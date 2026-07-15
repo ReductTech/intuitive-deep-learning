@@ -322,7 +322,7 @@
         return;
       }
       context.save();
-      context.globalCompositeOperation = 'multiply';
+      context.globalCompositeOperation = brushStyle.kind === 'blush' ? 'source-over' : 'multiply';
       context.fillStyle = solidColor;
       context.strokeStyle = solidColor;
       context.lineCap = 'round';

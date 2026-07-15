@@ -45,7 +45,6 @@
   var brushVisualStyle = brush.brushVisualStyle;
   var createBrushStrokeData = brush.createBrushStrokeData;
   var createBrushStrokeVisual = brush.createBrushStrokeVisual;
-  var redrawBrushStrokeVisual = brush.redrawBrushStrokeVisual;
   var MOLE_MIN_SIZE = 6;
   var MOLE_MAX_SIZE = 19;
   var MOLE_DEFAULT_SIZE = MOLE_MAX_SIZE / 2;
@@ -114,6 +113,7 @@
       markData: [],
       similarityTimer: null,
       skinFilterPreviewTimer: null,
+      liveStrokePreviewTimer: null,
       similarityRequestId: 0,
       lastSimilarity: null,
       painting: false,
@@ -304,6 +304,10 @@
       if (state.skinFilterPreviewTimer) {
         state.skinFilterPreviewTimer.remove(false);
         state.skinFilterPreviewTimer = null;
+      }
+      if (state.liveStrokePreviewTimer) {
+        state.liveStrokePreviewTimer.remove(false);
+        state.liveStrokePreviewTimer = null;
       }
       state.marks.forEach(function (mark) { mark.destroy(); });
       state.marks = [];
@@ -505,7 +509,7 @@
       previewOverlay.setVisible(false).setTexture(textureKey);
     }
 
-    function refreshCompositePreview() {
+    function renderCompositePreview() {
       var baseTextureKey = disguiseTextureForState(state);
       var sourceImage = scene.textures.get(baseTextureKey).getSourceImage();
       var previewScale = Math.min(1, 1024 / Math.max(1, sourceImage.width || 1), 1024 / Math.max(1, sourceImage.height || 1));
@@ -556,21 +560,46 @@
       }
       previewContext.putImageData(previewPixels, 0, 0);
 
+      editImage.setTexture(baseTextureKey);
+      fitDisguisePortrait(editImage);
+      if (scene.textures.exists(state.previewTextureKey)) {
+        var previewTexture = scene.textures.get(state.previewTextureKey);
+        var textureCanvas = previewTexture.getSourceImage();
+        if (textureCanvas.width !== previewCanvas.width || textureCanvas.height !== previewCanvas.height) {
+          textureCanvas.width = previewCanvas.width;
+          textureCanvas.height = previewCanvas.height;
+        }
+        var textureContext = textureCanvas.getContext('2d');
+        textureContext.clearRect(0, 0, textureCanvas.width, textureCanvas.height);
+        textureContext.drawImage(previewCanvas, 0, 0);
+        previewTexture.refresh();
+      } else {
+        scene.textures.addCanvas(state.previewTextureKey, previewCanvas);
+        smoothTexture(scene, state.previewTextureKey);
+      }
+      previewOverlay.setTexture(state.previewTextureKey).setVisible(true);
+      fitDisguisePortrait(previewOverlay);
+      state.previewFlattened = true;
+    }
+
+    function refreshCompositePreview() {
+      if (state.liveStrokePreviewTimer) {
+        state.liveStrokePreviewTimer.remove(false);
+        state.liveStrokePreviewTimer = null;
+      }
+      renderCompositePreview();
       editLayer.removeAll(true);
       state.marks = [];
       state.activeStrokeMark = null;
       state.activeStrokeVisual = null;
-      editImage.setTexture(baseTextureKey);
-      fitDisguisePortrait(editImage);
-      if (scene.textures.exists(state.previewTextureKey)) {
-        previewOverlay.setVisible(false).setTexture(baseTextureKey);
-        scene.textures.remove(state.previewTextureKey);
-      }
-      scene.textures.addCanvas(state.previewTextureKey, previewCanvas);
-      smoothTexture(scene, state.previewTextureKey);
-      previewOverlay.setTexture(state.previewTextureKey).setVisible(true);
-      fitDisguisePortrait(previewOverlay);
-      state.previewFlattened = true;
+    }
+
+    function scheduleLiveStrokePreview() {
+      if (state.liveStrokePreviewTimer) return;
+      state.liveStrokePreviewTimer = scene.time.delayedCall(45, function () {
+        state.liveStrokePreviewTimer = null;
+        if (state.painting && state.activeStrokeMark) renderCompositePreview();
+      });
     }
 
     function shouldShowBrushCursor() {
@@ -720,7 +749,7 @@
       var maxDiameter = state.params.brushKind === 'shapeBrow' ? 112 : 56;
       var strengthLabel = state.params.brushKind === 'pixelate'
         ? '像素程度'
-        : state.params.brushKind === 'blurBrush' ? '模糊程度' : '力度';
+        : state.params.brushKind === 'blurBrush' ? '去皱程度' : '力度';
       var maxStrength = state.params.brushKind === 'pixelate' ? 10 : state.params.brushKind === 'blurBrush' ? 8 : 5;
       addParamSlider(x, y, 360, '范围', 12, maxDiameter, state.params.brushDiameter || 24, setBrushDiameter);
       addParamSlider(x + 498, y, 360, strengthLabel, 1, maxStrength, state.params.brushStrength || 3, setBrushStrength);
@@ -1003,15 +1032,16 @@
         state.activeStrokeMark = createBrushStrokeData(uv, editImage, state.params);
         state.activeStrokeMark.screenPoints = [{ x: pointer.x, y: pointer.y }];
         state.activeStrokeVisual = createBrushStrokeVisual(scene, state.activeStrokeMark);
+        state.activeStrokeVisual.setVisible(false);
         editLayer.add(state.activeStrokeVisual);
         state.marks.push(state.activeStrokeVisual);
         state.markData.push(state.activeStrokeMark);
       } else {
         state.activeStrokeMark.points.push({ u: uv.u, v: uv.v });
         state.activeStrokeMark.screenPoints.push({ x: pointer.x, y: pointer.y });
-        redrawBrushStrokeVisual(state.activeStrokeVisual, state.activeStrokeMark);
       }
       state.lastPaint = { x: pointer.x, y: pointer.y };
+      scheduleLiveStrokePreview();
     }
 
     function finishActiveStroke() {

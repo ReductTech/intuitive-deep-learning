@@ -85,7 +85,7 @@
     },
     {
       key: 'pixelate',
-      label: '像素笔',
+      label: '像素',
       color: 'rgba(218, 184, 132, 0.42)',
       fill: 0xc29a62,
       diameter: 56,
@@ -93,7 +93,7 @@
     },
     {
       key: 'blurBrush',
-      label: '模糊笔',
+      label: '去皱',
       color: 'rgba(214, 194, 178, 0.34)',
       fill: 0xbfa794,
       diameter: 56,
