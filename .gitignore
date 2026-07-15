@@ -1,0 +1,7 @@
+*.pyc
+settings.json
+runtime_logs/
+history/
+__pycache__/
+*.zip
+settings.json

@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>神经网络最后一层到底应该怎么输出？</title>
+  <link rel="stylesheet" href="../shared/base.css">
+  <link rel="stylesheet" href="../shared/module-components.css">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main class="edu-root wp-root" data-tr-id="weather_probability_module_root" data-tr-view="module_show" data-tr-props='{"module":"Loss-Guide-2"}'>
+    <section class="edu-shell wp-shell">
+      <header class="edu-header">
+        <div>
+          <h1 class="edu-title">神经网络最后一层到底应该怎么输出？</h1>
+          <p class="edu-subtitle">同样是预测天气，“会不会下雨”和“晴、阴、雨是哪一种”需要不同的输出方式和损失函数。</p>
+        </div>
+        <span class="edu-badge">M23 · Output &amp; Loss</span>
+      </header>
+
+      <nav class="edu-progress wp-progress" aria-label="模块进度">
+        <span class="edu-progress-item is-current" data-progress="1" aria-current="step">一个类别的概率</span>
+        <span class="edu-progress-item" data-progress="2" aria-disabled="true">二分类损失</span>
+        <span class="edu-progress-item" data-progress="3" aria-disabled="true">多个互斥类别</span>
+        <span class="edu-progress-item" data-progress="4" aria-disabled="true">多分类损失</span>
+        <span class="edu-progress-item" data-progress="5" aria-disabled="true">选择输出层</span>
+      </nav>
+
+      <section class="edu-stage wp-stage" id="act1" aria-labelledby="act1Title">
+        <header class="edu-stage-head wp-stage-head">
+          <div class="edu-stage-copy">
+            <span class="edu-kicker">第一步 · 输出一个概率</span>
+            <h2 class="edu-stage-title" id="act1Title">怎样把原始分数变成下雨概率？</h2>
+            <p class="edu-stage-description">神经网络先根据湿度、云量、气压等信息计算一个原始分数，再把它转换成“明天下雨”的概率。</p>
+          </div>
+          <button class="edu-btn wp-animation-toggle" id="animationToggle" type="button" aria-label="暂停动画" title="暂停动画">Ⅱ</button>
+        </header>
+
+        <section class="wp-live-viewport" aria-label="多个天气输入汇入神经元，原始分数经过未知模块变成明天下雨概率的循环动画">
+          <div class="wp-live-pipeline">
+            <div class="wp-network-mount" id="neuronGraphMount" aria-label="多个动态天气输入汇入一个神经元，中间用省略号表示未画出的输入"></div>
+            <div class="wp-flow-arrow" aria-hidden="true"></div>
+            <div class="wp-raw-output">
+              <strong id="animatedRawValue">0.00</strong>
+              <small>原始分数（logit）<br>可以是任意实数</small>
+            </div>
+            <div class="wp-flow-arrow" aria-hidden="true"></div>
+            <div class="wp-mystery-module" id="mysteryModule">
+              <div class="edu-formula-block wp-mystery-formula">
+                <div class="edu-formula edu-formula--fraction" aria-label="Sigmoid 函数，一除以一加 e 的负 z 次方">
+                  <span class="edu-formula-prefix">
+                    <span class="edu-formula-term" tabindex="0" data-tooltip="σ：Sigmoid 函数，把任意实数映射到 0～1" aria-label="sigma，Sigmoid 函数">σ</span><span>(</span><span class="edu-formula-term" tabindex="0" data-tooltip="z：模型输出的原始分数" aria-label="z，模型输出的原始分数">z</span><span>) =</span>
+                  </span>
+                  <span class="edu-fraction">
+                    <span class="edu-fraction-numerator">1</span>
+                    <span class="edu-fraction-denominator">1 + e<sup>−<span class="edu-formula-term" tabindex="0" data-tooltip="z：模型输出的原始分数" aria-label="z，模型输出的原始分数">z</span></sup></span>
+                  </span>
+                </div>
+              </div>
+              <div class="wp-mystery-curtain" aria-label="未知转换模块">
+                <strong>???</strong>
+              </div>
+            </div>
+            <div class="wp-flow-arrow" aria-hidden="true"></div>
+            <div class="wp-bounded-output">
+              <strong id="animatedSigmoidValue">0.500000</strong>
+              <small>明天下雨概率<br>取值在 0～1 之间</small>
+            </div>
+          </div>
+        </section>
+
+        <section class="wp-guess-section" aria-label="Sigmoid 猜想题">
+          <div id="sigmoidQuestion"></div>
+          <div id="sigmoidRevealCue"></div>
+        </section>
+
+        <section class="wp-sigmoid-explanation" id="sigmoidExplanation" hidden aria-labelledby="sigmoidTitle">
+          <div class="wp-formula-reveal">
+            <h3 id="sigmoidTitle">Sigmoid 如何把原始分数变成概率？</h3>
+            <div class="edu-formula-block">
+              <div class="edu-formula edu-formula--fraction" aria-label="Sigmoid 函数：sigma z 等于一除以一加 e 的负 z 次方">
+                <span class="edu-formula-prefix">
+                  <span class="edu-formula-term" tabindex="0" data-tooltip="σ：Sigmoid 函数，把任意实数映射到 0～1" aria-label="sigma，Sigmoid 函数">σ</span><span>(</span><span class="edu-formula-term" tabindex="0" data-tooltip="z：模型尚未限制范围的原始分数，可以取任意实数" aria-label="z，模型的原始分数">z</span><span>) =</span>
+                </span>
+                <span class="edu-fraction">
+                  <span class="edu-fraction-numerator">1</span>
+                  <span class="edu-fraction-denominator">1 + e<sup>−<span class="edu-formula-term" tabindex="0" data-tooltip="z：模型尚未限制范围的原始分数，可以从 −∞ 到 +∞" aria-label="z，模型未限制范围的原始分数">z</span></sup></span>
+                </span>
+              </div>
+              <div class="edu-formula" aria-label="z 属于全体实数">
+                <span class="edu-formula-term" tabindex="0" data-tooltip="z：Sigmoid 的输入，可以是任意实数" aria-label="z，任意实数输入">z</span><span> ∈ ℝ</span>
+              </div>
+            </div>
+            <p>Sigmoid 会把任意实数映射到 0～1 之间，因此它的输出可以用来表示“明天下雨”的概率。</p>
+          </div>
+          <div class="wp-sigmoid-observation-grid">
+            <section class="wp-sigmoid-plot-panel" aria-labelledby="sigmoidPlotTitle">
+              <div class="wp-echart-head">
+                <div>
+                  <strong id="sigmoidPlotTitle">观察 Sigmoid 的变化</strong>
+                </div>
+              </div>
+              <div class="edu-check-group wp-chart-toggles" aria-label="选择 Sigmoid 图中显示的曲线">
+                <label class="edu-check edu-check--option"><input type="checkbox" checked data-plot-trace-toggle data-chart-id="sigmoidEchart" data-trace-index="0"><span>Sigmoid 函数</span></label>
+                <label class="edu-check edu-check--option"><input type="checkbox" checked data-plot-trace-toggle data-chart-id="sigmoidEchart" data-trace-index="1"><span>Sigmoid 导数</span></label>
+                <label class="edu-check edu-check--option"><input type="checkbox" checked data-plot-trace-toggle data-chart-id="sigmoidEchart" data-trace-index="2"><span>函数值上限</span></label>
+              </div>
+              <div class="edu-chart wp-sigmoid-chart" id="sigmoidEchart" role="img" aria-label="Sigmoid 函数及其导数曲线"></div>
+              <div class="wp-derivative-note">
+                <p>Sigmoid 可以接收任意实数。原始分数越大，输出越接近 1；原始分数越小，输出越接近 0。对于有限的原始分数，输出只会无限接近 0 或 1，不会真正到达两个端点。</p>
+              </div>
+            </section>
+            <section class="wp-sigmoid-checks" aria-label="Sigmoid 图像观察题">
+              <div class="wp-sigmoid-question-stack" id="sigmoidQuestionStack">
+                <article class="wp-sigmoid-quiz-card">
+                  <div id="sigmoidChoiceQuestion"></div>
+                </article>
+                <article class="wp-sigmoid-quiz-card wp-sigmoid-quiz-card--second" id="sigmoidJudgementCard" hidden>
+                  <div id="sigmoidJudgementQuestion"></div>
+                </article>
+              </div>
+            </section>
+          </div>
+          <div id="act1Cue"></div>
+        </section>
+      </section>
+
+      <div class="flow-scroll-area wp-flow-area" id="act2Flow" hidden aria-hidden="true">
+        <div class="flow-scroll-runway" aria-hidden="true"></div>
+      <section class="edu-stage wp-stage is-locked" id="act2" hidden aria-hidden="true" aria-labelledby="act2Title">
+        <header class="edu-stage-head wp-stage-head">
+          <div class="edu-stage-copy">
+            <span class="edu-kicker">第二步 · 计算二分类损失</span>
+            <h2 class="edu-stage-title" id="act2Title">预测概率有了，怎样衡量预测得好不好？</h2>
+            <p class="edu-stage-description">假设第二天确实下雨，真实标签为 1。请设计一个损失函数，让预测概率越接近 1，损失越小。</p>
+          </div>
+        </header>
+        <section class="wp-loss-designer">
+          <textarea class="edu-textarea" id="lossIdeaInput" rows="3" placeholder="例如：预测概率越接近 1，损失越小。" aria-label="你的损失函数想法或公式" data-dl-input-hint></textarea>
+          <button class="edu-btn edu-btn--primary dl-button-hint" id="generateLossCurve" type="button" data-dl-button-hint>查看损失曲线</button>
+          <p class="edu-status wp-feedback" id="lossDesignFeedback" aria-live="polite"></p>
+        </section>
+        <section class="wp-loss-result" id="lossDesignResult" hidden>
+          <div class="wp-loss-formulas">
+            <article class="wp-loss-formula-card" id="userLossFormulaBlock">
+              <span class="edu-kicker">你的损失函数</span>
+              <div class="edu-formula-block">
+                <div class="edu-formula">
+                  <span id="userLossFormula"></span>
+                </div>
+                <div class="edu-formula">
+                  <span id="userLossDerivative"></span>
+                </div>
+              </div>
+            </article>
+            <article class="wp-loss-formula-card">
+              <span class="edu-kicker">负对数损失</span>
+              <div class="edu-formula-block">
+                <div class="edu-formula" aria-label="损失 L p 等于负 log p">
+                  <span aria-hidden="true">L(</span><span class="edu-formula-term" tabindex="0" data-tooltip="p：模型给真实类别分配的概率" aria-label="p，模型给真实类别分配的概率">p</span><span aria-hidden="true">) = −log(p)</span>
+                </div>
+                <div class="edu-formula" aria-label="损失的导数等于负一除以 p">
+                  <span aria-hidden="true">L′(</span><span class="edu-formula-term" tabindex="0" data-tooltip="p 越接近 0，负梯度的绝对值越大" aria-label="p 越接近零，负梯度绝对值越大">p</span><span aria-hidden="true">) = −1/p</span>
+                </div>
+              </div>
+            </article>
+          </div>
+          <div class="wp-loss-charts">
+            <section class="wp-loss-chart-panel" aria-label="负对数损失及其导数曲线">
+              <div class="edu-check-group wp-chart-toggles" aria-label="选择图中显示的损失与导数曲线">
+                <label class="edu-check edu-check--option"><input type="checkbox" checked data-plot-trace-toggle data-chart-id="lossDesignChart" data-trace-index="0"><span>负对数损失</span></label>
+                <label class="edu-check edu-check--option"><input type="checkbox" checked data-plot-trace-toggle data-chart-id="lossDesignChart" data-trace-index="1"><span>负对数损失的导数</span></label>
+                <label class="edu-check edu-check--option" data-user-loss-toggle><input type="checkbox" checked data-plot-trace-toggle data-chart-id="lossDesignChart" data-trace-index="2"><span>你的损失函数</span></label>
+                <label class="edu-check edu-check--option" data-user-derivative-toggle><input type="checkbox" checked data-plot-trace-toggle data-chart-id="lossDesignChart" data-trace-index="3"><span>你的损失函数的导数</span></label>
+              </div>
+              <div class="edu-chart wp-loss-chart" id="lossDesignChart" role="img" aria-label="损失函数及其导数共用同一纵轴的曲线图"></div>
+            </section>
+          </div>
+          <section class="wp-bce-grid" aria-label="二分类交叉熵规则">
+            <div class="wp-bce-card">
+              <span class="edu-kicker">把两种真实情况写成一个公式</span>
+              <strong>当真实标签 y=1 时，只计算实际下雨对应的损失；当 y=0 时，只计算实际不下雨对应的损失。把两种情况写在一起，就得到二分类交叉熵损失 BCE。</strong>
+              <div class="wp-bce-cases">
+                <article class="wp-bce-case">
+                  <strong>情况一：真实值为 0，也就是实际没下雨</strong>
+                  <p>正确类别是“不下雨”，它的概率是 <strong>1 − p</strong>。</p>
+                  <div class="edu-formula-block">
+                    <div class="edu-formula" aria-label="损失 L 等于负 log 一减 p">
+                      <span class="edu-formula-term" tabindex="0" data-tooltip="L：真实值为 0 时的损失" aria-label="L，当前样本损失">L</span><span> = −log(1 − </span><span class="edu-formula-term" tabindex="0" data-tooltip="p：模型预测下雨的概率" aria-label="p，模型预测下雨的概率">p</span><span>)</span>
+                    </div>
+                  </div>
+                </article>
+                <article class="wp-bce-case">
+                  <strong>情况二：真实值为 1，也就是实际下雨</strong>
+                  <p>正确类别是“下雨”，请填入它的预测概率。</p>
+                  <div class="edu-formula-block wp-bce-fill-block">
+                    <div class="wp-bce-fill-row">
+                      <div class="edu-formula wp-bce-fill-formula" aria-label="损失 L 等于负 log，括号内需要填写下雨的预测概率">
+                        <span class="edu-formula-term" tabindex="0" data-tooltip="L：真实值为 1 时的损失" aria-label="L，当前样本损失">L</span><span> = −log(</span><input class="wp-bce-fill-input" id="bceRainInput" type="text" maxlength="4" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="填写下雨的预测概率"><span>)</span>
+                      </div>
+                      <button class="edu-btn edu-btn--primary" id="bceRainCheck" type="button">检查</button>
+                    </div>
+                    <p class="edu-status wp-bce-fill-feedback" id="bceRainFeedback" aria-live="polite" hidden></p>
+                  </div>
+                </article>
+              </div>
+
+              <div class="wp-bce-combined-reveal" id="bceCombinedReveal" hidden>
+                <strong class="wp-bce-step-title">先写成分段函数</strong>
+                <div class="edu-formula-block">
+                  <div class="edu-formula wp-piecewise-formula" aria-label="损失是一个分段函数：真实值为 0 时等于负 log 一减 p，真实值为 1 时等于负 log p">
+                    <span class="wp-piecewise-name"><span class="edu-formula-term" tabindex="0" data-tooltip="L：当前样本的二分类损失" aria-label="L，二分类损失">L</span><span>(</span><span class="edu-formula-term" tabindex="0" data-tooltip="p：模型预测下雨的概率" aria-label="p，下雨概率">p</span><span>, </span><span class="edu-formula-term" tabindex="0" data-tooltip="y：真实值；下雨为 1，没下雨为 0" aria-label="y，真实值">y</span><span>) =</span></span>
+                    <span class="edu-formula-term wp-piecewise-brace" tabindex="0" data-tooltip="大括号：表示根据右侧条件，从两行公式中选择一行" aria-label="分段函数大括号">{</span>
+                    <span class="wp-piecewise-cases">
+                      <span class="wp-piecewise-row"><span class="wp-piecewise-expression"><span>−log(1 − </span><span class="edu-formula-term" tabindex="0" data-tooltip="p：模型预测下雨的概率" aria-label="p，下雨概率">p</span><span>)</span></span><span class="wp-piecewise-condition">真实值 <span class="edu-formula-term" tabindex="0" data-tooltip="y：真实值" aria-label="y，真实值">y</span> = 0 时</span></span>
+                      <span class="wp-piecewise-row"><span class="wp-piecewise-expression"><span>−log(</span><span class="edu-formula-term" tabindex="0" data-tooltip="p：模型预测下雨的概率" aria-label="p，下雨概率">p</span><span>)</span></span><span class="wp-piecewise-condition">真实值 <span class="edu-formula-term" tabindex="0" data-tooltip="y：真实值" aria-label="y，真实值">y</span> = 1 时</span></span>
+                    </span>
+                  </div>
+                </div>
+
+                <strong class="wp-bce-step-title">用真实标签 <span>y</span> 选择对应的损失</strong>
+                <div class="edu-formula-block">
+                  <div class="edu-formula" aria-label="二分类交叉熵损失等于负的 y 乘 log p，加一减 y 乘 log 一减 p">
+                    <span class="edu-formula-term" tabindex="0" data-tooltip="L：Binary Cross Entropy，二分类交叉熵损失" aria-label="L，二分类交叉熵损失">L</span><span> = −[</span><span class="edu-formula-term" tabindex="0" data-tooltip="y：目标值，可取 0 到 1；用于确定正类项的权重" aria-label="y，取值范围零到一的目标值">y</span><span> log(</span><span class="edu-formula-term" tabindex="0" data-tooltip="p：模型预测下雨的概率" aria-label="p，下雨概率">p</span><span>) + (1 − y) log(1 − p)]</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </section>
+        <div id="act2Cue"></div>
+      </section>
+      </div>
+
+      <div class="flow-scroll-area wp-flow-area" id="act3Flow" hidden aria-hidden="true">
+        <div class="flow-scroll-runway" aria-hidden="true"></div>
+      <section class="edu-stage wp-stage is-locked" id="act3" hidden aria-hidden="true" aria-labelledby="act3Title">
+        <header class="edu-stage-head wp-stage-head">
+          <div class="edu-stage-copy">
+            <h2 class="edu-stage-title" id="act3Title">为什么多个类别不能分别使用 Sigmoid？</h2>
+            <p class="edu-stage-description">以天气预测为例：晴、阴、雨只能选一个，三个类别的概率应合计 100%。</p>
+          </div>
+        </header>
+
+        <section class="wp-independent-demo" aria-label="三个独立 Sigmoid 用于互斥天气类别的错误示范">
+          <div class="wp-independent-workbench">
+            <div class="wp-independent-output">
+              <div class="wp-output-head">
+                <div>
+                  <strong>每个类别独立使用 Sigmoid</strong>
+                </div>
+              </div>
+              <div class="edu-formula-block wp-output-formula">
+                <div class="edu-formula" aria-label="第 i 类概率等于第 i 类原始分数的 Sigmoid">
+                  <span class="edu-formula-term" tabindex="0" data-tooltip="p：模型输出的概率" aria-label="p，模型输出的概率">p</span><sub><span class="edu-formula-term" tabindex="0" data-tooltip="i：当前正在计算的天气类别编号" aria-label="i，天气类别编号">i</span></sub><span> = </span><span class="edu-formula-term" tabindex="0" data-tooltip="σ：Sigmoid 函数，各类别分别独立计算" aria-label="sigma，Sigmoid 函数">σ</span><span>(</span><span class="edu-formula-term" tabindex="0" data-tooltip="z：模型给某个类别的原始分数" aria-label="z，类别原始分数">z</span><sub><span class="edu-formula-term" tabindex="0" data-tooltip="i：当前天气类别编号" aria-label="i，天气类别编号">i</span></sub><span>)</span>
+                </div>
+              </div>
+              <p class="wp-formula-note">三个 Sigmoid 互不约束，总和可能超过 100%。</p>
+              <div class="wp-probability-bars" id="independentSigmoidBars"></div>
+              <div class="wp-probability-total" id="independentSigmoidTotal" aria-live="polite">
+                <span>概率总和</span>
+                <strong>0.0%</strong>
+                <small>三选一应为 100%</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="wp-mutual-check" id="mutualQuestion"></div>
+          <section class="wp-mutual-reveal" id="mutualReveal" hidden>
+            <div class="wp-softmax-reveal-body">
+              <h3>Softmax 如何让多个类别共同竞争？</h3>
+              <p>Softmax 会把三个原始分数（logit）一起归一化，得到总和为 100% 的类别概率。</p>
+              <div class="edu-formula-block">
+                <div class="edu-formula edu-formula--fraction" aria-label="Softmax 公式，p k 等于 e 的 z k 次方除以晴、阴、雨三个指数分数之和">
+                  <span class="edu-formula-prefix">
+                    <span class="edu-formula-term" tabindex="0" data-tooltip="p：Softmax 输出的类别概率" aria-label="p，类别概率">p</span><sub><span class="edu-formula-term" tabindex="0" data-tooltip="k：当前正在计算的类别" aria-label="k，当前类别">k</span></sub><span> =</span>
+                  </span>
+                  <span class="edu-fraction">
+                    <span class="edu-fraction-numerator">e<sup><span class="edu-formula-term" tabindex="0" data-tooltip="z：类别的原始分数" aria-label="z，类别原始分数">z</span><sub><span class="edu-formula-term" tabindex="0" data-tooltip="k：当前类别" aria-label="k，当前类别">k</span></sub></sup></span>
+                    <span class="edu-fraction-denominator">e<sup>z<sub>晴</sub></sup> + e<sup>z<sub>阴</sub></sup> + e<sup>z<sub>雨</sub></sup></span>
+                  </span>
+                </div>
+              </div>
+              <p class="wp-formula-note">共同的分母保证三个概率之和为 1。</p>
+              <div class="wp-softmax-preview" id="softmaxPreview" aria-label="Softmax 会让三个天气概率和为 100%"></div>
+            </div>
+          </section>
+          <div id="act3Cue"></div>
+        </section>
+      </section>
+      </div>
+
+      <div class="flow-scroll-area wp-flow-area" id="act4Flow" hidden aria-hidden="true">
+        <div class="flow-scroll-runway" aria-hidden="true"></div>
+      <section class="edu-stage wp-stage is-locked" id="act4" hidden aria-hidden="true" aria-labelledby="act4Title">
+        <header class="edu-stage-head wp-stage-head">
+          <div class="edu-stage-copy">
+            <h2 class="edu-stage-title" id="act4Title">多分类预测错了，损失怎样计算？</h2>
+          </div>
+        </header>
+
+        <div class="wp-forecast-grid" id="forecastCards" aria-label="三家天气预报"></div>
+        <div class="edu-status wp-feedback wp-forecast-feedback" id="forecastFeedback" aria-live="polite"></div>
+
+        <section class="wp-ce-reveal" id="ceReveal" hidden aria-labelledby="ceTitle">
+          <div class="wp-ce-formula">
+            <div class="wp-ce-formula-head">
+              <h3 id="ceTitle">用多分类交叉熵计算预测损失</h3>
+              <button class="edu-btn edu-btn--explain" type="button" data-dl-explain="单标签任务使用 one-hot 标签：只有真实类别的标签是 1，其余都是 0。因此求和时只有真实类别对应的一项会保留下来。" aria-expanded="false">为什么能简化？</button>
+            </div>
+            <div class="edu-formula-block wp-ce-three-line">
+              <div class="edu-formula" data-no-formula-explanations aria-label="多分类交叉熵通式">
+                <span>L<sub>CE</sub> = −Σ y<sub>k</sub> log(p<sub>k</sub>)</span>
+              </div>
+              <p>如果任务是单标签分类任务（一个样本只属于一个类别），那么交叉熵公式可以进一步简化为</p>
+              <div class="edu-formula" data-no-formula-explanations aria-label="单标签交叉熵等于负 log 真实类别概率">
+                <span>L<sub>CE</sub> = −log(p<sub>下雨</sub>)</span>
+              </div>
+            </div>
+          </div>
+          <div class="wp-success-note">
+            <strong>真实类别概率越高，CE 越小</strong>
+          </div>
+          <div class="wp-ce-negative-question" id="ceNegativeQuestion"></div>
+          <div id="act4Cue"></div>
+        </section>
+      </section>
+      </div>
+
+      <div class="flow-scroll-area wp-flow-area" id="act5Flow" hidden aria-hidden="true">
+        <div class="flow-scroll-runway" aria-hidden="true"></div>
+      <section class="edu-stage wp-stage is-locked" id="act5" hidden aria-hidden="true" aria-labelledby="act5Title">
+        <header class="edu-stage-head wp-stage-head">
+          <div class="edu-stage-copy">
+            <h2 class="edu-stage-title" id="act5Title">Sigmoid 和 Softmax 应该怎样选择？</h2>
+          </div>
+        </header>
+
+        <div class="wp-driving-layout" id="pairingWorkbench">
+          <section class="wp-driving-video" aria-label="雨夜道路场景">
+            <img src="./auto_drive.jpg" alt="车辆摄像头拍摄的雨夜道路，画面包含前方汽车、行人、红绿灯和车道线">
+          </section>
+
+          <div class="wp-pairing-grid">
+            <div id="pairQuestionPedestrian" data-pair-question="pedestrian"></div>
+            <div id="pairQuestionTraffic" data-pair-question="traffic" hidden></div>
+            <div id="pairQuestionBbox" data-pair-question="bbox" hidden></div>
+          </div>
+        </div>
+
+        <div class="edu-actions wp-pair-actions">
+          <button class="edu-btn" id="resetPairing" type="button">重新作答</button>
+        </div>
+
+      </section>
+      </div>
+
+      <section class="edu-content-block wp-resources" id="resourcesPanel" hidden aria-hidden="true">
+        <header class="edu-content-head">
+          <h2 class="edu-content-title">推荐资源</h2>
+          <p class="edu-content-subtitle">继续观看与当前主题直接相关的视频，巩固刚才完成的学习内容。</p>
+        </header>
+        <div class="edu-content-body">
+          <div id="relatedVideos"></div>
+          <nav class="edu-resource-actions" aria-label="学习导航">
+            <a class="edu-btn" href="../CourseMap/">返回课程目录</a>
+            <a class="edu-btn edu-btn--primary" href="../Digital-Image-Module/" data-next-lesson>学习下一个</a>
+          </nav>
+        </div>
+      </section>
+
+      <button class="flow-scroll-indicator" id="flowScrollIndicator" type="button" hidden>
+        <span class="flow-scroll-indicator-mark" aria-hidden="true"></span>
+        <strong id="flowScrollTitle">下方有新内容</strong>
+        <small id="flowScrollBody">滚动或点击查看</small>
+      </button>
+    </section>
+  </main>
+
+  <script src="../shared/plotly-3.6.0.min.js"></script>
+  <script src="../shared/plot-utils.js"></script>
+  <script src="../shared/module-components.js"></script>
+  <script src="./script.js"></script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+{
+  "title": "把多个信号合成一个判断",
+  "language": "python",
+  "promptHtml": "<p>这个实验把兴趣、压力、成本等因素变成输入信号，再用权重合成一个分数。它对应模块里“一个决定背后有很多信号”的直觉。</p>",
+  "codeFile": "tutorial_code.py",
+  "autoInsert": false
+}

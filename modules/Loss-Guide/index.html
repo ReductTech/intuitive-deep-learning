@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="loss.meta.title">L01 · 为什么需要损失函数</title>
+  <link rel="stylesheet" href="../shared/base.css">
+  <link rel="stylesheet" href="../shared/module-components.css">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main class="edu-root lg-root">
+    <section class="edu-shell">
+      <header class="edu-header">
+        <div>
+          <h1 class="edu-title"><span data-i18n="loss.header.title">为什么需要损失函数</span></h1>
+          <p class="edu-subtitle"><span data-i18n="loss.header.subtitle">从距离误差开始，观察损失函数怎样衡量预测和目标之间的差距。</span></p>
+        </div>
+      </header>
+
+      <section class="edu-stage edu-content-block edu-stage--featured" id="s-numberline" aria-labelledby="numberlineTitle" data-i18n-scope="loss.distance">
+        <header class="edu-content-head">
+          <h2 class="edu-content-title" id="numberlineTitle"><span data-i18n="loss.distance.title">损失就是距离</span></h2>
+          <p class="edu-content-subtitle"><span data-i18n="loss.distance.subtitle">Loss 衡量真实值和预测值之间差多少。先用一条数轴，把这种差距直接画出来。</span></p>
+        </header>
+
+        <div class="edu-content-body">
+          <div class="edu-callout edu-callout--orange">
+            <strong class="edu-callout-label" data-i18n="loss.distance.task.label">你的任务</strong>
+            <span class="edu-callout-text" data-i18n="loss.distance.task.body">拖动绿色预测值，让它与红色真实值重合，把 Loss 缩小到 0。</span>
+          </div>
+
+          <div class="edu-canvas-frame lg-numberline-frame">
+            <canvas id="nlCanvas" width="720" height="240" aria-label="数轴距离演示" data-i18n-aria-label="loss.distance.canvas.aria"></canvas>
+          </div>
+
+          <div class="lg-value-grid" id="nlReadout">
+            <div class="edu-value-tile edu-value-tile--orange">
+              <span class="edu-value-label" data-i18n-ignore="true">L1 Loss = |真实值 - 预测值|</span>
+              <output class="edu-value-number" id="nlL1" data-i18n-ignore="true">5.4</output>
+            </div>
+            <div class="edu-value-tile edu-value-tile--blue">
+              <span class="edu-value-label" data-i18n-ignore="true">L2 Loss = (真实值 - 预测值)²</span>
+              <output class="edu-value-number" id="nlL2" data-i18n-ignore="true">29.2</output>
+            </div>
+          </div>
+
+          <div class="edu-notice-strip edu-notice-strip--orange" id="nlStatus" aria-live="polite">
+            <strong data-i18n="loss.distance.status.label">操作提醒：</strong>
+            <span id="nlPrompt" data-i18n="loss.distance.status.initial">拖动绿色预测值，让它贴近红色真实值。</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="edu-stage edu-content-block" id="s-calc" hidden aria-hidden="true" aria-labelledby="calculationTitle" data-i18n-scope="loss.calculation">
+        <header class="edu-content-head">
+          <h2 class="edu-content-title" id="calculationTitle"><span data-i18n="loss.calculation.title">亲手算一次</span></h2>
+          <p class="edu-content-subtitle"><span data-i18n="loss.calculation.subtitle">现在真实值为 3，预测值为 7。图中同时画出了 L1 和 L2 随误差变化的形状。</span></p>
+        </header>
+
+        <div class="edu-content-body">
+          <div class="edu-callout edu-callout--orange">
+            <strong class="edu-callout-label" data-i18n="loss.calculation.task.label">你的任务</strong>
+            <span class="edu-callout-text" data-i18n="loss.calculation.task.body">先算出当前预测的 L1、L2 损失。计算正确后，再解释两种损失的区别。</span>
+          </div>
+
+          <div class="edu-canvas-frame lg-calc-frame">
+            <canvas id="calcCanvas" width="760" height="460" aria-label="可拖拽缩放的 L1 和 L2 损失函数图" data-i18n-aria-label="loss.calculation.canvas.aria"></canvas>
+          </div>
+
+          <div class="lg-question-stack">
+            <div id="calcQuestionMount"></div>
+            <div id="compareQuestionBlock" hidden>
+              <div id="compareQuestionMount"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="edu-stage edu-content-block" id="s-loss-gradient" hidden aria-hidden="true" aria-labelledby="lossGradientTitle" data-i18n-scope="loss.gradient">
+        <header class="edu-content-head">
+          <h2 class="edu-content-title" id="lossGradientTitle"><span data-i18n="loss.gradient.title">计算 L1 与 L2 的梯度</span></h2>
+          <p class="edu-content-subtitle"><span data-i18n="loss.gradient.subtitle">损失只告诉我们错了多少；梯度进一步告诉模型，预测值应该往哪个方向改，以及这一步需要多强的修正。</span></p>
+        </header>
+        <div class="edu-content-body">
+          <div class="edu-callout edu-callout--blue">
+            <strong class="edu-callout-label" data-i18n="loss.gradient.meaning.label">怎样读梯度</strong>
+            <span class="edu-callout-text" data-i18n="loss.gradient.meaning.body">梯度的正负表示修正方向，绝对值表示当前误差产生的修正强度。训练时会沿梯度的反方向更新预测。</span>
+          </div>
+
+          <div class="lg-gradient-sequence">
+            <section class="lg-gradient-step" aria-labelledby="l1GradientTitle">
+              <h3 class="edu-panel-title" id="l1GradientTitle" data-i18n-ignore="true">L1 Loss</h3>
+              <div class="edu-formula-block lg-formula-block">
+                <div class="lg-formula-steps" aria-label="L1 梯度分两步计算" data-i18n-aria-label="loss.gradient.l1.formula.aria">
+                  <div class="edu-formula">
+                    <span class="edu-formula-term" tabindex="0" data-i18n-ignore="true" data-tooltip="L₁：预测值与真实值之间的绝对误差" aria-label="L1，绝对误差损失">L₁</span><span data-i18n-ignore="true">(</span><span class="edu-formula-term" tabindex="0" data-i18n-ignore="true" data-tooltip="ŷ：模型给出的预测值，本例中是 7" aria-label="y hat，预测值 7">ŷ</span><span data-i18n-ignore="true">, </span><span class="edu-formula-term" tabindex="0" data-i18n-ignore="true" data-tooltip="y：样本的真实目标值，本例中是 3" aria-label="y，真实值 3">y</span><span data-i18n-ignore="true">) = |</span><span class="edu-formula-term" tabindex="0" data-i18n-ignore="true" data-tooltip="ŷ：模型给出的预测值" aria-label="y hat，预测值">ŷ</span><span data-i18n-ignore="true"> - </span><span class="edu-formula-term" tabindex="0" data-i18n-ignore="true" data-tooltip="y：样本的真实目标值" aria-label="y，真实值">y</span><span data-i18n-ignore="true">|</span>
+                  </div>
+                  <div class="edu-formula">
+                    <span class="edu-formula-term" tabindex="0" data-i18n-ignore="true" data-tooltip="对预测值 ŷ 求导，得到模型更新所需的梯度" aria-label="L1 对预测值的梯度">∂L₁/∂ŷ</span><span data-i18n-ignore="true"> = </span><span class="edu-formula-term" tabindex="0" data-i18n-ignore="true" data-tooltip="sign 只保留正负号：正数返回正一，负数返回负一" aria-label="sign，符号函数">sign</span><span data-i18n-ignore="true">(</span><span class="edu-formula-term" tabindex="0" data-i18n-ignore="true" data-tooltip="预测误差：预测值减去真实值" aria-label="预测误差 y hat 减 y">ŷ-y</span><span data-i18n-ignore="true">)</span>
+                  </div>
+                </div>
+              </div>
+              <div id="l1GradientQuestionMount"></div>
+            </section>
+
+            <section class="lg-gradient-step" id="l2GradientLesson" hidden aria-hidden="true" aria-labelledby="l2GradientTitle">
+              <h3 class="edu-panel-title" id="l2GradientTitle" data-i18n-ignore="true">L2 Loss</h3>
+              <div class="edu-formula-block lg-formula-block">
+                <div class="lg-formula-steps" aria-label="L2 梯度分两步计算" data-i18n-aria-label="loss.gradient.l2.formula.aria">
+                  <div class="edu-formula">
+                    <span class="edu-formula-term" tabindex="0" data-i18n-ignore="true" data-tooltip="L₂：预测误差的平方" aria-label="L2，平方误差损失">L₂</span><span data-i18n-ignore="true">(</span><span class="edu-formula-term" tabindex="0" data-i18n-ignore="true" data-tooltip="ŷ：模型给出的预测值，本例中是 7" aria-label="y hat，预测值 7">ŷ</span><span data-i18n-ignore="true">, </span><span class="edu-formula-term" tabindex="0" data-i18n-ignore="true" data-tooltip="y：样本的真实目标值，本例中是 3" aria-label="y，真实值 3">y</span><span data-i18n-ignore="true">) = (</span><span class="edu-formula-term" tabindex="0" data-i18n-ignore="true" data-tooltip="预测误差：预测值减去真实值" aria-label="预测误差 y hat 减 y">ŷ-y</span><span data-i18n-ignore="true">)²</span>
+                  </div>
+                  <div class="edu-formula">
+                    <span class="edu-formula-term" tabindex="0" data-i18n-ignore="true" data-tooltip="对预测值 ŷ 求导，得到同时包含方向和误差大小的梯度" aria-label="L2 对预测值的梯度">∂L₂/∂ŷ</span><span data-i18n-ignore="true"> = 2(</span><span class="edu-formula-term" tabindex="0" data-i18n-ignore="true" data-tooltip="预测误差：它的正负表示方向，绝对值表示离目标多远" aria-label="预测误差 y hat 减 y">ŷ-y</span><span data-i18n-ignore="true">)</span>
+                  </div>
+                </div>
+              </div>
+              <div id="l2GradientQuestionMount"></div>
+            </section>
+
+            <div id="finalGradientQuestionBlock" hidden aria-hidden="true">
+              <div id="gradientQuestionMount"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="edu-content-block lg-resources" id="s-loss-resources" hidden aria-hidden="true" aria-labelledby="lossResourcesTitle" data-i18n-scope="loss.resources">
+        <header class="edu-content-head">
+          <h2 class="edu-content-title" id="lossResourcesTitle"><span data-i18n="loss.resources.title">推荐资源</span></h2>
+          <p class="edu-content-subtitle"><span data-i18n="loss.resources.subtitle">继续观看与当前主题直接相关的视频，巩固刚才完成的学习内容。</span></p>
+        </header>
+        <div class="edu-content-body">
+          <div class="lg-related-videos" id="lossRelatedLinks" data-i18n-ignore="true"></div>
+          <nav class="edu-resource-actions" aria-label="学习导航" data-i18n-aria-label="loss.resources.actions.aria">
+            <a class="edu-btn" href="../CourseMap/"><span data-i18n="loss.resources.actions.back">返回课程目录</span></a>
+            <a class="edu-btn edu-btn--primary" href="../Gradient-Descent-Module/" data-next-lesson><span data-i18n="loss.resources.actions.next">学习下一个</span></a>
+          </nav>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script src="../shared/canvas-utils.js"></script>
+  <script src="../shared/plot-utils.js"></script>
+  <script src="../shared/module-components.js"></script>
+  <script src="./guide.js"></script>
+  <script src="./script.js"></script>
+</body>
+</html>

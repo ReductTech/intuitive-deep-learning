@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="face.meta.title">人脸识别：固定卷积核到参数全训</title>
+  <link rel="stylesheet" href="../shared/base.css">
+  <link rel="stylesheet" href="../shared/module-components.css">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main class="edu-root face-root">
+    <section class="edu-shell face-shell">
+      <header class="edu-header">
+        <div>
+          <h1 class="edu-title"><span data-i18n="face.header.title">人脸识别：固定卷积核到参数全训</span></h1>
+          <p class="edu-subtitle"><span data-i18n="face.header.subtitle">把上一关的固定扫描器换到 LFW 彩色人脸子集，先只训练最后的分类头。</span></p>
+        </div>
+      </header>
+
+      <section class="edu-stage edu-content-block edu-stage--featured" id="faceAct1" aria-labelledby="fixedKernelTitle" data-i18n-scope="face.fixed">
+        <header class="edu-content-head">
+          <span class="edu-kicker">第一幕 · 固定扫描器识别人脸身份</span>
+          <h2 class="edu-content-title" id="fixedKernelTitle">卷积核先不训练，只让 MLP 读它们提取出的脸部纹理</h2>
+          <p class="edu-content-subtitle">选择固定卷积核、训练分类头，再比较训练集与验证集表现。</p>
+        </header>
+        <div class="edu-content-body">
+
+        <div class="edu-toolbar" aria-label="训练状态">
+            <div class="edu-metrics">
+              <div class="edu-metric">
+                <span>状态</span>
+                <strong id="trainStatus">等待开始</strong>
+              </div>
+              <div class="edu-metric">
+                <span>训练集准确率</span>
+                <strong id="trainAcc" data-i18n-ignore="true">-</strong>
+              </div>
+              <div class="edu-metric" id="valAccMetric">
+                <span>验证集准确率</span>
+                <strong id="valAcc" data-i18n-ignore="true">-</strong>
+              </div>
+            </div>
+            <div class="edu-toolbar-actions"><button class="edu-btn edu-btn--primary dl-button-hint" id="trainBtn" type="button" data-dl-button-hint>训练 MLP</button></div>
+        </div>
+
+        <section class="edu-card face-fixed-lab" aria-label="固定卷积核人脸识别流水线">
+          <div class="face-panel-tools">
+            <div>
+              <p class="edu-body face-pretrain-kernel-note">LFW 均衡子集：12 个人，每人 50 张 62×47 彩色人脸。这里每个人 40 张训练、10 张验证。</p>
+              <div class="face-kernel-palette" id="kernelPalette" aria-label="固定卷积核选择"></div>
+            </div>
+            <div class="face-sample-actions" aria-label="样本切换">
+              <button class="edu-btn" id="prevSampleBtn" type="button">上一张</button>
+              <button class="edu-btn" id="nextSampleBtn" type="button">下一张</button>
+            </div>
+          </div>
+
+          <div class="face-pipeline">
+            <div class="face-pipe-node face-pipe-node--image">
+              <div class="face-node-head">
+                <span class="edu-label">输入人脸</span>
+                <strong id="faceIdentity">ID -</strong>
+              </div>
+              <canvas id="faceCanvas" width="282" height="372" aria-label="LFW 彩色人脸图像"></canvas>
+            </div>
+
+            <div class="face-pipe-arrow" aria-hidden="true"></div>
+
+            <div class="face-pipe-node face-feature-block" id="kernelDropZone">
+              <div class="face-node-head">
+                <span class="edu-label">4×4 固定核特征图</span>
+                <button class="edu-btn" id="resetKernelsBtn" type="button">重置</button>
+              </div>
+              <div class="face-feature-composer">
+                <div class="face-active-kernels" id="activeKernels" aria-label="已选固定卷积核"></div>
+                <div class="face-feature-viewer" id="featureViewer">
+                  <div class="face-feature-deck" id="featureDeck" aria-label="特征图相片滑动浏览"></div>
+                </div>
+              </div>
+              <div class="face-feature-scrub" id="featureScrub" aria-hidden="true"></div>
+            </div>
+
+            <div class="face-pipe-arrow" aria-hidden="true"></div>
+
+            <div class="face-pipe-node face-flatten-node" aria-label="展平特征向量">
+              <span class="edu-label">展平</span>
+              <div class="face-vector-strip" id="flattenStrip"></div>
+            </div>
+
+            <div class="face-pipe-arrow" aria-hidden="true"></div>
+
+            <div class="face-pipe-node face-classifier-node">
+              <span class="edu-label">分类器</span>
+              <canvas id="classifierCanvas" width="260" height="260" aria-label="人脸分类头连接示意图"></canvas>
+            </div>
+
+            <div class="face-pipe-node face-output-node">
+              <span class="edu-label">Top 身份概率</span>
+              <div class="face-bars" id="probBars" aria-label="预测身份概率"></div>
+            </div>
+          </div>
+
+          <div class="edu-notice-strip edu-notice-strip--blue" id="readout" aria-live="polite">先观察固定卷积核提取出的纹理，再训练分类头。</div>
+        </section>
+        </div>
+      </section>
+
+      <button class="flow-scroll-indicator" id="firstActContinueCue" type="button" aria-controls="faceAct2" hidden>
+        <span class="flow-scroll-indicator-mark" aria-hidden="true"></span>
+        <strong>下方有新内容</strong>
+        <small>滚动或点击进入第二幕</small>
+      </button>
+
+      <section class="edu-stage edu-content-block face-lenet-stage is-locked" id="faceAct2" hidden aria-labelledby="learnableTitle" aria-hidden="true" data-i18n-scope="face.learnable">
+        <header class="edu-content-head">
+          <span class="edu-kicker">第二幕 · 打开卷积核参数一起训练</span>
+          <h2 class="edu-content-title" id="learnableTitle">用小型可学习 CNN 直接学习人脸特征</h2>
+          <p class="edu-content-subtitle">搭建卷积与池化主干，训练全部参数，再通过连续练习检查理解。</p>
+        </header>
+        <div class="edu-content-body">
+
+        <div class="edu-toolbar" aria-label="可学习网络训练状态">
+            <div class="edu-metrics">
+              <div class="edu-metric">
+                <span>状态</span>
+                <strong id="lenetStatus">等待开始</strong>
+              </div>
+              <div class="edu-metric">
+                <span>训练集准确率</span>
+                <strong id="lenetTrainAcc" data-i18n-ignore="true">-</strong>
+              </div>
+              <div class="edu-metric" id="lenetValAccMetric">
+                <span>验证集准确率</span>
+                <strong id="lenetValAcc" data-i18n-ignore="true">-</strong>
+              </div>
+            </div>
+            <div class="edu-toolbar-actions"><button class="edu-btn edu-btn--primary dl-button-hint" id="lenetTrainBtn" type="button" data-dl-button-hint>训练 CNN</button></div>
+        </div>
+
+        <section class="edu-card face-learnable-lab" aria-label="可学习 CNN 人脸识别流水线">
+          <div class="face-lenet-lab">
+            <div class="face-arch-builder" aria-label="可拖动 CNN 结构">
+              <div class="face-arch-toolbar">
+                <div class="face-arch-control-grid">
+                  <div class="edu-control face-arch-control">
+                    <span class="edu-label" id="archKindLabel">模块</span>
+                    <div class="edu-selectbox" id="archKindSelectbox" data-dl-selectbox>
+                      <button class="edu-selectbox-trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="archKindMenu" aria-labelledby="archKindLabel archKindValue"><span id="archKindValue" data-selectbox-value>Conv</span></button>
+                      <div class="edu-selectbox-menu" id="archKindMenu" role="listbox" aria-labelledby="archKindLabel" hidden>
+                        <button class="edu-selectbox-option" type="button" role="option" aria-selected="true" data-value="conv">Conv</button>
+                        <button class="edu-selectbox-option" type="button" role="option" aria-selected="false" data-value="pool">Pool</button>
+                      </div>
+                      <input id="archKindSelect" type="hidden" value="conv">
+                    </div>
+                  </div>
+                  <div class="edu-control face-arch-control" id="archPoolTypeField">
+                    <span class="edu-label" id="archPoolTypeLabel">池化</span>
+                    <div class="edu-selectbox" id="archPoolTypeSelectbox" data-dl-selectbox>
+                      <button class="edu-selectbox-trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="archPoolTypeMenu" aria-labelledby="archPoolTypeLabel archPoolTypeValue"><span id="archPoolTypeValue" data-selectbox-value>最大</span></button>
+                      <div class="edu-selectbox-menu" id="archPoolTypeMenu" role="listbox" aria-labelledby="archPoolTypeLabel" hidden>
+                        <button class="edu-selectbox-option" type="button" role="option" aria-selected="true" data-value="max">最大</button>
+                        <button class="edu-selectbox-option" type="button" role="option" aria-selected="false" data-value="avg">平均</button>
+                      </div>
+                      <input id="archPoolTypeSelect" type="hidden" value="max">
+                    </div>
+                  </div>
+                  <label class="edu-control face-arch-field--wide" id="archChannelField" for="archChannelSlider">
+                    <span class="edu-control-head"><span class="edu-label">通道</span><output class="edu-control-value" id="archChannelValue" for="archChannelSlider" data-i18n-ignore="true">16</output></span>
+                    <input class="edu-range" id="archChannelSlider" type="range" min="0" max="7" step="1" value="2" data-dl-range data-range-digits="0">
+                  </label>
+                </div>
+                <div class="face-arch-actions">
+                  <button class="edu-btn edu-btn--primary" id="archApplyBtn" type="button">添加</button>
+                  <button class="edu-btn" id="archDeleteBtn" type="button" disabled>删除</button>
+                </div>
+              </div>
+              <div class="face-arch-stage">
+                <div class="face-arch-scene" id="arch3dScene" aria-label="3D CNN 结构舞台"></div>
+                <div class="face-arch-fallback" id="arch3dFallback" hidden>本地 Three.js 资源没有加载成功，请检查模块资源完整性。</div>
+                <div class="face-arch-selected" id="archSelectedInfo">未选择模块</div>
+                <button class="face-arch-stage-reset" id="archPresetBtn" type="button">重置</button>
+              </div>
+              <div class="edu-notice-strip edu-notice-strip--orange" role="note"><strong>视角操作：</strong>按住鼠标旋转 · 滚轮缩放 · 空格 + 鼠标平移</div>
+              <div class="face-arch-sequence" id="archSequence" aria-label="当前 CNN 主干结构" hidden></div>
+              <strong id="archHeadSummary" hidden>分类</strong>
+            </div>
+            <div class="face-lenet-grid">
+              <article class="edu-card face-history-card" id="lenetHistoryCard" hidden aria-hidden="true">
+                <h3 class="edu-panel-title">CNN 训练曲线</h3>
+                <p class="edu-panel-description">比较损失与验证集准确率随轮次的变化。</p>
+                <div class="edu-canvas-frame face-training-history" id="lenetHistoryChart" role="img" aria-label="CNN 训练损失与验证集准确率曲线"></div>
+              </article>
+            </div>
+            <section id="lenetQuizPanel" hidden aria-hidden="true" aria-label="卷积核、通道和泛化练习">
+              <div class="face-quiz-grid">
+                <div class="face-quiz-step" data-face-quiz-step="quizKernelDepth">
+                  <div id="quizKernelDepth"></div>
+                </div>
+                <div class="face-quiz-step" data-face-quiz-step="quizRgbDepth" hidden aria-hidden="true">
+                  <div id="quizRgbDepth"></div>
+                </div>
+                <div class="face-quiz-step" data-face-quiz-step="quizKernelCount" hidden aria-hidden="true">
+                  <div id="quizKernelCount"></div>
+                </div>
+                <div class="face-quiz-step" data-face-quiz-step="quizValAccuracy" hidden aria-hidden="true">
+                  <div id="quizValAccuracy"></div>
+                </div>
+                <div class="face-quiz-step" data-face-quiz-step="quizFaceVerification" hidden aria-hidden="true">
+                  <div id="quizFaceVerification"></div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </section>
+        </div>
+      </section>
+
+      <section class="face-stage face-act3-stage is-locked" id="faceAct3" aria-labelledby="disguiseTitle" aria-hidden="true">
+        <div class="face-stage-head">
+          <div class="face-stage-copy">
+            <span class="face-kicker">第三幕</span>
+            <h2 id="disguiseTitle">雨花弄：变脸</h2>
+          </div>
+        </div>
+
+        <section class="face-panel face-act3-panel" aria-label="乔装打扮游戏场景">
+          <div class="face-act3-game" id="act3GameScene" aria-label="躲避搜查房间场景">
+            <div class="face-act3-start" id="act3GameStart">
+              <video class="face-act3-start-video" id="act3StartVideo" autoplay muted loop playsinline preload="auto" aria-hidden="true">
+                <source src="./game_assets/yuhuanong_shouye.mp4" type="video/mp4">
+              </video>
+              <canvas class="face-act3-light" id="act3StartLight" aria-hidden="true"></canvas>
+              <div class="face-act3-start-fade" id="act3StartFade" aria-hidden="true"></div>
+              <div class="face-act3-start-action">
+                <button class="face-act3-start-button" id="act3GameStartBtn" type="button" aria-label="开始游玩" title="开始游玩">
+                  <span class="face-act3-play-icon" aria-hidden="true"></span>
+                </button>
+                <strong>开始游玩</strong>
+              </div>
+            </div>
+          </div>
+        </section>
+        <div class="face-act3-related" id="act3RelatedVideos" hidden aria-live="polite"></div>
+        <nav class="edu-resource-actions" aria-label="学习导航">
+          <a class="edu-btn edu-btn--primary" href="../CourseMap/">返回课程目录</a>
+        </nav>
+      </section>
+
+      <div class="face-kernel-popover" id="kernelPopover" hidden></div>
+    </section>
+  </main>
+
+  <script src="../shared/vendor/three/0.148.0/three.min.js"></script>
+  <script src="../shared/vendor/phaser/3.90.0/phaser.min.js"></script>
+  <script src="../shared/vendor/echarts/5.6.0/echarts.min.js"></script>
+  <script src="../shared/plotly-3.6.0.min.js"></script>
+  <script src="../shared/canvas-utils.js"></script>
+  <script src="../shared/plot-utils.js"></script>
+  <script src="../shared/module-components.js"></script>
+  <script src="./script.js"></script>
+  <script src="./game/config/constants.js"></script>
+  <script src="./game/assets/disguise-config.js"></script>
+  <script src="./game/systems/collision.js"></script>
+  <script src="./game/actors/animation.js"></script>
+  <script src="./game/actors/actor.js"></script>
+  <script src="./game/systems/navigation.js"></script>
+  <script src="./game/actors/movement.js"></script>
+  <script src="./game/ui/dialogue.js"></script>
+  <script src="./game/disguise/brush.js"></script>
+  <script src="./game/disguise/renderer.js"></script>
+  <script src="./game/ui/meter.js"></script>
+  <script src="./game/systems/similarity.js"></script>
+  <script src="./game/ui/buttons.js"></script>
+  <script src="./game/disguise/editor.js"></script>
+  <script src="./game/cutscene/opening.js"></script>
+  <script src="./game/scene/Act3Scene.js"></script>
+  <script src="./act3-disguise-game.js"></script>
+</body>
+</html>

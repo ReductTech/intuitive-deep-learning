@@ -1,0 +1,122 @@
+/* Loss Guide only keeps domain-specific layout; shared components own the visual language. */
+
+.lg-numberline-frame,
+.lg-calc-frame {
+  width: min(100%, 760px);
+  margin-inline: auto;
+}
+
+.lg-numberline-frame {
+  aspect-ratio: 3 / 1;
+}
+
+.lg-calc-frame {
+  aspect-ratio: 38 / 23;
+  cursor: grab;
+}
+
+.lg-calc-frame:active {
+  cursor: grabbing;
+}
+
+.lg-numberline-frame canvas,
+.lg-calc-frame canvas {
+  width: 100%;
+  height: 100%;
+}
+
+.lg-value-grid {
+  display: grid;
+  width: min(100%, 680px);
+  margin-inline: auto;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.lg-question-stack {
+  display: grid;
+  width: min(100%, 820px);
+  margin: 4px auto 0;
+  gap: 16px;
+}
+
+.lg-question-stack > [hidden] {
+  display: none;
+}
+
+.lg-question-stack > :not([hidden]) + :not([hidden]) {
+  animation: lg-question-rise 320ms ease both;
+}
+
+.lg-gradient-sequence {
+  display: grid;
+  width: min(100%, 860px);
+  margin-inline: auto;
+  gap: 16px;
+}
+
+.lg-gradient-step {
+  display: grid;
+  min-width: 0;
+  align-content: start;
+  gap: 10px;
+}
+
+.lg-gradient-step[hidden],
+#finalGradientQuestionBlock[hidden] {
+  display: none;
+}
+
+.lg-gradient-step.is-revealing,
+#finalGradientQuestionBlock.is-revealing {
+  animation: lg-question-rise 320ms ease both;
+}
+
+.lg-formula-block {
+  width: 100%;
+  place-items: stretch;
+}
+
+.lg-formula-steps {
+  display: grid;
+  gap: 18px;
+}
+
+.lg-formula-steps .edu-formula {
+  font-size: clamp(17px, 2.4vw, 23px);
+}
+
+.lg-resources {
+  margin-top: 18px;
+}
+
+.lg-related-videos .dl-related-section {
+  margin-top: 0;
+  border-top: 0;
+  padding-top: 0;
+}
+
+@keyframes lg-question-rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 640px) {
+  .lg-value-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lg-question-stack > :not([hidden]) + :not([hidden]),
+  .lg-gradient-step.is-revealing,
+  #finalGradientQuestionBlock.is-revealing {
+    animation: none;
+  }
+}

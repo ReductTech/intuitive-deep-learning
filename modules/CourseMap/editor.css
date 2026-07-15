@@ -1,0 +1,485 @@
+:root {
+  color-scheme: light;
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Microsoft YaHei", sans-serif;
+  color: #20384d;
+  background: #eaf1f7;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+button,
+a {
+  font: inherit;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid rgba(33, 129, 211, 0.35);
+  outline-offset: 3px;
+}
+
+.editor-shell {
+  display: grid;
+  grid-template-rows: 76px 1fr;
+  width: 100%;
+  height: 100%;
+}
+
+.editor-toolbar {
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 12px 20px 12px 24px;
+  border-bottom: 1px solid rgba(89, 126, 156, 0.18);
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 7px 24px rgba(50, 86, 115, 0.08);
+}
+
+.editor-toolbar p,
+.editor-toolbar h1 {
+  margin: 0;
+}
+
+.editor-toolbar p {
+  color: #4d91c6;
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: 0.17em;
+}
+
+.editor-toolbar h1 {
+  margin-top: 4px;
+  font-size: 22px;
+}
+
+.toolbar-actions {
+  display: flex;
+  gap: 9px;
+}
+
+.ghost-button,
+.save-button,
+.download-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  border-radius: 11px;
+  padding: 0 16px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.ghost-button,
+.download-button {
+  border: 1px solid rgba(75, 117, 151, 0.2);
+  color: #4b6d87;
+  background: #fff;
+}
+
+.save-button {
+  border: 1px solid #176db5;
+  color: #fff;
+  background: linear-gradient(135deg, #258bdc, #1265ad);
+  box-shadow: 0 10px 24px rgba(25, 111, 181, 0.22);
+  font-weight: 760;
+}
+
+.editor-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  min-height: 0;
+}
+
+.map-canvas {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  background:
+    linear-gradient(45deg, #dae4ec 25%, transparent 25%) 0 0 / 20px 20px,
+    linear-gradient(45deg, transparent 75%, #dae4ec 75%) 0 0 / 20px 20px,
+    linear-gradient(45deg, transparent 75%, #dae4ec 75%) 10px -10px / 20px 20px,
+    linear-gradient(45deg, #dae4ec 25%, #e8eff4 25%) 10px -10px / 20px 20px;
+  touch-action: none;
+}
+
+.map-canvas img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+
+.chapter-layer,
+.point-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.editor-chapter {
+  position: absolute;
+  z-index: 2;
+  border: 1px solid rgba(255, 255, 255, 0.82);
+  border-radius: 999px;
+  padding: 6px 10px;
+  color: #274b66;
+  background: rgba(255, 255, 255, 0.75);
+  box-shadow: 0 7px 20px rgba(40, 82, 113, 0.16);
+  backdrop-filter: blur(9px);
+  font-size: 11px;
+  font-weight: 780;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+}
+
+.edit-point {
+  position: absolute;
+  z-index: 4;
+  width: 46px;
+  height: 46px;
+  border: 0;
+  border-radius: 50%;
+  padding: 0;
+  color: transparent;
+  background: transparent;
+  cursor: grab;
+  pointer-events: auto;
+  transform: translate(-50%, -50%);
+  user-select: none;
+}
+
+.edit-point::before,
+.edit-point::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: transform 150ms ease, opacity 150ms ease, box-shadow 150ms ease;
+}
+
+.edit-point::before {
+  width: 19px;
+  height: 19px;
+  border: 2px solid rgba(255, 255, 255, 0.98);
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow:
+    0 0 0 5px rgba(255, 255, 255, 0.2),
+    0 0 20px 8px rgba(255, 255, 255, 0.92),
+    0 5px 14px rgba(43, 94, 131, 0.18);
+}
+
+.edit-point::after {
+  width: 31px;
+  height: 31px;
+  border: 2px solid rgba(39, 128, 200, 0.72);
+  box-shadow: 0 0 0 5px rgba(46, 137, 208, 0.12);
+  opacity: 0;
+}
+
+.edit-point:hover,
+.edit-point.is-selected {
+  z-index: 6;
+}
+
+.edit-point:hover::before,
+.edit-point.is-selected::before {
+  box-shadow:
+    0 0 0 6px rgba(255, 255, 255, 0.3),
+    0 0 25px 11px rgba(255, 255, 255, 1),
+    0 6px 17px rgba(35, 97, 142, 0.24);
+  transform: translate(-50%, -50%) scale(1.08);
+}
+
+.edit-point:hover::after,
+.edit-point.is-selected::after {
+  opacity: 1;
+}
+
+.edit-point.is-dragging {
+  cursor: grabbing;
+  transform: translate(-50%, -50%) scale(1.12);
+}
+
+.point-tooltip {
+  position: absolute;
+  left: 50%;
+  bottom: 46px;
+  width: max-content;
+  max-width: 230px;
+  border-radius: 9px;
+  padding: 6px 9px;
+  color: #294a63;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 7px 20px rgba(42, 80, 109, 0.2);
+  opacity: 0;
+  transform: translate(-50%, 4px);
+  transition: 150ms ease;
+  pointer-events: none;
+  font-size: 11px;
+}
+
+.edit-point:hover .point-tooltip,
+.edit-point.is-selected .point-tooltip {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.canvas-help {
+  position: absolute;
+  left: 18px;
+  bottom: 16px;
+  z-index: 8;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 999px;
+  padding: 8px 13px;
+  color: #59758c;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 8px 22px rgba(44, 81, 110, 0.12);
+  backdrop-filter: blur(12px);
+  font-size: 11px;
+}
+
+.editor-sidebar {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  border-left: 1px solid rgba(78, 119, 152, 0.16);
+  padding: 17px;
+  background: #f7fbfe;
+}
+
+.save-guide {
+  border: 1px solid #cfe5f5;
+  border-radius: 13px;
+  padding: 11px 12px;
+  color: #577188;
+  background: #edf7fe;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.save-guide strong,
+.save-guide span {
+  display: block;
+}
+
+.save-guide strong {
+  color: #2f668f;
+}
+
+.save-guide code {
+  color: #176eb1;
+  font-weight: 800;
+}
+
+.selection-card {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 12px;
+  margin-top: 13px;
+  border: 1px solid rgba(76, 120, 154, 0.15);
+  border-radius: 14px;
+  padding: 12px;
+  background: #fff;
+  box-shadow: 0 9px 25px rgba(58, 92, 118, 0.07);
+}
+
+#selectedIndex {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 13px;
+  color: #fff;
+  background: #227fc7;
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.selection-card small,
+.selection-card strong,
+.selection-card p {
+  display: block;
+  margin: 0;
+}
+
+.selection-card small {
+  color: #8ba0b0;
+  font-size: 10px;
+}
+
+.selection-card strong {
+  margin-top: 3px;
+  color: #294a62;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.selection-card p {
+  margin-top: 5px;
+  color: #7890a2;
+  font-size: 10px;
+}
+
+.selection-card b {
+  color: #2a739f;
+}
+
+.lesson-list {
+  flex: 1;
+  min-height: 0;
+  margin-top: 13px;
+  overflow-y: auto;
+}
+
+.list-chapter + .list-chapter {
+  margin-top: 14px;
+}
+
+.list-chapter h2 {
+  margin: 0 0 5px;
+  color: #6b8293;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+}
+
+.lesson-row {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 42px;
+  border: 0;
+  border-radius: 10px;
+  padding: 5px 7px;
+  color: #49677d;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+}
+
+.lesson-row:hover,
+.lesson-row.is-selected {
+  color: #245c85;
+  background: #e8f4fc;
+}
+
+.lesson-row-index {
+  display: grid;
+  place-items: center;
+  width: 27px;
+  height: 27px;
+  border-radius: 8px;
+  color: #397aa8;
+  background: #fff;
+  font-size: 9px;
+  font-weight: 850;
+}
+
+.lesson-row-title {
+  overflow: hidden;
+  font-size: 11px;
+  font-weight: 690;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lesson-row-coordinate {
+  color: #8ba0af;
+  font-size: 9px;
+}
+
+.sidebar-footer {
+  padding-top: 12px;
+  border-top: 1px solid rgba(83, 123, 153, 0.14);
+}
+
+#saveStatus {
+  min-height: 32px;
+  margin: 0 0 8px;
+  color: #6a8294;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+#saveStatus.is-success {
+  color: #23805f;
+}
+
+#saveStatus.is-error {
+  color: #c34545;
+}
+
+.download-button {
+  width: 100%;
+  min-height: 38px;
+  font-size: 11px;
+}
+
+@media (max-width: 900px) {
+  html,
+  body {
+    overflow: auto;
+  }
+
+  .editor-shell {
+    display: block;
+    height: auto;
+  }
+
+  .editor-toolbar {
+    position: sticky;
+    top: 0;
+    min-height: 76px;
+  }
+
+  .editor-toolbar h1 {
+    font-size: 17px;
+  }
+
+  .toolbar-actions .ghost-button:first-child,
+  #reloadButton {
+    display: none;
+  }
+
+  .editor-main {
+    display: block;
+  }
+
+  .map-canvas {
+    height: 58vw;
+    min-height: 330px;
+  }
+
+  .editor-sidebar {
+    height: auto;
+    border-top: 1px solid rgba(78, 119, 152, 0.16);
+  }
+
+  .lesson-list {
+    max-height: 430px;
+  }
+}

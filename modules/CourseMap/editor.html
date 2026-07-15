@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>课程地图点位编辑器</title>
+    <link rel="stylesheet" href="./editor.css" />
+  </head>
+  <body>
+    <div class="editor-shell">
+      <header class="editor-toolbar">
+        <div>
+          <p>COURSE MAP EDITOR</p>
+          <h1>课程点位编辑器</h1>
+        </div>
+        <div class="toolbar-actions">
+          <a class="ghost-button" href="./index.html" target="_blank">打开导航页</a>
+          <button id="reloadButton" class="ghost-button" type="button">撤销未保存修改</button>
+          <button id="saveButton" class="save-button" type="button">保存到项目</button>
+        </div>
+      </header>
+
+      <main class="editor-main">
+        <section id="canvas" class="map-canvas" aria-label="可拖拽课程地图">
+          <img id="mapImage" src="./assets/course-map-hero.webp" alt="课程地图背景" />
+          <div id="chapterLayer" class="chapter-layer" aria-hidden="true"></div>
+          <div id="pointLayer" class="point-layer"></div>
+          <div class="canvas-help">拖动圆点调整位置 · 方向键微调 · Shift + 方向键快速移动</div>
+        </section>
+
+        <aside class="editor-sidebar">
+          <div class="save-guide">
+            <strong>首次保存</strong>
+            <span>请选择项目中的 <code>CourseMap</code> 文件夹。以后点击保存会直接更新坐标文件。</span>
+          </div>
+
+          <div class="selection-card">
+            <span id="selectedIndex">01</span>
+            <div>
+              <small>当前选中</small>
+              <strong id="selectedTitle">为什么需要神经元</strong>
+              <p>X <b id="coordX">0</b>% · Y <b id="coordY">0</b>%</p>
+            </div>
+          </div>
+
+          <div id="lessonList" class="lesson-list"></div>
+
+          <div class="sidebar-footer">
+            <p id="saveStatus" role="status">拖动点位后点击“保存到项目”。</p>
+            <button id="downloadButton" class="download-button" type="button">下载坐标备份</button>
+          </div>
+        </aside>
+      </main>
+    </div>
+
+    <script src="./editor.js"></script>
+  </body>
+</html>

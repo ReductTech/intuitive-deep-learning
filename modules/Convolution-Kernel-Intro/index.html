@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="kernel.meta.title">卷积核入门：从五子棋棋盘开始</title>
+  <link rel="stylesheet" href="../shared/base.css">
+  <link rel="stylesheet" href="../shared/module-components.css">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main class="edu-root ck-root">
+    <section class="edu-shell">
+      <header class="edu-header">
+        <div>
+          <h1 class="edu-title"><span data-i18n="kernel.header.title">卷积核入门</span></h1>
+          <p class="edu-subtitle"><span data-i18n="kernel.header.subtitle">先从一局五子棋开始：计算机怎样从棋盘里判断“谁赢了”？</span></p>
+        </div>
+      </header>
+
+      <section class="edu-stage edu-content-block edu-stage--featured ck-game-stage" aria-labelledby="gameTitle" data-i18n-scope="kernel.game">
+        <header class="edu-content-head">
+          <h2 class="edu-content-title" id="gameTitle"><span data-i18n="kernel.game.title">你执黑先手，AI 执白后手</span></h2>
+          <p class="edu-content-subtitle"><span data-i18n="kernel.game.subtitle">这一幕只保留一件事：把棋局下到结束。结束后，请你解释计算机如何判断五子棋胜负。</span></p>
+        </header>
+
+        <div class="edu-content-body">
+          <div class="ck-game-layout" id="gameLayout">
+            <section class="edu-card ck-board-panel" aria-label="五子棋棋盘" data-i18n-aria-label="kernel.game.board.aria">
+              <div class="edu-metrics ck-scorebar" aria-live="polite">
+                <div class="edu-metric ck-score-item">
+                  <span data-i18n="kernel.game.metrics.turn">回合</span>
+                  <strong id="turnLabel" data-i18n="kernel.game.status.yourTurn">轮到你</strong>
+                </div>
+                <div class="edu-metric ck-score-item">
+                  <span data-i18n="kernel.game.metrics.moves">步数</span>
+                  <strong id="moveCount" data-i18n-ignore="true">0</strong>
+                </div>
+                <div class="edu-metric ck-score-item ck-score-item--wide">
+                  <span data-i18n="kernel.game.metrics.position">局面</span>
+                  <strong id="gameResult" data-i18n="kernel.game.status.firstMove">先落下一颗黑子</strong>
+                </div>
+              </div>
+
+              <div class="edu-canvas-frame ck-board-wrap">
+                <canvas id="boardCanvas" width="900" height="900" aria-label="十五路五子棋棋盘" data-i18n-aria-label="kernel.game.board.canvasAria"></canvas>
+              </div>
+
+              <div class="edu-toolbar-actions ck-board-actions">
+                <button class="edu-btn edu-btn--primary" id="resetBtn" type="button"><span data-i18n="kernel.game.actions.reset">重新开局</span></button>
+                <button class="edu-btn" id="undoBtn" type="button"><span data-i18n="kernel.game.actions.undo">悔一步</span></button>
+                <button class="edu-btn" id="demoWinBtn" type="button"><span data-i18n="kernel.game.actions.demo">示例棋局</span></button>
+              </div>
+            </section>
+
+            <div class="ck-game-side">
+              <aside class="edu-card ck-strategy-panel" aria-labelledby="strategyTitle">
+                <div class="ck-strategy-head">
+                  <h3 class="edu-panel-title" id="strategyTitle"><span data-i18n="kernel.game.strategy.title">五子棋攻略</span></h3>
+                </div>
+                <div class="edu-callout edu-callout--blue ck-strategy-tip" aria-live="polite">
+                  <strong class="edu-callout-label" data-i18n="kernel.game.strategy.label">观察提示</strong>
+                  <span class="edu-callout-text" id="strategyTipText" data-i18n="kernel.game.strategy.tip01">越靠近棋盘中心，棋子通常越容易向多个方向延伸。</span>
+                </div>
+              </aside>
+
+              <aside class="edu-card ck-reflection-panel" id="reflectionPanel" hidden aria-labelledby="reflectionTitle">
+                <h3 class="edu-panel-title" id="reflectionTitle"><span data-i18n="kernel.reflection.title">这局已经结束。计算机刚才是怎么判断胜负的？</span></h3>
+                <p class="edu-panel-description" data-i18n="kernel.reflection.description">重点想一想：棋盘怎样表示、要扫描哪些方向，以及怎样确认连续同色棋子。</p>
+                <div class="edu-callout edu-callout--green ck-win-summary">
+                  <span class="edu-callout-text" id="winSummary">恭喜！您获胜了。</span>
+                </div>
+                <div id="winQuestionMount"></div>
+              </aside>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="edu-stage edu-content-block ck-matrix-stage" id="matrixStage" hidden aria-labelledby="matrixTitle" data-i18n-scope="kernel.matrix">
+        <header class="edu-content-head">
+          <h2 class="edu-content-title" id="matrixTitle"><span data-i18n="kernel.matrix.title">把刚刚这盘棋拆成两个 0/1 图</span></h2>
+          <p class="edu-content-subtitle"><span data-i18n="kernel.matrix.subtitle">我们可以用一个小矩阵去检测图像中出现的特定模式。这个矩阵的 1 要和刚才获胜连线的形状保持一致，拖动 5 × 5 窗口，找到激活值最大的地方。</span></p>
+        </header>
+
+        <div class="edu-content-body">
+          <div class="ck-matrix-layout">
+            <section class="edu-card ck-matrix-card">
+              <div class="ck-card-head">
+                <h3 class="edu-panel-title" data-i18n="kernel.matrix.binary.title">二值棋盘</h3>
+                <div class="ck-segmented" id="layerSwitch" role="group" aria-label="切换二值棋盘图层" hidden>
+                  <button class="is-active" type="button" data-layer="winner"><span data-i18n="kernel.matrix.binary.winner">赢家图</span></button>
+                  <button type="button" data-layer="loser"><span data-i18n="kernel.matrix.binary.loser">输家图</span></button>
+                </div>
+              </div>
+              <div class="ck-binary-grid" id="binaryGrid" aria-label="带两圈零填充的二值棋盘"></div>
+            </section>
+
+            <section class="edu-card ck-matrix-card ck-operator-card">
+              <div class="ck-card-head ck-operator-title" id="searchCallout">
+                <h3 class="edu-panel-title">
+                  <span data-i18n="kernel.matrix.operator.taskLabel">拖动左侧橙色窗口</span>
+                  <span data-i18n="kernel.matrix.operator.task">寻找激活值最大的区域。</span>
+                </h3>
+              </div>
+              <div class="ck-operator-workspace" id="operatorWorkspace">
+                <div id="patchPanel">
+                  <span class="ck-mini-title" data-i18n="kernel.matrix.operator.patch">当前窗口</span>
+                  <div class="ck-kernel-grid" id="patchGrid" aria-label="棋盘当前五乘五窗口"></div>
+                </div>
+                <div id="presetKernelPanel">
+                  <span class="ck-mini-title" data-i18n="kernel.matrix.operator.kernel">5 × 5 算子</span>
+                  <div class="ck-kernel-grid" id="kernelGrid" aria-label="五乘五斜线检测算子"></div>
+                </div>
+                <div id="designKernelPanel" hidden>
+                  <span class="ck-mini-title" id="designedKernelTitle" hidden>5 × 5 算子</span>
+                  <div class="ck-design-task" id="designKernelTask">
+                    <strong id="designKernelAction">现在请点击下面的方格</strong>
+                    <span id="designKernelHint" data-i18n-ignore="true">悬浮方格会临时切换 0/1，点击才会保存。</span>
+                  </div>
+                  <div class="ck-kernel-grid ck-kernel-grid--editable" id="designGrid" aria-label="可编辑的五乘五算子"></div>
+                </div>
+              </div>
+              <div class="edu-callout edu-callout--blue ck-design-explain" id="designExplain" hidden>
+                <strong class="edu-callout-label" data-i18n="kernel.matrix.operator.changedLabel">换个方向，还能检测到吗？</strong>
+                <span class="edu-callout-text" data-i18n="kernel.matrix.operator.changed">观察左侧图像中 1 的排列，再看看上面的算子：它们还能对齐吗？试着调整 5 × 5 小矩阵，让它对新的排列产生更强的响应。</span>
+              </div>
+              <div class="ck-activation-row">
+                <div class="edu-value-tile edu-value-tile--orange">
+                  <span class="edu-value-label" data-i18n="kernel.matrix.operator.activation">当前激活值</span>
+                  <strong class="edu-value-number" id="activationValue" data-i18n-ignore="true">0</strong>
+                </div>
+                <button class="edu-btn edu-btn--explain ck-process-btn" id="calcProcessBtn" type="button" aria-expanded="false" aria-controls="calcPopover"><span data-i18n="kernel.matrix.operator.calculation">计算过程</span></button>
+              </div>
+              <div class="edu-notice-strip edu-notice-strip--orange ck-readout" id="operatorReadout" aria-live="polite">拖动橙色窗口，继续寻找激活值更高的位置。</div>
+              <button class="edu-btn edu-btn--primary dl-button-hint ck-pattern-btn" id="tryPatternBtn" type="button" data-dl-button-hint hidden><span data-i18n="kernel.matrix.operator.tryPattern">换一种模式试试吧</span></button>
+              <div class="ck-operator-guide" id="calcPopover" hidden role="dialog" aria-label="按位相乘再相加的计算过程">
+                <h4 data-i18n="kernel.matrix.calculation.title">按位相乘再相加</h4>
+                <p class="edu-helper ck-calc-note" data-i18n="kernel.matrix.calculation.note">M 是 5 × 5 算子，X 是当前窗口；i、j 表示第 i 行第 j 列。</p>
+                <div class="ck-multiply-grid" id="multiplyGrid" aria-label="五乘五按位相乘过程"></div>
+                <div class="ck-sum-line" id="sumLine" data-i18n-ignore="true">所有乘积相加 = 0</div>
+              </div>
+            </section>
+          </div>
+        </div>
+        <div class="ck-kernel-question" id="kernelEffectQuestion" hidden>
+          <div id="kernelEffectQuestionMount"></div>
+        </div>
+      </section>
+
+      <button class="flow-scroll-indicator" id="scrollIndicator" type="button" aria-controls="mnistStage" hidden>
+        <span class="flow-scroll-indicator-mark" aria-hidden="true"></span>
+        <strong data-i18n="kernel.flow.newContent">下方有新内容</strong>
+        <small data-i18n="kernel.flow.action">滚动或点击查看</small>
+      </button>
+
+      <div class="flow-scroll-area" id="scrollFlowArea" hidden aria-hidden="true">
+        <section class="edu-stage edu-content-block ck-mnist-stage" id="mnistStage" hidden aria-hidden="true" aria-labelledby="mnistTitle" data-i18n-scope="kernel.mnist">
+          <header class="edu-content-head">
+            <h2 class="edu-content-title" id="mnistTitle"><span data-i18n="kernel.mnist.title">让卷积核扫过一张手写数字</span></h2>
+            <p class="edu-content-subtitle"><span data-i18n="kernel.mnist.subtitle">这次输入不再是棋盘，而是一张 MNIST 数字图像。滑动窗口会自动移动，每到一个位置就计算一个值，并把它写进右边的特征图。</span></p>
+          </header>
+
+          <div class="edu-content-body">
+            <div class="ck-mnist-layout">
+              <section class="edu-card ck-matrix-card ck-mnist-card">
+                <div class="ck-card-head">
+                  <h3 class="edu-panel-title" data-i18n="kernel.mnist.input.title">输入图像</h3>
+                  <div class="edu-toolbar-actions ck-mnist-actions">
+                    <button class="edu-btn" id="randomDigitBtn" type="button"><span data-i18n="kernel.mnist.actions.random">随机换一张</span></button>
+                    <button class="edu-btn" id="replayConvBtn" type="button"><span data-i18n="kernel.mnist.actions.replay">重放扫描</span></button>
+                  </div>
+                </div>
+                <div class="edu-metrics ck-digit-meta">
+                  <div class="edu-metric"><span data-i18n="kernel.mnist.metrics.label">标签</span><strong id="digitLabel" data-i18n-ignore="true">-</strong></div>
+                  <div class="edu-metric"><span data-i18n="kernel.mnist.metrics.window">窗口</span><strong id="convPosition" data-i18n-ignore="true">00,00</strong></div>
+                </div>
+                <div class="edu-canvas-frame ck-digit-canvas-wrap">
+                  <canvas id="digitCanvas" width="280" height="280" aria-label="MNIST 手写数字输入"></canvas>
+                </div>
+              </section>
+
+              <section class="edu-card ck-matrix-card ck-mnist-card">
+                <div class="ck-card-head">
+                  <h3 class="edu-panel-title" data-i18n="kernel.mnist.output.title">卷积核与特征图</h3>
+                  <div class="ck-segmented ck-kernel-tabs" id="mnistKernelTabs" role="group" aria-label="选择卷积核" hidden>
+                    <button type="button" data-mnist-kernel="user"><span data-i18n="kernel.mnist.kernels.user">你的核</span></button>
+                    <button type="button" data-mnist-kernel="vertical"><span data-i18n="kernel.mnist.kernels.vertical">竖线</span></button>
+                    <button type="button" data-mnist-kernel="horizontal"><span data-i18n="kernel.mnist.kernels.horizontal">横线</span></button>
+                    <button type="button" data-mnist-kernel="edge"><span data-i18n="kernel.mnist.kernels.edge">边缘</span></button>
+                    <button type="button" data-mnist-kernel="custom"><span data-i18n="kernel.mnist.kernels.custom">自定义</span></button>
+                  </div>
+                </div>
+                <div class="edu-notice-strip edu-notice-strip--blue ck-mnist-hint" id="mnistHint">先用你刚刚设计的 5 × 5 卷积核扫描这张数字图。</div>
+                <div class="ck-conv-layout">
+                  <span class="ck-mini-title" data-i18n="kernel.mnist.featureMap">输出特征图</span>
+                  <div class="ck-feature-map" id="featureMap" aria-label="卷积输出特征图"></div>
+                </div>
+                <div class="edu-notice-strip edu-notice-strip--blue ck-conv-status">
+                  <span data-i18n="kernel.mnist.response">当前响应强度</span>
+                  <strong id="convValue" data-i18n-ignore="true">0.00</strong>
+                  <span id="convStatusText" data-i18n="kernel.mnist.status.ready">准备扫描</span>
+                </div>
+                <div class="ck-mnist-popover" id="mnistKernelPopover" hidden></div>
+              </section>
+            </div>
+
+            <section class="edu-content-block ck-resource-block" id="relatedResources" hidden aria-labelledby="relatedResourcesTitle" data-i18n-scope="kernel.resources">
+              <header class="edu-content-head">
+                <h3 class="edu-content-title" id="relatedResourcesTitle"><span data-i18n="kernel.resources.title">推荐资源</span></h3>
+                <p class="edu-content-subtitle"><span data-i18n="kernel.resources.subtitle">继续观看与当前主题直接相关的视频，巩固刚才完成的学习内容。</span></p>
+              </header>
+              <div class="edu-content-body">
+                <div class="ck-video-host" id="kernelRelatedVideos" data-i18n-ignore="true"></div>
+                <nav class="edu-resource-actions" aria-label="学习导航" data-i18n-aria-label="kernel.resources.actions.aria">
+                  <a class="edu-btn" href="../CourseMap/"><span data-i18n="kernel.resources.actions.back">返回课程目录</span></a>
+                  <a class="edu-btn edu-btn--primary" href="../LeNet5-CNN-Lab/" data-next-lesson><span data-i18n="kernel.resources.actions.next">学习下一个</span></a>
+                </nav>
+              </div>
+            </section>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <script src="../shared/canvas-utils.js"></script>
+  <script src="../shared/module-components.js"></script>
+  <script src="./script.js"></script>
+</body>
+</html>

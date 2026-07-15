@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>梯度下降如何让模型变好</title>
+  <link rel="stylesheet" href="../shared/base.css">
+  <link rel="stylesheet" href="../shared/module-components.css">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main class="edu-root gd-root">
+    <section class="edu-shell">
+      <header class="edu-header">
+        <div>
+          <h1 class="edu-title">梯度下降如何让模型变好</h1>
+          <p class="edu-subtitle">亲手缩小预测误差，再把观察到的规律变成网络的自动更新步骤。</p>
+        </div>
+      </header>
+
+      <section class="edu-stage edu-content-block edu-stage--featured gd-stage" id="tuningStage" aria-labelledby="tuningStageTitle">
+        <header class="edu-content-head gd-panel-head">
+          <div>
+            <h2 class="edu-content-title" id="tuningStageTitle">调整权重，让 L1 Loss 变成 0</h2>
+            <p class="edu-content-subtitle">先判断权重应该往哪个方向变化，再亲手调整并观察预测结果。</p>
+          </div>
+          <button class="edu-btn" id="resetWeightsBtn" type="button">重置</button>
+        </header>
+        <div class="edu-content-body">
+          <div class="edu-task">
+            <strong>当前任务</strong>
+            <span>让预测值接近真实值 10，并把 L1 Loss 降到 0。</span>
+          </div>
+          <div class="gd-opening-row">
+            <div class="gd-scoreboard">
+              <div class="edu-value-tile edu-value-tile--orange gd-score gd-score--loss">
+                <span class="edu-value-label">当前 L1 Loss</span>
+                <strong class="edu-value-number" id="lossValue">14.00</strong>
+                <span class="gd-score-goal">目标：小于0.5</span>
+              </div>
+            </div>
+            <div class="gd-question-stack gd-direction-question" id="directionQuestion"></div>
+          </div>
+          <div class="edu-canvas-frame gd-network-canvas">
+            <svg id="networkSvg" viewBox="0 0 1000 390" role="img" aria-label="两个输入、两个隐藏神经元、预测值和真实值组成的网络">
+              <defs>
+                <marker id="gdArrow" markerWidth="8" markerHeight="7" refX="7" refY="3.5" orient="auto"><path d="M0,0 L8,3.5 L0,7 Z" fill="#9fb0c8"></path></marker>
+                <marker id="gdActiveArrow" markerWidth="8" markerHeight="7" refX="7" refY="3.5" orient="auto"><path d="M0,0 L8,3.5 L0,7 Z" fill="#f07e47"></path></marker>
+              </defs>
+              <text class="gd-layer-label" x="100" y="42">输入</text>
+              <text class="gd-layer-label" x="410" y="42">隐藏层</text>
+              <text class="gd-layer-label" x="720" y="42">预测</text>
+              <text class="gd-layer-label" x="910" y="42">真实值</text>
+              <g class="gd-fixed-edges">
+                <line x1="134" y1="130" x2="374" y2="135"></line><line x1="134" y1="130" x2="374" y2="270"></line>
+                <line x1="134" y1="275" x2="374" y2="135"></line><line x1="134" y1="275" x2="374" y2="270"></line>
+                <text x="245" y="119">w₁₁ = 1</text><text x="260" y="188">w₂₁ = 1</text><text x="255" y="251">w₁₂ = 1</text><text x="245" y="296">w₂₂ = 0</text>
+              </g>
+              <g class="gd-output-edges"><line id="v1Edge" x1="446" y1="135" x2="680" y2="202"></line><line id="v2Edge" x1="446" y1="270" x2="680" y2="212"></line></g>
+              <foreignObject x="485" y="106" width="178" height="82">
+                <label class="edu-control gd-inline-weight" xmlns="http://www.w3.org/1999/xhtml" for="v1Range">
+                  <span class="edu-control-head"><span class="edu-label">v₁</span><output class="edu-control-value" id="v1Value" for="v1Range">-1.0</output></span>
+                  <input class="edu-range" id="v1Range" type="range" min="-1" max="3" step="0.1" value="-1" data-dl-range data-range-digits="1" disabled>
+                </label>
+              </foreignObject>
+              <foreignObject x="485" y="226" width="178" height="82">
+                <label class="edu-control gd-inline-weight" xmlns="http://www.w3.org/1999/xhtml" for="v2Range">
+                  <span class="edu-control-head"><span class="edu-label">v₂</span><output class="edu-control-value" id="v2Value" for="v2Range">-1.0</output></span>
+                  <input class="edu-range" id="v2Range" type="range" min="-1" max="3" step="0.1" value="-1" data-dl-range data-range-digits="1" disabled>
+                </label>
+              </foreignObject>
+              <g class="gd-node gd-node--input" transform="translate(100 130)"><circle r="35"></circle><text y="-5">x₁</text><text class="gd-node-value" y="18">1</text></g>
+              <g class="gd-node gd-node--input" transform="translate(100 275)"><circle r="35"></circle><text y="-5">x₂</text><text class="gd-node-value" y="18">2</text></g>
+              <g class="gd-node gd-node--hidden" transform="translate(410 135)"><circle r="36"></circle><text y="-5">h₁</text><text class="gd-node-value" y="18">3</text></g>
+              <g class="gd-node gd-node--hidden" transform="translate(410 270)"><circle r="36"></circle><text y="-5">h₂</text><text class="gd-node-value" y="18">1</text></g>
+              <g class="gd-node gd-node--output" transform="translate(720 207)"><circle r="40"></circle><text y="-7">预测 y</text><text class="gd-node-value" id="networkOutputValue" y="19">-4.00</text></g>
+              <text class="gd-compare-symbol" id="networkCompareSymbol" x="814" y="217">&lt;</text>
+              <g class="gd-node gd-node--target" transform="translate(910 207)"><circle r="40"></circle><text y="-7">真实 GT</text><text class="gd-node-value" y="19">10.00</text></g>
+            </svg>
+          </div>
+
+          <div class="gd-question-stack gd-impact-question" id="impactQuestionStage" hidden aria-hidden="true">
+            <div id="impactQuestion"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="edu-stage edu-content-block gd-auto-update" id="autoUpdate" hidden aria-hidden="true" aria-labelledby="autoUpdateTitle">
+        <header class="edu-content-head">
+          <h2 class="edu-content-title" id="autoUpdateTitle">网络会自己调整参数，让预测更接近真实值</h2>
+          <p class="edu-content-subtitle">依次算出误差方向和两个偏导，再观察更新步长如何影响稳定性。</p>
+        </header>
+        <div class="edu-content-body">
+          <div class="edu-panel gd-auto-demo" id="autoDemoCard" aria-labelledby="autoDemoTitle">
+            <div class="gd-auto-demo-head">
+              <h3 class="edu-panel-title" id="autoDemoTitle">如何让网络自动调节参数？</h3>
+              <div class="gd-auto-demo-actions" id="autoDemoActions">
+                <button class="edu-btn edu-btn--primary dl-button-hint" id="executeAutoUpdateBtn" type="button" data-dl-button-hint hidden>更新一次</button>
+              </div>
+            </div>
+            <div class="gd-auto-demo-body">
+              <div class="gd-learning-grid" id="learningInteraction">
+                <div class="gd-guided-update" id="guidedUpdate">
+                  <div class="gd-math-problem">
+                    <div class="edu-task"><strong>已知</strong><span>网络的参数可以通过下面的方式更新。</span></div>
+                    <div class="edu-formula-block gd-update-rule-card" id="guidedRuleCard">
+                      <span class="edu-kicker" id="guidedRuleLabel">更新规则</span>
+                      <strong class="edu-formula" id="guidedRuleText">
+                        <span class="edu-formula-term" tabindex="0" data-tooltip="本轮更新后的参数">新权重</span><i>=</i>
+                        <span class="edu-formula-term" tabindex="0" data-tooltip="本轮更新前的参数">旧权重</span><i>−</i>
+                        <span class="edu-formula-term" tabindex="0" data-tooltip="Loss 对当前权重的变化率">偏导</span>
+                      </strong>
+                      <div class="gd-rule-result" id="guidedRuleResult" hidden>
+                        <div class="gd-confirm-equations">
+                          <div class="gd-weight-equation"><strong>v₁(new)</strong><span>=</span><code><span id="confirmV1Old">—</span> − (<span id="confirmSignal1">—</span> × <span id="confirmH1">—</span>) = <b id="confirmV1New">—</b></code></div>
+                          <div class="gd-weight-equation"><strong>v₂(new)</strong><span>=</span><code><span id="confirmV2Old">—</span> − (<span id="confirmSignal2">—</span> × <span id="confirmH2">—</span>) = <b id="confirmV2New">—</b></code></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="gd-known-formulas">
+                      <p class="edu-body"><span class="edu-helper">输入</span><code class="edu-code">h₁ = 3，h₂ = 1</code></p>
+                      <p class="edu-body"><span class="edu-helper">输出</span><code class="edu-code">y = v₁×h₁ + v₂×h₂</code></p>
+                      <p class="edu-body"><span class="edu-helper">损失</span><code class="edu-code">L1_loss = |y - GT|</code></p>
+                    </div>
+                  </div>
+                  <div class="gd-mini-question" id="lossDerivativeForm"></div>
+                  <div class="gd-mini-question" id="v1DerivativeForm" hidden aria-hidden="true"></div>
+                  <div class="gd-mini-question" id="v2DerivativeForm" hidden aria-hidden="true"></div>
+                  <p class="edu-notice-strip edu-notice-strip--orange gd-oscillation-cue" id="oscillationCue" hidden>注意：预测值已经开始在真实值两侧来回跳动，说明更新步子可能太大，网络正在震荡。</p>
+                </div>
+              </div>
+              <section class="edu-panel gd-loss-history" id="autoLossHistoryPanel" hidden aria-labelledby="autoLossHistoryTitle">
+                <header class="gd-loss-history-head">
+                  <div>
+                    <h3 class="edu-panel-title" id="autoLossHistoryTitle">L1 loss 训练曲线</h3>
+                    <p class="edu-helper">每更新一次新增一个点。</p>
+                  </div>
+                  <div class="edu-toolbar gd-auto-controls" id="autoToolbar" hidden>
+                    <label class="edu-control gd-rate-control is-unset" id="rateControl" for="stepRatio" hidden>
+                      <span class="edu-control-head"><span class="edu-label" id="rateLabel">步长比例</span><output class="edu-control-value" id="stepRatioValue" for="stepRatio"></output></span>
+                      <input class="edu-range is-unset" id="stepRatio" type="range" min="0" max="1" step="0.05" value="0.1" data-dl-range data-range-digits="2" aria-valuetext="尚未选择">
+                    </label>
+                    <div class="edu-toolbar-actions" id="autoToolbarActions"></div>
+                  </div>
+                </header>
+                <div class="gd-loss-history-plot" id="autoLossHistoryPlot" role="img" aria-label="只显示 L1 loss 的训练指标曲线"></div>
+              </section>
+              <section class="gd-oscillation-question" id="oscillationForm" hidden aria-hidden="true">
+                <div id="oscillationQuestionMount"></div>
+                <button class="edu-btn edu-btn--primary dl-button-hint" id="tryLearningRateBtn" type="button" data-dl-button-hint hidden>去试试吧</button>
+              </section>
+            </div>
+            <div class="edu-callout edu-callout--green gd-learning-reveal" id="learningReveal" hidden>
+              <strong class="edu-callout-label">学习率</strong>
+              <span class="edu-callout-text">Loss 已经足够小。学习率决定每次更新走多大：太大会来回震荡，适当缩小才能稳定靠近最优点。</span>
+            </div>
+          </div>
+
+          <div class="gd-auto-network-card">
+            <div class="edu-canvas-frame gd-network-canvas gd-network-canvas--auto" id="autoNetworkHost"></div>
+          </div>
+
+        </div>
+      </section>
+
+      <button class="flow-scroll-indicator" id="gradientScrollIndicator" type="button" aria-controls="gradientNextTeaser" hidden>
+        <span class="flow-scroll-indicator-mark" aria-hidden="true"></span>
+        <strong>下方有新内容</strong>
+        <small>滚动或点击查看</small>
+      </button>
+
+      <section class="edu-stage edu-content-block gd-next-teaser" id="gradientNextTeaser" hidden aria-hidden="true" aria-labelledby="fullTrainingTitle">
+        <header class="edu-content-head gd-final-head">
+          <div>
+            <h2 class="edu-content-title" id="fullTrainingTitle">现在，让整个网络一起学习</h2>
+            <p class="edu-content-subtitle">很多情况下，网络里的所有参数都可以用同样的方法更新。</p>
+          </div>
+        </header>
+        <div class="edu-content-body">
+          <div class="gd-final-control-grid">
+            <label class="edu-control gd-final-control-card gd-target-entry" id="fullTargetEntry" for="fullTargetInput">
+              <span class="edu-kicker">设置真实值 GT</span>
+              <span class="edu-label">输入你喜欢的数字</span>
+              <input class="edu-input" id="fullTargetInput" type="number" step="any" placeholder="例如 31" autocomplete="off" data-dl-input-hint aria-label="写一个真实值 GT">
+              <small>输入后会自动选择稳定的训练参数。</small>
+            </label>
+
+            <section class="gd-final-control-card gd-full-loss-panel" aria-labelledby="fullLossPanelTitle">
+              <h3 class="edu-panel-title" id="fullLossPanelTitle">Loss</h3>
+              <div class="gd-full-loss-history-plot" id="fullLossHistoryPlot" role="img" aria-label="训练过程中 Loss 下降的训练指标曲线"></div>
+            </section>
+
+            <section class="gd-final-control-card gd-full-train-panel" aria-labelledby="fullTrainPanelTitle">
+              <span class="edu-kicker" id="fullTrainPanelTitle">训练操作</span>
+              <div class="gd-full-train-rate" aria-live="polite">
+                <span>当前学习率</span>
+                <strong id="fullRateValue">0.10</strong>
+                <small>每轮 × <b id="fullDecayValue">0.50</b></small>
+              </div>
+              <button class="edu-btn edu-btn--primary" id="trainFullNetworkBtn" type="button" disabled>训练一次</button>
+              <small>前馈 → Loss → 反向传播 → 全部参数更新</small>
+            </section>
+          </div>
+
+          <div class="edu-canvas-frame gd-network-canvas gd-full-network" id="fullNetworkHost">
+            <svg viewBox="0 0 900 330" role="img" aria-label="所有参数都可以更新的两层神经网络">
+              <defs><marker id="gdFullArrow" markerWidth="8" markerHeight="7" refX="7" refY="3.5" orient="auto"><path d="M0,0 L8,3.5 L0,7 Z" fill="#f07e47"></path></marker></defs>
+              <text class="gd-layer-label" x="90" y="34">输入</text><text class="gd-layer-label" x="390" y="34">隐藏层</text><text class="gd-layer-label" x="670" y="34">预测</text><text class="gd-layer-label" x="820" y="34">真实值</text>
+              <g class="gd-full-edges">
+                <line id="fullW11Edge" x1="125" y1="105" x2="354" y2="105"></line><line id="fullW12Edge" x1="125" y1="105" x2="354" y2="235"></line>
+                <line id="fullW21Edge" x1="125" y1="235" x2="354" y2="105"></line><line id="fullW22Edge" x1="125" y1="235" x2="354" y2="235"></line>
+                <line id="fullV1Edge" x1="426" y1="105" x2="632" y2="168"></line><line id="fullV2Edge" x1="426" y1="235" x2="632" y2="182"></line>
+              </g>
+              <g class="gd-full-weight-labels">
+                <text id="fullW11" x="235" y="94">w₁₁ = 1.00</text><text id="fullW12" x="270" y="205">w₁₂ = 1.00</text><text id="fullW21" x="270" y="143">w₂₁ = 1.00</text>
+                <text id="fullW22" x="235" y="257">w₂₂ = 0.00</text><text id="fullV1" x="520" y="119">v₁ = 1.00</text><text id="fullV2" x="520" y="238">v₂ = 1.00</text>
+              </g>
+              <g class="gd-node gd-node--input" transform="translate(90 105)"><circle r="34"></circle><text y="-5">x₁</text><text class="gd-node-value" y="18">1</text></g>
+              <g class="gd-node gd-node--input" transform="translate(90 235)"><circle r="34"></circle><text y="-5">x₂</text><text class="gd-node-value" y="18">2</text></g>
+              <g class="gd-node gd-node--hidden" transform="translate(390 105)"><circle r="36"></circle><text y="-5">h₁</text><text class="gd-node-value" id="fullH1" y="18">3.00</text></g>
+              <g class="gd-node gd-node--hidden" transform="translate(390 235)"><circle r="36"></circle><text y="-5">h₂</text><text class="gd-node-value" id="fullH2" y="18">1.00</text></g>
+              <g class="gd-node gd-node--output" transform="translate(670 175)"><circle r="40"></circle><text y="-7">预测 y</text><text class="gd-node-value" id="fullOutputNode" y="19">4.00</text></g>
+              <text class="gd-compare-symbol" id="fullCompare" x="748" y="185">?</text>
+              <g class="gd-node gd-node--target" transform="translate(820 175)"><circle r="40"></circle><text y="-7">真实 GT</text><text class="gd-node-value" id="fullTargetNode" y="19">—</text></g>
+            </svg>
+          </div>
+          <div class="gd-final-conclusion" id="fullConclusion" hidden>
+            <div class="edu-callout edu-callout--green gd-final-summary">
+              <strong class="edu-callout-label">这就是一次完整训练</strong>
+              <span class="edu-callout-text">前馈得到预测，Loss 衡量误差，反向传播把影响传回每个参数，梯度下降再按学习率更新它们。网络中的所有可学习参数都能这样更新。</span>
+            </div>
+            <section class="edu-content-block gd-related-resources" aria-labelledby="gradientResourcesTitle">
+              <header class="edu-content-head">
+                <h3 class="edu-content-title" id="gradientResourcesTitle">推荐资源</h3>
+                <p class="edu-content-subtitle">继续观看与当前主题直接相关的视频，巩固刚才完成的学习内容。</p>
+              </header>
+              <div class="edu-content-body">
+                <div class="gd-related-videos" id="gradientVideoPreview"></div>
+                <nav class="edu-resource-actions" aria-label="学习导航">
+                  <a class="edu-btn" href="../CourseMap/">返回课程目录</a>
+                  <a class="edu-btn edu-btn--primary" href="../Activation-Func-Module/" data-next-lesson>学习下一个</a>
+                </nav>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script src="../shared/plotly-3.6.0.min.js"></script>
+  <script src="../shared/plot-utils.js"></script>
+  <script src="../shared/module-components.js"></script>
+  <script src="./script.js"></script>
+</body>
+</html>

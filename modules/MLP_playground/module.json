@@ -1,0 +1,29 @@
+{
+  "id": "M22-MLP-guidence",
+  "number": "M22",
+  "title": "从手绘分类边界到 MLP",
+  "executor": "Codex",
+  "chapters": [
+    "classification-boundary",
+    "mlp-training",
+    "decision-surface"
+  ],
+  "status": "新增实验台",
+  "availability": "available",
+  "entry": "index.html",
+  "assets": [
+    "style.css",
+    "guide.js",
+    "script.js"
+  ],
+  "description": "通过三关手绘散点分类边界挑战建立分类直觉，再展开 MLP 自动训练实验。",
+  "rootClass": "z07",
+  "config": {
+    "dimensions": [1, 2, 3],
+    "defaultPreset": "blobs",
+    "defaultHiddenLayers": [6],
+    "activation": "tanh",
+    "optimizer": "full-batch-gradient-descent"
+  },
+  "sourceName": "从手绘分类边界到 MLP"
+}

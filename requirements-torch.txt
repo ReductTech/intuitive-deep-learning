@@ -1,0 +1,4 @@
+# Second installation batch: PyTorch CPU wheels only.
+# Install with the PyTorch CPU index specified in SKILL.md.
+torch
+torchvision

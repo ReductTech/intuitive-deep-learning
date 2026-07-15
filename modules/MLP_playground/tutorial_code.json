@@ -1,0 +1,7 @@
+{
+  "title": "NumPy 写一个两层 MLP 前向传播",
+  "language": "python",
+  "promptHtml": "<p>这个实验用 NumPy 写出 MLP 的一次前向传播。改隐藏层权重和激活函数，观察同一个输入如何被映射成分类 logits。</p>",
+  "codeFile": "tutorial_code.py",
+  "autoInsert": false
+}

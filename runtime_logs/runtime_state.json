@@ -1,0 +1,62 @@
+{
+  "services": {
+    "modules": {
+      "pid": 36824,
+      "command": [
+        "C:\\Python314\\python.exe",
+        "C:\\Users\\Ocean\\Documents\\GitHub\\Platu\\intuitive-deep-learning\\scripts\\module_http_service.py",
+        "--port",
+        "59411",
+        "--host",
+        "0.0.0.0",
+        "--directory",
+        "C:\\Users\\Ocean\\Documents\\GitHub\\Platu\\intuitive-deep-learning\\modules",
+        "--history-dir",
+        "C:\\Users\\Ocean\\Documents\\GitHub\\Platu\\intuitive-deep-learning\\history"
+      ],
+      "log": "C:\\Users\\Ocean\\Documents\\GitHub\\Platu\\intuitive-deep-learning\\runtime_logs\\modules-http.log",
+      "startedAt": 1784091533.8035712
+    },
+    "llm-proxy": {
+      "pid": 13308,
+      "command": [
+        "C:\\Python314\\python.exe",
+        "C:\\Users\\Ocean\\Documents\\GitHub\\Platu\\intuitive-deep-learning\\scripts\\llm_proxy_service.py",
+        "--host",
+        "0.0.0.0",
+        "--port",
+        "59413"
+      ],
+      "log": "C:\\Users\\Ocean\\Documents\\GitHub\\Platu\\intuitive-deep-learning\\runtime_logs\\llm-proxy.log",
+      "startedAt": 1784091535.3502994
+    },
+    "langchain": {
+      "pid": 44184,
+      "command": [
+        "C:\\Python314\\python.exe",
+        "C:\\Users\\Ocean\\Documents\\GitHub\\Platu\\intuitive-deep-learning\\scripts\\langchain_service.py",
+        "--host",
+        "0.0.0.0",
+        "--port",
+        "59414"
+      ],
+      "log": "C:\\Users\\Ocean\\Documents\\GitHub\\Platu\\intuitive-deep-learning\\runtime_logs\\langchain.log",
+      "startedAt": 1784091536.884828
+    },
+    "cnn": {
+      "pid": 44452,
+      "command": [
+        "C:\\Python314\\python.exe",
+        "C:\\Users\\Ocean\\Documents\\GitHub\\Platu\\intuitive-deep-learning\\scripts\\lenet5_cnn_service.py"
+      ],
+      "log": "C:\\Users\\Ocean\\Documents\\GitHub\\Platu\\intuitive-deep-learning\\runtime_logs\\cnn.log",
+      "startedAt": 1784091538.419979
+    }
+  },
+  "ports": {
+    "modules": 59411,
+    "llmProxy": 59413,
+    "langchain": 59414,
+    "cnn": 59415
+  }
+}

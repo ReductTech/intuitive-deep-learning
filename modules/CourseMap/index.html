@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="深度学习互动课程地图：沿着四个章节、十一门互动课程，从神经元一路学习到人脸识别。"
+    />
+    <title>深度学习互动课程地图</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main id="courseMap" class="course-map" aria-label="深度学习互动课程地图">
+      <img
+        id="mapImage"
+        class="map-image"
+        src="./assets/course-map-hero.webp"
+        alt="由四块岛屿组成的深度学习课程地图"
+      />
+      <div class="map-tint" aria-hidden="true"></div>
+
+      <header class="hero-copy">
+        <p class="eyebrow">DEEP LEARNING · INTERACTIVE LAB</p>
+        <h1>沿着学习地图<br />认识深度学习</h1>
+        <p class="hero-description">
+          从神经元出发，经过多层感知机、数字图像与卷积网络，完成一条由 11
+          门互动课程组成的学习路线。
+        </p>
+        <div class="hero-actions">
+          <button id="continueButton" class="primary-action" type="button">
+            从第一课开始
+          </button>
+          <button id="catalogButton" class="secondary-action" type="button">
+            查看课程目录
+          </button>
+        </div>
+        <div class="progress-summary" aria-live="polite">
+          <span class="progress-label">学习进度</span>
+          <span id="progressText">0 / 11</span>
+          <span class="progress-track" aria-hidden="true">
+            <span id="progressBar" class="progress-bar"></span>
+          </span>
+        </div>
+      </header>
+
+      <div id="chapterLayer" class="chapter-layer" aria-hidden="true"></div>
+      <nav id="lessonLayer" class="lesson-layer" aria-label="课程节点"></nav>
+
+      <section id="lessonPreview" class="lesson-preview" aria-live="polite">
+        <div class="preview-topline">
+          <span id="previewChapter">第一章</span>
+          <span id="previewIndex">01</span>
+        </div>
+        <h2 id="previewTitle">为什么需要神经元</h2>
+        <p id="previewSummary">点击地图上的白色亮点，进入对应互动课程。</p>
+        <div class="preview-learning" aria-label="模块学习记录">
+          <span><small>学习次数</small><strong id="previewStudyCount">0 次</strong></span>
+          <span><small>累计时长</small><strong id="previewTotalTime">0 秒</strong></span>
+          <span><small>上次打开</small><strong id="previewLastOpened">暂无</strong></span>
+        </div>
+        <button id="previewStart" class="preview-start" type="button">开始学习</button>
+      </section>
+
+      <div class="map-hint" aria-hidden="true">
+        <span class="hint-dot"></span>
+        白色亮点代表一节互动课
+      </div>
+
+      <button id="mobileCatalogButton" class="mobile-catalog-button" type="button">
+        课程目录
+      </button>
+    </main>
+
+    <div id="catalogBackdrop" class="catalog-backdrop" hidden></div>
+    <aside id="catalogPanel" class="catalog-panel" aria-label="课程目录" aria-hidden="true">
+      <div class="catalog-header">
+        <div>
+          <p>COURSE CATALOG</p>
+          <h2>四章 · 十一课</h2>
+        </div>
+        <button id="catalogClose" class="catalog-close" type="button" aria-label="关闭课程目录">×</button>
+      </div>
+      <div id="catalogList" class="catalog-list"></div>
+    </aside>
+
+    <script src="./course-map.js"></script>
+  </body>
+</html>

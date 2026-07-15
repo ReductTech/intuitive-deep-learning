@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>激活函数如何带来非线性</title>
+  <link rel="stylesheet" href="../shared/base.css">
+  <link rel="stylesheet" href="../shared/module-components.css">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main class="edu-root af-root">
+    <section class="edu-shell af-shell">
+      <header class="edu-header af-header">
+        <div>
+          <h1 class="edu-title">激活函数如何带来非线性</h1>
+          <p class="edu-subtitle">先理解什么是线性，再看看神经网络为什么需要打破线性。</p>
+        </div>
+      </header>
+
+      <section class="af-definition" aria-labelledby="linearTitle">
+        <div class="af-definition-copy">
+          <span class="af-kicker">第一幕</span>
+          <h2 id="linearTitle">什么是线性？先看它怎样变化</h2>
+          <p>
+            先不用记公式。在线性关系里，输入每次增加相同的一步，输出也会按照固定的幅度变化。
+            它的变化方向和速度不会突然改变，所以画在二维坐标中就是一条直线。
+            这条直线可以倾斜、平移、变陡或变平；只要没有弯曲和折点，这一关就把它看作线性。
+          </p>
+        </div>
+      </section>
+
+      <section class="af-quiz" id="quiz2d" aria-labelledby="quiz2dTitle">
+        <div class="af-quiz-head">
+          <span class="af-kicker">二维判断</span>
+          <h2 id="quiz2dTitle">下面三个函数，只有一个是线性的</h2>
+          <p>先观察图像的形状：哪一个始终沿着同一个方向、以固定速度变化？</p>
+        </div>
+
+        <div class="dl-panel-choice-grid af-choice-grid" role="radiogroup" aria-label="二维函数图像选项">
+          <article class="dl-panel-choice af-choice-card" data-stage="2d" data-correct="true" data-choice="2d-line">
+            <div class="dl-panel-choice-media af-plot af-choice-plot" data-plot="line2d" data-panel-interactive role="img" aria-label="二维选项 A"></div>
+            <button class="dl-panel-choice-answer" type="button" data-choice-trigger aria-pressed="false">
+              <span class="dl-panel-choice-key">A</span>
+              <strong class="dl-panel-choice-title">y = 0.72x - 0.18</strong>
+              <span class="dl-panel-choice-caption">直线</span>
+            </button>
+          </article>
+
+          <article class="dl-panel-choice af-choice-card" data-stage="2d" data-correct="false" data-choice="2d-curve">
+            <div class="dl-panel-choice-media af-plot af-choice-plot" data-plot="parabola2d" data-panel-interactive role="img" aria-label="二维选项 B"></div>
+            <button class="dl-panel-choice-answer" type="button" data-choice-trigger aria-pressed="false">
+              <span class="dl-panel-choice-key">B</span>
+              <strong class="dl-panel-choice-title">y = 0.75x² - 0.35</strong>
+              <span class="dl-panel-choice-caption">弯曲曲线</span>
+            </button>
+          </article>
+
+          <article class="dl-panel-choice af-choice-card" data-stage="2d" data-correct="false" data-choice="2d-fold">
+            <div class="dl-panel-choice-media af-plot af-choice-plot" data-plot="fold2d" data-panel-interactive role="img" aria-label="二维选项 C"></div>
+            <button class="dl-panel-choice-answer" type="button" data-choice-trigger aria-pressed="false">
+              <span class="dl-panel-choice-key">C</span>
+              <strong class="dl-panel-choice-title">y = max(0, x)</strong>
+              <span class="dl-panel-choice-caption">折线</span>
+            </button>
+          </article>
+        </div>
+
+        <div class="edu-callout edu-callout--blue af-feedback" aria-live="polite">
+          <strong class="edu-callout-label">判断提示</strong>
+          <span class="edu-callout-text" id="feedback2d">先看形状：直线才是这一关要找的线性函数。</span>
+        </div>
+      </section>
+
+      <section class="af-quiz af-quiz--locked" id="quiz3d" aria-hidden="true" aria-labelledby="quiz3dTitle">
+        <div class="af-quiz-head">
+          <span class="af-kicker">三维判断</span>
+          <h2 id="quiz3dTitle">到了三维，只有一个图形仍然是线性的</h2>
+          <p>参考二维直线的直觉：三维里的线性形状应该是一整张平面。</p>
+        </div>
+
+        <div class="dl-panel-choice-grid af-choice-grid" role="radiogroup" aria-label="三维函数图像选项">
+          <article class="dl-panel-choice af-choice-card" data-stage="3d" data-correct="false" data-choice="3d-bowl">
+            <div class="dl-panel-choice-media dl-panel-choice-media--tall af-plot af-choice-plot" data-plot="bowl3d" data-panel-interactive role="img" aria-label="三维选项 A"></div>
+            <button class="dl-panel-choice-answer" type="button" data-choice-trigger aria-pressed="false">
+              <span class="dl-panel-choice-key">A</span>
+              <strong class="dl-panel-choice-title">z = 0.65(x² + y²) - 0.58</strong>
+              <span class="dl-panel-choice-caption">碗形曲面</span>
+            </button>
+          </article>
+
+          <article class="dl-panel-choice af-choice-card" data-stage="3d" data-correct="true" data-choice="3d-plane">
+            <div class="dl-panel-choice-media dl-panel-choice-media--tall af-plot af-choice-plot" data-plot="plane3d" data-panel-interactive role="img" aria-label="三维选项 B"></div>
+            <button class="dl-panel-choice-answer" type="button" data-choice-trigger aria-pressed="false">
+              <span class="dl-panel-choice-key">B</span>
+              <strong class="dl-panel-choice-title">z = 0.55x - 0.30y + 0.05</strong>
+              <span class="dl-panel-choice-caption">平面</span>
+            </button>
+          </article>
+
+          <article class="dl-panel-choice af-choice-card" data-stage="3d" data-correct="false" data-choice="3d-fold">
+            <div class="dl-panel-choice-media dl-panel-choice-media--tall af-plot af-choice-plot" data-plot="fold3d" data-panel-interactive role="img" aria-label="三维选项 C"></div>
+            <button class="dl-panel-choice-answer" type="button" data-choice-trigger aria-pressed="false">
+              <span class="dl-panel-choice-key">C</span>
+              <strong class="dl-panel-choice-title">z = max(0, x + 0.55y) - 0.42</strong>
+              <span class="dl-panel-choice-caption">折面</span>
+            </button>
+          </article>
+        </div>
+
+        <div class="edu-callout edu-callout--blue af-feedback" aria-live="polite">
+          <strong class="edu-callout-label">判断提示</strong>
+          <span class="edu-callout-text" id="feedback3d">可以拖动任意三维图旋转视角。看清楚后，选出唯一的平面。</span>
+        </div>
+      </section>
+
+      <section class="af-network-lab" id="linearNetworkLab" hidden aria-labelledby="networkLabTitle">
+        <div class="af-network-head">
+          <div>
+            <span class="af-kicker">无激活函数网络</span>
+            <h2 id="networkLabTitle">只堆线性神经元，会发生什么？</h2>
+            <p id="networkLabCopy">先从一个最简单的网络开始：x 进入一个线性神经元，再输出 y。左侧会画出它对应的函数图像。</p>
+          </div>
+          <div class="af-network-actions">
+            <button class="edu-btn edu-btn--primary" id="addNeuronBtn" type="button">添加神经元</button>
+          </div>
+        </div>
+
+        <div class="af-network-stage">
+          <section class="af-network-panel">
+            <div class="af-panel-head">
+              <h3 id="graphTitle">二维函数图像</h3>
+              <span id="graphHint">一维输入 x，一维输出 y</span>
+            </div>
+            <div class="af-canvas-box">
+              <div class="af-plot af-stage-plot" id="networkGraphPlot" data-plot="networkGraph" role="img" aria-label="无激活网络输出图像"></div>
+            </div>
+            <p class="edu-notice-strip edu-notice-strip--blue af-readout" id="networkReadout">当前等价于一条直线。</p>
+          </section>
+
+          <section class="af-network-panel af-network-panel--model">
+            <div class="af-panel-head">
+              <h3>线性神经元结构</h3>
+              <span id="modelHint">悬浮节点查看参数</span>
+            </div>
+            <div class="af-canvas-box af-canvas-box--model">
+              <canvas id="networkModelCanvas" data-viz="networkModel" width="760" height="460" aria-label="无激活函数网络结构"></canvas>
+              <aside class="af-inspector" id="networkInspector"></aside>
+            </div>
+            <p class="edu-notice-strip edu-notice-strip--blue af-readout" id="networkStageMessage">默认只有 1 个线性神经元。添加几个随机线性神经元，观察左侧图像会不会弯。</p>
+          </section>
+        </div>
+        <div id="linearDeepCue"></div>
+      </section>
+
+      <section class="af-network-lab af-network-lab--deep" id="linearDeepLab" hidden aria-labelledby="linearDeepTitle">
+        <div class="af-network-head">
+          <div>
+            <span class="af-kicker">线性网络的三维视角</span>
+            <h2 id="linearDeepTitle">层数变多了，输出仍然是一张平面</h2>
+            <p>现在把输入扩展成二维坐标 x,y，输出变成 z。即使堆叠多层线性神经元，没有激活函数时，最后仍然只能得到一个平面。</p>
+          </div>
+          <div class="af-network-actions">
+            <button class="edu-btn edu-btn--primary" id="addDeepLayerBtn" type="button">添加一层</button>
+            <button class="edu-btn" id="removeDeepLayerBtn" type="button">删除一层</button>
+            <button class="edu-btn" id="rerollDeepNetworkBtn" type="button">随机参数</button>
+          </div>
+        </div>
+
+        <div class="af-network-stage">
+          <section class="af-network-panel">
+            <div class="af-panel-head">
+              <h3>三维输出平面</h3>
+              <span>二维输入 x,y，一维输出 z</span>
+            </div>
+            <div class="af-canvas-box">
+              <div class="af-plot af-stage-plot" id="linearDeepGraphPlot" data-plot="linearDeepGraph" role="img" aria-label="多层线性网络三维输出平面"></div>
+            </div>
+            <p class="edu-notice-strip edu-notice-strip--blue af-readout" id="linearDeepReadout">当前等价于一张平面。</p>
+          </section>
+
+          <section class="af-network-panel af-network-panel--model">
+            <div class="af-panel-head">
+              <h3>多层线性结构</h3>
+              <span>没有激活函数</span>
+            </div>
+            <div class="af-canvas-box af-canvas-box--model">
+              <canvas id="linearDeepModelCanvas" data-viz="linearDeepModel" width="760" height="460" aria-label="多层线性网络结构"></canvas>
+            </div>
+            <p class="edu-notice-strip edu-notice-strip--blue af-readout" id="linearDeepStageMessage">每层固定 3 个神经元。继续添加层数，左侧仍然只能画出一张平面。</p>
+          </section>
+        </div>
+      </section>
+
+      <section class="af-finish" id="finishPanel" hidden>
+        <span class="af-kicker">线性结论</span>
+        <h2>线性运算的线性叠加，永远还是线性的</h2>
+        <p>没有激活函数时，神经元只是不断做加权求和与加偏置。一个线性层、很多个神经元、甚至 5 层 MLP，最后都可以合并成一个大的线性变换：二维里还是直线，三维里还是平面。</p>
+        <button class="edu-btn edu-btn--primary af-continue-btn" id="startReluBtn" type="button">给神经元加上 ReLU</button>
+      </section>
+
+      <section class="af-network-lab af-relu-intro" id="reluIntroLab" hidden aria-labelledby="reluIntroTitle">
+        <div class="af-network-head">
+          <div>
+            <span class="af-kicker">第三幕 · 非线性</span>
+            <h2 id="reluIntroTitle">ReLU 做了什么？先看一个神经元</h2>
+            <p>在上一模块中，神经元会把输入乘以权重，再汇总成输出。现在沿用这个熟悉的结构，只在汇总结果后加一道 ReLU：正数照常通过，负数变成 0。</p>
+          </div>
+        </div>
+
+        <div class="af-relu-intro-card">
+          <div class="af-relu-control">
+            <label class="edu-control is-unset" for="reluInputRange">
+              <span class="edu-control-head">
+                <span class="edu-label">拖动输入 x，尤其观察负数区域</span>
+                <output class="edu-control-value af-relu-input-value" id="reluInputValue" for="reluInputRange"></output>
+              </span>
+              <input class="edu-range is-unset" id="reluInputRange" type="range" min="-3" max="3" step="0.01" value="0" aria-valuetext="尚未输入" aria-describedby="reluObservation">
+            </label>
+            <div class="af-fixed-weight" aria-label="固定权重为 2">
+              <span>固定权重</span>
+              <strong>w = 2.00</strong>
+            </div>
+          </div>
+
+          <div class="edu-formula-block af-relu-definition-formula">
+            <div class="edu-formula" aria-label="ReLU z 等于 0 和 z 中较大的一个">
+              <span class="edu-formula-term" tabindex="0" data-tooltip="ReLU：把负数截为 0，让非负数保持原值" aria-label="ReLU，把负数截为零，让非负数保持原值">ReLU</span>(<span class="edu-formula-term" tabindex="0" data-tooltip="z：输入乘权重后的加权结果" aria-label="z，输入乘权重后的加权结果">z</span>) = max(0, <span class="edu-formula-term" tabindex="0" data-tooltip="z ≥ 0 时输出 z；z < 0 时输出 0" aria-label="z，大于等于零时输出 z，小于零时输出零">z</span>)
+            </div>
+          </div>
+
+          <div class="af-relu-flow" id="reluIntroFlow">
+            <div class="af-signal-node af-signal-node--input">
+              <span>输入 x</span>
+              <strong id="reluInputNode">--</strong>
+            </div>
+            <div class="af-flow-link af-flow-link--weighted">
+              <span class="dl-network-weight af-weight-badge">权重 <b>2.00</b></span>
+            </div>
+            <div class="af-neuron-node">
+              <span>神经元</span>
+              <div class="af-neuron-operation"><b>Σ</b><i>|</i><b>ReLU</b></div>
+            </div>
+            <div class="af-flow-link af-flow-link--plain" aria-hidden="true"></div>
+            <div class="af-signal-node af-signal-node--output">
+              <span>输出 y</span>
+              <strong id="reluOutputNode">--</strong>
+            </div>
+          </div>
+
+          <div class="af-relu-formulas" aria-live="polite">
+            <p><span>先做线性计算</span><code id="reluLinearFormula">z = x × w</code></p>
+            <p><span>再经过 ReLU</span><code id="reluActivationFormula">y = ReLU(z)</code></p>
+          </div>
+
+          <div class="edu-callout edu-callout--blue af-relu-observation" id="reluObservation" aria-live="polite">
+            <strong class="edu-callout-label" id="reluObservationLabel">先调整输入</strong>
+            <span class="edu-callout-text" id="reluObservationText">拖动上方滑杆，观察输入、加权计算和 ReLU 输出怎样一起变化。</span>
+          </div>
+
+          <div class="af-relu-intro-next" id="reluIntroNext" hidden>
+            <p>你已经看到：负数区域里，输入继续变化，输出却一直停在 0。整个函数不再始终保持固定的 2 倍关系，因此出现了非线性的折点。</p>
+            <button class="edu-btn edu-btn--primary" id="continueReluNetworkBtn" type="button">继续：组合多个带有 ReLU 的神经元</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="af-network-lab" id="reluNetworkLab" hidden aria-labelledby="reluLabTitle">
+        <div class="af-network-head">
+          <div>
+            <span class="af-kicker">从一个到多个</span>
+            <h2 id="reluLabTitle">组合多个带有 ReLU 的神经元，曲线继续弯折</h2>
+            <p>刚才 ReLU 把负数截成了 0，并制造出一个折点。现在隐藏层中的每个神经元都会先计算 wx + b，再经过 ReLU：神经元越多，折点越多。</p>
+          </div>
+          <div class="af-network-actions">
+            <button class="edu-btn edu-btn--primary" id="addReluNeuronBtn" type="button">添加带有 ReLU 的神经元</button>
+            <button class="edu-btn" id="resetReluBtn" type="button">重置</button>
+          </div>
+        </div>
+
+        <div class="af-network-stage">
+          <section class="af-network-panel">
+            <div class="af-panel-head">
+              <h3>网络输出曲线</h3>
+              <span id="reluGraphHint">每个红色虚线是一个折点</span>
+            </div>
+            <div class="af-canvas-box">
+              <div class="af-plot af-stage-plot" id="reluGraphPlot" data-plot="reluGraph" role="img" aria-label="带有 ReLU 的隐藏层所产生的网络输出曲线"></div>
+            </div>
+            <p class="edu-notice-strip edu-notice-strip--blue af-readout" id="reluReadout">当前隐藏层有 1 个带有 ReLU 的神经元，曲线已经出现一个折点。</p>
+          </section>
+
+          <section class="af-network-panel af-network-panel--model">
+            <div class="af-panel-head">
+              <h3>隐藏层结构</h3>
+              <span>悬浮节点查看参数</span>
+            </div>
+            <div class="af-canvas-box af-canvas-box--model">
+              <canvas id="reluModelCanvas" data-viz="reluModel" width="760" height="460" aria-label="包含带有 ReLU 的神经元的隐藏层结构"></canvas>
+              <aside class="af-inspector" id="reluInspector"></aside>
+            </div>
+            <p class="edu-notice-strip edu-notice-strip--blue af-readout" id="reluStageMessage">向隐藏层添加几个带有 ReLU 的神经元，观察左侧曲线怎样一段一段折起来。</p>
+          </section>
+        </div>
+        <div id="reluApproxCue"></div>
+      </section>
+
+      <section class="af-approx" id="approxPanel" hidden aria-labelledby="approxTitle">
+        <div class="af-network-head">
+          <div>
+            <span class="af-kicker">更多隐藏层神经元</span>
+            <h2 id="approxTitle">足够多带有 ReLU 的神经元，就能逼近任意曲线</h2>
+            <p>灰色虚线是一个目标函数（绝非直线）。橙色实线是隐藏层神经元经过 ReLU 后形成的网络输出。增加神经元数量，观察折点如何叠加，让橙色曲线逐渐靠近目标。</p>
+          </div>
+          <div class="af-network-actions">
+            <button class="edu-btn edu-btn--primary" id="addApproxNeuronBtn" type="button">增加神经元数量</button>
+            <button class="edu-btn" id="resetApproxBtn" type="button">重置</button>
+          </div>
+        </div>
+        <div class="af-wide-panel">
+          <div class="af-plot af-wide-plot" id="approxPlot" data-plot="approximation" role="img" aria-label="ReLU 网络逼近目标函数"></div>
+        </div>
+        <p class="edu-notice-strip edu-notice-strip--blue af-readout" id="approxReadout">当前使用 2 个折点。继续增加，橙色曲线会更贴近灰色目标。</p>
+      </section>
+
+      <section class="af-activations" id="activationPanel" hidden aria-labelledby="activationTitle">
+        <span class="af-kicker">最后一幕</span>
+        <h2 id="activationTitle">认识这些被广泛使用的激活函数</h2>
+        <div class="af-activation-grid">
+          <article class="af-activation-card">
+            <div class="af-plot af-activation-plot" data-plot="activation-relu" role="img" aria-label="ReLU 激活函数"></div>
+            <h3>ReLU</h3>
+            <code>max(0, x)</code>
+            <p>简单、计算快，负数截断为 0，正数保持线性，是理解折点最直接的入口。</p>
+          </article>
+          <article class="af-activation-card">
+            <div class="af-plot af-activation-plot" data-plot="activation-sigmoid" role="img" aria-label="Sigmoid 激活函数"></div>
+            <h3>Sigmoid</h3>
+            <code>1 / (1 + e^-x)</code>
+            <p>把数值压到 0 到 1 之间，常用于二分类输出概率。</p>
+          </article>
+          <article class="af-activation-card">
+            <div class="af-plot af-activation-plot" data-plot="activation-silu" role="img" aria-label="SiLU 激活函数"></div>
+            <h3>SiLU / Swish</h3>
+            <code>x · sigmoid(x)</code>
+            <p>现代网络里常见的平滑 ReLU 风格激活，公式简单，又保留了非线性的柔和过渡。</p>
+          </article>
+        </div>
+        <section class="edu-content-block af-related-resources" aria-labelledby="relatedResourcesTitle">
+          <header class="edu-content-head">
+            <h3 class="edu-content-title" id="relatedResourcesTitle">推荐资源</h3>
+            <p class="edu-content-subtitle">继续观看与当前主题直接相关的视频，巩固刚才完成的学习内容。</p>
+          </header>
+          <div class="edu-content-body">
+            <div class="af-related-videos" id="activationVideoPreview"></div>
+            <nav class="edu-resource-actions" aria-label="学习导航" data-i18n-aria-label="activation.resources.actions.aria">
+              <a class="edu-btn" href="../CourseMap/">
+                <span data-i18n="activation.resources.actions.back">返回课程目录</span>
+              </a>
+              <a class="edu-btn edu-btn--primary" href="../MLP_playground/" data-next-lesson>
+                <span data-i18n="activation.resources.actions.next">学习下一个</span>
+              </a>
+            </nav>
+          </div>
+        </section>
+      </section>
+    </section>
+  </main>
+
+  <script src="../shared/plotly-3.6.0.min.js"></script>
+  <script src="../shared/canvas-utils.js"></script>
+  <script src="../shared/plot-utils.js"></script>
+  <script src="../shared/module-components.js"></script>
+  <script src="./script.js"></script>
+</body>
+</html>

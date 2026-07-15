@@ -1,0 +1,29 @@
+{
+  "id": "Convolution-Kernel-Intro",
+  "number": "K01",
+  "title": "卷积核入门：从五子棋棋形开始",
+  "executor": "Codex",
+  "chapters": [
+    "gomoku-ai",
+    "win-judgement-feedback",
+    "binary-board",
+    "kernel-operators",
+    "mnist-convolution"
+  ],
+  "status": "前三幕已实现",
+  "availability": "available",
+  "entry": "index.html",
+  "assets": [
+    "style.css",
+    "script.js"
+  ],
+  "description": "通过一局可玩的五子棋 AI 对战，引导用户解释胜负判断，再把棋盘拆成二值图并拖动 5x5 算子寻找最大激活值，最后用 MNIST 数字动画展示卷积核逐像素生成特征图。",
+  "rootClass": "ck",
+  "config": {
+    "boardSize": 15,
+    "humanStone": "black",
+    "aiStone": "white",
+    "aiStrategy": "local-pattern-scoring"
+  },
+  "sourceName": "卷积核入门"
+}

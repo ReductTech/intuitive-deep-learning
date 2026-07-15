@@ -1,0 +1,25 @@
+{
+  "id": "LeNet5-CNN-Lab",
+  "number": "C01",
+  "title": "从人工卷积核到 LeNet-5",
+  "executor": "Codex",
+  "chapters": [
+    "fixed-kernel-features"
+  ],
+  "status": "第一幕已实现",
+  "availability": "available",
+  "entry": "index.html",
+  "assets": [
+    "style.css",
+    "script.js"
+  ],
+  "description": "第一幕承接人工特征分类：把九宫格计数替换成多个人工指定的固定卷积核，用可堆叠响应图扫描 MNIST 图像，再训练一个小分类头观察训练集与验证集表现。",
+  "rootClass": "lenet",
+  "config": {
+    "serviceUrl": "http://127.0.0.1:59415/lenet5/fixed-kernel-train",
+    "dataset": "dataset/t10k-images.idx3-ubyte",
+    "split": "9:1",
+    "kernels": ["edge", "vertical", "horizontal", "diag_down", "diag_up", "center"]
+  },
+  "sourceName": "从人工卷积核到 LeNet-5"
+}

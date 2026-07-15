@@ -1,0 +1,27 @@
+{
+  "id": "L01-loss-guide",
+  "number": "L01",
+  "title": "为什么需要损失函数",
+  "executor": "Codex",
+  "chapters": [
+    "numeric-loss",
+    "l1-l2-comparison"
+  ],
+  "status": "新增实验台",
+  "availability": "available",
+  "entry": "index.html",
+  "assets": [
+    "style.css",
+    "guide.js",
+    "script.js"
+  ],
+  "description": "从数轴上的距离出发，动手计算并比较 L1 与 L2 对误差的不同惩罚方式。",
+  "rootClass": "lg",
+  "config": {
+    "defaultGT": 7,
+    "defaultPred": 1.6,
+    "calculationGT": 3,
+    "calculationPred": 7
+  },
+  "sourceName": "为什么需要损失函数"
+}

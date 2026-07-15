@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="module.meta.title">M00 · 教学模块标题</title>
+  <link rel="stylesheet" href="../shared/base.css">
+  <link rel="stylesheet" href="../shared/module-components.css">
+</head>
+<body>
+  <!--
+    DL UI module starter
+
+    1. Copy this file to modules/<module-id>/index.html.
+    2. Replace the title, subtitle, badge, steps, and lesson content.
+    3. Add ./style.css only for domain-specific layouts and visualizations.
+    4. Keep shared component appearance in shared CSS.
+    5. Mark visible copy with data-i18n and non-translatable values with data-i18n-ignore.
+  -->
+  <main class="edu-root">
+    <section class="edu-shell">
+      <header class="edu-header">
+        <div>
+          <h1 class="edu-title"><span data-i18n="module.header.title">教学模块标题</span></h1>
+          <p class="edu-subtitle"><span data-i18n="module.header.subtitle">用一句话说明学习者将观察什么、操作什么，以及最终理解什么。</span></p>
+        </div>
+        <span class="edu-badge" data-i18n="module.header.badge">M00 · 交互实验</span>
+      </header>
+
+      <nav class="edu-progress" aria-label="模块进度">
+        <span class="edu-progress-item is-current" aria-current="step" data-i18n="module.progress.observe">观察现象</span>
+        <span class="edu-progress-item" data-i18n="module.progress.experiment">动手实验</span>
+        <span class="edu-progress-item" data-i18n="module.progress.explain">解释原理</span>
+        <span class="edu-progress-item" data-i18n="module.progress.challenge">完成挑战</span>
+      </nav>
+
+      <section class="edu-stage edu-content-block edu-stage--featured" aria-labelledby="introTitle" data-i18n-scope="module.intro">
+        <header class="edu-content-head">
+          <h2 class="edu-content-title" id="introTitle"><span data-i18n="module.intro.title">先让学习者看到一个值得解释的现象</span></h2>
+          <p class="edu-content-subtitle"><span data-i18n="module.intro.subtitle">不要先堆概念。先提供一个可以观察、比较或操控的具体情境。</span></p>
+        </header>
+
+        <div class="edu-content-body">
+          <div class="edu-task">
+            <strong data-i18n="module.intro.task.label">当前任务</strong>
+            <span data-i18n="module.intro.task.body">调整一个关键参数，观察右侧输出如何变化，并尝试说出变化规律。</span>
+          </div>
+          <div class="edu-toolbar-actions">
+            <button class="edu-btn edu-btn--primary" id="startButton" type="button"><span data-i18n="module.intro.start">开始实验</span></button>
+          </div>
+        </div>
+      </section>
+
+      <section class="edu-stage edu-content-block" id="experimentStage" aria-labelledby="experimentTitle" data-i18n-scope="module.experiment">
+        <header class="edu-content-head">
+          <h2 class="edu-content-title" id="experimentTitle"><span data-i18n="module.experiment.title">把控制项、可视化和结果放在同一个工作区</span></h2>
+          <p class="edu-content-subtitle"><span data-i18n="module.experiment.subtitle">控制数量保持克制；关键操作使用主按钮，其余操作使用普通按钮。</span></p>
+        </header>
+
+        <div class="edu-content-body">
+          <div class="edu-toolbar">
+            <div class="edu-metrics" aria-label="实验指标">
+              <div class="edu-metric">
+                <span data-i18n="module.experiment.metrics.status">状态</span>
+                <strong id="runStatus" data-i18n="module.experiment.status.waiting">等待开始</strong>
+              </div>
+              <div class="edu-metric is-success">
+                <span data-i18n="module.experiment.metrics.accuracy">准确率</span>
+                <strong data-i18n-ignore="true">92.4%</strong>
+              </div>
+              <div class="edu-metric">
+                <span data-i18n="module.experiment.metrics.epochs">训练轮次</span>
+                <strong data-i18n-ignore="true">320</strong>
+              </div>
+            </div>
+            <div class="edu-toolbar-actions">
+              <button class="edu-btn" type="button"><span data-i18n="module.experiment.changeSample">换个样本</span></button>
+              <button class="edu-btn edu-btn--primary" id="runButton" type="button"><span data-i18n="module.experiment.run">运行</span></button>
+            </div>
+          </div>
+
+          <div class="edu-workspace">
+            <article class="edu-card">
+              <h3 class="edu-panel-title"><span data-i18n="module.experiment.visual.title">可视化区域</span></h3>
+              <p class="edu-panel-description"><span data-i18n="module.experiment.visual.description">Canvas、SVG、图表或模型结构放在这里。</span></p>
+              <div class="edu-canvas-frame edu-canvas-placeholder">
+                <span class="edu-empty" data-i18n="module.experiment.visual.placeholder">替换为模块专属可视化</span>
+              </div>
+            </article>
+
+            <aside class="edu-card">
+              <h3 class="edu-panel-title"><span data-i18n="module.experiment.controls.title">实验控制</span></h3>
+              <p class="edu-panel-description"><span data-i18n="module.experiment.controls.description">只保留理解当前概念必需的参数。</span></p>
+
+              <label class="edu-control" for="parameterRange">
+                <span class="edu-control-head">
+                  <span class="edu-label" data-i18n="module.experiment.controls.parameter">关键参数</span>
+                  <output class="edu-control-value" for="parameterRange" data-i18n-ignore="true">40</output>
+                </span>
+                <input class="edu-range" id="parameterRange" type="range" min="0" max="100" value="40" data-dl-range data-range-digits="0">
+              </label>
+
+              <div class="edu-status" id="experimentFeedback" aria-live="polite" data-i18n="module.experiment.feedback.adjust">调整参数后点击运行。</div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section class="edu-stage edu-content-block" aria-labelledby="questionTitle" data-i18n-scope="module.question">
+        <header class="edu-content-head">
+          <h2 class="edu-content-title" id="questionTitle"><span data-i18n="module.question.title">让学习者根据刚才的观察作答</span></h2>
+          <p class="edu-content-subtitle"><span data-i18n="module.question.subtitle">标准题型使用 DLModuleUI，不在模块中重新制作选项和反馈样式。</span></p>
+        </header>
+        <div class="edu-content-body">
+          <div id="questionMount"></div>
+        </div>
+      </section>
+
+      <footer class="edu-footer"><span data-i18n="module.footer.note">DL UI · 模块专属 CSS 只负责业务布局与可视化。</span></footer>
+    </section>
+  </main>
+
+  <script src="../shared/module-components.js"></script>
+  <script>
+    (function () {
+      'use strict';
+
+      var runButton = document.querySelector('#runButton');
+      var startButton = document.querySelector('#startButton');
+      var status = document.querySelector('#runStatus');
+      var feedback = document.querySelector('#experimentFeedback');
+
+      startButton.addEventListener('click', function () {
+        document.querySelector('#experimentStage').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+
+      runButton.addEventListener('click', function () {
+        status.setAttribute('data-i18n', 'module.experiment.status.complete');
+        status.textContent = '运行完成';
+        feedback.className = 'edu-status is-success';
+        feedback.setAttribute('data-i18n', 'module.experiment.feedback.complete');
+        feedback.textContent = '观察完成。现在比较运行前后的结果。';
+      });
+
+      DLModuleUI.mountQuestion('#questionMount', {
+        type: 'choice',
+        title: '根据刚才的实验，哪个说法最符合你观察到的规律？',
+        options: [
+          { key: 'A', value: 'correct', label: '关键参数变化会以可解释的方式影响输出' },
+          { key: 'B', value: 'wrong-1', label: '无论怎样调整参数，输出都完全不变' },
+          { key: 'C', value: 'wrong-2', label: '输出只会随机变化，没有任何规律' }
+        ],
+        answer: 'correct',
+        feedback: {
+          correct: '正确。实验的目标就是把参数与输出之间的关系变得可观察。',
+          wrong: '回到实验区，再比较一次参数改变前后的输出。'
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

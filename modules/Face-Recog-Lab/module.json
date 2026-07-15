@@ -1,0 +1,30 @@
+{
+  "id": "Face-Recog-Lab",
+  "number": "C02",
+  "title": "人脸识别：固定卷积核到参数全训",
+  "executor": "Codex",
+  "chapters": [
+    "fixed-kernel-face-recognition",
+    "learnable-cnn-face-recognition"
+  ],
+  "status": "前两幕已实现",
+  "availability": "available",
+  "entry": "index.html",
+  "assets": [
+    "style.css",
+    "script.js"
+  ],
+  "description": "前两幕在 LFW 12 类均衡彩色人脸子集上对比固定卷积核特征与 Torch 小型 CNN 端到端训练：先冻结卷积核只训 MLP 分类头，再用 RGB 输入打开卷积层和全连接层参数一起学习。",
+  "rootClass": "face",
+  "config": {
+    "serviceUrl": "http://127.0.0.1:59415/face-recog/fixed-kernel-train",
+    "lenetServiceUrl": "http://127.0.0.1:59415/face-recog/lenet-train",
+    "dataset": "dataset/lfw-50-balanced/lfw_50_balanced_images.npy",
+    "split": "40 train + 10 validation per identity",
+    "kernels": ["edge", "vertical", "horizontal", "diag_down", "diag_up", "center"],
+    "lenetInput": "3x62x47",
+    "lenetDefaultEpochs": 80,
+    "lenetChannels": [8, 16, 32, 64]
+  },
+  "sourceName": "人脸识别：固定卷积核到参数全训"
+}

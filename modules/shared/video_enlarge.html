@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>Bilibili Iframe Demo</title>
+<style>
+body{
+    margin:0;
+    background:#111;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.player{
+    width:960px;
+    aspect-ratio:16/9;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 10px 30px rgba(0,0,0,.4);
+}
+
+iframe{
+    width:100%;
+    height:100%;
+    border:none;
+}
+</style>
+</head>
+<body>
+
+<div class="player">
+<iframe
+src="https://player.bilibili.com/player.html?isOutside=true&aid=116877569361841&bvid=BV1bgMt6UEtP&cid=39726941247&p=1"
+allowfullscreen
+scrolling="no">
+</iframe>
+</div>
+
+</body>
+</html>

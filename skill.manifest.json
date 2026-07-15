@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "name": "intuitive-deep-learning",
+  "version": "1.0.0",
+  "description": "Standalone deep-learning interactive modules for Linux containers",
+  "runtime": {
+    "type": "command",
+    "workingDirectory": "."
+  },
+  "requirements": {
+    "commands": ["bash", "python3"],
+    "ports": [59411, 59413, 59414, 59415]
+  },
+  "lifecycle": {
+    "bootstrap": {
+      "cmd": "bash",
+      "args": ["scripts/run-lesson-page.sh", "--init"],
+      "required": true,
+      "timeoutMs": 60000
+    },
+    "validate": {
+      "cmd": "bash",
+      "args": ["scripts/run-lesson-page.sh", "--status"],
+      "required": true,
+      "timeoutMs": 10000
+    },
+    "beforeEachAction": {
+      "cmd": "bash",
+      "args": ["scripts/run-lesson-page.sh", "--init"],
+      "required": true,
+      "timeoutMs": 60000
+    },
+    "stop": {
+      "cmd": "bash",
+      "args": ["scripts/run-lesson-page.sh", "--stop"],
+      "required": false,
+      "timeoutMs": 10000
+    }
+  },
+  "actions": {
+    "preparePage": {
+      "cmd": "bash",
+      "args": ["scripts/run-lesson-page.sh", "--init"],
+      "timeoutMs": 60000,
+      "requiresReady": false
+    },
+    "openModule": {
+      "cmd": "bash",
+      "args": ["scripts/run-lesson-page.sh", "--open-module"],
+      "timeoutMs": 30000,
+      "requiresReady": false
+    }
+  }
+}

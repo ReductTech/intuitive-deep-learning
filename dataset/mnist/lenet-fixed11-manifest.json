@@ -1,0 +1,59 @@
+{
+  "version": "fixed11-train-aug-v4",
+  "source_images": "dataset\\t10k-images.idx3-ubyte",
+  "source_labels": "dataset\\t10k-labels.idx1-ubyte",
+  "class_count": 11,
+  "reject_label": 10,
+  "train_ratio": 0.9,
+  "train_images": "dataset\\mnist\\lenet-fixed11-train-images.idx3-ubyte",
+  "train_labels": "dataset\\mnist\\lenet-fixed11-train-labels.idx1-ubyte",
+  "val_images": "dataset\\mnist\\lenet-fixed11-val-images.idx3-ubyte",
+  "val_labels": "dataset\\mnist\\lenet-fixed11-val-labels.idx1-ubyte",
+  "feature_file": "dataset\\mnist\\lenet-fixed11-grid8-features.npz",
+  "feature_kind": "pooled-convolution",
+  "feature_dtype": "float16",
+  "feature_compressed": true,
+  "feature_grid_size": 8,
+  "feature_kernel_ids": [
+    "edge",
+    "vertical",
+    "horizontal",
+    "diag_down",
+    "diag_up",
+    "center"
+  ],
+  "feature_train_shape": [
+    100716,
+    6,
+    8,
+    8
+  ],
+  "feature_val_shape": [
+    1004,
+    6,
+    8,
+    8
+  ],
+  "train_count": 100716,
+  "val_count": 1004,
+  "digit_train_source_count": 9156,
+  "t10k_train_source_count": 8996,
+  "sequence_png_train_count": 160,
+  "digit_val_source_count": 1004,
+  "reject_train_count": 18312,
+  "val_augmented": false,
+  "train_augmentations": [
+    "rotate -7 degrees",
+    "rotate +7 degrees",
+    "dilate 3x3",
+    "erode 3x3",
+    "shift x -2",
+    "shift x +2",
+    "shift y -2",
+    "shift y +2",
+    "reject edge half-or-less slices",
+    "reject left/right quarter overlap slices",
+    "reject stride-1 pair-mixed windows"
+  ],
+  "durationMs": 30675
+}

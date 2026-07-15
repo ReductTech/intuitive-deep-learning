@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "updatedAt": "2026-07-12T15:43:20.765Z",
+  "image": {
+    "width": 5460,
+    "height": 3073
+  },
+  "chapters": {
+    "chapter-1": {
+      "x": 17.5,
+      "y": 69.5
+    },
+    "chapter-2": {
+      "x": 38.5,
+      "y": 56.5
+    },
+    "chapter-3": {
+      "x": 57.2,
+      "y": 34.8
+    },
+    "chapter-4": {
+      "x": 78.1,
+      "y": 12.5
+    }
+  },
+  "lessons": {
+    "Neuron-Guide": {
+      "x": 10.703,
+      "y": 85.527
+    },
+    "Loss-Guide": {
+      "x": 15.816,
+      "y": 78.319
+    },
+    "Gradient-Descent-Module": {
+      "x": 23.253,
+      "y": 78.977
+    },
+    "Activation-Func-Module": {
+      "x": 32.647,
+      "y": 69.009
+    },
+    "MLP_playground": {
+      "x": 38.647,
+      "y": 62.865
+    },
+    "Loss-Guide-2": {
+      "x": 47.725,
+      "y": 64.763
+    },
+    "Digital-Image-Module": {
+      "x": 57.874,
+      "y": 52.328
+    },
+    "Manual-Feature-Classification": {
+      "x": 65.872,
+      "y": 46.512
+    },
+    "Convolution-Kernel-Intro": {
+      "x": 84.993,
+      "y": 38.337
+    },
+    "LeNet5-CNN-Lab": {
+      "x": 77.989,
+      "y": 30.218
+    },
+    "Face-Recog-Lab": {
+      "x": 81.078,
+      "y": 23.597
+    }
+  }
+}

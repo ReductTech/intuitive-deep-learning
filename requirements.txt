@@ -1,0 +1,15 @@
+# First installation batch: all dependencies except PyTorch.
+# Install this file with the PyPI mirror specified in SKILL.md.
+
+# LangChain
+uuid_utils
+langchain-core==1.4.1
+pydantic==2.12.4
+pydantic_core==2.41.5
+
+# Core dependencies
+numpy
+opencv-python-headless
+insightface
+onnxruntime
+

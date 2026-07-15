@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "C:\Users\Ocean\Documents\GitHub\Platu\intuitive-deep-learning\scripts\lenet5_cnn_service.py", line 32, in <module>
+    import insightface_tool
+  File "C:\Users\Ocean\Documents\GitHub\Platu\intuitive-deep-learning\scripts\insightface_tool.py", line 8, in <module>
+    import insightface
+ModuleNotFoundError: No module named 'insightface'

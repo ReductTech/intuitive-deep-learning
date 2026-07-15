@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>人工特征的分类</title>
+  <link rel="stylesheet" href="../shared/base.css">
+  <link rel="stylesheet" href="../shared/module-components.css">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main class="edu-root hdf-root">
+    <section class="edu-shell hdf-shell">
+      <header class="edu-header hdf-header">
+        <div>
+          <h1 class="edu-title">人工特征的分类</h1>
+          <p class="edu-subtitle">从二值手写数字的九宫格计数开始，理解人设计的特征如何帮助模型分类，也会在哪里失效。</p>
+        </div>
+        <span class="edu-badge">D02 · Manual Features</span>
+      </header>
+
+      <nav class="edu-progress hdf-progress" aria-label="模块进度">
+        <span class="edu-progress-item is-current" data-progress="count" aria-current="step">数出人工特征</span>
+        <span class="edu-progress-item" data-progress="distribution" aria-disabled="true">比较特征分布</span>
+        <span class="edu-progress-item" data-progress="mlp" aria-disabled="true">训练分类模型</span>
+        <span class="edu-progress-item" data-progress="summary" aria-disabled="true">总结人工特征</span>
+      </nav>
+
+      <section class="edu-stage hdf-stage hdf-count-stage" aria-labelledby="countTitle">
+        <header class="edu-stage-head">
+          <div class="edu-stage-copy">
+            <h2 class="edu-stage-title" id="countTitle">设计第一个人工特征</h2>
+            <p class="edu-stage-description">请观察被高亮的格子，数一数里面有多少个亮起来的像素。</p>
+          </div>
+        </header>
+
+        <div class="hdf-count-layout">
+          <section class="edu-content-block hdf-digit-panel" aria-label="手写数字九宫格">
+            <header class="edu-content-head">
+              <h3 class="edu-content-title">当前样本：<span id="sampleLabel">加载中</span></h3>
+              <p class="edu-content-subtitle">把 28 × 28 的二值手写数字切成九宫格，逐格统计亮像素。</p>
+            </header>
+            <div class="edu-content-body">
+              <div class="hdf-panel-actions">
+                <button class="edu-btn" id="newSampleBtn" type="button">换一张</button>
+              </div>
+              <div class="hdf-digit-frame">
+                <canvas id="digitCanvas" width="560" height="560" aria-label="带九宫格的 MNIST 手写数字"></canvas>
+              </div>
+            </div>
+          </section>
+
+          <section class="edu-content-block hdf-task-panel" aria-labelledby="manualCountTitle">
+            <header class="edu-content-head">
+              <h3 class="edu-content-title" id="manualCountTitle">跟着计算机从左上扫到右下</h3>
+              <p class="edu-content-subtitle" id="countInstruction">计算机会先自动数前面的格子。扫到最少的那个非空格时，它会停下来，把这一格交给你。</p>
+            </header>
+            <div class="edu-content-body hdf-task-body">
+              <form class="hdf-count-form" id="countForm">
+                <label class="edu-control" for="countInput">
+                  <span class="edu-label">你数到的 <span id="targetRegionLabel">这一格</span> 亮像素数量</span>
+                  <span class="hdf-input-row">
+                    <input id="countInput" class="edu-input" type="number" min="0" max="100" step="1" inputmode="numeric" placeholder="输入数量" data-dl-input-hint>
+                    <button class="edu-btn edu-btn--primary dl-button-hint" id="countSubmit" type="submit" data-dl-button-hint>提交</button>
+                  </span>
+                </label>
+              </form>
+              <div id="vectorQuestion" hidden></div>
+              <div id="orderQuestion" hidden></div>
+              <div class="edu-callout edu-callout--blue hdf-feedback" id="countFeedback" aria-live="polite">
+                <strong class="edu-callout-label" id="countFeedbackLabel">观察提示</strong>
+                <span class="edu-callout-text" id="countFeedbackText">等待样本加载。</span>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section class="edu-stage hdf-stage hdf-distribution-stage" id="distributionStage" hidden aria-hidden="true" aria-labelledby="distributionTitle">
+        <header class="edu-stage-head">
+          <div class="edu-stage-copy">
+            <h2 class="edu-stage-title" id="distributionTitle">从 0 到 9，逐个观察九宫格分布</h2>
+            <p class="edu-stage-description">依次看每张热力图：先找颜色最深和最浅的格子，再看整体更像竖线、圆环，还是上下两个区域。</p>
+          </div>
+        </header>
+
+        <section class="edu-content-block hdf-chart-panel" aria-label="九宫格特征分布图">
+          <header class="edu-content-head">
+            <h3 class="edu-content-title" id="selectedFeatureTitle">找出每个数字最明显的分布特征</h3>
+            <p class="edu-content-subtitle hdf-status" id="datasetStatus">完成上方任务后，这里会显示 0 到 9 的平均像素分布。</p>
+          </header>
+          <div class="edu-content-body">
+            <div class="edu-notice-strip edu-notice-strip--orange hdf-game-prompt" id="distributionGamePrompt" hidden>点击下方按钮开始。</div>
+            <div class="hdf-chart-frame">
+              <canvas id="distributionCanvas" width="1160" height="660" aria-label="不同数字的平均九宫格热力图"></canvas>
+            </div>
+            <div class="hdf-panel-actions hdf-distribution-actions">
+              <button class="edu-btn edu-btn--primary" id="distributionGameBtn" type="button" disabled>观察好了，玩个小游戏</button>
+            </div>
+            <div id="mlpCueHost" hidden></div>
+          </div>
+        </section>
+      </section>
+
+      <div class="flow-scroll-area hdf-flow-area" id="mlpFlowArea" hidden aria-hidden="true">
+        <section class="edu-stage hdf-stage hdf-mlp-stage" id="mlpStage" hidden aria-hidden="true" aria-labelledby="mlpTitle">
+          <header class="edu-stage-head">
+            <div class="edu-stage-copy">
+              <h2 class="edu-stage-title" id="mlpTitle">把九宫格特征交给一个双层 MLP</h2>
+              <p class="edu-stage-description">这里只看训练集效果；遇到没见过的写法，泛化会变差。</p>
+            </div>
+          </header>
+
+          <section class="edu-content-block hdf-mlp-panel" aria-label="双层 MLP 十分类流水线">
+            <header class="edu-content-head">
+              <h3 class="edu-content-title">输入特征 → 双层 MLP → Softmax 概率</h3>
+              <p class="edu-content-subtitle">训练完成后立即用自己的手写数字测试模型，同时观察不同训练集样本的预测结果。</p>
+            </header>
+            <div class="edu-content-body">
+              <div class="edu-toolbar hdf-mlp-toolbar">
+                <div class="edu-metrics" aria-label="MLP 训练指标">
+                  <div class="edu-metric">
+                    <span>训练状态</span>
+                    <strong id="mlpStatus">等待训练</strong>
+                  </div>
+                  <div class="edu-metric">
+                    <span>训练轮数</span>
+                    <strong id="mlpEpoch">0 / 900</strong>
+                  </div>
+                  <div class="edu-metric is-success">
+                    <span>训练集准确率</span>
+                    <strong id="mlpAccuracy">-</strong>
+                  </div>
+                </div>
+                <div class="edu-toolbar-actions">
+                  <button class="edu-btn edu-btn--primary dl-button-hint" id="mlpDrawBtn" type="button" data-dl-button-hint hidden disabled>手写测试</button>
+                  <button class="edu-btn edu-btn--primary" id="mlpTrainBtn" type="button">训练 MLP</button>
+                </div>
+              </div>
+
+              <div class="hdf-mlp-flow">
+                <section class="hdf-mlp-input-panel" aria-label="MLP 输入画板">
+                  <span class="hdf-mini-title">输入与自动计数 <strong id="mlpSampleLabel">-</strong></span>
+                  <canvas id="mlpDigitCanvas" width="320" height="320" aria-label="用于 MLP 分类的数字画板"></canvas>
+                </section>
+
+                <section class="hdf-mlp-network-panel" aria-label="双层 MLP 示意图">
+                  <span class="hdf-mini-title">双层 MLP</span>
+                  <canvas id="mlpNetworkCanvas" width="520" height="320" aria-label="双层 MLP 网络示意图"></canvas>
+                </section>
+
+                <section class="hdf-mlp-logit-panel" aria-label="10 类 Softmax 概率">
+                  <span class="hdf-mini-title">Softmax 后的概率</span>
+                  <div class="hdf-mlp-prediction">
+                    <span>预测结果</span>
+                    <strong id="mlpPrediction">-</strong>
+                  </div>
+                  <div class="hdf-prob-bars" id="mlpProbBars" aria-label="0 到 9 的 Softmax 概率"></div>
+                </section>
+              </div>
+
+              <div id="mlpFinalCueHost" hidden></div>
+            </div>
+          </section>
+        </section>
+      </div>
+
+      <div class="flow-scroll-area hdf-flow-area" id="finalFlowArea" hidden aria-hidden="true">
+        <section class="hdf-stage hdf-final-section" id="mlpFinalSection" hidden aria-hidden="true" aria-labelledby="resourcesTitle">
+          <section class="edu-content-block hdf-resources" aria-labelledby="resourcesTitle">
+            <header class="edu-content-head">
+              <h3 class="edu-content-title" id="resourcesTitle">推荐资源</h3>
+              <p class="edu-content-subtitle">继续了解特征工程，并为下一节卷积核学习做好准备。</p>
+            </header>
+            <div class="edu-content-body">
+              <div class="hdf-related-video-host" id="mlpRelatedVideoHost"></div>
+              <nav class="edu-resource-actions" aria-label="学习导航">
+                <a class="edu-btn" href="../CourseMap/">返回课程目录</a>
+                <a class="edu-btn edu-btn--primary" href="../Convolution-Kernel-Intro/" data-next-lesson>学习下一个</a>
+              </nav>
+            </div>
+          </section>
+        </section>
+      </div>
+
+      <button class="flow-scroll-indicator" id="flowScrollIndicator" type="button" hidden>
+        <span class="flow-scroll-indicator-mark" aria-hidden="true"></span>
+        <strong id="flowScrollTitle">下方有新内容</strong>
+        <small id="flowScrollBody">滚动或点击查看</small>
+      </button>
+    </section>
+  </main>
+
+  <script src="../shared/canvas-utils.js"></script>
+  <script src="../shared/module-components.js"></script>
+  <script src="./script.js"></script>
+</body>
+</html>

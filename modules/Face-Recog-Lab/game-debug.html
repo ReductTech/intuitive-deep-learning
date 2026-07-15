@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>雨花弄：变脸</title>
+  <link rel="stylesheet" href="../shared/base.css">
+  <link rel="stylesheet" href="../shared/module-components.css">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main class="edu-root face-root">
+    <section class="edu-shell face-shell">
+      <section class="face-stage face-act3-stage" id="faceAct3" aria-labelledby="disguiseTitle">
+        <div class="face-stage-head">
+          <div class="face-stage-copy">
+            <span class="face-kicker">第三幕</span>
+            <h2 id="disguiseTitle">雨花弄：变脸</h2>
+          </div>
+        </div>
+
+        <section class="face-panel face-act3-panel" aria-label="乔装打扮游戏场景">
+          <div class="face-act3-game" id="act3GameScene" aria-label="躲避搜查房间场景">
+            <div class="face-act3-start" id="act3GameStart">
+              <video class="face-act3-start-video" id="act3StartVideo" autoplay muted loop playsinline preload="auto" aria-hidden="true">
+                <source src="./game_assets/yuhuanong_shouye.mp4" type="video/mp4">
+              </video>
+              <canvas class="face-act3-light" id="act3StartLight" aria-hidden="true"></canvas>
+              <div class="face-act3-start-fade" id="act3StartFade" aria-hidden="true"></div>
+              <div class="face-act3-start-action">
+                <button class="face-act3-start-button" id="act3GameStartBtn" type="button" aria-label="开始游玩" title="开始游玩">
+                  <span class="face-act3-play-icon" aria-hidden="true"></span>
+                </button>
+                <strong>开始游玩</strong>
+              </div>
+            </div>
+          </div>
+        </section>
+        <div class="face-act3-related" id="act3RelatedVideos" hidden aria-live="polite"></div>
+      </section>
+    </section>
+  </main>
+
+  <script src="../shared/vendor/phaser/3.90.0/phaser.min.js"></script>
+  <script src="../shared/module-components.js"></script>
+  <script src="./game/config/constants.js"></script>
+  <script src="./game/assets/disguise-config.js"></script>
+  <script src="./game/systems/collision.js"></script>
+  <script src="./game/actors/animation.js"></script>
+  <script src="./game/actors/actor.js"></script>
+  <script src="./game/systems/navigation.js"></script>
+  <script src="./game/actors/movement.js"></script>
+  <script src="./game/ui/dialogue.js"></script>
+  <script src="./game/disguise/brush.js"></script>
+  <script src="./game/disguise/renderer.js"></script>
+  <script src="./game/ui/meter.js"></script>
+  <script src="./game/systems/similarity.js"></script>
+  <script src="./game/ui/buttons.js"></script>
+  <script src="./game/disguise/editor.js"></script>
+  <script src="./game/cutscene/opening.js"></script>
+  <script src="./game/scene/Act3Scene.js"></script>
+  <script src="./act3-disguise-game.js"></script>
+</body>
+</html>

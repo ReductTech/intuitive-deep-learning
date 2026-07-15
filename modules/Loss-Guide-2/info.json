@@ -1,0 +1,11 @@
+{
+  "id": "Loss-Guide-2",
+  "title": "天气预测的两种输出：Sigmoid + BCE 与 Softmax + CE",
+  "use_when": "用户想理解 logits、Sigmoid、Softmax、BCE、Cross Entropy，或需要区分独立二分类、多标签与互斥多分类的输出层和损失函数搭配时使用。",
+  "summary": "围绕天气预测逐幕建立输出层直觉：一个独立的下雨判断用 Sigmoid 与 BCE；晴、阴、雨三选一先暴露多个独立 Sigmoid 的总和问题，再用 Softmax 与 Cross Entropy 建立互斥类别竞争，最后完成两种任务的输出头搭配。",
+  "prerequisites": [
+    "线性层与 logits 的直观概念",
+    "分类任务",
+    "概率与对数的基本概念"
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "title": "从 logits 稳定计算 BCE 与 Cross Entropy",
+  "language": "python",
+  "promptHtml": "<p>直接从 logits 计算二分类 BCE 和多分类 Cross Entropy，并对照 Sigmoid、Softmax 概率。重点观察：训练损失直接接收 logits，展示时才转换成概率。</p>",
+  "codeFile": "tutorial_code.py",
+  "autoInsert": false
+}

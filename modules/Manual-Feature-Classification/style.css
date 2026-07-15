@@ -1,0 +1,324 @@
+[hidden] {
+  display: none !important;
+}
+
+.hdf-root {
+  min-height: 100vh;
+}
+
+.hdf-shell {
+  display: grid;
+  gap: 20px;
+}
+
+.hdf-progress {
+  margin: 0;
+}
+
+.hdf-stage {
+  scroll-margin-top: 18px;
+}
+
+.hdf-count-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(340px, 0.92fr);
+  gap: 16px;
+  align-items: stretch;
+}
+
+.hdf-count-layout > .edu-content-block {
+  min-width: 0;
+  margin: 0;
+}
+
+.hdf-digit-panel,
+.hdf-task-panel {
+  height: 100%;
+}
+
+.hdf-panel-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.hdf-distribution-actions {
+  margin-top: 12px;
+  margin-bottom: 0;
+}
+
+.hdf-digit-frame,
+.hdf-chart-frame,
+.hdf-mlp-input-panel,
+.hdf-mlp-network-panel,
+.hdf-mlp-logit-panel {
+  border: 1px solid var(--edu-border, #d7e1ef);
+  border-radius: 12px;
+  background: var(--edu-surface-soft, #f7f9fc);
+  overflow: hidden;
+}
+
+.hdf-digit-frame {
+  width: min(100%, 560px);
+  margin: 0 auto;
+  aspect-ratio: 1;
+}
+
+.hdf-digit-frame canvas,
+.hdf-chart-frame canvas,
+.hdf-mlp-input-panel canvas,
+.hdf-mlp-network-panel canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.hdf-task-body {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+}
+
+.hdf-count-form {
+  margin: 0;
+}
+
+.hdf-input-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+}
+
+.hdf-feedback {
+  margin: 0;
+}
+
+#vectorQuestion,
+#orderQuestion {
+  min-width: 0;
+}
+
+#vectorQuestion .dl-option-body {
+  overflow-wrap: anywhere;
+}
+
+#vectorQuestion .dl-question-option.is-previewing {
+  border-color: var(--ui-accent-alt, #f07842);
+  background: rgba(240, 120, 66, 0.08);
+  box-shadow: 0 0 0 3px rgba(240, 120, 66, 0.13);
+}
+
+#digitCanvas.is-path-previewing {
+  cursor: default;
+}
+
+.hdf-chart-panel,
+.hdf-mlp-panel,
+.hdf-resources {
+  margin: 0;
+}
+
+.hdf-game-prompt {
+  display: flex;
+  min-height: 58px;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 12px;
+  padding: 14px 20px;
+  font-size: 20px;
+  font-weight: 950;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.hdf-game-prompt.is-wrong {
+  justify-content: space-between;
+  font-size: 16px;
+  text-align: left;
+}
+
+.hdf-game-confirm {
+  flex: 0 0 auto;
+}
+
+.hdf-chart-frame {
+  width: 100%;
+  min-height: 460px;
+  aspect-ratio: 1160 / 660;
+}
+
+#distributionCanvas.is-clickable {
+  cursor: pointer;
+}
+
+.hdf-flow-area {
+  min-width: 0;
+}
+
+.hdf-mlp-flow {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.82fr) minmax(320px, 1.35fr) minmax(240px, 0.9fr);
+  gap: 14px;
+  align-items: stretch;
+}
+
+.hdf-mlp-input-panel,
+.hdf-mlp-network-panel,
+.hdf-mlp-logit-panel {
+  position: relative;
+  min-width: 0;
+  min-height: 310px;
+  padding: 42px 12px 12px;
+}
+
+.hdf-mlp-input-panel canvas,
+.hdf-mlp-network-panel canvas {
+  min-height: 250px;
+}
+
+.hdf-mini-title {
+  position: absolute;
+  top: 12px;
+  left: 14px;
+  right: 14px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  color: var(--edu-ink, #17365d);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.hdf-mlp-prediction {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 4px 0 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--edu-border, #d7e1ef);
+  color: var(--edu-muted, #60718a);
+  font-size: 13px;
+}
+
+.hdf-mlp-prediction strong {
+  color: var(--edu-ink, #17365d);
+  font-size: 28px;
+}
+
+.hdf-prob-bars {
+  display: grid;
+  gap: 7px;
+}
+
+.hdf-prob-row {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr) 48px;
+  gap: 7px;
+  align-items: center;
+  color: var(--edu-muted, #60718a);
+  font-size: 11px;
+  font-weight: 750;
+}
+
+.hdf-prob-row > div {
+  height: 8px;
+  border-radius: 999px;
+  background: #e4e9f0;
+  overflow: hidden;
+}
+
+.hdf-prob-row > div > i {
+  display: block;
+  height: 100%;
+  min-width: 1px;
+  border-radius: inherit;
+  background: var(--edu-blue, #274c7e);
+}
+
+.hdf-prob-row.is-top > div > i {
+  background: var(--edu-orange, #f07842);
+}
+
+.hdf-prob-row.is-top {
+  color: var(--edu-ink, #17365d);
+}
+
+.hdf-related-video-host:empty {
+  display: none;
+}
+
+.hdf-resources .edu-resource-actions {
+  margin-top: 18px;
+}
+
+.is-revealing {
+  animation: hdf-reveal 420ms ease-out both;
+}
+
+@keyframes hdf-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 960px) {
+  .hdf-count-layout,
+  .hdf-mlp-flow {
+    grid-template-columns: 1fr;
+  }
+
+  .hdf-count-layout > .edu-content-block {
+    height: auto;
+  }
+
+  .hdf-mlp-input-panel,
+  .hdf-mlp-network-panel,
+  .hdf-mlp-logit-panel {
+    min-height: 280px;
+  }
+
+  .hdf-chart-frame {
+    min-height: 380px;
+    aspect-ratio: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .hdf-shell {
+    gap: 14px;
+  }
+
+  .hdf-count-layout {
+    gap: 12px;
+  }
+
+  .hdf-input-row {
+    grid-template-columns: 1fr;
+  }
+
+  .hdf-input-row .edu-btn,
+  .hdf-panel-actions .edu-btn,
+  .hdf-game-confirm {
+    width: 100%;
+  }
+
+  .hdf-panel-actions,
+  .hdf-game-prompt {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .hdf-chart-frame {
+    min-height: 320px;
+  }
+
+}

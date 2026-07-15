@@ -1,0 +1,7 @@
+{
+  "title": "用 Python 看 ReLU 怎样制造折点",
+  "language": "python",
+  "promptHtml": "<p>这个实验把一个输入 x 送进多个 ReLU 神经元，再把它们加起来。试着改 hidden_units 里的 w、b、v，观察输出曲线的折点如何变化。</p>",
+  "codeFile": "tutorial_code.py",
+  "autoInsert": false
+}

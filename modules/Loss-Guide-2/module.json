@@ -1,0 +1,39 @@
+{
+  "id": "Loss-Guide-2",
+  "number": "M23",
+  "title": "天气预测的两种输出：Sigmoid + BCE 与 Softmax + CE",
+  "executor": "Codex",
+  "chapters": [
+    "binary-sigmoid",
+    "binary-cross-entropy",
+    "multiclass-softmax",
+    "categorical-cross-entropy",
+    "output-head-pairing"
+  ],
+  "status": "完整实验台",
+  "availability": "available",
+  "entry": "index.html",
+  "assets": [
+    "style.css",
+    "script.js",
+    "tutorial_code.json",
+    "tutorial_code.py"
+  ],
+  "description": "用同一个天气场景区分独立二分类与互斥多分类：先从单个 logit 亲手发现 Sigmoid，再用真实标签推导 BCE；随后故意将多个 Sigmoid 用于互斥天气类别，观察概率总和失控，再引入 Softmax 竞争与 Cross Entropy，最终完成输出头搭配。",
+  "rootClass": "wp",
+  "config": {
+    "binaryTask": {
+      "question": "明天会下雨吗",
+      "output": "sigmoid",
+      "loss": "BCEWithLogitsLoss"
+    },
+    "multiclassTask": {
+      "question": "明天是晴天、阴天、下雨中的哪一个",
+      "classes": ["sunny", "cloudy", "rainy"],
+      "output": "softmax",
+      "loss": "CrossEntropyLoss"
+    },
+    "unlockRule": "complete-current-experiment"
+  },
+  "sourceName": "天气预测的两种输出：Sigmoid + BCE 与 Softmax + CE"
+}

@@ -1,0 +1,3 @@
+{"ok": true, "service": "deep-learning-module-server", "host": "0.0.0.0", "port": 59411, "directory": "C:\\Users\\Ocean\\Documents\\GitHub\\Platu\\intuitive-deep-learning\\modules", "datasetDirectory": "C:\\Users\\Ocean\\Documents\\GitHub\\Platu\\intuitive-deep-learning\\dataset", "history": "C:\\Users\\Ocean\\Documents\\GitHub\\Platu\\intuitive-deep-learning\\history", "telemetry_auth": true}
+[module-http] 127.0.0.1 "GET /index.json HTTP/1.1" 200 -
+[module-http] 127.0.0.1 "GET /__telemetry/health HTTP/1.1" 200 -

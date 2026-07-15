@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Z07 · 从手绘边界到 MLP</title>
+  <link rel="stylesheet" href="../shared/base.css">
+  <link rel="stylesheet" href="../shared/module-components.css">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main class="edu-root z06-root z07-root">
+    <section class="edu-shell z06-shell">
+      <header class="edu-header z06-header">
+        <div>
+          <h1 class="edu-title">多层感知机与分类边界</h1>
+          <p class="edu-subtitle">从二维特征空间中的点分类出发，理解 MLP 如何通过训练学习决策边界。</p>
+        </div>
+      </header>
+
+      <section class="z07-intro">
+        <div class="z07-example-start">
+          <h2>让我们先从你熟悉的事物开始熟悉MLP吧！</h2>
+          <p>告诉我，你喜欢什么？在下方写一个你熟悉的事物。让我们一起看看能做些什么？</p>
+          <form class="z07-example-form" id="exampleForm">
+            <input class="edu-input" id="exampleInput" type="text" placeholder="网球" aria-label="输入你喜欢的事物">
+            <button class="edu-btn edu-btn--primary" id="exampleSubmit" type="submit">开始分析</button>
+          </form>
+          <div class="z07-stream-panel" id="streamPanel" aria-live="polite">
+            <div class="z07-thinking" id="thinkingLine"><i></i><span>正在把你的例子转成分类问题</span></div>
+            <div class="z07-stream-output" id="streamOutput"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="z07-challenge" id="challengeSection" aria-hidden="true" aria-labelledby="challengeTitle">
+        <header class="z07-challenge-head">
+          <div>
+            <span class="z07-kicker">先由你来寻找边界</span>
+            <h2 id="challengeTitle">我们收集了很多数据，并将它们渲染在下方面板中</h2>
+            <p id="levelDescription">按住鼠标左键，尝试画出这两组数据之间的分类边界吧！</p>
+          </div>
+          <div class="z07-progress" aria-label="挑战进度">
+            <span class="is-active" data-level-dot="0">1</span>
+            <i></i>
+            <span data-level-dot="1">2</span>
+            <i></i>
+            <span data-level-dot="2">3</span>
+          </div>
+        </header>
+        <div class="edu-callout edu-callout--blue z07-boundary-note" id="boundaryNote">
+          <strong class="edu-callout-label">观察提示</strong>
+          <span class="edu-callout-text">下面这张图会把你的例子转成两个可量化特征。你画出的线，就是一个人工设计的判断规则。</span>
+        </div>
+
+        <div class="z07-play-layout">
+          <div class="z07-canvas-wrap">
+            <canvas id="drawCanvas" width="900" height="520" aria-label="手绘分类边界画布"></canvas>
+            <div class="z07-canvas-prompt" id="canvasPrompt">横向或纵向拖动，画出分类边界</div>
+          </div>
+          <aside class="z07-score-card">
+            <div class="z07-level-label"><span>当前挑战</span><strong id="levelName">第一关 · 清晰分离</strong></div>
+            <div class="z07-score-ring" id="scoreRing"><strong id="scoreValue">--</strong><span>正确率</span></div>
+            <div class="z07-target"><span>通过要求</span><strong id="targetValue">85%</strong></div>
+            <div class="edu-callout edu-callout--orange z07-score-message" id="scoreFeedback" aria-live="polite">
+              <strong class="edu-callout-label" id="scoreMessageLabel">操作提示</strong>
+              <span class="edu-callout-text" id="scoreMessage">观察两类样本，画一条边界把它们分开。</span>
+            </div>
+            <div class="z07-actions">
+              <button class="edu-btn" id="clearBoundaryBtn" type="button">重新绘制</button>
+              <button class="edu-btn" id="newPointsBtn" type="button">换组散点</button>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="edu-stage z07-transition" id="mlpTransition" hidden aria-hidden="true" aria-live="polite" aria-labelledby="mlpTransitionTitle">
+        <header class="edu-stage-head">
+          <div class="edu-stage-copy">
+            <span class="edu-kicker">三关完成</span>
+            <h2 class="edu-stage-title" id="mlpTransitionTitle">当边界越来越复杂，交给 MLP 自动寻找</h2>
+            <p class="edu-stage-description">你刚才通过观察和尝试手动画出了分类边界。MLP 会通过训练不断调整权重，让橙色边界自动靠近更合适的位置。</p>
+          </div>
+          <button class="edu-btn edu-btn--primary" id="openMlpBtn" type="button" aria-controls="mlpContent">展开 MLP 实验</button>
+        </header>
+      </section>
+
+      <section class="z07-mlp-content" id="mlpContent" aria-hidden="true">
+        <section id="labs" class="z06-labs" aria-label="1D、2D、3D 分类实验"></section>
+      </section>
+    </section>
+  </main>
+
+  <script src="../shared/canvas-utils.js"></script>
+  <script src="../shared/plot-utils.js"></script>
+  <script src="../shared/module-components.js"></script>
+  <script src="./guide.js"></script>
+  <script src="./script.js"></script>
+</body>
+</html>

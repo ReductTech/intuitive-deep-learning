@@ -1,0 +1,30 @@
+{
+  "id": "N01-neuron-guide",
+  "number": "N01",
+  "title": "为什么需要神经元",
+  "executor": "Codex",
+  "chapters": [
+    "daily-decisions",
+    "user-decision-input",
+    "multiple-signals-behind-a-decision"
+  ],
+  "status": "新增实验台",
+  "availability": "available",
+  "entry": "index.html",
+  "assets": ["style.css", "script.js"],
+  "description": "从人每天都会做判断出发，让用户输入一个真实纠结的决定，并看到这个决定背后其实包含多个信号；本阶段暂不引出神经元。",
+  "rootClass": "ng",
+  "config": {
+    "defaultDecision": "要不要读研？",
+    "decisionPrompts": [
+      "早饭吃什么？",
+      "今天要不要出门？",
+      "这条消息要不要回？",
+      "这门课要不要选？",
+      "这个 offer 要不要接？",
+      "要不要读研？"
+    ],
+    "factors": ["兴趣", "就业压力", "经济成本", "家人期待", "未来发展", "当前成绩"]
+  },
+  "sourceName": "为什么需要神经元"
+}

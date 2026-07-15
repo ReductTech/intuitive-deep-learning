@@ -1,0 +1,28 @@
+{
+  "id": "Manual-Feature-Classification",
+  "number": "D02",
+  "title": "人工特征的分类",
+  "executor": "Codex",
+  "chapters": [
+    "manual-nine-grid-count",
+    "auto-scan-and-copy-feature-vector",
+    "mnist-feature-distribution",
+    "two-layer-mlp-generalization"
+  ],
+  "status": "第一版已实现",
+  "availability": "available",
+  "entry": "index.html",
+  "assets": [
+    "style.css",
+    "script.js"
+  ],
+  "description": "通过 MNIST 二值图像的九宫格像素计数建立人工特征思维，再把 160 张样本统计成分布图，最后用双层 MLP 观察人工特征在训练集和真实手写输入上的差异。",
+  "rootClass": "hdf",
+  "config": {
+    "dataset": "dataset/mnist",
+    "sampleCount": 160,
+    "grid": "3x3",
+    "pixelThreshold": 0
+  },
+  "sourceName": "人工特征的分类"
+}

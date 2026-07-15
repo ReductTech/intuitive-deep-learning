@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>乔装剧情·关卡编辑器</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="./level-editor.css">
+</head>
+<body>
+  <div class="le-app" id="levelEditorApp">
+    <header class="le-topbar">
+      <div class="le-brand">
+        <span class="le-brand-mark">F03</span>
+        <div>
+          <strong>乔装剧情·关卡编辑器</strong>
+          <span id="saveState">源配置</span>
+        </div>
+      </div>
+
+      <div class="le-toolbar" role="toolbar" aria-label="编辑工具">
+        <div class="le-tool-group">
+          <button class="le-icon-button" id="undoButton" type="button" title="撤销" aria-label="撤销">↶</button>
+          <button class="le-icon-button" id="redoButton" type="button" title="重做" aria-label="重做">↷</button>
+        </div>
+
+        <div class="le-segmented" id="toolSelector" aria-label="画布工具">
+          <button class="is-active" type="button" data-tool="select" title="选择与拖拽" aria-label="选择与拖拽">V</button>
+          <button type="button" data-tool="path" title="添加路径点" aria-label="添加路径点">P+</button>
+          <button type="button" data-tool="pan" title="平移画布" aria-label="平移画布">H</button>
+        </div>
+
+        <div class="le-tool-group">
+          <button class="le-icon-button" id="zoomOutButton" type="button" title="缩小" aria-label="缩小">−</button>
+          <button class="le-zoom-readout" id="zoomReadout" type="button" title="适应画布">100%</button>
+          <button class="le-icon-button" id="zoomInButton" type="button" title="放大" aria-label="放大">+</button>
+        </div>
+
+        <label class="le-switch"><input id="gridToggle" type="checkbox"><span>网格</span></label>
+        <label class="le-switch"><input id="snapToggle" type="checkbox" checked><span>吸附</span></label>
+        <label class="le-switch"><input id="overlayToggle" type="checkbox"><span>前景</span></label>
+        <label class="le-switch"><input id="collisionToggle" type="checkbox"><span>碰撞</span></label>
+        <label class="le-switch"><input id="labelToggle" type="checkbox" checked><span>标签</span></label>
+      </div>
+
+      <div class="le-file-actions">
+        <button type="button" id="importButton">导入</button>
+        <button type="button" id="exportJsonButton">导出 JSON</button>
+        <button class="is-primary" type="button" id="saveConfigButton">保存配置 JS</button>
+      </div>
+    </header>
+
+    <main class="le-workspace">
+      <aside class="le-scenes-panel" aria-label="剧情段列表">
+        <div class="le-panel-heading">
+          <div>
+            <span>剧情段</span>
+            <strong id="sceneCount">0</strong>
+          </div>
+          <button class="le-icon-button" id="addSceneButton" type="button" title="新建剧情段" aria-label="新建剧情段">+</button>
+        </div>
+        <div class="le-scene-list" id="sceneList"></div>
+        <div class="le-panel-footer">
+          <span id="projectPointCount">0 个坐标点</span>
+          <button type="button" id="resetButton">恢复源配置</button>
+        </div>
+      </aside>
+
+      <section class="le-stage-panel" aria-label="地图画布">
+        <div class="le-stage-bar">
+          <div>
+            <strong id="stageSceneName">加载中</strong>
+            <span id="stageSceneCue"></span>
+          </div>
+          <div class="le-stage-stats">
+            <span id="cursorCoordinates">X 0 · Y 0</span>
+            <span>1448 × 1086</span>
+          </div>
+        </div>
+        <div class="le-canvas-wrap" id="canvasWrap">
+          <canvas id="levelCanvas" tabindex="0" aria-label="关卡地图编辑画布"></canvas>
+          <div class="le-canvas-loading" id="canvasLoading">正在加载地图与角色素材</div>
+          <div class="le-canvas-mode" id="canvasMode">选择</div>
+        </div>
+      </section>
+
+      <aside class="le-inspector" aria-label="属性检查器">
+        <div class="le-panel-heading">
+          <div>
+            <span>属性</span>
+            <strong id="selectionKind">剧情段</strong>
+          </div>
+        </div>
+
+        <section class="le-inspector-section">
+          <div class="le-section-title">
+            <span>场景</span>
+            <div>
+              <button class="le-icon-button" id="moveSceneUpButton" type="button" title="上移场景" aria-label="上移场景">↑</button>
+              <button class="le-icon-button" id="moveSceneDownButton" type="button" title="下移场景" aria-label="下移场景">↓</button>
+              <button class="le-icon-button" id="duplicateSceneButton" type="button" title="复制场景" aria-label="复制场景">⧉</button>
+              <button class="le-icon-button is-danger" id="deleteSceneButton" type="button" title="删除场景" aria-label="删除场景">×</button>
+            </div>
+          </div>
+          <label class="le-field"><span>名称</span><input id="sceneLabelInput" type="text"></label>
+          <label class="le-field"><span>触发时机</span><input id="sceneCueInput" type="text"></label>
+        </section>
+
+        <section class="le-inspector-section">
+          <div class="le-section-title">
+            <span>角色轨道</span>
+            <strong id="trackCount">0</strong>
+          </div>
+          <div class="le-track-list" id="trackList"></div>
+          <div class="le-add-track">
+            <select id="actorLibrarySelect" aria-label="待添加角色"></select>
+            <button type="button" id="addTrackButton">添加</button>
+          </div>
+        </section>
+
+        <section class="le-inspector-section" id="trackInspectorSection">
+          <div class="le-section-title">
+            <span id="selectedActorName">角色</span>
+            <button class="le-icon-button is-danger" id="deleteTrackButton" type="button" title="删除角色轨道" aria-label="删除角色轨道">×</button>
+          </div>
+          <div class="le-field-grid">
+            <label class="le-field"><span>移动速度</span><input id="trackSpeedInput" type="number" min="20" max="1000" step="10"></label>
+            <label class="le-field"><span>结束朝向</span><select id="trackFacingSelect"><option value="up">上</option><option value="down">下</option><option value="left">左</option><option value="right">右</option></select></label>
+          </div>
+          <div class="le-check-row">
+            <label><input id="trackVisibleInput" type="checkbox" checked><span>显示</span></label>
+            <label><input id="trackLoopInput" type="checkbox"><span>循环路径</span></label>
+          </div>
+        </section>
+
+        <section class="le-inspector-section" id="pointInspectorSection">
+          <div class="le-section-title">
+            <span id="selectedPointRole">坐标点</span>
+            <div>
+              <button class="le-icon-button" id="movePointUpButton" type="button" title="前移路径点" aria-label="前移路径点">↑</button>
+              <button class="le-icon-button" id="movePointDownButton" type="button" title="后移路径点" aria-label="后移路径点">↓</button>
+              <button class="le-icon-button is-danger" id="deletePointButton" type="button" title="删除路径点" aria-label="删除路径点">×</button>
+            </div>
+          </div>
+          <label class="le-field"><span>标识</span><input id="pointIdInput" type="text" readonly></label>
+          <label class="le-field"><span>标签</span><input id="pointLabelInput" type="text"></label>
+          <div class="le-field-grid">
+            <label class="le-field"><span>X</span><input id="pointXInput" type="number" min="-512" max="1960" step="1"></label>
+            <label class="le-field"><span>Y</span><input id="pointYInput" type="number" min="-512" max="1598" step="1"></label>
+          </div>
+          <div class="le-field-grid le-waypoint-only">
+            <label class="le-field"><span>此段速度</span><input id="pointSpeedInput" type="number" min="20" max="1000" step="10"></label>
+            <label class="le-field"><span>停留 ms</span><input id="pointWaitInput" type="number" min="0" max="30000" step="100"></label>
+          </div>
+          <button class="le-wide-button" id="addWaypointButton" type="button">+  在路径末尾添加点</button>
+        </section>
+      </aside>
+    </main>
+
+    <footer class="le-timeline">
+      <div class="le-playback">
+        <button class="le-icon-button le-play-button" id="playButton" type="button" title="预览路径" aria-label="预览路径">▶</button>
+        <button class="le-icon-button" id="stopButton" type="button" title="停止预览" aria-label="停止预览">■</button>
+        <select id="playbackSpeedSelect" aria-label="预览倍速"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select>
+      </div>
+      <div class="le-timeline-main">
+        <div class="le-timeline-head">
+          <strong id="timelineActorName">未选择角色</strong>
+          <span id="timelineDuration">0.0 s</span>
+        </div>
+        <input class="le-scrubber" id="timelineScrubber" type="range" min="0" max="1000" value="0" aria-label="预览时间轴">
+        <div class="le-node-strip" id="nodeStrip"></div>
+      </div>
+    </footer>
+
+    <input id="fileInput" type="file" accept=".json,.js,application/json,text/javascript" hidden>
+    <div class="le-toast" id="toast" role="status" aria-live="polite"></div>
+  </div>
+
+  <script src="./game/config/constants.js"></script>
+  <script src="./game/assets/disguise-config.js"></script>
+  <script src="./level-editor.js"></script>
+</body>
+</html>

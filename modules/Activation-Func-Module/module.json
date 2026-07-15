@@ -1,0 +1,46 @@
+{
+  "id": "M20-activation-func",
+  "number": "M20",
+  "title": "激活函数如何带来非线性",
+  "executor": "Codex",
+  "chapters": [
+    "linear-definition",
+    "linear-choice-2d",
+    "linear-choice-3d",
+    "linear-network-no-activation",
+    "linear-composition-summary",
+    "relu-nonlinearity",
+    "universal-approximation",
+    "common-activations"
+  ],
+  "status": "新增实验台",
+  "availability": "available",
+  "entry": "index.html",
+  "assets": [
+    "style.css",
+    "script.js"
+  ],
+  "description": "先定义线性的直观形状，再通过二维和三维选择题确认线性形状；随后搭建无激活函数网络证明线性叠加仍是线性，再加入 ReLU 观察折点如何带来非线性，并认识常见激活函数。",
+  "rootClass": "af",
+  "config": {
+    "defaultStage": "linear-choice-2d",
+    "unlockRule": "correct-answer-only",
+    "threeDimensionalView": "rotatable-canvas",
+    "linearNetwork": {
+      "activation": "identity",
+      "maxSingleLayerNeurons": 3,
+      "hiddenUnitsPerLayer": 3,
+      "maxHiddenLayers": 5
+    },
+    "reluNetwork": {
+      "activation": "relu",
+      "maxNeurons": 5
+    },
+    "commonActivations": [
+      "ReLU",
+      "Sigmoid",
+      "SiLU"
+    ]
+  },
+  "sourceName": "激活函数如何带来非线性"
+}

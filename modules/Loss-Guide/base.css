@@ -1,0 +1,444 @@
+/*
+  统一教学模块 Base 样式
+  参考来源: activation-browser
+  适用范围: 页面外壳、卡片、控件、表格、图表区、徽标、提示信息
+*/
+
+/* 全局设计令牌（颜色、圆角、阴影、字体） */
+:root {
+  --ui-bg-page: #eef2f7;
+  --ui-bg-page-top: #f7f9fc;
+  --ui-bg-card: #ffffff;
+  --ui-bg-soft: #eef3fb;
+  --ui-bg-muted: #f6f8fc;
+
+  --ui-text-main: #21324a;
+  --ui-text-muted: #68778f;
+  --ui-text-light: #8b97ab;
+
+  --ui-border: #d7deea;
+  --ui-border-strong: #9fb0c8;
+
+  --ui-accent: #27446e;
+  --ui-accent-alt: #f07e47;
+  --ui-success: #228d5c;
+  --ui-warning: #c07100;
+  --ui-danger: #c43f52;
+
+  --ui-shadow-soft: 0 12px 34px rgba(25, 42, 70, 0.08);
+  --ui-shadow-hover: 0 16px 40px rgba(25, 42, 70, 0.12);
+
+  --ui-radius-xl: 24px;
+  --ui-radius-lg: 18px;
+  --ui-radius-md: 12px;
+  --ui-radius-sm: 8px;
+  --ui-radius-pill: 999px;
+
+  --ui-font-sans: "Segoe UI", "PingFang SC", "Hiragino Sans GB", Arial, sans-serif;
+  --ui-font-mono: "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+}
+
+/* 统一盒模型，避免不同浏览器计算差异 */
+* {
+  box-sizing: border-box;
+}
+
+/* 清理页面默认边距 */
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* 页面根容器：负责背景、基础字号与主字体 */
+.edu-root {
+  min-height: 100vh;
+  padding: 24px;
+  background:
+    radial-gradient(circle at top left, rgba(39, 68, 110, 0.06), transparent 30%),
+    linear-gradient(180deg, var(--ui-bg-page-top) 0%, var(--ui-bg-page) 100%);
+  color: var(--ui-text-main);
+  font-family: var(--ui-font-sans);
+}
+
+/* 内容外壳：统一最大宽度、边框、圆角和阴影 */
+.edu-shell {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 26px;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius-xl);
+  background: var(--ui-bg-card);
+  box-shadow: var(--ui-shadow-soft);
+}
+
+/* 顶部标题区：标题 + 右上角徽标 */
+.edu-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+/* 主标题 */
+.edu-title {
+  margin: 0;
+  font-size: 42px;
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+}
+
+/* 副标题 */
+.edu-subtitle {
+  margin: 10px 0 0;
+  color: var(--ui-text-muted);
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+/* 右上角胶囊徽标（例如“第X课 / 交互实验”） */
+.edu-badge {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius-pill);
+  background: var(--ui-bg-muted);
+  color: var(--ui-text-muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* 主布局：左侧控制区 + 右侧内容区 */
+.edu-grid {
+  display: grid;
+  grid-template-columns: 320px minmax(0, 1fr);
+  gap: 16px;
+}
+
+/* 面板与卡片共享基础边框样式 */
+.edu-panel,
+.edu-card {
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius-lg);
+  background: var(--ui-bg-card);
+}
+
+/* 左侧控制面板 */
+.edu-panel {
+  padding: 16px;
+}
+
+/* 右侧内容卡片 */
+.edu-card {
+  padding: 18px;
+}
+
+/* 相邻卡片之间的纵向间距 */
+.edu-card + .edu-card {
+  margin-top: 14px;
+}
+
+/* 区块标题（小号大写风格） */
+.edu-section-title {
+  margin: 0 0 10px;
+  color: var(--ui-text-muted);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+/* 表单标签 */
+.edu-label {
+  display: block;
+  margin: 0 0 6px;
+  font-size: 13px;
+  color: var(--ui-text-muted);
+}
+
+/* 输入控件基础样式：输入框/下拉/多行文本 */
+.edu-input,
+.edu-select,
+.edu-textarea {
+  width: 100%;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius-md);
+  background: #ffffff;
+  color: var(--ui-text-main);
+  font: inherit;
+  transition: border-color 140ms ease, box-shadow 140ms ease;
+}
+
+/* 单行输入控件统一高度 */
+.edu-input,
+.edu-select {
+  height: 40px;
+  padding: 0 12px;
+}
+
+/* 多行输入框 */
+.edu-textarea {
+  min-height: 120px;
+  padding: 10px 12px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+/* 控件聚焦态：高亮边框与外发光 */
+.edu-input:focus,
+.edu-select:focus,
+.edu-textarea:focus {
+  outline: none;
+  border-color: var(--ui-accent);
+  box-shadow: 0 0 0 3px rgba(39, 68, 110, 0.14);
+}
+
+/* 范围滑条统一主色 */
+.edu-range {
+  width: 100%;
+  accent-color: var(--ui-accent);
+}
+
+/* 常用行布局：左右对齐 */
+.edu-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+/* 按钮组容器 */
+.edu-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* 按钮基础样式 */
+.edu-btn {
+  border: 1px solid var(--ui-border);
+  background: #ffffff;
+  color: var(--ui-text-muted);
+  border-radius: var(--ui-radius-pill);
+  padding: 9px 16px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 140ms ease;
+}
+
+/* 按钮悬停反馈 */
+.edu-btn:hover {
+  transform: translateY(-1px);
+  border-color: var(--ui-accent);
+  color: var(--ui-accent);
+}
+
+/* 激活态与主按钮 */
+.edu-btn.is-active,
+.edu-btn--primary {
+  border-color: var(--ui-accent);
+  background: var(--ui-accent);
+  color: #ffffff;
+}
+
+/* 警告按钮 */
+.edu-btn--warn {
+  border-color: rgba(192, 113, 0, 0.45);
+  background: rgba(192, 113, 0, 0.08);
+  color: var(--ui-warning);
+}
+
+/* 危险按钮 */
+.edu-btn--danger {
+  border-color: rgba(196, 63, 82, 0.45);
+  background: rgba(196, 63, 82, 0.08);
+  color: var(--ui-danger);
+}
+
+/* KPI 指标卡网格 */
+.edu-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+/* 单个 KPI 卡片 */
+.edu-kpi {
+  padding: 12px;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius-md);
+  background: var(--ui-bg-soft);
+}
+
+/* KPI 标签文本 */
+.edu-kpi-label {
+  margin: 0;
+  color: var(--ui-text-muted);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* KPI 数值文本 */
+.edu-kpi-value {
+  margin: 4px 0 0;
+  color: var(--ui-accent);
+  font-family: var(--ui-font-mono);
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+/* 图表容器（适配 svg/canvas） */
+.edu-chart {
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius-lg);
+  background: linear-gradient(180deg, rgba(250, 252, 255, 0.98), #ffffff);
+  padding: 10px;
+}
+
+/* 图表元素自适应宽度 */
+.edu-chart svg,
+.edu-chart canvas {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* 图例容器 */
+.edu-legend {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  color: var(--ui-text-muted);
+  font-size: 14px;
+}
+
+/* 图例项 */
+.edu-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 图例色点 */
+.edu-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+}
+
+/* 主曲线颜色 */
+.edu-dot--main {
+  background: var(--ui-accent);
+}
+
+/* 对比曲线颜色 */
+.edu-dot--alt {
+  background: var(--ui-accent-alt);
+}
+
+/* 表格外层：横向滚动与边框 */
+.edu-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius-md);
+}
+
+/* 统一表格样式 */
+.edu-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 560px;
+}
+
+/* 单元格样式 */
+.edu-table th,
+.edu-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--ui-border);
+  text-align: left;
+  font-size: 14px;
+}
+
+/* 表头样式 */
+.edu-table th {
+  background: var(--ui-bg-muted);
+  color: var(--ui-text-muted);
+  font-weight: 700;
+}
+
+/* 行悬停高亮 */
+.edu-table tbody tr:hover {
+  background: rgba(39, 68, 110, 0.05);
+}
+
+/* 提示说明块 */
+.edu-note {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border: 1px solid rgba(39, 68, 110, 0.18);
+  border-radius: var(--ui-radius-md);
+  background: rgba(39, 68, 110, 0.07);
+  color: var(--ui-text-main);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* 提示块中的强调文本 */
+.edu-note strong {
+  color: var(--ui-accent);
+}
+
+/* 空状态占位（无数据时使用） */
+.edu-empty {
+  border: 1px dashed var(--ui-border-strong);
+  border-radius: var(--ui-radius-md);
+  padding: 20px;
+  text-align: center;
+  color: var(--ui-text-light);
+}
+
+/* 页脚说明文字 */
+.edu-footer {
+  margin-top: 16px;
+  color: var(--ui-text-light);
+  font-size: 12px;
+}
+
+/* 中等屏幕：左右布局改为上下布局 */
+@media (max-width: 980px) {
+  .edu-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .edu-title {
+    font-size: 32px;
+  }
+}
+
+/* 小屏幕：收紧内边距并降低密度 */
+@media (max-width: 760px) {
+  .edu-root {
+    padding: 14px;
+  }
+
+  .edu-shell {
+    padding: 16px;
+    border-radius: var(--ui-radius-lg);
+  }
+
+  .edu-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .edu-kpi-grid {
+    grid-template-columns: 1fr;
+  }
+}

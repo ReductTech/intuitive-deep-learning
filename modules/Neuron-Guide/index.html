@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="neuron.meta.title">N01 · 为什么需要神经元</title>
+  <link rel="stylesheet" href="../shared/base.css">
+  <link rel="stylesheet" href="../shared/module-components.css">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main class="edu-root ng-root">
+    <section class="edu-shell">
+      <header class="edu-header">
+        <div>
+          <h1 class="edu-title"><span data-i18n="neuron.header.title">认识神经元</span></h1>
+          <p class="edu-subtitle"><span data-i18n="neuron.header.subtitle">从一个真实决定出发，看多个输入如何经过权重汇总成一个输出。</span></p>
+        </div>
+      </header>
+
+      <section class="edu-stage edu-content-block edu-stage--featured" id="openingScene" aria-labelledby="openingTitle" data-i18n-scope="neuron.opening">
+        <header class="edu-content-head">
+          <h2 class="edu-content-title" id="openingTitle"><span data-i18n="neuron.opening.title">一个决定背后，藏着多少信号？</span></h2>
+          <p class="edu-content-subtitle"><span data-i18n="neuron.opening.subtitle">先从你最近纠结的一件事开始，把模糊的直觉一步步变成可以计算的输入。</span></p>
+        </header>
+
+        <div class="edu-content-body">
+          <div class="ng-decision-stream" aria-label="选择一个日常决定" data-i18n-aria-label="neuron.opening.examples.aria"></div>
+
+          <form class="ng-decision-form" id="decisionForm">
+            <div class="ng-decision-prompt">
+              <h3>最近有没有一件事，让你有点拿不定主意？</h3>
+              <p>选一件就好，我们陪你把藏在决定里的信号慢慢理清。</p>
+            </div>
+            <label class="edu-field" for="decisionInput">
+              <span class="ng-visually-hidden">写下你正在考虑的事情</span>
+              <span class="ng-input-row">
+                <span class="ng-input-prefix" data-i18n="neuron.opening.form.prefix">是否要</span>
+                <input id="decisionInput" class="edu-input" type="text" autocomplete="off" placeholder="选择一件正在犹豫的事" aria-describedby="decisionHelp">
+              </span>
+            </label>
+            <span class="edu-helper" id="decisionHelp" data-i18n="neuron.opening.form.help">例如：读研、健身、换工作。只写一件事。</span>
+            <div class="edu-toolbar-actions">
+              <button class="edu-btn edu-btn--primary" id="analyzeButton" type="submit"><span data-i18n="neuron.opening.form.submit">开始分析</span></button>
+            </div>
+          </form>
+
+          <div class="edu-callout edu-callout--blue edu-callout--stream ng-opening-status" id="aiStatus" role="status" aria-live="polite" hidden>
+            <strong class="edu-callout-label" id="aiStatusLabel" data-i18n="neuron.analysis.status.label">正在准备</strong>
+            <span class="edu-callout-text" id="aiStatusText" data-stream-output data-i18n="neuron.analysis.status.initial">输入一个决定后，这里会展示模型提取的信号。</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="edu-stage edu-content-block" id="analysisScene" hidden aria-labelledby="analysisTitle" data-i18n-scope="neuron.analysis">
+        <header class="edu-content-head">
+          <h2 class="edu-content-title" id="analysisTitle"><span data-i18n="neuron.analysis.title">把决定拆成输入信号</span></h2>
+          <p class="edu-content-subtitle"><span data-i18n="neuron.analysis.subtitle">先量化一个信号，再观察输入、权重和输出之间的关系。</span></p>
+        </header>
+
+        <div class="edu-content-body ng-analysis-body">
+          <div class="edu-callout edu-callout--blue" id="currentDecisionCallout" hidden>
+            <strong class="edu-callout-label" data-i18n="neuron.analysis.current.label">当前分析</strong>
+            <span class="edu-callout-text" id="decisionText" data-i18n-ignore="true"></span>
+          </div>
+
+          <div class="ng-factor-stack" id="factorStack" data-i18n-ignore="true"></div>
+          <div class="ng-theory-panel" id="theoryPanel" hidden data-i18n-ignore="true"></div>
+        </div>
+      </section>
+
+      <section class="edu-stage edu-content-block" id="completionScene" hidden aria-labelledby="completionTitle" data-i18n-scope="neuron.complete">
+        <header class="edu-content-head">
+          <h2 class="edu-content-title" id="completionTitle"><span data-i18n="neuron.complete.title">你已经搭出了一个人工神经元</span></h2>
+          <p class="edu-content-subtitle"><span data-i18n="neuron.complete.subtitle">多个输入带着各自的权重进入汇总结构，最终产生一个输出。</span></p>
+        </header>
+        <div class="edu-content-body">
+          <div id="modelViewerMount" data-i18n-ignore="true"></div>
+        </div>
+      </section>
+
+      <section class="edu-content-block ng-resources" id="resourceScene" hidden aria-labelledby="resourceTitle" data-i18n-scope="neuron.resources">
+        <header class="edu-content-head">
+          <h2 class="edu-content-title" id="resourceTitle"><span data-i18n="neuron.resources.title">推荐资源</span></h2>
+          <p class="edu-content-subtitle"><span data-i18n="neuron.resources.subtitle">继续认识真实神经元，再进入激活函数，观察神经元如何获得非线性表达能力。</span></p>
+        </header>
+        <div class="edu-content-body">
+          <div id="relatedVideosMount" data-i18n-ignore="true"></div>
+          <nav class="edu-resource-actions" aria-label="学习导航" data-i18n-aria-label="neuron.resources.actions.aria">
+            <a class="edu-btn" href="../CourseMap/"><span data-i18n="neuron.resources.actions.back">返回课程目录</span></a>
+            <a class="edu-btn edu-btn--primary" href="../Loss-Guide/" data-next-lesson><span data-i18n="neuron.resources.actions.next">学习下一个</span></a>
+          </nav>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script src="../shared/module-components.js"></script>
+  <script src="./script.js"></script>
+</body>
+</html>

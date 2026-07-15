@@ -1,0 +1,737 @@
+.af-root {
+  --af-blue: #27446e;
+  --af-red: #c43f52;
+  --af-orange: #f07e47;
+  --af-green: #228d5c;
+}
+
+.af-header .edu-title {
+  font-size: 38px;
+  letter-spacing: 0;
+}
+
+.af-definition {
+  margin-bottom: 18px;
+  border: 1px solid var(--ui-border);
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 92% 8%, rgba(240, 126, 71, 0.11), transparent 34%),
+    linear-gradient(135deg, #f7faff, #ffffff);
+  padding: 22px;
+}
+
+.af-kicker {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--af-orange);
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.af-definition h2,
+.af-quiz h2,
+.af-finish h2 {
+  margin: 0;
+  color: var(--ui-accent);
+  font-size: 26px;
+  line-height: 1.32;
+}
+
+.af-definition p,
+.af-quiz-head p,
+.af-finish p {
+  margin: 10px 0 0;
+  color: var(--ui-text-muted);
+  font-size: 14px;
+  font-weight: 760;
+  line-height: 1.8;
+}
+
+.af-quiz {
+  margin-top: 18px;
+  border-top: 3px solid var(--ui-accent);
+  padding-top: 16px;
+}
+
+.af-quiz--locked {
+  display: none;
+}
+
+.af-quiz-head {
+  display: flex;
+  flex-direction: column;
+  max-width: 850px;
+  margin-bottom: 14px;
+}
+
+.af-feedback {
+  margin: 12px 0 0;
+}
+
+.af-network-lab {
+  margin-top: 20px;
+  border-top: 3px solid var(--ui-accent);
+  padding-top: 16px;
+  animation: af-rise 360ms ease both;
+}
+
+.af-network-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.af-network-head h2 {
+  margin: 0;
+  color: var(--ui-accent);
+  font-size: 26px;
+  line-height: 1.32;
+}
+
+.af-network-head p {
+  max-width: 850px;
+  margin: 10px 0 0;
+  color: var(--ui-text-muted);
+  font-size: 14px;
+  font-weight: 760;
+  line-height: 1.8;
+}
+
+.af-network-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.af-network-actions .edu-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.54;
+  transform: none;
+}
+
+.af-network-stage {
+  display: grid;
+  grid-template-columns: minmax(360px, 0.95fr) minmax(520px, 1.05fr);
+  gap: 14px;
+  align-items: stretch;
+}
+
+.af-network-panel {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  min-height: 560px;
+  flex-direction: column;
+  border: 1px solid var(--ui-border);
+  border-radius: 8px;
+  background: #fff;
+  padding: 14px;
+}
+
+.af-panel-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.af-panel-head h3 {
+  margin: 0;
+  color: var(--ui-text-muted);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.af-panel-head span {
+  color: var(--ui-text-light);
+  font: 800 11px var(--ui-font-mono);
+}
+
+.af-canvas-box {
+  position: relative;
+  flex: 1;
+  min-height: 430px;
+  overflow: hidden;
+  border: 1px solid var(--ui-border);
+  border-radius: 8px;
+  background: linear-gradient(180deg, #fbfdff, #f5f8fc);
+}
+
+.af-canvas-box canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.af-plot,
+.af-plot .plot-container,
+.af-plot .svg-container {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.af-plot {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.af-choice-plot {
+  height: auto !important;
+  touch-action: none;
+}
+
+.af-stage-plot {
+  min-height: 430px;
+}
+
+.af-canvas-box--model canvas {
+  cursor: default;
+}
+
+.af-readout {
+  margin: 10px 0 0;
+}
+
+.af-inspector {
+  position: absolute;
+  z-index: 20;
+  left: 12px;
+  top: 12px;
+  display: none;
+  width: min(420px, calc(100% - 24px));
+  pointer-events: none;
+  border: 1px solid var(--ui-border-strong);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 16px 38px rgba(33, 50, 74, 0.18);
+  padding: 12px;
+  color: var(--ui-text-main);
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.af-inspector.is-visible {
+  display: block;
+}
+
+.af-inspector strong {
+  display: block;
+  color: var(--ui-accent);
+  font-size: 13px;
+}
+
+.af-inspector p {
+  margin: 6px 0 0;
+}
+
+.af-inspector code {
+  display: block;
+  margin-top: 7px;
+  border-radius: 7px;
+  background: var(--ui-bg-muted);
+  color: var(--ui-accent);
+  padding: 8px;
+  font: 850 11px/1.55 var(--ui-font-mono);
+  white-space: normal;
+}
+
+.af-finish {
+  margin-top: 18px;
+  border: 1px solid rgba(34, 141, 92, 0.35);
+  border-radius: 8px;
+  background: rgba(34, 141, 92, 0.08);
+  padding: 18px;
+  animation: af-rise 360ms ease both;
+}
+
+.af-continue-btn {
+  margin-top: 14px;
+}
+
+.af-relu-intro-card {
+  display: grid;
+  gap: 18px;
+  border: 1px solid var(--ui-border);
+  border-radius: 8px;
+  background: linear-gradient(180deg, #fbfdff, #f5f8fc);
+  padding: 20px;
+}
+
+.af-relu-control {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 22px;
+}
+
+.af-relu-input-value {
+  color: var(--af-orange);
+  font-size: 28px;
+  line-height: 1;
+}
+
+.af-fixed-weight {
+  display: grid;
+  min-width: 130px;
+  gap: 3px;
+  border-left: 3px solid var(--af-orange);
+  padding: 5px 0 5px 12px;
+}
+
+.af-fixed-weight span {
+  color: var(--ui-text-light);
+  font-size: 11px;
+  font-weight: 850;
+}
+
+.af-fixed-weight strong {
+  color: var(--af-orange);
+  font: 950 22px var(--ui-font-mono);
+}
+
+.af-relu-flow {
+  display: grid;
+  grid-template-columns: 112px minmax(100px, 1fr) 190px minmax(100px, 1fr) 112px;
+  align-items: center;
+  min-height: 260px;
+  border: 1px solid var(--ui-border);
+  border-radius: 8px;
+  background: #fff;
+  padding: 24px 28px;
+}
+
+.af-relu-definition-formula {
+  width: 100%;
+}
+
+.af-signal-node,
+.af-neuron-node {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-content: center;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  text-align: center;
+}
+
+.af-signal-node {
+  width: 112px;
+  height: 112px;
+  border: 4px solid #fff;
+  box-shadow: 0 0 0 1px var(--ui-border), 0 10px 25px rgba(39, 68, 110, 0.13);
+}
+
+.af-signal-node--input {
+  background: var(--af-blue);
+}
+
+.af-signal-node--output {
+  background: var(--af-red);
+}
+
+.af-signal-node span,
+.af-neuron-node > span {
+  font-size: 11px;
+  font-weight: 850;
+}
+
+.af-signal-node strong {
+  margin-top: 3px;
+  color: #ffe079;
+  font: 950 30px var(--ui-font-mono);
+}
+
+.af-neuron-node {
+  width: 190px;
+  height: 190px;
+  background: var(--af-green);
+  border: 5px solid #fff;
+  box-shadow: 0 0 0 1px rgba(34, 141, 92, 0.32), 0 14px 30px rgba(34, 141, 92, 0.16);
+}
+
+.af-neuron-node > span {
+  font-size: 21px;
+}
+
+.af-neuron-operation {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.af-neuron-operation b {
+  font: 950 29px var(--ui-font-mono);
+}
+
+.af-neuron-operation i {
+  font-style: normal;
+  opacity: 0.75;
+}
+
+.af-flow-link {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  align-self: stretch;
+  align-content: center;
+  justify-items: center;
+  gap: 4px;
+  color: var(--ui-text-light);
+  font-size: 10px;
+  font-weight: 850;
+}
+
+.af-flow-link::before {
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: -2px;
+  width: calc(100% + 10px);
+  height: 4px;
+  background: #9fb0c8;
+  content: "";
+  transform: translateY(-50%);
+}
+
+.af-flow-link::after {
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  right: -8px;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-left: 12px solid #9fb0c8;
+  content: "";
+  transform: translateY(-50%);
+}
+
+.af-weight-badge {
+  position: relative;
+  z-index: 1;
+  gap: 5px;
+  width: 92px;
+  height: 28px;
+  color: #526985;
+}
+
+.af-weight-badge b {
+  color: #d9602f;
+  font-family: var(--ui-font-mono);
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 950;
+}
+
+.af-relu-flow.is-suppressed .af-signal-node--output {
+  background: var(--ui-text-light);
+}
+
+.af-relu-formulas {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.af-relu-formulas p {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  border: 1px solid var(--ui-border);
+  border-radius: 8px;
+  background: #fff;
+  padding: 12px 14px;
+}
+
+.af-relu-formulas span {
+  color: var(--ui-text-light);
+  font-size: 11px;
+  font-weight: 850;
+}
+
+.af-relu-formulas code {
+  overflow-wrap: anywhere;
+  color: var(--ui-accent);
+  font: 900 15px/1.55 var(--ui-font-mono);
+}
+
+.af-relu-observation {
+  margin: 0;
+}
+
+.af-relu-intro-next {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  border-top: 1px solid var(--ui-border);
+  padding-top: 16px;
+  animation: af-rise 300ms ease both;
+}
+
+.af-relu-intro-next[hidden] {
+  display: none;
+}
+
+.af-relu-intro-next p {
+  max-width: 760px;
+  margin: 0;
+  color: var(--ui-text-muted);
+  font-size: 13px;
+  font-weight: 780;
+  line-height: 1.7;
+}
+
+.af-approx,
+.af-activations {
+  margin-top: 20px;
+  border-top: 3px solid var(--ui-accent);
+  padding-top: 16px;
+  animation: af-rise 360ms ease both;
+}
+
+.af-wide-panel {
+  overflow: hidden;
+  border: 1px solid var(--ui-border);
+  border-radius: 8px;
+  background: linear-gradient(180deg, #fbfdff, #f5f8fc);
+}
+
+.af-wide-plot {
+  width: 100%;
+  height: 520px;
+  min-height: 430px;
+}
+
+.af-activations h2 {
+  margin: 0 0 14px;
+  color: var(--ui-accent);
+  font-size: 26px;
+  line-height: 1.32;
+}
+
+.af-activation-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.af-activation-card {
+  display: grid;
+  gap: 9px;
+  min-width: 0;
+  border: 1px solid var(--ui-border);
+  border-radius: 8px;
+  background: #fff;
+  padding: 12px;
+}
+
+.af-activation-plot {
+  width: 100%;
+  height: auto !important;
+  aspect-ratio: 21 / 13;
+  border: 1px solid var(--ui-border);
+  border-radius: 8px;
+  background: #fbfdff;
+}
+
+.af-activation-card h3 {
+  margin: 0;
+  color: var(--ui-accent);
+  font-size: 18px;
+  font-weight: 950;
+}
+
+.af-related-resources {
+  width: 100%;
+  margin-top: 22px;
+}
+
+.af-related-videos .dl-related-section {
+  margin-top: 0;
+  border-top: 0;
+  padding-top: 0;
+}
+
+.af-activation-card code {
+  display: block;
+  border-radius: 7px;
+  background: var(--ui-bg-muted);
+  color: var(--ui-accent);
+  padding: 8px;
+  font: 850 12px var(--ui-font-mono);
+}
+
+.af-activation-card p {
+  margin: 0;
+  color: var(--ui-text-muted);
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.65;
+}
+
+@keyframes af-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1120px) {
+  .af-network-stage,
+  .af-activation-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .af-network-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .af-network-actions {
+    justify-content: flex-start;
+  }
+
+  .af-relu-flow {
+    grid-template-columns: 96px minmax(70px, 1fr) 160px minmax(70px, 1fr) 96px;
+    padding-inline: 18px;
+  }
+
+  .af-signal-node {
+    width: 96px;
+    height: 96px;
+  }
+
+  .af-neuron-node {
+    width: 160px;
+    height: 160px;
+  }
+}
+
+@media (max-width: 760px) {
+  .af-header .edu-title {
+    font-size: 30px;
+  }
+
+  .af-definition {
+    padding: 16px;
+  }
+
+  .af-network-panel {
+    min-height: 480px;
+  }
+
+  .af-canvas-box {
+    min-height: 360px;
+  }
+
+  .af-stage-plot {
+    min-height: 360px;
+  }
+
+  .af-wide-plot {
+    height: 430px;
+  }
+
+  .af-relu-intro-card {
+    padding: 14px;
+  }
+
+  .af-relu-control,
+  .af-relu-formulas {
+    grid-template-columns: 1fr;
+  }
+
+  .af-relu-flow {
+    grid-template-columns: 86px minmax(38px, 1fr) 118px minmax(38px, 1fr) 86px;
+    min-height: 190px;
+    padding: 18px 8px;
+  }
+
+  .af-signal-node {
+    width: 82px;
+    height: 82px;
+  }
+
+  .af-signal-node strong {
+    font-size: 22px;
+  }
+
+  .af-neuron-node {
+    width: 118px;
+    height: 118px;
+  }
+
+  .af-neuron-node > span {
+    font-size: 13px;
+  }
+
+  .af-neuron-operation {
+    gap: 4px;
+    margin: 7px 0 4px;
+  }
+
+  .af-neuron-operation b {
+    font-size: 17px;
+  }
+
+  .af-relu-intro-next {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 520px) {
+  .af-relu-flow {
+    grid-template-columns: 1fr;
+    grid-template-rows: 82px 58px 118px 58px 82px;
+    justify-items: center;
+    min-height: 0;
+    padding: 18px;
+  }
+
+  .af-signal-node {
+    width: 82px;
+    height: 82px;
+  }
+
+  .af-flow-link {
+    width: 100%;
+    height: 58px;
+    align-content: center;
+  }
+
+  .af-flow-link::before {
+    top: -2px;
+    left: 50%;
+    width: 4px;
+    height: calc(100% + 10px);
+    transform: translateX(-50%);
+  }
+
+  .af-flow-link::after {
+    top: auto;
+    right: auto;
+    bottom: -8px;
+    left: 50%;
+    border-top: 12px solid #9fb0c8;
+    border-right: 8px solid transparent;
+    border-bottom: 0;
+    border-left: 8px solid transparent;
+    transform: translateX(-50%);
+  }
+}

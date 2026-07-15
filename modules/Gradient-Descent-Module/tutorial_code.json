@@ -1,0 +1,7 @@
+{
+  "title": "手算一次梯度下降更新",
+  "language": "python",
+  "promptHtml": "<p>这个实验只训练一个参数 w。观察预测、损失、梯度和更新后的 w，理解“沿着让 loss 下降的方向走一步”。</p>",
+  "codeFile": "tutorial_code.py",
+  "autoInsert": false
+}
