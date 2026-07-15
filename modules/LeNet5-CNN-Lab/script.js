@@ -20,9 +20,8 @@
   var DETECTION_TABLE_UPDATE_EVERY = 6;
   var DETECTION_TARGET_DIGIT = 6;
   var DETECTION_DIGITS = ['0', '2', '4', '6', '8'];
-  var SEQUENCE_SCAN_INTERVAL_MS = 45;
-  var SEQUENCE_SCAN_START_DELAY_MS = 260;
-  var SEQUENCE_SCAN_WINDOWS_PER_TICK = 6;
+  var SEQUENCE_SCAN_DURATION_MS = 5000;
+  var SEQUENCE_SCAN_START_DELAY_MS = 80;
   var SEQUENCE_CTC_MIN_CONFIDENCE = 0.42;
   var SEQUENCE_CTC_MIN_RUN_LENGTH = 2;
   var DIGIT_CLASS_COUNT = 10;
@@ -1546,8 +1545,15 @@
   }
 
   function setSequenceScanStatus(text) {
-    var target = $('sequenceScanStatus');
+    var target = $('sequenceScanStatusText');
     if (target) target.textContent = text;
+  }
+
+  function setSequenceResult(text, typing) {
+    var target = $('sequenceResult');
+    if (!target) return;
+    target.textContent = text || '';
+    target.classList.toggle('is-typing', !!typing);
   }
 
   function hideSequenceOverlay() {
@@ -1574,7 +1580,7 @@
     state.sequenceCompleted = false;
     state.sequenceFrames = [];
     renderSequenceFrames([]);
-    $('sequenceResult').textContent = '-';
+    setSequenceResult('', false);
     setSequenceScanStatus(status || (state.sequenceIdeaSubmitted ? '点击开始序列识别' : '等待想法提交'));
     hideSequenceOverlay();
     updateProgressiveDisclosure();
@@ -1599,11 +1605,11 @@
       state.sequenceFrames = [];
       drawSequenceImage();
       renderSequenceFrames([]);
-      $('sequenceResult').textContent = '-';
+      setSequenceResult('', false);
       if (state.sequenceQuestion && !state.sequenceIdeaSubmitted) state.sequenceQuestion.resetQuestion();
       hideSequenceOverlay();
     } catch (error) {
-      $('sequenceResult').textContent = '服务不可用';
+      setSequenceResult('服务不可用', false);
     } finally {
       if (button) button.disabled = false;
     }
@@ -1649,7 +1655,7 @@
     };
   }
 
-  function decodeSequenceFrames(frames) {
+  function decodeSequenceFrames(frames, finalize) {
     var runs = [];
     frames.forEach(function (frame) {
       frame.keep = false;
@@ -1686,7 +1692,7 @@
       }
       acceptedRuns.push(item);
     });
-    var targetLength = /^\d{5}$/.test(state.sequenceDigits) ? state.sequenceDigits.length : 0;
+    var targetLength = finalize !== false && /^\d{5}$/.test(state.sequenceDigits) ? state.sequenceDigits.length : 0;
     if (targetLength && acceptedRuns.length < targetLength) {
       droppedRuns
         .sort(function (a, b) { return b.score - a.score; })
@@ -1716,11 +1722,7 @@
     var track = $('sequenceFrameTrack');
     if (!track) return;
     track.replaceChildren();
-    var visibleFrames = state.sequenceScanning
-      ? frames.slice(Math.max(0, frames.length - 18))
-      : frames.filter(function (frame) {
-        return frame.keep || frame.ctcBlank || (!frame.reject && frame.confidence >= 0.82);
-      });
+    var visibleFrames = frames;
     if (!visibleFrames.length) {
       var empty = document.createElement('div');
       empty.className = 'lenet-frame is-empty';
@@ -1729,22 +1731,36 @@
       return;
     }
     visibleFrames.forEach(function (frame) {
-      var item = document.createElement('div');
-      item.className = 'lenet-frame'
-        + (frame.reject ? ' is-blank' : '')
-        + (!frame.reject && !frame.keep ? ' is-candidate' : '')
-        + (frame.ctcBlank ? ' is-ctc-blank' : '')
-        + (frame.keep ? ' is-kept' : '');
-      item.textContent = 'x=' + frame.left;
-      var strong = document.createElement('strong');
-      strong.textContent = frame.ctcSymbol || (frame.reject ? '_' : frame.digit);
-      item.appendChild(strong);
-      var confidence = document.createElement('small');
-      confidence.textContent = formatPercent(frame.confidence);
-      item.appendChild(confidence);
-      item.title = 'x=' + frame.left + '，CTC符号 ' + (frame.ctcSymbol || (frame.reject ? '_' : frame.digit)) + '，置信度 ' + formatPercent(frame.confidence);
-      track.appendChild(item);
+      track.appendChild(createSequenceFrameElement(frame));
     });
+  }
+
+  function createSequenceFrameElement(frame) {
+    var item = document.createElement('div');
+    item.className = 'lenet-frame'
+      + (frame.reject ? ' is-blank' : '')
+      + (!frame.reject && !frame.keep ? ' is-candidate' : '')
+      + (frame.ctcBlank ? ' is-ctc-blank' : '')
+      + (frame.keep ? ' is-kept' : '');
+    item.textContent = 'x=' + frame.left;
+    var strong = document.createElement('strong');
+    strong.textContent = frame.ctcSymbol || (frame.reject ? '_' : frame.digit);
+    item.appendChild(strong);
+    var confidence = document.createElement('small');
+    confidence.textContent = formatPercent(frame.confidence);
+    item.appendChild(confidence);
+    item.title = 'x=' + frame.left + '，CTC符号 ' + (frame.ctcSymbol || (frame.reject ? '_' : frame.digit)) + '，置信度 ' + formatPercent(frame.confidence);
+    return item;
+  }
+
+  function appendSequenceFrame(frame) {
+    var track = $('sequenceFrameTrack');
+    if (!track) return;
+    var empty = track.querySelector('.lenet-frame.is-empty');
+    if (empty) empty.remove();
+    var item = createSequenceFrameElement(frame);
+    item.classList.add('is-entering');
+    track.appendChild(item);
   }
 
   function sequenceCanvasGeometry() {
@@ -1800,11 +1816,13 @@
     state.sequenceFrames = frames;
     state.sequenceCompleted = false;
     state.sequenceScanning = true;
-    $('sequenceResult').textContent = '-';
+    setSequenceResult('', true);
     setSequenceScanStatus('扫描中 0 / ' + lefts.length);
     updateProgressiveDisclosure();
     moveSequenceOverlay({ left: 0 });
+    $('sequenceFrameTrack').replaceChildren();
     var index = 0;
+    var scanInterval = Math.max(16, Math.round((SEQUENCE_SCAN_DURATION_MS - SEQUENCE_SCAN_START_DELAY_MS) / Math.max(1, lefts.length)));
     function tick() {
       if (index >= lefts.length) {
         window.clearInterval(state.sequenceTimer);
@@ -1813,7 +1831,7 @@
         var decoded = decodeSequenceFrames(frames);
         state.sequenceFrames = frames;
         renderSequenceFrames(frames);
-        $('sequenceResult').textContent = decoded || '-';
+        setSequenceResult(decoded || '-', false);
         setSequenceScanStatus('扫描完成，CTC 合并 ' + (decoded ? decoded.length : 0) + ' 个符号');
         state.sequenceCompleted = true;
         state.detectionUnlocked = true;
@@ -1821,33 +1839,34 @@
         updateProgressiveDisclosure();
         return;
       }
-      var lastFrame = null;
-      for (var scanned = 0; scanned < SEQUENCE_SCAN_WINDOWS_PER_TICK && index < lefts.length; scanned += 1) {
-        var leftNow = lefts[index];
-        var image = cropSequenceWindow(sequence, leftNow);
-        var ink = meanInk(image);
-        var prediction = inferDigitImage(image);
-        lastFrame = {
-          left: leftNow,
-          ink: ink,
-          blank: prediction.reject,
-          digit: prediction.digit,
-          confidence: prediction.confidence,
-          reject: prediction.reject,
-          prediction: prediction.prediction,
-        };
-        frames.push(lastFrame);
-        index += 1;
-      }
+      var leftNow = lefts[index];
+      var image = cropSequenceWindow(sequence, leftNow);
+      var ink = meanInk(image);
+      var prediction = inferDigitImage(image);
+      var lastFrame = {
+        left: leftNow,
+        ink: ink,
+        blank: prediction.reject,
+        digit: prediction.digit,
+        confidence: prediction.confidence,
+        reject: prediction.reject,
+        prediction: prediction.prediction,
+        ctcSymbol: (!prediction.reject && prediction.digit !== '_' && prediction.confidence >= SEQUENCE_CTC_MIN_CONFIDENCE)
+          ? prediction.digit
+          : '_',
+      };
+      frames.push(lastFrame);
+      index += 1;
       state.sequenceFrames = frames;
-      if (lastFrame) moveSequenceOverlay(lastFrame);
-      renderSequenceFrames(frames);
+      moveSequenceOverlay(lastFrame);
+      appendSequenceFrame(lastFrame);
+      setSequenceResult(decodeSequenceFrames(frames, false), true);
       setSequenceScanStatus('扫描中 ' + Math.min(index, lefts.length) + ' / ' + lefts.length);
     }
     state.sequenceTimer = window.setTimeout(function () {
       tick();
       if (state.sequenceScanning) {
-        state.sequenceTimer = window.setInterval(tick, SEQUENCE_SCAN_INTERVAL_MS);
+        state.sequenceTimer = window.setInterval(tick, scanInterval);
       }
     }, SEQUENCE_SCAN_START_DELAY_MS);
   }
@@ -1876,7 +1895,7 @@
       state.sequenceIdeaSubmitted = true;
       state.sequenceCompleted = false;
       state.sequenceFrames = [];
-      $('sequenceResult').textContent = '-';
+      setSequenceResult('', false);
       setSequenceScanStatus('思路已提交，点击开始序列识别');
       renderSequenceFrames([]);
       updateProgressiveDisclosure();
@@ -2298,7 +2317,6 @@
         hintButton: true,
         validator: function () { return { ok: true, tone: 'hint', message: '正在提交你的思路。' }; },
         onCheck: function (result) {
-          demoteIdeaSubmitButton(state.sequenceQuestion);
           if (!result.empty) submitSequenceIdea((result.answer || [])[0]);
         }
       });

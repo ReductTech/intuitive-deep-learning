@@ -76,7 +76,7 @@
       color: '#fff4df',
       wordWrap: { width: SCENE_WIDTH - 208 }
     });
-    var continueText = scene.add.text(SCENE_WIDTH - 198, SCENE_HEIGHT - 82, '点击 / 空格', {
+    var continueText = scene.add.text(SCENE_WIDTH - 198, SCENE_HEIGHT - 82, '空格 · 左键', {
       fontFamily: 'Microsoft YaHei, sans-serif',
       fontSize: '18px',
       color: '#f7d68a'

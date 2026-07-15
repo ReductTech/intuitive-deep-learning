@@ -49,7 +49,7 @@
 
 .gd-layer-label {
   fill: var(--ui-text-muted);
-  font: 900 13px var(--ui-font-sans);
+  font: 900 16px var(--ui-font-sans);
   text-anchor: middle;
 }
 
@@ -61,8 +61,11 @@
 
 .gd-fixed-edges text {
   fill: #8998ad;
-  font: 850 11px var(--ui-font-mono);
+  font: 850 14px var(--ui-font-mono);
   text-anchor: middle;
+  paint-order: stroke;
+  stroke: #fbfdff;
+  stroke-width: 3px;
 }
 
 .gd-output-edges line {
@@ -79,12 +82,12 @@
 
 .gd-node text {
   fill: #fff;
-  font: 950 14px var(--ui-font-sans);
+  font: 950 16px var(--ui-font-sans);
   text-anchor: middle;
 }
 
 .gd-node .gd-node-value {
-  font: 900 13px var(--ui-font-mono);
+  font: 900 15px var(--ui-font-mono);
 }
 
 .gd-node--input circle { fill: var(--ui-accent); }
@@ -113,11 +116,19 @@
 
 .gd-inline-weight .edu-label {
   color: var(--ui-accent-alt);
+  font-size: 14px;
   font-family: var(--ui-font-mono);
   font-weight: 950;
 }
 
-.gd-inline-weight .edu-control-value { min-width: 4ch; }
+.gd-inline-weight .edu-control-value {
+  min-width: 4ch;
+  font-size: 14px;
+}
+
+.gd-inline-weight.is-attention {
+  animation: gd-control-glow 1.05s ease-in-out infinite;
+}
 
 .gd-inline-weight:has(.edu-range:disabled) {
   border-color: var(--ui-border);
@@ -134,6 +145,7 @@
 }
 
 .gd-impact-question {
+  width: 100%;
   margin-block: 22px;
   animation: gd-rise 340ms ease both;
 }
@@ -320,7 +332,7 @@
 
 .gd-auto-demo {
   display: grid;
-  gap: 14px;
+  gap: 10px;
 }
 
 .gd-auto-demo-body {
@@ -343,19 +355,22 @@
   box-sizing: border-box;
 }
 
-.gd-auto-demo-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
+.gd-auto-demo.is-solved .gd-update-rule-card .edu-formula {
+  flex-wrap: nowrap;
+  gap: 7px;
+  font-size: 30px;
+  white-space: nowrap;
 }
 
-.gd-auto-demo-actions {
+.gd-update-rule-actions {
   display: flex;
+  width: 100%;
   justify-content: flex-end;
+  margin-top: 2px;
 }
 
-.gd-auto-demo-actions:has(.edu-btn[hidden]) { display: none; }
+.gd-update-rule-actions:has(.edu-btn[hidden]),
+.gd-update-rule-actions:empty { display: none; }
 
 .gd-learning-grid,
 .gd-guided-update,
@@ -363,23 +378,31 @@
 .gd-known-formulas,
 .gd-oscillation-question {
   display: grid;
-  gap: 12px;
+  gap: 10px;
 }
 
 .gd-update-rule-card {
   width: 100%;
-  min-height: 130px;
+  min-height: 112px;
   box-sizing: border-box;
+  gap: 12px;
+  padding-block: 14px;
 }
 
-.gd-update-rule-card .edu-kicker { margin-bottom: 0; }
+.gd-update-rule-card .edu-kicker {
+  margin-bottom: 0;
+  font-size: 20px;
+  line-height: 1.3;
+}
 
 .gd-update-rule-card .edu-formula {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 7px;
+  gap: 10px;
+  font-size: 40px;
+  line-height: 1.35;
 }
 
 .gd-update-rule-card .edu-formula i {
@@ -417,7 +440,7 @@
 .gd-weight-equation span,
 .gd-weight-equation code {
   color: var(--ui-accent);
-  font: 900 13px var(--ui-font-mono);
+  font: 900 17px var(--ui-font-mono);
 }
 
 .gd-weight-equation code {
@@ -425,11 +448,40 @@
   overflow-wrap: anywhere;
 }
 
+.gd-known-formulas {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
 .gd-known-formulas .edu-body {
   display: grid;
-  grid-template-columns: 44px minmax(0, 1fr);
+  min-width: 0;
+  grid-template-columns: 36px minmax(0, 1fr);
   align-items: center;
-  gap: 10px;
+  gap: 7px;
+  margin: 0;
+}
+
+.gd-known-formulas .edu-code {
+  min-width: 0;
+  font-size: 16px;
+  white-space: nowrap;
+}
+
+.gd-known-formulas .edu-helper {
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.gd-loss-history-head .edu-helper {
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.gd-rate-control .edu-label,
+.gd-rate-control .edu-control-value,
+.gd-oscillation-cue {
+  font-size: 15px;
 }
 
 .gd-mini-question,
@@ -438,7 +490,26 @@
   animation: gd-rise 280ms ease both;
 }
 
-.gd-mini-question { width: min(820px, 100%); }
+.gd-mini-question { width: 100%; }
+
+.gd-derivative-hint {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 0;
+  border-left: 3px solid rgba(39, 68, 110, 0.3);
+  color: var(--ui-text-muted);
+  padding-left: 10px;
+  font-size: 15px;
+  font-weight: 650;
+  line-height: 1.6;
+}
+
+.gd-derivative-hint strong {
+  flex: 0 0 auto;
+  color: var(--ui-accent);
+  font-weight: 900;
+}
 
 .gd-oscillation-question {
   grid-column: 1 / -1;
@@ -556,7 +627,7 @@
 
 .gd-full-weight-labels text {
   fill: var(--ui-accent);
-  font: 850 10px var(--ui-font-mono);
+  font: 850 13px var(--ui-font-mono);
   text-anchor: middle;
   paint-order: stroke;
   stroke: #fbfdff;
@@ -598,6 +669,9 @@
 @media (max-width: 760px) {
   .gd-network-canvas { overflow-x: auto; }
   .gd-network-canvas svg { width: 940px; max-width: none; }
+  .gd-known-formulas { grid-template-columns: 1fr; }
+  .gd-update-rule-card .edu-formula { font-size: 30px; }
+  .gd-update-rule-card .edu-kicker { font-size: 18px; }
 }
 
 @media (max-width: 640px) {
@@ -628,7 +702,6 @@
   .gd-auto-controls .edu-btn { width: 100%; }
   .gd-loss-history-head { flex-direction: column; }
   .gd-loss-history-head .gd-auto-controls { width: 100%; min-width: 0; }
-  .gd-auto-demo-head { align-items: flex-start; flex-direction: column; }
   .gd-auto-demo.is-solved .gd-auto-demo-body { grid-template-columns: 1fr; }
 }
 
@@ -642,6 +715,7 @@
   .gd-mini-question,
   .gd-oscillation-question,
   .gd-network-canvas--auto.is-updating,
+  .gd-inline-weight.is-attention,
   .gd-rate-control.is-attention,
   .gd-target-entry.is-attention,
   .gd-full-network.is-backprop .gd-full-edges line {

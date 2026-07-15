@@ -91,18 +91,11 @@
           <p class="edu-content-subtitle">依次算出误差方向和两个偏导，再观察更新步长如何影响稳定性。</p>
         </header>
         <div class="edu-content-body">
-          <div class="edu-panel gd-auto-demo" id="autoDemoCard" aria-labelledby="autoDemoTitle">
-            <div class="gd-auto-demo-head">
-              <h3 class="edu-panel-title" id="autoDemoTitle">如何让网络自动调节参数？</h3>
-              <div class="gd-auto-demo-actions" id="autoDemoActions">
-                <button class="edu-btn edu-btn--primary dl-button-hint" id="executeAutoUpdateBtn" type="button" data-dl-button-hint hidden>更新一次</button>
-              </div>
-            </div>
+          <div class="edu-panel gd-auto-demo" id="autoDemoCard">
             <div class="gd-auto-demo-body">
               <div class="gd-learning-grid" id="learningInteraction">
                 <div class="gd-guided-update" id="guidedUpdate">
                   <div class="gd-math-problem">
-                    <div class="edu-task"><strong>已知</strong><span>网络的参数可以通过下面的方式更新。</span></div>
                     <div class="edu-formula-block gd-update-rule-card" id="guidedRuleCard">
                       <span class="edu-kicker" id="guidedRuleLabel">更新规则</span>
                       <strong class="edu-formula" id="guidedRuleText">
@@ -115,6 +108,9 @@
                           <div class="gd-weight-equation"><strong>v₁(new)</strong><span>=</span><code><span id="confirmV1Old">—</span> − (<span id="confirmSignal1">—</span> × <span id="confirmH1">—</span>) = <b id="confirmV1New">—</b></code></div>
                           <div class="gd-weight-equation"><strong>v₂(new)</strong><span>=</span><code><span id="confirmV2Old">—</span> − (<span id="confirmSignal2">—</span> × <span id="confirmH2">—</span>) = <b id="confirmV2New">—</b></code></div>
                         </div>
+                      </div>
+                      <div class="gd-update-rule-actions" id="autoDemoActions">
+                        <button class="edu-btn edu-btn--primary dl-button-hint" id="executeAutoUpdateBtn" type="button" data-dl-button-hint hidden>执行一次参数更新</button>
                       </div>
                     </div>
                     <div class="gd-known-formulas">

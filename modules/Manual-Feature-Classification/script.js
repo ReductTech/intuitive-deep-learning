@@ -373,7 +373,8 @@
     var chosen = sample || samples.find(function (item) { return item.label === 7 && item.file === '60000.png'; }) || samples[0];
     resetFirstActState();
     state.currentSample = chosen;
-    $('sampleLabel').textContent = '数字 ' + chosen.label + ' · ' + chosen.file;
+    $('sampleLabel').textContent = '数字 ' + chosen.label;
+    $('regionZoom').hidden = true;
     $('countInput').value = '';
     $('countForm').hidden = true;
     $('countSubmit').disabled = false;
@@ -414,7 +415,6 @@
       state.targetRegion = pickPracticeRegion(state.features);
       state.selectedRegion = state.targetRegion;
       state.activeRegion = 0;
-      $('targetRegionLabel').textContent = REGION_LABELS[state.targetRegion];
       $('manualCountTitle').textContent = '自动计数中';
       $('countInstruction').textContent = '计算机正按从左上到右下的顺序数格子。每个被数到的像素会闪一下，数完后数量会直接写在图上。';
       setFeedback($('countFeedback'), '先看图上的高亮框移动和像素闪烁。', '');
@@ -490,12 +490,14 @@
   function stopForManualCount() {
     state.scanPhase = 'manualCount';
     state.flashPixel = null;
-    $('manualCountTitle').textContent = '轮到你数 ' + REGION_LABELS[state.targetRegion];
-    $('countInstruction').textContent = '这一格是当前样本里像素数最少的非空格。请自己数一遍，再输入数量。';
+    $('manualCountTitle').textContent = '轮到你数白色像素点';
+    $('countInstruction').textContent = '请观察放大图，数完后输入数量。';
+    $('regionZoomCanvas').setAttribute('aria-label', '待计数区域的像素放大图');
+    $('regionZoom').hidden = false;
     $('countForm').hidden = false;
     $('countInput').value = '';
     $('countInput').focus();
-    setFeedback($('countFeedback'), '计算机停在这里，不显示答案。请你数这个格子。', '');
+    setFeedback($('countFeedback'), '数数图中有几个白色像素点。', '');
     drawPracticeCanvases();
   }
 
@@ -526,6 +528,47 @@
       traversalOrder: state.manualDone ? state.vectorPreviewOrder : '',
       label: state.currentSample ? String(state.currentSample.label) : '',
     });
+    if (!$('regionZoom').hidden) {
+      drawRegionZoom($('regionZoomCanvas'), state.pixels, state.targetRegion);
+    }
+  }
+
+  function drawRegionZoom(canvas, pixels, regionIndex) {
+    if (!canvas || !pixels.length) return;
+    var prepared = prepareCanvas(canvas, '#0b1020');
+    var ctx = prepared.ctx;
+    var width = prepared.width;
+    var height = prepared.height;
+    var gridRow = Math.floor(regionIndex / 3);
+    var gridCol = regionIndex % 3;
+    var top = REGION_BOUNDS[gridRow];
+    var bottom = REGION_BOUNDS[gridRow + 1];
+    var left = REGION_BOUNDS[gridCol];
+    var right = REGION_BOUNDS[gridCol + 1];
+    var rows = bottom - top;
+    var cols = right - left;
+    var padding = Math.max(18, Math.min(width, height) * 0.07);
+    var cell = Math.min((width - padding * 2) / cols, (height - padding * 2) / rows);
+    var originX = (width - cols * cell) / 2;
+    var originY = (height - rows * cell) / 2;
+
+    ctx.save();
+    ctx.imageSmoothingEnabled = false;
+    for (var row = 0; row < rows; row += 1) {
+      for (var col = 0; col < cols; col += 1) {
+        var x = originX + col * cell;
+        var y = originY + row * cell;
+        ctx.fillStyle = pixels[top + row][left + col] > THRESHOLD ? '#f8fbff' : '#11182a';
+        ctx.fillRect(x, y, Math.ceil(cell), Math.ceil(cell));
+        ctx.strokeStyle = 'rgba(159, 176, 200, 0.2)';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(x, y, cell, cell);
+      }
+    }
+    ctx.strokeStyle = '#e07a3f';
+    ctx.lineWidth = 3;
+    ctx.strokeRect(originX, originY, cols * cell, rows * cell);
+    ctx.restore();
   }
 
   function drawDigitCanvas(canvas, pixels, options) {
@@ -728,6 +771,7 @@
     state.revealedCounts = state.revealedCounts.map(function () { return true; });
     $('countSubmit').disabled = true;
     $('countForm').hidden = true;
+    $('regionZoom').hidden = true;
     $('vectorQuestion').hidden = false;
     $('manualCountTitle').textContent = '选择这个 7 的特征向量';
     $('countInstruction').textContent = '图上的 9 个数字已经提取出来了。请选择哪一个判断最准确。';

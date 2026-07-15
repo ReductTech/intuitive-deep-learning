@@ -51,9 +51,12 @@
     moustache: { textureKey: 'act3IconMoustache', asset: 'huzi.svg' },
     mole: { textureKey: 'act3IconMole', asset: 'zhi.svg' },
     makeup: { textureKey: 'act3IconMakeup', asset: 'face_mod.svg' },
+    skinTone: { textureKey: 'act3IconSkinTone', asset: 'face_mod.svg' },
     reshape: { textureKey: 'act3IconReshape', asset: 'face_mod.svg' },
     lipstick: { textureKey: 'act3IconLipstick', asset: 'kouhong.svg' },
-    eyebrow: { textureKey: 'act3IconEyebrow', asset: 'meimao.svg' }
+    eyebrow: { textureKey: 'act3IconEyebrow', asset: 'meimao.svg' },
+    guidePencil: { textureKey: 'act3GuidePencil', asset: 'drawing_pencil.svg' },
+    guideHand: { textureKey: 'act3GuideHand', asset: 'hand_thin_point.svg' }
   };
   var DISGUISE_DOTS = [
     { textureKey: 'act3Dot1', asset: 'dots/ct1.png' },
@@ -81,12 +84,20 @@
       strength: 3
     },
     {
-      key: 'complexion',
-      label: '提气色',
-      color: 'rgba(214, 124, 78, 0.34)',
-      fill: 0xd67c4e,
-      diameter: 48,
-      strength: 2
+      key: 'pixelate',
+      label: '像素笔',
+      color: 'rgba(218, 184, 132, 0.42)',
+      fill: 0xc29a62,
+      diameter: 56,
+      strength: 3
+    },
+    {
+      key: 'blurBrush',
+      label: '模糊笔',
+      color: 'rgba(214, 194, 178, 0.34)',
+      fill: 0xbfa794,
+      diameter: 56,
+      strength: 3
     }
   ];
   var BRUSH_PALETTE_COLORS = [

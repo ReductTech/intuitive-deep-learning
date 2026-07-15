@@ -19,6 +19,14 @@
     return (Number(match[1]) << 16) + (Number(match[2]) << 8) + Number(match[3]);
   }
 
+  function cssColorAlpha(color, fallback) {
+    if (!color || typeof color !== 'string') return fallback;
+    var match = color.match(/rgba\([^,]+,[^,]+,[^,]+,\s*([\d.]+)\s*\)/);
+    if (!match) return fallback;
+    var value = Number(match[1]);
+    return Number.isFinite(value) ? Math.max(0, Math.min(1, value)) : fallback;
+  }
+
   function addDisguiseMark(scene, layer, state, x, y, uv, image) {
     var markData = createMarkData(state.tool, uv, image, state.params);
     var mark;
@@ -44,6 +52,7 @@
     if (brushKind === 'browPencil' || brushKind === 'eyeliner') return 'shapeBrow';
     if (brushKind === 'powderPuff') return 'blush';
     if (brushKind === 'makeupBrush') return 'contour';
+    if (brushKind === 'complexion') return 'contour';
     return brushKind || 'shapeBrow';
   }
 
@@ -51,7 +60,8 @@
     brushKind = normalizeBrushKind(brushKind);
     if (brushKind === 'shapeBrow') return 0.10;
     if (brushKind === 'blush') return 0.30;
-    if (brushKind === 'complexion') return 0.24;
+    if (brushKind === 'pixelate') return 0.18;
+    if (brushKind === 'blurBrush') return 0.22;
     return 0.16;
   }
 
@@ -65,8 +75,11 @@
     if (brushKind === 'blush') {
       return { kind: brushKind, width: Math.max(22, radius * 2.25), alpha: 0.09 + strength * 0.035 };
     }
-    if (brushKind === 'complexion') {
-      return { kind: brushKind, width: Math.max(28, radius * 2.55), alpha: 0.055 + strength * 0.022 };
+    if (brushKind === 'pixelate') {
+      return { kind: brushKind, width: Math.max(28, radius * 2.5), alpha: 0.26 + strength * 0.04 };
+    }
+    if (brushKind === 'blurBrush') {
+      return { kind: brushKind, width: Math.max(30, radius * 2.6), alpha: 0.28 + strength * 0.045 };
     }
     return { kind: 'contour', width: Math.max(24, radius * 2.05), alpha: 0.075 + strength * 0.03 };
   }
@@ -91,6 +104,9 @@
 
   function createBrushStrokeVisual(scene, markData) {
     var graphics = scene.add.graphics();
+    if (window.Phaser && Phaser.BlendModes) {
+      graphics.setBlendMode(Phaser.BlendModes.MULTIPLY);
+    }
     redrawBrushStrokeVisual(graphics, markData);
     return graphics;
   }
@@ -99,6 +115,7 @@
     var points = markData.screenPoints || [];
     var fill = cssColorToNumber(markData.color, 0x482416);
     var style = brushVisualStyle(markData);
+    style.alpha *= cssColorAlpha(markData.color, 1);
     graphics.clear();
     if (!points.length) return;
     if (style.kind === 'blush') {
@@ -113,13 +130,10 @@
       });
       return;
     }
-    if (style.kind === 'complexion') {
-      forEachScreenStrokeSample(points, Math.max(6, style.width * 0.36), function (x, y) {
-        graphics.fillStyle(fill, style.alpha * 0.12);
-        graphics.fillEllipse(x, y, style.width, style.width * 0.82);
-        graphics.fillStyle(fill, style.alpha * 0.18);
-        graphics.fillEllipse(x, y, style.width * 0.56, style.width * 0.46);
-      });
+    if (style.kind === 'pixelate') {
+      return;
+    }
+    if (style.kind === 'blurBrush') {
       return;
     }
     if (style.kind === 'contour') {
@@ -285,6 +299,7 @@
     var radius = markData.radius || 28;
     var fill = cssColorToNumber(markData.color, 0x482416);
     var style = brushVisualStyle(markData);
+    style.alpha *= cssColorAlpha(markData.color, 1);
     if (style.kind === 'shapeBrow') {
       for (var hair = 0; hair < 7; hair += 1) {
         var piece = scene.add.rectangle(
@@ -303,11 +318,10 @@
         scene.add.circle(0, 0, style.width * 0.31, fill, style.alpha * 0.23),
         scene.add.circle(0, 0, style.width * 0.14, fill, style.alpha * 0.30)
       ]);
-    } else if (style.kind === 'complexion') {
-      container.add([
-        scene.add.ellipse(0, 0, style.width, style.width * 0.82, fill, style.alpha * 0.12),
-        scene.add.ellipse(0, 0, style.width * 0.56, style.width * 0.46, fill, style.alpha * 0.18)
-      ]);
+    } else if (style.kind === 'pixelate') {
+      return container;
+    } else if (style.kind === 'blurBrush') {
+      return container;
     } else {
       container.add([
         scene.add.ellipse(0, 0, style.width, style.width * 0.38, fill, style.alpha * 0.10),

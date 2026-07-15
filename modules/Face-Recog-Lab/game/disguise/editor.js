@@ -49,6 +49,15 @@
   var MOLE_MIN_SIZE = 6;
   var MOLE_MAX_SIZE = 19;
   var MOLE_DEFAULT_SIZE = MOLE_MAX_SIZE / 2;
+  var SKIN_FILTER_PRESETS = [
+    { key: 'original', label: '原生' },
+    { key: 'clear', label: '清透', defaultStrength: 45 },
+    { key: 'cool', label: '冷萃', defaultStrength: 48 },
+    { key: 'warmSun', label: '暖阳', defaultStrength: 46 },
+    { key: 'film', label: '胶片', defaultStrength: 52 },
+    { key: 'blackGold', label: '黑金', defaultStrength: 48 },
+    { key: 'roseGlow', label: '霞光', defaultStrength: 44 }
+  ];
 
   function ensureMoleAlphaMask(scene, dot) {
     var maskKey = dot.maskTextureKey || dot.textureKey + 'AlphaMask';
@@ -96,7 +105,7 @@
     var toolButtons = {};
 
     var state = {
-      tool: 'brush',
+      tool: 'moustache',
       templateKey: 'normal',
       template: DISGUISE_TEMPLATES.normal,
       beardVariant: null,
@@ -104,6 +113,7 @@
       marks: [],
       markData: [],
       similarityTimer: null,
+      skinFilterPreviewTimer: null,
       similarityRequestId: 0,
       lastSimilarity: null,
       painting: false,
@@ -115,6 +125,7 @@
       previewTextureKey: 'act3-disguise-live-preview',
       previewFlattened: false,
       eyedropper: false,
+      guideSeen: { brush: false, mole: false },
       params: {
         moustacheDensity: 3,
         moustacheSize: 1,
@@ -127,6 +138,8 @@
         brushColor: BRUSH_KINDS[0].color,
         brushStrength: BRUSH_KINDS[0].strength,
         brushKind: BRUSH_KINDS[0].key,
+        skinFilterKey: 'original',
+        skinFilterStrength: 55,
         reshapeRadius: 24,
         reshapeStrength: 0.5
       }
@@ -155,12 +168,18 @@
       color: '#fff0bf',
       fontStyle: 'bold'
     }).setOrigin(0.5);
-    var templateText = scene.add.text(SCENE_WIDTH / 2, 706, '身份：不变', {
-      fontFamily: 'Microsoft YaHei, sans-serif',
-      fontSize: '24px',
+    var identityDescriptions = {
+      normal: '保留原本样貌，\n最容易被排查认出。',
+      farmer: '朴素寡言的乡民，\n面部特征更粗粝。',
+      trader: '精明干练的南方商人，\n注重仪表与气度。',
+      teacher: '沉稳克制的教书先生，\n气质斯文。'
+    };
+    var templateText = scene.add.text(-124, -92, '身份：不变', {
+      fontFamily: 'STKaiti, KaiTi, SimSun, Microsoft YaHei, serif',
+      fontSize: '30px',
       color: '#ffe6ae',
       fontStyle: 'bold'
-    }).setOrigin(0.5);
+    }).setOrigin(0, 0.5);
     var portraitShadow = scene.add.graphics();
     portraitShadow.fillGradientStyle(0x000000, 0x000000, 0x000000, 0x000000, 0.48, 0.1, 0.1, 0.48);
     portraitShadow.fillRect(0, 0, SCENE_WIDTH, SCENE_HEIGHT);
@@ -172,24 +191,109 @@
     portraitShadow.fillRect(0, 0, SCENE_WIDTH, 180);
     portraitShadow.fillGradientStyle(0x000000, 0x000000, 0x000000, 0x000000, 0, 0, 0.76, 0.76);
     portraitShadow.fillRect(0, 690, SCENE_WIDTH, SCENE_HEIGHT - 690);
+    var identityPanel = scene.add.graphics();
+    identityPanel.fillStyle(0x15100b, 0.86);
+    identityPanel.lineStyle(2, 0xb88a4d, 0.78);
+    identityPanel.fillRoundedRect(-150, -145, 300, 290, 6);
+    identityPanel.strokeRoundedRect(-150, -145, 300, 290, 6);
+    identityPanel.lineStyle(1, 0xd2aa67, 0.38);
+    identityPanel.strokeRoundedRect(-140, -135, 280, 270, 4);
+    var identityRuleLeft = scene.add.rectangle(-94, -48, 82, 2, 0xa47b45, 0.62);
+    var identityRuleRight = scene.add.rectangle(94, -48, 82, 2, 0xa47b45, 0.62);
+    var identityDiamond = scene.add.rectangle(0, -48, 10, 10, 0xb98b4c, 0.74).setRotation(Math.PI / 4);
+    var identityDescription = scene.add.text(-124, -12, identityDescriptions.normal, {
+      fontFamily: 'STKaiti, KaiTi, SimSun, Microsoft YaHei, serif',
+      fontSize: '18px',
+      color: '#cdb48b',
+      lineSpacing: 10,
+      wordWrap: { width: 248 }
+    });
+    var identityIcon = scene.add.image(0, 102, 'act3IconIdentity').setDisplaySize(38, 38).setTint(0x9b7747).setAlpha(0.72);
+    var identityCard = scene.add.container(218, 402, [
+      identityPanel,
+      templateText,
+      identityRuleLeft,
+      identityRuleRight,
+      identityDiamond,
+      identityDescription,
+      identityIcon
+    ]).setSize(300, 290).setInteractive();
     var editImage = scene.add.image(SCENE_WIDTH / 2, 440, state.template.textureKey);
     fitDisguisePortrait(editImage);
+    var previewOverlay = scene.add.image(editImage.x, editImage.y, state.template.textureKey).setVisible(false);
+    fitDisguisePortrait(previewOverlay);
     var hit = scene.add.rectangle(SCENE_WIDTH / 2, 458, 900, 760, 0xffffff, 0.001).setInteractive();
     var brushCursor = scene.add.graphics().setVisible(false);
     var moleCursor = scene.add.image(0, 0, state.params.moleMaskTextureKey).setVisible(false);
     var bottomShell = createDisguiseBottomShell(scene);
     var paramLayer = scene.add.container(0, 0);
     var paletteLayer = scene.add.container(0, 0).setVisible(false);
-    var paramTitle = scene.add.text(154, 798, '妆效', {
+    var paramTitle = scene.add.text(132, 798, '妆效', {
       fontFamily: 'STKaiti, KaiTi, SimSun, Microsoft YaHei, serif',
       fontSize: '28px',
       color: '#f2d5a1',
       fontStyle: 'bold'
     }).setOrigin(0, 0.5);
-    var similarityMeter = createSimilarityMeter(scene, SCENE_WIDTH / 2, 176, 520);
+    var similarityMeter = createSimilarityMeter(scene, SCENE_WIDTH / 2, 170, 420);
     var paramControls = [];
     var templateCards = {};
     var paletteTarget = 'brush';
+    var guideLayer = scene.add.container(0, 0).setVisible(false);
+    var guideGestureCursor = null;
+
+    function stopGuideMotion() {
+      if (guideGestureCursor) scene.tweens.killTweensOf(guideGestureCursor);
+    }
+
+    function finishGuide() {
+      stopGuideMotion();
+      guideLayer.setVisible(false);
+    }
+
+    function showToolGesture(tool) {
+      if ((tool !== 'brush' && tool !== 'mole') || state.guideSeen[tool] || !guideGestureCursor) return;
+      state.guideSeen[tool] = true;
+      stopGuideMotion();
+      guideLayer.setVisible(true);
+      if (tool === 'brush') {
+        guideGestureCursor
+          .setTexture('act3GuidePencil')
+          .setScale(1)
+          .setDisplaySize(58, 58)
+          .setRotation(-0.55)
+          .setPosition(675, 390)
+          .setAlpha(0.96);
+        scene.tweens.add({
+          targets: guideGestureCursor,
+          x: 825,
+          y: 470,
+          duration: 720,
+          repeat: 2,
+          repeatDelay: 160,
+          ease: 'Sine.easeInOut',
+          onComplete: finishGuide
+        });
+      } else {
+        guideGestureCursor
+          .setTexture('act3GuideHand')
+          .setScale(1)
+          .setDisplaySize(52, 70)
+          .setRotation(-0.12)
+          .setPosition(755, 380)
+          .setAlpha(0.96);
+        scene.tweens.add({
+          targets: guideGestureCursor,
+          y: 416,
+          alpha: 0.72,
+          duration: 360,
+          repeat: 2,
+          yoyo: true,
+          repeatDelay: 120,
+          ease: 'Sine.easeInOut',
+          onComplete: finishGuide
+        });
+      }
+    }
 
     function clearMarks() {
       if (state.similarityTimer) {
@@ -197,6 +301,10 @@
         state.similarityTimer = null;
       }
       state.similarityRequestId += 1;
+      if (state.skinFilterPreviewTimer) {
+        state.skinFilterPreviewTimer.remove(false);
+        state.skinFilterPreviewTimer = null;
+      }
       state.marks.forEach(function (mark) { mark.destroy(); });
       state.marks = [];
       state.markData = [];
@@ -208,16 +316,15 @@
       state.reshapeStart = null;
       state.reshapeCurrent = null;
       state.previewFlattened = false;
+      state.params.skinFilterKey = 'original';
       if (scene.textures.exists(state.previewTextureKey)) {
-        if (editImage && editImage.texture && editImage.texture.key === state.previewTextureKey) {
-          editImage.setTexture(disguiseTextureForState(state));
-        }
+        previewOverlay.setVisible(false).setTexture(disguiseTextureForState(state));
         scene.textures.remove(state.previewTextureKey);
       }
     }
 
-    function addParamButton(x, y, label, onClick) {
-      var button = createDisguiseOption(scene, x, y, 106, label, onClick);
+    function addParamButton(x, y, label, onClick, width) {
+      var button = createDisguiseOption(scene, x, y, width || 106, label, onClick);
       paramLayer.add(button);
       paramControls.push(button);
       return button;
@@ -395,6 +502,7 @@
       smoothTexture(scene, textureKey);
       editImage.setTexture(textureKey);
       fitDisguisePortrait(editImage);
+      previewOverlay.setVisible(false).setTexture(textureKey);
     }
 
     function refreshCompositePreview() {
@@ -404,12 +512,17 @@
       var previewWidth = Math.max(1, Math.round((sourceImage.width || 1) * previewScale));
       var previewHeight = Math.max(1, Math.round((sourceImage.height || 1) * previewScale));
       var rendered = drawFaceCanvas(scene, baseTextureKey, state.markData, previewWidth, previewHeight);
+      var baseRendered = drawFaceCanvas(scene, baseTextureKey, [], previewWidth, previewHeight);
       var sourceRect = containedDrawRect(sourceImage, rendered.width, rendered.height);
       var previewCanvas = document.createElement('canvas');
+      var baseCanvas = document.createElement('canvas');
       previewCanvas.width = Math.max(1, Math.round(sourceRect.width));
       previewCanvas.height = Math.max(1, Math.round(sourceRect.height));
+      baseCanvas.width = previewCanvas.width;
+      baseCanvas.height = previewCanvas.height;
       var previewContext = previewCanvas.getContext('2d');
-      if (!previewContext) return;
+      var baseContext = baseCanvas.getContext('2d');
+      if (!previewContext || !baseContext) return;
       previewContext.drawImage(
         rendered,
         sourceRect.x,
@@ -421,24 +534,47 @@
         previewCanvas.width,
         previewCanvas.height
       );
+      baseContext.drawImage(
+        baseRendered,
+        sourceRect.x,
+        sourceRect.y,
+        sourceRect.width,
+        sourceRect.height,
+        0,
+        0,
+        baseCanvas.width,
+        baseCanvas.height
+      );
+      var previewPixels = previewContext.getImageData(0, 0, previewCanvas.width, previewCanvas.height);
+      var basePixels = baseContext.getImageData(0, 0, baseCanvas.width, baseCanvas.height);
+      for (var pixel = 0; pixel < previewPixels.data.length; pixel += 4) {
+        var changed = Math.abs(previewPixels.data[pixel] - basePixels.data[pixel]) > 1 ||
+          Math.abs(previewPixels.data[pixel + 1] - basePixels.data[pixel + 1]) > 1 ||
+          Math.abs(previewPixels.data[pixel + 2] - basePixels.data[pixel + 2]) > 1 ||
+          Math.abs(previewPixels.data[pixel + 3] - basePixels.data[pixel + 3]) > 1;
+        if (!changed) previewPixels.data[pixel + 3] = 0;
+      }
+      previewContext.putImageData(previewPixels, 0, 0);
 
       editLayer.removeAll(true);
       state.marks = [];
       state.activeStrokeMark = null;
       state.activeStrokeVisual = null;
       editImage.setTexture(baseTextureKey);
+      fitDisguisePortrait(editImage);
       if (scene.textures.exists(state.previewTextureKey)) {
+        previewOverlay.setVisible(false).setTexture(baseTextureKey);
         scene.textures.remove(state.previewTextureKey);
       }
       scene.textures.addCanvas(state.previewTextureKey, previewCanvas);
       smoothTexture(scene, state.previewTextureKey);
-      editImage.setTexture(state.previewTextureKey);
-      fitDisguisePortrait(editImage);
+      previewOverlay.setTexture(state.previewTextureKey).setVisible(true);
+      fitDisguisePortrait(previewOverlay);
       state.previewFlattened = true;
     }
 
     function shouldShowBrushCursor() {
-      return state.selected && editorLayer.visible && state.tool !== 'moustache';
+      return state.selected && editorLayer.visible && state.tool !== 'moustache' && state.tool !== 'skinTone';
     }
 
     function cursorDiameterForTool() {
@@ -567,7 +703,8 @@
     }
 
     function setBrushStrength(value) {
-      state.params.brushStrength = Math.max(1, Math.min(5, value));
+      var maxStrength = state.params.brushKind === 'pixelate' ? 10 : state.params.brushKind === 'blurBrush' ? 8 : 5;
+      state.params.brushStrength = Math.max(1, Math.min(maxStrength, value));
     }
 
     function setReshapeRadius(value) {
@@ -581,8 +718,12 @@
 
     function addBrushSliders(x, y) {
       var maxDiameter = state.params.brushKind === 'shapeBrow' ? 112 : 56;
+      var strengthLabel = state.params.brushKind === 'pixelate'
+        ? '像素程度'
+        : state.params.brushKind === 'blurBrush' ? '模糊程度' : '力度';
+      var maxStrength = state.params.brushKind === 'pixelate' ? 10 : state.params.brushKind === 'blurBrush' ? 8 : 5;
       addParamSlider(x, y, 360, '范围', 12, maxDiameter, state.params.brushDiameter || 24, setBrushDiameter);
-      addParamSlider(x + 498, y, 360, '力度', 1, 5, state.params.brushStrength || 3, setBrushStrength);
+      addParamSlider(x + 498, y, 360, strengthLabel, 1, maxStrength, state.params.brushStrength || 3, setBrushStrength);
     }
 
     function setMoleSize(value) {
@@ -667,10 +808,48 @@
       scheduleSimilarityUpdate(scene, state, similarityMeter);
     }
 
+    function scheduleSkinFilterPreview() {
+      if (state.skinFilterPreviewTimer) state.skinFilterPreviewTimer.remove(false);
+      state.skinFilterPreviewTimer = scene.time.delayedCall(40, function () {
+        state.skinFilterPreviewTimer = null;
+        if (state.markData.length) refreshCompositePreview();
+        else applyFaceTexture();
+      });
+      scheduleSimilarityUpdate(scene, state, similarityMeter);
+    }
+
+    function syncSkinFilterMark() {
+      state.markData = state.markData.filter(function (mark) { return mark.tool !== 'skinFilter'; });
+      if (state.params.skinFilterKey !== 'original') {
+        state.markData.unshift({
+          tool: 'skinFilter',
+          filter: state.params.skinFilterKey,
+          strength: state.params.skinFilterStrength
+        });
+      }
+      scheduleSkinFilterPreview();
+    }
+
+    function setSkinFilter(filterKey) {
+      var nextKey = filterKey || 'original';
+      if (nextKey !== state.params.skinFilterKey) {
+        var preset = SKIN_FILTER_PRESETS.find(function (item) { return item.key === nextKey; });
+        if (preset && preset.defaultStrength) state.params.skinFilterStrength = preset.defaultStrength;
+      }
+      state.params.skinFilterKey = nextKey;
+      syncSkinFilterMark();
+      updateParamPanel();
+    }
+
+    function setSkinFilterStrength(value) {
+      state.params.skinFilterStrength = Math.max(10, Math.min(100, value));
+      syncSkinFilterMark();
+    }
+
     function updateParamPanel() {
       clearParamControls();
       if (state.tool === 'moustache') {
-        paramTitle.setText('胡子样式');
+        paramTitle.setText('胡子');
         addParamButton(408, 798, state.beardVariant ? '无' : '✓ 无', function () {
           setBeardVariant(null);
         });
@@ -681,7 +860,7 @@
           setBeardVariant('h2');
         });
       } else if (state.tool === 'mole') {
-        paramTitle.setText('痣');
+        paramTitle.setText('痣饰');
         DISGUISE_DOTS.forEach(function (dot, index) {
           addDotButton(342 + index * 78, 758, dot);
         });
@@ -690,12 +869,22 @@
         });
         addParamSlider(342, 850, 360, '大小', MOLE_MIN_SIZE, MOLE_MAX_SIZE, state.params.moleSize || MOLE_DEFAULT_SIZE, setMoleSize);
         addParamSlider(840, 850, 360, '不透明度', 20, 100, state.params.moleOpacity || 100, setMoleOpacity);
+      } else if (state.tool === 'skinTone') {
+        paramTitle.setText('滤镜');
+        SKIN_FILTER_PRESETS.forEach(function (preset, index) {
+          addParamButton(300 + index * 100, 790, (state.params.skinFilterKey === preset.key ? '✓ ' : '') + preset.label, function () {
+            setSkinFilter(preset.key);
+          }, 88);
+        });
+        if (state.params.skinFilterKey !== 'original') {
+          addParamSlider(1025, 806, 300, '滤镜强度', 10, 100, state.params.skinFilterStrength || 55, setSkinFilterStrength);
+        }
       } else if (state.tool === 'reshape') {
         paramTitle.setText('塑形');
         addParamSlider(342, 806, 360, '范围', 12, 36, state.params.reshapeRadius || 24, setReshapeRadius);
         addParamSlider(840, 806, 360, '力度', 0.25, 1, state.params.reshapeStrength || 0.5, setReshapeStrength);
       } else {
-        paramTitle.setText('妆效');
+        paramTitle.setText('妆容');
         var colorFill = cssColorToNumber(state.params.brushColor, 0x4a2416);
         addParamLabel(324, 716, '取色');
         addSwatchButton(350, 770, colorFill, '颜色', true, function () { openPalette('brush'); });
@@ -736,12 +925,14 @@
     }
 
     function selectTool(tool) {
+      finishGuide();
       state.tool = tool;
       updateParamPanel();
       revealParamPanel();
-      if (tool === 'moustache') {
+      if (tool === 'moustache' || tool === 'skinTone') {
         hideBrushCursor();
       }
+      showToolGesture(tool);
     }
 
     function selectTemplate(templateKey) {
@@ -758,8 +949,9 @@
       cardLayer.setVisible(false);
       editorLayer.setVisible(true);
       templateText.setText('身份：' + template.label);
+      identityDescription.setText(identityDescriptions[templateKey] || identityDescriptions.normal);
       similarityMeter.reset();
-      selectTool('brush');
+      selectTool('moustache');
       scheduleSimilarityUpdate(scene, state, similarityMeter);
     }
 
@@ -783,7 +975,7 @@
 
     function paintAtPointer(pointer, force) {
       if (!state.selected || state.tool === 'moustache') return;
-      if (state.tool === 'reshape') return;
+      if (state.tool === 'reshape' || state.tool === 'skinTone') return;
       if (state.eyedropper) {
         sampleFaceColor(pointer);
         state.painting = false;
@@ -791,9 +983,13 @@
       }
       var uv = pointerToImageUv(editImage, pointer);
       if (!uv) return;
+      if (state.tool === 'brush' || state.tool === 'mole') {
+        finishGuide();
+      }
       if (state.tool === 'mole') {
         if (!force) return;
         addDisguiseMark(scene, editLayer, state, pointer.x, pointer.y, uv, editImage);
+        refreshCompositePreview();
         scheduleSimilarityUpdate(scene, state, similarityMeter);
         return;
       }
@@ -862,6 +1058,7 @@
       }
       if (state.activeStrokeMark) {
         scheduleSimilarityUpdate(scene, state, similarityMeter);
+        refreshCompositePreview();
       }
       state.painting = false;
       state.lastPaint = null;
@@ -896,7 +1093,7 @@
     });
     hit.on('pointerdown', function (pointer) {
       if (!state.selected) return;
-      if (state.tool === 'moustache') return;
+      if (state.tool === 'moustache' || state.tool === 'skinTone') return;
       if (state.tool === 'reshape') {
         var reshapeUv = pointerToImageUv(editImage, pointer);
         if (!reshapeUv) return;
@@ -927,22 +1124,25 @@
       cardLayer.setVisible(true);
       hideBrushCursor();
     });
-    var moustacheButton = createIconToolButton(scene, 420, 970, 'moustache', '胡子', function () {
+    var moustacheButton = createIconToolButton(scene, 422, 974, 'moustache', '胡子', function () {
       selectTool('moustache');
     });
-    var moleButton = createIconToolButton(scene, 620, 970, 'mole', '痣', function () {
+    var moleButton = createIconToolButton(scene, 573, 974, 'mole', '痣', function () {
       selectTool('mole');
     });
-    var brushButton = createIconToolButton(scene, 820, 970, 'makeup', '妆效', function () {
+    var brushButton = createIconToolButton(scene, 724, 974, 'makeup', '妆效', function () {
       selectTool('brush');
     });
-    var reshapeButton = createIconToolButton(scene, 1020, 970, 'reshape', '塑形', function () {
+    var skinToneButton = createIconToolButton(scene, 875, 974, 'skinTone', '滤镜', function () {
+      selectTool('skinTone');
+    });
+    var reshapeButton = createIconToolButton(scene, 1026, 974, 'reshape', '塑形', function () {
       selectTool('reshape');
     });
-    var reshapeIconCover = scene.add.circle(0, -14, 30, 0x2d2923, 0.96);
-    var reshapeArrow = scene.add.text(0, -17, '↔', {
+    var reshapeIconCover = scene.add.rectangle(-40, 0, 36, 36, 0x2d2923, 0.96);
+    var reshapeArrow = scene.add.text(-40, -2, '↔', {
       fontFamily: 'Arial, sans-serif',
-      fontSize: '35px',
+      fontSize: '30px',
       color: '#f4d89b',
       fontStyle: 'bold'
     }).setOrigin(0.5);
@@ -950,7 +1150,22 @@
     toolButtons.moustache = moustacheButton;
     toolButtons.mole = moleButton;
     toolButtons.brush = brushButton;
+    toolButtons.skinTone = skinToneButton;
     toolButtons.reshape = reshapeButton;
+
+    if (scene.input.keyboard) {
+      scene.input.keyboard.on('keydown', function (event) {
+        if (!container.visible || !editorLayer.visible || !event) return;
+        if (event.key === '1') selectTool('moustache');
+        else if (event.key === '2') selectTool('mole');
+        else if (event.key === '3') selectTool('brush');
+        else if (event.key === '4') selectTool('skinTone');
+        else if (event.key === '5') selectTool('reshape');
+      });
+    }
+
+    guideGestureCursor = scene.add.image(640, 390, 'act3GuidePencil').setVisible(true);
+    guideLayer.add(guideGestureCursor);
 
     var clearButton = createDisguiseActionButton(scene, 1162, 62, 118, '清除', false, function () {
       clearMarks();
@@ -1000,6 +1215,7 @@
     ]);
     editorLayer.add([
       editImage,
+      previewOverlay,
       portraitShadow,
       editLayer,
       hit,
@@ -1007,17 +1223,19 @@
       moleCursor,
       bottomShell,
       identityButton,
-      templateText,
+      identityCard,
       paramLayer,
       paramTitle,
       similarityMeter.node,
       moustacheButton,
       moleButton,
       brushButton,
+      skinToneButton,
       reshapeButton,
       clearButton,
       finishButton,
-      paletteLayer
+      paletteLayer,
+      guideLayer
     ]);
 
     return {
@@ -1039,7 +1257,12 @@
         state.templateKey = 'normal';
         state.template = DISGUISE_TEMPLATES.normal;
         state.beardVariant = null;
-        state.tool = 'brush';
+        templateText.setText('身份：不变');
+        identityDescription.setText(identityDescriptions.normal);
+        state.tool = 'moustache';
+        state.guideSeen = { brush: false, mole: false };
+        stopGuideMotion();
+        guideLayer.setVisible(false);
         state.params.moleTextureKey = DISGUISE_DOTS[0].textureKey;
         state.params.moleMaskTextureKey = DISGUISE_DOTS[0].maskTextureKey;
         state.params.moleColor = 'rgba(45, 24, 16, 1)';
@@ -1049,6 +1272,8 @@
         state.params.brushColor = BRUSH_KINDS[0].color;
         state.params.brushStrength = BRUSH_KINDS[0].strength;
         state.params.brushKind = BRUSH_KINDS[0].key;
+        state.params.skinFilterKey = 'original';
+        state.params.skinFilterStrength = 55;
         state.params.reshapeRadius = 24;
         state.params.reshapeStrength = 0.5;
         applyFaceTexture();

@@ -271,7 +271,7 @@
       });
       await wait(scene, callIndex === calls.length - 1 ? 120 : 90);
     }
-    var subtitle = scene.add.text(SCENE_WIDTH / 2, 890, '门外的脚步声逼近。', {
+    var subtitle = scene.add.text(SCENE_WIDTH / 2, 890, '门外的脚步声逼近', {
       fontFamily: 'Microsoft YaHei, sans-serif',
       fontSize: '25px',
       color: '#c8c1b7'
@@ -329,14 +329,14 @@
       }
     });
     await showDialogueLines(scene, [
-      { speaker: '？？？', text: '店打烊了。', duration: 1200 },
-      { speaker: '林墨', text: '我走错路了。', duration: 1300 },
-      { speaker: '？？？', text: '你要去哪？', duration: 1200 },
-      { speaker: '林墨', text: '三槐巷。', duration: 1100 },
-      { speaker: '？？？', text: '三槐巷没有路。', duration: 1400 },
-      { speaker: '林墨', text: '后院井没有水', duration: 1400 },
-      { speaker: '门内', text: '……门栓轻响。', duration: 1500 },
-      { speaker: '？？？', text: '进来。', duration: 1000 }
+      { speaker: '？？？', text: '谁呀，店打烊了...', duration: 1200 },
+      { speaker: '林墨', text: '我走错路了', duration: 1300 },
+      { speaker: '？？？', text: '先生去哪？', duration: 1200 },
+      { speaker: '林墨', text: '三槐巷', duration: 1100 },
+      { speaker: '？？？', text: '三槐巷里没有路', duration: 1400 },
+      { speaker: '林墨', text: '后院井中没有水', duration: 1400 },
+      { speaker: '门内', text: '……门栓轻响', duration: 1500 },
+      { speaker: '？？？', text: '同志，快进来吧！', duration: 1800 }
     ]);
     scene.dialogue.hide();
     if (knockLayer && knockLayer.active) knockLayer.destroy(true);
@@ -361,15 +361,13 @@
     ]);
     faceActorsTowardEachOther(scene.civil1, scene.player);
     await showDialogueLines(scene, [
-      { speaker: '晚宁', text: '我是雨花弄交通员，晚宁。', duration: 1700 },
-      { speaker: '林墨', text: '城东交通员，林墨。', duration: 1500 },
-      { speaker: '晚宁', text: '主点出事了？', duration: 1300 },
-      { speaker: '林墨', text: '街口多了两道岗。', duration: 1500 },
-      { speaker: '晚宁', text: '你被跟了？', duration: 1200 },
-      { speaker: '林墨', text: '没有。但我已经被通缉了。', duration: 1900 }
+      { speaker: '？？？', text: '我是雨花弄交通员，晚宁', duration: 1700 },
+      { speaker: '林墨', text: '城东交通员，林墨', duration: 1500 },
+      { speaker: '晚宁', text: '通缉令上见过你，后面没人吧？', duration: 1300 },
+      { speaker: '林墨', text: '甩掉了~', duration: 1500 },
     ]);
     faceActorsTowardEachOther(scene.civil1, scene.player);
-    await scene.dialogue.show('晚宁', '那你不能再这样出去。我来替你改改模样。你先去梳妆台，我去找些衣服。', 2900);
+    await scene.dialogue.show('晚宁', '那你不能再这样出去，去梳妆台等我，我有办法让他们认不出你', 2900);
     scene.dialogue.hide();
     scene.dresserQuestActive = true;
     scene.dresserTriggered = false;
@@ -416,7 +414,7 @@
       320
     );
     faceActorsTowardEachOther(scene.civil1, scene.player);
-    await scene.dialogue.show('晚宁', '事不宜迟，我们开始吧。', 1600);
+    await scene.dialogue.show('晚宁', '事不宜迟，我们开始吧', 1600);
     scene.dialogue.hide();
     await fadeToBlack(scene, 650);
     scene.disguiseEditor.show();
@@ -485,23 +483,23 @@
     faceActorFromTrack(scene.jpSoldierC, 'inspection-entry', 'jpSoldierC', 'up');
     await showDialogueLines(scene, [
       { speaker: '军官', text: '就你们两个人？', duration: 1300 },
-      { speaker: '晚宁', text: '是的。', duration: 1000 },
+      { speaker: '晚宁', text: '是的', duration: 1000 },
       { speaker: '军官', text: '见过这个人吗？', duration: 1400 }
     ]);
     await showWantedPoster(scene);
-    await scene.dialogue.show('晚宁', '没见过。', 1100);
+    await scene.dialogue.show('晚宁', '没见过', 1100);
     await scene.dialogue.show('军官', '你呢？', 1000);
-    await scene.dialogue.show('林墨', '看着像个麻烦人。', 1500);
+    await scene.dialogue.show('林墨', '看着像个麻烦人', 1500);
     await scene.dialogue.show('军官', '你倒干净？', 1200);
-    await scene.dialogue.show('林墨', '我胆小，不惹麻烦。', 1500);
-    await scene.dialogue.show('军官', '都站好。先查她。转一圈。', 1700);
+    await scene.dialogue.show('林墨', '我胆小，不惹麻烦', 1500);
+    await scene.dialogue.show('军官', '都站好，先查她，转一圈', 1700);
     scene.dialogue.hide();
     await turnActorInPlace(
       scene,
       scene.civil1,
       cutsceneFacing('inspection-lineup', 'civil1', 'down')
     );
-    await scene.dialogue.show('军官', '胆小的人……到你了。转一圈。', 1700);
+    await scene.dialogue.show('军官', '胆小的人……到你了转一圈', 1700);
     scene.dialogue.hide();
     await turnActorInPlace(
       scene,
@@ -512,8 +510,8 @@
     var result = await runDisguiseTeaching(scene);
     if (result.passed) {
       await showDialogueLines(scene, [
-        { speaker: '军官', text: '明早之前，不准出门。', duration: 1600 },
-        { speaker: '晚宁', text: '知道。', duration: 1000 }
+        { speaker: '军官', text: '明早之前，不准出门', duration: 1600 },
+        { speaker: '晚宁', text: '是，长官', duration: 1000 }
       ]);
       await Promise.all([
         walkActorAlongTrack(scene, scene.jpOfficer, 'inspection-exit', 'jpOfficer', CUTSCENE_POINTS.officerExit, 250),
@@ -523,11 +521,12 @@
       ]);
       clearInspectionActors(scene);
       await showDialogueLines(scene, [
-        { speaker: '晚宁', text: '这张脸还能用到天亮。', duration: 1600 },
-        { speaker: '林墨', text: '天亮以后呢？', duration: 1300 },
-        { speaker: '晚宁', text: '去城西门。会有人接你。', duration: 1700 },
-        { speaker: '林墨', text: '你呢？', duration: 1100 },
-        { speaker: '晚宁', text: '我等下一个去三槐巷的人。', duration: 2300 }
+        { speaker: '晚宁', text: '天亮前从西门出城，那边的岗最松', duration: 1800 },
+        { speaker: '林墨', text: '这张脸真能骗过去？', duration: 1500 },
+        { speaker: '晚宁', text: '只要关键特征变了，他们就认不出你了', duration: 1700 },
+        { speaker: '林墨', text: '那你呢？', duration: 1000 },
+        { speaker: '晚宁', text: '总得有人继续开这扇门，后会有期！', duration: 2200 },
+        { speaker: '林墨', text: '保重！', duration: 1200 }
       ]);
       scene.dialogue.hide();
       await showOutcomeTitle(scene, true);
@@ -536,7 +535,7 @@
       scene.inspectionRunning = false;
       return;
     } else {
-      await scene.dialogue.show('军官', '你装得倒挺像。可惜不像别人。带走！', 2100);
+      await scene.dialogue.show('军官', '你装得挺像，可惜不像别人，带走！', 2100);
       clearInspectionActors(scene);
       scene.dialogue.hide();
       await showOutcomeTitle(scene, false);
@@ -735,8 +734,8 @@
       fontStyle: 'bold'
     });
     var verdictSub = scene.add.text(870, 818, passed
-      ? '判定结果：乔装有效，放行。'
-      : '判定结果：高度相似，被识破。', {
+      ? '判定结果：乔装有效，放行'
+      : '判定结果：高度相似，被识破', {
       fontFamily: 'Microsoft YaHei, sans-serif',
       fontSize: '22px',
       color: '#fff4df'

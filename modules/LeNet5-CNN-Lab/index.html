@@ -62,7 +62,6 @@
               <div class="lenet-pipe-node lenet-output-node"><span class="edu-label">输出概率</span><div class="lenet-bars" id="probBars" aria-label="0 到 9 与拒识类的预测概率"></div></div>
             </div>
             <div class="edu-notice-strip edu-notice-strip--orange lenet-reject-note" role="note"><strong>“_” 表示拒识。</strong>训练时额外构造不属于 0–9 的样本作为第 11 类，例如空白区域、只截到一部分的数字，以及混合两个数字的滑窗片段。当输入不像任何一个完整数字时，模型输出“_”，避免强行把它认成 0–9 中的某一类。</div>
-            <div class="edu-notice-strip edu-notice-strip--blue" id="readout" aria-live="polite"><span>先观察固定边缘核产生的特征图，再训练分类头。</span></div>
           </section>
 
         </div>
@@ -71,16 +70,16 @@
       <button class="flow-scroll-indicator" id="sequenceContinueCueHost" type="button" aria-controls="sequenceStage" hidden><span class="flow-scroll-indicator-mark" aria-hidden="true"></span><strong>下方有新内容</strong><small>滚动或点击进入第二幕</small></button>
 
       <section class="edu-stage edu-content-block lenet-sequence-stage" id="sequenceStage" hidden aria-hidden="true" aria-labelledby="sequenceTitle" data-i18n-scope="lenet.sequence">
-        <header class="edu-content-head"><h2 class="edu-content-title" id="sequenceTitle">用滑动窗口识别序列数字</h2><p class="edu-content-subtitle">先写下策略；提交后才会出现滑窗帧与识别操作。</p></header>
+        <header class="edu-content-head"><h2 class="edu-content-title" id="sequenceTitle">用滑动窗口识别序列数字</h2><p class="edu-content-subtitle">观察连续数字图像，思考如何复用刚刚训练好的单个数字识别器。</p></header>
         <div class="edu-content-body lenet-sequence-lab">
           <section class="edu-card lenet-sequence-image-card" aria-label="序列数字图像">
-            <div class="lenet-sequence-image-head"><span class="edu-label">序列输入</span><div class="lenet-sequence-randomizer"><button class="edu-btn" id="sequenceBuildBtn" type="button" aria-label="随机选择 5 位数字" title="随机选择 5 位数字"><img src="./random.svg" width="20" height="20" alt=""></button><span>GT</span><strong id="sequenceGt" data-i18n-ignore="true">-----</strong></div></div>
+            <div class="lenet-sequence-image-head"><span class="edu-label">序列输入</span><div class="lenet-sequence-randomizer"><span class="lenet-gt-label">GT</span><strong id="sequenceGt" data-i18n-ignore="true">-----</strong><button class="lenet-dice-btn" id="sequenceBuildBtn" type="button" aria-label="随机选择 5 位数字" title="随机选择 5 位数字"><img src="./random.svg" width="22" height="22" alt=""></button></div></div>
             <div class="edu-canvas-frame lenet-sequence-canvas-wrap"><canvas id="sequenceCanvas" width="156" height="28" aria-label="由 MNIST 数字拼成的序列图片"></canvas><div class="lenet-window-overlay" id="sequenceWindowOverlay" aria-hidden="true"></div></div>
           </section>
           <div id="sequenceIdeaForm" class="lenet-question-host"></div>
           <section class="edu-card lenet-scan-card" id="sequenceScanCard" hidden aria-label="滑动窗口识别过程">
-            <div class="lenet-scan-head"><span class="edu-label">滑窗帧</span><div class="lenet-scan-controls"><span class="edu-status" id="sequenceScanStatus">等待开始</span><button class="edu-btn edu-btn--primary dl-button-hint" id="sequenceScanBtn" type="button" data-dl-button-hint>开始序列识别</button></div></div>
-            <div class="lenet-sequence-scan-body"><div class="lenet-frame-track" id="sequenceFrameTrack"></div><div class="edu-value-tile edu-value-tile--blue lenet-sequence-result"><span>识别结果</span><strong id="sequenceResult" data-i18n-ignore="true">-</strong></div></div>
+            <div class="lenet-scan-head"><span class="edu-label">滑窗帧</span><div class="lenet-scan-controls"><span class="edu-status lenet-sequence-live-status" id="sequenceScanStatus"><span id="sequenceScanStatusText">等待开始</span><strong class="lenet-sequence-live-result" id="sequenceResult" data-i18n-ignore="true"></strong></span><button class="edu-btn edu-btn--primary dl-button-hint" id="sequenceScanBtn" type="button" data-dl-button-hint>开始序列识别</button></div></div>
+            <div class="lenet-sequence-scan-body"><div class="lenet-frame-track" id="sequenceFrameTrack"></div></div>
           </section>
         </div>
       </section>
@@ -90,9 +89,9 @@
       <section class="edu-stage edu-content-block lenet-detection-stage" id="detectionStage" hidden aria-hidden="true" aria-labelledby="detectionTitle" data-i18n-scope="lenet.detection">
         <header class="edu-content-head"><h2 class="edu-content-title" id="detectionTitle">寻找老六</h2><p class="edu-content-subtitle">先提交定位策略，再用 28×28 窗口遍历大图并按 P(6) 排序。</p></header>
         <div class="edu-content-body lenet-detection-lab">
-          <section class="edu-card lenet-detection-canvas-card" aria-label="256 目标检测画布"><div class="lenet-detection-head"><span class="edu-label">256×256 图像</span><div class="edu-toolbar-actions lenet-detection-actions"><button class="edu-btn" id="detectionResetBtn" type="button" hidden>重新生成</button><button class="edu-btn edu-btn--primary dl-button-hint" id="detectionScanBtn" type="button" data-dl-button-hint hidden>开始检测位置</button></div></div><div class="edu-canvas-frame lenet-detection-canvas-wrap"><canvas id="detectionCanvas" width="256" height="256" aria-label="包含数字 0、2、4、6、8 的 256 画布"></canvas><div class="lenet-detection-box" id="detectionBox" aria-hidden="true"></div></div></section>
+          <section class="edu-card lenet-detection-canvas-card" aria-label="256 目标检测画布"><div class="lenet-detection-head"><span class="edu-label">256×256 图像</span><div class="edu-toolbar-actions lenet-detection-actions"><button class="edu-btn" id="detectionResetBtn" type="button" hidden>重新生成</button></div></div><div class="edu-canvas-frame lenet-detection-canvas-wrap"><canvas id="detectionCanvas" width="256" height="256" aria-label="包含数字 0、2、4、6、8 的 256 画布"></canvas><div class="lenet-detection-box" id="detectionBox" aria-hidden="true"></div></div></section>
           <div id="detectionIdeaForm" class="lenet-question-host"></div>
-          <section class="edu-card lenet-detection-result-card" hidden aria-label="目标检测概率排序"><div class="lenet-detection-ranking-head"><span class="edu-label">P(6) 概率排序</span><span class="edu-helper" id="detectionProgress">步长 12，共 400 个窗口</span></div><div class="edu-notice-strip edu-notice-strip--blue lenet-detection-readout"><span id="detectionStatus">观察图像后，先提交思路，再开始检测位置。</span><strong id="detectionResult" data-i18n-ignore="true">-</strong></div><div class="lenet-detection-table-wrap"><table class="lenet-detection-table"><thead><tr><th scope="col">坐标</th><th scope="col">P(6)</th></tr></thead><tbody id="detectionRankingBody"><tr class="is-empty"><td colspan="2">点击“开始检测位置”后显示每个窗口的概率。</td></tr></tbody></table></div></section>
+          <section class="edu-card lenet-detection-result-card" hidden aria-label="目标检测概率排序"><div class="lenet-detection-ranking-head"><span class="edu-label">P(6) 概率排序</span><div class="lenet-detection-ranking-tools"><span class="edu-helper" id="detectionProgress">步长 12，共 400 个窗口</span><button class="edu-btn edu-btn--primary dl-button-hint" id="detectionScanBtn" type="button" data-dl-button-hint hidden>开始检测位置</button></div></div><div class="edu-notice-strip edu-notice-strip--blue lenet-detection-readout"><span id="detectionStatus">观察图像后，先提交思路，再开始检测位置。</span><strong id="detectionResult" data-i18n-ignore="true">-</strong></div><div class="lenet-detection-table-wrap"><table class="lenet-detection-table"><thead><tr><th scope="col">坐标</th><th scope="col">P(6)</th></tr></thead><tbody id="detectionRankingBody"><tr class="is-empty"><td colspan="2">点击“开始检测位置”后显示每个窗口的概率。</td></tr></tbody></table></div></section>
         </div>
       </section>
 

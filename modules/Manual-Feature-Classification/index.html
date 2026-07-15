@@ -38,7 +38,6 @@
           <section class="edu-content-block hdf-digit-panel" aria-label="手写数字九宫格">
             <header class="edu-content-head">
               <h3 class="edu-content-title">当前样本：<span id="sampleLabel">加载中</span></h3>
-              <p class="edu-content-subtitle">把 28 × 28 的二值手写数字切成九宫格，逐格统计亮像素。</p>
             </header>
             <div class="edu-content-body">
               <div class="hdf-panel-actions">
@@ -56,9 +55,17 @@
               <p class="edu-content-subtitle" id="countInstruction">计算机会先自动数前面的格子。扫到最少的那个非空格时，它会停下来，把这一格交给你。</p>
             </header>
             <div class="edu-content-body hdf-task-body">
+              <div class="hdf-region-zoom" id="regionZoom" hidden>
+                <div class="hdf-region-zoom-head">
+                  <span>待计数区域放大</span>
+                </div>
+                <div class="hdf-region-zoom-frame">
+                  <canvas id="regionZoomCanvas" width="420" height="420" aria-label="待填写格的像素放大图"></canvas>
+                </div>
+              </div>
               <form class="hdf-count-form" id="countForm">
                 <label class="edu-control" for="countInput">
-                  <span class="edu-label">你数到的 <span id="targetRegionLabel">这一格</span> 亮像素数量</span>
+                  <span class="edu-label">白色像素点数量</span>
                   <span class="hdf-input-row">
                     <input id="countInput" class="edu-input" type="number" min="0" max="100" step="1" inputmode="numeric" placeholder="输入数量" data-dl-input-hint>
                     <button class="edu-btn edu-btn--primary dl-button-hint" id="countSubmit" type="submit" data-dl-button-hint>提交</button>

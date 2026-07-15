@@ -42,9 +42,11 @@
       parent: host,
       width: SCENE_WIDTH,
       height: SCENE_HEIGHT,
+      resolution: Math.min(window.devicePixelRatio || 1, 2),
       backgroundColor: '#050403',
-      pixelArt: true,
-      roundPixels: true,
+      antialias: true,
+      pixelArt: false,
+      roundPixels: false,
       physics: {
         default: 'arcade',
         arcade: {

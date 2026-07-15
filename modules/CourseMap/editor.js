@@ -35,17 +35,17 @@
   ];
 
   const lessons = [
-    { id: "Neuron-Guide", title: "为什么需要神经元" },
-    { id: "Loss-Guide", title: "为什么需要损失函数" },
-    { id: "Gradient-Descent-Module", title: "梯度下降如何让模型变好" },
-    { id: "Activation-Func-Module", title: "激活函数如何带来非线性" },
-    { id: "MLP_playground", title: "从手绘分类边界到 MLP" },
-    { id: "Loss-Guide-2", title: "天气预测的两种输出：Sigmoid + BCE 与 Softmax + CE" },
-    { id: "Digital-Image-Module", title: "数字图像如何变成 RGB 矩阵" },
-    { id: "Manual-Feature-Classification", title: "人工特征的分类" },
-    { id: "Convolution-Kernel-Intro", title: "卷积核入门：从五子棋棋形开始" },
-    { id: "LeNet5-CNN-Lab", title: "从人工卷积核到 LeNet-5" },
-    { id: "Face-Recog-Lab", title: "人脸识别：固定卷积核到参数全训" },
+  { id: "Neuron-Guide", title: "神经元到底是怎么工作的？" },
+  { id: "Loss-Guide", title: "为什么神经网络需要损失函数？" },
+  { id: "Gradient-Descent-Module", title: "梯度下降如何一步步降低误差？" },
+  { id: "Activation-Func-Module", title: "为什么神经网络需要非线性？" },
+  { id: "MLP_playground", title: "从手绘分类边界到多层神经网络" },
+  { id: "Loss-Guide-2", title: "神经网络最后一层到底应该怎么输出？" },
+  { id: "Digital-Image-Module", title: "图片在计算机眼里到底是什么？" },
+  { id: "Manual-Feature-Classification", title: "用九宫格识别手写体数字" },
+  { id: "Convolution-Kernel-Intro", title: "从五子棋到卷积核" },
+  { id: "LeNet5-CNN-Lab", title: "卷积核怎样帮助识别数字？" },
+  { id: "Face-Recog-Lab", title: "亲手搭建卷积神经网络" },
   ];
 
   const elements = {

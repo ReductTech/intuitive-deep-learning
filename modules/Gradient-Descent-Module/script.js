@@ -14,6 +14,7 @@
     initialV1: -1,
     initialV2: -1,
     slidersUnlocked: false,
+    sliderHintDismissed: false,
     impactQuestionRevealed: false
   };
 
@@ -205,11 +206,24 @@
     edge.style.opacity = String(0.5 + Math.min(0.5, Math.abs(weight) / 3));
   }
 
+  function setWeightSliderHint(active) {
+    ['v1Range', 'v2Range'].forEach(function (id) {
+      $(id).closest('.gd-inline-weight').classList.toggle('is-attention', active);
+    });
+  }
+
+  function dismissWeightSliderHint() {
+    if (state.sliderHintDismissed) return;
+    state.sliderHintDismissed = true;
+    setWeightSliderHint(false);
+  }
+
   function unlockWeightSliders() {
     if (state.slidersUnlocked) return;
     state.slidersUnlocked = true;
     $('v1Range').disabled = false;
     $('v2Range').disabled = false;
+    if (!state.sliderHintDismissed) setWeightSliderHint(true);
   }
 
   function revealImpactQuestion() {
@@ -255,6 +269,7 @@
   function bindRange(id, key) {
     var input = $(id);
     input.addEventListener('input', function () {
+      dismissWeightSliderHint();
       state[key] = Number(input.value);
       render();
     });
@@ -370,7 +385,7 @@
     $('autoToolbar').hidden = true;
     $('executeAutoUpdateBtn').disabled = false;
     $('executeAutoUpdateBtn').hidden = true;
-    $('executeAutoUpdateBtn').textContent = '更新一次';
+    $('executeAutoUpdateBtn').textContent = '执行一次参数更新';
     stopButtonHint($('executeAutoUpdateBtn'));
     $('rateControl').hidden = true;
     $('rateControl').classList.remove('is-attention');
@@ -496,7 +511,7 @@
     renderAutoLossHistory();
     $('executeAutoUpdateBtn').hidden = false;
     $('executeAutoUpdateBtn').disabled = false;
-    $('executeAutoUpdateBtn').textContent = '更新一次';
+    $('executeAutoUpdateBtn').textContent = '执行一次参数更新';
     startButtonHint($('executeAutoUpdateBtn'));
   }
 
@@ -766,6 +781,18 @@
     };
   }
 
+  function addDerivativeHint(question, text) {
+    var hint = document.createElement('p');
+    var label = document.createElement('strong');
+    var message = document.createElement('span');
+    hint.className = 'gd-derivative-hint';
+    label.textContent = '提示';
+    message.textContent = text;
+    hint.appendChild(label);
+    hint.appendChild(message);
+    question.root.querySelector('.dl-question-feedback').before(hint);
+  }
+
   async function submitOscillationAnswer(answer) {
     var submit = oscillationQuestion.submit;
     if (!answer) return;
@@ -852,6 +879,8 @@
     }
   });
 
+  addDerivativeHint(lossDerivativeQuestion, '固定 GT。当前 y < GT；y 每增加 1，Loss 会怎样变化？');
+
   v1DerivativeQuestion = window.DLModuleUI.mountQuestion('#v1DerivativeForm', {
     type: 'fill',
     title: 'y 对 v₁ 的偏导是 {{blank}}',
@@ -863,6 +892,8 @@
       advanceGuidedQuestion('v1DerivativeForm', 'v2DerivativeForm', v2DerivativeQuestion);
     }
   });
+
+  addDerivativeHint(v1DerivativeQuestion, '由 y = v₁×h₁ + v₂×h₂，只看 v₁ 前面的系数 h₁。');
 
   v2DerivativeQuestion = window.DLModuleUI.mountQuestion('#v2DerivativeForm', {
     type: 'fill',
@@ -876,6 +907,8 @@
       completeGuidedUpdate();
     }
   });
+
+  addDerivativeHint(v2DerivativeQuestion, '由 y = v₁×h₁ + v₂×h₂，只看 v₂ 前面的系数 h₂。');
 
   oscillationQuestion = window.DLModuleUI.mountQuestion('#oscillationQuestionMount', {
     type: 'short',

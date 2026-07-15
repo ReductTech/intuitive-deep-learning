@@ -3,10 +3,10 @@
 
   var game = global.Act3DisguiseGame = global.Act3DisguiseGame || {};
 
-  function similarityColor(percent) {
-    if (percent >= 50) return 0xc9483c;
-    if (percent >= 47) return 0xd7a23f;
-    return 0x55b86a;
+  function similarityColor(progress) {
+    if (progress >= 66) return 0x55b86a;
+    if (progress >= 33) return 0xd6a33d;
+    return 0xc9483c;
   }
 
   function clampSimilarityPercent(percent) {
@@ -15,36 +15,41 @@
     return Math.max(40, Math.min(60, value));
   }
 
+  function disguiseProgress(percent) {
+    return (60 - clampSimilarityPercent(percent)) / 20 * 100;
+  }
+
   function createSimilarityMeter(scene, x, y, width) {
     var meter = scene.add.container(x, y);
     var height = 22;
     var state = {
-      displayPercent: 60,
-      targetPercent: 60,
+      displayProgress: 0,
+      targetProgress: 0,
       tween: null,
       hasValue: false
     };
     var bg = scene.add.graphics();
+    var hud = scene.add.graphics();
     var transition = scene.add.graphics();
     var fill = scene.add.graphics();
     var frame = scene.add.graphics();
-    var leftLabel = scene.add.text(-width / 2 - 18, 0, '改头换面', {
-      fontFamily: 'STKaiti, KaiTi, SimSun, Microsoft YaHei, serif',
-      fontSize: '24px',
-      color: '#bfe6bd',
-      fontStyle: 'bold',
-      stroke: '#071006',
-      strokeThickness: 3
-    }).setOrigin(1, 0.5);
-    var rightLabel = scene.add.text(width / 2 + 18, 0, '本色不改', {
+    var leftLabel = scene.add.text(-width / 2 - 18, 0, '本色不改', {
       fontFamily: 'STKaiti, KaiTi, SimSun, Microsoft YaHei, serif',
       fontSize: '24px',
       color: '#f0b1a9',
       fontStyle: 'bold',
+      stroke: '#071006',
+      strokeThickness: 3
+    }).setOrigin(1, 0.5);
+    var rightLabel = scene.add.text(width / 2 + 18, 0, '改头换面', {
+      fontFamily: 'STKaiti, KaiTi, SimSun, Microsoft YaHei, serif',
+      fontSize: '24px',
+      color: '#bfe6bd',
+      fontStyle: 'bold',
       stroke: '#160706',
       strokeThickness: 3
     }).setOrigin(0, 0.5);
-    var caption = scene.add.text(0, -28, '识别风险', {
+    var caption = scene.add.text(0, -31, '乔装效果', {
       fontFamily: 'Microsoft YaHei, sans-serif',
       fontSize: '17px',
       color: '#d7bd8f',
@@ -61,8 +66,8 @@
       strokeThickness: 3
     }).setOrigin(0.5).setVisible(false);
 
-    function ratio(percent) {
-      return (clampSimilarityPercent(percent) - 40) / 20;
+    function ratio(progress) {
+      return Math.max(0, Math.min(1, progress / 100));
     }
 
     function roundedBar(graphics, startX, barWidth, color, alpha) {
@@ -71,74 +76,74 @@
       graphics.fillRoundedRect(startX, -height / 2, barWidth, height, height / 2);
     }
 
-    function redraw(displayPercent, previousPercent) {
-      var displayRatio = ratio(displayPercent);
-      var previousRatio = typeof previousPercent === 'number' ? ratio(previousPercent) : displayRatio;
+    function redraw(displayProgress, previousProgress) {
+      var displayRatio = ratio(displayProgress);
       var fillWidth = width * displayRatio;
-      var previousWidth = width * previousRatio;
       var left = -width / 2;
-      var color = similarityColor(displayPercent);
 
       bg.clear();
-      bg.fillStyle(0x0c0906, 0.72);
-      bg.fillRoundedRect(left, -height / 2, width, height, height / 2);
-      bg.fillGradientStyle(0x4a2a1c, 0x4a2a1c, 0x142514, 0x142514, 0.92, 0.92, 0.92, 0.92);
+      bg.fillStyle(0x0c0906, 0.94);
       bg.fillRoundedRect(left, -height / 2, width, height, height / 2);
 
       transition.clear();
-      if (previousWidth > fillWidth) {
-        roundedBar(transition, left + fillWidth, previousWidth - fillWidth, color, 0.32);
-      } else if (fillWidth > previousWidth) {
-        roundedBar(transition, left + previousWidth, fillWidth - previousWidth, color, 0.28);
-      }
 
       fill.clear();
-      roundedBar(fill, left, fillWidth, color, 0.96);
-      fill.fillStyle(0xffffff, 0.18);
-      fill.fillRoundedRect(left + 4, -height / 2 + 4, Math.max(0, fillWidth - 8), 4, 2);
+      roundedBar(fill, left, fillWidth, similarityColor(displayProgress), 0.98);
 
       frame.clear();
       frame.lineStyle(3, 0xd8a65c, 0.84);
       frame.strokeRoundedRect(left, -height / 2, width, height, height / 2);
-      frame.lineStyle(3, 0xf4ce80, 0.78);
-      frame.beginPath();
-      frame.moveTo(left + width * 0.5, -height / 2 - 7);
-      frame.lineTo(left + width * 0.5, height / 2 + 7);
-      frame.strokePath();
     }
 
-    meter.add([bg, transition, fill, frame, leftLabel, rightLabel, caption, pendingText]);
-    redraw(state.displayPercent);
-    meter.setVisible(false);
+    hud.fillStyle(0x080604, 0.82);
+    hud.lineStyle(2, 0xa77f49, 0.56);
+    hud.fillRoundedRect(-width / 2 - 154, -52, width + 308, 86, 8);
+    hud.strokeRoundedRect(-width / 2 - 154, -52, width + 308, 86, 8);
+    meter.add([hud, bg, transition, fill, frame, leftLabel, rightLabel, caption, pendingText]);
+    redraw(state.displayProgress);
+    leftLabel.setVisible(false);
+    rightLabel.setVisible(false);
+    pendingText.setText('等待识别').setVisible(true);
+    meter.setVisible(true);
 
     return {
       node: meter,
       reset: function () {
         if (state.tween) state.tween.stop();
-        state.displayPercent = 60;
-        state.targetPercent = 60;
+        state.displayProgress = 0;
+        state.targetProgress = 0;
         state.hasValue = false;
-        pendingText.setVisible(false);
-        meter.setVisible(false);
+        redraw(state.displayProgress);
+        leftLabel.setVisible(false);
+        rightLabel.setVisible(false);
+        pendingText.setText('等待识别').setVisible(true);
+        meter.setVisible(true);
       },
       setPending: function () {
+        if (state.tween) state.tween.stop();
+        meter.setVisible(true);
         if (!state.hasValue) {
-          meter.setVisible(false);
-          return;
+          transition.clear();
+          fill.clear();
+          leftLabel.setVisible(false);
+          rightLabel.setVisible(false);
         }
+        pendingText.setText('识别中').setVisible(true);
+      },
+      setUnavailable: function () {
         if (state.tween) state.tween.stop();
         meter.setVisible(true);
         transition.clear();
         fill.clear();
         leftLabel.setVisible(false);
         rightLabel.setVisible(false);
-        pendingText.setVisible(true);
+        pendingText.setText('暂未连接识别').setVisible(true);
       },
       setValue: function (percent) {
-        var from = state.displayPercent;
-        var to = clampSimilarityPercent(percent);
+        var from = state.displayProgress;
+        var to = disguiseProgress(percent);
         state.hasValue = true;
-        state.targetPercent = to;
+        state.targetProgress = to;
         if (state.tween) state.tween.stop();
         meter.setVisible(true);
         leftLabel.setVisible(true);
@@ -151,11 +156,11 @@
           duration: 520,
           ease: 'Sine.easeOut',
           onUpdate: function (tween) {
-            state.displayPercent = tween.getValue();
-            redraw(state.displayPercent, to);
+            state.displayProgress = tween.getValue();
+            redraw(state.displayProgress, to);
           },
           onComplete: function () {
-            state.displayPercent = to;
+            state.displayProgress = to;
             redraw(to);
           }
         });
@@ -167,6 +172,7 @@
   game.ui.meter = {
     similarityColor: similarityColor,
     clampSimilarityPercent: clampSimilarityPercent,
+    disguiseProgress: disguiseProgress,
     createSimilarityMeter: createSimilarityMeter
   };
 }(window));

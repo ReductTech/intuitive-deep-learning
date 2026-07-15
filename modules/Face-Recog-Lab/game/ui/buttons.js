@@ -88,53 +88,71 @@
 
   function createDisguiseBottomShell(scene) {
     var shell = scene.add.container(0, 0);
-    var shadow = scene.add.rectangle(SCENE_WIDTH / 2, 892, SCENE_WIDTH + 120, 388, 0x000000, 0.34);
+    var shadow = scene.add.rectangle(SCENE_WIDTH / 2, 882, SCENE_WIDTH + 120, 410, 0x000000, 0.5);
     var panel = scene.add.graphics();
-    panel.fillStyle(0x100b07, 0.95);
-    panel.lineStyle(2, 0xb28a55, 0.52);
-    panel.fillRoundedRect(118, 700, SCENE_WIDTH - 236, 196, 18);
-    panel.strokeRoundedRect(118, 700, SCENE_WIDTH - 236, 196, 18);
-    panel.fillStyle(0x201812, 0.94);
-    panel.lineStyle(3, 0xb28a55, 0.5);
-    panel.fillRoundedRect(280, 906, SCENE_WIDTH - 560, 154, 28);
-    panel.strokeRoundedRect(280, 906, SCENE_WIDTH - 560, 154, 28);
-    panel.lineStyle(2, 0x8b6b43, 0.42);
+    panel.fillStyle(0x130e09, 0.96);
+    panel.lineStyle(2, 0xb78a4e, 0.78);
+    panel.fillRoundedRect(74, 700, SCENE_WIDTH - 148, 190, 8);
+    panel.strokeRoundedRect(74, 700, SCENE_WIDTH - 148, 190, 8);
+    panel.fillStyle(0x21180f, 0.98);
+    panel.fillRect(74, 700, 154, 190);
+    panel.lineStyle(2, 0x8b6b43, 0.62);
     panel.beginPath();
-    panel.moveTo(286, 718);
-    panel.lineTo(286, 878);
+    panel.moveTo(228, 716);
+    panel.lineTo(228, 874);
     panel.strokePath();
-    var glow = scene.add.rectangle(SCENE_WIDTH / 2, 900, SCENE_WIDTH - 340, 3, 0xe7ba6e, 0.22);
+    panel.fillStyle(0x120d08, 0.98);
+    panel.lineStyle(3, 0xb78a4e, 0.84);
+    panel.fillRect(346, 914, 756, 120);
+    panel.strokeRect(346, 914, 756, 120);
+    panel.fillStyle(0xd0a15a, 0.9);
+    panel.fillTriangle(346, 914, 372, 914, 346, 940);
+    panel.fillTriangle(1102, 914, 1076, 914, 1102, 940);
+    var glow = scene.add.rectangle(SCENE_WIDTH / 2, 898, SCENE_WIDTH - 300, 2, 0xe7ba6e, 0.3);
     shell.add([shadow, panel, glow]);
     return shell;
   }
 
   function createIconToolButton(scene, x, y, iconKey, label, onClick) {
-    var button = scene.add.container(x, y).setSize(124, 142).setInteractive({ useHandCursor: true });
-    var halo = scene.add.circle(0, -14, 56, 0xffc873, 0);
-    var bg = scene.add.circle(0, -14, 48, 0x17120d, 0.94);
-    bg.setStrokeStyle(3, 0x8f7654, 0.66);
-    var inner = scene.add.circle(0, -14, 39, 0x2d2923, 0.78);
-    inner.setStrokeStyle(1, 0xf2cf8c, 0.12);
-    var icon = scene.add.image(0, -14, DISGUISE_TOOL_ICONS[iconKey].textureKey).setDisplaySize(42, 42);
+    var shortcutByTool = { moustache: '1', mole: '2', makeup: '3', skinTone: '4', reshape: '5' };
+    var button = scene.add.container(x, y).setSize(136, 72).setInteractive({ useHandCursor: true });
+    var halo = scene.add.rectangle(0, 0, 140, 76, 0xffc873, 0);
+    var bg = scene.add.rectangle(0, 0, 132, 68, 0x17120d, 0.98);
+    bg.setStrokeStyle(2, 0x8f7654, 0.72);
+    var activeBar = scene.add.rectangle(0, 32, 126, 4, 0xffca77, 0);
+    var iconPlate = scene.add.rectangle(-40, 0, 42, 42, 0x2d2923, 0.9);
+    iconPlate.setStrokeStyle(1, 0xf2cf8c, 0.2);
+    var icon = scene.add.image(-40, 0, DISGUISE_TOOL_ICONS[iconKey].textureKey).setDisplaySize(28, 28);
     icon.setTint(0xf4d89b);
-    var text = scene.add.text(0, 54, label, {
+    var text = scene.add.text(-10, 1, label, {
       fontFamily: 'Microsoft YaHei, sans-serif',
-      fontSize: '20px',
+      fontSize: '18px',
       color: '#d7bd8f',
       fontStyle: 'bold'
+    }).setOrigin(0, 0.5);
+    var keyText = scene.add.text(54, -26, shortcutByTool[iconKey] || '', {
+      fontFamily: 'Arial, sans-serif',
+      fontSize: '11px',
+      color: '#9f8b6c',
+      fontStyle: 'bold'
     }).setOrigin(0.5);
-    var dot = scene.add.circle(0, 82, 5, 0xffcf78, 0).setStrokeStyle(2, 0xffe0a4, 0);
-    button.add([halo, bg, inner, icon, text, dot]);
+    button.add([halo, bg, activeBar, iconPlate, icon, text, keyText]);
     button.on('pointerdown', onClick);
+    button.on('pointerover', function () {
+      if (!button.isActiveTool) bg.setFillStyle(0x251d14, 0.98);
+    });
+    button.on('pointerout', function () {
+      if (!button.isActiveTool) bg.setFillStyle(0x17120d, 0.98);
+    });
     button.setActiveStyle = function (active) {
-      halo.setAlpha(active ? 0.28 : 0);
-      bg.setFillStyle(active ? 0x3a2c1d : 0x17120d, active ? 0.98 : 0.94);
-      bg.setStrokeStyle(active ? 4 : 3, active ? 0xffca77 : 0x8f7654, active ? 1 : 0.66);
-      inner.setFillStyle(active ? 0x493722 : 0x2d2923, active ? 0.88 : 0.78);
+      button.isActiveTool = active;
+      halo.setAlpha(active ? 0.18 : 0);
+      bg.setFillStyle(active ? 0x3a2c1d : 0x17120d, 0.98);
+      bg.setStrokeStyle(active ? 3 : 2, active ? 0xffca77 : 0x8f7654, active ? 1 : 0.72);
+      activeBar.setAlpha(active ? 1 : 0);
+      iconPlate.setFillStyle(active ? 0x594025 : 0x2d2923, active ? 0.96 : 0.9);
       icon.setTint(active ? 0xffe2a8 : 0xf4d89b);
       text.setColor(active ? '#ffe2a8' : '#d7bd8f');
-      dot.setAlpha(active ? 1 : 0);
-      dot.setStrokeStyle(2, 0xffe0a4, active ? 0.72 : 0);
     };
     button.setActiveStyle(false);
     return button;
@@ -170,8 +188,8 @@
     var bg = scene.add.graphics();
     bg.fillStyle(0x211711, 0.9);
     bg.lineStyle(2, 0xb58b52, 0.62);
-    bg.fillRoundedRect(-width / 2, -23, width, 46, 16);
-    bg.strokeRoundedRect(-width / 2, -23, width, 46, 16);
+    bg.fillRoundedRect(-width / 2, -23, width, 46, 8);
+    bg.strokeRoundedRect(-width / 2, -23, width, 46, 8);
     var text = scene.add.text(0, 0, label, {
       fontFamily: 'Microsoft YaHei, sans-serif',
       fontSize: '20px',

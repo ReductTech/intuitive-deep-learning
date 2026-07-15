@@ -66,12 +66,38 @@
 }
 
 .hdf-digit-frame canvas,
+.hdf-region-zoom-frame canvas,
 .hdf-chart-frame canvas,
 .hdf-mlp-input-panel canvas,
 .hdf-mlp-network-panel canvas {
   display: block;
   width: 100%;
   height: 100%;
+}
+
+.hdf-region-zoom {
+  display: grid;
+  gap: 10px;
+}
+
+.hdf-region-zoom-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-start;
+  gap: 12px;
+  color: var(--ui-text-muted);
+  font-size: 13px;
+  font-weight: 850;
+}
+
+.hdf-region-zoom-frame {
+  width: min(100%, 360px);
+  margin-inline: auto;
+  overflow: hidden;
+  border: 1px solid var(--ui-border);
+  border-radius: 8px;
+  background: #0b1020;
+  aspect-ratio: 1;
 }
 
 .hdf-task-body {
@@ -319,6 +345,10 @@
 
   .hdf-chart-frame {
     min-height: 320px;
+  }
+
+  .hdf-region-zoom-frame {
+    width: min(100%, 320px);
   }
 
 }

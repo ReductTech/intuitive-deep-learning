@@ -52,7 +52,8 @@
       if (meter && meter.setValue) meter.setValue(correlationPercent);
     } catch (error) {
       if (requestId !== state.similarityRequestId) return;
-      if (meter && meter.reset) meter.reset();
+      if (meter && meter.setUnavailable) meter.setUnavailable();
+      else if (meter && meter.reset) meter.reset();
     }
   }
 

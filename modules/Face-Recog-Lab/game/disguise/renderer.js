@@ -17,7 +17,11 @@
 
   function brushColorWithAlpha(color, alpha) {
     var value = cssColorToNumber(color, 0x482416);
-    return 'rgba(' + ((value >> 16) & 255) + ', ' + ((value >> 8) & 255) + ', ' + (value & 255) + ', ' + alpha + ')';
+    var alphaMatch = typeof color === 'string' ? color.match(/rgba\([^,]+,[^,]+,[^,]+,\s*([\d.]+)\s*\)/) : null;
+    var sourceAlpha = alphaMatch ? Number(alphaMatch[1]) : 1;
+    if (!Number.isFinite(sourceAlpha)) sourceAlpha = 1;
+    var combinedAlpha = Math.max(0, Math.min(1, alpha * sourceAlpha));
+    return 'rgba(' + ((value >> 16) & 255) + ', ' + ((value >> 8) & 255) + ', ' + (value & 255) + ', ' + combinedAlpha + ')';
   }
 
   function fitImageToBox(image, maxWidth, maxHeight) {
@@ -92,7 +96,12 @@
     context.fillRect(0, 0, canvas.width, canvas.height);
     var imageRect = containedDrawRect(image, canvas.width, canvas.height);
     context.drawImage(image, imageRect.x, imageRect.y, imageRect.width, imageRect.height);
-    (marks || []).forEach(function (mark) {
+    var orderedMarks = (marks || []).slice().sort(function (left, right) {
+      if (left.tool === 'skinFilter' && right.tool !== 'skinFilter') return -1;
+      if (right.tool === 'skinFilter' && left.tool !== 'skinFilter') return 1;
+      return 0;
+    });
+    orderedMarks.forEach(function (mark) {
       drawMarkOnCanvas(scene, context, imageRect, mark);
     });
     return canvas;
@@ -188,7 +197,51 @@
     context.putImageData(outputImage, 0, 0);
   }
 
+  function applySkinFilter(context, imageRect, mark) {
+    var filterKey = mark.filter || 'original';
+    var strength = Math.max(0, Math.min(1, (Number(mark.strength) || 55) / 100));
+    if (filterKey === 'original' || strength <= 0) return;
+    var filterCanvas = document.createElement('canvas');
+    filterCanvas.width = context.canvas.width;
+    filterCanvas.height = context.canvas.height;
+    var filterContext = filterCanvas.getContext('2d');
+    if (!filterContext) return;
+    filterContext.drawImage(context.canvas, 0, 0);
+    context.save();
+    context.beginPath();
+    context.rect(imageRect.x, imageRect.y, imageRect.width, imageRect.height);
+    context.clip();
+    if (filterKey === 'clear') {
+      context.filter = 'brightness(' + (1 + strength * 0.10).toFixed(2) + ') contrast(' + (1 + strength * 0.10).toFixed(2) + ') saturate(' + (1 + strength * 0.12).toFixed(2) + ')';
+    } else if (filterKey === 'cool') {
+      context.filter = 'brightness(' + (1 + strength * 0.06).toFixed(2) + ') contrast(' + (1 + strength * 0.12).toFixed(2) + ') saturate(' + (0.96 + strength * 0.06).toFixed(2) + ')';
+    } else if (filterKey === 'warmSun') {
+      context.filter = 'sepia(' + (strength * 0.28).toFixed(2) + ') saturate(' + (1 + strength * 0.18).toFixed(2) + ') brightness(' + (1 + strength * 0.03).toFixed(2) + ')';
+    } else if (filterKey === 'film') {
+      context.filter = 'sepia(' + (strength * 0.36).toFixed(2) + ') contrast(' + (1 + strength * 0.18).toFixed(2) + ') saturate(' + (1 - strength * 0.16).toFixed(2) + ')';
+    } else if (filterKey === 'blackGold') {
+      context.filter = 'grayscale(' + (strength * 0.72).toFixed(2) + ') sepia(' + (strength * 0.42).toFixed(2) + ') contrast(' + (1 + strength * 0.28).toFixed(2) + ') brightness(' + (1 - strength * 0.10).toFixed(2) + ')';
+    } else if (filterKey === 'roseGlow') {
+      context.filter = 'brightness(' + (1 + strength * 0.06).toFixed(2) + ') saturate(' + (1 + strength * 0.20).toFixed(2) + ') sepia(' + (strength * 0.12).toFixed(2) + ')';
+    }
+    context.globalAlpha = 0.3 + strength * 0.68;
+    context.drawImage(filterCanvas, 0, 0);
+    context.filter = 'none';
+    var tint = filterKey === 'cool' ? '#b8d7ff' : filterKey === 'warmSun' ? '#efad68' : filterKey === 'roseGlow' ? '#e99b9e' : null;
+    if (tint) {
+      context.globalCompositeOperation = 'soft-light';
+      context.globalAlpha = 0.05 + strength * 0.16;
+      context.fillStyle = tint;
+      context.fillRect(imageRect.x, imageRect.y, imageRect.width, imageRect.height);
+    }
+    context.restore();
+  }
+
   function drawMarkOnCanvas(scene, context, imageRect, mark) {
+    if (mark.tool === 'skinFilter') {
+      applySkinFilter(context, imageRect, mark);
+      return;
+    }
     if (mark.tool === 'reshape') {
       applyReshapeMark(context, imageRect, mark);
       return;
@@ -223,8 +276,53 @@
       var scaledStyleWidth = brushStyle.width * Math.min(imageRect.width / (mark.displayWidth || EDIT_IMAGE_BOX), imageRect.height / (mark.displayHeight || EDIT_IMAGE_BOX));
       var points = mark.points || [{ u: mark.u || 0.5, v: mark.v || 0.5 }];
       var solidColor = brushColorWithAlpha(mark.color, 1);
+      if (brushStyle.kind === 'pixelate') {
+        var pixelCanvas = document.createElement('canvas');
+        var blockSize = Math.max(5, Math.round(4 + (mark.strength || 3) * 1.8));
+        pixelCanvas.width = Math.max(1, Math.ceil(context.canvas.width / blockSize));
+        pixelCanvas.height = Math.max(1, Math.ceil(context.canvas.height / blockSize));
+        var pixelContext = pixelCanvas.getContext('2d');
+        if (pixelContext) {
+          pixelContext.imageSmoothingEnabled = false;
+          pixelContext.drawImage(context.canvas, 0, 0, pixelCanvas.width, pixelCanvas.height);
+          context.save();
+          context.beginPath();
+          forEachCanvasStrokeSample(imageRect, points, Math.max(5, scaledStyleWidth * 0.24), function (px, py) {
+            var pixelRadius = Math.max(8, scaledStyleWidth * 0.5);
+            context.moveTo(px + pixelRadius, py);
+            context.arc(px, py, pixelRadius, 0, Math.PI * 2);
+          });
+          context.clip();
+          context.imageSmoothingEnabled = false;
+          context.drawImage(pixelCanvas, 0, 0, pixelCanvas.width, pixelCanvas.height, 0, 0, context.canvas.width, context.canvas.height);
+          context.restore();
+        }
+        return;
+      }
+      if (brushStyle.kind === 'blurBrush') {
+        var blurCanvas = document.createElement('canvas');
+        blurCanvas.width = context.canvas.width;
+        blurCanvas.height = context.canvas.height;
+        var blurContext = blurCanvas.getContext('2d');
+        if (blurContext) {
+          blurContext.drawImage(context.canvas, 0, 0);
+          context.save();
+          context.beginPath();
+          forEachCanvasStrokeSample(imageRect, points, Math.max(5, scaledStyleWidth * 0.25), function (px, py) {
+            var blurRadius = Math.max(8, scaledStyleWidth * 0.5);
+            context.moveTo(px + blurRadius, py);
+            context.arc(px, py, blurRadius, 0, Math.PI * 2);
+          });
+          context.clip();
+          context.filter = 'blur(' + Math.max(1.5, Math.min(9, 1 + (mark.strength || 3) * 0.85)).toFixed(1) + 'px)';
+          context.globalAlpha = Math.min(0.82, 0.28 + (mark.strength || 3) * 0.065);
+          context.drawImage(blurCanvas, 0, 0);
+          context.restore();
+        }
+        return;
+      }
       context.save();
-      context.globalCompositeOperation = brushStyle.kind === 'complexion' ? 'soft-light' : 'multiply';
+      context.globalCompositeOperation = 'multiply';
       context.fillStyle = solidColor;
       context.strokeStyle = solidColor;
       context.lineCap = 'round';
@@ -240,19 +338,6 @@
           context.fillStyle = gradient;
           context.beginPath();
           context.arc(px, py, blushRadius, 0, Math.PI * 2);
-          context.fill();
-        });
-      } else if (brushStyle.kind === 'complexion') {
-        forEachCanvasStrokeSample(imageRect, points, Math.max(5, scaledStyleWidth * 0.36), function (px, py) {
-          var glowRadius = Math.max(6, scaledStyleWidth * 0.5);
-          var gradient = context.createRadialGradient(px, py, 0, px, py, glowRadius);
-          gradient.addColorStop(0, brushColorWithAlpha(mark.color, 0.72));
-          gradient.addColorStop(0.52, brushColorWithAlpha(mark.color, 0.28));
-          gradient.addColorStop(1, brushColorWithAlpha(mark.color, 0));
-          context.globalAlpha = brushStyle.alpha;
-          context.fillStyle = gradient;
-          context.beginPath();
-          context.ellipse(px, py, glowRadius, glowRadius * 0.82, 0, 0, Math.PI * 2);
           context.fill();
         });
       } else if (brushStyle.kind === 'contour') {
