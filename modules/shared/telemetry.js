@@ -200,13 +200,16 @@
     if (timeEnd < timeStart) timeEnd = timeStart;
     var eventValue = Object.assign({}, properties || {}, {
       sequence: nextSequence(),
-      page_path: window.location.pathname,
-      element: {
+      page_path: window.location.pathname
+    });
+    var isPageRoot = !element || element === document || element === document.documentElement || element === document.body;
+    if (!isPageRoot) {
+      eventValue.element = {
         kind: elementKind(element),
         key: elementKey(element),
         label: elementLabel(element)
-      }
-    });
+      };
+    }
     return {
       event_id: createId('evt_'),
       session_id: sessionId,

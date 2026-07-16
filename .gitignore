@@ -5,3 +5,4 @@ history/
 __pycache__/
 *.zip
 settings.json
+/.private/
