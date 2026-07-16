@@ -1,9 +1,0 @@
-[llm-proxy] listening on http://0.0.0.0:59413
-[llm-proxy] settings: C:\Users\Ocean\Documents\GitHub\Platu\intuitive-deep-learning\settings.json
-[llm-proxy] upstream: https://code.yunfei.best/v1/messages
-[llm-proxy] api key: configured
-[llm-proxy] model: claude-opus-4-5-20251101
-[llm-proxy] POST /chat with {messages[] | prompt}
-[llm-proxy] 127.0.0.1 "GET /health HTTP/1.1" 200 -
-[llm-proxy] 127.0.0.1 "GET /health HTTP/1.1" 200 -
-[llm-proxy] 127.0.0.1 "GET /health HTTP/1.1" 200 -
