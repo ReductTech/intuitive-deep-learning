@@ -678,8 +678,8 @@ var decisionChoices = [
       },
       feedback: {
         empty: '先填写 0～3 的中点。',
-        correct: '正确：3 ÷ 2 = 1.5。',
-        wrong: '再算一次：0～3 的中点是多少？'
+        correct: '正确：3 ÷ 2 = 1.5。三个输入的加权总分范围是 0～3，1.5 正好把这个范围分成两半；总分超过 1.5 时，模型就更倾向于“' + positiveLabel + '”。',
+        wrong: '再想一下：这里要找的是 0～3 的中点，而不是直接取最大值或某一个输入的值。把总范围 3 平分成两半，分界点应为 3 ÷ 2 = 1.5。'
       },
       onCheck: function (result, questionRoot) {
         if (!result.ok) return;
@@ -1100,7 +1100,7 @@ var decisionChoices = [
     analyzeButton.classList.add('is-loading');
     analyzeButton.setAttribute('aria-busy', 'true');
     analyzeButtonText.setAttribute('data-i18n', 'neuron.opening.form.loading');
-    analyzeButtonText.textContent = '生成中';
+    analyzeButtonText.textContent = '拆解中';
     renderLoadingScene();
 
     try {
@@ -1146,7 +1146,7 @@ var decisionChoices = [
       analyzeButton.classList.remove('is-loading');
       analyzeButton.removeAttribute('aria-busy');
       analyzeButtonText.setAttribute('data-i18n', 'neuron.opening.form.submit');
-      analyzeButtonText.textContent = '开始分析';
+      analyzeButtonText.textContent = '开始拆解决定';
     }
   });
 

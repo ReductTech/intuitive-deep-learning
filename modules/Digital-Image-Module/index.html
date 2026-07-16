@@ -110,56 +110,62 @@
           </div>
         </header>
 
-        <section class="edu-toolbar di-upload-panel" id="uploadPanel" aria-label="选择图片">
+        <section class="di-upload-panel" id="uploadPanel" aria-label="上传一张图片">
           <label class="di-file-picker" for="imageInput">
             <input id="imageInput" type="file" accept="image/*">
-            <strong>选择一张图片</strong>
-            <span>支持常见图片格式 · 本地处理</span>
+            <span class="di-upload-icon" aria-hidden="true">📷</span>
+            <strong>上传一张图片</strong>
+            <span class="di-upload-instruction">点击或拖拽到这里</span>
           </label>
-          <div class="edu-toolbar-actions">
-            <button class="edu-btn edu-btn--primary dl-button-hint" id="demoImageBtn" type="button" data-dl-button-hint>使用示例图</button>
-          </div>
+          <button class="di-demo-link" id="demoImageBtn" type="button">
+            没有图片？<strong>使用示例图</strong><span aria-hidden="true">→</span>
+          </button>
         </section>
 
         <section class="di-image-workspace" id="imageWorkspace" hidden>
           <div class="di-representation-grid" id="representationGrid">
             <article class="edu-card di-image-card di-source-card">
               <h3 class="edu-panel-title">原始彩色图像</h3>
-              <p class="edu-panel-description">拖动图像中的选区，查看不同位置的 5 × 5 数值。</p>
+              <p class="edu-panel-description">拖动图像中的选区，查看不同位置的 3 × 3 数值。</p>
               <div class="edu-canvas-frame di-canvas-frame--image">
                 <canvas id="sourceCanvas" aria-label="上传后的原始彩色图像"></canvas>
               </div>
             </article>
 
-            <section class="di-channel-grid" id="channelGrid" hidden aria-label="RGB 通道拆分结果">
-              <div class="di-channel-head">
-                <h3 class="edu-panel-title">RGB 通道图</h3>
-                <p class="edu-panel-description">同一张图片拆成红、绿、蓝三层。</p>
+            <section class="di-rgb-panel" id="matrixPanel" hidden aria-label="RGB 通道图与 3 × 3 数值矩阵">
+              <div class="di-rgb-head">
+                <div class="di-channel-head">
+                  <h3 class="edu-panel-title">RGB 通道图与数值矩阵</h3>
+                  <p class="edu-panel-description">每个通道图下方是选区对应的 3 × 3 数值。</p>
+                </div>
+                <div class="edu-toolbar-actions di-matrix-controls" role="group" aria-label="矩阵数值显示方式">
+                  <button class="edu-btn is-active" type="button" data-scale-mode="255">0–255</button>
+                  <button class="edu-btn" type="button" data-scale-mode="unit">0–1</button>
+                </div>
               </div>
-              <article class="edu-card di-image-card di-channel-card di-channel-card--r">
-                <div class="di-card-head"><span>R 通道</span><strong>红色强度</strong></div>
-                <div class="edu-canvas-frame di-canvas-frame--image"><canvas id="redCanvas" aria-label="红色通道图"></canvas></div>
-              </article>
-              <article class="edu-card di-image-card di-channel-card di-channel-card--g">
-                <div class="di-card-head"><span>G 通道</span><strong>绿色强度</strong></div>
-                <div class="edu-canvas-frame di-canvas-frame--image"><canvas id="greenCanvas" aria-label="绿色通道图"></canvas></div>
-              </article>
-              <article class="edu-card di-image-card di-channel-card di-channel-card--b">
-                <div class="di-card-head"><span>B 通道</span><strong>蓝色强度</strong></div>
-                <div class="edu-canvas-frame di-canvas-frame--image"><canvas id="blueCanvas" aria-label="蓝色通道图"></canvas></div>
-              </article>
-            </section>
-
-            <section class="edu-panel di-matrix-panel" id="matrixPanel" hidden aria-label="5 × 5 像素值矩阵">
-              <div class="di-matrix-head">
-                <h3 class="edu-panel-title">RGB 数值矩阵</h3>
-                <p class="edu-panel-description">橙色边框标出选区中心；切换查看 0–255 或 0–1。</p>
+              <div class="di-channel-grid" id="channelGrid" hidden aria-label="RGB 通道拆分结果">
+                <section class="di-channel-column">
+                  <article class="edu-card di-image-card di-channel-card di-channel-card--r">
+                    <div class="di-card-head"><span>R 通道</span><strong>红色强度</strong></div>
+                    <div class="edu-canvas-frame di-canvas-frame--image"><canvas id="redCanvas" aria-label="红色通道图"></canvas></div>
+                  </article>
+                  <div class="di-matrix-slot" data-matrix-channel="r"></div>
+                </section>
+                <section class="di-channel-column">
+                  <article class="edu-card di-image-card di-channel-card di-channel-card--g">
+                    <div class="di-card-head"><span>G 通道</span><strong>绿色强度</strong></div>
+                    <div class="edu-canvas-frame di-canvas-frame--image"><canvas id="greenCanvas" aria-label="绿色通道图"></canvas></div>
+                  </article>
+                  <div class="di-matrix-slot" data-matrix-channel="g"></div>
+                </section>
+                <section class="di-channel-column">
+                  <article class="edu-card di-image-card di-channel-card di-channel-card--b">
+                    <div class="di-card-head"><span>B 通道</span><strong>蓝色强度</strong></div>
+                    <div class="edu-canvas-frame di-canvas-frame--image"><canvas id="blueCanvas" aria-label="蓝色通道图"></canvas></div>
+                  </article>
+                  <div class="di-matrix-slot" data-matrix-channel="b"></div>
+                </section>
               </div>
-              <div class="edu-toolbar-actions di-matrix-controls" role="group" aria-label="矩阵数值显示方式">
-                <button class="edu-btn is-active" type="button" data-scale-mode="255">0–255</button>
-                <button class="edu-btn" type="button" data-scale-mode="unit">0–1</button>
-              </div>
-              <div class="di-matrix-grid" id="matrixGrid" aria-label="5 × 5 像素值矩阵"></div>
             </section>
           </div>
         </section>

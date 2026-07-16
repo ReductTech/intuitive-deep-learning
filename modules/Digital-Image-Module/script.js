@@ -3,7 +3,7 @@
 
   var OBSERVATION_ENDPOINT = 'http://127.0.0.1:59414/image/observation-feedback';
   var MAX_IMAGE_SIDE = 512;
-  var SAMPLE_SIZE = 5;
+  var SAMPLE_SIZE = 3;
   var recommendedVideos = [
     {
       title: '【硬核科普】全网最简洁易懂的OLED与LCD屏幕工作原理与优劣科普',
@@ -577,15 +577,18 @@
 
   function renderMatrices() {
     if (!state.sourceImageData) return;
-    var host = $('matrixGrid');
-    host.replaceChildren();
+    document.querySelectorAll('[data-matrix-channel]').forEach(function (slot) {
+      slot.replaceChildren();
+    });
     var channels = [
-      { key: 'r', title: 'R 红色强度 5 × 5', index: 0 },
-      { key: 'g', title: 'G 绿色强度 5 × 5', index: 1 },
-      { key: 'b', title: 'B 蓝色强度 5 × 5', index: 2 }
+      { key: 'r', title: 'R 红色强度 3 × 3', index: 0 },
+      { key: 'g', title: 'G 绿色强度 3 × 3', index: 1 },
+      { key: 'b', title: 'B 蓝色强度 3 × 3', index: 2 }
     ];
     var bounds = sampleBounds(state.imageWidth, state.imageHeight);
     channels.forEach(function (channel) {
+      var host = document.querySelector('[data-matrix-channel="' + channel.key + '"]');
+      if (!host) return;
       var wrap = document.createElement('section');
       wrap.className = 'di-matrix-table di-matrix-table--' + channel.key;
       var title = document.createElement('h4');
@@ -680,6 +683,28 @@
 
     $('imageInput').addEventListener('change', function (event) {
       var file = event.target.files && event.target.files[0];
+      loadImageFromFile(file);
+    });
+    var uploadPanel = $('uploadPanel');
+    var dragDepth = 0;
+    uploadPanel.addEventListener('dragenter', function (event) {
+      event.preventDefault();
+      dragDepth += 1;
+      uploadPanel.classList.add('is-dragging');
+    });
+    uploadPanel.addEventListener('dragover', function (event) {
+      event.preventDefault();
+      if (event.dataTransfer) event.dataTransfer.dropEffect = 'copy';
+    });
+    uploadPanel.addEventListener('dragleave', function () {
+      dragDepth = Math.max(0, dragDepth - 1);
+      if (!dragDepth) uploadPanel.classList.remove('is-dragging');
+    });
+    uploadPanel.addEventListener('drop', function (event) {
+      event.preventDefault();
+      dragDepth = 0;
+      uploadPanel.classList.remove('is-dragging');
+      var file = event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files[0];
       loadImageFromFile(file);
     });
     $('demoImageBtn').addEventListener('click', function () {
