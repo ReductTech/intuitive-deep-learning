@@ -206,6 +206,15 @@ def _terminate_pid(pid: int) -> None:
         os.killpg(os.getpgid(pid), signal.SIGTERM)
     except (ProcessLookupError, PermissionError):
         return
+    deadline = time.monotonic() + 2.0
+    while _pid_exists(pid) and time.monotonic() < deadline:
+        time.sleep(0.05)
+    if not _pid_exists(pid):
+        return
+    try:
+        os.killpg(os.getpgid(pid), signal.SIGKILL)
+    except (ProcessLookupError, PermissionError):
+        return
 
 
 def _classify_port_processes(port: int, *, markers: list[str], label: str) -> dict[str, Any]:

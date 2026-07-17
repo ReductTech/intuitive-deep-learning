@@ -8,7 +8,7 @@
     "workingDirectory": "."
   },
   "requirements": {
-    "commands": ["bash", "python3"],
+    "commands": ["bash", "python3", "git"],
     "ports": [59411, 59413, 59414, 59415]
   },
   "lifecycle": {
