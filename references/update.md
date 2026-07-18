@@ -10,6 +10,6 @@
 bash "$skill_root/scripts/update-skill.sh" --yes
 ```
 
-脚本以 `https://gitee.com/ssocean/intuitive-deep-learning.git` 为唯一代码来源，强制本地代码与官方版本一致，只保留 `history/` 和 `runtime_logs/`。
+脚本以 `https://gitee.com/ssocean/intuitive-deep-learning.git` 为唯一代码来源，始终先在 Linux 原生 `/tmp` 中克隆，再复制回安装目录；这同时适用于普通 Linux 和 WSL2 挂载目录。脚本强制本地代码与官方版本一致，只保留 `history/` 和 `runtime_logs/`。
 
 命令失败时报告错误，不要声称更新完成，也不要自行改写或拆分脚本命令。成功时报告输出中的 `version` 和 `mode`，然后重新读取新版 `SKILL.md`、本文件和 `modules/index.json`。

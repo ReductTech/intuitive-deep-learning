@@ -8,37 +8,10 @@ fi
 
 repo="https://gitee.com/ssocean/intuitive-deep-learning.git"
 root="$(cd "${BASH_SOURCE[0]%/*}/.." && pwd -P)"
-temp="${root}.$$-temp"
+name="${root##*/}"
+native="/tmp/${name}-update.$$"
+staging="${root}.$$-temp"
 backup="${root}.$$-backup"
-
-# Fast path: force a standalone checkout to exactly match Gitee.
-git_prefix="$(git -C "$root" rev-parse --show-prefix 2>/dev/null || true)"
-git_worktree="$(git -C "$root" rev-parse --is-inside-work-tree 2>/dev/null || true)"
-if [[ -z "$git_prefix" && "$git_worktree" == true ]]; then
-  if git -C "$root" fetch "$repo" HEAD \
-    && git -C "$root" reset --hard FETCH_HEAD \
-    && bash "$root/scripts/start-all-services.sh" --stop >/dev/null \
-    && git -C "$root" clean -fdx -e history/ -e runtime_logs/; then
-    printf 'ok=true\nupdated=true\nversion=%s\nmode=reset\n' \
-      "$(git -C "$root" rev-parse --short HEAD)"
-    exit 0
-  fi
-fi
-
-# Fallback: build a clean replacement while the old package remains intact.
-git clone --quiet --depth 1 "$repo" "$temp"
-test -f "$temp/SKILL.md"
-test -f "$temp/modules/index.json"
-test -f "$temp/scripts/run-lesson-page.sh"
-test -f "$temp/scripts/update-skill.sh"
-bash "$temp/scripts/start-all-services.sh" --stop >/dev/null
-
-for path in runtime_logs history; do
-  if [[ -e "$root/$path" ]]; then
-    rm -rf "$temp/$path"
-    cp -a "$root/$path" "$temp/$path"
-  fi
-done
 
 restore() {
   local rc=$?
@@ -46,17 +19,39 @@ restore() {
   if [[ ! -e "$root" && -e "$backup" ]]; then
     mv "$backup" "$root"
   fi
-  rm -rf "$temp"
+  rm -rf "$native" "$staging"
   exit "$rc"
 }
 trap restore EXIT
 trap 'exit 130' INT
 trap 'exit 143' TERM
 
-mv "$root" "$backup"
-mv "$temp" "$root"
-trap - EXIT INT TERM
-rm -rf "$backup" || true
+# Git checkout stays on the native Linux filesystem, avoiding WSL chmod errors.
+rm -rf "$native" "$staging"
+git -c core.filemode=false clone --quiet --depth 1 "$repo" "$native"
+git -C "$native" config core.filemode false
+test -f "$native/SKILL.md"
+test -f "$native/modules/index.json"
+test -f "$native/scripts/run-lesson-page.sh"
+test -f "$native/scripts/update-skill.sh"
 
-printf 'ok=true\nupdated=true\nversion=%s\nmode=replace\n' \
+bash "$native/scripts/start-all-services.sh" --stop >/dev/null
+for path in runtime_logs history; do
+  if [[ -e "$root/$path" ]]; then
+    rm -rf "$native/$path"
+    cp -a "$root/$path" "$native/$path"
+  fi
+done
+
+# Copy without preserving Linux mode bits, then swap directories on one filesystem.
+mkdir -p "$staging"
+cp -r "$native/." "$staging/"
+git -C "$staging" config core.filemode false
+
+mv "$root" "$backup"
+mv "$staging" "$root"
+trap - EXIT INT TERM
+rm -rf "$native" "$backup"
+
+printf 'ok=true\nupdated=true\nversion=%s\nmode=tmp\n' \
   "$(git -C "$root" rev-parse --short HEAD)"
