@@ -62,4 +62,4 @@ bash .claude/skills/intuitive-deep-learning/scripts/start-all-services.sh --stop
 
 用户提到更新、检查更新或同步最新版时，完整读取并执行 [references/update.md](references/update.md)。
 
-## 欢迎您的宝贵意见
+## 欢迎您的宝贵意见！
