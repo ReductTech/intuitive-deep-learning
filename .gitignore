@@ -6,3 +6,4 @@ __pycache__/
 *.zip
 settings.json
 /.private/
+upgrade.md
