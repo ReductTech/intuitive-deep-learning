@@ -39,7 +39,10 @@ export function NumberLineBlock({ onComplete }: LessonBlockProps) {
     let active = true;
     void getTelemetryState<{ value?: number }>(predictionStateKey, 'loss-guide-react').then((entry) => {
       const restored = Number(entry?.state?.value);
-      if (active && Number.isFinite(restored)) setPrediction(clampPrediction(restored));
+      if (active && Number.isFinite(restored)) {
+        setPrediction(clampPrediction(restored));
+        setHintActive(false);
+      }
     });
     return () => { active = false; };
   }, []);

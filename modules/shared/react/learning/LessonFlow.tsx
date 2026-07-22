@@ -40,13 +40,19 @@ export function LessonFlow({
   const progressKey = `lesson-flow:${moduleKey}`;
   const [completedIds, setCompletedIds] = useState<string[]>([]);
   const [visibleCount, setVisibleCount] = useState(Math.min(1, steps.length));
+  const [, setHydrated] = useState(false);
   const [revealedIndex, setRevealedIndex] = useState<number | null>(null);
   const [cueIndex, setCueIndex] = useState<number | null>(null);
+  const completedIdsRef = useRef<string[]>([]);
+  const visibleCountRef = useRef(Math.min(1, steps.length));
+  const hydratedRef = useRef(false);
   const stepRefs = useRef<Array<HTMLElement | null>>([]);
   const cueTargetRef = useRef<HTMLElement | null>(null);
   const rootRef = useRef<HTMLDivElement | null>(null);
 
   const reset = useCallback(() => {
+    completedIdsRef.current = [];
+    visibleCountRef.current = Math.min(1, steps.length);
     setCompletedIds([]);
     setVisibleCount(Math.min(1, steps.length));
     setRevealedIndex(null);
@@ -56,22 +62,21 @@ export function LessonFlow({
 
   const complete = useCallback((id: string) => {
     const index = steps.findIndex((step) => step.id === id);
-    if (index < 0) return;
+    if (!hydratedRef.current || index < 0 || completedIdsRef.current.includes(id)) return;
     const nextIndex = index + 1;
-    setCompletedIds((current) => {
-      if (current.includes(id)) return current;
-      const nextCompleted = [...current, id];
-      const nextVisibleCount = Math.min(steps.length, Math.max(visibleCount, nextIndex + 1));
-      const lessonCompleted = Boolean(steps[index]?.completesLesson);
-      emitTelemetry('lesson_progress', rootRef.current, { state_key: progressKey, state: { completedIds: nextCompleted, visibleCount: nextVisibleCount, completed: lessonCompleted } });
-      if (lessonCompleted) emitTelemetry('module_complete', rootRef.current, { state_key: `module:${moduleKey}`, state: { completed: true, completedIds: nextCompleted } });
-      return nextCompleted;
-    });
+    const nextCompleted = [...completedIdsRef.current, id];
+    const nextVisibleCount = Math.min(steps.length, Math.max(visibleCountRef.current, nextIndex + 1));
+    const lessonCompleted = Boolean(steps[index]?.completesLesson);
+    completedIdsRef.current = nextCompleted;
+    visibleCountRef.current = nextVisibleCount;
+    setCompletedIds(nextCompleted);
+    emitTelemetry('lesson_progress', rootRef.current, { state_key: progressKey, state: { completedIds: nextCompleted, visibleCount: nextVisibleCount, completed: lessonCompleted } });
+    if (lessonCompleted) emitTelemetry('module_complete', rootRef.current, { state_key: `module:${moduleKey}`, state: { completed: true, completedIds: nextCompleted } });
     if (nextIndex < steps.length) {
-      setVisibleCount((current) => Math.max(current, nextIndex + 1));
+      setVisibleCount(nextVisibleCount);
       setRevealedIndex(nextIndex);
     }
-  }, [moduleKey, progressKey, steps, visibleCount]);
+  }, [moduleKey, progressKey, steps]);
 
   useEffect(() => {
     if (revealedIndex === null) return;
@@ -89,11 +94,21 @@ export function LessonFlow({
   useEffect(() => {
     let active = true;
     void getTelemetryState<LessonProgressState>(progressKey, moduleKey).then((entry) => {
-      if (!active || !entry?.state) return;
+      if (!active) return;
+      if (!entry?.state) {
+        hydratedRef.current = true;
+        setHydrated(true);
+        return;
+      }
       const restoredIds = Array.isArray(entry.state.completedIds) ? entry.state.completedIds.filter((id) => steps.some((step) => step.id === id)) : [];
       const restoredVisible = Number(entry.state.visibleCount);
+      const nextVisibleCount = Number.isFinite(restoredVisible) ? Math.min(steps.length, Math.max(1, restoredVisible)) : Math.min(steps.length, restoredIds.length + 1);
+      completedIdsRef.current = restoredIds;
+      visibleCountRef.current = nextVisibleCount;
       setCompletedIds(restoredIds);
-      setVisibleCount(Number.isFinite(restoredVisible) ? Math.min(steps.length, Math.max(1, restoredVisible)) : Math.min(steps.length, restoredIds.length + 1));
+      setVisibleCount(nextVisibleCount);
+      hydratedRef.current = true;
+      setHydrated(true);
     });
     return () => { active = false; };
   }, [moduleKey, progressKey, steps]);
