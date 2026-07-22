@@ -12,3 +12,4 @@ upgrade.md
 node_modules/
 dist/
 *.tsbuildinfo
+setting.json

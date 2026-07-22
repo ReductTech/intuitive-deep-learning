@@ -7,7 +7,7 @@ export type PlotlyTrace = Record<string, unknown>;
 export type PlotlyLayout = Record<string, unknown>;
 export type PlotlyConfig = Record<string, unknown>;
 
-interface PlotlyGraph {
+export interface PlotlyGraph {
   on?(event: string, handler: (event: Record<string, unknown>) => void): void;
   removeAllListeners?(event?: string): void;
 }
@@ -21,6 +21,7 @@ interface PlotlyGlobal {
   ): Promise<PlotlyGraph>;
   purge?(element: HTMLElement): void;
   relayout?(element: HTMLElement, update: PlotlyLayout): Promise<unknown>;
+  restyle?(element: HTMLElement, update: Record<string, unknown>, traceIndices?: number[]): Promise<unknown>;
 }
 
 declare global {
@@ -60,10 +61,11 @@ export interface PlotlyChartProps extends Omit<HTMLAttributes<HTMLDivElement>, '
   layout?: PlotlyLayout;
   config?: PlotlyConfig;
   minHeight?: number;
+  onGraphReady?: (graph: PlotlyGraph, host: HTMLDivElement) => void;
 }
 
 /** A lifecycle-safe wrapper around the repository's vendored Plotly build. */
-export function PlotlyChart({ data, layout, config, minHeight = 260, className, style, ...props }: PlotlyChartProps) {
+export function PlotlyChart({ data, layout, config, minHeight = 260, className, style, onGraphReady, ...props }: PlotlyChartProps) {
   const hostRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -83,7 +85,12 @@ export function PlotlyChart({ data, layout, config, minHeight = 260, className, 
         ...config,
       });
     }).then((created) => {
-      if (created && !disposed) graph = created;
+      if (!disposed) {
+        // Plotly 的事件 API 挂在实际 host 元素上；不同构建的 Promise 返回值并不总是同一对象。
+        const graphHost = host as HTMLDivElement & PlotlyGraph;
+        graph = created ?? graphHost;
+        onGraphReady?.(graphHost, host);
+      }
     }).catch(() => {
       if (!disposed) host.dataset.chartError = 'true';
     });
@@ -94,7 +101,7 @@ export function PlotlyChart({ data, layout, config, minHeight = 260, className, 
       if (window.Plotly?.purge) window.Plotly.purge(host);
       graph = null;
     };
-  }, [config, data, layout]);
+  }, [config, data, layout, onGraphReady]);
 
   return <div ref={hostRef} className={classNames('shared-plotly', className)} style={{ minHeight, ...style }} {...props} />;
 }

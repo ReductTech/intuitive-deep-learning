@@ -32,7 +32,9 @@ DEFAULT_MODULES_DIR = SKILL_DIR / "modules"
 DEFAULT_DATASET_DIR = SKILL_DIR / "dataset"
 DEFAULT_HISTORY_DIR = SKILL_DIR / "history"
 TELEMETRY_PATH = "/__telemetry/events"
+TELEMETRY_BOOTSTRAP_PATH = "/__telemetry/bootstrap"
 LEARNING_RECORDS_PATH = "/__telemetry/records"
+MODULE_STATE_PATH = "/__telemetry/state"
 EXPORT_PATH = "/__telemetry/export"
 SYNC_PENDING_PATH = "/__telemetry/sync/pending"
 SYNC_ACK_PATH = "/__telemetry/sync/ack"
@@ -75,6 +77,8 @@ def integer_ms(value: Any, fallback: int) -> int:
 def infer_event_kind(event_name: str) -> str:
     if event_name.startswith("page_"):
         return "page"
+    if event_name.startswith(("module_", "lesson_")):
+        return "learning"
     if event_name == "ui_click":
         return "click"
     if event_name.startswith("answer_") or event_name == "question_view":
@@ -231,8 +235,8 @@ class BehaviorStore:
                 """
                 SELECT
                     module_id,
-                    SUM(CASE WHEN event_name = 'page_view' THEN 1 ELSE 0 END) AS study_count,
-                    MAX(CASE WHEN event_name = 'page_view' THEN time_start END) AS last_opened_at,
+                    SUM(CASE WHEN event_name IN ('page_view', 'module_enter') THEN 1 ELSE 0 END) AS study_count,
+                    MAX(CASE WHEN event_name IN ('page_view', 'module_enter') THEN time_start END) AS last_opened_at,
                     SUM(
                         CASE WHEN event_name = 'page_leave' THEN
                             MIN(
@@ -250,7 +254,7 @@ class BehaviorStore:
                 FROM behavior_events
                 WHERE is_deleted = 0
                   AND module_id NOT IN ('CourseMap', 'root', 'unknown')
-                  AND event_name IN ('page_view', 'page_leave')
+                  AND event_name IN ('page_view', 'module_enter', 'page_leave')
                 GROUP BY module_id
                 """
             ).fetchall()
@@ -262,6 +266,46 @@ class BehaviorStore:
             }
             for row in rows
         }
+
+    def module_state(self, module_id: str) -> dict[str, Any]:
+        with closing(self._connect()) as connection:
+            rows = connection.execute(
+                f"""
+                SELECT {', '.join(EVENT_COLUMNS)}
+                FROM behavior_events
+                WHERE is_deleted = 0
+                  AND module_id = ?
+                  AND event_name <> 'question_view'
+                  AND json_extract(event_value, '$.state_key') IS NOT NULL
+                ORDER BY time_end DESC, rowid DESC
+                """,
+                (module_id,),
+            ).fetchall()
+            completed = connection.execute(
+                """
+                SELECT 1
+                FROM behavior_events
+                WHERE is_deleted = 0 AND module_id = ? AND event_name = 'module_complete'
+                LIMIT 1
+                """,
+                (module_id,),
+            ).fetchone() is not None
+
+        states: dict[str, Any] = {}
+        for row in rows:
+            event = self._decode_row(row)
+            value = event.get("event_value")
+            if not isinstance(value, dict):
+                continue
+            key = value.get("state_key")
+            if not isinstance(key, str) or not key or key in states:
+                continue
+            states[key] = {
+                "event_name": event.get("event_name"),
+                "state": value.get("state"),
+                "updated_at": event.get("time_end"),
+            }
+        return {"module_id": module_id, "completed": completed, "states": states}
 
     @staticmethod
     def _decode_row(row: sqlite3.Row) -> dict[str, Any]:
@@ -536,6 +580,14 @@ class ModuleRequestHandler(SimpleHTTPRequestHandler):
         if include_body:
             self.wfile.write(body)
 
+    def _telemetry_cookie_header(self) -> str:
+        cookie = SimpleCookie()
+        cookie[TELEMETRY_COOKIE] = self.telemetry_token
+        cookie[TELEMETRY_COOKIE]["path"] = "/"
+        cookie[TELEMETRY_COOKIE]["httponly"] = True
+        cookie[TELEMETRY_COOKIE]["samesite"] = "Strict"
+        return cookie.output(header="").strip()
+
     def do_GET(self) -> None:
         parsed = urlsplit(self.path)
         if self._redirect_directory_without_slash():
@@ -553,13 +605,23 @@ class ModuleRequestHandler(SimpleHTTPRequestHandler):
                 },
             )
             return
-        if parsed.path in {TELEMETRY_PATH, LEARNING_RECORDS_PATH, EXPORT_PATH, SYNC_PENDING_PATH} and not self._require_telemetry_token():
+        if parsed.path == TELEMETRY_BOOTSTRAP_PATH:
+            self._send_json(200, {"ok": True}, headers={"Set-Cookie": self._telemetry_cookie_header()})
+            return
+        if parsed.path in {TELEMETRY_PATH, LEARNING_RECORDS_PATH, MODULE_STATE_PATH, EXPORT_PATH, SYNC_PENDING_PATH} and not self._require_telemetry_token():
             return
         if parsed.path == LEARNING_RECORDS_PATH:
             self._send_json(
                 200,
                 {"ok": True, "modules": self.behavior_store.learning_records()},
             )
+            return
+        if parsed.path == MODULE_STATE_PATH:
+            module_id = str(parse_qs(parsed.query).get("module_id", [""])[0]).strip()
+            if not module_id:
+                self._send_json(400, {"ok": False, "error": "module-id-required"})
+                return
+            self._send_json(200, {"ok": True, **self.behavior_store.module_state(module_id)})
             return
         if parsed.path == EXPORT_PATH:
             document = self.behavior_store.export_document()
@@ -600,7 +662,7 @@ class ModuleRequestHandler(SimpleHTTPRequestHandler):
         parsed = urlsplit(self.path)
         if self._redirect_directory_without_slash():
             return
-        if parsed.path in {HEALTH_PATH, TELEMETRY_PATH, LEARNING_RECORDS_PATH, EXPORT_PATH, SYNC_PENDING_PATH}:
+        if parsed.path in {HEALTH_PATH, TELEMETRY_BOOTSTRAP_PATH, TELEMETRY_PATH, LEARNING_RECORDS_PATH, MODULE_STATE_PATH, EXPORT_PATH, SYNC_PENDING_PATH}:
             self.do_GET()
             return
         html_path = self._html_file()

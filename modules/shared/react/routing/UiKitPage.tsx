@@ -8,17 +8,18 @@ import { Callout } from '../feedback/Callout';
 import { Feedback } from '../feedback/Feedback';
 import { NoticeStrip } from '../feedback/NoticeStrip';
 import { ReplayableCallouts } from '../feedback/ReplayableCallouts';
+import { AttentionHint } from '../feedback/AttentionHint';
 import { CatalogItem } from '../layout/CatalogItem';
 import { ContentBlock } from '../layout/ContentBlock';
 import { ModuleShell } from '../layout/ModuleShell';
 import { FormulaBlock, FormulaTerm } from '../learning/FormulaBlock';
 import { Question } from '../learning/Question';
-import { RelatedVideos } from '../learning/RelatedVideos';
+import { LessonFooter } from '../learning/LessonFooter';
 import { ProgressiveReveal } from '../learning/ProgressiveReveal';
 import { PanelChoiceQuestion } from '../learning/PanelChoiceQuestion';
 import { CodeCompletionBlock } from '../learning/CodeCompletionBlock';
 import { ValueTile } from '../learning/ValueTile';
-import { FunctionPlot } from '../visuals/FunctionPlot';
+import { FunctionPlot, type FunctionSeries } from '../visuals/FunctionPlot';
 import { PlotlyChart, type PlotlyLayout, type PlotlyTrace } from '../visuals/PlotlyChart';
 import '../ui-kit.css';
 
@@ -26,6 +27,10 @@ const sigmoid = (x: number) => 1 / (1 + Math.exp(-x));
 const surfaceAxis = Array.from({ length: 25 }, (_, index) => -2 + index * (4 / 24));
 const surfaceData: PlotlyTrace[] = [{ type: 'surface', x: surfaceAxis, y: surfaceAxis, z: surfaceAxis.map((y) => surfaceAxis.map((x) => Math.exp(-(x * x + y * y) / 2))), colorscale: [[0, '#eef3fb'], [0.5, '#f7b28d'], [1, '#f07e47']], showscale: false, hovertemplate: 'x = %{x:.2f}<br>y = %{y:.2f}<br>z = %{z:.2f}<extra></extra>' }];
 const surfaceLayout: PlotlyLayout = { paper_bgcolor: '#fbfdff', margin: { l: 0, r: 0, t: 12, b: 0 }, showlegend: false, scene: { bgcolor: '#fbfdff', dragmode: 'orbit', aspectmode: 'cube', xaxis: { title: { text: 'x' } }, yaxis: { title: { text: 'y' } }, zaxis: { title: { text: 'z' } } } };
+const cartesianDemoSeries: FunctionSeries[] = [
+  { id: 'sigmoid', label: 'Sigmoid', fn: sigmoid, stroke: '#f07e47', strokeWidth: 3 },
+  { id: 'tanh', label: 'tanh', fn: (x) => Math.tanh(x), stroke: '#27446e', strokeWidth: 3 },
+];
 const panelChoiceOptions = [
   {
     key: 'A',
@@ -39,7 +44,7 @@ const panelChoiceOptions = [
 ];
 
 export function UiKitPage() {
-  return <ModuleShell title="UI Kit" subtitle="教学模块的统一界面组件与交互规范。" shellClassName="kit-shell" headerClassName="kit-header">
+  return <ModuleShell title="UI Kit" subtitle="教学模块的统一界面组件与交互规范。" shellClassName="kit-shell edu-shell--scaled" headerClassName="kit-header">
     <section className="kit-section" aria-labelledby="foundation-title"><header className="kit-section-head"><h2 id="foundation-title">基础展示</h2><p>定义每个教学小块的固定结构，以及正文中允许复用的提示、指标、公式和代码运行组件。</p></header><div className="foundation-catalog">
       <CatalogItem title="标准内容块" description="每个小块只保留一个主标题、一个副标题和一个正文区域。"><ContentBlock className="foundation-preview" title="损失就是距离" subtitle="Loss 衡量真实值和预测值之间差多少。这里先用一条数轴，把这种差距直接画出来。"><p className="edu-body">训练的目标不是记住一个答案，而是持续缩小预测与真实结果之间的距离。</p><p className="edu-body">先改变预测值，再观察 <strong className="edu-emphasis">L1 Loss</strong> 如何变化。</p></ContentBlock></CatalogItem>
       <CatalogItem title="提示框" description="颜色和播放方式是两个独立维度。每种颜色都可以直接显示，也可以逐字显示。"><div className="foundation-stack foundation-preview--compact"><Callout tone="orange" label="你的任务" text="拖动绿色预测值，让它与红色真实值重合，把 Loss 缩小到 0。" /><ReplayableCallouts className="foundation-stack" replayLabel="重播四种逐字提示" items={[{ tone: 'orange', label: '思考提示', text: '先比较预测值和真实值，再判断应该向左还是向右移动。', streaming: true, streamInterval: 24 }, { tone: 'blue', label: '逐步解释', text: '预测值每靠近真实值一步，损失就会随距离一起减小。', streaming: true, streamInterval: 24 }, { tone: 'green', label: '正确反馈', text: '方向判断正确，继续缩小距离就能进一步降低损失。', streaming: true, streamInterval: 24 }, { tone: 'red', label: '风险提醒', text: '学习率过大可能越过最低点，导致训练过程来回震荡。', streaming: true, streamInterval: 24 }]} /><Feedback status="correct" label="正确反馈" message="方向判断正确，可以继续。" /><Feedback status="wrong" label="错误提示" message="当前操作让预测值远离真实值。" /></div></CatalogItem>
@@ -50,6 +55,7 @@ export function UiKitPage() {
 
     <section className="kit-section" aria-labelledby="visual-title"><header className="kit-section-head"><h2 id="visual-title">坐标与曲线</h2><p>用于展示函数关系、曲面和训练误差的共享可视化。</p></header><div className="visual-catalog">
       <CatalogItem variant="visual" title="二维坐标轴与函数曲线" description="拖动平移坐标，使用滚轮缩放。函数会按当前视口重新采样，不设固定坐标范围。"><FunctionPlot className="visual-plot" fn={sigmoid} ariaLabel="Sigmoid 函数曲线" /></CatalogItem>
+      <CatalogItem variant="visual" title="多函数二维坐标图" description="与单函数图使用同一套平移、滚轮缩放与按视口重新采样逻辑；可同时比较任意多条函数。"><FunctionPlot className="visual-plot" series={cartesianDemoSeries} showLegend xLabel="x" yLabel="输出值" initialCenter={{ x: 0, y: 0 }} initialScale={{ x: .012, y: .006 }} minHeight={300} ariaLabel="Sigmoid 与 tanh 的多函数坐标图" /></CatalogItem>
       <CatalogItem variant="visual" title="三维坐标轴与曲面" description="拖动旋转坐标，使用滚轮缩放。"><PlotlyChart className="visual-plot" data={surfaceData} layout={surfaceLayout} aria-label="三维函数曲面" /><output className="visual-readout">camera = 1.35, 1.35, 0.95</output></CatalogItem>
     </div></section>
 
@@ -62,6 +68,10 @@ export function UiKitPage() {
       <CatalogItem variant="button" title="询问按钮" description="鼠标悬浮、键盘聚焦或触摸时显示可容纳任意内容的面板。"><ExplainPanelButton><strong>学习率</strong><p>学习率决定每次参数更新的步幅。</p><FormulaBlock ariaLabel="学习率公式">w<sub>new</sub> = w − η · ∇L</FormulaBlock></ExplainPanelButton></CatalogItem>
       <CatalogItem variant="button" title="等待按钮" description="请求已提交，正在等待结果，不可重复点击。"><Button loading>等待数据</Button></CatalogItem>
       <CatalogItem variant="button" title="禁用按钮" description="前置条件尚未满足时使用，禁用期间不显示等待动画。"><Button variant="primary" disabled>继续训练</Button></CatalogItem>
+    </div></section>
+
+    <section className="kit-section" aria-labelledby="hint-title"><header className="kit-section-head"><h2 id="hint-title">提示</h2><p>用于标记首次需要操作的对象；鼠标移入、键盘聚焦或点击后，提示由共享组件自动结束。</p></header><div className="foundation-catalog">
+      <CatalogItem title="通用交互提示" description="使用 AttentionHint 包裹任意 HTML 内容，或为 SVG 图形添加 edu-attention-hint 类名。"><AttentionHint><NoticeStrip tone="blue" lead="现在可以操作：">将鼠标移入此提示，外侧高亮会自动结束。</NoticeStrip></AttentionHint></CatalogItem>
     </div></section>
 
     <section className="kit-section" aria-labelledby="controls-title"><header className="kit-section-head"><h2 id="controls-title">参数与选项控件</h2><p>根据数据类型选择控件：单项选择用下拉或单选，多项选择用复选框，二元设置用开关，数值范围用滑杆。</p></header><div className="control-catalog">
@@ -82,6 +92,6 @@ export function UiKitPage() {
 
     <section className="kit-section" aria-labelledby="code-title"><header className="kit-section-head"><h2 id="code-title">代码运行块</h2><p>代码主体只读，学习者只填写指定的单行空位，并看到运行状态、帮助和运行时间。</p></header><CodeCompletionBlock className="foundation-preview" language="Python" expectedAnswer="square" inputLabel="填入缺失的函数名" help="这里需要填写 PyTorch 中执行平方运算的函数名。" prefixLines={<><span className="edu-code-line"><span className="edu-code-token--keyword">import</span> <span className="edu-code-token--module">torch</span></span>{'\n'}<span className="edu-code-line">prediction = torch.tensor([1.6])</span>{'\n'}<span className="edu-code-line">target = torch.tensor([7.0])</span>{'\n'}</>} beforeInput="loss = torch." afterInput=" (target - prediction)" /></section>
 
-    <section className="kit-section" aria-labelledby="related-title"><header className="kit-section-head"><h2 id="related-title">推荐视频</h2><p>放在教学模块底部，使用完整单栏宽度展示与当前主题直接相关的视频资源。</p></header><ContentBlock className="foundation-preview" title="推荐资源" subtitle="继续观看与当前主题直接相关的视频，巩固刚才完成的学习内容。"><RelatedVideos title="推荐视频" videos={[{ title: '什么是神经元？' }, { title: '损失如何指导学习？' }, { title: '激活函数' }]} /><nav className="edu-resource-actions" aria-label="课程资源操作"><a className="edu-btn" href="../CourseMap/">返回课程目录</a><a className="edu-btn edu-btn--primary" href="../MLP_playground/">学习下一个</a></nav></ContentBlock></section>
+    <section className="kit-section" aria-labelledby="ending-title"><header className="kit-section-head"><h2 id="ending-title">课程结尾</h2><p>用一个清晰的完成状态收束本节内容，再提供继续学习和延伸观看的入口。</p></header><LessonFooter title="继续你的学习旅程" description="你可以返回课程目录，或在准备好后继续前往下一步。" back={{ href: '../CourseMap/', label: '返回课程目录' }} next={{ href: '../MLP_playground/', label: '学习下一课' }} videos={[{ title: '从直觉理解神经元', embed: '<iframe src="//player.bilibili.com/player.html?isOutside=true&aid=116933504537855&bvid=BV1k3KE6uERK&cid=40029127550&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>' }, { title: '损失如何指导学习？', embed: '<iframe src="//player.bilibili.com/player.html?isOutside=true&aid=116933504537855&bvid=BV1k3KE6uERK&cid=40029127550&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>' }, { title: '激活函数为什么重要？', embed: '<iframe src="//player.bilibili.com/player.html?isOutside=true&aid=116933504537855&bvid=BV1k3KE6uERK&cid=40029127550&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>' }, { title: '从误差到参数更新', embed: '<iframe src="//player.bilibili.com/player.html?isOutside=true&aid=116933504537855&bvid=BV1k3KE6uERK&cid=40029127550&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>' }, { title: '继续探索多层网络', embed: '<iframe src="//player.bilibili.com/player.html?isOutside=true&aid=116933504537855&bvid=BV1k3KE6uERK&cid=40029127550&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>' }]} /></section>
   </ModuleShell>;
 }

@@ -112,6 +112,36 @@ class RuntimeNamingTests(unittest.TestCase):
 
 
 class ModuleHttpServiceTests(unittest.TestCase):
+    def test_duplicate_event_id_is_stored_only_once(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            store = BehaviorStore(Path(temp_dir))
+            event = {"event_id": "same-operation", "event_name": "control_commit", "module_id": "test"}
+            self.assertEqual(store.insert([event, event]), 1)
+            self.assertEqual(store.count(), 1)
+
+    def test_module_state_returns_only_the_latest_value_for_each_state_key(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            store = BehaviorStore(Path(temp_dir))
+            store.insert([
+                {"event_id": "old", "module_id": "lesson", "event_name": "control_commit", "time_end": 1, "event_value": {"state_key": "slider", "state": {"value": 2}}},
+                {"event_id": "new", "module_id": "lesson", "event_name": "control_commit", "time_end": 2, "event_value": {"state_key": "slider", "state": {"value": 7}}},
+                {"event_id": "done", "module_id": "lesson", "event_name": "module_complete", "time_end": 3, "event_value": {"state_key": "module:lesson", "state": {"completed": True}}},
+            ])
+            state = store.module_state("lesson")
+            self.assertEqual(state["states"]["slider"]["state"], {"value": 7})
+            self.assertTrue(state["completed"])
+
+    def test_question_view_does_not_overwrite_submitted_question_state(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            store = BehaviorStore(Path(temp_dir))
+            store.insert([
+                {"event_id": "submitted", "module_id": "lesson", "event_name": "answer_submit", "time_end": 1, "event_value": {"state_key": "question:comparison", "state": {"answer_fields": [{"value": "原回答"}], "submitted": True, "result": {"message": "原评语"}}}},
+                {"event_id": "viewed", "module_id": "lesson", "event_name": "question_view", "time_end": 2, "event_value": {"state_key": "question:comparison", "state": {"answer_fields": [{"value": ""}], "submitted": False}}},
+            ])
+            state = store.module_state("lesson")
+            self.assertEqual(state["states"]["question:comparison"]["event_name"], "answer_submit")
+            self.assertEqual(state["states"]["question:comparison"]["state"]["result"]["message"], "原评语")
+
     def test_behavior_store_repairs_a_missing_schema_before_insert(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             store = BehaviorStore(Path(temp_dir))

@@ -4,6 +4,7 @@
   if (window.__DL_TELEMETRY__) return;
 
   var ENDPOINT = '/__telemetry/events';
+  var BOOTSTRAP_ENDPOINT = '/__telemetry/bootstrap';
   var MEMORY_PENDING_ENDPOINT = '/__telemetry/sync/pending?limit=200';
   var MEMORY_ACK_ENDPOINT = '/__telemetry/sync/ack';
   var SKILL_MEMORY_ID = 'intuitive-deep-learning';
@@ -13,7 +14,7 @@
   var BATCH_SIZE = 20;
   var FLUSH_INTERVAL = 2000;
   var MAX_QUEUE_SIZE = 1000;
-  var INTERACTIVE_SELECTOR = 'button,a,input,select,textarea,[role="button"],[role="option"],[contenteditable="true"]';
+  var INTERACTIVE_SELECTOR = 'button,a,input,select,textarea,[role="button"],[role="option"],[role="slider"],[contenteditable="true"]';
   var queue = [];
   var sending = false;
   var consecutiveFailures = 0;
@@ -23,11 +24,23 @@
   var pageStartedAt = window.performance.now();
   var visibleStartedAt = document.visibilityState === 'visible' ? pageStartedAt : null;
   var visibleElapsedMs = 0;
-  var focusStartedAt = new WeakMap();
+  var focusState = new WeakMap();
   var questionAttempts = new WeakMap();
   var observedQuestions = new WeakSet();
   var pageLeaveEmitted = false;
   var memoryReportInFlight = null;
+  var telemetryBootstrap = null;
+
+  function ensureTelemetryBootstrap() {
+    if (telemetryBootstrap) return telemetryBootstrap;
+    telemetryBootstrap = window.fetch(BOOTSTRAP_ENDPOINT, {
+      cache: 'no-store',
+      credentials: 'same-origin'
+    }).catch(function () {
+      return false;
+    });
+    return telemetryBootstrap;
+  }
 
   function createId(prefix) {
     var value = window.crypto && typeof window.crypto.randomUUID === 'function'
@@ -52,6 +65,7 @@
 
   function moduleId() {
     var segments = window.location.pathname.split('/').filter(Boolean);
+    if (segments[0] === 'modules' && segments[1]) return decodeURIComponent(segments[1]);
     return decodeURIComponent(segments[0] || 'root');
   }
 
@@ -187,6 +201,8 @@
 
   function eventKind(eventName) {
     if (eventName.indexOf('page_') === 0) return 'page';
+    if (eventName.indexOf('module_') === 0 || eventName.indexOf('lesson_') === 0) return 'learning';
+    if (eventName === 'page_rating') return 'feedback';
     if (eventName === 'ui_click') return 'click';
     if (eventName.indexOf('answer_') === 0 || eventName === 'question_view') return 'answer';
     if (eventName.indexOf('control_') === 0 || eventName.indexOf('range_') === 0 || eventName === 'form_submit') return 'input';
@@ -234,11 +250,14 @@
     if (Date.now() < retryAfter) return Promise.resolve(false);
     sending = true;
     var batch = queue.splice(0, BATCH_SIZE);
-    return window.fetch(ENDPOINT, {
+    return ensureTelemetryBootstrap().then(function () {
+      return window.fetch(ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ events: batch }),
-      keepalive: true
+      keepalive: true,
+      credentials: 'same-origin'
+      });
     }).then(function (response) {
       if (!response.ok) throw new Error('telemetry-http-' + response.status);
       consecutiveFailures = 0;
@@ -353,6 +372,19 @@
     return memoryReportInFlight;
   }
 
+  function getModuleState(requestedModuleId) {
+    var requested = cleanText(requestedModuleId || currentModuleId, 160);
+    return ensureTelemetryBootstrap().then(function () {
+      return window.fetch('/__telemetry/state?module_id=' + encodeURIComponent(requested), {
+        cache: 'no-store',
+        credentials: 'same-origin'
+      });
+    }).then(function (response) {
+      if (!response.ok) throw new Error('telemetry-state-http-' + response.status);
+      return response.json();
+    });
+  }
+
   function shouldInterceptNextNavigation(event, link) {
     return event.button === 0
       && !event.metaKey
@@ -414,13 +446,24 @@
     var fields = Array.prototype.map.call(question.querySelectorAll('[data-role="question-answer"]'), function (field) {
       return controlValue(field);
     });
+    var selectedValues = Array.prototype.map.call(question.querySelectorAll('.dl-question-option.is-selected'), function (option) {
+      return cleanText(option.getAttribute('data-value'), 120);
+    });
+    var stateKey = question.getAttribute('data-state-key') || elementKey(question);
     return {
+      state_key: stateKey,
       question_key: elementKey(question),
       question_type: question.classList.contains('dl-question--multiple') ? 'multiple' : (question.getAttribute('data-question-type') || 'unknown'),
       submit_mode: question.getAttribute('data-submit-mode') || 'unknown',
       selected_options: selected,
+      selected_values: selectedValues,
       answer_fields: fields,
-      correct: questionResult(question)
+      correct: questionResult(question),
+      state: {
+        selected_values: selectedValues,
+        answer_fields: fields,
+        correct: questionResult(question)
+      }
     };
   }
 
@@ -444,24 +487,20 @@
         properties.attempt = attempts;
         emit('answer_submit', submit, properties);
       }
-      if (properties.correct !== null) emit('answer_checked', question, properties);
     });
+    return true;
   }
 
   document.addEventListener('click', function (event) {
     if (!event.isTrusted) return;
     var element = interactiveTarget(event);
     if (!element) return;
-    var properties = {};
-    var href = safeHref(element);
-    if (href) properties.href = href;
-    emit('ui_click', element, properties);
-    inspectQuestionAfterClick(element);
 
     var nextLink = element.closest(NEXT_LESSON_SELECTOR);
     if (nextLink && shouldInterceptNextNavigation(event, nextLink)) {
       event.preventDefault();
       navigateAfterSkillMemory(nextLink);
+      return;
     }
 
     var selectOption = element.closest('.edu-selectbox-option');
@@ -469,45 +508,66 @@
       window.queueMicrotask(function () {
         var selectbox = selectOption.closest('[data-dl-selectbox]');
         var hiddenInput = selectbox && selectbox.querySelector('input[type="hidden"]');
-        emit('control_change', selectbox || selectOption, {
-          value: hiddenInput ? cleanText(hiddenInput.value, 120) : cleanText(selectOption.getAttribute('data-value'), 120)
+        var value = hiddenInput ? cleanText(hiddenInput.value, 120) : cleanText(selectOption.getAttribute('data-value'), 120);
+        var stateKey = (selectbox && selectbox.getAttribute('data-state-key')) || elementKey(selectbox || selectOption);
+        emit('control_commit', selectbox || selectOption, {
+          state_key: stateKey,
+          value: value,
+          state: { value: value }
         });
       });
+      return;
     }
-  }, true);
 
-  document.addEventListener('pointerdown', function (event) {
-    if (!event.isTrusted) return;
-    var element = interactiveTarget(event);
-    if (element && elementKind(element) === 'range') emit('range_start', element, controlValue(element));
+    if (element.closest('[data-telemetry-manual]')) return;
+    if (inspectQuestionAfterClick(element)) return;
+    if (element.matches('input,select,textarea,[contenteditable="true"]')) return;
+    if (element.matches('button[type="submit"],input[type="submit"]')) return;
+
+    var href = safeHref(element);
+    if (href && href.charAt(0) === '/') return;
+    emit('ui_click', element, href ? { href: href } : {});
   }, true);
 
   document.addEventListener('change', function (event) {
     if (!event.isTrusted) return;
     var element = interactiveTarget(event);
     if (!element) return;
+    if (element.closest('[data-telemetry-manual]')) return;
     var kind = elementKind(element);
-    emit(kind === 'range' ? 'range_commit' : 'control_change', element, controlValue(element));
+    if (kind === 'text' || kind === 'search' || kind === 'email' || kind === 'url' || kind === 'tel' || element.tagName === 'TEXTAREA' || element.isContentEditable) return;
+    var state = controlValue(element);
+    emit('control_commit', element, {
+      state_key: element.getAttribute('data-state-key') || elementKey(element),
+      state: state,
+      value: state
+    });
   }, true);
 
   document.addEventListener('focusin', function (event) {
     if (!event.isTrusted) return;
     var element = interactiveTarget(event);
     if (!element || (!element.matches('input,select,textarea,[contenteditable="true"]'))) return;
-    focusStartedAt.set(element, Date.now());
-    emit('control_focus', element, {});
+    focusState.set(element, { startedAt: Date.now(), initial: JSON.stringify(controlValue(element)) });
   }, true);
 
   document.addEventListener('focusout', function (event) {
     if (!event.isTrusted) return;
     var element = interactiveTarget(event);
     if (!element || (!element.matches('input,select,textarea,[contenteditable="true"]'))) return;
-    var startedAt = focusStartedAt.get(element);
+    if (element.closest('[data-telemetry-manual]')) return;
+    var tracked = focusState.get(element);
     var properties = controlValue(element);
     var endedAt = Date.now();
-    if (startedAt != null) properties.focus_duration_ms = Math.round(endedAt - startedAt);
-    emit('control_blur', element, properties, { time_start: startedAt == null ? endedAt : startedAt, time_end: endedAt });
-    focusStartedAt.delete(element);
+    focusState.delete(element);
+    if (!tracked || tracked.initial === JSON.stringify(properties)) return;
+    if (event.relatedTarget && event.relatedTarget.closest && event.relatedTarget.closest('.dl-question-submit')) return;
+    emit('control_commit', element, {
+      state_key: element.getAttribute('data-state-key') || elementKey(element),
+      state: properties,
+      value: properties,
+      focus_duration_ms: Math.round(endedAt - tracked.startedAt)
+    }, { time_start: tracked.startedAt, time_end: endedAt });
   }, true);
 
   document.addEventListener('submit', function (event) {
@@ -523,7 +583,13 @@
       entries.forEach(function (entry) {
         if (!entry.isIntersecting || observedQuestions.has(entry.target)) return;
         observedQuestions.add(entry.target);
-        emit('question_view', entry.target, questionProperties(entry.target));
+        var properties = questionProperties(entry.target);
+        delete properties.state_key;
+        delete properties.state;
+        delete properties.selected_values;
+        delete properties.answer_fields;
+        delete properties.correct;
+        emit('question_view', entry.target, properties);
         questionObserver.unobserve(entry.target);
       });
     }, { threshold: 0.35 })
@@ -550,12 +616,37 @@
     }).observe(document.documentElement, { childList: true, subtree: true });
   }
 
-  emit('page_view', document.documentElement, {
-    title: cleanText(document.title),
-    referrer_path: document.referrer ? (function () {
-      try { return new URL(document.referrer).pathname; }
-      catch (_error) { return ''; }
-    })() : ''
+  function isModulePage() {
+    var first = window.location.pathname.split('/').filter(Boolean)[0];
+    return Boolean(first && first !== 'shared' && first !== 'dev' && first !== 'CourseMap');
+  }
+
+  function emitPageEntry(referrerPath) {
+    emit(isModulePage() ? 'module_enter' : 'page_view', document.documentElement, {
+      title: cleanText(document.title),
+      referrer_path: referrerPath || ''
+    });
+  }
+
+  var currentPagePath = window.location.pathname;
+  emitPageEntry(document.referrer ? (function () {
+    try { return new URL(document.referrer).pathname; }
+    catch (_error) { return ''; }
+  })() : '');
+
+  window.addEventListener('popstate', function () {
+    if (window.location.pathname === currentPagePath) return;
+    var previousPath = currentPagePath;
+    currentPagePath = window.location.pathname;
+    currentModuleId = moduleId();
+    currentModuleName = cleanText(document.documentElement.getAttribute('data-module-name') || currentModuleId, 160);
+    pageStartedAtUnix = Date.now();
+    pageStartedAt = window.performance.now();
+    visibleStartedAt = document.visibilityState === 'visible' ? pageStartedAt : null;
+    visibleElapsedMs = 0;
+    pageLeaveEmitted = false;
+    if (window.__DL_TELEMETRY__) window.__DL_TELEMETRY__.moduleId = currentModuleId;
+    emitPageEntry(previousPath);
   });
 
   window.setInterval(flush, FLUSH_INTERVAL);
@@ -576,6 +667,7 @@
   window.__DL_TELEMETRY__ = {
     emit: emit,
     flush: flush,
+    getModuleState: getModuleState,
     reportSkillMemory: reportSkillMemory,
     sessionId: sessionId,
     moduleId: currentModuleId

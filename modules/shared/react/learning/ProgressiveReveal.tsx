@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { Button } from '../controls/Button';
 import { LessonStage, type LessonStageProps } from '../layout/LessonStage';
+import { ScrollCue } from './ScrollCue';
 
 export type ProgressiveRevealMode = 'scroll' | 'cue';
 
@@ -31,14 +32,7 @@ export function ProgressiveReveal({
       requestAnimationFrame(() => stageRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
       return;
     }
-    if (!cueVisible) return;
-
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) setCueVisible(false);
-    }, { threshold: 0.01 });
-    observer.observe(stageRef.current);
-    return () => observer.disconnect();
-  }, [cueVisible, mode, visible]);
+  }, [mode, visible]);
 
   const reveal = () => {
     setVisible(true);
@@ -69,10 +63,7 @@ export function ProgressiveReveal({
       </div>
       {visible && <LessonStage {...stage} ref={stageRef}>{children}</LessonStage>}
       {visible && cueVisible && mode === 'cue' && (
-        <div className="edu-reveal-cue" role="status">
-          <span className="edu-reveal-cue-arrow" aria-hidden="true">↓</span>
-          <span>{cueText}</span>
-        </div>
+        <ScrollCue targetRef={stageRef} onDismiss={() => setCueVisible(false)}>{cueText}</ScrollCue>
       )}
     </>
   );

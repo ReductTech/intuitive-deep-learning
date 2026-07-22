@@ -1,5 +1,4 @@
 import { ContentBlock, ModuleShell } from '../../modules/shared/react';
-import { LossGuidePage } from '../../modules/Loss-Guide-React/LossGuidePage';
 import { GradientBlock } from '../../modules/Loss-Guide-React/blocks/GradientBlock';
 import { LossCalculationBlock } from '../../modules/Loss-Guide-React/blocks/LossCalculationBlock';
 import { NumberLineBlock } from '../../modules/Loss-Guide-React/blocks/NumberLineBlock';
@@ -7,12 +6,21 @@ import { ResourcesBlock } from '../../modules/Loss-Guide-React/blocks/ResourcesB
 import { BlockPreview } from './BlockPreview';
 import { UiKitPage } from '../../modules/shared/react/routing/UiKitPage';
 import { AppLink, type AppRoute } from './Router';
+import { migratedModules } from './modules';
 
 function HomePage() {
   return (
-    <ModuleShell title="Intuitive Deep Learning" subtitle="教学模块共享 React 基础层">
-      <ContentBlock title="Shared UI Kit" subtitle="可复用的教学组件已经准备好，可以供正式模块组合使用。">
-        <p className="edu-body"><AppLink to="/shared/ui-kit">打开 Shared UI Kit</AppLink></p>
+    <ModuleShell title="Intuitive Deep Learning" subtitle="已完成 React 迁移的教学模块">
+      <ContentBlock title="模块目录" subtitle="每个条目都是可独立进入、调试和继续迭代的 React 教学模块。">
+        <div className="app-module-catalog">
+          {migratedModules.map((module) => <AppLink key={module.id} className="app-module-card" to={module.path}>
+            <span className="edu-badge">{module.badge}</span>
+            <strong>{module.title}</strong>
+            <span>{module.description}</span>
+            <em>进入模块 →</em>
+          </AppLink>)}
+        </div>
+        <p className="app-infrastructure-link">开发与样式预览：<AppLink to="/shared/ui-kit">Shared UI Kit</AppLink></p>
       </ContentBlock>
     </ModuleShell>
   );
@@ -37,7 +45,7 @@ function ResourcesPreview() {
 export const appRoutes: AppRoute[] = [
   { path: '/', element: <HomePage /> },
   { path: '/shared/ui-kit', element: <UiKitPage /> },
-  { path: '/modules/loss-guide-react', element: <LossGuidePage /> },
+  ...migratedModules.map(({ path, element }) => ({ path, element })),
   { path: '/dev/blocks/loss-guide-react/number-line', element: <NumberLinePreview /> },
   { path: '/dev/blocks/loss-guide-react/calculation', element: <CalculationPreview /> },
   { path: '/dev/blocks/loss-guide-react/gradient', element: <GradientPreview /> },

@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
 import { classNames } from '../utils';
+import { emitTelemetry, getTelemetryState } from '../telemetry';
+import { ScrollCue } from './ScrollCue';
 
 export type LessonFlowRevealMode = 'immediate' | 'scroll' | 'cue';
 
@@ -12,6 +14,8 @@ export interface LessonStepContext {
 export interface LessonFlowStep {
   id: string;
   revealMode?: LessonFlowRevealMode;
+  /** Completing this step marks the whole module as learned. */
+  completesLesson?: boolean;
   render: (context: LessonStepContext) => ReactNode;
 }
 
@@ -19,36 +23,55 @@ export interface LessonFlowProps {
   steps: LessonFlowStep[];
   className?: string;
   cueText?: ReactNode;
+  /** Stable module-level key used to restore completed lesson steps after a revisit. */
+  persistenceKey?: string;
 }
+
+interface LessonProgressState { completedIds?: string[]; visibleCount?: number; completed?: boolean; }
 
 /** Manages lesson-step visibility; individual blocks only report their own completion. */
 export function LessonFlow({
   steps,
   className,
   cueText = '下一段内容已经准备好，向下滚动继续学习',
+  persistenceKey,
 }: LessonFlowProps) {
+  const moduleKey = persistenceKey || 'lesson';
+  const progressKey = `lesson-flow:${moduleKey}`;
   const [completedIds, setCompletedIds] = useState<string[]>([]);
   const [visibleCount, setVisibleCount] = useState(Math.min(1, steps.length));
   const [revealedIndex, setRevealedIndex] = useState<number | null>(null);
   const [cueIndex, setCueIndex] = useState<number | null>(null);
   const stepRefs = useRef<Array<HTMLElement | null>>([]);
+  const cueTargetRef = useRef<HTMLElement | null>(null);
+  const rootRef = useRef<HTMLDivElement | null>(null);
 
   const reset = useCallback(() => {
     setCompletedIds([]);
     setVisibleCount(Math.min(1, steps.length));
     setRevealedIndex(null);
     setCueIndex(null);
-  }, [steps.length]);
+    emitTelemetry('lesson_reset', rootRef.current, { state_key: progressKey, state: { completedIds: [], visibleCount: Math.min(1, steps.length), completed: false } });
+  }, [progressKey, steps.length]);
 
   const complete = useCallback((id: string) => {
     const index = steps.findIndex((step) => step.id === id);
     if (index < 0) return;
-    setCompletedIds((current) => current.includes(id) ? current : [...current, id]);
     const nextIndex = index + 1;
-    if (nextIndex >= steps.length) return;
-    setVisibleCount((current) => Math.max(current, nextIndex + 1));
-    setRevealedIndex(nextIndex);
-  }, [steps]);
+    setCompletedIds((current) => {
+      if (current.includes(id)) return current;
+      const nextCompleted = [...current, id];
+      const nextVisibleCount = Math.min(steps.length, Math.max(visibleCount, nextIndex + 1));
+      const lessonCompleted = Boolean(steps[index]?.completesLesson);
+      emitTelemetry('lesson_progress', rootRef.current, { state_key: progressKey, state: { completedIds: nextCompleted, visibleCount: nextVisibleCount, completed: lessonCompleted } });
+      if (lessonCompleted) emitTelemetry('module_complete', rootRef.current, { state_key: `module:${moduleKey}`, state: { completed: true, completedIds: nextCompleted } });
+      return nextCompleted;
+    });
+    if (nextIndex < steps.length) {
+      setVisibleCount((current) => Math.max(current, nextIndex + 1));
+      setRevealedIndex(nextIndex);
+    }
+  }, [moduleKey, progressKey, steps, visibleCount]);
 
   useEffect(() => {
     if (revealedIndex === null) return;
@@ -64,23 +87,24 @@ export function LessonFlow({
   }, [revealedIndex, steps]);
 
   useEffect(() => {
-    if (cueIndex === null) return;
-    const target = stepRefs.current[cueIndex];
-    if (!target) return;
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) setCueIndex(null);
-    }, { threshold: 0.08 });
-    observer.observe(target);
-    return () => observer.disconnect();
-  }, [cueIndex]);
+    let active = true;
+    void getTelemetryState<LessonProgressState>(progressKey, moduleKey).then((entry) => {
+      if (!active || !entry?.state) return;
+      const restoredIds = Array.isArray(entry.state.completedIds) ? entry.state.completedIds.filter((id) => steps.some((step) => step.id === id)) : [];
+      const restoredVisible = Number(entry.state.visibleCount);
+      setCompletedIds(restoredIds);
+      setVisibleCount(Number.isFinite(restoredVisible) ? Math.min(steps.length, Math.max(1, restoredVisible)) : Math.min(steps.length, restoredIds.length + 1));
+    });
+    return () => { active = false; };
+  }, [moduleKey, progressKey, steps]);
 
   return (
-    <div className={classNames('edu-lesson-flow', className)}>
+    <div className={classNames('edu-lesson-flow', className)} ref={rootRef} data-state-key={progressKey}>
       {steps.slice(0, visibleCount).map((step, index) => (
         <section
           className={classNames('edu-lesson-flow-step', index > 0 && 'is-revealed')}
           key={step.id}
-          ref={(node) => { stepRefs.current[index] = node; }}
+          ref={(node) => { stepRefs.current[index] = node; if (index === cueIndex) cueTargetRef.current = node; }}
           data-step-id={step.id}
         >
           {step.render({
@@ -91,9 +115,7 @@ export function LessonFlow({
         </section>
       ))}
       {cueIndex !== null && (
-        <div className="edu-lesson-flow-cue" role="status">
-          <span aria-hidden="true">↓</span>{cueText}
-        </div>
+        <ScrollCue targetRef={cueTargetRef} onDismiss={() => setCueIndex(null)}>{cueText}</ScrollCue>
       )}
     </div>
   );
