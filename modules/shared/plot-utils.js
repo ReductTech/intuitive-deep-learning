@@ -788,7 +788,7 @@
     var host = typeof target === 'string' ? document.querySelector(target) : target;
     if (!host) throw new Error('DLPlot: Plotly 容器不存在。');
     if (!window.Plotly || typeof window.Plotly.newPlot !== 'function') {
-      throw new Error('DLPlot: 请先加载 shared/plotly-3.6.0.min.js。');
+      throw new Error('DLPlot: 请先加载 shared/vendor/plotly/3.6.0/plotly.min.js。');
     }
     return host;
   }

@@ -1,7 +1,7 @@
 Intuitive Deep Learning · Meta Knowledge
 1. UI Kit 是唯一设计基准
 修改模块前，AI 必须先完整查看：
-modules/shared/ui-kit.html
+modules/shared/react/routing/UiKitPage.tsx
 不能只搜索类名，也不能只复制视觉样式。必须同时检查：
 完整 HTML 结构
 交互绑定方式

@@ -1,0 +1,19 @@
+.lg-react-shell { max-width: 980px; }
+.lg-react-block { min-width: 0; }
+.lg-react-numberline { overflow: hidden; border: 1px solid var(--ui-border); border-radius: var(--ui-radius-md); background: #fbfdff; }
+.lg-react-numberline svg { display: block; width: 100%; height: auto; }
+.lg-react-numberline text { fill: var(--ui-text-muted); font-family: var(--ui-font-sans); font-size: 13px; font-weight: 750; }
+.lg-react-axis { stroke: var(--ui-border-strong); stroke-width: 2; }
+.lg-react-tick { stroke: var(--ui-border-strong); stroke-width: 1.5; }
+.lg-react-distance { stroke: var(--ui-accent-alt); stroke-linecap: round; stroke-width: 5; }
+.lg-react-target { fill: var(--ui-danger); stroke: #fff; stroke-width: 4; }
+.lg-react-prediction { fill: var(--ui-success); stroke: #fff; stroke-width: 4; }
+.lg-react-value-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.lg-react-chart { overflow: hidden; border: 1px solid var(--ui-border); border-radius: var(--ui-radius-md); }
+.lg-react-gradient-step { display: grid; gap: 12px; padding-top: 4px; }
+.lg-react-gradient-step + .lg-react-gradient-step { border-top: 1px solid var(--ui-border); padding-top: 22px; }
+.lg-react-gradient-step h3 { margin: 0; color: var(--ui-accent); font-size: 17px; }
+
+@media (max-width: 640px) {
+  .lg-react-value-grid { grid-template-columns: 1fr; }
+}

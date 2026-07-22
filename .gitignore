@@ -6,3 +6,9 @@ __pycache__/
 *.zip
 settings.json
 /.private/
+upgrade.md
+
+# Frontend dependencies and build output
+node_modules/
+dist/
+*.tsbuildinfo
