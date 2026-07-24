@@ -1546,61 +1546,32 @@
             height: 100%;
         }
 
-        .loss-demo {
-            display: grid;
-            place-items: center;
-            background: linear-gradient(145deg, #fff9ed, #edf6fd);
+        .digit-demo {
+            background: linear-gradient(145deg, #edf5ff, #f3f0ff 52%, #edf9f4);
         }
 
-        .loss-line {
-            width: 78%;
-            height: 4px;
-            position: relative;
-            border-radius: 4px;
-            background: #c8d7e4;
+        .digit-demo svg {
+            width: 100%;
+            height: 100%;
+            display: block;
         }
 
-        .loss-line::before,
-        .loss-line::after {
-            position: absolute;
-            top: -49px;
-            translate: -50% 0;
-            padding: 8px 10px;
-            border-radius: 10px;
-            color: white;
-            font-size: 11px;
-            font-weight: 800;
+        .module-card:hover .digit-stroke {
+            stroke-dashoffset: 0;
         }
 
-        .loss-line::before {
-            content: "预测 3.2";
-            left: 25%;
-            background: var(--blue);
+        .digit-stroke {
+            stroke-dasharray: 240;
+            stroke-dashoffset: 18;
+            transition: stroke-dashoffset .55s ease;
         }
 
-        .loss-line::after {
-            content: "真实 7.0";
-            left: 73%;
-            background: var(--orange);
+        .module-card:hover .digit-scan {
+            translate: 0 48px;
         }
 
-        .loss-line i {
-            position: absolute;
-            left: 25%;
-            top: -2px;
-            width: 48%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--blue), var(--orange));
-        }
-
-        .loss-line span {
-            position: absolute;
-            left: 49%;
-            top: 18px;
-            translate: -50% 0;
-            color: var(--ink-2);
-            font-size: 13px;
-            font-weight: 800;
+        .digit-scan {
+            transition: translate .55s ease;
         }
 
         .conv-demo {
@@ -4029,8 +4000,8 @@
             <div class="wrap hero-grid">
                 <div class="hero-content reveal">
                     <div class="eyebrow">Intuitive Deep Learning · 01</div>
-                    <h1>让深度学习<span>可以被亲手理解</span></h1>
-                    <p class="hero-copy"><span class="hero-question">不是再看一遍讲解，而是拖动、判断，然后亲眼看到结果。</span>让抽象概念在操作与反馈中变得具体。</p>
+                    <h1>交互式学习<span>内容设计与探索</span></h1>
+                    <p class="hero-copy"><span class="hero-question">以深度学习为例，</span>探索抽象概念的交互呈现与学习体验设计。</p>
                     <div class="hero-actions">
                         <a class="hero-launch" href="#definition">
                             <span><small>START HERE</small><strong>进入交互式学习</strong></span>
@@ -4239,18 +4210,6 @@
                         </div>
                     </a>
 
-                    <a class="module-card reveal" href="modules/Loss-Guide/index.html">
-                        <div class="module-visual loss-demo">
-                            <div class="loss-line"><i></i><span>拖动预测，观察误差</span></div>
-                        </div>
-                        <div class="module-body">
-                            <div>
-                                <h3>为什么需要损失函数</h3>
-                                <p>先在数轴上感受“差多远”，再把这种感受收束为可以优化的度量。</p>
-                            </div><span class="module-arrow">↗</span>
-                        </div>
-                    </a>
-
                     <a class="module-card reveal" href="modules/Convolution-Kernel-Intro/index.html">
                         <div class="module-visual conv-demo">
                             <div class="conv-grid" aria-hidden="true">
@@ -4262,6 +4221,59 @@
                             <div>
                                 <h3>从五子棋理解卷积核</h3>
                                 <p>亲手寻找棋形，发现“同一种局部模式，无论出现在哪里都应该被识别”。</p>
+                            </div><span class="module-arrow">↗</span>
+                        </div>
+                    </a>
+
+                    <a class="module-card reveal" href="modules/LeNet5-CNN-Lab/index.html">
+                        <div class="module-visual digit-demo">
+                            <svg viewBox="0 0 560 205" role="img" aria-label="手写数字经过卷积核提取特征后被识别为数字 7">
+                                <defs>
+                                    <filter id="digit-shadow" x="-30%" y="-30%" width="160%" height="160%">
+                                        <feDropShadow dx="0" dy="9" stdDeviation="9" flood-color="#365f86" flood-opacity=".14" />
+                                    </filter>
+                                    <linearGradient id="digit-ink" x1="0" y1="0" x2="1" y2="1">
+                                        <stop stop-color="#1677e8" />
+                                        <stop offset="1" stop-color="#715bc4" />
+                                    </linearGradient>
+                                </defs>
+
+                                <g filter="url(#digit-shadow)">
+                                    <rect x="46" y="28" width="148" height="148" rx="30" fill="#fff" fill-opacity=".9" />
+                                    <rect x="52" y="34" width="136" height="136" rx="25" fill="#17283a" />
+                                </g>
+                                <path class="digit-stroke" d="M84 69c27-7 55-6 78 1-25 29-42 58-47 94" fill="none"
+                                    stroke="url(#digit-ink)" stroke-width="15" stroke-linecap="round" stroke-linejoin="round" />
+                                <rect class="digit-scan" x="61" y="51" width="118" height="36" rx="8" fill="none"
+                                    stroke="#f2a737" stroke-width="3" stroke-dasharray="7 6" />
+
+                                <path d="M216 102h46" stroke="#7890a5" stroke-width="3" stroke-linecap="round" />
+                                <path d="m254 94 9 8-9 8" fill="none" stroke="#7890a5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+
+                                <g transform="translate(282 43)" filter="url(#digit-shadow)">
+                                    <rect width="103" height="103" rx="22" fill="#fff" fill-opacity=".88" />
+                                    <g fill="none" stroke="#78a8d4" stroke-width="5" opacity=".78">
+                                        <path d="M22 30h59M22 50h39M22 70h52" />
+                                        <path d="M34 18v67M58 18v45M78 18v67" stroke="#42b285" />
+                                    </g>
+                                    <text x="51.5" y="125" text-anchor="middle" fill="#526b82" font-size="12" font-weight="800">卷积响应</text>
+                                </g>
+
+                                <path d="M410 102h38" stroke="#7890a5" stroke-width="3" stroke-linecap="round" />
+                                <path d="m440 94 9 8-9 8" fill="none" stroke="#7890a5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+
+                                <g transform="translate(467 56)" filter="url(#digit-shadow)">
+                                    <rect width="64" height="92" rx="20" fill="#fff" fill-opacity=".92" />
+                                    <text x="32" y="56" text-anchor="middle" fill="#1677e8" font-size="49" font-weight="900">7</text>
+                                    <circle cx="49" cy="17" r="7" fill="#29ad79" />
+                                    <path d="m46 17 2 2 4-5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                </g>
+                            </svg>
+                        </div>
+                        <div class="module-body">
+                            <div>
+                                <h3>卷积核怎样帮助机器认数字？</h3>
+                                <p>用固定卷积核扫描手写数字，观察响应图如何变成可供分类器学习的特征。</p>
                             </div><span class="module-arrow">↗</span>
                         </div>
                     </a>

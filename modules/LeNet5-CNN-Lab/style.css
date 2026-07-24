@@ -88,6 +88,28 @@
   font-size: 12px;
 }
 
+.edu-task.lenet-tool-note {
+  border-color: rgba(191, 64, 88, 0.42);
+  border-left-color: var(--lenet-red);
+  background: rgba(191, 64, 88, 0.09);
+  color: #982d43;
+}
+
+.edu-task.lenet-tool-note strong {
+  color: var(--lenet-red);
+}
+
+.lenet-root.has-validation-passed .edu-task.lenet-tool-note {
+  border-color: rgba(31, 138, 104, 0.42);
+  border-left-color: var(--lenet-green);
+  background: rgba(31, 138, 104, 0.09);
+  color: #176f55;
+}
+
+.lenet-root.has-validation-passed .edu-task.lenet-tool-note strong {
+  color: var(--lenet-green);
+}
+
 .lenet-top-train {
   display: grid;
   grid-template-columns: minmax(320px, 1fr) auto;

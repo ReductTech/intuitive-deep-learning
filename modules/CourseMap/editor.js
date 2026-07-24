@@ -44,7 +44,7 @@
   { id: "Digital-Image-Module", title: "图片在计算机眼里到底是什么？" },
   { id: "Manual-Feature-Classification", title: "用九宫格识别手写体数字" },
   { id: "Convolution-Kernel-Intro", title: "从五子棋到卷积核" },
-  { id: "LeNet5-CNN-Lab", title: "卷积核怎样帮助识别数字？" },
+  { id: "LeNet5-CNN-Lab", title: "卷积核怎样帮助机器认数字？" },
   { id: "Face-Recog-Lab", title: "亲手搭建卷积神经网络" },
   ];
 
