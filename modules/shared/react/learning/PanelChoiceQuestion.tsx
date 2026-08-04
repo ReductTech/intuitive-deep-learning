@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { Typography } from '../typography/Typography';
 import { Question, type QuestionCheckResult } from './Question';
 
 export interface PanelChoiceOption {
@@ -35,7 +36,7 @@ export function PanelChoiceQuestion({ title, options, answer, typeLabel = 'Èù¢Êù
         key: option.key,
         value: option.value,
         wrongFeedback: option.wrongFeedback,
-        label: <span className="dl-panel-option"><span className="dl-panel-option-media">{option.media}</span><span className="dl-panel-option-copy"><strong>{option.title}</strong>{option.caption !== undefined && <span>{option.caption}</span>}</span></span>,
+        label: <span className="dl-panel-option"><span className="dl-panel-option-media">{option.media}</span><span className="dl-panel-option-copy"><Typography as="strong" variant="label">{option.title}</Typography>{option.caption !== undefined && <Typography as="span" variant="caption" tone="muted">{option.caption}</Typography>}</span></span>,
       }))}
     />
   );

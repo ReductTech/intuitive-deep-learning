@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { emitTelemetry, getTelemetryState } from '../telemetry';
+import { Typography } from '../typography/Typography';
 
 export type PageRatingValue = 1 | 2 | 3 | 4 | 5;
 
@@ -37,10 +38,10 @@ export function PageRating({ pageKey }: PageRatingProps) {
   return (
     <section className="edu-page-rating" ref={rootRef} aria-label="当页评价">
       {rating ? (
-        <p>感谢你的评分。</p>
+        <Typography variant="caption" tone="muted">感谢你的评分。</Typography>
       ) : (
         <>
-          <p>这一页的学习体验如何？</p>
+          <Typography variant="caption" tone="muted">这一页的学习体验如何？</Typography>
           <div className="edu-page-rating-stars" role="radiogroup" aria-label="学习体验评分">
             {([1, 2, 3, 4, 5] as const).map((value) => (
               <button

@@ -1,4 +1,5 @@
 import { useEffect, type ReactNode, type RefObject } from 'react';
+import { Typography } from '../typography/Typography';
 
 export interface ScrollCueProps {
   targetRef: RefObject<Element | null>;
@@ -18,5 +19,5 @@ export function ScrollCue({ targetRef, onDismiss, children }: ScrollCueProps) {
     return () => observer.disconnect();
   }, [onDismiss, targetRef]);
 
-  return <div className="edu-scroll-cue" role="status"><span className="edu-scroll-cue-arrow" aria-hidden="true">↓</span><span>{children}</span></div>;
+  return <div className="edu-scroll-cue" role="status"><span className="edu-scroll-cue-arrow" aria-hidden="true">↓</span><Typography as="span" variant="inherit" tone="inherit">{children}</Typography></div>;
 }

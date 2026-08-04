@@ -1,4 +1,5 @@
 import { useId, useRef, useState, type HTMLAttributes, type WheelEvent } from 'react';
+import { Typography } from '../typography/Typography';
 import { classNames } from '../utils';
 
 const VIDEOS_PER_PAGE = 4;
@@ -63,11 +64,11 @@ export function RelatedVideos({
 
   return (
     <section className={classNames('dl-related-section', className)} {...props}>
-      {showHeader && <h3>{title}</h3>}
-      {showHeader && description && <p>{description}</p>}
+      {showHeader && <Typography as="h3" variant="h2" tone="accent">{title}</Typography>}
+      {showHeader && description && <Typography variant="bodySmall" tone="muted">{description}</Typography>}
       {pageCount > 1 && (
         <nav className="dl-video-pagination" aria-label="视频资源分页">
-          <span className="dl-video-page-label">全部视频 · {videos.length}</span>
+          <Typography as="span" variant="label" tone="muted" className="dl-video-page-label">全部视频 · {videos.length}</Typography>
           <span className="dl-video-page-tabs" role="tablist" aria-label="视频资源页组">
             {Array.from({ length: pageCount }, (_, index) => <button className={classNames(index === page && 'is-current')} type="button" role="tab" aria-label={`切换到第 ${index + 1} 组`} aria-selected={index === page} key={index} onClick={() => changePage(index)}><span aria-hidden="true" /></button>)}
           </span>
@@ -80,7 +81,7 @@ export function RelatedVideos({
             {video.embed ? (
               <div className="dl-video-embed" dangerouslySetInnerHTML={{ __html: prepareEmbed(video.embed) }} />
             ) : (
-              <div className="dl-video-placeholder">暂无视频嵌入</div>
+              <div className="dl-video-placeholder"><Typography as="span" variant="inherit" tone="inherit">暂无视频嵌入</Typography></div>
             )}
             {video.embed && (
               <button
@@ -96,13 +97,13 @@ export function RelatedVideos({
                 <span className="dl-video-play" aria-hidden="true">▶</span>
               </button>
             )}
-            <strong>{video.title}</strong>
+            <Typography as="strong" variant="label" tone="accent">{video.title}</Typography>
           </article>;
         })}
       </div>
       <div className="dl-video-viewer" id={viewerId} hidden={!activeVideo}>
         <div className="dl-video-viewer-head">
-          <strong>{activeVideo?.title}</strong>
+          <Typography as="strong" variant="label" tone="accent">{activeVideo?.title}</Typography>
           <button className="dl-video-viewer-close" type="button" aria-label="关闭放大播放" onClick={() => setActiveIndex(null)}>
             ×
           </button>

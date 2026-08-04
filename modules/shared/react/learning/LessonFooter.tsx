@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { Button } from '../controls/Button';
+import { Typography } from '../typography/Typography';
 import { classNames } from '../utils';
 import { RelatedVideos, type RelatedVideo } from './RelatedVideos';
 import { PageRating } from './PageRating';
@@ -39,9 +40,9 @@ export function LessonFooter({
     <footer className={classNames('edu-lesson-footer', className)}>
       <div className="edu-lesson-footer-main">
         <div className="edu-lesson-footer-copy">
-          <span className="edu-kicker">{eyebrow}</span>
-          <h3>{title}</h3>
-          {description && <p>{description}</p>}
+          <Typography as="span" variant="label" tone="accent" className="edu-kicker">{eyebrow}</Typography>
+          <Typography as="h3" variant="display">{title}</Typography>
+          {description && <Typography variant="body" tone="muted">{description}</Typography>}
         </div>
         {(back || next) && (
           <nav className="edu-lesson-footer-actions" aria-label="课程结尾操作">
@@ -52,7 +53,7 @@ export function LessonFooter({
       </div>
       {videos.length > 0 && (
         <div className="edu-lesson-footer-resources">
-          <span>{videosLabel}</span>
+          <Typography as="span" variant="label" tone="muted">{videosLabel}</Typography>
           <RelatedVideos videos={videos} showHeader={false} ariaLabel="延伸观看资源" />
         </div>
       )}

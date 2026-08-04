@@ -1,4 +1,5 @@
 import { useId, useState, type ChangeEventHandler, type InputHTMLAttributes, type ReactNode, type TextareaHTMLAttributes } from 'react';
+import { Typography } from '../typography/Typography';
 import { classNames } from '../utils';
 
 interface SharedTextInputProps {
@@ -33,7 +34,7 @@ export function TextInput({
 
   return (
     <label className={classNames('edu-control', controlClassName)} htmlFor={inputId}>
-      {label !== undefined && <span className="edu-label">{label}</span>}
+      {label !== undefined && <Typography as="span" variant="label" tone="muted" className="edu-label">{label}</Typography>}
       {multiline ? (
         <textarea
           {...props}

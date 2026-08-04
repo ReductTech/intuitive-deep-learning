@@ -1,4 +1,5 @@
 import type { HTMLAttributes, ReactNode } from 'react';
+import { Typography } from '../typography/Typography';
 import { classNames } from '../utils';
 
 export interface ModuleShellProps extends Omit<HTMLAttributes<HTMLElement>, 'title'> {
@@ -33,10 +34,10 @@ export function ModuleShell({
             {header ?? (
               <>
                 <div>
-                  {title !== undefined && <h1 className="edu-title">{title}</h1>}
-                  {subtitle !== undefined && <p className="edu-subtitle">{subtitle}</p>}
+                  {title !== undefined && <Typography as="h1" variant="display" className="edu-title">{title}</Typography>}
+                  {subtitle !== undefined && <Typography variant="subtitle" tone="muted" className="edu-subtitle">{subtitle}</Typography>}
                 </div>
-                {badge !== undefined && <span className="edu-badge">{badge}</span>}
+                {badge !== undefined && <Typography as="span" variant="label" tone="muted" className="edu-badge">{badge}</Typography>}
               </>
             )}
           </header>

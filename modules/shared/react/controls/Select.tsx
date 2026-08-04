@@ -1,4 +1,5 @@
 import { useEffect, useId, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
+import { Typography } from '../typography/Typography';
 import { classNames } from '../utils';
 
 export interface SelectOption {
@@ -79,7 +80,7 @@ export function Select({
 
   return (
     <div className={classNames('edu-control', controlClassName)}>
-      <span className="edu-label" id={`${id}-label`}>{label}</span>
+      <Typography as="span" variant="label" tone="muted" className="edu-label" id={`${id}-label`}>{label}</Typography>
       <div
         ref={rootRef}
         className={classNames('edu-selectbox', open && 'is-open', className)}
@@ -104,7 +105,7 @@ export function Select({
             }
           }}
         >
-          <span id={`${id}-value`} data-selectbox-value>{selectedOption?.label}</span>
+          <Typography as="span" variant="inherit" tone="inherit" id={`${id}-value`} data-selectbox-value>{selectedOption?.label}</Typography>
         </button>
         <div
           className="edu-selectbox-menu"
@@ -126,7 +127,7 @@ export function Select({
               onClick={() => choose(option)}
               onKeyDown={(event) => handleOptionKeyDown(event, index)}
             >
-              {option.label}
+              <Typography as="span" variant="inherit" tone="inherit">{option.label}</Typography>
             </button>
           ))}
         </div>

@@ -1,4 +1,5 @@
 import { forwardRef, type HTMLAttributes, type ReactNode } from 'react';
+import { Typography, type TypographyVariant } from '../typography/Typography';
 import { classNames } from '../utils';
 
 export type LessonStageVariant = 'default' | 'flat' | 'featured';
@@ -30,6 +31,7 @@ export const LessonStage = forwardRef<HTMLElement, LessonStageProps>(function Le
   ...props
 }, ref) {
   const Heading = `h${headingLevel}` as const;
+  const headingVariant: TypographyVariant = headingLevel === 2 ? 'h2' : 'h3';
   const hasHeader = kicker !== undefined || title !== undefined || description !== undefined || actions !== undefined;
 
   return (
@@ -48,9 +50,9 @@ export const LessonStage = forwardRef<HTMLElement, LessonStageProps>(function Le
       {hasHeader && (
         <header className="edu-stage-head">
           <div className="edu-stage-copy">
-            {kicker !== undefined && <span className="edu-kicker">{kicker}</span>}
-            {title !== undefined && <Heading className="edu-stage-title">{title}</Heading>}
-            {description !== undefined && <p className="edu-stage-description">{description}</p>}
+            {kicker !== undefined && <Typography as="span" variant="label" tone="accent" className="edu-kicker">{kicker}</Typography>}
+            {title !== undefined && <Typography as={Heading} variant={headingVariant} tone="accent" className="edu-stage-title">{title}</Typography>}
+            {description !== undefined && <Typography variant="bodySmall" tone="muted" className="edu-stage-description">{description}</Typography>}
           </div>
           {actions}
         </header>

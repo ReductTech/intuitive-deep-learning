@@ -76,6 +76,8 @@ export const migratedModules: MigratedModule[] = [
     path: '/modules/formula-tooltip-react',
     badge: '公式实验模块',
     element: <FormulaTooltipPage />,
+  },
+  {
     id: 'gradient-descent-module-react',
     title: '梯度下降导览',
     description: '从手动调节输出层权重，到学习率实验和完整网络参数更新。',

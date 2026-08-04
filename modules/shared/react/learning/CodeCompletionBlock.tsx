@@ -1,5 +1,6 @@
 import { useState, type ReactNode } from 'react';
 import { Button } from '../controls/Button';
+import { Typography } from '../typography/Typography';
 
 export interface CodeCompletionBlockProps {
   language: ReactNode;
@@ -37,9 +38,9 @@ export function CodeCompletionBlock({
   return (
     <section className={`edu-code-block ${className ?? ''}`.trim()}>
       <header className="edu-code-toolbar">
-        <span className="edu-code-language">{language}</span>
-        <span className="edu-code-status">{running ? '运行中' : '就绪'}</span>
-        <span className="edu-code-runtime">运行时间<output>{running ? runtime : '0.0 s'}</output></span>
+        <Typography as="span" variant="code" tone="inherit" className="edu-code-language">{language}</Typography>
+        <Typography as="span" variant="caption" tone="inherit" className="edu-code-status">{running ? '运行中' : '就绪'}</Typography>
+        <Typography as="span" variant="caption" tone="inherit" className="edu-code-runtime">运行时间<Typography as="output" variant="inherit" tone="inherit">{running ? runtime : '0.0 s'}</Typography></Typography>
         <div className="edu-code-actions">
           <Button variant="primary" disabled={running} onClick={start}>启动</Button>
           <Button disabled={!running} onClick={() => setRunning(false)}>停止</Button>
@@ -47,7 +48,7 @@ export function CodeCompletionBlock({
         </div>
       </header>
       <pre className="edu-code-source"><code>{prefixLines}{beforeInput}<input className="edu-code-blank" aria-label={inputLabel} value={code} onChange={(event) => setCode(event.target.value)} />{afterInput}</code></pre>
-      <div className="edu-code-help" hidden={!helpVisible}>{help}</div>
+      <Typography as="div" variant="caption" tone="inherit" className="edu-code-help" hidden={!helpVisible}>{help}</Typography>
     </section>
   );
 }

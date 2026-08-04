@@ -3,6 +3,8 @@ import { Callout } from '../../shared/react/feedback/Callout';
 import { ContentBlock } from '../../shared/react/layout/ContentBlock';
 import { NoticeStrip } from '../../shared/react/feedback/NoticeStrip';
 import { ValueTile } from '../../shared/react/learning/ValueTile';
+import { MathFormulaBlock, MathFormulaStatic } from '../../shared/react/learning/MathFormulaBlock';
+import { Typography } from '../../shared/react/typography/Typography';
 import { emitTelemetry, getTelemetryState } from '../../shared/react/telemetry';
 
 export interface LessonBlockProps {
@@ -95,6 +97,34 @@ export function NumberLineBlock({ onComplete }: LessonBlockProps) {
 
   return (
     <ContentBlock className="lg-react-block" title="损失就是距离" subtitle="Loss 衡量真实值和预测值之间差多少。先用一条数轴，把这种差距直接画出来。">
+      <section className="lg-react-rigor-note" aria-labelledby="lg-loss-definition-title">
+        <Typography as="h3" variant="h3" tone="accent" id="lg-loss-definition-title">先明确损失函数在衡量什么</Typography>
+        <Typography variant="bodySmall">对第 <em>i</em> 个监督学习样本，输入为 xᵢ，真实目标为 yᵢ，带参数 θ 的模型给出预测 ŷᵢ。本模块讨论的 L1、L2 损失把“预测与目标的差异”映射为一个非负标量；数值越小，表示该样本上的预测越接近训练目标。</Typography>
+        <MathFormulaBlock ariaLabel="第 i 个样本的预测值等于参数为 theta 的模型作用于输入 x i，单样本损失等于真实值和预测值的损失函数值，并且不小于零">
+          <MathFormulaStatic latex="\hat{y}_i=f_{\theta}(x_i),\qquad \ell_i(\theta)=\ell(y_i,\hat{y}_i)\ge 0" />
+        </MathFormulaBlock>
+        <dl className="lg-react-symbol-list">
+          <div><Typography as="dt" variant="code" tone="accent">yᵢ</Typography><Typography as="dd" variant="bodySmall" tone="muted">数据给出的真实目标</Typography></div>
+          <div><Typography as="dt" variant="code" tone="accent">ŷᵢ</Typography><Typography as="dd" variant="bodySmall" tone="muted">模型在输入 xᵢ 上的预测</Typography></div>
+          <div><Typography as="dt" variant="code" tone="accent">θ</Typography><Typography as="dd" variant="bodySmall" tone="muted">模型训练时需要学习的全部参数</Typography></div>
+          <div><Typography as="dt" variant="code" tone="accent">ℓᵢ</Typography><Typography as="dd" variant="bodySmall" tone="muted">第 i 个样本产生的单样本损失</Typography></div>
+        </dl>
+        <dl className="lg-react-definition-list">
+          <div>
+            <Typography as="dt" variant="label" tone="accent">损失函数</Typography>
+            <Typography as="dd" variant="bodySmall">由任务设计者选定的一条评价规则：输入真实目标与模型预测，输出一个标量代价。它规定模型训练时怎样理解“预测得不好”，因此不同任务可以采用不同损失。</Typography>
+          </div>
+          <div>
+            <Typography as="dt" variant="label" tone="accent">单样本损失</Typography>
+            <Typography as="dd" variant="bodySmall">把一个样本的 yᵢ 与 ŷᵢ 代入损失函数后得到的数值 ℓᵢ。它只描述模型在这个样本上的代价，不能单独代表模型在整个数据集上的表现。</Typography>
+          </div>
+          <div>
+            <Typography as="dt" variant="label" tone="accent">零损失</Typography>
+            <Typography as="dd" variant="bodySmall">对本模块的绝对误差和平方误差，ℓᵢ = 0 当且仅当 ŷᵢ = yᵢ；但“训练样本上损失为零”并不等于模型对未见数据也预测正确。</Typography>
+          </div>
+        </dl>
+        <Typography variant="caption" tone="muted">损失函数不必是数学上的距离。绝对误差满足距离的常见性质；平方误差不满足三角不等式，却仍然是有效且常用的训练损失。因此“损失就是距离”是本页帮助建立直觉的说法，不是损失函数的一般定义。</Typography>
+      </section>
       <Callout tone="orange" label="你的任务" text="拖动绿色预测值，让它与红色真实值重合，把 Loss 缩小到 0。" />
       <div className="lg-react-numberline" aria-label="数轴距离演示">
         <svg ref={svgRef} viewBox="0 0 720 170" role="group" aria-label={`数轴互动：预测值 ${prediction.toFixed(1)}，真实值 ${target}`} onPointerMove={drag} onPointerUp={finishDrag} onPointerCancel={finishDrag} onLostPointerCapture={finishDrag}>

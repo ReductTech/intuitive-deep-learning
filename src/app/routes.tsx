@@ -213,6 +213,8 @@ function MlpThreeDimensionalPreview() {
 
 function MlpResourcesPreview() {
   return <BlockPreview title="MLP 推荐资源">{() => <MlpResourcesBlock />}</BlockPreview>;
+}
+
 function FittingDiagnosisPreview() {
   return <BlockPreview title="辨别欠拟合与过拟合">{({ complete }) => <FittingDiagnosisBlock onComplete={complete} />}</BlockPreview>;
 }

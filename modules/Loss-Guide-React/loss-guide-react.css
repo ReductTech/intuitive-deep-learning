@@ -15,6 +15,81 @@
 .lg-react-chart { overflow: hidden; border: 1px solid var(--ui-border); border-radius: var(--ui-radius-md); }
 .lg-react-gradient-step { display: grid; gap: 12px; padding-top: 4px; }
 .lg-react-gradient-step + .lg-react-gradient-step { border-top: 1px solid var(--ui-border); padding-top: 22px; }
-.lg-react-gradient-step h3 { margin: 0; color: var(--ui-accent); font-size: 17px; }
+
+.lg-react-rigor-note {
+  display: grid;
+  gap: 12px;
+  border-block: 1px solid var(--ui-border);
+  padding-block: 18px;
+}
+.lg-react-rigor-note--compact { padding-block: 14px; }
+.lg-react-rigor-note > .ui-typography,
+.lg-react-technical-note > .ui-typography,
+.lg-react-rigor-list {
+  max-width: 72ch;
+}
+.lg-react-symbol-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 20px;
+  margin: 0;
+}
+.lg-react-symbol-list div { display: grid; grid-template-columns: 36px 1fr; gap: 8px; align-items: baseline; }
+.lg-react-definition-list {
+  display: grid;
+  max-width: 72ch;
+  margin: 0;
+  border-top: 1px solid var(--ui-border);
+}
+.lg-react-definition-list > div {
+  display: grid;
+  grid-template-columns: minmax(112px, 142px) minmax(0, 1fr);
+  align-items: baseline;
+  gap: 14px;
+  border-bottom: 1px solid var(--ui-border);
+  padding-block: 10px;
+}
+.lg-react-definition-list dt,
+.lg-react-definition-list dd { margin: 0; }
+.lg-react-formula-stack { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.lg-react-rigor-note .math-formula-block,
+.lg-react-technical-note .math-formula-block {
+  width: 100%;
+  min-height: 88px;
+  overflow-x: auto;
+  padding: 14px 16px;
+}
+.lg-react-rigor-note .math-formula,
+.lg-react-technical-note .math-formula {
+  display: flex;
+  min-width: min-content;
+  align-items: center;
+  justify-content: center;
+  color: var(--ui-accent);
+  font-size: 22px;
+  white-space: nowrap;
+}
+.lg-react-rigor-note .math-formula math-field,
+.lg-react-technical-note .math-formula math-field {
+  display: inline-flex;
+  width: auto;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  color: inherit;
+  font-size: inherit;
+  pointer-events: none;
+}
+.lg-react-technical-note { display: grid; gap: 9px; color: var(--ui-text-main); }
+.lg-react-rigor-list { display: grid; gap: 6px; padding-left: 20px; }
+
+@media (max-width: 720px) {
+  .lg-react-symbol-list,
+  .lg-react-formula-stack { grid-template-columns: 1fr; }
+  .lg-react-definition-list > div { grid-template-columns: 1fr; gap: 4px; }
+  .lg-react-rigor-note .math-formula,
+  .lg-react-technical-note .math-formula { font-size: 18px; }
+}
 
 
