@@ -42,6 +42,14 @@
 <script src="../shared/plot-utils.js"></script>
 ```
 
+## 登录校验（自动注入）
+
+模块 HTTP 服务会在返回 HTML 时自动注入 GrowAgent 登录校验脚本，模块开发者**无需**在 `index.html` 中手动引用 `auth-guard.js`。
+
+- 生产域名：后台异步校验 GrowAgent 登录态，不影响页面加载；未登录或 token 失效时会跳转到 `/shared/auth-pending.html`，授权成功后再返回原页面。
+- 本地开发（`localhost` / `127.0.0.1`）：默认跳过登录校验，便于调试。
+- 本地测试登录流程：启动服务时加 `--require-auth`，例如 `python3 scripts/lab_launcher.py --init --require-auth`。
+
 ## 标准页面结构
 
 模块页面默认使用：

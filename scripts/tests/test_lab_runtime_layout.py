@@ -12,7 +12,7 @@ from unittest.mock import patch
 
 import lab_launcher
 import service_runtime
-from module_http_service import BehaviorStore, create_server
+from module_http_service import BehaviorStore, _inject_scripts, create_server
 
 
 SCRIPTS_DIR = Path(__file__).resolve().parents[1]
@@ -164,7 +164,7 @@ class ModuleHttpServiceTests(unittest.TestCase):
             history_dir = root / "history"
             modules_dir.mkdir()
             dataset_dir.mkdir()
-            server = create_server("0.0.0.0", 0, modules_dir, history_dir, dataset_dir)
+            server = create_server("0.0.0.0", 0, modules_dir, history_dir, dataset_dir, require_auth=True)
             thread = threading.Thread(target=server.serve_forever, daemon=True)
             thread.start()
             try:
@@ -175,10 +175,23 @@ class ModuleHttpServiceTests(unittest.TestCase):
                 self.assertTrue(payload["ok"])
                 self.assertEqual(payload["service"], "deep-learning-module-server")
                 self.assertIn("dataset-mount-v1", payload["capabilities"])
+                self.assertTrue(payload["require_auth"])
             finally:
                 server.shutdown()
                 server.server_close()
                 thread.join(timeout=2)
+
+    def test_auth_pending_html_skips_telemetry_injection(self) -> None:
+        sample = "<!doctype html><html><head></head><body><main></main></body></html>"
+        injected = _inject_scripts(sample, require_auth=True, is_auth_pending_page=True)
+        self.assertIn("auth-guard.js", injected)
+        self.assertNotIn("telemetry.js", injected)
+
+    def test_module_html_still_injects_telemetry(self) -> None:
+        sample = "<!doctype html><html><head></head><body><main></main></body></html>"
+        injected = _inject_scripts(sample, require_auth=False, is_auth_pending_page=False)
+        self.assertIn("telemetry.js", injected)
+        self.assertIn('"requireAuth":false', injected)
 
     def test_glb_content_type_is_stable_across_operating_systems(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:

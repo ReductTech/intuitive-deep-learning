@@ -38,8 +38,9 @@ SYNC_PENDING_PATH = "/__telemetry/sync/pending"
 SYNC_ACK_PATH = "/__telemetry/sync/ack"
 HEALTH_PATH = "/__telemetry/health"
 GROWAGENT_SCRIPT = '<script src="https://www-test.reduct.cn/embed/growagent-ipc.js"></script>'
+AUTH_GUARD_CSS = '<link rel="stylesheet" href="/shared/auth-guard.css">'
+AUTH_GUARD_SCRIPT = '<script src="/shared/auth-guard.js"></script>'
 TELEMETRY_SCRIPT = '<script src="/shared/telemetry.js"></script>'
-INJECTED_SCRIPTS = (GROWAGENT_SCRIPT, TELEMETRY_SCRIPT)
 TELEMETRY_COOKIE = "dl_telemetry_token"
 TELEMETRY_TOKEN = "VLTQ9Z2HKguj6x"
 SKILL_MEMORY_ID = "intuitive-deep-learning"
@@ -409,8 +410,28 @@ class BehaviorStore:
         return int(row[0] if row else 0)
 
 
-def _inject_scripts(source: str) -> str:
-    missing = [script for script in INJECTED_SCRIPTS if script not in source]
+def _auth_config_script(require_auth: bool) -> str:
+    payload = json.dumps({"requireAuth": require_auth}, ensure_ascii=False, separators=(",", ":"))
+    return f"<script>window.__DL_AUTH_CONFIG__={payload};</script>"
+
+
+def _inject_scripts(source: str, *, require_auth: bool, is_auth_pending_page: bool = False) -> str:
+    auth_config = _auth_config_script(require_auth)
+    body_scripts: list[str] = [
+        GROWAGENT_SCRIPT,
+        auth_config,
+        AUTH_GUARD_SCRIPT,
+    ]
+    if not is_auth_pending_page:
+        body_scripts.append(TELEMETRY_SCRIPT)
+    if AUTH_GUARD_CSS not in source:
+        head_marker = "</head>"
+        if head_marker in source:
+            source = source.replace(head_marker, f"  {AUTH_GUARD_CSS}\n{head_marker}", 1)
+        else:
+            source = AUTH_GUARD_CSS + source
+
+    missing = [script for script in body_scripts if script not in source]
     if not missing:
         return source
     block = "\n".join(f"  {script}" for script in missing)
@@ -432,6 +453,10 @@ class ModuleRequestHandler(SimpleHTTPRequestHandler):
     @property
     def telemetry_token(self) -> str:
         return self.server.telemetry_token  # type: ignore[attr-defined]
+
+    @property
+    def require_auth(self) -> bool:
+        return bool(self.server.require_auth)  # type: ignore[attr-defined]
 
     def translate_path(self, path: str) -> str:
         """Mount the skill dataset at /dataset without exposing the skill root."""
@@ -527,7 +552,11 @@ class ModuleRequestHandler(SimpleHTTPRequestHandler):
         return True
 
     def _serve_html(self, path: Path, *, include_body: bool) -> None:
-        source = _inject_scripts(path.read_text(encoding="utf-8"))
+        source = _inject_scripts(
+            path.read_text(encoding="utf-8"),
+            require_auth=self.require_auth,
+            is_auth_pending_page=path.name == "auth-pending.html",
+        )
         body = source.encode("utf-8")
         self.send_response(200)
         self.send_header("Content-Type", "text/html; charset=utf-8")
@@ -557,6 +586,7 @@ class ModuleRequestHandler(SimpleHTTPRequestHandler):
                     "events": self.behavior_store.count(),
                     "storage": "sqlite",
                     "telemetry_auth": True,
+                    "require_auth": self.require_auth,
                     "capabilities": list(SERVER_CAPABILITIES),
                 },
             )
@@ -680,6 +710,8 @@ def create_server(
     modules_dir: Path,
     history_dir: Path,
     dataset_dir: Path | None = None,
+    *,
+    require_auth: bool = False,
 ) -> ThreadingHTTPServer:
     modules_root = modules_dir.resolve()
     dataset_root = (dataset_dir or DEFAULT_DATASET_DIR).resolve()
@@ -693,6 +725,7 @@ def create_server(
     server.behavior_store = store  # type: ignore[attr-defined]
     server.dataset_root = dataset_root  # type: ignore[attr-defined]
     server.telemetry_token = TELEMETRY_TOKEN  # type: ignore[attr-defined]
+    server.require_auth = require_auth  # type: ignore[attr-defined]
     return server
 
 
@@ -702,6 +735,11 @@ def main() -> None:
     parser.add_argument("--port", type=int, default=59411)
     parser.add_argument("--directory", type=Path, default=DEFAULT_MODULES_DIR)
     parser.add_argument("--history-dir", type=Path, default=DEFAULT_HISTORY_DIR)
+    parser.add_argument(
+        "--require-auth",
+        action="store_true",
+        help="Require GrowAgent login checks even on localhost.",
+    )
     args = parser.parse_args()
 
     if not args.directory.is_dir():
@@ -709,7 +747,13 @@ def main() -> None:
     if not DEFAULT_DATASET_DIR.is_dir():
         raise SystemExit(f"Dataset directory does not exist: {DEFAULT_DATASET_DIR}")
 
-    server = create_server(args.host, args.port, args.directory, args.history_dir)
+    server = create_server(
+        args.host,
+        args.port,
+        args.directory,
+        args.history_dir,
+        require_auth=args.require_auth,
+    )
     print(
         json.dumps(
             {
@@ -721,6 +765,7 @@ def main() -> None:
                 "datasetDirectory": str(DEFAULT_DATASET_DIR.resolve()),
                 "history": str(args.history_dir.resolve()),
                 "telemetry_auth": True,
+                "require_auth": args.require_auth,
             },
             ensure_ascii=False,
         ),

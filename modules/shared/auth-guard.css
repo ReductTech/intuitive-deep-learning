@@ -1,0 +1,54 @@
+.dl-auth-pending-page {
+  min-height: 100vh;
+}
+
+.dl-auth-pending-panel {
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.dl-auth-pending-message {
+  margin: 0 0 16px;
+  color: var(--ui-text-muted, #68778f);
+  line-height: 1.7;
+}
+
+.dl-auth-pending-error {
+  margin: 0 0 16px;
+  padding: 12px 14px;
+  border: 1px solid rgba(196, 63, 82, 0.34);
+  border-radius: 12px;
+  background: rgba(196, 63, 82, 0.06);
+  color: #7f4852;
+  line-height: 1.6;
+}
+
+.dl-auth-pending-actions {
+  margin-top: 8px;
+}
+
+.dl-auth-pending-button {
+  appearance: none;
+  border: 1px solid rgba(39, 68, 110, 0.24);
+  border-radius: 999px;
+  padding: 10px 22px;
+  background: var(--ui-accent, #27446e);
+  color: #ffffff;
+  font: inherit;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.dl-auth-pending-button:hover {
+  filter: brightness(1.05);
+}
+
+.dl-auth-pending-button:focus-visible {
+  outline: 2px solid rgba(39, 68, 110, 0.35);
+  outline-offset: 2px;
+}
+
+.dl-auth-pending-button:disabled {
+  opacity: 0.7;
+  cursor: wait;
+}

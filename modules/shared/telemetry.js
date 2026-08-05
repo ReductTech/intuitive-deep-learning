@@ -448,6 +448,7 @@
     });
   }
 
+  function startTelemetry() {
   document.addEventListener('click', function (event) {
     if (!event.isTrusted) return;
     var element = interactiveTarget(event);
@@ -580,4 +581,11 @@
     sessionId: sessionId,
     moduleId: currentModuleId
   };
+  }
+
+  if (window.__DL_AUTH__ && window.__DL_AUTH__.ok) {
+    startTelemetry();
+  } else {
+    window.addEventListener('dl-auth-ready', startTelemetry, { once: true });
+  }
 })();
