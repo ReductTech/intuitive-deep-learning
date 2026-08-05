@@ -37,7 +37,9 @@ EXPORT_PATH = "/__telemetry/export"
 SYNC_PENDING_PATH = "/__telemetry/sync/pending"
 SYNC_ACK_PATH = "/__telemetry/sync/ack"
 HEALTH_PATH = "/__telemetry/health"
+GROWAGENT_SCRIPT = '<script src="https://www-test.reduct.cn/embed/growagent-ipc.js"></script>'
 TELEMETRY_SCRIPT = '<script src="/shared/telemetry.js"></script>'
+INJECTED_SCRIPTS = (GROWAGENT_SCRIPT, TELEMETRY_SCRIPT)
 TELEMETRY_COOKIE = "dl_telemetry_token"
 TELEMETRY_TOKEN = "VLTQ9Z2HKguj6x"
 SKILL_MEMORY_ID = "intuitive-deep-learning"
@@ -407,6 +409,15 @@ class BehaviorStore:
         return int(row[0] if row else 0)
 
 
+def _inject_scripts(source: str) -> str:
+    missing = [script for script in INJECTED_SCRIPTS if script not in source]
+    if not missing:
+        return source
+    block = "\n".join(f"  {script}" for script in missing)
+    marker = "</body>"
+    return source.replace(marker, f"{block}\n{marker}", 1) if marker in source else source + block
+
+
 class ModuleRequestHandler(SimpleHTTPRequestHandler):
     server_version = "DLModuleServer/1.0"
 
@@ -516,10 +527,7 @@ class ModuleRequestHandler(SimpleHTTPRequestHandler):
         return True
 
     def _serve_html(self, path: Path, *, include_body: bool) -> None:
-        source = path.read_text(encoding="utf-8")
-        if TELEMETRY_SCRIPT not in source:
-            marker = "</body>"
-            source = source.replace(marker, f"  {TELEMETRY_SCRIPT}\n{marker}", 1) if marker in source else source + TELEMETRY_SCRIPT
+        source = _inject_scripts(path.read_text(encoding="utf-8"))
         body = source.encode("utf-8")
         self.send_response(200)
         self.send_header("Content-Type", "text/html; charset=utf-8")
