@@ -1,0 +1,861 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f3f7fc">
+  <meta name="description" content="Intuitive Deep Learning：把深度学习从“听懂了”变成“做明白了”。">
+  <title>Intuitive Deep Learning · 下一代互动教材</title>
+  <style>
+    :root {
+      --ink: #102f4f;
+      --ink-2: #31536f;
+      --muted: #6f879b;
+      --line: rgba(35, 78, 112, .13);
+      --blue: #1677e8;
+      --blue-2: #57a8ff;
+      --cyan: #50d3df;
+      --orange: #f2a737;
+      --green: #29ad79;
+      --red: #e85d62;
+      --paper: #ffffff;
+      --wash: #f3f7fc;
+      --shadow: 0 30px 80px rgba(35, 72, 108, .13);
+      --radius: 28px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 10%, rgba(87, 168, 255, .11), transparent 25rem),
+        linear-gradient(180deg, #f8fbff 0%, #eef4fa 100%);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+    button { color: inherit; }
+    ::selection { background: rgba(22, 119, 232, .18); }
+
+    .page-progress {
+      position: fixed;
+      inset: 0 auto auto 0;
+      z-index: 100;
+      width: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--blue), var(--cyan));
+      box-shadow: 0 0 20px rgba(22, 119, 232, .5);
+    }
+
+    .topbar {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 90;
+      border-bottom: 1px solid transparent;
+      transition: .25s ease;
+    }
+
+    .topbar.is-scrolled {
+      border-color: var(--line);
+      background: rgba(248, 251, 255, .82);
+      backdrop-filter: blur(18px) saturate(1.25);
+    }
+
+    .nav {
+      width: min(1180px, calc(100% - 48px));
+      height: 76px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 800; letter-spacing: -.02em; }
+    .brand-mark {
+      width: 38px;
+      aspect-ratio: 1;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      color: white;
+      background: linear-gradient(145deg, var(--blue), #3ea6ff);
+      box-shadow: 0 10px 25px rgba(22, 119, 232, .25);
+    }
+    .brand-mark svg { width: 21px; }
+    .brand small { display: block; color: var(--muted); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; }
+
+    .nav-actions { display: flex; align-items: center; gap: 10px; }
+    .nav-link { padding: 10px 12px; color: var(--ink-2); font-size: 14px; font-weight: 650; }
+    .present-btn {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 10px 16px;
+      background: rgba(255,255,255,.75);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 8px 25px rgba(41, 76, 111, .06);
+      transition: .2s ease;
+    }
+    .present-btn:hover { transform: translateY(-2px); border-color: rgba(22, 119, 232, .3); }
+
+    .section {
+      position: relative;
+      padding: 128px 0;
+      scroll-margin-top: 72px;
+    }
+    .wrap { width: min(1180px, calc(100% - 48px)); margin: auto; }
+    .section-head { max-width: 760px; margin-bottom: 58px; }
+    .section-kicker {
+      margin: 0 0 16px;
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 850;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { font-size: clamp(48px, 6.4vw, 88px); line-height: .99; letter-spacing: -.065em; }
+    h2 { margin-bottom: 20px; font-size: clamp(36px, 4.4vw, 58px); line-height: 1.08; letter-spacing: -.05em; }
+    h3 { margin-bottom: 12px; font-size: 22px; letter-spacing: -.025em; }
+    .lead { color: var(--ink-2); font-size: clamp(18px, 2vw, 23px); line-height: 1.7; }
+    .body-copy { color: var(--ink-2); font-size: 17px; line-height: 1.8; }
+    .muted { color: var(--muted); }
+
+    .hero {
+      min-height: 100svh;
+      padding: 138px 0 72px;
+      display: grid;
+      align-items: center;
+      overflow: hidden;
+    }
+    .hero::before, .hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(2px);
+      pointer-events: none;
+    }
+    .hero::before {
+      width: 520px; height: 520px; right: -180px; top: -150px;
+      background: radial-gradient(circle, rgba(87,168,255,.16), transparent 68%);
+    }
+    .hero::after {
+      width: 360px; height: 360px; left: -180px; bottom: -80px;
+      background: radial-gradient(circle, rgba(80,211,223,.12), transparent 70%);
+    }
+    .hero-grid { display: grid; grid-template-columns: .92fr 1.08fr; align-items: center; gap: 58px; }
+    .eyebrow {
+      width: fit-content;
+      margin-bottom: 24px;
+      padding: 9px 13px;
+      border: 1px solid rgba(22,119,232,.15);
+      border-radius: 999px;
+      background: rgba(255,255,255,.7);
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 850;
+      letter-spacing: .12em;
+      box-shadow: 0 8px 30px rgba(42, 91, 132, .06);
+    }
+    .hero h1 span { display: block; color: var(--blue); }
+    .hero-copy { max-width: 670px; margin-bottom: 32px; color: var(--ink-2); font-size: 19px; line-height: 1.75; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 40px; }
+    .btn {
+      min-height: 52px;
+      padding: 0 22px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: rgba(255,255,255,.8);
+      font-weight: 750;
+      transition: .22s ease;
+    }
+    .btn:hover { transform: translateY(-3px); box-shadow: 0 16px 35px rgba(44, 82, 119, .12); }
+    .btn-primary { color: white; border-color: transparent; background: linear-gradient(135deg, var(--blue), #3699f4); box-shadow: 0 14px 30px rgba(22,119,232,.24); }
+    .btn svg { width: 18px; }
+    .hero-stats { display: flex; gap: 28px; }
+    .stat strong { display: block; font-size: 24px; letter-spacing: -.04em; }
+    .stat span { color: var(--muted); font-size: 13px; }
+
+    .hero-visual { position: relative; min-width: 0; }
+    .map-window {
+      position: relative;
+      min-height: 565px;
+      border: 1px solid rgba(255,255,255,.9);
+      border-radius: 34px;
+      overflow: hidden;
+      background: #eef4fa;
+      box-shadow: 0 45px 100px rgba(38, 78, 114, .2), inset 0 0 0 1px rgba(49,92,129,.08);
+      transform: perspective(1200px) rotateY(-3deg) rotateX(1.5deg);
+    }
+    .map-window img { width: 100%; height: 100%; position: absolute; object-fit: cover; object-position: 58% center; }
+    .map-window::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(240,246,252,.32), transparent 30%), linear-gradient(0deg, rgba(14,54,90,.08), transparent 35%); }
+    .window-bar { position: absolute; z-index: 2; inset: 0 0 auto; height: 50px; display: flex; align-items: center; gap: 7px; padding: 0 18px; background: rgba(255,255,255,.56); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255,255,255,.65); }
+    .window-dot { width: 9px; height: 9px; border-radius: 50%; background: #c8d7e4; }
+    .window-dot:first-child { background: #f09d99; }
+    .window-dot:nth-child(2) { background: #f2c66a; }
+    .window-dot:nth-child(3) { background: #7acba3; }
+    .window-label { margin-left: auto; color: #648096; font-size: 11px; font-weight: 750; letter-spacing: .08em; }
+    .float-card {
+      position: absolute;
+      z-index: 4;
+      padding: 14px 16px;
+      border: 1px solid rgba(255,255,255,.88);
+      border-radius: 18px;
+      background: rgba(255,255,255,.78);
+      backdrop-filter: blur(15px);
+      box-shadow: 0 18px 45px rgba(42, 76, 109, .16);
+      animation: float 5s ease-in-out infinite;
+    }
+    .float-card strong { display: block; font-size: 14px; }
+    .float-card span { color: var(--muted); font-size: 11px; }
+    .float-card.one { top: 86px; right: -18px; }
+    .float-card.two { left: -26px; bottom: 114px; animation-delay: -2s; }
+    .float-card.three { right: 30px; bottom: 26px; animation-delay: -3.4s; }
+    .float-card .signal { display: inline-block; width: 8px; height: 8px; margin-right: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 5px rgba(41,173,121,.12); }
+    @keyframes float { 50% { transform: translateY(-10px); } }
+    .scroll-hint { position: absolute; bottom: 25px; left: 50%; translate: -50% 0; color: var(--muted); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .scroll-hint::after { content: ""; width: 1px; height: 24px; background: linear-gradient(var(--blue), transparent); animation: scrollPulse 1.8s infinite; }
+    @keyframes scrollPulse { 0%,100% { transform: scaleY(.4); transform-origin: top; opacity: .4; } 50% { transform: scaleY(1); opacity: 1; } }
+
+    .statement-band { padding: 35px 0; color: white; background: linear-gradient(115deg, #0e3456, #145f99 64%, #168aaa); }
+    .statement-inner { display: grid; grid-template-columns: auto 1fr; gap: 32px; align-items: center; }
+    .statement-number { color: rgba(255,255,255,.32); font-size: 64px; font-weight: 900; letter-spacing: -.08em; }
+    .statement-band p { margin: 0; max-width: 940px; font-size: clamp(21px, 2.4vw, 31px); line-height: 1.42; font-weight: 650; letter-spacing: -.025em; }
+
+    .definition-grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: 48px; align-items: stretch; }
+    .definition-copy { padding: 28px 0; }
+    .quote {
+      margin-top: 32px;
+      padding: 24px 26px;
+      border-left: 4px solid var(--orange);
+      border-radius: 0 18px 18px 0;
+      background: rgba(255,255,255,.72);
+      color: var(--ink);
+      font-size: 20px;
+      line-height: 1.6;
+      font-weight: 750;
+    }
+
+    .demo-card {
+      position: relative;
+      padding: 34px;
+      border: 1px solid rgba(255,255,255,.9);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.88);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .demo-card::before { content: ""; position: absolute; width: 220px; height: 220px; right: -85px; top: -85px; border-radius: 50%; background: rgba(87,168,255,.09); }
+    .demo-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; margin-bottom: 34px; }
+    .demo-top p { margin: 4px 0 0; color: var(--muted); font-size: 14px; }
+    .live-badge { padding: 7px 10px; border-radius: 999px; color: var(--green); background: rgba(41,173,121,.1); font-size: 11px; font-weight: 850; letter-spacing: .08em; }
+    .number-line { position: relative; height: 116px; margin: 10px 8px 28px; }
+    .number-track { position: absolute; left: 0; right: 0; top: 58px; height: 4px; border-radius: 4px; background: #dfe9f2; }
+    .number-track::before, .number-track::after { content: ""; position: absolute; top: -5px; width: 1px; height: 14px; background: #9db2c5; }
+    .number-track::before { left: 0; } .number-track::after { right: 0; }
+    .target-marker, .pred-marker { position: absolute; top: 32px; translate: -50% 0; text-align: center; transition: left .12s ease; }
+    .target-marker { left: 70%; color: var(--orange); }
+    .pred-marker { left: 30%; color: var(--blue); }
+    .marker-dot { width: 18px; height: 18px; margin: 9px auto 0; border: 4px solid white; border-radius: 50%; background: currentColor; box-shadow: 0 4px 15px color-mix(in srgb, currentColor 35%, transparent); }
+    .marker-label { display: block; font-size: 12px; font-weight: 800; white-space: nowrap; }
+    .range-control { width: 100%; accent-color: var(--blue); cursor: grab; }
+    .range-control:active { cursor: grabbing; }
+    .demo-metrics { margin-top: 24px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .demo-metric { padding: 16px; border: 1px solid var(--line); border-radius: 15px; background: #f8fbfe; }
+    .demo-metric span { display: block; margin-bottom: 7px; color: var(--muted); font-size: 11px; }
+    .demo-metric strong { font-size: 22px; }
+    .feedback { margin-top: 14px; padding: 15px 17px; border-radius: 14px; color: var(--blue); background: rgba(22,119,232,.08); font-size: 14px; font-weight: 700; transition: .2s ease; }
+    .feedback.is-close { color: #18835b; background: rgba(41,173,121,.1); }
+    .feedback.is-far { color: #b77312; background: rgba(242,167,55,.12); }
+
+    .loop { margin-top: 46px; display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
+    .loop-step { position: relative; min-height: 138px; padding: 20px 16px; border: 1px solid var(--line); border-radius: 18px; background: rgba(255,255,255,.72); }
+    .loop-step:not(:last-child)::after { content: "→"; position: absolute; z-index: 2; right: -17px; top: 50%; translate: 0 -50%; width: 24px; height: 24px; display: grid; place-items: center; color: var(--blue); border: 1px solid var(--line); border-radius: 50%; background: white; font-size: 12px; }
+    .loop-index { color: var(--blue); font-size: 11px; font-weight: 900; }
+    .loop-step strong { display: block; margin: 14px 0 7px; font-size: 16px; }
+    .loop-step span { color: var(--muted); font-size: 12px; line-height: 1.55; }
+
+    .compare-section { background: #0f3150; color: white; overflow: hidden; }
+    .compare-section::before { content: ""; position: absolute; width: 800px; height: 800px; right: -300px; top: -340px; border-radius: 50%; border: 1px solid rgba(110,198,255,.13); box-shadow: 0 0 0 100px rgba(93,181,255,.025), 0 0 0 200px rgba(93,181,255,.018); }
+    .compare-section .section-kicker { color: #75c7ff; }
+    .compare-section .lead { color: #b7cad9; }
+    .compare-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .compare-card { position: relative; padding: 28px; border: 1px solid rgba(255,255,255,.11); border-radius: 24px; background: rgba(255,255,255,.055); backdrop-filter: blur(12px); }
+    .compare-card.featured { background: linear-gradient(145deg, rgba(29,135,234,.35), rgba(50,191,203,.14)); border-color: rgba(117,199,255,.35); box-shadow: 0 25px 60px rgba(0,0,0,.18); transform: translateY(-12px); }
+    .compare-tag { width: 48px; height: 48px; margin-bottom: 24px; border-radius: 15px; display: grid; place-items: center; color: #bcd0df; background: rgba(255,255,255,.08); font-weight: 900; }
+    .featured .compare-tag { color: white; background: var(--blue); }
+    .compare-card h3 { font-size: 25px; }
+    .compare-card > p { min-height: 72px; color: #a8c0d2; font-size: 14px; line-height: 1.7; }
+    .metric-row { margin-top: 19px; }
+    .metric-label { margin-bottom: 7px; display: flex; justify-content: space-between; color: #bed0dc; font-size: 12px; }
+    .metric-bar { height: 6px; overflow: hidden; border-radius: 99px; background: rgba(255,255,255,.09); }
+    .metric-bar i { display: block; width: var(--value); height: 100%; border-radius: inherit; background: #789bb5; }
+    .featured .metric-bar i { background: linear-gradient(90deg, #60aefe, #69e0da); }
+    .compare-note { margin-top: 48px; padding: 26px 30px; display: grid; grid-template-columns: auto 1fr; gap: 20px; align-items: center; border: 1px solid rgba(255,255,255,.1); border-radius: 20px; background: rgba(255,255,255,.045); }
+    .compare-note strong { color: #76c8ff; font-size: 33px; }
+    .compare-note p { margin: 0; color: #d7e5ee; font-size: 18px; line-height: 1.65; }
+
+    .module-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
+    .module-card { min-height: 345px; border: 1px solid rgba(255,255,255,.92); border-radius: 26px; overflow: hidden; background: rgba(255,255,255,.8); box-shadow: 0 22px 55px rgba(36,74,110,.1); transition: .25s ease; }
+    .module-card:hover { transform: translateY(-7px); box-shadow: 0 30px 70px rgba(36,74,110,.16); }
+    .module-visual { height: 205px; position: relative; overflow: hidden; background: #eaf3fb; }
+    .module-body { padding: 22px 24px 25px; display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; }
+    .module-body p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.55; }
+    .module-arrow { flex: 0 0 auto; width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; color: var(--blue); background: rgba(22,119,232,.09); }
+    .boundary-demo { background: linear-gradient(145deg, #ecf6ff, #e4f0fb); }
+    .boundary-demo svg { width: 100%; height: 100%; }
+    .loss-demo { display: grid; place-items: center; background: linear-gradient(145deg, #fff9ed, #edf6fd); }
+    .loss-line { width: 78%; height: 4px; position: relative; border-radius: 4px; background: #c8d7e4; }
+    .loss-line::before, .loss-line::after { position: absolute; top: -49px; translate: -50% 0; padding: 8px 10px; border-radius: 10px; color: white; font-size: 11px; font-weight: 800; }
+    .loss-line::before { content: "预测 3.2"; left: 25%; background: var(--blue); }
+    .loss-line::after { content: "真实 7.0"; left: 73%; background: var(--orange); }
+    .loss-line i { position: absolute; left: 25%; top: -2px; width: 48%; height: 4px; background: linear-gradient(90deg, var(--blue), var(--orange)); }
+    .loss-line span { position: absolute; left: 49%; top: 18px; translate: -50% 0; color: var(--ink-2); font-size: 13px; font-weight: 800; }
+    .conv-demo { display: grid; place-items: center; background: linear-gradient(145deg, #edf9f2, #eaf3fb); }
+    .conv-grid { display: grid; grid-template-columns: repeat(7, 24px); gap: 5px; rotate: -3deg; }
+    .conv-grid i { width: 24px; height: 24px; border-radius: 5px; background: rgba(45,100,137,.11); }
+    .conv-grid i:nth-child(10), .conv-grid i:nth-child(17), .conv-grid i:nth-child(24), .conv-grid i:nth-child(31), .conv-grid i:nth-child(38) { background: var(--green); box-shadow: 0 6px 16px rgba(41,173,121,.2); }
+    .conv-window { position: absolute; width: 94px; height: 94px; border: 3px solid var(--orange); border-radius: 12px; translate: 28px -2px; box-shadow: 0 10px 30px rgba(242,167,55,.22); }
+    .face-demo { display: flex; align-items: center; justify-content: center; gap: 14px; background: linear-gradient(135deg, #edf3ff, #ecfaf7); }
+    .face-node { width: 76px; height: 76px; border: 1px solid rgba(22,119,232,.14); border-radius: 20px; display: grid; place-items: center; background: rgba(255,255,255,.82); box-shadow: 0 12px 30px rgba(38,79,114,.11); color: var(--blue); font-weight: 900; font-size: 12px; text-align: center; }
+    .face-node:first-child { border-radius: 50% 50% 45% 45%; font-size: 30px; }
+    .face-link { width: 36px; height: 2px; position: relative; background: #8fb6d4; }
+    .face-link::after { content: ""; position: absolute; right: -1px; top: -3px; border-left: 7px solid #8fb6d4; border-top: 4px solid transparent; border-bottom: 4px solid transparent; }
+
+    .challenge-section { background: linear-gradient(180deg, #f4f8fc, #eaf1f7); }
+    .challenge-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 64px; align-items: center; }
+    .capability-map { position: relative; min-height: 520px; display: grid; place-items: center; }
+    .orbit { position: absolute; border: 1px dashed rgba(22,119,232,.18); border-radius: 50%; }
+    .orbit.one { width: 440px; height: 440px; }
+    .orbit.two { width: 310px; height: 310px; }
+    .core { width: 170px; aspect-ratio: 1; border-radius: 50%; display: grid; place-items: center; text-align: center; color: white; background: linear-gradient(145deg, #103c62, var(--blue)); box-shadow: 0 30px 60px rgba(24,90,143,.27); font-size: 20px; font-weight: 850; line-height: 1.35; }
+    .capability { position: absolute; width: 142px; padding: 19px 14px; border: 1px solid white; border-radius: 18px; background: rgba(255,255,255,.9); box-shadow: 0 16px 40px rgba(36,73,108,.12); text-align: center; }
+    .capability strong { display: block; font-size: 16px; }
+    .capability span { color: var(--muted); font-size: 11px; }
+    .capability.a { top: 12px; left: 50%; translate: -50% 0; }
+    .capability.b { right: 0; top: 50%; translate: 0 -50%; }
+    .capability.c { bottom: 12px; left: 50%; translate: -50% 0; }
+    .capability.d { left: 0; top: 50%; translate: 0 -50%; }
+    .challenge-list { display: grid; gap: 14px; margin-top: 32px; }
+    .challenge-item { padding: 19px 20px; border: 1px solid var(--line); border-radius: 17px; background: rgba(255,255,255,.68); }
+    .challenge-item strong { display: block; margin-bottom: 5px; }
+    .challenge-item span { color: var(--muted); font-size: 14px; line-height: 1.6; }
+    .bottleneck { margin-top: 24px; padding: 22px; border-radius: 17px; color: #8c5d16; background: rgba(242,167,55,.13); font-weight: 750; line-height: 1.65; }
+
+    .philosophy-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .principle { position: relative; min-height: 310px; padding: 32px; border: 1px solid rgba(255,255,255,.94); border-radius: 26px; overflow: hidden; background: rgba(255,255,255,.78); box-shadow: 0 18px 48px rgba(36,74,110,.08); }
+    .principle::after { content: attr(data-number); position: absolute; right: 18px; bottom: -28px; color: rgba(22,119,232,.055); font-size: 150px; font-weight: 950; letter-spacing: -.1em; }
+    .principle-icon { width: 48px; height: 48px; margin-bottom: 35px; border-radius: 15px; display: grid; place-items: center; color: var(--blue); background: rgba(22,119,232,.09); font-weight: 900; }
+    .principle h3 { font-size: 26px; }
+    .principle p { position: relative; z-index: 1; color: var(--ink-2); line-height: 1.75; }
+    .principle small { position: relative; z-index: 1; color: var(--muted); font-size: 12px; line-height: 1.5; }
+
+    .scale-section { overflow: hidden; background: #eef5fb; }
+    .scale-grid { display: grid; grid-template-columns: .82fr 1.18fr; gap: 70px; align-items: center; }
+    .architecture { display: grid; gap: 12px; perspective: 900px; }
+    .layer { position: relative; padding: 22px 24px; border: 1px solid rgba(255,255,255,.95); border-radius: 18px; background: white; box-shadow: 0 16px 45px rgba(36,74,110,.1); transform: rotateX(2deg) rotateY(-3deg); }
+    .layer::before { content: ""; position: absolute; left: 18px; right: 18px; bottom: -8px; height: 12px; border-radius: 0 0 12px 12px; background: rgba(27,84,130,.08); }
+    .layer:nth-child(1) { margin-inline: 0; border-left: 5px solid var(--blue); }
+    .layer:nth-child(2) { margin-inline: 35px; border-left: 5px solid var(--cyan); }
+    .layer:nth-child(3) { margin-inline: 70px; border-left: 5px solid var(--green); }
+    .layer:nth-child(4) { margin-inline: 105px; border-left: 5px solid var(--orange); }
+    .layer strong { display: block; margin-bottom: 4px; }
+    .layer span { color: var(--muted); font-size: 12px; }
+    .tech-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+    .tech-pill { padding: 8px 11px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.65); color: var(--ink-2); font-size: 11px; font-weight: 750; }
+    .scale-callout { margin-top: 30px; padding-top: 24px; border-top: 1px solid var(--line); color: var(--ink); font-size: 19px; line-height: 1.65; font-weight: 750; }
+
+    .closing { min-height: 88svh; display: grid; place-items: center; text-align: center; color: white; background: linear-gradient(135deg, #0e3151, #135f96 60%, #168b9d); overflow: hidden; }
+    .closing::before, .closing::after { content: ""; position: absolute; border-radius: 50%; border: 1px solid rgba(255,255,255,.1); }
+    .closing::before { width: 680px; height: 680px; left: -300px; top: -280px; box-shadow: 0 0 0 100px rgba(255,255,255,.025); }
+    .closing::after { width: 520px; height: 520px; right: -230px; bottom: -260px; box-shadow: 0 0 0 80px rgba(255,255,255,.02); }
+    .closing-content { position: relative; z-index: 1; max-width: 900px; }
+    .closing .section-kicker { color: #7fd7fa; }
+    .closing h2 { font-size: clamp(44px, 6.2vw, 78px); }
+    .closing p { max-width: 740px; margin: 0 auto 36px; color: #d4e4ee; font-size: 20px; line-height: 1.75; }
+    .closing .btn { border-color: rgba(255,255,255,.16); background: rgba(255,255,255,.1); color: white; backdrop-filter: blur(12px); }
+    .closing .btn-primary { border-color: transparent; background: white; color: var(--blue); }
+    .footer-note { margin-top: 70px; color: rgba(255,255,255,.48); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; }
+
+    .section-rail { position: fixed; z-index: 80; right: 22px; top: 50%; translate: 0 -50%; display: grid; gap: 9px; }
+    .rail-item { width: 10px; height: 10px; position: relative; padding: 0; border: 0; border-radius: 50%; background: rgba(59,91,118,.2); cursor: pointer; transition: .2s ease; }
+    .rail-item::before { content: attr(aria-label); position: absolute; right: 20px; top: 50%; translate: 6px -50%; padding: 6px 9px; border-radius: 8px; color: white; background: var(--ink); white-space: nowrap; font-size: 10px; opacity: 0; pointer-events: none; transition: .2s ease; }
+    .rail-item:hover::before { opacity: 1; translate: 0 -50%; }
+    .rail-item.is-active { height: 28px; border-radius: 99px; background: var(--blue); }
+
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.is-visible { opacity: 1; transform: none; }
+
+    body.presenting .section { min-height: 100svh; display: grid; align-items: center; padding-block: 110px; }
+    body.presenting .statement-band { min-height: auto; }
+
+    @media (max-width: 980px) {
+      .hero-grid, .definition-grid, .challenge-grid, .scale-grid { grid-template-columns: 1fr; }
+      .hero { padding-top: 120px; }
+      .hero-visual { max-width: 760px; }
+      .map-window { min-height: 480px; transform: none; }
+      .float-card.one { right: 10px; } .float-card.two { left: 10px; }
+      .loop { grid-template-columns: repeat(3, 1fr); }
+      .loop-step:nth-child(3)::after { display: none; }
+      .compare-grid { grid-template-columns: 1fr; }
+      .compare-card.featured { transform: none; }
+      .compare-card > p { min-height: 0; }
+      .capability-map { max-width: 520px; width: 100%; margin: auto; }
+      .section-rail { display: none; }
+    }
+
+    @media (max-width: 720px) {
+      .nav { width: min(100% - 28px, 1180px); height: 66px; }
+      .brand small, .nav-link, .present-btn span { display: none; }
+      .present-btn { width: 42px; height: 42px; padding: 0; justify-content: center; }
+      .wrap { width: min(100% - 28px, 1180px); }
+      .section { padding: 92px 0; }
+      .hero { min-height: auto; padding: 112px 0 76px; }
+      h1 { font-size: clamp(45px, 14vw, 64px); }
+      .hero-copy { font-size: 17px; }
+      .hero-stats { gap: 18px; }
+      .map-window { min-height: 360px; border-radius: 24px; }
+      .float-card { padding: 10px 12px; }
+      .float-card.one { top: 68px; } .float-card.two { bottom: 72px; } .float-card.three { right: 12px; }
+      .statement-inner { grid-template-columns: 1fr; gap: 8px; }
+      .statement-number { font-size: 42px; }
+      .demo-card { padding: 24px 20px; }
+      .demo-metrics { grid-template-columns: 1fr; }
+      .loop { grid-template-columns: 1fr 1fr; }
+      .loop-step:nth-child(2n)::after { display: none; }
+      .loop-step:nth-child(3)::after { display: grid; }
+      .module-grid, .philosophy-grid { grid-template-columns: 1fr; }
+      .module-visual { height: 185px; }
+      .compare-note { grid-template-columns: 1fr; }
+      .capability-map { min-height: 430px; scale: .84; margin-block: -35px; }
+      .layer:nth-child(n) { margin-inline: 0; }
+      .closing p { font-size: 17px; }
+      .scroll-hint { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-progress" id="pageProgress"></div>
+
+  <header class="topbar" id="topbar">
+    <nav class="nav" aria-label="主导航">
+      <a class="brand" href="#hero">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M5 17V8.5L12 4l7 4.5V17l-7 4-7-4Z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="2.5" fill="currentColor"/><path d="M12 9.5V4M14.2 13.2l4.8 3M9.8 13.2 5 16" stroke="currentColor" stroke-width="1.5"/></svg>
+        </span>
+        <span>Intuitive Deep Learning<small>Interactive Learning Lab</small></span>
+      </a>
+      <div class="nav-actions">
+        <a class="nav-link" href="#compare">为什么交互</a>
+        <a class="nav-link" href="#modules">课程案例</a>
+        <button class="present-btn" id="presentBtn" type="button" title="进入演示模式">
+          <svg width="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="4" width="18" height="13" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="m9 21 3-4 3 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+          <span>演示模式</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <aside class="section-rail" aria-label="页面章节导航">
+    <button class="rail-item is-active" data-target="hero" aria-label="开场"></button>
+    <button class="rail-item" data-target="definition" aria-label="什么是交互式学习"></button>
+    <button class="rail-item" data-target="compare" aria-label="学习方式对比"></button>
+    <button class="rail-item" data-target="modules" aria-label="课程案例"></button>
+    <button class="rail-item" data-target="challenge" aria-label="生产挑战"></button>
+    <button class="rail-item" data-target="philosophy" aria-label="设计哲学"></button>
+    <button class="rail-item" data-target="scale" aria-label="规模化路径"></button>
+    <button class="rail-item" data-target="closing" aria-label="总结"></button>
+  </aside>
+
+  <main>
+    <section class="section hero" id="hero" data-section>
+      <div class="wrap hero-grid">
+        <div class="hero-content reveal">
+          <div class="eyebrow">深度学习 · 互动教材探索</div>
+          <h1>从“听懂了”<span>到“做明白了”。</span></h1>
+          <p class="hero-copy">我们把教学材料写进浏览器：概念不再只靠文字和视频讲解，而是变成可以观察、操作、试错和验证的学习过程。</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#definition">
+              看它如何工作
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m8 5 7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a class="btn" href="modules/CourseMap/index.html">打开课程地图</a>
+          </div>
+          <div class="hero-stats" aria-label="项目特点">
+            <div class="stat"><strong>HTML</strong><span>浏览器即教材</span></div>
+            <div class="stat"><strong>10′</strong><span>单次聚焦一个直觉</span></div>
+            <div class="stat"><strong>↻</strong><span>操作—反馈闭环</span></div>
+          </div>
+        </div>
+
+        <div class="hero-visual reveal">
+          <div class="map-window">
+            <img src="modules/CourseMap/assets/course-map-hero.webp" alt="深度学习课程地图的三维学习路径">
+            <div class="window-bar" aria-hidden="true">
+              <i class="window-dot"></i><i class="window-dot"></i><i class="window-dot"></i>
+              <span class="window-label">LEARNING JOURNEY</span>
+            </div>
+          </div>
+          <div class="float-card one"><strong><i class="signal"></i>即时反馈</strong><span>不是看完，而是当场验明白</span></div>
+          <div class="float-card two"><strong>直觉先于公式</strong><span>先体验规律，再给它名字</span></div>
+          <div class="float-card three"><strong>概念逐步出现</strong><span>一次只增加一个认知负担</span></div>
+        </div>
+      </div>
+      <div class="scroll-hint">继续探索</div>
+    </section>
+
+    <section class="statement-band">
+      <div class="wrap statement-inner reveal">
+        <div class="statement-number">01</div>
+        <p>交互式学习不是给教材加几个动画，而是把学习从“内容播放”改写成“行动与反馈”。</p>
+      </div>
+    </section>
+
+    <section class="section" id="definition" data-section>
+      <div class="wrap">
+        <div class="definition-grid">
+          <div class="definition-copy reveal">
+            <p class="section-kicker">What it is</p>
+            <h2>什么是<br>交互式学习？</h2>
+            <p class="body-copy">最直白的定义，就是<strong>用 HTML 编写教学材料</strong>。但 HTML 在这里不只是承载文字：它可以运行演示、响应操作、生成新数据，也可以在学习者做出判断后立刻给出反馈。</p>
+            <p class="body-copy">因此，同一个页面同时承担了教材、实验台和练习册的角色。学习者不是沿着作者的结论往下读，而是在“先预测—再操作—看结果—改判断”的循环中，亲自完成理解。</p>
+            <div class="quote">真正重要的不是页面能不能动，而是每一次动作，都能不能推动一次认知变化。</div>
+          </div>
+
+          <div class="demo-card reveal" aria-label="即时反馈互动演示">
+            <div class="demo-top">
+              <div><h3>一个最小的互动教材</h3><p>不要先背“损失函数”的定义。拖动预测值，先看见误差如何变化。</p></div>
+              <span class="live-badge">LIVE DEMO</span>
+            </div>
+            <div class="number-line">
+              <div class="number-track"></div>
+              <div class="target-marker"><span class="marker-label">真实值 7.0</span><i class="marker-dot"></i></div>
+              <div class="pred-marker" id="predMarker"><span class="marker-label" id="predLabel">预测值 3.0</span><i class="marker-dot"></i></div>
+            </div>
+            <input class="range-control" id="predictionRange" type="range" min="0" max="10" step="0.1" value="3" aria-label="调整预测值">
+            <div class="demo-metrics">
+              <div class="demo-metric"><span>预测值</span><strong id="predictionValue">3.0</strong></div>
+              <div class="demo-metric"><span>真实值</span><strong>7.0</strong></div>
+              <div class="demo-metric"><span>L1 误差</span><strong id="lossValue">4.0</strong></div>
+            </div>
+            <div class="feedback is-far" id="demoFeedback">误差还比较大。继续向真实值靠近。</div>
+          </div>
+        </div>
+
+        <div class="loop reveal" aria-label="交互式学习闭环">
+          <div class="loop-step"><span class="loop-index">01</span><strong>遇到问题</strong><span>先让“为什么要学”真实发生</span></div>
+          <div class="loop-step"><span class="loop-index">02</span><strong>做出预测</strong><span>把脑中的理解变成可检验判断</span></div>
+          <div class="loop-step"><span class="loop-index">03</span><strong>亲手操作</strong><span>拖动、绘制、选择或启动训练</span></div>
+          <div class="loop-step"><span class="loop-index">04</span><strong>立即反馈</strong><span>让结果直接回应刚才的判断</span></div>
+          <div class="loop-step"><span class="loop-index">05</span><strong>修正模型</strong><span>不是记答案，而是调整心智模型</span></div>
+          <div class="loop-step"><span class="loop-index">06</span><strong>迁移直觉</strong><span>换一组数据，依然知道如何判断</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section compare-section" id="compare" data-section>
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="section-kicker">Why interactive</p>
+          <h2>课堂擅长启发，视频擅长讲解，<br>交互擅长把理解“验出来”。</h2>
+          <p class="lead">三种方式不是谁取代谁，而是解决不同问题。交互式学习最独特的价值，是把原本只能在脑中发生的理解，变成一次可观察、可反馈、可重复的行动。</p>
+        </div>
+
+        <div class="compare-grid">
+          <article class="compare-card reveal">
+            <div class="compare-tag">课</div>
+            <h3>典型大班课堂</h3>
+            <p>强项是教师的临场解释、追问与情绪感染；限制在于统一节奏下，很难让大班里的每个人都完成操作。</p>
+            <div class="metric-row"><div class="metric-label"><span>启发与追问</span><span>很强</span></div><div class="metric-bar"><i style="--value:94%"></i></div></div>
+            <div class="metric-row"><div class="metric-label"><span>每个人都动手</span><span>有限</span></div><div class="metric-bar"><i style="--value:42%"></i></div></div>
+            <div class="metric-row"><div class="metric-label"><span>个体即时反馈</span><span>有限</span></div><div class="metric-bar"><i style="--value:46%"></i></div></div>
+            <div class="metric-row"><div class="metric-label"><span>自主节奏</span><span>较弱</span></div><div class="metric-bar"><i style="--value:30%"></i></div></div>
+          </article>
+
+          <article class="compare-card reveal">
+            <div class="compare-tag">▶</div>
+            <h3>B站 / 视频课程</h3>
+            <p>强项是低成本传播、完整叙事和随时回看；限制是观看本身不会暴露误解，“看懂了”很容易替代“真的会了”。</p>
+            <div class="metric-row"><div class="metric-label"><span>叙事与讲解</span><span>很强</span></div><div class="metric-bar"><i style="--value:92%"></i></div></div>
+            <div class="metric-row"><div class="metric-label"><span>传播与复用</span><span>很强</span></div><div class="metric-bar"><i style="--value:97%"></i></div></div>
+            <div class="metric-row"><div class="metric-label"><span>理解检验</span><span>较弱</span></div><div class="metric-bar"><i style="--value:24%"></i></div></div>
+            <div class="metric-row"><div class="metric-label"><span>针对性反馈</span><span>很弱</span></div><div class="metric-bar"><i style="--value:14%"></i></div></div>
+          </article>
+
+          <article class="compare-card featured reveal">
+            <div class="compare-tag">互</div>
+            <h3>交互式学习</h3>
+            <p>强项是让每个人必须预测、操作和答题，并用即时反馈暴露理解偏差；它更像一座可反复进入的实验室。</p>
+            <div class="metric-row"><div class="metric-label"><span>每个人都动手</span><span>很强</span></div><div class="metric-bar"><i style="--value:96%"></i></div></div>
+            <div class="metric-row"><div class="metric-label"><span>理解检验</span><span>很强</span></div><div class="metric-bar"><i style="--value:97%"></i></div></div>
+            <div class="metric-row"><div class="metric-label"><span>即时反馈</span><span>很强</span></div><div class="metric-bar"><i style="--value:96%"></i></div></div>
+            <div class="metric-row"><div class="metric-label"><span>自主实验</span><span>很强</span></div><div class="metric-bar"><i style="--value:94%"></i></div></div>
+          </article>
+        </div>
+
+        <div class="compare-note reveal"><strong>关键差异</strong><p>视频结束时，系统只知道你“看完了”；互动任务结束时，系统知道你做了什么判断、错在哪里、是否在反馈后完成了修正。<small style="display:block;margin-top:8px;color:#8faabd;font-size:12px">图中长度用于表达不同媒介的相对能力结构，不代表实验测量分数。</small></p></div>
+      </div>
+    </section>
+
+    <section class="section" id="modules" data-section>
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="section-kicker">Learning experiences</p>
+          <h2>我们设计的不是页面，<br>而是一条认知路径。</h2>
+          <p class="lead">每个模块只抓住一个核心障碍：先让旧方法在真实任务中失效，再让新概念以“解决问题的工具”出现。术语和公式不是开场，而是对已经发生过的体验做收束。</p>
+        </div>
+
+        <div class="module-grid">
+          <a class="module-card reveal" href="modules/MLP_playground/index.html">
+            <div class="module-visual boundary-demo">
+              <svg viewBox="0 0 560 205" aria-hidden="true">
+                <defs><linearGradient id="field" x1="0" x2="1"><stop stop-color="#d9efff"/><stop offset="1" stop-color="#fff0dc"/></linearGradient></defs>
+                <rect width="560" height="205" fill="url(#field)" opacity=".52"/>
+                <g fill="#278be9" opacity=".88"><circle cx="72" cy="65" r="7"/><circle cx="118" cy="118" r="7"/><circle cx="167" cy="76" r="7"/><circle cx="204" cy="138" r="7"/><circle cx="144" cy="40" r="7"/><circle cx="232" cy="52" r="7"/></g>
+                <g fill="#f1a335" opacity=".9"><circle cx="349" cy="54" r="7"/><circle cx="405" cy="106" r="7"/><circle cx="466" cy="63" r="7"/><circle cx="338" cy="148" r="7"/><circle cx="456" cy="155" r="7"/><circle cx="500" cy="112" r="7"/></g>
+                <path d="M250 0c54 42-42 62 20 103s-5 68 42 102" fill="none" stroke="#173f63" stroke-width="5" stroke-linecap="round" stroke-dasharray="7 9"/>
+              </svg>
+            </div>
+            <div class="module-body"><div><h3>从手绘边界到 MLP</h3><p>先自己画边界；当数据变复杂、手工规则失效，MLP 才有了出场理由。</p></div><span class="module-arrow">↗</span></div>
+          </a>
+
+          <a class="module-card reveal" href="modules/Loss-Guide/index.html">
+            <div class="module-visual loss-demo"><div class="loss-line"><i></i><span>拖动预测，观察误差</span></div></div>
+            <div class="module-body"><div><h3>为什么需要损失函数</h3><p>先在数轴上感受“差多远”，再把这种感受收束为可以优化的度量。</p></div><span class="module-arrow">↗</span></div>
+          </a>
+
+          <a class="module-card reveal" href="modules/Convolution-Kernel-Intro/index.html">
+            <div class="module-visual conv-demo">
+              <div class="conv-grid" aria-hidden="true">
+                <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+              </div>
+              <div class="conv-window" aria-hidden="true"></div>
+            </div>
+            <div class="module-body"><div><h3>从五子棋理解卷积核</h3><p>亲手寻找棋形，发现“同一种局部模式，无论出现在哪里都应该被识别”。</p></div><span class="module-arrow">↗</span></div>
+          </a>
+
+          <a class="module-card reveal" href="modules/Face-Recog-Lab/index.html">
+            <div class="module-visual face-demo" aria-hidden="true">
+              <div class="face-node">◉</div><i class="face-link"></i><div class="face-node">卷积<br>特征</div><i class="face-link"></i><div class="face-node">身份<br>分类</div>
+            </div>
+            <div class="module-body"><div><h3>人脸识别实验室</h3><p>通过换脸与身份验证任务，把抽象的特征学习变成可观察的判断。</p></div><span class="module-arrow">↗</span></div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section challenge-section" id="challenge" data-section>
+      <div class="wrap challenge-grid">
+        <div class="capability-map reveal" aria-label="高质量互动课程需要四种复合能力">
+          <div class="orbit one"></div><div class="orbit two"></div>
+          <div class="core">高质量<br>互动课程</div>
+          <div class="capability a"><strong>学科理解</strong><span>知道什么真正重要</span></div>
+          <div class="capability b"><strong>教学设计</strong><span>知道如何建立理解</span></div>
+          <div class="capability c"><strong>前端工程</strong><span>把想法稳定地实现</span></div>
+          <div class="capability d"><strong>产品 Taste</strong><span>决定什么应该克制</span></div>
+        </div>
+
+        <div class="reveal">
+          <p class="section-kicker">The hard part</p>
+          <h2>代码可以生成，<br>教学判断很难外包。</h2>
+          <p class="body-copy">一个模块同时要求学科深度、教材编排、交互设计和产品克制。难点不是“能不能做出网页”，而是能不能判断：什么值得教、先让学生经历什么、哪里应该停、哪一次反馈才会真正改变理解。</p>
+          <div class="challenge-list">
+            <div class="challenge-item"><strong>本科生与低年级硕士生：能开发，不等于能拆解概念</strong><span>早期尝试表明，如果缺少足够的知识结构和教学判断，模块即使功能完整，也可能让已经懂的人都看不明白它究竟想教什么。</span></div>
+            <div class="challenge-item"><strong>高年级硕博生：懂内容，但网页开发不是他们的主任务</strong><span>他们更接近正确的教学判断，却往往对大量前端实现和细节调试存在天然抵触，供给难以持续。</span></div>
+            <div class="challenge-item"><strong>外部工程师：懂实现，但不掌握概念的轻重缓急</strong><span>每个按钮、反馈和关卡都需要反复解释深度学习背景。沟通链条越长，教学意图损耗越大，成本甚至高于自己实现。</span></div>
+          </div>
+          <div class="bottleneck">分发几乎可以无限扩展；真正难以 Scale Up 的，是把专家脑中的隐性判断，稳定地变成学生面前的一段学习体验。</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="philosophy" data-section>
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="section-kicker">Design philosophy</p>
+          <h2>把“会做教材”的隐性经验，<br>沉淀为 Meta Skills。</h2>
+          <p class="lead">Meta Skill 不是某个页面模板，而是一组约束设计判断的上层能力：面对任何新概念，都知道该删掉什么、先呈现什么，以及如何让学生通过行动自己逼近答案。</p>
+        </div>
+
+        <div class="philosophy-grid">
+          <article class="principle reveal" data-number="1">
+            <div class="principle-icon">○</div><h3>无意识设计</h3>
+            <p>最好的交互不会让人意识到自己在“学习一个界面”。操作方式与概念本身同构，学生几乎不需要阅读说明，就知道下一步该做什么。</p>
+            <small>理解距离，就在数轴上靠近目标；理解分类边界，就直接在两类样本之间画线。</small>
+          </article>
+          <article class="principle reveal" data-number="2">
+            <div class="principle-icon">↘</div><h3>渐进式概念披露</h3>
+            <p>这不只是把复杂界面分几步展示，而是控制概念进入头脑的顺序。每一阶段只引入一个新变量，让新工具在学习者产生需要之后出现。</p>
+            <small>术语晚于体验，公式晚于直觉；克制本身就是教学设计。</small>
+          </article>
+          <article class="principle reveal" data-number="3">
+            <div class="principle-icon">≈</div><h3>直觉式学习</h3>
+            <p>未来并不是所有细节都值得被同等记忆。我们更关注能否建立一种可迁移的判断：换一个维度、换一种数据分布，仍然知道应该观察什么、为什么选择某类方法。</p>
+            <small>目标不是背出某个排序算法的逐行实现，而是理解约束如何决定方案，并知道何时调用、比较或重构它。</small>
+          </article>
+          <article class="principle reveal" data-number="4">
+            <div class="principle-icon">↻</div><h3>反馈闭环</h3>
+            <p>题目不是学完后的附录，而是理解过程的一部分。每次关键操作都立刻回应：发生了什么、为什么，以及原来的判断需要如何修正。</p>
+            <small>没有认知反馈的点击只是互动；能暴露误解并引导修正，才构成学习。</small>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section scale-section" id="scale" data-section>
+      <div class="wrap scale-grid">
+        <div class="reveal">
+          <p class="section-kicker">From craft to system</p>
+          <h2>技术降低实现成本，<br>方法论降低判断成本。</h2>
+          <p class="body-copy">我们开始采用 React + TypeScript 构建后续模块。组件化让实验面板、反馈、关卡和数据记录可以复用；类型系统让模块在持续增加功能时仍可维护。这解决的是“做得快、改得动”。</p>
+          <p class="body-copy">更关键的一层，是把无意识设计、渐进式概念披露和反馈闭环写进设计规范与生产流程。这解决的是“方向不跑偏、质量可复制”。两层叠加，才可能把原本依赖个人 Taste 的手艺，逐步变成可扩展的系统。</p>
+          <div class="tech-pills">
+            <span class="tech-pill">React</span><span class="tech-pill">TypeScript</span><span class="tech-pill">组件化 UI</span><span class="tech-pill">Canvas</span><span class="tech-pill">WebGL / 3D</span><span class="tech-pill">教学状态管理</span><span class="tech-pill">学习行为记录</span><span class="tech-pill">模块元数据</span>
+          </div>
+          <div class="scale-callout">我们要规模化的不是网页数量，而是高质量教学判断被复用的次数。</div>
+        </div>
+
+        <div class="architecture reveal" aria-label="互动课程生产架构">
+          <div class="layer"><strong>课程体验层</strong><span>学生看到的是情境、实验、问题与反馈</span></div>
+          <div class="layer"><strong>Meta Skill 层</strong><span>决定概念顺序、交互意义与内容取舍</span></div>
+          <div class="layer"><strong>共享组件层</strong><span>复用关卡、画布、反馈、训练曲线与遥测</span></div>
+          <div class="layer"><strong>工程基础层</strong><span>React + TypeScript 支撑持续演进与协作</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section closing" id="closing" data-section>
+      <div class="wrap closing-content reveal">
+        <p class="section-kicker">Our proposition</p>
+        <h2>我们不是在把课件搬上网。<br>我们在探索下一代教材。</h2>
+        <p>它既保留教材的结构，也拥有实验的可操作性和教师式的即时反馈；最终让知识不只被讲清楚，更能被学习者亲手验证。</p>
+        <div class="hero-actions" style="justify-content:center">
+          <a class="btn btn-primary" href="modules/CourseMap/index.html">进入课程地图</a>
+          <a class="btn" href="#hero">回到开场</a>
+        </div>
+        <div class="footer-note">Intuitive Deep Learning · Interactive Learning Lab</div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      var progress = document.getElementById('pageProgress');
+      var topbar = document.getElementById('topbar');
+      var sections = Array.from(document.querySelectorAll('[data-section]'));
+      var railItems = Array.from(document.querySelectorAll('.rail-item'));
+      var revealItems = document.querySelectorAll('.reveal');
+
+      function updateScrollState() {
+        var scrollTop = window.scrollY || document.documentElement.scrollTop;
+        var max = document.documentElement.scrollHeight - window.innerHeight;
+        progress.style.width = (max > 0 ? scrollTop / max * 100 : 0) + '%';
+        topbar.classList.toggle('is-scrolled', scrollTop > 24);
+      }
+      updateScrollState();
+      window.addEventListener('scroll', updateScrollState, { passive: true });
+
+      var revealObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) entry.target.classList.add('is-visible');
+        });
+      }, { threshold: .13 });
+      revealItems.forEach(function (item) { revealObserver.observe(item); });
+
+      var sectionObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          railItems.forEach(function (item) {
+            item.classList.toggle('is-active', item.dataset.target === entry.target.id);
+          });
+        });
+      }, { rootMargin: '-38% 0px -52% 0px', threshold: 0 });
+      sections.forEach(function (section) { sectionObserver.observe(section); });
+
+      railItems.forEach(function (item) {
+        item.addEventListener('click', function () {
+          document.getElementById(item.dataset.target).scrollIntoView({ behavior: 'smooth' });
+        });
+      });
+
+      var range = document.getElementById('predictionRange');
+      var predMarker = document.getElementById('predMarker');
+      var predLabel = document.getElementById('predLabel');
+      var predictionValue = document.getElementById('predictionValue');
+      var lossValue = document.getElementById('lossValue');
+      var feedback = document.getElementById('demoFeedback');
+
+      function updateDemo() {
+        var prediction = Number(range.value);
+        var loss = Math.abs(7 - prediction);
+        predMarker.style.left = (prediction * 10) + '%';
+        predLabel.textContent = '预测值 ' + prediction.toFixed(1);
+        predictionValue.textContent = prediction.toFixed(1);
+        lossValue.textContent = loss.toFixed(1);
+        feedback.className = 'feedback';
+        if (loss < .15) {
+          feedback.classList.add('is-close');
+          feedback.textContent = '完全对齐：误差接近 0。操作、结果和概念在这一刻连起来了。';
+        } else if (loss < 1.1) {
+          feedback.classList.add('is-close');
+          feedback.textContent = '已经很接近。预测越靠近真实值，误差越小。';
+        } else {
+          feedback.classList.add('is-far');
+          feedback.textContent = prediction < 7 ? '误差还比较大。继续向右，向真实值靠近。' : '预测超过了真实值。向左修正，误差会缩小。';
+        }
+      }
+      range.addEventListener('input', updateDemo);
+      updateDemo();
+
+      var presentBtn = document.getElementById('presentBtn');
+      presentBtn.addEventListener('click', function () {
+        document.body.classList.toggle('presenting');
+        if (!document.fullscreenElement && document.documentElement.requestFullscreen) {
+          document.documentElement.requestFullscreen().catch(function () {});
+        } else if (document.exitFullscreen) {
+          document.exitFullscreen().catch(function () {});
+        }
+      });
+      document.addEventListener('fullscreenchange', function () {
+        if (!document.fullscreenElement) document.body.classList.remove('presenting');
+      });
+
+      document.addEventListener('keydown', function (event) {
+        if (!document.body.classList.contains('presenting')) return;
+        if (/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) return;
+        var currentIndex = sections.findIndex(function (section) {
+          var rect = section.getBoundingClientRect();
+          return rect.top <= window.innerHeight * .5 && rect.bottom >= window.innerHeight * .5;
+        });
+        if (event.key === 'ArrowDown' || event.key === 'PageDown' || event.key === ' ') {
+          event.preventDefault();
+          sections[Math.min(sections.length - 1, currentIndex + 1)].scrollIntoView({ behavior: 'smooth' });
+        }
+        if (event.key === 'ArrowUp' || event.key === 'PageUp') {
+          event.preventDefault();
+          sections[Math.max(0, currentIndex - 1)].scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    }());
+  </script>
+</body>
+</html>
