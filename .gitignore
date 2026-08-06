@@ -6,3 +6,8 @@ __pycache__/
 *.zip
 settings.json
 /.private/
+upgrade.md
+/node_modules
+/dist
+/.vite
+tsconfig.tsbuildinfo

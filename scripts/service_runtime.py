@@ -109,6 +109,17 @@ def _is_http_ready(url: str, timeout: float = 1.0) -> bool:
         return False
 
 
+def _fetch_service_health(url: str, *, timeout: float = 1.0) -> dict[str, Any] | None:
+    try:
+        with urllib.request.urlopen(url, timeout=timeout) as response:
+            if not 200 <= response.status < 400:
+                return None
+            payload = json.loads(response.read().decode("utf-8") or "{}")
+    except (urllib.error.URLError, TimeoutError, ValueError, OSError, json.JSONDecodeError):
+        return None
+    return payload if isinstance(payload, dict) else None
+
+
 def _is_service_health_ready(
     url: str,
     *,
@@ -206,6 +217,15 @@ def _terminate_pid(pid: int) -> None:
         os.killpg(os.getpgid(pid), signal.SIGTERM)
     except (ProcessLookupError, PermissionError):
         return
+    deadline = time.monotonic() + 2.0
+    while _pid_exists(pid) and time.monotonic() < deadline:
+        time.sleep(0.05)
+    if not _pid_exists(pid):
+        return
+    try:
+        os.killpg(os.getpgid(pid), signal.SIGKILL)
+    except (ProcessLookupError, PermissionError):
+        return
 
 
 def _classify_port_processes(port: int, *, markers: list[str], label: str) -> dict[str, Any]:
@@ -284,18 +304,22 @@ def ensure_background_http_service(
     return {"ok": ready, "label": label, "started": True, "alreadyRunning": False, "url": health_url, **process_info}
 
 
-def ensure_module_http_service() -> dict[str, Any]:
+def ensure_module_http_service(*, require_auth: bool = False) -> dict[str, Any]:
     if not MODULES_DIR.is_dir():
         return {"ok": False, "stage": "modules-directory", "error": f"Modules directory is missing: {MODULES_DIR}"}
     if not DATASET_DIR.is_dir():
         return {"ok": False, "stage": "dataset-directory", "error": f"Dataset directory is missing: {DATASET_DIR}"}
     index_url = urllib.parse.urljoin(MODULES_HEALTH_URL, "index.json")
-    if _is_http_ready(index_url) and _is_service_health_ready(
+    service_ready = _is_http_ready(index_url) and _is_service_health_ready(
         MODULE_HTTP_HEALTH_URL,
         expected_service=MODULE_HTTP_SERVICE_NAME,
         expected_capability=MODULE_HTTP_REQUIRED_CAPABILITY,
-    ):
-        return {"ok": True, "started": False, "alreadyRunning": True, "url": MODULES_URL, "indexUrl": index_url}
+    )
+    if service_ready:
+        health = _fetch_service_health(MODULE_HTTP_HEALTH_URL)
+        running_require_auth = bool(health.get("require_auth")) if health else False
+        if running_require_auth == require_auth:
+            return {"ok": True, "started": False, "alreadyRunning": True, "url": MODULES_URL, "indexUrl": index_url}
 
     classification = _classify_port_processes(MODULES_PORT, markers=MODULE_HTTP_MARKERS, label="modules")
     if classification["foreign"]:
@@ -320,6 +344,8 @@ def ensure_module_http_service() -> dict[str, Any]:
         "--history-dir",
         str(SKILL_DIR / "history"),
     ]
+    if require_auth:
+        command.append("--require-auth")
     process_info = _spawn_background(command, log_name="modules-http.log", label="modules")
     _remember_service_process("modules", process_info)
     ready = _wait_until(
@@ -343,8 +369,8 @@ def get_module_url(module_id: str) -> str:
     return urllib.parse.urljoin(MODULES_URL, f"{urllib.parse.quote(normalized)}/")
 
 
-def open_module(module_id: str) -> dict[str, Any]:
-    server = ensure_module_http_service()
+def open_module(module_id: str, *, require_auth: bool = False) -> dict[str, Any]:
+    server = ensure_module_http_service(require_auth=require_auth)
     if not server.get("ok"):
         return {"ok": False, "stage": server.get("stage") or "module-http-service", "server": server}
     try:

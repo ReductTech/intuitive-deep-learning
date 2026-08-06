@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title data-i18n="lenet.meta.title">从人工卷积核到 LeNet-5</title>
+  <title data-i18n="lenet.meta.title">卷积核怎样帮助机器认数字？</title>
   <link rel="stylesheet" href="../shared/base.css">
   <link rel="stylesheet" href="../shared/module-components.css">
   <link rel="stylesheet" href="./style.css">
@@ -13,7 +13,7 @@
     <section class="edu-shell lenet-shell">
       <header class="edu-header">
         <div>
-          <h1 class="edu-title"><span data-i18n="lenet.header.title">从人工卷积核到 LeNet-5</span></h1>
+          <h1 class="edu-title"><span data-i18n="lenet.header.title">卷积核怎样帮助机器认数字？</span></h1>
           <p class="edu-subtitle"><span data-i18n="lenet.header.subtitle">接着“人工特征”：不再数粗糙大格子，先让固定边缘卷积核反复扫描图像。</span></p>
         </div>
       </header>
@@ -28,7 +28,7 @@
             <div class="edu-metrics">
               <div class="edu-metric"><span data-i18n="lenet.metrics.status">状态</span><strong id="trainStatus">等待开始</strong></div>
               <div class="edu-metric"><span data-i18n="lenet.metrics.trainAccuracy">训练集准确率</span><strong id="trainAcc" data-i18n-ignore="true">-</strong></div>
-              <div class="edu-metric" id="valAccMetric"><span data-i18n="lenet.metrics.validationAccuracy">验证集准确率（&gt;0.9 解锁）</span><strong id="valAcc" data-i18n-ignore="true">-</strong></div>
+              <div class="edu-metric" id="valAccMetric"><span data-i18n="lenet.metrics.validationAccuracy">验证集准确率（&gt;90% 解锁）</span><strong id="valAcc" data-i18n-ignore="true">-</strong></div>
             </div>
             <div class="edu-toolbar-actions">
               <button class="edu-btn edu-btn--primary dl-button-hint" id="trainBtn" type="button" data-dl-button-hint><span data-i18n="lenet.actions.train">训练 MLP</span></button>
@@ -39,7 +39,7 @@
             <div class="lenet-panel-tools">
               <div>
                 <p class="edu-body lenet-pretrain-kernel-note" data-i18n="lenet.kernel.intro">使用常用边缘卷积核提取特征，并把特征拉平后送入 MLP 分类。</p>
-                <div class="edu-task lenet-tool-note"><strong data-i18n="lenet.kernel.taskLabel">当前任务</strong><span data-i18n="lenet.kernel.task">构造更多固定卷积核特征，使验证集准确率大于 0.9。</span></div>
+                <div class="edu-task lenet-tool-note"><strong data-i18n="lenet.kernel.taskLabel">当前任务</strong><span id="kernelTaskText" data-i18n="lenet.kernel.task">尝试勾选更多固定卷积核，使验证集准确率大于 90%。</span></div>
                 <div class="lenet-kernel-palette" id="kernelPalette" aria-label="可选固定卷积核"></div>
               </div>
               <div class="edu-toolbar-actions lenet-sample-actions" aria-label="输入图像操作">
@@ -70,7 +70,7 @@
       <button class="flow-scroll-indicator" id="sequenceContinueCueHost" type="button" aria-controls="sequenceStage" hidden><span class="flow-scroll-indicator-mark" aria-hidden="true"></span><strong>下方有新内容</strong><small>滚动或点击进入第二幕</small></button>
 
       <section class="edu-stage edu-content-block lenet-sequence-stage" id="sequenceStage" hidden aria-hidden="true" aria-labelledby="sequenceTitle" data-i18n-scope="lenet.sequence">
-        <header class="edu-content-head"><h2 class="edu-content-title" id="sequenceTitle">用滑动窗口识别序列数字</h2><p class="edu-content-subtitle">观察连续数字图像，思考如何复用刚刚训练好的单个数字识别器。</p></header>
+        <header class="edu-content-head"><h2 class="edu-content-title" id="sequenceTitle">尝试识别序列数字</h2><p class="edu-content-subtitle">观察连续数字图像，思考如何复用刚刚训练好的单个数字识别器。</p></header>
         <div class="edu-content-body lenet-sequence-lab">
           <section class="edu-card lenet-sequence-image-card" aria-label="序列数字图像">
             <div class="lenet-sequence-image-head"><span class="edu-label">序列输入</span><div class="lenet-sequence-randomizer"><span class="lenet-gt-label">GT</span><strong id="sequenceGt" data-i18n-ignore="true">-----</strong><button class="lenet-dice-btn" id="sequenceBuildBtn" type="button" aria-label="随机选择 5 位数字" title="随机选择 5 位数字"><img src="./random.svg" width="22" height="22" alt=""></button></div></div>

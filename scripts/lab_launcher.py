@@ -99,8 +99,8 @@ def _ensure_runtime_backends() -> dict[str, Any]:
     return {"ok": True, "services": services}
 
 
-def _start_services() -> dict[str, Any]:
-    module_http = service_runtime.ensure_module_http_service()
+def _start_services(*, require_auth: bool = False) -> dict[str, Any]:
+    module_http = service_runtime.ensure_module_http_service(require_auth=require_auth)
     if not module_http.get("ok"):
         return {
             "ok": False,
@@ -133,21 +133,21 @@ def _start_services() -> dict[str, Any]:
     }
 
 
-def _open_module(module_id: str) -> dict[str, Any]:
+def _open_module(module_id: str, *, require_auth: bool = False) -> dict[str, Any]:
     if not _module_exists(module_id):
         return {"ok": False, "stage": "module-not-found", "error": f"Unknown module id: {module_id}"}
     backends = _ensure_runtime_backends()
     if not backends.get("ok"):
         return {"ok": False, "stage": "module-backend", "moduleId": module_id, "backends": backends}
-    page = service_runtime.open_module(module_id)
+    page = service_runtime.open_module(module_id, require_auth=require_auth)
     return {**page, "backends": backends}
 
 
-def _init() -> dict[str, Any]:
-    module_http = service_runtime.ensure_module_http_service()
+def _init(*, require_auth: bool = False) -> dict[str, Any]:
+    module_http = service_runtime.ensure_module_http_service(require_auth=require_auth)
     if not module_http.get("ok"):
         return {"ok": False, "stage": module_http.get("stage") or "module-http-service", "server": module_http}
-    return _open_module("CourseMap")
+    return _open_module("CourseMap", require_auth=require_auth)
 
 
 def _status() -> dict[str, Any]:
@@ -192,6 +192,11 @@ def _build_parser() -> argparse.ArgumentParser:
     action.add_argument("--stop", action="store_true", help="Stop skill-owned static and backend services.")
     parser.add_argument("--module-id", dest="module_id", help="Directory id under modules/.")
     parser.add_argument("--payload-json", help="JSON payload for manifest/action callers.")
+    parser.add_argument(
+        "--require-auth",
+        action="store_true",
+        help="Require GrowAgent login checks even on localhost.",
+    )
     return parser
 
 
@@ -205,9 +210,9 @@ def main(argv: list[str] | None = None) -> int:
     args.module_id = args.module_id or _payload_string(payload, "moduleId", "module_id")
 
     if args.start_services:
-        return _print_result(_start_services())
+        return _print_result(_start_services(require_auth=args.require_auth))
     if args.init:
-        return _print_result(_init())
+        return _print_result(_init(require_auth=args.require_auth))
     if args.status:
         return _print_result(_status())
     if args.stop:
@@ -215,7 +220,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.open_module:
         if not args.module_id:
             parser.error("--open-module requires --module-id")
-        return _print_result(_open_module(args.module_id))
+        return _print_result(_open_module(args.module_id, require_auth=args.require_auth))
     parser.error("No action selected.")
     return 2
 

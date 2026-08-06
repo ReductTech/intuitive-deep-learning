@@ -174,6 +174,13 @@
     root.classList.toggle('has-detection-cue-dismissed', state.detectionCueDismissed);
     root.classList.toggle('has-detection-idea-submitted', state.detectionIdeaSubmitted);
 
+    var kernelTaskText = $('kernelTaskText');
+    if (kernelTaskText) {
+      kernelTaskText.textContent = readyForNextStep
+        ? '做得很好！验证集准确率已超过 90%，点击“尝试手写”按钮继续。'
+        : '尝试勾选更多固定卷积核，使验证集准确率大于 90%。';
+    }
+
     var sequenceScanCard = $('sequenceScanCard');
     if (sequenceScanCard) sequenceScanCard.hidden = !state.sequenceIdeaSubmitted;
     var sequenceScanButton = $('sequenceScanBtn');
@@ -318,7 +325,7 @@
       }
     ], {
       showHeader: false,
-      ariaLabel: 'LeNet 固定卷积核模块推荐视频',
+      ariaLabel: '固定卷积核与滑窗识别模块推荐视频',
     });
   }
 
@@ -725,7 +732,7 @@
         state.firstDigitWritten = false;
         state.sequenceCueDismissed = false;
         state.pendingUnlockAfterTraining = true;
-        setReadout('需要先让当前卷积核组合的验证集准确率超过 0.9，达标后才能进入下一关。正在自动补训练。');
+        setReadout('需要先让当前卷积核组合的验证集准确率超过 90%，达标后才能进入下一关。正在自动补训练。');
       }
       updateProgressiveDisclosure();
     }
@@ -759,7 +766,7 @@
     stopAutoSampleSwitch();
     if (!classifierReadyForNextStep()) {
       $('trainStatus').textContent = '自动补训练';
-      setReadout('当前卷积核组合需要先训练，并且验证集准确率超过 0.9 才能进入下一关。');
+      setReadout('当前卷积核组合需要先训练，并且验证集准确率超过 90% 才能进入下一关。');
       await startTraining({ auto: true });
     }
     if (!classifierReadyForNextStep()) {
@@ -1447,7 +1454,6 @@
   async function startTraining(options) {
     options = options || {};
     if (state.training) return;
-    if (!options.auto) revealTrainingFlow();
     if (!options.auto && state.sequence) {
       resetSequenceScanUi(state.sequenceIdeaSubmitted ? '重新训练后，点击开始序列识别' : '等待想法提交');
     }
@@ -1479,11 +1485,12 @@
       $('trainStatus').textContent = validationPasses() ? '训练完成' : 'Val未达标';
       $('trainAcc').textContent = formatPercent(state.result.train_accuracy);
       syncValidationMetric();
+      if (!options.auto) revealTrainingFlow();
       if (!options.auto) {
         if (validationPasses()) {
-          setReadout('验证集准确率已经超过 0.9。现在可以尝试手写，达标后进入下一关。');
+          setReadout('验证集准确率已经超过 90%。现在可以尝试手写，达标后进入下一关。');
         } else {
-          setReadout('验证集准确率需要超过 0.9 才能进入下一关。可以调整卷积核组合后重新训练。', true);
+          setReadout('验证集准确率需要超过 90% 才能进入下一关。可以调整卷积核组合后重新训练。', true);
         }
       }
       if (state.customImage) {
@@ -1802,7 +1809,7 @@
       return;
     }
     if (!classifierReadyForNextStep()) {
-      setReadout('第一幕需要先让当前卷积核组合的验证集准确率超过 0.9，才能进入序列识别。', true);
+      setReadout('第一幕需要先让当前卷积核组合的验证集准确率超过 90%，才能进入序列识别。', true);
       return;
     }
     stopSequenceScan();
@@ -2136,7 +2143,7 @@
 
   function scanDetectionTarget() {
     if (!classifierReadyForNextStep()) {
-      setReadout('第一幕需要先让当前卷积核组合的验证集准确率超过 0.9，才能进入滑窗识别。', true);
+      setReadout('第一幕需要先让当前卷积核组合的验证集准确率超过 90%，才能进入滑窗识别。', true);
       return;
     }
     if (!state.detectionIdeaSubmitted) {

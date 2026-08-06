@@ -1,7 +1,7 @@
 {
   "id": "LeNet5-CNN-Lab",
   "number": "C01",
-  "title": "从人工卷积核到 LeNet-5",
+  "title": "卷积核怎样帮助机器认数字？",
   "executor": "Codex",
   "chapters": [
     "fixed-kernel-features"
@@ -21,5 +21,5 @@
     "split": "9:1",
     "kernels": ["edge", "vertical", "horizontal", "diag_down", "diag_up", "center"]
   },
-  "sourceName": "从人工卷积核到 LeNet-5"
+  "sourceName": "卷积核怎样帮助机器认数字？"
 }
