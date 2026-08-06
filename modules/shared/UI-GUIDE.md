@@ -42,6 +42,14 @@
 <script src="../shared/plot-utils.js"></script>
 ```
 
+## 登录校验（自动注入）
+
+模块 HTTP 服务会在返回 HTML 时自动注入 GrowAgent 登录校验脚本，模块开发者**无需**在 `index.html` 中手动引用 `auth-guard.js`。
+
+- 生产域名：后台异步校验 GrowAgent 登录态，不影响页面加载；未登录或 token 失效时会跳转到 `/shared/auth-pending.html`，授权成功后再返回原页面。
+- 本地开发（`localhost` / `127.0.0.1`）：默认跳过登录校验，便于调试。
+- 本地测试登录流程：启动服务时加 `--require-auth`，例如 `python3 scripts/lab_launcher.py --init --require-auth`。
+
 ## 标准页面结构
 
 模块页面默认使用：
@@ -158,7 +166,7 @@ is-revealing
 - 每段可见自然语言必须由带 `data-i18n="稳定键"` 的元素包裹，不得把文字直接散落在无标记容器中。
 - i18n 键使用 `模块.内容块.字段` 结构；同一句文本不要复用含义不明确的 `text1`、`label2`。
 - 代码、公式、语言名和动态数值不翻译，但必须标记 `data-i18n-ignore="true"`，不能不加说明地裸放。
-- 行为追踪由模块服务器自动注入 `shared/telemetry.js` 完成。模块不得添加行为追踪属性或通用控件追踪监听。
+- 行为追踪由模块服务器自动注入 `growagent-ipc.js` 与 `shared/telemetry.js` 完成。模块不得添加行为追踪属性或通用控件追踪监听。
 - `button`、`a`、输入框、选择控件、滑杆和标准考试题会被顶层自动监听。模块只实现真实业务交互，不负责发送行为记录。
 - 文本输入默认只记录长度、是否为空和操作时长，不记录原文；不得绕过全局策略上传用户输入内容。
 
