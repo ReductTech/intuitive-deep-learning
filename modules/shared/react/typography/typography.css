@@ -49,6 +49,10 @@
   --ui-type-code-size: var(--ui-type-body-small-size);
   --ui-type-code-weight: 600;
   --ui-type-code-line-height: 1.65;
+
+  --ui-type-formula-size: var(--ui-type-subtitle-size);
+  --ui-type-formula-weight: 700;
+  --ui-type-formula-line-height: 1.35;
 }
 
 .ui-typography {

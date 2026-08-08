@@ -6,6 +6,7 @@ import {
 } from 'react';
 import { forward } from '../model/mlpEngine';
 import type { ForwardResult, MlpLabState } from '../model/mlpTypes';
+import { MathFormulaBlock, MathFormulaTerm } from '../../shared/react';
 import {
   useResponsiveCanvas,
   type ResponsiveCanvasSize,
@@ -302,10 +303,12 @@ function NetworkInspector({
         </pre>
       </div>
       <div className="mlp-react-inspector__equation">
-        <code>
-          W{node.layer} × a{modelLayer} +{' '}
-          {state.useBias ? `b${node.layer}` : '0'} = z{node.layer}
-        </code>
+        <MathFormulaBlock ariaLabel={`第 ${node.layer} 层线性计算`}>
+          <MathFormulaTerm
+            latex={`W_${node.layer}a_${modelLayer}+${state.useBias ? `b_${node.layer}` : '0'}=z_${node.layer}`}
+            tooltip="当前层先做矩阵乘法并加上偏置，得到激活前的 z"
+          />
+        </MathFormulaBlock>
       </div>
       <div className="mlp-react-inspector__part">
         <b>a{modelLayer} </b>

@@ -61,3 +61,14 @@ bash .claude/skills/intuitive-deep-learning/scripts/start-all-services.sh --stop
 ## 更新
 
 用户提到更新、检查更新或同步最新版时，完整读取并执行 [references/update.md](references/update.md)。
+
+
+## 用户记忆工具（memory_*）的说明
+
+- **偏好、事实、工作、习惯、学习** 五类日常记忆可能在 session_sync 上下文中预载：若「用户长期记忆（日常）」区块含具体条目（非占位说明），则优先引用该上下文，无需重复调用 memory_get_by_category；若该区块为「尚未同步」「暂无法读取」或「暂无日常需要」，则按需调用 memory_get_by_category。其它分类的读取，或写入/删除记忆，仍须使用下方 memory_* 工具。
+- 涉及用户长期偏好、习惯、背景事实时，**先**调用 memory_list_categories 获取分类，**再**用 memory_get_by_category 读取相关分类下的记忆；勿臆造用户未存储的信息。
+- **memory_list_categories**：无参数，返回全部分类名。
+- **memory_get_by_category**：必填 category，返回该分类下的记忆条目数组（含 id、content、createdAt、updatedAt）。
+- **memory_upsert**：用户明确要求「记住」「保存偏好」等时使用。必填 category、content；可选 id（更新已有条目）；分类不存在时默认自动创建。
+- **memory_delete_item**：用户要求忘记/删除某条记忆时使用。必填 category、id。
+- 分类命名应简洁（如「偏好」「工作」「学习」），避免重复创建同义分类。

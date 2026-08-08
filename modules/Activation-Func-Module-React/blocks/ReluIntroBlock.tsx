@@ -2,9 +2,10 @@ import { useRef, type FormEvent } from 'react';
 import {
   Button,
   Feedback,
-  FormulaBlock,
-  FormulaTerm,
   LessonStage,
+  MathFormulaBlock,
+  MathFormulaStatic,
+  MathFormulaTerm,
   NoticeStrip,
   RangeControl,
 } from '../../shared/react';
@@ -183,18 +184,16 @@ export function ReluIntroBlock({ onComplete }: ReluIntroBlockProps) {
             </div>
           </div>
 
-          <FormulaBlock
+          <MathFormulaBlock
             className="af-react-relu-definition"
             ariaLabel="ReLU z 等于 0 和 z 中较大的一个"
           >
-            <FormulaTerm tooltip="ReLU：把负数截为 0，让非负数保持原值">
-              ReLU
-            </FormulaTerm>
-            (<FormulaTerm tooltip="z：输入乘权重后的加权结果">z</FormulaTerm>)
-            {' = max(0, '}
-            <FormulaTerm tooltip="z ≥ 0 时输出 z；z < 0 时输出 0">z</FormulaTerm>
-            )
-          </FormulaBlock>
+            <MathFormulaTerm latex="\operatorname{ReLU}" tooltip="ReLU：把负数截为 0，让非负数保持原值" />
+            <MathFormulaStatic latex="(" />
+            <MathFormulaTerm latex="z" tooltip="z：输入乘权重后的加权结果" />
+            <MathFormulaStatic latex=")=" />
+            <MathFormulaTerm latex="\max(0,z)" tooltip="z 大于等于 0 时输出 z；否则输出 0" />
+          </MathFormulaBlock>
 
           <div className={`af-react-relu-flow${result.z < 0 ? ' is-suppressed' : ''}`}>
             <div className="af-react-signal-node af-react-signal-node--input">
@@ -218,18 +217,22 @@ export function ReluIntroBlock({ onComplete }: ReluIntroBlockProps) {
           </div>
 
           <div className="af-react-relu-formulas" aria-live="polite">
-            <p>
-              <span>先做线性计算</span>
-              <code>{state.touched
-                ? `z = x × w = ${formatNumber(result.x)} × 2 = ${formatNumber(result.z)}`
-                : 'z = x × w'}</code>
-            </p>
-            <p>
-              <span>再经过 ReLU</span>
-              <code>{state.touched
-                ? `y = ReLU(z) = max(0, ${formatNumber(result.z)}) = ${formatNumber(result.y)}`
-                : 'y = ReLU(z)'}</code>
-            </p>
+            <MathFormulaBlock ariaLabel="线性计算">
+              <MathFormulaTerm
+                latex={state.touched
+                  ? `z=x\\cdot w=${formatNumber(result.x)}\\cdot 2=${formatNumber(result.z)}`
+                  : 'z=x\\cdot w'}
+                tooltip="先用输入乘以权重，得到激活前的线性结果 z"
+              />
+            </MathFormulaBlock>
+            <MathFormulaBlock ariaLabel="ReLU 激活计算">
+              <MathFormulaTerm
+                latex={state.touched
+                  ? `y=\\operatorname{ReLU}(z)=\\max(0,${formatNumber(result.z)})=${formatNumber(result.y)}`
+                  : 'y=\\operatorname{ReLU}(z)'}
+                tooltip="再把线性结果 z 送入 ReLU，得到输出 y"
+              />
+            </MathFormulaBlock>
           </div>
 
           <Feedback

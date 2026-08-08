@@ -36,7 +36,9 @@ import { DropoutBlock } from '../../modules/Fitting_Module/blocks/DropoutBlock';
 import { FittingDiagnosisBlock } from '../../modules/Fitting_Module/blocks/FittingDiagnosisBlock';
 import { FittingLessonFooter } from '../../modules/Fitting_Module/blocks/FittingLessonFooter';
 import { WeightRegularizationBlock } from '../../modules/Fitting_Module/blocks/WeightRegularizationBlock';
-import { SgdFoundationBlock } from '../../modules/Adaptive-Learning-Rate-Module/blocks/SgdFoundationBlock';
+import { WhyOptimizerBlock } from '../../modules/Adaptive-Learning-Rate-Module/blocks/WhyOptimizerBlock';
+import { SgdBlock } from '../../modules/Adaptive-Learning-Rate-Module/blocks/SgdBlock';
+import { MomentumBlock } from '../../modules/Adaptive-Learning-Rate-Module/blocks/MomentumBlock';
 import { AdaGradBlock } from '../../modules/Adaptive-Learning-Rate-Module/blocks/AdaGradBlock';
 import { AdamBlock } from '../../modules/Adaptive-Learning-Rate-Module/blocks/AdamBlock';
 import { AdaptiveLearningRateLessonFooter } from '../../modules/Adaptive-Learning-Rate-Module/blocks/AdaptiveLearningRateLessonFooter';
@@ -46,10 +48,12 @@ import { AppLink, type AppRoute } from './Router';
 import { migratedModules } from './modules';
 
 const blockPreviews = [
-  { id: 'adaptive-lr-sgd', group: '自适应学习率', title: 'SGD 基础', description: '用碗形损失曲线理解梯度方向、学习率与一步参数更新。', path: '/dev/blocks/adaptive-learning-rate/sgd' },
-  { id: 'adaptive-lr-adagrad', group: '自适应学习率', title: 'AdaGrad', description: '观察历史平方梯度如何为每个参数缩放有效学习率。', path: '/dev/blocks/adaptive-learning-rate/adagrad' },
-  { id: 'adaptive-lr-adam', group: '自适应学习率', title: 'Adam', description: '在噪声梯度序列中比较原始梯度、方向记忆与自适应更新量。', path: '/dev/blocks/adaptive-learning-rate/adam' },
-  { id: 'adaptive-lr-ending', group: '自适应学习率', title: '课程结尾', description: '回顾 SGD、AdaGrad 与 Adam 的演化主线。', path: '/dev/blocks/adaptive-learning-rate/ending' },
+  { id: 'adaptive-lr-why', group: '优化器如何调整步伐', title: '为什么需要优化器', description: '比较过大与过小的固定学习率，观察震荡和缓慢收敛。', path: '/dev/blocks/adaptive-learning-rate/why-optimizer' },
+  { id: 'adaptive-lr-sgd', group: '优化器如何调整步伐', title: 'SGD', description: '对比 Full Batch 的平滑路线与 SGD 的蛇形路线。', path: '/dev/blocks/adaptive-learning-rate/sgd' },
+  { id: 'adaptive-lr-momentum', group: '优化器如何调整步伐', title: 'Momentum', description: '观察方向记忆如何减少随机梯度带来的左右摇摆。', path: '/dev/blocks/adaptive-learning-rate/momentum' },
+  { id: 'adaptive-lr-adagrad', group: '优化器如何调整步伐', title: 'AdaGrad', description: '观察频繁参数与稀疏参数如何获得不同学习率。', path: '/dev/blocks/adaptive-learning-rate/adagrad' },
+  { id: 'adaptive-lr-adam', group: '优化器如何调整步伐', title: 'Adam', description: '组合方向记忆与自适应步长，并完成优化器总结。', path: '/dev/blocks/adaptive-learning-rate/adam' },
+  { id: 'adaptive-lr-ending', group: '优化器如何调整步伐', title: '课程结尾', description: '回顾 SGD、Momentum、AdaGrad 与 Adam。', path: '/dev/blocks/adaptive-learning-rate/ending' },
   { id: 'fitting-diagnosis', group: '拟合与泛化', title: '辨别欠拟合与过拟合', description: '观察训练与验证曲线，标记过拟合开始位置。', path: '/dev/blocks/fitting/diagnosis' },
   { id: 'fitting-weight-regularization', group: '拟合与泛化', title: '权重正则化', description: '理解小权重为何更稳定，以及正则项如何缓解过拟合。', path: '/dev/blocks/fitting/weight-regularization' },
   { id: 'fitting-dropout', group: '拟合与泛化', title: 'Dropout', description: '观察每次训练如何用新的随机 Mask 屏蔽部分激活。', path: '/dev/blocks/fitting/dropout' },
@@ -248,8 +252,16 @@ function FittingEndingPreview() {
   return <BlockPreview title="课程结尾">{() => <FittingLessonFooter />}</BlockPreview>;
 }
 
-function SgdFoundationPreview() {
-  return <BlockPreview title="SGD 基础">{({ complete }) => <SgdFoundationBlock onComplete={complete} />}</BlockPreview>;
+function WhyOptimizerPreview() {
+  return <BlockPreview title="为什么需要优化器">{({ complete }) => <WhyOptimizerBlock onComplete={complete} />}</BlockPreview>;
+}
+
+function SgdPreview() {
+  return <BlockPreview title="SGD">{({ complete }) => <SgdBlock onComplete={complete} />}</BlockPreview>;
+}
+
+function MomentumPreview() {
+  return <BlockPreview title="Momentum">{({ complete }) => <MomentumBlock onComplete={complete} />}</BlockPreview>;
 }
 
 function AdaGradPreview() {
@@ -268,7 +280,9 @@ export const appRoutes: AppRoute[] = [
   { path: '/', element: <HomePage /> },
   { path: '/shared/ui-kit', element: <UiKitPage /> },
   ...migratedModules.map(({ path, element }) => ({ path, element })),
-  { path: '/dev/blocks/adaptive-learning-rate/sgd', element: <SgdFoundationPreview /> },
+  { path: '/dev/blocks/adaptive-learning-rate/why-optimizer', element: <WhyOptimizerPreview /> },
+  { path: '/dev/blocks/adaptive-learning-rate/sgd', element: <SgdPreview /> },
+  { path: '/dev/blocks/adaptive-learning-rate/momentum', element: <MomentumPreview /> },
   { path: '/dev/blocks/adaptive-learning-rate/adagrad', element: <AdaGradPreview /> },
   { path: '/dev/blocks/adaptive-learning-rate/adam', element: <AdamPreview /> },
   { path: '/dev/blocks/adaptive-learning-rate/ending', element: <AdaptiveLearningRateEndingPreview /> },

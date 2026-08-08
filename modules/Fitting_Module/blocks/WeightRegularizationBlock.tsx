@@ -1,5 +1,5 @@
 import { useRef, useState, type CSSProperties } from 'react';
-import { Callout, ContentBlock, FormulaBlock, FormulaTerm, NoticeStrip, RangeControl } from '../../shared/react';
+import { Callout, ContentBlock, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, NoticeStrip, RangeControl } from '../../shared/react';
 
 interface WeightRegularizationBlockProps { onComplete?: () => void; }
 
@@ -71,38 +71,17 @@ export function WeightRegularizationBlock({ onComplete }: WeightRegularizationBl
 
       {touched && <section className="fit-penalty-lab">
         <NoticeStrip tone="blue" lead="观察结论：">限制权重不是让模型越小越好，而是减少它追随训练集偶然细节的倾向。具体做法是在原损失中加入 L2 正则项。</NoticeStrip>
-        <FormulaBlock className="fit-l2-formula" ariaLabel="最佳权重等于使预测损失与 L2 正则项之和最小的权重">
-          <span className="fit-l2-minimization">
-            <FormulaTerm className="fit-l2-result" tooltip="W*：训练最终找到的一组最佳权重">W<sup>*</sup></FormulaTerm>
-            <span className="fit-formula-operator">=</span>
-            <span className="fit-l2-min-symbol">
-              <FormulaTerm tooltip="arg min：返回让目标值达到最小的参数，而不是只返回最小值">arg min</FormulaTerm>
-              <sub><FormulaTerm tooltip="W：训练过程中不断调整并寻找最优取值的网络权重">W</FormulaTerm></sub>
-            </span>
-            <span>(</span>
-            <span className="fit-formula-expression">
-              <FormulaTerm className="fit-formula-data" tooltip="Loss：衡量模型预测误差的原任务损失函数">Loss</FormulaTerm>
-              <span className="fit-formula-data">(</span>
-              <FormulaTerm className="fit-formula-data" tooltip="y：样本的真实目标值">y</FormulaTerm>
-              <span className="fit-formula-data">, </span>
-              <FormulaTerm className="fit-formula-data" tooltip="ŷ：模型根据当前权重得到的预测值">ŷ</FormulaTerm>
-              <span className="fit-formula-data">)</span>
-            </span>
-            <span className="fit-formula-operator">+</span>
-            <span className="fit-formula-expression fit-formula-regularizer fit-formula-penalty">
-              <FormulaTerm tooltip="λ：控制权重正则项影响强度的非负超参数">λ</FormulaTerm>
-              <span className="fit-formula-indexed">
-                <FormulaTerm tooltip="‖W‖：把网络权重 W 作为一个整体来衡量大小">‖W‖</FormulaTerm>
-                <span className="fit-formula-dual-scripts">
-                  <sup><FormulaTerm tooltip="上标 2：对范数求平方，得到正则惩罚">2</FormulaTerm></sup>
-                  <sub><FormulaTerm tooltip="下标 2：指定这里采用 L2 范数">2</FormulaTerm></sub>
-                </span>
-              </span>
-            </span>
-            <span>)</span>
-          </span>
-          <p className="fit-l2-explanation">W* 表示训练最终找到的权重：它使预测损失与 λ‖W‖₂² 之和达到最小。</p>
-        </FormulaBlock>
+        <MathFormulaBlock ariaLabel="最佳权重等于使预测损失与 L2 正则项之和最小的权重">
+          <MathFormulaTerm latex="W^{*}" tooltip="W*：训练最终找到的一组最佳权重" />
+          <MathFormulaStatic latex="=" />
+          <MathFormulaTerm latex="\underset{W}{\operatorname{arg\,min}}" tooltip="arg min：返回让目标值达到最小的参数，而不是只返回最小值" />
+          <MathFormulaStatic latex="(" />
+          <MathFormulaTerm latex="\operatorname{Loss}(y,\hat{y})" tooltip="Loss：衡量模型预测值与真实值之间的原任务损失" />
+          <MathFormulaStatic latex="+" />
+          <MathFormulaTerm latex="\lambda\lVert W\rVert_2^2" tooltip="λ 乘权重的 L2 范数平方：惩罚过大的权重" />
+          <MathFormulaStatic latex=")" />
+        </MathFormulaBlock>
+        <p className="fit-l2-explanation">W* 表示训练最终找到的权重：它使预测损失与 λ‖W‖₂² 之和达到最小。</p>
       </section>}
     </ContentBlock>
   );

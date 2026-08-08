@@ -123,6 +123,20 @@ button, input, textarea, select { font: inherit; }
 .edu-formula-term:hover::before, .edu-formula-term:focus-visible::before { transform: translate(-50%, 0) rotate(45deg); }
 .edu-formula-term:hover::after, .edu-formula-term:focus-visible::after { transform: translate(-50%, 0); }
 
+.math-formula-block { width: min(100%, 980px); min-height: 132px; padding: clamp(20px, 3vw, 30px) clamp(16px, 3vw, 28px); }
+.math-formula { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0; color: var(--ui-accent); font-family: var(--ui-font-mono); font-size: var(--ui-type-formula-size); font-weight: var(--ui-type-formula-weight); line-height: var(--ui-type-formula-line-height); text-align: center; }
+.math-formula math-field { display: inline-flex; width: auto; min-width: 0; border: 0; border-radius: 0; outline: 0; background: transparent; color: currentColor; padding: 0; font: inherit; line-height: inherit; pointer-events: none; --caret-color: transparent; --selection-background-color: transparent; --contains-highlight-background-color: transparent; }
+.math-formula-static, .math-formula-term { display: inline-flex; flex: 0 0 auto; align-items: center; color: inherit; }
+.math-formula-term { position: relative; cursor: help; outline: none; }
+.math-formula-term--warm { color: var(--ui-accent-alt); }
+.math-formula-term:focus-visible { outline: 2px solid rgba(39,68,110,.32); outline-offset: 4px; }
+.math-formula-term::before, .math-formula-term::after { position: absolute; left: 50%; z-index: 30; visibility: hidden; opacity: 0; pointer-events: none; transition: opacity .12s ease, transform .12s ease, visibility .12s ease; }
+.math-formula-term::before { top: calc(100% + 4px); width: 10px; height: 10px; background: var(--ui-text-main); content: ""; transform: translate(-50%, -4px) rotate(45deg); }
+.math-formula-term::after { top: calc(100% + 9px); width: max-content; max-width: min(270px, calc(100vw - 56px)); border-radius: var(--ui-radius-sm); background: var(--ui-text-main); box-shadow: 0 12px 28px rgba(25,42,70,.2); color: #fff; content: attr(data-tooltip); padding: 8px 10px; font-family: var(--ui-font-sans); font-size: var(--ui-type-caption-size); font-weight: var(--ui-type-label-weight); line-height: var(--ui-type-caption-line-height); text-align: left; white-space: normal; transform: translate(-50%, -4px); }
+.math-formula-term:hover::before, .math-formula-term:hover::after, .math-formula-term:focus-visible::before, .math-formula-term:focus-visible::after { visibility: visible; opacity: 1; }
+.math-formula-term:hover::before, .math-formula-term:focus-visible::before { transform: translate(-50%, 0) rotate(45deg); }
+.math-formula-term:hover::after, .math-formula-term:focus-visible::after { transform: translate(-50%, 0); }
+
 .edu-control { display: grid; width: 100%; gap: 9px; }
 .edu-label { display: block; margin: 0 0 6px; color: var(--ui-text-muted); font-size: 13px; }
 .edu-control-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
@@ -176,7 +190,7 @@ button, input, textarea, select { font: inherit; }
 .edu-radio input:checked::after { position: absolute; inset: 4px; border-radius: 50%; background: #fff; content: ""; }
 .edu-check input:focus-visible, .edu-radio input:focus-visible { outline: 3px solid rgba(240,126,71,.28); outline-offset: 2px; }
 
-.edu-btn { border: 1px solid var(--ui-border); border-radius: var(--ui-radius-pill); background: #fff; color: var(--ui-text-muted); padding: 9px 16px; font-size: 14px; font-weight: 700; cursor: pointer; transition: all .14s ease; }
+.edu-btn { border: 1px solid var(--ui-border); border-radius: var(--ui-radius-pill); background: #fff; color: var(--ui-text-muted); padding: 9px 16px; font-size: var(--ui-type-button-size); font-weight: var(--ui-type-button-weight); line-height: var(--ui-type-button-line-height); cursor: pointer; transition: all .14s ease; }
 .edu-btn:hover { transform: translateY(-1px); border-color: var(--ui-accent); color: var(--ui-accent); }
 .edu-btn:focus-visible { outline: 3px solid rgba(240,126,71,.28); outline-offset: 2px; }
 .edu-btn--primary, .edu-btn.is-active { border-color: var(--ui-accent); background: var(--ui-accent); color: #fff; }
@@ -306,13 +320,13 @@ svg .edu-attention-hint { fill: none; stroke: rgba(var(--attention-hint-rgb), .5
 
 .edu-code-block { overflow: hidden; border: 1px solid var(--ui-border); border-radius: var(--ui-radius-sm); background: #18263a; color: #f4f7fb; }
 .edu-code-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; border-bottom: 1px solid rgba(255,255,255,.12); background: #21324a; padding: 10px 12px; }
-.edu-code-language { color: #fff; font-family: var(--ui-font-mono); font-size: 12px; font-weight: 900; }
-.edu-code-status { color: #b9c8db; font-size: 12px; font-weight: 800; }
-.edu-code-runtime { margin-left: auto; color: #b9c8db; font-size: 11px; }
+.edu-code-language { color: #fff; font-weight: 900; }
+.edu-code-status { color: #b9c8db; }
+.edu-code-runtime { margin-left: auto; color: #b9c8db; }
 .edu-code-runtime output { margin-left: 5px; color: #fff; font-family: var(--ui-font-mono); }
 .edu-code-actions { display: flex; flex-wrap: wrap; gap: 8px; }
-.edu-code-actions .edu-btn { padding: 6px 10px; font-size: 12px; }
-.edu-code-source { overflow: auto; margin: 0; padding: 16px; font: 13px/1.7 var(--ui-font-mono); }
+.edu-code-actions .edu-btn { padding: 6px 10px; }
+.edu-code-source { overflow: auto; margin: 0; padding: 16px; }
 .edu-code-source code { white-space: pre; }
 .edu-code-line { display: block; min-height: 1.7em; }
 .edu-code-token--keyword { color: #f6a6c1; }
@@ -321,7 +335,7 @@ svg .edu-attention-hint { fill: none; stroke: rgba(var(--attention-hint-rgb), .5
 .edu-code-token--operator { color: #c5d6e8; }
 .edu-code-token--string { color: #a7dfb0; }
 .edu-code-blank { width: 9ch; border: 1px solid var(--ui-accent-alt); border-radius: 4px; outline: none; background: rgba(240,126,71,.14); color: #fff; padding: 1px 4px; font: inherit; }
-.edu-code-help { border-top: 1px solid rgba(255,255,255,.12); background: rgba(240,126,71,.12); color: #ffd7c5; padding: 10px 14px; font-size: 12px; line-height: 1.6; }
+.edu-code-help { border-top: 1px solid rgba(255,255,255,.12); background: rgba(240,126,71,.12); color: #ffd7c5; padding: 10px 14px; }
 .edu-code-help[hidden] { display: none; }
 
 .visual-catalog { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 28px; }

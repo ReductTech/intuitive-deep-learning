@@ -1,7 +1,13 @@
-import { useEffect, type HTMLAttributes, type ReactNode } from 'react';
+import { useEffect, useRef, type HTMLAttributes, type ReactNode } from 'react';
 import { classNames } from '../utils';
 
 let mathliveRequest: Promise<unknown> | null = null;
+
+type MathFieldElement = HTMLElement & {
+  value: string;
+  readOnly: boolean;
+  virtualKeyboardMode: string;
+};
 
 function ensureMathlive() {
   if (typeof window === 'undefined') return Promise.resolve();
@@ -24,12 +30,22 @@ export interface MathFormulaBlockProps extends HTMLAttributes<HTMLDivElement> {
 
 export function MathFormulaTerm({ latex, tooltip, ariaLabel, tone = 'default', className, ...props }: MathFormulaTermProps) {
   const tooltipText = typeof tooltip === 'string' ? tooltip : String(tooltip ?? '');
+  const fieldRef = useRef<MathFieldElement | null>(null);
 
   useEffect(() => {
-    ensureMathlive().catch(() => {
-      document.documentElement.classList.add('dl-mathlive-unavailable');
-    });
-  }, []);
+    let active = true;
+    ensureMathlive()
+      .then(() => {
+        if (!active || !fieldRef.current) return;
+        fieldRef.current.value = latex;
+        fieldRef.current.readOnly = true;
+        fieldRef.current.virtualKeyboardMode = 'manual';
+      })
+      .catch(() => {
+        document.documentElement.classList.add('dl-mathlive-unavailable');
+      });
+    return () => { active = false; };
+  }, [latex]);
 
   return (
     <span
@@ -39,7 +55,7 @@ export function MathFormulaTerm({ latex, tooltip, ariaLabel, tone = 'default', c
       data-tooltip={tooltipText}
       aria-label={ariaLabel ?? tooltipText}
     >
-      <math-field read-only="true" virtual-keyboard-mode="manual" aria-hidden="true">
+      <math-field ref={fieldRef} read-only="true" virtual-keyboard-mode="manual" data-latex={latex} aria-hidden="true">
         {latex}
       </math-field>
     </span>
@@ -47,15 +63,26 @@ export function MathFormulaTerm({ latex, tooltip, ariaLabel, tone = 'default', c
 }
 
 export function MathFormulaStatic({ latex, className, ...props }: { latex: string; className?: string } & HTMLAttributes<HTMLSpanElement>) {
+  const fieldRef = useRef<MathFieldElement | null>(null);
+
   useEffect(() => {
-    ensureMathlive().catch(() => {
-      document.documentElement.classList.add('dl-mathlive-unavailable');
-    });
-  }, []);
+    let active = true;
+    ensureMathlive()
+      .then(() => {
+        if (!active || !fieldRef.current) return;
+        fieldRef.current.value = latex;
+        fieldRef.current.readOnly = true;
+        fieldRef.current.virtualKeyboardMode = 'manual';
+      })
+      .catch(() => {
+        document.documentElement.classList.add('dl-mathlive-unavailable');
+      });
+    return () => { active = false; };
+  }, [latex]);
 
   return (
     <span {...props} className={classNames('math-formula-static', className)}>
-      <math-field read-only="true" virtual-keyboard-mode="manual" aria-hidden="true">
+      <math-field ref={fieldRef} read-only="true" virtual-keyboard-mode="manual" data-latex={latex} aria-hidden="true">
         {latex}
       </math-field>
     </span>

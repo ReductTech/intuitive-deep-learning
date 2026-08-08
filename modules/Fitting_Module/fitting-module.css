@@ -89,22 +89,7 @@
 .fit-neuron-network.is-small .fit-delta-gauge { color: var(--ui-accent); }
 .fit-neuron-network.is-large .fit-delta-gauge { color: var(--ui-danger); }
 .fit-penalty-lab { animation: edu-stage-enter .45s ease both; }
-.fit-l2-formula { box-sizing: border-box; width: 100%; min-height: 164px; margin-inline: 0; padding: 24px 28px; }
-.fit-l2-formula .edu-formula { display: grid; width: 100%; max-width: 100%; gap: 13px; font-size: clamp(24px, 3.2vw, 32px); overflow-wrap: normal; }
-.fit-l2-minimization { display: flex; align-items: baseline; justify-content: center; flex-wrap: wrap; color: var(--ui-accent); font-size: 1em; }
-.fit-l2-minimization .fit-formula-operator { margin-inline: .26em; }
-.fit-l2-result sup { font-size: 16px; }
-.fit-l2-min-symbol { display: inline-grid; grid-template-rows: auto auto; justify-items: center; align-self: baseline; margin-right: .3em; line-height: 1; }
-.fit-l2-min-symbol > sub { position: static; margin-top: 1px; font-size: 16px; line-height: 1; }
-.fit-formula-expression, .fit-formula-indexed { display: inline-flex; align-items: baseline; white-space: nowrap; }
-.fit-formula-operator { margin-inline: .38em; }
-.fit-formula-regularizer { gap: .16em; }
-.fit-formula-dual-scripts { display: inline-grid; grid-template-rows: 1fr 1fr; align-self: center; margin-left: .02em; font-size: 16px; line-height: 1; }
-.fit-formula-dual-scripts > sup, .fit-formula-dual-scripts > sub { position: static; font-size: 1em; line-height: 1; text-align: left; }
-.fit-formula-data { color: var(--ui-accent); }
-.fit-formula-penalty { color: var(--ui-accent-alt); }
 .fit-l2-explanation { max-width: 780px; margin: 0 auto; color: var(--ui-text-muted); font-family: var(--ui-font-sans); font-size: 16px; font-weight: 550; line-height: 1.65; text-align: center; }
-.fit-l2-formula .edu-formula-term::after { font-size: 16px; }
 
 .fit-dropout { margin-top: 28px; }
 .fit-dropout .edu-content-body { display: grid; gap: 18px; }
@@ -139,7 +124,5 @@
 }
 
 @media (max-width: 520px) {
-  .fit-l2-formula { padding: 20px; }
-  .fit-l2-formula .edu-formula { font-size: 24px; }
   .fit-l2-explanation { font-size: 16px; text-align: left; }
 }

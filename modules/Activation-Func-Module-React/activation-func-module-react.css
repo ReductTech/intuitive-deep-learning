@@ -455,28 +455,6 @@
   gap: 10px;
 }
 
-.af-react-relu-formulas p {
-  display: grid;
-  gap: 6px;
-  margin: 0;
-  border: 1px solid var(--ui-border);
-  border-radius: var(--ui-radius-sm);
-  background: #fff;
-  padding: 12px 14px;
-}
-
-.af-react-relu-formulas span {
-  color: var(--ui-text-light);
-  font-size: 11px;
-  font-weight: 850;
-}
-
-.af-react-relu-formulas code {
-  overflow-wrap: anywhere;
-  color: var(--ui-accent);
-  font: 900 15px/1.55 var(--ui-font-mono);
-}
-
 .af-react-relu-next {
   display: flex;
   align-items: center;

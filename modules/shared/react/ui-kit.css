@@ -3,8 +3,8 @@
 .kit-header .edu-title { font-size: 36px; letter-spacing: 0; }
 .kit-section + .kit-section { margin-top: 34px; }
 .kit-section-head { display: flex; align-items: end; justify-content: space-between; gap: 18px; margin-bottom: 14px; border-bottom: 1px solid var(--ui-border); padding-bottom: 14px; }
-.kit-section-head h2 { margin: 0; color: var(--ui-text-main); font-size: 24px; line-height: 1.25; }
-.kit-section-head p { max-width: 620px; margin: 0; color: var(--ui-text-muted); font-size: 13px; line-height: 1.65; }
+.kit-section-head h2 { margin: 0; color: var(--ui-text-main); font-size: var(--ui-type-h2-size); font-weight: var(--ui-type-h2-weight); letter-spacing: var(--ui-type-h2-letter-spacing); line-height: var(--ui-type-h2-line-height); }
+.kit-section-head p { max-width: 620px; margin: 0; color: var(--ui-text-muted); font-size: var(--ui-type-body-small-size); font-weight: var(--ui-type-body-small-weight); line-height: var(--ui-type-body-small-line-height); }
 .kit-type-stack { display: grid; gap: 18px; }
 .kit-type-panel { min-width: 0; border: 1px solid var(--ui-border); border-radius: var(--ui-radius-md); background: var(--ui-bg-card); padding: 20px; }
 .kit-type-panel-head { display: grid; gap: 5px; margin-bottom: 18px; }
