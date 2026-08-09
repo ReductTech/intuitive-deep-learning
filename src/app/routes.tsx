@@ -20,6 +20,29 @@ import { NumberLineBlock } from '../../modules/Loss-Guide-React/blocks/NumberLin
 import { ResourcesBlock } from '../../modules/Loss-Guide-React/blocks/ResourcesBlock';
 import { DatasetLessonFooter } from '../../modules/Dataset-Split-Module/blocks/DatasetLessonFooter';
 import { DatasetSplitProcessBlock } from '../../modules/Dataset-Split-Module/blocks/DatasetSplitProcessBlock';
+import { ImageMatrixLabBlock } from '../../modules/Digital-Image-Module-React/blocks/ImageMatrixLabBlock';
+import { ObservationBlock } from '../../modules/Digital-Image-Module-React/blocks/ObservationBlock';
+import { ResourcesBlock as DigitalImageResourcesBlock } from '../../modules/Digital-Image-Module-React/blocks/ResourcesBlock';
+import { RgbColorLabBlock } from '../../modules/Digital-Image-Module-React/blocks/RgbColorLabBlock';
+import { ManualCountBlock } from '../../modules/Manual-Feature-Classification-React/blocks/ManualCountBlock';
+import { DistributionBlock as ManualDistributionBlock } from '../../modules/Manual-Feature-Classification-React/blocks/DistributionBlock';
+import { MlpTrainingBlock as ManualMlpTrainingBlock } from '../../modules/Manual-Feature-Classification-React/blocks/MlpTrainingBlock';
+import { ResourcesBlock as ManualFeatureResourcesBlock } from '../../modules/Manual-Feature-Classification-React/blocks/ResourcesBlock';
+import { GomokuGameBlock } from '../../modules/Convolution-Kernel-Intro-React/blocks/GomokuGameBlock';
+import { KernelOperatorBlock } from '../../modules/Convolution-Kernel-Intro-React/blocks/KernelOperatorBlock';
+import { MnistConvolutionBlock } from '../../modules/Convolution-Kernel-Intro-React/blocks/MnistConvolutionBlock';
+import { ResourcesBlock as ConvolutionResourcesBlock } from '../../modules/Convolution-Kernel-Intro-React/blocks/ResourcesBlock';
+import { DetectionSearchBlock } from '../../modules/LeNet5-CNN-Lab-React/blocks/DetectionSearchBlock';
+import { FixedKernelClassifierBlock } from '../../modules/LeNet5-CNN-Lab-React/blocks/FixedKernelClassifierBlock';
+import { ResourcesBlock as LeNetResourcesBlock } from '../../modules/LeNet5-CNN-Lab-React/blocks/ResourcesBlock';
+import { SequenceRecognitionBlock } from '../../modules/LeNet5-CNN-Lab-React/blocks/SequenceRecognitionBlock';
+import { LenetPreviewClassifierGate } from '../../modules/LeNet5-CNN-Lab-React/components/LenetPreviewClassifierGate';
+import { CnnQuizBlock as FaceCnnQuizBlock } from '../../modules/Face-Recog-Lab-React/blocks/CnnQuizBlock';
+import { DisguiseGameBlock as FaceDisguiseGameBlock } from '../../modules/Face-Recog-Lab-React/blocks/DisguiseGameBlock';
+import { FixedKernelFaceBlock } from '../../modules/Face-Recog-Lab-React/blocks/FixedKernelFaceBlock';
+import { LearnableCnnBlock as FaceLearnableCnnBlock } from '../../modules/Face-Recog-Lab-React/blocks/LearnableCnnBlock';
+import { ResourcesBlock as FaceResourcesBlock } from '../../modules/Face-Recog-Lab-React/blocks/ResourcesBlock';
+import { FaceRuntimeBoundary } from '../../modules/Face-Recog-Lab-React/FaceRecogLabPage';
 import { HyperparameterOverviewBlock } from '../../modules/Hyperparameter-Module/blocks/HyperparameterOverviewBlock';
 import { HyperparameterLessonFooter } from '../../modules/Hyperparameter-Module/blocks/HyperparameterLessonFooter';
 import { GridSearchSimulationBlock } from '../../modules/Hyperparameter-Module/blocks/GridSearchSimulationBlock';
@@ -42,6 +65,12 @@ import { MomentumBlock } from '../../modules/Adaptive-Learning-Rate-Module/block
 import { AdaGradBlock } from '../../modules/Adaptive-Learning-Rate-Module/blocks/AdaGradBlock';
 import { AdamBlock } from '../../modules/Adaptive-Learning-Rate-Module/blocks/AdamBlock';
 import { AdaptiveLearningRateLessonFooter } from '../../modules/Adaptive-Learning-Rate-Module/blocks/AdaptiveLearningRateLessonFooter';
+import { BinaryCrossEntropyBlock } from '../../modules/Loss-Guide-2-React/blocks/BinaryCrossEntropyBlock';
+import { BinarySigmoidBlock } from '../../modules/Loss-Guide-2-React/blocks/BinarySigmoidBlock';
+import { CategoricalCrossEntropyBlock } from '../../modules/Loss-Guide-2-React/blocks/CategoricalCrossEntropyBlock';
+import { MulticlassSoftmaxBlock } from '../../modules/Loss-Guide-2-React/blocks/MulticlassSoftmaxBlock';
+import { OutputHeadPairingBlock } from '../../modules/Loss-Guide-2-React/blocks/OutputHeadPairingBlock';
+import { ResourcesBlock as LossGuide2ResourcesBlock } from '../../modules/Loss-Guide-2-React/blocks/ResourcesBlock';
 import { BlockPreview } from './BlockPreview';
 import { UiKitPage } from '../../modules/shared/react/routing/UiKitPage';
 import { AppLink, type AppRoute } from './Router';
@@ -71,6 +100,33 @@ const blockPreviews = [
   { id: 'loss-cross-entropy', group: '损失函数导览', title: '分类与交叉熵', description: '独立调试交叉熵教学块。', path: '/dev/blocks/loss-guide-react/cross-entropy' },
   { id: 'loss-advanced', group: '损失函数导览', title: '延伸拓展', description: '独立调试延伸拓展内容块。', path: '/dev/blocks/loss-guide-react/advanced' },
   { id: 'loss-resources', group: '损失函数导览', title: '推荐资源', description: '独立调试课程结尾与推荐资源。', path: '/dev/blocks/loss-guide-react/resources' },
+  { id: 'loss-2-sigmoid', group: '输出层与分类损失', title: 'Sigmoid 与单类别概率', description: '独立调试天气信号、Sigmoid 曲线和观察题。', path: '/dev/blocks/loss-guide-2-react/sigmoid' },
+  { id: 'loss-2-bce', group: '输出层与分类损失', title: '二分类交叉熵', description: '独立调试损失设计、曲线和 BCE 推导。', path: '/dev/blocks/loss-guide-2-react/bce' },
+  { id: 'loss-2-softmax', group: '输出层与分类损失', title: 'Softmax 类别竞争', description: '独立调试多个 Sigmoid 与 Softmax 的差异。', path: '/dev/blocks/loss-guide-2-react/softmax' },
+  { id: 'loss-2-ce', group: '输出层与分类损失', title: '多分类交叉熵', description: '独立调试天气预报选择与交叉熵负号解释。', path: '/dev/blocks/loss-guide-2-react/cross-entropy' },
+  { id: 'loss-2-pairing', group: '输出层与分类损失', title: '输出头配对', description: '独立调试三种任务与输出层、损失函数的搭配。', path: '/dev/blocks/loss-guide-2-react/output-pairing' },
+  { id: 'loss-2-resources', group: '输出层与分类损失', title: '课程结尾', description: '独立调试推荐视频和课程导航。', path: '/dev/blocks/loss-guide-2-react/resources' },
+  { id: 'digital-image-observation', group: '数字图像与 RGB', title: '屏幕像素观察', description: '独立调试观察画布、RGB 子像素放大镜和真实简答评阅。', path: '/dev/blocks/digital-image-module-react/observation' },
+  { id: 'digital-image-rgb', group: '数字图像与 RGB', title: 'RGB 调色', description: '独立调试 RGB 滑杆、0–1/0–255 向量和纯绿色完成条件。', path: '/dev/blocks/digital-image-module-react/rgb' },
+  { id: 'digital-image-matrix', group: '数字图像与 RGB', title: '图片通道与矩阵', description: '独立调试本地图片、RGB 通道、拖动选区和 3×3 矩阵。', path: '/dev/blocks/digital-image-module-react/image-matrix' },
+  { id: 'digital-image-resources', group: '数字图像与 RGB', title: '课程结尾', description: '独立调试数字图像课程总结、视频和导航。', path: '/dev/blocks/digital-image-module-react/resources' },
+  { id: 'manual-feature-count', group: '人工特征的分类', title: '九宫格计数与向量顺序', description: '独立调试真实 MNIST 自动扫描、手动计数、路径预览和顺序评语。', path: '/dev/blocks/manual-feature-classification-react/count' },
+  { id: 'manual-feature-distribution', group: '人工特征的分类', title: '九宫格分布热力图', description: '独立调试 160 张真实 MNIST 图片的平均特征和识别小游戏。', path: '/dev/blocks/manual-feature-classification-react/distribution' },
+  { id: 'manual-feature-mlp', group: '人工特征的分类', title: '双层 MLP 训练', description: '独立调试 900 轮真实训练、自动样本轮播和手写测试。', path: '/dev/blocks/manual-feature-classification-react/mlp' },
+  { id: 'manual-feature-resources', group: '人工特征的分类', title: '课程结尾', description: '独立调试人工特征总结、推荐视频和课程导航。', path: '/dev/blocks/manual-feature-classification-react/resources' },
+  { id: 'convolution-gomoku', group: '卷积核入门', title: '五子棋与胜负判断', description: '独立调试五子棋 AI、胜局展示与真实简答评阅。', path: '/dev/blocks/convolution-kernel-intro-react/gomoku' },
+  { id: 'convolution-operator', group: '卷积核入门', title: '二值棋盘与 5×5 算子', description: '独立调试窗口扫描、算子设计、变换和激活计算。', path: '/dev/blocks/convolution-kernel-intro-react/operator' },
+  { id: 'convolution-mnist', group: '卷积核入门', title: 'MNIST 卷积扫描', description: '独立调试真实 MNIST、卷积核切换、自定义核和特征图。', path: '/dev/blocks/convolution-kernel-intro-react/mnist' },
+  { id: 'convolution-resources', group: '卷积核入门', title: '课程结尾', description: '独立调试卷积课程推荐视频和课程导航。', path: '/dev/blocks/convolution-kernel-intro-react/resources' },
+  { id: 'lenet-fixed-kernel', group: '从人工卷积核到 LeNet-5', title: '固定核分类器', description: '独立调试固定卷积核、真实训练、特征图与手写识别。', path: '/dev/blocks/lenet5-cnn-lab-react/fixed-kernel' },
+  { id: 'lenet-sequence', group: '从人工卷积核到 LeNet-5', title: '序列数字识别', description: '使用真实分类器独立调试五位数字滑窗识别和 CTC 合并。', path: '/dev/blocks/lenet5-cnn-lab-react/sequence' },
+  { id: 'lenet-detection', group: '从人工卷积核到 LeNet-5', title: '寻找老六', description: '使用真实分类器独立调试 400 个窗口的数字位置检测。', path: '/dev/blocks/lenet5-cnn-lab-react/detection' },
+  { id: 'lenet-resources', group: '从人工卷积核到 LeNet-5', title: '课程结尾', description: '独立调试 LeNet 原有四个推荐视频和课程导航。', path: '/dev/blocks/lenet5-cnn-lab-react/resources' },
+  { id: 'face-fixed-kernel', group: '人脸识别', title: '固定卷积核人脸分类', description: '独立调试 LFW 样本、固定卷积核特征图和真实 MLP 训练。', path: '/dev/blocks/face-recog-lab-react/fixed-kernel' },
+  { id: 'face-learnable-cnn', group: '人脸识别', title: '可学习 CNN', description: '独立调试 CNN 结构编辑、Three.js 网络与真实异步训练。', path: '/dev/blocks/face-recog-lab-react/learnable-cnn' },
+  { id: 'face-cnn-understanding', group: '人脸识别', title: 'CNN 理解练习', description: '独立调试卷积深度、通道、泛化和人脸验证连续练习。', path: '/dev/blocks/face-recog-lab-react/cnn-understanding' },
+  { id: 'face-disguise-game', group: '人脸识别', title: '雨花弄：变脸', description: '独立调试与完整课程相同的 Phaser 乔装挑战。', path: '/dev/blocks/face-recog-lab-react/disguise-game' },
+  { id: 'face-resources', group: '人脸识别', title: '课程结尾', description: '独立调试原有四个推荐视频和最终课程目录入口。', path: '/dev/blocks/face-recog-lab-react/resources' },
 ];
 
 function HomePage() {
@@ -276,6 +332,114 @@ function AdaptiveLearningRateEndingPreview() {
   return <BlockPreview title="课程结尾">{() => <AdaptiveLearningRateLessonFooter />}</BlockPreview>;
 }
 
+function LossGuide2SigmoidPreview() {
+  return <BlockPreview title="Sigmoid 与单类别概率">{({ complete }) => <BinarySigmoidBlock onComplete={complete} />}</BlockPreview>;
+}
+
+function LossGuide2BcePreview() {
+  return <BlockPreview title="二分类交叉熵">{({ complete }) => <BinaryCrossEntropyBlock onComplete={complete} />}</BlockPreview>;
+}
+
+function LossGuide2SoftmaxPreview() {
+  return <BlockPreview title="Softmax 类别竞争">{({ complete }) => <MulticlassSoftmaxBlock onComplete={complete} />}</BlockPreview>;
+}
+
+function LossGuide2CrossEntropyPreview() {
+  return <BlockPreview title="多分类交叉熵">{({ complete }) => <CategoricalCrossEntropyBlock onComplete={complete} />}</BlockPreview>;
+}
+
+function LossGuide2PairingPreview() {
+  return <BlockPreview title="输出头配对">{({ complete }) => <OutputHeadPairingBlock onComplete={complete} />}</BlockPreview>;
+}
+
+function LossGuide2ResourcesPreview() {
+  return <BlockPreview title="输出层与分类损失课程结尾">{() => <LossGuide2ResourcesBlock />}</BlockPreview>;
+}
+
+function DigitalImageObservationPreview() {
+  return <BlockPreview title="屏幕像素观察">{({ complete }) => <ObservationBlock onComplete={complete} />}</BlockPreview>;
+}
+
+function DigitalImageRgbPreview() {
+  return <BlockPreview title="RGB 调色">{({ complete }) => <RgbColorLabBlock onComplete={complete} />}</BlockPreview>;
+}
+
+function DigitalImageMatrixPreview() {
+  return <BlockPreview title="图片通道与矩阵">{({ complete }) => <ImageMatrixLabBlock onComplete={complete} />}</BlockPreview>;
+}
+
+function DigitalImageResourcesPreview() {
+  return <BlockPreview title="数字图像课程结尾">{() => <DigitalImageResourcesBlock />}</BlockPreview>;
+}
+
+function ManualFeatureCountPreview() {
+  return <BlockPreview title="九宫格计数与向量顺序">{({ complete }) => <ManualCountBlock onComplete={complete} />}</BlockPreview>;
+}
+
+function ManualFeatureDistributionPreview() {
+  return <BlockPreview title="九宫格分布热力图">{({ complete }) => <ManualDistributionBlock onComplete={complete} />}</BlockPreview>;
+}
+
+function ManualFeatureMlpPreview() {
+  return <BlockPreview title="双层 MLP 训练">{({ complete }) => <ManualMlpTrainingBlock onComplete={complete} />}</BlockPreview>;
+}
+
+function ManualFeatureResourcesPreview() {
+  return <BlockPreview title="人工特征课程结尾">{() => <ManualFeatureResourcesBlock />}</BlockPreview>;
+}
+
+function ConvolutionGomokuPreview() {
+  return <BlockPreview title="五子棋与胜负判断">{({ complete }) => <GomokuGameBlock onComplete={complete} />}</BlockPreview>;
+}
+
+function ConvolutionOperatorPreview() {
+  return <BlockPreview title="二值棋盘与 5×5 算子">{({ complete }) => <KernelOperatorBlock onComplete={complete} />}</BlockPreview>;
+}
+
+function ConvolutionMnistPreview() {
+  return <BlockPreview title="MNIST 卷积扫描">{({ complete }) => <MnistConvolutionBlock onComplete={complete} />}</BlockPreview>;
+}
+
+function ConvolutionResourcesPreview() {
+  return <BlockPreview title="卷积核课程结尾">{() => <ConvolutionResourcesBlock />}</BlockPreview>;
+}
+
+function LeNetFixedKernelPreview() {
+  return <BlockPreview title="固定核分类器">{({ complete }) => <FixedKernelClassifierBlock onComplete={complete} onSessionChange={() => undefined} />}</BlockPreview>;
+}
+
+function LeNetSequencePreview() {
+  return <BlockPreview title="序列数字识别">{({ complete }) => <LenetPreviewClassifierGate>{(classifierSession) => <SequenceRecognitionBlock classifierSession={classifierSession} onComplete={complete} />}</LenetPreviewClassifierGate>}</BlockPreview>;
+}
+
+function LeNetDetectionPreview() {
+  return <BlockPreview title="寻找老六">{({ complete }) => <LenetPreviewClassifierGate>{(classifierSession) => <DetectionSearchBlock classifierSession={classifierSession} onComplete={complete} />}</LenetPreviewClassifierGate>}</BlockPreview>;
+}
+
+function LeNetResourcesPreview() {
+  return <BlockPreview title="LeNet-5 课程结尾">{() => <LeNetResourcesBlock />}</BlockPreview>;
+}
+function FaceFixedKernelPreview() {
+  return <BlockPreview title="固定卷积核人脸分类">{({ complete }) => <FaceRuntimeBoundary><FixedKernelFaceBlock onComplete={complete} /></FaceRuntimeBoundary>}</BlockPreview>;
+}
+
+function FaceLearnableCnnPreview() {
+  return <BlockPreview title="可学习 CNN">{({ complete }) => <FaceRuntimeBoundary><FaceLearnableCnnBlock onComplete={complete} /></FaceRuntimeBoundary>}</BlockPreview>;
+}
+
+function FaceCnnUnderstandingPreview() {
+  return <BlockPreview title="CNN 理解练习">{({ complete }) => <FaceRuntimeBoundary><FaceCnnQuizBlock onComplete={complete} /></FaceRuntimeBoundary>}</BlockPreview>;
+}
+
+function FaceDisguiseGamePreview() {
+  return <BlockPreview title="雨花弄：变脸">{({ complete }) => <FaceRuntimeBoundary><FaceDisguiseGameBlock onComplete={complete} /></FaceRuntimeBoundary>}</BlockPreview>;
+}
+
+function FaceResourcesPreview() {
+  return <BlockPreview title="人脸识别课程结尾">{() => <FaceResourcesBlock />}</BlockPreview>;
+}
+
+
 export const appRoutes: AppRoute[] = [
   { path: '/', element: <HomePage /> },
   { path: '/shared/ui-kit', element: <UiKitPage /> },
@@ -324,4 +488,31 @@ export const appRoutes: AppRoute[] = [
   { path: '/dev/blocks/mlp-playground-react/mlp-2d', element: <MlpTwoDimensionalPreview /> },
   { path: '/dev/blocks/mlp-playground-react/mlp-3d', element: <MlpThreeDimensionalPreview /> },
   { path: '/dev/blocks/mlp-playground-react/resources', element: <MlpResourcesPreview /> },
+  { path: '/dev/blocks/loss-guide-2-react/sigmoid', element: <LossGuide2SigmoidPreview /> },
+  { path: '/dev/blocks/loss-guide-2-react/bce', element: <LossGuide2BcePreview /> },
+  { path: '/dev/blocks/loss-guide-2-react/softmax', element: <LossGuide2SoftmaxPreview /> },
+  { path: '/dev/blocks/loss-guide-2-react/cross-entropy', element: <LossGuide2CrossEntropyPreview /> },
+  { path: '/dev/blocks/loss-guide-2-react/output-pairing', element: <LossGuide2PairingPreview /> },
+  { path: '/dev/blocks/loss-guide-2-react/resources', element: <LossGuide2ResourcesPreview /> },
+  { path: '/dev/blocks/digital-image-module-react/observation', element: <DigitalImageObservationPreview /> },
+  { path: '/dev/blocks/digital-image-module-react/rgb', element: <DigitalImageRgbPreview /> },
+  { path: '/dev/blocks/digital-image-module-react/image-matrix', element: <DigitalImageMatrixPreview /> },
+  { path: '/dev/blocks/digital-image-module-react/resources', element: <DigitalImageResourcesPreview /> },
+  { path: '/dev/blocks/manual-feature-classification-react/count', element: <ManualFeatureCountPreview /> },
+  { path: '/dev/blocks/manual-feature-classification-react/distribution', element: <ManualFeatureDistributionPreview /> },
+  { path: '/dev/blocks/manual-feature-classification-react/mlp', element: <ManualFeatureMlpPreview /> },
+  { path: '/dev/blocks/manual-feature-classification-react/resources', element: <ManualFeatureResourcesPreview /> },
+  { path: '/dev/blocks/convolution-kernel-intro-react/gomoku', element: <ConvolutionGomokuPreview /> },
+  { path: '/dev/blocks/convolution-kernel-intro-react/operator', element: <ConvolutionOperatorPreview /> },
+  { path: '/dev/blocks/convolution-kernel-intro-react/mnist', element: <ConvolutionMnistPreview /> },
+  { path: '/dev/blocks/convolution-kernel-intro-react/resources', element: <ConvolutionResourcesPreview /> },
+  { path: '/dev/blocks/lenet5-cnn-lab-react/fixed-kernel', element: <LeNetFixedKernelPreview /> },
+  { path: '/dev/blocks/lenet5-cnn-lab-react/sequence', element: <LeNetSequencePreview /> },
+  { path: '/dev/blocks/lenet5-cnn-lab-react/detection', element: <LeNetDetectionPreview /> },
+  { path: '/dev/blocks/lenet5-cnn-lab-react/resources', element: <LeNetResourcesPreview /> },
+  { path: '/dev/blocks/face-recog-lab-react/fixed-kernel', element: <FaceFixedKernelPreview /> },
+  { path: '/dev/blocks/face-recog-lab-react/learnable-cnn', element: <FaceLearnableCnnPreview /> },
+  { path: '/dev/blocks/face-recog-lab-react/cnn-understanding', element: <FaceCnnUnderstandingPreview /> },
+  { path: '/dev/blocks/face-recog-lab-react/disguise-game', element: <FaceDisguiseGamePreview /> },
+  { path: '/dev/blocks/face-recog-lab-react/resources', element: <FaceResourcesPreview /> },
 ];

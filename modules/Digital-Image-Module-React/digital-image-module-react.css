@@ -1,0 +1,123 @@
+@import '../Digital-Image-Module/style.css';
+
+.di-react-shell .edu-lesson-flow {
+  display: grid;
+  gap: 18px;
+}
+
+.di-react-shell .edu-lesson-flow-step {
+  min-width: 0;
+}
+
+/* The original module relied on the legacy shared package for these neutral
+   panel primitives. Keep the compatibility layer scoped to this module. */
+.di-stage .edu-panel,
+.di-stage .edu-card {
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius-lg);
+  background: var(--ui-bg-card);
+}
+
+.di-stage .edu-panel {
+  padding: 16px;
+}
+
+.di-stage .edu-card {
+  padding: 18px;
+}
+
+.di-stage .edu-canvas-frame {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius-sm);
+  background: #fbfdff;
+}
+
+.di-stage .edu-panel-title {
+  margin: 0;
+  color: var(--ui-text-main);
+  font-size: 18px;
+  font-weight: 950;
+  line-height: 1.3;
+}
+
+.di-stage .edu-panel-description {
+  margin: 6px 0 0;
+  color: var(--ui-text-muted);
+  font-size: 13px;
+  font-weight: 760;
+  line-height: 1.65;
+}
+
+.di-stage .di-channel-card {
+  padding: 9px;
+}
+
+.di-observation-question.is-submit-hint
+  .dl-question-submit:not(:disabled) {
+  --attention-hint-rgb: 65, 105, 160;
+  position: relative;
+  box-shadow:
+    0 0 0 2px rgba(var(--attention-hint-rgb), 0.5),
+    0 0 14px rgba(var(--attention-hint-rgb), 0.34),
+    0 8px 22px rgba(var(--attention-hint-rgb), 0.2);
+  animation: shared-attention-hint 1.65s ease-in-out infinite;
+}
+
+.di-slider-panel .edu-range.di-range--red {
+  accent-color: var(--ui-danger);
+}
+
+.di-slider-panel .edu-range.di-range--green {
+  accent-color: var(--ui-success);
+}
+
+.di-slider-panel .edu-range.di-range--blue {
+  accent-color: var(--ui-accent);
+}
+
+.di-vector-tile .edu-value-number {
+  max-width: 100%;
+  font-size: clamp(12px, 1.25vw, 16px);
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+}
+
+.di-upload-feedback {
+  margin-top: 12px;
+}
+
+.di-image-workspace {
+  margin-top: 14px;
+}
+
+.di-demo-link.edu-btn {
+  box-shadow: none;
+}
+
+.di-react-footer {
+  margin-top: 0;
+}
+
+.di-resource-finish {
+  display: grid;
+  gap: 18px;
+}
+
+.di-resource-summary {
+  margin: 0;
+}
+
+.di-rgb-magnifier {
+  box-sizing: content-box;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .di-react-shell *,
+  .di-react-shell *::before,
+  .di-react-shell *::after {
+    scroll-behavior: auto !important;
+  }
+}

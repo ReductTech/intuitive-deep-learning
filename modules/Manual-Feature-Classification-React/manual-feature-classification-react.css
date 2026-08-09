@@ -1,0 +1,64 @@
+@import '../Manual-Feature-Classification/style.css';
+
+.hdf-react-root { min-height: 100vh; }
+.hdf-react-shell { display: grid; gap: 20px; }
+.hdf-react-shell .edu-lesson-flow { display: grid; gap: 20px; }
+.hdf-react-shell .edu-lesson-flow-step { min-width: 0; }
+.hdf-react-shell .hdf-progress { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; padding: 8px; border: 1px solid var(--edu-border, #d7e1ef); border-radius: 12px; background: #f7f9fc; }
+.hdf-react-shell .hdf-progress .edu-progress-item { display: grid; min-height: 42px; place-items: center; padding: 8px 12px; border-radius: 9px; color: var(--edu-muted, #60718a); font-size: 13px; font-weight: 850; text-align: center; }
+.hdf-react-shell .hdf-progress .edu-progress-item.is-current { background: #294d7e; color: #fff; box-shadow: 0 6px 16px rgba(41,77,126,.16); }
+.hdf-react-shell .edu-stage { margin: 0; }
+.hdf-react-shell .hdf-vector-question { margin: 0; }
+.hdf-react-shell .hdf-vector-question .dl-question-options { grid-template-columns: 1fr; }
+.hdf-react-shell .hdf-vector-question .dl-question-option { text-align: left; }
+.hdf-react-shell .hdf-vector-question .dl-option-body { overflow-wrap: anywhere; }
+.hdf-react-shell .hdf-vector-question .dl-question-option.is-previewing { border-color: var(--ui-accent-alt, #f07842); background: rgba(240,120,66,.08); box-shadow: 0 0 0 3px rgba(240,120,66,.13); }
+.hdf-react-shell .hdf-digit-frame canvas { touch-action: none; }
+
+.hdf-heatmap-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 18px 16px; width: 100%; min-height: 460px; padding: 26px 28px 24px; border: 1px solid var(--edu-border, #d7e1ef); border-radius: 12px; background: #fbfdff; aspect-ratio: 1160 / 660; }
+.hdf-heatmap-card { position: relative; display: grid; min-width: 0; place-items: center; padding: 0; border: 1px solid rgba(32,50,77,.14); border-radius: 8px; background: #fff; color: var(--edu-ink, #17365d); font: inherit; transition: border-color .16s ease, box-shadow .16s ease, transform .16s ease; }
+.hdf-heatmap-card:not(:disabled) { cursor: pointer; }
+.hdf-heatmap-card:disabled { opacity: 1; }
+.hdf-heatmap-card:hover { border: 3px solid rgba(47,95,152,.76); background: #f8fbff; box-shadow: 0 6px 18px rgba(47,95,152,.18); }
+.hdf-heatmap-card.is-correct { border: 3px solid #1f8a68; }
+.hdf-heatmap-card.is-wrong { border: 3px solid #bf4058; }
+.hdf-heatmap-card header { position: absolute; top: 18px; left: 18px; display: flex; align-items: baseline; gap: 10px; }
+.hdf-heatmap-card header strong { font-size: 34px; font-weight: 950; }
+.hdf-heatmap-card header span { color: rgba(32,50,77,.56); font-size: 12px; font-weight: 850; }
+.hdf-heatmap-cells { display: grid; grid-template-columns: repeat(3, 1fr); width: calc(100% - 34px); aspect-ratio: 1; }
+.hdf-heatmap-card.is-labeled .hdf-heatmap-cells { align-self: end; width: calc(100% - 40px); margin-bottom: 18px; }
+.hdf-heatmap-cells span { display: grid; place-items: center; box-sizing: border-box; border: 1px solid rgba(32,50,77,.32); font-size: 11px; font-weight: 850; }
+.hdf-distribution-actions > .edu-callout { flex: 1; margin: 0; }
+.hdf-game-prompt strong { color: #bf4058; font-size: 28px; }
+
+.hdf-react-shell .hdf-mlp-input-panel canvas,
+.hdf-react-shell .hdf-mlp-network-panel canvas { width: 100%; height: 100%; }
+.hdf-react-shell .hdf-mlp-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 16px; padding: 14px; border: 1px solid var(--edu-border, #d7e1ef); border-radius: 12px; background: #f7f9fc; }
+.hdf-react-shell .hdf-mlp-toolbar .edu-metrics { display: grid; flex: 1; grid-template-columns: repeat(3, minmax(120px, 1fr)); gap: 10px; }
+.hdf-react-shell .hdf-mlp-toolbar .edu-metric { display: grid; gap: 4px; min-width: 0; padding: 10px 12px; border: 1px solid var(--edu-border, #d7e1ef); border-radius: 9px; background: #fff; }
+.hdf-react-shell .hdf-mlp-toolbar .edu-metric span { color: var(--edu-muted, #60718a); font-size: 12px; font-weight: 750; }
+.hdf-react-shell .hdf-mlp-toolbar .edu-metric strong { color: var(--edu-ink, #17365d); font-size: 16px; }
+.hdf-react-shell .hdf-mlp-toolbar .edu-metric.is-success strong { color: #1f8a68; }
+.hdf-react-shell .hdf-mlp-toolbar .edu-toolbar-actions { display: flex; flex: 0 0 auto; gap: 10px; }
+.hdf-react-shell .hdf-mlp-input-panel { display: grid; }
+.hdf-react-shell .hdf-clear-drawing { position: absolute; right: 12px; bottom: 12px; z-index: 2; }
+.hdf-react-shell .hdf-prob-row.is-top > div > i { background: #bf4058; }
+.hdf-resource-finish { display: grid; gap: 16px; }
+.hdf-resource-finish > .edu-callout { margin: 0; }
+.hdf-react-footer { margin: 0; }
+
+@media (max-width: 1120px) {
+  .hdf-heatmap-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: none; aspect-ratio: auto; }
+  .hdf-react-shell .hdf-mlp-flow { grid-template-columns: 1fr 1fr; }
+  .hdf-react-shell .hdf-mlp-logit-panel { grid-column: 1 / -1; }
+}
+@media (max-width: 760px) {
+  .hdf-react-shell .hdf-progress { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hdf-react-shell .hdf-count-layout, .hdf-react-shell .hdf-mlp-flow { grid-template-columns: 1fr; }
+  .hdf-heatmap-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 14px; }
+  .hdf-react-shell .hdf-mlp-logit-panel { grid-column: auto; }
+  .hdf-react-shell .hdf-input-row { grid-template-columns: 1fr; }
+  .hdf-react-shell .hdf-mlp-toolbar { align-items: stretch; flex-direction: column; }
+  .hdf-react-shell .hdf-mlp-toolbar .edu-metrics { grid-template-columns: 1fr; }
+  .hdf-react-shell .hdf-mlp-toolbar .edu-toolbar-actions .edu-btn { width: 100%; }
+}
