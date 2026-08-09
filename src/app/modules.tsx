@@ -9,6 +9,11 @@ import { MiscPage } from '../../modules/MISC_Module/MiscPage';
 import { MLPPlaygroundPage } from '../../modules/MLP_playground-React/MLPPlaygroundPage';
 import { FittingPage } from '../../modules/Fitting_Module/FittingPage';
 import { AdaptiveLearningRatePage } from '../../modules/Adaptive-Learning-Rate-Module/AdaptiveLearningRatePage';
+import { ImageAugmentationFinetuningPage } from '../../modules/Image-Augmentation-Finetuning-Module/ImageAugmentationFinetuningPage';
+import { ObjectDetectionFoundationsPage } from '../../modules/Object-Detection-Foundations-Module/ObjectDetectionFoundationsPage';
+import { DetectionModelsPage } from '../../modules/Detection-Models-Module/DetectionModelsPage';
+import { PixelVisionPage } from '../../modules/Pixel-Vision-Module/PixelVisionPage';
+import { VisionStyleCompetitionsPage } from '../../modules/Vision-Style-Competitions-Module/VisionStyleCompetitionsPage';
 
 /** 已完成 React 迁移、可作为独立教学页面进入的模块。 */
 export interface MigratedModule {
@@ -27,6 +32,61 @@ export interface MigratedModule {
 }
 
 export const migratedModules: MigratedModule[] = [
+  {
+    id: 'image-augmentation-finetuning-module',
+    title: '小数据也能训练好图像分类',
+    description: '理解图像增广如何保持标签，以及如何复用预训练模型进行微调。',
+    path: '/modules/image-augmentation-finetuning',
+    badge: '计算机视觉模块',
+    element: <ImageAugmentationFinetuningPage />,
+    moduleType: 'teaching',
+    difficulty: 'intermediate',
+    audience: 'undergraduate',
+  },
+  {
+    id: 'object-detection-foundations-module',
+    title: '模型怎样找到图像里的多个目标',
+    description: '理解边界框、IoU、锚框匹配、NMS 去重与多尺度检测。',
+    path: '/modules/object-detection-foundations',
+    badge: '计算机视觉模块',
+    element: <ObjectDetectionFoundationsPage />,
+    moduleType: 'teaching',
+    difficulty: 'intermediate',
+    audience: 'undergraduate',
+  },
+  {
+    id: 'detection-models-module',
+    title: '从检测数据到 SSD 与 R-CNN',
+    description: '理解检测标签、SSD 多尺度预测，以及 R-CNN 系列从区域提议到实例掩码的演进。',
+    path: '/modules/detection-models',
+    badge: '计算机视觉模块',
+    element: <DetectionModelsPage />,
+    moduleType: 'teaching',
+    difficulty: 'intermediate',
+    audience: 'undergraduate',
+  },
+  {
+    id: 'pixel-vision-module',
+    title: '让模型理解图像中的每一个像素',
+    description: '理解语义分割标签、同步裁剪、转置卷积与全卷积网络的像素级预测链路。',
+    path: '/modules/pixel-vision',
+    badge: '计算机视觉模块',
+    element: <PixelVisionPage />,
+    moduleType: 'teaching',
+    difficulty: 'intermediate',
+    audience: 'undergraduate',
+  },
+  {
+    id: 'vision-style-competitions-module',
+    title: '让图像获得新风格，并把模型送上竞赛排行榜',
+    description: '理解神经风格迁移的三类损失与 Gram 表示，走完 CIFAR-10 和 Dogs 的训练、验证、重训与提交流程。',
+    path: '/modules/vision-style-competitions',
+    badge: '计算机视觉模块',
+    element: <VisionStyleCompetitionsPage />,
+    moduleType: 'teaching',
+    difficulty: 'intermediate',
+    audience: 'undergraduate',
+  },
   {
     id: 'adaptive-learning-rate-module',
     title: '让模型学得更快',

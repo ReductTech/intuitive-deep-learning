@@ -1,0 +1,764 @@
+.vision-generalization-module {
+  --vgen-ink: var(--ui-text-main);
+  --vgen-blue: var(--ui-accent);
+  --vgen-orange: #b45327;
+}
+
+.vision-generalization-module .edu-lesson-flow {
+  display: grid;
+  gap: 22px;
+}
+
+.vision-generalization-module .vgen-task-switch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.vision-generalization-module .vgen-augmentation-lab {
+  display: grid;
+  grid-template-columns: minmax(230px, .72fr) minmax(420px, 1.28fr);
+  align-items: stretch;
+  gap: 20px;
+  border-radius: var(--ui-radius-md);
+  background: var(--ui-bg-muted);
+  padding: clamp(16px, 2.6vw, 24px);
+}
+
+.vision-generalization-module .vgen-lab-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 12px;
+  max-width: 62ch;
+}
+
+.vision-generalization-module .vgen-lab-copy > span {
+  color: var(--vgen-orange);
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.vision-generalization-module .vgen-lab-copy h3,
+.vision-generalization-module .vgen-lab-copy p,
+.vision-generalization-module .vgen-sign-comparison figure {
+  margin: 0;
+}
+
+.vision-generalization-module .vgen-lab-copy h3 {
+  color: var(--vgen-blue);
+  font-size: 21px;
+  line-height: 1.35;
+  text-wrap: balance;
+}
+
+.vision-generalization-module .vgen-lab-copy p {
+  color: var(--ui-text-muted);
+  font-size: 14px;
+  line-height: 1.7;
+  text-wrap: pretty;
+}
+
+.vision-generalization-module .vgen-sign-comparison {
+  display: grid;
+  grid-template-columns: minmax(140px, 1fr) auto minmax(140px, 1fr);
+  align-items: center;
+  gap: 12px;
+}
+
+.vision-generalization-module .vgen-sign-comparison figure {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+
+.vision-generalization-module .vgen-sign-comparison figure.is-waiting {
+  color: var(--ui-text-muted);
+}
+
+.vision-generalization-module .vgen-road-scene {
+  position: relative;
+  display: grid;
+  min-height: 190px;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius-sm);
+  background:
+    linear-gradient(180deg, #dcecff 0 58%, #cad4df 58% 72%, #536273 72% 100%);
+}
+
+.vision-generalization-module .vgen-road-scene::after {
+  position: absolute;
+  right: 8%;
+  bottom: 12%;
+  left: 8%;
+  height: 3px;
+  background: #f4e9a3;
+  content: '';
+}
+
+.vision-generalization-module .vgen-road-sign {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: 116px;
+  height: 78px;
+  place-items: center;
+  border: 7px solid #f7f9fc;
+  border-radius: var(--ui-radius-sm);
+  background: #285f9b;
+  box-shadow: 0 4px 0 #34465a;
+  color: #fff;
+  font-size: 56px;
+  font-weight: 900;
+  line-height: 1;
+  transition: transform 180ms cubic-bezier(.22, 1, .36, 1);
+}
+
+.vision-generalization-module .vgen-road-sign::after {
+  position: absolute;
+  top: 100%;
+  width: 8px;
+  height: 54px;
+  background: #66788a;
+  content: '';
+}
+
+.vision-generalization-module .vgen-road-sign.is-flipped {
+  transform: scaleX(-1);
+}
+
+.vision-generalization-module .vgen-image-placeholder {
+  position: relative;
+  z-index: 1;
+  color: var(--ui-text-muted);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.vision-generalization-module .vgen-transform-mark {
+  color: var(--vgen-orange);
+  font-size: 26px;
+  font-weight: 900;
+}
+
+.vision-generalization-module .vgen-sign-comparison figcaption {
+  color: var(--ui-text-muted);
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.vision-generalization-module .vgen-sign-comparison figcaption strong {
+  color: var(--vgen-ink);
+}
+
+.vision-generalization-module .vgen-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.vision-generalization-module .vgen-strength-layout {
+  display: grid;
+  grid-template-columns: minmax(320px, 1.08fr) minmax(300px, .92fr);
+  gap: 20px;
+}
+
+.vision-generalization-module .vgen-strength-controls,
+.vision-generalization-module .vgen-metric-panel {
+  display: grid;
+  align-content: start;
+  gap: 16px;
+  min-width: 0;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius-md);
+  padding: clamp(16px, 2.4vw, 22px);
+}
+
+.vision-generalization-module .vgen-strength-controls h3,
+.vision-generalization-module .vgen-metric-panel h3 {
+  margin: 0;
+  color: var(--vgen-blue);
+  font-size: 18px;
+  line-height: 1.4;
+  text-wrap: balance;
+}
+
+.vision-generalization-module .vgen-sample-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.vision-generalization-module .vgen-mini-scene {
+  position: relative;
+  display: grid;
+  min-height: 96px;
+  place-items: center;
+  overflow: hidden;
+  border-radius: var(--ui-radius-sm);
+  background: linear-gradient(180deg, #dcecff 0 64%, #59697a 64% 100%);
+}
+
+.vision-generalization-module .vgen-mini-scene.is-clipped::after {
+  position: absolute;
+  inset: 0 0 0 58%;
+  background: var(--ui-bg-muted);
+  content: '';
+  opacity: .86;
+}
+
+.vision-generalization-module .vgen-mini-sign {
+  display: grid;
+  width: 56px;
+  height: 38px;
+  place-items: center;
+  border: 4px solid #f7f9fc;
+  border-radius: 5px;
+  background: #285f9b;
+  color: #fff;
+  filter: brightness(var(--vgen-sample-light)) blur(var(--vgen-sample-blur));
+  font-size: 27px;
+  font-weight: 900;
+  line-height: 1;
+  transform: translateX(var(--vgen-sample-shift)) rotate(var(--vgen-sample-rotate)) scale(var(--vgen-sample-scale));
+  transition: filter 180ms ease, transform 180ms ease;
+}
+
+.vision-generalization-module .vgen-metric-tiles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.vision-generalization-module .vgen-metric-tiles .edu-value-tile {
+  min-width: 0;
+  min-height: 84px;
+  padding: 10px 6px;
+}
+
+.vision-generalization-module .vgen-metric-tiles .edu-value-number {
+  font-size: 22px;
+}
+
+.vision-generalization-module .vgen-accuracy-chart {
+  width: 100%;
+  min-height: 210px;
+  border-radius: var(--ui-radius-sm);
+  background: var(--ui-bg-muted);
+}
+
+.vision-generalization-module .vgen-accuracy-chart > line:not(.vgen-chart-marker) {
+  stroke: var(--ui-border-strong);
+  stroke-width: 1;
+}
+
+.vision-generalization-module .vgen-accuracy-chart polyline {
+  fill: none;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.vision-generalization-module .vgen-chart-train {
+  fill: var(--vgen-blue);
+  stroke: var(--vgen-blue);
+}
+
+.vision-generalization-module .vgen-chart-validation {
+  fill: var(--ui-success);
+  stroke: var(--ui-success);
+}
+
+.vision-generalization-module .vgen-chart-target {
+  fill: rgba(34, 141, 92, .08);
+}
+
+.vision-generalization-module .vgen-chart-marker {
+  stroke: var(--vgen-orange);
+  stroke-width: 2;
+  stroke-dasharray: 4 4;
+}
+
+.vision-generalization-module .vgen-chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  color: var(--ui-text-muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.vision-generalization-module .vgen-chart-legend span::before {
+  display: inline-block;
+  width: 18px;
+  height: 3px;
+  margin-right: 6px;
+  background: currentColor;
+  content: '';
+  vertical-align: middle;
+}
+
+.vision-generalization-module .vgen-chart-legend .is-train { color: var(--vgen-blue); }
+.vision-generalization-module .vgen-chart-legend .is-validation { color: var(--ui-success); }
+.vision-generalization-module .vgen-chart-legend .is-target { color: #63705b; }
+
+.vision-generalization-module .vgen-finetuning-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(300px, .85fr);
+  gap: 20px;
+}
+
+.vision-generalization-module .vgen-network-transfer,
+.vision-generalization-module .vgen-finetuning-console {
+  display: grid;
+  align-content: start;
+  gap: 18px;
+  min-width: 0;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius-md);
+  padding: clamp(16px, 2.4vw, 22px);
+}
+
+.vision-generalization-module .vgen-network-transfer header > span,
+.vision-generalization-module .vgen-finetuning-console header > span {
+  color: var(--vgen-orange);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.vision-generalization-module .vgen-network-transfer h3,
+.vision-generalization-module .vgen-finetuning-console h3,
+.vision-generalization-module .vgen-finetuning-console p {
+  margin: 6px 0 0;
+}
+
+.vision-generalization-module .vgen-network-transfer h3,
+.vision-generalization-module .vgen-finetuning-console h3 {
+  color: var(--vgen-blue);
+  font-size: 19px;
+  line-height: 1.4;
+  text-wrap: balance;
+}
+
+.vision-generalization-module .vgen-finetuning-console p {
+  color: var(--ui-text-muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.vision-generalization-module .vgen-network-stack {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  min-width: 0;
+}
+
+.vision-generalization-module .vgen-feature-layer,
+.vision-generalization-module .vgen-head-swap {
+  display: flex;
+  min-width: 0;
+  flex: 1 1 0;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  border-radius: var(--ui-radius-sm);
+  background: var(--ui-bg-soft);
+  padding: 12px 9px;
+  text-align: center;
+}
+
+.vision-generalization-module .vgen-feature-layer span,
+.vision-generalization-module .vgen-feature-layer small {
+  color: var(--ui-text-muted);
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.vision-generalization-module .vgen-feature-layer strong {
+  color: var(--vgen-blue);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.vision-generalization-module .vgen-layer-arrow {
+  align-self: center;
+  color: var(--ui-border-strong);
+  font-weight: 900;
+}
+
+.vision-generalization-module .vgen-head-swap {
+  gap: 8px;
+  border: 1px solid rgba(240, 126, 71, .42);
+  background: rgba(240, 126, 71, .06);
+}
+
+.vision-generalization-module .vgen-head-swap span {
+  border-radius: 5px;
+  padding: 7px 5px;
+  font-size: 10px;
+  font-weight: 900;
+  line-height: 1.35;
+}
+
+.vision-generalization-module .vgen-head-swap .is-old {
+  background: #e7ebf1;
+  color: var(--ui-text-muted);
+  text-decoration: line-through;
+}
+
+.vision-generalization-module .vgen-head-swap .is-new {
+  background: var(--vgen-orange);
+  color: #fff;
+}
+
+.vision-generalization-module .vgen-head-swap strong {
+  color: var(--vgen-orange);
+  font-size: 10px;
+}
+
+.vision-generalization-module .vgen-phase-row {
+  display: grid;
+  grid-template-columns: 74px minmax(0, 1fr);
+  align-items: start;
+  gap: 12px;
+}
+
+.vision-generalization-module .vgen-phase-row > b {
+  margin-top: 25px;
+  border-radius: var(--ui-radius-pill);
+  background: var(--ui-bg-soft);
+  color: var(--vgen-blue);
+  padding: 6px 10px;
+  font-size: 12px;
+  text-align: center;
+}
+
+.vision-generalization-module .vgen-scenario-list {
+  border-block: 1px solid var(--ui-border);
+}
+
+.vision-generalization-module .vgen-scenario-list article {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr) minmax(240px, 320px);
+  align-items: start;
+  gap: 16px;
+  padding: 20px 4px;
+}
+
+.vision-generalization-module .vgen-scenario-list article + article {
+  border-top: 1px solid var(--ui-border);
+}
+
+.vision-generalization-module .vgen-scenario-list article.is-wrong {
+  background: rgba(196, 63, 82, .035);
+}
+
+.vision-generalization-module .vgen-scenario-list article.is-correct {
+  background: rgba(34, 141, 92, .035);
+}
+
+.vision-generalization-module .vgen-scenario-index {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--vgen-blue);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.vision-generalization-module .vgen-scenario-copy {
+  min-width: 0;
+}
+
+.vision-generalization-module .vgen-scenario-copy h3,
+.vision-generalization-module .vgen-scenario-copy p {
+  margin: 0;
+}
+
+.vision-generalization-module .vgen-scenario-copy h3 {
+  color: var(--vgen-blue);
+  font-size: 18px;
+  line-height: 1.4;
+}
+
+.vision-generalization-module .vgen-scenario-copy > p {
+  max-width: 70ch;
+  margin-top: 7px;
+  color: var(--ui-text-muted);
+  font-size: 13px;
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+.vision-generalization-module .vgen-scenario-signals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.vision-generalization-module .vgen-scenario-signals span {
+  border-radius: var(--ui-radius-pill);
+  background: var(--ui-bg-soft);
+  color: var(--vgen-blue);
+  padding: 4px 9px;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.vision-generalization-module .vgen-scenario-copy .vgen-scenario-rationale {
+  margin-top: 12px;
+  color: #356b58;
+}
+
+.vision-generalization-module .vgen-strategy-submit {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.vision-generalization-module .vgen-strategy-submit > span {
+  color: var(--ui-text-muted);
+  font-size: 12px;
+}
+
+.vision-generalization-module .vgen-pipeline-grid,
+.vision-generalization-module .vgen-code-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.vision-generalization-module .vgen-pipeline-card,
+.vision-generalization-module .vgen-code-card,
+.vision-generalization-module .vgen-coverage-note {
+  min-width: 0;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius-md);
+  background: var(--ui-bg-muted);
+}
+
+.vision-generalization-module .vgen-pipeline-card {
+  display: grid;
+  align-content: start;
+  gap: 16px;
+  padding: clamp(16px, 2.4vw, 22px);
+}
+
+.vision-generalization-module .vgen-pipeline-card header > span,
+.vision-generalization-module .vgen-code-card header > span,
+.vision-generalization-module .vgen-coverage-note span {
+  color: var(--vgen-orange);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: .03em;
+}
+
+.vision-generalization-module .vgen-pipeline-card header p {
+  margin: 7px 0 0;
+  color: var(--ui-text-muted);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.vision-generalization-module .vgen-pipeline-card ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.vision-generalization-module .vgen-pipeline-card li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.vision-generalization-module .vgen-pipeline-card li:not(:last-child)::after {
+  color: var(--ui-text-muted);
+  content: '→';
+  font-weight: 900;
+}
+
+.vision-generalization-module .vgen-pipeline-card code {
+  border-radius: var(--ui-radius-pill);
+  background: var(--ui-bg-soft);
+  color: var(--vgen-blue);
+  padding: 6px 9px;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.vision-generalization-module .vgen-code-card {
+  overflow: hidden;
+  background: var(--ui-text-main);
+  color: var(--ui-bg-soft);
+}
+
+.vision-generalization-module .vgen-code-card header {
+  display: grid;
+  gap: 5px;
+  border-bottom: 1px solid rgba(255, 255, 255, .12);
+  padding: 14px 16px;
+}
+
+.vision-generalization-module .vgen-code-card header > span {
+  color: var(--ui-accent-alt);
+}
+
+.vision-generalization-module .vgen-code-card header strong {
+  color: var(--ui-bg-card);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.vision-generalization-module .vgen-code-card pre {
+  margin: 0;
+  overflow-x: auto;
+  padding: 16px;
+  font-size: 12px;
+  line-height: 1.65;
+  tab-size: 4;
+}
+
+.vision-generalization-module .vgen-code-card code {
+  font-family: var(--ui-font-mono);
+}
+
+.vision-generalization-module .vgen-coverage-note {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  padding: clamp(16px, 2.4vw, 22px);
+}
+
+.vision-generalization-module .vgen-coverage-note > div {
+  display: grid;
+  gap: 7px;
+}
+
+.vision-generalization-module .vgen-coverage-note strong {
+  color: var(--vgen-blue);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.vision-generalization-module .vgen-coverage-note p {
+  grid-column: 1 / -1;
+  margin: 0;
+  border-top: 1px solid var(--ui-border);
+  padding-top: 16px;
+  color: var(--ui-text-muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.vision-generalization-module .vgen-coverage-note a {
+  color: var(--vgen-blue);
+  font-weight: 800;
+  text-underline-offset: 3px;
+}
+
+.vision-generalization-module .vgen-coverage-note a:focus-visible {
+  outline: 2px solid rgba(39, 68, 110, .32);
+  outline-offset: 3px;
+}
+
+@media (max-width: 820px) {
+  .vision-generalization-module .vgen-augmentation-lab {
+    grid-template-columns: 1fr;
+  }
+
+  .vision-generalization-module .vgen-strength-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .vision-generalization-module .vgen-finetuning-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .vision-generalization-module .vgen-pipeline-grid,
+  .vision-generalization-module .vgen-code-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .vision-generalization-module .vgen-sign-comparison {
+    grid-template-columns: 1fr;
+  }
+
+  .vision-generalization-module .vgen-transform-mark {
+    transform: rotate(90deg);
+    text-align: center;
+  }
+
+  .vision-generalization-module .vgen-road-scene {
+    min-height: 160px;
+  }
+
+  .vision-generalization-module .vgen-sample-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .vision-generalization-module .vgen-metric-tiles {
+    grid-template-columns: 1fr;
+  }
+
+  .vision-generalization-module .vgen-network-stack {
+    flex-direction: column;
+  }
+
+  .vision-generalization-module .vgen-layer-arrow {
+    transform: rotate(90deg);
+  }
+
+  .vision-generalization-module .vgen-phase-row {
+    grid-template-columns: 1fr;
+  }
+
+  .vision-generalization-module .vgen-phase-row > b {
+    width: fit-content;
+    margin-top: 0;
+  }
+
+  .vision-generalization-module .vgen-scenario-list article {
+    grid-template-columns: 34px minmax(0, 1fr);
+  }
+
+  .vision-generalization-module .vgen-scenario-list article > .edu-control {
+    grid-column: 2;
+  }
+
+  .vision-generalization-module .vgen-coverage-note {
+    grid-template-columns: 1fr;
+  }
+
+  .vision-generalization-module .vgen-coverage-note p {
+    grid-column: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vision-generalization-module .vgen-road-sign {
+    transition: none;
+  }
+
+  .vision-generalization-module .vgen-mini-sign {
+    transition: none;
+  }
+}

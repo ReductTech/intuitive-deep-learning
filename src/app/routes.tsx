@@ -42,12 +42,72 @@ import { MomentumBlock } from '../../modules/Adaptive-Learning-Rate-Module/block
 import { AdaGradBlock } from '../../modules/Adaptive-Learning-Rate-Module/blocks/AdaGradBlock';
 import { AdamBlock } from '../../modules/Adaptive-Learning-Rate-Module/blocks/AdamBlock';
 import { AdaptiveLearningRateLessonFooter } from '../../modules/Adaptive-Learning-Rate-Module/blocks/AdaptiveLearningRateLessonFooter';
+import { LabelPreservationBlock } from '../../modules/Image-Augmentation-Finetuning-Module/blocks/LabelPreservationBlock';
+import { AugmentationStrengthBlock } from '../../modules/Image-Augmentation-Finetuning-Module/blocks/AugmentationStrengthBlock';
+import { FineTuningMechanismBlock } from '../../modules/Image-Augmentation-Finetuning-Module/blocks/FineTuningMechanismBlock';
+import { TrainingStrategyBlock } from '../../modules/Image-Augmentation-Finetuning-Module/blocks/TrainingStrategyBlock';
+import { ImplementationBridgeBlock } from '../../modules/Image-Augmentation-Finetuning-Module/blocks/ImplementationBridgeBlock';
+import { ImageGeneralizationLessonFooter } from '../../modules/Image-Augmentation-Finetuning-Module/blocks/ImageGeneralizationLessonFooter';
+import { BoundingBoxRepresentationBlock } from '../../modules/Object-Detection-Foundations-Module/blocks/BoundingBoxRepresentationBlock';
+import { IouMatchingBlock } from '../../modules/Object-Detection-Foundations-Module/blocks/IouMatchingBlock';
+import { NonMaximumSuppressionBlock } from '../../modules/Object-Detection-Foundations-Module/blocks/NonMaximumSuppressionBlock';
+import { MultiScaleDetectionBlock } from '../../modules/Object-Detection-Foundations-Module/blocks/MultiScaleDetectionBlock';
+import { DetectionPipelineBridgeBlock } from '../../modules/Object-Detection-Foundations-Module/blocks/DetectionPipelineBridgeBlock';
+import { ObjectDetectionFoundationsLessonFooter } from '../../modules/Object-Detection-Foundations-Module/blocks/ObjectDetectionFoundationsLessonFooter';
+import { DetectionDatasetBlock } from '../../modules/Detection-Models-Module/blocks/DetectionDatasetBlock';
+import { SsdPredictionBlock } from '../../modules/Detection-Models-Module/blocks/SsdPredictionBlock';
+import { RcnnEvolutionBlock } from '../../modules/Detection-Models-Module/blocks/RcnnEvolutionBlock';
+import { DetectionModelChoiceBlock } from '../../modules/Detection-Models-Module/blocks/DetectionModelChoiceBlock';
+import { DetectionTrainingBridgeBlock } from '../../modules/Detection-Models-Module/blocks/DetectionTrainingBridgeBlock';
+import { DetectionModelsLessonFooter } from '../../modules/Detection-Models-Module/blocks/DetectionModelsLessonFooter';
+import { PixelTaskBlock } from '../../modules/Pixel-Vision-Module/blocks/PixelTaskBlock';
+import { SegmentationDataBlock } from '../../modules/Pixel-Vision-Module/blocks/SegmentationDataBlock';
+import { TransposedConvolutionBlock } from '../../modules/Pixel-Vision-Module/blocks/TransposedConvolutionBlock';
+import { FcnAssemblyBlock } from '../../modules/Pixel-Vision-Module/blocks/FcnAssemblyBlock';
+import { PixelVisionBridgeBlock } from '../../modules/Pixel-Vision-Module/blocks/PixelVisionBridgeBlock';
+import { PixelVisionLessonFooter } from '../../modules/Pixel-Vision-Module/blocks/PixelVisionLessonFooter';
+import { StyleLossMixerBlock } from '../../modules/Vision-Style-Competitions-Module/blocks/StyleLossMixerBlock';
+import { StyleRepresentationBlock } from '../../modules/Vision-Style-Competitions-Module/blocks/StyleRepresentationBlock';
+import { CompetitionPipelineBlock } from '../../modules/Vision-Style-Competitions-Module/blocks/CompetitionPipelineBlock';
+import { CompetitionStrategyBlock } from '../../modules/Vision-Style-Competitions-Module/blocks/CompetitionStrategyBlock';
+import { VisionPracticeBridgeBlock } from '../../modules/Vision-Style-Competitions-Module/blocks/VisionPracticeBridgeBlock';
+import { VisionStyleLessonFooter } from '../../modules/Vision-Style-Competitions-Module/blocks/VisionStyleLessonFooter';
 import { BlockPreview } from './BlockPreview';
 import { UiKitPage } from '../../modules/shared/react/routing/UiKitPage';
 import { AppLink, type AppRoute } from './Router';
 import { migratedModules } from './modules';
 
 const blockPreviews = [
+  { id: 'vision-style-loss', group: '风格迁移与竞赛', title: '风格损失配方', description: '调节内容、风格与全变分损失，寻找有效平衡。', path: '/dev/blocks/vision-style-competitions/loss' },
+  { id: 'vision-style-representation', group: '风格迁移与竞赛', title: '风格特征表示', description: '比较内容特征、多层风格特征与 Gram 矩阵。', path: '/dev/blocks/vision-style-competitions/representation' },
+  { id: 'vision-competition-pipeline', group: '风格迁移与竞赛', title: '竞赛数据流程', description: '为 train、valid、train_valid 与 test 分配职责。', path: '/dev/blocks/vision-style-competitions/pipeline' },
+  { id: 'vision-competition-strategy', group: '风格迁移与竞赛', title: '竞赛策略测验', description: '为 CIFAR-10、Dogs 与最终重训选择策略。', path: '/dev/blocks/vision-style-competitions/strategy' },
+  { id: 'vision-practice-bridge', group: '风格迁移与竞赛', title: '优化与提交代码桥接', description: '对照图像优化与竞赛训练提交伪代码。', path: '/dev/blocks/vision-style-competitions/bridge' },
+  { id: 'vision-style-ending', group: '风格迁移与竞赛', title: '计算机视觉章节结尾', description: '回顾风格迁移和两项 Kaggle 实战。', path: '/dev/blocks/vision-style-competitions/ending' },
+  { id: 'pixel-vision-task', group: '像素级视觉', title: '视觉任务输出粒度', description: '比较分类、检测、语义分割与实例分割。', path: '/dev/blocks/pixel-vision/task' },
+  { id: 'pixel-vision-data', group: '像素级视觉', title: '分割数据同步变换', description: '同步裁剪输入与标签，并保持离散类别编号。', path: '/dev/blocks/pixel-vision/data' },
+  { id: 'pixel-vision-transposed', group: '像素级视觉', title: '转置卷积上采样', description: '切换步幅，观察输入值如何展开并叠加到输出画布。', path: '/dev/blocks/pixel-vision/transposed' },
+  { id: 'pixel-vision-fcn', group: '像素级视觉', title: 'FCN 结构组装', description: '匹配骨干、1×1 卷积与转置卷积的职责。', path: '/dev/blocks/pixel-vision/fcn' },
+  { id: 'pixel-vision-bridge', group: '像素级视觉', title: '像素训练链路', description: '串联成对增强、逐像素得分与交叉熵。', path: '/dev/blocks/pixel-vision/bridge' },
+  { id: 'pixel-vision-ending', group: '像素级视觉', title: '课程结尾', description: '回顾语义分割、转置卷积与 FCN。', path: '/dev/blocks/pixel-vision/ending' },
+  { id: 'detection-models-dataset', group: '检测数据与模型', title: '检测数据标注', description: '把类别和归一化边界框整理成统一的批量标签。', path: '/dev/blocks/detection-models/dataset' },
+  { id: 'detection-models-ssd', group: '检测数据与模型', title: 'SSD 多尺度预测头', description: '配置锚框数与类别数，理解分类和边框预测通道。', path: '/dev/blocks/detection-models/ssd' },
+  { id: 'detection-models-rcnn', group: '检测数据与模型', title: 'R-CNN 系列演进', description: '比较四代区域检测器如何共享特征、学习提议并增加掩码。', path: '/dev/blocks/detection-models/rcnn' },
+  { id: 'detection-models-choice', group: '检测数据与模型', title: '检测模型选型', description: '根据速度、区域提议和像素掩码需求选择检测器。', path: '/dev/blocks/detection-models/choice' },
+  { id: 'detection-models-training', group: '检测数据与模型', title: '训练与推理链路', description: '串联检测目标、掩码损失、解码与 NMS。', path: '/dev/blocks/detection-models/training' },
+  { id: 'detection-models-ending', group: '检测数据与模型', title: '课程结尾', description: '回顾检测标签、SSD 与 R-CNN 系列。', path: '/dev/blocks/detection-models/ending' },
+  { id: 'detection-bounding-box', group: '目标检测基础', title: '边界框与坐标表示', description: '选择紧贴目标的边界框，并在两角表示与中心宽高表示之间转换。', path: '/dev/blocks/object-detection-foundations/bounding-box' },
+  { id: 'detection-iou', group: '目标检测基础', title: 'IoU 匹配', description: '移动锚框，观察交集、并集与 IoU 如何共同变化。', path: '/dev/blocks/object-detection-foundations/iou' },
+  { id: 'detection-nms', group: '目标检测基础', title: 'NMS 去重', description: '调节 IoU 阈值，保留不同目标并抑制重复预测框。', path: '/dev/blocks/object-detection-foundations/nms' },
+  { id: 'detection-multiscale', group: '目标检测基础', title: '多尺度检测', description: '根据目标大小匹配细、中、粗三种特征图检测层。', path: '/dev/blocks/object-detection-foundations/multiscale' },
+  { id: 'detection-pipeline', group: '目标检测基础', title: '检测训练与预测链路', description: '串联锚框生成、类别与偏移监督、预测修正和 NMS。', path: '/dev/blocks/object-detection-foundations/pipeline' },
+  { id: 'detection-ending', group: '目标检测基础', title: '课程结尾', description: '回顾候选框产生、匹配、去重与多尺度选择。', path: '/dev/blocks/object-detection-foundations/ending' },
+  { id: 'vision-label-preservation', group: '小数据图像分类', title: '标签保持与图像增广', description: '对同一张图执行水平翻转，判断不同任务中的标签是否仍成立。', path: '/dev/blocks/image-augmentation-finetuning/label-preservation' },
+  { id: 'vision-augmentation-strength', group: '小数据图像分类', title: '增广强度与泛化', description: '调节增广强度，寻找验证表现与标签安全之间的平衡。', path: '/dev/blocks/image-augmentation-finetuning/augmentation-strength' },
+  { id: 'vision-finetuning-mechanism', group: '小数据图像分类', title: '微调的两阶段机制', description: '配置冻结、解冻与分层学习率，保护预训练特征。', path: '/dev/blocks/image-augmentation-finetuning/finetuning-mechanism' },
+  { id: 'vision-training-strategy', group: '小数据图像分类', title: '训练策略迁移判断', description: '根据数据规模与领域差异选择冻结、微调或重新训练。', path: '/dev/blocks/image-augmentation-finetuning/training-strategy' },
+  { id: 'vision-implementation-bridge', group: '小数据图像分类', title: '从直觉到代码', description: '对照训练与评估管线，并查看组合增广和分层学习率代码。', path: '/dev/blocks/image-augmentation-finetuning/implementation' },
+  { id: 'vision-generalization-ending', group: '小数据图像分类', title: '课程结尾', description: '回顾图像增广、迁移学习和微调策略。', path: '/dev/blocks/image-augmentation-finetuning/ending' },
   { id: 'adaptive-lr-why', group: '优化器如何调整步伐', title: '为什么需要优化器', description: '比较过大与过小的固定学习率，观察震荡和缓慢收敛。', path: '/dev/blocks/adaptive-learning-rate/why-optimizer' },
   { id: 'adaptive-lr-sgd', group: '优化器如何调整步伐', title: 'SGD', description: '对比 Full Batch 的平滑路线与 SGD 的蛇形路线。', path: '/dev/blocks/adaptive-learning-rate/sgd' },
   { id: 'adaptive-lr-momentum', group: '优化器如何调整步伐', title: 'Momentum', description: '观察方向记忆如何减少随机梯度带来的左右摇摆。', path: '/dev/blocks/adaptive-learning-rate/momentum' },
@@ -276,10 +336,134 @@ function AdaptiveLearningRateEndingPreview() {
   return <BlockPreview title="课程结尾">{() => <AdaptiveLearningRateLessonFooter />}</BlockPreview>;
 }
 
+function BoundingBoxRepresentationPreview() {
+  return <BlockPreview title="边界框与坐标表示">{({ complete }) => <div className="object-detection-foundations-module"><BoundingBoxRepresentationBlock onComplete={complete} /></div>}</BlockPreview>;
+}
+
+function DetectionDatasetPreview() {
+  return <BlockPreview title="检测数据标注">{({ complete }) => <div className="detection-models-module"><DetectionDatasetBlock onComplete={complete} /></div>}</BlockPreview>;
+}
+
+function PixelTaskPreview() {
+  return <BlockPreview title="视觉任务输出粒度">{({ complete }) => <div className="pixel-vision-module"><PixelTaskBlock onComplete={complete} /></div>}</BlockPreview>;
+}
+
+function SegmentationDataPreview() {
+  return <BlockPreview title="分割数据同步变换">{({ complete }) => <div className="pixel-vision-module"><SegmentationDataBlock onComplete={complete} /></div>}</BlockPreview>;
+}
+
+function TransposedConvolutionPreview() {
+  return <BlockPreview title="转置卷积上采样">{({ complete }) => <div className="pixel-vision-module"><TransposedConvolutionBlock onComplete={complete} /></div>}</BlockPreview>;
+}
+
+function FcnAssemblyPreview() { return <BlockPreview title="FCN 结构组装">{({ complete }) => <div className="pixel-vision-module"><FcnAssemblyBlock onComplete={complete} /></div>}</BlockPreview>; }
+function PixelVisionBridgePreview() { return <BlockPreview title="像素训练链路">{() => <div className="pixel-vision-module"><PixelVisionBridgeBlock /></div>}</BlockPreview>; }
+function PixelVisionEndingPreview() { return <BlockPreview title="课程结尾">{() => <div className="pixel-vision-module"><PixelVisionLessonFooter /></div>}</BlockPreview>; }
+function StyleLossMixerPreview() { return <BlockPreview title="风格损失配方">{({ complete }) => <div className="vision-style-competitions-module"><StyleLossMixerBlock onComplete={complete} /></div>}</BlockPreview>; }
+function StyleRepresentationPreview() { return <BlockPreview title="风格特征表示">{({ complete }) => <div className="vision-style-competitions-module"><StyleRepresentationBlock onComplete={complete} /></div>}</BlockPreview>; }
+function CompetitionPipelinePreview() { return <BlockPreview title="竞赛数据流程">{({ complete }) => <div className="vision-style-competitions-module"><CompetitionPipelineBlock onComplete={complete} /></div>}</BlockPreview>; }
+function CompetitionStrategyPreview() { return <BlockPreview title="竞赛策略测验">{({ complete }) => <div className="vision-style-competitions-module"><CompetitionStrategyBlock onComplete={complete} /></div>}</BlockPreview>; }
+function VisionPracticeBridgePreview() { return <BlockPreview title="优化与提交代码桥接">{() => <div className="vision-style-competitions-module"><VisionPracticeBridgeBlock /></div>}</BlockPreview>; }
+function VisionStyleEndingPreview() { return <BlockPreview title="计算机视觉章节结尾">{() => <div className="vision-style-competitions-module"><VisionStyleLessonFooter /></div>}</BlockPreview>; }
+
+function SsdPredictionPreview() {
+  return <BlockPreview title="SSD 多尺度预测头">{({ complete }) => <div className="detection-models-module"><SsdPredictionBlock onComplete={complete} /></div>}</BlockPreview>;
+}
+
+function RcnnEvolutionPreview() {
+  return <BlockPreview title="R-CNN 系列演进">{({ complete }) => <div className="detection-models-module"><RcnnEvolutionBlock onComplete={complete} /></div>}</BlockPreview>;
+}
+
+function DetectionModelChoicePreview() {
+  return <BlockPreview title="检测模型选型">{({ complete }) => <div className="detection-models-module"><DetectionModelChoiceBlock onComplete={complete} /></div>}</BlockPreview>;
+}
+
+function DetectionTrainingBridgePreview() {
+  return <BlockPreview title="训练与推理链路">{() => <div className="detection-models-module"><DetectionTrainingBridgeBlock /></div>}</BlockPreview>;
+}
+
+function DetectionModelsEndingPreview() {
+  return <BlockPreview title="课程结尾">{() => <div className="detection-models-module"><DetectionModelsLessonFooter /></div>}</BlockPreview>;
+}
+
+function IouMatchingPreview() {
+  return <BlockPreview title="IoU 匹配">{({ complete }) => <div className="object-detection-foundations-module"><IouMatchingBlock onComplete={complete} /></div>}</BlockPreview>;
+}
+
+function NonMaximumSuppressionPreview() {
+  return <BlockPreview title="NMS 去重">{({ complete }) => <div className="object-detection-foundations-module"><NonMaximumSuppressionBlock onComplete={complete} /></div>}</BlockPreview>;
+}
+
+function MultiScaleDetectionPreview() {
+  return <BlockPreview title="多尺度检测">{({ complete }) => <div className="object-detection-foundations-module"><MultiScaleDetectionBlock onComplete={complete} /></div>}</BlockPreview>;
+}
+
+function DetectionPipelineBridgePreview() {
+  return <BlockPreview title="检测训练与预测链路">{() => <div className="object-detection-foundations-module"><DetectionPipelineBridgeBlock /></div>}</BlockPreview>;
+}
+
+function ObjectDetectionFoundationsEndingPreview() {
+  return <BlockPreview title="课程结尾">{() => <div className="object-detection-foundations-module"><ObjectDetectionFoundationsLessonFooter /></div>}</BlockPreview>;
+}
+
+function LabelPreservationPreview() {
+  return <BlockPreview title="标签保持与图像增广">{({ complete }) => <LabelPreservationBlock onComplete={complete} />}</BlockPreview>;
+}
+
+function AugmentationStrengthPreview() {
+  return <BlockPreview title="增广强度与泛化">{({ complete }) => <AugmentationStrengthBlock onComplete={complete} />}</BlockPreview>;
+}
+
+function FineTuningMechanismPreview() {
+  return <BlockPreview title="微调的两阶段机制">{({ complete }) => <FineTuningMechanismBlock onComplete={complete} />}</BlockPreview>;
+}
+
+function TrainingStrategyPreview() {
+  return <BlockPreview title="训练策略迁移判断">{({ complete }) => <TrainingStrategyBlock onComplete={complete} />}</BlockPreview>;
+}
+
+function ImplementationBridgePreview() {
+  return <BlockPreview title="从直觉到代码">{() => <ImplementationBridgeBlock />}</BlockPreview>;
+}
+
+function ImageGeneralizationEndingPreview() {
+  return <BlockPreview title="课程结尾">{() => <ImageGeneralizationLessonFooter />}</BlockPreview>;
+}
+
 export const appRoutes: AppRoute[] = [
   { path: '/', element: <HomePage /> },
   { path: '/shared/ui-kit', element: <UiKitPage /> },
   ...migratedModules.map(({ path, element }) => ({ path, element })),
+  { path: '/dev/blocks/vision-style-competitions/loss', element: <StyleLossMixerPreview /> },
+  { path: '/dev/blocks/vision-style-competitions/representation', element: <StyleRepresentationPreview /> },
+  { path: '/dev/blocks/vision-style-competitions/pipeline', element: <CompetitionPipelinePreview /> },
+  { path: '/dev/blocks/vision-style-competitions/strategy', element: <CompetitionStrategyPreview /> },
+  { path: '/dev/blocks/vision-style-competitions/bridge', element: <VisionPracticeBridgePreview /> },
+  { path: '/dev/blocks/vision-style-competitions/ending', element: <VisionStyleEndingPreview /> },
+  { path: '/dev/blocks/pixel-vision/task', element: <PixelTaskPreview /> },
+  { path: '/dev/blocks/pixel-vision/data', element: <SegmentationDataPreview /> },
+  { path: '/dev/blocks/pixel-vision/transposed', element: <TransposedConvolutionPreview /> },
+  { path: '/dev/blocks/pixel-vision/fcn', element: <FcnAssemblyPreview /> },
+  { path: '/dev/blocks/pixel-vision/bridge', element: <PixelVisionBridgePreview /> },
+  { path: '/dev/blocks/pixel-vision/ending', element: <PixelVisionEndingPreview /> },
+  { path: '/dev/blocks/detection-models/dataset', element: <DetectionDatasetPreview /> },
+  { path: '/dev/blocks/detection-models/ssd', element: <SsdPredictionPreview /> },
+  { path: '/dev/blocks/detection-models/rcnn', element: <RcnnEvolutionPreview /> },
+  { path: '/dev/blocks/detection-models/choice', element: <DetectionModelChoicePreview /> },
+  { path: '/dev/blocks/detection-models/training', element: <DetectionTrainingBridgePreview /> },
+  { path: '/dev/blocks/detection-models/ending', element: <DetectionModelsEndingPreview /> },
+  { path: '/dev/blocks/object-detection-foundations/bounding-box', element: <BoundingBoxRepresentationPreview /> },
+  { path: '/dev/blocks/object-detection-foundations/iou', element: <IouMatchingPreview /> },
+  { path: '/dev/blocks/object-detection-foundations/nms', element: <NonMaximumSuppressionPreview /> },
+  { path: '/dev/blocks/object-detection-foundations/multiscale', element: <MultiScaleDetectionPreview /> },
+  { path: '/dev/blocks/object-detection-foundations/pipeline', element: <DetectionPipelineBridgePreview /> },
+  { path: '/dev/blocks/object-detection-foundations/ending', element: <ObjectDetectionFoundationsEndingPreview /> },
+  { path: '/dev/blocks/image-augmentation-finetuning/label-preservation', element: <LabelPreservationPreview /> },
+  { path: '/dev/blocks/image-augmentation-finetuning/augmentation-strength', element: <AugmentationStrengthPreview /> },
+  { path: '/dev/blocks/image-augmentation-finetuning/finetuning-mechanism', element: <FineTuningMechanismPreview /> },
+  { path: '/dev/blocks/image-augmentation-finetuning/training-strategy', element: <TrainingStrategyPreview /> },
+  { path: '/dev/blocks/image-augmentation-finetuning/implementation', element: <ImplementationBridgePreview /> },
+  { path: '/dev/blocks/image-augmentation-finetuning/ending', element: <ImageGeneralizationEndingPreview /> },
   { path: '/dev/blocks/adaptive-learning-rate/why-optimizer', element: <WhyOptimizerPreview /> },
   { path: '/dev/blocks/adaptive-learning-rate/sgd', element: <SgdPreview /> },
   { path: '/dev/blocks/adaptive-learning-rate/momentum', element: <MomentumPreview /> },
