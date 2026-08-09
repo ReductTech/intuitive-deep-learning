@@ -24,40 +24,17 @@
   border-top: 3px solid var(--ui-accent);
 }
 
-.af-react-choice-stage .dl-question {
-  border: 0;
-  background: transparent;
-  padding: 0;
-}
-
-.af-react-choice-stage .dl-question-head {
-  align-items: start;
-}
-
-.af-react-choice-stage .dl-question-stem {
-  display: grid;
-  gap: 8px;
-  color: var(--ui-accent);
-  font-size: 26px;
-  line-height: 1.32;
-}
-
 .af-react-question-help {
+  display: block;
+  margin-top: 7px;
   color: var(--ui-text-muted);
-  font-size: 14px;
-  font-weight: 760;
-  line-height: 1.7;
-}
-
-.activation-panel-choice {
-  cursor: default;
-}
-
-.activation-panel-choice:hover {
-  transform: none;
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 1.6;
 }
 
 .activation-panel-choice-answer {
+  display: block;
   width: 100%;
   border: 0;
   background: #fff;
@@ -74,11 +51,6 @@
 .activation-panel-choice-answer:focus-visible {
   outline: 3px solid rgba(65, 105, 160, 0.24);
   outline-offset: -3px;
-}
-
-.activation-panel-choice.is-selected .dl-panel-choice-key {
-  background: var(--ui-accent);
-  color: #fff;
 }
 
 .af-react-plot,

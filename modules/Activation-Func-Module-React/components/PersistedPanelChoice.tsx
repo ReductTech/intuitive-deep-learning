@@ -1,5 +1,5 @@
 import { useRef, type ReactNode } from 'react';
-import { currentModuleId, Feedback } from '../../shared/react';
+import { currentModuleId, Feedback, Typography } from '../../shared/react';
 import { usePersistedActivity } from './usePersistedActivity';
 
 export interface PersistedPanelChoiceOption {
@@ -138,7 +138,12 @@ export function PersistedPanelChoice({
   return (
     <section
       ref={rootRef}
-      className={classNames('dl-question', 'dl-question--panel-choice', className)}
+      className={classNames(
+        'dl-question',
+        'dl-question--panel',
+        'dl-question--panel-choice',
+        className,
+      )}
       data-question-type="panel-choice"
       data-submit-mode="instant"
       data-state-key={stateKey}
@@ -147,10 +152,21 @@ export function PersistedPanelChoice({
       aria-label={typeof typeLabel === 'string' ? typeLabel : undefined}
     >
       <header className="dl-question-head">
-        <span className="dl-question-type">{typeLabel}</span>
-        <strong className="dl-question-stem">{title}</strong>
+        <Typography
+          as="span"
+          variant="label"
+          tone="accent"
+          className="dl-question-type"
+        >
+          {typeLabel}
+        </Typography>
+        <div className="dl-question-title-row">
+          <Typography as="strong" variant="label" className="dl-question-stem">
+            {title}
+          </Typography>
+        </div>
       </header>
-      <div className="dl-panel-choice-grid" role="radiogroup">
+      <div className="dl-question-options" role="radiogroup">
         {options.map((option, index) => {
           const chosen = selectedId === option.id;
           const markedCorrect = chosen && activity.state?.correct === true;
@@ -159,7 +175,7 @@ export function PersistedPanelChoice({
           return (
             <article
               className={classNames(
-                'dl-panel-choice',
+                'dl-question-option',
                 'activation-panel-choice',
                 chosen && 'is-selected',
                 markedCorrect && 'is-correct',
@@ -167,27 +183,33 @@ export function PersistedPanelChoice({
               )}
               key={option.id}
             >
-              <div className="dl-panel-choice-media" data-panel-media>
-                {option.media}
+              <div className="dl-panel-option">
+                <div className="dl-panel-option-media" data-panel-media>
+                  {option.media}
+                </div>
+                <button
+                  className="activation-panel-choice-answer"
+                  type="button"
+                  role="radio"
+                  aria-checked={chosen}
+                  disabled={!activity.hydrated || locked}
+                  onClick={() => select(option.id)}
+                >
+                  <span className="dl-option-key">
+                    {option.key ?? String.fromCharCode(65 + index)}
+                  </span>
+                  <span className="dl-panel-option-copy">
+                    <Typography as="strong" variant="label">
+                      {option.title}
+                    </Typography>
+                    {option.caption !== undefined && (
+                      <Typography as="span" variant="caption" tone="muted">
+                        {option.caption}
+                      </Typography>
+                    )}
+                  </span>
+                </button>
               </div>
-              <button
-                className="dl-panel-choice-answer activation-panel-choice-answer"
-                type="button"
-                role="radio"
-                aria-checked={chosen}
-                disabled={!activity.hydrated || locked}
-                onClick={() => select(option.id)}
-              >
-                <span className="dl-panel-choice-key">
-                  {option.key ?? String.fromCharCode(65 + index)}
-                </span>
-                <span className="dl-panel-choice-copy">
-                  <strong className="dl-panel-choice-title">{option.title}</strong>
-                  {option.caption !== undefined && (
-                    <span className="dl-panel-choice-caption">{option.caption}</span>
-                  )}
-                </span>
-              </button>
             </article>
           );
         })}
