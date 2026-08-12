@@ -76,7 +76,7 @@ export function Callout({
       )}
       {...props}
     >
-      {label !== undefined && <Typography as="strong" variant="label" tone="inherit" className="edu-callout-label">{label}</Typography>}
+      {label !== undefined && <Typography as="strong" variant="bodySmall" tone="inherit" className="edu-callout-label">{label}</Typography>}
       <Typography as="span" variant="bodySmall" tone="inherit" className="edu-callout-text" data-stream-output={streaming || undefined}>
         {sourceText !== null && streamedText !== null ? streamedText : content}
       </Typography>

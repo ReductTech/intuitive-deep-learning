@@ -54,10 +54,10 @@ export function Button(props: ButtonProps) {
     const handleClick = (event: MouseEvent<HTMLAnchorElement>) => { dismissHint(); onClick?.(event); };
     const link = (
       <a {...anchorProps} {...explainHandlers} className={classes} href={href} data-dl-button-hint={hint && hintActive ? '' : undefined} data-dl-explain={explain} onPointerEnter={handlePointerEnter} onFocus={handleFocus} onClick={handleClick}>
-        <Typography as="span" variant="inherit" tone="inherit">{children}</Typography>
+        <span>{children}</span>
       </a>
     );
-    return explain ? <span className="shared-button-wrap">{link}<Typography as="span" variant="caption" tone="inherit" className="dl-explain-tooltip" role="tooltip" hidden={!explainOpen}>{explain}</Typography></span> : link;
+    return explain ? <span className="shared-button-wrap">{link}<Typography as="span" variant="bodySmall" tone="inherit" className="dl-explain-tooltip" role="tooltip" hidden={!explainOpen}>{explain}</Typography></span> : link;
   }
 
   const { variant: _variant, active: _active, loading: _loading, hint: _hint, explain: _explain, onPointerEnter, onFocus, onClick, ...buttonProps } = props;
@@ -66,8 +66,8 @@ export function Button(props: ButtonProps) {
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => { dismissHint(); onClick?.(event); };
   const button = (
     <button {...buttonProps} {...explainHandlers} className={classes} type={buttonProps.type ?? 'button'} disabled={loading || buttonProps.disabled} aria-busy={loading || buttonProps['aria-busy']} data-dl-button-hint={hint && hintActive ? '' : undefined} data-dl-explain={explain} onPointerEnter={handlePointerEnter} onFocus={handleFocus} onClick={handleClick}>
-      <Typography as="span" variant="inherit" tone="inherit">{children}</Typography>
+      <span>{children}</span>
     </button>
   );
-  return explain ? <span className="shared-button-wrap">{button}<Typography as="span" variant="caption" tone="inherit" className="dl-explain-tooltip" role="tooltip" hidden={!explainOpen}>{explain}</Typography></span> : button;
+  return explain ? <span className="shared-button-wrap">{button}<Typography as="span" variant="bodySmall" tone="inherit" className="dl-explain-tooltip" role="tooltip" hidden={!explainOpen}>{explain}</Typography></span> : button;
 }

@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>统一教学模块模板</title>
+    <link rel="stylesheet" href="./base.css" />
+  </head>
+  <body>
+    <main class="edu-root">
+      <section class="edu-shell">
+        <header class="edu-header">
+          <div>
+            <h1 class="edu-title">模块标题</h1>
+            <p class="edu-subtitle">
+              在这里写本模块的学习目标或一句功能说明，例如：观察参数变化对模型输出的影响。
+            </p>
+          </div>
+          <span class="edu-badge">第 X 课 / 交互实验</span>
+        </header>
+
+        <div class="edu-grid">
+          <aside class="edu-panel">
+            <h2 class="edu-section-title">控制面板</h2>
+
+            <label class="edu-label" for="topic-select">主题</label>
+            <select id="topic-select" class="edu-select">
+              <option>选项 A</option>
+              <option>选项 B</option>
+              <option>选项 C</option>
+            </select>
+
+            <div style="height: 12px"></div>
+
+            <label class="edu-label" for="learning-rate">参数: learning_rate</label>
+            <input id="learning-rate" class="edu-range" type="range" min="0" max="100" value="30" />
+
+            <div style="height: 12px"></div>
+
+            <label class="edu-label" for="notes">说明文字</label>
+            <textarea id="notes" class="edu-textarea" placeholder="输入实验说明或学生观察结论"></textarea>
+
+            <div style="height: 14px"></div>
+
+            <div class="edu-actions">
+              <button type="button" class="edu-btn edu-btn--primary">运行</button>
+              <button type="button" class="edu-btn">重置</button>
+              <button type="button" class="edu-btn edu-btn--warn">随机样本</button>
+            </div>
+          </aside>
+
+          <section>
+            <article class="edu-card">
+              <h2 class="edu-section-title">关键指标</h2>
+              <div class="edu-kpi-grid">
+                <div class="edu-kpi">
+                  <p class="edu-kpi-label">Loss</p>
+                  <p class="edu-kpi-value">0.128</p>
+                </div>
+                <div class="edu-kpi">
+                  <p class="edu-kpi-label">Accuracy</p>
+                  <p class="edu-kpi-value">92.4%</p>
+                </div>
+                <div class="edu-kpi">
+                  <p class="edu-kpi-label">Step</p>
+                  <p class="edu-kpi-value">320</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="edu-card">
+              <h2 class="edu-section-title">可视化区域</h2>
+              <div class="edu-chart">
+                <svg viewBox="0 0 960 420" role="img" aria-label="示例图表">
+                  <line x1="70" y1="340" x2="900" y2="340" stroke="#9fb0c8" stroke-width="2" />
+                  <line x1="70" y1="40" x2="70" y2="340" stroke="#9fb0c8" stroke-width="2" />
+                  <path d="M70 290 C 250 90, 420 230, 900 110" fill="none" stroke="#27446e" stroke-width="5" stroke-linecap="round" />
+                  <path d="M70 300 C 250 260, 420 120, 900 180" fill="none" stroke="#f07e47" stroke-width="5" stroke-dasharray="10 8" stroke-linecap="round" />
+                </svg>
+              </div>
+              <div class="edu-legend">
+                <span class="edu-legend-item"><span class="edu-dot edu-dot--main"></span>主曲线</span>
+                <span class="edu-legend-item"><span class="edu-dot edu-dot--alt"></span>对比曲线</span>
+              </div>
+            </article>
+
+            <article class="edu-card">
+              <h2 class="edu-section-title">实验记录表</h2>
+              <div class="edu-table-wrap">
+                <table class="edu-table">
+                  <thead>
+                    <tr>
+                      <th>参数</th>
+                      <th>实验 1</th>
+                      <th>实验 2</th>
+                      <th>实验 3</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>learning_rate</td>
+                      <td>0.01</td>
+                      <td>0.05</td>
+                      <td>0.1</td>
+                    </tr>
+                    <tr>
+                      <td>最终 loss</td>
+                      <td>0.32</td>
+                      <td>0.18</td>
+                      <td>0.23</td>
+                    </tr>
+                    <tr>
+                      <td>收敛步数</td>
+                      <td>540</td>
+                      <td>320</td>
+                      <td>380</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="edu-note">
+                <strong>提示:</strong>
+                学生可以在该区域写观察结论，例如在一定区间内，学习率增大可提升收敛速度，但过大时会振荡。
+              </div>
+            </article>
+          </section>
+        </div>
+
+        <footer class="edu-footer">
+          参考文献可以放在此处
+        </footer>
+      </section>
+    </main>
+  </body>
+</html>

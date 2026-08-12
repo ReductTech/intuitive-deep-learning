@@ -154,14 +154,14 @@ export function PersistedPanelChoice({
       <header className="dl-question-head">
         <Typography
           as="span"
-          variant="label"
+          variant="bodySmall"
           tone="accent"
           className="dl-question-type"
         >
           {typeLabel}
         </Typography>
         <div className="dl-question-title-row">
-          <Typography as="strong" variant="label" className="dl-question-stem">
+          <Typography as="strong" variant="bodySmall" className="dl-question-stem">
             {title}
           </Typography>
         </div>
@@ -199,11 +199,11 @@ export function PersistedPanelChoice({
                     {option.key ?? String.fromCharCode(65 + index)}
                   </span>
                   <span className="dl-panel-option-copy">
-                    <Typography as="strong" variant="label">
+                    <Typography as="strong" variant="bodySmall">
                       {option.title}
                     </Typography>
                     {option.caption !== undefined && (
-                      <Typography as="span" variant="caption" tone="muted">
+                      <Typography as="span" variant="bodySmall" tone="muted">
                         {option.caption}
                       </Typography>
                     )}

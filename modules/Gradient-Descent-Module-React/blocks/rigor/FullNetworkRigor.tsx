@@ -9,15 +9,15 @@ export function NetworkObjectiveSection() {
       <Typography variant="bodySmall">每个训练样本由输入 xᵢ 与目标 yᵢ 组成。单样本梯度只反映这一对数据建议的修正方向，可能偏离整个训练集的平均方向。实践中主要有三种取样和更新方式：</Typography>
       <dl className="gd-react-definition-list" aria-label="批量、随机和小批量梯度下降对比">
         <div>
-          <Typography as="dt" variant="label" tone="accent">批量梯度下降</Typography>
+          <Typography as="dt" variant="bodySmall" tone="accent">批量梯度下降</Typography>
           <Typography as="dd" variant="bodySmall">每次更新都使用整个训练集计算经验风险的准确梯度。方向确定，但当训练集很大时，一次更新的计算和存储代价较高。</Typography>
         </div>
         <div>
-          <Typography as="dt" variant="label" tone="accent">随机梯度下降</Typography>
+          <Typography as="dt" variant="bodySmall" tone="accent">随机梯度下降</Typography>
           <Typography as="dd" variant="bodySmall">每次随机抽取一个训练样本，用该样本的梯度估计训练集梯度并更新参数。单次计算成本低，但梯度估计的波动通常较大。</Typography>
         </div>
         <div>
-          <Typography as="dt" variant="label" tone="accent">小批量梯度下降</Typography>
+          <Typography as="dt" variant="bodySmall" tone="accent">小批量梯度下降</Typography>
           <Typography as="dd" variant="bodySmall">每次使用随机抽取的一小批样本的平均梯度更新参数，是深度学习中最常见的训练方式。批量大小在梯度估计噪声、计算吞吐和显存占用之间形成权衡。</Typography>
         </div>
       </dl>
@@ -58,7 +58,7 @@ export function NetworkObjectiveSection() {
         <MathFormulaTerm latex="b^{-1/2}" tooltip="在近似独立同分布条件下，批量扩大到 b 个样本时，平均梯度标准差按 1/√b 缩小。" ariaLabel="批量大小 b 的负二分之一次方" />
       </MathFormulaBlock>
       <section className="gd-react-worked-example" aria-labelledby="gd-batch-example-title">
-        <Typography as="h4" variant="label" tone="accent" id="gd-batch-example-title">小例子：小批量怎样在计算量和波动之间折中</Typography>
+        <Typography as="h4" variant="bodySmall" tone="accent" id="gd-batch-example-title">小例子：小批量怎样在计算量和波动之间折中</Typography>
         <Typography variant="bodySmall">假设当前参数下，4 个训练样本给出的单样本梯度分别为 2、4、6、8。完整训练集梯度是它们的平均值 5。</Typography>
         <MathFormulaBlock ariaLabel="四个单样本梯度为二四六八，完整训练集平均梯度等于五">
           <MathFormulaTerm latex="[g_1,g_2,g_3,g_4]" tooltip="4 个样本分别给出的单样本梯度。" ariaLabel="四个单样本梯度" />
@@ -83,7 +83,7 @@ export function NetworkObjectiveSection() {
         </MathFormulaBlock>
         <Typography variant="bodySmall">若每次均匀随机抽取，许多次小批量估计的平均会回到完整梯度 5；单次更新仍有噪声，而这种噪声正是减少计算量所付出的代价。</Typography>
       </section>
-      <Typography variant="caption" tone="muted">实际训练样本并不总是独立同分布，重复样本、分层采样和数据相关性都会改变方差关系；因此上式是理解批量权衡的基准，不是对所有数据加载方式的无条件保证。</Typography>
+      <Typography variant="bodySmall" tone="muted">实际训练样本并不总是独立同分布，重复样本、分层采样和数据相关性都会改变方差关系；因此上式是理解批量权衡的基准，不是对所有数据加载方式的无条件保证。</Typography>
     </section>
   );
 }
@@ -115,7 +115,7 @@ export function BackpropagationSection() {
         <MathFormulaTerm latex="\frac{\partial h_1}{\partial w_{11}}" tooltip="隐藏量 h₁ 关于权重 w₁₁ 的局部变化率。" ariaLabel="隐藏量 h1 对权重 w11 的偏导" />
       </MathFormulaBlock>
       <section className="gd-react-worked-example" aria-labelledby="gd-backprop-example-title">
-        <Typography as="h4" variant="label" tone="accent" id="gd-backprop-example-title">小例子：沿一条计算路径完成前向、反向和更新</Typography>
+        <Typography as="h4" variant="bodySmall" tone="accent" id="gd-backprop-example-title">小例子：沿一条计算路径完成前向、反向和更新</Typography>
         <Typography variant="bodySmall">设一个最简单的标量模型 ŷ=wx，输入 x=3、权重 w=2、真实目标 y=5，并采用绝对误差。前向传播先得到预测 6 和 Loss 1。</Typography>
         <MathFormulaBlock ariaLabel="输入三乘权重二得到预测六，预测六与目标五的绝对误差等于一">
           <MathFormulaTerm latex="\hat y" tooltip="标量模型给出的预测值。" ariaLabel="模型预测值" />
@@ -148,7 +148,7 @@ export function BackpropagationSection() {
           <MathFormulaTerm latex="L_{\mathrm{new}}=|5.1-5|=0.1" tooltip="新预测更接近目标，因此绝对误差下降。" ariaLabel="新损失等于零点一" />
         </MathFormulaBlock>
       </section>
-      <Typography variant="caption" tone="muted">反向传播不负责选择学习率，也不直接修改参数；它只高效计算梯度。优化器接收这些梯度后，才依据更新规则生成下一组参数。</Typography>
+      <Typography variant="bodySmall" tone="muted">反向传播不负责选择学习率，也不直接修改参数；它只高效计算梯度。优化器接收这些梯度后，才依据更新规则生成下一组参数。</Typography>
     </section>
   );
 }

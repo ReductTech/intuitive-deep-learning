@@ -17,6 +17,10 @@ from langchain_app.http_server import LangChainServiceHandler
 from langchain_app.registry import ENDPOINTS, ROUTES
 from langchain_app.structured import TaskResult
 from langchain_app.tasks.loss import parse_probability_loss_design
+from langchain_app.tasks.decision import (
+    generate_decision_intake_uncached,
+    generate_extra_decision_factors_uncached,
+)
 from langchain_app.tasks.short_answer import (
     SHORT_ANSWER_SYSTEM_PROMPT,
     evaluate_short_answer,
@@ -327,7 +331,7 @@ class ComplexTaskTests(unittest.TestCase):
         }
         client = ScriptedClient([intake])
         with patch.object(structured, "DEFAULT_CLIENT", client):
-            result = ROUTES["/decision/intake"]({"decision": "读研"}, 1.0)
+            result = generate_decision_intake_uncached({"decision": "读研"}, 1.0)
         self.assertEqual(len(client.prompts), 1)
         self.assertEqual(result["decision"], "要不要读研？")
         self.assertEqual(result["primary_factor"]["name"], "学术兴趣")
@@ -363,7 +367,7 @@ class ComplexTaskTests(unittest.TestCase):
             "primary_factor_name": "学术兴趣",
         }
         with patch.object(structured, "DEFAULT_CLIENT", client):
-            result = ROUTES["/decision/extra-factors"](payload, 1.0)
+            result = generate_extra_decision_factors_uncached(payload, 1.0)
         self.assertEqual(len(client.prompts), 1)
         self.assertEqual(len(result["factors"]), 2)
         self.assertEqual(result["factors"][0]["value_transform"], "direct")
@@ -375,7 +379,7 @@ class ComplexTaskTests(unittest.TestCase):
     def test_unparseable_decision_intake_short_circuits_as_model_success(self) -> None:
         client = ScriptedClient(["我需要更多信息。", "还是无法形成 JSON。"])
         with patch.object(structured, "DEFAULT_CLIENT", client):
-            result = ROUTES["/decision/intake"]({"decision": "不知道"}, 1.0)
+            result = generate_decision_intake_uncached({"decision": "不知道"}, 1.0)
         self.assertIsInstance(result, TaskResult)
         self.assertFalse(result.structured)
         self.assertEqual(result.raw_text, "我需要更多信息。")
@@ -397,7 +401,7 @@ class ComplexTaskTests(unittest.TestCase):
         }
         client = ScriptedClient([refusal])
         with patch.object(structured, "DEFAULT_CLIENT", client):
-            result = ROUTES["/decision/intake"]({"decision": "测试输入"}, 1.0)
+            result = generate_decision_intake_uncached({"decision": "测试输入"}, 1.0)
         self.assertIsInstance(result, TaskResult)
         self.assertTrue(result.structured)
         self.assertEqual(result["status"], "refuse")

@@ -46,7 +46,7 @@ export function LossObjectiveSection() {
         <Typography variant="bodySmall">训练集中全部样本损失的平均值称为<strong>经验风险</strong> J(θ)。它来自有限训练数据，可以被直接计算和最小化。模型真正关心的是未知数据分布上的<strong>期望风险</strong>，训练时只能用经验风险近似；因此训练 Loss 下降说明优化取得进展，却不能单独证明泛化能力变好。</Typography>
         <Typography variant="bodySmall">逐样本损失还需要通过 <strong>reduction</strong> 汇总。取平均能让目标尺度较少依赖样本数；取和会随样本数整体放大。样本权重一致时，两者的最小值位置相同，但梯度尺度不同。</Typography>
       </div>
-      <Typography variant="caption" tone="muted">“损失”严格地说常指单样本量 ℓ，“经验风险”指训练集平均量 J；工程语境中二者也经常统称为 loss。本模块沿用原有命名，将绝对误差称为 L1 Loss、平方误差称为 L2 Loss；取训练集平均后通常称为 MAE、MSE。</Typography>
+      <Typography variant="bodySmall" tone="muted">“损失”严格地说常指单样本量 ℓ，“经验风险”指训练集平均量 J；工程语境中二者也经常统称为 loss。本模块沿用原有命名，将绝对误差称为 L1 Loss、平方误差称为 L2 Loss；取训练集平均后通常称为 MAE、MSE。</Typography>
       <MathFormulaBlock ariaLabel="训练目标 J theta 等于 m 个样本损失的平均值，最优参数 theta star 是使训练目标最小的参数">
         <MathFormulaTerm latex="J(\theta)" tooltip="J(θ)：参数为 θ 时，训练集上的经验风险或平均训练目标。" ariaLabel="参数 theta 的经验风险" />
         <MathFormulaStatic latex="=" />
@@ -72,7 +72,7 @@ export function LossObjectiveSection() {
         </MathFormulaBlock>
       </div>
       <section className="lg-react-worked-example" aria-labelledby="lg-dataset-example-title">
-        <Typography as="h4" variant="label" tone="accent" id="lg-dataset-example-title">小例子：同一组残差怎样得到不同的总体损失</Typography>
+        <Typography as="h4" variant="bodySmall" tone="accent" id="lg-dataset-example-title">小例子：同一组残差怎样得到不同的总体损失</Typography>
         <Typography variant="bodySmall">某个回归模型在 4 个样本上的残差依次为 −2、0、1、5。先对每个残差取绝对值或平方，再分别求平均。</Typography>
         <div className="lg-react-formula-stack">
           <MathFormulaBlock ariaLabel="残差为负二、零、一、五时，平均绝对误差等于二">

@@ -13,7 +13,7 @@ export function KnowledgePoint({ ariaLabel, title, children, caption }: Knowledg
     <section className="gd-react-interaction-insight" aria-label={ariaLabel}>
       <Typography as="h3" variant="h3" tone="accent">{title}</Typography>
       <Typography variant="bodySmall">{children}</Typography>
-      {caption && <Typography variant="caption" tone="muted">{caption}</Typography>}
+      {caption && <Typography variant="bodySmall" tone="muted">{caption}</Typography>}
     </section>
   );
 }

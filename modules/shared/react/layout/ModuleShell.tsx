@@ -37,7 +37,7 @@ export function ModuleShell({
                   {title !== undefined && <Typography as="h1" variant="display" className="edu-title">{title}</Typography>}
                   {subtitle !== undefined && <Typography variant="subtitle" tone="muted" className="edu-subtitle">{subtitle}</Typography>}
                 </div>
-                {badge !== undefined && <Typography as="span" variant="label" tone="muted" className="edu-badge">{badge}</Typography>}
+                {badge !== undefined && <Typography as="span" variant="bodySmall" tone="muted" className="edu-badge">{badge}</Typography>}
               </>
             )}
           </header>

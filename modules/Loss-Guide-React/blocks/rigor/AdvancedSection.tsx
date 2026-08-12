@@ -20,7 +20,7 @@ export function AdvancedSection() {
       {/* 1. 正则化 */}
       <details className="lg-react-advanced-details">
         <summary>
-          <Typography as="h4" variant="label" tone="accent">
+          <Typography as="h4" variant="bodySmall" tone="accent">
             从经验风险到结构风险：正则化
           </Typography>
         </summary>
@@ -49,7 +49,7 @@ export function AdvancedSection() {
             <MathFormulaStatic latex="," />
             <MathFormulaTerm latex="\underbrace{-\eta\lambda\operatorname{sign}(\theta_j)}_{\text{L1 稀疏化}}" tooltip="L1 正则化附加项：恒定大小的符号推力，驱向零。" ariaLabel="L1 稀疏化项" />
           </MathFormulaBlock>
-          <Typography variant="caption" tone="muted">
+          <Typography variant="bodySmall" tone="muted">
             正则化只应在训练时使用；评估和测试时应使用不含正则项的经验风险。λ 通常很小（如 1e-4），通过验证集选择。
           </Typography>
         </div>
@@ -58,7 +58,7 @@ export function AdvancedSection() {
       {/* 2. Huber Loss */}
       <details className="lg-react-advanced-details">
         <summary>
-          <Typography as="h4" variant="label" tone="accent">
+          <Typography as="h4" variant="bodySmall" tone="accent">
             Huber Loss：L1 和 L2 的平滑折中
           </Typography>
         </summary>
@@ -78,7 +78,7 @@ export function AdvancedSection() {
           <Typography variant="bodySmall">
             超参数 δ 控制切换点：δ 越小，行为越接近 L1（对离群点更稳健）；δ 越大，行为越接近 L2（对小误差更精确）。δ=1 是常见默认值。Huber Loss 既保留了小残差区域的光滑梯度，又避免了大残差放大问题，常用于目标检测等需要同时处理噪声和离群点的回归任务。
           </Typography>
-          <Typography variant="caption" tone="muted">
+          <Typography variant="bodySmall" tone="muted">
             Huber Loss 也称为 Smooth L1 Loss（在目标检测文献中常见）。它处处可导，因此比纯 L1 更适合梯度优化。
           </Typography>
         </div>
@@ -87,7 +87,7 @@ export function AdvancedSection() {
       {/* 3. Hinge Loss */}
       <details className="lg-react-advanced-details">
         <summary>
-          <Typography as="h4" variant="label" tone="accent">
+          <Typography as="h4" variant="bodySmall" tone="accent">
             Hinge Loss：最大间隔分类的损失
           </Typography>
         </summary>
@@ -108,7 +108,7 @@ export function AdvancedSection() {
               多分类 Hinge Loss（Crammer-Singer 形式）：ℓ = Σ_{'k≠k*'} max(0, 1 + f_k(x) − f_{'k*'}(x))，要求真实类别的得分比其他类别高出至少 1。
             </Typography>
           </div>
-          <Typography variant="caption" tone="muted">
+          <Typography variant="bodySmall" tone="muted">
             Hinge Loss 在零点不可导，现代实现通常使用次梯度或平滑近似（如平方 Hinge Loss）。实践中，交叉熵 + softmax 比 SVM/Hinge 更常用于深度学习分类，因为 CE 提供更好的概率校准。
           </Typography>
         </div>
@@ -117,7 +117,7 @@ export function AdvancedSection() {
       {/* 4. 凸性 */}
       <details className="lg-react-advanced-details">
         <summary>
-          <Typography as="h4" variant="label" tone="accent">
+          <Typography as="h4" variant="bodySmall" tone="accent">
             凸性：为什么损失函数的形状很重要
           </Typography>
         </summary>
@@ -138,7 +138,7 @@ export function AdvancedSection() {
           <Typography variant="bodySmall">
             实践中，深度网络的非凸优化并不是灾难：SGD 的随机噪声有助于逃离鞍点；大型过参数化网络通常有大量几乎等价的优良解；好的初始化和归一化技术（如 BatchNorm）也能改善优化地形。
           </Typography>
-          <Typography variant="caption" tone="muted">
+          <Typography variant="bodySmall" tone="muted">
             凸性是充分条件而非必要条件——非凸问题在实践中仍可能被优化到很好的程度，但不能从数学上获得最优性保证。
           </Typography>
         </div>
@@ -147,7 +147,7 @@ export function AdvancedSection() {
       {/* 5. 速查表 */}
       <details className="lg-react-advanced-details">
         <summary>
-          <Typography as="h4" variant="label" tone="accent">
+          <Typography as="h4" variant="bodySmall" tone="accent">
             损失函数选择速查表
           </Typography>
         </summary>
@@ -194,7 +194,7 @@ export function AdvancedSection() {
               <span>等价于参数的高斯先验下的 MAP 估计</span>
             </div>
           </div>
-          <Typography variant="caption" tone="muted">
+          <Typography variant="bodySmall" tone="muted">
             速查表给出的是常见默认选择。实际项目中应比较多个候选损失在验证集上的表现，并结合领域知识做出决定。
           </Typography>
         </div>

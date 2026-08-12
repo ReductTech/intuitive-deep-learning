@@ -1023,7 +1023,7 @@ export function AutoUpdateBlock({ onComplete }: AutoUpdateBlockProps) {
                   {!derivativesComplete && (
                     <div className="gd-known-formulas">
                       <div className="gd-known-formula">
-                        <Typography variant="label" tone="muted">输入</Typography>
+                        <Typography variant="bodySmall" tone="muted">输入</Typography>
                         <MathFormulaBlock ariaLabel="隐藏层输入 h1 等于三，h2 等于一">
                           <MathFormulaTerm latex="h_1" tooltip="h₁：进入第一个输出权重的隐藏层数值。" ariaLabel="隐藏层输出 h1" />
                           <MathFormulaStatic latex="=" />
@@ -1035,7 +1035,7 @@ export function AutoUpdateBlock({ onComplete }: AutoUpdateBlockProps) {
                         </MathFormulaBlock>
                       </div>
                       <div className="gd-known-formula">
-                        <Typography variant="label" tone="muted">输出</Typography>
+                        <Typography variant="bodySmall" tone="muted">输出</Typography>
                         <MathFormulaBlock ariaLabel="预测 y 等于两个权重与隐藏层输出乘积之和">
                           <MathFormulaTerm latex="y" tooltip="y：网络当前得到的预测值。" ariaLabel="预测值 y" />
                           <MathFormulaStatic latex="=" />
@@ -1045,7 +1045,7 @@ export function AutoUpdateBlock({ onComplete }: AutoUpdateBlockProps) {
                         </MathFormulaBlock>
                       </div>
                       <div className="gd-known-formula">
-                        <Typography variant="label" tone="muted">损失</Typography>
+                        <Typography variant="bodySmall" tone="muted">损失</Typography>
                         <MathFormulaBlock ariaLabel="L1 损失等于预测与真实目标之差的绝对值">
                           <MathFormulaTerm latex="\ell_{\mathrm{L1}}" tooltip="当前样本的 L1 损失。" ariaLabel="L1 损失" />
                           <MathFormulaStatic latex="=" />

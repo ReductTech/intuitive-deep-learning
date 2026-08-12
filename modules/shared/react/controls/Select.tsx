@@ -80,7 +80,7 @@ export function Select({
 
   return (
     <div className={classNames('edu-control', controlClassName)}>
-      <Typography as="span" variant="label" tone="muted" className="edu-label" id={`${id}-label`}>{label}</Typography>
+      <Typography as="span" variant="bodySmall" tone="muted" className="edu-label" id={`${id}-label`}>{label}</Typography>
       <div
         ref={rootRef}
         className={classNames('edu-selectbox', open && 'is-open', className)}
@@ -105,7 +105,7 @@ export function Select({
             }
           }}
         >
-          <Typography as="span" variant="inherit" tone="inherit" id={`${id}-value`} data-selectbox-value>{selectedOption?.label}</Typography>
+          <span id={`${id}-value`} data-selectbox-value>{selectedOption?.label}</span>
         </button>
         <div
           className="edu-selectbox-menu"
@@ -127,7 +127,7 @@ export function Select({
               onClick={() => choose(option)}
               onKeyDown={(event) => handleOptionKeyDown(event, index)}
             >
-              <Typography as="span" variant="inherit" tone="inherit">{option.label}</Typography>
+              <span>{option.label}</span>
             </button>
           ))}
         </div>

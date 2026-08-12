@@ -23,7 +23,7 @@ export function LossDefinitionSection() {
         <MathFormulaTerm latex="\ell(y^{(i)},\hat{y}^{(i)})" tooltip="损失函数比较第 i 个样本的真实标签与预测值后输出一个标量。" ariaLabel="真实标签与预测值的损失函数值" />
         <MathFormulaTerm latex="\ge 0" tooltip="本页使用的绝对误差和平方误差都不小于 0；预测完全正确时损失为 0。" ariaLabel="损失不小于零" />
       </MathFormulaBlock>
-      <Typography variant="caption" tone="muted">“预测正确时损失为 0”是本页两种回归损失的性质；一般损失函数只要能给训练提供合适的比较标准即可，不应把这一性质误当成所有任务的唯一形式。</Typography>
+      <Typography variant="bodySmall" tone="muted">“预测正确时损失为 0”是本页两种回归损失的性质；一般损失函数只要能给训练提供合适的比较标准即可，不应把这一性质误当成所有任务的唯一形式。</Typography>
     </section>
   );
 }

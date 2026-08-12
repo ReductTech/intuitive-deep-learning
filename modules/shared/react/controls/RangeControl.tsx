@@ -68,8 +68,8 @@ export function RangeControl({
       htmlFor={inputId}
     >
       <span className="edu-control-head">
-        <Typography as="span" variant="label" tone="muted" className="edu-label">{label}</Typography>
-        <Typography as="output" variant="code" tone="accent" className="edu-control-value" htmlFor={inputId} data-i18n-ignore="true">
+        <Typography as="span" variant="bodySmall" tone="muted" className="edu-label">{label}</Typography>
+        <Typography as="output" variant="bodySmall" tone="accent" className="edu-control-value" htmlFor={inputId} data-i18n-ignore="true">
           {formattedValue}
         </Typography>
       </span>
@@ -97,7 +97,11 @@ export function RangeControl({
       />
       {scale && scale.length > 0 && (
         <span className="edu-range-scale" aria-hidden="true">
-          {scale.map((item, index) => <Typography as="span" variant="inherit" tone="inherit" key={index}><i aria-hidden="true" />{item}</Typography>)}
+          {scale.map((item, index) => (
+            <Typography as="span" variant="bodySmall" tone="inherit" key={index}>
+              <i aria-hidden="true" />{item}
+            </Typography>
+          ))}
         </span>
       )}
     </label>

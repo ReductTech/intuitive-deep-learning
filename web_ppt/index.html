@@ -1,0 +1,804 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React 互动课件展示</title>
+    <style>
+      :root {
+        --deck-bg: #e9edf4;
+        --deck-surface: #ffffff;
+        --deck-surface-soft: #f6f8fc;
+        --deck-text: #21324a;
+        --deck-muted: #68778f;
+        --deck-border: #d7deea;
+        --deck-accent: #27446e;
+        --deck-accent-alt: #f07e47;
+        --deck-shadow: 0 18px 48px rgba(25, 42, 70, 0.12);
+        --deck-radius: 18px;
+        font-family: "Segoe UI", "PingFang SC", "Hiragino Sans GB", Arial, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+        color: var(--deck-text);
+        background:
+          radial-gradient(circle at 18% 8%, rgba(240, 126, 71, 0.09), transparent 26%),
+          linear-gradient(180deg, #f8fafc 0%, var(--deck-bg) 100%);
+      }
+
+      body {
+        overflow: hidden;
+      }
+
+      button {
+        font: inherit;
+      }
+
+      .deck-root {
+        display: grid;
+        grid-template-columns: 280px minmax(0, 1fr);
+        gap: 18px;
+        height: 100vh;
+        padding: 18px;
+      }
+
+      .deck-sidebar {
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid var(--deck-border);
+        border-radius: var(--deck-radius);
+        background: rgba(255, 255, 255, 0.92);
+        box-shadow: var(--deck-shadow);
+        overflow: hidden;
+      }
+
+      .deck-brand {
+        padding: 18px 18px 14px;
+        border-bottom: 1px solid var(--deck-border);
+      }
+
+      .deck-brand-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .deck-title {
+        margin: 0;
+        font-size: 22px;
+        line-height: 1.18;
+      }
+
+      .deck-subtitle {
+        margin: 8px 0 0;
+        color: var(--deck-muted);
+        font-size: 13px;
+        line-height: 1.55;
+      }
+
+      .deck-list {
+        flex: 1;
+        min-height: 0;
+        margin: 0;
+        padding: 10px;
+        overflow: auto;
+        list-style: none;
+      }
+
+      .deck-slide-button {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 34px minmax(0, 1fr);
+        gap: 10px;
+        align-items: center;
+        margin: 0;
+        padding: 10px;
+        border: 1px solid transparent;
+        border-radius: 12px;
+        background: transparent;
+        color: var(--deck-text);
+        text-align: left;
+        cursor: pointer;
+      }
+
+      .deck-slide-button:hover {
+        background: var(--deck-surface-soft);
+      }
+
+      .deck-slide-button.is-active {
+        border-color: rgba(39, 68, 110, 0.24);
+        background: rgba(39, 68, 110, 0.08);
+      }
+
+      .deck-slide-index {
+        width: 34px;
+        height: 34px;
+        display: inline-grid;
+        place-items: center;
+        border-radius: 999px;
+        background: var(--deck-surface-soft);
+        color: var(--deck-muted);
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .deck-slide-button.is-active .deck-slide-index {
+        background: var(--deck-accent);
+        color: #ffffff;
+      }
+
+      .deck-slide-name {
+        min-width: 0;
+        overflow: hidden;
+        font-size: 14px;
+        font-weight: 700;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .deck-main {
+        min-width: 0;
+        min-height: 0;
+        display: grid;
+        grid-template-rows: auto minmax(0, 1fr);
+        gap: 12px;
+      }
+
+      .deck-toolbar {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 12px;
+        align-items: center;
+        padding: 12px;
+        border: 1px solid var(--deck-border);
+        border-radius: var(--deck-radius);
+        background: rgba(255, 255, 255, 0.94);
+        box-shadow: var(--deck-shadow);
+      }
+
+      .deck-current {
+        min-width: 0;
+      }
+
+      .deck-current-title {
+        margin: 0;
+        overflow: hidden;
+        font-size: 18px;
+        font-weight: 800;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .deck-current-meta {
+        margin: 4px 0 0;
+        color: var(--deck-muted);
+        font-size: 13px;
+      }
+
+      .deck-controls {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .deck-source-btn {
+        min-height: 40px;
+        border: 1px solid var(--deck-accent);
+        border-radius: 999px;
+        background: #ffffff;
+        color: var(--deck-accent);
+        padding: 0 16px;
+        font-size: 14px;
+        font-weight: 800;
+        cursor: pointer;
+      }
+
+      .deck-source-btn:hover {
+        background: var(--deck-accent);
+        color: #ffffff;
+      }
+
+      .deck-btn {
+        min-width: 42px;
+        height: 40px;
+        display: inline-grid;
+        place-items: center;
+        border: 1px solid var(--deck-border);
+        border-radius: 999px;
+        background: #ffffff;
+        color: var(--deck-muted);
+        font-size: 18px;
+        font-weight: 800;
+        cursor: pointer;
+        transition: transform 140ms ease, border-color 140ms ease, color 140ms ease, background 140ms ease;
+      }
+
+      .deck-btn:hover {
+        transform: translateY(-1px);
+        border-color: var(--deck-accent);
+        color: var(--deck-accent);
+      }
+
+      .deck-btn:disabled {
+        transform: none;
+        opacity: 0.42;
+        cursor: not-allowed;
+      }
+
+      .deck-btn--primary {
+        border-color: var(--deck-accent);
+        background: var(--deck-accent);
+        color: #ffffff;
+      }
+
+      .deck-btn--primary:hover {
+        color: #ffffff;
+      }
+
+      .deck-progress {
+        min-width: 62px;
+        color: var(--deck-muted);
+        font-family: "Cascadia Code", Consolas, monospace;
+        font-size: 14px;
+        font-weight: 800;
+        text-align: center;
+      }
+
+      .deck-file-input {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+      }
+
+      .deck-stage {
+        position: relative;
+        min-height: 0;
+        display: grid;
+        place-items: center;
+        padding: 16px;
+        border: 1px solid var(--deck-border);
+        border-radius: var(--deck-radius);
+        background: #111827;
+        box-shadow: var(--deck-shadow);
+      }
+
+      .deck-folder-btn {
+        width: 52px;
+        height: 52px;
+        flex: 0 0 auto;
+        display: inline-grid;
+        place-items: center;
+        border: 1px solid var(--deck-border);
+        border-radius: 999px;
+        background: #ffffff;
+        color: var(--deck-muted);
+        cursor: pointer;
+        box-shadow: 0 10px 24px rgba(25, 42, 70, 0.1);
+        transition: transform 140ms ease, opacity 140ms ease, background 140ms ease, color 140ms ease, border-color 140ms ease;
+      }
+
+      .deck-folder-btn:hover {
+        transform: translateY(-1px);
+        border-color: var(--deck-accent);
+        color: var(--deck-accent);
+      }
+
+      .deck-folder-btn.is-needed {
+        border-color: rgba(240, 126, 71, 0.85);
+        background: #f07e47;
+        color: #ffffff;
+        opacity: 1;
+      }
+
+      .deck-folder-btn.is-loaded {
+        opacity: 0.36;
+      }
+
+      .deck-folder-btn.is-loaded:hover {
+        opacity: 0.95;
+      }
+
+      .deck-folder-btn svg {
+        width: 25px;
+        height: 25px;
+        display: block;
+      }
+
+      .deck-frame-wrap {
+        width: min(100%, calc((100vh - 132px) * 16 / 9));
+        aspect-ratio: 16 / 9;
+        border-radius: 14px;
+        background: #ffffff;
+        overflow: hidden;
+      }
+
+      .deck-frame {
+        width: 100%;
+        height: 100%;
+        display: block;
+        border: 0;
+        background: #ffffff;
+        overflow: hidden;
+      }
+
+      .deck-empty {
+        padding: 28px;
+        border-radius: 14px;
+        background: #ffffff;
+        color: var(--deck-muted);
+        text-align: center;
+      }
+
+      .deck-root.is-fullscreen {
+        padding: 0;
+        grid-template-columns: 1fr;
+        gap: 0;
+        background: #111827;
+      }
+
+      .deck-root.is-fullscreen .deck-sidebar,
+      .deck-root.is-fullscreen .deck-toolbar {
+        display: none;
+      }
+
+      .deck-root.is-fullscreen .deck-main {
+        grid-template-rows: 1fr;
+      }
+
+      .deck-root.is-fullscreen .deck-stage {
+        border: 0;
+        border-radius: 0;
+        padding: 0;
+      }
+
+      .deck-root.is-fullscreen .deck-frame-wrap {
+        width: min(100vw, calc(100vh * 16 / 9));
+        border-radius: 0;
+      }
+
+      @media (max-width: 920px) {
+        body {
+          overflow: auto;
+        }
+
+        .deck-root {
+          height: auto;
+          min-height: 100vh;
+          grid-template-columns: 1fr;
+        }
+
+        .deck-sidebar {
+          max-height: 260px;
+        }
+
+        .deck-toolbar {
+          grid-template-columns: 1fr;
+        }
+
+        .deck-controls {
+          justify-content: space-between;
+        }
+
+        .deck-stage {
+          min-height: 58vh;
+        }
+
+        .deck-frame-wrap {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="deck-root" id="deckRoot">
+      <aside class="deck-sidebar" aria-label="课件目录">
+        <header class="deck-brand">
+          <div class="deck-brand-row">
+            <h1 class="deck-title">认识人工神经元</h1>
+            <button class="deck-folder-btn is-needed" type="button" id="chooseFolderBtn" title="选择课件文件夹" aria-label="选择课件文件夹">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M3.5 6.5A2.5 2.5 0 0 1 6 4h4.15c.72 0 1.4.31 1.88.85L13.05 6H18a2.5 2.5 0 0 1 2.5 2.5v1H3.5v-3Z" fill="currentColor" opacity="0.72" />
+                <path d="M3.5 9h17l-1.08 8.1A3 3 0 0 1 16.45 19.7H7.55a3 3 0 0 1-2.97-2.6L3.5 9Z" fill="currentColor" />
+              </svg>
+            </button>
+          </div>
+          <p class="deck-subtitle">React 互动课件 · 使用 [←] [→] 翻页</p>
+        </header>
+        <ol class="deck-list" id="slideList"></ol>
+      </aside>
+
+      <main class="deck-main">
+        <header class="deck-toolbar">
+          <div class="deck-current">
+            <p class="deck-current-title" id="currentTitle">准备加载课件</p>
+            <p class="deck-current-meta" id="currentMeta">0 / 0</p>
+          </div>
+          <nav class="deck-controls" aria-label="播放控制">
+            <button class="deck-source-btn" type="button" id="loadBuiltInBtn">加载内置课件</button>
+            <button class="deck-btn" type="button" id="prevBtn" title="后退" aria-label="后退">‹</button>
+            <span class="deck-progress" id="progressText">0 / 0</span>
+            <button class="deck-btn deck-btn--primary" type="button" id="nextBtn" title="前进" aria-label="前进">›</button>
+            <button class="deck-btn" type="button" id="fullscreenBtn" title="全屏" aria-label="全屏">⛶</button>
+          </nav>
+          <input class="deck-file-input" type="file" id="folderInput" webkitdirectory directory multiple accept=".html" />
+        </header>
+
+        <section class="deck-stage" aria-label="课件播放区">
+          <div class="deck-frame-wrap" id="frameWrap">
+            <iframe class="deck-frame" id="slideFrame" title="当前课件页"></iframe>
+          </div>
+          <div class="deck-empty" id="emptyState">
+            请选择课件来源：加载内置课件，或点击文件夹按钮选择本地课件。
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      const builtInSlides = [
+        { title: "只有 302 个神经元，它为什么能完成这么多行为？", route: "./slide.html?slide=nematode-response" },
+        { title: "1943 年，神经元被写成了数学模型", route: "./slide.html?slide=biological-structure" },
+        { title: "神经元究竟在做什么？", route: "./slide.html?slide=decision-bridge" },
+        { title: "复杂决策，很少只由一个因素决定", route: "./slide.html?slide=signal-discovery" },
+        { title: "把一个现实因素变成输入信号", route: "./slide.html?slide=weighted-sum" },
+        { title: "同一个决定，三个输入怎样形成最终判断？", route: "./slide.html?slide=extra-inputs" },
+        { title: "从加权求和到矩阵表示", route: "./slide.html?slide=weighted-contribution" },
+        { title: "从神经元的角度得到最终判断", route: "./slide.html?slide=bias-theory" },
+        { title: "你已经搭出了一个人工神经元", route: "./slide.html?slide=ending" }
+      ];
+
+      let slides = [];
+      const fileByName = new Map();
+      const assetUrls = new Map();
+
+      const deckRoot = document.querySelector("#deckRoot");
+      const slideList = document.querySelector("#slideList");
+      const slideFrame = document.querySelector("#slideFrame");
+      const frameWrap = document.querySelector("#frameWrap");
+      const emptyState = document.querySelector("#emptyState");
+      const currentTitle = document.querySelector("#currentTitle");
+      const currentMeta = document.querySelector("#currentMeta");
+      const progressText = document.querySelector("#progressText");
+      const chooseFolderBtn = document.querySelector("#chooseFolderBtn");
+      const loadBuiltInBtn = document.querySelector("#loadBuiltInBtn");
+      const folderInput = document.querySelector("#folderInput");
+      const prevBtn = document.querySelector("#prevBtn");
+      const nextBtn = document.querySelector("#nextBtn");
+      const fullscreenBtn = document.querySelector("#fullscreenBtn");
+
+      let currentIndex = 0;
+
+      function clampSlideIndex(index) {
+        return Math.max(0, Math.min(index, slides.length - 1));
+      }
+
+      function formatCount(index) {
+        if (!slides.length) return "0 / 0";
+        return `${index + 1} / ${slides.length}`;
+      }
+
+      function updateFolderButtonState() {
+        const hasSlides = slides.length > 0;
+        chooseFolderBtn.classList.toggle("is-needed", !hasSlides);
+        chooseFolderBtn.classList.toggle("is-loaded", hasSlides);
+      }
+
+      function renderList() {
+        slideList.innerHTML = "";
+        updateFolderButtonState();
+        slides.forEach((slide, index) => {
+          const item = document.createElement("li");
+          const button = document.createElement("button");
+          const number = document.createElement("span");
+          const name = document.createElement("span");
+
+          button.type = "button";
+          button.className = "deck-slide-button";
+          button.dataset.index = String(index);
+          button.title = slide.title;
+
+          number.className = "deck-slide-index";
+          number.textContent = String(index + 1).padStart(2, "0");
+
+          name.className = "deck-slide-name";
+          name.textContent = slide.title;
+
+          button.append(number, name);
+          button.addEventListener("click", () => showSlide(index));
+          item.append(button);
+          slideList.append(item);
+        });
+      }
+
+      async function showSlide(index) {
+        if (!slides.length) {
+          frameWrap.hidden = true;
+          emptyState.hidden = false;
+          currentTitle.textContent = "尚未选择课件";
+          currentMeta.textContent = "加载内置课件，或选择包含编号 HTML 页面的本地文件夹";
+          progressText.textContent = "0 / 0";
+          prevBtn.disabled = true;
+          nextBtn.disabled = true;
+          return;
+        }
+
+        currentIndex = clampSlideIndex(index);
+        const slide = slides[currentIndex];
+        frameWrap.hidden = false;
+        emptyState.hidden = true;
+        if (slide.route) {
+          slideFrame.removeAttribute("srcdoc");
+          slideFrame.src = slide.route;
+        } else {
+          slideFrame.removeAttribute("src");
+          slideFrame.srcdoc = await buildSlideDocument(slide);
+        }
+        currentTitle.textContent = slide.title;
+        currentMeta.textContent = slide.fileName ?? `React TSX · 第 ${currentIndex + 1} 页`;
+        progressText.textContent = formatCount(currentIndex);
+        prevBtn.disabled = currentIndex === 0;
+        nextBtn.disabled = currentIndex === slides.length - 1;
+
+        document.querySelectorAll(".deck-slide-button").forEach((button) => {
+          button.classList.toggle("is-active", Number(button.dataset.index) === currentIndex);
+        });
+      }
+
+      function nextSlide() {
+        if (currentIndex < slides.length - 1) showSlide(currentIndex + 1);
+      }
+
+      function prevSlide() {
+        if (currentIndex > 0) showSlide(currentIndex - 1);
+      }
+
+      function revokeAssetUrls() {
+        assetUrls.forEach((url) => URL.revokeObjectURL(url));
+        assetUrls.clear();
+      }
+
+      function getAssetUrl(fileName) {
+        const cleanName = fileName.replace(/^\.\//, "");
+        const key = cleanName.toLowerCase();
+        if (!fileByName.has(key)) return fileName;
+        if (!assetUrls.has(key)) {
+          assetUrls.set(key, URL.createObjectURL(fileByName.get(key)));
+        }
+        return assetUrls.get(key);
+      }
+
+      function rewriteLocalAssetReferences(html) {
+        return html.replace(/\b(src|href)=["']\.?\/?([^"'#:]+)["']/gi, (match, attribute, fileName) => {
+          if (/^\d{2,}-.+\.html$/i.test(fileName)) return match;
+          const assetUrl = getAssetUrl(fileName);
+          return `${attribute}="${assetUrl}"`;
+        });
+      }
+
+      async function buildSlideDocument(slide) {
+        const html = await slide.file.text();
+        const cssFile = fileByName.get("base.css");
+        if (!cssFile) return rewriteLocalAssetReferences(html);
+
+        const css = await cssFile.text();
+        const styleBlock = `<style>\n${css}\n</style>`;
+        const withInlineCss = html.replace(
+          /<link\s+[^>]*href=["']\.?\/?base\.css["'][^>]*>/i,
+          styleBlock
+        );
+
+        return rewriteLocalAssetReferences(withInlineCss);
+      }
+
+      function fitSlideToFrame() {
+        try {
+          const slideDocument = slideFrame.contentWindow.document;
+          const htmlElement = slideDocument.documentElement;
+          const bodyElement = slideDocument.body;
+          if (!htmlElement || !bodyElement) return;
+
+          if (slideDocument.querySelector("[data-ppt-react-slide]")) {
+            htmlElement.style.overflow = "hidden";
+            bodyElement.style.overflow = "hidden";
+            slideFrame.contentWindow.dispatchEvent(new Event("resize"));
+            bodyElement.dataset.deckFitScale = "react";
+            return;
+          }
+
+          bodyElement.style.transform = "none";
+          bodyElement.style.width = "";
+          bodyElement.style.minHeight = "";
+          bodyElement.style.transformOrigin = "top left";
+          htmlElement.style.overflow = "hidden";
+          bodyElement.style.overflow = "hidden";
+
+          const fixedCanvas = slideDocument.querySelector(".edu-root");
+          if (fixedCanvas && slideDocument.querySelector(".edu-shell")) {
+            const viewportWidth = slideFrame.clientWidth;
+            const viewportHeight = slideFrame.clientHeight;
+            const scale = Math.min(viewportWidth / 1920, viewportHeight / 1080);
+
+            htmlElement.style.width = "100%";
+            htmlElement.style.height = "100%";
+            bodyElement.style.width = "100%";
+            bodyElement.style.height = "100%";
+            bodyElement.style.margin = "0";
+            bodyElement.style.position = "relative";
+            bodyElement.style.background = "#111827";
+
+            fixedCanvas.style.setProperty("position", "absolute", "important");
+            fixedCanvas.style.setProperty("left", "50%", "important");
+            fixedCanvas.style.setProperty("top", "50%", "important");
+            fixedCanvas.style.setProperty("width", "1920px", "important");
+            fixedCanvas.style.setProperty("height", "1080px", "important");
+            fixedCanvas.style.setProperty("transform", `translate(-50%, -50%) scale(${scale})`, "important");
+            fixedCanvas.style.setProperty("transform-origin", "center center", "important");
+
+            slideDocument.body.dataset.deckFitScale = scale.toFixed(4);
+            return;
+          }
+
+          const viewportWidth = slideFrame.clientWidth;
+          const viewportHeight = slideFrame.clientHeight;
+          const contentWidth = Math.max(htmlElement.scrollWidth, bodyElement.scrollWidth, viewportWidth);
+          const contentHeight = Math.max(htmlElement.scrollHeight, bodyElement.scrollHeight, viewportHeight);
+          const scale = Math.min(viewportWidth / contentWidth, viewportHeight / contentHeight, 1);
+
+          bodyElement.style.transform = `scale(${scale})`;
+          bodyElement.style.width = `${100 / scale}%`;
+          bodyElement.style.minHeight = `${100 / scale}vh`;
+          slideDocument.body.dataset.deckFitScale = scale.toFixed(4);
+        } catch (error) {
+          // srcdoc slides are normally accessible; keep the deck usable if a browser blocks access.
+        }
+      }
+
+      function scheduleSlideFit() {
+        requestAnimationFrame(() => {
+          fitSlideToFrame();
+          setTimeout(fitSlideToFrame, 120);
+          setTimeout(fitSlideToFrame, 480);
+        });
+      }
+
+      function getSlideNumber(fileName) {
+        const match = fileName.match(/^(\d+)-/);
+        return match ? Number(match[1]) : Number.MAX_SAFE_INTEGER;
+      }
+
+      function formatSlideTitle(fileName) {
+        return decodeURIComponent(fileName)
+          .replace(/\.html$/i, "")
+          .replace(/^\d+-/, "")
+          .replace(/[-_]+/g, " ")
+          .trim();
+      }
+
+      function sortSlides(slideA, slideB) {
+        const numberA = getSlideNumber(slideA.fileName);
+        const numberB = getSlideNumber(slideB.fileName);
+        if (numberA !== numberB) return numberA - numberB;
+        return slideA.fileName.localeCompare(slideB.fileName, "zh-CN", { numeric: true });
+      }
+
+      function discoverSlidesFromFiles(fileList) {
+        revokeAssetUrls();
+        fileByName.clear();
+        Array.from(fileList).forEach((file) => {
+          fileByName.set(file.name.toLowerCase(), file);
+        });
+
+        const seen = new Set();
+
+        return Array.from(fileList)
+          .filter((file) => /^\d{2,}-.+\.html$/i.test(file.name))
+          .filter((file) => {
+            const key = file.name.toLowerCase();
+            if (seen.has(key)) return false;
+            seen.add(key);
+            return true;
+          })
+          .map((file) => {
+            return {
+              fileName: file.name,
+              title: formatSlideTitle(file.name),
+              file
+            };
+          })
+          .sort(sortSlides);
+      }
+
+      function loadFolderFiles(fileList) {
+        slides = discoverSlidesFromFiles(fileList);
+        currentIndex = 0;
+        renderList();
+        showSlide(0);
+      }
+
+      async function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+          await deckRoot.requestFullscreen();
+        } else {
+          await document.exitFullscreen();
+        }
+      }
+
+      prevBtn.addEventListener("click", prevSlide);
+      nextBtn.addEventListener("click", nextSlide);
+      fullscreenBtn.addEventListener("click", toggleFullscreen);
+      chooseFolderBtn.addEventListener("click", () => folderInput.click());
+      folderInput.addEventListener("change", () => loadFolderFiles(folderInput.files));
+      loadBuiltInBtn.addEventListener("click", () => {
+        slides = [...builtInSlides];
+        currentIndex = 0;
+        renderList();
+        showSlide(0);
+      });
+
+      document.addEventListener("fullscreenchange", () => {
+        const isFullscreen = Boolean(document.fullscreenElement);
+        deckRoot.classList.toggle("is-fullscreen", isFullscreen);
+        fullscreenBtn.textContent = isFullscreen ? "×" : "⛶";
+        fullscreenBtn.title = isFullscreen ? "退出全屏" : "全屏";
+        fullscreenBtn.setAttribute("aria-label", fullscreenBtn.title);
+        scheduleSlideFit();
+      });
+
+      function handleDeckKeydown(event) {
+        const tagName = event.target.tagName;
+        if (["INPUT", "TEXTAREA", "SELECT"].includes(tagName)) return;
+
+        if (event.key === "ArrowRight" || event.key === "ArrowDown" || event.key === "PageDown" || event.key === " ") {
+          event.preventDefault();
+          nextSlide();
+        }
+
+        if (event.key === "ArrowLeft" || event.key === "ArrowUp" || event.key === "PageUp") {
+          event.preventDefault();
+          prevSlide();
+        }
+
+        if (event.key === "Home") {
+          event.preventDefault();
+          showSlide(0);
+        }
+
+        if (event.key === "End") {
+          event.preventDefault();
+          showSlide(slides.length - 1);
+        }
+      }
+
+      slideFrame.addEventListener("load", () => {
+        try {
+          slideFrame.contentWindow.document.addEventListener("keydown", handleDeckKeydown);
+        } catch (error) {
+          // Some browsers restrict file iframe access; parent-level shortcuts still work.
+        }
+        scheduleSlideFit();
+      });
+
+      document.addEventListener("keydown", handleDeckKeydown);
+      window.addEventListener("resize", scheduleSlideFit);
+
+      function initDeck() {
+        renderList();
+        showSlide(0);
+      }
+
+      initDeck();
+    </script>
+  </body>
+</html>

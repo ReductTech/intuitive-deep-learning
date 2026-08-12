@@ -83,7 +83,7 @@ function FillTitle({ title, blanks, fields, onChange }: { title: ReactNode; blan
   if (typeof title !== 'string') return <>{title}{input(0)}</>;
   const parts = title.split('____');
   if (parts.length === 1) return <>{title}{input(0)}</>;
-  return <>{parts.map((part, index) => <Typography as="span" variant="inherit" tone="inherit" key={index}>{part}{index < parts.length - 1 && input(index)}</Typography>)}</>;
+  return <>{parts.map((part, index) => <span key={index}>{part}{index < parts.length - 1 && input(index)}</span>)}</>;
 }
 
 function inlineBlankCount(title: ReactNode) {
@@ -108,8 +108,8 @@ function optionFeedback(
     ...missed.map((option) => ({ prefix: `漏选 ${optionKey(option)}：`, message: option.missedFeedback })),
   ].filter((detail) => detail.message !== undefined && detail.message !== null && detail.message !== false && detail.message !== '');
   if (!details.length) return fallback;
-  if (details.length === 1) return <><Typography as="strong" variant="inherit" tone="inherit">{details[0].prefix}</Typography>{details[0].message}</>;
-  return <ul className="dl-question-feedback-list">{details.map((detail, index) => <Typography as="li" variant="bodySmall" tone="inherit" key={index}><Typography as="strong" variant="inherit" tone="inherit">{detail.prefix}</Typography>{detail.message}</Typography>)}</ul>;
+  if (details.length === 1) return <><strong>{details[0].prefix}</strong>{details[0].message}</>;
+  return <ul className="dl-question-feedback-list">{details.map((detail, index) => <Typography as="li" variant="bodySmall" tone="inherit" key={index}><strong>{detail.prefix}</strong>{detail.message}</Typography>)}</ul>;
 }
 
 function typeLabel(type: QuestionType, multiple: boolean) {
@@ -328,10 +328,10 @@ export function Question({
       }}
     >
       <header className="dl-question-head">
-        <Typography as="span" variant="label" tone="accent" className="dl-question-type">{label ?? typeLabel(normalizedType, multiple)}</Typography>
+        <Typography as="span" variant="bodySmall" tone="accent" className="dl-question-type">{label ?? typeLabel(normalizedType, multiple)}</Typography>
         <div className="dl-question-title-row">
-          <Typography as="strong" variant="label" className="dl-question-stem">{normalizedType === 'fill' ? <FillTitle title={title} blanks={blanks.length ? blanks : [{ placeholder: '填写答案' }]} fields={fields} onChange={(index, value) => { setFields((current) => { const next = [...current]; next[index] = value; return next; }); setResult(null); }} /> : title}</Typography>
-          {!instant && <button className="edu-btn edu-btn--primary dl-question-submit" type="button" disabled={isReviewing} aria-busy={isReviewing} onClick={() => void submit()}><Typography as="span" variant="inherit" tone="inherit">{isReviewing ? '正在分析' : submitText}</Typography></button>}
+          <Typography as="strong" variant="bodySmall" className="dl-question-stem">{normalizedType === 'fill' ? <FillTitle title={title} blanks={blanks.length ? blanks : [{ placeholder: '填写答案' }]} fields={fields} onChange={(index, value) => { setFields((current) => { const next = [...current]; next[index] = value; return next; }); setResult(null); }} /> : title}</Typography>
+          {!instant && <button className="edu-btn edu-btn--primary dl-question-submit" type="button" disabled={isReviewing} aria-busy={isReviewing} onClick={() => void submit()}><span>{isReviewing ? '正在分析' : submitText}</span></button>}
         </div>
       </header>
 
@@ -353,15 +353,15 @@ export function Question({
                 aria-pressed={isSelected}
                 onClick={() => void choose(value)}
               >
-                <Typography as="span" variant="code" tone="inherit" className="dl-option-key">{option.key ?? String.fromCharCode(65 + index)}</Typography>
-                <Typography as="span" variant="label" tone="inherit" className="dl-option-body">{option.label}</Typography>
+                <Typography as="span" variant="bodySmall" tone="inherit" className="dl-option-key">{option.key ?? String.fromCharCode(65 + index)}</Typography>
+                <Typography as="span" variant="bodySmall" tone="inherit" className="dl-option-body">{option.label}</Typography>
               </button>
             );
           })}
         </div>
       )}
 
-      {normalizedType === 'fill' && blanks.length > inlineBlanks && <div className="dl-question-fields">{blanks.slice(inlineBlanks).map((blank, index) => <label className="dl-question-field" key={index}><Typography as="span" variant="label" tone="accent">{blank.label}</Typography><input type="text" value={fields[index + inlineBlanks] ?? ''} placeholder={blank.placeholder} autoComplete="off" data-role="question-answer" onChange={(event) => { setFields((current) => { const next = [...current]; next[index + inlineBlanks] = event.target.value; return next; }); setResult(null); }} /></label>)}</div>}
+      {normalizedType === 'fill' && blanks.length > inlineBlanks && <div className="dl-question-fields">{blanks.slice(inlineBlanks).map((blank, index) => <label className="dl-question-field" key={index}><Typography as="span" variant="bodySmall" tone="accent">{blank.label}</Typography><input type="text" value={fields[index + inlineBlanks] ?? ''} placeholder={blank.placeholder} autoComplete="off" data-role="question-answer" onChange={(event) => { setFields((current) => { const next = [...current]; next[index + inlineBlanks] = event.target.value; return next; }); setResult(null); }} /></label>)}</div>}
 
       {normalizedType === 'short' && (
         <div className="dl-question-fields">

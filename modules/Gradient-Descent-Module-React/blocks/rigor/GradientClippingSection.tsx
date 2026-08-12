@@ -45,7 +45,7 @@ export function GradientClippingSection() {
         <MathFormulaTerm latex="\tilde{\boldsymbol g}" tooltip="用裁剪后的梯度替代原始梯度进行更新。" ariaLabel="裁剪后的梯度" />
       </MathFormulaBlock>
 
-      <Typography variant="caption" tone="muted">
+      <Typography variant="bodySmall" tone="muted">
         梯度裁剪是训练稳定性的保障措施，不是优化算法的核心组成部分。它与动量法、学习率调度、自适应方法等均可组合使用。现代框架（PyTorch、TensorFlow）提供一行 API 即可启用。
       </Typography>
     </section>

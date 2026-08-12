@@ -50,7 +50,7 @@ export const LessonStage = forwardRef<HTMLElement, LessonStageProps>(function Le
       {hasHeader && (
         <header className="edu-stage-head">
           <div className="edu-stage-copy">
-            {kicker !== undefined && <Typography as="span" variant="label" tone="accent" className="edu-kicker">{kicker}</Typography>}
+            {kicker !== undefined && <Typography as="span" variant="bodySmall" tone="accent" className="edu-kicker">{kicker}</Typography>}
             {title !== undefined && <Typography as={Heading} variant={headingVariant} tone="accent" className="edu-stage-title">{title}</Typography>}
             {description !== undefined && <Typography variant="bodySmall" tone="muted" className="edu-stage-description">{description}</Typography>}
           </div>

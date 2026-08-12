@@ -42,12 +42,32 @@ import { MomentumBlock } from '../../modules/Adaptive-Learning-Rate-Module/block
 import { AdaGradBlock } from '../../modules/Adaptive-Learning-Rate-Module/blocks/AdaGradBlock';
 import { AdamBlock } from '../../modules/Adaptive-Learning-Rate-Module/blocks/AdamBlock';
 import { AdaptiveLearningRateLessonFooter } from '../../modules/Adaptive-Learning-Rate-Module/blocks/AdaptiveLearningRateLessonFooter';
+import { BiasThresholdTheoryBlock } from '../../modules/Neuron-Guide-React/blocks/BiasThresholdTheoryBlock';
+import { BiologicalNeuronBlock } from '../../modules/Neuron-Guide-React/blocks/BiologicalNeuronBlock';
+import { ExtraInputsBlock } from '../../modules/Neuron-Guide-React/blocks/ExtraInputsBlock';
+import { DecisionBridgeBlock } from '../../modules/Neuron-Guide-React/blocks/DecisionBridgeBlock';
+import { NematodeResponseBlock } from '../../modules/Neuron-Guide-React/blocks/NematodeResponseBlock';
+import { NeuronLessonFooter } from '../../modules/Neuron-Guide-React/blocks/NeuronLessonFooter';
+import { SignalDiscoveryBlock } from '../../modules/Neuron-Guide-React/blocks/SignalDiscoveryBlock';
+import { WeightedSumBlock } from '../../modules/Neuron-Guide-React/blocks/WeightedSumBlock';
+import { WeightedContributionTheoryBlock } from '../../modules/Neuron-Guide-React/blocks/WeightedContributionTheoryBlock';
+import { NeuronLessonProvider } from '../../modules/Neuron-Guide-React/model/NeuronLessonContext';
+import { NeuronPptSlidePage } from '../../modules/Neuron-Guide-React/NeuronPptSlidePage';
 import { BlockPreview } from './BlockPreview';
 import { UiKitPage } from '../../modules/shared/react/routing/UiKitPage';
 import { AppLink, type AppRoute } from './Router';
 import { migratedModules } from './modules';
 
 const blockPreviews = [
+  { id: 'neuron-nematode-response', group: '认识人工神经元', title: '秀丽隐杆线虫的刺激反应', description: '从 302 个神经元怎样形成刺激反应建立课程问题。', path: '/dev/blocks/neuron-guide-react/nematode-response' },
+  { id: 'neuron-biological-structure', group: '认识人工神经元', title: '生物神经元结构', description: '使用 3D 模型与结构图追踪典型信号方向。', path: '/dev/blocks/neuron-guide-react/biological-structure' },
+  { id: 'neuron-decision-bridge', group: '认识人工神经元', title: '决策案例过渡', description: '说明为什么多因素决定适合展示多输入汇总。', path: '/dev/blocks/neuron-guide-react/decision-bridge' },
+  { id: 'neuron-signal-discovery', group: '认识人工神经元', title: '发现多个输入信号', description: '从一个日常决定中辨认需要同时汇总的多个信号。', path: '/dev/blocks/neuron-guide-react/signal-discovery' },
+  { id: 'neuron-weighted-sum', group: '认识人工神经元', title: '权重与加权和', description: '固定输入并改变权重，观察单项贡献和总分。', path: '/dev/blocks/neuron-guide-react/weighted-sum' },
+  { id: 'neuron-extra-inputs', group: '认识人工神经元', title: '补充其他输入', description: '为同一个决定填写另外两个输入信号。', path: '/dev/blocks/neuron-guide-react/extra-inputs' },
+  { id: 'neuron-weighted-contribution', group: '认识人工神经元', title: '单项加权贡献', description: '定义输入、权重与单项贡献的数学关系。', path: '/dev/blocks/neuron-guide-react/weighted-contribution' },
+  { id: 'neuron-bias-theory', group: '认识人工神经元', title: '偏置：把判断门槛写进公式', description: '将判断门槛移入加权和，并统一与 0 比较。', path: '/dev/blocks/neuron-guide-react/bias-theory' },
+  { id: 'neuron-ending', group: '认识人工神经元', title: '课程结尾', description: '总结人工神经元的输入、权重、求和与偏置。', path: '/dev/blocks/neuron-guide-react/ending' },
   { id: 'adaptive-lr-why', group: '优化器如何调整步伐', title: '为什么需要优化器', description: '比较过大与过小的固定学习率，观察震荡和缓慢收敛。', path: '/dev/blocks/adaptive-learning-rate/why-optimizer' },
   { id: 'adaptive-lr-sgd', group: '优化器如何调整步伐', title: 'SGD', description: '对比 Full Batch 的平滑路线与 SGD 的蛇形路线。', path: '/dev/blocks/adaptive-learning-rate/sgd' },
   { id: 'adaptive-lr-momentum', group: '优化器如何调整步伐', title: 'Momentum', description: '观察方向记忆如何减少随机梯度带来的左右摇摆。', path: '/dev/blocks/adaptive-learning-rate/momentum' },
@@ -96,12 +116,52 @@ function HomePage() {
       <ContentBlock title="Shared UI Kit" subtitle="检查所有共享组件、流程控制、题型和课程结尾样式。">
         <AppLink className="app-ui-kit-card" to="/shared/ui-kit"><span className="edu-badge">设计系统</span><strong>打开 Shared UI Kit</strong><span>统一查看基础展示、控件、提示、流程控制、考试题型和课程结尾。</span><em>进入 UI Kit →</em></AppLink>
       </ContentBlock>
+      <ContentBlock title="Web PPT" subtitle="在独立播放器中加载并播放 React 课件或本地 PPT 网页。">
+        <a className="app-ui-kit-card" href="/web_ppt/"><span className="edu-badge">演示入口</span><strong>打开 Web PPT</strong><span>进入空白播放器后，自行选择内置课件或本地课件文件夹。</span><em>进入播放器 →</em></a>
+      </ContentBlock>
     </ModuleShell>
   );
 }
 
 function NumberLinePreview() {
   return <BlockPreview title="数轴距离">{({ complete }) => <NumberLineBlock onComplete={complete} />}</BlockPreview>;
+}
+
+function NeuronSignalDiscoveryPreview() {
+  return <BlockPreview title="发现多个输入信号" contentClassName="ng-react-shell">{({ complete }) => <NeuronLessonProvider><SignalDiscoveryBlock onComplete={complete} /></NeuronLessonProvider>}</BlockPreview>;
+}
+
+function NeuronNematodeResponsePreview() {
+  return <BlockPreview title="秀丽隐杆线虫的刺激反应" contentClassName="ng-react-shell">{() => <NeuronLessonProvider><NematodeResponseBlock /></NeuronLessonProvider>}</BlockPreview>;
+}
+
+function NeuronBiologicalStructurePreview() {
+  return <BlockPreview title="生物神经元结构" contentClassName="ng-react-shell">{() => <NeuronLessonProvider><BiologicalNeuronBlock /></NeuronLessonProvider>}</BlockPreview>;
+}
+
+
+function NeuronDecisionBridgePreview() {
+  return <BlockPreview title="决策案例过渡" contentClassName="ng-react-shell">{() => <NeuronLessonProvider><DecisionBridgeBlock /></NeuronLessonProvider>}</BlockPreview>;
+}
+
+function NeuronBiasTheoryPreview() {
+  return <BlockPreview title="偏置：把判断门槛写进公式" contentClassName="ng-react-shell">{() => <NeuronLessonProvider><BiasThresholdTheoryBlock /></NeuronLessonProvider>}</BlockPreview>;
+}
+
+function NeuronWeightedSumPreview() {
+  return <BlockPreview title="权重与加权和" contentClassName="ng-react-shell">{({ complete }) => <NeuronLessonProvider><WeightedSumBlock onComplete={complete} /></NeuronLessonProvider>}</BlockPreview>;
+}
+
+function NeuronExtraInputsPreview() {
+  return <BlockPreview title="补充其他输入" contentClassName="ng-react-shell">{({ complete }) => <NeuronLessonProvider><ExtraInputsBlock onComplete={complete} /></NeuronLessonProvider>}</BlockPreview>;
+}
+
+function NeuronWeightedContributionPreview() {
+  return <BlockPreview title="多个输入的加权求和" contentClassName="ng-react-shell">{() => <NeuronLessonProvider><WeightedContributionTheoryBlock /></NeuronLessonProvider>}</BlockPreview>;
+}
+
+function NeuronEndingPreview() {
+  return <BlockPreview title="课程结尾" contentClassName="ng-react-shell">{() => <NeuronLessonFooter />}</BlockPreview>;
 }
 
 function CalculationPreview() {
@@ -279,7 +339,18 @@ function AdaptiveLearningRateEndingPreview() {
 export const appRoutes: AppRoute[] = [
   { path: '/', element: <HomePage /> },
   { path: '/shared/ui-kit', element: <UiKitPage /> },
+  { path: '/web-ppt/neuron', element: <NeuronPptSlidePage /> },
+  { path: '/web_ppt/slide.html', element: <NeuronPptSlidePage /> },
   ...migratedModules.map(({ path, element }) => ({ path, element })),
+  { path: '/dev/blocks/neuron-guide-react/nematode-response', element: <NeuronNematodeResponsePreview /> },
+  { path: '/dev/blocks/neuron-guide-react/biological-structure', element: <NeuronBiologicalStructurePreview /> },
+  { path: '/dev/blocks/neuron-guide-react/decision-bridge', element: <NeuronDecisionBridgePreview /> },
+  { path: '/dev/blocks/neuron-guide-react/signal-discovery', element: <NeuronSignalDiscoveryPreview /> },
+  { path: '/dev/blocks/neuron-guide-react/weighted-sum', element: <NeuronWeightedSumPreview /> },
+  { path: '/dev/blocks/neuron-guide-react/extra-inputs', element: <NeuronExtraInputsPreview /> },
+  { path: '/dev/blocks/neuron-guide-react/weighted-contribution', element: <NeuronWeightedContributionPreview /> },
+  { path: '/dev/blocks/neuron-guide-react/bias-theory', element: <NeuronBiasTheoryPreview /> },
+  { path: '/dev/blocks/neuron-guide-react/ending', element: <NeuronEndingPreview /> },
   { path: '/dev/blocks/adaptive-learning-rate/why-optimizer', element: <WhyOptimizerPreview /> },
   { path: '/dev/blocks/adaptive-learning-rate/sgd', element: <SgdPreview /> },
   { path: '/dev/blocks/adaptive-learning-rate/momentum', element: <MomentumPreview /> },

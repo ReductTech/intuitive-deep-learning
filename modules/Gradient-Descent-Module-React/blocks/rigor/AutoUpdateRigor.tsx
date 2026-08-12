@@ -39,7 +39,7 @@ export function ChainRuleSection() {
         <MathFormulaTerm latex="j\in\{1,2\}" tooltip="本阶段仅有两个输出层权重，因此 j 取 1 或 2。" ariaLabel="j 属于一和二" />
       </MathFormulaBlock>
       <Typography variant="bodySmall">当前 y &lt; GT，所以 ∂L/∂y = −1；与 h₁ = 3、h₂ = 1 相乘后，两个权重的梯度分别为 −3 和 −1。更新规则减去负梯度，因此两个权重都会增大。</Typography>
-      <Typography variant="caption" tone="muted">严格地说，L1 Loss 在 y = GT 处不可导；此时可使用区间 [−1, 1] 内的次梯度。本演示在 Loss 足够小时停止更新，避免在折点附近反复跳动。</Typography>
+      <Typography variant="bodySmall" tone="muted">严格地说，L1 Loss 在 y = GT 处不可导；此时可使用区间 [−1, 1] 内的次梯度。本演示在 Loss 足够小时停止更新，避免在折点附近反复跳动。</Typography>
       <MathFormulaBlock ariaLabel="当前关于 v1 和 v2 的梯度向量等于负三和负一，下一步参数等于当前参数减学习率乘梯度">
         <MathFormulaTerm latex="\nabla_{\boldsymbol v}L" tooltip="损失关于两个输出层权重的梯度向量。" ariaLabel="损失关于输出层权重的梯度" />
         <MathFormulaStatic latex="=" />
@@ -89,7 +89,7 @@ export function LearningRateSection() {
       </MathFormulaBlock>
       <Typography variant="bodySmall">上式省略了参数步长的二阶及更高阶项，所以它只在局部成立。学习率过大时，高阶项不再可以忽略；这正是“方向算对了，Loss 仍可能上升”的数学原因。</Typography>
       <section className="gd-react-worked-example" aria-labelledby="gd-rate-example-title">
-        <Typography as="h4" variant="label" tone="accent" id="gd-rate-example-title">小例子：同一个梯度方向，步长不同会得到相反结果</Typography>
+        <Typography as="h4" variant="bodySmall" tone="accent" id="gd-rate-example-title">小例子：同一个梯度方向，步长不同会得到相反结果</Typography>
         <Typography variant="bodySmall">考虑最简单的一维目标 J(x)=x²/2。当前位置 x=4 时，梯度 J′(x)=x=4，负梯度方向指向更小的 x。</Typography>
         <MathFormulaBlock ariaLabel="目标函数 J x 等于二分之一 x 平方，在 x 等于四时梯度等于四，目标值等于八">
           <MathFormulaTerm latex="J(x)" tooltip="用于演示学习率作用的一维二次目标函数。" ariaLabel="一维目标函数 J x" />
@@ -137,7 +137,7 @@ export function LearningRateSection() {
         <MathFormulaStatic latex="," />
         <MathFormulaTerm latex="\eta(t)=\eta_0(\beta t+1)^{-\alpha}" tooltip="多项式衰减：学习率按幂函数减小，α 与 β 决定曲线形状。" ariaLabel="多项式衰减学习率" tone="warm" />
       </MathFormulaBlock>
-      <Typography variant="caption" tone="muted">学习率下降过快会让参数在到达合适区域前几乎停止；下降过慢则可能使随机梯度噪声长期主导更新。深度网络通常只能在给定假设和训练配置下讨论收敛，不能由某一种调度公式无条件保证。</Typography>
+      <Typography variant="bodySmall" tone="muted">学习率下降过快会让参数在到达合适区域前几乎停止；下降过慢则可能使随机梯度噪声长期主导更新。深度网络通常只能在给定假设和训练配置下讨论收敛，不能由某一种调度公式无条件保证。</Typography>
     </section>
   );
 }

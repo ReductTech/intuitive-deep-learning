@@ -49,7 +49,7 @@ export function LikelihoodSection() {
           <MathFormulaTerm latex="\sum_{i=1}^{m}|e_i|" tooltip="全部样本绝对残差之和，因此固定尺度拉普拉斯噪声导出平均绝对误差形式。" ariaLabel="样本绝对误差之和" />
         </MathFormulaBlock>
       </div>
-      <Typography variant="caption" tone="muted">这里的“概率”对连续标签严格说是概率密度。常数 C 与参数 θ 无关，删除它不会改变最优参数；若噪声尺度也参与学习，则相应的对数尺度项不能被当作常数省略。</Typography>
+      <Typography variant="bodySmall" tone="muted">这里的“概率”对连续标签严格说是概率密度。常数 C 与参数 θ 无关，删除它不会改变最优参数；若噪声尺度也参与学习，则相应的对数尺度项不能被当作常数省略。</Typography>
     </section>
   );
 }

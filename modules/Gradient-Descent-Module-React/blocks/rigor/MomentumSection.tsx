@@ -56,7 +56,7 @@ export function MomentumSection() {
       </div>
 
       <section className="gd-react-worked-example" aria-labelledby="gd-momentum-example-title">
-        <Typography as="h4" variant="label" tone="accent" id="gd-momentum-example-title">
+        <Typography as="h4" variant="bodySmall" tone="accent" id="gd-momentum-example-title">
           小例子：动量如何抑制震荡
         </Typography>
         <Typography variant="bodySmall">
@@ -76,7 +76,7 @@ export function MomentumSection() {
         需要特别指出的是：动量法是关于<strong>更新规则</strong>的改进，与损失函数的选择无关——它可以与 L1、L2、交叉熵、小批量 SGD 等任何损失和采样方式结合使用。它也不改变梯度的数学定义，只改变「用梯度来更新参数」的方式。
       </Typography>
 
-      <Typography variant="caption" tone="muted">
+      <Typography variant="bodySmall" tone="muted">
         动量法的一个变体是 Nesterov 加速梯度：先沿当前速度方向迈出一小步，在那一步的位置计算梯度，再做正式更新——相当于「先看一眼前方再决定」。工程实践中，Adam 等自适应优化器已将动量思想内嵌，是一个单独的教学模块。
       </Typography>
     </section>

@@ -16,7 +16,7 @@ export function AdvancedSection() {
       {/* 凸性与收敛 */}
       <details className="gd-react-advanced-details">
         <summary>
-          <Typography as="h4" variant="label" tone="accent">
+          <Typography as="h4" variant="bodySmall" tone="accent">
             凸性：什么时候梯度下降保证找到全局最优
           </Typography>
         </summary>
@@ -59,7 +59,7 @@ export function AdvancedSection() {
       {/* SGD 收敛性 */}
       <details className="gd-react-advanced-details">
         <summary>
-          <Typography as="h4" variant="label" tone="accent">
+          <Typography as="h4" variant="bodySmall" tone="accent">
             SGD 的收敛性：为什么学习率必须衰减
           </Typography>
         </summary>
@@ -84,7 +84,7 @@ export function AdvancedSection() {
             这个 O(1/√T) 速率解释了工程中的两条经验法则：① 学习率必须随训练推进而衰减（否则无法收敛）；② 衰减太快会导致过早停滞，衰减太慢会导致长期震荡。多项式衰减（ηₜ ∝ 1/√t）在凸问题中匹配理论最优速率。
           </Typography>
 
-          <Typography variant="caption" tone="muted">
+          <Typography variant="bodySmall" tone="muted">
             以上分析依赖凸性和梯度有界等强假设。深度网络的非凸性质使得这些结论不能直接应用，但它们为理解 SGD 的行为提供了重要的定性框架。
           </Typography>
         </div>
@@ -93,7 +93,7 @@ export function AdvancedSection() {
       {/* Adam 桥接 */}
       <details className="gd-react-advanced-details">
         <summary>
-          <Typography as="h4" variant="label" tone="accent">
+          <Typography as="h4" variant="bodySmall" tone="accent">
             从 SGD 到 Adam：优化器的演化主线
           </Typography>
         </summary>
@@ -156,7 +156,7 @@ export function AdvancedSection() {
       {/* Nesterov */}
       <details className="gd-react-advanced-details">
         <summary>
-          <Typography as="h4" variant="label" tone="accent">
+          <Typography as="h4" variant="bodySmall" tone="accent">
             Nesterov 加速梯度：「先看一眼前方再迈步」
           </Typography>
         </summary>
@@ -179,7 +179,7 @@ export function AdvancedSection() {
             直觉上：标准动量相当于一个盲人顺着惯性往下走，边走边感知坡度；Nesterov 相当于「先顺着惯性迈一步，停下来感受坡度，再调整」。当速度方向与真实梯度方向不完全一致时，前瞻能够提前修正。
           </Typography>
 
-          <Typography variant="caption" tone="muted">
+          <Typography variant="bodySmall" tone="muted">
             在凸目标上，Nesterov 方法有理论上的最优收敛速率 O(1/T²)（对比标准 GD 的 O(1/T)）。但深度网络的非凸性质削弱了这一优势，实践中 NAG 与标准动量的差异通常不大。主流框架中 NAG 作为 SGD 的一个可选参数（momentum + nesterov=True）提供。
           </Typography>
         </div>
@@ -188,7 +188,7 @@ export function AdvancedSection() {
       {/* Warmup */}
       <details className="gd-react-advanced-details">
         <summary>
-          <Typography as="h4" variant="label" tone="accent">
+          <Typography as="h4" variant="bodySmall" tone="accent">
             学习率 Warmup：给训练一个「热身期」
           </Typography>
         </summary>
@@ -209,7 +209,7 @@ export function AdvancedSection() {
             现代训练管线（尤其是 Transformer 架构）几乎标配 warmup。典型设置：W = 4000 步，之后切换到余弦衰减或线性衰减。warmup 与梯度裁剪互为补充——前者从步长角度保护初期训练，后者从梯度范数角度防止单步异常。
           </Typography>
 
-          <Typography variant="caption" tone="muted">
+          <Typography variant="bodySmall" tone="muted">
             warmup 的理论解释仍在活跃研究中：一种观点认为初期的大梯度方差使自适应优化器的二阶矩估计不可靠，warmup 给二阶矩足够的时间累积到有意义的尺度。
           </Typography>
         </div>

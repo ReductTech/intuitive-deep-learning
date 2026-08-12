@@ -63,12 +63,6 @@ const typographyVariants: Array<{
   { variant: 'subtitle', label: '副标题', usage: '紧跟标题解释当前学习目标', sample: '拖动参数，观察训练过程如何改变。' },
   { variant: 'body', label: '正文', usage: '主要解释、结论和教学文案', sample: '学习率决定模型每次更新参数时迈出多大一步。' },
   { variant: 'bodySmall', label: '小正文', usage: '紧凑面板、控件附近的补充说明', sample: '真实结果仍需结合验证集表现判断。' },
-  { variant: 'label', label: '标签', usage: '表单、指标和状态名称', sample: '当前学习率' },
-  { variant: 'caption', label: '说明文字', usage: '图注、来源和低优先级帮助', sample: '数值保留三位小数' },
-  { variant: 'button', label: '按钮文字', usage: 'Button 等操作组件内部使用', sample: '继续学习' },
-  { variant: 'numeric', label: '关键数值', usage: '损失、准确率和动态读数', sample: '92.40%' },
-  { variant: 'code', label: '代码文字', usage: '变量、短代码和等宽文本', sample: 'learning_rate = 0.001' },
-  { variant: 'inherit', label: '继承', usage: '需要完整继承父组件文字样式时使用', sample: '继承父组件的排版' },
 ];
 
 const typographyTones: Array<{ tone: TypographyTone; label: string; usage: string }> = [
@@ -98,12 +92,12 @@ export function UiKitPage() {
           </header>
           <div className="kit-font-family-grid">
             <div>
-              <Typography variant="label" tone="muted">--ui-font-sans</Typography>
+              <Typography variant="bodySmall" tone="muted">--ui-font-sans</Typography>
               <Typography variant="h3">中文教学文字 Aa 123</Typography>
             </div>
             <div>
-              <Typography variant="label" tone="muted">--ui-font-mono</Typography>
-              <Typography variant="code">Loss = 0.024 · epoch_12</Typography>
+              <Typography variant="bodySmall" tone="muted">--ui-font-mono</Typography>
+              <Typography as="code" variant="bodySmall">Loss = 0.024 · epoch_12</Typography>
             </div>
           </div>
         </article>
@@ -117,9 +111,9 @@ export function UiKitPage() {
             {typographyVariants.map(({ variant, label, usage, sample }) => (
               <div className="kit-type-entry" key={variant}>
                 <div className="kit-type-meta">
-                  <Typography variant="label">{variant}</Typography>
-                  <Typography variant="caption" tone="muted">{label} · 默认 &lt;{String(typographyVariantMapping[variant])}&gt;</Typography>
-                  <Typography variant="caption" tone="light">{usage}</Typography>
+                  <Typography as="strong" variant="bodySmall">{variant}</Typography>
+                  <Typography variant="bodySmall" tone="muted">{label} · 默认 &lt;{String(typographyVariantMapping[variant])}&gt;</Typography>
+                  <Typography variant="bodySmall" tone="light">{usage}</Typography>
                 </div>
                 <Typography as="p" variant={variant}>{sample}</Typography>
               </div>
@@ -136,7 +130,7 @@ export function UiKitPage() {
             {typographyTones.map(({ tone, label, usage }) => (
               <div className="kit-tone-entry" key={tone}>
                 <Typography variant="body" tone={tone}>{label}</Typography>
-                <Typography variant="caption" tone="muted">{tone} · {usage}</Typography>
+                <Typography variant="bodySmall" tone="muted">{tone} · {usage}</Typography>
               </div>
             ))}
           </div>
@@ -153,10 +147,10 @@ export function UiKitPage() {
             <Typography variant="bodySmall" align="end">align="end"</Typography>
           </div>
           <div className="kit-wrap-grid">
-            <div><Typography variant="label" tone="muted">normal</Typography><Typography variant="bodySmall" wrap="normal">普通换行适合连续正文，这段内容会按照容器宽度自然进入下一行。</Typography></div>
-            <div><Typography variant="label" tone="muted">balance</Typography><Typography variant="h3" wrap="balance">平衡换行让多行标题的长度更加接近</Typography></div>
-            <div><Typography variant="label" tone="muted">nowrap</Typography><Typography variant="bodySmall" wrap="nowrap">保持单行，不裁切内容</Typography></div>
-            <div><Typography variant="label" tone="muted">truncate</Typography><Typography variant="bodySmall" wrap="truncate">单行空间不足时截断，并在结尾显示省略号</Typography></div>
+            <div><Typography as="strong" variant="bodySmall" tone="muted">normal</Typography><Typography variant="bodySmall" wrap="normal">普通换行适合连续正文，这段内容会按照容器宽度自然进入下一行。</Typography></div>
+            <div><Typography as="strong" variant="bodySmall" tone="muted">balance</Typography><Typography variant="h3" wrap="balance">平衡换行让多行标题的长度更加接近</Typography></div>
+            <div><Typography as="strong" variant="bodySmall" tone="muted">nowrap</Typography><Typography variant="bodySmall" wrap="nowrap">保持单行，不裁切内容</Typography></div>
+            <div><Typography as="strong" variant="bodySmall" tone="muted">truncate</Typography><Typography variant="bodySmall" wrap="truncate">单行空间不足时截断，并在结尾显示省略号</Typography></div>
           </div>
         </article>
 
@@ -167,7 +161,7 @@ export function UiKitPage() {
           </header>
           <div className="kit-type-guide-grid">
             <section>
-              <Typography as="h4" variant="label">独立文字</Typography>
+              <Typography as="h4" variant="h3">独立文字</Typography>
               <pre className="kit-code-sample"><code>{`<Typography variant="h2">
   当前训练状态
 </Typography>
@@ -177,7 +171,7 @@ export function UiKitPage() {
 </Typography>`}</code></pre>
             </section>
             <section>
-              <Typography as="h4" variant="label">Shared 组件文字</Typography>
+              <Typography as="h4" variant="h3">Shared 组件文字</Typography>
               <pre className="kit-code-sample"><code>{`<ModuleShell
   title="超参数与搜索策略"
   subtitle="观察参数如何影响训练"
@@ -186,11 +180,11 @@ export function UiKitPage() {
 <Button>继续学习</Button>`}</code></pre>
             </section>
             <section>
-              <Typography as="h4" variant="label">自定义现有样式</Typography>
+              <Typography as="h4" variant="h3">自定义现有样式</Typography>
               <Typography variant="bodySmall" tone="muted">在 <code>typography.css</code> 中修改对应的 <code>--ui-type-*</code> token，不在模块 CSS 中重写字号、字重或行高。</Typography>
             </section>
             <section>
-              <Typography as="h4" variant="label">新增文字等级</Typography>
+              <Typography as="h4" variant="h3">新增文字等级</Typography>
               <ol className="kit-type-steps">
                 <li>确认现有 variant 无法表达真实且可复用的语义。</li>
                 <li>向 TypographyVariant 和默认标签映射加入名称。</li>

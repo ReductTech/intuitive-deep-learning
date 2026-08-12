@@ -40,7 +40,7 @@ export function LessonFooter({
     <footer className={classNames('edu-lesson-footer', className)}>
       <div className="edu-lesson-footer-main">
         <div className="edu-lesson-footer-copy">
-          <Typography as="span" variant="label" tone="accent" className="edu-kicker">{eyebrow}</Typography>
+          <Typography as="span" variant="bodySmall" tone="accent" className="edu-kicker">{eyebrow}</Typography>
           <Typography as="h3" variant="display">{title}</Typography>
           {description && <Typography variant="body" tone="muted">{description}</Typography>}
         </div>
@@ -53,7 +53,7 @@ export function LessonFooter({
       </div>
       {videos.length > 0 && (
         <div className="edu-lesson-footer-resources">
-          <Typography as="span" variant="label" tone="muted">{videosLabel}</Typography>
+          <Typography as="span" variant="bodySmall" tone="muted">{videosLabel}</Typography>
           <RelatedVideos videos={videos} showHeader={false} ariaLabel="延伸观看资源" />
         </div>
       )}

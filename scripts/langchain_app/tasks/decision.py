@@ -6,6 +6,7 @@ from typing import Any, Literal
 from ..dependencies import load_parts
 from ..structured import run_structured
 from .common import optional_text, require_text
+from .decision_cache import cached_decision_intake, cached_extra_decision_factors
 
 
 FACTOR_DIMENSIONS = """
@@ -170,7 +171,7 @@ def _parsers() -> tuple[Any, Any]:
     )
 
 
-def analyze_decision_intake(payload: dict[str, Any], timeout: float) -> dict[str, Any]:
+def generate_decision_intake_uncached(payload: dict[str, Any], timeout: float) -> dict[str, Any]:
     raw_decision = optional_text(payload, "decision", "读研")
     parser, _ = _parsers()
     return run_structured(
@@ -183,7 +184,15 @@ def analyze_decision_intake(payload: dict[str, Any], timeout: float) -> dict[str
     )
 
 
-def generate_extra_decision_factors(payload: dict[str, Any], timeout: float) -> dict[str, Any]:
+def analyze_decision_intake(payload: dict[str, Any], timeout: float) -> dict[str, Any]:
+    raw_decision = optional_text(payload, "decision", "读研")
+    cached = cached_decision_intake(raw_decision)
+    if cached is not None:
+        return cached
+    return generate_decision_intake_uncached(payload, timeout)
+
+
+def generate_extra_decision_factors_uncached(payload: dict[str, Any], timeout: float) -> dict[str, Any]:
     decision = require_text(payload, "decision", "缺少规范化后的决策。")
     positive_label = require_text(payload, "positive_label", "缺少正向标签。")
     negative_label = require_text(payload, "negative_label", "缺少反向标签。")
@@ -206,3 +215,10 @@ def generate_extra_decision_factors(payload: dict[str, Any], timeout: float) -> 
         error_tag="decision-extra-factors-parse-error",
         transform=prepare_extra_factors_result,
     )
+
+
+def generate_extra_decision_factors(payload: dict[str, Any], timeout: float) -> dict[str, Any]:
+    cached = cached_extra_decision_factors(payload)
+    if cached is not None:
+        return cached
+    return generate_extra_decision_factors_uncached(payload, timeout)

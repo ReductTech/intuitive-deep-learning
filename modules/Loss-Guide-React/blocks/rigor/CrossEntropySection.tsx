@@ -18,7 +18,7 @@ export function CrossEntropySection() {
       </div>
 
       <section aria-labelledby="lg-bce-title">
-        <Typography as="h4" variant="label" tone="accent" id="lg-bce-title">
+        <Typography as="h4" variant="bodySmall" tone="accent" id="lg-bce-title">
           二分类交叉熵
         </Typography>
         <Typography variant="bodySmall">
@@ -54,7 +54,7 @@ export function CrossEntropySection() {
       </section>
 
       <section aria-labelledby="lg-softmax-title">
-        <Typography as="h4" variant="label" tone="accent" id="lg-softmax-title">
+        <Typography as="h4" variant="bodySmall" tone="accent" id="lg-softmax-title">
           从二分类到多分类：Softmax
         </Typography>
         <Typography variant="bodySmall">
@@ -73,7 +73,7 @@ export function CrossEntropySection() {
       </section>
 
       <section aria-labelledby="lg-multi-ce-title">
-        <Typography as="h4" variant="label" tone="accent" id="lg-multi-ce-title">
+        <Typography as="h4" variant="bodySmall" tone="accent" id="lg-multi-ce-title">
           多分类交叉熵
         </Typography>
         <Typography variant="bodySmall">
@@ -92,7 +92,7 @@ export function CrossEntropySection() {
       </section>
 
       <section className="lg-react-worked-example" aria-labelledby="lg-ce-worked-title">
-        <Typography as="h4" variant="label" tone="accent" id="lg-ce-worked-title">
+        <Typography as="h4" variant="bodySmall" tone="accent" id="lg-ce-worked-title">
           关键洞察：为什么分类不用 MSE？
         </Typography>
         <Typography variant="bodySmall">
@@ -125,7 +125,7 @@ export function CrossEntropySection() {
         </div>
       </section>
 
-      <Typography variant="caption" tone="muted">
+      <Typography variant="bodySmall" tone="muted">
         以上讨论假设标签是互斥的。多标签分类（一个样本可同时属于多个类别）需改用逐标签的二分类交叉熵之和。另外，交叉熵要求 p_k &gt; 0，实际实现中会在 log 内部添加极小常数（如 10⁻⁷）防止数值溢出。
       </Typography>
     </section>

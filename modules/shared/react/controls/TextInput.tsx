@@ -34,7 +34,7 @@ export function TextInput({
 
   return (
     <label className={classNames('edu-control', controlClassName)} htmlFor={inputId}>
-      {label !== undefined && <Typography as="span" variant="label" tone="muted" className="edu-label">{label}</Typography>}
+      {label !== undefined && <Typography as="span" variant="bodySmall" tone="muted" className="edu-label">{label}</Typography>}
       {multiline ? (
         <textarea
           {...props}

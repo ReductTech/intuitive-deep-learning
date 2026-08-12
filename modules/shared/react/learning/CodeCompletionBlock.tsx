@@ -38,11 +38,11 @@ export function CodeCompletionBlock({
   return (
     <section className={`edu-code-block ${className ?? ''}`.trim()}>
       <header className="edu-code-toolbar">
-        <Typography as="span" variant="code" tone="inherit" className="edu-code-language">{language}</Typography>
-        <Typography as="span" variant="label" tone="inherit" className="edu-code-status">{running ? '运行中' : '就绪'}</Typography>
+        <Typography as="span" variant="bodySmall" tone="inherit" className="edu-code-language">{language}</Typography>
+        <Typography as="span" variant="bodySmall" tone="inherit" className="edu-code-status">{running ? '运行中' : '就绪'}</Typography>
         <Typography as="span" variant="bodySmall" tone="inherit" className="edu-code-runtime">
           运行时间
-          <Typography as="output" variant="code" tone="inherit">{running ? runtime : '0.0 s'}</Typography>
+          <Typography as="output" variant="bodySmall" tone="inherit">{running ? runtime : '0.0 s'}</Typography>
         </Typography>
         <div className="edu-code-actions">
           <Button variant="primary" disabled={running} onClick={start}>启动</Button>
@@ -50,7 +50,7 @@ export function CodeCompletionBlock({
           <Button onClick={() => setHelpVisible((value) => !value)}>请求帮助</Button>
         </div>
       </header>
-      <pre className="edu-code-source"><Typography as="code" variant="code" tone="inherit">{prefixLines}{beforeInput}<input className="edu-code-blank" aria-label={inputLabel} value={code} onChange={(event) => setCode(event.target.value)} />{afterInput}</Typography></pre>
+      <pre className="edu-code-source"><Typography as="code" variant="bodySmall" tone="inherit">{prefixLines}{beforeInput}<input className="edu-code-blank" aria-label={inputLabel} value={code} onChange={(event) => setCode(event.target.value)} />{afterInput}</Typography></pre>
       <Typography as="div" variant="bodySmall" tone="inherit" className="edu-code-help" hidden={!helpVisible}>{help}</Typography>
     </section>
   );

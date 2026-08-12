@@ -11,7 +11,7 @@ export function GradientFoundationsSections() {
       <section className="lg-react-rigor-note lg-react-rigor-note--compact" aria-labelledby="lg-calculus-definition-title">
         <Typography as="h3" variant="h3" tone="accent" id="lg-calculus-definition-title">先区分导数、偏导数和梯度</Typography>
         <Typography variant="bodySmall"><strong>导数</strong>描述单变量函数在某一点的局部变化率；面对多变量函数时，只改变一个变量并固定其他变量，得到的是<strong>偏导数</strong>；把标量目标关于全部变量的偏导按顺序排成向量，就得到<strong>梯度</strong>。所以求导前必须先写清“对谁求导”，才能判断结果是一个数还是一个向量。</Typography>
-        <Typography variant="caption" tone="muted">本页先研究损失关于预测值的变化率；梯度下降模块再沿计算路径把这一变化率传到权重。</Typography>
+        <Typography variant="bodySmall" tone="muted">本页先研究损失关于预测值的变化率；梯度下降模块再沿计算路径把这一变化率传到权重。</Typography>
       </section>
 
       <section className="lg-react-rigor-note lg-react-rigor-note--compact" aria-labelledby="lg-gradient-variable-title">

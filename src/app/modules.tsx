@@ -9,6 +9,7 @@ import { MiscPage } from '../../modules/MISC_Module/MiscPage';
 import { MLPPlaygroundPage } from '../../modules/MLP_playground-React/MLPPlaygroundPage';
 import { FittingPage } from '../../modules/Fitting_Module/FittingPage';
 import { AdaptiveLearningRatePage } from '../../modules/Adaptive-Learning-Rate-Module/AdaptiveLearningRatePage';
+import { ExpandedNeuronGuidePage } from '../../modules/Neuron-Guide-React/ExpandedNeuronGuidePage';
 
 /** 已完成 React 迁移、可作为独立教学页面进入的模块。 */
 export interface MigratedModule {
@@ -27,6 +28,17 @@ export interface MigratedModule {
 }
 
 export const migratedModules: MigratedModule[] = [
+  {
+    id: 'neuron-guide-react',
+    title: '认识人工神经元',
+    description: '从秀丽隐杆线虫的刺激反应出发，经由生物神经元的结构抽象，理解人工神经元的输入、权重、加权和与偏置。',
+    path: '/modules/neuron-guide-react',
+    badge: 'React 迁移版',
+    element: <ExpandedNeuronGuidePage />,
+    moduleType: 'teaching',
+    difficulty: 'introductory',
+    audience: 'general',
+  },
   {
     id: 'adaptive-learning-rate-module',
     title: '让模型学得更快',
