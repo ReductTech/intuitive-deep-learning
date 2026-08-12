@@ -1,7 +1,7 @@
 import { LessonFlow, ModuleShell, type LessonFlowStep } from '../shared/react';
 import './neuron-guide-react.css';
 import { ExtraInputsBlock } from './blocks/ExtraInputsBlock';
-import { NeuronLessonFooter } from './blocks/NeuronLessonFooter';
+import { NeuronCompletionBlock, NeuronLessonFooter } from './blocks/NeuronLessonFooter';
 import { SignalDiscoveryBlock } from './blocks/SignalDiscoveryBlock';
 import { WeightedSumBlock } from './blocks/WeightedSumBlock';
 import { NeuronLessonProvider } from './model/NeuronLessonContext';
@@ -25,6 +25,11 @@ export const neuronGuideLessonSteps: LessonFlowStep[] = [
   },
   {
     id: 'neuron-ending-v3',
+    revealMode: 'scroll',
+    render: () => <NeuronCompletionBlock />,
+  },
+  {
+    id: 'neuron-resources-v1',
     revealMode: 'immediate',
     render: () => <NeuronLessonFooter />,
   },

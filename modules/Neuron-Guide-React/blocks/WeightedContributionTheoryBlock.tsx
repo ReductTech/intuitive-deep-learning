@@ -43,20 +43,28 @@ export function WeightedContributionTheoryBlock() {
       </section>
 
       <section className="ng-matrix-definition-ppt__vectors">
+        <div className="ng-matrix-definition-ppt__vectors-heading">
+          <Typography variant="bodySmall" tone="warning">把两组数分别收进向量</Typography>
+          <Typography variant="bodySmall" tone="muted">一一对应：权重 W · 输入 X</Typography>
+        </div>
         <ColumnVector symbol="W" tone="warning" values={['w₁', 'w₂', 'w₃']} />
         <ColumnVector symbol="X" tone="accent" values={['x₁', 'x₂', 'x₃']} />
       </section>
 
       <section className="ng-matrix-definition-ppt__vertical-expansion">
+        <div className="ng-matrix-definition-ppt__equation-label">
+          <Typography variant="bodySmall" tone="success">合并写法</Typography>
+          <Typography as="strong" variant="h3" tone="accent">一次矩阵乘法</Typography>
+        </div>
         <div className="ng-matrix-definition-ppt__operand">
-          <Typography variant="bodySmall" tone="warning">Wᵀ</Typography>
+          <Typography variant="subtitle" tone="warning">Wᵀ</Typography>
           <div className="ng-matrix-definition-ppt__row-vector edu-formula" aria-label="W 转置后的权重行向量">
             {['w₁', 'w₂', 'w₃'].map((value, index) => <FormulaTerm tooltip={`第 ${index + 1} 个权重`} key={value}>{value}</FormulaTerm>)}
           </div>
         </div>
         <Typography variant="h3" tone="muted">×</Typography>
         <div className="ng-matrix-definition-ppt__operand">
-          <Typography variant="bodySmall" tone="accent">X</Typography>
+          <Typography variant="subtitle" tone="accent">X</Typography>
           <div className="ng-matrix-definition-ppt__column ng-matrix-definition-ppt__column--accent edu-formula" aria-label="输入列向量 X">
             {['x₁', 'x₂', 'x₃'].map((value, index) => <FormulaTerm tooltip={`第 ${index + 1} 个输入`} key={value}>{value}</FormulaTerm>)}
           </div>

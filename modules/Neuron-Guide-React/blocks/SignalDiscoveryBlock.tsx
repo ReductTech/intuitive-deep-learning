@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from 'react';
+import { useState, type FormEvent } from 'react';
 import { Button, ContentBlock, NoticeStrip, TextInput, Typography } from '../../shared/react';
 import { DecisionMarquee } from '../components/DecisionMarquee';
 import { useNeuronLesson } from '../model/NeuronLessonContext';
@@ -18,10 +18,6 @@ export function SignalDiscoveryBlock({ onComplete }: SignalDiscoveryBlockProps) 
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-
-  useEffect(() => {
-    if (state.analysis) setDecision(editableDecision(state.analysis.decision));
-  }, [state.analysis]);
 
   const selectDecision = (value: string) => {
     setDecision(value);
@@ -53,8 +49,8 @@ export function SignalDiscoveryBlock({ onComplete }: SignalDiscoveryBlockProps) 
   return (
     <ContentBlock
       className="ng-opening-stage edu-stage--featured ng-decision-discovery"
-      title="复杂决策，很少只由一个因素决定"
-      subtitle="输入一个正在权衡的问题，或直接选择示例，把它分解成三个主要影响因素。"
+      title="让神经元帮你做一次判断"
+      subtitle="输入一个正在权衡的问题，看看哪些因素正在共同推动你的决定。"
     >
       <form className="ng-decision-composer" onSubmit={submit}>
         <div className="ng-decision-composer__main">
@@ -78,7 +74,6 @@ export function SignalDiscoveryBlock({ onComplete }: SignalDiscoveryBlockProps) 
         </div>
 
         <div className="ng-decision-composer__presets">
-          <Typography variant="bodySmall" tone="muted">也可以直接选择一个常见决定</Typography>
           <DecisionMarquee selected={decision} onSelect={selectDecision} />
         </div>
 

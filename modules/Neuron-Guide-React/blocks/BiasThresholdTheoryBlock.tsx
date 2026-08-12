@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { Button, ContentBlock, FormulaBlock, FormulaTerm, NoticeStrip, Typography } from '../../shared/react';
+import { Button, ContentBlock, FormulaBlock, FormulaTerm, NoticeStrip, Question, Typography } from '../../shared/react';
 import { formatScore, weightedSum } from '../model/neuronMath';
 import { useNeuronLesson } from '../model/NeuronLessonContext';
 
 export function BiasThresholdTheoryBlock() {
   const [step, setStep] = useState<0 | 1 | 2>(0);
-  const { state, scenario } = useNeuronLesson();
+  const { state, scenario, markThresholdPassed } = useNeuronLesson();
+  const [thresholdRevealed, setThresholdRevealed] = useState(state.thresholdPassed);
   const score = weightedSum(scenario, state.values);
   const centeredScore = score - 1.5;
   const tendency = centeredScore >= 0 ? scenario.positiveLabel : scenario.negativeLabel;
@@ -20,23 +21,30 @@ export function BiasThresholdTheoryBlock() {
       title={`所以，从神经元的角度看，我们是否要${decisionAction}？`}
       subtitle="把三个输入的加权总分与判断门槛比较，得到这次决策的倾向。"
     >
-      <div className="ng-bias-derivation-ppt__context">
-        <div>
-          <Typography variant="bodySmall" tone="warning">原来的判断规则</Typography>
-          <Typography as="h3" variant="h3" tone="accent">加权总分超过 1.5，输出正向结果</Typography>
-        </div>
-        <Typography as="code" variant="bodySmall" tone="muted">门槛 T = 1.5</Typography>
+      <div className="ng-bias-derivation-ppt__context ng-question-wrap">
+        <Question
+          persistenceKey="neuron-multi-threshold-v3"
+          type="fill"
+          title={`三个加权输入的总分范围是 0～3。若取中点为分界，总分大于 ____ 时，更倾向于“${scenario.positiveLabel}”。`}
+          blanks={[{ label: '三个输入的倾向分界', placeholder: '填写数值' }]}
+          answer="1.5"
+          feedback={{
+            correct: `正确：3 ÷ 2 = 1.5。总分超过 1.5 时，模型更倾向于“${scenario.positiveLabel}”。`,
+            wrong: '这里要找 0～3 的中点。把总范围 3 平分成两半，分界点是多少？',
+          }}
+          onCheck={(result) => {
+            if (!result.ok) return;
+            setThresholdRevealed(true);
+            markThresholdPassed();
+          }}
+        />
       </div>
 
       <section className="ng-bias-derivation-ppt__stage" aria-live="polite">
-        <Typography variant="bodySmall" tone="warning">
-          {step === 0 ? '第一步：写出门槛' : step === 1 ? '第二步：把门槛移到左边' : '第三步：把常数记作偏置'}
-        </Typography>
-
         <FormulaBlock ariaLabel="从判断门槛推导偏置">
           <FormulaTerm tooltip="三个输入的加权总分">w₁x₁ + w₂x₂ + w₃x₃</FormulaTerm>
           {step === 0 ? (
-            <>{' > '}<FormulaTerm tooltip="判断门槛 T">1.5</FormulaTerm></>
+            <>{' > '}<FormulaTerm tooltip={thresholdRevealed ? '判断门槛 T' : '先完成上方填空'}>{thresholdRevealed ? '1.5' : '?'}</FormulaTerm></>
           ) : step === 1 ? (
             <>{' − '}<FormulaTerm tooltip="移到左侧后，门槛变成负数">1.5</FormulaTerm>{' > 0'}</>
           ) : (
@@ -45,7 +53,7 @@ export function BiasThresholdTheoryBlock() {
         </FormulaBlock>
 
         <div className="ng-bias-derivation-ppt__action">
-          {step === 0 && <Button variant="primary" onClick={() => setStep(1)}>把 1.5 移到左边</Button>}
+          {step === 0 && <Button variant="primary" disabled={!thresholdRevealed} onClick={() => setStep(1)}>{thresholdRevealed ? '把 1.5 移到左边' : '先确定判断门槛'}</Button>}
           {step === 1 && <Button variant="primary" onClick={() => setStep(2)}>把 −1.5 记作 b</Button>}
           {step === 2 && <Typography as="code" variant="bodySmall" tone="success">b = −1.5</Typography>}
         </div>

@@ -8,7 +8,7 @@ import { NeuronDecisionBridgeBlock } from './blocks/NeuronDecisionBridgeBlock';
 import { SignalDiscoveryBlock } from './blocks/SignalDiscoveryBlock';
 import { WeightedSumBlock } from './blocks/WeightedSumBlock';
 import { WeightedContributionTheoryBlock } from './blocks/WeightedContributionTheoryBlock';
-import { NeuronLessonFooter } from './blocks/NeuronLessonFooter';
+import { NeuronCompletionBlock, NeuronLessonFooter } from './blocks/NeuronLessonFooter';
 import { NeuronLessonProvider } from './model/NeuronLessonContext';
 import { LectureAdvanceCue } from './components/LectureAdvanceCue';
 
@@ -21,6 +21,7 @@ export const expandedNeuronGuideLessonSteps: LessonFlowStep[] = [
   { id: 'neuron-extra-inputs-v1', revealMode: 'cue', render: ({ complete }) => <ExtraInputsBlock onComplete={complete} /> },
   { id: 'neuron-vector-story-v1', revealMode: 'cue', render: ({ complete, isComplete }) => <LectureAdvanceCue complete={isComplete} onContinue={complete}><WeightedContributionTheoryBlock /></LectureAdvanceCue> },
   { id: 'neuron-bias-threshold-theory-v3', revealMode: 'scroll', render: ({ complete, isComplete }) => <LectureAdvanceCue complete={isComplete} onContinue={complete}><BiasThresholdTheoryBlock /></LectureAdvanceCue> },
+  { id: 'neuron-completion-v1', revealMode: 'scroll', render: ({ complete, isComplete }) => <LectureAdvanceCue complete={isComplete} onContinue={complete}><NeuronCompletionBlock /></LectureAdvanceCue> },
   { id: 'neuron-lesson-footer-v1', revealMode: 'immediate', render: () => <NeuronLessonFooter /> },
 ];
 

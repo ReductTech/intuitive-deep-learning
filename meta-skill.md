@@ -10,6 +10,8 @@ description: 为 Intuitive Deep Learning 新建或扩展 React + TypeScript 交�
 开始修改前，读取当前工作树中的以下文件；以代码现状为准，不凭记忆套模板：
 
 - `modules/Loss-Guide-React/`、`modules/Hyperparameter-Module/`：参考 React/TypeScript 目录、页面组合、内容块和交互结构。借鉴结构，不照抄内容密度、私有样式或已有缺陷。
+- `modules/Neuron-Guide/` 与 `modules/Neuron-Guide-React/`：参考“同一教学内容同时服务网页学习与 PPT 演示”的组织思路。重点理解同源业务组件、共享状态和展示端适配边界，不要复制旧 HTML 的实现方式。
+- `modules/Neuron-Guide-React/NeuronPptSlidePage.tsx` 与 `web_ppt/`：确认 PPT 如何装载 React Block、切换页面和约束 1600 × 900 画布。
 - `modules/shared/react/index.ts` 与 `modules/shared/react/routing/UiKitPage.tsx`：确认已有共享组件及其实际 API；也要 查看`/shared/ui-kit` 。
 - `src/app/modules.tsx`、`src/app/routes.tsx`：确认完整模块与子模块的当前注册方式。
 
@@ -197,7 +199,48 @@ description: 为 Intuitive Deep Learning 新建或扩展 React + TypeScript 交�
 - 不要直接重定义 `.edu-*`、`.dl-*` 或猜测 shared 内部类名；优先向组件传 `className` 或增加私有 wrapper。
 - 补齐窄屏、键盘焦点和 `prefers-reduced-motion`。普通 CSS 会进入同一全局空间，页面内导入不等于样式隔离。
 
-## 4. 一次完成一个子模块
+### Typography 是硬约束
+
+模块内所有独立文字都必须使用 shared 的 `Typography` 文字系统，包括标题、正文、辅助说明、标签、按钮旁注、图例、节点名称、数值标题、公式说明和空状态。不能因为文字位于 SVG、图表、交互舞台或自定义卡片中，就另建一套字号。
+
+- 只能从 `display`、`h1`、`h2`、`h3`、`subtitle`、`body`、`bodySmall` 中按语义选择 variant；颜色使用 tone 或设计 token。
+- 模块 CSS 禁止覆盖 Typography 的 `font-size`、`font-weight`、`line-height`，也禁止用 `px`、`rem`、`clamp()`、transform 缩放或局部 CSS 变量绕过文字系统。
+- `body` 必须在视觉层级上明显高于 `bodySmall`。正文用 `body`，紧邻控件的补充说明、来源和次级元数据才用 `bodySmall`，不能把二者当作随机尺寸档位。
+- 数学上下标使用语义化 `<sub>`、`<sup>` 或 shared 公式组件，不用普通字符假装下标，也不通过缩小整段文字实现。
+- 仅当第三方图表、Canvas 或原生 SVG 无法渲染 React Typography 时，才允许使用与对应 Typography token 完全一致的字体属性；其外围说明仍必须使用 `Typography`。
+- 文字放不下时，先精炼文案、调整信息层级、改变布局比例或减少同屏内容。禁止把字体缩小作为适配手段。
+
+## 4. 网页与 PPT 一鱼两吃
+
+一个教学模块可以同时作为完整网页课程和 `web_ppt` 中的逐页演示，但两端必须共享同一套教学内容与业务状态。PPT 不是另一份课件，也不是根据网页截图重新拼出的简化模块。
+
+### 单一内容源
+
+- 每个 Block 只实现一次。网页 Page 与 PPT Slide Page 应直接渲染同一个 Block 组件，不复制 JSX、不建立 `PptXxxBlock`，也不维护两套文案。
+- 计算、请求、判题、默认示例、用户选择与完成条件必须来自同一个 model/context/service。PPT 层不能重新实现业务逻辑。
+- PPT 可以增加明确的展示模式标记或容器类，只用于尺寸、留白、区域比例和交互密度适配；不得借此改变教学含义、返回数据或状态推进方式。
+- 对视觉结构做大幅调整时，优先让 Block 本身形成可复用的比例布局，再为 PPT 增加最少量适配。不要让网页端与 PPT 端逐渐演化成两个产品。
+
+### 连续状态，而不是逐页默认值
+
+`web_ppt` 可能通过 iframe 或独立路由逐页装载，每次翻页都可能重新挂载 React。不能假设组件内存状态会自然保留。
+
+- 用户在前一页输入、选择或由服务生成的结果，必须成为后一页的输入。例如第四页选择的决定与分析因素，第五页必须继续使用，不能重新回到默认示例。
+- 默认值只用于用户直接打开某一页、且没有任何已保存学习状态的情况；它不是翻页后的兜底覆盖值。
+- 状态应归属共享 Provider/model，并使用稳定 state key 持久化。跨 iframe 场景需提供同源浏览器存储等同步恢复路径，远端 telemetry 可用于长期恢复，但不能用较旧结果覆盖刚完成的本地选择。
+- 输入框展示值与服务返回的规范化文本可以分离：如果产品要求保留用户原文，不要让后端改写反向覆盖输入框；下游分析仍可继续使用返回结果。
+- 恢复状态时必须经过版本化校验和 normalize；只有状态结构或语义不兼容时才升级 key。
+
+### PPT 只负责舞台适配
+
+- 每页对应一个明确 Block 或用户明确要求组合在同页的若干 Block；保持一个主旨和清晰阅读顺序。
+- Block 必须在 1600 × 900 画布内水平、垂直合理居中。PPT 外壳自身的标题栏、重复页头、厚重边框或内层卡框不能挤占教学内容，除非它承担必要导航含义。
+- 所有 Grid/Flex 子项设置 `min-width: 0`，参与画布布局的内容设置 `max-width: 100%`；使用比例轨道或 `minmax(0, fr)`，不叠加多个固定最小宽度。
+- 不允许依赖裁切、横向滚动或缩小字体把网页塞进 PPT。应重排区域、压缩无效留白、精炼文字，并保持核心交互样式和行为一致。
+- 交互控件在 PPT 中仍应真实可操作；不要用静态占位图替换，也不要因为切页而丢失用户结果。
+- 完成 PPT 改动后，逐页验证网页直览与 `web_ppt`：两端内容和状态一致，且 `.ng-ppt-slide-surface` 的所有后代边界均未超出画布。
+
+## 5. 一次完成一个子模块
 
 采用轻量结构，按需要增加目录，不预建空文件：
 
@@ -224,7 +267,7 @@ modules/<ModuleName>/
 
 为 `LessonFlow`、step 和每道可恢复题目使用唯一、稳定且带模块语义的 key。自定义可恢复交互复用 shared telemetry API 和稳定的 state key，不重复上报同一动作。只有流程或判题语义改变、旧状态不再兼容时才升级 key 版本。`completesLesson` 不会因 step 被渲染而自动生效：最后一个真实考核 Block 必须调用 `complete()`，且对应 step 设置 `completesLesson: true`，之后再展示被动的 `LessonFooter`。不要在 mount effect 或状态恢复完成前自动触发完成。定时器、监听器、RAF 和第三方实例必须在卸载时清理。
 
-## 5. 注册到 React/Vite 应用
+## 6. 注册到 React/Vite 应用
 
 完整模块在 `src/app/modules.tsx` 中注册：
 

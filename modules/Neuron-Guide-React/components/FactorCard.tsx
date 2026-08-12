@@ -1,5 +1,4 @@
-import { Button, RangeControl, Typography } from '../../shared/react';
-import type { CSSProperties } from 'react';
+import { Button, ExplainPanelButton, RangeControl, Typography } from '../../shared/react';
 import type { NeuronFactor } from '../model/neuronMath';
 
 export interface FactorCardProps {
@@ -32,34 +31,28 @@ export function FactorCard({
     <article className="ng-factor-card">
       <div className="ng-factor-heading">
         <div className="ng-factor-heading-copy">
-          <Typography as="h3" variant="body" tone="accent" className="ng-panel-title">{factor.name}</Typography>
+          <div className="ng-factor-title-row">
+            <Typography as="h3" variant="body" tone="accent" className="ng-panel-title">{factor.name}</Typography>
+            {factor.valueTransform === 'inverse' && (
+              <ExplainPanelButton
+                triggerContent={<Typography as="span" variant="bodySmall" tone="inherit">反</Typography>}
+                label="查看反向计入说明"
+              >
+                <Typography as="strong" variant="bodySmall" tone="accent">反向计入</Typography>
+                <Typography variant="bodySmall" tone="muted">评分越高，越不支持当前选择。</Typography>
+              </ExplainPanelButton>
+            )}
+          </div>
           <Typography variant="bodySmall" tone="muted">{factor.explanation}</Typography>
         </div>
         <Typography as="span" variant="bodySmall" tone="muted" className="edu-badge ng-factor-index">{String(index + 1).padStart(2, '0')}</Typography>
       </div>
       <div className={`ng-factor-controls${showInput ? '' : ' is-single'}`}>
         <div className="ng-model-importance">
-          <div className="ng-model-range" aria-label={`建议的重要程度为 ${factor.suggestedImportance} 分，此滑杆不可调整`}>
-            <div className="ng-model-range-head">
-              <Typography as="span" variant="bodySmall" tone="accent">建议权重 w <Typography as="span" variant="bodySmall" tone="warning" className="ng-readonly-note">已设定</Typography></Typography>
-              <Typography as="output" variant="bodySmall" tone="warning">{factor.suggestedImportance} / 10</Typography>
-            </div>
-            <input
-              className="ng-readonly-range"
-              type="range"
-              min="0"
-              max="10"
-              step="1"
-              value={factor.suggestedImportance}
-              style={{ '--ng-weight-percent': `${factor.suggestedImportance * 10}%` } as CSSProperties}
-              tabIndex={-1}
-              aria-disabled="true"
-              disabled
-              readOnly
-            />
-            <div className="ng-segment-scale" aria-hidden="true">
-              {Array.from({ length: 11 }, (_, tick) => <Typography as="span" variant="bodySmall" tone="light" key={tick}>{tick}</Typography>)}
-            </div>
+          <div className="ng-model-importance-copy" aria-label={`分析建议权重为 ${factor.suggestedImportance} 分`}>
+            <Typography variant="bodySmall" tone="muted">
+              AI 建议：在这次判断中，这个因素按 <Typography as="strong" variant="h3" tone="warning">{factor.suggestedImportance} / 10</Typography> 的权重计入。
+            </Typography>
           </div>
           {requireAccept && !accepted && <Button className="ng-accept-importance" variant="primary" onClick={onAccept}>好的</Button>}
         </div>

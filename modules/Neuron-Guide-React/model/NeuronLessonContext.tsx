@@ -13,6 +13,7 @@ import { scenarioById, type DecisionScenario } from './neuronMath';
 
 const MODULE_ID = 'neuron-guide-react';
 const STATE_KEY = 'activity:neuron-guide-core-v3';
+const LOCAL_STATE_KEY = `${MODULE_ID}:${STATE_KEY}`;
 
 interface NeuronLessonState {
   analysis: DecisionAnalysis | null;
@@ -100,14 +101,34 @@ function stateSignature(state: NeuronLessonState) {
   return JSON.stringify(state);
 }
 
+function readLocalState(): NeuronLessonState | null {
+  if (typeof window === 'undefined') return null;
+  try {
+    const serialized = window.localStorage.getItem(LOCAL_STATE_KEY);
+    return serialized ? normalizeState(JSON.parse(serialized)) : null;
+  } catch {
+    return null;
+  }
+}
+
+function writeLocalState(state: NeuronLessonState) {
+  if (typeof window === 'undefined') return;
+  try {
+    window.localStorage.setItem(LOCAL_STATE_KEY, JSON.stringify(state));
+  } catch {
+    // Storage can be unavailable in privacy-restricted embeds; telemetry remains the fallback.
+  }
+}
+
 export function NeuronLessonProvider({ children }: { children: ReactNode }) {
-  const [state, setState] = useState<NeuronLessonState>(() => initialState());
+  const [state, setState] = useState<NeuronLessonState>(() => readLocalState() ?? initialState());
   const [hydrated, setHydrated] = useState(false);
   const stateRef = useRef(state);
   const lastCommittedRef = useRef('');
 
   const replaceState = (next: NeuronLessonState) => {
     stateRef.current = next;
+    writeLocalState(next);
     setState(next);
   };
 
@@ -123,7 +144,9 @@ export function NeuronLessonProvider({ children }: { children: ReactNode }) {
     let active = true;
     void getTelemetryState<unknown>(STATE_KEY, MODULE_ID).then((entry) => {
       if (!active) return;
-      const restored = normalizeState(entry?.state) ?? initialState();
+      // PPT pages are separate iframe navigations. Prefer the latest synchronous
+      // browser state so a previous slide's choice is not replaced by stale telemetry.
+      const restored = readLocalState() ?? normalizeState(entry?.state) ?? initialState();
       lastCommittedRef.current = stateSignature(restored);
       replaceState(restored);
       setHydrated(true);

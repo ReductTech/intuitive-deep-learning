@@ -20,7 +20,7 @@ export function WeightedSumBlock({ onComplete }: WeightedSumBlockProps) {
   return (
     <ContentBlock
       className="ng-analysis-stage ng-signal-quantization"
-      title="把一个现实因素变成输入信号"
+      title="把一个现实因素，翻译成神经元能处理的输入"
       subtitle="模型不能直接计算“表现好不好”，需要先规定衡量问题，再把回答映射到统一的数值尺度。"
     >
       <FactorCard

@@ -1010,6 +1010,12 @@
 }
 
 .ng-react-shell .ng-factor-heading-copy { display: grid; min-width: 0; gap: 3px; }
+.ng-react-shell .ng-factor-title-row { display: flex; min-width: 0; align-items: center; gap: 9px; }
+.ng-react-shell .ng-factor-title-row .explain-panel-trigger { width: 26px; height: 26px; border-color: rgba(217,96,47,.18); background: rgba(240,126,71,.10); color: #b45327; box-shadow: none; }
+.ng-react-shell .ng-factor-title-row .explain-panel-trigger:hover,
+.ng-react-shell .ng-factor-title-row .explain-panel-trigger:focus-visible { background: rgba(240,126,71,.18); color: #9f421f; }
+.ng-react-shell .ng-factor-title-row .explain-panel { left: 0; transform: none; }
+.ng-react-shell .ng-factor-title-row .explain-panel::before { left: 15px; transform: rotate(45deg); }
 
 .ng-react-shell .ng-panel-title {
   margin: 0;
@@ -1041,6 +1047,25 @@
   margin: 0;
   color: #334966;
 }
+
+.ng-react-shell .ng-model-importance-copy {
+  display: block;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  border-left: 4px solid var(--ui-accent-alt);
+  background: rgba(240, 126, 71, 0.065);
+  padding: 12px 16px;
+}
+
+.ng-react-shell .ng-model-importance-copy > p:first-child {
+  display: flex;
+  min-width: 0;
+  align-items: baseline;
+  gap: 8px;
+}
+
 
 .ng-react-shell .ng-model-importance-copy strong {
   color: #d9602f;
@@ -1673,9 +1698,14 @@
 .ng-react-shell .ng-network-node--unit { fill: #f07e47; }
 .ng-react-shell .ng-network-node--output { fill: #b9364a; }
 .ng-react-shell .ng-network-node-symbol { fill: #fff; font-family: var(--ui-font-mono); text-anchor: middle; }
+.ng-react-shell .ng-network-node-symbol--unit { dominant-baseline: central; }
 .ng-react-shell .ng-network-node-caption { fill: #fff; text-anchor: middle; }
+.ng-react-shell .ng-network-node-label { fill: #27446e; text-anchor: middle; }
 .ng-react-shell .ng-network-output-value { fill: #ffd07a; font-family: var(--ui-font-mono); text-anchor: middle; }
 .ng-react-shell .ng-network-external-label { fill: #27446e; text-anchor: start; }
+.ng-react-shell .ng-network-label-object { max-width: 100%; overflow: visible; }
+.ng-react-shell .ng-network-label-box { display: flex; width: 100%; height: 100%; min-width: 0; max-width: 100%; align-items: center; justify-content: flex-end; text-align: right; }
+.ng-react-shell .ng-network-label-box > p { max-width: 100%; overflow-wrap: anywhere; }
 .ng-react-shell .ng-network-external-label--output { fill: #b9364a; text-anchor: middle; }
 .ng-react-shell .ng-network-external-value { fill: #526985; font-family: var(--ui-font-mono); text-anchor: start; }
 .ng-react-shell .ng-network-external-value--output { text-anchor: middle; }
@@ -1744,11 +1774,19 @@
 .ng-react-shell .ng-tendency-highlight--negative { background: rgba(39, 68, 110, 0.12); color: #27446e; }
 
 .ng-react-shell .ng-completion-stack { display: grid; gap: 18px; }
-.ng-react-shell .ng-model-viewer-layout { display: grid; grid-template-columns: minmax(340px, 1.15fr) minmax(280px, 0.85fr); align-items: stretch; gap: 20px; }
+.ng-react-shell .ng-model-viewer-layout { display: grid; grid-template-columns: minmax(0, .72fr) minmax(0, 1fr); align-items: stretch; gap: 20px; }
 .ng-react-shell .ng-model-viewer-frame { display: grid; min-height: 380px; place-items: center; overflow: hidden; border: 1px solid var(--ui-border); border-radius: var(--ui-radius-md); background: radial-gradient(circle, #fff, #eef3fb); }
 .ng-react-shell .ng-model-viewer-frame model-viewer { width: 100%; height: 100%; min-height: 380px; }
 .ng-react-shell .ng-model-fallback { color: var(--ui-text-muted); padding: 30px; text-align: center; }
-.ng-react-shell .ng-model-viewer-copy { display: grid; align-content: center; gap: 12px; border-left: 4px solid var(--ui-accent-alt); background: #f8fafc; padding: 22px; }
+.ng-react-shell .ng-model-viewer-copy { display: grid; align-content: center; gap: 18px; border-left: 4px solid var(--ui-accent-alt); background: #f8fafc; padding: 24px; }
+.ng-react-shell .ng-model-viewer-copy__idea,
+.ng-react-shell .ng-model-viewer-copy__scale { display: grid; min-width: 0; gap: 7px; }
+.ng-react-shell .ng-model-viewer-copy__quote { margin: 3px 0; border-left: 3px solid var(--ui-accent-alt); background: rgba(240,126,71,.055); padding: 10px 14px; }
+.ng-react-shell .ng-model-viewer-copy__idea > a { justify-self: end; text-underline-offset: 3px; }
+.ng-react-shell .ng-model-viewer-copy__scale { border-top: 1px solid var(--ui-border); padding-top: 16px; }
+.ng-react-shell .ng-model-viewer-copy__numbers { display: grid; min-width: 0; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
+.ng-react-shell .ng-model-viewer-copy__numbers > div { display: grid; min-width: 0; align-content: start; gap: 2px; border-left: 2px solid var(--ui-accent); padding: 4px 0 4px 14px; }
+.ng-react-shell .ng-model-viewer-copy__numbers > div:last-child { border-left-color: var(--ui-success); }
 .ng-react-shell .ng-model-viewer-copy h3 { margin: 0; color: var(--ui-accent); }
 .ng-react-shell .ng-model-viewer-copy p { margin: 0; color: var(--ui-text-muted); }
 .ng-react-shell .ng-model-viewer-copy > strong { color: #b45327; }
@@ -1946,17 +1984,20 @@
 }
 
 /* 数学递进三页：加权求和、函数抽象、向量推广。 */
-.ng-react-shell .ng-matrix-definition-ppt__expanded { display: grid; width: 100%; min-width: 0; grid-template-columns: minmax(0,34fr) minmax(0,66fr); align-items: center; gap: 42px; border-top: 4px solid var(--ui-accent); padding: 18px 26px; }
+.ng-react-shell .ng-matrix-definition-ppt .edu-content-body { gap: 14px; }
+.ng-react-shell .ng-matrix-definition-ppt__expanded { display: grid; width: 100%; min-width: 0; grid-template-columns: minmax(0,34fr) minmax(0,66fr); align-items: center; gap: 28px; background: linear-gradient(90deg,#fff,rgba(39,68,110,.035)); padding: 16px 24px; }
 .ng-react-shell .ng-matrix-definition-ppt__expanded > div:first-child { display: grid; gap: 4px; }
 .ng-react-shell .ng-matrix-definition-ppt__expanded > .edu-formula-block { width: 100%; min-width: 0; padding: 16px 18px; }
-.ng-react-shell .ng-matrix-definition-ppt__vectors { display: grid; width: min(980px,100%); min-width: 0; grid-template-columns: repeat(2,minmax(0,1fr)); align-items: stretch; justify-self: center; gap: 94px; padding-block: 16px; }
+.ng-react-shell .ng-matrix-definition-ppt__vectors { display: grid; width: 100%; min-width: 0; grid-template-columns: repeat(2,minmax(0,1fr)); align-items: stretch; gap: 18px; }
+.ng-react-shell .ng-matrix-definition-ppt__vectors-heading { grid-column: 1 / -1; display: flex; min-width: 0; align-items: baseline; justify-content: space-between; gap: 20px; border-bottom: 1px solid var(--ui-border); padding: 0 4px 9px; }
 .ng-react-shell .ng-matrix-definition-ppt__vector-definition,
 .ng-react-shell .ng-matrix-definition-ppt__compact-formula { display: grid; align-content: center; justify-items: center; gap: 10px; border-top: 3px solid rgba(39,68,110,.2); background: #fff; padding: 14px 18px; text-align: center; }
-.ng-react-shell .ng-matrix-definition-ppt__vector-definition { grid-template-rows: 180px auto; align-content: stretch; }
+.ng-react-shell .ng-matrix-definition-ppt__vector-definition { grid-template-columns: minmax(0,1fr) auto; grid-template-rows: auto; align-items: center; min-height: 150px; border: 1px solid var(--ui-border); border-top: 3px solid var(--ui-accent-alt); border-radius: var(--ui-radius-md); background: rgba(240,126,71,.035); padding: 12px 20px; }
+.ng-react-shell .ng-matrix-definition-ppt__vector-definition:nth-child(3) { border-top-color: var(--ui-accent); background: rgba(39,68,110,.035); }
 .ng-react-shell .ng-matrix-definition-ppt__compact-formula { border-top-color: var(--ui-success); background: rgba(45,125,104,.035); }
 .ng-react-shell .ng-matrix-definition-ppt__vector-definition .edu-formula-block,
 .ng-react-shell .ng-matrix-definition-ppt__compact-formula .edu-formula-block { width: 100%; min-width: 0; border: 0; background: transparent; padding: 8px; }
-.ng-react-shell .ng-matrix-definition-ppt__vector-definition .edu-formula-block { height: 180px; margin: 0; }
+.ng-react-shell .ng-matrix-definition-ppt__vector-definition .edu-formula-block { height: auto; margin: 0; }
 .ng-react-shell .ng-matrix-definition-ppt__vector-equation { display: grid; width: min(260px,100%); grid-template-columns: 58px 28px 112px; align-items: center; justify-content: center; gap: 8px; }
 .ng-react-shell .ng-matrix-definition-ppt__vector-equation > :first-child { justify-self: end; }
 .ng-react-shell .ng-matrix-definition-ppt__vector-equation > :nth-child(2) { justify-self: center; }
@@ -1971,13 +2012,14 @@
 .ng-react-shell .ng-matrix-definition-ppt__row-vector::after { right: 0; border-right: 2px solid currentColor; }
 .ng-react-shell .ng-matrix-definition-ppt__column--warning { color: var(--ui-accent-alt); }
 .ng-react-shell .ng-matrix-definition-ppt__column--accent { color: var(--ui-accent); }
-.ng-react-shell .ng-matrix-definition-ppt__vertical-expansion { display: grid; width: min(1040px,100%); min-width: 0; grid-template-columns: minmax(320px,1.25fr) 54px minmax(180px,.72fr) 54px minmax(150px,.6fr); align-items: stretch; justify-self: center; gap: 30px; border-top: 1px solid var(--ui-border); padding: 24px 28px 12px; }
+.ng-react-shell .ng-matrix-definition-ppt__vertical-expansion { display: grid; width: 100%; min-width: 0; grid-template-columns: minmax(190px,.72fr) minmax(280px,1.25fr) 40px minmax(150px,.68fr) 40px minmax(120px,.55fr); align-items: center; gap: 18px; border: 1px solid var(--ui-border); border-left: 4px solid var(--ui-success); border-radius: var(--ui-radius-md); background: linear-gradient(90deg,rgba(45,125,104,.045),#fff 35%); padding: 18px 24px; }
+.ng-react-shell .ng-matrix-definition-ppt__equation-label { display: grid; align-content: center; gap: 3px; }
 .ng-react-shell .ng-matrix-definition-ppt__operand,
-.ng-react-shell .ng-matrix-definition-ppt__output { display: grid; grid-template-rows: 28px 150px; align-content: stretch; justify-items: center; gap: 8px; }
-.ng-react-shell .ng-matrix-definition-ppt__vertical-expansion > .ui-typography--h3 { align-self: end; display: grid; height: 150px; place-items: center; }
-.ng-react-shell .ng-matrix-definition-ppt__row-vector { position: relative; display: grid; width: 100%; height: 150px; grid-template-columns: repeat(3,minmax(0,1fr)); place-items: center; gap: 12px; color: var(--ui-accent-alt); padding: 16px 28px; }
-.ng-react-shell .ng-matrix-definition-ppt__vertical-expansion .ng-matrix-definition-ppt__column { width: 100%; height: 150px; align-content: center; }
-.ng-react-shell .ng-matrix-definition-ppt__output > :last-child { display: grid; height: 150px; place-items: center; }
+.ng-react-shell .ng-matrix-definition-ppt__output { display: grid; grid-template-rows: 28px 112px; align-content: center; justify-items: center; gap: 4px; }
+.ng-react-shell .ng-matrix-definition-ppt__vertical-expansion > .ui-typography--h3 { display: grid; height: 112px; place-items: center; }
+.ng-react-shell .ng-matrix-definition-ppt__row-vector { position: relative; display: grid; width: 100%; height: 112px; grid-template-columns: repeat(3,minmax(0,1fr)); place-items: center; gap: 12px; color: var(--ui-accent-alt); padding: 14px 24px; }
+.ng-react-shell .ng-matrix-definition-ppt__vertical-expansion .ng-matrix-definition-ppt__column { width: 100%; height: 112px; align-content: center; }
+.ng-react-shell .ng-matrix-definition-ppt__output > :last-child { display: grid; height: 112px; place-items: center; }
 .ng-react-shell .ng-matrix-definition-ppt__vertical-expansion > .edu-formula-block { width: 100%; min-width: 0; border: 0; background: var(--ui-bg-muted); padding: 12px 14px; }
 .ng-react-shell .ng-matrix-definition-ppt__conclusion { display: flex; align-items: center; justify-content: center; gap: 22px; border-left: 4px solid var(--ui-success); background: rgba(45,125,104,.055); padding: 14px 20px; text-align: center; }
 
@@ -2046,7 +2088,8 @@
 .ng-ppt-slide-surface svg,
 .ng-ppt-slide-surface canvas { max-width: 100%; }
 
-.ng-react-shell .ng-bias-derivation-ppt__context { display: flex; align-items: center; justify-content: space-between; gap: 24px; border-left: 4px solid var(--ui-accent); background: var(--ui-bg-muted); padding: 15px 20px; }
+.ng-react-shell .ng-bias-derivation-ppt__context { display: block; margin-top: 0; }
+.ng-react-shell .ng-bias-derivation-ppt__context > .dl-question { border: 0; border-radius: 0; background: transparent; padding: 0; }
 .ng-react-shell .ng-bias-derivation-ppt__context > div { display: grid; gap: 4px; }
 .ng-react-shell .ng-bias-derivation-ppt__stage { display: grid; min-height: 310px; align-content: center; justify-items: center; gap: 22px; border-block: 1px solid var(--ui-border); padding: 28px 20px; }
 .ng-react-shell .ng-bias-derivation-ppt__stage > .edu-formula-block { width: min(980px,100%); min-width: 0; padding: 24px 30px; }
@@ -2293,8 +2336,7 @@ body.ng-ppt-body .app-router { width: 100%; height: 100%; }
   display: grid;
   width: 1600px;
   height: 900px;
-  grid-template-rows: 38px minmax(0, 1fr);
-  gap: 14px;
+  grid-template-rows: minmax(0, 1fr);
   overflow: hidden;
   background: radial-gradient(circle at 90% 3%, rgba(240,126,71,.08), transparent 25%), #f4f7fb;
   padding: 24px 30px 28px;
@@ -2305,21 +2347,19 @@ body.ng-ppt-body .app-router { width: 100%; height: 100%; }
 .ng-ppt-header > div { display: flex; align-items: baseline; gap: 14px; }
 
 .ng-ppt-slide-viewport { position: relative; min-width: 0; min-height: 0; overflow: hidden; }
-.ng-ppt-slide-surface { position: absolute; top: 0; left: 50%; width: 100%; transform-origin: top center; }
+.ng-ppt-slide-surface { position: absolute; top: 50%; left: 50%; width: 100%; transform-origin: center; }
 .ng-ppt-slide-surface > .edu-content-block,
 .ng-ppt-slide-surface > .ng-completion-stack { width: 100%; }
 .ng-ppt-slide-surface .edu-content-block { padding: 8px 22px; }
+.ng-ppt-slide-surface > .edu-content-block { border: 0; border-radius: 0; background: transparent; }
+.ng-ppt-slide-surface > .ng-nematode-opening-v2 { border: 0; border-radius: 0; background: transparent; padding-inline: 22px; }
+.ng-ppt-slide-surface > .ng-nematode-opening-v2::after { display: none; }
 .ng-ppt-slide-surface .edu-content-head { max-width: 1040px; margin-bottom: 10px; }
 .ng-ppt-slide-surface .edu-content-subtitle { margin-top: 5px; }
 .ng-ppt-slide-surface .edu-content-body { gap: 10px; }
 .ng-ppt-slide-surface .dl-question { gap: 10px; padding: 13px 15px; }
 .ng-ppt-slide-surface .dl-question-options { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
 .ng-ppt-slide-surface .dl-question-option { min-height: 44px; padding: 7px 10px; }
-.ng-react-shell .ng-ppt-slide-surface .ng-marquee-track { width: 100%; animation: none; transform: none; }
-.ng-react-shell .ng-ppt-slide-surface .ng-choice-group { width: 100%; min-width: 0; flex-wrap: wrap; justify-content: center; }
-.ng-react-shell .ng-ppt-slide-surface .ng-choice-group[aria-hidden="true"] { display: none; }
-.ng-react-shell .ng-ppt-slide-surface .ng-choice-group .ng-choice-chip:nth-child(n+5) { display: none; }
-.ng-react-shell .ng-ppt-slide-surface .ng-decision-composer .ng-marquee-row:nth-child(3) { display: none; }
 .ng-ppt-slide-surface .ng-biological-model__hero { height: 340px; min-height: 0; }
 .ng-ppt-slide-surface .ng-biological-model__figure img { height: 100%; min-height: 0; }
 .ng-ppt-slide-surface .ng-biological-model__thesis { gap: 9px; padding: 18px 24px; }
@@ -2329,27 +2369,19 @@ body.ng-ppt-body .app-router { width: 100%; height: 100%; }
 .ng-ppt-slide-surface .ng-biological-model__steps li { min-height: 170px; }
 .ng-ppt-slide-surface .ng-biological-model__step-biology,
 .ng-ppt-slide-surface .ng-biological-model__step-math { padding-inline: 14px; }
-.ng-ppt-slide-surface .ng-decision-composer { grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); align-items: start; gap: 16px; padding: 16px 18px; }
-.ng-ppt-slide-surface .ng-decision-composer__presets { min-width: 0; border-top: 0; border-left: 1px solid rgba(39,68,110,.14); padding-top: 0; padding-left: 16px; }
-.ng-ppt-slide-surface .ng-decision-composer__presets .ng-decision-stream { min-height: 170px; padding-block: 8px; }
-.ng-ppt-slide-surface .ng-decision-result { padding-top: 12px; }
-.ng-ppt-slide-surface .ng-decision-result__branches { height: 14px; }
-.ng-ppt-slide-surface .ng-decision-result__factors article { padding: 12px 14px; }
 .ng-ppt-slide-surface .ng-extra-factor-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 .ng-ppt-slide-surface .ng-factor-card { min-width: 0; padding: 12px; }
 .ng-ppt-slide-surface .ng-factor-heading { margin-bottom: 9px; }
 .ng-ppt-slide-surface .ng-factor-controls { gap: 10px; }
 .ng-ppt-slide-surface .ng-model-importance { gap: 8px; padding: 10px 12px; }
-.ng-ppt-slide-surface .ng-theory-panel { grid-template-columns: minmax(0, .65fr) minmax(0, 1.15fr) minmax(0, .9fr); align-items: start; gap: 12px; }
+.ng-ppt-slide-surface .ng-extra-inputs-stage .ng-theory-panel { grid-template-columns: minmax(0, 1fr); align-items: stretch; gap: 12px; }
 .ng-ppt-slide-surface .ng-theory-panel > * { min-width: 0; max-width: 100%; }
 .ng-ppt-slide-surface .ng-theory-panel .ng-network-wrap svg { min-width: 0; }
 .ng-ppt-slide-surface .ng-theory-panel .ng-question-wrap { margin-top: 0; }
 .ng-ppt-slide-surface .ng-signal-quantization__result .ng-network-wrap { min-height: 200px; }
 .ng-ppt-slide-surface .ng-signal-quantization__result .ng-network-wrap svg { height: 180px; min-width: 0; }
 .ng-ppt-slide-surface .ng-matrix-definition-ppt__vectors { padding-block: 10px; }
-.ng-ppt-slide-surface .ng-model-viewer-layout { grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); }
+.ng-ppt-slide-surface .ng-model-viewer-layout { grid-template-columns: minmax(0, .72fr) minmax(0, 1fr); }
 .ng-ppt-slide-surface .ng-model-viewer-frame,
 .ng-ppt-slide-surface .ng-model-viewer-frame model-viewer { min-height: 290px; }
-.ng-ppt-slide-surface .ng-completion-stack { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); align-items: start; gap: 12px; }
-.ng-ppt-slide-surface .ng-completion-stack > * { min-width: 0; max-width: 100%; }
 .ng-ppt-slide-surface .edu-lesson-footer { padding-block: 14px; }

@@ -21,6 +21,7 @@ export function NeuronSignalNetwork({ scenario, values, count = 3 }: NeuronSigna
   const contributions = weightedContributions(scenario, values).slice(0, count);
   const output = contributions.reduce((sum, item) => sum + item, 0);
   const nodeYs = count === 1 ? [126] : [58, 126, 194];
+  const subscripts = ['₁', '₂', '₃'];
 
   return (
     <figure className={`ng-network-wrap${count === 1 ? ' ng-network-wrap--single' : ''}`}>
@@ -38,26 +39,34 @@ export function NeuronSignalNetwork({ scenario, values, count = 3 }: NeuronSigna
           const weight = normalizedWeight(factor.suggestedImportance);
           return (
             <g key={factor.name}>
-              <Typography as="text" variant="bodySmall" tone="accent" className="ng-network-external-label ng-network-external-label--input" x="30" y={y + 5}>{factor.valueLabel}</Typography>
+              {count !== 1 && (
+                <foreignObject className="ng-network-label-object" x="4" y={y - 27} width="116" height="54">
+                  <div className="ng-network-label-box">
+                    <Typography variant="bodySmall" tone="accent">{factor.valueLabel}</Typography>
+                  </div>
+                </foreignObject>
+              )}
               <circle className="ng-network-node ng-network-node--input" cx="155" cy={y} r="28" />
-              <Typography as="text" variant="bodySmall" tone="inherit" className="ng-network-node-symbol" x="155" y={y - 2}>x{index + 1}</Typography>
+              <Typography as="text" variant="bodySmall" tone="inherit" className="ng-network-node-symbol" x="155" y={y - 2}>x{subscripts[index]}</Typography>
               <Typography as="text" variant="bodySmall" tone="inherit" className="ng-network-input-value" x="155" y={y + 16}>{formatScore(input)}</Typography>
+              {count === 1 && <Typography as="text" variant="bodySmall" tone="accent" className="ng-network-node-label" x="155" y={y + 54}>{factor.valueLabel}</Typography>}
               <line className="ng-network-edge" x1="183" y1={y} x2="424" y2="126" style={{ strokeWidth: 1.5 + weight * 4 }} />
               <g className="ng-network-weight" transform={`translate(278 ${y - 16})`}>
                 <rect width="92" height="30" rx="15" />
-                <Typography as="text" variant="bodySmall" tone="warning" x="46" y="20">w{index + 1} = {formatScore(weight)}</Typography>
+                <Typography as="text" variant="bodySmall" tone="warning" x="46" y="20">w{subscripts[index]} = {formatScore(weight)}</Typography>
               </g>
             </g>
           );
         })}
         <circle className="ng-network-node ng-network-node--unit" cx="462" cy="126" r="40" />
-        <Typography as="text" variant="h3" tone="inherit" className="ng-network-node-symbol ng-network-node-symbol--unit" x="462" y="122">Σ</Typography>
-        <Typography as="text" variant="bodySmall" tone="inherit" className="ng-network-node-caption" x="462" y="143">加权求和</Typography>
+        <Typography as="text" variant="h3" tone="inherit" className="ng-network-node-symbol ng-network-node-symbol--unit" x="462" y="126">Σ</Typography>
+        <Typography as="text" variant="bodySmall" tone="accent" className="ng-network-node-label" x="462" y={count === 1 ? 184 : 181}>加权求和</Typography>
         <line className="ng-network-output-edge" x1="502" y1="126" x2="612" y2="126" markerEnd={`url(#${titleId}-arrow)`} />
         <circle className="ng-network-node ng-network-node--output" cx="652" cy="126" r="34" />
         <Typography as="text" variant="bodySmall" tone="inherit" className="ng-network-node-symbol" x="652" y="122">y</Typography>
         <Typography as="text" variant="bodySmall" tone="warning" className="ng-network-output-value" x="652" y="143">{formatScore(output)}</Typography>
-        <Typography as="text" variant="bodySmall" tone="accent" className="ng-network-external-label ng-network-external-label--output" x="720" y="131">判断分数</Typography>
+        {count !== 1 && <Typography as="text" variant="bodySmall" tone="accent" className="ng-network-external-label ng-network-external-label--output" x="720" y="131">判断分数</Typography>}
+        {count === 1 && <Typography as="text" variant="bodySmall" tone="accent" className="ng-network-node-label" x="652" y="184">判断分数</Typography>}
       </svg>
     </figure>
   );

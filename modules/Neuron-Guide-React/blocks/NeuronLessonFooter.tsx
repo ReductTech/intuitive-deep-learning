@@ -12,25 +12,28 @@ const videos = [
   },
 ];
 
+export function NeuronCompletionBlock() {
+  return (
+    <ContentBlock
+      className="ng-completion-stage"
+      title="你已经搭出了一个人工神经元"
+      subtitle="从生物神经元到人工神经元，真正被继承的不是结构，而是一种处理信息的方式。"
+    >
+      <NeuronModelViewer />
+    </ContentBlock>
+  );
+}
+
 export function NeuronLessonFooter() {
   return (
-    <div className="ng-completion-stack">
-      <ContentBlock
-        className="ng-completion-stage"
-        title="你已经搭出了一个人工神经元"
-        subtitle="多个输入带着各自的权重进入汇总结构，最终产生一个输出。"
-      >
-        <NeuronModelViewer />
-      </ContentBlock>
-      <LessonFooter
-        className="ng-react-footer"
-        title="推荐资源"
-        description="继续认识真实神经元，再进入激活函数，观察神经元如何获得非线性表达能力。"
-        back={{ href: '/', label: '返回课程目录' }}
-        next={{ href: '/modules/activation-func-module-react', label: '学习激活函数' }}
-        videos={videos}
-        videosLabel="延伸观看"
-      />
-    </div>
+    <LessonFooter
+      className="ng-react-footer"
+      title="推荐资源"
+      description="继续认识真实神经元，再进入激活函数，观察神经元如何获得非线性表达能力。"
+      back={{ href: '/', label: '返回课程目录' }}
+      next={{ href: '/modules/activation-func-module-react', label: '学习激活函数' }}
+      videos={videos}
+      videosLabel="延伸观看"
+    />
   );
 }
