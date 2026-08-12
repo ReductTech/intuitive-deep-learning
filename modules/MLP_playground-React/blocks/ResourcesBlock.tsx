@@ -30,7 +30,7 @@ export function ResourcesBlock() {
         label: '返回课程目录',
       }}
       next={{
-        href: 'http://127.0.0.1:59411/Loss-Guide-2/',
+        href: '/modules/loss-guide-2-react',
         label: '学习下一课',
       }}
       videos={videos}

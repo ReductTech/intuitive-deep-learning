@@ -1,15 +1,21 @@
 import type { ReactNode } from 'react';
 import { DatasetSplitPage } from '../../modules/Dataset-Split-Module/DatasetSplitPage';
 import { FormulaTooltipPage } from '../../modules/Formula-Tooltip-React/FormulaTooltipPage';
+import { DigitalImagePage } from '../../modules/Digital-Image-Module-React/DigitalImagePage';
 import { HyperparameterPage } from '../../modules/Hyperparameter-Module/HyperparameterPage';
 import { ActivationFuncPage } from '../../modules/Activation-Func-Module-React/ActivationFuncPage';
 import { GradientDescentPage } from '../../modules/Gradient-Descent-Module-React/GradientDescentPage';
 import { LossGuidePage } from '../../modules/Loss-Guide-React/LossGuidePage';
+import { LossGuide2Page } from '../../modules/Loss-Guide-2-React/LossGuide2Page';
 import { MiscPage } from '../../modules/MISC_Module/MiscPage';
 import { MLPPlaygroundPage } from '../../modules/MLP_playground-React/MLPPlaygroundPage';
 import { FittingPage } from '../../modules/Fitting_Module/FittingPage';
 import { AdaptiveLearningRatePage } from '../../modules/Adaptive-Learning-Rate-Module/AdaptiveLearningRatePage';
 import { ExpandedNeuronGuidePage } from '../../modules/Neuron-Guide-React/ExpandedNeuronGuidePage';
+import { ManualFeatureClassificationPage } from '../../modules/Manual-Feature-Classification-React/ManualFeatureClassificationPage';
+import { ConvolutionKernelIntroPage } from '../../modules/Convolution-Kernel-Intro-React/ConvolutionKernelIntroPage';
+import { LeNet5CnnLabPage } from '../../modules/LeNet5-CNN-Lab-React/LeNet5CnnLabPage';
+import { FaceRecogLabPage } from '../../modules/Face-Recog-Lab-React/FaceRecogLabPage';
 
 /** 已完成 React 迁移、可作为独立教学页面进入的模块。 */
 export interface MigratedModule {
@@ -121,5 +127,53 @@ export const migratedModules: MigratedModule[] = [
     path: '/modules/mlp-playground-react',
     badge: 'React 迁移版',
     element: <MLPPlaygroundPage />,
+  },
+  {
+    id: 'loss-guide-2-react',
+    title: '输出层与分类损失',
+    description: '用同一个天气场景理解 Sigmoid + BCE、Softmax + Cross Entropy，以及任务与输出头的搭配。',
+    path: '/modules/loss-guide-2-react',
+    badge: 'React 迁移版',
+    element: <LossGuide2Page />,
+  },
+  {
+    id: 'digital-image-module-react',
+    title: '数字图像与 RGB 矩阵',
+    description: '从屏幕子像素、RGB 调色到本地图片的三个通道和 3×3 数值矩阵。',
+    path: '/modules/digital-image-module-react',
+    badge: 'React 迁移版',
+    element: <DigitalImagePage />,
+  },
+  {
+    id: 'manual-feature-classification-react',
+    title: '人工特征的分类',
+    description: '从 MNIST 九宫格计数与分布热力图出发，训练双层 MLP，并观察人工特征的价值与边界。',
+    path: '/modules/manual-feature-classification-react',
+    badge: 'React 迁移版',
+    element: <ManualFeatureClassificationPage />,
+  },
+  {
+    id: 'convolution-kernel-intro-react',
+    title: '卷积核入门',
+    description: '从五子棋的局部模式出发，设计 5×5 算子，并让同一个卷积核扫描 MNIST 手写数字。',
+    path: '/modules/convolution-kernel-intro-react',
+    badge: 'React 迁移版',
+    element: <ConvolutionKernelIntroPage />,
+  },
+  {
+    id: 'lenet5-cnn-lab-react',
+    title: '从人工卷积核到 LeNet-5',
+    description: '训练固定卷积核分类头，并把单个数字识别器用于序列识别和滑窗目标检测。',
+    path: '/modules/lenet5-cnn-lab-react',
+    badge: 'React 迁移版',
+    element: <LeNet5CnnLabPage />,
+  },
+  {
+    id: 'face-recog-lab-react',
+    title: '人脸识别：固定卷积核到参数全训',
+    description: '在 LFW 彩色人脸子集上比较固定卷积核分类头与可学习 CNN，并通过乔装挑战理解人脸表征。',
+    path: '/modules/face-recog-lab-react',
+    badge: 'React 迁移版',
+    element: <FaceRecogLabPage />,
   },
 ];
