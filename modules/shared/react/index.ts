@@ -24,6 +24,8 @@ export * from './learning/MathFormulaBlock';
 export * from './learning/MathFormulaSymbols';
 export * from './learning/RelatedVideos';
 export * from './learning/LessonFooter';
+export * from './learning/LessonDevelopers';
+export * from './learning/developers';
 export * from './learning/PageRating';
 export * from './learning/ProgressiveReveal';
 export * from './learning/ScrollCue';

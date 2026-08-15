@@ -20,9 +20,6 @@ interface NeuronLessonState {
   acceptedImportance: boolean;
   values: Array<number | null>;
   touched: boolean[];
-  singleQuestionPassed: boolean;
-  thresholdPassed: boolean;
-  biasStep: 0 | 1 | 2;
 }
 
 interface NeuronLessonContextValue {
@@ -33,9 +30,6 @@ interface NeuronLessonContextValue {
   acceptImportance: () => void;
   setValueDraft: (index: number, value: number) => void;
   commitValues: () => void;
-  markSingleQuestionPassed: () => void;
-  markThresholdPassed: () => void;
-  advanceBiasStep: (step: 1 | 2) => void;
 }
 
 const NeuronLessonContext = createContext<NeuronLessonContextValue | null>(null);
@@ -46,9 +40,6 @@ function initialState(): NeuronLessonState {
     acceptedImportance: false,
     values: [null, null, null],
     touched: [false, false, false],
-    singleQuestionPassed: false,
-    thresholdPassed: false,
-    biasStep: 0,
   };
 }
 
@@ -84,16 +75,11 @@ function normalizeState(value: unknown): NeuronLessonState | null {
   if (!analysis) return null;
   if (!Array.isArray(candidate.values) || candidate.values.length !== 3) return null;
   if (candidate.values.some((item) => item !== null && (typeof item !== 'number' || !Number.isFinite(item)))) return null;
-  const biasStep = Number(candidate.biasStep);
-  if (![0, 1, 2].includes(biasStep)) return null;
   return {
     analysis,
     acceptedImportance: Boolean(candidate.acceptedImportance),
     values: candidate.values.map((item) => item === null ? null : clampScore(item)),
     touched: Array.from({ length: 3 }, (_, index) => Boolean(candidate.touched?.[index])),
-    singleQuestionPassed: Boolean(candidate.singleQuestionPassed),
-    thresholdPassed: Boolean(candidate.thresholdPassed),
-    biasStep: biasStep as 0 | 1 | 2,
   };
 }
 
@@ -187,15 +173,6 @@ export function NeuronLessonProvider({ children }: { children: ReactNode }) {
       if (!hydrated || signature === lastCommittedRef.current) return;
       lastCommittedRef.current = signature;
       emitTelemetry('neuron_input_value_changed', null, { touched_count: next.touched.filter(Boolean).length, state_key: STATE_KEY, state: next });
-    },
-    markSingleQuestionPassed: () => {
-      if (!stateRef.current.singleQuestionPassed) commitState('neuron_single_range_understood', { ...stateRef.current, singleQuestionPassed: true });
-    },
-    markThresholdPassed: () => {
-      if (!stateRef.current.thresholdPassed) commitState('neuron_threshold_understood', { ...stateRef.current, thresholdPassed: true });
-    },
-    advanceBiasStep: (step) => {
-      if (step > stateRef.current.biasStep) commitState('neuron_bias_revealed', { ...stateRef.current, biasStep: step }, { bias_step: step });
     },
   }), [hydrated, scenario, state]);
 

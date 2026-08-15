@@ -21,7 +21,6 @@ export function ActivationCatalogBlock() {
     <div className="af-react-summary">
       <LessonStage
         className="af-react-activations"
-        kicker="最后一幕"
         title="认识这些被广泛使用的激活函数"
         variant="flat"
       >

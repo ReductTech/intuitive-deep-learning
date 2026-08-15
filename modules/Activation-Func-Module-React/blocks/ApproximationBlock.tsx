@@ -105,7 +105,6 @@ export function ApproximationBlock({ onComplete }: ApproximationBlockProps) {
     <LessonStage
       ref={rootRef}
       className="af-react-approximation"
-      kicker="更多隐藏层神经元"
       title="足够多带有 ReLU 的神经元，就能逼近任意曲线"
       description="灰色虚线是一个目标函数（绝非直线）。橙色实线是隐藏层神经元经过 ReLU 后形成的网络输出。增加神经元数量，观察折点如何叠加，让橙色曲线逐渐靠近目标。"
       actions={(

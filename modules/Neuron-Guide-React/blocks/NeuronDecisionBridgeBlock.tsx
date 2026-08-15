@@ -34,7 +34,7 @@ export function NeuronDecisionBridgeBlock() {
     <ContentBlock
       className="ng-lecture-stage ng-neuron-decision-bridge"
       title="神经元究竟在做什么？"
-      subtitle="单个神经元只有激活与不激活两种状态；许多神经元组合起来，却能形成丰富的判断与行为。"
+      subtitle="早期二值模型把单个神经元简化为 0 或 1；许多简单状态组合起来，却能形成丰富的判断与行为。"
     >
       <section className="ng-neuron-decision-bridge__stage" aria-label="神经元组合状态实验">
         <div className="ng-neuron-decision-bridge__network">
@@ -103,7 +103,7 @@ export function NeuronDecisionBridgeBlock() {
           </div>
           <div className="ng-neuron-decision-bridge__scale">
             <div><Typography variant="bodySmall" tone="muted">3 个神经元</Typography><Typography as="strong" variant="h2" tone="accent">2³ = 8</Typography></div>
-            <span aria-hidden="true">→</span>
+            <Typography as="span" variant="h3" tone="warning" aria-hidden="true">→</Typography>
             <div><Typography variant="bodySmall" tone="muted">10 个神经元</Typography><Typography as="strong" variant="h2" tone="accent">2¹⁰ = 1024</Typography></div>
           </div>
         </div>

@@ -1,5 +1,5 @@
 import { useMemo, useRef } from 'react';
-import { Button, LessonStage, NoticeStrip } from '../../shared/react';
+import { Button, LessonStage, NoticeStrip, Typography } from '../../shared/react';
 import { DeepOutputPlot } from '../components/ActivationCharts';
 import {
   NetworkCanvas,
@@ -188,7 +188,6 @@ export function DeepLinearBlock({ onComplete }: DeepLinearBlockProps) {
     <LessonStage
       ref={rootRef}
       className="af-react-network-lab"
-      kicker="线性网络的三维视角"
       title="层数变多了，输出仍然是一张平面"
       description="现在把输入扩展成二维坐标 x,y，输出变成 z。即使堆叠多层线性神经元，没有激活函数时，最后仍然只能得到一个平面。"
       actions={(
@@ -237,22 +236,21 @@ export function DeepLinearBlock({ onComplete }: DeepLinearBlockProps) {
         <div className="af-react-network-stage">
           <section className="af-react-network-panel">
             <header className="af-react-panel-head">
-              <h3>三维输出平面</h3>
-              <span>二维输入 x,y，一维输出 z</span>
+              <Typography as="h3" variant="subtitle" tone="main">三维输出平面</Typography>
+              <Typography as="span" variant="bodySmall" tone="muted">二维输入 x,y，一维输出 z</Typography>
             </header>
             <div className="af-react-visual-box">
               <DeepOutputPlot model={model} />
             </div>
             <NoticeStrip className="af-react-readout">
-              当前等价平面：z = {formatNumber(plane.ax)}x {formatSigned(plane.ay)}y {formatSigned(plane.c)}。
-              隐藏层数：{layerCount} / {MAX_DEEP_LAYER_COUNT}。
+              <Typography variant="bodySmall" tone="inherit">当前等价平面：z = {formatNumber(plane.ax)}x {formatSigned(plane.ay)}y {formatSigned(plane.c)}。隐藏层数：{layerCount} / {MAX_DEEP_LAYER_COUNT}。</Typography>
             </NoticeStrip>
           </section>
 
           <section className="af-react-network-panel">
             <header className="af-react-panel-head">
-              <h3>多层线性结构</h3>
-              <span>没有激活函数</span>
+              <Typography as="h3" variant="subtitle" tone="main">多层线性结构</Typography>
+              <Typography as="span" variant="bodySmall" tone="muted">没有激活函数</Typography>
             </header>
             <div className="af-react-visual-box af-react-visual-box--model">
               <NetworkCanvas
@@ -265,9 +263,9 @@ export function DeepLinearBlock({ onComplete }: DeepLinearBlockProps) {
               />
             </div>
             <NoticeStrip className="af-react-readout">
-              {layerCount < MAX_DEEP_LAYER_COUNT
+              <Typography variant="bodySmall" tone="inherit">{layerCount < MAX_DEEP_LAYER_COUNT
                 ? '每层固定 3 个神经元。继续添加层数，左侧仍然只能画出一张平面。'
-                : '已经加到 5 层了。没有激活函数时，这个 MLP 依然只是一个线性变换。'}
+                : '已经加到 5 层了。没有激活函数时，这个 MLP 依然只是一个线性变换。'}</Typography>
             </NoticeStrip>
           </section>
         </div>

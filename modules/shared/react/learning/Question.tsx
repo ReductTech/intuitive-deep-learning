@@ -64,6 +64,7 @@ export interface QuestionProps {
   review?: (answers: string[]) => Promise<ShortAnswerReview>;
   /** Stable key used to restore the latest answer from telemetry SQLite. */
   persistenceKey?: string;
+  showFeedback?: boolean;
 }
 
 function normalize(value: string | undefined) {
@@ -136,6 +137,7 @@ export function Question({
   onCheck,
   review,
   persistenceKey,
+  showFeedback = true,
 }: QuestionProps) {
   const generatedStateId = useId();
   const rootRef = useRef<HTMLElement | null>(null);
@@ -379,13 +381,13 @@ export function Question({
         </div>
       )}
 
-      <Feedback
+      {showFeedback && <Feedback
         status={result?.tone ?? 'info'}
         message={result?.message ?? feedback.initial}
         streaming={normalizedType === 'short' && Boolean(result && !result.empty)}
         className="dl-question-feedback"
         hidden={!result && feedback.initial === undefined}
-      />
+      />}
     </section>
   );
 }

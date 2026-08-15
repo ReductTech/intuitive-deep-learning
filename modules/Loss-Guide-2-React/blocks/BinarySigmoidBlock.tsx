@@ -510,7 +510,6 @@ export function BinarySigmoidBlock({
     <LessonStage
       ref={rootRef}
       className="wp-stage lg2-binary-sigmoid"
-      kicker="第一步 · 输出一个概率"
       title="怎样把原始分数变成下雨概率？"
       description="神经网络先根据湿度、云量、气压等信息计算一个原始分数，再把它转换成“明天下雨”的概率。"
       data-state-key="activity:sigmoid-transform-review"

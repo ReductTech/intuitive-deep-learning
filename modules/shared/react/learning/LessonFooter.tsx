@@ -4,6 +4,7 @@ import { Typography } from '../typography/Typography';
 import { classNames } from '../utils';
 import { RelatedVideos, type RelatedVideo } from './RelatedVideos';
 import { PageRating } from './PageRating';
+import { LessonDevelopers } from './LessonDevelopers';
 
 export interface LessonFooterLink {
   href: string;
@@ -18,6 +19,7 @@ export interface LessonFooterProps {
   videosLabel?: ReactNode;
   back?: LessonFooterLink;
   next?: LessonFooterLink;
+  developerIds?: readonly string[];
   className?: string;
 }
 
@@ -34,6 +36,7 @@ export function LessonFooter({
   videosLabel = '延伸观看',
   back,
   next,
+  developerIds = [],
   className,
 }: LessonFooterProps) {
   return (
@@ -57,7 +60,10 @@ export function LessonFooter({
           <RelatedVideos videos={videos} showHeader={false} ariaLabel="延伸观看资源" />
         </div>
       )}
-      <PageRating />
+      <div className="edu-lesson-footer-meta">
+        <LessonDevelopers githubIds={developerIds} />
+        <PageRating />
+      </div>
     </footer>
   );
 }

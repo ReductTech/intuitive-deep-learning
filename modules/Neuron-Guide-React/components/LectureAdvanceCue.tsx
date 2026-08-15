@@ -1,10 +1,11 @@
 import { useEffect, useRef, type ReactNode } from 'react';
 import { Typography } from '../../shared/react';
 
-export function LectureAdvanceCue({ children, complete, onContinue }: {
+export function LectureAdvanceCue({ children, complete, onContinue, label = '继续向下滚动' }: {
   children: ReactNode;
   complete: boolean;
   onContinue: () => void;
+  label?: string;
 }) {
   const rootRef = useRef<HTMLDivElement>(null);
   const touchStartY = useRef<number | null>(null);
@@ -52,7 +53,7 @@ export function LectureAdvanceCue({ children, complete, onContinue }: {
       {!complete && (
         <div className="edu-scroll-cue" role="status">
           <Typography as="span" variant="bodySmall" tone="inherit" className="edu-scroll-cue-arrow" aria-hidden="true">↓</Typography>
-          <Typography as="span" variant="bodySmall" tone="inherit">继续向下滚动</Typography>
+          <Typography as="span" variant="bodySmall" tone="inherit">{label}</Typography>
         </div>
       )}
     </div>

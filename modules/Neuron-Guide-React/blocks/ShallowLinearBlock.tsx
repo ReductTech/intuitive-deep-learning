@@ -1,5 +1,5 @@
 import { useMemo, useRef } from 'react';
-import { Button, LessonStage, NoticeStrip, Typography } from '../../shared/react';
+import { Button, FormulaBlock, LessonStage, NoticeStrip, Typography } from '../../shared/react';
 import { ShallowOutputPlot } from '../components/ActivationCharts';
 import {
   NetworkCanvas,
@@ -7,6 +7,7 @@ import {
   type NetworkLayer,
 } from '../components/NetworkCanvas';
 import { usePersistedActivity } from '../components/usePersistedActivity';
+import '../linear-network.css';
 import {
   formatNumber,
   formatSigned,
@@ -67,32 +68,43 @@ function normalizeSnapshot(value: unknown): ShallowSnapshot | null {
 function buildCanvas(
   model: ShallowModel,
 ): { layers: NetworkLayer[]; connections: NetworkConnection[] } {
-  const equivalent = shallowEquivalent(model);
   const layers: NetworkLayer[] = [
     {
       title: '输入 (1)',
       nodes: [{
         label: 'x',
         tone: 'input',
-        details: {
-          title: '输入节点 x',
-          body: '这里直接接收横轴上的输入值。',
-          code: 'a0 = x',
-        },
       }],
     },
     {
       title: `线性层 (${model.neurons.length})`,
-      nodes: model.neurons.map((neuron, index) => ({
-        label: `h${index + 1}`,
-        tone: 'hidden' as const,
-        activation: 'linear',
-        details: {
-          title: `线性神经元 ${index + 1}`,
-          body: '它只做加权和加偏置，然后直接送往输出层。',
-          code: `h${index + 1} = ${formatNumber(neuron.w)}x ${formatSigned(neuron.b)}\ny += ${formatNumber(neuron.v)}h${index + 1}`,
-        },
-      })),
+      nodes: model.neurons.map((neuron, index) => {
+        return {
+          label: `h1.${index + 1}`,
+          tone: 'hidden' as const,
+          activation: 'linear',
+          details: {
+            title: `线性层 1 · h1.${index + 1}`,
+            body: '这个节点先对变量 x 做一次线性变换，再把结果传向输出节点。',
+            content: (
+              <div className="ng-hidden-node-calculation">
+                <div>
+                  <Typography as="span" variant="bodySmall" tone="muted">节点输出</Typography>
+                  <Typography as="code" variant="bodySmall" tone="accent" wrap="nowrap">h1.{index + 1} = {formatNumber(neuron.w)}x {formatSigned(neuron.b)}</Typography>
+                </div>
+                <div>
+                  <Typography as="span" variant="bodySmall" tone="muted">输出权重</Typography>
+                  <Typography as="code" variant="bodySmall" tone="warning" wrap="nowrap">v1.{index + 1} = {formatNumber(neuron.v)}</Typography>
+                </div>
+                <div>
+                  <Typography as="span" variant="bodySmall" tone="muted">送入 y</Typography>
+                  <Typography as="code" variant="bodySmall" tone="success" wrap="nowrap">v1.{index + 1}h1.{index + 1} = {formatNumber(neuron.v)}h1.{index + 1}</Typography>
+                </div>
+              </div>
+            ),
+          },
+        };
+      }),
     },
     {
       title: '输出 (1)',
@@ -101,8 +113,21 @@ function buildCanvas(
         tone: 'output',
         details: {
           title: '输出节点 y',
-          body: '所有线性神经元的输出再次线性相加，所以可以合并成一条直线。',
-          code: `y = Σ(vh) ${formatSigned(model.outputBias)}\ny = ${formatNumber(equivalent.slope)}x ${formatSigned(equivalent.intercept)}`,
+          body: '把各隐藏节点作为变量统一加权，再加上输出偏置。',
+          content: (
+            <div className="ng-output-matrix">
+              <div className="ng-output-matrix__formula" aria-label="y 等于输出权重行向量乘隐藏层列向量，再加偏置 c">
+                <Typography as="code" variant="subtitle" tone="main" wrap="nowrap">y =</Typography>
+                <div className="ng-output-matrix__row-vector">
+                  {model.neurons.map((neuron, index) => <Typography as="code" variant="bodySmall" tone="warning" wrap="nowrap" title={`v${index + 1}`} key={index}>{formatNumber(neuron.v)}</Typography>)}
+                </div>
+                <div className="ng-output-matrix__column-vector">
+                  {model.neurons.map((_, index) => <Typography as="code" variant="bodySmall" tone="accent" wrap="nowrap" key={index}>h1.{index + 1}</Typography>)}
+                </div>
+                <Typography as="code" variant="subtitle" tone="main" wrap="nowrap">+ {formatNumber(model.outputBias)}</Typography>
+              </div>
+            </div>
+          ),
         },
       }],
     },
@@ -169,13 +194,38 @@ export function ShallowLinearBlock({ onComplete }: ShallowLinearBlockProps) {
     if (!state.completed && next.completed) onComplete();
   };
 
+  const removeNeuron = () => {
+    if (!state || state.model.neurons.length <= 1) return;
+    const neurons = state.model.neurons.slice(0, -1);
+    commit('activation_linear_neuron_remove', {
+      model: { ...state.model, neurons },
+      completed: state.completed,
+    }, {
+      experiment: 'shallow',
+      neuron_count: neurons.length,
+    });
+  };
+
+  const randomizeWeights = () => {
+    if (!state) return;
+    const neuronCount = state.model.neurons.length;
+    commit('activation_linear_weights_randomized', {
+      model: makeShallowModel(neuronCount),
+      completed: state.completed,
+    }, {
+      experiment: 'shallow',
+      neuron_count: neuronCount,
+    });
+  };
+
   const count = model?.neurons.length ?? 0;
   return (
     <LessonStage
       ref={rootRef}
       className="af-react-network-lab"
-      title="只堆线性神经元，会发生什么？"
-      description="先从一个最简单的网络开始：x 进入一个线性神经元，再输出 y。左侧会画出它对应的函数图像。"
+      title="多个线性神经元的叠加"
+      description="把多个线性神经元写进矩阵，观察增加神经元能否改变线性输出的形状。"
+      descriptionVariant="bodySmall"
       actions={(
         <div className="af-react-actions">
           <Button
@@ -185,6 +235,18 @@ export function ShallowLinearBlock({ onComplete }: ShallowLinearBlockProps) {
           >
             添加神经元
           </Button>
+          <Button
+            disabled={!hydrated || !model || count <= 1}
+            onClick={removeNeuron}
+          >
+            删减神经元
+          </Button>
+          <Button
+            disabled={!hydrated || !model}
+            onClick={randomizeWeights}
+          >
+            随机权重
+          </Button>
         </div>
       )}
       data-telemetry-manual
@@ -192,42 +254,48 @@ export function ShallowLinearBlock({ onComplete }: ShallowLinearBlockProps) {
     >
       {!model || !equivalent ? (
         <NoticeStrip tone="blue">
-          正在恢复已保存的随机参数…
+          <Typography variant="bodySmall" tone="inherit">正在恢复已保存的随机参数…</Typography>
         </NoticeStrip>
       ) : (
         <div className="af-react-network-stage">
           <section className="af-react-network-panel">
             <header className="af-react-panel-head">
-              <Typography as="h3" variant="subtitle" tone="main">二维函数图像</Typography>
-              <Typography as="span" variant="bodySmall" tone="muted">一维输入 x，一维输出 y</Typography>
+              <Typography as="h3" variant="subtitle" tone="main">先看输出的形状</Typography>
+              <Typography as="span" variant="bodySmall" tone="muted">增加神经元，直线会弯曲吗？</Typography>
             </header>
             <div className="af-react-visual-box">
+              <FormulaBlock
+                className="af-react-plot-formula"
+                ariaLabel={`当前函数为 y 等于 ${formatNumber(equivalent.slope)} x ${formatSigned(equivalent.intercept)}`}
+                formula={(
+                  <span className="af-react-plot-formula-content">
+                    <Typography as="span" variant="bodySmall" tone="muted">
+                      当前函数
+                    </Typography>
+                    <Typography as="span" variant="subtitle" tone="main">
+                      y = {formatNumber(equivalent.slope)}x {formatSigned(equivalent.intercept)}
+                    </Typography>
+                  </span>
+                )}
+              />
               <ShallowOutputPlot model={model} />
             </div>
-            <NoticeStrip className="af-react-readout">
-              <Typography variant="bodySmall" tone="inherit">当前等价函数：y = {formatNumber(equivalent.slope)}x {formatSigned(equivalent.intercept)}。隐藏神经元数量：{count} / 3。</Typography>
-            </NoticeStrip>
           </section>
 
           <section className="af-react-network-panel">
             <header className="af-react-panel-head">
-              <Typography as="h3" variant="subtitle" tone="main">线性神经元结构</Typography>
-              <Typography as="span" variant="bodySmall" tone="muted">悬浮节点查看 w、b、v</Typography>
+              <Typography as="h3" variant="subtitle" tone="main">把一个神经元扩展成多个</Typography>
+              <Typography as="span" variant="bodySmall" tone="muted">悬浮节点查看每一步加权</Typography>
             </header>
             <div className="af-react-visual-box af-react-visual-box--model">
               <NetworkCanvas
                 layers={canvas.layers}
                 connections={canvas.connections}
                 ariaLabel="无激活函数网络结构"
-                caption="没有激活函数：h = wx + b，y = Σvh + c"
+                caption="每个节点都只做线性运算；多个线性结果再次加权，仍然只能合并成一条直线"
                 height={430}
               />
             </div>
-            <NoticeStrip className="af-react-readout">
-              <Typography variant="bodySmall" tone="inherit">{count < 3
-                ? '点击“添加神经元”会加入一组随机 w、b、v。线可能旋转或平移，但仍然是一条直线。'
-                : '已经有 3 个线性神经元了。它们叠加后仍然只是一条直线。继续往下观察二维输入时会发生什么。'}</Typography>
-            </NoticeStrip>
           </section>
         </div>
       )}

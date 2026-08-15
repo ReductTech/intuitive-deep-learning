@@ -1,13 +1,9 @@
 import { Fragment } from 'react';
-import { LessonStage } from '../../shared/react';
+import { LessonStage, PanelChoiceQuestion, Typography, type PanelChoiceOption } from '../../shared/react';
 import {
   Function2DChoicePlot,
   Surface3DChoicePlot,
 } from '../components/ActivationCharts';
-import {
-  PersistedPanelChoice,
-  type PersistedPanelChoiceOption,
-} from '../components/PersistedPanelChoice';
 
 export interface LinearChoiceBlockProps {
   onComplete: () => void;
@@ -15,6 +11,7 @@ export interface LinearChoiceBlockProps {
 
 interface ConfiguredLinearChoiceProps extends LinearChoiceBlockProps {
   dimension: '2d' | '3d';
+  showFeedback?: boolean;
 }
 
 function choiceConfig(dimension: ConfiguredLinearChoiceProps['dimension']): {
@@ -23,7 +20,7 @@ function choiceConfig(dimension: ConfiguredLinearChoiceProps['dimension']): {
   title: string;
   help: string;
   correctId: string;
-  options: PersistedPanelChoiceOption[];
+  options: PanelChoiceOption[];
   initialFeedback: string;
   wrongFeedback: string;
   correctFeedback: string;
@@ -37,24 +34,21 @@ function choiceConfig(dimension: ConfiguredLinearChoiceProps['dimension']): {
       correctId: '2d-line',
       options: [
         {
-          id: '2d-line',
+          value: '2d-line',
           key: 'A',
           title: 'y = 0.72x - 0.18',
-          caption: '直线',
           media: <Function2DChoicePlot type="line2d" />,
         },
         {
-          id: '2d-curve',
+          value: '2d-curve',
           key: 'B',
           title: 'y = 0.75x² - 0.35',
-          caption: '弯曲曲线',
           media: <Function2DChoicePlot type="parabola2d" />,
         },
         {
-          id: '2d-fold',
+          value: '2d-fold',
           key: 'C',
           title: 'y = max(0, x)',
-          caption: '折线',
           media: <Function2DChoicePlot type="fold2d" />,
         },
       ],
@@ -72,24 +66,21 @@ function choiceConfig(dimension: ConfiguredLinearChoiceProps['dimension']): {
     correctId: '3d-plane',
     options: [
       {
-        id: '3d-bowl',
+        value: '3d-bowl',
         key: 'A',
         title: 'z = 0.65(x² + y²) - 0.58',
-        caption: '碗形曲面',
         media: <Surface3DChoicePlot type="bowl3d" />,
       },
       {
-        id: '3d-plane',
+        value: '3d-plane',
         key: 'B',
         title: 'z = 0.55x - 0.30y + 0.05',
-        caption: '平面',
         media: <Surface3DChoicePlot type="plane3d" />,
       },
       {
-        id: '3d-fold',
+        value: '3d-fold',
         key: 'C',
         title: 'z = max(0, x + 0.55y) - 0.42',
-        caption: '折面',
         media: <Surface3DChoicePlot type="fold3d" />,
       },
     ],
@@ -103,29 +94,29 @@ function choiceConfig(dimension: ConfiguredLinearChoiceProps['dimension']): {
 export function LinearChoiceBlock({
   dimension,
   onComplete,
+  showFeedback = true,
 }: ConfiguredLinearChoiceProps) {
   const config = choiceConfig(dimension);
   return (
-    <LessonStage className="af-react-choice-stage" variant="flat">
-      <PersistedPanelChoice
-        persistenceKey={config.persistenceKey}
-        typeLabel={config.typeLabel}
-        title={(
-          <>
-            <span>{config.title}</span>
-            <small className="af-react-question-help">{config.help}</small>
-          </>
-        )}
-        correctId={config.correctId}
-        options={config.options}
-        feedback={{
-          initial: config.initialFeedback,
-          wrong: config.wrongFeedback,
-          correct: config.correctFeedback,
-        }}
-        onComplete={onComplete}
-      />
-    </LessonStage>
+    <PanelChoiceQuestion
+      persistenceKey={config.persistenceKey}
+      typeLabel={config.typeLabel}
+      title={(
+        <span className="af-react-question-line">
+          <Typography as="span" variant="body">{config.title}</Typography>
+          <Typography as="span" variant="bodySmall" tone="muted">{config.help}</Typography>
+        </span>
+      )}
+      answer={config.correctId}
+      options={config.options}
+      feedback={{
+        initial: config.initialFeedback,
+        wrong: config.wrongFeedback,
+        correct: config.correctFeedback,
+      }}
+      showFeedback={showFeedback}
+      onCheck={(result) => { if (result.ok) onComplete(); }}
+    />
   );
 }
 
@@ -134,7 +125,6 @@ export function Linear2DChoiceBlock({ onComplete }: LinearChoiceBlockProps) {
     <Fragment>
       <LessonStage
         className="af-react-definition"
-        kicker="第一幕"
         title="什么是线性？先看它怎样变化"
         variant="featured"
       >

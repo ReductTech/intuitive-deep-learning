@@ -27,6 +27,7 @@ export function NeuronCompletionBlock() {
 export function NeuronLessonFooter() {
   return (
     <LessonFooter
+      developerIds={['ssocean', 'zhasion', 'zero223', 'GGbondas', 'dengyuhai','ShuyangHou',]}
       className="ng-react-footer"
       title="推荐资源"
       description="继续认识真实神经元，再进入激活函数，观察神经元如何获得非线性表达能力。"

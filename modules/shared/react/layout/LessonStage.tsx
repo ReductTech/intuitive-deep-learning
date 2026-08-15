@@ -5,9 +5,9 @@ import { classNames } from '../utils';
 export type LessonStageVariant = 'default' | 'flat' | 'featured';
 
 export interface LessonStageProps extends Omit<HTMLAttributes<HTMLElement>, 'title'> {
-  kicker?: ReactNode;
   title?: ReactNode;
   description?: ReactNode;
+  descriptionVariant?: TypographyVariant;
   actions?: ReactNode;
   variant?: LessonStageVariant;
   locked?: boolean;
@@ -17,9 +17,9 @@ export interface LessonStageProps extends Omit<HTMLAttributes<HTMLElement>, 'tit
 }
 
 export const LessonStage = forwardRef<HTMLElement, LessonStageProps>(function LessonStage({
-  kicker,
   title,
   description,
+  descriptionVariant = 'bodySmall',
   actions,
   variant = 'default',
   locked = false,
@@ -32,7 +32,7 @@ export const LessonStage = forwardRef<HTMLElement, LessonStageProps>(function Le
 }, ref) {
   const Heading = `h${headingLevel}` as const;
   const headingVariant: TypographyVariant = headingLevel === 2 ? 'h2' : 'h3';
-  const hasHeader = kicker !== undefined || title !== undefined || description !== undefined || actions !== undefined;
+  const hasHeader = title !== undefined || description !== undefined || actions !== undefined;
 
   return (
     <section
@@ -50,9 +50,8 @@ export const LessonStage = forwardRef<HTMLElement, LessonStageProps>(function Le
       {hasHeader && (
         <header className="edu-stage-head">
           <div className="edu-stage-copy">
-            {kicker !== undefined && <Typography as="span" variant="bodySmall" tone="accent" className="edu-kicker">{kicker}</Typography>}
             {title !== undefined && <Typography as={Heading} variant={headingVariant} tone="accent" className="edu-stage-title">{title}</Typography>}
-            {description !== undefined && <Typography variant="bodySmall" tone="muted" className="edu-stage-description">{description}</Typography>}
+            {description !== undefined && <Typography variant={descriptionVariant} tone="muted" className="edu-stage-description">{description}</Typography>}
           </div>
           {actions}
         </header>

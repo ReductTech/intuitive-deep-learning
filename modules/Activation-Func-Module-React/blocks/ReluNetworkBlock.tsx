@@ -169,7 +169,6 @@ export function ReluNetworkBlock({ onComplete }: ReluNetworkBlockProps) {
     <LessonStage
       ref={rootRef}
       className="af-react-network-lab"
-      kicker="从一个到多个"
       title="组合多个带有 ReLU 的神经元，曲线继续弯折"
       description="刚才 ReLU 把负数截成了 0，并制造出一个折点。现在隐藏层中的每个神经元都会先计算 wx + b，再经过 ReLU：神经元越多，折点越多。"
       actions={(

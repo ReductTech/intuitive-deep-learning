@@ -12,6 +12,7 @@ import { MLPPlaygroundPage } from '../../modules/MLP_playground-React/MLPPlaygro
 import { FittingPage } from '../../modules/Fitting_Module/FittingPage';
 import { AdaptiveLearningRatePage } from '../../modules/Adaptive-Learning-Rate-Module/AdaptiveLearningRatePage';
 import { ExpandedNeuronGuidePage } from '../../modules/Neuron-Guide-React/ExpandedNeuronGuidePage';
+import { BaseMathPage } from '../../modules/base_math/BaseMathPage';
 import { ManualFeatureClassificationPage } from '../../modules/Manual-Feature-Classification-React/ManualFeatureClassificationPage';
 import { ConvolutionKernelIntroPage } from '../../modules/Convolution-Kernel-Intro-React/ConvolutionKernelIntroPage';
 import { LeNet5CnnLabPage } from '../../modules/LeNet5-CNN-Lab-React/LeNet5CnnLabPage';
@@ -34,6 +35,17 @@ export interface MigratedModule {
 }
 
 export const migratedModules: MigratedModule[] = [
+  {
+    id: 'base-math',
+    title: '认识线性',
+    description: '从二维直线到三维平面，建立线性关系的几何直觉。',
+    path: '/modules/base-math',
+    badge: '基础数学模块',
+    element: <BaseMathPage />,
+    moduleType: 'teaching',
+    difficulty: 'introductory',
+    audience: 'general',
+  },
   {
     id: 'neuron-guide-react',
     title: '认识人工神经元',

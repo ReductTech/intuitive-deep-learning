@@ -19,9 +19,10 @@ export interface PanelChoiceQuestionProps {
   feedback?: { initial?: ReactNode; correct?: ReactNode; wrong?: ReactNode };
   persistenceKey?: string;
   onCheck?: (result: QuestionCheckResult) => void;
+  showFeedback?: boolean;
 }
 
-export function PanelChoiceQuestion({ title, options, answer, typeLabel = '面板单选题', feedback, persistenceKey, onCheck }: PanelChoiceQuestionProps) {
+export function PanelChoiceQuestion({ title, options, answer, typeLabel = '面板单选题', feedback, persistenceKey, onCheck, showFeedback = true }: PanelChoiceQuestionProps) {
   return (
     <Question
       className="dl-question--panel"
@@ -32,6 +33,7 @@ export function PanelChoiceQuestion({ title, options, answer, typeLabel = '面�
       feedback={feedback}
       persistenceKey={persistenceKey}
       onCheck={onCheck}
+      showFeedback={showFeedback}
       options={options.map((option) => ({
         key: option.key,
         value: option.value,

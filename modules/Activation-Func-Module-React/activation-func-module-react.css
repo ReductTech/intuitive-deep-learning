@@ -24,13 +24,13 @@
   border-top: 3px solid var(--ui-accent);
 }
 
-.af-react-question-help {
-  display: block;
-  margin-top: 7px;
-  color: var(--ui-text-muted);
-  font-size: 13px;
-  font-weight: 650;
-  line-height: 1.6;
+.af-react-question-line {
+  display: flex;
+  min-width: 0;
+  max-width: 100%;
+  align-items: baseline;
+  gap: 14px;
+  white-space: nowrap;
 }
 
 .activation-panel-choice-answer {
@@ -122,19 +122,7 @@
   margin-bottom: 10px;
 }
 
-.af-react-panel-head h3 {
-  margin: 0;
-  color: var(--ui-text-muted);
-  font-size: 12px;
-  font-weight: 900;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.af-react-panel-head span {
-  color: var(--ui-text-light);
-  font: 800 11px var(--ui-font-mono);
-}
+.af-react-panel-head .ui-typography { margin: 0; }
 
 .af-react-visual-box {
   position: relative;

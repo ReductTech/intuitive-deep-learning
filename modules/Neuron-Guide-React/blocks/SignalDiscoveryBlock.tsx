@@ -78,7 +78,7 @@ export function SignalDiscoveryBlock({ onComplete }: SignalDiscoveryBlockProps) 
         </div>
 
         {error && (
-          <NoticeStrip className="ng-opening-status" tone="red" lead="分析暂时无法完成：">
+          <NoticeStrip className="ng-opening-status" tone="red" lead={<Typography as="span" variant="bodySmall" tone="inherit">分析暂时无法完成：</Typography>}>
             <Typography as="span" variant="bodySmall" tone="inherit">{error}</Typography>
           </NoticeStrip>
         )}

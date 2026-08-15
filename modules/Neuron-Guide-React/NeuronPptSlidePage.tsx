@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
-import { BiasThresholdTheoryBlock } from './blocks/BiasThresholdTheoryBlock';
 import { BiologicalNeuronBlock } from './blocks/BiologicalNeuronBlock';
 import { ExtraInputsBlock } from './blocks/ExtraInputsBlock';
 import { NematodeResponseBlock } from './blocks/NematodeResponseBlock';
@@ -8,6 +7,14 @@ import { NeuronDecisionBridgeBlock } from './blocks/NeuronDecisionBridgeBlock';
 import { SignalDiscoveryBlock } from './blocks/SignalDiscoveryBlock';
 import { WeightedSumBlock } from './blocks/WeightedSumBlock';
 import { WeightedContributionTheoryBlock } from './blocks/WeightedContributionTheoryBlock';
+import { BiasThresholdTheoryBlock } from './blocks/BiasThresholdTheoryBlock';
+import { ShallowLinearBlock } from './blocks/ShallowLinearBlock';
+import { DeepLinearBlock } from './blocks/DeepLinearBlock';
+import { ReluIntroBlock } from './blocks/ReluIntroBlock';
+import { ReluExplanationBlock } from './blocks/ReluExplanationBlock';
+import { ReluNetworkBlock } from './blocks/ReluNetworkBlock';
+import { ReluApproximationLabBlock } from './blocks/ReluApproximationLabBlock';
+import { ActivationCatalogBlock } from './blocks/ActivationCatalogBlock';
 import { NeuronLessonProvider } from './model/NeuronLessonContext';
 import './neuron-guide-react.css';
 
@@ -29,7 +36,14 @@ export const neuronPptSlides: NeuronPptSlideDefinition[] = [
   { id: 'weighted-sum', title: '把一个现实因素，翻译成神经元能处理的输入', section: '输入信号', render: (complete) => <WeightedSumBlock onComplete={complete} /> },
   { id: 'extra-inputs', title: '从一个因素，到三个因素', section: '输入信号', render: (complete) => <ExtraInputsBlock onComplete={complete} /> },
   { id: 'weighted-contribution', title: '从加权求和到矩阵表示', section: '矩阵形式', render: () => <WeightedContributionTheoryBlock /> },
-  { id: 'bias-theory', title: '从神经元的角度得到最终判断', section: '最终判断', render: () => <BiasThresholdTheoryBlock /> },
+  { id: 'bias-threshold', title: '判断门槛与偏置', section: '最终判断', render: (complete) => <BiasThresholdTheoryBlock onComplete={complete} /> },
+  { id: 'linear-shallow', title: '多个线性神经元的叠加', section: '线性网络', render: (complete) => <ShallowLinearBlock onComplete={complete} /> },
+  { id: 'linear-deep', title: '线性关系从直线扩展为平面', section: '线性网络', render: (complete) => <DeepLinearBlock onComplete={complete} /> },
+  { id: 'relu-intro', title: '从线性计算到非线性响应', section: '激活函数', render: (complete) => <ReluIntroBlock onComplete={complete} /> },
+  { id: 'relu-explanation', title: '认识线性整流单元', section: '激活函数', render: () => <ReluExplanationBlock /> },
+  { id: 'relu-network', title: '组合多个带有 ReLU 的神经元，曲线继续弯折', section: '激活函数', render: (complete) => <ReluNetworkBlock onComplete={complete} /> },
+  { id: 'relu-approximation', title: '足够多带有 ReLU 的神经元，就能逼近任意曲线', section: '激活函数', render: (complete) => <ReluApproximationLabBlock onComplete={complete} /> },
+  { id: 'activation-catalog', title: '认识这些被广泛使用的激活函数', section: '激活函数', render: () => <ActivationCatalogBlock /> },
   { id: 'ending', title: '你已经搭出了一个人工神经元', section: '课程结尾', render: () => <NeuronCompletionBlock /> },
   { id: 'resources', title: '推荐资源', section: '课程结尾', render: () => <NeuronLessonFooter /> },
 ];

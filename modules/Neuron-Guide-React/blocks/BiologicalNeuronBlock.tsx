@@ -1,5 +1,5 @@
 import { ContentBlock, Typography } from '../../shared/react';
-import neuronDiagram from '../../Activation-Func-Module-React/assets/biological-neuron-diagram.svg';
+import neuronDiagram from '../assets/biological-neuron-diagram.svg';
 
 const abstractions = [
   {

@@ -427,7 +427,6 @@ export function BinaryCrossEntropyBlock({
     <LessonStage
       ref={rootRef}
       className="wp-stage lg2-binary-cross-entropy"
-      kicker="第二步 · 计算二分类损失"
       title="预测概率有了，怎样衡量预测得好不好？"
       description="假设第二天确实下雨，真实标签为 1。请设计一个损失函数，让预测概率越接近 1，损失越小。"
       data-state-key="activity:loss-design"

@@ -150,7 +150,6 @@ export function ReluIntroBlock({ onComplete }: ReluIntroBlockProps) {
     <LessonStage
       ref={rootRef}
       className="af-react-network-lab af-react-relu-intro"
-      kicker="第三幕 · 非线性"
       title="ReLU 做了什么？先看一个神经元"
       description="在上一模块中，神经元会把输入乘以权重，再汇总成输出。现在沿用这个熟悉的结构，只在汇总结果后加一道 ReLU：正数照常通过，负数变成 0。"
       data-telemetry-manual

@@ -186,10 +186,13 @@ export interface Function2DChoicePlotProps {
 export function Function2DChoicePlot({ type }: Function2DChoicePlotProps) {
   const definition = FUNCTION_2D_DEFINITIONS[type];
   const data = useMemo<PlotlyTrace[]>(() => {
+    // The viewport is intentionally small for comparison, but these functions
+    // are defined on the whole real line. Sample a much wider domain so
+    // panning or zooming never exposes misleading finite endpoints.
     const sampled = sampleFunction2D(definition.fn, {
-      xMin: -1.2,
-      xMax: 1.2,
-      samples: 180,
+      xMin: -100,
+      xMax: 100,
+      samples: 4001,
     });
     return [{
       type: 'scatter',
@@ -202,19 +205,33 @@ export function Function2DChoicePlot({ type }: Function2DChoicePlotProps) {
     }];
   }, [definition, type]);
   const layout = useMemo(
-    () => layout2D({
-      xRange: [-1.2, 1.2],
-      yRange: [-1.2, 1.2],
-      margin: { l: 34, r: 10, t: 10, b: 34 },
-      uirevision: `activation-choice-${type}`,
-    }),
+    () => {
+      const sharedLayout = layout2D({
+        xRange: [-1.2, 1.2],
+        yRange: [-1.2, 1.2],
+        margin: { l: 34, r: 10, t: 10, b: 34 },
+        uirevision: 'activation-choice-2d-v3',
+      });
+      const xaxis = sharedLayout.xaxis && typeof sharedLayout.xaxis === 'object'
+        ? sharedLayout.xaxis as Record<string, unknown>
+        : {};
+      const yaxis = sharedLayout.yaxis && typeof sharedLayout.yaxis === 'object'
+        ? sharedLayout.yaxis as Record<string, unknown>
+        : {};
+      return {
+        ...sharedLayout,
+        dragmode: 'pan',
+        xaxis: { ...xaxis, fixedrange: false },
+        yaxis: { ...yaxis, fixedrange: false, scaleanchor: 'x', scaleratio: 1 },
+      };
+    },
     [type],
   );
 
   return (
     <PersistedPlotlyChart
       className="af-react-plot af-react-choice-plot"
-      persistenceKey={`activation-choice-${type}`}
+      persistenceKey={`activation-choice-${type}-v3`}
       data={data}
       layout={layout}
       minHeight={132}
@@ -269,7 +286,10 @@ export function ShallowOutputPlot({ model }: ShallowOutputPlotProps) {
   const data = useMemo<PlotlyTrace[]>(() => {
     const sampled = sampleFunction2D(
       (x) => shallowPredict(model, x),
-      { xMin: -1.15, xMax: 1.15, samples: 180 },
+      // The network is y = ax + b, so its graph must not read as a bounded
+      // segment. Keep a wide sampled domain behind the initial close view;
+      // users can pan and zoom without immediately reaching an endpoint.
+      { xMin: -100, xMax: 100, samples: 4001 },
     );
     return [{
       type: 'scatter',
@@ -290,7 +310,7 @@ export function ShallowOutputPlot({ model }: ShallowOutputPlotProps) {
           `y = ${formatNumber(equivalent.slope)}x ${formatSigned(equivalent.intercept)}`,
         ),
       ],
-      uirevision: 'activation-linear-shallow-output',
+      uirevision: 'activation-linear-shallow-output-v2',
     }),
     [equivalent],
   );
@@ -298,7 +318,7 @@ export function ShallowOutputPlot({ model }: ShallowOutputPlotProps) {
   return (
     <PersistedPlotlyChart
       className="af-react-plot af-react-stage-plot"
-      persistenceKey="activation-linear-shallow-output"
+      persistenceKey="activation-linear-shallow-output-v2"
       data={data}
       layout={layout}
       minHeight={430}

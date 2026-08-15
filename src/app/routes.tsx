@@ -65,6 +65,7 @@ import { MomentumBlock } from '../../modules/Adaptive-Learning-Rate-Module/block
 import { AdaGradBlock } from '../../modules/Adaptive-Learning-Rate-Module/blocks/AdaGradBlock';
 import { AdamBlock } from '../../modules/Adaptive-Learning-Rate-Module/blocks/AdamBlock';
 import { AdaptiveLearningRateLessonFooter } from '../../modules/Adaptive-Learning-Rate-Module/blocks/AdaptiveLearningRateLessonFooter';
+import { LinearRecognitionBlock } from '../../modules/base_math/blocks/LinearRecognitionBlock';
 import { BiasThresholdTheoryBlock } from '../../modules/Neuron-Guide-React/blocks/BiasThresholdTheoryBlock';
 import { BiologicalNeuronBlock } from '../../modules/Neuron-Guide-React/blocks/BiologicalNeuronBlock';
 import { ExtraInputsBlock } from '../../modules/Neuron-Guide-React/blocks/ExtraInputsBlock';
@@ -95,7 +96,8 @@ const blockPreviews = [
   { id: 'neuron-weighted-sum', group: '认识人工神经元', title: '权重与加权和', description: '固定输入并改变权重，观察单项贡献和总分。', path: '/dev/blocks/neuron-guide-react/weighted-sum' },
   { id: 'neuron-extra-inputs', group: '认识人工神经元', title: '补充其他输入', description: '为同一个决定填写另外两个输入信号。', path: '/dev/blocks/neuron-guide-react/extra-inputs' },
   { id: 'neuron-weighted-contribution', group: '认识人工神经元', title: '单项加权贡献', description: '定义输入、权重与单项贡献的数学关系。', path: '/dev/blocks/neuron-guide-react/weighted-contribution' },
-  { id: 'neuron-bias-theory', group: '认识人工神经元', title: '偏置：把判断门槛写进公式', description: '将判断门槛移入加权和，并统一与 0 比较。', path: '/dev/blocks/neuron-guide-react/bias-theory' },
+  { id: 'neuron-bias-theory', group: '认识人工神经元', title: '判断门槛与偏置', description: '将判断门槛移入加权和，并统一与 0 比较。', path: '/dev/blocks/neuron-guide-react/bias-theory' },
+  { id: 'base-math-linear-recognition', group: '基础数学', title: '认识线性', description: '通过二维直线与三维平面建立线性直觉。', path: '/dev/blocks/base-math/linear-recognition' },
   { id: 'neuron-ending', group: '认识人工神经元', title: '课程结尾', description: '总结人工神经元的输入、权重、求和与偏置。', path: '/dev/blocks/neuron-guide-react/ending' },
   { id: 'adaptive-lr-why', group: '优化器如何调整步伐', title: '为什么需要优化器', description: '比较过大与过小的固定学习率，观察震荡和缓慢收敛。', path: '/dev/blocks/adaptive-learning-rate/why-optimizer' },
   { id: 'adaptive-lr-sgd', group: '优化器如何调整步伐', title: 'SGD', description: '对比 Full Batch 的平滑路线与 SGD 的蛇形路线。', path: '/dev/blocks/adaptive-learning-rate/sgd' },
@@ -201,7 +203,11 @@ function NeuronDecisionBridgePreview() {
 }
 
 function NeuronBiasTheoryPreview() {
-  return <BlockPreview title="偏置：把判断门槛写进公式" contentClassName="ng-react-shell">{() => <NeuronLessonProvider><BiasThresholdTheoryBlock /></NeuronLessonProvider>}</BlockPreview>;
+  return <BlockPreview title="判断门槛与偏置" contentClassName="ng-react-shell">{({ complete }) => <NeuronLessonProvider><BiasThresholdTheoryBlock onComplete={complete} /></NeuronLessonProvider>}</BlockPreview>;
+}
+
+function BaseMathLinearRecognitionPreview() {
+  return <BlockPreview title="认识线性" contentClassName="base-math-shell">{({ complete }) => <LinearRecognitionBlock onComplete={complete} />}</BlockPreview>;
 }
 
 function NeuronWeightedSumPreview() {
@@ -514,6 +520,7 @@ export const appRoutes: AppRoute[] = [
   { path: '/dev/blocks/neuron-guide-react/extra-inputs', element: <NeuronExtraInputsPreview /> },
   { path: '/dev/blocks/neuron-guide-react/weighted-contribution', element: <NeuronWeightedContributionPreview /> },
   { path: '/dev/blocks/neuron-guide-react/bias-theory', element: <NeuronBiasTheoryPreview /> },
+  { path: '/dev/blocks/base-math/linear-recognition', element: <BaseMathLinearRecognitionPreview /> },
   { path: '/dev/blocks/neuron-guide-react/ending', element: <NeuronEndingPreview /> },
   { path: '/dev/blocks/adaptive-learning-rate/why-optimizer', element: <WhyOptimizerPreview /> },
   { path: '/dev/blocks/adaptive-learning-rate/sgd', element: <SgdPreview /> },

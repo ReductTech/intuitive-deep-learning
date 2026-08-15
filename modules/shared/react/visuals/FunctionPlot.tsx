@@ -7,11 +7,22 @@ export interface FunctionSeries {
   label?: string;
   stroke?: string;
   strokeWidth?: number;
+  dash?: string;
+}
+
+export interface FunctionGuide {
+  id: string;
+  x: number;
+  label?: string;
+  stroke?: string;
+  strokeWidth?: number;
+  dash?: string;
 }
 
 export interface FunctionPlotProps {
   fn?: (x: number) => number;
   series?: FunctionSeries[];
+  verticalGuides?: FunctionGuide[];
   className?: string;
   ariaLabel: string;
   minHeight?: number;
@@ -28,9 +39,10 @@ interface Viewport {
   y: [number, number];
 }
 
-const sampleCount = 401;
+const sampleCount = 1001;
 const plotWidth = 760;
 const plotHeight = 420;
+const viewportOverscan = 2;
 
 function numeric(value: unknown): number | null {
   const parsed = typeof value === 'number' ? value : typeof value === 'string' ? Number(value) : Number.NaN;
@@ -59,29 +71,59 @@ function plottedRange(host: HTMLElement, axis: 'xaxis' | 'yaxis', fallback: [num
 }
 
 function samplesFor([min, max]: [number, number]) {
-  const padding = (max - min) * .16;
+  // Plotly translates the existing trace while the pointer is moving and only
+  // emits the final viewport afterwards. Keep two extra viewports on either
+  // side so an unbounded function never reveals a fake endpoint mid-pan; the
+  // relayout handler then resamples around the new viewport.
+  const padding = (max - min) * viewportOverscan;
   const start = min - padding;
   const end = max + padding;
   return Array.from({ length: sampleCount }, (_, index) => start + (end - start) * index / (sampleCount - 1));
 }
 
-function tracesFor(curves: FunctionSeries[], viewport: Viewport, fallbackStroke: string): PlotlyTrace[] {
+function tracesFor(
+  curves: FunctionSeries[],
+  guides: FunctionGuide[],
+  viewport: Viewport,
+  fallbackStroke: string,
+): PlotlyTrace[] {
   const x = samplesFor(viewport.x);
-  return curves.map((curve) => ({
+  const curveTraces = curves.map((curve) => ({
     type: 'scatter',
     mode: 'lines',
     name: curve.label,
     x,
     y: x.map(curve.fn),
-    line: { color: curve.stroke ?? fallbackStroke, width: curve.strokeWidth ?? 4 },
+    line: {
+      color: curve.stroke ?? fallbackStroke,
+      width: curve.strokeWidth ?? 4,
+      dash: curve.dash,
+    },
     hovertemplate: `${curve.label ? `${curve.label}<br>` : ''}x = %{x:.4g}<br>y = %{y:.4g}<extra></extra>`,
   }));
+  const y = samplesFor(viewport.y);
+  const guideTraces = guides.map((guide) => ({
+    type: 'scatter',
+    mode: 'lines',
+    name: guide.label,
+    showlegend: false,
+    x: [guide.x, guide.x],
+    y: [y[0], y[y.length - 1]],
+    line: {
+      color: guide.stroke ?? 'rgba(196, 63, 82, 0.52)',
+      width: guide.strokeWidth ?? 1.6,
+      dash: guide.dash ?? 'dash',
+    },
+    hovertemplate: `${guide.label ? `${guide.label}<br>` : ''}x = %{x:.4g}<extra></extra>`,
+  }));
+  return [...curveTraces, ...guideTraces];
 }
 
 /** Plotly-backed function graph. Single and multi-function views share hover, pan, zoom and resampling behavior. */
 export function FunctionPlot({
   fn,
   series,
+  verticalGuides,
   className,
   ariaLabel,
   minHeight = 300,
@@ -99,11 +141,14 @@ export function FunctionPlot({
   const resampleTimerRef = useRef<number | null>(null);
   const viewportRef = useRef(initialViewport);
   const curves = useMemo<FunctionSeries[]>(() => series?.length ? series : fn ? [{ id: 'function', fn, stroke }] : [], [fn, series, stroke]);
+  const guides = useMemo<FunctionGuide[]>(() => verticalGuides ?? [], [verticalGuides]);
   const curvesRef = useRef(curves);
+  const guidesRef = useRef(guides);
   const strokeRef = useRef(stroke);
   useEffect(() => { curvesRef.current = curves; }, [curves]);
+  useEffect(() => { guidesRef.current = guides; }, [guides]);
   useEffect(() => { strokeRef.current = stroke; }, [stroke]);
-  const data = useMemo<PlotlyTrace[]>(() => tracesFor(curves, initialViewport, stroke), [curves, initialViewport, stroke]);
+  const data = useMemo<PlotlyTrace[]>(() => tracesFor(curves, guides, initialViewport, stroke), [curves, guides, initialViewport, stroke]);
   const layout = useMemo<PlotlyLayout>(() => ({
     paper_bgcolor: '#fbfdff',
     plot_bgcolor: '#fbfdff',
@@ -125,7 +170,7 @@ export function FunctionPlot({
       if (resampleTimerRef.current !== null) window.clearTimeout(resampleTimerRef.current);
       resampleTimerRef.current = window.setTimeout(() => {
         viewportRef.current = { x, y };
-        const traces = tracesFor(curvesRef.current, { x, y }, strokeRef.current);
+        const traces = tracesFor(curvesRef.current, guidesRef.current, { x, y }, strokeRef.current);
         window.Plotly?.restyle?.(host, {
           x: traces.map((trace) => trace.x),
           y: traces.map((trace) => trace.y),
