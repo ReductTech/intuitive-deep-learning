@@ -2,6 +2,13 @@
 
 These rules are mandatory for every AI or human editing React PPT modules in this repository.
 
+## Active and legacy module boundary
+
+- `modules/` is the only active module tree. Application code under `src/`, `web_ppt/`, and active modules may depend only on code and assets inside `modules/` (plus normal project dependencies).
+- `modules-legacy/` is archival and may be removed at any time. Never import, fetch, link, or load runtime code or assets from it in an active module.
+- Every active React module must own its module-specific assets inside its directory. Shared runtime code and genuinely shared assets belong in `modules/shared/`.
+- Do not register a module in the active application unless its implementation exists under `modules/`.
+
 ## PPT containment
 
 - A slide must remain fully inside the 1600 × 900 canvas used by `web_ppt`.

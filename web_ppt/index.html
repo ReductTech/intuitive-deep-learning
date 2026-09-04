@@ -414,7 +414,7 @@
               </svg>
             </button>
           </div>
-          <p class="deck-subtitle">React 互动课件 · 使用 [←] [→] 翻页</p>
+          <p class="deck-subtitle">互动课件 · 使用 [←] [→] 翻页</p>
         </header>
         <ol class="deck-list" id="slideList"></ol>
       </aside>
@@ -447,27 +447,48 @@
     </div>
 
     <script>
-      const builtInSlides = [
-        { title: "只有 302 个神经元，它为什么能完成这么多行为？", route: "./slide.html?slide=nematode-response" },
-        { title: "1943 年，神经元被写成了数学模型", route: "./slide.html?slide=biological-structure" },
-        { title: "神经元究竟在做什么？", route: "./slide.html?slide=decision-bridge" },
-        { title: "让神经元帮你做一次判断", route: "./slide.html?slide=signal-discovery" },
-        { title: "把一个现实因素，翻译成神经元能处理的输入", route: "./slide.html?slide=weighted-sum" },
-        { title: "从一个因素，到三个因素", route: "./slide.html?slide=extra-inputs" },
-        { title: "从加权求和到矩阵表示", route: "./slide.html?slide=weighted-contribution" },
-        { title: "判断门槛与偏置", route: "./slide.html?slide=bias-threshold" },
-        { title: "多个线性神经元的叠加", route: "./slide.html?slide=linear-shallow" },
-        { title: "线性关系从直线扩展为平面", route: "./slide.html?slide=linear-deep" },
-        { title: "从线性计算到非线性响应", route: "./slide.html?slide=relu-intro" },
-        { title: "认识线性整流单元", route: "./slide.html?slide=relu-explanation" },
-        { title: "组合多个带有 ReLU 的神经元，曲线继续弯折", route: "./slide.html?slide=relu-network" },
-        { title: "足够多带有 ReLU 的神经元，就能逼近任意曲线", route: "./slide.html?slide=relu-approximation" },
-        { title: "认识这些被广泛使用的激活函数", route: "./slide.html?slide=activation-catalog" },
-        { title: "你已经搭出了一个人工神经元", route: "./slide.html?slide=ending" },
-        { title: "推荐资源", route: "./slide.html?slide=resources" }
-      ];
+      const builtInDecks = {
+        neuron: {
+          title: "认识人工神经元",
+          slides: [
+            { title: "只有 302 个神经元，它为什么能完成这么多行为？", route: "./slide.html?slide=nematode-response" },
+            { title: "1943 年，神经元被写成了数学模型", route: "./slide.html?slide=biological-structure" },
+            { title: "神经元究竟在做什么？", route: "./slide.html?slide=decision-bridge" },
+            { title: "让神经元帮你做一次判断", route: "./slide.html?slide=signal-discovery" },
+            { title: "把一个现实因素，翻译成神经元能处理的输入", route: "./slide.html?slide=weighted-sum" },
+            { title: "从一个因素，到三个因素", route: "./slide.html?slide=extra-inputs" },
+            { title: "从加权求和到矩阵表示", route: "./slide.html?slide=weighted-contribution" },
+            { title: "判断门槛与偏置", route: "./slide.html?slide=bias-threshold" },
+            { title: "多个线性神经元的叠加", route: "./slide.html?slide=linear-shallow" },
+            { title: "线性关系从直线扩展为平面", route: "./slide.html?slide=linear-deep" },
+            { title: "从线性计算到非线性响应", route: "./slide.html?slide=relu-intro" },
+            { title: "认识线性整流单元", route: "./slide.html?slide=relu-explanation" },
+            { title: "组合多个带有 ReLU 的神经元，曲线继续弯折", route: "./slide.html?slide=relu-network" },
+            { title: "足够多带有 ReLU 的神经元，就能逼近任意曲线", route: "./slide.html?slide=relu-approximation" },
+            { title: "认识这些被广泛使用的激活函数", route: "./slide.html?slide=activation-catalog" },
+            { title: "你已经搭出了一个人工神经元", route: "./slide.html?slide=ending" },
+            { title: "推荐资源", route: "./slide.html?slide=resources" }
+          ]
+        },
+        loss: {
+          title: "为什么需要损失函数",
+          slides: [
+            { title: "一颗消失的行星", route: "/web-ppt/loss?slide=lost-planet" },
+            { title: "怎么从有限观测中找回谷神星？", route: "/web-ppt/loss?slide=candidate-orbits" },
+            { title: "高斯给出的答案", route: "/web-ppt/loss?slide=gauss-answer" },
+            { title: "损失就是距离", route: "/web-ppt/loss?slide=distance" },
+            { title: "亲手算一次", route: "/web-ppt/loss?slide=comparison" },
+            { title: "计算 L1 与 L2 的梯度", route: "/web-ppt/loss?slide=gradient" },
+            { title: "推荐资源", route: "/web-ppt/loss?slide=resources" }
+          ]
+        }
+      };
+      const requestedCourse = new URLSearchParams(window.location.search).get("course");
+      const builtInDeck = builtInDecks[requestedCourse] ?? builtInDecks.neuron;
+      const builtInSlides = builtInDeck.slides;
+      document.querySelector(".deck-title").textContent = builtInDeck.title;
 
-      let slides = [];
+      let slides = requestedCourse ? [...builtInSlides] : [];
       const fileByName = new Map();
       const assetUrls = new Map();
 
@@ -554,7 +575,7 @@
           slideFrame.srcdoc = await buildSlideDocument(slide);
         }
         currentTitle.textContent = slide.title;
-        currentMeta.textContent = slide.fileName ?? `React TSX · 第 ${currentIndex + 1} 页`;
+          currentMeta.textContent = slide.fileName ?? `互动 TSX · 第 ${currentIndex + 1} 页`;
         progressText.textContent = formatCount(currentIndex);
         prevBtn.disabled = currentIndex === 0;
         nextBtn.disabled = currentIndex === slides.length - 1;
