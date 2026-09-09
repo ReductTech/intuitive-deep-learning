@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { GaltonLinearRegressionPage } from '../../modules/Galton-Linear-Regression/GaltonLinearRegressionPage';
 import { ExpandedNeuronGuidePage } from '../../modules/Neuron-Guide/ExpandedNeuronGuidePage';
 import { LinearRegressionLossPage } from '../../modules/Linear-Regression-Loss/LinearRegressionLossPage';
 
@@ -19,6 +20,17 @@ export interface ActiveModule {
 }
 
 export const activeModules: ActiveModule[] = [
+  {
+    id: 'galton-linear-regression',
+    title: '从高尔顿的身高数据到损失函数',
+    description: '从一个真实的身高研究出发，看散点、直线、残差与损失如何接成一条认知链。',
+    path: '/modules/galton-linear-regression',
+    badge: '互动课程',
+    element: <GaltonLinearRegressionPage />,
+    moduleType: 'teaching',
+    difficulty: 'introductory',
+    audience: 'general',
+  },
   {
     id: 'linear-regression-loss',
     title: '线性回归与损失函数',

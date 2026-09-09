@@ -1,4 +1,6 @@
 import { ContentBlock, ModuleShell } from '../../modules/shared/react';
+import { GaltonLinearRegressionPptSlidePage } from '../../modules/Galton-Linear-Regression/GaltonLinearRegressionPptSlidePage';
+import { CompareLossBlock, FitLabBlock, GaltonStoryBlock, LossFunctionBlock as GaltonLossFunctionBlock, PredictionModelBlock, ResidualBlock, ScatterObservationBlock, SummaryBlock } from '../../modules/Galton-Linear-Regression/blocks';
 import { LinearRegressionLossPptSlidePage } from '../../modules/Linear-Regression-Loss/LinearRegressionLossPptSlidePage';
 import { GaltonOpeningBlock } from '../../modules/Linear-Regression-Loss/blocks/GaltonOpeningBlock';
 import { LinearFitBlock } from '../../modules/Linear-Regression-Loss/blocks/LinearFitBlock';
@@ -30,6 +32,14 @@ import { activeModules } from './modules';
 import { AppLink, type AppRoute } from './Router';
 
 const blockPreviews = [
+  { id: 'galton-regression-story', moduleId: 'galton-linear-regression', title: '高尔顿的身高故事', description: '从历史档案提出“如何预测孩子身高”的问题。', path: '/dev/blocks/galton-linear-regression/story' },
+  { id: 'galton-regression-scatter', moduleId: 'galton-linear-regression', title: '观察散点趋势', description: '先看见相关性，再讨论为什么不能完美预测。', path: '/dev/blocks/galton-linear-regression/scatter' },
+  { id: 'galton-regression-model', moduleId: 'galton-linear-regression', title: '线性模型', description: '用 ŷ = wx + b 把趋势写成可计算的预测。', path: '/dev/blocks/galton-linear-regression/model' },
+  { id: 'galton-regression-residual', moduleId: 'galton-linear-regression', title: '残差', description: '看真实值与预测值之间的垂直距离。', path: '/dev/blocks/galton-linear-regression/residual' },
+  { id: 'galton-regression-loss', moduleId: 'galton-linear-regression', title: '损失函数基础', description: '把许多个残差汇总为一个评分。', path: '/dev/blocks/galton-linear-regression/loss' },
+  { id: 'galton-regression-compare', moduleId: 'galton-linear-regression', title: 'MAE 与 MSE', description: '比较绝对误差与平方误差的关注点。', path: '/dev/blocks/galton-linear-regression/compare' },
+  { id: 'galton-regression-lab', moduleId: 'galton-linear-regression', title: '拟合小实验', description: '拖动参数，让整体损失变小。', path: '/dev/blocks/galton-linear-regression/lab' },
+  { id: 'galton-regression-summary', moduleId: 'galton-linear-regression', title: '课程总结', description: '回顾从数据到损失的完整认知链。', path: '/dev/blocks/galton-linear-regression/summary' },
   { id: 'linear-regression-galton-opening', moduleId: 'linear-regression-loss', title: '高尔顿的身高数据', description: '从父母与孩子身高的散点关系提出预测问题。', path: '/dev/blocks/linear-regression-loss/galton-opening' },
   { id: 'linear-regression-fit', moduleId: 'linear-regression-loss', title: '拟合一条趋势线', description: '调整斜率和截距，让直线捕捉数据趋势。', path: '/dev/blocks/linear-regression-loss/fit' },
   { id: 'linear-regression-loss-function', moduleId: 'linear-regression-loss', title: '损失函数', description: '观察残差如何汇总成平方损失和绝对损失。', path: '/dev/blocks/linear-regression-loss/loss' },
@@ -224,13 +234,31 @@ function LinearRegressionResourcesPreview() {
   return <BlockPreview title="继续探索" contentClassName="lr-guide-shell">{() => <LinearRegressionFooter />}</BlockPreview>;
 }
 
+function GaltonStoryPreview() { return <BlockPreview title="高尔顿的身高故事" contentClassName="glr-shell">{({ complete }) => <GaltonStoryBlock onComplete={complete} />}</BlockPreview>; }
+function GaltonScatterPreview() { return <BlockPreview title="观察散点趋势" contentClassName="glr-shell">{({ complete }) => <ScatterObservationBlock onComplete={complete} />}</BlockPreview>; }
+function GaltonModelPreview() { return <BlockPreview title="线性模型" contentClassName="glr-shell">{({ complete }) => <PredictionModelBlock onComplete={complete} />}</BlockPreview>; }
+function GaltonResidualPreview() { return <BlockPreview title="残差" contentClassName="glr-shell">{({ complete }) => <ResidualBlock onComplete={complete} />}</BlockPreview>; }
+function GaltonLossPreview() { return <BlockPreview title="损失函数" contentClassName="glr-shell">{({ complete }) => <GaltonLossFunctionBlock onComplete={complete} />}</BlockPreview>; }
+function GaltonComparePreview() { return <BlockPreview title="MAE 与 MSE" contentClassName="glr-shell">{({ complete }) => <CompareLossBlock onComplete={complete} />}</BlockPreview>; }
+function GaltonLabPreview() { return <BlockPreview title="拟合小实验" contentClassName="glr-shell">{({ complete }) => <FitLabBlock onComplete={complete} />}</BlockPreview>; }
+function GaltonSummaryPreview() { return <BlockPreview title="课程总结" contentClassName="glr-shell">{() => <SummaryBlock />}</BlockPreview>; }
+
 export const appRoutes: AppRoute[] = [
   { path: '/', element: <HomePage /> },
   { path: '/shared/ui-kit', element: <UiKitPage /> },
   { path: '/web-ppt/neuron', element: <NeuronPptSlidePage /> },
   { path: '/web-ppt/linear-regression-loss', element: <LinearRegressionLossPptSlidePage /> },
+  { path: '/web-ppt/galton-linear-regression', element: <GaltonLinearRegressionPptSlidePage /> },
   { path: '/web_ppt/slide.html', element: <NeuronPptSlidePage /> },
   ...activeModules.map(({ path, element }) => ({ path, element })),
+  { path: '/dev/blocks/galton-linear-regression/story', element: <GaltonStoryPreview /> },
+  { path: '/dev/blocks/galton-linear-regression/scatter', element: <GaltonScatterPreview /> },
+  { path: '/dev/blocks/galton-linear-regression/model', element: <GaltonModelPreview /> },
+  { path: '/dev/blocks/galton-linear-regression/residual', element: <GaltonResidualPreview /> },
+  { path: '/dev/blocks/galton-linear-regression/loss', element: <GaltonLossPreview /> },
+  { path: '/dev/blocks/galton-linear-regression/compare', element: <GaltonComparePreview /> },
+  { path: '/dev/blocks/galton-linear-regression/lab', element: <GaltonLabPreview /> },
+  { path: '/dev/blocks/galton-linear-regression/summary', element: <GaltonSummaryPreview /> },
   { path: '/dev/blocks/neuron-guide/nematode-response', element: <NeuronNematodeResponsePreview /> },
   { path: '/dev/blocks/neuron-guide/biological-structure', element: <NeuronBiologicalStructurePreview /> },
   { path: '/dev/blocks/neuron-guide/decision-bridge', element: <NeuronDecisionBridgePreview /> },
