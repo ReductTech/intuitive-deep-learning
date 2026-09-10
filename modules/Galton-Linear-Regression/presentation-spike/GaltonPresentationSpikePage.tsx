@@ -1,186 +1,79 @@
-import { useEffect, useMemo, useState } from 'react';
-import {
-  GuideRenderer,
-  NarrationPlayer,
-  ScaledSlide,
-  SlideEditor,
-  WidgetRegistry,
-  WidgetRegistryProvider,
-  clonePresentationDocument,
-  createPresentationStore,
-  parsePresentationDocument,
-  type PresentationDocument,
-  type SlidePlacement,
-  type WidgetRuntimeProps,
-} from '../../shared/presentation-engine';
-import { GaltonModelBlock } from '../../Galton-Linear-Regression-Lesson/blocks/GaltonRegressionBlocks';
+import { createElement, useEffect, useMemo, useRef, useState, type ChangeEvent, type DragEvent } from 'react';
+import { GuideRenderer, NarrationPlayer, ScaledSlide, SlideEditor, SlideSurface, WidgetRegistry, WidgetRegistryProvider, clonePresentationDocument, createPresentationStore, parsePresentationDocument, type ContentNode, type PresentationDocument, type SlidePage, type SlidePlacement, type WidgetRuntimeProps } from '../../shared/presentation-engine';
+import { GaltonLossBlock, GaltonModelBlock, GaltonScatterBlock, GaltonSummaryBlock } from '../../Galton-Linear-Regression-Lesson/blocks/GaltonRegressionBlocks';
 import { galtonSpikeDocument } from './document';
 import '../../Galton-Linear-Regression-Lesson/linear-regression-lesson.css';
 
-const STORAGE_KEY = 'presentation-engine:galton-spike:v1';
+const STORAGE_KEY = 'presentation-engine:galton-studio:v2';
+const CANVAS = { width: 1600, height: 900 };
 
-function loadInitialDocument(): PresentationDocument {
-  try {
-    const saved = window.localStorage.getItem(STORAGE_KEY);
-    return saved ? parsePresentationDocument(JSON.parse(saved)) : clonePresentationDocument(galtonSpikeDocument);
-  } catch (error) {
-    console.warn('Ignoring invalid saved presentation', error);
-    return clonePresentationDocument(galtonSpikeDocument);
-  }
-}
+type LibraryItem = { id: string; label: string; description: string; icon: string; group: '基础' | '媒体' | '现有模块'; kind: 'text' | 'image' | 'widget'; role?: Extract<ContentNode, { type: 'text' }>['role']; widgetType?: string; defaultSize: { width: number; height: number } };
+const libraryItems: LibraryItem[] = [
+  { id: 'title', label: '标题', description: '醒目的主标题', icon: 'T', group: '基础', kind: 'text', role: 'title', defaultSize: { width: 980, height: 100 } },
+  { id: 'body', label: '正文', description: '段落与说明', icon: '¶', group: '基础', kind: 'text', role: 'body', defaultSize: { width: 620, height: 180 } },
+  { id: 'note', label: '注释卡片', description: '辅助说明信息', icon: '✦', group: '基础', kind: 'text', role: 'note', defaultSize: { width: 360, height: 130 } },
+  { id: 'image', label: '图片', description: 'URL 或本地文件', icon: '▧', group: '媒体', kind: 'image', defaultSize: { width: 560, height: 340 } },
+  { id: 'video', label: '视频', description: 'MP4 / WebM', icon: '▶', group: '媒体', kind: 'widget', widgetType: 'studio-video', defaultSize: { width: 640, height: 360 } },
+  { id: 'model', label: '3D 场景', description: 'GLB / GLTF', icon: '◇', group: '媒体', kind: 'widget', widgetType: 'studio-model', defaultSize: { width: 640, height: 420 } },
+  { id: 'game', label: '互动游戏', description: '嵌入网页', icon: '⌘', group: '媒体', kind: 'widget', widgetType: 'studio-game', defaultSize: { width: 720, height: 460 } },
+  { id: 'galton-model', label: '线性拟合实验', description: '高尔顿互动模块', icon: 'ƒ', group: '现有模块', kind: 'widget', widgetType: 'galton-fit-lab', defaultSize: { width: 860, height: 520 } },
+  { id: 'galton-scatter', label: '散点观察', description: '已有课程模块', icon: '⋮', group: '现有模块', kind: 'widget', widgetType: 'galton-scatter', defaultSize: { width: 760, height: 430 } },
+  { id: 'galton-loss', label: '损失实验', description: '已有课程模块', icon: 'Δ', group: '现有模块', kind: 'widget', widgetType: 'galton-loss', defaultSize: { width: 860, height: 510 } },
+  { id: 'galton-summary', label: '课程总结', description: '已有课程模块', icon: '✓', group: '现有模块', kind: 'widget', widgetType: 'galton-summary', defaultSize: { width: 700, height: 340 } },
+];
 
-function GaltonFitLabWidget({ activeAnchorId }: WidgetRuntimeProps) {
-  return <div className={`pe-legacy-widget glr-shell${activeAnchorId === 'fit-lab-widget' ? ' is-speaking' : ''}`}>
-    <GaltonModelBlock />
-  </div>;
-}
+function loadInitialDocument(): PresentationDocument { try { const saved = window.localStorage.getItem(STORAGE_KEY); return saved ? parsePresentationDocument(JSON.parse(saved)) : clonePresentationDocument(galtonSpikeDocument); } catch { return clonePresentationDocument(galtonSpikeDocument); } }
+function LegacyWidget({ children }: { children: React.ReactNode }) { return <div className="pe-legacy-widget pe-studio-widget">{children}</div>; }
+function VideoWidget({ props }: WidgetRuntimeProps<{ src?: string }>) { return <div className="pe-media-widget">{props.src ? <video src={props.src} controls playsInline /> : <div className="pe-media-empty">选择此组件，在右侧粘贴视频地址</div>}</div>; }
+function ModelWidget({ props }: WidgetRuntimeProps<{ src?: string }>) { const [failed, setFailed] = useState(false); useEffect(() => { const src = new URL('../../shared/vendor/model-viewer/3.5.0/model-viewer.min.js', import.meta.url).href; if (customElements.get('model-viewer') || document.querySelector('[data-presentation-model-viewer]')) return; const script = document.createElement('script'); script.type = 'module'; script.src = src; script.dataset.presentationModelViewer = 'true'; script.onerror = () => setFailed(true); document.head.append(script); }, []); return !props.src || failed ? <div className="pe-media-empty">粘贴 GLB / GLTF 地址以加载可旋转的 3D 场景</div> : <div className="pe-media-widget pe-model-widget">{createElement('model-viewer', { src: props.src, 'camera-controls': true, 'auto-rotate': true, 'shadow-intensity': '1', style: { width: '100%', height: '100%' } })}</div>; }
+function GameWidget({ props }: WidgetRuntimeProps<{ src?: string }>) { return <div className="pe-media-widget">{props.src ? <iframe title="互动内容" src={props.src} allow="fullscreen; autoplay" /> : <div className="pe-media-empty">粘贴游戏或互动网页地址</div>}</div>; }
 
-const widgetRegistry = new WidgetRegistry().register({
-  type: 'galton-fit-lab',
-  version: 1,
-  displayName: '高尔顿线性拟合实验',
-  Component: GaltonFitLabWidget,
-  capabilities: {
-    interactive: true,
-    resizable: true,
-    serializable: false,
-    supportsSlide: true,
-    supportsGuide: true,
-    supportsNarration: true,
-  },
-  narrationAnchors: [
-    { id: 'scatter-points', label: '家庭身高散点' },
-    { id: 'trend-line', label: '线性预测线' },
-  ],
-});
-
+const capability = { interactive: true, resizable: true, serializable: true, supportsSlide: true, supportsGuide: true, supportsNarration: true };
+const widgetRegistry = new WidgetRegistry()
+  .register({ type: 'galton-fit-lab', version: 1, displayName: '高尔顿线性拟合实验', Component: () => <LegacyWidget><GaltonModelBlock /></LegacyWidget>, capabilities: { ...capability, serializable: false } })
+  .register({ type: 'galton-scatter', version: 1, displayName: '高尔顿散点观察', Component: () => <LegacyWidget><GaltonScatterBlock /></LegacyWidget>, capabilities: { ...capability, interactive: false, serializable: false } })
+  .register({ type: 'galton-loss', version: 1, displayName: '高尔顿损失实验', Component: () => <LegacyWidget><GaltonLossBlock /></LegacyWidget>, capabilities: { ...capability, serializable: false } })
+  .register({ type: 'galton-summary', version: 1, displayName: '高尔顿课程总结', Component: () => <LegacyWidget><GaltonSummaryBlock /></LegacyWidget>, capabilities: { ...capability, interactive: false, serializable: false } })
+  .register({ type: 'studio-video', version: 1, displayName: '视频', Component: VideoWidget, capabilities: capability })
+  .register({ type: 'studio-model', version: 1, displayName: '3D 场景', Component: ModelWidget, capabilities: capability })
+  .register({ type: 'studio-game', version: 1, displayName: '互动游戏', Component: GameWidget, capabilities: capability });
 const usePresentationStore = createPresentationStore(loadInitialDocument());
+function createId(prefix: string) { return `${prefix}-${crypto.randomUUID ? crypto.randomUUID().slice(0, 8) : `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`}`; }
+function pageFor(document: PresentationDocument, id: string) { return document.views.slides.pages.find((page) => page.id === id) ?? document.views.slides.pages[0]; }
+function placementFor(source: SlidePlacement['source'], item: LibraryItem, point?: { x: number; y: number }): SlidePlacement { const { width, height } = item.defaultSize; return { id: createId('placement'), source, x: Math.max(20, Math.min(CANVAS.width - width - 20, (point?.x ?? 800) - width / 2)), y: Math.max(20, Math.min(CANVAS.height - height - 20, (point?.y ?? 450) - height / 2)), width, height, rotation: 0, zIndex: 20, locked: false, hidden: false, style: item.id === 'note' ? { background: '#edf5f2', borderRadius: 16, padding: 22 } : item.id === 'body' ? { background: 'rgba(255,255,255,.88)', borderRadius: 14, padding: 22 } : {} }; }
 
-function LayerPanel() {
-  const document = usePresentationStore((state) => state.document);
-  const slideId = usePresentationStore((state) => state.activeSlideId);
-  const selected = usePresentationStore((state) => state.selectedPlacementIds);
-  const select = usePresentationStore((state) => state.selectPlacements);
-  const page = document.views.slides.pages.find((candidate) => candidate.id === slideId) ?? document.views.slides.pages[0];
-  const layers = [...page.placements].sort((a, b) => b.zIndex - a.zIndex);
-  const nameFor = (placement: SlidePlacement) => {
-    if (placement.source.kind === 'widget') return document.widgets[placement.source.id]?.widgetType ?? placement.source.id;
-    const node = document.content[placement.source.id];
-    return node?.type === 'text' ? node.text : placement.source.id;
-  };
-  return <aside className="pe-sidebar">
-    <h2>图层</h2>
-    <div className="pe-layer-list">{layers.map((placement) => <button
-      type="button"
-      className={`pe-layer${selected.includes(placement.id) ? ' is-selected' : ''}`}
-      key={placement.id}
-      onClick={() => select([placement.id])}
-    >
-      <span className="pe-layer__icon">{placement.source.kind === 'widget' ? 'W' : 'T'}</span>
-      <span className="pe-layer__copy">{nameFor(placement)}</span>
-    </button>)}</div>
-  </aside>;
+function SlideThumbnail({ document, page, active, onClick }: { document: PresentationDocument; page: SlidePage; active: boolean; onClick: () => void }) { const scale = .105; return <button className={`pe-slide-thumb${active ? ' is-active' : ''}`} type="button" onClick={onClick}><span className="pe-slide-thumb__number">{document.views.slides.pages.indexOf(page) + 1}</span><span className="pe-slide-thumb__canvas"><span style={{ width: page.width, height: page.height, transform: `scale(${scale})`, transformOrigin: 'top left' }}><SlideSurface document={document} page={page} mode="present" /></span></span><strong>{page.title}</strong></button>; }
+function MediaUrlField({ label, value, onChange }: { label: string; value?: string; onChange: (value: string) => void }) { return <label className="pe-property-field">{label}<input value={value ?? ''} placeholder="https://…" onChange={(event) => onChange(event.currentTarget.value)} /></label>; }
+
+function StudioSidebar({ document, activeSlideId, onSelectSlide, onAdd, onAddPage, onDuplicatePage, onDeletePage }: { document: PresentationDocument; activeSlideId: string; onSelectSlide: (id: string) => void; onAdd: (item: LibraryItem, point?: { x: number; y: number }) => void; onAddPage: () => void; onDuplicatePage: () => void; onDeletePage: () => void; }) {
+  const [tab, setTab] = useState<'slides' | 'assets'>('slides'); const [scanned, setScanned] = useState(false); const drag = (event: DragEvent, item: LibraryItem) => event.dataTransfer.setData('application/x-presentation-item', item.id);
+  return <aside className="pe-studio-left"><div className="pe-side-tabs"><button className={tab === 'slides' ? 'is-active' : ''} onClick={() => setTab('slides')}>页面</button><button className={tab === 'assets' ? 'is-active' : ''} onClick={() => setTab('assets')}>素材</button></div>{tab === 'slides' ? <><div className="pe-page-actions"><button onClick={onAddPage}>＋ 新页面</button><button onClick={onDuplicatePage}>复制</button><button disabled={document.views.slides.pages.length === 1} onClick={onDeletePage}>删除</button></div><div className="pe-thumbnail-list">{document.views.slides.pages.map((page) => <SlideThumbnail document={document} page={page} active={page.id === activeSlideId} onClick={() => onSelectSlide(page.id)} key={page.id} />)}</div></> : <><div className="pe-library-head"><span>组件素材库</span><button onClick={() => setScanned(true)}>{scanned ? '已扫描' : '扫描现有模块'}</button></div>{(['基础', '媒体', '现有模块'] as const).map((group) => <section className="pe-library-group" key={group}><h3>{group}{group === '现有模块' && scanned ? <em>{libraryItems.filter((item) => item.group === group).length} 个已发现</em> : null}</h3>{libraryItems.filter((item) => item.group === group).map((item) => <button draggable type="button" className="pe-library-item" onDragStart={(event) => drag(event, item)} onClick={() => onAdd(item)} key={item.id}><b>{item.icon}</b><span><strong>{item.label}</strong><small>{item.description}</small></span><i>拖入</i></button>)}</section>)}</>}</aside>;
 }
 
-function InspectorPanel() {
-  const document = usePresentationStore((state) => state.document);
-  const slideId = usePresentationStore((state) => state.activeSlideId);
-  const selected = usePresentationStore((state) => state.selectedPlacementIds);
-  const update = usePresentationStore((state) => state.updatePlacements);
-  const reorder = usePresentationStore((state) => state.reorderPlacement);
-  const page = document.views.slides.pages.find((candidate) => candidate.id === slideId) ?? document.views.slides.pages[0];
-  const placement = selected.length === 1 ? page.placements.find((candidate) => candidate.id === selected[0]) : undefined;
-  if (!placement) return <aside className="pe-sidebar pe-sidebar--right"><h2>属性</h2><p className="pe-sidebar__empty">选择一个图层以精确调整位置和尺寸。按住 Shift 可以多选。</p></aside>;
+function Inspector({ document, activeSlideId, selected, onUpdatePlacement, onUpdateDocument, onDeletePlacement }: { document: PresentationDocument; activeSlideId: string; selected: string[]; onUpdatePlacement: (patch: Partial<SlidePlacement>) => void; onUpdateDocument: (mutate: (document: PresentationDocument) => void) => void; onDeletePlacement: () => void; }) {
+  const page = pageFor(document, activeSlideId); const placement = selected.length === 1 ? page.placements.find((candidate) => candidate.id === selected[0]) : undefined;
+  if (!placement) return <aside className="pe-studio-right"><h2>属性</h2><div className="pe-empty-inspector">从素材库拖入组件，或点击画布元素开始编辑。</div></aside>;
+  const contentSource = placement.source.kind === 'content' ? document.content[placement.source.id] : undefined;
+  const widgetSource = placement.source.kind === 'widget' ? document.widgets[placement.source.id] : undefined;
+  const source = contentSource ?? widgetSource;
+  const editText = (text: string) => onUpdateDocument((next) => { const node = next.content[placement.source.id]; if (node?.type === 'text') node.text = text; });
+  const editUrl = (src: string) => onUpdateDocument((next) => { if (placement.source.kind === 'content') { const node = next.content[placement.source.id]; if (node?.type === 'image') next.assets[node.assetId].src = src; } else next.widgets[placement.source.id].props = { ...next.widgets[placement.source.id].props, src }; });
   const fields: Array<[keyof Pick<SlidePlacement, 'x' | 'y' | 'width' | 'height' | 'rotation'>, string]> = [['x', 'X'], ['y', 'Y'], ['width', '宽'], ['height', '高'], ['rotation', '旋转']];
-  return <aside className="pe-sidebar pe-sidebar--right">
-    <h2>属性</h2>
-    <div className="pe-inspector">
-      <div className="pe-inspector__grid">{fields.map(([key, label]) => <label key={key}>{label}<input
-        type="number"
-        value={Math.round(placement[key] * 10) / 10}
-        onChange={(event) => update([{ id: placement.id, patch: { [key]: Number(event.currentTarget.value) } }])}
-      /></label>)}</div>
-      <div className="pe-inspector__actions">
-        <button type="button" onClick={() => reorder(placement.id, 'front')}>置于顶层</button>
-        <button type="button" onClick={() => reorder(placement.id, 'back')}>置于底层</button>
-        <button type="button" onClick={() => update([{ id: placement.id, patch: { locked: !placement.locked } }])}>{placement.locked ? '解锁' : '锁定'}</button>
-        <button type="button" onClick={() => update([{ id: placement.id, patch: { hidden: !placement.hidden } }])}>{placement.hidden ? '显示' : '隐藏'}</button>
-      </div>
-    </div>
-  </aside>;
-}
-
-function JsonDialog({ onClose }: { onClose: () => void }) {
-  const document = usePresentationStore((state) => state.document);
-  const replace = usePresentationStore((state) => state.replaceDocument);
-  const [value, setValue] = useState(() => JSON.stringify(document, null, 2));
-  const [error, setError] = useState<string>();
-  const apply = () => {
-    try {
-      replace(parsePresentationDocument(JSON.parse(value)));
-      onClose();
-    } catch (caught) {
-      setError(caught instanceof Error ? caught.message : String(caught));
-    }
-  };
-  return <div className="pe-json-dialog" role="dialog" aria-modal="true" aria-label="文档 JSON">
-    <div className="pe-json-dialog__panel">
-      <div><b>PresentationDocument</b>{error && <p style={{ color: '#a33' }}>{error}</p>}</div>
-      <textarea value={value} onChange={(event) => setValue(event.currentTarget.value)} spellCheck={false} />
-      <div className="pe-json-dialog__actions"><button type="button" onClick={onClose}>取消</button><button type="button" onClick={apply}>校验并应用</button></div>
-    </div>
-  </div>;
+  const currentUrl = contentSource?.type === 'image' ? document.assets[contentSource.assetId]?.src : String(widgetSource?.props.src ?? '');
+  return <aside className="pe-studio-right"><h2>属性</h2><div className="pe-property-title"><b>{widgetSource ? widgetRegistry.get(widgetSource.widgetType)?.displayName ?? widgetSource.widgetType : contentSource?.type ?? '内容'}</b><button onClick={onDeletePlacement}>删除元素</button></div>{contentSource?.type === 'text' ? <label className="pe-property-field">文字<textarea value={contentSource.text} onChange={(event) => editText(event.currentTarget.value)} /></label> : null}{currentUrl || contentSource?.type === 'image' ? <MediaUrlField label={widgetSource?.widgetType === 'studio-game' ? '网页地址' : '资源地址'} value={currentUrl} onChange={editUrl} /> : null}<div className="pe-inspector__grid">{fields.map(([key, label]) => <label key={key}>{label}<input type="number" value={Math.round(placement[key] * 10) / 10} onChange={(event) => onUpdatePlacement({ [key]: Number(event.currentTarget.value) })} /></label>)}</div><div className="pe-inspector__actions"><button onClick={() => onUpdatePlacement({ zIndex: Math.max(...page.placements.map((item) => item.zIndex)) + 1 })}>置于顶层</button><button onClick={() => onUpdatePlacement({ zIndex: Math.min(...page.placements.map((item) => item.zIndex)) - 1 })}>置于底层</button><button onClick={() => onUpdatePlacement({ locked: !placement.locked })}>{placement.locked ? '解锁' : '锁定'}</button><button onClick={() => onUpdatePlacement({ hidden: !placement.hidden })}>{placement.hidden ? '显示' : '隐藏'}</button></div></aside>;
 }
 
 export function GaltonPresentationSpikePage() {
-  const document = usePresentationStore((state) => state.document);
-  const mode = usePresentationStore((state) => state.mode);
-  const setMode = usePresentationStore((state) => state.setMode);
-  const activeSlideId = usePresentationStore((state) => state.activeSlideId);
-  const targetId = usePresentationStore((state) => state.activeNarrationTargetId);
-  const setTarget = usePresentationStore((state) => state.setNarrationTarget);
-  const undo = usePresentationStore((state) => state.undo);
-  const redo = usePresentationStore((state) => state.redo);
-  const pastCount = usePresentationStore((state) => state.past.length);
-  const futureCount = usePresentationStore((state) => state.future.length);
-  const replace = usePresentationStore((state) => state.replaceDocument);
-  const [showJson, setShowJson] = useState(false);
-  const page = useMemo(() => document.views.slides.pages.find((candidate) => candidate.id === activeSlideId) ?? document.views.slides.pages[0], [activeSlideId, document.views.slides.pages]);
-
-  useEffect(() => usePresentationStore.subscribe((state) => {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state.document));
-  }), []);
-
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (!(event.ctrlKey || event.metaKey)) return;
-      if (event.key.toLowerCase() === 'z') { event.preventDefault(); event.shiftKey ? redo() : undo(); }
-      if (event.key.toLowerCase() === 'y') { event.preventDefault(); redo(); }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [redo, undo]);
-
-  return <WidgetRegistryProvider registry={widgetRegistry}>
-    <div className="pe-app pe-app-shell">
-      <header className="pe-toolbar">
-        <div className="pe-toolbar__brand"><b>Presentation Engine</b><span>多形态互动内容 · 技术纵切</span></div>
-        <div className="pe-toolbar__group">
-          <button type="button" className={mode === 'edit' ? 'is-active' : ''} onClick={() => setMode('edit')}>编辑</button>
-          <button type="button" className={mode === 'present' ? 'is-active' : ''} onClick={() => setMode('present')}>幻灯片</button>
-          <button type="button" className={mode === 'guide' ? 'is-active' : ''} onClick={() => setMode('guide')}>导览页</button>
-        </div>
-        <div className="pe-toolbar__group"><button type="button" onClick={undo} disabled={!pastCount}>撤销</button><button type="button" onClick={redo} disabled={!futureCount}>重做</button></div>
-        <div className="pe-toolbar__spacer" />
-        <button type="button" onClick={() => replace(clonePresentationDocument(galtonSpikeDocument))}>重置示例</button>
-        <button type="button" onClick={() => setShowJson(true)}>文档 JSON</button>
-      </header>
-      {mode === 'edit' ? <div className="pe-workspace"><LayerPanel /><SlideEditor store={usePresentationStore} /><InspectorPanel /></div> : mode === 'present'
-        ? <ScaledSlide document={document} page={page} mode="present" activeTargetId={targetId} />
-        : <GuideRenderer document={document} activeTargetId={targetId} />}
-      {mode !== 'edit' && document.narration && <NarrationPlayer segments={document.narration.segments} onTargetChange={setTarget} />}
-      {showJson && <JsonDialog onClose={() => setShowJson(false)} />}
-    </div>
-  </WidgetRegistryProvider>;
+  const document = usePresentationStore((state) => state.document); const mode = usePresentationStore((state) => state.mode); const setMode = usePresentationStore((state) => state.setMode); const activeSlideId = usePresentationStore((state) => state.activeSlideId); const setActiveSlide = usePresentationStore((state) => state.setActiveSlide); const selected = usePresentationStore((state) => state.selectedPlacementIds); const selectPlacements = usePresentationStore((state) => state.selectPlacements); const targetId = usePresentationStore((state) => state.activeNarrationTargetId); const setTarget = usePresentationStore((state) => state.setNarrationTarget); const undo = usePresentationStore((state) => state.undo); const redo = usePresentationStore((state) => state.redo); const pastCount = usePresentationStore((state) => state.past.length); const futureCount = usePresentationStore((state) => state.future.length); const replace = usePresentationStore((state) => state.replaceDocument); const updatePlacements = usePresentationStore((state) => state.updatePlacements); const [showJson, setShowJson] = useState(false); const importRef = useRef<HTMLInputElement>(null); const page = useMemo(() => pageFor(document, activeSlideId), [activeSlideId, document]);
+  useEffect(() => usePresentationStore.subscribe((state) => window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state.document))), []);
+  useEffect(() => { const handler = (event: KeyboardEvent) => { if (!(event.ctrlKey || event.metaKey)) return; if (event.key.toLowerCase() === 'z') { event.preventDefault(); event.shiftKey ? redo() : undo(); } if (event.key.toLowerCase() === 'y') { event.preventDefault(); redo(); } }; window.addEventListener('keydown', handler); return () => window.removeEventListener('keydown', handler); }, [redo, undo]);
+  const changeDocument = (mutate: (next: PresentationDocument) => void) => { const next = clonePresentationDocument(document); mutate(next); replace(parsePresentationDocument(next)); };
+  const addItem = (item: LibraryItem, point?: { x: number; y: number }) => changeDocument((next) => { const activePage = pageFor(next, activeSlideId); if (item.kind === 'text') { const id = createId('text'); next.content[id] = { id, type: 'text', role: item.role ?? 'body', text: item.role === 'title' ? '在这里输入标题' : item.role === 'note' ? '补充说明' : '在这里输入内容' }; activePage.placements.push(placementFor({ kind: 'content', id }, item, point)); } else if (item.kind === 'image') { const assetId = createId('image-asset'); const id = createId('image'); next.assets[assetId] = { id: assetId, type: 'image', src: 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="800" height="480"><rect width="100%" height="100%" fill="#e7efec"/><path d="M120 360 300 180l130 130 105-94 150 144" fill="none" stroke="#4e7a70" stroke-width="24"/><circle cx="590" cy="140" r="42" fill="#d7a15b"/></svg>'), mimeType: 'image/svg+xml', metadata: {} }; next.content[id] = { id, type: 'image', assetId, alt: '新图片', fit: 'cover' }; activePage.placements.push(placementFor({ kind: 'content', id }, item, point)); } else if (item.widgetType) { const id = createId('widget'); next.widgets[id] = { id, widgetType: item.widgetType, widgetVersion: 1, props: {} }; activePage.placements.push(placementFor({ kind: 'widget', id }, item, point)); } });
+  const addPage = () => changeDocument((next) => { const number = next.views.slides.pages.length + 1; const textId = createId('page-title'); const pageId = createId('slide'); next.content[textId] = { id: textId, type: 'text', role: 'title', text: `第 ${number} 页` }; next.views.slides.pages.push({ id: pageId, title: `第 ${number} 页`, width: 1600, height: 900, background: '#fbfcfb', placements: [{ id: createId('placement'), source: { kind: 'content', id: textId }, x: 110, y: 100, width: 1100, height: 100, rotation: 0, zIndex: 1, locked: false, hidden: false, style: {} }] }); next.views.guide.sections.push({ id: `guide-${pageId}`, title: `第 ${number} 页`, layout: 'hero', theme: 'plain', sources: [{ kind: 'content', id: textId }] }); setActiveSlide(pageId); });
+  const duplicatePage = () => changeDocument((next) => { const original = pageFor(next, activeSlideId); const pageId = createId('slide'); next.views.slides.pages.push({ ...structuredClone(original), id: pageId, title: `${original.title} 副本`, placements: original.placements.map((placement) => ({ ...placement, id: createId('placement') })) }); setActiveSlide(pageId); });
+  const deletePage = () => { if (document.views.slides.pages.length === 1) return; changeDocument((next) => { next.views.slides.pages = next.views.slides.pages.filter((candidate) => candidate.id !== activeSlideId); next.views.guide.sections = next.views.guide.sections.filter((section) => section.id !== `guide-${activeSlideId}`); setActiveSlide(next.views.slides.pages[0].id); }); };
+  const deletePlacement = () => changeDocument((next) => { const activePage = pageFor(next, activeSlideId); activePage.placements = activePage.placements.filter((placement) => !selected.includes(placement.id)); selectPlacements([]); });
+  const exportProject = () => { const blob = new Blob([JSON.stringify(document, null, 2)], { type: 'application/json' }); const url = URL.createObjectURL(blob); const anchor = window.document.createElement('a'); anchor.href = url; anchor.download = `${document.id}.presentation.json`; anchor.click(); URL.revokeObjectURL(url); };
+  const importProject = async (event: ChangeEvent<HTMLInputElement>) => { const file = event.currentTarget.files?.[0]; if (!file) return; try { replace(parsePresentationDocument(JSON.parse(await file.text()))); } catch (error) { window.alert(`项目文件无效：${error instanceof Error ? error.message : String(error)}`); } finally { event.currentTarget.value = ''; } };
+  return <WidgetRegistryProvider registry={widgetRegistry}><div className="pe-app pe-app-shell pe-studio-shell"><header className="pe-toolbar pe-studio-toolbar"><div className="pe-toolbar__brand"><b>Presentation Studio</b><span>互动课件 · 幻灯片 · 导览页</span></div><div className="pe-toolbar__group"><button className={mode === 'edit' ? 'is-active' : ''} onClick={() => setMode('edit')}>编辑</button><button className={mode === 'present' ? 'is-active' : ''} onClick={() => setMode('present')}>放映</button><button className={mode === 'guide' ? 'is-active' : ''} onClick={() => setMode('guide')}>导览页</button></div><div className="pe-toolbar__group"><button onClick={undo} disabled={!pastCount}>撤销</button><button onClick={redo} disabled={!futureCount}>重做</button></div><div className="pe-toolbar__spacer" /><button onClick={() => importRef.current?.click()}>导入项目</button><button onClick={exportProject}>导出项目</button><button onClick={() => setShowJson(true)}>高级 JSON</button><input ref={importRef} hidden type="file" accept="application/json,.json" onChange={importProject} /></header>{mode === 'edit' ? <div className="pe-studio-workspace"><StudioSidebar document={document} activeSlideId={activeSlideId} onSelectSlide={setActiveSlide} onAdd={addItem} onAddPage={addPage} onDuplicatePage={duplicatePage} onDeletePage={deletePage} /><SlideEditor store={usePresentationStore} onCanvasDrop={(id, point) => { const item = libraryItems.find((candidate) => candidate.id === id); if (item) addItem(item, point); }} /><Inspector document={document} activeSlideId={activeSlideId} selected={selected} onUpdatePlacement={(patch) => selected[0] && updatePlacements([{ id: selected[0], patch }])} onUpdateDocument={changeDocument} onDeletePlacement={deletePlacement} /></div> : mode === 'present' ? <ScaledSlide document={document} page={page} mode="present" activeTargetId={targetId} /> : <GuideRenderer document={document} activeTargetId={targetId} />}{mode !== 'edit' && document.narration ? <NarrationPlayer segments={document.narration.segments} onTargetChange={setTarget} /> : null}{showJson ? <div className="pe-json-dialog" role="dialog" aria-modal="true"><div className="pe-json-dialog__panel"><b>PresentationDocument</b><textarea value={JSON.stringify(document, null, 2)} readOnly /><div className="pe-json-dialog__actions"><button onClick={() => setShowJson(false)}>关闭</button></div></div></div> : null}</div></WidgetRegistryProvider>;
 }
-
