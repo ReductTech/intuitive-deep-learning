@@ -13,9 +13,9 @@ import {
   type SlidePlacement,
   type WidgetRuntimeProps,
 } from '../../shared/presentation-engine';
-import { FitLabBlock } from '../blocks';
+import { GaltonModelBlock } from '../../Galton-Linear-Regression-Lesson/blocks/GaltonRegressionBlocks';
 import { galtonSpikeDocument } from './document';
-import '../galton-linear-regression.css';
+import '../../Galton-Linear-Regression-Lesson/linear-regression-lesson.css';
 
 const STORAGE_KEY = 'presentation-engine:galton-spike:v1';
 
@@ -31,7 +31,7 @@ function loadInitialDocument(): PresentationDocument {
 
 function GaltonFitLabWidget({ activeAnchorId }: WidgetRuntimeProps) {
   return <div className={`pe-legacy-widget glr-shell${activeAnchorId === 'fit-lab-widget' ? ' is-speaking' : ''}`}>
-    <FitLabBlock />
+    <GaltonModelBlock />
   </div>;
 }
 
