@@ -4,7 +4,10 @@ import Selecto from 'react-selecto';
 import type { PresentationStore } from './store';
 import { SlideSurface } from './renderers';
 
-export function SlideEditor({ store }: { store: PresentationStore }) {
+export function SlideEditor({ store, onCanvasDrop }: {
+  store: PresentationStore;
+  onCanvasDrop?: (itemId: string, point: { x: number; y: number }) => void;
+}) {
   const document = store((state) => state.document);
   const activeSlideId = store((state) => state.activeSlideId);
   const selectedIds = store((state) => state.selectedPlacementIds);
@@ -33,7 +36,22 @@ export function SlideEditor({ store }: { store: PresentationStore }) {
   const placementById = (id: string) => page.placements.find((placement) => placement.id === id);
 
   return <div className="pe-editor-viewport" ref={viewportRef}>
-    <div className="pe-editor-stage" style={{ width: page.width, height: page.height, transform: `translate(-50%, -50%) scale(${scale})` }} ref={surfaceRef}>
+    <div
+      className="pe-editor-stage"
+      style={{ width: page.width, height: page.height, transform: `translate(-50%, -50%) scale(${scale})` }}
+      ref={surfaceRef}
+      onDragOver={(event) => event.preventDefault()}
+      onDrop={(event) => {
+        event.preventDefault();
+        const itemId = event.dataTransfer.getData('application/x-presentation-item');
+        const rect = surfaceRef.current?.getBoundingClientRect();
+        if (!itemId || !rect) return;
+        onCanvasDrop?.(itemId, {
+          x: Math.max(0, Math.min(page.width, (event.clientX - rect.left) / scale)),
+          y: Math.max(0, Math.min(page.height, (event.clientY - rect.top) / scale)),
+        });
+      }}
+    >
       <SlideSurface
         document={document}
         page={page}
@@ -116,4 +134,3 @@ export function SlideEditor({ store }: { store: PresentationStore }) {
     </div>
   </div>;
 }
-
