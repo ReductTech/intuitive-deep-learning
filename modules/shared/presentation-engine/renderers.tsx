@@ -7,11 +7,13 @@ function contentClass(node: ContentNode): string {
   return node.type === 'text' ? `pe-text pe-text--${node.role}` : `pe-content pe-content--${node.type}`;
 }
 
-export function SourceRenderer({ document, source, mode, activeTargetId }: {
+export function SourceRenderer({ document, source, mode, activeTargetId, editable, onTextChange }: {
   document: PresentationDocument;
   source: SourceRef;
   mode: PresentationMode;
   activeTargetId?: string;
+  editable?: boolean;
+  onTextChange?: (text: string) => void;
 }) {
   if (source.kind === 'widget') {
     const instance = document.widgets[source.id];
@@ -22,7 +24,18 @@ export function SourceRenderer({ document, source, mode, activeTargetId }: {
   const node = document.content[source.id];
   if (!node) return <div className="pe-reference-error">Missing content {source.id}</div>;
   if (node.type === 'text') {
-    return <div className={contentClass(node)} aria-label={node.ariaLabel}>{node.text}</div>;
+    return <div
+      className={contentClass(node)}
+      aria-label={node.ariaLabel}
+      aria-multiline={editable || undefined}
+      contentEditable={editable}
+      role={editable ? 'textbox' : undefined}
+      suppressContentEditableWarning
+      spellCheck={false}
+      onPointerDown={(event) => editable && event.stopPropagation()}
+      onBlur={(event) => editable && onTextChange?.(event.currentTarget.textContent ?? '')}
+      onKeyDown={(event) => { if (event.key === 'Escape') event.currentTarget.blur(); }}
+    >{node.text}</div>;
   }
   if (node.type === 'image') {
     const asset = document.assets[node.assetId];
@@ -42,6 +55,13 @@ function placementStyle(placement: SlidePlacement): CSSProperties {
     transform: `rotate(${placement.rotation}deg)`,
     zIndex: placement.zIndex,
     color: placement.style.color,
+    fontFamily: placement.style.fontFamily,
+    fontSize: placement.style.fontSize,
+    fontWeight: placement.style.fontWeight,
+    fontStyle: placement.style.fontStyle,
+    textDecoration: placement.style.textDecoration,
+    lineHeight: placement.style.lineHeight,
+    letterSpacing: placement.style.letterSpacing,
     background: placement.style.background,
     border: placement.style.border,
     borderRadius: placement.style.borderRadius,
@@ -49,18 +69,21 @@ function placementStyle(placement: SlidePlacement): CSSProperties {
     boxShadow: placement.style.boxShadow,
     opacity: placement.style.opacity,
     textAlign: placement.style.textAlign,
+    alignItems: placement.style.verticalAlign === 'middle' ? 'center' : placement.style.verticalAlign === 'bottom' ? 'flex-end' : undefined,
     overflow: placement.style.overflow,
-    display: placement.hidden ? 'none' : undefined,
+    display: placement.hidden ? 'none' : placement.style.verticalAlign ? 'flex' : undefined,
   };
 }
 
-export function SlideSurface({ document, page, mode, selectedIds = [], activeTargetId, onPlacementPointerDown, children }: {
+export function SlideSurface({ document, page, mode, selectedIds = [], activeTargetId, editingPlacementId, onPlacementPointerDown, onTextChange, children }: {
   document: PresentationDocument;
   page: SlidePage;
   mode: PresentationMode;
   selectedIds?: string[];
   activeTargetId?: string;
+  editingPlacementId?: string;
   onPlacementPointerDown?: (placementId: string, event: React.PointerEvent) => void;
+  onTextChange?: (placementId: string, text: string) => void;
   children?: ReactNode;
 }) {
   const placements = useMemo(() => [...page.placements].sort((a, b) => a.zIndex - b.zIndex), [page.placements]);
@@ -80,7 +103,7 @@ export function SlideSurface({ document, page, mode, selectedIds = [], activeTar
         style={placementStyle(placement)}
         onPointerDown={(event) => onPlacementPointerDown?.(placement.id, event)}
       >
-        <SourceRenderer document={document} source={placement.source} mode={mode} activeTargetId={activeTargetId} />
+        <SourceRenderer document={document} source={placement.source} mode={mode} activeTargetId={activeTargetId} editable={editingPlacementId === placement.id} onTextChange={(text) => onTextChange?.(placement.id, text)} />
       </div>;
     })}
     {children}
@@ -131,4 +154,3 @@ export function GuideRenderer({ document, activeTargetId }: { document: Presenta
     </section>)}
   </main>;
 }
-

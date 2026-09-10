@@ -58,6 +58,13 @@ export type WidgetInstance = z.infer<typeof widgetInstanceSchema>;
 
 export const placementStyleSchema = z.object({
   color: z.string().optional(),
+  fontFamily: z.string().optional(),
+  fontSize: z.number().positive().optional(),
+  fontWeight: z.union([z.number(), z.string()]).optional(),
+  fontStyle: z.enum(['normal', 'italic']).optional(),
+  textDecoration: z.enum(['none', 'underline', 'line-through']).optional(),
+  lineHeight: z.number().positive().optional(),
+  letterSpacing: z.number().optional(),
   background: z.string().optional(),
   border: z.string().optional(),
   borderRadius: z.number().nonnegative().optional(),
@@ -65,6 +72,7 @@ export const placementStyleSchema = z.object({
   boxShadow: z.string().optional(),
   opacity: z.number().min(0).max(1).optional(),
   textAlign: z.enum(['left', 'center', 'right']).optional(),
+  verticalAlign: z.enum(['top', 'middle', 'bottom']).optional(),
   overflow: z.enum(['visible', 'hidden', 'auto']).optional(),
 });
 
@@ -177,4 +185,3 @@ export function assertReferences(document: PresentationDocument): void {
 export function clonePresentationDocument(document: PresentationDocument): PresentationDocument {
   return structuredClone(document);
 }
-

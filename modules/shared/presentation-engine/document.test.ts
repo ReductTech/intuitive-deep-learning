@@ -23,6 +23,22 @@ describe('PresentationDocument', () => {
     invalid.views.slides.pages[0].placements[0].x = 1599;
     expect(() => parsePresentationDocument(invalid)).toThrow(/escapes slide/i);
   });
+
+  it('round-trips editable typography in project documents', () => {
+    const styled = clonePresentationDocument(galtonSpikeDocument);
+    styled.views.slides.pages[0].placements[0].style = {
+      fontFamily: 'Microsoft YaHei',
+      fontSize: 38,
+      fontWeight: 700,
+      fontStyle: 'italic',
+      textDecoration: 'underline',
+      lineHeight: 1.25,
+      letterSpacing: 1.5,
+      verticalAlign: 'middle',
+    };
+    const parsed = parsePresentationDocument(JSON.parse(JSON.stringify(styled)));
+    expect(parsed.views.slides.pages[0].placements[0].style).toEqual(styled.views.slides.pages[0].placements[0].style);
+  });
 });
 
 describe('typed presentation commands', () => {

@@ -13,11 +13,26 @@ export function SlideEditor({ store, onCanvasDrop }: {
   const selectedIds = store((state) => state.selectedPlacementIds);
   const selectPlacements = store((state) => state.selectPlacements);
   const updatePlacements = store((state) => state.updatePlacements);
+  const replaceDocument = store((state) => state.replaceDocument);
   const activeTargetId = store((state) => state.activeNarrationTargetId);
   const page = document.views.slides.pages.find((candidate) => candidate.id === activeSlideId) ?? document.views.slides.pages[0];
   const viewportRef = useRef<HTMLDivElement>(null);
   const surfaceRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(.64);
+  const [editingPlacementId, setEditingPlacementId] = useState<string>();
+
+  useEffect(() => {
+    if (!editingPlacementId) return;
+    const editable = surfaceRef.current?.querySelector<HTMLElement>(`[data-placement-id="${CSS.escape(editingPlacementId)}"] [contenteditable="true"]`);
+    editable?.focus();
+    if (editable) {
+      const selection = window.getSelection();
+      const range = window.document.createRange();
+      range.selectNodeContents(editable);
+      selection?.removeAllRanges();
+      selection?.addRange(range);
+    }
+  }, [editingPlacementId]);
 
   useEffect(() => {
     const host = viewportRef.current;
@@ -58,9 +73,23 @@ export function SlideEditor({ store, onCanvasDrop }: {
         mode="edit"
         selectedIds={selectedIds}
         activeTargetId={activeTargetId}
+        editingPlacementId={editingPlacementId}
         onPlacementPointerDown={(id, event) => {
+          const placement = page.placements.find((candidate) => candidate.id === id);
+          const node = placement?.source.kind === 'content' ? document.content[placement.source.id] : undefined;
           if (event.shiftKey) selectPlacements(selectedIds.includes(id) ? selectedIds.filter((value) => value !== id) : [...selectedIds, id]);
           else if (!selectedIds.includes(id)) selectPlacements([id]);
+          setEditingPlacementId(node?.type === 'text' ? id : undefined);
+        }}
+        onTextChange={(id, text) => {
+          const placement = page.placements.find((candidate) => candidate.id === id);
+          if (!placement || placement.source.kind !== 'content') return;
+          const node = document.content[placement.source.id];
+          if (node?.type !== 'text' || node.text === text) return;
+          const next = structuredClone(document);
+          const nextNode = next.content[placement.source.id];
+          if (nextNode?.type === 'text') nextNode.text = text;
+          replaceDocument(next);
         }}
       />
       <Selecto
