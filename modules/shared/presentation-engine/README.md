@@ -70,4 +70,4 @@ npm run test:engine
 npm run build
 ```
 
-The Galton vertical slice is available at `/presentation-spike` and demonstrates a shared content graph, an existing React lesson widget, visual slide editing, responsive guide rendering, JSON round-tripping, undo and redo, and narration highlights.
+The Neuron Guide vertical slice is available at `/presentation-spike`, and the earlier Galton slice remains at `/presentation-spike/galton`. Both demonstrate a shared content graph, existing React lesson widgets, visual slide editing, responsive guide rendering, JSON round-tripping, undo and redo, and narration highlights.

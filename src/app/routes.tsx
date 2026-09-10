@@ -1,5 +1,6 @@
 import { ContentBlock, ModuleShell } from '../../modules/shared/react';
 import { GaltonPresentationSpikePage } from '../../modules/Galton-Linear-Regression/presentation-spike/GaltonPresentationSpikePage';
+import { NeuronPresentationSpikePage } from '../../modules/Neuron-Guide-Test/presentation-spike/NeuronPresentationSpikePage';
 import { UiKitPage } from '../../modules/shared/react/routing/UiKitPage';
 import { LinearRegressionLessonPptSlidePage } from '../../modules/Galton-Linear-Regression-Lesson/LinearRegressionLessonPptSlidePage';
 import { NeuronPptSlidePage } from '../../modules/Neuron-Guide/NeuronPptSlidePage';
@@ -23,7 +24,8 @@ function HomePage() {
 
 export const appRoutes: AppRoute[] = [
   { path: '/', element: <HomePage /> },
-  { path: '/presentation-spike', element: <GaltonPresentationSpikePage /> },
+  { path: '/presentation-spike', element: <NeuronPresentationSpikePage /> },
+  { path: '/presentation-spike/galton', element: <GaltonPresentationSpikePage /> },
   { path: '/shared/ui-kit', element: <UiKitPage /> },
   { path: '/web-ppt/neuron', element: <NeuronPptSlidePage /> },
   { path: '/web-ppt/linear-regression-lesson', element: <LinearRegressionLessonPptSlidePage /> },

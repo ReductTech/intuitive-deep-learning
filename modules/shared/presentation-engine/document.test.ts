@@ -3,6 +3,7 @@ import { executePresentationCommand } from './commands';
 import { clonePresentationDocument, parsePresentationDocument } from './document';
 import { createPresentationStore } from './store';
 import { galtonSpikeDocument } from '../../Galton-Linear-Regression/presentation-spike/document';
+import { neuronGuidePresentationDocument } from '../../Neuron-Guide-Test/presentation-spike/document';
 
 describe('PresentationDocument', () => {
   it('accepts the multi-view Galton example', () => {
@@ -10,6 +11,14 @@ describe('PresentationDocument', () => {
     expect(parsed.views.slides.pages).toHaveLength(1);
     expect(parsed.views.guide.sections).toHaveLength(4);
     expect(parsed.widgets['fit-lab-widget'].widgetType).toBe('galton-fit-lab');
+  });
+
+  it('accepts the multi-page Neuron Guide adaptation', () => {
+    const parsed = parsePresentationDocument(neuronGuidePresentationDocument);
+    expect(parsed.views.slides.pages).toHaveLength(6);
+    expect(parsed.views.guide.sections).toHaveLength(7);
+    expect(parsed.views.slides.pages.every((page) => page.width === 1600 && page.height === 900)).toBe(true);
+    expect(Object.keys(parsed.widgets)).toHaveLength(5);
   });
 
   it('rejects dangling semantic references', () => {
