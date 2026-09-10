@@ -4,6 +4,10 @@ import Selecto from 'react-selecto';
 import type { PresentationStore } from './store';
 import { SlideSurface } from './renderers';
 
+function createId(prefix: string): string {
+  return `${prefix}-${crypto.randomUUID?.().slice(0, 8) ?? `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`}`;
+}
+
 export function SlideEditor({ store, onCanvasDrop }: {
   store: PresentationStore;
   onCanvasDrop?: (itemId: string, point: { x: number; y: number }) => void;
@@ -20,6 +24,7 @@ export function SlideEditor({ store, onCanvasDrop }: {
   const surfaceRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(.64);
   const [editingPlacementId, setEditingPlacementId] = useState<string>();
+  const [contextMenu, setContextMenu] = useState<{ x: number; y: number; placementId?: string }>();
 
   useEffect(() => {
     if (!editingPlacementId) return;
@@ -44,13 +49,65 @@ export function SlideEditor({ store, onCanvasDrop }: {
     return () => observer.disconnect();
   }, [page.height, page.width]);
 
-  const targets = useMemo(() => selectedIds
+  const targets = useMemo(() => editingPlacementId ? [] : selectedIds
     .map((id) => surfaceRef.current?.querySelector<HTMLElement>(`[data-placement-id="${CSS.escape(id)}"]`) ?? null)
-    .filter((target): target is HTMLElement => Boolean(target)), [document, selectedIds, scale]);
+    .filter((target): target is HTMLElement => Boolean(target)), [document, editingPlacementId, selectedIds, scale]);
 
   const placementById = (id: string) => page.placements.find((placement) => placement.id === id);
+  const contextPlacement = contextMenu?.placementId ? placementById(contextMenu.placementId) : undefined;
+  const contextText = contextPlacement?.source.kind === 'content'
+    ? document.content[contextPlacement.source.id]
+    : undefined;
+  const closeContextMenu = () => setContextMenu(undefined);
 
-  return <div className="pe-editor-viewport" ref={viewportRef}>
+  const duplicatePlacement = (placementId: string) => {
+    const original = placementById(placementId);
+    if (!original) return;
+    const next = structuredClone(document);
+    const nextPage = next.views.slides.pages.find((candidate) => candidate.id === activeSlideId);
+    if (!nextPage) return;
+    let source = original.source;
+    if (source.kind === 'content') {
+      const originalNode = next.content[source.id];
+      if (originalNode) {
+        const id = createId(originalNode.type);
+        next.content[id] = { ...originalNode, id };
+        source = { kind: 'content', id };
+      }
+    } else {
+      const originalWidget = next.widgets[source.id];
+      if (originalWidget) {
+        const id = createId('widget');
+        next.widgets[id] = { ...originalWidget, id, props: structuredClone(originalWidget.props) };
+        source = { kind: 'widget', id };
+      }
+    }
+    const id = createId('placement');
+    nextPage.placements.push({
+      ...original,
+      id,
+      source,
+      x: Math.min(nextPage.width - original.width, original.x + 32),
+      y: Math.min(nextPage.height - original.height, original.y + 32),
+      zIndex: Math.max(...nextPage.placements.map((placement) => placement.zIndex)) + 1,
+      locked: false,
+    });
+    replaceDocument(next);
+    selectPlacements([id]);
+  };
+
+  const deletePlacement = (placementId: string) => {
+    const next = structuredClone(document);
+    const nextPage = next.views.slides.pages.find((candidate) => candidate.id === activeSlideId);
+    if (!nextPage) return;
+    nextPage.placements = nextPage.placements.filter((placement) => placement.id !== placementId);
+    replaceDocument(next);
+    selectPlacements([]);
+  };
+
+  return <div className="pe-editor-viewport" ref={viewportRef} onPointerDown={(event) => {
+    if (!(event.target as HTMLElement).closest('.pe-editor-context-menu')) closeContextMenu();
+  }}>
     <div
       className="pe-editor-stage"
       style={{ width: page.width, height: page.height, transform: `translate(-50%, -50%) scale(${scale})` }}
@@ -66,6 +123,20 @@ export function SlideEditor({ store, onCanvasDrop }: {
           y: Math.max(0, Math.min(page.height, (event.clientY - rect.top) / scale)),
         });
       }}
+      onContextMenu={(event) => {
+        event.preventDefault();
+        const viewport = viewportRef.current;
+        if (!viewport) return;
+        const placement = (event.target as HTMLElement).closest<HTMLElement>('[data-placement-id]');
+        const placementId = placement?.dataset.placementId;
+        if (placementId) selectPlacements([placementId]);
+        const rect = viewport.getBoundingClientRect();
+        setContextMenu({
+          x: Math.min(Math.max(8, event.clientX - rect.left), Math.max(8, rect.width - 188)),
+          y: Math.min(Math.max(8, event.clientY - rect.top), Math.max(8, rect.height - 246)),
+          placementId,
+        });
+      }}
     >
       <SlideSurface
         document={document}
@@ -75,11 +146,17 @@ export function SlideEditor({ store, onCanvasDrop }: {
         activeTargetId={activeTargetId}
         editingPlacementId={editingPlacementId}
         onPlacementPointerDown={(id, event) => {
-          const placement = page.placements.find((candidate) => candidate.id === id);
-          const node = placement?.source.kind === 'content' ? document.content[placement.source.id] : undefined;
           if (event.shiftKey) selectPlacements(selectedIds.includes(id) ? selectedIds.filter((value) => value !== id) : [...selectedIds, id]);
           else if (!selectedIds.includes(id)) selectPlacements([id]);
-          setEditingPlacementId(node?.type === 'text' ? id : undefined);
+        }}
+        onPlacementDoubleClick={(id, event) => {
+          const placement = page.placements.find((candidate) => candidate.id === id);
+          const node = placement?.source.kind === 'content' ? document.content[placement.source.id] : undefined;
+          if (node?.type !== 'text' || placement?.locked) return;
+          event.preventDefault();
+          event.stopPropagation();
+          selectPlacements([id]);
+          setEditingPlacementId(id);
         }}
         onTextChange={(id, text) => {
           const placement = page.placements.find((candidate) => candidate.id === id);
@@ -91,11 +168,12 @@ export function SlideEditor({ store, onCanvasDrop }: {
           if (nextNode?.type === 'text') nextNode.text = text;
           replaceDocument(next);
         }}
+        onTextEditEnd={() => setEditingPlacementId(undefined)}
       />
       <Selecto
         container={viewportRef.current}
         dragContainer={surfaceRef.current}
-        selectableTargets={['.pe-placement[data-editable="true"]']}
+        selectableTargets={editingPlacementId ? [] : ['.pe-placement[data-editable="true"]']}
         selectByClick
         selectFromInside={false}
         continueSelect={false}
@@ -161,5 +239,36 @@ export function SlideEditor({ store, onCanvasDrop }: {
         }}
       />
     </div>
+    {contextMenu ? <div
+      className="pe-editor-context-menu"
+      role="menu"
+      style={{ left: contextMenu.x, top: contextMenu.y }}
+      onPointerDown={(event) => event.stopPropagation()}
+    >
+      {contextPlacement && contextText?.type === 'text' ? <button type="button" role="menuitem" onClick={() => {
+        setEditingPlacementId(contextPlacement.id);
+        closeContextMenu();
+      }}>编辑文字</button> : null}
+      {contextPlacement ? <button type="button" role="menuitem" onClick={() => {
+        duplicatePlacement(contextPlacement.id);
+        closeContextMenu();
+      }}>复制元素</button> : null}
+      {contextPlacement ? <button type="button" role="menuitem" onClick={() => {
+        updatePlacements([{ id: contextPlacement.id, patch: { zIndex: Math.max(...page.placements.map((placement) => placement.zIndex)) + 1 } }]);
+        closeContextMenu();
+      }}>置于顶层</button> : null}
+      {contextPlacement ? <button type="button" role="menuitem" onClick={() => {
+        updatePlacements([{ id: contextPlacement.id, patch: { zIndex: Math.min(...page.placements.map((placement) => placement.zIndex)) - 1 } }]);
+        closeContextMenu();
+      }}>置于底层</button> : null}
+      {contextPlacement ? <button type="button" role="menuitem" onClick={() => {
+        updatePlacements([{ id: contextPlacement.id, patch: { locked: !contextPlacement.locked } }]);
+        closeContextMenu();
+      }}>{contextPlacement.locked ? '解锁元素' : '锁定元素'}</button> : null}
+      {contextPlacement ? <button className="is-danger" type="button" role="menuitem" onClick={() => {
+        deletePlacement(contextPlacement.id);
+        closeContextMenu();
+      }}>删除元素</button> : <span>在画布元素上右键可使用常用操作</span>}
+    </div> : null}
   </div>;
 }

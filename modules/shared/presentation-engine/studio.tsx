@@ -15,6 +15,7 @@ import {
 import { NarrationPlayer } from './narration';
 import { SlideEditor } from './editor';
 import { StudioRibbon } from './studio-ribbon';
+import { StudioBuiltinProperties } from './studio-builtins';
 import {
   clonePresentationDocument,
   parsePresentationDocument,
@@ -46,15 +47,15 @@ export interface PresentationLibraryItem {
 
 export interface PresentationStudioProps {
   initialDocument: PresentationDocument;
-  storageKey: string;
+  storageKey?: string;
   registry: WidgetRegistry;
   libraryItems: PresentationLibraryItem[];
   Provider?: ComponentType<{ children: ReactNode }>;
 }
 
-function loadInitialDocument(initialDocument: PresentationDocument, storageKey: string): PresentationDocument {
+function loadInitialDocument(initialDocument: PresentationDocument, storageKey?: string): PresentationDocument {
   try {
-    if (typeof window === 'undefined') return clonePresentationDocument(initialDocument);
+    if (typeof window === 'undefined' || !storageKey) return clonePresentationDocument(initialDocument);
     const saved = window.localStorage.getItem(storageKey);
     return saved ? parsePresentationDocument(JSON.parse(saved)) : clonePresentationDocument(initialDocument);
   } catch {
@@ -240,6 +241,26 @@ function Inspector({ document, activeSlideId, registry, selected, onUpdatePlacem
       next.widgets[placement.source.id].props = { ...next.widgets[placement.source.id].props, src };
     }
   });
+  const editWidgetProps = (patch: Record<string, unknown>) => onUpdateDocument((next) => {
+    if (placement.source.kind !== 'widget') return;
+    const widget = next.widgets[placement.source.id];
+    if (widget) widget.props = { ...widget.props, ...patch };
+  });
+  const importImage = (file?: File) => {
+    if (!file || placement.source.kind !== 'content') return;
+    const reader = new FileReader();
+    reader.onload = () => onUpdateDocument((next) => {
+      const node = next.content[placement.source.id];
+      if (node?.type !== 'image' || typeof reader.result !== 'string') return;
+      const asset = next.assets[node.assetId];
+      if (asset) {
+        asset.src = reader.result;
+        asset.mimeType = file.type || asset.mimeType;
+        asset.metadata = { ...asset.metadata, fileName: file.name };
+      }
+    });
+    reader.readAsDataURL(file);
+  };
   const fields: Array<[keyof Pick<SlidePlacement, 'x' | 'y' | 'width' | 'height' | 'rotation'>, string]> = [
     ['x', 'X'],
     ['y', 'Y'],
@@ -248,6 +269,7 @@ function Inspector({ document, activeSlideId, registry, selected, onUpdatePlacem
     ['rotation', '旋转'],
   ];
   const currentUrl = contentSource?.type === 'image' ? document.assets[contentSource.assetId]?.src : String(widgetSource?.props.src ?? '');
+  const isMediaWidget = ['studio-video', 'studio-model', 'studio-game'].includes(widgetSource?.widgetType ?? '');
 
   return <aside className="pe-studio-right">
     <h2>属性</h2>
@@ -259,11 +281,13 @@ function Inspector({ document, activeSlideId, registry, selected, onUpdatePlacem
       文字
       <textarea value={contentSource.text} onChange={(event) => editText(event.currentTarget.value)} />
     </label> : null}
-    {currentUrl || contentSource?.type === 'image' ? <MediaUrlField
+    {currentUrl || contentSource?.type === 'image' || isMediaWidget ? <MediaUrlField
       label={widgetSource?.widgetType === 'studio-game' ? '网页地址' : '资源地址'}
       value={currentUrl}
       onChange={editUrl}
     /> : null}
+    {contentSource?.type === 'image' ? <label className="pe-property-field pe-property-file">本地图片<input type="file" accept="image/*" onChange={(event) => { importImage(event.currentTarget.files?.[0]); event.currentTarget.value = ''; }} /></label> : null}
+    {widgetSource ? <StudioBuiltinProperties widgetType={widgetSource.widgetType} props={widgetSource.props} onChange={editWidgetProps} /> : null}
     <div className="pe-inspector__grid">
       {fields.map(([key, label]) => <label key={key}>
         {label}
@@ -308,9 +332,12 @@ export function PresentationStudio({
   const importRef = useRef<HTMLInputElement>(null);
   const page = useMemo(() => pageFor(document, activeSlideId), [activeSlideId, document]);
 
-  useEffect(() => presentationStore.subscribe((state) => {
-    window.localStorage.setItem(storageKey, JSON.stringify(state.document));
-  }), [presentationStore, storageKey]);
+  useEffect(() => {
+    if (!storageKey) return undefined;
+    return presentationStore.subscribe((state) => {
+      window.localStorage.setItem(storageKey, JSON.stringify(state.document));
+    });
+  }, [presentationStore, storageKey]);
 
   useEffect(() => {
     const handler = (event: KeyboardEvent) => {
@@ -457,6 +484,7 @@ export function PresentationStudio({
           const item = libraryItems.find((candidate) => candidate.id === id);
           if (item) addItem(item);
         }}
+        onAddPage={addPage}
         onImport={() => importRef.current?.click()}
         onExport={exportProject}
         onOpenJson={() => setShowJson(true)}
@@ -494,7 +522,7 @@ export function PresentationStudio({
       <footer className="pe-studio-status">
         <span>幻灯片 {activePageNumber} / {document.views.slides.pages.length}</span>
         <span>{mode === 'edit' ? '单击文字直接编辑 · 拖动元素调整布局' : mode === 'present' ? '放映模式 · 智能讲解可同步高亮' : '导览模式 · 同一内容，自适应长页面'}</span>
-        <span>16:9 · 1600 × 900 · 自动保存</span>
+        <span>{storageKey ? '16:9 · 1600 × 900 · 自动保存' : '16:9 · 1600 × 900 · 请使用“保存”下载项目'}</span>
       </footer>
       {showJson ? <div className="pe-json-dialog" role="dialog" aria-modal="true">
         <div className="pe-json-dialog__panel">

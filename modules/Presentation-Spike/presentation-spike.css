@@ -1,0 +1,156 @@
+.presentation-spike-launcher {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(72, 143, 124, .18), transparent 34%),
+    linear-gradient(145deg, #f6faf8, #edf3f1);
+  padding: 32px;
+  color: #23463f;
+}
+
+.presentation-spike-launcher__panel {
+  display: grid;
+  width: min(660px, 100%);
+  gap: 20px;
+  border: 1px solid rgba(95, 132, 122, .28);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, .94);
+  box-shadow: 0 24px 80px rgba(27, 68, 59, .14);
+  padding: clamp(30px, 6vw, 56px);
+}
+
+.presentation-spike-launcher__eyebrow {
+  color: #267363;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .16em;
+}
+
+.presentation-spike-launcher h1,
+.presentation-spike-launcher p {
+  margin: 0;
+}
+
+.presentation-spike-launcher h1 {
+  font-size: clamp(30px, 5vw, 48px);
+  line-height: 1.08;
+}
+
+.presentation-spike-launcher p {
+  color: #637a74;
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+.presentation-spike-launcher code {
+  border-radius: 5px;
+  background: #eef4f2;
+  padding: 2px 5px;
+  color: #315f55;
+}
+
+.presentation-spike-launcher__projects {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.presentation-spike-launcher__projects a {
+  display: grid;
+  min-width: 0;
+  gap: 5px;
+  border: 1px solid #c7d7d2;
+  border-radius: 13px;
+  background: #f9fcfb;
+  color: #315c53;
+  padding: 15px;
+  text-decoration: none;
+}
+
+.presentation-spike-launcher__projects a:hover {
+  border-color: #2a7767;
+  background: #f0f7f4;
+}
+
+.presentation-spike-launcher__projects span {
+  color: #54857a;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .08em;
+}
+
+.presentation-spike-launcher__projects strong,
+.presentation-spike-launcher__projects small {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.presentation-spike-launcher__projects strong {
+  color: #224d44;
+  font-size: 14px;
+}
+
+.presentation-spike-launcher__projects small {
+  color: #82938e;
+  font: 11px/1.4 "Cascadia Code", monospace;
+}
+
+.presentation-spike-launcher__actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.presentation-spike-launcher__actions button {
+  min-width: 0;
+  border: 1px solid #b9ccc7;
+  border-radius: 11px;
+  background: #fff;
+  color: #315c53;
+  padding: 13px 18px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.presentation-spike-launcher__actions button:hover {
+  border-color: #2a7767;
+  background: #f1f7f5;
+}
+
+.presentation-spike-launcher__actions button.is-primary {
+  border-color: #1d6258;
+  background: #1d6258;
+  color: #fff;
+}
+
+.presentation-spike-launcher__error {
+  border-radius: 9px;
+  background: #fff0ee;
+  color: #a14337 !important;
+  padding: 10px 12px;
+  font-size: 12px !important;
+}
+
+.presentation-spike-launcher small {
+  color: #82938e;
+  font-size: 12px;
+}
+
+@media (max-width: 560px) {
+  .presentation-spike-launcher {
+    padding: 18px;
+  }
+
+  .presentation-spike-launcher__actions {
+    grid-template-columns: 1fr;
+  }
+
+  .presentation-spike-launcher__projects {
+    grid-template-columns: 1fr;
+  }
+}

@@ -2,6 +2,8 @@ import { createElement, useEffect, useState, type ReactNode } from 'react';
 import {
   PresentationStudio,
   WidgetRegistry,
+  coreStudioLibraryItems,
+  registerCoreStudioWidgets,
   type PresentationLibraryItem,
   type WidgetRuntimeProps,
 } from '../../shared/presentation-engine';
@@ -82,7 +84,7 @@ const widgetCapability = {
   supportsNarration: true,
 };
 
-const widgetRegistry = new WidgetRegistry()
+const widgetRegistry = registerCoreStudioWidgets(new WidgetRegistry())
   .register({
     type: 'neuron-weighted-input',
     version: 1,
@@ -164,6 +166,7 @@ const libraryItems: PresentationLibraryItem[] = [
     defaultSize: { width: 360, height: 130 },
     defaultStyle: { background: '#eef4fb', borderRadius: 14, padding: 18 },
   },
+  ...coreStudioLibraryItems,
   { id: 'image', label: '图片', description: 'URL 或本地文件', icon: '▧', group: '媒体', kind: 'image', defaultSize: { width: 560, height: 340 } },
   { id: 'video', label: '视频', description: 'MP4 / WebM', icon: '▶', group: '媒体', kind: 'widget', widgetType: 'studio-video', defaultSize: { width: 640, height: 360 } },
   { id: 'model', label: '3D 场景', description: 'GLB / GLTF', icon: '◇', group: '媒体', kind: 'widget', widgetType: 'studio-model', defaultSize: { width: 640, height: 420 } },

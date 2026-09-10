@@ -70,4 +70,4 @@ npm run test:engine
 npm run build
 ```
 
-The Neuron Guide vertical slice is available at `/presentation-spike`, and the earlier Galton slice remains at `/presentation-spike/galton`. Both demonstrate a shared content graph, existing React lesson widgets, visual slide editing, responsive guide rendering, JSON round-tripping, undo and redo, and narration highlights.
+The project-neutral studio is available at `/presentation-spike`. It starts by explicitly selecting an existing module project, opening a saved `.presentation.json` file, or creating a new project; it never loads a lesson by default. The Neuron Guide vertical slice is available at `/presentation-spike/neuron`, while the earlier Galton slice remains at `/presentation-spike/galton`.

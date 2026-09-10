@@ -7,13 +7,14 @@ function contentClass(node: ContentNode): string {
   return node.type === 'text' ? `pe-text pe-text--${node.role}` : `pe-content pe-content--${node.type}`;
 }
 
-export function SourceRenderer({ document, source, mode, activeTargetId, editable, onTextChange }: {
+export function SourceRenderer({ document, source, mode, activeTargetId, editable, onTextChange, onTextEditEnd }: {
   document: PresentationDocument;
   source: SourceRef;
   mode: PresentationMode;
   activeTargetId?: string;
   editable?: boolean;
   onTextChange?: (text: string) => void;
+  onTextEditEnd?: () => void;
 }) {
   if (source.kind === 'widget') {
     const instance = document.widgets[source.id];
@@ -33,8 +34,18 @@ export function SourceRenderer({ document, source, mode, activeTargetId, editabl
       suppressContentEditableWarning
       spellCheck={false}
       onPointerDown={(event) => editable && event.stopPropagation()}
-      onBlur={(event) => editable && onTextChange?.(event.currentTarget.textContent ?? '')}
-      onKeyDown={(event) => { if (event.key === 'Escape') event.currentTarget.blur(); }}
+      onBlur={(event) => {
+        if (!editable) return;
+        onTextChange?.(event.currentTarget.textContent ?? '');
+        onTextEditEnd?.();
+      }}
+      onKeyDown={(event) => {
+        if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') event.currentTarget.blur();
+        if (event.key === 'Escape') {
+          event.currentTarget.textContent = node.text;
+          event.currentTarget.blur();
+        }
+      }}
     >{node.text}</div>;
   }
   if (node.type === 'image') {
@@ -75,7 +86,7 @@ function placementStyle(placement: SlidePlacement): CSSProperties {
   };
 }
 
-export function SlideSurface({ document, page, mode, selectedIds = [], activeTargetId, editingPlacementId, onPlacementPointerDown, onTextChange, children }: {
+export function SlideSurface({ document, page, mode, selectedIds = [], activeTargetId, editingPlacementId, onPlacementPointerDown, onPlacementDoubleClick, onTextChange, onTextEditEnd, children }: {
   document: PresentationDocument;
   page: SlidePage;
   mode: PresentationMode;
@@ -83,7 +94,9 @@ export function SlideSurface({ document, page, mode, selectedIds = [], activeTar
   activeTargetId?: string;
   editingPlacementId?: string;
   onPlacementPointerDown?: (placementId: string, event: React.PointerEvent) => void;
+  onPlacementDoubleClick?: (placementId: string, event: React.MouseEvent) => void;
   onTextChange?: (placementId: string, text: string) => void;
+  onTextEditEnd?: () => void;
   children?: ReactNode;
 }) {
   const placements = useMemo(() => [...page.placements].sort((a, b) => a.zIndex - b.zIndex), [page.placements]);
@@ -102,8 +115,9 @@ export function SlideSurface({ document, page, mode, selectedIds = [], activeTar
         key={placement.id}
         style={placementStyle(placement)}
         onPointerDown={(event) => onPlacementPointerDown?.(placement.id, event)}
+        onDoubleClick={(event) => onPlacementDoubleClick?.(placement.id, event)}
       >
-        <SourceRenderer document={document} source={placement.source} mode={mode} activeTargetId={activeTargetId} editable={editingPlacementId === placement.id} onTextChange={(text) => onTextChange?.(placement.id, text)} />
+        <SourceRenderer document={document} source={placement.source} mode={mode} activeTargetId={activeTargetId} editable={editingPlacementId === placement.id} onTextChange={(text) => onTextChange?.(placement.id, text)} onTextEditEnd={onTextEditEnd} />
       </div>;
     })}
     {children}

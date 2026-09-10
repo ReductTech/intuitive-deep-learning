@@ -5,6 +5,7 @@ export * from './narration';
 export * from './renderers';
 export * from './store';
 export * from './studio';
+export * from './studio-builtins';
 export * from './studio-ribbon';
 export * from './widget-registry';
 import './presentation-engine.css';
