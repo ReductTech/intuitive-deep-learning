@@ -6,6 +6,12 @@
   --ui-bg-card: #ffffff;
   --ui-bg-soft: #eef3fb;
   --ui-bg-muted: #f6f8fc;
+  --ui-bg-page-rgb: 238, 242, 247;
+  --ui-accent-rgb: 39, 68, 110;
+  --ui-accent-alt-rgb: 240, 126, 71;
+  --ui-success-rgb: 34, 141, 92;
+  --ui-warning-rgb: 192, 113, 0;
+  --ui-danger-rgb: 196, 63, 82;
   --ui-text-main: #21324a;
   --ui-text-muted: #68778f;
   --ui-text-light: #8b97ab;
@@ -16,6 +22,10 @@
   --ui-success: #228d5c;
   --ui-warning: #c07100;
   --ui-danger: #c43f52;
+  --ui-navy: #182b4b;
+  --ui-accent-soft: #edf3fb;
+  --ui-focus: #8aa4d0;
+  --ui-grid: #dfe6f1;
   --ui-shadow-soft: 0 12px 34px rgba(25, 42, 70, 0.08);
   --ui-shadow-hover: 0 16px 40px rgba(25, 42, 70, 0.12);
   --ui-radius-xl: 24px;

@@ -37,3 +37,4 @@ export * from './visuals/PlotlyChart';
 export * from './visuals/plotSampling';
 export * from './visuals/FunctionPlot';
 export * from './telemetry';
+export * from './theme';

@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react';
-import { GaltonLinearRegressionPage } from '../../modules/Galton-Linear-Regression/GaltonLinearRegressionPage';
 import { ExpandedNeuronGuidePage } from '../../modules/Neuron-Guide/ExpandedNeuronGuidePage';
-import { LinearRegressionLossPage } from '../../modules/Linear-Regression-Loss/LinearRegressionLossPage';
+import { LinearRegressionLessonPage } from '../../modules/Galton-Linear-Regression-Lesson/LinearRegressionLessonPage';
 
 /** 当前可在应用中独立进入的教学模块。 */
 export interface ActiveModule {
@@ -21,23 +20,12 @@ export interface ActiveModule {
 
 export const activeModules: ActiveModule[] = [
   {
-    id: 'galton-linear-regression',
-    title: '从高尔顿的身高数据到损失函数',
-    description: '从一个真实的身高研究出发，看散点、直线、残差与损失如何接成一条认知链。',
-    path: '/modules/galton-linear-regression',
+    id: 'galton-linear-regression-lesson',
+    title: '从高尔顿到损失函数',
+    description: '从真实历史问题出发，建立散点、直线、残差与损失之间的第一条认知链。',
+    path: '/modules/galton-linear-regression-lesson',
     badge: '互动课程',
-    element: <GaltonLinearRegressionPage />,
-    moduleType: 'teaching',
-    difficulty: 'introductory',
-    audience: 'general',
-  },
-  {
-    id: 'linear-regression-loss',
-    title: '线性回归与损失函数',
-    description: '从高尔顿的父母与孩子身高数据出发，拟合一条趋势线并用损失衡量预测偏差。',
-    path: '/modules/linear-regression-loss',
-    badge: '互动课程',
-    element: <LinearRegressionLossPage />,
+    element: <LinearRegressionLessonPage />,
     moduleType: 'teaching',
     difficulty: 'introductory',
     audience: 'general',

@@ -2,6 +2,22 @@
 .kit-header { max-width: 760px; margin-bottom: 26px; }
 .kit-header .edu-title { font-size: 36px; letter-spacing: 0; }
 .kit-section + .kit-section { margin-top: 34px; }
+.kit-theme-preview { display: grid; gap: 18px; }
+.kit-theme-preview__hero { display: grid; gap: 6px; border-left: 4px solid var(--ui-accent-alt); background: linear-gradient(135deg, var(--ui-bg-soft), var(--ui-bg-card)); padding: 20px 22px; }
+.kit-theme-preview__hero strong { color: var(--ui-accent); font-size: 24px; }
+.kit-theme-preview__hero small { color: var(--ui-text-muted); font-size: 13px; font-weight: 650; line-height: 1.6; }
+.kit-theme-preview__eyebrow { color: var(--ui-accent-alt); font-size: 10px; font-weight: 950; letter-spacing: .14em; }
+.kit-theme-swatches { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.kit-theme-swatch { display: grid; grid-template-columns: 42px minmax(0, 1fr); align-items: center; gap: 11px; min-width: 0; border: 1px solid var(--ui-border); border-radius: var(--ui-radius-sm); background: var(--ui-bg-card); padding: 10px; }
+.kit-theme-swatch__chip { width: 42px; height: 42px; border: 1px solid rgba(var(--ui-accent-rgb), .16); border-radius: 9px; box-shadow: inset 0 0 0 1px rgba(255,255,255,.3); }
+.kit-theme-swatch > div { display: grid; min-width: 0; gap: 2px; }
+.kit-theme-swatch .ui-typography { overflow-wrap: anywhere; }
+.kit-theme-live { display: grid; gap: 12px; border: 1px solid var(--ui-border); background: var(--ui-bg-muted); padding: 16px; }
+.kit-theme-live h3 { margin: 0; color: var(--ui-accent); }
+.kit-theme-live__row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.kit-theme-live__success { color: var(--ui-success); font-weight: 850; }
+.kit-theme-live__bar { height: 9px; overflow: hidden; border-radius: var(--ui-radius-pill); background: var(--ui-border); }
+.kit-theme-live__bar span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--ui-accent), var(--ui-accent-alt)); }
 .kit-section-head { display: flex; align-items: end; justify-content: space-between; gap: 18px; margin-bottom: 14px; border-bottom: 1px solid var(--ui-border); padding-bottom: 14px; }
 .kit-section-head h2 { margin: 0; color: var(--ui-text-main); font-size: var(--ui-type-h2-size); font-weight: var(--ui-type-h2-weight); letter-spacing: var(--ui-type-h2-letter-spacing); line-height: var(--ui-type-h2-line-height); }
 .kit-section-head p { max-width: 620px; margin: 0; color: var(--ui-text-muted); font-size: var(--ui-type-body-small-size); font-weight: var(--ui-type-body-small-weight); line-height: var(--ui-type-body-small-line-height); }
@@ -44,4 +60,5 @@
   .kit-font-family-grid, .kit-tone-grid, .kit-type-guide-grid { grid-template-columns: 1fr; }
   .kit-type-entry { grid-template-columns: 1fr; gap: 10px; }
   .kit-wrap-grid { grid-template-columns: minmax(0, 1fr); }
+  .kit-theme-swatches { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }

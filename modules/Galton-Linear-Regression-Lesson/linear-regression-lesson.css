@@ -1,0 +1,43 @@
+.grl-shell { --grl-ink: #19343a; --grl-muted: #647477; --grl-paper: #f4f5ef; --grl-green: #245b52; --grl-orange: #d56b45; }
+.grl-shell .edu-lesson-flow { display: grid; gap: 24px; }
+.grl-shell .edu-content-block { border: 1px solid #d8ddd4; background: #fbfbf8; padding: 30px 34px; box-shadow: 0 12px 34px rgba(25,52,58,.06); }
+.grl-shell .edu-content-head { max-width: 980px; margin-bottom: 22px; }
+.grl-shell .edu-content-title { color: var(--grl-ink); }
+.grl-opening-grid { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(300px, .7fr); gap: 28px; align-items: stretch; }
+.grl-archive { display: grid; gap: 12px; border-left: 5px solid var(--grl-orange); background: #f1f2eb; padding: 26px 28px; }
+.grl-archive h3, .grl-opening-question h3 { margin: 0; }
+.grl-opening-question { display: grid; align-content: center; gap: 10px; border: 1px solid #cbd5ce; background: #e7eee8; padding: 28px; }
+.grl-opening-question h3 { color: var(--grl-green); }
+.grl-timeline { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: center; gap: 10px; margin-top: 18px; }
+.grl-timeline span { display: grid; gap: 2px; }
+.grl-timeline small { color: var(--grl-muted); }
+.grl-timeline i { color: var(--grl-orange); font-size: 24px; font-style: normal; }
+.grl-source { display: block; margin-top: 18px; max-width: 1050px; }
+.grl-visual-main { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 28px; align-items: center; }
+.grl-plot { display: block; width: 100%; max-width: 100%; height: auto; overflow: visible; }
+.grl-plot text { fill: #657477; font-family: inherit; font-size: 13px; }
+.grl-scatter-note { display: grid; gap: 10px; border-top: 4px solid var(--grl-orange); padding-top: 16px; }
+.grl-scatter-note strong { color: var(--grl-green); }
+.grl-key, .grl-legend { display: flex; flex-wrap: wrap; gap: 14px; color: var(--grl-muted); font-size: 13px; }
+.grl-key i { display: inline-block; width: 10px; height: 10px; margin-right: 6px; border-radius: 50%; background: var(--grl-orange); }
+.grl-model-grid, .grl-loss-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(290px, .8fr); gap: 28px; align-items: center; }
+.grl-controls, .grl-loss-side { display: grid; gap: 14px; }
+.grl-equation { display: grid; gap: 12px; border-left: 4px solid var(--grl-green); padding: 18px 22px; background: #eef3ed; }
+.grl-equation em { color: var(--grl-orange); font-style: normal; }
+.grl-metrics { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.grl-metrics > div { display: grid; gap: 4px; border-top: 3px solid var(--grl-orange); background: #f2f3ed; padding: 14px; }
+.grl-metrics h2 { color: var(--grl-green); }
+.grl-dot { display: inline-block; width: 10px; height: 10px; margin-right: 6px; border-radius: 50%; vertical-align: middle; }
+.grl-dot--point { background: var(--grl-orange); }.grl-dot--line { background: var(--grl-green); }.grl-dot--residual { width: 4px; border-radius: 0; background: #d56b45; }
+.grl-summary-flow { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-bottom: 24px; }
+.grl-summary-step { position: relative; display: grid; gap: 8px; min-width: 0; border-top: 4px solid var(--grl-green); background: #f0f2ec; padding: 20px; }
+.grl-summary-step > span { color: var(--grl-orange); font-weight: 700; letter-spacing: .08em; }
+.grl-summary-step h3 { margin: 0; color: var(--grl-ink); }.grl-summary-step b { position: absolute; right: -18px; top: 42%; color: var(--grl-orange); font-size: 24px; }
+.grl-ppt-body { margin: 0; overflow: hidden; background: #dde3dc; }
+.grl-ppt-root { position: fixed; inset: 0; overflow: hidden; }
+.grl-ppt-canvas { position: absolute; left: 50%; top: 50%; width: 1600px; height: 900px; transform-origin: center center; }
+.grl-ppt-surface { width: 1600px; height: 900px; box-sizing: border-box; padding: 74px 92px; background: #fbfbf8; overflow: hidden; }
+.grl-ppt-surface .edu-content-block { height: 752px; box-sizing: border-box; padding: 40px 48px; }
+.grl-ppt-surface .edu-content-title { font-size: 40px; }.grl-ppt-surface .edu-content-subtitle { font-size: 20px; }
+.grl-ppt-surface .grl-plot { max-height: 510px; }.grl-ppt-surface .grl-opening-grid { min-height: 500px; }.grl-ppt-surface .grl-summary-flow { margin-top: 88px; }
+@media (max-width: 900px) { .grl-opening-grid, .grl-visual-main, .grl-model-grid, .grl-loss-grid { grid-template-columns: 1fr; }.grl-summary-flow { grid-template-columns: 1fr; }.grl-summary-step b { display: none; } }
