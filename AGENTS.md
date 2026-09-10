@@ -25,3 +25,13 @@ These rules are mandatory for every AI or human editing React PPT modules in thi
 - Prefer a small number of proportion-based regions over nested web-style cards.
 - Use Shared Typography for all independent text. Do not override its font size, weight, or line height in module CSS.
 - When requirements describe several "blocks" on one page, keep them on one slide unless the user explicitly calls them separate pages or slides.
+
+## Presentation engine boundary
+
+- New multi-form presentation work must use `modules/shared/presentation-engine/`. Do not create another page-specific slide runtime.
+- `PresentationDocument` is the canonical, versioned source for semantic content, slide placements, guide sections, widgets, and narration cues. Editor libraries and rendered DOM are projections, not sources of truth.
+- Shared content must be referenced by stable IDs from both slide and guide views. Do not duplicate copy merely to place it in another view.
+- Reusable interaction modules must enter the engine through `WidgetRegistry`. A widget declares its version and capabilities and must not reach into editor state or layout DOM.
+- Agent-authored changes must use validated presentation commands or validated document replacement. Do not ask an agent to edit runtime DOM or generated CSS selectors.
+- Narration and highlighting must target semantic node, placement, widget, or widget-anchor IDs. Never persist viewport pixels as the only narration target.
+- Existing React lessons may be wrapped as legacy widgets during migration. New widgets should externalize durable state through `WidgetRuntimeProps.setState` so session state survives view changes.

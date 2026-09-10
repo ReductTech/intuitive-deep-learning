@@ -7,17 +7,23 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "typecheck": "tsc --noEmit",
+    "test:engine": "vitest run modules/shared/presentation-engine/document.test.ts",
     "cache:decision": "node scripts/generate_decision_candidate_cache.mjs"
   },
   "dependencies": {
     "react": "19.2.7",
-    "react-dom": "19.2.7"
+    "react-dom": "19.2.7",
+    "react-moveable": "^0.56.0",
+    "react-selecto": "^1.26.3",
+    "zod": "^4.6.1",
+    "zustand": "^5.0.15"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^4.4.1",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
+    "@vitejs/plugin-react": "^4.4.1",
     "typescript": "^5.8.3",
-    "vite": "^6.3.5"
+    "vite": "^6.3.5",
+    "vitest": "^5.0.0"
   }
 }

@@ -7,8 +7,6 @@ export default defineConfig({
     rollupOptions: {
       input: {
         app: 'index.html',
-        webPpt: 'web_ppt/index.html',
-        webPptSlide: 'web_ppt/slide.html',
       },
     },
   },
