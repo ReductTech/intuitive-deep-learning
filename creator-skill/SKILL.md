@@ -1,42 +1,30 @@
 ---
 name: creator-skill
-description: 规划、设计、实现或验收本仓库中的 React 课程模块与 1600×900 Web PPT。用于把教师材料发展为课程认知路径、单页教学界面和 Guide/PPT；普通 React 页面开发不应触发。
+description: 规划、设计、实现或验收本仓库的 React 课程与 Web PPT；用于教师材料、课程认知路径和 Guide/PPT 页面创作，不用于普通 React 页面开发。
 ---
 
 # 课程创作
 
-把主题、笔记、截图、教材、数据、论文或案例发展成帮助学习者形成理解的 React 课程模块。交付可以包含课堂投影用的 Web PPT 与课后探索用的 Guide；二者共享知识结构、认知旅程和核心状态，但版式与信息密度可以不同。
+把材料变成帮助学习者理解的课程。尊重用户指定的内容、页数与交付范围；小改直接处理，不必重走完整流程。
 
-## 使用方式
+## 核心原则
 
-先完整读取 [references/common.md](references/common.md)，它适用于所有课程创作任务。然后只读取当前阶段需要的文件：
+- 保留原始事实、公式和数据；区分来源事实、教学示意与设计推断。
+- 一页围绕一个主要认知任务，视觉形式由知识关系决定。
+- Guide 与 PPT 保持知识一致，版式与展开深度可各自设计。
 
-- 分析材料、建立教学 Brief、认知地图或页面大纲：读取 [references/course-planning.md](references/course-planning.md)。
-- 设计、修改或精修某一页：读取 [references/page-design.md](references/page-design.md)。
-- 已确定当前页的教学功能、需要读取该类型的目标与判断边界：先读取 [styles/index.md](styles/index.md)，再只读取它指向的一种页面类型。
-- 编写或调整 React 代码、课程结构、共享状态、路由或素材：读取 [references/implementation.md](references/implementation.md)。
-- 验证单页、整套课程或交付质量：读取 [references/validation.md](references/validation.md)。
+## 按需路由
 
-只处理一个阶段时不要预读其他阶段。完整创作任务也应随阶段推进再加载对应文件，不要一开始全部读入。
+只读当前阶段需要的一份文件；它已足够时直接工作。有具体疑问再补一份专项，解决后继续。不要预读后续阶段或沿链接遍历全部文件；已读内容无需重复加载。这是减少上下文的习惯，不是阻止完成任务的文件配额。
 
-## 三层决策
+| 当前任务 | 读取 |
+|---|---|
+| 从材料规划课程 | [planning](routes/planning.md) |
+| 设计 PPT 单页 | [ppt](routes/ppt.md) |
+| 设计自主学习 Guide | [guide](routes/guide.md) |
+| 设计操作、实验或反馈 | [interaction](routes/interaction.md) |
+| 人物、历史、实验、论文等真实材料有助于理解 | [assets](routes/assets.md) |
+| 编写或修改 React | [implementation](routes/implementation.md) |
+| 页面完成后检查，或用户要求评审 | [review](routes/review.md) |
 
-课程创作必须依次解决三个不同层次的问题：
-
-1. **教学结构**：学习者要理解什么，哪条证据促成理解变化；
-2. **视觉结构**：知识对象以怎样的空间关系被看见，注意力如何移动；
-3. **React 实现**：用哪些组件、数据、素材与状态实现该视觉结构。
-
-不得从组件、卡片、分栏或现成页面结构直接开始。实现便利不能反过来决定知识如何呈现。
-
-## 默认工作节奏
-
-```text
-理解材料 → 教学 Brief → 认知地图 → 课程视觉系统 → 页面大纲
-→ 单页 Visual Plan → 素材获取 → React 实现
-→ 1600×900 截图 → Visual Critic → 重构 → 教学复盘
-```
-
-默认一次只设计和实现一页。老师明确要求整套完成，或多页存在必须同时处理的强依赖时，可以连续推进，但仍逐页构图和验证。
-
-单页构图时同时读取 [references/ppt-composition.md](references/ppt-composition.md)。完成可运行页面后必须读取 [references/visual-critic.md](references/visual-critic.md)，查看真实截图并据此决定是否重构；代码审查、DOM 边界检查和截图审查不能互相替代。
+页面类型和视觉专项在设计路由中按需选择。无需固定 Brief、Visual Plan 或逐项自评报告；按用户范围持续完成工作。
