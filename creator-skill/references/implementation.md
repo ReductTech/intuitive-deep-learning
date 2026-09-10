@@ -18,7 +18,7 @@ modules/shared/react/index.ts
 
 ## 2. 课程单元的单一事实源
 
-Guide、PPT 与开发预览尽量来自同一组课程单元定义，不分别维护标题、顺序和 description。
+Guide、PPT 与开发预览尽量来自同一组课程单元定义，不分别维护标题、顺序和 description。共享的是课程语义，不是页面 DOM。
 
 推荐关系：
 
@@ -32,7 +32,7 @@ PPT slide definitions
 block preview / route metadata
 ```
 
-课程单元可按项目需要包含：
+课程单元可按项目需要分别提供形态渲染器：
 
 ```ts
 id
@@ -40,12 +40,11 @@ title
 section
 description
 revealMode
-render
-ppt
-guide
+guide: () => <ConceptGuide />
+ppt: () => <ConceptPpt />
 ```
 
-这不是强制接口。核心要求是课程结构变化能在一个主要位置完成，Guide、PPT 和 preview 不悄悄漂移。
+这不是强制接口。核心要求是课程结构变化能在一个主要位置完成，Guide、PPT 和 preview 不悄悄漂移。二者可复用领域可视化、数据、公式、状态、tokens 和 Typography；不要把 PPT 仅实现为“Guide 减去按钮和交互”。当信息密度、注意路径或空间关系不同，应使用不同页面组件。
 
 ## 3. Shared UI Kit
 
@@ -58,6 +57,8 @@ guide
 - 可视化：`FunctionPlot`、`EChartsChart`、`PlotlyChart`。
 
 凡 Shared 已提供的能力，优先直接使用。不要重写 Shared Button、RangeControl、基础表单、普通提示框或 Typography。
+
+Shared 布局组件是 primitives，不是构图模板。`ContentBlock` 可以表达语义 section，但模块 CSS 不得仅因使用它就统一添加 Card 外观。若当前 Shared 没有裸内容舞台，可在实际复用需求成立时增加 `PptStage` 或 `ContentBlock` 的 bare 能力；应提供 `PptStage`、`MediaFrame`、`PlotArea`、`MappingBand`、`Annotation`、`SourceLine`、`Callout` 这类可组合职责，不创建 `HistoricalSlide`、`ConceptSlide`、`ComparisonSlide` 等页面模板。
 
 ## 4. 新组件边界
 
@@ -113,6 +114,8 @@ modules/<ModuleName>/
 - Shared 组件、Typography 与可访问性；
 - 1600×900 画布验证。
 
+开始 JSX 前必须先完成 [page-design.md](page-design.md) 中的 Visual Plan。实现顺序服从“教学结构 → 视觉结构 → React 实现”，不得因某个现成组件方便而改变核心空间关系。
+
 多页共享强依赖或老师明确要求时可以批量调整，但不得用批量生成牺牲逐页设计质量。
 
 ## 8. 实际运行验证
@@ -131,7 +134,7 @@ revisit
 PPT
 ```
 
-验证 observable behavior，而不是只检查代码存在。PPT 必须执行实际边界框检查；不要仅凭截图或 CSS 推断没有溢出。
+验证 observable behavior，而不是只检查代码存在。PPT 必须执行实际边界框检查；不要仅凭截图或 CSS 推断没有溢出。随后在真实 `1600×900` viewport 截图并按 [visual-critic.md](visual-critic.md) 进行视觉审查；边界框检查与截图审查缺一不可。
 
 ## 9. 工程失败清单
 
@@ -147,4 +150,3 @@ PPT
 - 为简单视觉效果创建大量无意义组件；
 - 自行重写已有课程推进逻辑；
 - 未处理交互的 reset、revisit、loading 或 error（在这些状态适用时）。
-
