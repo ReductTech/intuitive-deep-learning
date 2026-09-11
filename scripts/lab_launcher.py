@@ -71,7 +71,7 @@ def _ensure_llm_services() -> dict[str, Any]:
 def _ensure_cnn_service() -> dict[str, Any]:
     return service_runtime.ensure_background_http_service(
         "cnn",
-        [sys.executable, str(SCRIPT_DIR / "lenet5_cnn_service.py")],
+        [sys.executable, str(SCRIPT_DIR / "http_service.py")],
         port=service_runtime.CNN_PORT,
         markers=service_runtime.CNN_MARKERS,
         expected_service="lenet5-cnn-service",
