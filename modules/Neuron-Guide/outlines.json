@@ -9,8 +9,8 @@
   "audience": "general",
   "entry": "GuidePage.tsx",
   "ppt": {
-    "entry": "SlidePage.tsx",
-    "path": "/web-ppt/neuron",
+    "entry": "SceneDeck.tsx",
+    "path": "/scenedeck/",
     "player": true
   },
   "pages": [

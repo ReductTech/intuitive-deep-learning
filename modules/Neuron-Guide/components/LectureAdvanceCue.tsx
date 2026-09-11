@@ -48,7 +48,7 @@ export function LectureAdvanceCue({ children, complete, onContinue, label = '继
   }, [complete, onContinue]);
 
   return (
-    <div className="ng-lecture-step" ref={rootRef}>
+    <div className="lesson-step" ref={rootRef}>
       {children}
       {!complete && (
         <div className="edu-scroll-cue" role="status">

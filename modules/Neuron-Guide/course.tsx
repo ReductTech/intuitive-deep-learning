@@ -1,21 +1,21 @@
 import type { ReactNode } from 'react';
 import type { LessonFlowRevealMode, LessonStepContext } from '../shared/react';
-import { BiologicalNeuronPage } from './pages/BiologicalNeuronPage';
-import { ExtraInputsPage } from './pages/ExtraInputsPage';
-import { NematodeResponsePage } from './pages/NematodeResponsePage';
-import { NeuronDecisionBridgePage } from './pages/NeuronDecisionBridgePage';
-import { SignalDiscoveryPage } from './pages/SignalDiscoveryPage';
-import { WeightedSumPage } from './pages/WeightedSumPage';
-import { WeightedContributionTheoryPage } from './pages/WeightedContributionTheoryPage';
-import { BiasThresholdTheoryPage } from './pages/BiasThresholdTheoryPage';
+import { BiologicalNeuronPage } from './pages/BiologicalNeuronPage/BiologicalNeuronPage';
+import { ExtraInputsPage } from './pages/ExtraInputsPage/ExtraInputsPage';
+import { NematodeResponsePage } from './pages/NematodeResponsePage/NematodeResponsePage';
+import { NeuronDecisionBridgePage } from './pages/NeuronDecisionBridgePage/NeuronDecisionBridgePage';
+import { SignalDiscoveryPage } from './pages/SignalDiscoveryPage/SignalDiscoveryPage';
+import { WeightedSumPage } from './pages/WeightedSumPage/WeightedSumPage';
+import { WeightedContributionTheoryPage } from './pages/WeightedContributionTheoryPage/WeightedContributionTheoryPage';
+import { BiasThresholdTheoryPage } from './pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage';
 import { NeuronCompletionPage, NeuronLessonFooter } from './pages/NeuronLessonFooter';
-import { ShallowLinearPage } from './pages/ShallowLinearPage';
-import { DeepLinearPage } from './pages/DeepLinearPage';
-import { ReluIntroPage } from './pages/ReluIntroPage';
-import { ReluExplanationPage } from './pages/ReluExplanationPage';
-import { ReluNetworkPage } from './pages/ReluNetworkPage';
-import { ReluApproximationLabPage } from './pages/ReluApproximationLabPage';
-import { ActivationCatalogPage } from './pages/ActivationCatalogPage';
+import { ShallowLinearPage } from './pages/ShallowLinearPage/ShallowLinearPage';
+import { DeepLinearPage } from './pages/DeepLinearPage/DeepLinearPage';
+import { ReluIntroPage } from './pages/ReluIntroPage/ReluIntroPage';
+import { ReluExplanationPage } from './pages/ReluExplanationPage/ReluExplanationPage';
+import { ReluNetworkPage } from './pages/ReluNetworkPage/ReluNetworkPage';
+import { ReluApproximationLabPage } from './pages/ReluApproximationLabPage/ReluApproximationLabPage';
+import { ActivationCatalogPage } from './pages/ActivationCatalogPage/ActivationCatalogPage';
 import { LectureAdvanceCue } from './components/LectureAdvanceCue';
 
 export interface NeuronCourseItem {
@@ -52,6 +52,8 @@ export const neuronCourse: NeuronCourseItem[] = [
   { id: 'ending', title: '你已经搭出了一个人工神经元', section: '课程结尾', revealMode: 'scroll', component: (c) => cue(<NeuronCompletionPage />, c) },
   { id: 'resources', title: '推荐资源', section: '课程结尾', revealMode: 'immediate', component: () => <NeuronLessonFooter /> },
 ];
+
+
 
 
 

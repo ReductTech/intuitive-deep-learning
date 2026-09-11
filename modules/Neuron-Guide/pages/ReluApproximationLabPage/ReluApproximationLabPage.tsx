@@ -6,8 +6,8 @@ import {
   useState,
   type PointerEvent as ReactPointerEvent,
 } from 'react';
-import { Button, LessonStage, NoticeStrip, RangeControl, Typography } from '../../shared/react';
-import './SlidePage.css';
+import "./ReluApproximationLabPage.css";
+import { Button, LessonStage, NoticeStrip, RangeControl, Typography } from '../../../shared/react';
 
 interface Point {
   x: number;
@@ -335,6 +335,7 @@ export function ReluApproximationLabPage({ onComplete }: ReluApproximationLabPag
     </LessonStage>
   );
 }
+
 
 
 

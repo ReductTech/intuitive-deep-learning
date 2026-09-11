@@ -1,7 +1,8 @@
-import { Typography } from '../../shared/react';
+import { Typography } from '../../../shared/react';
+import "./NematodeResponsePage.css";
 import type { CSSProperties } from 'react';
-import nematodeVideo from '../assets/video.mp4';
-import nematodeVideoPoster from '../assets/video-poster.png';
+import nematodeVideo from '../../assets/video.mp4';
+import nematodeVideoPoster from '../../assets/video-poster.png';
 
 const abilities = [
   { name: '触碰', detail: '触觉神经元感受到身体接触，再通过神经回路触发后退或转向。', group: '感知' },
@@ -65,17 +66,6 @@ export function NematodeResponsePage() {
             </Typography>
           </section>
 
-          <section className="ng-nematode-intro__hero" aria-labelledby="ng-nematode-system">
-            <div className="ng-nematode-intro__count">
-              <Typography as="strong" variant="display" tone="accent">302</Typography>
-              <Typography variant="h3" tone="warning">个神经元</Typography>
-            </div>
-            <div className="ng-nematode-intro__hero-copy">
-              <Typography id="ng-nematode-system" as="h3" variant="h3" tone="accent">构成一个完整的神经系统</Typography>
-              <Typography variant="bodySmall" tone="muted">接收环境信号、协调运动，并改变行为。</Typography>
-            </div>
-          </section>
-
           <section className="ng-nematode-intro__abilities" aria-label="秀丽隐杆线虫的感知、行动与行为">
             <div className="ng-nematode-intro__ability-head">
               <div>
@@ -110,6 +100,7 @@ export function NematodeResponsePage() {
     </section>
   );
 }
+
 
 
 

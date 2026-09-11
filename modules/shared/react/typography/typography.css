@@ -1,32 +1,32 @@
 :root {
-  --ui-type-display-size: clamp(2.25rem, 4vw, 2.625rem);
+  --ui-type-display-size: clamp(3.24rem, 5.76vw, 3.78rem);
   --ui-type-display-weight: 800;
   --ui-type-display-line-height: 1.08;
   --ui-type-display-letter-spacing: -0.03em;
 
-  --ui-type-h1-size: clamp(2rem, 3.5vw, 2.25rem);
+  --ui-type-h1-size: clamp(2.88rem, 5.04vw, 3.24rem);
   --ui-type-h1-weight: 800;
   --ui-type-h1-line-height: 1.12;
   --ui-type-h1-letter-spacing: -0.02em;
 
-  --ui-type-h2-size: clamp(1.5rem, 3vw, 1.75rem);
+  --ui-type-h2-size: clamp(2.16rem, 4.32vw, 2.52rem);
   --ui-type-h2-weight: 800;
   --ui-type-h2-line-height: 1.22;
   --ui-type-h2-letter-spacing: -0.01em;
 
-  --ui-type-h3-size: 1.5rem;
+  --ui-type-h3-size: 2.16rem;
   --ui-type-h3-weight: 800;
   --ui-type-h3-line-height: 1.35;
 
-  --ui-type-subtitle-size: 1.375rem;
+  --ui-type-subtitle-size: 1.98rem;
   --ui-type-subtitle-weight: 500;
   --ui-type-subtitle-line-height: 1.6;
 
-  --ui-type-body-size: 1.25rem;
+  --ui-type-body-size: 1.8rem;
   --ui-type-body-weight: 500;
   --ui-type-body-line-height: 1.7;
 
-  --ui-type-body-small-size: 1rem;
+  --ui-type-body-small-size: 1.44rem;
   --ui-type-body-small-weight: 500;
   --ui-type-body-small-line-height: 1.7;
 

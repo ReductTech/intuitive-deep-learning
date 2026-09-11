@@ -1,5 +1,6 @@
-import { ContentBlock, Typography } from '../../shared/react';
-import neuronDiagram from '../assets/biological-neuron-diagram.svg';
+import { ContentBlock, Typography } from '../../../shared/react';
+import "./BiologicalNeuronPage.css";
+import neuronDiagram from '../../assets/biological-neuron-diagram.svg';
 
 const abstractions = [
   {
@@ -35,6 +36,7 @@ const abstractions = [
 export function BiologicalNeuronPage() {
   return (
     <ContentBlock
+      headingLevel={1}
       className="ng-lecture-stage ng-biological-model"
       title="1943 年，神经元被写成了数学模型"
       subtitle="沃伦·麦卡洛克与沃尔特·皮茨没有复制神经元的形状，而是抽出了它处理信号的基本规则。"
@@ -96,6 +98,7 @@ export function BiologicalNeuronPage() {
     </ContentBlock>
   );
 }
+
 
 
 

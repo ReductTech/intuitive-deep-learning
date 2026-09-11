@@ -1,0 +1,434 @@
+.ng-response-lab {
+  display: grid;
+  min-width: 0;
+  max-width: 100%;
+  gap: 16px;
+}
+
+.ng-response-lab__scene {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(190px, 0.85fr) minmax(270px, 1.15fr) minmax(190px, 0.85fr);
+  align-items: center;
+  min-width: 0;
+  min-height: 410px;
+  overflow: hidden;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius-lg);
+  background:
+    radial-gradient(circle at 50% 48%, rgb(72 143 100 / 10%), transparent 25%),
+    linear-gradient(90deg, #f5f8fc 0 43%, #fff 43% 57%, #f5f8fc 57% 100%);
+  padding: 34px 48px;
+}
+
+.ng-response-lab.is-suppressed .ng-response-lab__core,
+.ng-response-lab.is-suppressed .ng-response-lab__membrane::before,
+.ng-response-lab.is-suppressed .ng-response-lab__membrane::after {
+  background: var(--ui-text-light);
+}
+
+.ng-response-lab.is-suppressed .ng-response-lab__halo {
+  border-color: rgb(117 133 157 / 18%);
+  box-shadow: 0 0 0 18px rgb(117 133 157 / 4%), 0 0 0 38px rgb(117 133 157 / 2%);
+}
+
+.ng-response-lab.is-suppressed .ng-response-lab__pulse {
+  opacity: 0.12;
+}
+
+.ng-response-lab.is-waiting .ng-response-lab__core,
+.ng-response-lab.is-waiting .ng-response-lab__membrane::before,
+.ng-response-lab.is-waiting .ng-response-lab__membrane::after {
+  background: var(--ui-navy);
+}
+
+.ng-response-lab.is-waiting .ng-response-lab__pulse,
+.ng-response-lab.is-waiting .ng-response-lab__beam {
+  opacity: 0.28;
+}
+
+.ng-response-lab__scene {
+  grid-template-columns: minmax(170px, 0.68fr) minmax(520px, 2.2fr) minmax(170px, 0.68fr);
+  background:
+    radial-gradient(ellipse at 50% 50%, rgb(240 126 71 / 7%), transparent 35%),
+    #f7f9fc;
+}
+
+.ng-response-lab.is-active .ng-response-lab__spring {
+  width: 20%;
+  opacity: 0.24;
+}
+
+.ng-response-lab.is-active .ng-response-lab__charge {
+  left: 88%;
+  background: var(--ui-success);
+  animation: ng-response-release 420ms cubic-bezier(.12,.78,.24,1) both;
+  box-shadow: 0 0 0 2px rgb(72 143 100 / 22%), 0 0 34px rgb(72 143 100 / 32%);
+}
+
+.ng-response-lab.is-active .ng-response-lab__latch {
+  transform: translateY(-36px) rotate(18deg);
+  opacity: 0.28;
+  transition: transform 180ms ease, opacity 180ms ease;
+}
+
+.ng-response-lab.is-active .ng-response-lab__release {
+  opacity: 1;
+  animation: ng-response-pulse 700ms ease-out both;
+}
+
+.ng-response-lab.is-suppressed .ng-response-lab__outgoing {
+  opacity: 0.48;
+}
+
+.ng-response-lab.is-waiting .ng-response-lab__spring,
+.ng-response-lab.is-waiting .ng-response-lab__charge,
+.ng-response-lab.is-waiting .ng-response-lab__force {
+  opacity: 0.32;
+}
+
+.ng-response-lab__scene {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-content: center;
+  gap: 42px;
+  min-height: 410px;
+  background: #f7f9fc;
+  padding: 38px 54px;
+}
+
+.ng-response-lab__threshold-view {
+  display: grid;
+  min-width: 0;
+  gap: 18px;
+}
+
+.ng-response-lab__instruction {
+  display: flex;
+  min-width: 0;
+  align-items: end;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.ng-response-lab__instruction > div:first-child,
+.ng-response-lab__current {
+  display: grid;
+  min-width: 0;
+  gap: 4px;
+}
+
+.ng-response-lab__instruction p,
+.ng-response-lab__result p {
+  margin: 0;
+}
+
+.ng-response-lab__current {
+  flex: 0 0 auto;
+  justify-items: end;
+  border-right: 3px solid var(--ui-accent-alt);
+  padding-right: 14px;
+}
+
+.ng-response-lab__direct-control {
+  position: absolute;
+  inset: -14px 0;
+  z-index: 5;
+  width: 100%;
+  height: calc(100% + 28px);
+  margin: 0;
+  cursor: grab;
+  opacity: 0;
+  touch-action: none;
+}
+
+.ng-response-lab__direct-control:active {
+  cursor: grabbing;
+}
+
+.ng-response-lab.is-active .ng-response-lab__signal-dot {
+  background: var(--ui-success);
+  box-shadow: 0 0 0 2px rgb(72 143 100 / 22%), 0 0 30px rgb(72 143 100 / 25%);
+}
+
+.ng-response-lab.is-active .ng-response-lab__output-wave {
+  animation: ng-simple-response 420ms ease-out both;
+}
+
+.ng-response-lab__result {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  min-width: 0;
+  align-items: center;
+  gap: 18px;
+  border-left: 4px solid var(--ui-text-light);
+  border-radius: var(--ui-radius-sm);
+  background: #fff;
+  padding: 16px 20px;
+}
+
+.ng-response-lab.is-active .ng-response-lab__result {
+  border-left-color: var(--ui-success);
+  background: rgb(72 143 100 / 6%);
+}
+
+@media (max-width: 760px) {
+  .ng-response-lab__instruction,
+    .ng-response-lab__result {
+      align-items: stretch;
+      grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 760px) {
+  .ng-response-lab__instruction {
+      display: grid;
+    }
+}
+
+@media (max-width: 760px) {
+  .ng-response-lab__scene {
+      gap: 28px;
+      padding: 28px 20px;
+    }
+}
+
+.ng-response-lab__neuron-demo {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.62fr) minmax(0, 1.38fr);
+  min-width: 0;
+  align-items: center;
+  gap: 64px;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius-lg);
+  background: #fff;
+  padding: 34px 54px;
+}
+
+.ng-response-lab__neuron-state {
+  display: grid;
+  place-items: center;
+  gap: 18px;
+  text-align: center;
+}
+
+.ng-response-lab__charge-ring {
+  position: relative;
+  display: grid;
+  width: 210px;
+  max-width: 100%;
+  aspect-ratio: 1;
+  place-items: center;
+  border-radius: 50%;
+  background: #e6ebf2;
+  padding: 13px;
+  transition: background 90ms linear, transform 90ms linear, box-shadow 90ms linear;
+  box-shadow: 0 14px 32px rgb(28 51 86 / 10%);
+}
+
+.ng-response-lab__charge-ring::after {
+  position: absolute;
+  inset: 23px;
+  border: 1px solid rgb(255 255 255 / 78%);
+  border-radius: 50%;
+  content: '';
+}
+
+.ng-response-lab__neuron-core {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: 100%;
+  height: 100%;
+  place-content: center;
+  place-items: center;
+  gap: 5px;
+  border: 9px solid #fff;
+  border-radius: 50%;
+  background: var(--ui-text-light);
+  color: #fff;
+  transition: background 120ms ease, box-shadow 120ms ease;
+}
+
+.ng-response-lab.is-active .ng-response-lab__charge-ring {
+  background: var(--ui-success);
+  transform: scale(var(--ng-output-scale));
+  box-shadow:
+    0 0 0 10px rgb(72 143 100 / 7%),
+    0 0 var(--ng-output-glow) rgb(72 143 100 / var(--ng-output-alpha));
+}
+
+.ng-response-lab.is-active .ng-response-lab__neuron-core {
+  background: var(--ui-success);
+}
+
+.ng-response-lab__suppressed-flash {
+  position: absolute;
+  inset: -2px;
+  border: 5px solid var(--ui-accent-alt);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: ng-suppressed-breathe 620ms ease-in-out infinite;
+}
+
+.af-react-relu-intro .edu-stage-copy,
+.af-react-relu-intro .edu-stage-description {
+  width: 100%;
+  max-width: none;
+}
+
+.af-react-relu-intro .edu-stage-description {
+  white-space: nowrap;
+}
+
+.ng-response-lab__single-control {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  gap: 22px;
+  border-radius: var(--ui-radius-sm);
+  background: #f7f9fc;
+  padding: 28px 30px 34px;
+}
+
+.ng-response-lab__control-head {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.ng-response-lab__control-track {
+  position: relative;
+  height: 18px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #cfd7e4 0 50%, rgb(72 143 100 / 24%) 50% 100%);
+  box-shadow: inset 0 2px 4px rgb(28 51 86 / 12%);
+}
+
+.ng-response-lab__control-track::after {
+  position: absolute;
+  top: 50%;
+  left: clamp(18px, var(--ng-signal-position), calc(100% - 18px));
+  z-index: 3;
+  width: 38px;
+  height: 38px;
+  border: 7px solid #fff;
+  border-radius: 50%;
+  background: var(--ui-accent-alt);
+  content: '';
+  transform: translate(-50%, -50%);
+  transition: background 120ms ease, box-shadow 120ms ease;
+  box-shadow: 0 0 0 2px rgb(240 126 71 / 22%), var(--ui-shadow-soft);
+}
+
+.ng-response-lab.is-active .ng-response-lab__control-track::after {
+  background: var(--ui-success);
+  box-shadow: 0 0 0 2px rgb(72 143 100 / 24%), 0 0 24px rgb(72 143 100 / 22%);
+}
+
+.ng-response-lab__control-threshold {
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  transform: translate(-50%, -100%);
+}
+
+.ng-response-lab__control-threshold::after {
+  width: 4px;
+  height: 40px;
+  border-radius: 999px;
+  background: var(--ui-navy);
+  content: '';
+  opacity: 0.44;
+}
+
+.ng-response-lab__single-control .ng-response-lab__direct-control {
+  cursor: ew-resize;
+}
+
+.ng-response-lab__control-track:focus-within {
+  outline: 3px solid var(--ui-focus);
+  outline-offset: 5px;
+}
+
+@media (max-width: 760px) {
+  .af-react-relu-intro .edu-stage-description {
+      white-space: normal;
+    }
+}
+
+@media (max-width: 760px) {
+  .ng-response-lab__neuron-demo {
+      grid-template-columns: 1fr;
+      gap: 34px;
+      padding: 28px 20px;
+    }
+}
+
+.ng-response-lab.is-active .ng-response-lab__fixed-neuron {
+  background: var(--ui-success);
+  box-shadow: 0 0 0 2px rgb(72 143 100 / 24%), 0 0 34px rgb(72 143 100 / 26%);
+  animation: ng-neuron-trigger 260ms cubic-bezier(.18,.86,.32,1.28) both;
+}
+
+.ng-response-lab.is-active .ng-response-lab__neuron-rings,
+.ng-response-lab.is-active .ng-response-lab__neuron-rings i {
+  animation: ng-neuron-ring 520ms ease-out both;
+}
+
+.ng-response-lab.is-active .ng-response-lab__neuron-rings i:nth-child(2) { animation-delay: 60ms; }
+
+.ng-response-lab.is-active .ng-response-lab__neuron-rings i:nth-child(3) { animation-delay: 120ms; }
+
+.ng-response-lab.is-active .ng-response-lab__signal-card {
+  left: 78%;
+  transform: translate(-50%, -50%) scale(.82);
+  opacity: 0.55;
+}
+
+@media (max-width: 760px) {
+  .ng-response-lab__scene {
+      grid-template-columns: 1fr;
+      gap: 40px;
+      padding: 28px 20px;
+    }
+}
+
+@keyframes ng-response-release {
+  0% { left: 59%; transform: translate(-50%, -50%) scale(1.08); }
+  62% { left: 91%; transform: translate(-50%, -50%) scale(.9); }
+  100% { left: 88%; transform: translate(-50%, -50%) scale(1); }
+}
+
+@keyframes ng-response-pulse {
+  0% { transform: translate(-28px, -50%); opacity: 0; }
+  45% { opacity: 1; }
+  100% { transform: translate(0, -50%); opacity: 1; }
+}
+
+@keyframes ng-simple-response {
+  0% { opacity: 0; transform: translate(-24px, -50%); }
+  55% { opacity: 1; }
+  100% { opacity: 1; transform: translate(0, -50%); }
+}
+
+@keyframes ng-suppressed-breathe {
+  0%, 100% { opacity: .12; transform: scale(.98); }
+  50% { opacity: .58; transform: scale(1.08); }
+}
+
+@keyframes ng-neuron-trigger {
+  0% { transform: scale(.9); }
+  70% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+@keyframes ng-neuron-ring {
+  0% { opacity: .65; transform: scale(.72); }
+  100% { opacity: 0; transform: scale(1.2); }
+}
+

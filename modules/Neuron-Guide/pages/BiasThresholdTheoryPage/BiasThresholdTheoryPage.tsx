@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { Button, ContentBlock, FormulaBlock, FormulaTerm, NoticeStrip, Question, Typography } from '../../shared/react';
-import { formatScore, weightedSum } from '../model/neuronMath';
-import { useNeuronLesson } from '../model/NeuronLessonContext';
+import "./BiasThresholdTheoryPage.css";
+import { Button, ContentBlock, FormulaBlock, FormulaTerm, NoticeStrip, Question, Typography } from '../../../shared/react';
+import { formatScore, weightedSum } from '../../model/neuronMath';
+import { useNeuronLesson } from '../../model/NeuronLessonContext';
 
 export function BiasThresholdTheoryPage({ onComplete }: { onComplete?: () => void }) {
   const { state, scenario } = useNeuronLesson();
@@ -12,6 +13,7 @@ export function BiasThresholdTheoryPage({ onComplete }: { onComplete?: () => voi
   const tendency = centeredScore >= 0 ? scenario.positiveLabel : scenario.negativeLabel;
 
   return <ContentBlock
+    headingLevel={1}
     className="ng-bias-theory"
     title={`所以，从神经元的角度看，${scenario.question}`}
     subtitle="把三个输入的加权总分与判断门槛比较，得到这次决策的倾向。"
@@ -50,6 +52,7 @@ export function BiasThresholdTheoryPage({ onComplete }: { onComplete?: () => voi
     </div> : <div className="ng-bias-theory__hint"><Typography variant="bodySmall" tone="muted">公式两边进行相同的移项，判断结果不会改变。</Typography></div>}
   </ContentBlock>;
 }
+
 
 
 

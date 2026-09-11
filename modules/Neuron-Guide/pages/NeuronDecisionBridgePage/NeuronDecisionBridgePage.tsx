@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { ContentBlock, Typography } from '../../shared/react';
+import "./NeuronDecisionBridgePage.css";
+import { ContentBlock, Typography } from '../../../shared/react';
 
 const neurons = [
   { label: '发现食物', short: '食物', x: 14, y: 18 },
@@ -32,6 +33,7 @@ export function NeuronDecisionBridgePage() {
 
   return (
     <ContentBlock
+      headingLevel={1}
       className="ng-lecture-stage ng-neuron-decision-bridge"
       title="神经元究竟在做什么？"
       subtitle="早期二值模型把单个神经元简化为 0 或 1；许多简单状态组合起来，却能形成丰富的判断与行为。"
@@ -115,6 +117,7 @@ export function NeuronDecisionBridgePage() {
     </ContentBlock>
   );
 }
+
 
 
 

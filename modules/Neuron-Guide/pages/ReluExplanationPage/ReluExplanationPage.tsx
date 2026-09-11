@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
-import { Button, FunctionPlot, LessonStage, MathFormulaBlock, MathFormulaStatic, Typography } from '../../shared/react';
-import './SlidePage.css';
+import "./ReluExplanationPage.css";
+import { Button, FunctionPlot, LessonStage, MathFormulaBlock, MathFormulaStatic, Typography } from '../../../shared/react';
 
 interface ReluInputParameters {
   a: number;
@@ -98,6 +98,7 @@ export function ReluExplanationPage() {
     </LessonStage>
   );
 }
+
 
 
 

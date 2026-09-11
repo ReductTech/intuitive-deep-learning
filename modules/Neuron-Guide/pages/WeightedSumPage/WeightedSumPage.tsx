@@ -1,7 +1,8 @@
-import { Callout, ContentBlock } from '../../shared/react';
-import { FactorCard } from '../components/FactorCard';
-import { NeuronSignalNetwork } from '../components/NeuronSignalNetwork';
-import { useNeuronLesson } from '../model/NeuronLessonContext';
+import { Callout, ContentBlock } from '../../../shared/react';
+import "./WeightedSumPage.css";
+import { FactorCard } from '../../components/FactorCard';
+import { NeuronSignalNetwork } from '../../components/NeuronSignalNetwork';
+import { useNeuronLesson } from '../../model/NeuronLessonContext';
 
 export interface WeightedSumPageProps {
   onComplete: () => void;
@@ -19,6 +20,7 @@ export function WeightedSumPage({ onComplete }: WeightedSumPageProps) {
 
   return (
     <ContentBlock
+      headingLevel={1}
       className="ng-analysis-stage ng-signal-quantization"
       title="把一个现实因素，翻译成神经元能处理的输入"
       subtitle="模型不能直接计算“表现好不好”，需要先规定衡量问题，再把回答映射到统一的数值尺度。"
@@ -46,6 +48,7 @@ export function WeightedSumPage({ onComplete }: WeightedSumPageProps) {
     </ContentBlock>
   );
 }
+
 
 
 

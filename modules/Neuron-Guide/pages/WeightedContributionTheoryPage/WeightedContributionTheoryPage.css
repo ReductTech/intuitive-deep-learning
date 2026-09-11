@@ -1,0 +1,83 @@
+.guide-shell .ng-opening-stage,
+.guide-shell .ng-lecture-stage,
+.guide-shell .ng-analysis-stage,
+.guide-shell .ng-multi-stage,
+.guide-shell .ng-completion-stage {
+  width: 100%;
+}
+
+.guide-shell .ng-lecture-stage .edu-content-body { gap: 20px; }
+
+.guide-shell .ng-matrix-definition-ppt .edu-content-body { gap: 14px; }
+
+.guide-shell .ng-matrix-definition-ppt__expanded { display: grid; width: 100%; min-width: 0; grid-template-columns: minmax(0,34fr) minmax(0,66fr); align-items: center; gap: 28px; background: linear-gradient(90deg,#fff,rgba(39,68,110,.035)); padding: 16px 24px; }
+
+.guide-shell .ng-matrix-definition-ppt__expanded > div:first-child { display: grid; gap: 4px; }
+
+.guide-shell .ng-matrix-definition-ppt__expanded > .edu-formula-block { width: 100%; min-width: 0; padding: 16px 18px; }
+
+.guide-shell .ng-matrix-definition-ppt__vectors { display: grid; width: 100%; min-width: 0; grid-template-columns: repeat(2,minmax(0,1fr)); align-items: stretch; gap: 18px; }
+
+.guide-shell .ng-matrix-definition-ppt__vectors-heading { grid-column: 1 / -1; display: flex; min-width: 0; align-items: baseline; justify-content: space-between; gap: 20px; border-bottom: 1px solid var(--ui-border); padding: 0 4px 9px; }
+
+.guide-shell .ng-matrix-definition-ppt__vector-definition,
+.guide-shell .ng-matrix-definition-ppt__compact-formula { display: grid; align-content: center; justify-items: center; gap: 10px; border-top: 3px solid rgba(39,68,110,.2); background: #fff; padding: 14px 18px; text-align: center; }
+
+.guide-shell .ng-matrix-definition-ppt__vector-definition { grid-template-columns: minmax(0,1fr) auto; grid-template-rows: auto; align-items: center; min-height: 150px; border: 1px solid var(--ui-border); border-top: 3px solid var(--ui-accent-alt); border-radius: var(--ui-radius-md); background: rgba(240,126,71,.035); padding: 12px 20px; }
+
+.guide-shell .ng-matrix-definition-ppt__vector-definition:nth-child(3) { border-top-color: var(--ui-accent); background: rgba(39,68,110,.035); }
+
+.guide-shell .ng-matrix-definition-ppt__vector-definition .edu-formula-block,
+.guide-shell .ng-matrix-definition-ppt__compact-formula .edu-formula-block { width: 100%; min-width: 0; border: 0; background: transparent; padding: 8px; }
+
+.guide-shell .ng-matrix-definition-ppt__vector-definition .edu-formula-block { height: auto; margin: 0; }
+
+.guide-shell .ng-matrix-definition-ppt__vector-equation { display: grid; width: min(260px,100%); grid-template-columns: 58px 28px 112px; align-items: center; justify-content: center; gap: 8px; }
+
+.guide-shell .ng-matrix-definition-ppt__vector-equation > :first-child { justify-self: end; }
+
+.guide-shell .ng-matrix-definition-ppt__vector-equation > :nth-child(2) { justify-self: center; }
+
+.guide-shell .ng-matrix-definition-ppt__column { position: relative; display: inline-grid; justify-items: center; gap: 2px; padding: 8px 16px; }
+
+.guide-shell .ng-matrix-definition-ppt__column::before,
+.guide-shell .ng-matrix-definition-ppt__column::after,
+.guide-shell .ng-matrix-definition-ppt__row-vector::before,
+.guide-shell .ng-matrix-definition-ppt__row-vector::after { content: ''; position: absolute; inset-block: 0; width: 8px; border-block: 2px solid currentColor; }
+
+.guide-shell .ng-matrix-definition-ppt__column::before,
+.guide-shell .ng-matrix-definition-ppt__row-vector::before { left: 0; border-left: 2px solid currentColor; }
+
+.guide-shell .ng-matrix-definition-ppt__column::after,
+.guide-shell .ng-matrix-definition-ppt__row-vector::after { right: 0; border-right: 2px solid currentColor; }
+
+.guide-shell .ng-matrix-definition-ppt__column--accent { color: var(--ui-accent); }
+
+.guide-shell .ng-matrix-definition-ppt__vertical-expansion { display: grid; width: 100%; min-width: 0; grid-template-columns: minmax(190px,.72fr) minmax(280px,1.25fr) 40px minmax(150px,.68fr) 40px minmax(120px,.55fr); align-items: center; gap: 18px; border: 1px solid var(--ui-border); border-left: 4px solid var(--ui-success); border-radius: var(--ui-radius-md); background: linear-gradient(90deg,rgba(45,125,104,.045),#fff 35%); padding: 18px 24px; }
+
+.guide-shell .ng-matrix-definition-ppt__equation-label { display: grid; align-content: center; gap: 3px; }
+
+.guide-shell .ng-matrix-definition-ppt__operand,
+.guide-shell .ng-matrix-definition-ppt__output { display: grid; grid-template-rows: 28px 112px; align-content: center; justify-items: center; gap: 4px; }
+
+.guide-shell .ng-matrix-definition-ppt__vertical-expansion > .ui-typography--h3 { display: grid; height: 112px; place-items: center; }
+
+.guide-shell .ng-matrix-definition-ppt__row-vector { position: relative; display: grid; width: 100%; height: 112px; grid-template-columns: repeat(3,minmax(0,1fr)); place-items: center; gap: 12px; color: var(--ui-accent-alt); padding: 14px 24px; }
+
+.guide-shell .ng-matrix-definition-ppt__vertical-expansion .ng-matrix-definition-ppt__column { width: 100%; height: 112px; align-content: center; }
+
+.guide-shell .ng-matrix-definition-ppt__output > :last-child { display: grid; height: 112px; place-items: center; }
+
+.guide-shell .ng-matrix-definition-ppt__vertical-expansion > .edu-formula-block { width: 100%; min-width: 0; border: 0; background: var(--ui-bg-muted); padding: 12px 14px; }
+
+@media (max-width: 820px) {
+  .guide-shell .ng-matrix-definition-ppt__expanded,
+    .guide-shell .ng-matrix-definition-ppt__vectors { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 820px) {
+  .guide-shell .ng-matrix-definition-ppt__vertical-expansion { overflow-x: auto; }
+}
+
+.course-page-surface .ng-matrix-definition-ppt__vectors { padding-block: 10px; }
+

@@ -1,7 +1,8 @@
-import { Callout, ContentBlock } from '../../shared/react';
-import { FactorCard } from '../components/FactorCard';
-import { NeuronSignalNetwork } from '../components/NeuronSignalNetwork';
-import { useNeuronLesson } from '../model/NeuronLessonContext';
+import { Callout, ContentBlock } from '../../../shared/react';
+import "./ExtraInputsPage.css";
+import { FactorCard } from '../../components/FactorCard';
+import { NeuronSignalNetwork } from '../../components/NeuronSignalNetwork';
+import { useNeuronLesson } from '../../model/NeuronLessonContext';
 
 export interface ExtraInputsPageProps {
   onComplete: () => void;
@@ -17,6 +18,7 @@ export function ExtraInputsPage({ onComplete }: ExtraInputsPageProps) {
   } = useNeuronLesson();
   return (
     <ContentBlock
+      headingLevel={1}
       className="ng-multi-stage ng-extra-inputs-stage"
       title="从一个因素，到三个因素"
       subtitle="补充另外两个输入，观察三个加权信号如何汇总成分数，并通过判断门槛形成最终倾向。"
@@ -55,6 +57,7 @@ export function ExtraInputsPage({ onComplete }: ExtraInputsPageProps) {
     </ContentBlock>
   );
 }
+
 
 
 

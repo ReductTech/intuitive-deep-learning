@@ -1,6 +1,6 @@
-import { LessonStage, Typography } from '../../shared/react';
-import { ActivationFunctionPlot } from '../components/ActivationCharts';
-import './SlidePage.css';
+import { LessonStage, Typography } from '../../../shared/react';
+import "./ActivationCatalogPage.css";
+import { ActivationFunctionPlot } from '../../components/ActivationCharts';
 
 const activations = [
   {
@@ -62,6 +62,7 @@ export function ActivationCatalogPage() {
     </LessonStage>
   );
 }
+
 
 
 

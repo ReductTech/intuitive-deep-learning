@@ -1,12 +1,13 @@
 import { useMemo, useRef } from 'react';
-import { Button, LessonStage, NoticeStrip, Typography } from '../../shared/react';
-import { ReluNetworkPlot } from '../components/ActivationCharts';
+import "./ReluNetworkPage.css";
+import { Button, LessonStage, NoticeStrip, Typography } from '../../../shared/react';
+import { ReluNetworkPlot } from '../../components/ActivationCharts';
 import {
   NetworkCanvas,
   type NetworkConnection,
   type NetworkLayer,
-} from '../components/NetworkCanvas';
-import { usePersistedActivity } from '../components/usePersistedActivity';
+} from '../../components/NetworkCanvas';
+import { usePersistedActivity } from '../../components/usePersistedActivity';
 import {
   formatNumber,
   formatSigned,
@@ -14,8 +15,7 @@ import {
   MIN_RELU_NEURON_COUNT,
   RELU_OUTPUT_BIAS,
   type ShallowNeuron,
-} from '../model/activationMath';
-import './SlidePage.css';
+} from '../../model/activationMath';
 
 const STATE_KEY = 'activity:neuron-guide-relu-network-v1';
 
@@ -243,6 +243,7 @@ export function ReluNetworkPage({ onComplete }: ReluNetworkPageProps) {
     </LessonStage>
   );
 }
+
 
 
 

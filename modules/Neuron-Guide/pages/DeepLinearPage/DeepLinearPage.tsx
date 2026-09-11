@@ -1,13 +1,13 @@
 import { useMemo, useRef } from 'react';
-import { Button, FormulaBlock, LessonStage, NoticeStrip, Typography } from '../../shared/react';
-import { DeepOutputPlot } from '../components/ActivationCharts';
+import "./DeepLinearPage.css";
+import { Button, FormulaBlock, LessonStage, NoticeStrip, Typography } from '../../../shared/react';
+import { DeepOutputPlot } from '../../components/ActivationCharts';
 import {
   NetworkCanvas,
   type NetworkConnection,
   type NetworkLayer,
-} from '../components/NetworkCanvas';
-import { usePersistedActivity } from '../components/usePersistedActivity';
-import './SlidePage.css';
+} from '../../components/NetworkCanvas';
+import { usePersistedActivity } from '../../components/usePersistedActivity';
 import {
   buildDeepModel,
   deepEquivalent,
@@ -16,7 +16,7 @@ import {
   MAX_DEEP_LAYER_COUNT,
   MIN_DEEP_LAYER_COUNT,
   type DeepNetworkModel,
-} from '../model/activationMath';
+} from '../../model/activationMath';
 
 const STATE_KEY = 'activity:activation-linear-dimensional-v1';
 
@@ -360,6 +360,7 @@ export function DeepLinearPage({ onComplete }: DeepLinearPageProps) {
     </LessonStage>
   );
 }
+
 
 
 

@@ -12,7 +12,7 @@ export interface LessonStageProps extends Omit<HTMLAttributes<HTMLElement>, 'tit
   variant?: LessonStageVariant;
   locked?: boolean;
   revealing?: boolean;
-  headingLevel?: 2 | 3 | 4;
+  headingLevel?: 1 | 2 | 3 | 4;
   bodyClassName?: string;
 }
 
@@ -24,14 +24,14 @@ export const LessonStage = forwardRef<HTMLElement, LessonStageProps>(function Le
   variant = 'default',
   locked = false,
   revealing = false,
-  headingLevel = 2,
+  headingLevel = 1,
   bodyClassName,
   className,
   children,
   ...props
 }, ref) {
   const Heading = `h${headingLevel}` as const;
-  const headingVariant: TypographyVariant = headingLevel === 2 ? 'h2' : 'h3';
+  const headingVariant: TypographyVariant = headingLevel === 1 ? 'h1' : headingLevel === 2 ? 'h2' : 'h3';
   const hasHeader = title !== undefined || description !== undefined || actions !== undefined;
 
   return (

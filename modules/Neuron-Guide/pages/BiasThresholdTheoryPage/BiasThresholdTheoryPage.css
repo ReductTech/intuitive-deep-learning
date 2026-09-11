@@ -1,0 +1,40 @@
+.guide-shell .ng-bias-theory__question { margin-top: 6px; }
+
+.guide-shell .ng-bias-theory__question > .dl-question { border: 0; border-radius: 0; background: transparent; padding: 0; }
+
+.guide-shell .ng-bias-theory__stage { display: grid; min-height: 310px; align-content: center; justify-items: center; gap: 22px; border-block: 1px solid var(--ui-border); padding: 28px 20px; }
+
+.guide-shell .ng-bias-theory__stage > .edu-formula-block { width: min(980px, 100%); min-width: 0; max-width: 100%; padding: 24px 30px; }
+
+.guide-shell .ng-bias-theory__action { display: grid; min-height: 48px; place-items: center; }
+
+.guide-shell .ng-bias-theory__equivalence { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 16px; max-width: 100%; }
+
+.guide-shell .ng-bias-theory__equivalence > div { display: grid; min-width: 0; justify-items: center; gap: 6px; border-top: 3px solid rgba(39,68,110,.18); background: #fff; padding: 14px 18px; text-align: center; }
+
+.guide-shell .ng-bias-theory__equivalence > div.is-current { border-top-color: var(--ui-accent-alt); background: rgba(240,126,71,.045); }
+
+.guide-shell .ng-bias-theory__notice { display: flex; align-items: baseline; justify-content: center; gap: 14px; }
+
+.guide-shell .ng-bias-theory__result-stack { display: grid; gap: 10px; }
+
+.guide-shell .ng-bias-theory__current-result { display: grid; grid-template-columns: auto minmax(0,1fr) auto; align-items: center; gap: 16px; border-left: 4px solid var(--ui-accent-alt); background: rgba(240,126,71,.07); padding: 12px 18px; }
+
+.guide-shell .ng-bias-theory__hint { display: grid; place-items: center; min-height: 48px; background: rgba(39,68,110,.035); padding: 10px 18px; text-align: center; }
+
+.course-page-surface .ng-bias-theory__stage { min-height: 250px; padding-block: 18px; }
+
+.course-page-surface .ng-bias-theory__stage > .edu-formula-block { padding-block: 18px; }
+
+@media (max-width: 760px) {
+  .guide-shell .ng-bias-theory__equivalence { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 760px) {
+  .guide-shell .ng-bias-theory__notice { align-items: flex-start; flex-direction: column; }
+}
+
+@media (max-width: 760px) {
+  .guide-shell .ng-bias-theory__current-result { grid-template-columns: 1fr; }
+}
+

@@ -1,8 +1,9 @@
 import { useState, type FormEvent } from 'react';
-import { Button, ContentBlock, NoticeStrip, TextInput, Typography } from '../../shared/react';
-import { DecisionMarquee } from '../components/DecisionMarquee';
-import { useNeuronLesson } from '../model/NeuronLessonContext';
-import { analyzeDecision } from '../services/decisionAnalysis';
+import "./SignalDiscoveryPage.css";
+import { Button, ContentBlock, NoticeStrip, TextInput, Typography } from '../../../shared/react';
+import { DecisionMarquee } from '../../components/DecisionMarquee';
+import { useNeuronLesson } from '../../model/NeuronLessonContext';
+import { analyzeDecision } from '../../services/decisionAnalysis';
 
 export interface SignalDiscoveryPageProps {
   onComplete: () => void;
@@ -48,6 +49,7 @@ export function SignalDiscoveryPage({ onComplete }: SignalDiscoveryPageProps) {
 
   return (
     <ContentBlock
+      headingLevel={1}
       className="ng-opening-stage edu-stage--featured ng-decision-discovery"
       title="让神经元帮你做一次判断"
       subtitle="输入一个正在权衡的问题，看看哪些因素正在共同推动你的决定。"
@@ -134,6 +136,7 @@ export function SignalDiscoveryPage({ onComplete }: SignalDiscoveryPageProps) {
     </ContentBlock>
   );
 }
+
 
 
 

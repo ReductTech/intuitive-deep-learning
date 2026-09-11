@@ -1,10 +1,11 @@
 import { useRef, type CSSProperties, type FormEvent } from 'react';
+import "./ReluIntroPage.css";
 import {
   LessonStage,
   NoticeStrip,
   Typography,
-} from '../../shared/react';
-import { usePersistedActivity } from '../components/usePersistedActivity';
+} from '../../../shared/react';
+import { usePersistedActivity } from '../../components/usePersistedActivity';
 import {
   formatNumber,
   RELU_INTRO_MAX_X,
@@ -12,8 +13,7 @@ import {
   RELU_INTRO_STEP,
   RELU_INTRO_WEIGHT,
   reluIntroForward,
-} from '../model/activationMath';
-import './SlidePage.css';
+} from '../../model/activationMath';
 
 const STATE_KEY = 'activity:neuron-guide-relu-intro-v1';
 
@@ -188,6 +188,7 @@ export function ReluIntroPage({ onComplete }: ReluIntroPageProps) {
     </LessonStage>
   );
 }
+
 
 
 

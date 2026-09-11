@@ -1,13 +1,13 @@
 import { useMemo, useRef } from 'react';
-import { Button, FormulaBlock, LessonStage, NoticeStrip, Typography } from '../../shared/react';
-import { ShallowOutputPlot } from '../components/ActivationCharts';
+import "./ShallowLinearPage.css";
+import { Button, FormulaBlock, LessonStage, NoticeStrip, Typography } from '../../../shared/react';
+import { ShallowOutputPlot } from '../../components/ActivationCharts';
 import {
   NetworkCanvas,
   type NetworkConnection,
   type NetworkLayer,
-} from '../components/NetworkCanvas';
-import { usePersistedActivity } from '../components/usePersistedActivity';
-import './SlidePage.css';
+} from '../../components/NetworkCanvas';
+import { usePersistedActivity } from '../../components/usePersistedActivity';
 import {
   formatNumber,
   formatSigned,
@@ -15,7 +15,7 @@ import {
   makeShallowNeuron,
   shallowEquivalent,
   type ShallowModel,
-} from '../model/activationMath';
+} from '../../model/activationMath';
 
 const STATE_KEY = 'activity:activation-linear-shallow';
 
@@ -302,6 +302,7 @@ export function ShallowLinearPage({ onComplete }: ShallowLinearPageProps) {
     </LessonStage>
   );
 }
+
 
 
 

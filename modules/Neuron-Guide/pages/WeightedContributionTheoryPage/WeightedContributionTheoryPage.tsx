@@ -1,4 +1,5 @@
-import { ContentBlock, FormulaBlock, FormulaTerm, Typography } from '../../shared/react';
+import { ContentBlock, FormulaBlock, FormulaTerm, Typography } from '../../../shared/react';
+import "./WeightedContributionTheoryPage.css";
 
 function ColumnVector({ symbol, tone, values }: { symbol: 'W' | 'X'; tone: 'warning' | 'accent'; values: string[] }) {
   return (
@@ -22,6 +23,7 @@ function ColumnVector({ symbol, tone, values }: { symbol: 'W' | 'X'; tone: 'warn
 export function WeightedContributionTheoryPage() {
   return (
     <ContentBlock
+      headingLevel={1}
       className="ng-lecture-stage ng-matrix-definition-ppt"
       title="从加权求和到矩阵表示"
       subtitle="把权重和输入分别写成向量，同一条加权求和可以写成一次矩阵乘法。"
@@ -78,6 +80,7 @@ export function WeightedContributionTheoryPage() {
     </ContentBlock>
   );
 }
+
 
 
 

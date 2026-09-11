@@ -1,0 +1,41 @@
+.af-react-plot-formula-content {
+  display: flex;
+  min-width: 0;
+  max-width: 100%;
+  align-items: baseline;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.ng-output-matrix { display: grid; gap: 12px; margin-top: 10px; border-radius: var(--ui-radius-sm); background: var(--ui-bg-muted); padding: 14px; }
+
+.ng-output-matrix__formula { display: flex; width: max-content; max-width: 100%; margin-inline: auto; flex-wrap: wrap; align-items: center; justify-content: center; gap: clamp(7px, 2cqi, 12px); }
+
+.ng-output-matrix__formula > * { flex: 0 0 auto; }
+
+.ng-output-matrix__formula > .ui-typography { white-space: nowrap; }
+
+.ng-output-matrix__row-vector, .ng-output-matrix__column-vector { position: relative; display: grid; place-items: center; min-width: max-content; padding: 8px 15px; }
+
+.ng-output-matrix__row-vector { grid-auto-flow: column; grid-auto-columns: max-content; gap: clamp(9px, 2cqi, 13px); color: var(--ui-accent-alt); }
+
+.ng-output-matrix__column-vector { gap: 2px; color: var(--ui-accent); }
+
+.ng-output-matrix__row-vector::before, .ng-output-matrix__row-vector::after, .ng-output-matrix__column-vector::before, .ng-output-matrix__column-vector::after { position: absolute; inset-block: 0; width: 7px; border-block: 2px solid currentColor; content: ''; }
+
+.ng-output-matrix__row-vector::before, .ng-output-matrix__column-vector::before { left: 0; border-left: 2px solid currentColor; }
+
+.ng-output-matrix__row-vector::after, .ng-output-matrix__column-vector::after { right: 0; border-right: 2px solid currentColor; }
+
+.ng-deep-linear-conclusion {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: baseline;
+  gap: 14px;
+  margin-top: 14px;
+}
+
+@media (max-width: 980px) {
+  .ng-deep-linear-conclusion { grid-template-columns: minmax(0, 1fr); }
+}
+
