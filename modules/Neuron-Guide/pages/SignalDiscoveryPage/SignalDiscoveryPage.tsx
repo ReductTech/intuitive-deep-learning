@@ -56,10 +56,10 @@ export function SignalDiscoveryPage({ onComplete }: SignalDiscoveryPageProps) {
     >
       <form className="ng-decision-composer" onSubmit={submit}>
         <div className="ng-decision-composer__main">
-          <Typography variant="bodySmall" tone="warning">给出一个需要权衡的决定</Typography>
+          <Typography variant="body" tone="warning">给出一个需要权衡的决定</Typography>
           <div className="ng-decision-composer__action">
             <div className={`ng-input-row${decision ? ' is-confirmed' : ''}`}>
-              <Typography className="ng-input-prefix" variant="bodySmall" tone="light">是否要</Typography>
+              <Typography className="ng-input-prefix" variant="body" tone="light">是否要</Typography>
               <TextInput
                 controlClassName="ng-decision-input-control"
                 value={decision}
@@ -80,8 +80,8 @@ export function SignalDiscoveryPage({ onComplete }: SignalDiscoveryPageProps) {
         </div>
 
         {error && (
-          <NoticeStrip className="ng-opening-status" tone="red" lead={<Typography as="span" variant="bodySmall" tone="inherit">分析暂时无法完成：</Typography>}>
-            <Typography as="span" variant="bodySmall" tone="inherit">{error}</Typography>
+          <NoticeStrip className="ng-opening-status" tone="red" lead={<Typography as="span" variant="body" tone="inherit">分析暂时无法完成：</Typography>}>
+            <Typography as="span" variant="body" tone="inherit">{error}</Typography>
           </NoticeStrip>
         )}
       </form>
@@ -89,13 +89,13 @@ export function SignalDiscoveryPage({ onComplete }: SignalDiscoveryPageProps) {
       <section className="ng-decision-result" aria-live="polite">
           <div className="ng-decision-result__head">
             <div>
-              <Typography variant="bodySmall" tone="warning">{loading ? '正在分析' : '分析结果'}</Typography>
-              <Typography as="h3" variant="h2" tone="accent">
+              <Typography variant="body" tone="warning">{loading ? '正在分析' : '分析结果'}</Typography>
+              <Typography as="h3" variant="h1" tone="accent">
                 {resultVisible && state.analysis ? '这个决定主要受三类因素影响' : '三个主要影响因素'}
               </Typography>
             </div>
             {resultVisible && state.analysis && (
-              <Typography variant="bodySmall" tone="muted">{state.analysis.decision}</Typography>
+              <Typography variant="body" tone="muted">{state.analysis.decision}</Typography>
             )}
           </div>
 
@@ -107,16 +107,16 @@ export function SignalDiscoveryPage({ onComplete }: SignalDiscoveryPageProps) {
                 key={index}
                 aria-hidden={!loading}
               >
-                <Typography as="code" variant="bodySmall" tone="muted" className="ng-decision-result__placeholder-index">0{index + 1}</Typography>
+                <Typography as="code" variant="body" tone="muted" className="ng-decision-result__placeholder-index">0{index + 1}</Typography>
                 {(!loading || index !== 1) && (
                   <div className="ng-decision-result__unknown">
-                    <Typography className="ng-decision-result__question" variant="h2" tone="muted">?</Typography>
+                    <Typography className="ng-decision-result__question" variant="h1" tone="muted">?</Typography>
                   </div>
                 )}
                 {loading && index === 1 && (
                   <div className="ng-decision-result__loading">
                     <i aria-hidden="true" />
-                    <Typography variant="bodySmall" tone="muted">分析中…</Typography>
+                    <Typography variant="body" tone="muted">分析中…</Typography>
                   </div>
                 )}
                 <div className="ng-decision-result__skeleton" aria-hidden="true"><i /><i /><i /></div>
@@ -125,10 +125,10 @@ export function SignalDiscoveryPage({ onComplete }: SignalDiscoveryPageProps) {
             {resultVisible && state.analysis && !loading && state.analysis.factors.map((factor, index) => (
               <article key={`${factor.name}-${index}`}>
                 <div className="ng-decision-result__factor-head">
-                  <Typography as="code" variant="bodySmall" tone="warning">0{index + 1}</Typography>
+                  <Typography as="code" variant="body" tone="warning">0{index + 1}</Typography>
                   <Typography as="h4" variant="h3" tone="accent">{factor.name}</Typography>
                 </div>
-                <Typography variant="bodySmall" tone="muted">{factor.explanation}</Typography>
+                <Typography variant="body" tone="muted">{factor.explanation}</Typography>
               </article>
             ))}
           </div>

@@ -265,7 +265,7 @@ export function ReluApproximationLabPage({ onComplete }: ReluApproximationLabPag
       className="ng-relu-approximation-lab"
       title="足够多带有 ReLU 的神经元，就能逼近任意曲线"
       description="在画布上画出一条目标曲线，再让浏览器直接训练一个由 ReLU 神经元组成的小网络。"
-      descriptionVariant="bodySmall"
+      descriptionVariant="body"
       actions={(
         <div className="af-react-actions">
           <Button variant="primary" disabled={!target.length || training} onClick={train}>{training ? '训练中…' : '训练网络'}</Button>
@@ -277,11 +277,11 @@ export function ReluApproximationLabPage({ onComplete }: ReluApproximationLabPag
         <header className="ng-relu-drawing-panel__head">
           <div>
             <Typography as="h3" variant="subtitle" tone="main">画一条你想让网络学习的曲线</Typography>
-            <Typography variant="bodySmall" tone="muted">按住并拖动即可绘制；再次落笔会替换当前目标。</Typography>
+            <Typography variant="body" tone="muted">按住并拖动即可绘制；再次落笔会替换当前目标。</Typography>
           </div>
           <div className="ng-relu-drawing-panel__legend" aria-label="图例">
-            <Typography as="span" variant="bodySmall" tone="accent">目标曲线</Typography>
-            <Typography as="span" variant="bodySmall" tone="warning">模型输出</Typography>
+            <Typography as="span" variant="body" tone="accent">目标曲线</Typography>
+            <Typography as="span" variant="body" tone="warning">模型输出</Typography>
           </div>
         </header>
         <div className="ng-relu-drawing-panel__controls">
@@ -294,7 +294,7 @@ export function ReluApproximationLabPage({ onComplete }: ReluApproximationLabPag
             suffix=" 个"
             onChange={(event) => changeNeuronCount(Number(event.currentTarget.value))}
           />
-          <Typography variant="bodySmall" tone="muted">神经元越多，可用来贴近曲线的折点越密。</Typography>
+          <Typography variant="body" tone="muted">神经元越多，可用来贴近曲线的折点越密。</Typography>
         </div>
         <div className="ng-relu-drawing-board">
           {!target.length && !raw.length && (
@@ -324,7 +324,7 @@ export function ReluApproximationLabPage({ onComplete }: ReluApproximationLabPag
         </div>
       </section>
       <NoticeStrip tone={loss !== null && loss < 0.012 ? 'green' : 'blue'}>
-        <Typography variant="bodySmall" tone="inherit">
+        <Typography variant="body" tone="inherit">
           {!target.length
             ? '先画出目标曲线；训练完全在浏览器中完成，不会上传绘制内容。'
             : loss === null

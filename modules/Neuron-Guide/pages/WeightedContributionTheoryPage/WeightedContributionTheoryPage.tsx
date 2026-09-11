@@ -7,15 +7,15 @@ function ColumnVector({ symbol, tone, values }: { symbol: 'W' | 'X'; tone: 'warn
       <FormulaBlock ariaLabel={`${symbol} 的列向量定义`}>
         <div className="ng-matrix-definition-ppt__vector-equation">
           <FormulaTerm tooltip={symbol === 'W' ? 'W：由三个权重组成的列向量' : 'X：由三个输入组成的列向量'}>{symbol}</FormulaTerm>
-          <Typography as="span" variant="bodySmall" tone="muted">=</Typography>
-          <Typography as="span" variant="bodySmall" tone="inherit" className={`ng-matrix-definition-ppt__column ng-matrix-definition-ppt__column--${tone}`}>
+          <Typography as="span" variant="body" tone="muted">=</Typography>
+          <Typography as="span" variant="body" tone="inherit" className={`ng-matrix-definition-ppt__column ng-matrix-definition-ppt__column--${tone}`}>
             {values.map((value, index) => (
               <FormulaTerm tooltip={symbol === 'W' ? `w${index + 1}：第 ${index + 1} 个输入的权重` : `x${index + 1}：第 ${index + 1} 个输入`} key={value}>{value}</FormulaTerm>
             ))}
           </Typography>
         </div>
       </FormulaBlock>
-      <Typography variant="bodySmall" tone="muted">{symbol === 'W' ? '权重列向量' : '输入列向量'} · 3 × 1</Typography>
+      <Typography variant="body" tone="muted">{symbol === 'W' ? '权重列向量' : '输入列向量'} · 3 × 1</Typography>
     </div>
   );
 }
@@ -30,7 +30,7 @@ export function WeightedContributionTheoryPage() {
     >
       <section className="ng-matrix-definition-ppt__expanded">
         <div>
-          <Typography variant="bodySmall" tone="warning">展开写法</Typography>
+          <Typography variant="body" tone="warning">展开写法</Typography>
           <Typography as="h3" variant="h3" tone="accent">三个输入分别加权，再相加</Typography>
         </div>
         <FormulaBlock ariaLabel="输出 y 等于三个输入的加权和">
@@ -46,8 +46,8 @@ export function WeightedContributionTheoryPage() {
 
       <section className="ng-matrix-definition-ppt__vectors">
         <div className="ng-matrix-definition-ppt__vectors-heading">
-          <Typography variant="bodySmall" tone="warning">把两组数分别收进向量</Typography>
-          <Typography variant="bodySmall" tone="muted">一一对应：权重 W · 输入 X</Typography>
+          <Typography variant="body" tone="warning">把两组数分别收进向量</Typography>
+          <Typography variant="body" tone="muted">一一对应：权重 W · 输入 X</Typography>
         </div>
         <ColumnVector symbol="W" tone="warning" values={['w₁', 'w₂', 'w₃']} />
         <ColumnVector symbol="X" tone="accent" values={['x₁', 'x₂', 'x₃']} />
@@ -55,7 +55,7 @@ export function WeightedContributionTheoryPage() {
 
       <section className="ng-matrix-definition-ppt__vertical-expansion">
         <div className="ng-matrix-definition-ppt__equation-label">
-          <Typography variant="bodySmall" tone="success">合并写法</Typography>
+          <Typography variant="body" tone="success">合并写法</Typography>
           <Typography as="strong" variant="h3" tone="accent">一次矩阵乘法</Typography>
         </div>
         <div className="ng-matrix-definition-ppt__operand">
@@ -73,8 +73,8 @@ export function WeightedContributionTheoryPage() {
         </div>
         <Typography variant="h3" tone="muted">=</Typography>
         <div className="ng-matrix-definition-ppt__output">
-          <Typography variant="bodySmall" tone="success">输出</Typography>
-          <Typography variant="h2" tone="success">y</Typography>
+          <Typography variant="body" tone="success">输出</Typography>
+          <Typography variant="h1" tone="success">y</Typography>
         </div>
       </section>
     </ContentBlock>

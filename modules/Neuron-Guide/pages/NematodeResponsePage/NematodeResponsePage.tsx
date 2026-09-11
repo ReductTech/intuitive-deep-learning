@@ -20,11 +20,11 @@ export function NematodeResponsePage() {
   return (
     <section className="ng-nematode-opening-v2 ng-nematode-intro" aria-labelledby="ng-nematode-title">
       <header className="ng-nematode-intro__head">
-        <Typography id="ng-nematode-title" as="h2" variant="h2" tone="accent" wrap="balance">
+        <Typography id="ng-nematode-title" as="h1" variant="h1" tone="accent" wrap="balance">
           只有 302 个神经元，它为什么能完成这么多行为？
         </Typography>
-        <Typography variant="bodySmall" tone="muted">
-          <Typography as="em" variant="bodySmall" tone="accent">Caenorhabditis elegans</Typography>
+        <Typography variant="subtitle" tone="muted">
+          <Typography as="em" variant="subtitle" tone="accent">Caenorhabditis elegans</Typography>
           {' '}· 一种体长约 1 毫米、身体透明的非寄生线虫，已在地球上存在约 2000 万年
         </Typography>
       </header>
@@ -42,7 +42,7 @@ export function NematodeResponsePage() {
             aria-label="显微镜下活动的秀丽隐杆线虫"
           />
           <div className="ng-nematode-opening-v2__specimen">
-            <Typography variant="bodySmall" tone="inherit">显微镜下的活动影像</Typography>
+            <Typography variant="body" tone="inherit">显微镜下的活动影像</Typography>
             <Typography as="strong" variant="h3" tone="inherit">成年秀丽隐杆线虫</Typography>
           </div>
         </figure>
@@ -50,18 +50,18 @@ export function NematodeResponsePage() {
         <div className="ng-nematode-intro__story">
           <section className="ng-nematode-intro__connectome" aria-labelledby="ng-nematode-connectome">
             <div className="ng-nematode-intro__year">
-              <Typography variant="bodySmall" tone="warning">截至</Typography>
+              <Typography variant="body" tone="warning">截至</Typography>
               <Typography as="strong" variant="h2" tone="warning">2019</Typography>
             </div>
             <div>
               <Typography id="ng-nematode-connectome" as="h3" variant="h3" tone="accent">
                 唯一完成全神经系统连接组测定的动物
               </Typography>
-              <Typography variant="bodySmall" tone="muted">
+              <Typography variant="body" tone="muted">
                 研究者已经记录这些神经元之间的连接关系，因此可以沿着完整“线路图”追踪感觉如何转化为行为。
               </Typography>
             </div>
-            <Typography as="a" variant="bodySmall" tone="muted" href="https://www.nature.com/articles/s41586-019-1352-7" target="_blank" rel="noreferrer">
+            <Typography as="a" variant="body" tone="muted" href="https://www.nature.com/articles/s41586-019-1352-7" target="_blank" rel="noreferrer">
               资料：Nature, 2019
             </Typography>
           </section>
@@ -70,12 +70,12 @@ export function NematodeResponsePage() {
             <div className="ng-nematode-intro__ability-head">
               <div>
                 <Typography as="h3" variant="h3" tone="accent">302 个神经元支持的能力</Typography>
-                <Typography variant="bodySmall" tone="muted">悬浮或聚焦泡泡，暂停漂浮并查看机制。</Typography>
+                <Typography variant="body" tone="muted">悬浮或聚焦泡泡，暂停漂浮并查看机制。</Typography>
               </div>
               <div className="ng-nematode-intro__ability-legend" aria-label="能力类别">
-                <Typography as="span" variant="bodySmall" tone="accent">感知</Typography>
-                <Typography as="span" variant="bodySmall" tone="warning">行动</Typography>
-                <Typography as="span" variant="bodySmall" tone="success">行为</Typography>
+                <Typography as="span" variant="body" tone="accent">感知</Typography>
+                <Typography as="span" variant="body" tone="warning">行动</Typography>
+                <Typography as="span" variant="body" tone="success">行为</Typography>
               </div>
             </div>
             <div className="ng-nematode-intro__bubble-field">
@@ -88,8 +88,8 @@ export function NematodeResponsePage() {
                   key={ability.name}
                   aria-label={`${ability.name}：${ability.detail}`}
                 >
-                  <Typography as="strong" variant="bodySmall" tone="inherit">{ability.name}</Typography>
-                  <Typography as="span" variant="bodySmall" tone="inherit" className="ng-nematode-intro__bubble-detail">{ability.detail}</Typography>
+                  <Typography as="strong" variant="body" tone="inherit">{ability.name}</Typography>
+                  <Typography as="span" variant="body" tone="inherit" className="ng-nematode-intro__bubble-detail">{ability.detail}</Typography>
                 </button>
               ))}
             </div>
@@ -100,7 +100,6 @@ export function NematodeResponsePage() {
     </section>
   );
 }
-
 
 
 

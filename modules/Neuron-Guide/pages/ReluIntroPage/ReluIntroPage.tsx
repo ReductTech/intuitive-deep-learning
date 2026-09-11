@@ -103,12 +103,12 @@ export function ReluIntroPage({ onComplete }: ReluIntroPageProps) {
       className="af-react-network-lab af-react-relu-intro"
       title="从线性计算到非线性响应"
       description="早期模型用 0 或 1 表示是否响应；现代人工神经元通常传递连续数值。这里的“抑制与激活”描述响应状态：低于阈值时抑制，超过阈值后继续传递连续值。"
-      descriptionVariant="bodySmall"
+      descriptionVariant="body"
       data-telemetry-manual
       aria-busy={!hydrated}
     >
       {!state ? (
-        <NoticeStrip tone="blue"><Typography variant="bodySmall" tone="inherit">正在恢复交互状态…</Typography></NoticeStrip>
+        <NoticeStrip tone="blue"><Typography variant="body" tone="inherit">正在恢复交互状态…</Typography></NoticeStrip>
       ) : (
         <div
           className={`ng-response-lab${!state.touched ? ' is-waiting' : isSuppressed ? ' is-suppressed' : ' is-active'}`}
@@ -122,7 +122,7 @@ export function ReluIntroPage({ onComplete }: ReluIntroPageProps) {
                   <Typography as="p" variant="body" tone="muted">注意零点前后：哪一段保持不变，哪一段开始增长？</Typography>
                 </div>
                 <div className="ng-response-lab__current">
-                  <Typography as="span" variant="bodySmall" tone="muted">加权结果</Typography>
+                  <Typography as="span" variant="body" tone="muted">加权结果</Typography>
                   <Typography as="strong" variant="h3" tone="warning">z = {state.touched ? formatNumber(result.z) : '—'}</Typography>
                 </div>
               </div>
@@ -131,7 +131,7 @@ export function ReluIntroPage({ onComplete }: ReluIntroPageProps) {
                   <div className="ng-response-lab__charge-ring" aria-hidden="true">
                     {state.touched && isSuppressed ? <i className="ng-response-lab__suppressed-flash" /> : null}
                     <div className="ng-response-lab__neuron-core">
-                      <Typography as="span" variant="bodySmall" tone="inherit">最终输出</Typography>
+                      <Typography as="span" variant="body" tone="inherit">最终输出</Typography>
                       <Typography as="strong" variant="h3" tone="inherit">y = {state.touched ? formatNumber(result.y) : '—'}</Typography>
                     </div>
                   </div>
@@ -147,7 +147,7 @@ export function ReluIntroPage({ onComplete }: ReluIntroPageProps) {
                   </div>
                   <div className="ng-response-lab__control-track">
                     <div className="ng-response-lab__control-threshold">
-                      <Typography as="span" variant="bodySmall" tone="muted">响应起点 z = 0</Typography>
+                      <Typography as="span" variant="body" tone="muted">响应起点 z = 0</Typography>
                     </div>
                     <input
                       className="ng-response-lab__direct-control"

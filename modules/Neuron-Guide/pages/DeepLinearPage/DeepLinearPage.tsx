@@ -139,7 +139,7 @@ function buildCanvas(
                 <Typography as="code" variant="subtitle" tone="main" wrap="nowrap">z =</Typography>
                 <div className="ng-output-matrix__row-vector">
                   {outputWeights.map((weight, weightIndex) => (
-                    <Typography as="code" variant="bodySmall" tone="warning" wrap="nowrap" key={weightIndex}>
+                    <Typography as="code" variant="body" tone="warning" wrap="nowrap" key={weightIndex}>
                       {formatNumber(weight)}
                     </Typography>
                   ))}
@@ -147,7 +147,7 @@ function buildCanvas(
                 <Typography as="code" variant="subtitle" tone="muted" wrap="nowrap">×</Typography>
                 <div className="ng-output-matrix__column-vector">
                   {outputWeights.map((_, hiddenIndex) => (
-                    <Typography as="code" variant="bodySmall" tone="accent" wrap="nowrap" key={hiddenIndex}>
+                    <Typography as="code" variant="body" tone="accent" wrap="nowrap" key={hiddenIndex}>
                       {hiddenLabel(outputLayer - 1, hiddenIndex)}
                     </Typography>
                   ))}
@@ -172,7 +172,7 @@ function buildCanvas(
                 </Typography>
                 <div className="ng-output-matrix__row-vector">
                   {incomingWeights.map((weight, weightIndex) => (
-                    <Typography as="code" variant="bodySmall" tone="warning" wrap="nowrap" key={weightIndex}>
+                    <Typography as="code" variant="body" tone="warning" wrap="nowrap" key={weightIndex}>
                       {formatNumber(weight)}
                     </Typography>
                   ))}
@@ -180,7 +180,7 @@ function buildCanvas(
                 <Typography as="code" variant="subtitle" tone="muted" wrap="nowrap">×</Typography>
                 <div className="ng-output-matrix__column-vector">
                   {sourceLabels.map((sourceLabel) => (
-                    <Typography as="code" variant="bodySmall" tone="accent" wrap="nowrap" key={sourceLabel}>
+                    <Typography as="code" variant="body" tone="accent" wrap="nowrap" key={sourceLabel}>
                       {sourceLabel}
                     </Typography>
                   ))}
@@ -267,7 +267,7 @@ export function DeepLinearPage({ onComplete }: DeepLinearPageProps) {
       className="af-react-network-lab"
       title="线性关系从直线扩展为平面"
       description="当输入由一个变量扩展为两个变量，y = ax + b 对应地写成 z = ax + by + c，图像也从直线扩展为平面。继续增加线性层，只会得到新的平面，无法形成弯曲的曲面。"
-      descriptionVariant="bodySmall"
+      descriptionVariant="body"
       actions={(
         <div className="af-react-actions">
           <Button
@@ -308,14 +308,14 @@ export function DeepLinearPage({ onComplete }: DeepLinearPageProps) {
     >
       {!model || !plane ? (
         <NoticeStrip tone="blue">
-          <Typography variant="bodySmall" tone="inherit">正在恢复已保存的网络层数与参数…</Typography>
+          <Typography variant="body" tone="inherit">正在恢复已保存的网络层数与参数…</Typography>
         </NoticeStrip>
       ) : (
         <div className="af-react-network-stage">
           <section className="af-react-network-panel">
             <header className="af-react-panel-head">
               <Typography as="h3" variant="subtitle" tone="main">从直线扩展到平面</Typography>
-              <Typography as="span" variant="bodySmall" tone="muted">增加层数，平面会弯曲吗？</Typography>
+              <Typography as="span" variant="body" tone="muted">增加层数，平面会弯曲吗？</Typography>
             </header>
             <div className="af-react-visual-box">
               <FormulaBlock
@@ -323,7 +323,7 @@ export function DeepLinearPage({ onComplete }: DeepLinearPageProps) {
                 ariaLabel={`当前平面为 z 等于 ${formatNumber(plane.ax)} x ${formatSigned(plane.ay)} y ${formatSigned(plane.c)}`}
                 formula={(
                   <span className="af-react-plot-formula-content">
-                    <Typography as="span" variant="bodySmall" tone="muted">
+                    <Typography as="span" variant="body" tone="muted">
                       当前平面
                     </Typography>
                     <Typography as="span" variant="subtitle" tone="main">
@@ -339,7 +339,7 @@ export function DeepLinearPage({ onComplete }: DeepLinearPageProps) {
           <section className="af-react-network-panel">
             <header className="af-react-panel-head">
               <Typography as="h3" variant="subtitle" tone="main">再把线性网络加深</Typography>
-              <Typography as="span" variant="bodySmall" tone="muted">悬浮节点查看这一层的矩阵运算</Typography>
+              <Typography as="span" variant="body" tone="muted">悬浮节点查看这一层的矩阵运算</Typography>
             </header>
             <div className="af-react-visual-box af-react-visual-box--model">
               <NetworkCanvas
@@ -354,8 +354,8 @@ export function DeepLinearPage({ onComplete }: DeepLinearPageProps) {
         </div>
       )}
       <NoticeStrip className="ng-deep-linear-conclusion" tone="green">
-        <Typography as="strong" variant="bodySmall" tone="inherit">为什么必须在层与层之间加入非线性？</Typography>
-        <Typography as="span" variant="bodySmall" tone="inherit">没有激活函数，再多线性层也能合并成一次线性运算；层间加入 ReLU 后，每一层才能重新折叠输入空间，让深度真正增加表达能力。</Typography>
+        <Typography as="strong" variant="body" tone="inherit">为什么必须在层与层之间加入非线性？</Typography>
+        <Typography as="span" variant="body" tone="inherit">没有激活函数，再多线性层也能合并成一次线性运算；层间加入 ReLU 后，每一层才能重新折叠输入空间，让深度真正增加表达能力。</Typography>
       </NoticeStrip>
     </LessonStage>
   );

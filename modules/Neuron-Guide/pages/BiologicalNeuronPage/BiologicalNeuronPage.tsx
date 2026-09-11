@@ -47,8 +47,8 @@ export function BiologicalNeuronPage() {
         </figure>
 
         <section className="ng-biological-model__thesis">
-          <Typography variant="bodySmall" tone="warning">关键抽象</Typography>
-          <Typography as="h3" variant="h2" tone="accent" wrap="balance">
+          <Typography variant="body" tone="warning">关键抽象</Typography>
+          <Typography as="h3" variant="h1" tone="accent" wrap="balance">
             不复刻细胞，<br />只保留“怎样形成一次输出”
           </Typography>
           <Typography variant="body" tone="main">
@@ -56,10 +56,10 @@ export function BiologicalNeuronPage() {
           </Typography>
 
           <div className="ng-biological-model__authors">
-            <Typography variant="h2" tone="warning">1943</Typography>
+            <Typography variant="h1" tone="warning">1943</Typography>
             <div>
               <Typography as="strong" variant="h3" tone="accent">McCulloch × Pitts</Typography>
-              <Typography variant="bodySmall" tone="muted">
+              <Typography variant="body" tone="muted">
                 他们把上述关系形式化为早期人工神经元，使神经活动第一次能够用逻辑和数学讨论。
               </Typography>
             </div>
@@ -69,8 +69,8 @@ export function BiologicalNeuronPage() {
 
       <section className="ng-biological-model__translation">
         <div className="ng-biological-model__translation-head">
-          <Typography variant="bodySmall" tone="warning">从生物机制到可计算关系</Typography>
-          <Typography as="a" variant="bodySmall" tone="muted" href="https://doi.org/10.1007/BF02478259" target="_blank" rel="noreferrer">
+          <Typography variant="body" tone="warning">从生物机制到可计算关系</Typography>
+          <Typography as="a" variant="body" tone="muted" href="https://doi.org/10.1007/BF02478259" target="_blank" rel="noreferrer">
             McCulloch &amp; Pitts, 1943
           </Typography>
         </div>
@@ -78,18 +78,18 @@ export function BiologicalNeuronPage() {
           {abstractions.map((item) => (
             <li key={item.index}>
               <div className="ng-biological-model__step-biology">
-                <Typography as="span" variant="bodySmall" tone="warning" className="ng-biological-model__step-index">{item.index}</Typography>
-                <Typography variant="bodySmall" tone="warning">生物结构</Typography>
+                <Typography as="span" variant="body" tone="warning" className="ng-biological-model__step-index">{item.index}</Typography>
+                <Typography variant="body" tone="warning">生物结构</Typography>
                 <Typography as="strong" variant="h3" tone="accent">{item.structure}</Typography>
-                <Typography variant="bodySmall" tone="muted">{item.biology}</Typography>
+                <Typography variant="body" tone="muted">{item.biology}</Typography>
               </div>
               <div className="ng-biological-model__mapping-label">
-                <Typography as="span" variant="bodySmall" tone="warning">建模为</Typography>
+                <Typography as="span" variant="body" tone="warning">建模为</Typography>
               </div>
               <div className="ng-biological-model__step-math">
-                <Typography variant="bodySmall" tone="muted">数学抽象</Typography>
+                <Typography variant="body" tone="muted">数学抽象</Typography>
                 <Typography as="strong" variant="h3" tone="accent">{item.math}</Typography>
-                <Typography as="code" variant="bodySmall" tone="main">{item.symbol}</Typography>
+                <Typography as="code" variant="body" tone="main">{item.symbol}</Typography>
               </div>
             </li>
           ))}

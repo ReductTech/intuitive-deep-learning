@@ -39,7 +39,7 @@ export function ReluExplanationPage() {
       className="ng-relu-explanation"
       title="认识线性整流单元"
       description="前面观察到的“负值被抑制、正值继续传递”，可以写成一个分段函数。这个函数称为 ReLU。"
-      descriptionVariant="bodySmall"
+      descriptionVariant="body"
     >
       <div className="ng-relu-explanation__layout">
         <section className="ng-relu-explanation__definition" aria-labelledby="ng-relu-definition-title">
@@ -59,14 +59,14 @@ export function ReluExplanationPage() {
 
           <div className="ng-relu-explanation__cases" aria-label="ReLU 分段规则">
             <div>
-              <Typography as="span" variant="bodySmall" tone="muted">当 z ≤ 0</Typography>
+              <Typography as="span" variant="body" tone="muted">当 z ≤ 0</Typography>
               <Typography as="strong" variant="h3" tone="accent">输出 0</Typography>
-              <Typography variant="bodySmall" tone="muted">信号被抑制</Typography>
+              <Typography variant="body" tone="muted">信号被抑制</Typography>
             </div>
             <div>
-              <Typography as="span" variant="bodySmall" tone="muted">当 z &gt; 0</Typography>
+              <Typography as="span" variant="body" tone="muted">当 z &gt; 0</Typography>
               <Typography as="strong" variant="h3" tone="success">输出 z</Typography>
-              <Typography variant="bodySmall" tone="muted">信号被激活</Typography>
+              <Typography variant="body" tone="muted">信号被激活</Typography>
             </div>
           </div>
 
@@ -76,7 +76,7 @@ export function ReluExplanationPage() {
           <div className="ng-relu-explanation__figure-head">
             <div>
               <Typography id="ng-relu-figure-title" as="h3" variant="h3" tone="accent">观察 ReLU 的输出</Typography>
-              <Typography variant="bodySmall" tone="muted">{formula}</Typography>
+              <Typography variant="body" tone="muted">{formula}</Typography>
             </div>
             <Button variant="primary" onClick={randomize}>随机参数</Button>
           </div>

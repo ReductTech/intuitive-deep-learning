@@ -89,16 +89,16 @@ function buildCanvas(
             content: (
               <div className="ng-hidden-node-calculation">
                 <div>
-                  <Typography as="span" variant="bodySmall" tone="muted">节点输出</Typography>
-                  <Typography as="code" variant="bodySmall" tone="accent" wrap="nowrap">h1.{index + 1} = {formatNumber(neuron.w)}x {formatSigned(neuron.b)}</Typography>
+                  <Typography as="span" variant="body" tone="muted">节点输出</Typography>
+                  <Typography as="code" variant="body" tone="accent" wrap="nowrap">h1.{index + 1} = {formatNumber(neuron.w)}x {formatSigned(neuron.b)}</Typography>
                 </div>
                 <div>
-                  <Typography as="span" variant="bodySmall" tone="muted">输出权重</Typography>
-                  <Typography as="code" variant="bodySmall" tone="warning" wrap="nowrap">v1.{index + 1} = {formatNumber(neuron.v)}</Typography>
+                  <Typography as="span" variant="body" tone="muted">输出权重</Typography>
+                  <Typography as="code" variant="body" tone="warning" wrap="nowrap">v1.{index + 1} = {formatNumber(neuron.v)}</Typography>
                 </div>
                 <div>
-                  <Typography as="span" variant="bodySmall" tone="muted">送入 y</Typography>
-                  <Typography as="code" variant="bodySmall" tone="success" wrap="nowrap">v1.{index + 1}h1.{index + 1} = {formatNumber(neuron.v)}h1.{index + 1}</Typography>
+                  <Typography as="span" variant="body" tone="muted">送入 y</Typography>
+                  <Typography as="code" variant="body" tone="success" wrap="nowrap">v1.{index + 1}h1.{index + 1} = {formatNumber(neuron.v)}h1.{index + 1}</Typography>
                 </div>
               </div>
             ),
@@ -119,10 +119,10 @@ function buildCanvas(
               <div className="ng-output-matrix__formula" aria-label="y 等于输出权重行向量乘隐藏层列向量，再加偏置 c">
                 <Typography as="code" variant="subtitle" tone="main" wrap="nowrap">y =</Typography>
                 <div className="ng-output-matrix__row-vector">
-                  {model.neurons.map((neuron, index) => <Typography as="code" variant="bodySmall" tone="warning" wrap="nowrap" title={`v${index + 1}`} key={index}>{formatNumber(neuron.v)}</Typography>)}
+                  {model.neurons.map((neuron, index) => <Typography as="code" variant="body" tone="warning" wrap="nowrap" title={`v${index + 1}`} key={index}>{formatNumber(neuron.v)}</Typography>)}
                 </div>
                 <div className="ng-output-matrix__column-vector">
-                  {model.neurons.map((_, index) => <Typography as="code" variant="bodySmall" tone="accent" wrap="nowrap" key={index}>h1.{index + 1}</Typography>)}
+                  {model.neurons.map((_, index) => <Typography as="code" variant="body" tone="accent" wrap="nowrap" key={index}>h1.{index + 1}</Typography>)}
                 </div>
                 <Typography as="code" variant="subtitle" tone="main" wrap="nowrap">+ {formatNumber(model.outputBias)}</Typography>
               </div>
@@ -225,7 +225,7 @@ export function ShallowLinearPage({ onComplete }: ShallowLinearPageProps) {
       className="af-react-network-lab"
       title="多个线性神经元的叠加"
       description="把多个线性神经元写进矩阵，观察增加神经元能否改变线性输出的形状。"
-      descriptionVariant="bodySmall"
+      descriptionVariant="body"
       actions={(
         <div className="af-react-actions">
           <Button
@@ -254,14 +254,14 @@ export function ShallowLinearPage({ onComplete }: ShallowLinearPageProps) {
     >
       {!model || !equivalent ? (
         <NoticeStrip tone="blue">
-          <Typography variant="bodySmall" tone="inherit">正在恢复已保存的随机参数…</Typography>
+          <Typography variant="body" tone="inherit">正在恢复已保存的随机参数…</Typography>
         </NoticeStrip>
       ) : (
         <div className="af-react-network-stage">
           <section className="af-react-network-panel">
             <header className="af-react-panel-head">
               <Typography as="h3" variant="subtitle" tone="main">先看输出的形状</Typography>
-              <Typography as="span" variant="bodySmall" tone="muted">增加神经元，直线会弯曲吗？</Typography>
+              <Typography as="span" variant="body" tone="muted">增加神经元，直线会弯曲吗？</Typography>
             </header>
             <div className="af-react-visual-box">
               <FormulaBlock
@@ -269,7 +269,7 @@ export function ShallowLinearPage({ onComplete }: ShallowLinearPageProps) {
                 ariaLabel={`当前函数为 y 等于 ${formatNumber(equivalent.slope)} x ${formatSigned(equivalent.intercept)}`}
                 formula={(
                   <span className="af-react-plot-formula-content">
-                    <Typography as="span" variant="bodySmall" tone="muted">
+                    <Typography as="span" variant="body" tone="muted">
                       当前函数
                     </Typography>
                     <Typography as="span" variant="subtitle" tone="main">
@@ -285,7 +285,7 @@ export function ShallowLinearPage({ onComplete }: ShallowLinearPageProps) {
           <section className="af-react-network-panel">
             <header className="af-react-panel-head">
               <Typography as="h3" variant="subtitle" tone="main">把一个神经元扩展成多个</Typography>
-              <Typography as="span" variant="bodySmall" tone="muted">悬浮节点查看每一步加权</Typography>
+              <Typography as="span" variant="body" tone="muted">悬浮节点查看每一步加权</Typography>
             </header>
             <div className="af-react-visual-box af-react-visual-box--model">
               <NetworkCanvas

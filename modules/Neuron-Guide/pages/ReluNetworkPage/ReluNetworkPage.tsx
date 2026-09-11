@@ -92,16 +92,16 @@ function buildCanvas(count: number, allNeurons: readonly ShallowNeuron[]): { lay
           content: (
             <div className="ng-hidden-node-calculation">
               <div>
-                <Typography as="span" variant="bodySmall" tone="muted">线性结果</Typography>
-                <Typography as="code" variant="bodySmall" tone="accent" wrap="nowrap">z1.{index + 1} = {formatNumber(neuron.w)}x {formatSigned(neuron.b)}</Typography>
+                <Typography as="span" variant="body" tone="muted">线性结果</Typography>
+                <Typography as="code" variant="body" tone="accent" wrap="nowrap">z1.{index + 1} = {formatNumber(neuron.w)}x {formatSigned(neuron.b)}</Typography>
               </div>
               <div>
-                <Typography as="span" variant="bodySmall" tone="muted">节点输出</Typography>
-                <Typography as="code" variant="bodySmall" tone="success" wrap="nowrap">h1.{index + 1} = ReLU(z1.{index + 1})</Typography>
+                <Typography as="span" variant="body" tone="muted">节点输出</Typography>
+                <Typography as="code" variant="body" tone="success" wrap="nowrap">h1.{index + 1} = ReLU(z1.{index + 1})</Typography>
               </div>
               <div>
-                <Typography as="span" variant="bodySmall" tone="muted">输出权重</Typography>
-                <Typography as="code" variant="bodySmall" tone="warning" wrap="nowrap">v1.{index + 1} = {formatNumber(neuron.v)}</Typography>
+                <Typography as="span" variant="body" tone="muted">输出权重</Typography>
+                <Typography as="code" variant="body" tone="warning" wrap="nowrap">v1.{index + 1} = {formatNumber(neuron.v)}</Typography>
               </div>
             </div>
           ),
@@ -121,10 +121,10 @@ function buildCanvas(count: number, allNeurons: readonly ShallowNeuron[]): { lay
               <div className="ng-output-matrix__formula" aria-label="y 等于输出权重行向量乘 ReLU 层输出列向量，再加输出偏置">
                 <Typography as="code" variant="subtitle" tone="main" wrap="nowrap">y =</Typography>
                 <div className="ng-output-matrix__row-vector">
-                  {neurons.map((neuron, index) => <Typography as="code" variant="bodySmall" tone="warning" wrap="nowrap" title={`v1.${index + 1}`} key={index}>{formatNumber(neuron.v)}</Typography>)}
+                  {neurons.map((neuron, index) => <Typography as="code" variant="body" tone="warning" wrap="nowrap" title={`v1.${index + 1}`} key={index}>{formatNumber(neuron.v)}</Typography>)}
                 </div>
                 <div className="ng-output-matrix__column-vector">
-                  {neurons.map((_, index) => <Typography as="code" variant="bodySmall" tone="accent" wrap="nowrap" key={index}>h1.{index + 1}</Typography>)}
+                  {neurons.map((_, index) => <Typography as="code" variant="body" tone="accent" wrap="nowrap" key={index}>h1.{index + 1}</Typography>)}
                 </div>
                 <Typography as="code" variant="subtitle" tone="main" wrap="nowrap">+ {formatNumber(RELU_OUTPUT_BIAS)}</Typography>
               </div>
@@ -187,7 +187,7 @@ export function ReluNetworkPage({ onComplete }: ReluNetworkPageProps) {
       className="af-react-network-lab ng-relu-network"
       title="组合多个带有 ReLU 的神经元，曲线继续弯折"
       description="每个神经元都有自己的 w 和 b，因此会在不同的 x 位置由抑制切换为激活。添加一个神经元，就是向总输出加入一段从新位置开始的直线，曲线的斜率会在那里改变一次。"
-      descriptionVariant="bodySmall"
+      descriptionVariant="body"
       actions={(
         <div className="af-react-actions">
           <Button
@@ -210,13 +210,13 @@ export function ReluNetworkPage({ onComplete }: ReluNetworkPageProps) {
       aria-busy={!hydrated}
     >
       {!state ? (
-        <NoticeStrip tone="blue"><Typography variant="bodySmall" tone="inherit">正在恢复神经元数量…</Typography></NoticeStrip>
+        <NoticeStrip tone="blue"><Typography variant="body" tone="inherit">正在恢复神经元数量…</Typography></NoticeStrip>
       ) : (
         <div className="af-react-network-stage">
           <section className="af-react-network-panel">
             <header className="af-react-panel-head">
               <Typography as="h3" variant="subtitle" tone="main">从一个折点到多个折点</Typography>
-              <Typography as="span" variant="bodySmall" tone="muted">虚线对应每个神经元的响应起点</Typography>
+              <Typography as="span" variant="body" tone="muted">虚线对应每个神经元的响应起点</Typography>
             </header>
             <div className="af-react-visual-box">
               <ReluNetworkPlot count={count} neurons={state.neurons} />
@@ -226,7 +226,7 @@ export function ReluNetworkPage({ onComplete }: ReluNetworkPageProps) {
           <section className="af-react-network-panel">
             <header className="af-react-panel-head">
               <Typography as="h3" variant="subtitle" tone="main">把多个 ReLU 神经元组合起来</Typography>
-              <Typography as="span" variant="bodySmall" tone="muted">悬浮节点，对照左侧同名折点</Typography>
+              <Typography as="span" variant="body" tone="muted">悬浮节点，对照左侧同名折点</Typography>
             </header>
             <div className="af-react-visual-box af-react-visual-box--model">
               <NetworkCanvas

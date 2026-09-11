@@ -63,28 +63,28 @@ export function NeuronDecisionBridgePage() {
             >
               <span className="ng-neuron-decision-bridge__neuron-pulse" aria-hidden="true" />
               <Typography as="strong" variant="h3" tone="inherit">{neuron.short}</Typography>
-              <Typography as="span" variant="bodySmall" tone="inherit">{states[index] ? '1 · 响应' : '0 · 静默'}</Typography>
+              <Typography as="span" variant="body" tone="inherit">{states[index] ? '1 · 响应' : '0 · 静默'}</Typography>
             </button>
           ))}
 
           <div className="ng-neuron-decision-bridge__core" aria-live="polite">
             <span className="ng-neuron-decision-bridge__core-orbit" aria-hidden="true" />
-            <Typography variant="bodySmall" tone="muted">组合状态</Typography>
+            <Typography variant="body" tone="muted">组合状态</Typography>
             <Typography as="code" variant="display" tone="accent">{stateCode}</Typography>
-            <Typography as="strong" variant="h2" tone="success">{outcome.title}</Typography>
+            <Typography as="strong" variant="h1" tone="success">{outcome.title}</Typography>
           </div>
 
           <div className="ng-neuron-decision-bridge__decision">
-            <Typography variant="bodySmall" tone="warning">当前判断</Typography>
+            <Typography variant="body" tone="warning">当前判断</Typography>
             <Typography as="strong" variant="h3" tone="accent">{outcome.title}</Typography>
-            <Typography variant="bodySmall" tone="muted">{outcome.rule}</Typography>
+            <Typography variant="body" tone="muted">{outcome.rule}</Typography>
           </div>
         </div>
 
         <div className="ng-neuron-decision-bridge__states" aria-label="八种组合状态">
           <div className="ng-neuron-decision-bridge__states-head">
-            <Typography variant="bodySmall" tone="warning">状态星图</Typography>
-            <Typography variant="bodySmall" tone="muted">选择一种组合</Typography>
+            <Typography variant="body" tone="warning">状态星图</Typography>
+            <Typography variant="body" tone="muted">选择一种组合</Typography>
           </div>
           <div className="ng-neuron-decision-bridge__state-grid">
             {combinations.map((combination, index) => (
@@ -98,15 +98,15 @@ export function NeuronDecisionBridgePage() {
                 <span className="ng-neuron-decision-bridge__bits" aria-hidden="true">
                   {combination.split('').map((bit, bitIndex) => <i className={bit === '1' ? 'is-on' : ''} key={bitIndex} />)}
                 </span>
-                <Typography as="code" variant="bodySmall" tone="inherit">{combination}</Typography>
-                <Typography as="span" variant="bodySmall" tone="inherit">{outcomes[index].title}</Typography>
+                <Typography as="code" variant="body" tone="inherit">{combination}</Typography>
+                <Typography as="span" variant="body" tone="inherit">{outcomes[index].title}</Typography>
               </button>
             ))}
           </div>
           <div className="ng-neuron-decision-bridge__scale">
-            <div><Typography variant="bodySmall" tone="muted">3 个神经元</Typography><Typography as="strong" variant="h2" tone="accent">2³ = 8</Typography></div>
+            <div><Typography variant="body" tone="muted">3 个神经元</Typography><Typography as="strong" variant="h1" tone="accent">2³ = 8</Typography></div>
             <Typography as="span" variant="h3" tone="warning" aria-hidden="true">→</Typography>
-            <div><Typography variant="bodySmall" tone="muted">10 个神经元</Typography><Typography as="strong" variant="h2" tone="accent">2¹⁰ = 1024</Typography></div>
+            <div><Typography variant="body" tone="muted">10 个神经元</Typography><Typography as="strong" variant="h1" tone="accent">2¹⁰ = 1024</Typography></div>
           </div>
         </div>
       </section>

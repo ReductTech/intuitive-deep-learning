@@ -47,15 +47,15 @@ export function ActivationCatalogPage() {
       className="ng-activation-catalog"
       title="认识这些被广泛使用的激活函数"
       description="激活函数有不同形状，也会给网络带来不同的数值特性；它们共同完成同一件事：打破纯线性叠加。"
-      descriptionVariant="bodySmall"
+      descriptionVariant="body"
     >
       <div className="ng-activation-catalog__grid">
         {activations.map((activation) => (
           <article className="ng-activation-catalog__card" key={activation.type}>
             <ActivationFunctionPlot type={activation.type} />
             <Typography as="h3" variant="subtitle" tone="accent">{activation.name}</Typography>
-            <Typography as="code" variant="bodySmall" tone="main" className="ng-activation-catalog__formula">{activation.formula}</Typography>
-            <Typography variant="bodySmall" tone="muted">{activation.description}</Typography>
+            <Typography as="code" variant="body" tone="main" className="ng-activation-catalog__formula">{activation.formula}</Typography>
+            <Typography variant="body" tone="muted">{activation.description}</Typography>
           </article>
         ))}
       </div>
