@@ -3,7 +3,7 @@ import { Button, ContentBlock, FormulaBlock, FormulaTerm, NoticeStrip, Question,
 import { formatScore, weightedSum } from '../model/neuronMath';
 import { useNeuronLesson } from '../model/NeuronLessonContext';
 
-export function BiasThresholdTheoryBlock({ onComplete }: { onComplete?: () => void }) {
+export function BiasThresholdTheoryPage({ onComplete }: { onComplete?: () => void }) {
   const { state, scenario } = useNeuronLesson();
   const [step, setStep] = useState<0 | 1 | 2>(0);
   const [thresholdRevealed, setThresholdRevealed] = useState(false);
@@ -50,3 +50,6 @@ export function BiasThresholdTheoryBlock({ onComplete }: { onComplete?: () => vo
     </div> : <div className="ng-bias-theory__hint"><Typography variant="bodySmall" tone="muted">公式两边进行相同的移项，判断结果不会改变。</Typography></div>}
   </ContentBlock>;
 }
+
+
+

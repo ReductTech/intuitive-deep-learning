@@ -20,7 +20,7 @@ const outcomes = [
 
 const combinations = Array.from({ length: 8 }, (_, index) => index.toString(2).padStart(3, '0'));
 
-export function NeuronDecisionBridgeBlock() {
+export function NeuronDecisionBridgePage() {
   const [states, setStates] = useState([true, false, true]);
   const stateIndex = states.reduce((value, active, index) => value + (active ? 2 ** (2 - index) : 0), 0);
   const outcome = outcomes[stateIndex];
@@ -115,3 +115,6 @@ export function NeuronDecisionBridgeBlock() {
     </ContentBlock>
   );
 }
+
+
+

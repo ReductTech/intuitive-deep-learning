@@ -32,7 +32,7 @@ const abstractions = [
   },
 ];
 
-export function BiologicalNeuronBlock() {
+export function BiologicalNeuronPage() {
   return (
     <ContentBlock
       className="ng-lecture-stage ng-biological-model"
@@ -96,3 +96,6 @@ export function BiologicalNeuronBlock() {
     </ContentBlock>
   );
 }
+
+
+

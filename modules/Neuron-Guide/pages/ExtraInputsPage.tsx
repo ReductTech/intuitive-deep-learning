@@ -3,11 +3,11 @@ import { FactorCard } from '../components/FactorCard';
 import { NeuronSignalNetwork } from '../components/NeuronSignalNetwork';
 import { useNeuronLesson } from '../model/NeuronLessonContext';
 
-export interface ExtraInputsBlockProps {
+export interface ExtraInputsPageProps {
   onComplete: () => void;
 }
 
-export function ExtraInputsBlock({ onComplete }: ExtraInputsBlockProps) {
+export function ExtraInputsPage({ onComplete }: ExtraInputsPageProps) {
   const {
     state,
     scenario,
@@ -55,3 +55,6 @@ export function ExtraInputsBlock({ onComplete }: ExtraInputsBlockProps) {
     </ContentBlock>
   );
 }
+
+
+

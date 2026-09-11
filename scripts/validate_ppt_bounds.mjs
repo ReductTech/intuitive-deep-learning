@@ -1,6 +1,6 @@
 const debugPort = process.env.PPT_DEBUG_PORT || '9223';
-const lessonUrl = process.env.PPT_LESSON_URL || 'http://127.0.0.1:5173/web-ppt/linear-regression-lesson';
-const slideIds = ['opening', 'scatter', 'model', 'residual', 'loss', 'loss-lab', 'summary'];
+const lessonUrl = process.env.PPT_LESSON_URL || 'http://127.0.0.1:5173/web-ppt/neuron';
+const slideIds = ['nematode-response', 'biological-structure', 'decision-bridge', 'signal-discovery', 'weighted-sum', 'extra-inputs', 'weighted-contribution', 'bias-threshold', 'linear-shallow', 'linear-deep', 'relu-intro', 'relu-explanation', 'relu-network', 'relu-approximation', 'activation-catalog', 'ending', 'resources'];
 
 async function createTab(url) {
   const response = await fetch(`http://127.0.0.1:${debugPort}/json/new?${encodeURIComponent(url)}`, { method: 'PUT' });

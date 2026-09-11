@@ -7,7 +7,7 @@ import {
   type NetworkLayer,
 } from '../components/NetworkCanvas';
 import { usePersistedActivity } from '../components/usePersistedActivity';
-import '../linear-network.css';
+import './SlidePage.css';
 import {
   buildDeepModel,
   deepEquivalent,
@@ -212,11 +212,11 @@ function buildCanvas(
   return { layers, connections };
 }
 
-export interface DeepLinearBlockProps {
+export interface DeepLinearPageProps {
   onComplete: () => void;
 }
 
-export function DeepLinearBlock({ onComplete }: DeepLinearBlockProps) {
+export function DeepLinearPage({ onComplete }: DeepLinearPageProps) {
   const rootRef = useRef<HTMLElement | null>(null);
   const {
     state,
@@ -360,3 +360,6 @@ export function DeepLinearBlock({ onComplete }: DeepLinearBlockProps) {
     </LessonStage>
   );
 }
+
+
+

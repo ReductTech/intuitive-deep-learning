@@ -19,7 +19,7 @@ function ColumnVector({ symbol, tone, values }: { symbol: 'W' | 'X'; tone: 'warn
   );
 }
 
-export function WeightedContributionTheoryBlock() {
+export function WeightedContributionTheoryPage() {
   return (
     <ContentBlock
       className="ng-lecture-stage ng-matrix-definition-ppt"
@@ -78,3 +78,6 @@ export function WeightedContributionTheoryBlock() {
     </ContentBlock>
   );
 }
+
+
+

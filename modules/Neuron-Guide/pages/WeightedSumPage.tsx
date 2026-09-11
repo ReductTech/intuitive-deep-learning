@@ -3,11 +3,11 @@ import { FactorCard } from '../components/FactorCard';
 import { NeuronSignalNetwork } from '../components/NeuronSignalNetwork';
 import { useNeuronLesson } from '../model/NeuronLessonContext';
 
-export interface WeightedSumBlockProps {
+export interface WeightedSumPageProps {
   onComplete: () => void;
 }
 
-export function WeightedSumBlock({ onComplete }: WeightedSumBlockProps) {
+export function WeightedSumPage({ onComplete }: WeightedSumPageProps) {
   const {
     state,
     scenario,
@@ -46,3 +46,6 @@ export function WeightedSumBlock({ onComplete }: WeightedSumBlockProps) {
     </ContentBlock>
   );
 }
+
+
+

@@ -15,7 +15,7 @@ import {
   RELU_OUTPUT_BIAS,
   type ShallowNeuron,
 } from '../model/activationMath';
-import '../linear-network.css';
+import './SlidePage.css';
 
 const STATE_KEY = 'activity:neuron-guide-relu-network-v1';
 
@@ -142,11 +142,11 @@ function buildCanvas(count: number, allNeurons: readonly ShallowNeuron[]): { lay
   return { layers, connections };
 }
 
-export interface ReluNetworkBlockProps {
+export interface ReluNetworkPageProps {
   onComplete: () => void;
 }
 
-export function ReluNetworkBlock({ onComplete }: ReluNetworkBlockProps) {
+export function ReluNetworkPage({ onComplete }: ReluNetworkPageProps) {
   const rootRef = useRef<HTMLElement | null>(null);
   const { state, hydrated, commit } = usePersistedActivity<ReluNetworkSnapshot>({
     stateKey: STATE_KEY,
@@ -243,3 +243,6 @@ export function ReluNetworkBlock({ onComplete }: ReluNetworkBlockProps) {
     </LessonStage>
   );
 }
+
+
+

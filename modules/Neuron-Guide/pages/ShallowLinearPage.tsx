@@ -7,7 +7,7 @@ import {
   type NetworkLayer,
 } from '../components/NetworkCanvas';
 import { usePersistedActivity } from '../components/usePersistedActivity';
-import '../linear-network.css';
+import './SlidePage.css';
 import {
   formatNumber,
   formatSigned,
@@ -152,11 +152,11 @@ function buildCanvas(
   return { layers, connections };
 }
 
-export interface ShallowLinearBlockProps {
+export interface ShallowLinearPageProps {
   onComplete: () => void;
 }
 
-export function ShallowLinearBlock({ onComplete }: ShallowLinearBlockProps) {
+export function ShallowLinearPage({ onComplete }: ShallowLinearPageProps) {
   const rootRef = useRef<HTMLElement | null>(null);
   const {
     state,
@@ -302,3 +302,6 @@ export function ShallowLinearBlock({ onComplete }: ShallowLinearBlockProps) {
     </LessonStage>
   );
 }
+
+
+

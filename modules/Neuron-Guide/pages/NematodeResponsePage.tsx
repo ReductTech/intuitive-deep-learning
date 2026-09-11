@@ -15,7 +15,7 @@ const abilities = [
   { name: '简单学习', detail: '经历重复刺激后，它会改变后续反应强度，表现出习惯化与联结学习。', group: '行为' },
 ] as const;
 
-export function NematodeResponseBlock() {
+export function NematodeResponsePage() {
   return (
     <section className="ng-nematode-opening-v2 ng-nematode-intro" aria-labelledby="ng-nematode-title">
       <header className="ng-nematode-intro__head">
@@ -110,3 +110,6 @@ export function NematodeResponseBlock() {
     </section>
   );
 }
+
+
+

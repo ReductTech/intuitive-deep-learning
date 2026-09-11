@@ -1,6 +1,6 @@
 import { LessonStage, Typography } from '../../shared/react';
 import { ActivationFunctionPlot } from '../components/ActivationCharts';
-import '../linear-network.css';
+import './SlidePage.css';
 
 const activations = [
   {
@@ -41,7 +41,7 @@ const activations = [
   },
 ];
 
-export function ActivationCatalogBlock() {
+export function ActivationCatalogPage() {
   return (
     <LessonStage
       className="ng-activation-catalog"
@@ -62,3 +62,6 @@ export function ActivationCatalogBlock() {
     </LessonStage>
   );
 }
+
+
+

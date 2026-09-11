@@ -13,7 +13,7 @@ import {
   RELU_INTRO_WEIGHT,
   reluIntroForward,
 } from '../model/activationMath';
-import '../linear-network.css';
+import './SlidePage.css';
 
 const STATE_KEY = 'activity:neuron-guide-relu-intro-v1';
 
@@ -41,11 +41,11 @@ function normalizeSnapshot(value: unknown): ReluIntroSnapshot | null {
   };
 }
 
-export interface ReluIntroBlockProps {
+export interface ReluIntroPageProps {
   onComplete: () => void;
 }
 
-export function ReluIntroBlock({ onComplete }: ReluIntroBlockProps) {
+export function ReluIntroPage({ onComplete }: ReluIntroPageProps) {
   const rootRef = useRef<HTMLElement | null>(null);
   const dirtyRef = useRef(false);
   const { state, stateRef, hydrated, setDraft, commit } =
@@ -188,3 +188,6 @@ export function ReluIntroBlock({ onComplete }: ReluIntroBlockProps) {
     </LessonStage>
   );
 }
+
+
+

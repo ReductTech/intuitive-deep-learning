@@ -12,7 +12,7 @@ const videos = [
   },
 ];
 
-export function NeuronCompletionBlock() {
+export function NeuronCompletionPage() {
   return (
     <ContentBlock
       className="ng-completion-stage"
@@ -37,3 +37,6 @@ export function NeuronLessonFooter() {
     />
   );
 }
+
+
+

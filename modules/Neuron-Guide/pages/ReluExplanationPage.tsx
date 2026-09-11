@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 import { Button, FunctionPlot, LessonStage, MathFormulaBlock, MathFormulaStatic, Typography } from '../../shared/react';
-import '../linear-network.css';
+import './SlidePage.css';
 
 interface ReluInputParameters {
   a: number;
@@ -23,7 +23,7 @@ function signed(value: number) {
   return value < 0 ? `− ${Math.abs(value).toFixed(2)}` : `+ ${value.toFixed(2)}`;
 }
 
-export function ReluExplanationBlock() {
+export function ReluExplanationPage() {
   const [parameters, setParameters] = useState<ReluInputParameters>({ a: 1, b: 0 });
   const randomize = useCallback(() => setParameters(randomParameters()), []);
   const formula = parameters.a === 1 && parameters.b === 0
@@ -98,3 +98,6 @@ export function ReluExplanationBlock() {
     </LessonStage>
   );
 }
+
+
+

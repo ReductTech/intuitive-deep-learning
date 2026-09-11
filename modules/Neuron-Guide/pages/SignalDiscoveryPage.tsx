@@ -4,7 +4,7 @@ import { DecisionMarquee } from '../components/DecisionMarquee';
 import { useNeuronLesson } from '../model/NeuronLessonContext';
 import { analyzeDecision } from '../services/decisionAnalysis';
 
-export interface SignalDiscoveryBlockProps {
+export interface SignalDiscoveryPageProps {
   onComplete: () => void;
 }
 
@@ -12,7 +12,7 @@ function editableDecision(value: string) {
   return value.replace(/^是否要/, '').replace(/？$/, '');
 }
 
-export function SignalDiscoveryBlock({ onComplete }: SignalDiscoveryBlockProps) {
+export function SignalDiscoveryPage({ onComplete }: SignalDiscoveryPageProps) {
   const { state, hydrated, applyAnalysis } = useNeuronLesson();
   const [decision, setDecision] = useState('');
   const [submitted, setSubmitted] = useState(false);
@@ -134,3 +134,6 @@ export function SignalDiscoveryBlock({ onComplete }: SignalDiscoveryBlockProps) 
     </ContentBlock>
   );
 }
+
+
+

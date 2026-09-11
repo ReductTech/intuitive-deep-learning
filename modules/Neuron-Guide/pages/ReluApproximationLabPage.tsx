@@ -7,7 +7,7 @@ import {
   type PointerEvent as ReactPointerEvent,
 } from 'react';
 import { Button, LessonStage, NoticeStrip, RangeControl, Typography } from '../../shared/react';
-import '../linear-network.css';
+import './SlidePage.css';
 
 interface Point {
   x: number;
@@ -125,11 +125,11 @@ function solveReluSpline(target: readonly Point[], responsePoints: readonly numb
   return [bias, initialSlope, ...hingeWeights];
 }
 
-export interface ReluApproximationLabBlockProps {
+export interface ReluApproximationLabPageProps {
   onComplete: () => void;
 }
 
-export function ReluApproximationLabBlock({ onComplete }: ReluApproximationLabBlockProps) {
+export function ReluApproximationLabPage({ onComplete }: ReluApproximationLabPageProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const drawingRef = useRef(false);
   const rawRef = useRef<Point[]>([]);
@@ -335,3 +335,6 @@ export function ReluApproximationLabBlock({ onComplete }: ReluApproximationLabBl
     </LessonStage>
   );
 }
+
+
+
