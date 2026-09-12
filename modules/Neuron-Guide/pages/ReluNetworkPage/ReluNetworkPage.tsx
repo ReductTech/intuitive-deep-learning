@@ -17,7 +17,7 @@ import {
   type ShallowNeuron,
 } from '../../model/activationMath';
 
-const STATE_KEY = 'activity:neuron-guide-relu-network-v1';
+const STATE_KEY = 'activity:neuron-guide-relu-ng-network-v1';
 
 interface ReluNetworkSnapshot {
   count: number;
@@ -90,7 +90,7 @@ function buildCanvas(count: number, allNeurons: readonly ShallowNeuron[]): { lay
           title: `ReLU 层 1 · h1.${index + 1}`,
           body: '这个节点先完成线性变换，再用 ReLU 决定是否输出。',
           content: (
-            <div className="hidden-node-calculation">
+            <div className="ng-hidden-node-calculation">
               <div>
                 <Typography as="span" variant="body" tone="muted">线性结果</Typography>
                 <Typography as="code" variant="body" tone="accent" wrap="nowrap">z1.{index + 1} = {formatNumber(neuron.w)}x {formatSigned(neuron.b)}</Typography>
@@ -117,13 +117,13 @@ function buildCanvas(count: number, allNeurons: readonly ShallowNeuron[]): { lay
           title: '输出节点 y',
           body: '把各隐藏节点作为变量统一加权，再加上输出偏置。',
           content: (
-            <div className="output-matrix">
-              <div className="output-matrix__formula" aria-label="y 等于输出权重行向量乘 ReLU 层输出列向量，再加输出偏置">
+            <div className="ng-output-matrix">
+              <div className="ng-output-matrix__formula" aria-label="y 等于输出权重行向量乘 ReLU 层输出列向量，再加输出偏置">
                 <Typography as="code" variant="subtitle" tone="main" wrap="nowrap">y =</Typography>
-                <div className="output-matrix__row-vector">
+                <div className="ng-output-matrix__row-vector">
                   {neurons.map((neuron, index) => <Typography as="code" variant="body" tone="warning" wrap="nowrap" title={`v1.${index + 1}`} key={index}>{formatNumber(neuron.v)}</Typography>)}
                 </div>
-                <div className="output-matrix__column-vector">
+                <div className="ng-output-matrix__column-vector">
                   {neurons.map((_, index) => <Typography as="code" variant="body" tone="accent" wrap="nowrap" key={index}>h1.{index + 1}</Typography>)}
                 </div>
                 <Typography as="code" variant="subtitle" tone="main" wrap="nowrap">+ {formatNumber(RELU_OUTPUT_BIAS)}</Typography>
@@ -185,13 +185,13 @@ export function ReluNetworkPage({ onComplete }: ReluNetworkPageProps) {
     <ContentBlock
       ref={rootRef}
       headingLevel={1}
-      className="activation-network-lab ng-relu-network"
+      className="ng-activation-network-lab ng-relu-network"
       title="组合多个带有 ReLU 的神经元，曲线继续弯折"
       subtitle="每个神经元都有自己的 w 和 b，因此会在不同的 x 位置由抑制切换为激活。添加一个神经元，就是向总输出加入一段从新位置开始的直线，曲线的斜率会在那里改变一次。"
       data-telemetry-manual
       aria-busy={!hydrated}
     >
-      <div className="activation-actions">
+      <div className="ng-activation-actions">
         <Button variant="primary" disabled={!hydrated || !state || count >= MAX_RELU_NEURON_COUNT} onClick={() => changeCount(count + 1, 'add')}>
           添加神经元
         </Button>
@@ -203,23 +203,23 @@ export function ReluNetworkPage({ onComplete }: ReluNetworkPageProps) {
       {!state ? (
         <NoticeStrip tone="blue"><Typography variant="body" tone="inherit">正在恢复神经元数量…</Typography></NoticeStrip>
       ) : (
-        <div className="activation-network-stage">
-          <section className="activation-network-panel">
-            <header className="activation-panel-head">
+        <div className="ng-activation-network-stage">
+          <section className="ng-activation-network-panel">
+            <header className="ng-activation-panel-head">
               <Typography as="h3" variant="subtitle" tone="main">从一个折点到多个折点</Typography>
               <Typography as="span" variant="body" tone="muted">虚线对应每个神经元的响应起点</Typography>
             </header>
-            <div className="activation-visual-box">
+            <div className="ng-activation-visual-box">
               <ReluNetworkPlot count={count} neurons={state.neurons} />
             </div>
           </section>
 
-          <section className="activation-network-panel">
-            <header className="activation-panel-head">
+          <section className="ng-activation-network-panel">
+            <header className="ng-activation-panel-head">
               <Typography as="h3" variant="subtitle" tone="main">把多个 ReLU 神经元组合起来</Typography>
               <Typography as="span" variant="body" tone="muted">悬浮节点，对照左侧同名折点</Typography>
             </header>
-            <div className="activation-visual-box activation-visual-box--model">
+            <div className="ng-activation-visual-box ng-activation-visual-box--model">
               <NetworkCanvas
                 layers={canvas.layers}
                 connections={canvas.connections}

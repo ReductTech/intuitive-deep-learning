@@ -51,7 +51,7 @@
 .course-page-surface .ng-activation-catalog__card { min-height: 0; }
 .course-page-surface .ng-activation-catalog__grid { grid-template-columns: repeat(3,minmax(0,1fr)); grid-template-rows: repeat(2,minmax(0,1fr)); }
 .course-page-surface .ng-activation-catalog__card { grid-template-rows: 150px auto auto minmax(0,1fr); }
-.course-page-surface .ng-activation-catalog .activation-function-plot { height: 150px; min-height: 150px !important; aspect-ratio: auto; }
+.course-page-surface .ng-activation-catalog .ng-activation-function-plot { height: 150px; min-height: 150px !important; aspect-ratio: auto; }
 
 @media (max-width: 980px) {
   .ng-activation-catalog__grid { grid-template-columns: minmax(0, 1fr); }

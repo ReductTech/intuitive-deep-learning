@@ -35,9 +35,6 @@
 .scenedeck-thumbnail__preview { position: relative; display: block; width: 100%; aspect-ratio: 1600 / 900; overflow: hidden; border: 1px solid #d7dce3; border-radius: 5px; background: #e9ebee; box-shadow: 0 1px 2px rgba(31,35,41,.08); content-visibility: auto; contain-intrinsic-size: auto 120px; }
 .scenedeck-thumbnail__surface { position: absolute; top: 0; left: 0; display: block; width: 1600px; height: 900px; overflow: hidden; transform: scale(.125); transform-origin: top left; pointer-events: none; }
 .scenedeck-thumbnail__surface > .edu-content-block { width: 1600px; height: 900px; min-height: 900px; }
-.scenedeck-thumbnail__surface .activation-plot,
-.scenedeck-thumbnail__surface .activation-stage-plot,
-.scenedeck-thumbnail__surface .activation-wide-plot { min-height: 430px !important; }
 .scenedeck-thumbnail__surface > * { pointer-events: none !important; }
 .scenedeck-thumbnail__surface .edu-scroll-cue,
 .scenedeck-thumbnail__surface .flow-scroll-indicator { display: none !important; }

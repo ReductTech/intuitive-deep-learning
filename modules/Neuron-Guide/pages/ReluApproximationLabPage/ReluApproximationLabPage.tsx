@@ -267,7 +267,7 @@ export function ReluApproximationLabPage({ onComplete }: ReluApproximationLabPag
       title="足够多带有 ReLU 的神经元，就能逼近任意曲线"
       subtitle="在画布上画出一条目标曲线，再让浏览器直接训练一个由 ReLU 神经元组成的小网络。"
     >
-      <div className="activation-actions">
+      <div className="ng-activation-actions">
         <Button variant="primary" disabled={!target.length || training} onClick={train}>{training ? '训练中…' : '训练网络'}</Button>
         <Button disabled={!target.length && !raw.length} onClick={clear}>重新绘制</Button>
       </div>

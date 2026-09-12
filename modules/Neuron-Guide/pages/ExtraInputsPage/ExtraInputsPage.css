@@ -1,6 +1,6 @@
 .course-shell .ng-theory-panel { display: grid; gap: 16px; }
 .course-shell .ng-extra-factor-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); align-items: stretch; gap: 14px; }
-.course-shell .ng-extra-factor-grid > .factor-card:nth-child(2) { border-top-color: var(--ui-accent); background: linear-gradient(155deg, rgba(39,68,110,.045), #fff 36%); }
+.course-shell .ng-extra-factor-grid > .ng-factor-card:nth-child(2) { border-top-color: var(--ui-accent); background: linear-gradient(155deg, rgba(39,68,110,.045), #fff 36%); }
 .course-shell .ng-extra-factor-grid > * { min-width: 0; max-width: 100%; }
 
 .course-page-surface .ng-extra-factor-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
@@ -21,8 +21,8 @@
 .course-page-surface .ng-extra-inputs-stage .ng-extra-factor-grid { grid-template-columns: repeat(2,minmax(0,1fr)); min-height: 0; }
 .course-page-surface .ng-extra-inputs-stage .ng-theory-panel { grid-template-columns: minmax(0,1fr); grid-template-rows: auto minmax(0,1fr); min-height: 0; align-items: stretch; gap: 12px; }
 .course-page-surface .ng-theory-panel > * { min-width: 0; max-width: 100%; }
-.course-page-surface .ng-theory-panel .network-wrap { min-height: 0; }
-.course-page-surface .ng-theory-panel .network-wrap svg { height: 100%; min-width: 0; }
+.course-page-surface .ng-theory-panel .ng-network-wrap { min-height: 0; }
+.course-page-surface .ng-theory-panel .ng-network-wrap svg { height: 100%; min-width: 0; }
 .course-page-surface .ng-theory-panel .ng-question-wrap { margin-top: 0; }
 
 @media (max-width: 820px) { .course-shell .ng-extra-factor-grid { grid-template-columns: minmax(0,1fr); } }

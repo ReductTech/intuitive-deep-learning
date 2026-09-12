@@ -26,8 +26,8 @@
   grid-template-rows: auto minmax(0, 1fr);
 }
 .course-page-surface .ng-relu-network > .edu-content-body,
-.course-page-surface .ng-relu-network .activation-network-stage,
-.course-page-surface .ng-relu-network .activation-network-panel,
+.course-page-surface .ng-relu-network .ng-activation-network-stage,
+.course-page-surface .ng-relu-network .ng-activation-network-panel,
 .course-page-surface .ng-relu-network .activation-visual-box,
 .course-page-surface .ng-relu-network .network-figure,
 .course-page-surface .ng-relu-network .network-canvas { min-height: 0; }

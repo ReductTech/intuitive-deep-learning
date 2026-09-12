@@ -1,0 +1,42 @@
+.ng-factor-card {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  min-width: 0;
+  border: 1px solid var(--ui-border);
+  border-top: 4px solid var(--ui-accent-alt);
+  border-radius: var(--ui-radius-md);
+  background: linear-gradient(155deg, rgba(240,126,71,.045), #fff 36%);
+  box-shadow: 0 8px 22px rgba(39,68,110,.07);
+  padding: 16px 18px 18px;
+  animation: ng-shared-reveal 260ms ease both;
+}
+.ng-factor-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; }
+.ng-factor-heading-copy { display: grid; min-width: 0; gap: 3px; }
+.ng-factor-title-row { display: flex; min-width: 0; align-items: center; gap: 9px; }
+.ng-factor-title-row .explain-panel-trigger { width: 26px; height: 26px; border-color: rgba(217,96,47,.18); background: rgba(240,126,71,.1); color: #b45327; box-shadow: none; }
+.ng-factor-title-row .explain-panel-trigger:hover,
+.ng-factor-title-row .explain-panel-trigger:focus-visible { background: rgba(240,126,71,.18); color: #9f421f; }
+.ng-factor-title-row .explain-panel { left: 0; transform: none; }
+.ng-factor-title-row .explain-panel::before { left: 15px; transform: rotate(45deg); }
+.ng-factor-title { margin: 0; color: #213b63; }
+.ng-factor-index { flex: 0 0 auto; }
+.ng-factor-controls { display: grid; grid-template-columns: minmax(0,1fr); gap: 10px; }
+.ng-factor-controls.is-single { grid-template-columns: 1fr; }
+.ng-model-importance { display: grid; gap: 8px; }
+.ng-model-importance-copy { display: block; min-width: 0; border-left: 4px solid var(--ui-accent-alt); background: rgba(240,126,71,.065); padding: 12px 16px; }
+.ng-model-importance-copy p { margin: 0; color: #334966; }
+.ng-model-importance-copy > p:first-child { display: flex; min-width: 0; align-items: baseline; gap: 8px; }
+.ng-model-importance-copy strong { color: #d9602f; }
+.ng-accept-importance { justify-self: start; min-width: 82px; }
+.ng-range-group { margin-top: 14px; }
+.ng-factor-controls > .ng-range-group { margin-top: 0; border: 1px solid #d5deeb; border-left: 4px solid var(--ui-accent); border-radius: 8px; background: #f8fafc; padding: 10px 14px; }
+
+.course-page-surface .ng-factor-card { min-width: 0; padding: 12px; }
+.course-page-surface .ng-factor-heading { margin-bottom: 9px; }
+.course-page-surface .ng-factor-controls { gap: 10px; }
+.course-page-surface .ng-model-importance { gap: 8px; padding: 10px 12px; }
+
+@media (max-width: 820px) { .ng-factor-controls { grid-template-columns: 1fr; } }
+@media (max-width: 640px) { .ng-factor-heading { align-items: flex-start; flex-direction: column; } }
+@media (prefers-reduced-motion: reduce) { .ng-factor-card { animation: none; } }

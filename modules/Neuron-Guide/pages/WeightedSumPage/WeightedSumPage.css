@@ -1,5 +1,5 @@
 .course-shell .ng-signal-quantization__result { display: grid; gap: 14px; }
-.course-shell .ng-signal-quantization__result .network-wrap { min-height: 220px; }
+.course-shell .ng-signal-quantization__result .ng-network-wrap { min-height: 220px; }
 
 .course-page-surface .ng-signal-quantization {
   display: grid;
@@ -9,7 +9,7 @@
   min-height: 0;
 }
 .course-page-surface .ng-signal-quantization .edu-content-body { min-height: 0; grid-template-columns: minmax(0,.86fr) minmax(0,1.14fr); align-items: stretch; gap: 18px; }
-.course-page-surface .ng-signal-quantization .factor-card { min-height: 0; height: 100%; }
+.course-page-surface .ng-signal-quantization .ng-factor-card { min-height: 0; height: 100%; }
 .course-page-surface .ng-signal-quantization__result { min-height: 0; height: 100%; grid-template-rows: auto minmax(0,1fr); gap: 14px; }
-.course-page-surface .ng-signal-quantization__result .network-wrap { display: grid; min-height: 0; height: 100%; align-items: center; }
-.course-page-surface .ng-signal-quantization__result .network-wrap svg { height: 180px; min-width: 0; }
+.course-page-surface .ng-signal-quantization__result .ng-network-wrap { display: grid; min-height: 0; height: 100%; align-items: center; }
+.course-page-surface .ng-signal-quantization__result .ng-network-wrap svg { height: 180px; min-width: 0; }

@@ -38,11 +38,11 @@ export const neuronSpeakerNotes: Record<string, SpeakerNote[]> = {
     { text: '移项以后，门槛就变成了偏置；两种写法描述的是同一次判断。', selectors: ['.ng-bias-theory__equivalence'] },
   ],
   'linear-shallow': [
-    { text: '一个神经元扩展成一层，多个节点并行计算各自的加权和。', selectors: ['.activation-network-stage'] },
+    { text: '一个神经元扩展成一层，多个节点并行计算各自的加权和。', selectors: ['.ng-activation-network-stage'] },
     { text: '输出矩阵把这些并行结果收拢起来，维度必须彼此对齐。', selectors: ['.ng-output-matrix'] },
   ],
   'linear-deep': [
-    { text: '再增加一层，线性计算可以组合，但它仍然没有产生新的非线性形状。', selectors: ['.activation-network-stage'] },
+    { text: '再增加一层，线性计算可以组合，但它仍然没有产生新的非线性形状。', selectors: ['.ng-activation-network-stage'] },
     { text: '输入空间里的分界从直线扩展为平面，仍然属于线性关系。', selectors: ['.ng-deep-linear-conclusion'] },
   ],
   'relu-intro': [
@@ -54,7 +54,7 @@ export const neuronSpeakerNotes: Record<string, SpeakerNote[]> = {
     { text: '图上的折点标记了激活函数改变规则的位置。', selectors: ['.ng-relu-explanation__figure'] },
   ],
   'relu-network': [
-    { text: '一个 ReLU 神经元贡献一个折点，多个神经元可以把折点叠加起来。', selectors: ['.activation-network-stage'] },
+    { text: '一个 ReLU 神经元贡献一个折点，多个神经元可以把折点叠加起来。', selectors: ['.ng-activation-network-stage'] },
     { text: '网络输出因此变成多段线性曲线，结构越丰富，曲线越能弯折。', selectors: ['.ng-output-matrix'] },
   ],
   'relu-approximation': [

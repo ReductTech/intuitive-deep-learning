@@ -101,7 +101,7 @@ export function ReluIntroPage({ onComplete }: ReluIntroPageProps) {
     <ContentBlock
       ref={rootRef}
       headingLevel={1}
-      className="activation-network-lab activation-relu-intro"
+      className="ng-activation-network-lab ng-activation-relu-intro"
       title="从线性计算到非线性响应"
       subtitle="早期模型用 0 或 1 表示是否响应；现代人工神经元通常传递连续数值。这里的“抑制与激活”描述响应状态：低于阈值时抑制，超过阈值后继续传递连续值。"
       data-telemetry-manual

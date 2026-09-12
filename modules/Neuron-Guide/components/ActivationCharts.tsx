@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import '../../shared/react/visuals/activation.css';
+import './ActivationCharts.css';
 import {
   FunctionPlot,
   sampleSurface3D,
@@ -156,7 +156,7 @@ export function Function2DChoicePlot({ type }: Function2DChoicePlotProps) {
 
   return (
     <FunctionPlot
-      className="activation-plot activation-choice-plot"
+      className="ng-activation-plot ng-activation-choice-plot"
       fn={definition.fn}
       stroke={FUNCTION_COLORS[type]}
       initialCenter={{ x: 0, y: 0 }}
@@ -190,7 +190,7 @@ export function Surface3DChoicePlot({ type }: Surface3DChoicePlotProps) {
 
   return (
     <PersistedPlotlyChart
-      className="activation-plot activation-choice-plot activation-choice-plot--3d"
+      className="ng-activation-plot ng-activation-choice-plot ng-activation-choice-plot--3d"
       persistenceKey={`activation-choice-${type}`}
       data={data}
       layout={layout}
@@ -212,7 +212,7 @@ export function ShallowOutputPlot({ model }: ShallowOutputPlotProps) {
 
   return (
     <FunctionPlot
-      className="activation-plot activation-stage-plot"
+      className="ng-activation-plot ng-activation-stage-plot"
       fn={fn}
       stroke={COLORS.green}
       initialCenter={{ x: 0, y: 0 }}
@@ -244,14 +244,14 @@ export function DeepOutputPlot({ model }: DeepOutputPlotProps) {
     return [surfaceTrace(sampled, [[0, '#e8f7ef'], [1, COLORS.green]], name)];
   }, [equivalent, model]);
   const layout = useMemo(
-    () => layout3D('activation-linear-deep-output'),
+    () => layout3D('activation-'),
     [],
   );
 
   return (
     <PersistedPlotlyChart
-      className="activation-plot activation-stage-plot"
-      persistenceKey="activation-linear-deep-output"
+      className="ng-activation-plot ng-activation-stage-plot"
+      persistenceKey="ng-activation-linear-deep-output"
       data={data}
       layout={layout}
       minHeight={430}
@@ -297,7 +297,7 @@ export function ReluNetworkPlot({ count, neurons }: ReluNetworkPlotProps) {
 
   return (
     <FunctionPlot
-      className="activation-plot activation-stage-plot"
+      className="ng-activation-plot ng-activation-stage-plot"
       series={series}
       verticalGuides={verticalGuides}
       initialCenter={{ x: 0, y: 0 }}
@@ -342,7 +342,7 @@ export function ApproximationPlot({ count }: ApproximationPlotProps) {
 
   return (
     <FunctionPlot
-      className="activation-plot activation-wide-plot"
+      className="ng-activation-plot ng-activation-wide-plot"
       series={series}
       verticalGuides={verticalGuides}
       initialCenter={{ x: 0, y: 0 }}
@@ -417,7 +417,7 @@ export function ActivationFunctionPlot({ type }: ActivationFunctionPlotProps) {
 
   return (
     <FunctionPlot
-      className="activation-plot activation-function-plot"
+      className="ng-activation-plot ng-activation-function-plot"
       fn={definition.fn}
       stroke={definition.color}
       initialCenter={{

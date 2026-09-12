@@ -45,8 +45,8 @@
   grid-template-rows: minmax(0, 1fr) auto;
   gap: 12px;
 }
-.course-page-surface .ng-deep-linear .activation-network-stage,
-.course-page-surface .ng-deep-linear .activation-network-panel,
+.course-page-surface .ng-deep-linear .ng-activation-network-stage,
+.course-page-surface .ng-deep-linear .ng-activation-network-panel,
 .course-page-surface .ng-deep-linear .activation-visual-box,
 .course-page-surface .ng-deep-linear .network-figure,
 .course-page-surface .ng-deep-linear .network-canvas { min-height: 0; }

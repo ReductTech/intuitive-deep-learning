@@ -1,0 +1,22 @@
+.ng-network-input-value { fill: #ffd76b; font-family: var(--ui-font-mono); text-anchor: middle; }
+.ng-network-wrap { min-width: 0; margin: 0; border: 1px solid var(--ui-border); border-radius: var(--ui-radius-sm); background: var(--ui-bg-muted); padding: 8px 14px; overflow: hidden; }
+.ng-network-wrap svg { display: block; width: 100%; min-width: 0; max-width: 100%; height: auto; }
+.ng-network-wrap--single { padding-block: 4px; }
+.ng-network-edge { stroke: #9fb0c8; stroke-linecap: round; opacity: .72; }
+.ng-network-output-edge { stroke: #f07e47; stroke-width: 3; }
+.ng-network-arrow { fill: #f07e47; }
+.ng-network-node { stroke: #fff; stroke-width: 4; }
+.ng-network-node--input { fill: #27446e; }
+.ng-network-node--unit { fill: #f07e47; }
+.ng-network-node--output { fill: #b9364a; }
+.ng-network-node-symbol { fill: #fff; font-family: var(--ui-font-mono); text-anchor: middle; }
+.ng-network-node-symbol--unit { dominant-baseline: central; }
+.ng-network-node-label { fill: #27446e; text-anchor: middle; }
+.ng-network-output-value { fill: #ffd07a; font-family: var(--ui-font-mono); text-anchor: middle; }
+.ng-network-external-label { fill: #27446e; text-anchor: start; }
+.ng-network-label-object { max-width: 100%; overflow: visible; }
+.ng-network-label-box { display: flex; width: 100%; height: 100%; min-width: 0; max-width: 100%; align-items: center; justify-content: flex-end; text-align: right; }
+.ng-network-label-box > p { max-width: 100%; overflow-wrap: anywhere; }
+.ng-network-external-label--output { fill: #b9364a; text-anchor: middle; }
+.ng-network-weight rect { fill: #fff; stroke: #d5deeb; }
+.ng-network-weight text { fill: #d9602f; font-family: var(--ui-font-mono); text-anchor: middle; }
