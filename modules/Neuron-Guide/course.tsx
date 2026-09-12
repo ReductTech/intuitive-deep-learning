@@ -35,8 +35,8 @@ const cue = (content: ReactNode, context: LessonStepContext, label?: string) => 
 
 export const neuronCourse: NeuronCourseItem[] = [
   { id: 'nematode-response', title: '只有 302 个神经元，它为什么能完成这么多行为？', section: '神经系统', revealMode: 'scroll', component: (c) => cue(<NematodeResponsePage />, c) },
-  { id: 'biological-structure', title: '1943 年，神经元被写成了数学模型', section: '生物学引入', revealMode: 'scroll', component: (c) => cue(<BiologicalNeuronPage />, c) },
-  { id: 'decision-bridge', title: '神经元究竟在做什么？', section: '从简单响应到复杂决策', revealMode: 'scroll', component: (c) => cue(<NeuronDecisionBridgePage />, c) },
+  { id: 'biological-structure', title: '人工神经元，源自生物神经元', section: '生物学引入', revealMode: 'scroll', component: (c) => cue(<BiologicalNeuronPage />, c) },
+  { id: 'decision-bridge', title: '一个神经元，只做一次简单判断', section: '从简单响应到复杂决策', revealMode: 'scroll', component: (c) => cue(<NeuronDecisionBridgePage />, c) },
   { id: 'signal-discovery', title: '让神经元帮你做一次判断', section: '输入信号', revealMode: 'cue', component: (c) => <SignalDiscoveryPage onComplete={c.complete} /> },
   { id: 'weighted-sum', title: '把一个现实因素，翻译成神经元能处理的输入', section: '输入信号', revealMode: 'cue', component: (c) => <WeightedSumPage onComplete={c.complete} /> },
   { id: 'extra-inputs', title: '从一个因素，到三个因素', section: '输入信号', revealMode: 'cue', component: (c) => <ExtraInputsPage onComplete={c.complete} /> },

@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import '../../shared/react/visuals/activation.css';
 import {
   FunctionPlot,
   sampleSurface3D,
@@ -155,7 +156,7 @@ export function Function2DChoicePlot({ type }: Function2DChoicePlotProps) {
 
   return (
     <FunctionPlot
-      className="af-react-plot af-react-choice-plot"
+      className="activation-plot activation-choice-plot"
       fn={definition.fn}
       stroke={FUNCTION_COLORS[type]}
       initialCenter={{ x: 0, y: 0 }}
@@ -189,7 +190,7 @@ export function Surface3DChoicePlot({ type }: Surface3DChoicePlotProps) {
 
   return (
     <PersistedPlotlyChart
-      className="af-react-plot af-react-choice-plot af-react-choice-plot--3d"
+      className="activation-plot activation-choice-plot activation-choice-plot--3d"
       persistenceKey={`activation-choice-${type}`}
       data={data}
       layout={layout}
@@ -211,7 +212,7 @@ export function ShallowOutputPlot({ model }: ShallowOutputPlotProps) {
 
   return (
     <FunctionPlot
-      className="af-react-plot af-react-stage-plot"
+      className="activation-plot activation-stage-plot"
       fn={fn}
       stroke={COLORS.green}
       initialCenter={{ x: 0, y: 0 }}
@@ -249,7 +250,7 @@ export function DeepOutputPlot({ model }: DeepOutputPlotProps) {
 
   return (
     <PersistedPlotlyChart
-      className="af-react-plot af-react-stage-plot"
+      className="activation-plot activation-stage-plot"
       persistenceKey="activation-linear-deep-output"
       data={data}
       layout={layout}
@@ -296,7 +297,7 @@ export function ReluNetworkPlot({ count, neurons }: ReluNetworkPlotProps) {
 
   return (
     <FunctionPlot
-      className="af-react-plot af-react-stage-plot"
+      className="activation-plot activation-stage-plot"
       series={series}
       verticalGuides={verticalGuides}
       initialCenter={{ x: 0, y: 0 }}
@@ -341,7 +342,7 @@ export function ApproximationPlot({ count }: ApproximationPlotProps) {
 
   return (
     <FunctionPlot
-      className="af-react-plot af-react-wide-plot"
+      className="activation-plot activation-wide-plot"
       series={series}
       verticalGuides={verticalGuides}
       initialCenter={{ x: 0, y: 0 }}
@@ -416,7 +417,7 @@ export function ActivationFunctionPlot({ type }: ActivationFunctionPlotProps) {
 
   return (
     <FunctionPlot
-      className="af-react-plot af-react-activation-plot"
+      className="activation-plot activation-function-plot"
       fn={definition.fn}
       stroke={definition.color}
       initialCenter={{

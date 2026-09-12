@@ -1,4 +1,4 @@
-import { Typography } from '../../../shared/react';
+import { ContentBlock, Typography } from '../../../shared/react';
 import "./NematodeResponsePage.css";
 import type { CSSProperties } from 'react';
 import nematodeVideo from '../../assets/video.mp4';
@@ -18,16 +18,17 @@ const abilities = [
 
 export function NematodeResponsePage() {
   return (
-    <section className="ng-nematode-opening-v2 ng-nematode-intro" aria-labelledby="ng-nematode-title">
-      <header className="ng-nematode-intro__head">
-        <Typography id="ng-nematode-title" as="h1" variant="h1" tone="accent" wrap="balance">
-          只有 302 个神经元，它为什么能完成这么多行为？
-        </Typography>
-        <Typography variant="subtitle" tone="muted">
+    <ContentBlock
+      headingLevel={1}
+      className="ng-nematode-opening-v2 ng-nematode-intro"
+      title="只有 302 个神经元，它为什么能完成这么多行为？"
+      subtitle={(
+        <>
           <Typography as="em" variant="subtitle" tone="accent">Caenorhabditis elegans</Typography>
           {' '}· 一种体长约 1 毫米、身体透明的非寄生线虫，已在地球上存在约 2000 万年
-        </Typography>
-      </header>
+        </>
+      )}
+    >
 
       <div className="ng-nematode-intro__scene">
         <figure className="ng-nematode-opening-v2__micrograph ng-nematode-intro__video">
@@ -97,9 +98,6 @@ export function NematodeResponsePage() {
 
         </div>
       </div>
-    </section>
+    </ContentBlock>
   );
 }
-
-
-

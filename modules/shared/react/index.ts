@@ -38,3 +38,4 @@ export * from './visuals/plotSampling';
 export * from './visuals/FunctionPlot';
 export * from './telemetry';
 export * from './theme';
+export * from './presentation';

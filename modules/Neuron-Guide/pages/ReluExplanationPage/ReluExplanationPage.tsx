@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 import "./ReluExplanationPage.css";
-import { Button, FunctionPlot, LessonStage, MathFormulaBlock, MathFormulaStatic, Typography } from '../../../shared/react';
+import { Button, ContentBlock, FunctionPlot, MathFormulaBlock, MathFormulaStatic, Typography } from '../../../shared/react';
 
 interface ReluInputParameters {
   a: number;
@@ -35,11 +35,11 @@ export function ReluExplanationPage() {
   );
 
   return (
-    <LessonStage
+    <ContentBlock
+      headingLevel={1}
       className="ng-relu-explanation"
       title="认识线性整流单元"
-      description="前面观察到的“负值被抑制、正值继续传递”，可以写成一个分段函数。这个函数称为 ReLU。"
-      descriptionVariant="body"
+      subtitle="前面观察到的“负值被抑制、正值继续传递”，可以写成一个分段函数。这个函数称为 ReLU。"
     >
       <div className="ng-relu-explanation__layout">
         <section className="ng-relu-explanation__definition" aria-labelledby="ng-relu-definition-title">
@@ -95,7 +95,7 @@ export function ReluExplanationPage() {
           </div>
         </figure>
       </div>
-    </LessonStage>
+    </ContentBlock>
   );
 }
 

@@ -1,7 +1,22 @@
 .ng-relu-approximation-lab {
+  position: relative;
   min-width: 0;
   max-width: 100%;
   border-top: 3px solid var(--ui-accent);
+  border-radius: var(--ui-radius-lg);
+  box-shadow: var(--ui-shadow-soft);
+  padding: clamp(16px, 2.4vw, 22px);
+}
+
+.ng-relu-approximation-lab > .edu-content-head {
+  margin-bottom: 16px;
+  padding-right: 220px;
+}
+
+.ng-relu-approximation-lab > .edu-content-body > .activation-actions {
+  position: absolute;
+  top: clamp(16px, 2.4vw, 22px);
+  right: clamp(16px, 2.4vw, 22px);
 }
 
 .ng-relu-approximation-lab > div:last-child {
@@ -141,6 +156,8 @@
 }
 
 @media (max-width: 980px) {
+  .ng-relu-approximation-lab > .edu-content-head { padding-right: 0; }
+  .ng-relu-approximation-lab > .edu-content-body > .activation-actions { position: static; }
   .ng-relu-drawing-panel__head { align-items: flex-start; flex-direction: column; }
 }
 

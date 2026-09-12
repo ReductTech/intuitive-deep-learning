@@ -5,10 +5,10 @@ export interface SharedThemePalette {
   colors: Array<{ token: string; label: string; value: string; usage: string }>;
 }
 
-/** Neuron Guide 当前使用的 Shared UI 默认配色。 */
-export const neuronGuideTheme: SharedThemePalette = {
-  id: 'neuron-guide',
-  name: 'Neuron Guide · 学术蓝橙',
+/** 所有课程模块共用的 Shared UI 默认配色。模块可以覆写 token，但不应复制这组基础语义。 */
+export const defaultTheme: SharedThemePalette = {
+  id: 'shared-default',
+  name: 'Shared UI · 学术蓝橙',
   description: '可信的深蓝负责结构与解释，暖橙负责动作、注意和关键反馈；绿色只表示成功状态。',
   colors: [
     { token: '--ui-bg-page', label: '页面背景', value: '#EEF2F7', usage: '课程页面底色' },

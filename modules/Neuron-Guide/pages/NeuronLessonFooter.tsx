@@ -1,5 +1,6 @@
 import { ContentBlock, LessonFooter } from '../../shared/react';
 import { NeuronModelViewer } from '../components/NeuronModelViewer';
+import './NeuronLessonFooter.css';
 
 const videos = [
   {
@@ -15,6 +16,7 @@ const videos = [
 export function NeuronCompletionPage() {
   return (
     <ContentBlock
+      headingLevel={1}
       className="ng-completion-stage"
       title="你已经搭出了一个人工神经元"
       subtitle="从生物神经元到人工神经元，真正被继承的不是结构，而是一种处理信息的方式。"

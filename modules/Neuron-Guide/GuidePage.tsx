@@ -2,7 +2,7 @@ import { useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import { LessonFlow, ModuleShell, type LessonFlowStep } from '../shared/react';
 import '../shared/react/styles.css';
 import '../shared/react/ui-kit.css';
-import './pages/shared.css';
+import '../shared/react/presentation.css';
 import { NeuronLessonProvider } from './model/NeuronLessonContext';
 import { neuronCourse } from './course';
 
@@ -21,7 +21,7 @@ function BlogLessonCanvas({ children }: { children: ReactNode }) {
     observer.observe(frame);
     return () => observer.disconnect();
   }, []);
-  return <div ref={frameRef} className="lesson-canvas-frame" style={{ height: 900 * scale }}><div className="course-page-surface guide-shell" style={{ transform: 'scale(' + scale + ')' }}>{children}</div></div>;
+  return <div ref={frameRef} className="lesson-canvas-frame" style={{ height: 900 * scale }}><div className="course-page-surface course-shell" style={{ transform: 'scale(' + scale + ')' }}>{children}</div></div>;
 }
 
 export const neuronGuideLessonSteps: LessonFlowStep[] = neuronCourse
@@ -38,7 +38,7 @@ export function GuidePage() {
       <ModuleShell
         title="认识人工神经元"
         subtitle="从秀丽隐杆线虫的刺激反应出发，逐步建立输入、权重、加权和与偏置的数学模型。"
-        shellClassName="guide-shell guide-blog-shell"
+        shellClassName="course-shell course-blog-shell"
       >
         <LessonFlow steps={neuronGuideLessonSteps} persistenceKey="neuron-guide-expanded-v6" />
       </ModuleShell>

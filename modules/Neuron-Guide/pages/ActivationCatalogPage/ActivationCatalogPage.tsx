@@ -1,4 +1,4 @@
-import { LessonStage, Typography } from '../../../shared/react';
+import { ContentBlock, Typography } from '../../../shared/react';
 import "./ActivationCatalogPage.css";
 import { ActivationFunctionPlot } from '../../components/ActivationCharts';
 
@@ -43,11 +43,11 @@ const activations = [
 
 export function ActivationCatalogPage() {
   return (
-    <LessonStage
+    <ContentBlock
+      headingLevel={1}
       className="ng-activation-catalog"
       title="认识这些被广泛使用的激活函数"
-      description="激活函数有不同形状，也会给网络带来不同的数值特性；它们共同完成同一件事：打破纯线性叠加。"
-      descriptionVariant="body"
+      subtitle="激活函数有不同形状，也会给网络带来不同的数值特性；它们共同完成同一件事：打破纯线性叠加。"
     >
       <div className="ng-activation-catalog__grid">
         {activations.map((activation) => (
@@ -59,7 +59,7 @@ export function ActivationCatalogPage() {
           </article>
         ))}
       </div>
-    </LessonStage>
+    </ContentBlock>
   );
 }
 

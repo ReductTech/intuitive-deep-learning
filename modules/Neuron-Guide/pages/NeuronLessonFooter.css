@@ -1,0 +1,7 @@
+.course-page-surface .ng-completion-stage { display: grid; grid-template-rows: auto minmax(0,1fr); }
+.course-page-surface .ng-completion-stage > .edu-content-body,
+.course-page-surface .model-viewer-layout,
+.course-page-surface .model-viewer-copy { min-height: 0; }
+.course-page-surface .model-viewer-frame,
+.course-page-surface .model-viewer-frame model-viewer,
+.course-page-surface .model-fallback { min-height: 0; height: 100%; }

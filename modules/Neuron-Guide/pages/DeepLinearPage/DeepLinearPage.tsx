@@ -1,6 +1,6 @@
 import { useMemo, useRef } from 'react';
 import "./DeepLinearPage.css";
-import { Button, FormulaBlock, LessonStage, NoticeStrip, Typography } from '../../../shared/react';
+import { Button, ContentBlock, FormulaBlock, NoticeStrip, Typography } from '../../../shared/react';
 import { DeepOutputPlot } from '../../components/ActivationCharts';
 import {
   NetworkCanvas,
@@ -134,10 +134,10 @@ function buildCanvas(
           title: '输出节点 z',
           body: '最后一层把隐藏节点的输出加权汇总，再加上偏置。',
           content: (
-            <div className="ng-output-matrix">
-              <div className="ng-output-matrix__formula" aria-label="z 等于输出权重行向量乘最后一层隐藏节点列向量，再加偏置">
+            <div className="output-matrix">
+              <div className="output-matrix__formula" aria-label="z 等于输出权重行向量乘最后一层隐藏节点列向量，再加偏置">
                 <Typography as="code" variant="subtitle" tone="main" wrap="nowrap">z =</Typography>
-                <div className="ng-output-matrix__row-vector">
+                <div className="output-matrix__row-vector">
                   {outputWeights.map((weight, weightIndex) => (
                     <Typography as="code" variant="body" tone="warning" wrap="nowrap" key={weightIndex}>
                       {formatNumber(weight)}
@@ -145,7 +145,7 @@ function buildCanvas(
                   ))}
                 </div>
                 <Typography as="code" variant="subtitle" tone="muted" wrap="nowrap">×</Typography>
-                <div className="ng-output-matrix__column-vector">
+                <div className="output-matrix__column-vector">
                   {outputWeights.map((_, hiddenIndex) => (
                     <Typography as="code" variant="body" tone="accent" wrap="nowrap" key={hiddenIndex}>
                       {hiddenLabel(outputLayer - 1, hiddenIndex)}
@@ -162,15 +162,15 @@ function buildCanvas(
           title: `第 ${layer} 层 · ${hiddenLabel(layer, index)}`,
           body: '用这一行权重读取上一层的全部输出，再加上该节点的偏置。',
           content: (
-            <div className="ng-output-matrix">
+            <div className="output-matrix">
               <div
-                className="ng-output-matrix__formula"
+                className="output-matrix__formula"
                 aria-label={`${hiddenLabel(layer, index)} 等于权重行向量乘上一层输出列向量，再加偏置`}
               >
                 <Typography as="code" variant="subtitle" tone="main" wrap="nowrap">
                   {hiddenLabel(layer, index)} =
                 </Typography>
-                <div className="ng-output-matrix__row-vector">
+                <div className="output-matrix__row-vector">
                   {incomingWeights.map((weight, weightIndex) => (
                     <Typography as="code" variant="body" tone="warning" wrap="nowrap" key={weightIndex}>
                       {formatNumber(weight)}
@@ -178,7 +178,7 @@ function buildCanvas(
                   ))}
                 </div>
                 <Typography as="code" variant="subtitle" tone="muted" wrap="nowrap">×</Typography>
-                <div className="ng-output-matrix__column-vector">
+                <div className="output-matrix__column-vector">
                   {sourceLabels.map((sourceLabel) => (
                     <Typography as="code" variant="body" tone="accent" wrap="nowrap" key={sourceLabel}>
                       {sourceLabel}
@@ -262,67 +262,53 @@ export function DeepLinearPage({ onComplete }: DeepLinearPageProps) {
   const layerCount = model?.layerCount ?? MIN_DEEP_LAYER_COUNT;
 
   return (
-    <LessonStage
+    <ContentBlock
       ref={rootRef}
-      className="af-react-network-lab"
+      headingLevel={1}
+      className="activation-network-lab ng-deep-linear"
       title="线性关系从直线扩展为平面"
-      description="当输入由一个变量扩展为两个变量，y = ax + b 对应地写成 z = ax + by + c，图像也从直线扩展为平面。继续增加线性层，只会得到新的平面，无法形成弯曲的曲面。"
-      descriptionVariant="body"
-      actions={(
-        <div className="af-react-actions">
-          <Button
-            variant="primary"
-            disabled={!hydrated || !model || layerCount >= MAX_DEEP_LAYER_COUNT}
-            onClick={() => replaceModel(
-              'activation_linear_dimension_layer_add',
-              layerCount + 1,
-              'add',
-            )}
-          >
-            添加一层
-          </Button>
-          <Button
-            disabled={!hydrated || !model || layerCount <= MIN_DEEP_LAYER_COUNT}
-            onClick={() => replaceModel(
-              'activation_linear_dimension_layer_remove',
-              layerCount - 1,
-              'remove',
-            )}
-          >
-            删除一层
-          </Button>
-          <Button
-            disabled={!hydrated || !model}
-            onClick={() => replaceModel(
-              'activation_linear_dimension_reroll',
-              layerCount,
-              'reroll',
-            )}
-          >
-            随机参数
-          </Button>
-        </div>
-      )}
+      subtitle="当输入由一个变量扩展为两个变量，y = ax + b 对应地写成 z = ax + by + c，图像也从直线扩展为平面。继续增加线性层，只会得到新的平面，无法形成弯曲的曲面。"
       data-telemetry-manual
       aria-busy={!hydrated}
     >
+      <div className="activation-actions">
+        <Button
+          variant="primary"
+          disabled={!hydrated || !model || layerCount >= MAX_DEEP_LAYER_COUNT}
+          onClick={() => replaceModel('activation_linear_dimension_layer_add', layerCount + 1, 'add')}
+        >
+          添加一层
+        </Button>
+        <Button
+          disabled={!hydrated || !model || layerCount <= MIN_DEEP_LAYER_COUNT}
+          onClick={() => replaceModel('activation_linear_dimension_layer_remove', layerCount - 1, 'remove')}
+        >
+          删除一层
+        </Button>
+        <Button
+          disabled={!hydrated || !model}
+          onClick={() => replaceModel('activation_linear_dimension_reroll', layerCount, 'reroll')}
+        >
+          随机参数
+        </Button>
+      </div>
       {!model || !plane ? (
         <NoticeStrip tone="blue">
           <Typography variant="body" tone="inherit">正在恢复已保存的网络层数与参数…</Typography>
         </NoticeStrip>
       ) : (
-        <div className="af-react-network-stage">
-          <section className="af-react-network-panel">
-            <header className="af-react-panel-head">
+        <div className="activation-network-stage">
+          <section className="activation-network-panel">
+            <header className="activation-panel-head">
               <Typography as="h3" variant="subtitle" tone="main">从直线扩展到平面</Typography>
               <Typography as="span" variant="body" tone="muted">增加层数，平面会弯曲吗？</Typography>
             </header>
-            <div className="af-react-visual-box">
+            <div className="activation-visual-box">
               <FormulaBlock
-                className="af-react-plot-formula"
+                className="activation-plot-formula"
                 ariaLabel={`当前平面为 z 等于 ${formatNumber(plane.ax)} x ${formatSigned(plane.ay)} y ${formatSigned(plane.c)}`}
                 formula={(
-                  <span className="af-react-plot-formula-content">
+                  <span className="activation-plot-formula-content">
                     <Typography as="span" variant="body" tone="muted">
                       当前平面
                     </Typography>
@@ -336,12 +322,12 @@ export function DeepLinearPage({ onComplete }: DeepLinearPageProps) {
             </div>
           </section>
 
-          <section className="af-react-network-panel">
-            <header className="af-react-panel-head">
+          <section className="activation-network-panel">
+            <header className="activation-panel-head">
               <Typography as="h3" variant="subtitle" tone="main">再把线性网络加深</Typography>
               <Typography as="span" variant="body" tone="muted">悬浮节点查看这一层的矩阵运算</Typography>
             </header>
-            <div className="af-react-visual-box af-react-visual-box--model">
+            <div className="activation-visual-box activation-visual-box--model">
               <NetworkCanvas
                 layers={canvas.layers}
                 connections={canvas.connections}
@@ -357,7 +343,7 @@ export function DeepLinearPage({ onComplete }: DeepLinearPageProps) {
         <Typography as="strong" variant="body" tone="inherit">为什么必须在层与层之间加入非线性？</Typography>
         <Typography as="span" variant="body" tone="inherit">没有激活函数，再多线性层也能合并成一次线性运算；层间加入 ReLU 后，每一层才能重新折叠输入空间，让深度真正增加表达能力。</Typography>
       </NoticeStrip>
-    </LessonStage>
+    </ContentBlock>
   );
 }
 

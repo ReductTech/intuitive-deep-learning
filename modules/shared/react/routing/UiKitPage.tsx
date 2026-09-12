@@ -28,7 +28,7 @@ import {
 } from '../typography/Typography';
 import { FunctionPlot, type FunctionSeries } from '../visuals/FunctionPlot';
 import { PlotlyChart, type PlotlyLayout, type PlotlyTrace } from '../visuals/PlotlyChart';
-import { neuronGuideTheme } from '../theme';
+import { defaultTheme } from '../theme';
 import '../ui-kit.css';
 
 const sigmoid = (x: number) => 1 / (1 + Math.exp(-x));
@@ -80,11 +80,11 @@ const typographyTones: Array<{ tone: TypographyTone; label: string; usage: strin
 export function UiKitPage() {
   return <ModuleShell title="UI Kit" subtitle="教学模块的统一界面组件与交互规范。" shellClassName="kit-shell edu-shell--scaled" headerClassName="kit-header">
     <section className="kit-section" aria-labelledby="theme-title">
-      <header className="kit-section-head"><h2 id="theme-title">默认主题色 · Neuron Guide</h2><p>{neuronGuideTheme.description} 所有 Shared 组件默认使用这套语义颜色。</p></header>
+      <header className="kit-section-head"><h2 id="theme-title">Shared 默认主题色</h2><p>{defaultTheme.description} 所有 Shared 组件默认使用这套语义颜色。</p></header>
       <div className="kit-theme-preview">
-        <div className="kit-theme-preview__hero"><span className="kit-theme-preview__eyebrow">DEFAULT SHARED THEME</span><strong>{neuronGuideTheme.name}</strong><small>颜色先按语义命名，再由组件使用 token；模块 CSS 不直接填写色值。</small></div>
-        <div className="kit-theme-swatches">{neuronGuideTheme.colors.map((color) => <div className="kit-theme-swatch" key={color.token}><span className="kit-theme-swatch__chip" style={{ background: color.value }} aria-hidden="true" /><div><Typography as="strong" variant="bodySmall">{color.label}</Typography><Typography variant="bodySmall" tone="muted">{color.token} · {color.value}</Typography><Typography variant="bodySmall" tone="light">{color.usage}</Typography></div></div>)}</div>
-        <div className="kit-theme-live" aria-label="Neuron Guide 主题实时预览"><Typography as="h3" variant="h3">语义预览</Typography><div className="kit-theme-live__row"><Button variant="primary">主操作</Button><Button variant="warn">注意状态</Button><Button variant="danger">错误状态</Button><span className="kit-theme-live__success">✓ 已完成</span></div><div className="kit-theme-live__bar"><span style={{ width: '72%' }} /></div><Typography variant="bodySmall" tone="muted">深蓝 = 结构与解释　暖橙 = 注意与行动　绿色 = 成功反馈</Typography></div>
+        <div className="kit-theme-preview__hero"><span className="kit-theme-preview__eyebrow">DEFAULT SHARED THEME</span><strong>{defaultTheme.name}</strong><small>颜色先按语义命名，再由组件使用 token；模块 CSS 不直接填写色值。</small></div>
+        <div className="kit-theme-swatches">{defaultTheme.colors.map((color) => <div className="kit-theme-swatch" key={color.token}><span className="kit-theme-swatch__chip" style={{ background: color.value }} aria-hidden="true" /><div><Typography as="strong" variant="bodySmall">{color.label}</Typography><Typography variant="bodySmall" tone="muted">{color.token} · {color.value}</Typography><Typography variant="bodySmall" tone="light">{color.usage}</Typography></div></div>)}</div>
+        <div className="kit-theme-live" aria-label="Shared 主题实时预览"><Typography as="h3" variant="h3">语义预览</Typography><div className="kit-theme-live__row"><Button variant="primary">主操作</Button><Button variant="warn">注意状态</Button><Button variant="danger">错误状态</Button><span className="kit-theme-live__success">✓ 已完成</span></div><div className="kit-theme-live__bar"><span style={{ width: '72%' }} /></div><Typography variant="bodySmall" tone="muted">深蓝 = 结构与解释　暖橙 = 注意与行动　绿色 = 成功反馈</Typography></div>
       </div>
     </section>
     <section className="kit-section" aria-labelledby="typography-title">

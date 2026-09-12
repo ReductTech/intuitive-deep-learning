@@ -1,4 +1,5 @@
 import { Button, ExplainPanelButton, RangeControl, Typography } from '../../shared/react';
+import '../../shared/react/learning/FactorCard.css';
 import type { NeuronFactor } from '../model/neuronMath';
 
 export interface FactorCardProps {
@@ -28,11 +29,11 @@ export function FactorCard({
 }: FactorCardProps) {
   const showInput = !requireAccept || accepted;
   return (
-    <article className="ng-factor-card">
-      <div className="ng-factor-heading">
-        <div className="ng-factor-heading-copy">
-          <div className="ng-factor-title-row">
-            <Typography as="h3" variant="body" tone="accent" className="ng-panel-title">{factor.name}</Typography>
+    <article className="factor-card">
+      <div className="factor-heading">
+        <div className="factor-heading-copy">
+          <div className="factor-title-row">
+            <Typography as="h3" variant="body" tone="accent" className="factor-title">{factor.name}</Typography>
             {factor.valueTransform === 'inverse' && (
               <ExplainPanelButton
                 triggerContent={<Typography as="span" variant="bodySmall" tone="inherit">反</Typography>}
@@ -45,20 +46,20 @@ export function FactorCard({
           </div>
           <Typography variant="bodySmall" tone="muted">{factor.explanation}</Typography>
         </div>
-        <Typography as="span" variant="bodySmall" tone="muted" className="edu-badge ng-factor-index">{String(index + 1).padStart(2, '0')}</Typography>
+        <Typography as="span" variant="bodySmall" tone="muted" className="edu-badge factor-index">{String(index + 1).padStart(2, '0')}</Typography>
       </div>
-      <div className={`ng-factor-controls${showInput ? '' : ' is-single'}`}>
-        <div className="ng-model-importance">
-          <div className="ng-model-importance-copy" aria-label={`分析建议权重为 ${factor.suggestedImportance} 分`}>
+      <div className={`factor-controls${showInput ? '' : ' is-single'}`}>
+        <div className="model-importance">
+          <div className="model-importance-copy" aria-label={`分析建议权重为 ${factor.suggestedImportance} 分`}>
             <Typography variant="bodySmall" tone="muted">
               AI 建议：在这次判断中，这个因素按 <Typography as="strong" variant="h3" tone="warning">{factor.suggestedImportance} / 10</Typography> 的权重计入。
             </Typography>
           </div>
-          {requireAccept && !accepted && <Button className="ng-accept-importance" variant="primary" onClick={onAccept}>好的</Button>}
+          {requireAccept && !accepted && <Button className="accept-importance" variant="primary" onClick={onAccept}>好的</Button>}
         </div>
         {showInput && (
           <RangeControl
-            controlClassName="ng-range-group"
+            controlClassName="range-group"
             label="你的当前程度"
             min={0}
             max={10}

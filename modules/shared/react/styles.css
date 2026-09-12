@@ -71,8 +71,8 @@ button, input, textarea, select { font: inherit; }
 
 .edu-content-block { min-width: 0; margin-inline: auto; border: 1px solid var(--ui-border); border-top: 3px solid var(--ui-accent); border-radius: var(--ui-radius-sm); background: #fff; padding: clamp(20px, 3vw, 30px); }
 .edu-content-head { width: 100%; max-width: 100%; margin-bottom: 18px; }
-.edu-content-title { margin: 0; color: var(--ui-accent); font-size: 28px; font-weight: 950; line-height: 1.22; overflow-wrap: anywhere; }
-.edu-content-subtitle { margin: 8px 0 0; color: var(--ui-text-muted); font-size: 14px; font-weight: 720; line-height: 1.7; }
+.edu-content-title { margin: 0; }
+.edu-content-subtitle { margin: 8px 0 0; }
 .edu-content-body { display: grid; gap: 14px; }
 .edu-body { margin: 0; color: var(--ui-text-main); font-size: 15px; font-weight: 500; line-height: 1.75; }
 .edu-helper { margin: 0; color: var(--ui-text-muted); font-size: 12px; line-height: 1.6; }

@@ -9,7 +9,7 @@
   "audience": "general",
   "entry": "GuidePage.tsx",
   "ppt": {
-    "entry": "SceneDeck.tsx",
+    "entry": "neuronPpt.tsx",
     "path": "/scenedeck/",
     "player": true
   },
@@ -25,7 +25,7 @@
     },
     {
       "id": "biological-structure",
-      "title": "1943 年，神经元被写成了数学模型",
+      "title": "人工神经元，源自生物神经元",
       "goal": "分清生物神经元的结构与麦卡洛克-皮茨模型抽象出的规则，理解被继承的是处理信号的方式而不是形状。",
       "summary": "把生物神经元的树突、胞体、轴突与 M-P 模型的输入、加权、阈值输出并排对照。",
       "interaction": "无，结构与模型对照阅读。",
@@ -34,7 +34,7 @@
     },
     {
       "id": "decision-bridge",
-      "title": "神经元究竟在做什么？",
+      "title": "一个神经元，只做一次简单判断",
       "goal": "理解早期二值模型把单个神经元简化为 0 或 1，许多这样的简单状态组合起来才能形成丰富判断。",
       "summary": "从刺激反应过渡到决策，说明神经元给出的是倾向而不是答案，复杂行为来自大量简单单元的组合。",
       "interaction": "无。",

@@ -7,7 +7,7 @@ import {
   type PointerEvent as ReactPointerEvent,
 } from 'react';
 import "./ReluApproximationLabPage.css";
-import { Button, LessonStage, NoticeStrip, RangeControl, Typography } from '../../../shared/react';
+import { Button, ContentBlock, NoticeStrip, RangeControl, Typography } from '../../../shared/react';
 
 interface Point {
   x: number;
@@ -261,18 +261,16 @@ export function ReluApproximationLabPage({ onComplete }: ReluApproximationLabPag
   const predictionPath = pathFor(prediction);
 
   return (
-    <LessonStage
+    <ContentBlock
+      headingLevel={1}
       className="ng-relu-approximation-lab"
       title="足够多带有 ReLU 的神经元，就能逼近任意曲线"
-      description="在画布上画出一条目标曲线，再让浏览器直接训练一个由 ReLU 神经元组成的小网络。"
-      descriptionVariant="body"
-      actions={(
-        <div className="af-react-actions">
-          <Button variant="primary" disabled={!target.length || training} onClick={train}>{training ? '训练中…' : '训练网络'}</Button>
-          <Button disabled={!target.length && !raw.length} onClick={clear}>重新绘制</Button>
-        </div>
-      )}
+      subtitle="在画布上画出一条目标曲线，再让浏览器直接训练一个由 ReLU 神经元组成的小网络。"
     >
+      <div className="activation-actions">
+        <Button variant="primary" disabled={!target.length || training} onClick={train}>{training ? '训练中…' : '训练网络'}</Button>
+        <Button disabled={!target.length && !raw.length} onClick={clear}>重新绘制</Button>
+      </div>
       <section className="ng-relu-drawing-panel">
         <header className="ng-relu-drawing-panel__head">
           <div>
@@ -332,7 +330,7 @@ export function ReluApproximationLabPage({ onComplete }: ReluApproximationLabPag
               : `${neuronCount} 个 ReLU 神经元 · 拟合进度 ${epoch}% · 当前误差 ${loss.toFixed(4)}`}
         </Typography>
       </NoticeStrip>
-    </LessonStage>
+    </ContentBlock>
   );
 }
 

@@ -2,7 +2,12 @@
   min-width: 0;
   max-width: 100%;
   border-top: 3px solid var(--ui-accent);
+  border-radius: var(--ui-radius-lg);
+  box-shadow: var(--ui-shadow-soft);
+  padding: clamp(16px, 2.4vw, 22px);
 }
+
+.ng-activation-catalog > .edu-content-head { margin-bottom: 16px; }
 
 .ng-activation-catalog__grid {
   display: grid;
@@ -36,6 +41,17 @@
 .ng-activation-catalog__card:nth-child(6) { border-top-color: #a16925; }
 
 .ng-activation-catalog__formula { border-radius: var(--ui-radius-sm); background: var(--ui-bg-muted); padding: 8px 10px; }
+
+.course-page-surface .ng-activation-catalog {
+  display: grid;
+  grid-template-rows: auto minmax(0,1fr);
+}
+.course-page-surface .ng-activation-catalog > .edu-content-body,
+.course-page-surface .ng-activation-catalog__grid,
+.course-page-surface .ng-activation-catalog__card { min-height: 0; }
+.course-page-surface .ng-activation-catalog__grid { grid-template-columns: repeat(3,minmax(0,1fr)); grid-template-rows: repeat(2,minmax(0,1fr)); }
+.course-page-surface .ng-activation-catalog__card { grid-template-rows: 150px auto auto minmax(0,1fr); }
+.course-page-surface .ng-activation-catalog .activation-function-plot { height: 150px; min-height: 150px !important; aspect-ratio: auto; }
 
 @media (max-width: 980px) {
   .ng-activation-catalog__grid { grid-template-columns: minmax(0, 1fr); }

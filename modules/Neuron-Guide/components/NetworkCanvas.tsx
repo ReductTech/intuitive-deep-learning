@@ -11,6 +11,7 @@ import {
   type ReactNode,
 } from 'react';
 import { Typography } from '../../shared/react';
+import '../../shared/react/visuals/activation.css';
 
 export type NetworkNodeTone =
   | 'input'
@@ -662,13 +663,13 @@ export function NetworkCanvas({
   return (
     <figure
       ref={figureRef}
-      className={classNames('af-network-figure', className)}
+      className={classNames('network-figure', className)}
       data-active-layer={selectedNode?.layer}
       data-active-index={selectedNode?.index}
     >
       <canvas
         ref={canvasRef}
-        className="af-network-canvas"
+        className="network-canvas"
         width={960}
         height={height}
         role="img"
@@ -690,7 +691,7 @@ export function NetworkCanvas({
         {textSummary}
       </canvas>
 
-      <Typography id={descriptionId} variant="bodySmall" tone="muted" className="af-network-summary">
+      <Typography id={descriptionId} variant="bodySmall" tone="muted" className="network-summary">
         {textSummary}
       </Typography>
 
@@ -699,7 +700,7 @@ export function NetworkCanvas({
           ref={inspectorRef}
           id={inspectorId}
           className={classNames(
-            'af-network-inspector',
+            'network-inspector',
             inspectorDetails && 'is-visible',
           )}
           aria-live="polite"

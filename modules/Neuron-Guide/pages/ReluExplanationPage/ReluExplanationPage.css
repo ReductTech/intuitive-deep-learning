@@ -1,5 +1,13 @@
-.ng-relu-explanation .edu-stage-copy,
-.ng-relu-explanation .edu-stage-description {
+.ng-relu-explanation {
+  border-radius: var(--ui-radius-lg);
+  box-shadow: var(--ui-shadow-soft);
+  padding: clamp(16px, 2.4vw, 22px);
+}
+
+.ng-relu-explanation > .edu-content-head { margin-bottom: 16px; }
+
+.ng-relu-explanation .edu-content-head,
+.ng-relu-explanation .edu-content-subtitle {
   width: 100%;
   max-width: none;
 }
