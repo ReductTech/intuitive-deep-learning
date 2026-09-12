@@ -25,25 +25,23 @@ export function WeightedSumPage({ onComplete }: WeightedSumPageProps) {
       title="把一个现实因素，翻译成神经元能处理的输入"
       subtitle="模型不能直接计算“表现好不好”，需要先规定衡量问题，再把回答映射到统一的数值尺度。"
     >
-      <FactorCard
-        factor={factor}
-        index={0}
-        value={state.values[0]}
-        touched={state.touched[0]}
-        disabled={!hydrated}
-        onValueChange={(value) => {
-          setValueDraft(0, value);
-          onComplete();
-        }}
-        onValueCommit={commitValues}
-      />
-      <div className="ng-signal-quantization__result">
-        <Callout
-          tone="green"
-          label="直觉观察"
-          text="回答形成输入强度，分析建议形成连线权重；信号经过这条连线后，影响会被相应放大或缩小。"
-        />
+      <div className="ng-signal-quantization__hero">
         <NeuronSignalNetwork scenario={scenario} values={state.values} count={1} />
+      </div>
+      <div className="ng-signal-quantization__input">
+        <FactorCard
+          factor={factor}
+          index={0}
+          value={state.values[0]}
+          touched={state.touched[0]}
+          disabled={!hydrated}
+          onValueChange={(value) => {
+            setValueDraft(0, value);
+            onComplete();
+          }}
+          onValueCommit={commitValues}
+        />
+        <Callout tone="green" label="直觉观察" text="你的回答先变成输入强度，再沿着带有权重的连线传递；权重越大，这个因素对最终判断的影响越明显。" />
       </div>
     </ContentBlock>
   );

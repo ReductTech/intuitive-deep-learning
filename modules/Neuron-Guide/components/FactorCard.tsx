@@ -52,7 +52,7 @@ export function FactorCard({
         <div className="ng-model-importance">
           <div className="ng-model-importance-copy" aria-label={`分析建议权重为 ${factor.suggestedImportance} 分`}>
             <Typography variant="bodySmall" tone="muted">
-              AI 建议：在这次判断中，这个因素按 <Typography as="strong" variant="h3" tone="warning">{factor.suggestedImportance} / 10</Typography> 的权重计入。
+              AI 建议权重：<Typography as="strong" variant="h3" tone="warning">{factor.suggestedImportance} / 10</Typography>
             </Typography>
           </div>
           {requireAccept && !accepted && <Button className="ng-accept-importance" variant="primary" onClick={onAccept}>好的</Button>}

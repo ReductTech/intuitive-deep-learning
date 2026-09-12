@@ -35,8 +35,7 @@ export function NeuronDecisionBridgePage() {
     <ContentBlock
       headingLevel={1}
       className="ng-lecture-stage ng-neuron-decision-bridge"
-      title="一个神经元，只做一次简单判断"
-      subtitle="早期模型把神经元的输出简化为 0 或 1。复杂行为来自许多简单输出的组合，而不是某一个神经元独自完成。"
+      title="一个神经元很简单，组合起来却极其复杂"
     >
       <section className="ng-neuron-decision-bridge__stage" aria-label="神经元组合状态实验">
         <div className="ng-neuron-decision-bridge__network">
@@ -75,17 +74,13 @@ export function NeuronDecisionBridgePage() {
           </div>
 
           <div className="ng-neuron-decision-bridge__decision">
-            <Typography variant="body" tone="warning">组合后的行为</Typography>
+            <Typography variant="body" tone="warning">组合后的状态</Typography>
             <Typography as="strong" variant="h3" tone="accent">{outcome.title}</Typography>
             <Typography variant="body" tone="muted">{outcome.rule}</Typography>
           </div>
         </div>
 
         <div className="ng-neuron-decision-bridge__states" aria-label="八种组合状态">
-          <div className="ng-neuron-decision-bridge__states-head">
-            <Typography variant="body" tone="warning">3 个输出，8 种组合</Typography>
-            <Typography variant="body" tone="muted">点击切换</Typography>
-          </div>
           <div className="ng-neuron-decision-bridge__state-grid">
             {combinations.map((combination, index) => (
               <button
@@ -106,17 +101,15 @@ export function NeuronDecisionBridgePage() {
           <div className="ng-neuron-decision-bridge__scale">
             <div><Typography variant="body" tone="muted" wrap="nowrap">3 个二值输出</Typography><Typography as="strong" variant="h1" tone="accent" wrap="nowrap">2³ = 8</Typography></div>
             <Typography as="span" variant="h3" tone="warning" aria-hidden="true">→</Typography>
-            <div><Typography variant="body" tone="muted" wrap="nowrap">10 个二值输出</Typography><Typography as="strong" variant="h1" tone="accent" wrap="nowrap">2¹⁰ = 1024</Typography></div>
+            <div><Typography variant="body" tone="muted" wrap="nowrap">302 个神经元</Typography><Typography as="strong" variant="h1" tone="accent" wrap="nowrap">2³⁰² ≈ 8.1 × 10⁹⁰</Typography></div>
           </div>
         </div>
       </section>
 
       <div className="ng-neuron-decision-bridge__conclusion">
-        <Typography as="strong" variant="h3" tone="accent">单个神经元只输出 0 / 1；多个简单输出组合起来，形成不同的判断与行为。</Typography>
+        <Typography as="strong" variant="h3" tone="accent">在极度简化的二值模型中，每增加一个神经元，可能的状态组合数就翻一倍。</Typography>
       </div>
     </ContentBlock>
   );
 }
-
-
 

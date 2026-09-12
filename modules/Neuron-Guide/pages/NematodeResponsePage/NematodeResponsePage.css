@@ -141,8 +141,6 @@
 
 .course-shell .ng-nematode-intro__ability-head > div:first-child { display: grid; min-width: 0; gap: 2px; }
 
-.course-shell .ng-nematode-intro__ability-legend { display: flex; flex: 0 0 auto; gap: 14px; }
-
 .course-shell .ng-nematode-intro__bubble-field {
   position: relative;
   min-width: 0;
@@ -315,7 +313,7 @@
 
 .course-page-surface .ng-nematode-intro__story {
   min-height: 0;
-  grid-template-rows: minmax(0, .72fr) minmax(0, 2.28fr);
+  grid-template-rows: minmax(0, 1.05fr) minmax(0, 1.95fr);
   gap: 14px;
 }
 
@@ -323,20 +321,26 @@
 .course-page-surface .ng-nematode-intro__abilities { min-height: 0; padding: 16px 18px 18px; }
 
 .course-page-surface .ng-nematode-intro__bubble-field {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  grid-template-rows: repeat(3, minmax(0, 1fr));
-  align-items: center;
-  justify-items: center;
-  gap: 8px 14px;
+  display: block;
+  position: relative;
   min-height: 0;
 }
 
 .course-page-surface .ng-nematode-intro__bubble {
-  position: relative;
-  inset: auto !important;
+  position: absolute;
+  inset: auto;
   width: 86px;
   height: 86px;
   flex: 0 0 auto;
 }
+
+.course-page-surface .ng-nematode-intro__bubble:nth-child(1) { left: 4%; top: 8%; }
+.course-page-surface .ng-nematode-intro__bubble:nth-child(2) { left: 34%; top: 2%; }
+.course-page-surface .ng-nematode-intro__bubble:nth-child(3) { right: 7%; top: 14%; }
+.course-page-surface .ng-nematode-intro__bubble:nth-child(4) { left: 16%; top: 49%; }
+.course-page-surface .ng-nematode-intro__bubble:nth-child(5) { left: 53%; top: 39%; }
+.course-page-surface .ng-nematode-intro__bubble:nth-child(6) { right: 1%; top: 55%; }
+.course-page-surface .ng-nematode-intro__bubble:nth-child(7) { left: 2%; top: auto; bottom: 2%; }
+.course-page-surface .ng-nematode-intro__bubble:nth-child(8) { left: 39%; top: auto; bottom: 7%; }
+.course-page-surface .ng-nematode-intro__bubble:nth-child(9) { right: 19%; top: auto; bottom: 0; }
 

@@ -63,7 +63,7 @@
   overflow: hidden;
   margin: 0;
   background: linear-gradient(180deg, #fff, color-mix(in srgb, var(--step-soft) 45%, white));
-  padding: 10px 12px;
+  padding: 4px 8px;
 }
 
 .course-shell .ng-biological-model__image img {

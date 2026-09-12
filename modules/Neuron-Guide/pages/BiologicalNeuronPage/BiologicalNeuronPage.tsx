@@ -17,8 +17,8 @@ export function BiologicalNeuronPage() {
     <ContentBlock
       headingLevel={1}
       className="ng-lecture-stage ng-biological-model"
-      title="人工神经元，源自生物神经元"
-      subtitle="它没有复制细胞的外形，而是借鉴了四个环节：接收、影响、整合、传出。"
+      title="人工神经元，从生物神经元获得灵感"
+      subtitle="它没有复制神经细胞，而是抽象了它处理信息的过程：接收、加权、汇总、输出。"
     >
       <ol className="ng-biological-model__steps" aria-label="从生物结构到人工神经元的四步抽象">
         {abstractions.map((item) => (
@@ -34,7 +34,7 @@ export function BiologicalNeuronPage() {
               <img src={item.image} alt={`${item.structure}：${item.biology}`} />
             </figure>
             <div className="ng-biological-model__detail ng-biological-model__detail--math">
-              <Typography as="strong" variant="bodySmall" tone="warning">建模角色</Typography>
+              <Typography as="strong" variant="bodySmall" tone="warning">对应环节</Typography>
               <Typography as="strong" variant="h3" tone="accent">{item.math}</Typography>
               <Typography as="code" variant="body" tone="main">{item.symbol}</Typography>
             </div>

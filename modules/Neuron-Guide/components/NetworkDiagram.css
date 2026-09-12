@@ -1,5 +1,5 @@
 .ng-network-input-value { fill: #ffd76b; font-family: var(--ui-font-mono); text-anchor: middle; }
-.ng-network-wrap { min-width: 0; margin: 0; border: 1px solid var(--ui-border); border-radius: var(--ui-radius-sm); background: var(--ui-bg-muted); padding: 8px 14px; overflow: hidden; }
+.ng-network-wrap { min-width: 0; margin: 0; border: 1px solid var(--ui-border); border-radius: var(--ui-radius-sm); background: transparent; padding: 8px 14px; overflow: hidden; }
 .ng-network-wrap svg { display: block; width: 100%; min-width: 0; max-width: 100%; height: auto; }
 .ng-network-wrap--single { padding-block: 4px; }
 .ng-network-edge { stroke: #9fb0c8; stroke-linecap: round; opacity: .72; }
@@ -19,4 +19,5 @@
 .ng-network-label-box > p { max-width: 100%; overflow-wrap: anywhere; }
 .ng-network-external-label--output { fill: #b9364a; text-anchor: middle; }
 .ng-network-weight rect { fill: #fff; stroke: #d5deeb; }
+.ng-network-weight { isolation: isolate; }
 .ng-network-weight text { fill: #d9602f; font-family: var(--ui-font-mono); text-anchor: middle; }

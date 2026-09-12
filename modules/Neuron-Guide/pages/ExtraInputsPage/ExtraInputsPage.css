@@ -13,8 +13,8 @@
 }
 .course-page-surface .ng-extra-inputs-stage .edu-content-body {
   min-height: 0;
-  grid-template-columns: minmax(0,1.05fr) minmax(0,.95fr);
-  grid-template-rows: minmax(0,1fr);
+  grid-template-columns: minmax(0,1fr);
+  grid-template-rows: minmax(0,1.05fr) minmax(0,.95fr);
   align-items: stretch;
   gap: 12px;
 }

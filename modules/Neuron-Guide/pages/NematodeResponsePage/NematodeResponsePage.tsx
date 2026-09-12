@@ -13,7 +13,7 @@ const abilities = [
   { name: '转向', detail: '它通过改变头部摆动和身体弯曲，重新选择探索方向。', group: '行动' },
   { name: '觅食', detail: '它综合气味、食物浓度与饥饿状态，调整速度和方向来寻找细菌。', group: '行为' },
   { name: '避险', detail: '有害气味、强烈触碰或异常温度会激活回避回路，让它迅速离开。', group: '行为' },
-  { name: '简单学习', detail: '经历重复刺激后，它会改变后续反应强度，表现出习惯化与联结学习。', group: '行为' },
+  { name: '学习', detail: '经历重复刺激后，它会改变后续反应强度，表现出习惯化与联结学习。', group: '行为' },
 ] as const;
 
 export function NematodeResponsePage() {
@@ -67,16 +67,11 @@ export function NematodeResponsePage() {
             </Typography>
           </section>
 
-          <section className="ng-nematode-intro__abilities" aria-label="秀丽隐杆线虫的感知、行动与行为">
+          <section className="ng-nematode-intro__abilities" aria-label="秀丽隐杆线虫的能力">
             <div className="ng-nematode-intro__ability-head">
               <div>
                 <Typography as="h3" variant="h3" tone="accent">302 个神经元支持的能力</Typography>
                 <Typography variant="body" tone="muted">悬浮或聚焦泡泡，暂停漂浮并查看机制。</Typography>
-              </div>
-              <div className="ng-nematode-intro__ability-legend" aria-label="能力类别">
-                <Typography as="span" variant="body" tone="accent">感知</Typography>
-                <Typography as="span" variant="body" tone="warning">行动</Typography>
-                <Typography as="span" variant="body" tone="success">行为</Typography>
               </div>
             </div>
             <div className="ng-nematode-intro__bubble-field">

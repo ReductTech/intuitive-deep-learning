@@ -47,7 +47,7 @@ export function NeuronSignalNetwork({ scenario, values, count = 3 }: NeuronSigna
                   </div>
                 </foreignObject>
               )}
-              <circle className="ng-network-node ng-network-node--input" cx="155" cy={y} r="28" />
+              <circle className="ng-network-node ng-network-node--input" cx="155" cy={y} r={count === 1 ? 36 : 28} />
               <Typography as="text" variant="bodySmall" tone="inherit" className="ng-network-node-symbol" x="155" y={y - 2}>x{subscripts[index]}</Typography>
               <Typography as="text" variant="bodySmall" tone="inherit" className="ng-network-input-value" x="155" y={y + 16}>{formatScore(input)}</Typography>
               {count === 1 && <Typography as="text" variant="bodySmall" tone="accent" className="ng-network-node-label" x="155" y={y + 54}>{factor.valueLabel}</Typography>}
@@ -59,11 +59,11 @@ export function NeuronSignalNetwork({ scenario, values, count = 3 }: NeuronSigna
             </g>
           );
         })}
-        <circle className="ng-network-node ng-network-node--unit" cx="462" cy="126" r="40" />
+        <circle className="ng-network-node ng-network-node--unit" cx="462" cy="126" r={count === 1 ? 48 : 40} />
         <Typography as="text" variant="h3" tone="inherit" className="ng-network-node-symbol ng-network-node-symbol--unit" x="462" y="126">Σ</Typography>
         <Typography as="text" variant="bodySmall" tone="accent" className="ng-network-node-label" x="462" y={count === 1 ? 184 : 181}>加权求和</Typography>
         <line className="ng-network-output-edge" x1="502" y1="126" x2="612" y2="126" markerEnd={`url(#${titleId}-arrow)`} />
-        <circle className="ng-network-node ng-network-node--output" cx="652" cy="126" r="34" />
+        <circle className="ng-network-node ng-network-node--output" cx="652" cy="126" r={count === 1 ? 42 : 34} />
         <Typography as="text" variant="bodySmall" tone="inherit" className="ng-network-node-symbol" x="652" y="122">y</Typography>
         <Typography as="text" variant="bodySmall" tone="warning" className="ng-network-output-value" x="652" y="143">{formatScore(output)}</Typography>
         {count !== 1 && <Typography as="text" variant="bodySmall" tone="accent" className="ng-network-external-label ng-network-external-label--output" x="720" y="131">判断分数</Typography>}
