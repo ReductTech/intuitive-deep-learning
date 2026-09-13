@@ -208,17 +208,35 @@ export interface ShallowOutputPlotProps {
 
 export function ShallowOutputPlot({ model }: ShallowOutputPlotProps) {
   const equivalent = useMemo(() => shallowEquivalent(model), [model]);
-  const fn = useMemo(() => (x: number) => shallowPredict(model, x), [model]);
+  const series = useMemo<FunctionSeries[]>(() => [
+    ...model.neurons.map((neuron, index) => ({
+      id: `hidden-${index}`,
+      label: `h${index + 1}`,
+      stroke: ['#ef9540', '#5b8fe1', '#8e63d8'][index] ?? '#8e63d8',
+      strokeWidth: 2,
+      fn: (x: number) => neuron.w * x + neuron.b,
+    })),
+    {
+      id: 'network-output',
+      label: 'y（总输出）',
+      stroke: COLORS.green,
+      strokeWidth: 4,
+      fn: (x: number) => shallowPredict(model, x),
+    },
+  ], [model]);
 
   return (
     <FunctionPlot
       className="ng-activation-plot ng-activation-stage-plot"
-      fn={fn}
-      stroke={COLORS.green}
+      series={series}
       initialCenter={{ x: 0, y: 0 }}
       initialScale={{ x: 2.4 / 760, y: 2.4 / 420 }}
-      minHeight={430}
-      ariaLabel={`无激活函数浅层网络的输出直线，y 等于 ${formatNumber(equivalent.slope)} x ${formatSigned(equivalent.intercept)}`}
+      showLegend
+      xLabel="x"
+      yLabel="y"
+      fontScale={1.3}
+      minHeight={390}
+      ariaLabel={`无激活函数浅层网络的多条直线与总输出，y 等于 ${formatNumber(equivalent.slope)} x ${formatSigned(equivalent.intercept)}`}
     />
   );
 }

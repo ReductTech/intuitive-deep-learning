@@ -1,58 +1,199 @@
-import { useState } from 'react';
+import { useRef, useState, type CSSProperties } from 'react';
 import "./BiasThresholdTheoryPage.css";
-import { Button, ContentBlock, FormulaBlock, FormulaTerm, NoticeStrip, Question, Typography } from '../../../shared/react';
+import { ContentBlock, FormulaBlock, FormulaTerm, Typography } from '../../../shared/react';
 import { formatScore, weightedSum } from '../../model/neuronMath';
 import { useNeuronLesson } from '../../model/NeuronLessonContext';
 
-export function BiasThresholdTheoryPage({ onComplete }: { onComplete?: () => void }) {
-  const { state, scenario } = useNeuronLesson();
-  const [step, setStep] = useState<0 | 1 | 2>(0);
-  const [thresholdRevealed, setThresholdRevealed] = useState(false);
-  const score = weightedSum(scenario, state.values);
-  const centeredScore = score - 1.5;
-  const tendency = centeredScore >= 0 ? scenario.positiveLabel : scenario.negativeLabel;
+const thresholdPresets = [
+  { label: '宽松', value: 0.8 },
+  { label: '中间', value: 1.5 },
+  { label: '严格', value: 2.2 },
+];
 
-  return <ContentBlock
-    headingLevel={1}
-    className="ng-bias-theory"
-    title={`所以，从神经元的角度看，${scenario.question}`}
-    subtitle="把三个输入的加权总分与判断门槛比较，得到这次决策的倾向。"
-  >
-    <div className="ng-bias-theory__question">
-      <Question
-        persistenceKey="neuron-threshold-v4" type="fill"
-        title={`三个加权输入的总分范围是 0～3。若取中点为分界，总分大于 ____ 时，更倾向于“${scenario.positiveLabel}”。`}
-        blanks={[{ label: '三个输入的倾向分界', placeholder: '填写数值' }]}
-        answer="1.5"
-        feedback={{ correct: `正确：3 ÷ 2 = 1.5。总分超过 1.5 时，模型更倾向于“${scenario.positiveLabel}”。`, wrong: '这里要找 0～3 的中点。把总范围 3 平分成两半，分界点是多少？' }}
-        onCheck={(result) => result.ok && setThresholdRevealed(true)}
-      />
-    </div>
-    <section className="ng-bias-theory__stage" aria-live="polite">
-      <FormulaBlock ariaLabel="从判断门槛推导偏置">
-        <FormulaTerm tooltip="三个输入的加权总分">w₁x₁ + w₂x₂ + w₃x₃</FormulaTerm>
-        {step === 0 ? <>{' > '}<FormulaTerm tooltip={thresholdRevealed ? '判断门槛 T' : '先完成上方填空'}>{thresholdRevealed ? '1.5' : '?'}</FormulaTerm></> : step === 1 ? <>{' − '}<FormulaTerm tooltip="移到左侧后，门槛变成负数">1.5</FormulaTerm>{' > 0'}</> : <>{' + '}<FormulaTerm tooltip="偏置 b = −1.5">b</FormulaTerm>{' > 0'}</>}
-      </FormulaBlock>
-      <div className="ng-bias-theory__action">
-        {step === 0 && <Button variant="primary" disabled={!thresholdRevealed} onClick={() => setStep(1)}>{thresholdRevealed ? '把 1.5 移到左边' : '先确定判断门槛'}</Button>}
-        {step === 1 && <Button variant="primary" onClick={() => { setStep(2); onComplete?.(); }}>把 −1.5 记作 b</Button>}
-        {step === 2 && <Typography as="code" variant="body" tone="success">b = −1.5</Typography>}
-      </div>
-    </section>
-    <div className="ng-bias-theory__equivalence">
-      <div className={step === 0 ? 'is-current' : ''}><Typography variant="body" tone="muted">门槛形式</Typography><Typography as="code" variant="body" tone="accent">wᵀx &gt; T</Typography></div>
-      <Typography variant="h3" tone="warning">⇔</Typography>
-      <div className={step === 1 ? 'is-current' : ''}><Typography variant="body" tone="muted">移项</Typography><Typography as="code" variant="body" tone="accent">wᵀx − T &gt; 0</Typography></div>
-      <Typography variant="h3" tone="warning">⇔</Typography>
-      <div className={step === 2 ? 'is-current' : ''}><Typography variant="body" tone="muted">偏置形式</Typography><Typography as="code" variant="body" tone="success">wᵀx + b &gt; 0</Typography></div>
-    </div>
-    {step === 2 ? <div className="ng-bias-theory__result-stack">
-      <NoticeStrip className="ng-bias-theory__notice"><Typography as="strong" variant="body" tone="accent">偏置就是移入公式的判断门槛。</Typography><Typography as="span" variant="body" tone="muted">当门槛为 T 时，b = −T；这样所有判断都可以统一与 0 比较。</Typography></NoticeStrip>
-      <div className="ng-bias-theory__current-result"><Typography variant="body" tone="warning">当前结果</Typography><Typography as="code" variant="body" tone="main">z = {formatScore(score)} + (−1.50) = {formatScore(centeredScore)}</Typography><Typography variant="body" tone={centeredScore >= 0 ? 'success' : 'accent'}>更倾向于“{tendency}”</Typography></div>
-    </div> : <div className="ng-bias-theory__hint"><Typography variant="body" tone="muted">公式两边进行相同的移项，判断结果不会改变。</Typography></div>}
-  </ContentBlock>;
+function clampPosition(value: number): number {
+  return Math.max(0, Math.min(100, (value / 3) * 100));
 }
 
+export function BiasThresholdTheoryPage({ onComplete }: { onComplete?: () => void }) {
+  const { state, scenario } = useNeuronLesson();
+  const [threshold, setThreshold] = useState(1.5);
+  const [thresholdTouched, setThresholdTouched] = useState(false);
+  const completedRef = useRef(false);
 
+  const values = scenario.factors.map((factor, index) => state.values[index] ?? factor.suggestedValue);
+  const score = weightedSum(scenario, values);
+  const bias = -threshold;
+  const centeredScore = score + bias;
+  const isActive = score > threshold;
+  const tendency = isActive ? scenario.positiveLabel : scenario.negativeLabel;
+  const thresholdDisplay = threshold.toFixed(2);
+  const scoreDisplay = formatScore(score);
+  const centeredScoreDisplay = formatScore(centeredScore);
+  const zPosition = clampPosition(score);
+  const thresholdPosition = clampPosition(threshold);
 
+  const markComplete = () => {
+    setThresholdTouched(true);
+    if (!completedRef.current) {
+      completedRef.current = true;
+      onComplete?.();
+    }
+  };
 
+  const updateThreshold = (nextValue: number) => {
+    setThreshold(nextValue);
+    markComplete();
+  };
+
+  const stageStyle = {
+    '--ng-z-position': `${zPosition}%`,
+    '--ng-threshold-position': `${thresholdPosition}%`,
+  } as CSSProperties;
+
+  return (
+    <ContentBlock
+      headingLevel={1}
+      className="ng-bias-theory"
+      title={`为什么需要 bias，才能判断“${scenario.positiveLabel}”？`}
+      subtitle={`权重决定“看重什么”，bias 决定“${scenario.positiveLabel}”需要多大总输入才算够。`}
+    >
+      <div className="ng-bias-theory__context">
+        <Typography as="span" variant="body" tone="muted">上一页得到总输入</Typography>
+        <FormulaTerm tooltip="z：三个输入经过加权求和后的总输入">
+          z = WᵀX = {scoreDisplay}
+        </FormulaTerm>
+        <Typography as="span" variant="body" tone="muted">当前决定：{scenario.question}</Typography>
+      </div>
+
+      <section className="ng-bias-theory__experiment" aria-live="polite" style={stageStyle}>
+        <div className="ng-bias-theory__steps" aria-label="偏置实验步骤">
+          <div className="ng-bias-theory__step is-complete">
+            <span className="ng-bias-theory__step-number">1</span>
+            <span>
+              <Typography as="strong" variant="body" tone="main">固定总输入 z</Typography>
+              <Typography as="span" variant="bodySmall" tone="muted">保持输入和权重不变</Typography>
+            </span>
+          </div>
+          <span className="ng-bias-theory__step-arrow" aria-hidden="true">›</span>
+          <div className={`ng-bias-theory__step ${thresholdTouched ? 'is-complete' : 'is-current'}`}>
+            <span className="ng-bias-theory__step-number">2</span>
+            <span>
+              <Typography as="strong" variant="body" tone="main">拖动门槛 θ</Typography>
+              <Typography as="span" variant="bodySmall" tone="muted">调整需要多少总输入才激活</Typography>
+            </span>
+          </div>
+          <span className="ng-bias-theory__step-arrow" aria-hidden="true">›</span>
+          <div className={`ng-bias-theory__step ${thresholdTouched ? 'is-current' : ''}`}>
+            <span className="ng-bias-theory__step-number">3</span>
+            <span>
+              <Typography as="strong" variant="body" tone="main">观察 b 和输出</Typography>
+              <Typography as="span" variant="bodySmall" tone="muted">看门槛变化如何影响输出</Typography>
+            </span>
+          </div>
+        </div>
+
+        <div className="ng-bias-theory__workspace">
+          <div className="ng-bias-theory__numberline-panel">
+            <div className="ng-bias-theory__marker-labels">
+              <Typography variant="body" tone="success">
+                总输入 <FormulaTerm tooltip="固定不变的加权总输入">z = {scoreDisplay}</FormulaTerm>
+              </Typography>
+              <Typography variant="body" tone="warning">
+                门槛 <FormulaTerm tooltip="神经元需要达到的激活门槛">θ = {thresholdDisplay}</FormulaTerm>
+              </Typography>
+            </div>
+
+            <div className="ng-bias-theory__numberline" aria-label={`总输入 ${scoreDisplay}，门槛 ${thresholdDisplay}`}>
+              <div className="ng-bias-theory__track" />
+              <div className="ng-bias-theory__ticks" aria-hidden="true">
+                {[0, 1, 2, 3].map((tick) => (
+                  <span key={tick} style={{ left: `${(tick / 3) * 100}%` }}>{tick}</span>
+                ))}
+              </div>
+              <span className="ng-bias-theory__marker ng-bias-theory__marker--z" aria-hidden="true" />
+              <span className="ng-bias-theory__marker ng-bias-theory__marker--threshold" aria-hidden="true" />
+              <input
+                className="ng-bias-theory__range"
+                type="range"
+                min="0"
+                max="3"
+                step="0.1"
+                value={threshold}
+                aria-label="调整判断门槛"
+                onChange={(event) => updateThreshold(Number(event.target.value))}
+              />
+            </div>
+
+            <div className="ng-bias-theory__drag-label">
+              <Typography variant="body" tone="warning">拖动门槛 θ</Typography>
+              <Typography as="span" variant="bodySmall" tone="muted">试试看：门槛越高，越不容易输出 1</Typography>
+            </div>
+
+            <FormulaBlock ariaLabel="总输入加上偏置后的结果">
+              <FormulaTerm tooltip="z：输入和权重相乘后加总的结果">z</FormulaTerm>
+              {' + '}
+              <FormulaTerm tooltip="b：偏置，等于门槛的相反数">b</FormulaTerm>
+              {' = '}
+              <FormulaTerm tooltip="固定的总输入">{scoreDisplay}</FormulaTerm>
+              {' + ('}
+              <FormulaTerm tooltip={`b = −θ = −${thresholdDisplay}`}>{formatScore(bias)}</FormulaTerm>
+              {') = '}
+              <FormulaTerm className={isActive ? 'ng-bias-theory__formula-result--active' : 'ng-bias-theory__formula-result--inactive'} tooltip="送入激活函数前的净输入">
+                {centeredScoreDisplay}
+              </FormulaTerm>
+            </FormulaBlock>
+            <Typography variant="bodySmall" tone="muted">
+              其中 <FormulaTerm tooltip="偏置与判断门槛方向相反">b = −θ</FormulaTerm>
+            </Typography>
+          </div>
+
+          <aside className={`ng-bias-theory__output ${isActive ? 'is-active' : ''}`}>
+            <Typography variant="body" tone="muted">输出</Typography>
+            <Typography as="strong" variant="h1" tone={isActive ? 'success' : 'warning'}>
+              {isActive ? '1' : '0'}
+            </Typography>
+            <Typography variant="body" tone="muted">
+              因为 {scoreDisplay} {isActive ? '>' : '≤'} {thresholdDisplay}
+            </Typography>
+            <div className="ng-bias-theory__output-divider" />
+            <Typography variant="body" tone={isActive ? 'success' : 'accent'}>
+              更倾向于“{tendency}”
+            </Typography>
+          </aside>
+        </div>
+
+        <div className="ng-bias-theory__controls">
+          <Typography as="strong" variant="body" tone="main">快速设置门槛：</Typography>
+          <div className="ng-bias-theory__presets">
+            {thresholdPresets.map((preset) => (
+              <button
+                key={preset.label}
+                type="button"
+                className={`ng-bias-theory__preset ${threshold === preset.value ? 'is-selected' : ''}`}
+                onClick={() => updateThreshold(preset.value)}
+              >
+                <Typography as="span" variant="body" tone={threshold === preset.value ? 'warning' : 'main'}>
+                  {preset.label} <FormulaTerm tooltip="当前预设对应的判断门槛">θ = {preset.value.toFixed(1)}</FormulaTerm>
+                </Typography>
+              </button>
+            ))}
+          </div>
+          <div className="ng-bias-theory__controls-note">
+            <FormulaTerm tooltip="偏置不会改变输入和权重，只改变神经元的启动标准">b = −θ</FormulaTerm>
+            <Typography as="span" variant="bodySmall" tone="muted">不改权重，只改启动标准</Typography>
+          </div>
+        </div>
+      </section>
+
+      <div className="ng-bias-theory__key-point">
+        <span className="ng-bias-theory__key-point-mark" aria-hidden="true">i</span>
+        <Typography as="strong" variant="body" tone="main">
+          bias 不是新的输入因素，而是神经元自己的<strong>启动标准</strong>。
+        </Typography>
+        <Typography as="span" variant="body" tone="muted">
+          它让模型在不改变各输入权重关系的前提下，整体调高或调低“够不够”的标准。
+        </Typography>
+      </div>
+    </ContentBlock>
+  );
+}

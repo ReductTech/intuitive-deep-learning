@@ -1,40 +1,407 @@
-.course-shell .ng-bias-theory__question { margin-top: 6px; }
-
-.course-shell .ng-bias-theory__question > .dl-question { border: 0; border-radius: 0; background: transparent; padding: 0; }
-
-.course-shell .ng-bias-theory__stage { display: grid; min-height: 310px; align-content: center; justify-items: center; gap: 22px; border-block: 1px solid var(--ui-border); padding: 28px 20px; }
-
-.course-shell .ng-bias-theory__stage > .edu-formula-block { width: min(980px, 100%); min-width: 0; max-width: 100%; padding: 24px 30px; }
-
-.course-shell .ng-bias-theory__action { display: grid; min-height: 48px; place-items: center; }
-
-.course-shell .ng-bias-theory__equivalence { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 16px; max-width: 100%; }
-
-.course-shell .ng-bias-theory__equivalence > div { display: grid; min-width: 0; justify-items: center; gap: 6px; border-top: 3px solid rgba(39,68,110,.18); background: #fff; padding: 14px 18px; text-align: center; }
-
-.course-shell .ng-bias-theory__equivalence > div.is-current { border-top-color: var(--ui-accent-alt); background: rgba(240,126,71,.045); }
-
-.course-shell .ng-bias-theory__notice { display: flex; align-items: baseline; justify-content: center; gap: 14px; }
-
-.course-shell .ng-bias-theory__result-stack { display: grid; gap: 10px; }
-
-.course-shell .ng-bias-theory__current-result { display: grid; grid-template-columns: auto minmax(0,1fr) auto; align-items: center; gap: 16px; border-left: 4px solid var(--ui-accent-alt); background: rgba(240,126,71,.07); padding: 12px 18px; }
-
-.course-shell .ng-bias-theory__hint { display: grid; place-items: center; min-height: 48px; background: rgba(39,68,110,.035); padding: 10px 18px; text-align: center; }
-
-.course-page-surface .ng-bias-theory__stage { min-height: 250px; padding-block: 18px; }
-
-.course-page-surface .ng-bias-theory__stage > .edu-formula-block { padding-block: 18px; }
-
-@media (max-width: 760px) {
-  .course-shell .ng-bias-theory__equivalence { grid-template-columns: 1fr; }
+.course-shell .ng-bias-theory {
+  --ng-theory-blue: #173d73;
+  --ng-theory-muted: #6d7f9f;
+  --ng-theory-border: #dbe5f1;
+  --ng-theory-green: #2d985a;
+  --ng-theory-orange: #ee6c25;
+  --ng-theory-soft-blue: #f4f8fd;
+  --ng-theory-soft-green: #f3fbf5;
+  --ng-theory-soft-orange: #fff8f2;
 }
 
-@media (max-width: 760px) {
-  .course-shell .ng-bias-theory__notice { align-items: flex-start; flex-direction: column; }
+.course-shell .ng-bias-theory__context {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 0 14px;
+  border: 1px solid #d6e4f6;
+  border-radius: 22px;
+  background: #eef5ff;
+  padding: 7px 16px;
 }
 
-@media (max-width: 760px) {
-  .course-shell .ng-bias-theory__current-result { grid-template-columns: 1fr; }
+.course-shell .ng-bias-theory__context .edu-formula-term {
+  color: var(--ng-theory-blue);
+  font-weight: 700;
 }
 
+.course-shell .ng-bias-theory__experiment {
+  display: grid;
+  gap: 0;
+  overflow: hidden;
+  border: 1px solid var(--ng-theory-border);
+  border-radius: 9px;
+  background: #fff;
+  box-shadow: 0 10px 24px rgba(35, 67, 110, .06);
+}
+
+.course-shell .ng-bias-theory__steps {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+  border-bottom: 1px solid #edf1f7;
+  padding: 17px 24px 15px;
+}
+
+.course-shell .ng-bias-theory__step {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 12px;
+  color: var(--ng-theory-muted);
+}
+
+.course-shell .ng-bias-theory__step > span:last-child {
+  display: grid;
+  min-width: 0;
+  gap: 2px;
+}
+
+.course-shell .ng-bias-theory__step-number {
+  display: grid;
+  flex: 0 0 auto;
+  width: 42px;
+  aspect-ratio: 1;
+  place-items: center;
+  border-radius: 50%;
+  background: #e8eef6;
+  color: #7083a0;
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.course-shell .ng-bias-theory__step.is-complete .ng-bias-theory__step-number {
+  background: #5593df;
+  color: #fff;
+}
+
+.course-shell .ng-bias-theory__step.is-current .ng-bias-theory__step-number {
+  background: var(--ng-theory-orange);
+  color: #fff;
+}
+
+.course-shell .ng-bias-theory__step-arrow {
+  color: #8295b4;
+  font-size: 32px;
+  line-height: 1;
+}
+
+.course-shell .ng-bias-theory__workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 190px;
+  gap: 18px;
+  padding: 18px;
+}
+
+.course-shell .ng-bias-theory__numberline-panel {
+  display: grid;
+  min-width: 0;
+  align-content: center;
+  gap: 12px;
+  border-radius: 9px;
+  background: var(--ng-theory-soft-blue);
+  padding: 24px 28px 18px;
+}
+
+.course-shell .ng-bias-theory__marker-labels {
+  display: flex;
+  justify-content: space-around;
+  gap: 18px;
+  min-width: 0;
+}
+
+.course-shell .ng-bias-theory__marker-labels > * {
+  min-width: 0;
+}
+
+.course-shell .ng-bias-theory__marker-labels .edu-formula-term {
+  font-weight: 700;
+}
+
+.course-shell .ng-bias-theory__numberline {
+  position: relative;
+  min-height: 84px;
+  margin: 0 16px;
+}
+
+.course-shell .ng-bias-theory__track {
+  position: absolute;
+  top: 29px;
+  right: 0;
+  left: 0;
+  height: 3px;
+  background: var(--ng-theory-blue);
+}
+
+.course-shell .ng-bias-theory__track::before,
+.course-shell .ng-bias-theory__track::after {
+  position: absolute;
+  top: -7px;
+  width: 2px;
+  height: 17px;
+  background: var(--ng-theory-blue);
+  content: "";
+}
+
+.course-shell .ng-bias-theory__track::before { left: 0; }
+.course-shell .ng-bias-theory__track::after { right: 0; }
+
+.course-shell .ng-bias-theory__ticks {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.course-shell .ng-bias-theory__ticks span {
+  position: absolute;
+  top: 56px;
+  transform: translateX(-50%);
+  color: var(--ng-theory-blue);
+  font-size: 16px;
+}
+
+.course-shell .ng-bias-theory__marker {
+  position: absolute;
+  z-index: 2;
+  top: 18px;
+  width: 23px;
+  height: 23px;
+  transform: translateX(-50%);
+  border: 3px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 2px 5px rgba(23, 61, 115, .2);
+  pointer-events: none;
+}
+
+.course-shell .ng-bias-theory__marker--z {
+  left: var(--ng-z-position);
+  background: var(--ng-theory-green);
+}
+
+.course-shell .ng-bias-theory__marker--threshold {
+  left: var(--ng-threshold-position);
+  background: var(--ng-theory-orange);
+  box-shadow: 0 0 0 6px rgba(238, 108, 37, .16);
+}
+
+.course-shell .ng-bias-theory__range {
+  position: absolute;
+  z-index: 3;
+  top: 17px;
+  right: 0;
+  left: 0;
+  width: 100%;
+  height: 28px;
+  margin: 0;
+  cursor: grab;
+  opacity: 0;
+}
+
+.course-shell .ng-bias-theory__range:active {
+  cursor: grabbing;
+}
+
+.course-shell .ng-bias-theory__drag-label {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.course-shell .ng-bias-theory__drag-label .edu-body {
+  color: var(--ng-theory-orange);
+  font-weight: 700;
+}
+
+.course-shell .ng-bias-theory__numberline-panel > .edu-formula-block {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  margin-top: 2px;
+  border: 0;
+  background: rgba(255, 255, 255, .58);
+  padding: 13px 16px 9px;
+}
+
+.course-shell .ng-bias-theory__numberline-panel > .edu-caption {
+  text-align: center;
+}
+
+.course-shell .ng-bias-theory__formula-result--active {
+  color: var(--ng-theory-green);
+}
+
+.course-shell .ng-bias-theory__formula-result--inactive {
+  color: var(--ng-theory-orange);
+}
+
+.course-shell .ng-bias-theory__output {
+  display: grid;
+  min-width: 0;
+  align-content: center;
+  justify-items: center;
+  gap: 8px;
+  border-radius: 9px;
+  background: var(--ng-theory-soft-orange);
+  padding: 18px 14px;
+  text-align: center;
+}
+
+.course-shell .ng-bias-theory__output.is-active {
+  background: var(--ng-theory-soft-green);
+}
+
+.course-shell .ng-bias-theory__output > .edu-h1 {
+  color: #bd3e2d;
+  line-height: 1;
+}
+
+.course-shell .ng-bias-theory__output.is-active > .edu-h1 {
+  color: var(--ng-theory-green);
+}
+
+.course-shell .ng-bias-theory__output-divider {
+  width: 80%;
+  border-top: 1px solid rgba(99, 78, 66, .16);
+  margin: 8px 0;
+}
+
+.course-shell .ng-bias-theory__controls {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) minmax(170px, .7fr);
+  align-items: center;
+  gap: 16px;
+  border-top: 1px solid #edf1f7;
+  padding: 14px 18px;
+}
+
+.course-shell .ng-bias-theory__presets {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  min-width: 0;
+}
+
+.course-shell .ng-bias-theory__preset {
+  min-width: 0;
+  border: 1px solid #d6e1ef;
+  border-radius: 8px;
+  background: #f8fbff;
+  padding: 9px 10px;
+  color: var(--ng-theory-blue);
+  cursor: pointer;
+  text-align: center;
+}
+
+.course-shell .ng-bias-theory__preset:hover,
+.course-shell .ng-bias-theory__preset.is-selected {
+  border-color: var(--ng-theory-orange);
+  background: var(--ng-theory-soft-orange);
+}
+
+.course-shell .ng-bias-theory__controls-note {
+  display: grid;
+  min-width: 0;
+  gap: 2px;
+  border-left: 1px solid #d9e2ee;
+  padding-left: 18px;
+}
+
+.course-shell .ng-bias-theory__controls-note .edu-formula-term {
+  color: var(--ng-theory-blue);
+  font-weight: 700;
+}
+
+.course-shell .ng-bias-theory__key-point {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  margin-top: 14px;
+  border: 1px solid #cfe7d8;
+  border-radius: 9px;
+  background: var(--ng-theory-soft-green);
+  padding: 13px 18px;
+}
+
+.course-shell .ng-bias-theory__key-point-mark {
+  display: grid;
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--ng-theory-green);
+  color: #fff;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.course-shell .ng-bias-theory__key-point strong {
+  color: var(--ng-theory-green);
+}
+
+@media (max-width: 860px) {
+  .course-shell .ng-bias-theory__workspace {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .course-shell .ng-bias-theory__output {
+    grid-template-columns: auto auto minmax(0, 1fr);
+    justify-items: start;
+    text-align: left;
+  }
+
+  .course-shell .ng-bias-theory__output-divider {
+    display: none;
+  }
+
+  .course-shell .ng-bias-theory__controls {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .course-shell .ng-bias-theory__controls-note {
+    border-top: 1px solid #d9e2ee;
+    border-left: 0;
+    padding-top: 10px;
+    padding-left: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .course-shell .ng-bias-theory__steps {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .course-shell .ng-bias-theory__step-arrow {
+    display: none;
+  }
+
+  .course-shell .ng-bias-theory__numberline-panel {
+    padding-inline: 14px;
+  }
+
+  .course-shell .ng-bias-theory__marker-labels,
+  .course-shell .ng-bias-theory__drag-label {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .course-shell .ng-bias-theory__controls {
+    padding-inline: 12px;
+  }
+
+  .course-shell .ng-bias-theory__presets {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .course-shell .ng-bias-theory__output {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

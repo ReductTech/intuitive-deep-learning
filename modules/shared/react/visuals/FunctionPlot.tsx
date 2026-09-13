@@ -32,6 +32,7 @@ export interface FunctionPlotProps {
   xLabel?: string;
   yLabel?: string;
   showLegend?: boolean;
+  fontScale?: number;
 }
 
 interface Viewport {
@@ -133,6 +134,7 @@ export function FunctionPlot({
   xLabel = 'x',
   yLabel = 'y',
   showLegend = false,
+  fontScale = 1,
 }: FunctionPlotProps) {
   const initialViewport = useMemo<Viewport>(() => ({
     x: [initialCenter.x - plotWidth * initialScale.x / 2, initialCenter.x + plotWidth * initialScale.x / 2],
@@ -153,14 +155,14 @@ export function FunctionPlot({
     paper_bgcolor: '#fbfdff',
     plot_bgcolor: '#fbfdff',
     margin: { l: 58, r: 22, t: 18, b: 56 },
-    font: { family: 'Inter, Segoe UI, sans-serif', color: '#27446e', size: 12 },
+    font: { family: 'Inter, Segoe UI, sans-serif', color: '#27446e', size: 12 * fontScale },
     hovermode: 'closest',
     dragmode: 'pan',
     showlegend: showLegend,
-    legend: showLegend ? { orientation: 'h', y: -0.24 } : undefined,
-    xaxis: { title: { text: xLabel }, range: initialViewport.x, gridcolor: '#dfe6f1', zerolinecolor: '#68778f', linecolor: '#9fb0c8' },
-    yaxis: { title: { text: yLabel }, range: initialViewport.y, gridcolor: '#dfe6f1', zerolinecolor: '#68778f', linecolor: '#9fb0c8' },
-  }), [initialViewport, showLegend, xLabel, yLabel]);
+    legend: showLegend ? { orientation: 'h', y: -0.24, font: { size: 11 * fontScale } } : undefined,
+    xaxis: { title: { text: xLabel, font: { size: 13 * fontScale } }, tickfont: { size: 11 * fontScale }, range: initialViewport.x, gridcolor: '#dfe6f1', zerolinecolor: '#68778f', linecolor: '#9fb0c8' },
+    yaxis: { title: { text: yLabel, font: { size: 13 * fontScale } }, tickfont: { size: 11 * fontScale }, range: initialViewport.y, gridcolor: '#dfe6f1', zerolinecolor: '#68778f', linecolor: '#9fb0c8' },
+  }), [fontScale, initialViewport, showLegend, xLabel, yLabel]);
   const handleGraphReady = useCallback((graph: PlotlyGraph, host: HTMLElement) => {
     graph.on?.('plotly_relayout', (event) => {
       const eventSnapshot = { ...event };

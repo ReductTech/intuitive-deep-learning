@@ -1,6 +1,6 @@
 import { useMemo, useRef } from 'react';
 import "./ShallowLinearPage.css";
-import { Button, ContentBlock, FormulaBlock, NoticeStrip, Typography } from '../../../shared/react';
+import { Button, ContentBlock, FormulaBlock, FormulaTerm, NoticeStrip, Typography } from '../../../shared/react';
 import { ShallowOutputPlot } from '../../components/ActivationCharts';
 import {
   NetworkCanvas,
@@ -78,33 +78,31 @@ function buildCanvas(
     },
     {
       title: `线性层 (${model.neurons.length})`,
-      nodes: model.neurons.map((neuron, index) => {
-        return {
-          label: `h1.${index + 1}`,
-          tone: 'hidden' as const,
-          activation: 'linear',
-          details: {
-            title: `线性层 1 · h1.${index + 1}`,
-            body: '这个节点先对变量 x 做一次线性变换，再把结果传向输出节点。',
-            content: (
-              <div className="ng-hidden-node-calculation">
-                <div>
-                  <Typography as="span" variant="body" tone="muted">节点输出</Typography>
-                  <Typography as="code" variant="body" tone="accent" wrap="nowrap">h1.{index + 1} = {formatNumber(neuron.w)}x {formatSigned(neuron.b)}</Typography>
-                </div>
-                <div>
-                  <Typography as="span" variant="body" tone="muted">输出权重</Typography>
-                  <Typography as="code" variant="body" tone="warning" wrap="nowrap">v1.{index + 1} = {formatNumber(neuron.v)}</Typography>
-                </div>
-                <div>
-                  <Typography as="span" variant="body" tone="muted">送入 y</Typography>
-                  <Typography as="code" variant="body" tone="success" wrap="nowrap">v1.{index + 1}h1.{index + 1} = {formatNumber(neuron.v)}h1.{index + 1}</Typography>
-                </div>
+      nodes: model.neurons.map((neuron, index) => ({
+        label: `h1.${index + 1}`,
+        tone: 'hidden' as const,
+        activation: 'linear',
+        details: {
+          title: `线性层 1 · h1.${index + 1}`,
+          body: '这个节点先对变量 x 做一次线性变换，再把结果传向输出节点。',
+          content: (
+            <div className="ng-hidden-node-calculation">
+              <div>
+                <Typography as="span" variant="body" tone="muted">节点输出</Typography>
+                <Typography as="code" variant="body" tone="accent" wrap="nowrap">h1.{index + 1} = {formatNumber(neuron.w)}x {formatSigned(neuron.b)}</Typography>
               </div>
-            ),
-          },
-        };
-      }),
+              <div>
+                <Typography as="span" variant="body" tone="muted">输出权重</Typography>
+                <Typography as="code" variant="body" tone="warning" wrap="nowrap">v1.{index + 1} = {formatNumber(neuron.v)}</Typography>
+              </div>
+              <div>
+                <Typography as="span" variant="body" tone="muted">送入 y</Typography>
+                <Typography as="code" variant="body" tone="success" wrap="nowrap">v1.{index + 1}h1.{index + 1} = {formatNumber(neuron.v)}h1.{index + 1}</Typography>
+              </div>
+            </div>
+          ),
+        },
+      })),
     },
     {
       title: '输出 (1)',
@@ -225,10 +223,56 @@ export function ShallowLinearPage({ onComplete }: ShallowLinearPageProps) {
       headingLevel={1}
       className="ng-activation-network-lab ng-shallow-linear"
       title="多个线性神经元的叠加"
-      subtitle="把多个线性神经元写进矩阵，观察增加神经元能否改变线性输出的形状。"
+      subtitle={`把 ${count || 1} 个线性神经元写进矩阵，观察它们叠加后能否改变线性输出的形状。`}
       data-telemetry-manual
       aria-busy={!hydrated}
     >
+      {!model || !equivalent ? (
+        <NoticeStrip tone="blue">
+          <Typography variant="body" tone="inherit">正在恢复已保存的随机参数…</Typography>
+        </NoticeStrip>
+      ) : (
+        <div className="ng-activation-network-stage">
+          <section className="ng-activation-network-panel">
+            <header className="ng-activation-panel-head">
+              <Typography as="h3" variant="subtitle" tone="main">可视化展示台</Typography>
+            </header>
+            <div className="ng-activation-visual-box">
+              <FormulaBlock
+                className="ng-activation-plot-formula"
+                ariaLabel={`当前函数为 y 等于 ${formatNumber(equivalent.slope)} x ${formatSigned(equivalent.intercept)}`}
+                formula={(
+                  <span className="ng-activation-plot-formula-content">
+                    <Typography as="span" variant="body" tone="muted">
+                      当前总输出
+                    </Typography>
+                    <FormulaTerm tooltip="y：多个线性神经元的输出，再经过输出权重加总">
+                      y = {formatNumber(equivalent.slope)}x {formatSigned(equivalent.intercept)}
+                    </FormulaTerm>
+                  </span>
+                )}
+              />
+              <ShallowOutputPlot model={model} />
+            </div>
+          </section>
+
+          <section className="ng-activation-network-panel">
+            <header className="ng-activation-panel-head">
+              <Typography as="h3" variant="subtitle" tone="main">悬浮节点查看每一步加权</Typography>
+            </header>
+            <div className="ng-activation-visual-box ng-activation-visual-box--model">
+              <NetworkCanvas
+                layers={canvas.layers}
+                connections={canvas.connections}
+                ariaLabel="无激活函数网络结构"
+                caption="每个节点都只做线性运算；多个线性结果再次加权，仍然只能合并成一条直线"
+                height={430}
+                fontScale={1.25}
+              />
+            </div>
+          </section>
+        </div>
+      )}
       <div className="ng-activation-actions">
         <Button variant="primary" disabled={!hydrated || !model || count >= 3} onClick={addNeuron}>
           添加神经元
@@ -240,57 +284,6 @@ export function ShallowLinearPage({ onComplete }: ShallowLinearPageProps) {
           随机权重
         </Button>
       </div>
-      {!model || !equivalent ? (
-        <NoticeStrip tone="blue">
-          <Typography variant="body" tone="inherit">正在恢复已保存的随机参数…</Typography>
-        </NoticeStrip>
-      ) : (
-        <div className="ng-activation-network-stage">
-          <section className="ng-activation-network-panel">
-            <header className="ng-activation-panel-head">
-              <Typography as="h3" variant="subtitle" tone="main">先看输出的形状</Typography>
-              <Typography as="span" variant="body" tone="muted">增加神经元，直线会弯曲吗？</Typography>
-            </header>
-            <div className="ng-activation-visual-box">
-              <FormulaBlock
-                className="ng-activation-plot-formula"
-                ariaLabel={`当前函数为 y 等于 ${formatNumber(equivalent.slope)} x ${formatSigned(equivalent.intercept)}`}
-                formula={(
-                  <span className="ng-activation-plot-formula-content">
-                    <Typography as="span" variant="body" tone="muted">
-                      当前函数
-                    </Typography>
-                    <Typography as="span" variant="subtitle" tone="main">
-                      y = {formatNumber(equivalent.slope)}x {formatSigned(equivalent.intercept)}
-                    </Typography>
-                  </span>
-                )}
-              />
-              <ShallowOutputPlot model={model} />
-            </div>
-          </section>
-
-          <section className="ng-activation-network-panel">
-            <header className="ng-activation-panel-head">
-              <Typography as="h3" variant="subtitle" tone="main">把一个神经元扩展成多个</Typography>
-              <Typography as="span" variant="body" tone="muted">悬浮节点查看每一步加权</Typography>
-            </header>
-            <div className="ng-activation-visual-box ng-activation-visual-box--model">
-              <NetworkCanvas
-                layers={canvas.layers}
-                connections={canvas.connections}
-                ariaLabel="无激活函数网络结构"
-                caption="每个节点都只做线性运算；多个线性结果再次加权，仍然只能合并成一条直线"
-                height={430}
-              />
-            </div>
-          </section>
-        </div>
-      )}
     </ContentBlock>
   );
 }
-
-
-
-

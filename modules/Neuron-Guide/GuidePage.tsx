@@ -1,10 +1,66 @@
-import { useLayoutEffect, useRef, useState, type ReactNode } from 'react';
-import { LessonFlow, ModuleShell, type LessonFlowStep } from '../shared/react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
+import { LessonFlow, ModuleShell, Typography, type LessonFlowStep } from '../shared/react';
 import '../shared/react/styles.css';
 import '../shared/react/ui-kit.css';
 import '../shared/react/presentation.css';
 import { NeuronLessonProvider } from './model/NeuronLessonContext';
 import { neuronCourse } from './course';
+
+function LectureAdvanceCue({ children, complete, onContinue, label = '继续向下滚动' }: {
+  children: ReactNode;
+  complete: boolean;
+  onContinue: () => void;
+  label?: string;
+}) {
+  const touchStartY = useRef<number | null>(null);
+  const advancedRef = useRef(false);
+  const advance = useCallback(() => {
+    if (complete || advancedRef.current) return;
+    advancedRef.current = true;
+    onContinue();
+  }, [complete, onContinue]);
+
+  useEffect(() => {
+    if (complete) return undefined;
+    let armed = false;
+    const armTimer = window.setTimeout(() => { armed = true; }, 350);
+    const handleWheel = (event: WheelEvent) => { if (armed && event.deltaY > 12) advance(); };
+    const handleTouchStart = (event: TouchEvent) => { touchStartY.current = event.touches[0]?.clientY ?? null; };
+    const handleTouchEnd = (event: TouchEvent) => {
+      const endY = event.changedTouches[0]?.clientY;
+      if (armed && touchStartY.current !== null && endY !== undefined && touchStartY.current - endY > 24) advance();
+      touchStartY.current = null;
+    };
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement || event.target instanceof HTMLSelectElement) return;
+      if (['ArrowDown', 'PageDown', ' '].includes(event.key)) advance();
+    };
+
+    window.addEventListener('wheel', handleWheel, { passive: true });
+    window.addEventListener('touchstart', handleTouchStart, { passive: true });
+    window.addEventListener('touchend', handleTouchEnd, { passive: true });
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.clearTimeout(armTimer);
+      window.removeEventListener('wheel', handleWheel);
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchend', handleTouchEnd);
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [advance, complete]);
+
+  return (
+    <div className="lesson-step">
+      {children}
+      {!complete && (
+        <button type="button" className="edu-scroll-cue" onClick={advance} aria-label={label}>
+          <Typography as="span" variant="bodySmall" tone="inherit" className="edu-scroll-cue-arrow" aria-hidden="true">↓</Typography>
+          <Typography as="span" variant="bodySmall" tone="inherit">{label}</Typography>
+        </button>
+      )}
+    </div>
+  );
+}
 
 function BlogLessonCanvas({ children }: { children: ReactNode }) {
   const frameRef = useRef<HTMLDivElement>(null);
@@ -26,10 +82,18 @@ function BlogLessonCanvas({ children }: { children: ReactNode }) {
 
 export const neuronGuideLessonSteps: LessonFlowStep[] = neuronCourse
   .filter((item) => item.showInBlog !== false)
-  .map(({ id, revealMode, component }) => ({
+  .map(({ id, revealMode, advanceLabel, component }) => ({
     id,
     revealMode,
-    render: (context) => <BlogLessonCanvas>{component(context)}</BlogLessonCanvas>,
+    render: (context) => (
+      <BlogLessonCanvas>
+        {revealMode === 'scroll' ? (
+          <LectureAdvanceCue complete={context.isComplete} onContinue={context.complete} {...(advanceLabel ? { label: advanceLabel } : {})}>
+            {component(context)}
+          </LectureAdvanceCue>
+        ) : component(context)}
+      </BlogLessonCanvas>
+    ),
   }));
 
 export function GuidePage() {
@@ -40,7 +104,7 @@ export function GuidePage() {
         subtitle="从秀丽隐杆线虫的刺激反应出发，逐步建立输入、权重、加权和与偏置的数学模型。"
         shellClassName="course-shell course-blog-shell"
       >
-        <LessonFlow steps={neuronGuideLessonSteps} persistenceKey="neuron-guide-expanded-v6" />
+        <LessonFlow steps={neuronGuideLessonSteps} persistenceKey="neuron-guide-guidepage-v1" />
       </ModuleShell>
     </NeuronLessonProvider>
   );

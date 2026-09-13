@@ -7,19 +7,24 @@
 
 .ng-shallow-linear > .edu-content-head {
   margin-bottom: 16px;
-  padding-right: 310px;
 }
 
 .ng-shallow-linear > .edu-content-body { display: block; }
 
-.ng-shallow-linear > .edu-content-body > .activation-actions {
-  position: absolute;
-  top: clamp(16px, 2.4vw, 22px);
-  right: clamp(16px, 2.4vw, 22px);
+.ng-shallow-linear > .edu-content-body > .ng-activation-actions {
+  position: static;
+  justify-content: flex-end;
+  margin: 16px 0 0;
+  padding: 0;
+}
+
+.ng-shallow-linear .ng-activation-actions .edu-btn {
+  min-height: 40px;
+  padding-inline: 15px;
 }
 
 @media (max-width: 1120px) {
-  .ng-shallow-linear > .edu-content-head { padding-right: 0; }
-  .ng-shallow-linear > .edu-content-body > .activation-actions { position: static; }
+  .ng-shallow-linear > .edu-content-body > .ng-activation-actions {
+    justify-content: flex-start;
+  }
 }
-

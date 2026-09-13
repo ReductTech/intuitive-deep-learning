@@ -61,6 +61,7 @@ export interface NetworkCanvasProps {
   summary?: string;
   className?: string;
   height?: number;
+  fontScale?: number;
   activeNode?: NetworkNodeRef | null;
   onActiveNodeChange?: (node: NetworkNodeRef | null) => void;
   showInspector?: boolean;
@@ -191,6 +192,7 @@ function drawNetwork(
   connections: NetworkConnection[],
   caption: string | undefined,
   selected: NetworkNodeRef | null,
+  fontScale: number,
 ): CanvasLayout {
   const context = canvas.getContext('2d');
   if (!context) return EMPTY_LAYOUT;
@@ -199,8 +201,8 @@ function drawNetwork(
   const logicalWidth = Math.max(280, Math.round(bounds.width || 960));
   const logicalHeight = Math.max(220, Math.round(bounds.height || 360));
   const pixelRatio = Math.max(
-    1,
-    Math.min(3, window.devicePixelRatio || 1),
+    2,
+    Math.min(4, (window.devicePixelRatio || 1) * 2),
   );
   const pixelWidth = Math.round(logicalWidth * pixelRatio);
   const pixelHeight = Math.round(logicalHeight * pixelRatio);
@@ -276,7 +278,7 @@ function drawNetwork(
   });
   context.restore();
 
-  const titleFontSize = layers.length > 5 ? 10 : 12;
+  const titleFontSize = (layers.length > 5 ? 10 : 13) * fontScale;
   layers.forEach((layer, layerIndex) => {
     const layerNodes = layout.nodes.filter(
       (node) => node.layer === layerIndex,
@@ -330,7 +332,7 @@ function drawNetwork(
       }
 
       context.fillStyle = '#ffffff';
-      context.font = `900 ${position.radius < 16 ? 9 : 11}px ${sansFont}`;
+      context.font = `900 ${(position.radius < 16 ? 10 : 13) * fontScale}px ${sansFont}`;
       context.textAlign = 'center';
       context.textBaseline = 'middle';
       context.fillText(
@@ -343,7 +345,7 @@ function drawNetwork(
 
   if (caption) {
     context.fillStyle = colors.muted;
-    context.font = `800 12px ${monoFont}`;
+    context.font = `800 ${14 * fontScale}px ${monoFont}`;
     context.textAlign = 'center';
     context.textBaseline = 'alphabetic';
     context.fillText(
@@ -414,6 +416,7 @@ export function NetworkCanvas({
   summary,
   className,
   height = 360,
+  fontScale = 1,
   activeNode,
   onActiveNodeChange,
   showInspector = true,
@@ -554,6 +557,7 @@ export function NetworkCanvas({
           connections,
           caption,
           selectedNode,
+          fontScale,
         );
         positionInspector();
       });
@@ -576,7 +580,7 @@ export function NetworkCanvas({
       resizeObserver?.disconnect();
       window.removeEventListener('resize', redraw);
     };
-  }, [caption, connections, layers, positionInspector, selectedNode]);
+  }, [caption, connections, fontScale, layers, positionInspector, selectedNode]);
 
   const handlePointerMove = (
     event: PointerEvent<HTMLCanvasElement>,
