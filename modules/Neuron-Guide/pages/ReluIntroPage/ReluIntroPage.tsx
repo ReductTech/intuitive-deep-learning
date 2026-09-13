@@ -5,7 +5,6 @@ import {
   NoticeStrip,
   Typography,
 } from '../../../shared/react';
-import { usePersistedActivity } from '../../components/usePersistedActivity';
 import {
   formatNumber,
   RELU_INTRO_MAX_X,
@@ -13,7 +12,8 @@ import {
   RELU_INTRO_STEP,
   RELU_INTRO_WEIGHT,
   reluIntroForward,
-} from '../../model/activationMath';
+  usePersistedActivity,
+} from '../ActivationCatalogPage/ActivationCatalogPage';
 
 const STATE_KEY = 'activity:neuron-guide-relu-intro-v1';
 

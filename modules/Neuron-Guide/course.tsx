@@ -8,7 +8,7 @@ import { SignalDiscoveryPage } from './pages/SignalDiscoveryPage/SignalDiscovery
 import { WeightedSumPage } from './pages/WeightedSumPage/WeightedSumPage';
 import { WeightedContributionTheoryPage } from './pages/WeightedContributionTheoryPage/WeightedContributionTheoryPage';
 import { BiasThresholdTheoryPage } from './pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage';
-import { NeuronCompletionPage, NeuronLessonFooter } from './pages/NeuronLessonFooter';
+import { NeuronCompletionPage, NeuronLessonFooter } from './pages/NeuronLessonFooter/NeuronLessonFooter';
 import { ShallowLinearPage } from './pages/ShallowLinearPage/ShallowLinearPage';
 import { DeepLinearPage } from './pages/DeepLinearPage/DeepLinearPage';
 import { ReluIntroPage } from './pages/ReluIntroPage/ReluIntroPage';
@@ -28,6 +28,16 @@ export interface NeuronCourseItem {
   showInBlog?: boolean;
   showInPpt?: boolean;
 }
+
+export const lessonContextOptions = {
+  moduleId: 'neuron-guide',
+  stateKey: 'activity:neuron-guide-core-v3',
+  events: {
+    decisionAnalyzed: 'neuron_decision_analyzed',
+    importanceAccepted: 'neuron_weight_suggestion_accepted',
+    inputValueChanged: 'neuron_input_value_changed',
+  },
+} as const;
 
 export const neuronCourse: NeuronCourseItem[] = [
   { id: 'nematode-response', title: '只有 302 个神经元，它为什么能完成这么多行为？', section: '神经系统', revealMode: 'scroll', component: () => <NematodeResponsePage /> },

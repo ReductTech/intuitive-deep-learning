@@ -1,8 +1,7 @@
 import { useRef, useState, type CSSProperties } from 'react';
 import "./BiasThresholdTheoryPage.css";
 import { ContentBlock, FormulaBlock, FormulaTerm, Typography } from '../../../shared/react';
-import { formatScore, weightedSum } from '../../model/neuronMath';
-import { useNeuronLesson } from '../../model/NeuronLessonContext';
+import { formatScore, useLesson, weightedSum } from '../../LessonContext';
 
 const thresholdPresets = [
   { label: '宽松', value: 0.8 },
@@ -15,7 +14,7 @@ function clampPosition(value: number): number {
 }
 
 export function BiasThresholdTheoryPage({ onComplete }: { onComplete?: () => void }) {
-  const { state, scenario } = useNeuronLesson();
+  const { state, scenario } = useLesson();
   const [threshold, setThreshold] = useState(1.5);
   const [thresholdTouched, setThresholdTouched] = useState(false);
   const completedRef = useRef(false);

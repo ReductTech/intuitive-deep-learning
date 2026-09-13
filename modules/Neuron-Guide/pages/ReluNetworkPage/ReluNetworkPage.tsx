@@ -1,13 +1,12 @@
 import { useMemo, useRef } from 'react';
 import "./ReluNetworkPage.css";
 import { Button, ContentBlock, NoticeStrip, Typography } from '../../../shared/react';
-import { ReluNetworkPlot } from '../../components/ActivationCharts';
+import { ReluNetworkPlot, usePersistedActivity } from '../ActivationCatalogPage/ActivationCatalogPage';
 import {
   NetworkCanvas,
   type NetworkConnection,
   type NetworkLayer,
-} from '../../components/NetworkCanvas';
-import { usePersistedActivity } from '../../components/usePersistedActivity';
+} from '../DeepLinearPage/DeepLinearPage';
 import {
   formatNumber,
   formatSigned,
@@ -15,7 +14,7 @@ import {
   MIN_RELU_NEURON_COUNT,
   RELU_OUTPUT_BIAS,
   type ShallowNeuron,
-} from '../../model/activationMath';
+} from '../ActivationCatalogPage/ActivationCatalogPage';
 
 const STATE_KEY = 'activity:neuron-guide-relu-ng-network-v1';
 

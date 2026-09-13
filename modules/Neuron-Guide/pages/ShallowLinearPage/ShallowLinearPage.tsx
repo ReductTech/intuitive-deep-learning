@@ -1,13 +1,12 @@
 import { useMemo, useRef } from 'react';
 import "./ShallowLinearPage.css";
 import { Button, ContentBlock, FormulaBlock, FormulaTerm, NoticeStrip, Typography } from '../../../shared/react';
-import { ShallowOutputPlot } from '../../components/ActivationCharts';
+import { ShallowOutputPlot, usePersistedActivity } from '../ActivationCatalogPage/ActivationCatalogPage';
 import {
   NetworkCanvas,
   type NetworkConnection,
   type NetworkLayer,
-} from '../../components/NetworkCanvas';
-import { usePersistedActivity } from '../../components/usePersistedActivity';
+} from '../DeepLinearPage/DeepLinearPage';
 import {
   formatNumber,
   formatSigned,
@@ -15,7 +14,7 @@ import {
   makeShallowNeuron,
   shallowEquivalent,
   type ShallowModel,
-} from '../../model/activationMath';
+} from '../ActivationCatalogPage/ActivationCatalogPage';
 
 const STATE_KEY = 'activity:activation-linear-shallow';
 

@@ -1,7 +1,6 @@
 import { ContentBlock, Typography } from '../../../shared/react';
 import "./WeightedSumPage.css";
-import { useNeuronLesson } from '../../model/NeuronLessonContext';
-import { effectiveInput } from '../../model/neuronMath';
+import { effectiveInput, useLesson } from '../../LessonContext';
 import teacherVideo from '../../assets/teacher_female_10s_wb.mp4';
 
 export interface WeightedSumPageProps {
@@ -13,7 +12,7 @@ export function WeightedSumPage({ onComplete }: WeightedSumPageProps) {
     state,
     setValueDraft,
     scenario,
-  } = useNeuronLesson();
+  } = useLesson();
   const factor = scenario.factors[0];
   const rawValue = state.values[0] ?? factor.suggestedValue;
   const normalizedValue = effectiveInput(factor, rawValue);

@@ -10,14 +10,14 @@ const scenes: SceneDefinition[] = [
   },
 ];
 
-const catalog: [DeckDefinition, ...DeckDefinition[]] = [
-  {
-    id: 'linear-regression-loss',
-    title: '从身高遗传到线性回归',
-    subtitle: '模型、误差与损失函数 · 1 页',
-    scenes,
-  },
-];
+export const deck: DeckDefinition = {
+  id: 'linear-regression-loss',
+  title: '从身高遗传到线性回归',
+  subtitle: '模型、误差与损失函数 · 1 页',
+  scenes,
+};
+
+const catalog: [DeckDefinition, ...DeckDefinition[]] = [deck];
 
 export function LinearRegressionPpt() {
   return <SceneDeck catalog={catalog} moduleId="linear-regression-loss" progressKey="lesson-flow:linear-regression-loss" />;

@@ -1,4 +1,5 @@
 import type { ComponentType, ReactNode } from 'react';
+import type { DeckDefinition, SpeakerNote } from '../../modules/shared/react/presentation';
 
 export interface ModulePageOutline {
   id: string;
@@ -28,6 +29,8 @@ export interface ActiveModule {
   /** 该模块 Web PPT 的独立播放路径。 */
   pptPath?: string;
   pptElement?: ReactNode;
+  pptDeck?: DeckDefinition;
+  getPptNotes?: (sceneId: string) => SpeakerNote[];
   /** 是否承接 /web_ppt/ 与 /web_ppt/slide.html 这两个通用播放入口。 */
   claimsPptPlayer: boolean;
 }
@@ -59,8 +62,15 @@ function moduleDir(file: string) {
 /** entry 写成模块目录下的文件名，组件以同名命名导出。 */
 function entryElement(dir: string, entry?: string): ReactNode {
   if (!entry) return null;
-  const Component = pageModules[`../../modules/${dir}/${entry}`]?.[entry.replace(/\.tsx$/, '')] as ComponentType | undefined;
+  const exports = pageModules[`../../modules/${dir}/${entry}`];
+  const entryName = entry.replace(/\.tsx$/, '');
+  const componentName = `${entryName.charAt(0).toUpperCase()}${entryName.slice(1)}`;
+  const Component = (exports?.[entryName] ?? exports?.[componentName]) as ComponentType | undefined;
   return Component ? <Component /> : null;
+}
+
+function entryExports(dir: string, entry?: string) {
+  return entry ? pageModules[`../../modules/${dir}/${entry}`] : undefined;
 }
 
 export const activeModules: ActiveModule[] = Object.entries(outlineFiles)
@@ -68,6 +78,7 @@ export const activeModules: ActiveModule[] = Object.entries(outlineFiles)
     const dir = moduleDir(file);
     const element = entryElement(dir, outline.entry);
     if (!element) console.warn(`[modules] ${dir}/outlines.json 的 entry 未指向可用的入口组件，已跳过注册。`);
+    const pptExports = entryExports(dir, outline.ppt?.entry);
     return {
       id: outline.id ?? dir,
       title: outline.title ?? dir,
@@ -81,6 +92,8 @@ export const activeModules: ActiveModule[] = Object.entries(outlineFiles)
       pages: outline.pages ?? [],
       pptPath: outline.ppt?.path,
       pptElement: entryElement(dir, outline.ppt?.entry),
+      pptDeck: pptExports?.deck as DeckDefinition | undefined,
+      getPptNotes: pptExports?.getPptNotes as ((sceneId: string) => SpeakerNote[]) | undefined,
       claimsPptPlayer: Boolean(outline.ppt?.player),
     };
   })

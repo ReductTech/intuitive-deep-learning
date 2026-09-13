@@ -18,6 +18,15 @@ function sceneIndexFromUrl(scenes: SceneDefinition[]) {
   return index >= 0 ? index : 0;
 }
 
+function deckFromUrl(catalog: SceneDeckProps['catalog']) {
+  const requested = new URLSearchParams(window.location.search).get('deck');
+  return catalog.find((deck) => deck.id === requested) ?? catalog[0];
+}
+
+function deckValue(value: string | ((deckId: string) => string), deckId: string) {
+  return typeof value === 'function' ? value(deckId) : value;
+}
+
 function readProgress(progressKey: string) {
   try {
     const raw = window.localStorage.getItem(progressKey);
@@ -56,9 +65,10 @@ function requestStageFullscreen(viewport: HTMLDivElement | null) {
 export function SceneDeck({ catalog, moduleId, progressKey, getNotes }: SceneDeckProps) {
   const appRef = useRef<HTMLDivElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
-  const [activeDeck, setActiveDeck] = useState<DeckDefinition>(catalog[0]);
-  const [sceneIndex, setSceneIndex] = useState(() => sceneIndexFromUrl(catalog[0].scenes));
-  const [completedIds, setCompletedIds] = useState<string[]>(() => readProgress(progressKey));
+  const initialDeck = useMemo(() => deckFromUrl(catalog), [catalog]);
+  const [activeDeck, setActiveDeck] = useState<DeckDefinition>(initialDeck);
+  const [sceneIndex, setSceneIndex] = useState(() => sceneIndexFromUrl(initialDeck.scenes));
+  const [completedIds, setCompletedIds] = useState<string[]>(() => readProgress(deckValue(progressKey, initialDeck.id)));
   const [notesOpen, setNotesOpen] = useState(false);
   const [noteIndex, setNoteIndex] = useState(0);
   const [sidebarWidth, setSidebarWidth] = useState(272);
@@ -67,26 +77,28 @@ export function SceneDeck({ catalog, moduleId, progressKey, getNotes }: SceneDec
   const [toolNotice, setToolNotice] = useState('');
   const scenes = activeDeck.scenes;
   const scene = scenes[sceneIndex] ?? scenes[0];
-  const notes = useMemo(() => getNotes?.(scene.id) ?? [], [getNotes, scene.id]);
+  const activeModuleId = deckValue(moduleId, activeDeck.id);
+  const activeProgressKey = deckValue(progressKey, activeDeck.id);
+  const notes = useMemo(() => getNotes?.(scene.id, activeDeck.id) ?? [], [activeDeck.id, getNotes, scene.id]);
   const scale = useSceneScale(viewportRef);
 
   useLayoutEffect(() => setNoteIndex(0), [scene.id]);
 
   useEffect(() => {
     let active = true;
-    void getTelemetryState<LessonProgressState>(progressKey, moduleId).then((entry) => {
-      if (!active || !entry?.state || readProgress(progressKey).length) return;
+    void getTelemetryState<LessonProgressState>(activeProgressKey, activeModuleId).then((entry) => {
+      if (!active || !entry?.state || readProgress(activeProgressKey).length) return;
       const ids = Array.isArray(entry.state.completedIds) ? entry.state.completedIds : [];
       setCompletedIds(ids.filter((id) => scenes.some((item) => item.id === id)));
     });
     return () => { active = false; };
-  }, [moduleId, progressKey, scenes]);
+  }, [activeModuleId, activeProgressKey, scenes]);
 
   const persistProgress = useCallback((ids: string[], visibleCount: number) => {
     const state = { completedIds: ids, visibleCount, completed: ids.length === scenes.length };
-    try { window.localStorage.setItem(progressKey, JSON.stringify(state)); } catch { /* telemetry fallback */ }
-    emitTelemetry('lesson_progress', null, { state_key: progressKey, state });
-  }, [progressKey, scenes.length]);
+    try { window.localStorage.setItem(activeProgressKey, JSON.stringify(state)); } catch { /* telemetry fallback */ }
+    emitTelemetry('lesson_progress', null, { state_key: activeProgressKey, state });
+  }, [activeProgressKey, scenes.length]);
 
   const navigate = useCallback((requestedIndex: number) => {
     const nextIndex = Math.min(scenes.length - 1, Math.max(0, requestedIndex));
@@ -137,14 +149,14 @@ export function SceneDeck({ catalog, moduleId, progressKey, getNotes }: SceneDec
   const selectDeck = useCallback((deck: DeckDefinition) => {
     setActiveDeck(deck);
     setSceneIndex(0);
-    setCompletedIds([]);
+    setCompletedIds(readProgress(deckValue(progressKey, deck.id)));
     setNoteIndex(0);
     setCourseMenuOpen(false);
     const url = new URL(window.location.href);
     url.searchParams.delete('slide');
     url.searchParams.set('deck', deck.id);
     window.history.replaceState(null, '', url);
-  }, []);
+  }, [progressKey]);
 
   useEffect(() => {
     document.body.classList.add('ppt-body');

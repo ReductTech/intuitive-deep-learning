@@ -1,3 +1,11 @@
+.course-page-surface .ng-completion-stage { display: grid; grid-template-rows: auto minmax(0,1fr); }
+.course-page-surface .ng-completion-stage > .edu-content-body,
+.course-page-surface .model-viewer-layout,
+.course-page-surface .model-viewer-copy { min-height: 0; }
+.course-page-surface .model-viewer-frame,
+.course-page-surface .model-viewer-frame model-viewer,
+.course-page-surface .model-fallback { min-height: 0; height: 100%; }
+
 .ng-model-viewer-layout { display: grid; min-width: 0; grid-template-columns: minmax(0,.9fr) minmax(0,1.1fr); align-items: stretch; gap: 18px; }
 .ng-model-viewer-layout > * { min-width: 0; max-width: 100%; }
 .ng-model-viewer-frame { min-height: 520px; overflow: hidden; border: 1px solid var(--ui-border); border-radius: var(--ui-radius-md); background: radial-gradient(circle at 50% 42%, rgba(240,126,71,.12), transparent 45%), var(--ui-bg-muted); }

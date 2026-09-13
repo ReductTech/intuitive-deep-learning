@@ -3,8 +3,8 @@ import { LessonFlow, ModuleShell, Typography, type LessonFlowStep } from '../sha
 import '../shared/react/styles.css';
 import '../shared/react/ui-kit.css';
 import '../shared/react/presentation.css';
-import { NeuronLessonProvider } from './model/NeuronLessonContext';
-import { neuronCourse } from './course';
+import { LessonProvider } from './LessonContext';
+import { lessonContextOptions, neuronCourse } from './course';
 
 function LectureAdvanceCue({ children, complete, onContinue, label = '继续向下滚动' }: {
   children: ReactNode;
@@ -98,7 +98,7 @@ export const neuronGuideLessonSteps: LessonFlowStep[] = neuronCourse
 
 export function GuidePage() {
   return (
-    <NeuronLessonProvider>
+    <LessonProvider {...lessonContextOptions}>
       <ModuleShell
         title="认识人工神经元"
         subtitle="从秀丽隐杆线虫的刺激反应出发，逐步建立输入、权重、加权和与偏置的数学模型。"
@@ -106,7 +106,7 @@ export function GuidePage() {
       >
         <LessonFlow steps={neuronGuideLessonSteps} persistenceKey="neuron-guide-guidepage-v1" />
       </ModuleShell>
-    </NeuronLessonProvider>
+    </LessonProvider>
   );
 }
 

@@ -1,14 +1,25 @@
 import { ContentBlock, ModuleShell } from '../../modules/shared/react';
+import { SceneDeck, type DeckDefinition } from '../../modules/shared/react/presentation';
 import { UiKitPage } from '../../modules/shared/react/routing/UiKitPage';
 import { activeModules, type ActiveModule, type ModulePageOutline } from './modules';
 import { AppLink, type AppRoute } from './Router';
 
-// 通用 SceneDeck 演示入口默认交给声明了 ppt.player 的模块，其次是第一个提供 PPT 的模块。
-const pptPlayerModule = activeModules.find((module) => module.claimsPptPlayer) ?? activeModules.find((module) => module.pptElement);
+const pptModules = activeModules.filter((module) => module.pptDeck);
+const pptCatalog = pptModules.map((module) => module.pptDeck) as [DeckDefinition, ...DeckDefinition[]];
+
+function SceneDeckPage() {
+  if (!pptCatalog.length) return <p>Page not found.</p>;
+  return <SceneDeck
+    catalog={pptCatalog}
+    moduleId={(deckId) => deckId}
+    progressKey={(deckId) => pptModules.find((module) => module.pptDeck?.id === deckId)?.id === 'neuron-guide' ? 'lesson-flow:neuron-guide-expanded-v6' : `lesson-flow:${deckId}`}
+    getNotes={(sceneId, deckId) => pptModules.find((module) => module.pptDeck?.id === deckId)?.getPptNotes?.(sceneId) ?? []}
+  />;
+}
 
 /** 页面索引中的每一页对应 PPT 的一页；没有 PPT 的模块指向课程本身。 */
 function pageHref(module: ActiveModule, page: ModulePageOutline) {
-  return module.pptPath ? `${module.pptPath}?slide=${encodeURIComponent(page.id)}` : module.path;
+  return module.pptPath ? `${module.pptPath}?deck=${encodeURIComponent(module.id)}&slide=${encodeURIComponent(page.id)}` : module.path;
 }
 
 function HomePage() {
@@ -26,12 +37,11 @@ export const appRoutes: AppRoute[] = [
   { path: '/shared/ui-kit', element: <UiKitPage /> },
   ...activeModules.flatMap((module) => [
     { path: module.path, element: module.element },
-    ...(module.pptPath && module.pptElement ? [{ path: module.pptPath, element: module.pptElement }] : []),
   ]),
-  ...(pptPlayerModule?.pptElement ? [
-    { path: '/scenedeck/', element: pptPlayerModule.pptElement },
-    { path: '/web_ppt/', element: pptPlayerModule.pptElement },
-    { path: '/web_ppt/slide.html', element: pptPlayerModule.pptElement },
+  ...(pptCatalog.length ? [
+    { path: '/scenedeck/', element: <SceneDeckPage /> },
+    { path: '/web_ppt/', element: <SceneDeckPage /> },
+    { path: '/web_ppt/slide.html', element: <SceneDeckPage /> },
   ] : []),
 ];
 

@@ -1,8 +1,7 @@
 import type { ReactNode } from 'react';
 import { ContentBlock, FormulaBlock, FormulaTerm, Typography } from '../../../shared/react';
 import "./WeightedContributionTheoryPage.css";
-import { useNeuronLesson } from '../../model/NeuronLessonContext';
-import { effectiveInput, formatScore, normalizedWeight, weightedSum } from '../../model/neuronMath';
+import { effectiveInput, formatScore, normalizedWeight, useLesson, weightedSum } from '../../LessonContext';
 
 const subscripts = ['₁', '₂', '₃'];
 
@@ -31,7 +30,7 @@ function VectorBracket({
 }
 
 export function WeightedContributionTheoryPage() {
-  const { scenario, state } = useNeuronLesson();
+  const { scenario, state } = useLesson();
   const values = scenario.factors.map((factor, index) => effectiveInput(factor, state.values[index] ?? factor.suggestedValue));
   const weights = scenario.factors.map((factor) => normalizedWeight(factor.suggestedImportance));
   const total = weightedSum(scenario, values);

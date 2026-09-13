@@ -1,13 +1,13 @@
 import type { CSSProperties } from 'react';
 import { ContentBlock, Typography } from '../../../shared/react';
 import "./ExtraInputsPage.css";
-import { useNeuronLesson } from '../../model/NeuronLessonContext';
 import {
   effectiveInput,
   formatScore,
   normalizedWeight,
   weightedContributions,
-} from '../../model/neuronMath';
+  useLesson,
+} from '../../LessonContext';
 import teacherVideo from '../../assets/teacher_male_10s_wb.mp4';
 
 export interface ExtraInputsPageProps {
@@ -15,7 +15,7 @@ export interface ExtraInputsPageProps {
 }
 
 export function ExtraInputsPage({ onComplete }: ExtraInputsPageProps) {
-  const { state, scenario, setValueDraft, commitValues } = useNeuronLesson();
+  const { state, scenario, setValueDraft, commitValues } = useLesson();
   const values = scenario.factors.map((factor, index) => state.values[index] ?? factor.suggestedValue);
   const contributions = weightedContributions(scenario, values);
   const output = contributions.reduce((sum, contribution) => sum + contribution, 0);

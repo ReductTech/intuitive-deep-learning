@@ -25,8 +25,8 @@ export interface DeckDefinition {
 export interface SceneDeckProps {
   /** At least one deck is required so the player always has an initial scene. */
   catalog: readonly [DeckDefinition, ...DeckDefinition[]];
-  moduleId: string;
-  progressKey: string;
+  moduleId: string | ((deckId: string) => string);
+  progressKey: string | ((deckId: string) => string);
   /** Optional presenter notes; decks without notes render without the inspector content. */
-  getNotes?: (sceneId: string) => SpeakerNote[];
+  getNotes?: (sceneId: string, deckId?: string) => SpeakerNote[];
 }
