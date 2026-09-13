@@ -29,12 +29,10 @@ export function WeightedSumPage({ onComplete }: WeightedSumPageProps) {
         <div className="ng-weighted-sum-redesign__top-flow">
           <section className="ng-weighted-sum-redesign__question" aria-label="现实问题">
             <div className="ng-weighted-sum-redesign__question-copy">
-              <Typography variant="bodySmall" tone="muted">现实问题</Typography>
               <Typography as="strong" variant="h3" tone="accent">{factor.valueQuestion}</Typography>
               <Typography variant="bodySmall" tone="light">{factor.explanation}</Typography>
             </div>
             <div className="ng-weighted-sum-redesign__range-wrap">
-              <output className="ng-weighted-sum-redesign__range-value">{rawValue} <span>/ 10</span></output>
               <input
                 className="ng-weighted-sum-redesign__range"
                 type="range"
@@ -59,15 +57,9 @@ export function WeightedSumPage({ onComplete }: WeightedSumPageProps) {
           </section>
           <div className="ng-weighted-sum-redesign__connector" aria-hidden="true"><span>→</span></div>
           <section className={`ng-weighted-sum-redesign__normalize${isInverse ? ' is-inverse' : ''}`} aria-label="统一到 0 到 1">
-            <Typography variant="bodySmall" tone="accent">统一到 0 ～ 1</Typography>
+            <Typography variant="body" tone="accent">统一到 0 ～ 1</Typography>
             <div className="ng-weighted-sum-redesign__operation">
-              {isInverse ? (
-                <>
-                  <span>÷ 10</span>
-                  <span className="ng-weighted-sum-redesign__operation-arrow">→</span>
-                  <span>1 - x</span>
-                </>
-              ) : '÷ 10'}
+              {isInverse ? '1 − (x₁ ÷ 10)' : 'x₁ ÷ 10'}
             </div>
             {isInverse && (
               <Typography as="span" variant="bodySmall" tone="muted" className="ng-weighted-sum-redesign__inverse-note">
@@ -83,27 +75,18 @@ export function WeightedSumPage({ onComplete }: WeightedSumPageProps) {
             </div>
           </section>
         </div>
-        <div className="ng-weighted-sum-redesign__explanation">
-          <Typography as="p" variant="body" tone="main">
-            <strong>
-            {isInverse
-              ? `我们把 ${rawValue} / 10 先统一到 0～1，再取反得到 ${normalizedValue.toFixed(2)}，作为神经元的输入。`
-              : `我们把 ${rawValue} / 10 转换为 ${normalizedValue.toFixed(2)}，这样不同的问题都可以用相同的数值尺度输入到神经元中。`}
-            </strong>
-          </Typography>
-        </div>
+
         <div className="ng-weighted-sum-redesign__tip">
           <div className="ng-weighted-sum-redesign__video"><video src={teacherVideo} autoPlay loop muted playsInline aria-label="教师提示视频" /></div>
           <div className="ng-weighted-sum-redesign__tip-copy">
             <Typography as="strong" variant="h3" tone="accent">小提示</Typography>
-            <Typography as="p" variant="body" tone="muted">无论是 1～5 分、1～10 分，还是“非常低～非常高”，都可以通过简单的转换，变成 0～1 之间的数。</Typography>
+            <Typography as="p" variant="body" tone="muted">无论是 1～5 分、1～10 分，还是“非常低～非常高”，都可以通过简单的转换，变成 0～1 之间的数。这样不同的问题都可以用相同的数值尺度输入到神经元中。</Typography>
           </div>
         </div>
       </div>
     </ContentBlock>
   );
 }
-
 
 
 

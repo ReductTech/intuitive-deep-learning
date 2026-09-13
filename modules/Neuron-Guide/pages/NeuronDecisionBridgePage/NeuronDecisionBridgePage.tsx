@@ -101,7 +101,7 @@ export function NeuronDecisionBridgePage() {
           <div className="ng-neuron-decision-bridge__scale">
             <div><Typography variant="body" tone="muted" wrap="nowrap">3 个二值输出</Typography><Typography as="strong" variant="h1" tone="accent" wrap="nowrap">2³ = 8</Typography></div>
             <Typography as="span" variant="h3" tone="warning" aria-hidden="true">→</Typography>
-            <div><Typography variant="body" tone="muted" wrap="nowrap">302 个神经元</Typography><Typography as="strong" variant="h1" tone="accent" wrap="nowrap">2³⁰² ≈ 8.1 × 10⁹⁰</Typography></div>
+            <div><Typography variant="body" tone="muted" wrap="nowrap">秀丽隐杆线虫的302 个神经元</Typography><Typography as="strong" variant="h1" tone="accent" wrap="nowrap">2³⁰² ≈ 8.1 × 10⁹⁰</Typography></div>
           </div>
         </div>
       </section>

@@ -118,7 +118,7 @@ button, input, textarea, select { font: inherit; }
 .edu-value-tile--danger { --value-border: rgba(196,63,82,.4); --value-bg: rgba(196,63,82,.05); --value-label: #963142; --value-number: var(--ui-danger); }
 
 .edu-formula-block { display: grid; min-height: 108px; margin-inline: auto; place-items: center; border: 1px solid var(--ui-border); border-radius: var(--ui-radius-sm); background: var(--ui-bg-muted); padding: 18px; text-align: center; }
-.edu-formula { position: relative; z-index: 2; color: var(--ui-accent); font-family: var(--ui-font-mono); font-size: clamp(18px, 3vw, 25px); font-weight: 950; line-height: 1.45; overflow-wrap: anywhere; }
+.edu-formula { position: relative; z-index: 2; color: var(--ui-accent); font-family: var(--ui-font-mono); font-size: var(--ui-type-formula-size); font-weight: var(--ui-type-formula-weight); line-height: var(--ui-type-formula-line-height); overflow-wrap: anywhere; }
 .edu-formula--fraction { display: inline-flex; max-width: 100%; align-items: center; justify-content: center; gap: .4em; overflow-wrap: normal; }
 .edu-formula-prefix { display: inline-flex; align-items: baseline; white-space: nowrap; }
 .edu-fraction { display: inline-grid; min-width: 4.4em; grid-template-rows: auto auto; line-height: 1.12; text-align: center; }
@@ -128,7 +128,7 @@ button, input, textarea, select { font: inherit; }
 .edu-formula-term:focus-visible { outline: 2px solid rgba(39,68,110,.32); outline-offset: 3px; }
 .edu-formula-term::before, .edu-formula-term::after { position: absolute; left: 50%; z-index: 20; visibility: hidden; opacity: 0; pointer-events: none; transition: opacity .12s ease, transform .12s ease, visibility .12s ease; }
 .edu-formula-term::before { top: calc(100% + 3px); width: 10px; height: 10px; background: var(--ui-text-main); content: ""; transform: translate(-50%, -4px) rotate(45deg); }
-.edu-formula-term::after { top: calc(100% + 8px); width: max-content; max-width: min(230px, calc(100vw - 56px)); border-radius: var(--ui-radius-sm); background: var(--ui-text-main); box-shadow: 0 12px 28px rgba(25,42,70,.2); color: #fff; content: attr(data-tooltip); padding: 8px 10px; font-family: var(--ui-font-sans); font-size: 12px; font-weight: 700; line-height: 1.5; text-align: left; white-space: normal; transform: translate(-50%, -4px); }
+.edu-formula-term::after { top: calc(100% + 8px); width: max-content; max-width: min(230px, calc(100vw - 56px)); border-radius: var(--ui-radius-sm); background: var(--ui-text-main); box-shadow: 0 12px 28px rgba(25,42,70,.2); color: #fff; content: attr(data-tooltip); padding: 8px 10px; font-family: var(--ui-font-sans); font-size: var(--ui-type-body-small-size); font-weight: var(--ui-type-body-small-weight); line-height: var(--ui-type-body-small-line-height); text-align: left; white-space: normal; transform: translate(-50%, -4px); }
 .edu-formula-term:hover::before, .edu-formula-term:hover::after, .edu-formula-term:focus-visible::before, .edu-formula-term:focus-visible::after { visibility: visible; opacity: 1; }
 .edu-formula-term:hover::before, .edu-formula-term:focus-visible::before { transform: translate(-50%, 0) rotate(45deg); }
 .edu-formula-term:hover::after, .edu-formula-term:focus-visible::after { transform: translate(-50%, 0); }

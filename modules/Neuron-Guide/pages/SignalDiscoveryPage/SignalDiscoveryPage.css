@@ -141,6 +141,9 @@
   box-shadow: none;
   background: transparent;
   color: #172a45;
+  font-size: var(--ui-type-body-size);
+  font-weight: var(--ui-type-body-weight);
+  line-height: var(--ui-type-body-line-height);
 }
 
 .course-shell .ng-input-row .edu-input::placeholder {
@@ -429,9 +432,9 @@
   gap: 14px;
 }
 .course-page-surface .ng-decision-composer { min-height: 0; gap: 14px; padding: 14px 18px; }
-.course-page-surface .ng-decision-composer__presets .ng-decision-stream { min-height: 148px; }
-.course-page-surface .ng-decision-stream .ng-marquee-row:nth-child(n+3) { display: none; }
-.course-page-surface .ng-decision-result { min-height: 0; padding-top: 14px; }
+.course-page-surface .ng-decision-composer__presets .ng-decision-stream { min-height: 178px; }
+.course-page-surface .ng-decision-stream .ng-marquee-row:nth-child(n+4) { display: none; }
+.course-page-surface .ng-decision-result { min-height: 0; border-top: 0; padding-top: 0; }
 .course-page-surface .ng-decision-result__factors { min-height: 0; }
 .course-page-surface .ng-decision-result__factors .ng-decision-result__placeholder,
 .course-page-surface .ng-decision-result__factors article { min-height: 132px; }

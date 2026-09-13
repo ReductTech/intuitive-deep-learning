@@ -17,7 +17,7 @@
   position: relative;
   display: grid;
   min-width: 0;
-  grid-template-rows: 92px minmax(180px, 1fr) 118px;
+  grid-template-rows: 112px minmax(180px, 1fr) 166px;
   overflow: visible;
   border: 1px solid color-mix(in srgb, var(--step-color) 26%, white);
   border-radius: 12px;

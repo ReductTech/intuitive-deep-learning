@@ -1,5 +1,4 @@
-import type { CSSProperties } from 'react';
-import { ContentBlock, Typography } from '../../../shared/react';
+import { ContentBlock, ExplainPanelButton, RangeControl, Typography } from '../../../shared/react';
 import "./ExtraInputsPage.css";
 import {
   effectiveInput,
@@ -9,6 +8,8 @@ import {
   useLesson,
 } from '../../LessonContext';
 import teacherVideo from '../../assets/teacher_male_10s_wb.mp4';
+
+const subscripts = ['₁', '₂', '₃'] as const;
 
 export interface ExtraInputsPageProps {
   onComplete: () => void;
@@ -29,19 +30,16 @@ export function ExtraInputsPage({ onComplete }: ExtraInputsPageProps) {
     <ContentBlock
       headingLevel={1}
       className="ng-multi-stage ng-three-factor-sum"
-      title="一个决定，通常由多个因素共同推动"
+      title={scenario.question}
       subtitle="每个因素先变成输入 x，再乘上对应的重要性 w，最后汇总成神经元的总输入。"
     >
-      <div className="ng-three-factor-sum__decision">
-        <Typography variant="bodySmall" tone="muted">当前正在分析</Typography>
-        <Typography as="strong" variant="body" tone="accent">{scenario.question}</Typography>
-      </div>
-
       <div className="ng-three-factor-sum__layout">
         <section className="ng-three-factor-sum__factor-list" aria-label="三个影响因素">
           <div className="ng-three-factor-sum__column-labels" aria-hidden="true">
-            <Typography variant="bodySmall" tone="muted">现实因素与输入值</Typography>
+            <Typography variant="bodySmall" tone="muted">现实因素</Typography>
+            <Typography variant="bodySmall" tone="accent">输入</Typography>
             <Typography variant="bodySmall" tone="muted">权重（重要性）</Typography>
+            <Typography variant="bodySmall" tone="muted">贡献</Typography>
           </div>
 
           {scenario.factors.map((factor, index) => {
@@ -53,48 +51,49 @@ export function ExtraInputsPage({ onComplete }: ExtraInputsPageProps) {
             return (
               <article className="ng-three-factor-sum__factor-row" key={`${factor.name}-${index}`}>
                 <div className="ng-three-factor-sum__factor-info">
-                  <div className="ng-three-factor-sum__factor-number">0{index + 1}</div>
+                  <Typography as="span" variant="h3" tone="muted" wrap="nowrap" className="ng-three-factor-sum__factor-number">0{index + 1}</Typography>
                   <div className="ng-three-factor-sum__factor-copy">
-                    <Typography as="h3" variant="body" tone="accent">{factor.name}</Typography>
-                    <Typography variant="bodySmall" tone="muted">{factor.valueQuestion}</Typography>
-                    <Typography variant="bodySmall" tone="light">{factor.explanation}</Typography>
-                  </div>
-                  <div className="ng-three-factor-sum__factor-control">
-                    <div className="ng-three-factor-sum__value-head">
-                      <Typography variant="bodySmall" tone="muted">输入 x{index + 1}</Typography>
-                      <Typography as="strong" variant="bodySmall" tone="accent">{formatScore(input)}</Typography>
-                    </div>
-                    <input
-                      className="ng-three-factor-sum__range"
-                      type="range"
-                      min="0"
-                      max="10"
-                      step="1"
-                      value={rawValue}
-                      disabled={!state || !scenario}
-                      aria-label={`${factor.name}，当前评分 ${rawValue} / 10`}
-                      onChange={(event) => setValueDraft(index, Number(event.currentTarget.value))}
-                      onPointerUp={commitValue}
-                      onPointerCancel={commitValue}
-                      onKeyUp={commitValue}
-                      onBlur={commitValue}
-                    />
-                    <div className="ng-three-factor-sum__range-scale">
-                      <Typography as="span" variant="bodySmall" tone="light">0</Typography>
-                      <Typography as="span" variant="bodySmall" tone="light">{rawValue} / 10</Typography>
-                      <Typography as="span" variant="bodySmall" tone="light">10</Typography>
+                    <div className="ng-three-factor-sum__factor-title">
+                      <Typography as="h3" variant="body" tone="accent">{factor.name}</Typography>
+                      <ExplainPanelButton label={`查看${factor.name}的说明`}>
+                        <Typography as="strong" variant="bodySmall" tone="accent">{factor.valueQuestion}</Typography>
+                        <Typography variant="bodySmall" tone="muted">{factor.explanation}</Typography>
+                      </ExplainPanelButton>
                     </div>
                   </div>
                 </div>
 
-                <div className="ng-three-factor-sum__weight">
-                  <Typography variant="bodySmall" tone="muted">w{index + 1}</Typography>
-                  <div className="ng-three-factor-sum__weight-meter" style={{ '--ng-weight-level': weight } as CSSProperties}>
-                    <span />
-                  </div>
-                  <Typography as="strong" variant="body" tone="warning">{formatScore(weight)}</Typography>
-                  {factor.valueTransform === 'inverse' && <Typography variant="bodySmall" tone="muted">反向</Typography>}
-                </div>
+                <RangeControl
+                  label={`输入 x${subscripts[index]}`}
+                  value={rawValue}
+                  min={0}
+                  max={10}
+                  step={1}
+                  discrete
+                  scale={['0', '5 / 10', '10']}
+                  formatValue={() => formatScore(input)}
+                  hint={index === 0}
+                  controlClassName="ng-three-factor-sum__factor-control"
+                  aria-label={`${factor.name}，当前评分 ${rawValue} / 10`}
+                  onChange={(event) => {
+                    setValueDraft(index, Number(event.currentTarget.value));
+                    commitValue();
+                  }}
+                />
+
+                <RangeControl
+                  label={`w${subscripts[index]}`}
+                  value={weight}
+                  min={0}
+                  max={1}
+                  step={0.1}
+                  discrete
+                  scale={['0', '0.5', '1']}
+                  digits={1}
+                  disabled
+                  controlClassName="ng-three-factor-sum__weight-control"
+                  aria-label={`${factor.name}的权重 ${formatScore(weight)}`}
+                />
 
                 <div className="ng-three-factor-sum__contribution" aria-label={`${factor.name}的加权贡献`}>
                   <Typography variant="bodySmall" tone="muted">贡献</Typography>
@@ -105,13 +104,19 @@ export function ExtraInputsPage({ onComplete }: ExtraInputsPageProps) {
           })}
         </section>
 
-        <aside className="ng-three-factor-sum__result" aria-label="加权求和结果">
+        <div className="ng-three-factor-sum__connector" aria-hidden="true">→</div>
+
+        <aside className="ng-three-factor-sum__result" aria-label="加权求和">
           <Typography variant="bodySmall" tone="muted">加权求和</Typography>
           <div className="ng-three-factor-sum__sigma">Σ</div>
-          <Typography variant="bodySmall" tone="muted">三个因素的加权贡献</Typography>
+        </aside>
+
+        <div className="ng-three-factor-sum__connector" aria-hidden="true">→</div>
+
+        <aside className="ng-three-factor-sum__output" aria-label="神经元的总输入">
           <div className="ng-three-factor-sum__total">
-            <Typography variant="bodySmall" tone="warning">神经元的总输入</Typography>
-            <Typography as="strong" variant="h1" tone="warning">y = {formatScore(output)}</Typography>
+            <Typography variant="body" tone="warning">输出 y</Typography>
+            <Typography as="strong" variant="h1" tone="warning">= {formatScore(output)}</Typography>
           </div>
         </aside>
       </div>

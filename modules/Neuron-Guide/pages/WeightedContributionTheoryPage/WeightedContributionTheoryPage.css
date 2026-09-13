@@ -88,7 +88,7 @@
 .ng-matrix-representation__vector-card--inputs { border-color: #d8e3f0; border-left-color: #6e9fe2; background: #fbfdff; }
 .ng-matrix-representation__card-copy { display: grid; min-width: 0; align-content: center; gap: 3px; }
 .ng-matrix-representation__vector-card .edu-formula-block { min-height: 114px; border: 0; background: transparent; padding: 6px; }
-.ng-matrix-representation__vector-equation { display: flex; min-width: 0; align-items: center; justify-content: center; gap: 8px; color: #263f68; font-family: var(--ui-font-mono); font-size: 22px; font-weight: 850; }
+.ng-matrix-representation__vector-equation { display: flex; min-width: 0; align-items: center; justify-content: center; gap: 8px; color: #263f68; font-family: var(--ui-font-mono); font-size: var(--ui-type-formula-size); font-weight: var(--ui-type-formula-weight); line-height: var(--ui-type-formula-line-height); }
 
 .ng-matrix-representation__bracket-vector {
   position: relative;

@@ -87,19 +87,6 @@ export function SignalDiscoveryPage({ onComplete }: SignalDiscoveryPageProps) {
       </form>
 
       <section className="ng-decision-result" aria-live="polite">
-          <div className="ng-decision-result__head">
-            <div>
-              <Typography variant="body" tone="warning">{loading ? '正在分析' : '分析结果'}</Typography>
-              <Typography as="h3" variant="h1" tone="accent">
-                {resultVisible && state.analysis ? '这个决定主要受三类因素影响' : '三个主要影响因素'}
-              </Typography>
-            </div>
-            {resultVisible && state.analysis && (
-              <Typography variant="body" tone="muted">{state.analysis.decision}</Typography>
-            )}
-          </div>
-
-          <div className="ng-decision-result__branches" aria-hidden="true"><i /><i /><i /></div>
           <div className={`ng-decision-result__factors${resultVisible && state.analysis && !loading ? '' : ' is-empty'}`}>
             {(!resultVisible || !state.analysis || loading) && [0, 1, 2].map((index) => (
               <article
