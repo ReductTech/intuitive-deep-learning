@@ -20,6 +20,7 @@ from langchain_app.tasks.loss import parse_probability_loss_design
 from langchain_app.tasks.decision import (
     generate_decision_intake_uncached,
     generate_extra_decision_factors_uncached,
+    split_value_scale,
 )
 from langchain_app.tasks.short_answer import (
     SHORT_ANSWER_SYSTEM_PROMPT,
@@ -292,6 +293,16 @@ class StructuredTaskTests(unittest.TestCase):
 
 
 class ComplexTaskTests(unittest.TestCase):
+    def test_legacy_value_question_scale_is_split(self) -> None:
+        self.assertEqual(
+            split_value_scale("问题？（0 = 较低，1 = 较高）"),
+            ("问题？", "较低", "较高"),
+        )
+        self.assertEqual(
+            split_value_scale("问题？（0 = 随时都能学，不急，1 = 现在是最佳时机）"),
+            ("问题？", "随时都能学，不急", "现在是最佳时机"),
+        )
+
     def test_classification_scenario_contract(self) -> None:
         response = {
             "subject": "网球",
@@ -325,6 +336,8 @@ class ComplexTaskTests(unittest.TestCase):
             "first_factor_direction": "positive",
             "first_factor_value_label": "学术兴趣强度",
             "first_factor_value_question": "你对学术研究有多感兴趣？",
+            "first_factor_min_desc": "完全没有",
+            "first_factor_max_desc": "非常强烈",
             "first_factor_explanation": "兴趣会影响长期投入。",
             "suggested_importance": 0.8,
             "reason": "输入明确。",
@@ -346,6 +359,8 @@ class ComplexTaskTests(unittest.TestCase):
                     "direction": "positive",
                     "value_label": "职业目标清晰度",
                     "value_question": "你的职业目标有多清晰？",
+                    "min_desc": "完全不清晰",
+                    "max_desc": "非常清晰",
                     "suggested_importance": 0.9,
                     "explanation": "清晰的目标有助于判断深造价值。",
                 },
@@ -354,6 +369,8 @@ class ComplexTaskTests(unittest.TestCase):
                     "direction": "negative",
                     "value_label": "可投入时间压力",
                     "value_question": "你目前面临的时间压力有多大？",
+                    "min_desc": "完全没有压力",
+                    "max_desc": "压力极大",
                     "suggested_importance": 0.7,
                     "explanation": "压力越大，可用于深造的精力越少。",
                 },
@@ -373,6 +390,8 @@ class ComplexTaskTests(unittest.TestCase):
         self.assertEqual(result["factors"][0]["value_transform"], "direct")
         self.assertEqual(result["factors"][1]["value_transform"], "inverse")
         self.assertEqual(result["factors"][0]["suggested_importance"], 0.9)
+        self.assertEqual(result["factors"][0]["min_desc"], "完全不清晰")
+        self.assertEqual(result["factors"][0]["max_desc"], "非常清晰")
         self.assertNotIn("importance_question", result["factors"][0])
         self.assertNotIn("value", result["factors"][0])
 
@@ -395,6 +414,8 @@ class ComplexTaskTests(unittest.TestCase):
             "first_factor_direction": "positive",
             "first_factor_value_label": "",
             "first_factor_value_question": "",
+            "first_factor_min_desc": "",
+            "first_factor_max_desc": "",
             "first_factor_explanation": "",
             "suggested_importance": 0.5,
             "reason": "该输入不适合继续分析。",

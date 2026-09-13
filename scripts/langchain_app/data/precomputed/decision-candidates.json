@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "namespace": "decision-candidates",
-  "content_version": 60,
+  "content_version": 61,
   "generator": {
     "id": "decision-candidate-generator",
     "model": "claude-sonnet-4-6",
@@ -31,10 +31,12 @@
             "name": "学术兴趣与深造意愿",
             "direction": "positive",
             "value_label": "读研意愿强度",
-            "value_question": "你对继续深入学习某个专业领域有多强烈的兴趣和主动意愿？（0=完全没有，1=非常强烈）",
+            "value_question": "你对继续深入学习某个专业领域有多强烈的兴趣和主动意愿？",
             "suggested_importance": 0.8,
             "explanation": "读研需要持续投入大量时间钻研，内在驱动力越强，越能坚持完成并从中获益。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "完全没有",
+            "max_desc": "非常强烈"
           }
         },
         "extra_factors": {
@@ -43,19 +45,23 @@
               "name": "经济承受能力",
               "direction": "positive",
               "value_label": "经济支撑充裕度",
-              "value_question": "你目前的家庭或个人经济状况，能在不产生严重压力的情况下支撑2-3年的读研费用和生活开销吗？（0=完全无法承受，1=完全没有压力）",
+              "value_question": "你目前的家庭或个人经济状况，能在不产生严重压力的情况下支撑2-3年的读研费用和生活开销吗？",
               "suggested_importance": 0.7,
               "explanation": "读研期间收入中断且需持续支出，经济压力过大会直接影响学习状态和完成可能性。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "完全无法承受",
+              "max_desc": "完全没有压力"
             },
             {
               "name": "目标职业对学历的要求",
               "direction": "positive",
               "value_label": "学历门槛必要性",
-              "value_question": "你理想中的职业方向或目标岗位，在实际招聘中对硕士及以上学历的要求有多强？（0=完全不需要，1=几乎必须）",
+              "value_question": "你理想中的职业方向或目标岗位，在实际招聘中对硕士及以上学历的要求有多强？",
               "suggested_importance": 0.6,
               "explanation": "如果目标行业明确要求更高学历，读研的长期回报更确定，否则性价比会大幅降低。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "完全不需要",
+              "max_desc": "几乎必须"
             }
           ]
         }
@@ -89,10 +95,12 @@
             "name": "对现职的厌倦与转行意愿",
             "direction": "positive",
             "value_label": "离职意愿强度",
-            "value_question": "你目前对现在这份工作感到厌倦或强烈想离开的程度有多高？（0=完全没有，1=非常强烈）",
+            "value_question": "你目前对现在这份工作感到厌倦或强烈想离开的程度有多高？",
             "suggested_importance": 0.85,
             "explanation": "个人主观意愿是驱动换工作行动的核心动力，意愿越强越可能付诸行动。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "完全没有",
+            "max_desc": "非常强烈"
           }
         },
         "extra_factors": {
@@ -101,19 +109,23 @@
               "name": "新机会的稀缺性与时效性",
               "direction": "positive",
               "value_label": "当前机会紧迫程度",
-              "value_question": "你现在手头有多少具体的、限时的好工作机会？（0=完全没有，1=有非常理想且即将截止的机会）",
+              "value_question": "你现在手头有多少具体的、限时的好工作机会？",
               "suggested_importance": 0.75,
               "explanation": "机会窗口具有时效性，错过合适时机可能需要等待很久才能再遇到同等条件。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "完全没有",
+              "max_desc": "有非常理想且即将截止的机会"
             },
             {
               "name": "换工作带来的收入与生活稳定风险",
               "direction": "negative",
               "value_label": "经济与生活风险程度",
-              "value_question": "如果现在换工作，你面临的收入中断、降薪或生活不稳定的风险有多大？（0=几乎没有风险，1=风险极高）",
+              "value_question": "如果现在换工作，你面临的收入中断、降薪或生活不稳定的风险有多大？",
               "suggested_importance": 0.65,
               "explanation": "换工作可能带来短期收入波动和生活压力，风险越高越需要谨慎权衡是否行动。",
-              "value_transform": "inverse"
+              "value_transform": "inverse",
+              "min_desc": "几乎没有风险",
+              "max_desc": "风险极高"
             }
           ]
         }
@@ -147,10 +159,12 @@
             "name": "健身意愿强度",
             "direction": "positive",
             "value_label": "想健身的迫切程度",
-            "value_question": "你现在有多想开始健身？（0 = 完全没想法，1 = 非常迫切）",
+            "value_question": "你现在有多想开始健身？",
             "suggested_importance": 0.8,
             "explanation": "个人意愿是行动的核心驱动力，意愿越强越容易克服阻碍并坚持下去。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "完全没想法",
+            "max_desc": "非常迫切"
           }
         },
         "extra_factors": {
@@ -159,19 +173,23 @@
               "name": "可支配时间",
               "direction": "positive",
               "value_label": "每周空闲时间充裕程度",
-              "value_question": "你每周有多少空闲时间可以用来健身？（0 = 几乎没有，1 = 非常充裕）",
+              "value_question": "你每周有多少空闲时间可以用来健身？",
               "suggested_importance": 0.7,
               "explanation": "健身需要持续投入时间，可支配时间越少越难形成规律锻炼习惯。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "几乎没有",
+              "max_desc": "非常充裕"
             },
             {
               "name": "健身费用压力",
               "direction": "negative",
               "value_label": "健身相关费用的经济负担程度",
-              "value_question": "办卡、购置装备等健身费用对你来说经济压力有多大？（0 = 完全没压力，1 = 压力很大）",
+              "value_question": "办卡、购置装备等健身费用对你来说经济压力有多大？",
               "suggested_importance": 0.6,
               "explanation": "健身的经济成本越高，财务压力越大，越可能成为阻碍行动的现实障碍。",
-              "value_transform": "inverse"
+              "value_transform": "inverse",
+              "min_desc": "完全没压力",
+              "max_desc": "压力很大"
             }
           ]
         }
@@ -205,10 +223,12 @@
             "name": "新城市的发展机会",
             "direction": "positive",
             "value_label": "机会吸引力",
-            "value_question": "新城市在职业发展、行业资源或生活品质上对你的吸引力有多强？（0=几乎没有吸引力，1=非常强烈）",
+            "value_question": "新城市在职业发展、行业资源或生活品质上对你的吸引力有多强？",
             "suggested_importance": 0.8,
             "explanation": "新城市能提供的机会越多，搬过去的潜在收益越大，越值得行动。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "几乎没有吸引力",
+            "max_desc": "非常强烈"
           }
         },
         "extra_factors": {
@@ -217,19 +237,23 @@
               "name": "家庭牵绊程度",
               "direction": "negative",
               "value_label": "家庭束缚感",
-              "value_question": "你目前在原城市的家庭责任或情感依赖有多重？（0=几乎没有牵绊，1=非常难以离开）",
+              "value_question": "你目前在原城市的家庭责任或情感依赖有多重？",
               "suggested_importance": 0.7,
               "explanation": "家庭牵绊越强，离开原城市的现实代价越高，会显著阻碍搬迁决定。",
-              "value_transform": "inverse"
+              "value_transform": "inverse",
+              "min_desc": "几乎没有牵绊",
+              "max_desc": "非常难以离开"
             },
             {
               "name": "经济承受能力",
               "direction": "positive",
               "value_label": "财务准备度",
-              "value_question": "你目前的积蓄和收入能在新城市支撑过渡期（如找工作、安置费用）的程度有多高？（0=完全无法支撑，1=非常充裕）",
+              "value_question": "你目前的积蓄和收入能在新城市支撑过渡期（如找工作、安置费用）的程度有多高？",
               "suggested_importance": 0.6,
               "explanation": "足够的经济缓冲能降低搬迁初期的生存压力，让决定更可行。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "完全无法支撑",
+              "max_desc": "非常充裕"
             }
           ]
         }
@@ -263,10 +287,12 @@
             "name": "个人学习意愿",
             "direction": "positive",
             "value_label": "学习动力强度",
-            "value_question": "你对学习这项新技能的渴望有多强烈？（0 = 完全没兴趣，1 = 非常迫切想学）",
+            "value_question": "你对学习这项新技能的渴望有多强烈？",
             "suggested_importance": 0.8,
             "explanation": "内在动力越强，学习过程中越能克服困难并坚持到底。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "完全没兴趣",
+            "max_desc": "非常迫切想学"
           }
         },
         "extra_factors": {
@@ -275,19 +301,23 @@
               "name": "可用时间安排",
               "direction": "positive",
               "value_label": "空闲时间充裕度",
-              "value_question": "你目前每周能稳定拿出多少时间用于学习？（0 = 几乎没有空闲，1 = 时间非常充裕）",
+              "value_question": "你目前每周能稳定拿出多少时间用于学习？",
               "suggested_importance": 0.7,
               "explanation": "学习新技能需要持续投入时间，可用时间越充裕越能保证学习进度。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "几乎没有空闲",
+              "max_desc": "时间非常充裕"
             },
             {
               "name": "学习机会窗口",
               "direction": "positive",
               "value_label": "当前机会紧迫性",
-              "value_question": "这项技能的学习机会或应用场景有多紧迫？（0 = 随时都能学，不急，1 = 现在是难得的最佳时机）",
+              "value_question": "这项技能的学习机会或应用场景有多紧迫？",
               "suggested_importance": 0.6,
               "explanation": "机会窗口越稀缺，推迟学习的代价越高，越应该抓住当下行动。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "随时都能学，不急",
+              "max_desc": "现在是难得的最佳时机"
             }
           ]
         }
@@ -321,10 +351,12 @@
             "name": "创业意愿与热情",
             "direction": "positive",
             "value_label": "创业渴望程度",
-            "value_question": "你对创业这件事有多强烈的主动意愿和持续热情？（0=完全没兴趣，1=非常渴望且想清楚了）",
+            "value_question": "你对创业这件事有多强烈的主动意愿和持续热情？",
             "suggested_importance": 0.8,
             "explanation": "内在驱动力决定了面对创业挫折时能否坚持，是启动和维持创业行为的根本动力。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "完全没兴趣",
+            "max_desc": "非常渴望且想清楚了"
           }
         },
         "extra_factors": {
@@ -333,19 +365,23 @@
               "name": "启动资金与经济储备",
               "direction": "positive",
               "value_label": "经济抗风险能力",
-              "value_question": "你目前的存款和收入来源，能支撑你在没有稳定收入的情况下坚持多久？（0=完全撑不住，1=可以轻松支撑1年以上）",
+              "value_question": "你目前的存款和收入来源，能支撑你在没有稳定收入的情况下坚持多久？",
               "suggested_importance": 0.7,
               "explanation": "创业初期往往没有稳定收入，经济储备不足会迫使创业者过早放弃或做出妥协决策。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "完全撑不住",
+              "max_desc": "可以轻松支撑1年以上"
             },
             {
               "name": "相关行业经验与技能",
               "direction": "positive",
               "value_label": "领域能力积累",
-              "value_question": "你在打算创业的领域，已经积累了多少实际经验和可用技能？（0=完全空白，1=有丰富的实战经验和核心技能）",
+              "value_question": "你在打算创业的领域，已经积累了多少实际经验和可用技能？",
               "suggested_importance": 0.6,
               "explanation": "具备相关经验和技能能显著降低试错成本，提高创业项目在早期存活的概率。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "完全空白",
+              "max_desc": "有丰富的实战经验和核心技能"
             }
           ]
         }
@@ -379,10 +415,12 @@
             "name": "出国深造的个人意愿",
             "direction": "positive",
             "value_label": "留学意愿强度",
-            "value_question": "你有多强烈地想通过留学拓展视野、获得海外学历？（0=完全没兴趣，1=非常渴望）",
+            "value_question": "你有多强烈地想通过留学拓展视野、获得海外学历？",
             "suggested_importance": 0.8,
             "explanation": "个人意愿是驱动留学决策最核心的内在动力，意愿越强越可能克服后续障碍坚持完成申请。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "完全没兴趣",
+            "max_desc": "非常渴望"
           }
         },
         "extra_factors": {
@@ -391,19 +429,23 @@
               "name": "留学经济承受能力",
               "direction": "positive",
               "value_label": "经济可行程度",
-              "value_question": "综合学费、生活费和家庭储蓄，你目前的经济条件能在多大程度上支撑留学费用？（0=完全无法负担，1=完全没有压力）",
+              "value_question": "综合学费、生活费和家庭储蓄，你目前的经济条件能在多大程度上支撑留学费用？",
               "suggested_importance": 0.7,
               "explanation": "留学需要持续的高额资金投入，经济条件直接决定申请是否在现实层面可行。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "完全无法负担",
+              "max_desc": "完全没有压力"
             },
             {
               "name": "申请竞争力与语言能力",
               "direction": "positive",
               "value_label": "申请准备完成度",
-              "value_question": "你目前的学术成绩、语言考试成绩（如托福/雅思）和相关经历，整体处于什么水平？（0=远未达到目标院校要求，1=已完全满足要求）",
+              "value_question": "你目前的学术成绩、语言考试成绩（如托福/雅思）和相关经历，整体处于什么水平？",
               "suggested_importance": 0.6,
               "explanation": "硬件条件是能否成功获得录取的基础门槛，准备越充分申请成功率越高。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "远未达到目标院校要求",
+              "max_desc": "已完全满足要求"
             }
           ]
         }
@@ -437,10 +479,12 @@
             "name": "身心疲惫程度",
             "direction": "positive",
             "value_label": "当前身心疲惫程度",
-            "value_question": "你现在身心疲惫的程度有多高？（0 = 完全不疲惫，1 = 已经精疲力竭）",
+            "value_question": "你现在身心疲惫的程度有多高？",
             "suggested_importance": 0.8,
             "explanation": "身心越疲惫，辞职休息带来的恢复价值越大，越支持做出辞职的决定。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "完全不疲惫",
+            "max_desc": "已经精疲力竭"
           }
         },
         "extra_factors": {
@@ -449,19 +493,23 @@
               "name": "经济储蓄充裕度",
               "direction": "positive",
               "value_label": "当前经济储蓄充裕度",
-              "value_question": "你目前的经济储蓄有多充裕？（0 = 完全没有积蓄，1 = 足以支撑长期不工作）",
+              "value_question": "你目前的经济储蓄有多充裕？",
               "suggested_importance": 0.7,
               "explanation": "储蓄越不充裕，辞职后的生活压力越大，越难以支撑休息期间的基本开销，从而削弱辞职的可行性。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "完全没有积蓄",
+              "max_desc": "足以支撑长期不工作"
             },
             {
               "name": "再就业机会充裕度",
               "direction": "positive",
               "value_label": "当前所在领域的再就业机会充裕度",
-              "value_question": "你认为休息后重新找到合适工作的机会有多充裕？（0 = 几乎没有机会，1 = 机会非常多）",
+              "value_question": "你认为休息后重新找到合适工作的机会有多充裕？",
               "suggested_importance": 0.6,
               "explanation": "再就业机会越少，辞职后重返职场的难度越高，长期发展风险越大，越不利于做出辞职的决定。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "几乎没有机会",
+              "max_desc": "机会非常多"
             }
           ]
         }
@@ -496,10 +544,12 @@
             "name": "自由职业意愿强度",
             "direction": "positive",
             "value_label": "对自由职业的渴望程度",
-            "value_question": "你有多强烈地想要脱离固定雇佣关系、自主安排工作？（0=完全没有，1=非常强烈）",
+            "value_question": "你有多强烈地想要脱离固定雇佣关系、自主安排工作？",
             "suggested_importance": 0.8,
             "explanation": "内在动力决定了面对自由职业初期困难时能否坚持下去。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "完全没有",
+            "max_desc": "非常强烈"
           }
         },
         "extra_factors": {
@@ -508,19 +558,23 @@
               "name": "经济储备与收入缓冲",
               "direction": "positive",
               "value_label": "当前经济安全垫充足程度",
-              "value_question": "你目前的储蓄或被动收入，能支撑你在没有稳定客户的情况下生活多久？（0=不足一个月，1=一年以上）",
+              "value_question": "你目前的储蓄或被动收入，能支撑你在没有稳定客户的情况下生活多久？",
               "suggested_importance": 0.7,
               "explanation": "足够的经济缓冲能让你在早期客户稀少时不被迫接受低质量项目或仓促放弃。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "不足一个月",
+              "max_desc": "一年以上"
             },
             {
               "name": "可接单的专业技能成熟度",
               "direction": "positive",
               "value_label": "核心技能的市场可变现程度",
-              "value_question": "你的专业技能是否已经成熟到可以独立交付客户付费项目？（0=还在学习阶段，1=已有成功交付案例）",
+              "value_question": "你的专业技能是否已经成熟到可以独立交付客户付费项目？",
               "suggested_importance": 0.6,
               "explanation": "可变现的技能是自由职业获得第一批客户和口碑的基础前提。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "还在学习阶段",
+              "max_desc": "已有成功交付案例"
             }
           ]
         }
@@ -554,10 +608,12 @@
             "name": "对新行业的个人意愿",
             "direction": "positive",
             "value_label": "转行意愿强度",
-            "value_question": "你对进入新行业的渴望有多强烈？（0 = 完全不想，1 = 非常迫切）",
+            "value_question": "你对进入新行业的渴望有多强烈？",
             "suggested_importance": 0.8,
             "explanation": "内在动力决定转行后能否持续投入，是长期成功的核心驱动力。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "完全不想",
+            "max_desc": "非常迫切"
           }
         },
         "extra_factors": {
@@ -566,19 +622,23 @@
               "name": "转行的经济储备与抗风险能力",
               "direction": "positive",
               "value_label": "经济缓冲充足度",
-              "value_question": "你目前的积蓄或收入能支撑多久的过渡期生活？（0 = 完全没有缓冲，1 = 足够支撑一年以上）",
+              "value_question": "你目前的积蓄或收入能支撑多久的过渡期生活？",
               "suggested_importance": 0.7,
               "explanation": "转行初期往往收入下降或中断，经济储备直接决定能否承受过渡期的压力。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "完全没有缓冲",
+              "max_desc": "足够支撑一年以上"
             },
             {
               "name": "现有可迁移能力与新行业匹配度",
               "direction": "positive",
               "value_label": "能力匹配程度",
-              "value_question": "你在原行业积累的技能和经验，有多少能直接用于新行业？（0 = 几乎无法迁移，1 = 高度匹配）",
+              "value_question": "你在原行业积累的技能和经验，有多少能直接用于新行业？",
               "suggested_importance": 0.6,
               "explanation": "可迁移能力越强，转行的学习成本和时间成本越低，成功概率也越高。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "几乎无法迁移",
+              "max_desc": "高度匹配"
             }
           ]
         }
@@ -614,10 +674,12 @@
             "name": "薪资与职业回报",
             "direction": "positive",
             "value_label": "薪资吸引力",
-            "value_question": "这份 offer 的薪资和福利待遇，相比你目前的期望和市场水平，有多符合你的要求？（0 = 完全不符合，1 = 完全符合）",
+            "value_question": "这份 offer 的薪资和福利待遇，相比你目前的期望和市场水平，有多符合你的要求？",
             "suggested_importance": 0.8,
             "explanation": "薪资直接决定经济生活质量，是接受 offer 最基础的物质驱动力。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "完全不符合",
+            "max_desc": "完全符合"
           }
         },
         "extra_factors": {
@@ -626,19 +688,23 @@
               "name": "岗位与长期发展方向",
               "direction": "positive",
               "value_label": "发展契合度",
-              "value_question": "这个岗位的职业发展路径，与你 3-5 年后希望达到的目标有多契合？（0 = 完全不契合，1 = 高度契合）",
+              "value_question": "这个岗位的职业发展路径，与你 3-5 年后希望达到的目标有多契合？",
               "suggested_importance": 0.7,
               "explanation": "岗位是否符合长期规划决定了接受 offer 的战略价值，而不只是短期收益。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "完全不契合",
+              "max_desc": "高度契合"
             },
             {
               "name": "当前机会稀缺性",
               "direction": "positive",
               "value_label": "机会稀缺程度",
-              "value_question": "如果放弃这个 offer，你认为在近期内找到同等或更好机会的可能性有多低？（0 = 很容易找到替代，1 = 几乎不可能再有类似机会）",
+              "value_question": "如果放弃这个 offer，你认为在近期内找到同等或更好机会的可能性有多低？",
               "suggested_importance": 0.6,
               "explanation": "机会窗口的稀缺性越高，放弃的潜在代价越大，接受的紧迫性也越强。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "很容易找到替代",
+              "max_desc": "几乎不可能再有类似机会"
             }
           ]
         }
@@ -672,10 +738,12 @@
             "name": "学习兴趣与动力",
             "direction": "positive",
             "value_label": "对这门课的学习兴趣强度",
-            "value_question": "你对这门课的内容有多感兴趣？（0 = 完全没兴趣，1 = 非常感兴趣）",
+            "value_question": "你对这门课的内容有多感兴趣？",
             "suggested_importance": 0.8,
             "explanation": "学习兴趣越强，越容易坚持完成课程并从中获益，是选课最核心的驱动力。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "完全没兴趣",
+            "max_desc": "非常感兴趣"
           }
         },
         "extra_factors": {
@@ -684,19 +752,23 @@
               "name": "时间是否充裕",
               "direction": "positive",
               "value_label": "当前可用于学习的时间充裕程度",
-              "value_question": "你目前每周有多少空余时间可以用来学习这门课？（0 = 几乎没有空余时间，1 = 时间非常充裕）",
+              "value_question": "你目前每周有多少空余时间可以用来学习这门课？",
               "suggested_importance": 0.7,
               "explanation": "学习需要投入足够的时间，时间越充裕越能保证学习质量和完课率。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "几乎没有空余时间",
+              "max_desc": "时间非常充裕"
             },
             {
               "name": "相关基础能力",
               "direction": "positive",
               "value_label": "与这门课相关的已有知识或技能水平",
-              "value_question": "你目前掌握的与这门课相关的基础知识有多扎实？（0 = 完全没有基础，1 = 基础非常扎实）",
+              "value_question": "你目前掌握的与这门课相关的基础知识有多扎实？",
               "suggested_importance": 0.6,
               "explanation": "已有的相关基础越好，学习这门课时越不容易因难度过高而中途放弃。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "完全没有基础",
+              "max_desc": "基础非常扎实"
             }
           ]
         }
@@ -730,10 +802,12 @@
             "name": "回复意愿",
             "direction": "positive",
             "value_label": "想要回复的意愿强度",
-            "value_question": "你有多想回复这条消息？（0=完全不想，1=非常想）",
+            "value_question": "你有多想回复这条消息？",
             "suggested_importance": 0.8,
             "explanation": "个人是否有意愿回复是决定要不要行动的最直接驱动力。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "完全不想",
+            "max_desc": "非常想"
           }
         },
         "extra_factors": {
@@ -742,19 +816,23 @@
               "name": "回复时机紧迫性",
               "direction": "positive",
               "value_label": "当前时机的紧迫程度",
-              "value_question": "你觉得现在回复这条消息有多紧迫？（0=完全不急，1=非常紧迫）",
+              "value_question": "你觉得现在回复这条消息有多紧迫？",
               "suggested_importance": 0.7,
               "explanation": "消息的时效性越强，错过回复窗口的代价越大，越应该尽快回复。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "完全不急",
+              "max_desc": "非常紧迫"
             },
             {
               "name": "当前时间余裕",
               "direction": "positive",
               "value_label": "现在可用于回复的时间充裕程度",
-              "value_question": "你现在有多少空闲时间可以用来回复这条消息？（0=完全没有，1=非常充裕）",
+              "value_question": "你现在有多少空闲时间可以用来回复这条消息？",
               "suggested_importance": 0.6,
               "explanation": "只有当下有足够时间，才具备立即回复的现实条件。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "完全没有",
+              "max_desc": "非常充裕"
             }
           ]
         }
@@ -788,10 +866,12 @@
             "name": "对对方的喜欢程度",
             "direction": "positive",
             "value_label": "喜欢强度",
-            "value_question": "你现在对对方的喜欢程度有多强？（0=几乎没感觉，1=非常喜欢、难以自抑）",
+            "value_question": "你现在对对方的喜欢程度有多强？",
             "suggested_importance": 0.85,
             "explanation": "对对方的喜欢程度越强，主动表白的内在驱动力就越充分，行动意愿也越高。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "几乎没感觉",
+            "max_desc": "非常喜欢、难以自抑"
           }
         },
         "extra_factors": {
@@ -800,19 +880,23 @@
               "name": "被接受的可能性",
               "direction": "positive",
               "value_label": "成功把握",
-              "value_question": "根据你观察到的信号，你觉得对方接受你的可能性有多大？（0=几乎不可能，1=非常有把握）",
+              "value_question": "根据你观察到的信号，你觉得对方接受你的可能性有多大？",
               "suggested_importance": 0.7,
               "explanation": "被接受的可能性越高，表白的预期收益越大、风险越小，越值得主动出击。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "几乎不可能",
+              "max_desc": "非常有把握"
             },
             {
               "name": "表白失败对关系的影响",
               "direction": "negative",
               "value_label": "关系损伤风险",
-              "value_question": "如果表白被拒，你们现有的关系（友谊、同学、同事等）受到损伤的可能性有多大？（0=完全不影响，1=关系很可能彻底破裂）",
+              "value_question": "如果表白被拒，你们现有的关系（友谊、同学、同事等）受到损伤的可能性有多大？",
               "suggested_importance": 0.6,
               "explanation": "表白失败对现有关系的潜在损伤越大，行动的代价越高，会抑制主动表白的意愿。",
-              "value_transform": "inverse"
+              "value_transform": "inverse",
+              "min_desc": "完全不影响",
+              "max_desc": "关系很可能彻底破裂"
             }
           ]
         }
@@ -846,10 +930,12 @@
             "name": "个人合作意愿",
             "direction": "positive",
             "value_label": "主动想参与这次合作的意愿强度",
-            "value_question": "你有多想参与这次合作？（0 = 完全不想，1 = 非常想参与）",
+            "value_question": "你有多想参与这次合作？",
             "suggested_importance": 0.8,
             "explanation": "个人意愿直接决定合作过程中的投入程度，意愿越强越值得接受。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "完全不想",
+            "max_desc": "非常想参与"
           }
         },
         "extra_factors": {
@@ -858,19 +944,23 @@
               "name": "当前时间安排余裕",
               "direction": "positive",
               "value_label": "现有时间安排对合作的容纳程度",
-              "value_question": "你目前的时间安排有多充裕，足以承担这次合作？（0 = 完全没有空余时间，1 = 时间非常充裕）",
+              "value_question": "你目前的时间安排有多充裕，足以承担这次合作？",
               "suggested_importance": 0.7,
               "explanation": "时间不足会导致合作质量下降甚至失约，充裕的时间是顺利完成合作的基础条件。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "完全没有空余时间",
+              "max_desc": "时间非常充裕"
             },
             {
               "name": "合作带来的长期发展价值",
               "direction": "positive",
               "value_label": "这次合作对长期发展的促进程度",
-              "value_question": "你认为这次合作对你的长期发展有多大帮助？（0 = 几乎没有帮助，1 = 非常有价值）",
+              "value_question": "你认为这次合作对你的长期发展有多大帮助？",
               "suggested_importance": 0.6,
               "explanation": "长期发展价值越高，接受合作的收益越大，越值得在短期付出成本。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "几乎没有帮助",
+              "max_desc": "非常有价值"
             }
           ]
         }
@@ -906,10 +996,12 @@
             "name": "近期业绩与贡献度",
             "direction": "positive",
             "value_label": "业绩表现强度",
-            "value_question": "过去半年你在工作中的表现和贡献，有多突出？（0=几乎没有亮点，1=成果显著且有据可查）",
+            "value_question": "过去半年你在工作中的表现和贡献，有多突出？",
             "suggested_importance": 0.85,
             "explanation": "业绩越突出，加薪请求越有说服力，成功率也越高。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "几乎没有亮点",
+            "max_desc": "成果显著且有据可查"
           }
         },
         "extra_factors": {
@@ -918,19 +1010,23 @@
               "name": "当前提薪时机",
               "direction": "positive",
               "value_label": "时机成熟程度",
-              "value_question": "现在距离上次调薪或绩效考核有多久，公司整体氛围对加薪是否友好？（0=刚调薪或公司收缩期，1=时间充裕且公司处于扩张期）",
+              "value_question": "现在距离上次调薪或绩效考核有多久，公司整体氛围对加薪是否友好？",
               "suggested_importance": 0.75,
               "explanation": "选在合适的时间窗口提出，能大幅降低被拒绝的概率。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "刚调薪或公司收缩期",
+              "max_desc": "时间充裕且公司处于扩张期"
             },
             {
               "name": "被拒后的职业风险",
               "direction": "negative",
               "value_label": "被拒风险大小",
-              "value_question": "如果加薪请求被拒，你担心对自己在公司的形象或职业发展造成负面影响的程度有多高？（0=完全不担心，1=非常担心）",
+              "value_question": "如果加薪请求被拒，你担心对自己在公司的形象或职业发展造成负面影响的程度有多高？",
               "suggested_importance": 0.6,
               "explanation": "感知到的风险越大，越容易让人选择回避而不是主动提出。",
-              "value_transform": "inverse"
+              "value_transform": "inverse",
+              "min_desc": "完全不担心",
+              "max_desc": "非常担心"
             }
           ]
         }
@@ -964,10 +1060,12 @@
             "name": "对这份工作的个人意愿",
             "direction": "positive",
             "value_label": "岗位吸引力",
-            "value_question": "你对这个岗位的内容和发展方向有多感兴趣？（0=完全没兴趣，1=非常想要）",
+            "value_question": "你对这个岗位的内容和发展方向有多感兴趣？",
             "suggested_importance": 0.8,
             "explanation": "内心越渴望这份工作，越值得花时间去争取面试机会。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "完全没兴趣",
+            "max_desc": "非常想要"
           }
         },
         "extra_factors": {
@@ -976,19 +1074,23 @@
               "name": "与岗位匹配的能力经验",
               "direction": "positive",
               "value_label": "能力匹配度",
-              "value_question": "你目前的技能和经历与岗位要求的契合程度有多高？（0=几乎不符合，1=高度匹配）",
+              "value_question": "你目前的技能和经历与岗位要求的契合程度有多高？",
               "suggested_importance": 0.7,
               "explanation": "能力越匹配，面试成功的可能性越大，参加的性价比也越高。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "几乎不符合",
+              "max_desc": "高度匹配"
             },
             {
               "name": "面试的时间安排冲突",
               "direction": "negative",
               "value_label": "时间冲突程度",
-              "value_question": "参加这场面试与你当前其他重要事项的时间冲突有多严重？（0=完全不冲突，1=严重冲突）",
+              "value_question": "参加这场面试与你当前其他重要事项的时间冲突有多严重？",
               "suggested_importance": 0.6,
               "explanation": "时间冲突越大，参加面试的实际成本越高，可能影响其他重要安排。",
-              "value_transform": "inverse"
+              "value_transform": "inverse",
+              "min_desc": "完全不冲突",
+              "max_desc": "严重冲突"
             }
           ]
         }
@@ -1022,10 +1124,12 @@
             "name": "对团队方向的个人意愿",
             "direction": "positive",
             "value_label": "加入意愿强度",
-            "value_question": "你对这个团队的目标和方向有多感兴趣？（0=完全没兴趣，1=非常想参与）",
+            "value_question": "你对这个团队的目标和方向有多感兴趣？",
             "suggested_importance": 0.8,
             "explanation": "内在动力决定你加入后能否持续投入，是影响这个决定最核心的主观因素。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "完全没兴趣",
+            "max_desc": "非常想参与"
           }
         },
         "extra_factors": {
@@ -1034,19 +1138,23 @@
               "name": "与团队匹配的能力经验",
               "direction": "positive",
               "value_label": "能力匹配程度",
-              "value_question": "你目前的技能和经验与团队需求的匹配度有多高？（0=完全不符合，1=高度匹配）",
+              "value_question": "你目前的技能和经验与团队需求的匹配度有多高？",
               "suggested_importance": 0.7,
               "explanation": "能力匹配度越高，你在团队中越能发挥价值，也越容易获得成就感和认可。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "完全不符合",
+              "max_desc": "高度匹配"
             },
             {
               "name": "当前时间安排的余裕",
               "direction": "positive",
               "value_label": "时间可用程度",
-              "value_question": "你现阶段有多少空余时间可以投入到这个团队？（0=几乎没有空余时间，1=时间非常充裕）",
+              "value_question": "你现阶段有多少空余时间可以投入到这个团队？",
               "suggested_importance": 0.6,
               "explanation": "没有足够的时间投入，即使意愿和能力都强，也难以在团队中做出实质贡献。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "几乎没有空余时间",
+              "max_desc": "时间非常充裕"
             }
           ]
         }
@@ -1080,10 +1188,12 @@
             "name": "对项目的持续意愿",
             "direction": "negative",
             "value_label": "当前投入意愿强度",
-            "value_question": "你现在对继续推进这个项目还有多强的主动意愿？（0=完全不想继续，1=非常想继续）",
+            "value_question": "你现在对继续推进这个项目还有多强的主动意愿？",
             "suggested_importance": 0.8,
             "explanation": "个人意愿直接决定退出冲动的根本来源，意愿越低越倾向于退出。",
-            "value_transform": "inverse"
+            "value_transform": "inverse",
+            "min_desc": "完全不想继续",
+            "max_desc": "非常想继续"
           }
         },
         "extra_factors": {
@@ -1092,19 +1202,23 @@
               "name": "项目对长期发展的价值",
               "direction": "negative",
               "value_label": "长期价值判断",
-              "value_question": "你认为这个项目对你未来的职业或成长有多大的长期价值？（0=几乎没有价值，1=非常关键）",
+              "value_question": "你认为这个项目对你未来的职业或成长有多大的长期价值？",
               "suggested_importance": 0.7,
               "explanation": "长期发展价值越高，退出的机会成本越大，越不应该轻易离开。",
-              "value_transform": "inverse"
+              "value_transform": "inverse",
+              "min_desc": "几乎没有价值",
+              "max_desc": "非常关键"
             },
             {
               "name": "当前时间与精力的可持续性",
               "direction": "positive",
               "value_label": "时间精力压力程度",
-              "value_question": "这个项目目前对你的时间和精力造成了多大的负担或挤压？（0=几乎没有压力，1=已经严重透支）",
+              "value_question": "这个项目目前对你的时间和精力造成了多大的负担或挤压？",
               "suggested_importance": 0.6,
               "explanation": "时间安排上的持续超负荷会加速退出决策，压力越大越难以为继。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "几乎没有压力",
+              "max_desc": "已经严重透支"
             }
           ]
         }
@@ -1140,10 +1254,12 @@
             "name": "内心意愿强度",
             "direction": "positive",
             "value_label": "继续做下去的意愿强度",
-            "value_question": "你现在有多想继续坚持这件事？（0 = 完全不想继续，1 = 非常想继续）",
+            "value_question": "你现在有多想继续坚持这件事？",
             "suggested_importance": 0.8,
             "explanation": "内心意愿越强，面对困难时越能持续投入，是决定能否坚持的核心驱动力。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "完全不想继续",
+            "max_desc": "非常想继续"
           }
         },
         "extra_factors": {
@@ -1152,19 +1268,23 @@
               "name": "已积累的能力与经验",
               "direction": "positive",
               "value_label": "在这件事上已积累的能力与经验程度",
-              "value_question": "你在这件事上已经积累了多少能力或经验？（0 = 几乎没有积累，1 = 积累非常丰富）",
+              "value_question": "你在这件事上已经积累了多少能力或经验？",
               "suggested_importance": 0.7,
               "explanation": "已有的积累越深，放弃的沉没成本越高，继续下去的边际收益也越大。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "几乎没有积累",
+              "max_desc": "积累非常丰富"
             },
             {
               "name": "继续坚持的现实阻力",
               "direction": "negative",
               "value_label": "当前面临的现实阻力大小",
-              "value_question": "你目前在现实环境中遇到的阻力有多大？（0 = 几乎没有阻力，1 = 阻力极大难以为继）",
+              "value_question": "你目前在现实环境中遇到的阻力有多大？",
               "suggested_importance": 0.6,
               "explanation": "现实阻力越大，继续坚持所需付出的代价越高，会直接削弱坚持下去的可行性。",
-              "value_transform": "inverse"
+              "value_transform": "inverse",
+              "min_desc": "几乎没有阻力",
+              "max_desc": "阻力极大难以为继"
             }
           ]
         }
@@ -1198,10 +1318,12 @@
             "name": "对宠物的喜爱与陪伴意愿",
             "direction": "positive",
             "value_label": "个人意愿强度",
-            "value_question": "你有多渴望每天照顾并陪伴一只宠物？（0=完全没兴趣，1=非常渴望）",
+            "value_question": "你有多渴望每天照顾并陪伴一只宠物？",
             "suggested_importance": 0.8,
             "explanation": "养宠物是长期承诺，内心真实的喜爱程度直接决定你是否愿意持续投入精力。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "完全没兴趣",
+            "max_desc": "非常渴望"
           }
         },
         "extra_factors": {
@@ -1210,19 +1332,23 @@
               "name": "日常时间与生活规律",
               "direction": "positive",
               "value_label": "可用时间充裕度",
-              "value_question": "你目前每天能稳定拿出多少时间照料宠物？（0=几乎没有，1=时间非常充裕）",
+              "value_question": "你目前每天能稳定拿出多少时间照料宠物？",
               "suggested_importance": 0.7,
               "explanation": "宠物需要每日喂食、陪玩和清洁，时间不足会直接影响宠物健康和饲养质量。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "几乎没有",
+              "max_desc": "时间非常充裕"
             },
             {
               "name": "饲养费用承担能力",
               "direction": "positive",
               "value_label": "经济余裕程度",
-              "value_question": "你目前的收入或零花钱能轻松覆盖宠物的食物、医疗等日常开销吗？（0=完全无法承担，1=完全没有压力）",
+              "value_question": "你目前的收入或零花钱能轻松覆盖宠物的食物、医疗等日常开销吗？",
               "suggested_importance": 0.6,
               "explanation": "宠物的食物、疫苗和意外医疗费用是持续支出，经济压力过大会让饲养难以为继。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "完全无法承担",
+              "max_desc": "完全没有压力"
             }
           ]
         }
@@ -1256,10 +1382,12 @@
             "name": "独立出行意愿",
             "direction": "positive",
             "value_label": "渴望独自旅行的强烈程度",
-            "value_question": "你有多渴望一个人出去旅行？（0=完全没兴趣，1=非常想去）",
+            "value_question": "你有多渴望一个人出去旅行？",
             "suggested_importance": 0.8,
             "explanation": "内心对独自旅行的渴望程度直接决定了你是否有动力克服各种障碍去实现它。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "完全没兴趣",
+            "max_desc": "非常想去"
           }
         },
         "extra_factors": {
@@ -1268,19 +1396,23 @@
               "name": "独立旅行能力与经验",
               "direction": "positive",
               "value_label": "独立处理旅途突发状况的能力",
-              "value_question": "你有多大把握独自应对旅途中的突发情况，比如迷路、行程变更或语言不通？（0=完全没把握，1=非常有把握）",
+              "value_question": "你有多大把握独自应对旅途中的突发情况，比如迷路、行程变更或语言不通？",
               "suggested_importance": 0.7,
               "explanation": "具备基本的独立出行经验和应变能力，是独自旅行能够顺利完成的重要保障。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "完全没把握",
+              "max_desc": "非常有把握"
             },
             {
               "name": "旅行预算充裕度",
               "direction": "positive",
               "value_label": "当前可用于此次旅行的资金充足程度",
-              "value_question": "你目前的旅行预算有多充足？（0=完全负担不起，1=资金完全充裕）",
+              "value_question": "你目前的旅行预算有多充足？",
               "suggested_importance": 0.6,
               "explanation": "足够的旅行预算能覆盖交通、住宿及应急开销，是独自旅行得以成行的基本物质条件。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "完全负担不起",
+              "max_desc": "资金完全充裕"
             }
           ]
         }
@@ -1314,10 +1446,12 @@
             "name": "经济承受能力",
             "direction": "positive",
             "value_label": "当前可支配预算充裕程度",
-            "value_question": "你目前的存款或可支配收入，能轻松覆盖这台电脑的价格而不影响日常生活吗？（0=完全负担不起，1=完全没有压力）",
+            "value_question": "你目前的存款或可支配收入，能轻松覆盖这台电脑的价格而不影响日常生活吗？",
             "suggested_importance": 0.8,
             "explanation": "经济条件直接决定购买是否可行，预算不足会让购买带来财务风险。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "完全负担不起",
+            "max_desc": "完全没有压力"
           }
         },
         "extra_factors": {
@@ -1326,19 +1460,23 @@
               "name": "现有电脑的使用需求缺口",
               "direction": "positive",
               "value_label": "当前设备满足工作学习需求的不足程度",
-              "value_question": "你现在的电脑有多难以满足你的日常工作或学习需求？（0=完全够用，1=严重影响效率或根本无法使用）",
+              "value_question": "你现在的电脑有多难以满足你的日常工作或学习需求？",
               "suggested_importance": 0.7,
               "explanation": "现实环境中设备与需求的差距越大，购买新电脑带来的实际价值就越高。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "完全够用",
+              "max_desc": "严重影响效率或根本无法使用"
             },
             {
               "name": "对新电脑的主动购买意愿",
               "direction": "positive",
               "value_label": "主动想要购买的强烈程度",
-              "value_question": "撇开其他因素，你个人有多想买这台新电脑？（0=毫无兴趣，1=非常想买）",
+              "value_question": "撇开其他因素，你个人有多想买这台新电脑？",
               "suggested_importance": 0.6,
               "explanation": "个人意愿反映内在驱动力，意愿越强越容易克服购买过程中的阻碍并长期满意这个决定。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "毫无兴趣",
+              "max_desc": "非常想买"
             }
           ]
         }
@@ -1372,10 +1510,12 @@
             "name": "当前收支余裕度",
             "direction": "positive",
             "value_label": "每月可支配余额充裕程度",
-            "value_question": "你每个月收入扣除必要开销后，还剩多少可以自由支配？（0=完全入不敷出，1=余额非常充裕）",
+            "value_question": "你每个月收入扣除必要开销后，还剩多少可以自由支配？",
             "suggested_importance": 0.85,
             "explanation": "只有月末有剩余资金，才具备持续存钱的物质基础。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "完全入不敷出",
+            "max_desc": "余额非常充裕"
           }
         },
         "extra_factors": {
@@ -1384,19 +1524,23 @@
               "name": "储蓄意愿与自律心",
               "direction": "positive",
               "value_label": "主动存钱的意愿强度",
-              "value_question": "你有多想养成存钱的习惯？（0=完全没有意愿，1=非常迫切想开始）",
+              "value_question": "你有多想养成存钱的习惯？",
               "suggested_importance": 0.7,
               "explanation": "内在动力越强，越容易克服消费冲动并坚持执行存钱计划。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "完全没有意愿",
+              "max_desc": "非常迫切想开始"
             },
             {
               "name": "近期大额支出压力",
               "direction": "negative",
               "value_label": "近期必须支出的资金压力",
-              "value_question": "你在未来3个月内有多大概率面临婚礼、医疗、换房等大额必要支出？（0=几乎没有，1=压力极大）",
+              "value_question": "你在未来3个月内有多大概率面临婚礼、医疗、换房等大额必要支出？",
               "suggested_importance": 0.6,
               "explanation": "即将到来的大额刚性支出会挤占可存资金，使存钱计划难以为继。",
-              "value_transform": "inverse"
+              "value_transform": "inverse",
+              "min_desc": "几乎没有",
+              "max_desc": "压力极大"
             }
           ]
         }
@@ -1430,10 +1574,12 @@
             "name": "独立生活能力",
             "direction": "positive",
             "value_label": "自理能力强度",
-            "value_question": "你目前能独立处理做饭、洗衣、缴费等日常事务的程度有多高？（0=完全依赖家人，1=完全可以自己搞定）",
+            "value_question": "你目前能独立处理做饭、洗衣、缴费等日常事务的程度有多高？",
             "suggested_importance": 0.8,
             "explanation": "独立生活所需的基本自理能力越强，搬出去后维持正常生活的可能性就越高。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "完全依赖家人",
+            "max_desc": "完全可以自己搞定"
           }
         },
         "extra_factors": {
@@ -1442,19 +1588,23 @@
               "name": "租房经济压力",
               "direction": "negative",
               "value_label": "经济负担程度",
-              "value_question": "租房及生活开销占你当前收入或可用资金的比例有多重？（0=完全负担得起，1=完全无力承担）",
+              "value_question": "租房及生活开销占你当前收入或可用资金的比例有多重？",
               "suggested_importance": 0.7,
               "explanation": "租房带来的经济压力越大，搬出去独立生活的可持续性就越低。",
-              "value_transform": "inverse"
+              "value_transform": "inverse",
+              "min_desc": "完全负担得起",
+              "max_desc": "完全无力承担"
             },
             {
               "name": "与家人的居住矛盾",
               "direction": "positive",
               "value_label": "家庭摩擦强度",
-              "value_question": "你目前因生活习惯、隐私或自主权与家人产生冲突的频繁程度有多高？（0=完全没有矛盾，1=矛盾非常严重）",
+              "value_question": "你目前因生活习惯、隐私或自主权与家人产生冲突的频繁程度有多高？",
               "suggested_importance": 0.6,
               "explanation": "与家人同住的摩擦越多，搬出去获得独立空间对生活质量的改善就越明显。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "完全没有矛盾",
+              "max_desc": "矛盾非常严重"
             }
           ]
         }
@@ -1488,10 +1638,12 @@
             "name": "想自己做饭的意愿",
             "direction": "positive",
             "value_label": "学做饭的个人意愿强度",
-            "value_question": "你有多想亲手做出一顿饭？（0=完全不想，1=非常渴望）",
+            "value_question": "你有多想亲手做出一顿饭？",
             "suggested_importance": 0.8,
             "explanation": "内在动力越强，越容易坚持学习并克服初期的挫折感。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "完全不想",
+            "max_desc": "非常渴望"
           }
         },
         "extra_factors": {
@@ -1500,19 +1652,23 @@
               "name": "日常可用于练习的时间",
               "direction": "positive",
               "value_label": "每周空闲时间充裕程度",
-              "value_question": "你每周有多少空闲时间可以用来买菜、备料和下厨练习？（0=几乎没有，1=非常充裕）",
+              "value_question": "你每周有多少空闲时间可以用来买菜、备料和下厨练习？",
               "suggested_importance": 0.7,
               "explanation": "做饭需要反复练习，可支配时间越多越能快速积累经验。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "几乎没有",
+              "max_desc": "非常充裕"
             },
             {
               "name": "当前饮食开销压力",
               "direction": "positive",
               "value_label": "外卖或餐厅消费的经济负担程度",
-              "value_question": "你目前在外卖或外食上的花费让你感到多大经济压力？（0=完全没压力，1=压力很大）",
+              "value_question": "你目前在外卖或外食上的花费让你感到多大经济压力？",
               "suggested_importance": 0.6,
               "explanation": "经济压力越大，自己做饭节省开支的现实收益越明显，学习动机也更充分。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "完全没压力",
+              "max_desc": "压力很大"
             }
           ]
         }
@@ -1546,10 +1702,12 @@
             "name": "对音乐的热爱程度",
             "direction": "positive",
             "value_label": "个人意愿强度",
-            "value_question": "你有多想学一门乐器？（0 = 完全没兴趣，1 = 非常渴望）",
+            "value_question": "你有多想学一门乐器？",
             "suggested_importance": 0.8,
             "explanation": "内在动力越强，越能坚持练习枯燥的基本功，是能否学成的核心驱动力。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "完全没兴趣",
+            "max_desc": "非常渴望"
           }
         },
         "extra_factors": {
@@ -1558,19 +1716,23 @@
               "name": "每周可用练习时间",
               "direction": "positive",
               "value_label": "时间充裕程度",
-              "value_question": "你每周能稳定拿出多少时间练琴？（0 = 几乎没有，1 = 非常充裕）",
+              "value_question": "你每周能稳定拿出多少时间练琴？",
               "suggested_importance": 0.7,
               "explanation": "乐器需要持续练习才能进步，可用时间直接决定学习能否落地。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "几乎没有",
+              "max_desc": "非常充裕"
             },
             {
               "name": "购琴与课程费用压力",
               "direction": "negative",
               "value_label": "经济负担程度",
-              "value_question": "购买乐器和支付课程费用对你来说压力有多大？（0 = 完全没压力，1 = 压力极大）",
+              "value_question": "购买乐器和支付课程费用对你来说压力有多大？",
               "suggested_importance": 0.6,
               "explanation": "经济负担越重，越容易因投入成本而中途放弃或根本无法启动。",
-              "value_transform": "inverse"
+              "value_transform": "inverse",
+              "min_desc": "完全没压力",
+              "max_desc": "压力极大"
             }
           ]
         }
@@ -1604,10 +1766,12 @@
             "name": "跑步意愿与健身动力",
             "direction": "positive",
             "value_label": "运动意愿强度",
-            "value_question": "你现在有多想通过跑步改善健康或体型？（0=完全没兴趣，1=非常渴望）",
+            "value_question": "你现在有多想通过跑步改善健康或体型？",
             "suggested_importance": 0.8,
             "explanation": "内在动力是能否坚持跑步习惯的核心驱动力，意愿越强越可能真正行动并持续下去。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "完全没兴趣",
+            "max_desc": "非常渴望"
           }
         },
         "extra_factors": {
@@ -1616,19 +1780,23 @@
               "name": "可用时间安排",
               "direction": "positive",
               "value_label": "每周空闲时间充裕度",
-              "value_question": "你每周能稳定抽出时间去跑步的程度有多高？（0=几乎没有空档，1=时间非常充裕）",
+              "value_question": "你每周能稳定抽出时间去跑步的程度有多高？",
               "suggested_importance": 0.7,
               "explanation": "跑步需要规律投入时间，时间越充裕越容易形成稳定的锻炼计划。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "几乎没有空档",
+              "max_desc": "时间非常充裕"
             },
             {
               "name": "身体健康风险",
               "direction": "negative",
               "value_label": "运动健康风险程度",
-              "value_question": "你目前有多大程度存在可能妨碍跑步的身体问题（如关节伤病、心肺疾病等）？（0=完全没有，1=风险很高）",
+              "value_question": "你目前有多大程度存在可能妨碍跑步的身体问题（如关节伤病、心肺疾病等）？",
               "suggested_importance": 0.6,
               "explanation": "身体健康风险越高，贸然开始跑步越可能造成伤害，需要更谨慎地评估是否适合立即开始。",
-              "value_transform": "inverse"
+              "value_transform": "inverse",
+              "min_desc": "完全没有",
+              "max_desc": "风险很高"
             }
           ]
         }
@@ -1662,10 +1830,12 @@
             "name": "早起意愿与动力",
             "direction": "positive",
             "value_label": "早起意愿强度",
-            "value_question": "你有多想养成每天早起的习惯？（0=完全不想，1=非常渴望）",
+            "value_question": "你有多想养成每天早起的习惯？",
             "suggested_importance": 0.8,
             "explanation": "内在动力越强，越容易克服早起的不适感并长期坚持。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "完全不想",
+            "max_desc": "非常渴望"
           }
         },
         "extra_factors": {
@@ -1674,19 +1844,23 @@
               "name": "当前作息规律性",
               "direction": "positive",
               "value_label": "作息规律程度",
-              "value_question": "你目前的睡眠时间有多规律？（0=完全不规律，1=非常规律）",
+              "value_question": "你目前的睡眠时间有多规律？",
               "suggested_importance": 0.65,
               "explanation": "已有规律作息的人调整起床时间更容易，成功率更高。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "完全不规律",
+              "max_desc": "非常规律"
             },
             {
               "name": "夜间家庭干扰程度",
               "direction": "negative",
               "value_label": "夜间被打扰频率",
-              "value_question": "你晚上经常被家人或家庭事务打扰睡眠吗？（0=从不，1=非常频繁）",
+              "value_question": "你晚上经常被家人或家庭事务打扰睡眠吗？",
               "suggested_importance": 0.5,
               "explanation": "夜间频繁被打扰会导致睡眠不足，使早起变得有害而非有益。",
-              "value_transform": "inverse"
+              "value_transform": "inverse",
+              "min_desc": "从不",
+              "max_desc": "非常频繁"
             }
           ]
         }
@@ -1720,10 +1894,12 @@
             "name": "自我管理意愿",
             "direction": "positive",
             "value_label": "减少刷视频的主动意愿",
-            "value_question": "你有多强烈地想主动控制自己刷短视频的时间？（0=完全没想过，1=非常迫切想改变）",
+            "value_question": "你有多强烈地想主动控制自己刷短视频的时间？",
             "suggested_importance": 0.85,
             "explanation": "主动想改变的意愿越强，越容易真正执行减少刷视频的行动。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "完全没想过",
+            "max_desc": "非常迫切想改变"
           }
         },
         "extra_factors": {
@@ -1732,19 +1908,23 @@
               "name": "时间被占用程度",
               "direction": "positive",
               "value_label": "短视频对日常时间的挤占程度",
-              "value_question": "你觉得刷短视频目前占用了你多少本该用于其他事情的时间？（0=几乎没影响，1=严重挤占学习或睡眠等重要时间）",
+              "value_question": "你觉得刷短视频目前占用了你多少本该用于其他事情的时间？",
               "suggested_importance": 0.75,
               "explanation": "短视频占用时间越多，减少它带来的实际收益就越大，决定也越值得执行。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "几乎没影响",
+              "max_desc": "严重挤占学习或睡眠等重要时间"
             },
             {
               "name": "长期目标受损风险",
               "direction": "positive",
               "value_label": "持续刷视频对长期目标的威胁程度",
-              "value_question": "你认为长期保持现在的刷视频习惯，对你的学业、职业或健康目标有多大负面影响？（0=没什么影响，1=会严重阻碍我的长期发展）",
+              "value_question": "你认为长期保持现在的刷视频习惯，对你的学业、职业或健康目标有多大负面影响？",
               "suggested_importance": 0.65,
               "explanation": "对长期目标的潜在损害越大，减少短视频的必要性就越高。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "没什么影响",
+              "max_desc": "会严重阻碍我的长期发展"
             }
           ]
         }
@@ -1778,10 +1958,12 @@
             "name": "旅行意愿强度",
             "direction": "positive",
             "value_label": "出行渴望度",
-            "value_question": "你现在有多想出去旅行？（0=完全没兴趣，1=非常渴望）",
+            "value_question": "你现在有多想出去旅行？",
             "suggested_importance": 0.8,
             "explanation": "个人意愿是驱动旅行决定的核心动力，意愿越强越可能付诸行动。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "完全没兴趣",
+            "max_desc": "非常渴望"
           }
         },
         "extra_factors": {
@@ -1790,19 +1972,23 @@
               "name": "旅行预算充裕度",
               "direction": "positive",
               "value_label": "可用旅行资金",
-              "value_question": "你目前有多少可以自由支配用于旅行的资金？（0=完全没有，1=非常充裕）",
+              "value_question": "你目前有多少可以自由支配用于旅行的资金？",
               "suggested_importance": 0.7,
               "explanation": "经济条件直接决定旅行能否实现，预算不足会让计划无法落地。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "完全没有",
+              "max_desc": "非常充裕"
             },
             {
               "name": "近期时间空闲度",
               "direction": "positive",
               "value_label": "可用空闲时间",
-              "value_question": "你近期有多少连续的空闲时间可以用来旅行？（0=完全没有，1=时间非常充裕）",
+              "value_question": "你近期有多少连续的空闲时间可以用来旅行？",
               "suggested_importance": 0.6,
               "explanation": "时间安排是旅行的基本前提，没有足够的空闲时间旅行计划就无从实施。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "完全没有",
+              "max_desc": "时间非常充裕"
             }
           ]
         }
@@ -1836,10 +2022,12 @@
             "name": "对户外活动的个人意愿",
             "direction": "positive",
             "value_label": "出行意愿强度",
-            "value_question": "你现在有多想去户外放松、亲近自然？（0=完全不想，1=非常渴望）",
+            "value_question": "你现在有多想去户外放松、亲近自然？",
             "suggested_importance": 0.8,
             "explanation": "个人意愿直接决定了行动的内在驱动力，意愿越强越可能克服其他障碍去露营。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "完全不想",
+            "max_desc": "非常渴望"
           }
         },
         "extra_factors": {
@@ -1848,19 +2036,23 @@
               "name": "近期时间安排的空闲程度",
               "direction": "positive",
               "value_label": "时间空闲程度",
-              "value_question": "你在计划露营的时间段里有多空闲、没有其他重要安排？（0=完全排不开，1=时间完全自由）",
+              "value_question": "你在计划露营的时间段里有多空闲、没有其他重要安排？",
               "suggested_importance": 0.7,
               "explanation": "露营需要连续的空闲时间，时间越充裕才越具备出行的基本条件。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "完全排不开",
+              "max_desc": "时间完全自由"
             },
             {
               "name": "目的地天气与路况等现实环境",
               "direction": "negative",
               "value_label": "环境风险程度",
-              "value_question": "目的地当前的天气、路况等现实条件有多恶劣或不理想？（0=条件极佳，1=非常恶劣）",
+              "value_question": "目的地当前的天气、路况等现实条件有多恶劣或不理想？",
               "suggested_importance": 0.6,
               "explanation": "恶劣的天气或路况会直接降低露营的安全性和体验质量，风险越高越不适合出行。",
-              "value_transform": "inverse"
+              "value_transform": "inverse",
+              "min_desc": "条件极佳",
+              "max_desc": "非常恶劣"
             }
           ]
         }
@@ -1894,10 +2086,12 @@
             "name": "出行时间充裕度",
             "direction": "positive",
             "value_label": "空闲时间充足程度",
-            "value_question": "你目前有多少连续空闲时间可以用于这次出行？（0=完全没有，1=时间非常充裕）",
+            "value_question": "你目前有多少连续空闲时间可以用于这次出行？",
             "suggested_importance": 0.8,
             "explanation": "去看海需要占用一定连续时间，时间越充裕越能支撑这次出行。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "完全没有",
+            "max_desc": "时间非常充裕"
           }
         },
         "extra_factors": {
@@ -1906,19 +2100,23 @@
               "name": "向往大海的心情",
               "direction": "positive",
               "value_label": "想去看海的渴望强度",
-              "value_question": "你现在有多想去看海、放松一下？（0=毫无兴趣，1=非常渴望）",
+              "value_question": "你现在有多想去看海、放松一下？",
               "suggested_importance": 0.7,
               "explanation": "内心对看海的渴望程度直接决定了行动的驱动力。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "毫无兴趣",
+              "max_desc": "非常渴望"
             },
             {
               "name": "出行交通与费用压力",
               "direction": "negative",
               "value_label": "经济与出行成本负担",
-              "value_question": "这次去看海的交通和花费对你来说压力有多大？（0=完全没压力，1=压力非常大）",
+              "value_question": "这次去看海的交通和花费对你来说压力有多大？",
               "suggested_importance": 0.6,
               "explanation": "出行成本越高、经济压力越大，越可能让人打消去看海的念头。",
-              "value_transform": "inverse"
+              "value_transform": "inverse",
+              "min_desc": "完全没压力",
+              "max_desc": "压力非常大"
             }
           ]
         }
@@ -1952,10 +2150,12 @@
             "name": "爬山体力与经验",
             "direction": "positive",
             "value_label": "体能与经验充足程度",
-            "value_question": "你目前的体力状态和爬山经验有多充足？（0=完全没把握，1=非常有把握）",
+            "value_question": "你目前的体力状态和爬山经验有多充足？",
             "suggested_importance": 0.8,
             "explanation": "体力和经验直接决定能否安全完成爬山，是最基础的行动前提。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "完全没把握",
+            "max_desc": "非常有把握"
           }
         },
         "extra_factors": {
@@ -1964,19 +2164,23 @@
               "name": "当天时间是否空闲",
               "direction": "positive",
               "value_label": "时间充裕程度",
-              "value_question": "你这一天的时间安排有多宽松，足够完成一次爬山？（0=完全没时间，1=时间非常充裕）",
+              "value_question": "你这一天的时间安排有多宽松，足够完成一次爬山？",
               "suggested_importance": 0.7,
               "explanation": "爬山需要连续的整块时间，时间不够则计划根本无法执行。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "完全没时间",
+              "max_desc": "时间非常充裕"
             },
             {
               "name": "天气与路况风险",
               "direction": "negative",
               "value_label": "当前风险程度",
-              "value_question": "今天的天气或山路状况有多危险？（0=完全安全，1=风险极高）",
+              "value_question": "今天的天气或山路状况有多危险？",
               "suggested_importance": 0.6,
               "explanation": "恶劣天气或危险路况会显著提高受伤概率，风险越高越不宜出行。",
-              "value_transform": "inverse"
+              "value_transform": "inverse",
+              "min_desc": "完全安全",
+              "max_desc": "风险极高"
             }
           ]
         }
@@ -2010,10 +2214,12 @@
             "name": "对音乐节的期待热情",
             "direction": "positive",
             "value_label": "个人期待强度",
-            "value_question": "你有多想去这次音乐节？（0=完全不想，1=非常渴望）",
+            "value_question": "你有多想去这次音乐节？",
             "suggested_importance": 0.8,
             "explanation": "个人意愿是行动的核心驱动力，期待越强越可能促成出行决定。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "完全不想",
+            "max_desc": "非常渴望"
           }
         },
         "extra_factors": {
@@ -2022,19 +2228,23 @@
               "name": "票价与出行花费的承受度",
               "direction": "positive",
               "value_label": "经济承受程度",
-              "value_question": "你目前的经济状况能轻松覆盖票价和交通住宿费用吗？（0=完全负担不起，1=完全没压力）",
+              "value_question": "你目前的经济状况能轻松覆盖票价和交通住宿费用吗？",
               "suggested_importance": 0.7,
               "explanation": "音乐节涉及门票、交通等实际支出，经济压力过大会直接阻碍参与。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "完全负担不起",
+              "max_desc": "完全没压力"
             },
             {
               "name": "活动期间的时间冲突",
               "direction": "negative",
               "value_label": "时间冲突程度",
-              "value_question": "音乐节举办期间，你有多少重要的事情与之冲突？（0=完全没有冲突，1=冲突非常严重）",
+              "value_question": "音乐节举办期间，你有多少重要的事情与之冲突？",
               "suggested_importance": 0.6,
               "explanation": "时间安排上的冲突越多，去音乐节的可行性就越低。",
-              "value_transform": "inverse"
+              "value_transform": "inverse",
+              "min_desc": "完全没有冲突",
+              "max_desc": "冲突非常严重"
             }
           ]
         }
@@ -2068,10 +2278,12 @@
             "name": "对水下世界的好奇心",
             "direction": "positive",
             "value_label": "个人兴趣强度",
-            "value_question": "你对探索水下世界有多强烈的好奇心和向往？（0=完全没兴趣，1=非常渴望）",
+            "value_question": "你对探索水下世界有多强烈的好奇心和向往？",
             "suggested_importance": 0.8,
             "explanation": "个人意愿是驱动体验行为最直接的动力，兴趣越强越可能克服其他障碍付诸行动。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "完全没兴趣",
+            "max_desc": "非常渴望"
           }
         },
         "extra_factors": {
@@ -2080,19 +2292,23 @@
               "name": "水性与身体健康状况",
               "direction": "positive",
               "value_label": "身体适应能力",
-              "value_question": "你目前的游泳能力和身体健康状况有多适合进行水下活动？（0=完全不会游泳或有禁忌症，1=水性好且身体状况极佳）",
+              "value_question": "你目前的游泳能力和身体健康状况有多适合进行水下活动？",
               "suggested_importance": 0.7,
               "explanation": "潜水对身体素质有基本要求，能力与健康状况直接决定体验的安全性和可行性。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "完全不会游泳或有禁忌症",
+              "max_desc": "水性好且身体状况极佳"
             },
             {
               "name": "溺水或意外的顾虑程度",
               "direction": "negative",
               "value_label": "风险担忧程度",
-              "value_question": "你对潜水过程中发生意外（如溺水、耳压不适）有多强烈的担心？（0=完全不担心，1=非常恐惧）",
+              "value_question": "你对潜水过程中发生意外（如溺水、耳压不适）有多强烈的担心？",
               "suggested_importance": 0.6,
               "explanation": "对潜水风险的主观顾虑越高，越容易让人退缩放弃体验机会。",
-              "value_transform": "inverse"
+              "value_transform": "inverse",
+              "min_desc": "完全不担心",
+              "max_desc": "非常恐惧"
             }
           ]
         }
@@ -2126,10 +2342,12 @@
             "name": "跑步能力与训练基础",
             "direction": "positive",
             "value_label": "当前跑步基础强度",
-            "value_question": "你目前的跑步基础有多扎实？（0 = 几乎没有跑步习惯，1 = 已能稳定完成长距离训练）",
+            "value_question": "你目前的跑步基础有多扎实？",
             "suggested_importance": 0.85,
             "explanation": "跑步能力和训练积累直接决定能否安全完赛，基础越强越支持报名。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "几乎没有跑步习惯",
+            "max_desc": "已能稳定完成长距离训练"
           }
         },
         "extra_factors": {
@@ -2138,19 +2356,23 @@
               "name": "备赛时间充裕度",
               "direction": "positive",
               "value_label": "可用备赛时间充裕程度",
-              "value_question": "在比赛日之前，你有多少空余时间用于系统训练？（0 = 几乎没有空档，1 = 时间非常充裕）",
+              "value_question": "在比赛日之前，你有多少空余时间用于系统训练？",
               "suggested_importance": 0.75,
               "explanation": "马拉松需要持续数月的系统训练，可用时间越充裕越能保障备赛质量。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "几乎没有空档",
+              "max_desc": "时间非常充裕"
             },
             {
               "name": "参赛费用与经济压力",
               "direction": "negative",
               "value_label": "报名及备赛的经济负担程度",
-              "value_question": "报名费、装备和交通等费用对你目前的经济状况压力有多大？（0 = 完全没有压力，1 = 压力非常大）",
+              "value_question": "报名费、装备和交通等费用对你目前的经济状况压力有多大？",
               "suggested_importance": 0.55,
               "explanation": "参赛涉及一定经济支出，经济压力越大越可能成为报名的阻碍因素。",
-              "value_transform": "inverse"
+              "value_transform": "inverse",
+              "min_desc": "完全没有压力",
+              "max_desc": "压力非常大"
             }
           ]
         }
@@ -2184,10 +2406,12 @@
             "name": "对博物馆的兴趣程度",
             "direction": "positive",
             "value_label": "参观意愿",
-            "value_question": "你现在有多想去博物馆参观？（0=完全不想，1=非常想去）",
+            "value_question": "你现在有多想去博物馆参观？",
             "suggested_importance": 0.8,
             "explanation": "个人对博物馆的兴趣越强，越有动力付诸行动去参观。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "完全不想",
+            "max_desc": "非常想去"
           }
         },
         "extra_factors": {
@@ -2196,19 +2420,23 @@
               "name": "今天的空闲时间",
               "direction": "positive",
               "value_label": "可用时间",
-              "value_question": "你今天有多少空闲时间可以用来去博物馆？（0=完全没空，1=时间非常充裕）",
+              "value_question": "你今天有多少空闲时间可以用来去博物馆？",
               "suggested_importance": 0.7,
               "explanation": "去博物馆需要花费一定时间，可用时间越充裕越容易成行。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "完全没空",
+              "max_desc": "时间非常充裕"
             },
             {
               "name": "出行交通难度",
               "direction": "negative",
               "value_label": "出行障碍",
-              "value_question": "去博物馆的交通有多麻烦或不便？（0=非常方便，1=极其麻烦）",
+              "value_question": "去博物馆的交通有多麻烦或不便？",
               "suggested_importance": 0.6,
               "explanation": "交通越不便利，出行成本越高，越可能打消去博物馆的念头。",
-              "value_transform": "inverse"
+              "value_transform": "inverse",
+              "min_desc": "非常方便",
+              "max_desc": "极其麻烦"
             }
           ]
         }
@@ -2242,10 +2470,12 @@
             "name": "个人意愿：想休息放松的渴望",
             "direction": "positive",
             "value_label": "休息渴望度",
-            "value_question": "你现在有多想待在家里安静休息或娱乐？（0=完全不想宅，1=非常想宅）",
+            "value_question": "你现在有多想待在家里安静休息或娱乐？",
             "suggested_importance": 0.8,
             "explanation": "内心对休息的渴望越强，选择宅家的驱动力就越大。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "完全不想宅",
+            "max_desc": "非常想宅"
           }
         },
         "extra_factors": {
@@ -2254,19 +2484,23 @@
               "name": "时间安排：本周累积疲劳程度",
               "direction": "positive",
               "value_label": "本周疲劳度",
-              "value_question": "这一周你感觉有多疲惫？（0=精力充沛，1=筋疲力尽）",
+              "value_question": "这一周你感觉有多疲惫？",
               "suggested_importance": 0.7,
               "explanation": "一周积累的疲劳越多，周末越需要在家恢复体力。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "精力充沛",
+              "max_desc": "筋疲力尽"
             },
             {
               "name": "机会窗口：外出活动的吸引力",
               "direction": "negative",
               "value_label": "外出吸引力",
-              "value_question": "这个周末有多少让你心动的外出活动或社交邀约？（0=完全没有，1=非常多且吸引人）",
+              "value_question": "这个周末有多少让你心动的外出活动或社交邀约？",
               "suggested_importance": 0.6,
               "explanation": "外出机会越有吸引力，就越会削弱留在家里的意愿。",
-              "value_transform": "inverse"
+              "value_transform": "inverse",
+              "min_desc": "完全没有",
+              "max_desc": "非常多且吸引人"
             }
           ]
         }
@@ -2302,10 +2536,12 @@
             "name": "看日出的个人意愿",
             "direction": "positive",
             "value_label": "想去的渴望程度",
-            "value_question": "你现在有多想亲眼看一次日出？（0=完全没兴趣，1=非常渴望）",
+            "value_question": "你现在有多想亲眼看一次日出？",
             "suggested_importance": 0.8,
             "explanation": "内心的渴望程度直接决定了你是否愿意为看日出付出早起等代价。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "完全没兴趣",
+            "max_desc": "非常渴望"
           }
         },
         "extra_factors": {
@@ -2314,19 +2550,23 @@
               "name": "早起的时间安排",
               "direction": "negative",
               "value_label": "早起的困难程度",
-              "value_question": "明天早起对你来说有多困难？（0=完全不难，1=极其困难）",
+              "value_question": "明天早起对你来说有多困难？",
               "suggested_importance": 0.7,
               "explanation": "看日出通常需要凌晨或清晨出发，早起的难度越高越容易放弃行动。",
-              "value_transform": "inverse"
+              "value_transform": "inverse",
+              "min_desc": "完全不难",
+              "max_desc": "极其困难"
             },
             {
               "name": "天气与观测的机会窗口",
               "direction": "positive",
               "value_label": "天气条件的理想程度",
-              "value_question": "明天的天气预报对看日出有多有利？（0=阴雨完全看不到，1=晴空万里极佳）",
+              "value_question": "明天的天气预报对看日出有多有利？",
               "suggested_importance": 0.6,
               "explanation": "天气是能否真正看到日出的客观前提，条件越好这次机会越值得把握。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "阴雨完全看不到",
+              "max_desc": "晴空万里极佳"
             }
           ]
         }
@@ -2360,10 +2600,12 @@
             "name": "过往直觉准确度",
             "direction": "positive",
             "value_label": "直觉历史准确率",
-            "value_question": "回顾过去，你凭直觉做出的决定有多少次被证明是正确的？（0=几乎全错，1=几乎全对）",
+            "value_question": "回顾过去，你凭直觉做出的决定有多少次被证明是正确的？",
             "suggested_importance": 0.8,
             "explanation": "直觉的可靠性建立在过往经验积累上，历史准确率越高说明你的直觉越值得信赖。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "几乎全错",
+            "max_desc": "几乎全对"
           }
         },
         "extra_factors": {
@@ -2372,19 +2614,23 @@
               "name": "当前决策风险大小",
               "direction": "negative",
               "value_label": "决策风险程度",
-              "value_question": "这次决定一旦出错，后果有多严重或难以挽回？（0=无所谓，1=极其严重）",
+              "value_question": "这次决定一旦出错，后果有多严重或难以挽回？",
               "suggested_importance": 0.7,
               "explanation": "风险越高，单凭直觉而不加理性验证的代价越大，更需要谨慎权衡而非冲动行事。",
-              "value_transform": "inverse"
+              "value_transform": "inverse",
+              "min_desc": "无所谓",
+              "max_desc": "极其严重"
             },
             {
               "name": "信息收集充分度",
               "direction": "negative",
               "value_label": "可用信息丰富程度",
-              "value_question": "你目前掌握的与这个决定相关的客观信息有多充分？（0=几乎没有，1=非常充分）",
+              "value_question": "你目前掌握的与这个决定相关的客观信息有多充分？",
               "suggested_importance": 0.6,
               "explanation": "当客观信息已经足够充分时，理性分析往往比直觉更可靠，直觉的优势在于信息匮乏的模糊情境。",
-              "value_transform": "inverse"
+              "value_transform": "inverse",
+              "min_desc": "几乎没有",
+              "max_desc": "非常充分"
             }
           ]
         }
@@ -2420,10 +2666,12 @@
             "name": "对朋友判断的信任度",
             "direction": "positive",
             "value_label": "信任程度",
-            "value_question": "你有多信任这位朋友在这件事上的判断？（0=完全不信任，1=非常信任）",
+            "value_question": "你有多信任这位朋友在这件事上的判断？",
             "suggested_importance": 0.8,
             "explanation": "对朋友判断越信任，越有理由采纳其建议。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "完全不信任",
+            "max_desc": "非常信任"
           }
         },
         "extra_factors": {
@@ -2432,19 +2680,23 @@
               "name": "建议与个人意愿的契合度",
               "direction": "positive",
               "value_label": "意愿契合程度",
-              "value_question": "朋友的建议与你自己内心的想法有多吻合？（0=完全相反，1=完全一致）",
+              "value_question": "朋友的建议与你自己内心的想法有多吻合？",
               "suggested_importance": 0.7,
               "explanation": "建议越符合自身意愿，执行起来阻力越小，也越值得听从。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "完全相反",
+              "max_desc": "完全一致"
             },
             {
               "name": "不听建议的潜在风险",
               "direction": "positive",
               "value_label": "忽视建议的风险大小",
-              "value_question": "如果不听这个建议，你认为出现不好结果的风险有多大？（0=几乎没有风险，1=风险非常大）",
+              "value_question": "如果不听这个建议，你认为出现不好结果的风险有多大？",
               "suggested_importance": 0.6,
               "explanation": "忽视建议的潜在风险越高，越应该认真考虑并采纳建议。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "几乎没有风险",
+              "max_desc": "风险非常大"
             }
           ]
         }
@@ -2478,10 +2730,12 @@
             "name": "个人意愿强度",
             "direction": "positive",
             "value_label": "想自己做主的迫切程度",
-            "value_question": "你有多强烈地想要自己来做这个决定，而不是交给别人？（0=完全不想，1=非常迫切）",
+            "value_question": "你有多强烈地想要自己来做这个决定，而不是交给别人？",
             "suggested_importance": 0.8,
             "explanation": "自主意愿越强，独立决策带来的满足感越高，执行起来也更有动力。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "完全不想",
+            "max_desc": "非常迫切"
           }
         },
         "extra_factors": {
@@ -2490,19 +2744,23 @@
               "name": "相关能力与经验",
               "direction": "positive",
               "value_label": "对这件事的了解和经验积累",
-              "value_question": "你对这个决定所涉及的领域了解多少、有多少相关经验？（0=完全陌生，1=非常熟悉）",
+              "value_question": "你对这个决定所涉及的领域了解多少、有多少相关经验？",
               "suggested_importance": 0.7,
               "explanation": "掌握的信息和经验越充分，独立判断出错的概率越低，自己决定才更可靠。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "完全陌生",
+              "max_desc": "非常熟悉"
             },
             {
               "name": "决策风险大小",
               "direction": "negative",
               "value_label": "决策失误可能带来的损失程度",
-              "value_question": "如果这个决定做错了，后果会有多严重？（0=几乎没影响，1=损失极大）",
+              "value_question": "如果这个决定做错了，后果会有多严重？",
               "suggested_importance": 0.6,
               "explanation": "风险越高，独自承担决策责任的代价越大，此时参考他人意见往往更稳妥。",
-              "value_transform": "inverse"
+              "value_transform": "inverse",
+              "min_desc": "几乎没影响",
+              "max_desc": "损失极大"
             }
           ]
         }
@@ -2536,10 +2794,12 @@
             "name": "内心渴望程度",
             "direction": "positive",
             "value_label": "个人意愿强度",
-            "value_question": "你有多想做这件事？（0=完全不想，1=非常渴望）",
+            "value_question": "你有多想做这件事？",
             "suggested_importance": 0.8,
             "explanation": "内心越渴望，大胆行动带来的满足感越强，犹豫的代价也越高。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "完全不想",
+            "max_desc": "非常渴望"
           }
         },
         "extra_factors": {
@@ -2548,19 +2808,23 @@
               "name": "失败可承受程度",
               "direction": "positive",
               "value_label": "风险承受能力",
-              "value_question": "如果这件事失败了，你能接受后果吗？（0=完全无法接受，1=完全可以接受）",
+              "value_question": "如果这件事失败了，你能接受后果吗？",
               "suggested_importance": 0.7,
               "explanation": "能承受失败后果的人，大胆行动的实际风险更低，值得放手一试。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "完全无法接受",
+              "max_desc": "完全可以接受"
             },
             {
               "name": "机会稀缺程度",
               "direction": "positive",
               "value_label": "机会窗口紧迫性",
-              "value_question": "这个机会有多难得或紧迫？（0=随时都有，1=错过就没了）",
+              "value_question": "这个机会有多难得或紧迫？",
               "suggested_importance": 0.6,
               "explanation": "机会越稀缺，等待观望的机会成本越高，越应该果断行动。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "随时都有",
+              "max_desc": "错过就没了"
             }
           ]
         }
@@ -2594,10 +2858,12 @@
             "name": "当前风险承受能力",
             "direction": "negative",
             "value_label": "风险承受强度",
-            "value_question": "你目前对失败或损失的承受能力有多强？（0=完全无法承受，1=完全不在乎）",
+            "value_question": "你目前对失败或损失的承受能力有多强？",
             "suggested_importance": 0.8,
             "explanation": "风险承受能力越弱，越需要选择稳健策略来保护自己。",
-            "value_transform": "inverse"
+            "value_transform": "inverse",
+            "min_desc": "完全无法承受",
+            "max_desc": "完全不在乎"
           }
         },
         "extra_factors": {
@@ -2606,19 +2872,23 @@
               "name": "现有资源与退路",
               "direction": "negative",
               "value_label": "经济安全垫厚度",
-              "value_question": "你目前的积蓄或备用资源能支撑你多久不出问题？（0=几乎没有，1=非常充裕）",
+              "value_question": "你目前的积蓄或备用资源能支撑你多久不出问题？",
               "suggested_importance": 0.7,
               "explanation": "经济缓冲越薄，一旦冒险失败代价越大，稳一点更为必要。",
-              "value_transform": "inverse"
+              "value_transform": "inverse",
+              "min_desc": "几乎没有",
+              "max_desc": "非常充裕"
             },
             {
               "name": "当前机会的紧迫性",
               "direction": "negative",
               "value_label": "机会窗口紧迫度",
-              "value_question": "你现在面对的机会有多紧迫，错过就很难再有？（0=完全不急，1=稍纵即逝）",
+              "value_question": "你现在面对的机会有多紧迫，错过就很难再有？",
               "suggested_importance": 0.6,
               "explanation": "机会越紧迫，等待或保守可能意味着错失，反而不利于选择稳一点。",
-              "value_transform": "inverse"
+              "value_transform": "inverse",
+              "min_desc": "完全不急",
+              "max_desc": "稍纵即逝"
             }
           ]
         }
@@ -2652,10 +2922,12 @@
             "name": "已投入资源的沉没程度",
             "direction": "negative",
             "value_label": "沉没成本感知强度",
-            "value_question": "你觉得自己已经投入了大量时间、金钱或精力，放弃会非常可惜——这种感受有多强烈？（0=完全不在意，1=极度难以割舍）",
+            "value_question": "你觉得自己已经投入了大量时间、金钱或精力，放弃会非常可惜——这种感受有多强烈？",
             "suggested_importance": 0.8,
             "explanation": "沉没成本感越强，人越容易因不舍得放弃而继续亏损，识别这一心理偏误是决定止损的关键障碍。",
-            "value_transform": "inverse"
+            "value_transform": "inverse",
+            "min_desc": "完全不在意",
+            "max_desc": "极度难以割舍"
           }
         },
         "extra_factors": {
@@ -2664,19 +2936,23 @@
               "name": "继续投入的风险大小",
               "direction": "positive",
               "value_label": "潜在损失风险程度",
-              "value_question": "如果不止损继续下去，你认为可能造成的损失有多严重？（0=几乎没有额外损失，1=可能导致难以承受的重大损失）",
+              "value_question": "如果不止损继续下去，你认为可能造成的损失有多严重？",
               "suggested_importance": 0.7,
               "explanation": "潜在损失越大，及时止损的必要性越高，风险评估直接决定是否应该立即行动。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "几乎没有额外损失",
+              "max_desc": "可能导致难以承受的重大损失"
             },
             {
               "name": "未来翻盘的现实可能性",
               "direction": "negative",
               "value_label": "客观好转概率",
-              "value_question": "基于当前客观条件，你认为局面在可预见的时间内真正好转的可能性有多大？（0=几乎不可能，1=非常有把握）",
+              "value_question": "基于当前客观条件，你认为局面在可预见的时间内真正好转的可能性有多大？",
               "suggested_importance": 0.6,
               "explanation": "现实环境中翻盘的概率越低，继续坚持的合理性越弱，止损反而是更理性的选择。",
-              "value_transform": "inverse"
+              "value_transform": "inverse",
+              "min_desc": "几乎不可能",
+              "max_desc": "非常有把握"
             }
           ]
         }
@@ -2710,10 +2986,12 @@
             "name": "对改变的个人意愿",
             "direction": "positive",
             "value_label": "主动意愿强度",
-            "value_question": "你有多强烈地想要主动做出这个改变？（0=完全不想，1=非常渴望）",
+            "value_question": "你有多强烈地想要主动做出这个改变？",
             "suggested_importance": 0.8,
             "explanation": "内心是否真正想要改变，是推动行动最直接的驱动力。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "完全不想",
+            "max_desc": "非常渴望"
           }
         },
         "extra_factors": {
@@ -2722,19 +3000,23 @@
               "name": "改变带来的长期发展空间",
               "direction": "positive",
               "value_label": "长期收益预期",
-              "value_question": "你认为接受这个改变对你未来发展的帮助有多大？（0=几乎没有帮助，1=非常有帮助）",
+              "value_question": "你认为接受这个改变对你未来发展的帮助有多大？",
               "suggested_importance": 0.7,
               "explanation": "改变是否能带来更好的未来，决定了它是否值得承担当下的代价。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "几乎没有帮助",
+              "max_desc": "非常有帮助"
             },
             {
               "name": "改变涉及的风险大小",
               "direction": "negative",
               "value_label": "感知风险程度",
-              "value_question": "你觉得接受这个改变可能带来的损失或不确定性有多大？（0=几乎没有风险，1=风险极大）",
+              "value_question": "你觉得接受这个改变可能带来的损失或不确定性有多大？",
               "suggested_importance": 0.6,
               "explanation": "感知到的风险越高，人越倾向于回避改变、选择维持现状。",
-              "value_transform": "inverse"
+              "value_transform": "inverse",
+              "min_desc": "几乎没有风险",
+              "max_desc": "风险极大"
             }
           ]
         }
@@ -2768,10 +3050,12 @@
             "name": "个人意愿：挑战的内在驱动力",
             "direction": "positive",
             "value_label": "内在驱动强度",
-            "value_question": "你有多强烈地想要突破自己当前的舒适区？（0 = 完全没有冲动，1 = 非常渴望挑战）",
+            "value_question": "你有多强烈地想要突破自己当前的舒适区？",
             "suggested_importance": 0.8,
             "explanation": "内在驱动力越强，面对困难时越能坚持，是决定是否挑战自己最核心的动力来源。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "完全没有冲动",
+            "max_desc": "非常渴望挑战"
           }
         },
         "extra_factors": {
@@ -2780,19 +3064,23 @@
               "name": "能力经验：应对挑战的准备程度",
               "direction": "positive",
               "value_label": "当前能力准备度",
-              "value_question": "你觉得自己目前的知识和经验，有多大程度上能够支撑你完成这个挑战？（0 = 完全没有准备，1 = 准备非常充分）",
+              "value_question": "你觉得自己目前的知识和经验，有多大程度上能够支撑你完成这个挑战？",
               "suggested_importance": 0.7,
               "explanation": "具备一定基础能力才能将挑战转化为成长，准备不足时强行挑战容易受挫放弃。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "完全没有准备",
+              "max_desc": "准备非常充分"
             },
             {
               "name": "时间安排：投入挑战的时间余裕",
               "direction": "positive",
               "value_label": "可用时间充裕度",
-              "value_question": "你目前有多充裕的时间可以专门投入到这个挑战中？（0 = 几乎没有空余时间，1 = 时间非常充裕）",
+              "value_question": "你目前有多充裕的时间可以专门投入到这个挑战中？",
               "suggested_importance": 0.6,
               "explanation": "挑战需要持续投入时间才能看到进展，时间严重不足会让挑战半途而废甚至带来额外压力。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "几乎没有空余时间",
+              "max_desc": "时间非常充裕"
             }
           ]
         }
@@ -2826,10 +3114,12 @@
             "name": "制定目标的个人意愿",
             "direction": "positive",
             "value_label": "制定目标的主动意愿强度",
-            "value_question": "你有多强烈地想要为自己制定一个明确目标？（0=完全没有意愿，1=非常强烈）",
+            "value_question": "你有多强烈地想要为自己制定一个明确目标？",
             "suggested_importance": 0.8,
             "explanation": "内在意愿越强，制定目标后坚持执行的动力越足，目标也越有实际意义。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "完全没有意愿",
+            "max_desc": "非常强烈"
           }
         },
         "extra_factors": {
@@ -2838,19 +3128,23 @@
               "name": "目标方向的清晰程度",
               "direction": "positive",
               "value_label": "对目标方向的清晰程度",
-              "value_question": "你目前对自己想要达成的方向有多清晰？（0=完全模糊，1=非常清晰）",
+              "value_question": "你目前对自己想要达成的方向有多清晰？",
               "suggested_importance": 0.7,
               "explanation": "方向越清晰，制定出的目标越具体可行，否则过早制定目标可能流于空泛。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "完全模糊",
+              "max_desc": "非常清晰"
             },
             {
               "name": "当前时间安排的余裕",
               "direction": "positive",
               "value_label": "当前时间安排的宽裕程度",
-              "value_question": "你目前的时间安排有多宽裕，足以认真思考并制定目标？（0=完全没有空余时间，1=时间非常充裕）",
+              "value_question": "你目前的时间安排有多宽裕，足以认真思考并制定目标？",
               "suggested_importance": 0.6,
               "explanation": "只有拥有足够的时间认真规划，制定出的目标才更周全，仓促制定的目标容易脱离实际。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "完全没有空余时间",
+              "max_desc": "时间非常充裕"
             }
           ]
         }
@@ -2884,10 +3178,12 @@
             "name": "内心渴望程度",
             "direction": "positive",
             "value_label": "个人意愿强度",
-            "value_question": "你有多想给自己这次机会？（0 = 完全不想，1 = 非常渴望）",
+            "value_question": "你有多想给自己这次机会？",
             "suggested_importance": 0.8,
             "explanation": "内心是否真正想要，是决定要不要迈出这一步最根本的驱动力。",
-            "value_transform": "direct"
+            "value_transform": "direct",
+            "min_desc": "完全不想",
+            "max_desc": "非常渴望"
           }
         },
         "extra_factors": {
@@ -2896,19 +3192,23 @@
               "name": "失败后的可承受程度",
               "direction": "positive",
               "value_label": "风险承受能力",
-              "value_question": "如果这次机会没有结果，你能接受这个结果吗？（0 = 完全无法接受，1 = 完全可以接受）",
+              "value_question": "如果这次机会没有结果，你能接受这个结果吗？",
               "suggested_importance": 0.7,
               "explanation": "能否承受最坏结果，决定了给自己这次机会是否在心理上是安全的。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "完全无法接受",
+              "max_desc": "完全可以接受"
             },
             {
               "name": "当前时机的稀缺性",
               "direction": "positive",
               "value_label": "机会窗口紧迫度",
-              "value_question": "你觉得这个机会现在不抓住就会错过吗？（0 = 随时都有机会，1 = 现在是唯一窗口）",
+              "value_question": "你觉得这个机会现在不抓住就会错过吗？",
               "suggested_importance": 0.6,
               "explanation": "机会窗口越稀缺，等待的代价越高，越值得现在就给自己一次机会。",
-              "value_transform": "direct"
+              "value_transform": "direct",
+              "min_desc": "随时都有机会",
+              "max_desc": "现在是唯一窗口"
             }
           ]
         }

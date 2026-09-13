@@ -54,7 +54,7 @@ function normalizeAnalysis(value: unknown): DecisionAnalysis | null {
   if (!Array.isArray(candidate.factors) || candidate.factors.length !== 3) return null;
   const factors = candidate.factors.map((factor) => {
     if (!factor || typeof factor !== 'object') return null;
-    if (![factor.name, factor.valueLabel, factor.valueQuestion, factor.explanation].every((item) => typeof item === 'string' && item.trim())) return null;
+    if (![factor.name, factor.valueLabel, factor.valueQuestion, factor.minDesc, factor.maxDesc, factor.explanation].every((item) => typeof item === 'string' && item.trim())) return null;
     if (!Number.isFinite(factor.suggestedImportance) || factor.suggestedImportance < 0 || factor.suggestedImportance > 10) return null;
     if (factor.valueTransform !== 'direct' && factor.valueTransform !== 'inverse') return null;
     return { ...factor, suggestedImportance: Math.ceil(factor.suggestedImportance) };

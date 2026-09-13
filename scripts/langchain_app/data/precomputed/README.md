@@ -6,7 +6,7 @@ can be checked in for review without becoming live. Files are hot-reloaded by mt
 validated cache update does not require changing route code.
 
 For decision candidates, the display source of truth is
-`modules/Neuron-Guide-React/data/decisionCandidates.json`. Generate entries sequentially:
+`modules/Neuron-Guide/data/decisionCandidates.json`. Generate entries sequentially:
 
 ```powershell
 node scripts/generate_decision_candidate_cache.mjs --approve

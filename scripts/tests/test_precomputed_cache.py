@@ -85,7 +85,7 @@ class CheckedInDecisionCacheTests(unittest.TestCase):
     def test_every_displayed_candidate_has_one_approved_complete_cache_entry(self) -> None:
         repo_root = Path(__file__).resolve().parents[2]
         candidates = json.loads(
-            (repo_root / "modules" / "Neuron-Guide-React" / "data" / "decisionCandidates.json").read_text(encoding="utf-8")
+            (repo_root / "modules" / "Neuron-Guide" / "data" / "decisionCandidates.json").read_text(encoding="utf-8")
         )["rows"]
         labels = [label for row in candidates for label in row]
         cache_path = repo_root / "scripts" / "langchain_app" / "data" / "precomputed" / "decision-candidates.json"

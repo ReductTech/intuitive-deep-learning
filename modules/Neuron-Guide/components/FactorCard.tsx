@@ -67,7 +67,7 @@ export function FactorCard({
             value={value ?? 5}
             formatValue={() => touched ? `${value} / 10` : ''}
             unset={!touched}
-            scale={Array.from({ length: 11 }, (_, tick) => tick)}
+            scale={[`0 · ${factor.minDesc}`, ...Array.from({ length: 9 }, (_, tick) => tick + 1), `10 · ${factor.maxDesc}`]}
             discrete
             disabled={disabled}
             onChange={(event) => onValueChange(Number(event.currentTarget.value))}

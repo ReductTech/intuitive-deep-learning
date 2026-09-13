@@ -1,86 +1,159 @@
+import type { ReactNode } from 'react';
 import { ContentBlock, FormulaBlock, FormulaTerm, Typography } from '../../../shared/react';
 import "./WeightedContributionTheoryPage.css";
+import { useNeuronLesson } from '../../model/NeuronLessonContext';
+import { effectiveInput, formatScore, normalizedWeight, weightedSum } from '../../model/neuronMath';
 
-function ColumnVector({ symbol, tone, values }: { symbol: 'W' | 'X'; tone: 'warning' | 'accent'; values: string[] }) {
+const subscripts = ['₁', '₂', '₃'];
+
+function FormulaVariable({ children, tooltip, className }: { children: ReactNode; tooltip: string; className?: string }) {
+  return <FormulaTerm className={className} tooltip={tooltip}>{children}</FormulaTerm>;
+}
+
+function VectorBracket({
+  values,
+  tone,
+  direction,
+  tooltips,
+}: {
+  values: string[];
+  tone: 'warm' | 'blue';
+  direction: 'row' | 'column';
+  tooltips: string[];
+}) {
   return (
-    <div className="ng-matrix-definition-ppt__vector-definition">
-      <FormulaBlock ariaLabel={`${symbol} 的列向量定义`}>
-        <div className="ng-matrix-definition-ppt__vector-equation">
-          <FormulaTerm tooltip={symbol === 'W' ? 'W：由三个权重组成的列向量' : 'X：由三个输入组成的列向量'}>{symbol}</FormulaTerm>
-          <Typography as="span" variant="body" tone="muted">=</Typography>
-          <Typography as="span" variant="body" tone="inherit" className={`ng-matrix-definition-ppt__column ng-matrix-definition-ppt__column--${tone}`}>
-            {values.map((value, index) => (
-              <FormulaTerm tooltip={symbol === 'W' ? `w${index + 1}：第 ${index + 1} 个输入的权重` : `x${index + 1}：第 ${index + 1} 个输入`} key={value}>{value}</FormulaTerm>
-            ))}
-          </Typography>
-        </div>
-      </FormulaBlock>
-      <Typography variant="body" tone="muted">{symbol === 'W' ? '权重列向量' : '输入列向量'} · 3 × 1</Typography>
-    </div>
+    <span className={`ng-matrix-representation__bracket-vector ng-matrix-representation__bracket-vector--${tone} ng-matrix-representation__bracket-vector--${direction}`}>
+      {values.map((value, index) => (
+        <FormulaVariable key={`${value}-${index}`} tooltip={tooltips[index]}>{value}</FormulaVariable>
+      ))}
+    </span>
   );
 }
 
 export function WeightedContributionTheoryPage() {
+  const { scenario, state } = useNeuronLesson();
+  const values = scenario.factors.map((factor, index) => effectiveInput(factor, state.values[index] ?? factor.suggestedValue));
+  const weights = scenario.factors.map((factor) => normalizedWeight(factor.suggestedImportance));
+  const total = weightedSum(scenario, values);
+
   return (
     <ContentBlock
       headingLevel={1}
-      className="ng-lecture-stage ng-matrix-definition-ppt"
+      className="ng-lecture-stage ng-matrix-representation"
       title="从加权求和到矩阵表示"
-      subtitle="把权重和输入分别写成向量，同一条加权求和可以写成一次矩阵乘法。"
+      subtitle="刚才那一长串乘法没有变，只是换了一种更紧凑的写法。"
     >
-      <section className="ng-matrix-definition-ppt__expanded">
-        <div>
-          <Typography variant="body" tone="warning">展开写法</Typography>
+      <section className="ng-matrix-representation__expanded">
+        <div className="ng-matrix-representation__section-copy">
+          <Typography variant="body" tone="warning">上一页的写法</Typography>
           <Typography as="h3" variant="h3" tone="accent">三个输入分别加权，再相加</Typography>
         </div>
-        <FormulaBlock ariaLabel="输出 y 等于三个输入的加权和">
-          <FormulaTerm tooltip="y：人工神经元的输出">y</FormulaTerm>
-          {' = '}
-          <FormulaTerm tooltip="第一个输入的加权贡献">w₁x₁</FormulaTerm>
-          {' + '}
-          <FormulaTerm tooltip="第二个输入的加权贡献">w₂x₂</FormulaTerm>
-          {' + '}
-          <FormulaTerm tooltip="第三个输入的加权贡献">w₃x₃</FormulaTerm>
+        <FormulaBlock ariaLabel="三个输入的加权和以及当前数值">
+          <div className="ng-matrix-representation__formula-line">
+            <FormulaVariable tooltip="y：三个输入经过加权后相加得到的总输入。">y</FormulaVariable>
+            {' = '}
+            {subscripts.map((subscript, index) => (
+              <span key={subscript}>
+                {index > 0 && ' + '}
+                <FormulaVariable tooltip={`w${subscript}x${subscript}：第 ${index + 1} 个输入乘以对应权重后的贡献。`}>
+                  w{subscript}x{subscript}
+                </FormulaVariable>
+              </span>
+            ))}
+          </div>
+          <div className="ng-matrix-representation__formula-detail">
+            {'= '}
+            {weights.map((weight, index) => (
+              <span key={index}>
+                {index > 0 && ' + '}
+                <FormulaVariable tooltip={`第 ${index + 1} 个权重与输入的数值：${formatScore(weight)} × ${formatScore(values[index])}。`}>
+                  {formatScore(weight)} × {formatScore(values[index])}
+                </FormulaVariable>
+              </span>
+            ))}
+            {' = '}
+            <FormulaVariable tooltip={`y：当前三个加权贡献相加后的总输入，为 ${formatScore(total)}。`}>{formatScore(total)}</FormulaVariable>
+          </div>
         </FormulaBlock>
       </section>
 
-      <section className="ng-matrix-definition-ppt__vectors">
-        <div className="ng-matrix-definition-ppt__vectors-heading">
-          <Typography variant="body" tone="warning">把两组数分别收进向量</Typography>
-          <Typography variant="body" tone="muted">一一对应：权重 W · 输入 X</Typography>
-        </div>
-        <ColumnVector symbol="W" tone="warning" values={['w₁', 'w₂', 'w₃']} />
-        <ColumnVector symbol="X" tone="accent" values={['x₁', 'x₂', 'x₃']} />
+      <div className="ng-matrix-representation__down-arrow" aria-hidden="true">↓</div>
+      <div className="ng-matrix-representation__bridge-label">
+        <Typography as="strong" variant="body" tone="accent">把权重放在一起，把输入放在一起</Typography>
+      </div>
+
+      <section className="ng-matrix-representation__vectors" aria-label="权重向量和输入向量">
+        <article className="ng-matrix-representation__vector-card ng-matrix-representation__vector-card--weights">
+          <div className="ng-matrix-representation__card-copy">
+            <Typography variant="body" tone="warning">权重</Typography>
+            <Typography variant="bodySmall" tone="muted">把三个权重排成一个行向量。</Typography>
+          </div>
+          <FormulaBlock ariaLabel="权重行向量 W 转置">
+            <div className="ng-matrix-representation__vector-equation">
+              <FormulaVariable tooltip="Wᵀ：由三个输入权重组成的行向量。">Wᵀ</FormulaVariable>
+              {' = '}
+              <VectorBracket
+                tone="warm"
+                direction="row"
+                values={weights.map(formatScore)}
+                tooltips={weights.map((weight, index) => `w${subscripts[index]}：第 ${index + 1} 个因素的权重，为 ${formatScore(weight)}。`)}
+              />
+            </div>
+          </FormulaBlock>
+        </article>
+
+        <div className="ng-matrix-representation__multiply" aria-hidden="true">×</div>
+
+        <article className="ng-matrix-representation__vector-card ng-matrix-representation__vector-card--inputs">
+          <div className="ng-matrix-representation__card-copy">
+            <Typography variant="body" tone="accent">输入</Typography>
+            <Typography variant="bodySmall" tone="muted">把三个输入排成一个列向量。</Typography>
+          </div>
+          <FormulaBlock ariaLabel="输入列向量 X">
+            <div className="ng-matrix-representation__vector-equation">
+              <FormulaVariable tooltip="X：由三个输入组成的列向量。">X</FormulaVariable>
+              {' = '}
+              <VectorBracket
+                tone="blue"
+                direction="column"
+                values={values.map(formatScore)}
+                tooltips={values.map((value, index) => `x${subscripts[index]}：第 ${index + 1} 个输入，为 ${formatScore(value)}。`)}
+              />
+            </div>
+          </FormulaBlock>
+        </article>
       </section>
 
-      <section className="ng-matrix-definition-ppt__vertical-expansion">
-        <div className="ng-matrix-definition-ppt__equation-label">
+      <section className="ng-matrix-representation__compact">
+        <div className="ng-matrix-representation__section-copy">
           <Typography variant="body" tone="success">合并写法</Typography>
-          <Typography as="strong" variant="h3" tone="accent">一次矩阵乘法</Typography>
+          <Typography as="h3" variant="h3" tone="accent">一次矩阵乘法</Typography>
         </div>
-        <div className="ng-matrix-definition-ppt__operand">
-          <Typography variant="subtitle" tone="warning">Wᵀ</Typography>
-          <div className="ng-matrix-definition-ppt__row-vector edu-formula" aria-label="W 转置后的权重行向量">
-            {['w₁', 'w₂', 'w₃'].map((value, index) => <FormulaTerm tooltip={`第 ${index + 1} 个权重`} key={value}>{value}</FormulaTerm>)}
+        <FormulaBlock ariaLabel="权重转置乘以输入向量得到神经元总输入">
+          <div className="ng-matrix-representation__compact-formula">
+            <FormulaVariable tooltip="y：神经元接收到的总输入。">y</FormulaVariable>
+            {' = '}
+            <FormulaVariable tooltip="Wᵀ：权重组成的行向量。">Wᵀ</FormulaVariable>
+            {' × '}
+            <FormulaVariable tooltip="X：输入组成的列向量。">X</FormulaVariable>
+            {' = '}
+            <FormulaVariable tooltip={`当前矩阵乘法的结果，为 ${formatScore(total)}。`}>{formatScore(total)}</FormulaVariable>
           </div>
-        </div>
-        <Typography variant="h3" tone="muted">×</Typography>
-        <div className="ng-matrix-definition-ppt__operand">
-          <Typography variant="subtitle" tone="accent">X</Typography>
-          <div className="ng-matrix-definition-ppt__column ng-matrix-definition-ppt__column--accent edu-formula" aria-label="输入列向量 X">
-            {['x₁', 'x₂', 'x₃'].map((value, index) => <FormulaTerm tooltip={`第 ${index + 1} 个输入`} key={value}>{value}</FormulaTerm>)}
+          <div className="ng-matrix-representation__compact-detail">
+            {'= '}
+            <FormulaVariable tooltip="WᵀX：把对应位置的权重和输入相乘，再把结果相加。">
+              {weights.map((weight, index) => `${formatScore(weight)} × ${formatScore(values[index])}`).join(' + ')}
+            </FormulaVariable>
+            {' = '}
+            <FormulaVariable tooltip={`y：矩阵表示与展开写法得到相同结果，为 ${formatScore(total)}。`}>{formatScore(total)}</FormulaVariable>
           </div>
-        </div>
-        <Typography variant="h3" tone="muted">=</Typography>
-        <div className="ng-matrix-definition-ppt__output">
-          <Typography variant="body" tone="success">输出</Typography>
-          <Typography variant="h1" tone="success">y</Typography>
-        </div>
+        </FormulaBlock>
       </section>
+
+      <aside className="ng-matrix-representation__key-point">
+        <Typography as="strong" variant="body" tone="warning">理解重点：</Typography>
+        <Typography as="span" variant="bodySmall" tone="muted">矩阵写法没有发明新的计算，只是把同样的加权过程写得更紧凑。</Typography>
+      </aside>
     </ContentBlock>
   );
 }
-
-
-
-

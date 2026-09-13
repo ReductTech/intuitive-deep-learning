@@ -2,6 +2,8 @@ export interface NeuronFactor {
   name: string;
   valueLabel: string;
   valueQuestion: string;
+  minDesc: string;
+  maxDesc: string;
   explanation: string;
   suggestedImportance: number;
   suggestedValue: number;
@@ -25,9 +27,9 @@ export const decisionScenarios: DecisionScenario[] = [
     positiveLabel: '读研',
     negativeLabel: '不读研',
     factors: [
-      { name: '研究兴趣', valueLabel: '研究兴趣', valueQuestion: '你现在对深入研究的兴趣有多强？', explanation: '它会直接影响长期投入的动力。', suggestedImportance: 9, suggestedValue: 8 },
-      { name: '职业帮助', valueLabel: '职业帮助', valueQuestion: '读研对你的目标职业帮助有多大？', explanation: '它决定这段学习经历与目标的匹配程度。', suggestedImportance: 7, suggestedValue: 7 },
-      { name: '经济承受力', valueLabel: '经济承受力', valueQuestion: '你目前承担时间与经济成本的能力有多强？', explanation: '它影响计划是否能够持续执行。', suggestedImportance: 6, suggestedValue: 5 },
+      { name: '研究兴趣', valueLabel: '研究兴趣', valueQuestion: '你现在对深入研究的兴趣有多强？', minDesc: '完全没有', maxDesc: '非常强烈', explanation: '它会直接影响长期投入的动力。', suggestedImportance: 9, suggestedValue: 8 },
+      { name: '职业帮助', valueLabel: '职业帮助', valueQuestion: '读研对你的目标职业帮助有多大？', minDesc: '完全不需要', maxDesc: '几乎必须', explanation: '它决定这段学习经历与目标的匹配程度。', suggestedImportance: 7, suggestedValue: 7 },
+      { name: '经济承受力', valueLabel: '经济承受力', valueQuestion: '你目前承担时间与经济成本的能力有多强？', minDesc: '完全无法承受', maxDesc: '完全没有压力', explanation: '它影响计划是否能够持续执行。', suggestedImportance: 6, suggestedValue: 5 },
     ],
   },
   {
@@ -37,9 +39,9 @@ export const decisionScenarios: DecisionScenario[] = [
     positiveLabel: '接受 offer',
     negativeLabel: '不接受 offer',
     factors: [
-      { name: '成长空间', valueLabel: '成长空间', valueQuestion: '这份工作能提供多大的成长空间？', explanation: '它影响这份选择的长期价值。', suggestedImportance: 8, suggestedValue: 9 },
-      { name: '薪资满意度', valueLabel: '薪资满意度', valueQuestion: '你对薪资和福利有多满意？', explanation: '它影响现实回报和生活压力。', suggestedImportance: 7, suggestedValue: 6 },
-      { name: '生活平衡', valueLabel: '生活平衡', valueQuestion: '这份工作能提供多好的生活平衡？', explanation: '它影响这份工作能否长期持续。', suggestedImportance: 8, suggestedValue: 4 },
+      { name: '成长空间', valueLabel: '成长空间', valueQuestion: '这份工作能提供多大的成长空间？', minDesc: '几乎没有', maxDesc: '非常充足', explanation: '它影响这份选择的长期价值。', suggestedImportance: 8, suggestedValue: 9 },
+      { name: '薪资满意度', valueLabel: '薪资满意度', valueQuestion: '你对薪资和福利有多满意？', minDesc: '完全不满意', maxDesc: '非常满意', explanation: '它影响现实回报和生活压力。', suggestedImportance: 7, suggestedValue: 6 },
+      { name: '生活平衡', valueLabel: '生活平衡', valueQuestion: '这份工作能提供多好的生活平衡？', minDesc: '完全没有平衡', maxDesc: '非常理想', explanation: '它影响这份工作能否长期持续。', suggestedImportance: 8, suggestedValue: 4 },
     ],
   },
   {
@@ -49,9 +51,9 @@ export const decisionScenarios: DecisionScenario[] = [
     positiveLabel: '开始健身',
     negativeLabel: '暂不开始',
     factors: [
-      { name: '健康需要', valueLabel: '健康需要', valueQuestion: '你改善健康状态的需要有多强？', explanation: '它决定行动能带来多大实际收益。', suggestedImportance: 9, suggestedValue: 8 },
-      { name: '时间余量', valueLabel: '时间余量', valueQuestion: '你目前能稳定安排多少时间？', explanation: '它影响计划能否真正执行。', suggestedImportance: 7, suggestedValue: 5 },
-      { name: '行动意愿', valueLabel: '行动意愿', valueQuestion: '你现在开始行动的意愿有多强？', explanation: '它影响计划能否从想法变成习惯。', suggestedImportance: 8, suggestedValue: 7 },
+      { name: '健康需要', valueLabel: '健康需要', valueQuestion: '你改善健康状态的需要有多强？', minDesc: '几乎没有', maxDesc: '非常强烈', explanation: '它决定行动能带来多大实际收益。', suggestedImportance: 9, suggestedValue: 8 },
+      { name: '时间余量', valueLabel: '时间余量', valueQuestion: '你目前能稳定安排多少时间？', minDesc: '几乎没有时间', maxDesc: '时间非常充裕', explanation: '它影响计划能否真正执行。', suggestedImportance: 7, suggestedValue: 5 },
+      { name: '行动意愿', valueLabel: '行动意愿', valueQuestion: '你现在开始行动的意愿有多强？', minDesc: '完全没有', maxDesc: '非常强烈', explanation: '它影响计划能否从想法变成习惯。', suggestedImportance: 8, suggestedValue: 7 },
     ],
   },
   {
@@ -61,9 +63,9 @@ export const decisionScenarios: DecisionScenario[] = [
     positiveLabel: '做这件事',
     negativeLabel: '暂时不做',
     factors: [
-      { name: '预期收益', valueLabel: '预期收益', valueQuestion: '这件事可能带来的收益有多大？', explanation: '它代表这个决定可能带来的正向结果。', suggestedImportance: 8, suggestedValue: 7 },
-      { name: '现实可行性', valueLabel: '现实可行性', valueQuestion: '以你目前的条件，这件事有多可行？', explanation: '它决定想法能否真正落地。', suggestedImportance: 7, suggestedValue: 6 },
-      { name: '长期匹配度', valueLabel: '长期匹配度', valueQuestion: '这件事与你的长期目标有多匹配？', explanation: '它帮助避免只看眼前感受。', suggestedImportance: 8, suggestedValue: 5 },
+      { name: '预期收益', valueLabel: '预期收益', valueQuestion: '这件事可能带来的收益有多大？', minDesc: '几乎没有', maxDesc: '非常可观', explanation: '它代表这个决定可能带来的正向结果。', suggestedImportance: 8, suggestedValue: 7 },
+      { name: '现实可行性', valueLabel: '现实可行性', valueQuestion: '以你目前的条件，这件事有多可行？', minDesc: '完全不可行', maxDesc: '非常可行', explanation: '它决定想法能否真正落地。', suggestedImportance: 7, suggestedValue: 6 },
+      { name: '长期匹配度', valueLabel: '长期匹配度', valueQuestion: '这件事与你的长期目标有多匹配？', minDesc: '完全不匹配', maxDesc: '高度匹配', explanation: '它帮助避免只看眼前感受。', suggestedImportance: 8, suggestedValue: 5 },
     ],
   },
 ];

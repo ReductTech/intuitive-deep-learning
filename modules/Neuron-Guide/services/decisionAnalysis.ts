@@ -5,6 +5,8 @@ export interface DecisionAnalysisFactor {
   name: string;
   valueLabel: string;
   valueQuestion: string;
+  minDesc: string;
+  maxDesc: string;
   explanation: string;
   valueTransform: 'direct' | 'inverse';
   suggestedImportance: number;
@@ -35,6 +37,18 @@ function requiredText(value: unknown, message: string): string {
   return value.trim();
 }
 
+function splitLegacyScale(question: string): { question: string; minDesc: string; maxDesc: string } {
+  const match = question.match(/[（(]([^（）()]*)[）)]\s*$/u);
+  if (!match) return { question, minDesc: '', maxDesc: '' };
+  const parts = match[1].split(/[,，]\s*1\s*[=:：]\s*/u);
+  const minMatch = parts[0]?.match(/^\s*0\s*[=:：]\s*(.+?)\s*$/u);
+  return {
+    question: question.slice(0, match.index).trim(),
+    minDesc: minMatch?.[1]?.trim() ?? '',
+    maxDesc: parts[1]?.trim() ?? '',
+  };
+}
+
 function normalizeFactor(value: unknown): DecisionAnalysisFactor {
   const factor = asObject(value, '服务返回了无效的因素。');
   const importance = Number(factor.suggested_importance ?? factor.suggestedImportance);
@@ -45,10 +59,13 @@ function normalizeFactor(value: unknown): DecisionAnalysisFactor {
   if (transform !== 'direct' && transform !== 'inverse') {
     throw new Error('服务返回了无效的因素方向。');
   }
+  const legacyScale = splitLegacyScale(requiredText(factor.value_question ?? factor.valueQuestion, '服务返回的评分问题为空。'));
   return {
     name: requiredText(factor.name, '服务返回的因素名称为空。'),
     valueLabel: requiredText(factor.value_label ?? factor.valueLabel, '服务返回的评分变量为空。'),
-    valueQuestion: requiredText(factor.value_question ?? factor.valueQuestion, '服务返回的评分问题为空。'),
+    valueQuestion: legacyScale.question,
+    minDesc: requiredText(factor.min_desc ?? factor.minDesc ?? legacyScale.minDesc, '服务返回的 0 分说明为空。'),
+    maxDesc: requiredText(factor.max_desc ?? factor.maxDesc ?? legacyScale.maxDesc, '服务返回的 1 分说明为空。'),
     explanation: requiredText(factor.explanation, '服务返回的因素解释为空。'),
     valueTransform: transform,
     suggestedImportance: Math.ceil(importance * 10),

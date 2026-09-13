@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 
 const scriptDir = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(scriptDir, '..');
-const candidatesPath = join(repoRoot, 'modules', 'Neuron-Guide-React', 'data', 'decisionCandidates.json');
+const candidatesPath = join(repoRoot, 'modules', 'Neuron-Guide', 'data', 'decisionCandidates.json');
 const cachePath = join(scriptDir, 'langchain_app', 'data', 'precomputed', 'decision-candidates.json');
 const settingsPath = join(repoRoot, 'settings.json');
 
@@ -65,9 +65,10 @@ function validateModelResult(label, value) {
   }
   const names = new Set();
   for (const [index, factor] of value.factors.entries()) {
-    for (const field of ['name', 'direction', 'value_label', 'value_question', 'explanation']) {
+    for (const field of ['name', 'direction', 'value_label', 'value_question', 'min_desc', 'max_desc', 'explanation']) {
       if (typeof factor?.[field] !== 'string' || !factor[field].trim()) throw new Error(`${label}: factor ${index + 1} ${field} is empty.`);
     }
+    if (/[（(].*[）)]$/u.test(factor.value_question)) throw new Error(`${label}: factor ${index + 1} must keep scale descriptions outside value_question.`);
     if (!['positive', 'negative'].includes(factor.direction)) throw new Error(`${label}: factor ${index + 1} direction is invalid.`);
     if (typeof factor.suggested_importance !== 'number' || factor.suggested_importance < 0 || factor.suggested_importance > 1) throw new Error(`${label}: factor ${index + 1} weight is invalid.`);
     const name = normalizeKey(factor.name);
@@ -78,7 +79,26 @@ function validateModelResult(label, value) {
 }
 
 function promptFor(label) {
-  return `为神经元入门教学网页预生成候选决定“${label}”的完整分析。\n\n${dimensions}\n\n要求：\n1. 把候选规范成只讨论一个目标动作的自然 yes/no 问句，decision 推荐“要不要 + 目标动作 + ？”。\n2. positive_label 是目标动作短标签，negative_label 是自然的否定短标签。\n3. 不得擅自补充候选中没有的对象、课程、职业或情境。候选较抽象时保持抽象，例如“继续坚持”只能规范为“要不要继续坚持当前正在做的事？”。\n4. factors 正好 3 个，分别来自三个不同维度；按对这个决定的相关性排序。\n5. 每个因素必须具体且适合用户按 0-1 评价当前真实强度。不要替用户给强度。\n6. name、value_label、value_question 必须描述同一个原始变量，不能一个写“充裕度”另一个却问“压力程度”。\n7. direction 必须严格根据 value_question 中 0 到 1 的原始评分判断：评分越高越支持 positive_label 才是 positive，评分越高越削弱 positive_label 才是 negative。例如“不回复的风险越高”会更支持“回复”，所以是 positive。\n8. value_label 是用户直接评分的原始变量；value_question 是自然、清晰的评分问题。\n9. suggested_importance 是教学用建议权重，范围 0-1，要有合理区分度，不能机械地全填 0.5。\n10. explanation 用一句话解释因素为什么影响该决定。\n11. 输出必须是这个 JSON 结构，不得增加或遗漏字段：\n{"decision":"...","positive_label":"...","negative_label":"...","factors":[{"name":"...","direction":"positive或negative","value_label":"...","value_question":"...","suggested_importance":0.8,"explanation":"..."},{"name":"...","direction":"positive或negative","value_label":"...","value_question":"...","suggested_importance":0.7,"explanation":"..."},{"name":"...","direction":"positive或negative","value_label":"...","value_question":"...","suggested_importance":0.6,"explanation":"..."}]}`;
+  return [
+    `为神经元入门教学网页预生成候选决定“${label}”的完整分析。`,
+    '',
+    dimensions,
+    '',
+    '要求：',
+    '1. 把候选规范成只讨论一个目标动作的自然 yes/no 问句，decision 推荐“要不要 + 目标动作 + ？”。',
+    '2. positive_label 是目标动作短标签，negative_label 是自然的否定短标签。',
+    '3. 不得擅自补充候选中没有的对象、课程、职业或情境。候选较抽象时保持抽象，例如“继续坚持”只能规范为“要不要继续坚持当前正在做的事？”。',
+    '4. factors 正好 3 个，分别来自三个不同维度；按对这个决定的相关性排序。',
+    '5. 每个因素必须具体且适合用户按 0-1 评价当前真实强度。不要替用户给强度。',
+    '6. name、value_label、value_question 必须描述同一个原始变量，不能一个写“充裕度”另一个却问“压力程度”。',
+    '7. direction 必须严格根据 value_question 中 0 到 1 的原始评分判断：评分越高越支持 positive_label 才是 positive，评分越高越削弱 positive_label 才是 negative。例如“不回复的风险越高”会更支持“回复”，所以是 positive。',
+    '8. value_label 是用户直接评分的原始变量；value_question 是自然、清晰的评分问题。',
+    '9. min_desc 和 max_desc 分别说明评分 0 与评分 1 的含义，不要包含“0=”或“1=”前缀，也不要把它们放回 value_question 的括号中。',
+    '10. suggested_importance 是教学用建议权重，范围 0-1，要有合理区分度，不能机械地全填 0.5。',
+    '11. explanation 用一句话解释因素为什么影响该决定。',
+    '12. 输出必须是这个 JSON 结构，不得增加或遗漏字段：',
+    '{"decision":"...","positive_label":"...","negative_label":"...","factors":[{"name":"...","direction":"positive或negative","value_label":"...","value_question":"...","min_desc":"...","max_desc":"...","suggested_importance":0.8,"explanation":"..."},{"name":"...","direction":"positive或negative","value_label":"...","value_question":"...","min_desc":"...","max_desc":"...","suggested_importance":0.7,"explanation":"..."},{"name":"...","direction":"positive或negative","value_label":"...","value_question":"...","min_desc":"...","max_desc":"...","suggested_importance":0.6,"explanation":"..."}]}',
+  ].join('\n');
 }
 
 function extractText(response) {
@@ -128,6 +148,7 @@ async function requestCandidate(settings, label) {
 function asEntry(label, sequence, result, model, approved, existingId) {
   const factors = result.factors.map((factor) => ({
     ...factor,
+    value_question: factor.value_question.replace(/[（(][^（）()]*[）)]\s*$/u, '').trim(),
     value_transform: factor.direction === 'positive' ? 'direct' : 'inverse',
   }));
   const intake = {
@@ -212,7 +233,7 @@ async function main() {
       id: 'decision-candidate-generator',
       model: settings.model,
       prompt_versions: ['decision-candidate-bundle-v1', 'decision-candidate-bundle-v2'],
-      source: 'modules/Neuron-Guide-React/data/decisionCandidates.json',
+      source: 'modules/Neuron-Guide/data/decisionCandidates.json',
     };
     await atomicWrite(document);
     console.log(`[decision-cache] saved ${label} status=${entry.review.status}`);
