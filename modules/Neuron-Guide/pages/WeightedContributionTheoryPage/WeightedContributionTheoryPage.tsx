@@ -31,9 +31,10 @@ function VectorBracket({
 
 export function WeightedContributionTheoryPage() {
   const { scenario, state } = useLesson();
-  const values = scenario.factors.map((factor, index) => effectiveInput(factor, state.values[index] ?? factor.suggestedValue));
+  const rawValues = scenario.factors.map((factor, index) => state.values[index] ?? factor.suggestedValue);
+  const values = scenario.factors.map((factor, index) => effectiveInput(factor, rawValues[index]));
   const weights = scenario.factors.map((factor) => normalizedWeight(factor.suggestedImportance));
-  const total = weightedSum(scenario, values);
+  const total = weightedSum(scenario, rawValues);
 
   return (
     <ContentBlock

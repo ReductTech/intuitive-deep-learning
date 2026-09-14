@@ -33,9 +33,13 @@ export const neuronSpeakerNotes: Record<string, SpeakerNote[]> = {
     { text: '先把一长串加权求和写成输入向量与权重向量。', selectors: ['.ng-matrix-definition-ppt__vectors'] },
     { text: '再把同一条关系展开成矩阵乘法，注意每个维度如何对应。', selectors: ['.ng-matrix-definition-ppt__expanded'] },
   ],
+  'bias-natural-boundary': [
+    { text: '先看左侧：0 天然地把负数和非负数分开，因此符号本身就能承担一次二分类。', selectors: ['.ng-bias-concept--natural .ng-bias-axis'] },
+    { text: '再看右侧：本例所有加权和都落在 0–3，0 的左侧没有任何可能结果，因此没有 b 时无法分成两类。', selectors: ['.ng-bias-concept--problem .ng-bias-axis'] },
+  ],
   'bias-threshold': [
-    { text: '先看阈值形式：加权总分达到门槛，神经元才输出。', selectors: ['.ng-bias-theory__stage'] },
-    { text: '移项以后，门槛就变成了偏置；两种写法描述的是同一次判断。', selectors: ['.ng-bias-theory__equivalence'] },
+    { text: '请学习者先根据 0–3 的范围选择分界点；干扰项分别对应沿用 0、误分区间和选择上限。', selectors: ['.ng-bias-question-pane'] },
+    { text: '答对后看右侧：1.50 平分 0–3，当前结果 1.33 因而输出 0；最后把分界点写成 −b，得到 b = −1.50。', selectors: ['.ng-bias-answer-pane'] },
   ],
   'linear-shallow': [
     { text: '一个神经元扩展成一层，多个节点并行计算各自的加权和。', selectors: ['.ng-activation-network-stage'] },
