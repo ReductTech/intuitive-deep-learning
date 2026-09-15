@@ -1,0 +1,161 @@
+.ng-network-figure {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: var(--ng-network-height, 360px);
+  margin: 0;
+  user-select: text;
+}
+
+.ng-network-diagram {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: var(--ng-network-height, 360px);
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+.ng-network-links {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.ng-network-links line { transition: opacity .16s ease, stroke-width .16s ease; }
+.ng-network-links line.is-related { opacity: .86; stroke-width: 3px; }
+.ng-network-links line.is-dimmed { opacity: .1; }
+
+.ng-network-layer-title {
+  position: absolute;
+  top: 18px;
+  width: max-content;
+  max-width: 30%;
+  margin: 0;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.ng-network-node {
+  position: absolute;
+  z-index: 2;
+  left: var(--ng-network-x);
+  top: var(--ng-network-y);
+  display: grid;
+  width: 150px;
+  min-width: 0;
+  max-width: 100%;
+  justify-items: center;
+  gap: 8px;
+  color: var(--ng-network-node-color);
+  outline: 0;
+  transform: translate(-50%, -50%);
+  cursor: default;
+}
+
+.ng-network-node__circle {
+  display: grid;
+  width: calc(52px * var(--ng-network-font-scale, 1));
+  height: calc(52px * var(--ng-network-font-scale, 1));
+  place-items: center;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background: var(--ng-network-node-color);
+  box-shadow: 0 5px 14px rgba(25, 42, 70, .14);
+  color: #fff;
+  transition: transform .16s ease, box-shadow .16s ease;
+}
+
+.ng-network-node__circle .ui-typography,
+.ng-network-node__caption { margin: 0; }
+
+.ng-network-node__caption {
+  max-width: 150px;
+  border: 1px solid color-mix(in srgb, var(--ng-network-node-color) 24%, transparent);
+  border-radius: 7px;
+  background: color-mix(in srgb, var(--ng-network-node-color) 8%, #fff);
+  color: var(--ng-network-node-color);
+  padding: 4px 8px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.ng-network-node:hover .ng-network-node__circle,
+.ng-network-node.is-selected .ng-network-node__circle,
+.ng-network-node:focus-visible .ng-network-node__circle {
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--ng-network-node-color) 16%, transparent), 0 8px 18px rgba(25, 42, 70, .18);
+  transform: scale(1.05);
+}
+
+.ng-network-node:focus-visible {
+  border-radius: var(--ui-radius-sm);
+  outline: 2px solid color-mix(in srgb, var(--ng-network-node-color) 40%, transparent);
+  outline-offset: 5px;
+}
+
+.ng-network-caption {
+  position: absolute;
+  right: 18px;
+  bottom: 14px;
+  left: 18px;
+  margin: 0;
+  text-align: center;
+}
+
+.ng-network-summary {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.ng-network-inspector {
+  position: absolute;
+  z-index: 10;
+  top: 58px;
+  right: 16px;
+  bottom: auto;
+  left: 16px;
+  display: none;
+  box-sizing: border-box;
+  width: auto;
+  max-width: none;
+  max-height: calc(100% - 72px);
+  overflow: hidden;
+  gap: 7px;
+  border: 1px solid color-mix(in srgb, var(--ng-network-inspector-color, var(--ui-accent)) 30%, var(--ui-border));
+  border-top: 3px solid var(--ng-network-inspector-color, var(--ui-accent));
+  border-radius: var(--ui-radius-sm);
+  background: rgba(255, 255, 255, .98);
+  box-shadow: 0 16px 38px rgba(33, 50, 74, .16);
+  padding: 11px 13px;
+  user-select: text;
+}
+
+.ng-network-inspector.is-visible { display: grid; }
+
+.ng-network-inspector > .ui-typography { margin: 0; }
+
+.ng-network-inspector code {
+  display: block;
+  border-radius: 7px;
+  background: color-mix(in srgb, var(--ng-network-inspector-color, var(--ui-accent)) 8%, #fff);
+  color: var(--ng-network-inspector-color, var(--ui-accent));
+  padding: 7px 9px;
+  white-space: nowrap;
+}
+
+@media (max-width: 760px) {
+  .ng-network-node { width: 120px; }
+  .ng-network-node__caption { max-width: 120px; }
+}

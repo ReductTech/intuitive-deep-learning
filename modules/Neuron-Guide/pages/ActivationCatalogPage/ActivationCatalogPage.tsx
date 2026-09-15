@@ -5,61 +5,44 @@ import {
   useRef,
   useState,
   type MutableRefObject,
+  type ReactNode,
 } from 'react';
 import {
   ContentBlock,
+  FormulaBlock,
+  FormulaTerm,
   FunctionPlot,
   PlotlyChart,
   Typography,
   currentModuleId,
   emitTelemetry,
-  sampleSurface3D,
-  type FunctionGuide,
-  type FunctionSeries,
   type PlotlyChartProps,
   type PlotlyGraph,
   type PlotlyLayout,
-  type PlotlyTrace,
+  type FunctionGuide,
+  type FunctionSeries,
   type TelemetryStateEntry,
 } from '../../../shared/react';
 import "./ActivationCatalogPage.css";
 
 const activations = [
   {
-    type: 'relu' as const,
-    name: 'ReLU',
-    formula: 'max(0, x)',
-    description: '负值被抑制为 0，正值保持线性，输出向正方向没有上界。',
-  },
-  {
     type: 'leakyRelu' as const,
     name: 'Leaky ReLU',
     formula: 'max(0.1x, x)',
-    description: '负值保留较小斜率，正值保持原斜率，两个方向都可以继续延伸。',
-  },
-  {
-    type: 'silu' as const,
-    name: 'SiLU / Swish',
-    formula: 'x · sigmoid(x)',
-    description: '平滑地抑制负值，正向输出没有上界。',
+    description: '负侧保留小斜率，避免梯度完全归零。',
   },
   {
     type: 'gelu' as const,
     name: 'GELU',
     formula: 'x · Φ(x)',
-    description: '按输入大小平滑调节通过比例，大模型中常见。',
+    description: '按输入大小平滑调节通过比例。',
   },
   {
     type: 'sigmoid' as const,
     name: 'Sigmoid',
     formula: '1 / (1 + e⁻ˣ)',
-    description: '把数值压到 0～1，常用于二分类输出。',
-  },
-  {
-    type: 'tanh' as const,
-    name: 'Tanh',
-    formula: 'tanh(x)',
-    description: '把数值压到 −1～1，并以 0 为中心。',
+    description: '把输出压到 0～1，适合表示概率。',
   },
 ];
 
@@ -73,14 +56,39 @@ export function ActivationCatalogPage() {
     >
       <div className="ng-activation-catalog__grid">
         {activations.map((activation) => (
-          <article className="ng-activation-catalog__card" key={activation.type}>
+            <article className={`ng-activation-catalog__card ng-activation-catalog__card--${activation.type}`} key={activation.type}>
             <ActivationFunctionPlot type={activation.type} />
             <Typography as="h3" variant="subtitle" tone="accent">{activation.name}</Typography>
-            <Typography as="code" variant="body" tone="main" className="ng-activation-catalog__formula">{activation.formula}</Typography>
-            <Typography variant="body" tone="muted">{activation.description}</Typography>
+            <FormulaBlock
+              className="ng-activation-catalog__formula"
+              ariaLabel={`${activation.name} 的数学表达式`}
+            >
+              <ActivationFormula type={activation.type} />
+            </FormulaBlock>
+            <Typography variant="bodySmall" tone="muted">{activation.description}</Typography>
           </article>
         ))}
       </div>
+      <section className="ng-activation-catalog__properties" aria-label="激活函数的数学性质">
+        <div className="ng-activation-catalog__properties-head">
+          <Typography as="h2" variant="subtitle" tone="accent">激活函数的数学性质</Typography>
+          <Typography variant="bodySmall" tone="muted">三者都把线性输入变成可学习的非线性输出。</Typography>
+        </div>
+        <div className="ng-activation-catalog__properties-grid">
+          <div>
+            <Typography as="strong" variant="body" tone="main">定义域</Typography>
+            <Typography variant="bodySmall" tone="muted">通常对整个实数域有定义。</Typography>
+          </div>
+          <div>
+            <Typography as="strong" variant="body" tone="main">连续性</Typography>
+            <Typography variant="bodySmall" tone="muted">通常保持连续，输入变化时输出不会跳变。</Typography>
+          </div>
+          <div>
+            <Typography as="strong" variant="body" tone="main">可导性</Typography>
+            <Typography variant="bodySmall" tone="muted">大多处处可导，少数边界点需特殊处理。</Typography>
+          </div>
+        </div>
+      </section>
     </ContentBlock>
   );
 }
@@ -96,105 +104,17 @@ const COLORS = Object.freeze({
   background: '#fbfdff',
 });
 
-const FONT = {
-  family: '"Segoe UI", "PingFang SC", "Hiragino Sans GB", Arial, sans-serif',
-  color: COLORS.blue,
-  size: 12,
-};
-
-const CHART_STYLE = Object.freeze({ width: '100%' });
+export const SHALLOW_SERIES_COLORS = Object.freeze({
+  hidden: ['#ef8f32', '#4f7ed8', '#8656d6'] as const,
+  input: '#2f4b78',
+  output: '#3f9566',
+});
 
 const FUNCTION_COLORS: Readonly<Record<Function2DId, string>> = Object.freeze({
   line2d: COLORS.green,
   parabola2d: COLORS.orange,
   fold2d: COLORS.red,
 });
-
-const SURFACE_COLORS: Readonly<
-  Record<Surface3DId, Array<[number, string]>>
-> = Object.freeze({
-  plane3d: [[0, '#e8f7ef'], [1, COLORS.green]],
-  bowl3d: [[0, '#fff4ee'], [1, COLORS.orange]],
-  fold3d: [[0, '#fff0f2'], [1, COLORS.red]],
-});
-
-function axis(title: string, range: [number, number]) {
-  return {
-    title: {
-      text: title,
-      standoff: 8,
-      font: { size: 12, color: COLORS.blue },
-    },
-    range,
-    showgrid: true,
-    gridcolor: COLORS.grid,
-    gridwidth: 1,
-    zeroline: true,
-    zerolinecolor: COLORS.axis,
-    zerolinewidth: 1.5,
-    showline: false,
-    ticks: 'outside',
-    tickcolor: COLORS.tick,
-    tickfont: { size: 10, color: COLORS.axis },
-    fixedrange: false,
-    automargin: true,
-  };
-}
-
-function surfaceTrace(
-  sampled: ReturnType<typeof sampleSurface3D>,
-  colorscale: Array<[number, string]>,
-  name?: string,
-): PlotlyTrace {
-  return {
-    type: 'surface',
-    name,
-    x: sampled.x,
-    y: sampled.y,
-    z: sampled.z,
-    showscale: false,
-    opacity: 0.94,
-    colorscale,
-    hovertemplate: 'x = %{x:.3f}<br>y = %{y:.3f}<br>z = %{z:.3f}<extra></extra>',
-    contours: {
-      x: { show: true, color: 'rgba(255,255,255,0.55)', width: 1 },
-      y: { show: true, color: 'rgba(255,255,255,0.55)', width: 1 },
-      z: { show: false },
-    },
-  };
-}
-
-function layout3D(uirevision: string): PlotlyLayout {
-  return {
-    autosize: true,
-    paper_bgcolor: COLORS.background,
-    font: FONT,
-    margin: { l: 0, r: 0, t: 0, b: 0 },
-    showlegend: false,
-    uirevision,
-    scene: {
-      bgcolor: COLORS.background,
-      dragmode: 'orbit',
-      aspectmode: 'cube',
-      camera: { eye: { x: 1.35, y: 1.35, z: 0.95 } },
-      xaxis: {
-        ...axis('x', [-1.05, 1.05]),
-        showbackground: true,
-        backgroundcolor: COLORS.background,
-      },
-      yaxis: {
-        ...axis('y', [-1.05, 1.05]),
-        showbackground: true,
-        backgroundcolor: COLORS.background,
-      },
-      zaxis: {
-        ...axis('z', [-1.05, 1.05]),
-        showbackground: true,
-        backgroundcolor: COLORS.background,
-      },
-    },
-  };
-}
 
 export interface Function2DChoicePlotProps {
   type: Function2DId;
@@ -216,63 +136,42 @@ export function Function2DChoicePlot({ type }: Function2DChoicePlotProps) {
   );
 }
 
-export interface Surface3DChoicePlotProps {
-  type: Surface3DId;
-}
-
-export function Surface3DChoicePlot({ type }: Surface3DChoicePlotProps) {
-  const definition = SURFACE_3D_DEFINITIONS[type];
-  const data = useMemo<PlotlyTrace[]>(() => {
-    const sampled = sampleSurface3D(definition.fn, {
-      min: -1,
-      max: 1,
-      samples: 28,
-      zMin: -1.05,
-      zMax: 1.05,
-    });
-    return [surfaceTrace(sampled, SURFACE_COLORS[type], definition.formula)];
-  }, [definition, type]);
-  const layout = useMemo(
-    () => layout3D(`activation-choice-${type}`),
-    [type],
-  );
-
-  return (
-    <PersistedPlotlyChart
-      className="ng-activation-plot ng-activation-choice-plot ng-activation-choice-plot--3d"
-      persistenceKey={`activation-choice-${type}`}
-      data={data}
-      layout={layout}
-      minHeight={180}
-      style={CHART_STYLE}
-      role="img"
-      aria-label={`${definition.formula} 的三维函数曲面，可拖动旋转`}
-    />
-  );
-}
-
 export interface ShallowOutputPlotProps {
   model: Readonly<ShallowModel>;
+  activeSeriesId?: string | null;
 }
 
-export function ShallowOutputPlot({ model }: ShallowOutputPlotProps) {
+export function ShallowOutputPlot({ model, activeSeriesId = null }: ShallowOutputPlotProps) {
   const equivalent = useMemo(() => shallowEquivalent(model), [model]);
   const series = useMemo<FunctionSeries[]>(() => [
-    ...model.neurons.map((neuron, index) => ({
-      id: `hidden-${index}`,
-      label: `h${index + 1}`,
-      stroke: ['#ef9540', '#5b8fe1', '#8e63d8'][index] ?? '#8e63d8',
-      strokeWidth: 2,
-      fn: (x: number) => neuron.w * x + neuron.b,
-    })),
+    ...model.neurons.map((neuron, index) => {
+      const id = `hidden-${index}`;
+      return {
+        id,
+        label: `h${index + 1}`,
+        hoverLabel: `h${index + 1} = ${formatNumber(neuron.w)}x ${formatSigned(neuron.b)}`,
+        endLabel: `h${index + 1}`,
+        endLabelPosition: index % 2 === 0 ? 'top left' : 'bottom left',
+        endLabelFontSize: 23,
+        stroke: SHALLOW_SERIES_COLORS.hidden[index] ?? SHALLOW_SERIES_COLORS.hidden[2],
+        // 单个神经元的直线只是铺垫，保持淡而细，让绿色结果线先被看到。
+        strokeWidth: 1.4,
+        opacity: 0.36,
+        fn: (x: number) => neuron.w * x + neuron.b,
+      };
+    }),
     {
       id: 'network-output',
-      label: 'y（总输出）',
-      stroke: COLORS.green,
+      label: 'y',
+      hoverLabel: `y = ${formatNumber(equivalent.slope)}x ${formatSigned(equivalent.intercept)}`,
+      endLabel: 'y',
+      endLabelPosition: 'bottom left',
+      endLabelFontSize: 23,
+      stroke: SHALLOW_SERIES_COLORS.output,
       strokeWidth: 4,
       fn: (x: number) => shallowPredict(model, x),
     },
-  ], [model]);
+  ], [equivalent.intercept, equivalent.slope, model]);
 
   return (
     <FunctionPlot
@@ -280,51 +179,14 @@ export function ShallowOutputPlot({ model }: ShallowOutputPlotProps) {
       series={series}
       initialCenter={{ x: 0, y: 0 }}
       initialScale={{ x: 2.4 / 760, y: 2.4 / 420 }}
-      showLegend
       xLabel="x"
       yLabel="y"
       fontScale={1.3}
+      axisTitleFontSize={23}
+      tickFontSize={23}
+      highlightSeriesId={activeSeriesId}
       minHeight={390}
       ariaLabel={`无激活函数浅层网络的多条直线与总输出，y 等于 ${formatNumber(equivalent.slope)} x ${formatSigned(equivalent.intercept)}`}
-    />
-  );
-}
-
-export interface DeepOutputPlotProps {
-  model: Readonly<DeepNetworkModel>;
-}
-
-export function DeepOutputPlot({ model }: DeepOutputPlotProps) {
-  const equivalent = useMemo(() => deepEquivalent(model), [model]);
-  const data = useMemo<PlotlyTrace[]>(() => {
-    const sampled = sampleSurface3D(
-      (x, y) => deepPredict(model, x, y),
-      {
-        min: -1,
-        max: 1,
-        samples: 28,
-        zMin: -1.05,
-        zMax: 1.05,
-      },
-    );
-    const name = `z = ${formatNumber(equivalent.ax)}x ${formatSigned(equivalent.ay)}y ${formatSigned(equivalent.c)}`;
-    return [surfaceTrace(sampled, [[0, '#e8f7ef'], [1, COLORS.green]], name)];
-  }, [equivalent, model]);
-  const layout = useMemo(
-    () => layout3D('activation-'),
-    [],
-  );
-
-  return (
-    <PersistedPlotlyChart
-      className="ng-activation-plot ng-activation-stage-plot"
-      persistenceKey="ng-activation-linear-deep-output"
-      data={data}
-      layout={layout}
-      minHeight={430}
-      style={CHART_STYLE}
-      role="img"
-      aria-label={`多层线性网络的三维输出平面，z 等于 ${formatNumber(equivalent.ax)} x ${formatSigned(equivalent.ay)} y ${formatSigned(equivalent.c)}`}
     />
   );
 }
@@ -356,7 +218,7 @@ export function ReluNetworkPlot({ count, neurons }: ReluNetworkPlotProps) {
     return visibleNeurons.map((neuron, index) => ({
       id: `relu-kink-${index}`,
       x: reluKink(neuron),
-      label: `h1.${index + 1} 的响应起点`,
+      label: `h${index + 1} 的响应起点`,
       stroke: 'rgba(196, 63, 82, 0.52)',
       dash: 'dash',
     }));
@@ -421,10 +283,39 @@ export function ApproximationPlot({ count }: ApproximationPlotProps) {
   );
 }
 
-export type ActivationFunctionType = 'relu' | 'leakyRelu' | 'silu' | 'gelu' | 'sigmoid' | 'tanh';
+export type ActivationFunctionType = 'leakyRelu' | 'gelu' | 'sigmoid';
 
 export interface ActivationFunctionPlotProps {
   type: ActivationFunctionType;
+}
+
+function ActivationFormula({ type }: { type: ActivationFunctionType }): ReactNode {
+  if (type === 'leakyRelu') {
+    return (
+      <>
+        <FormulaTerm tooltip="max 取两个输入中的较大值。" ariaLabel="max，取较大值">max</FormulaTerm>
+        <span>(</span>
+        <FormulaTerm tooltip="负值区域保留 0.1 倍斜率，使梯度仍可传递。" ariaLabel="0.1x，负侧的小斜率">0.1x</FormulaTerm>
+        <span>, </span>
+        <FormulaTerm tooltip="正值区域保持原始输入。" ariaLabel="x，正侧的原始输入">x</FormulaTerm>
+        <span>)</span>
+      </>
+    );
+  }
+  if (type === 'gelu') {
+    return (
+      <>
+        <FormulaTerm tooltip="x 是神经元接收到的线性输入。" ariaLabel="x，线性输入">x</FormulaTerm>
+        <span> · </span>
+        <FormulaTerm tooltip="Φ(x) 是标准正态分布的累积分布函数，用来平滑调节通过比例。" ariaLabel="Phi of x，标准正态分布累积分布函数">Φ(x)</FormulaTerm>
+      </>
+    );
+  }
+  return (
+    <>
+      <FormulaTerm tooltip="指数项让输出在两端逐渐趋于稳定。" ariaLabel="Sigmoid 的指数表达式">1 / (1 + e⁻ˣ)</FormulaTerm>
+    </>
+  );
 }
 
 const ACTIVATION_DEFINITIONS: Readonly<
@@ -438,23 +329,11 @@ const ACTIVATION_DEFINITIONS: Readonly<
     }
   >
 > = Object.freeze({
-  relu: {
-    fn: relu,
-    color: COLORS.red,
-    yRange: [-0.85, 3.1],
-    label: 'ReLU',
-  },
   leakyRelu: {
     fn: (x) => x >= 0 ? x : 0.1 * x,
     color: COLORS.green,
     yRange: [-1.05, 3.1],
     label: 'Leaky ReLU',
-  },
-  silu: {
-    fn: silu,
-    color: COLORS.orange,
-    yRange: [-0.85, 3.1],
-    label: 'SiLU',
   },
   gelu: {
     fn: (x) => 0.5 * x * (1 + Math.tanh(Math.sqrt(2 / Math.PI) * (x + 0.044715 * x ** 3))),
@@ -467,12 +346,6 @@ const ACTIVATION_DEFINITIONS: Readonly<
     color: COLORS.blue,
     yRange: [-0.1, 1.1],
     label: 'Sigmoid',
-  },
-  tanh: {
-    fn: Math.tanh,
-    color: '#a16925',
-    yRange: [-1.1, 1.1],
-    label: 'Tanh',
   },
 });
 
@@ -487,6 +360,9 @@ export function ActivationFunctionPlot({ type }: ActivationFunctionPlotProps) {
       className="ng-activation-plot ng-activation-function-plot"
       fn={definition.fn}
       stroke={definition.color}
+      fontScale={1.45}
+      axisTitleFontSize={24}
+      tickFontSize={21}
       initialCenter={{
         x: (xRange[0] + xRange[1]) / 2,
         y: (definition.yRange[0] + definition.yRange[1]) / 2,
@@ -501,16 +377,10 @@ export function ActivationFunctionPlot({ type }: ActivationFunctionPlotProps) {
 export type RandomSource = () => number;
 
 export type Function2DId = 'line2d' | 'parabola2d' | 'fold2d';
-export type Surface3DId = 'plane3d' | 'bowl3d' | 'fold3d';
 
 export interface Function2DDefinition {
   formula: string;
   fn: (x: number) => number;
-}
-
-export interface Surface3DDefinition {
-  formula: string;
-  fn: (x: number, y: number) => number;
 }
 
 export interface ShallowNeuron {
@@ -529,19 +399,6 @@ export interface EquivalentLine {
   intercept: number;
 }
 
-export interface DeepNetworkModel {
-  layerCount: number;
-  sizes: number[];
-  W: number[][][];
-  B: number[][];
-}
-
-export interface EquivalentPlane {
-  ax: number;
-  ay: number;
-  c: number;
-}
-
 export interface ApproximationKnot {
   x: number;
   y: number;
@@ -553,8 +410,6 @@ export interface ReluIntroResult {
   y: number;
 }
 
-export const MIN_DEEP_LAYER_COUNT = 1;
-export const MAX_DEEP_LAYER_COUNT = 5;
 export const MIN_RELU_NEURON_COUNT = 1;
 export const MAX_RELU_NEURON_COUNT = 5;
 export const MIN_APPROXIMATION_COUNT = 2;
@@ -572,12 +427,6 @@ export const SHALLOW_PARAMETER_RANGES = Object.freeze({
   b: Object.freeze({ low: 0.08, high: 0.65 }),
   v: Object.freeze({ low: 0.45, high: 1.2 }),
   outputBias: Object.freeze({ low: 0.05, high: 0.3 }),
-});
-
-export const DEEP_PARAMETER_RANGES = Object.freeze({
-  firstLayerWeight: Object.freeze({ low: 0.12, high: 0.8 }),
-  laterLayerWeight: Object.freeze({ low: 0.12, high: 0.62 }),
-  bias: Object.freeze({ low: 0.02, high: 0.22 }),
 });
 
 export function linear2d(x: number): number {
@@ -606,35 +455,6 @@ export const FUNCTION_2D_DEFINITIONS: Readonly<
   fold2d: Object.freeze({
     formula: 'y = max(0, x)',
     fn: fold2d,
-  }),
-});
-
-export function plane3d(x: number, y: number): number {
-  return 0.55 * x - 0.3 * y + 0.05;
-}
-
-export function bowl3d(x: number, y: number): number {
-  return 0.65 * (x * x + y * y) - 0.58;
-}
-
-export function fold3d(x: number, y: number): number {
-  return Math.max(0, x + 0.55 * y) - 0.42;
-}
-
-export const SURFACE_3D_DEFINITIONS: Readonly<
-  Record<Surface3DId, Surface3DDefinition>
-> = Object.freeze({
-  plane3d: Object.freeze({
-    formula: 'z = 0.55x - 0.30y + 0.05',
-    fn: plane3d,
-  }),
-  bowl3d: Object.freeze({
-    formula: 'z = 0.65(x² + y²) - 0.58',
-    fn: bowl3d,
-  }),
-  fold3d: Object.freeze({
-    formula: 'z = max(0, x + 0.55y) - 0.42',
-    fn: fold3d,
   }),
 });
 
@@ -713,110 +533,6 @@ export function shallowPredict(
 ): number {
   const line = shallowEquivalent(model);
   return line.slope * x + line.intercept;
-}
-
-export function normalizeDeepLayerCount(layerCount: number): number {
-  return Math.min(
-    MAX_DEEP_LAYER_COUNT,
-    Math.max(MIN_DEEP_LAYER_COUNT, Math.trunc(layerCount)),
-  );
-}
-
-/**
- * Builds the original fully linear network: two inputs, three neurons in each
- * hidden layer and one output. Every rebuild re-randomizes the complete model.
- */
-export function buildDeepModel(
-  layerCount: number,
-  random: RandomSource = Math.random,
-): DeepNetworkModel {
-  const normalizedLayerCount = normalizeDeepLayerCount(layerCount);
-  const sizes = [
-    2,
-    ...Array.from({ length: normalizedLayerCount }, () => 3),
-    1,
-  ];
-  const W: number[][][] = [];
-  const B: number[][] = [];
-
-  for (let layer = 0; layer < sizes.length - 1; layer += 1) {
-    const rows: number[][] = [];
-    const bias: number[] = [];
-    const high =
-      layer === 0
-        ? DEEP_PARAMETER_RANGES.firstLayerWeight.high
-        : DEEP_PARAMETER_RANGES.laterLayerWeight.high;
-
-    for (let row = 0; row < sizes[layer + 1]; row += 1) {
-      const weights: number[] = [];
-      for (let column = 0; column < sizes[layer]; column += 1) {
-        weights.push(
-          signedRandom(
-            DEEP_PARAMETER_RANGES.firstLayerWeight.low,
-            high,
-            random,
-          ),
-        );
-      }
-      rows.push(weights);
-      bias.push(
-        signedRandom(
-          DEEP_PARAMETER_RANGES.bias.low,
-          DEEP_PARAMETER_RANGES.bias.high,
-          random,
-        ),
-      );
-    }
-
-    W.push(rows);
-    B.push(bias);
-  }
-
-  return {
-    layerCount: normalizedLayerCount,
-    sizes,
-    W,
-    B,
-  };
-}
-
-export function deepForward(
-  model: Readonly<DeepNetworkModel>,
-  input: readonly number[],
-): number {
-  let current = [...input];
-
-  for (let layer = 0; layer < model.W.length; layer += 1) {
-    const next: number[] = [];
-    for (let row = 0; row < model.W[layer].length; row += 1) {
-      let sum = model.B[layer][row];
-      for (let column = 0; column < current.length; column += 1) {
-        sum += model.W[layer][row][column] * current[column];
-      }
-      next.push(sum);
-    }
-    current = next;
-  }
-
-  return current[0];
-}
-
-export function deepEquivalent(
-  model: Readonly<DeepNetworkModel>,
-): EquivalentPlane {
-  const c = deepForward(model, [0, 0]);
-  const ax = deepForward(model, [1, 0]) - c;
-  const ay = deepForward(model, [0, 1]) - c;
-
-  return { ax, ay, c };
-}
-
-export function deepPredict(
-  model: Readonly<DeepNetworkModel>,
-  x: number,
-  y: number,
-): number {
-  return deepForward(model, [x, y]);
 }
 
 export const RELU_NEURONS: readonly Readonly<ShallowNeuron>[] = Object.freeze([
@@ -931,6 +647,16 @@ export function formatNumber(value: number): string {
 
 export function formatSigned(value: number): string {
   return `${value >= 0 ? '+ ' : '- '}${formatNumber(Math.abs(value))}`;
+}
+
+const SUBSCRIPT_DIGITS = ['₀', '₁', '₂', '₃', '₄', '₅', '₆', '₇', '₈', '₉'];
+
+/** 把编号转成 Unicode 下标，让 w₁、b₁ 这类符号在正文里保持同一行基线。 */
+export function formatSubscript(value: number): string {
+  return String(value)
+    .split('')
+    .map((digit) => SUBSCRIPT_DIGITS[Number(digit)] ?? digit)
+    .join('');
 }
 
 export type PersistedActivityUpdater<T> = T | ((current: T) => T);

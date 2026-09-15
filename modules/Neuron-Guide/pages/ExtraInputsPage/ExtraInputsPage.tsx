@@ -1,3 +1,4 @@
+import { useState, type CSSProperties } from 'react';
 import { ContentBlock, ExplainPanelButton, RangeControl, Typography } from '../../../shared/react';
 import "./ExtraInputsPage.css";
 import {
@@ -20,6 +21,15 @@ export function ExtraInputsPage({ onComplete }: ExtraInputsPageProps) {
   const values = scenario.factors.map((factor, index) => state.values[index] ?? factor.suggestedValue);
   const contributions = weightedContributions(scenario, values);
   const output = contributions.reduce((sum, contribution) => sum + contribution, 0);
+  // 逐个引导：先调完 x₁，再轮到 x₂、x₃；三个都碰过以后权重列才点亮。
+  const [guidedIndex, setGuidedIndex] = useState(0);
+  const weightsLit = guidedIndex >= scenario.factors.length;
+
+  const advanceGuide = (index: number) => {
+    setGuidedIndex((current) => (
+      index === current ? Math.min(index + 1, scenario.factors.length) : current
+    ));
+  };
 
   const commitValue = () => {
     commitValues();
@@ -35,11 +45,19 @@ export function ExtraInputsPage({ onComplete }: ExtraInputsPageProps) {
     >
       <div className="ng-three-factor-sum__layout">
         <section className="ng-three-factor-sum__factor-list" aria-label="三个影响因素">
-          <div className="ng-three-factor-sum__column-labels" aria-hidden="true">
-            <Typography variant="bodySmall" tone="muted">现实因素</Typography>
-            <Typography variant="bodySmall" tone="accent">输入</Typography>
-            <Typography variant="bodySmall" tone="muted">权重（重要性）</Typography>
-            <Typography variant="bodySmall" tone="muted">贡献</Typography>
+          <div className="ng-three-factor-sum__column-labels">
+            <Typography variant="bodySmall" tone="muted" aria-hidden="true">现实因素</Typography>
+            <Typography variant="bodySmall" tone="accent" aria-hidden="true">输入</Typography>
+            <div className="ng-three-factor-sum__weight-label">
+              <Typography variant="bodySmall" tone="muted">权重（重要性）</Typography>
+              <ExplainPanelButton label="查看权重（重要性）的说明">
+                <Typography as="strong" variant="bodySmall" tone="accent">权重由 AI 建议</Typography>
+                <Typography variant="bodySmall" tone="muted">
+                  由 AI 根据经验给出，示例里固定不变，不开放修改；你只需要调节左边的输入 x。
+                </Typography>
+              </ExplainPanelButton>
+            </div>
+            <Typography variant="bodySmall" tone="muted" aria-hidden="true">贡献</Typography>
           </div>
 
           {scenario.factors.map((factor, index) => {
@@ -47,6 +65,8 @@ export function ExtraInputsPage({ onComplete }: ExtraInputsPageProps) {
             const input = effectiveInput(factor, rawValue);
             const weight = normalizedWeight(factor.suggestedImportance);
             const contribution = contributions[index];
+            const isUnlocked = index <= guidedIndex;
+            const isGuiding = index === guidedIndex;
 
             return (
               <article className="ng-three-factor-sum__factor-row" key={`${factor.name}-${index}`}>
@@ -72,10 +92,13 @@ export function ExtraInputsPage({ onComplete }: ExtraInputsPageProps) {
                   discrete
                   scale={['0', '5 / 10', '10']}
                   formatValue={() => formatScore(input)}
-                  hint={index === 0}
-                  controlClassName="ng-three-factor-sum__factor-control"
+                  disabled={!isUnlocked}
+                  controlClassName={`ng-three-factor-sum__factor-control${isUnlocked ? '' : ' is-pending'}${isGuiding ? ' is-guiding edu-attention-hint' : ''}`}
                   aria-label={`${factor.name}，当前评分 ${rawValue} / 10`}
+                  onPointerEnter={() => advanceGuide(index)}
+                  onFocus={() => advanceGuide(index)}
                   onChange={(event) => {
+                    advanceGuide(index);
                     setValueDraft(index, Number(event.currentTarget.value));
                     commitValue();
                   }}
@@ -91,7 +114,8 @@ export function ExtraInputsPage({ onComplete }: ExtraInputsPageProps) {
                   scale={['0', '0.5', '1']}
                   digits={1}
                   disabled
-                  controlClassName="ng-three-factor-sum__weight-control"
+                  style={{ '--weight-ratio': String(weight) } as CSSProperties}
+                  controlClassName={`ng-three-factor-sum__weight-control${weightsLit ? ' is-lit' : ''}`}
                   aria-label={`${factor.name}的权重 ${formatScore(weight)}`}
                 />
 

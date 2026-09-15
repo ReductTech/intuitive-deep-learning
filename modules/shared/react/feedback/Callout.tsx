@@ -1,5 +1,5 @@
 import { useEffect, useState, type HTMLAttributes, type ReactNode } from 'react';
-import { Typography } from '../typography/Typography';
+import { Typography, type TypographyVariant } from '../typography/Typography';
 import { classNames } from '../utils';
 
 export type FeedbackTone = 'orange' | 'blue' | 'green' | 'red';
@@ -8,6 +8,8 @@ export interface CalloutProps extends HTMLAttributes<HTMLDivElement> {
   tone?: FeedbackTone;
   label?: ReactNode;
   text?: ReactNode;
+  /** 说明文字使用的文字层级，默认沿用紧凑的 bodySmall。 */
+  textVariant?: TypographyVariant;
   streaming?: boolean;
   streamInterval?: number;
 }
@@ -16,6 +18,7 @@ export function Callout({
   tone = 'blue',
   label,
   text,
+  textVariant = 'bodySmall',
   streaming = false,
   streamInterval = 28,
   className,
@@ -76,8 +79,8 @@ export function Callout({
       )}
       {...props}
     >
-      {label !== undefined && <Typography as="strong" variant="bodySmall" tone="inherit" className="edu-callout-label">{label}</Typography>}
-      <Typography as="span" variant="bodySmall" tone="inherit" className="edu-callout-text" data-stream-output={streaming || undefined}>
+      {label !== undefined && <Typography as="strong" variant={textVariant} tone="inherit" className="edu-callout-label">{label}</Typography>}
+      <Typography as="span" variant={textVariant} tone="inherit" className="edu-callout-text" data-stream-output={streaming || undefined}>
         {sourceText !== null && streamedText !== null ? streamedText : content}
       </Typography>
     </div>

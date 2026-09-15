@@ -1,36 +1,157 @@
+/* 与「线性神经元的组合」页共用同一套实验页外壳：工具条 + 双面板 + 结论条。 */
 .ng-relu-network {
   position: relative;
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  grid-template-rows: auto minmax(0, 1fr);
   border-radius: var(--ui-radius-lg);
   box-shadow: var(--ui-shadow-soft);
-  padding: clamp(16px, 2.4vw, 22px);
+  padding: 26px 32px 22px;
 }
 
 .ng-relu-network > .edu-content-head {
-  margin-bottom: 16px;
-  padding-right: 310px;
+  min-width: 0;
+  margin-bottom: 14px;
 }
 
-.ng-relu-network > .edu-content-body > .activation-actions {
-  position: absolute;
-  top: clamp(16px, 2.4vw, 22px);
-  right: clamp(16px, 2.4vw, 22px);
+.ng-relu-network > .edu-content-body {
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  max-width: 100%;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 10px;
+}
+
+.ng-relu-toolbar {
+  display: flex;
+  min-width: 0;
+  max-width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 56px;
+  border: 0;
+  border-left: 4px solid rgba(39, 68, 110, .52);
+  border-radius: var(--ui-radius-sm);
+  background: linear-gradient(90deg, rgba(39, 68, 110, .065), rgba(39, 68, 110, .018));
+  padding: 4px 8px 4px 12px;
+}
+
+.ng-relu-toolbar__context {
+  display: flex;
+  min-width: 0;
+  max-width: 100%;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.ng-relu-toolbar__context .ui-typography { margin: 0; }
+
+.ng-relu-toolbar .ng-activation-actions {
+  flex: 0 0 auto;
+  min-width: 0;
+  max-width: 100%;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.ng-relu-toolbar .ng-activation-actions .edu-btn {
+  min-height: 0;
+  padding: 0 13px;
+}
+
+.ng-relu-network .ng-activation-network-stage {
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  max-width: 100%;
+  grid-template-columns: minmax(0, .82fr) minmax(0, 1.48fr);
+  gap: 20px;
+}
+
+.ng-relu-network .ng-relu-panel {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  max-width: 100%;
+  flex-direction: column;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 0;
+}
+
+.ng-relu-network .ng-relu-panel--plot {
+  border-left: 1px solid var(--ui-border);
+  padding-left: 20px;
+}
+
+.ng-relu-network .ng-activation-panel-head {
+  display: grid;
+  min-width: 0;
+  max-width: 100%;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: start;
+  gap: 3px;
+  margin-bottom: 10px;
+}
+
+.ng-relu-network .ng-activation-visual-box {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+  border-radius: var(--ui-radius-md);
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(25, 42, 70, .06);
+}
+
+.ng-relu-network .ng-activation-visual-box--model {
+  border-color: rgba(39, 68, 110, .16);
+  background: linear-gradient(180deg, #f5f8fd 0%, #edf3fb 100%);
+  box-shadow: none;
+}
+
+.ng-relu-conclusion {
+  display: flex;
+  min-width: 0;
+  max-width: 100%;
+  align-items: center;
+  gap: 12px;
+  border-top: 1px solid rgba(34, 141, 92, .32);
+  border-radius: 0 0 var(--ui-radius-sm) var(--ui-radius-sm);
+  background: linear-gradient(90deg, rgba(34, 141, 92, .08), rgba(34, 141, 92, .02));
+  padding: 10px 14px;
+}
+
+.ng-relu-conclusion > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.ng-relu-conclusion .ui-typography { margin: 0; }
+
+.course-page-surface .ng-relu-network .ng-activation-stage-plot {
+  height: 100%;
+  min-height: 0 !important;
+}
+
+.course-page-surface .ng-relu-network .ng-network-figure,
+.course-page-surface .ng-relu-network .ng-network-diagram {
+  height: 100%;
+  min-height: 0;
 }
 
 @media (max-width: 1120px) {
-  .ng-relu-network > .edu-content-head { padding-right: 0; }
-  .ng-relu-network > .edu-content-body > .activation-actions { position: static; }
+  .ng-relu-network .ng-activation-network-stage { grid-template-columns: minmax(0, 1fr); }
+  .ng-relu-network .ng-relu-panel--plot {
+    border-left: 0;
+    border-top: 1px solid var(--ui-border);
+    padding-top: 14px;
+    padding-left: 0;
+  }
+  .ng-relu-toolbar { align-items: flex-start; flex-direction: column; }
+  .ng-relu-toolbar .ng-activation-actions { justify-content: flex-start; }
 }
-
-.course-page-surface .ng-relu-network {
-  display: grid;
-  grid-template-rows: auto minmax(0, 1fr);
-}
-.course-page-surface .ng-relu-network > .edu-content-body,
-.course-page-surface .ng-relu-network .ng-activation-network-stage,
-.course-page-surface .ng-relu-network .ng-activation-network-panel,
-.course-page-surface .ng-relu-network .activation-visual-box,
-.course-page-surface .ng-relu-network .network-figure,
-.course-page-surface .ng-relu-network .network-canvas { min-height: 0; }
-.course-page-surface .ng-relu-network > .edu-content-body { grid-template-rows: minmax(0,1fr); }
-.course-page-surface .ng-relu-network .activation-stage-plot { min-height: 0 !important; }
-

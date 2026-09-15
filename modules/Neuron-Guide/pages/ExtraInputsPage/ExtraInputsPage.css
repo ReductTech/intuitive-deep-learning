@@ -96,8 +96,67 @@
 }
 
 .ng-three-factor-sum__weight-control { --ui-accent: #9ba5b2; }
-.ng-three-factor-sum__weight-control .edu-range { accent-color: #a3abb7; cursor: not-allowed; }
 .ng-three-factor-sum__weight-control .edu-control-value { color: #8f99a7; }
+/* w 永远是只读的建议值：自己画滑杆，用“橙色但浅”表示可看不可改。 */
+.ng-three-factor-sum__weight-control .edu-range {
+  --weight-fill: #b5bec9;
+  --weight-track: #dde3ea;
+  --weight-thumb: #adb7c4;
+  height: 16px;
+  appearance: none;
+  background: transparent;
+  cursor: not-allowed;
+}
+.ng-three-factor-sum__weight-control .edu-range::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: var(--ui-radius-pill);
+  background: linear-gradient(to right, var(--weight-fill) 0 calc(8px + (100% - 16px) * var(--weight-ratio, 0)), var(--weight-track) calc(8px + (100% - 16px) * var(--weight-ratio, 0)) 100%);
+}
+.ng-three-factor-sum__weight-control .edu-range::-webkit-slider-thumb { width: 16px; height: 16px; margin-top: -5px; border: 2px solid #fff; border-radius: 50%; background: var(--weight-thumb); box-shadow: 0 0 0 2px rgba(104,119,143,.14); appearance: none; }
+.ng-three-factor-sum__weight-control .edu-range::-moz-range-progress { height: 6px; border-radius: var(--ui-radius-pill); background: var(--weight-fill); }
+.ng-three-factor-sum__weight-control .edu-range::-moz-range-track { height: 6px; border-radius: var(--ui-radius-pill); background: var(--weight-track); }
+.ng-three-factor-sum__weight-control .edu-range::-moz-range-thumb { width: 16px; height: 16px; border: 2px solid #fff; border-radius: 50%; background: var(--weight-thumb); }
+
+/* 还没轮到的输入：整格变灰，等提示走到它才解锁。 */
+.ng-three-factor-sum__factor-control.is-pending { --ui-accent: #9ba5b2; }
+.ng-three-factor-sum__factor-control.is-pending .edu-label { color: #9aa4b2; }
+.ng-three-factor-sum__factor-control.is-pending .edu-range { accent-color: #a3abb7; cursor: not-allowed; }
+.ng-three-factor-sum__factor-control.is-pending .edu-control-value { color: #9aa4b2; }
+
+/* 当前轮到调节的输入：整块高亮提示。 */
+.ng-three-factor-sum__factor-control.is-guiding { border-radius: 10px; }
+
+/* 三个输入都调完以后，权重列统一点亮成橙色。 */
+.ng-three-factor-sum__weight-control .edu-label,
+.ng-three-factor-sum__weight-control .edu-control-value { transition: color .24s ease; }
+
+.ng-three-factor-sum__weight-control.is-lit {
+  --ui-accent: var(--ui-accent-alt);
+  /* 只加底色，不加 padding，避免点亮时滑杆尺寸跳动。 */
+  background: rgba(var(--ui-accent-alt-rgb), .07);
+  border-radius: 10px;
+  animation: ng-three-factor-weight-lit 1.2s ease-out 1;
+}
+
+.ng-three-factor-sum__weight-control.is-lit .edu-label { color: var(--ui-accent-alt); }
+.ng-three-factor-sum__weight-control.is-lit .edu-control-value { color: var(--ui-accent-alt); }
+.ng-three-factor-sum__weight-control.is-lit .edu-range { --weight-fill: #f08a4c; --weight-track: #dfe4ea; --weight-thumb: #ef9a63; }
+
+@keyframes ng-three-factor-weight-lit {
+  0% { box-shadow: 0 0 0 0 rgba(var(--ui-accent-alt-rgb), .34); }
+  100% { box-shadow: 0 0 0 16px rgba(var(--ui-accent-alt-rgb), 0); }
+}
+
+.ng-three-factor-sum__weight-label {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.ng-three-factor-sum__weight-label .explain-panel { left: 50%; }
+.ng-three-factor-sum__weight-label .explain-panel-trigger { width: 32px; height: 32px; font-size: 17px; }
 
 .ng-three-factor-sum__contribution {
   display: grid;
@@ -163,7 +222,7 @@
 .ng-three-factor-sum__video { min-width: 0; overflow: hidden; background: #f9f9f9; }
 .ng-three-factor-sum__video video { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 22%; }
 .ng-three-factor-sum__tip-copy { display: grid; align-content: center; gap: 6px; min-width: 0; padding: 16px 26px; }
-.ng-three-factor-sum__tip-copy p { max-width: 900px; }
+.ng-three-factor-sum__tip-copy p { width: 100%; max-width: none; overflow-wrap: anywhere; }
 
 @media (max-width: 1050px) {
   .ng-three-factor-sum__layout { grid-template-columns: minmax(0, 1fr) 30px 112px 30px 150px; gap: 7px; }

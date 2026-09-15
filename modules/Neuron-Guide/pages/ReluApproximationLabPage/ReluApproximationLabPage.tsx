@@ -7,7 +7,7 @@ import {
   type PointerEvent as ReactPointerEvent,
 } from 'react';
 import "./ReluApproximationLabPage.css";
-import { Button, ContentBlock, NoticeStrip, RangeControl, Typography } from '../../../shared/react';
+import { Button, ContentBlock, RangeControl, Typography } from '../../../shared/react';
 
 interface Point {
   x: number;
@@ -267,24 +267,11 @@ export function ReluApproximationLabPage({ onComplete }: ReluApproximationLabPag
       title="足够多带有 ReLU 的神经元，就能逼近任意曲线"
       subtitle="在画布上画出一条目标曲线，再让浏览器直接训练一个由 ReLU 神经元组成的小网络。"
     >
-      <div className="ng-activation-actions">
-        <Button variant="primary" disabled={!target.length || training} onClick={train}>{training ? '训练中…' : '训练网络'}</Button>
-        <Button disabled={!target.length && !raw.length} onClick={clear}>重新绘制</Button>
-      </div>
       <section className="ng-relu-drawing-panel">
-        <header className="ng-relu-drawing-panel__head">
-          <div>
-            <Typography as="h3" variant="subtitle" tone="main">画一条你想让网络学习的曲线</Typography>
-            <Typography variant="body" tone="muted">按住并拖动即可绘制；再次落笔会替换当前目标。</Typography>
-          </div>
-          <div className="ng-relu-drawing-panel__legend" aria-label="图例">
-            <Typography as="span" variant="body" tone="accent">目标曲线</Typography>
-            <Typography as="span" variant="body" tone="warning">模型输出</Typography>
-          </div>
-        </header>
-        <div className="ng-relu-drawing-panel__controls">
+        <header className="ng-relu-drawing-toolbar">
+          <Typography as="strong" variant="body" tone="main" wrap="nowrap">绘制目标曲线</Typography>
           <RangeControl
-            label="ReLU 神经元数量"
+            label="ReLU 神经元"
             min={4}
             max={MAX_NEURON_COUNT}
             step={1}
@@ -292,9 +279,23 @@ export function ReluApproximationLabPage({ onComplete }: ReluApproximationLabPag
             suffix=" 个"
             onChange={(event) => changeNeuronCount(Number(event.currentTarget.value))}
           />
-          <Typography variant="body" tone="muted">神经元越多，可用来贴近曲线的折点越密。</Typography>
-        </div>
+          <Typography className="ng-relu-drawing-toolbar__status" variant="bodySmall" tone="muted" wrap="nowrap">
+            {!target.length
+              ? '拖动画布开始绘制'
+              : loss === null
+                ? '目标已记录，可以开始训练'
+                : `进度 ${epoch}%，误差 ${loss.toFixed(4)}`}
+          </Typography>
+          <div className="ng-activation-actions">
+            <Button variant="primary" disabled={!target.length || training} onClick={train}>{training ? '训练中…' : '训练网络'}</Button>
+            <Button disabled={!target.length && !raw.length} onClick={clear}>重新绘制</Button>
+          </div>
+        </header>
         <div className="ng-relu-drawing-board">
+          <div className="ng-relu-drawing-panel__legend" aria-label="图例">
+            <Typography as="span" variant="bodySmall" tone="accent">目标曲线</Typography>
+            <Typography as="span" variant="bodySmall" tone="warning">模型输出</Typography>
+          </div>
           {!target.length && !raw.length && (
             <Typography className="ng-relu-drawing-board__prompt" variant="subtitle" tone="muted">在画布上拖动，画出任意曲线</Typography>
           )}
@@ -321,15 +322,6 @@ export function ReluApproximationLabPage({ onComplete }: ReluApproximationLabPag
           </svg>
         </div>
       </section>
-      <NoticeStrip tone={loss !== null && loss < 0.012 ? 'green' : 'blue'}>
-        <Typography variant="body" tone="inherit">
-          {!target.length
-            ? '先画出目标曲线；训练完全在浏览器中完成，不会上传绘制内容。'
-            : loss === null
-              ? `目标已经记录。点击“训练网络”，让 ${neuronCount} 个 ReLU 神经元开始拟合。`
-              : `${neuronCount} 个 ReLU 神经元 · 拟合进度 ${epoch}% · 当前误差 ${loss.toFixed(4)}`}
-        </Typography>
-      </NoticeStrip>
     </ContentBlock>
   );
 }

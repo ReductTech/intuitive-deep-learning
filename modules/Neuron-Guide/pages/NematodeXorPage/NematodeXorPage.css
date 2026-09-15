@@ -1,0 +1,105 @@
+.course-shell .ng-nematode-xor {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  max-width: 100%;
+  grid-template-rows: auto minmax(0, 1fr);
+  overflow: hidden;
+}
+
+.course-shell .ng-nematode-xor > .edu-content-head { max-width: none; margin-bottom: 12px; }
+.course-shell .ng-nematode-xor > .edu-content-body { min-width: 0; min-height: 0; max-width: 100%; grid-template-rows: minmax(0, 1fr); }
+.course-shell .ng-nematode-xor__columns { display: grid; min-width: 0; min-height: 0; max-width: 100%; grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr); gap: 14px; }
+
+.course-shell .ng-nematode-xor__cases,
+.course-shell .ng-nematode-xor__line-panel {
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  max-width: 100%;
+  overflow: hidden;
+  border: 1px solid rgba(var(--ui-accent-rgb), .17);
+  border-top: 2px solid var(--ui-accent);
+  border-radius: var(--ui-radius-md);
+  background: #fff;
+  padding: 14px 16px;
+}
+
+.course-shell .ng-nematode-xor__cases { grid-template-rows: auto minmax(0, 1fr); gap: 12px; }
+.course-shell .ng-nematode-xor__line-panel { grid-template-rows: auto minmax(0, 1fr); gap: 10px; border-top-color: #6f9cda; }
+.course-shell .ng-nematode-xor__line-panel > header { display: flex; min-width: 0; max-width: 100%; align-items: center; justify-content: space-between; gap: 12px; border-bottom: 1px solid rgba(var(--ui-accent-rgb), .12); padding-bottom: 9px; }
+.course-shell .ng-nematode-xor__line-panel > header > div { display: grid; min-width: 0; gap: 2px; }
+
+.course-shell .ng-nematode-xor__rule-note { display: grid; min-width: 0; max-width: 100%; grid-template-columns: 42px minmax(0, 1fr); align-items: center; gap: 12px; border-radius: var(--ui-radius-md); background: linear-gradient(90deg, rgba(var(--ui-accent-rgb), .08), rgba(var(--ui-accent-rgb), .035)); padding: 10px 14px; }
+.course-shell .ng-nematode-xor__rule-note > span { display: grid; width: 34px; height: 34px; place-items: center; border-radius: 50%; background: rgba(var(--ui-warning-rgb), .13); color: var(--ui-warning); font-family: var(--ui-font-sans); font-size: 24px; font-weight: 900; line-height: 1; }
+
+.course-shell .ng-nematode-xor__case-grid { display: grid; min-width: 0; min-height: 0; max-width: 100%; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.course-shell .ng-nematode-xor__case { display: grid; min-width: 0; min-height: 0; max-width: 100%; grid-template-rows: auto minmax(0, 1fr) auto; gap: 6px; border: 1px solid rgba(var(--ng-case-rgb), .28); border-radius: var(--ui-radius-md); background: linear-gradient(150deg, #fff 15%, rgba(var(--ng-case-rgb), .07)); padding: 10px 12px; color: rgb(var(--ng-case-rgb)); cursor: pointer; transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease; }
+.course-shell .ng-nematode-xor__case.is-turn { --ng-case-rgb: var(--ui-success-rgb); }
+.course-shell .ng-nematode-xor__case.is-stay { --ng-case-rgb: var(--ui-accent-alt-rgb); }
+.course-shell .ng-nematode-xor__case:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(var(--ng-case-rgb), .08); }
+.course-shell .ng-nematode-xor__case.is-selected { border-color: rgba(var(--ng-case-rgb), .64); box-shadow: 0 0 0 3px rgba(var(--ng-case-rgb), .1); }
+.course-shell .ng-nematode-xor__case-head { display: grid; min-width: 0; grid-template-columns: 43px minmax(0, 1fr); align-items: start; gap: 9px; text-align: left; }
+.course-shell .ng-nematode-xor__case-head > div { display: grid; min-width: 0; justify-items: center; gap: 0; text-align: center; }
+.course-shell .ng-nematode-xor__case-number { display: grid; width: 43px; height: 43px; place-items: center; border-radius: 50%; background: rgb(var(--ng-case-rgb)); color: #fff; line-height: 1; }
+.course-shell .ng-nematode-xor__case-scene { display: grid; min-width: 0; min-height: 0; grid-template-columns: minmax(0, .72fr) minmax(78px, 1.3fr) minmax(0, .72fr); align-items: center; gap: 5px; }
+.course-shell .ng-nematode-xor__cue { display: grid; min-width: 0; justify-items: center; gap: 0; text-align: center; }
+.course-shell .ng-nematode-xor__cue-icon { display: grid; min-width: 34px; height: 34px; place-items: center; border: 3px dashed var(--ui-border-strong); border-radius: 50%; color: transparent; line-height: 1; }
+.course-shell .ng-nematode-xor__cue.is-active .ng-nematode-xor__cue-icon { border: 0; color: #4a9aee; font-family: var(--ui-font-mono); font-size: 22px; font-weight: 900; }
+.course-shell .ng-nematode-xor__cue.is-active:last-child .ng-nematode-xor__cue-icon { color: var(--ui-accent-alt); transform: rotate(180deg); }
+.course-shell .ng-nematode-xor__worm { display: block; width: 100%; height: 86px; max-width: 150px; object-fit: contain; justify-self: center; filter: drop-shadow(0 10px 6px rgba(25,42,70,.14)); }
+.course-shell .ng-nematode-xor__worm.is-flipped { transform: scaleX(-1); }
+.course-shell .ng-nematode-xor__case-action { justify-self: center; min-width: 126px; border-radius: var(--ui-radius-pill); background: rgba(var(--ng-case-rgb), .11); padding: 4px 22px; text-align: center; }
+
+.course-shell .ng-nematode-xor__map { position: relative; min-width: 0; min-height: 0; max-width: 100%; margin: 6px 26px 66px 82px; border-left: 2px solid var(--ui-accent); border-bottom: 2px solid var(--ui-accent); background: #fff; overflow: visible; }
+.course-shell .ng-nematode-xor__map::before { position: absolute; right: -9px; bottom: -6px; width: 0; height: 0; border-top: 5px solid transparent; border-bottom: 5px solid transparent; border-left: 9px solid var(--ui-accent); content: ''; }
+.course-shell .ng-nematode-xor__map::after { position: absolute; top: -9px; left: -6px; width: 0; height: 0; border-right: 5px solid transparent; border-bottom: 9px solid var(--ui-accent); border-left: 5px solid transparent; content: ''; }
+.course-shell .ng-nematode-xor__decision-regions { position: absolute; z-index: 0; inset: 0; width: 100%; height: 100%; max-width: 100%; overflow: hidden; pointer-events: none; }
+.course-shell .ng-nematode-xor__decision-regions polygon.is-turn { fill: rgba(var(--ui-success-rgb), .095); }
+.course-shell .ng-nematode-xor__decision-regions polygon.is-stay { fill: rgba(var(--ui-accent-alt-rgb), .09); }
+.course-shell .ng-nematode-xor__map-grid { position: absolute; z-index: 1; inset: 0; background-image: linear-gradient(rgba(var(--ui-accent-rgb), .1) 1px, transparent 1px), linear-gradient(90deg, rgba(var(--ui-accent-rgb), .1) 1px, transparent 1px); background-size: 25% 25%; opacity: .7; pointer-events: none; }
+.course-shell .ng-nematode-xor__axis-label { position: absolute; }
+.course-shell .ng-nematode-xor__axis-label--x { bottom: -65px; left: 50%; transform: translateX(-50%); white-space: nowrap; }
+.course-shell .ng-nematode-xor__axis-label--y { top: 50%; left: -62px; white-space: nowrap; transform: translate(-50%, -50%) rotate(-90deg); transform-origin: center; }
+.course-shell .ng-nematode-xor__tick { position: absolute; z-index: 4; font-family: var(--ui-font-mono); font-weight: 800; pointer-events: none; }
+.course-shell .ng-nematode-xor__tick::before { position: absolute; background: var(--ui-accent); content: ''; }
+.course-shell .ng-nematode-xor__tick--x0 { bottom: -36px; left: 16%; transform: translateX(-50%); }
+.course-shell .ng-nematode-xor__tick--x1 { right: 16%; bottom: -36px; transform: translateX(50%); }
+.course-shell .ng-nematode-xor__tick--x0::before, .course-shell .ng-nematode-xor__tick--x1::before { top: -8px; left: 50%; width: 1px; height: 6px; }
+.course-shell .ng-nematode-xor__tick--y0 { bottom: 16%; left: -27px; transform: translateY(50%); }
+.course-shell .ng-nematode-xor__tick--y1 { top: 16%; left: -27px; transform: translateY(-50%); }
+.course-shell .ng-nematode-xor__tick--y0::before, .course-shell .ng-nematode-xor__tick--y1::before { top: 50%; right: -9px; width: 6px; height: 1px; }
+.course-shell .ng-nematode-xor__point { position: absolute; z-index: 5; display: grid; min-width: 0; justify-items: center; gap: 5px; transform: translate(-50%, -50%); transition: transform .18s ease; }
+.course-shell .ng-nematode-xor__point-marker { position: relative; display: block; width: 25px; height: 25px; }
+.course-shell .ng-nematode-xor__point-marker > i { display: block; width: 25px; height: 25px; border: 3px solid #fff; border-radius: 50%; box-shadow: 0 2px 8px rgba(25,42,70,.18); transition: box-shadow .18s ease; }
+.course-shell .ng-nematode-xor__point > .ui-typography { border-radius: var(--ui-radius-pill); padding: 1px 8px; font-weight: 800; }
+.course-shell .ng-nematode-xor__point--turn .ng-nematode-xor__point-marker > i { background: var(--ui-success); }
+.course-shell .ng-nematode-xor__point--turn > .ui-typography { background: rgba(var(--ui-success-rgb), .09); }
+.course-shell .ng-nematode-xor__point--stay .ng-nematode-xor__point-marker > i { background: var(--ui-accent-alt); }
+.course-shell .ng-nematode-xor__point--stay > .ui-typography { background: rgba(var(--ui-accent-alt-rgb), .1); }
+.course-shell .ng-nematode-xor__point.is-correct .ng-nematode-xor__point-marker > i { box-shadow: 0 0 0 5px rgba(var(--ui-success-rgb), .2), 0 0 20px rgba(var(--ui-success-rgb), .8), 0 3px 10px rgba(25,42,70,.2); }
+.course-shell .ng-nematode-xor__point.is-wrong .ng-nematode-xor__point-marker > i { box-shadow: 0 0 0 5px rgba(var(--ui-danger-rgb), .2), 0 0 20px rgba(var(--ui-danger-rgb), .78), 0 3px 10px rgba(25,42,70,.2); }
+.course-shell .ng-nematode-xor__point-error { position: absolute; inset: 0; z-index: 2; display: grid; place-items: center; color: #fff; font-family: var(--ui-font-sans); font-size: 21px; font-weight: 900; line-height: 1; text-shadow: 0 1px 3px rgba(92,15,29,.72); }
+.course-shell .ng-nematode-xor__point.is-correct:hover, .course-shell .ng-nematode-xor__point.is-wrong:hover { transform: translate(-50%, -50%) scale(1.08); }
+.course-shell .ng-nematode-xor__decision-line { position: absolute; z-index: 3; inset: 0; width: 100%; height: 100%; max-width: 100%; overflow: visible; pointer-events: none; filter: drop-shadow(0 2px 3px rgba(39,68,110,.18)); }
+.course-shell .ng-nematode-xor__decision-line line { stroke: #6f9cda; stroke-width: 1.2; vector-effect: non-scaling-stroke; }
+.course-shell .ng-nematode-xor__line-handle { position: absolute; z-index: 7; width: 17px; height: 17px; border: 3px solid #5d87ca; border-radius: 50%; background: #fff; box-shadow: 0 2px 7px rgba(39,68,110,.26); cursor: grab; transform: translate(-50%, -50%); touch-action: none; }
+.course-shell .ng-nematode-xor__line-handle:active { cursor: grabbing; }
+.course-shell .ng-nematode-xor__line-handle.is-pulsing::after { position: absolute; inset: -5px; border: 2px solid rgba(93,135,202,.56); border-radius: 50%; content: ''; pointer-events: none; animation: ng-xor-handle-pulse 1.15s ease-in-out infinite; }
+
+@media (max-width: 820px) {
+  .course-shell .ng-nematode-xor { height: auto; min-height: 100%; overflow: visible; }
+  .course-shell .ng-nematode-xor__columns { grid-template-columns: minmax(0, 1fr); }
+  .course-shell .ng-nematode-xor__map { min-height: 390px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .course-shell .ng-nematode-xor__line-handle.is-pulsing::after { animation: none; }
+}
+
+@keyframes ng-xor-handle-pulse {
+  0%, 100% { opacity: .9; box-shadow: 0 0 0 0 rgba(93,135,202,.34); transform: scale(.92); }
+  50% { opacity: 0; box-shadow: 0 0 0 9px rgba(93,135,202,0); transform: scale(1.15); }
+}

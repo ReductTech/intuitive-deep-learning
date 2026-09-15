@@ -5,9 +5,14 @@ export interface FunctionSeries {
   id: string;
   fn: (x: number) => number;
   label?: string;
+  hoverLabel?: string;
+  endLabel?: string;
+  endLabelPosition?: string;
+  endLabelFontSize?: number;
   stroke?: string;
   strokeWidth?: number;
   dash?: string;
+  opacity?: number;
 }
 
 export interface FunctionGuide {
@@ -33,6 +38,9 @@ export interface FunctionPlotProps {
   yLabel?: string;
   showLegend?: boolean;
   fontScale?: number;
+  axisTitleFontSize?: number;
+  tickFontSize?: number;
+  highlightSeriesId?: string | null;
 }
 
 interface Viewport {
@@ -100,7 +108,8 @@ function tracesFor(
       width: curve.strokeWidth ?? 4,
       dash: curve.dash,
     },
-    hovertemplate: `${curve.label ? `${curve.label}<br>` : ''}x = %{x:.4g}<br>y = %{y:.4g}<extra></extra>`,
+    opacity: curve.opacity ?? 1,
+    hovertemplate: `${curve.hoverLabel ?? curve.label ?? ''}${curve.hoverLabel || curve.label ? '<br>' : ''}x = %{x:.4g}<br>y = %{y:.4g}<extra></extra>`,
   }));
   const y = samplesFor(viewport.y);
   const guideTraces = guides.map((guide) => ({
@@ -117,7 +126,24 @@ function tracesFor(
     },
     hovertemplate: `${guide.label ? `${guide.label}<br>` : ''}x = %{x:.4g}<extra></extra>`,
   }));
-  return [...curveTraces, ...guideTraces];
+  const labelX = viewport.x[0] + (viewport.x[1] - viewport.x[0]) * 0.96;
+  const labelTraces = curves.flatMap((curve) => curve.endLabel ? [{
+    type: 'scatter',
+    mode: 'text',
+    name: `${curve.id}-label`,
+    showlegend: false,
+    hoverinfo: 'skip',
+    x: [labelX],
+    y: [curve.fn(labelX)],
+    text: [curve.endLabel],
+    textposition: curve.endLabelPosition ?? 'middle left',
+    textfont: {
+      color: curve.stroke ?? fallbackStroke,
+      size: curve.endLabelFontSize ?? 18,
+    },
+    opacity: curve.opacity ?? 1,
+  }] : []);
+  return [...curveTraces, ...guideTraces, ...labelTraces];
 }
 
 /** Plotly-backed function graph. Single and multi-function views share hover, pan, zoom and resampling behavior. */
@@ -135,6 +161,9 @@ export function FunctionPlot({
   yLabel = 'y',
   showLegend = false,
   fontScale = 1,
+  axisTitleFontSize,
+  tickFontSize,
+  highlightSeriesId = null,
 }: FunctionPlotProps) {
   const initialViewport = useMemo<Viewport>(() => ({
     x: [initialCenter.x - plotWidth * initialScale.x / 2, initialCenter.x + plotWidth * initialScale.x / 2],
@@ -147,23 +176,64 @@ export function FunctionPlot({
   const curvesRef = useRef(curves);
   const guidesRef = useRef(guides);
   const strokeRef = useRef(stroke);
+  const graphHostRef = useRef<HTMLElement | null>(null);
+  const highlightSeriesIdRef = useRef(highlightSeriesId);
+  const resolvedLegendFontSize = 11 * fontScale;
+  const resolvedAxisTitleFontSize = axisTitleFontSize ?? 13 * fontScale;
+  const resolvedTickFontSize = tickFontSize ?? 11 * fontScale;
   useEffect(() => { curvesRef.current = curves; }, [curves]);
   useEffect(() => { guidesRef.current = guides; }, [guides]);
   useEffect(() => { strokeRef.current = stroke; }, [stroke]);
+  highlightSeriesIdRef.current = highlightSeriesId;
   const data = useMemo<PlotlyTrace[]>(() => tracesFor(curves, guides, initialViewport, stroke), [curves, guides, initialViewport, stroke]);
   const layout = useMemo<PlotlyLayout>(() => ({
     paper_bgcolor: '#fbfdff',
     plot_bgcolor: '#fbfdff',
-    margin: { l: 58, r: 22, t: 18, b: 56 },
+    margin: {
+      l: Math.max(58, resolvedTickFontSize * 2.1 + resolvedAxisTitleFontSize + 10),
+      r: 22,
+      t: 18,
+      b: showLegend
+        ? Math.max(72, resolvedTickFontSize + resolvedAxisTitleFontSize + resolvedLegendFontSize + 38)
+        : Math.max(56, resolvedTickFontSize + resolvedAxisTitleFontSize + 22),
+    },
     font: { family: 'Inter, Segoe UI, sans-serif', color: '#27446e', size: 12 * fontScale },
     hovermode: 'closest',
     dragmode: 'pan',
     showlegend: showLegend,
-    legend: showLegend ? { orientation: 'h', y: -0.24, font: { size: 11 * fontScale } } : undefined,
-    xaxis: { title: { text: xLabel, font: { size: 13 * fontScale } }, tickfont: { size: 11 * fontScale }, range: initialViewport.x, gridcolor: '#dfe6f1', zerolinecolor: '#68778f', linecolor: '#9fb0c8' },
-    yaxis: { title: { text: yLabel, font: { size: 13 * fontScale } }, tickfont: { size: 11 * fontScale }, range: initialViewport.y, gridcolor: '#dfe6f1', zerolinecolor: '#68778f', linecolor: '#9fb0c8' },
-  }), [fontScale, initialViewport, showLegend, xLabel, yLabel]);
+    legend: showLegend ? { orientation: 'h', y: -0.24, font: { size: resolvedLegendFontSize } } : undefined,
+    xaxis: { title: { text: xLabel, font: { size: resolvedAxisTitleFontSize } }, tickfont: { size: resolvedTickFontSize }, range: initialViewport.x, gridcolor: '#dfe6f1', zerolinecolor: '#68778f', linecolor: '#9fb0c8' },
+    yaxis: { title: { text: yLabel, font: { size: resolvedAxisTitleFontSize } }, tickfont: { size: resolvedTickFontSize }, range: initialViewport.y, gridcolor: '#dfe6f1', zerolinecolor: '#68778f', linecolor: '#9fb0c8' },
+  }), [fontScale, initialViewport, resolvedAxisTitleFontSize, resolvedLegendFontSize, resolvedTickFontSize, showLegend, xLabel, yLabel]);
+  const applySeriesHighlight = useCallback((host: HTMLElement) => {
+    const currentCurves = curvesRef.current;
+    const currentGuides = guidesRef.current;
+    const highlightedId = highlightSeriesIdRef.current;
+    const curveIndices = currentCurves.map((_, index) => index);
+    const curveOpacity = currentCurves.map((curve) => (
+      highlightedId === null || curve.id === highlightedId ? curve.opacity ?? 1 : .18
+    ));
+    void window.Plotly?.restyle?.(host, { opacity: curveOpacity }, curveIndices);
+
+    let labelOffset = 0;
+    const labelIndices: number[] = [];
+    const labelOpacity: number[] = [];
+    currentCurves.forEach((curve) => {
+      if (!curve.endLabel) return;
+      labelIndices.push(currentCurves.length + currentGuides.length + labelOffset);
+      labelOpacity.push(highlightedId === null || curve.id === highlightedId ? curve.opacity ?? 1 : .18);
+      labelOffset += 1;
+    });
+    if (labelIndices.length) void window.Plotly?.restyle?.(host, { opacity: labelOpacity }, labelIndices);
+  }, []);
+
+  useEffect(() => {
+    if (graphHostRef.current) applySeriesHighlight(graphHostRef.current);
+  }, [applySeriesHighlight, highlightSeriesId]);
+
   const handleGraphReady = useCallback((graph: PlotlyGraph, host: HTMLElement) => {
+    graphHostRef.current = host;
+    applySeriesHighlight(host);
     graph.on?.('plotly_relayout', (event) => {
       const eventSnapshot = { ...event };
       const current = viewportRef.current;
@@ -180,10 +250,11 @@ export function FunctionPlot({
         resampleTimerRef.current = null;
       }, 140);
     });
-  }, []);
+  }, [applySeriesHighlight]);
 
   useEffect(() => () => {
     if (resampleTimerRef.current !== null) window.clearTimeout(resampleTimerRef.current);
+    graphHostRef.current = null;
   }, []);
 
   return <PlotlyChart className={className} data={data} layout={layout} minHeight={minHeight} aria-label={ariaLabel} onGraphReady={handleGraphReady} />;

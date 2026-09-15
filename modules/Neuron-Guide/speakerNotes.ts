@@ -34,20 +34,21 @@ export const neuronSpeakerNotes: Record<string, SpeakerNote[]> = {
     { text: '再把同一条关系展开成矩阵乘法，注意每个维度如何对应。', selectors: ['.ng-matrix-definition-ppt__expanded'] },
   ],
   'bias-natural-boundary': [
-    { text: '先看左侧：0 天然地把负数和非负数分开，因此符号本身就能承担一次二分类。', selectors: ['.ng-bias-concept--natural .ng-bias-axis'] },
-    { text: '再看右侧：本例所有加权和都落在 0–3，0 的左侧没有任何可能结果，因此没有 b 时无法分成两类。', selectors: ['.ng-bias-concept--problem .ng-bias-axis'] },
+    { text: '矩阵计算得到的是一个连续数值。先看左侧：0 将负数和非负数分开，因此正负号可以承担一次二分类。', selectors: ['.ng-bias-concept--natural .ng-bias-axis'] },
+    { text: '再看右侧：本例所有加权和都落在 0–3，0 的左侧没有任何可能结果。因此没有 bias 时，当前结果无法形成有效分类。', selectors: ['.ng-bias-concept--problem .ng-bias-axis'] },
   ],
   'bias-threshold': [
-    { text: '请学习者先根据 0–3 的范围选择分界点；干扰项分别对应沿用 0、误分区间和选择上限。', selectors: ['.ng-bias-question-pane'] },
-    { text: '答对后看右侧：1.50 平分 0–3，当前结果 1.33 因而输出 0；最后把分界点写成 −b，得到 b = −1.50。', selectors: ['.ng-bias-answer-pane'] },
+    { text: '请学习者先根据 0–3 的范围选择分类阈值；若两类区间长度相同，分界点应位于范围中点。', selectors: ['.ng-bias-question-pane'] },
+    { text: '答对后看右侧：1.50 平分 0–3，当前结果 1.33 因而输出 0。再将分界点写成 −b，得到 b = −1.50。', selectors: ['.ng-bias-answer-pane'] },
   ],
   'linear-shallow': [
-    { text: '一个神经元扩展成一层，多个节点并行计算各自的加权和。', selectors: ['.ng-activation-network-stage'] },
-    { text: '输出矩阵把这些并行结果收拢起来，维度必须彼此对齐。', selectors: ['.ng-output-matrix'] },
+    { text: '将单个神经元扩展成一层，多个节点并行计算各自的线性结果。', selectors: ['.ng-activation-network-stage'] },
+    { text: '输出节点再将这些结果加权汇总。由于线性函数的加权和仍然是线性的，总输出仍然是一条直线。', selectors: ['.ng-output-matrix'] },
   ],
-  'linear-deep': [
-    { text: '再增加一层，线性计算可以组合，但它仍然没有产生新的非线性形状。', selectors: ['.ng-activation-network-stage'] },
-    { text: '输入空间里的分界从直线扩展为平面，仍然属于线性关系。', selectors: ['.ng-deep-linear-conclusion'] },
+  'nematode-xor': [
+    { text: '上一页说明多个线性神经元组合后仍然保持线性。现在将这个结论放回秀丽隐杆线虫的双侧刺激场景中进行检验。', selectors: ['.edu-content-head', '.ng-nematode-xor__rule-note'] },
+    { text: '先观察四种行为结果，再调整右侧分类直线的位置和方向，使两个转向状态位于同一侧。', selectors: ['.ng-nematode-xor__case-grid', '.ng-nematode-xor__line-panel'] },
+    { text: '两个转向状态位于对角位置，一条直线最多判断对三种情况。这个无法被线性边界完全分开的关系称为 XOR，下一步需要引入非线性。', selectors: ['.ng-nematode-xor__map', '.ng-nematode-xor__line-panel'] },
   ],
   'relu-intro': [
     { text: '拖动输入值，观察 ReLU 对负值和正值的两种处理方式。', selectors: ['.ng-response-lab__single-control'] },

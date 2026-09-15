@@ -19,6 +19,55 @@
 .ng-model-viewer-copy__numbers { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
 .ng-model-viewer-copy__numbers > div { display: grid; align-content: start; gap: 5px; min-width: 0; border-radius: var(--ui-radius-sm); background: var(--ui-bg-muted); padding: 10px 12px; }
 
+/* Keep the closing slide balanced inside the fixed PPT canvas. */
+.course-page-surface .ng-completion-stage {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.course-page-surface .ng-completion-stage > .edu-content-body {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.course-page-surface .ng-model-viewer-layout {
+  min-height: 0;
+  height: 100%;
+  grid-template-columns: minmax(0, .84fr) minmax(0, 1.16fr);
+  gap: 14px;
+}
+
+.course-page-surface .ng-model-viewer-frame,
+.course-page-surface .ng-model-viewer-frame model-viewer,
+.course-page-surface .ng-model-fallback {
+  min-height: 0 !important;
+  height: 100%;
+}
+
+.course-page-surface .ng-model-viewer-copy {
+  min-height: 0;
+  overflow: hidden;
+  grid-template-rows: minmax(0, .82fr) minmax(0, 1.18fr);
+  gap: 10px;
+}
+
+.course-page-surface .ng-model-viewer-copy__idea,
+.course-page-surface .ng-model-viewer-copy__scale {
+  min-height: 0;
+  overflow: hidden;
+  padding: 12px 14px;
+}
+
+.course-page-surface .ng-model-viewer-copy__numbers {
+  min-height: 0;
+}
+
+.course-page-surface .ng-model-viewer-copy__numbers > div {
+  min-height: 0;
+  overflow: hidden;
+  padding: 8px 10px;
+}
+
 @media (max-width: 900px) {
   .ng-model-viewer-layout { grid-template-columns: minmax(0,1fr); }
   .ng-model-viewer-frame,

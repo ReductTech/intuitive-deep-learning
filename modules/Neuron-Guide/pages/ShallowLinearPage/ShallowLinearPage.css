@@ -1,30 +1,143 @@
 .ng-shallow-linear {
   position: relative;
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  grid-template-rows: auto minmax(0, 1fr);
   border-radius: var(--ui-radius-lg);
   box-shadow: var(--ui-shadow-soft);
-  padding: clamp(16px, 2.4vw, 22px);
+  padding: 26px 32px 22px;
 }
 
 .ng-shallow-linear > .edu-content-head {
-  margin-bottom: 16px;
+  min-width: 0;
+  margin-bottom: 14px;
 }
 
-.ng-shallow-linear > .edu-content-body { display: block; }
+.ng-shallow-linear > .edu-content-body {
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 10px;
+}
 
-.ng-shallow-linear > .edu-content-body > .ng-activation-actions {
-  position: static;
+.ng-shallow-toolbar {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 56px;
+  border: 0;
+  border-left: 4px solid rgba(39, 68, 110, .52);
+  border-radius: var(--ui-radius-sm);
+  background: linear-gradient(90deg, rgba(39, 68, 110, .065), rgba(39, 68, 110, .018));
+  padding: 4px 8px 4px 12px;
+}
+
+.ng-shallow-toolbar__context {
+  display: flex;
+  min-width: 0;
+  max-width: 100%;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.ng-shallow-toolbar__context .ui-typography { margin: 0; }
+
+.ng-shallow-toolbar .ng-activation-actions {
+  flex: 0 0 auto;
+  min-width: 0;
+  max-width: 100%;
+  align-items: center;
   justify-content: flex-end;
-  margin: 16px 0 0;
+}
+
+.ng-shallow-toolbar .ng-activation-actions .edu-btn {
+  min-height: 0;
+  padding: 0 13px;
+}
+
+.ng-shallow-linear .ng-activation-network-stage {
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  grid-template-columns: minmax(300px, .82fr) minmax(0, 1.48fr);
+  gap: 20px;
+}
+
+.ng-shallow-linear .ng-shallow-panel {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  max-width: 100%;
+  flex-direction: column;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
   padding: 0;
 }
 
-.ng-shallow-linear .ng-activation-actions .edu-btn {
-  min-height: 40px;
-  padding-inline: 15px;
+.ng-shallow-linear .ng-shallow-panel--plot {
+  border-left: 1px solid var(--ui-border);
+  padding-left: 20px;
 }
 
+.ng-shallow-linear .ng-activation-visual-box {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius-md);
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(25, 42, 70, .06);
+}
+
+.ng-shallow-linear .ng-shallow-panel--network .ng-activation-visual-box {
+  border-color: rgba(39, 68, 110, .16);
+  background: linear-gradient(180deg, #f5f8fd 0%, #edf3fb 100%);
+  box-shadow: none;
+}
+
+.course-page-surface .ng-shallow-linear .ng-activation-stage-plot,
+.course-page-surface .ng-shallow-linear .ng-network-figure,
+.course-page-surface .ng-shallow-linear .ng-network-diagram {
+  min-height: 0 !important;
+}
+
+.course-page-surface .ng-shallow-linear .ng-activation-stage-plot {
+  height: 100%;
+}
+
+.course-page-surface .ng-shallow-linear .ng-network-figure {
+  height: 100%;
+}
+
+.ng-shallow-conclusion {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 12px;
+  border-top: 1px solid rgba(34, 141, 92, .32);
+  border-radius: 0 0 var(--ui-radius-sm) var(--ui-radius-sm);
+  background: linear-gradient(90deg, rgba(34, 141, 92, .08), rgba(34, 141, 92, .02));
+  padding: 10px 14px;
+}
+
+.ng-shallow-conclusion > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+
+.ng-shallow-conclusion .ui-typography { margin: 0; }
+
 @media (max-width: 1120px) {
-  .ng-shallow-linear > .edu-content-body > .ng-activation-actions {
-    justify-content: flex-start;
-  }
+  .ng-shallow-linear .ng-activation-network-stage { grid-template-columns: minmax(0, 1fr); }
+  .ng-shallow-linear .ng-shallow-panel--plot { border-left: 0; border-top: 1px solid var(--ui-border); padding-top: 14px; padding-left: 0; }
+  .ng-shallow-toolbar { align-items: flex-start; flex-direction: column; }
+  .ng-shallow-toolbar .ng-activation-actions { justify-content: flex-start; }
 }

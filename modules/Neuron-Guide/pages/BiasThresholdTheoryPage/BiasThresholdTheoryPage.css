@@ -27,11 +27,29 @@
 .course-shell .ng-bias-axis__boundary > .ui-typography { border-radius: var(--ui-radius-pill); background: rgba(var(--ui-accent-alt-rgb), .1); padding: 3px 10px; }
 .course-shell .ng-bias-axis__boundary.is-at-start { justify-items: start; transform: none; }
 .course-shell .ng-bias-axis__boundary.is-at-end { justify-items: end; transform: translateX(-100%); }
+.course-shell .ng-bias-axis__boundary.is-draggable { border: 0; background: transparent; padding: 0; color: inherit; font: inherit; cursor: grab; touch-action: none; -webkit-appearance: none; appearance: none; }
+.course-shell .ng-bias-axis__boundary.is-draggable::before { position: absolute; inset: -12px -18px; content: ''; }
+.course-shell .ng-bias-axis__boundary.is-draggable.is-holding { cursor: grabbing; }
+.course-shell .ng-bias-axis__boundary.is-draggable:hover > i { background: color-mix(in srgb, var(--ui-accent-alt) 82%, #7f2d00); }
+.course-shell .ng-bias-axis__boundary.is-draggable:focus-visible { outline: none; }
+.course-shell .ng-bias-axis__boundary.is-draggable:focus-visible .ng-bias-axis__grip { box-shadow: 0 0 0 4px rgba(var(--ui-accent-alt-rgb), .3), 0 2px 8px rgba(25, 42, 70, .22); }
+.course-shell .ng-bias-axis__grip { position: absolute; bottom: -2px; left: 50%; display: flex; width: 22px; height: 22px; align-items: center; justify-content: center; gap: 3px; border: 3px solid #fff; border-radius: 50%; background: var(--ui-accent-alt); box-shadow: 0 2px 8px rgba(25, 42, 70, .22); margin-left: -11px; }
+.course-shell .ng-bias-axis__grip::before, .course-shell .ng-bias-axis__grip::after { width: 0; height: 0; border-top: 4px solid transparent; border-bottom: 4px solid transparent; content: ''; }
+.course-shell .ng-bias-axis__grip::before { border-right: 5px solid #fff; }
+.course-shell .ng-bias-axis__grip::after { border-left: 5px solid #fff; }
+.course-shell .ng-bias-axis__boundary.is-at-start .ng-bias-axis__grip { left: 0; }
+.course-shell .ng-bias-axis__boundary.is-at-end .ng-bias-axis__grip { right: 0; left: auto; margin-right: -11px; margin-left: 0; }
+.course-shell .ng-bias-axis__boundary.is-pulsing .ng-bias-axis__grip { animation: ng-bias-handle-pulse 1.25s ease-in-out infinite; }
+.course-shell .ng-bias-axis__note { position: absolute; top: 45px; right: 0; bottom: var(--ng-axis-bottom); left: 0; display: grid; place-items: center; }
+.course-shell .ng-bias-axis--answer .ng-bias-axis__note { top: 52px; }
+.course-shell .ng-bias-axis--locked .ng-bias-axis__zone { background: rgba(var(--ui-accent-rgb), .06); }
+.course-shell .ng-bias-axis__marker > .ui-typography { border-radius: var(--ui-radius-pill); background: rgba(255, 255, 255, .95); box-shadow: 0 0 0 1px rgba(var(--ui-accent-rgb), .2), 0 1px 5px rgba(25, 42, 70, .08); padding: 2px 9px; }
 .course-shell .ng-bias-axis__ticks span { position: absolute; bottom: 0; transform: translateX(-50%); white-space: nowrap; }
 .course-shell .ng-bias-axis__ticks span::before { position: absolute; bottom: 22px; left: 50%; width: 1px; height: 9px; background: var(--ui-accent); content: ''; transform: translateX(-50%); }
-.course-shell .ng-bias-axis__marker { position: absolute; top: 30px; bottom: calc(var(--ng-axis-bottom) - 8px); z-index: 3; display: grid; min-width: 0; grid-template-rows: auto minmax(0, 1fr); justify-items: center; gap: 5px; pointer-events: none; transform: translateX(-50%); }
-.course-shell .ng-bias-axis__marker > i { width: 15px; height: 15px; align-self: end; border: 3px solid #fff; border-radius: 50%; background: var(--ui-success); box-shadow: 0 2px 8px rgba(25, 42, 70, .22); }
+.course-shell .ng-bias-axis__marker { position: absolute; bottom: calc(var(--ng-axis-bottom) - 8px); z-index: 3; display: flex; min-width: 0; max-width: 100%; flex-direction: column; align-items: center; gap: 6px; pointer-events: none; transform: translateX(-50%); }
+.course-shell .ng-bias-axis__marker > i { flex: 0 0 auto; width: 15px; height: 15px; border: 3px solid #fff; border-radius: 50%; background: var(--ui-success); box-shadow: 0 2px 8px rgba(25, 42, 70, .22); }
 .course-shell .ng-bias-axis__marker--red > i { background: var(--ui-danger); }
+.course-shell .ng-bias-axis__marker--neutral > i { background: var(--ui-accent); }
 
 .course-shell .ng-bias-boundary-story { display: grid; width: 100%; height: 100%; min-width: 0; min-height: 0; max-width: 100%; grid-template-columns: minmax(0, 1fr) 72px minmax(0, 1.08fr); align-items: stretch; }
 .course-shell .ng-bias-concept { --ng-concept-color: var(--ng-bias-blue); display: grid; min-width: 0; min-height: 0; max-width: 100%; grid-template-rows: auto minmax(0, 1fr) auto; gap: 24px; border: 1px solid rgba(var(--ui-accent-rgb), .18); border-top: 3px solid color-mix(in srgb, var(--ng-concept-color) 72%, white); border-radius: var(--ui-radius-md); background: linear-gradient(180deg, #fff 0%, rgba(var(--ui-accent-rgb), .025) 100%); padding: 28px 30px 26px; box-shadow: 0 14px 34px rgba(var(--ui-accent-rgb), .055); }
@@ -50,31 +68,29 @@
 .course-shell .ng-bias-boundary-story__turn > span:not(.ui-typography) { width: 1px; height: 100%; background: linear-gradient(180deg, transparent, rgba(var(--ui-accent-alt-rgb), .35), transparent); }
 .course-shell .ng-bias-boundary-story__turn > .ui-typography { display: grid; width: 54px; height: 54px; place-items: center; border: 1px solid rgba(var(--ui-accent-alt-rgb), .26); border-radius: 50%; background: rgba(var(--ui-accent-alt-rgb), .08); }
 
-.course-shell .ng-bias-choice-layout { display: grid; width: 100%; height: 100%; min-width: 0; min-height: 0; max-width: 100%; grid-template-columns: minmax(0, .78fr) minmax(0, 1.22fr); gap: 28px; }
+.course-shell .ng-bias-choice-layout { display: grid; width: 100%; height: 100%; min-width: 0; min-height: 0; max-width: 100%; grid-template-columns: minmax(0, .6fr) minmax(0, 1.4fr); gap: 28px; }
 .course-shell .ng-bias-question-pane, .course-shell .ng-bias-answer-pane { display: grid; min-width: 0; min-height: 0; max-width: 100%; border-radius: var(--ui-radius-md); }
-.course-shell .ng-bias-question-pane { grid-template-rows: auto minmax(0, 1fr); gap: 20px; border: 1px solid rgba(var(--ui-accent-rgb), .2); border-top: 3px solid var(--ui-accent); background: linear-gradient(180deg, rgba(var(--ui-accent-rgb), .025), #fff 42%); padding: 24px 26px; }
-.course-shell .ng-bias-question-pane__context { display: grid; min-width: 0; gap: 8px; border-bottom: 1px solid rgba(var(--ui-accent-rgb), .12); padding-bottom: 18px; }
-.course-shell .ng-bias-question-pane__range { display: grid; min-width: 0; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 12px; }
-.course-shell .ng-bias-question-pane__range > span { height: 3px; border-radius: 2px; background: linear-gradient(90deg, var(--ui-accent), var(--ui-success)); }
-.course-shell .ng-bias-midpoint-question { min-width: 0; min-height: 0; align-content: start; }
-.course-shell .ng-bias-midpoint-question .dl-question-options { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-.course-shell .ng-bias-midpoint-question .dl-question-option { min-width: 0; max-width: 100%; min-height: 76px; background: #fff; }
-.course-shell .ng-bias-midpoint-question .dl-question-feedback { min-height: 76px; }
-.course-shell .ng-bias-answer-pane { position: relative; grid-template-rows: auto minmax(220px, 1fr) 176px; gap: 18px; border: 1px solid rgba(var(--ui-success-rgb), .25); border-top: 3px solid var(--ui-success); background: linear-gradient(180deg, #fff 0%, rgba(var(--ui-success-rgb), .032) 100%); padding: 24px 28px; overflow: hidden; transition: border-color .24s ease, box-shadow .24s ease; }
+.course-shell .ng-bias-question-pane { align-content: center; border: 1px solid rgba(var(--ui-accent-rgb), .18); border-top: 3px solid var(--ui-accent); background: linear-gradient(180deg, #fff 0%, rgba(var(--ui-accent-rgb), .03) 100%); padding: 28px 30px; }
+.course-shell .ng-bias-midpoint-question { border: 0; background: transparent; padding: 0; }
+.course-shell .ng-bias-answer-pane { position: relative; grid-template-rows: auto minmax(0, 1fr) auto; gap: 16px; border: 1px solid rgba(var(--ui-success-rgb), .22); border-top: 3px solid var(--ui-success); background: linear-gradient(180deg, #fff 0%, rgba(var(--ui-success-rgb), .03) 100%); padding: 26px 30px; overflow: hidden; transition: border-color .24s ease, box-shadow .24s ease; }
 .course-shell .ng-bias-answer-pane.is-revealed { border-color: rgba(var(--ui-success-rgb), .42); box-shadow: 0 18px 42px rgba(var(--ui-success-rgb), .08); }
-.course-shell .ng-bias-answer-pane__head { display: grid; min-width: 0; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 18px; border-bottom: 1px solid rgba(var(--ui-success-rgb), .14); padding-bottom: 16px; }
-.course-shell .ng-bias-answer-pane__head > div:first-child { display: grid; min-width: 0; gap: 5px; }
-.course-shell .ng-bias-answer-pane__calculation { display: grid; min-width: 132px; justify-items: end; gap: 2px; border-radius: var(--ui-radius-sm); background: rgba(var(--ui-success-rgb), .07); padding: 10px 14px; }
-.course-shell .ng-bias-answer-pane__visual { display: grid; min-width: 0; min-height: 0; max-width: 100%; align-items: center; }
-.course-shell .ng-bias-axis--answer { height: 210px; }
-.course-shell .ng-bias-axis--answer .ng-bias-axis__zones { top: 58px; border-radius: 8px 8px 0 0; }
-.course-shell .ng-bias-axis--answer .ng-bias-axis__marker { top: 38px; }
-.course-shell .ng-bias-answer-pane__result { display: grid; min-width: 0; min-height: 0; max-width: 100%; align-content: center; gap: 14px; border-top: 1px solid rgba(var(--ui-success-rgb), .16); padding-top: 16px; }
+.course-shell .ng-bias-answer-pane__head { display: grid; min-width: 0; grid-template-columns: minmax(0, 1fr); align-items: center; border-bottom: 1px solid rgba(var(--ui-success-rgb), .14); padding-bottom: 14px; }
+.course-shell .ng-bias-answer-pane__rule { display: grid; min-width: 0; gap: 4px; }
+
+.course-shell .ng-bias-answer-pane__visual { display: grid; min-width: 0; min-height: 0; max-width: 100%; align-content: center; gap: 12px; }
+.course-shell .ng-bias-axis-head { display: flex; min-width: 0; align-items: baseline; justify-content: space-between; gap: 16px; }
+.course-shell .ng-bias-axis--answer { height: 216px; }
+.course-shell .ng-bias-axis--answer .ng-bias-axis__zones { top: 52px; border-radius: 8px 8px 0 0; }
+.course-shell .ng-bias-axis--answer .ng-bias-axis__zone--negative { background: rgba(var(--ui-accent-rgb), .07); }
+.course-shell .ng-bias-answer-pane__result { display: grid; min-width: 0; min-height: 0; max-width: 100%; align-content: center; border-top: 1px solid rgba(var(--ui-success-rgb), .16); padding-top: 14px; }
 .course-shell .ng-bias-answer-pane__decision { display: flex; min-width: 0; max-width: 100%; align-items: center; justify-content: space-between; gap: 18px; }
-.course-shell .ng-bias-answer-pane__bias { display: grid; min-width: 0; max-width: 100%; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 5px 18px; border-left: 4px solid var(--ui-accent-alt); background: rgba(var(--ui-accent-alt-rgb), .05); padding: 12px 16px; }
-.course-shell .ng-bias-answer-pane__bias > :first-child { grid-column: 1 / -1; }
 .course-shell .ng-bias-answer-pane__waiting { display: grid; min-width: 0; justify-items: center; gap: 9px; text-align: center; }
 .course-shell .ng-bias-answer-pane__waiting > span { display: grid; width: 46px; height: 46px; place-items: center; border: 1px dashed rgba(var(--ui-accent-rgb), .34); border-radius: 50%; color: var(--ui-text-muted); font-family: var(--ui-font-mono); font-size: 24px; }
+
+@keyframes ng-bias-handle-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(var(--ui-accent-alt-rgb), .5), 0 2px 8px rgba(25, 42, 70, .22); }
+  50% { box-shadow: 0 0 0 10px rgba(var(--ui-accent-alt-rgb), 0), 0 2px 8px rgba(25, 42, 70, .22); }
+}
 
 @media (max-width: 820px) {
   .course-shell .ng-bias-page { height: auto; min-height: 100%; overflow: visible; }

@@ -1,12 +1,19 @@
-import { useRef, useState, type CSSProperties } from 'react';
+import { useCallback, useRef, useState, type CSSProperties, type KeyboardEvent as ReactKeyboardEvent, type PointerEvent as ReactPointerEvent } from 'react';
 import './BiasThresholdTheoryPage.css';
 import { ContentBlock, Question, Typography, type QuestionCheckResult } from '../../../shared/react';
 import { formatScore, useLesson, weightedSum } from '../../LessonContext';
 
+const RANGE_MIN = 0;
+const RANGE_MAX = 3;
+/** 0–3 的中点，也是这一类分类的正确答案。 */
+const RANGE_MIDPOINT = 1.5;
+/** 分界点吸附的刻度。 */
+const BOUNDARY_STEP = 0.05;
+
 interface AxisMarker {
   value: number;
   label: string;
-  tone: 'green' | 'red';
+  tone: 'green' | 'red' | 'neutral';
 }
 
 interface ClassificationAxisProps {
@@ -19,6 +26,24 @@ interface ClassificationAxisProps {
   markers?: AxisMarker[];
   boundaryLabel?: string;
   className?: string;
+  /** 反侧区域的文字色：默认用危险色，用 accent 表示“只是另一类，不是错误”。 */
+  negativeTone?: 'danger' | 'accent';
+  /** 传入后分界线可拖动，取值范围为 [min, max]。 */
+  onBoundaryChange?: (value: number) => void;
+  onBoundaryDragStart?: () => void;
+  showBoundary?: boolean;
+  /** 首次拖动前的轻提示。 */
+  pulsing?: boolean;
+  /** 分界线不可用时的占位说明。 */
+  note?: string;
+}
+
+function clamp(value: number, min: number, max: number) {
+  return Math.min(max, Math.max(min, value));
+}
+
+function snapBoundary(value: number, min: number, max: number) {
+  return Number(clamp(Math.round(value / BOUNDARY_STEP) * BOUNDARY_STEP, min, max).toFixed(2));
 }
 
 function axisPosition(value: number, min: number, max: number) {
@@ -35,26 +60,116 @@ function ClassificationAxis({
   markers = [],
   boundaryLabel,
   className = '',
+  negativeTone = 'danger',
+  onBoundaryChange,
+  onBoundaryDragStart,
+  showBoundary = true,
+  pulsing = false,
+  note,
 }: ClassificationAxisProps) {
+  const axisRef = useRef<HTMLDivElement | null>(null);
+  const holdingRef = useRef(false);
+  const [holding, setHolding] = useState(false);
   const boundaryPosition = axisPosition(boundary, min, max);
+  const draggable = Boolean(onBoundaryChange);
   const style = { '--ng-boundary-position': `${boundaryPosition}%` } as CSSProperties;
 
+  const valueFromPointer = useCallback((clientX: number) => {
+    const rect = axisRef.current?.getBoundingClientRect();
+    if (!rect || !rect.width) return boundary;
+    return snapBoundary(min + clamp((clientX - rect.left) / rect.width, 0, 1) * (max - min), min, max);
+  }, [boundary, max, min]);
+
+  const commit = useCallback((value: number) => {
+    onBoundaryDragStart?.();
+    onBoundaryChange?.(value);
+  }, [onBoundaryChange, onBoundaryDragStart]);
+
+  const startDrag = (event: ReactPointerEvent<HTMLButtonElement>) => {
+    if (!draggable) return;
+    event.preventDefault();
+    holdingRef.current = true;
+    setHolding(true);
+    event.currentTarget.setPointerCapture(event.pointerId);
+    commit(valueFromPointer(event.clientX));
+  };
+
+  const moveDrag = (event: ReactPointerEvent<HTMLButtonElement>) => {
+    if (!draggable || !holdingRef.current) return;
+    event.preventDefault();
+    commit(valueFromPointer(event.clientX));
+  };
+
+  const endDrag = (event: ReactPointerEvent<HTMLButtonElement>) => {
+    if (!holdingRef.current) return;
+    holdingRef.current = false;
+    setHolding(false);
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
+  };
+
+  const handleKeyDown = (event: ReactKeyboardEvent<HTMLButtonElement>) => {
+    if (!draggable) return;
+    const deltas: Record<string, number> = { ArrowLeft: -BOUNDARY_STEP, ArrowDown: -BOUNDARY_STEP, ArrowRight: BOUNDARY_STEP, ArrowUp: BOUNDARY_STEP };
+    const delta = deltas[event.key];
+    if (delta !== undefined) {
+      // 方向键在 PPT 里用于翻页、在 Blog 里用于推进课程，这里必须停止继续冒泡。
+      event.preventDefault();
+      event.stopPropagation();
+      commit(snapBoundary(boundary + delta, min, max));
+      return;
+    }
+    if (event.key !== 'Home' && event.key !== 'End') return;
+    event.preventDefault();
+    event.stopPropagation();
+    commit(event.key === 'Home' ? min : max);
+  };
+
+  const boundaryClassName = `ng-bias-axis__boundary${boundaryPosition <= 2 ? ' is-at-start' : boundaryPosition >= 98 ? ' is-at-end' : ''}${draggable ? ' is-draggable' : ''}${holding ? ' is-holding' : ''}${draggable && pulsing ? ' is-pulsing' : ''}`;
+  // 区间太窄时藏起区域标签，避免文字被裁成半截。
+  const zoneLabelFits = (share: number) => share >= 18;
+  const boundaryBody = (
+    <>
+      {boundaryLabel && <Typography as="span" variant="bodySmall" tone="warning" wrap="nowrap">{boundaryLabel}</Typography>}
+      <i />
+      {draggable && <span className="ng-bias-axis__grip" aria-hidden="true" />}
+    </>
+  );
+
   return (
-    <div className={`ng-bias-axis ${className}`.trim()} style={style}>
+    <div className={`ng-bias-axis ${className}`.trim()} style={style} ref={axisRef}>
       <div className="ng-bias-axis__zones" aria-hidden="true">
         <span className="ng-bias-axis__zone ng-bias-axis__zone--negative">
-          <Typography as="span" variant="body" tone="danger">{leftLabel}</Typography>
+          {leftLabel && zoneLabelFits(boundaryPosition) && <Typography as="span" variant="bodySmall" tone={negativeTone}>{leftLabel}</Typography>}
         </span>
         <span className="ng-bias-axis__zone ng-bias-axis__zone--positive">
-          <Typography as="span" variant="body" tone="success">{rightLabel}</Typography>
+          {rightLabel && zoneLabelFits(100 - boundaryPosition) && <Typography as="span" variant="bodySmall" tone="success">{rightLabel}</Typography>}
         </span>
       </div>
 
       <div className="ng-bias-axis__line" aria-hidden="true" />
-      <div className={`ng-bias-axis__boundary${boundaryPosition <= 2 ? ' is-at-start' : boundaryPosition >= 98 ? ' is-at-end' : ''}`} aria-hidden="true">
-        {boundaryLabel && <Typography as="span" variant="bodySmall" tone="warning" wrap="nowrap">{boundaryLabel}</Typography>}
-        <i />
-      </div>
+      {note && <Typography as="span" variant="bodySmall" tone="muted" className="ng-bias-axis__note">{note}</Typography>}
+      {showBoundary && (draggable ? (
+        <button
+          type="button"
+          className={boundaryClassName}
+          role="slider"
+          aria-label="分类分界线"
+          aria-valuemin={min}
+          aria-valuemax={max}
+          aria-valuenow={boundary}
+          aria-valuetext={`分界点 ${formatScore(boundary)}`}
+          data-ng-bias-handle
+          onPointerDown={startDrag}
+          onPointerMove={moveDrag}
+          onPointerUp={endDrag}
+          onPointerCancel={endDrag}
+          onKeyDown={handleKeyDown}
+        >
+          {boundaryBody}
+        </button>
+      ) : (
+        <div className={boundaryClassName} aria-hidden="true">{boundaryBody}</div>
+      ))}
 
       <div className="ng-bias-axis__ticks" aria-hidden="true">
         {ticks.map((tick) => (
@@ -64,18 +179,17 @@ function ClassificationAxis({
         ))}
       </div>
 
-      {markers.map((marker) => (
-        <div
-          className={`ng-bias-axis__marker ng-bias-axis__marker--${marker.tone}`}
-          style={{ left: `${axisPosition(marker.value, min, max)}%` }}
-          key={marker.label}
-        >
-          <Typography as="span" variant="bodySmall" tone={marker.tone === 'green' ? 'success' : 'danger'} wrap="nowrap">
-            {marker.label}
-          </Typography>
-          <i aria-hidden="true" />
-        </div>
-      ))}
+      {markers.map((marker) => {
+        const markerPosition = axisPosition(marker.value, min, max);
+        return (
+          <div className={`ng-bias-axis__marker ng-bias-axis__marker--${marker.tone}`} style={{ left: `${markerPosition}%` }} key={marker.label}>
+            <Typography as="span" variant="bodySmall" tone={marker.tone === 'green' ? 'success' : marker.tone === 'red' ? 'danger' : 'main'} wrap="nowrap">
+              {marker.label}
+            </Typography>
+            <i aria-hidden="true" />
+          </div>
+        );
+      })}
     </div>
   );
 }
@@ -101,27 +215,27 @@ export function BiasNaturalBoundaryPage() {
     <ContentBlock
       headingLevel={1}
       className="ng-bias-page ng-bias-boundary-page"
-      title="0，为什么是天然的分类边界？"
-      subtitle="对于二分类，我们自然希望一类落在 0 左侧，另一类落在 0 右侧。"
+      title="矩阵计算之后，如何形成分类判断？"
+      subtitle="矩阵计算最终得到一个数值。神经元需要根据这个数值，将输入划分为两类。"
     >
       <div className="ng-bias-boundary-story">
         <section className="ng-bias-concept ng-bias-concept--natural">
           <header className="ng-bias-concept__head">
             <Typography as="span" variant="h3" tone="accent" className="ng-bias-concept__number">1</Typography>
             <div>
-              <Typography as="h2" variant="h3" tone="main">只看正负，就能分成两类</Typography>
-              <Typography variant="bodySmall" tone="muted">0 左侧是负数，右侧是非负数</Typography>
+              <Typography as="h2" variant="h3" tone="main">正负号可以承担分类</Typography>
+              <Typography variant="bodySmall" tone="muted">0 左侧为负数，右侧为非负数</Typography>
             </div>
           </header>
           <NaturalBoundaryFigure />
           <div className="ng-bias-concept__takeaway">
-            <Typography variant="body" tone="accent">数值跨过 0，符号就能承担分类。</Typography>
+            <Typography variant="body" tone="accent">当结果分布在 0 的两侧时，符号可以直接区分两类。</Typography>
           </div>
         </section>
 
         <div className="ng-bias-boundary-story__turn" aria-hidden="true">
           <span />
-          <Typography as="span" variant="bodySmall" tone="warning">可是</Typography>
+          <Typography as="span" variant="bodySmall" tone="warning">问题在于</Typography>
           <span />
         </div>
 
@@ -130,7 +244,7 @@ export function BiasNaturalBoundaryPage() {
             <Typography as="span" variant="h3" tone="warning" className="ng-bias-concept__number">2</Typography>
             <div>
               <Typography as="h2" variant="h3" tone="main">现在，所有结果都在 0 的右侧</Typography>
-              <Typography variant="bodySmall" tone="muted">输入与权重都在 0–1，加权和 y 只能落在 0–3</Typography>
+              <Typography variant="bodySmall" tone="muted">当前输入与权重均为 0–1，加权和 y 的取值范围为 0–3</Typography>
             </div>
           </header>
           <div className="ng-bias-range-figure">
@@ -148,7 +262,7 @@ export function BiasNaturalBoundaryPage() {
           </div>
           <div className="ng-bias-concept__takeaway ng-bias-concept__takeaway--problem">
             <Typography variant="body" tone="main">
-              没有 b 时，无论输入如何变化，结果都不会跨过 0。
+              没有 bias 时，结果不会跨过 0，因而无法形成有效分类。
             </Typography>
           </div>
         </section>
@@ -162,8 +276,14 @@ export function BiasThresholdTheoryPage({ onComplete }: { onComplete?: () => voi
   const values = scenario.factors.map((factor, index) => state.values[index] ?? factor.suggestedValue);
   const outputY = weightedSum(scenario, values);
   const [answeredCorrectly, setAnsweredCorrectly] = useState(false);
+  const [boundary, setBoundary] = useState(RANGE_MIDPOINT);
+  const [boundaryDragged, setBoundaryDragged] = useState(false);
   const completedRef = useRef(false);
-  const tendency = outputY >= 1.5 ? scenario.positiveLabel : scenario.negativeLabel;
+  const atMidpoint = Math.abs(boundary - RANGE_MIDPOINT) < 0.01;
+  const aboveBoundary = outputY >= boundary;
+  const tendency = aboveBoundary ? scenario.positiveLabel : scenario.negativeLabel;
+  const negativeZone = `输出 0 · ${scenario.negativeLabel}`;
+  const positiveZone = `输出 1 · ${scenario.positiveLabel}`;
 
   const handleCheck = (result: QuestionCheckResult) => {
     if (!result.ok) return;
@@ -178,30 +298,22 @@ export function BiasThresholdTheoryPage({ onComplete }: { onComplete?: () => voi
     <ContentBlock
       headingLevel={1}
       className="ng-bias-page ng-bias-choice-page"
-      title="这道题的分界点，应该放在哪里？"
-      subtitle="加权和的范围是 0–3。先做出判断，再看 bias 如何把这个位置对准 0。"
+      title="偏置如何调整分类阈值？"
+      subtitle="当加权和的实际范围不跨过 0 时，需要先确定合适的分界点，再用偏置将它移动到 0。"
     >
       <div className="ng-bias-choice-layout">
         <section className="ng-bias-question-pane">
-          <div className="ng-bias-question-pane__context">
-            <Typography as="span" variant="bodySmall" tone="muted">已知范围</Typography>
-            <div className="ng-bias-question-pane__range">
-              <Typography as="strong" variant="h2" tone="accent">0</Typography>
-              <span aria-hidden="true" />
-              <Typography as="strong" variant="h2" tone="accent">3</Typography>
-            </div>
-            <Typography variant="bodySmall" tone="muted">希望两类拥有相同大小的判断区间</Typography>
-          </div>
-
           <Question
             className="ng-bias-midpoint-question"
             type="choice"
             typeLabel="先预测"
-            title="你会把分界点放在哪个位置？"
+            textVariant="body"
+            title={`加权和范围为 ${RANGE_MIN}–${RANGE_MAX}，分类边界应设置在哪里？`}
             answer="1.50"
             persistenceKey="neuron-guide:bias-midpoint-v1"
             onCheck={handleCheck}
             feedback={{
+              initial: '若希望两类区间的长度相同，分界点应落在范围中点。',
               correct: '正好在 0–3 的中点，两侧区间各占 50%。',
               wrong: '再看一次 0–3：哪一个位置能把整段平均分成两半？',
             }}
@@ -216,55 +328,58 @@ export function BiasThresholdTheoryPage({ onComplete }: { onComplete?: () => voi
 
         <section className={`ng-bias-answer-pane${answeredCorrectly ? ' is-revealed' : ''}`} aria-live="polite">
           <header className="ng-bias-answer-pane__head">
-            <div>
-              <Typography as="span" variant="bodySmall" tone="success">判断规则</Typography>
-              <Typography as="h2" variant="h3" tone="main">达到总上限的 50% 才输出 1</Typography>
-            </div>
-            <div className="ng-bias-answer-pane__calculation">
-              <Typography as="span" variant="bodySmall" tone="muted">3 × 50%</Typography>
-              <Typography as="strong" variant="h2" tone={answeredCorrectly ? 'success' : 'muted'}>
-                {answeredCorrectly ? '= 1.50' : '= ?'}
-              </Typography>
+            <div className="ng-bias-answer-pane__rule">
+              <Typography as="span" variant="bodySmall" tone="success">分类规则</Typography>
+              <Typography as="h2" variant="h3" tone="main">加权和越过分界点，判为「输出 1」</Typography>
             </div>
           </header>
 
           <div className="ng-bias-answer-pane__visual">
+            <div className="ng-bias-axis-head">
+              <Typography as="span" variant="bodySmall" tone="muted">加权和 y 的全部可能范围：0–3</Typography>
+              <Typography as="span" variant="bodySmall" tone={answeredCorrectly ? (atMidpoint ? 'success' : 'warning') : 'muted'}>
+                {answeredCorrectly
+                  ? atMidpoint
+                    ? '分界点已在中点：两侧正好各占一半'
+                    : `把分界线拖到 0–3 的中点 ${formatScore(RANGE_MIDPOINT)}`
+                  : '选对答案后，这里的分界线就可以拖动'}
+              </Typography>
+            </div>
             <ClassificationAxis
-              min={0}
-              max={3}
-              boundary={answeredCorrectly ? 1.5 : 0}
+              min={RANGE_MIN}
+              max={RANGE_MAX}
+              boundary={answeredCorrectly ? boundary : RANGE_MIN}
               ticks={[0, 1, 2, 3]}
-              leftLabel={answeredCorrectly ? '输出 0' : ''}
-              rightLabel={answeredCorrectly ? '输出 1' : ''}
-              boundaryLabel={answeredCorrectly ? '分界点 1.50' : undefined}
+              negativeTone="accent"
+              leftLabel={answeredCorrectly ? negativeZone : ''}
+              rightLabel={answeredCorrectly ? positiveZone : ''}
+              boundaryLabel={answeredCorrectly ? `分界点 ${formatScore(boundary)}` : undefined}
               markers={answeredCorrectly ? [{
                 value: outputY,
-                label: `你的 y = ${formatScore(outputY)}`,
-                tone: outputY >= 1.5 ? 'green' : 'red',
+                label: `y = ${formatScore(outputY)}`,
+                tone: 'neutral',
               }] : []}
-              className="ng-bias-axis--answer"
+              onBoundaryChange={answeredCorrectly ? setBoundary : undefined}
+              onBoundaryDragStart={() => setBoundaryDragged(true)}
+              showBoundary={answeredCorrectly}
+              pulsing={!boundaryDragged}
+              note={answeredCorrectly ? undefined : '分界线待解锁'}
+              className={`ng-bias-axis--answer${answeredCorrectly ? '' : ' ng-bias-axis--locked'}`}
             />
           </div>
 
           <div className="ng-bias-answer-pane__result">
             {answeredCorrectly ? (
-              <>
-                <div className="ng-bias-answer-pane__decision">
-                  <Typography as="strong" variant="h3" tone={outputY >= 1.5 ? 'success' : 'danger'}>
-                    {formatScore(outputY)} {outputY >= 1.5 ? '≥' : '<'} 1.50
-                  </Typography>
-                  <Typography as="strong" variant="body" tone="main">倾向“{tendency}”</Typography>
-                </div>
-                <div className="ng-bias-answer-pane__bias">
-                  <Typography variant="bodySmall" tone="muted">在公式 y + b = 0 中，分界点写作 −b</Typography>
-                  <Typography as="strong" variant="h3" tone="accent">−b = 1.50　→　b = −1.50</Typography>
-                  <Typography variant="bodySmall" tone="warning">bias 把原始分界点 1.50 移回了 0</Typography>
-                </div>
-              </>
+              <div className="ng-bias-answer-pane__decision">
+                <Typography as="strong" variant="h3" tone={aboveBoundary ? 'success' : 'accent'}>
+                  {`y = ${formatScore(outputY)} ${aboveBoundary ? '≥' : '<'} ${formatScore(boundary)}`}
+                </Typography>
+                <Typography as="strong" variant="body" tone="main">{`倾向“${tendency}”`}</Typography>
+              </div>
             ) : (
               <div className="ng-bias-answer-pane__waiting">
                 <span aria-hidden="true">?</span>
-                <Typography variant="body" tone="muted">选择后，这里会显示新的分类边界。</Typography>
+                <Typography variant="body" tone="muted">选择正确答案后，这里会显示可拖动的分界线。</Typography>
               </div>
             )}
           </div>

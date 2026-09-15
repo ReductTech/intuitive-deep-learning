@@ -1,7 +1,7 @@
 import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from 'react';
 import { Feedback } from '../feedback/Feedback';
 import { emitTelemetry, getTelemetryState } from '../telemetry';
-import { Typography } from '../typography/Typography';
+import { Typography, type TypographyVariant } from '../typography/Typography';
 import { classNames } from '../utils';
 
 export type QuestionType = 'choice' | 'multiple' | 'judgement' | 'fill' | 'short';
@@ -55,6 +55,8 @@ export interface QuestionProps {
   blanks?: Array<{ label?: ReactNode; placeholder?: string }>;
   rows?: number;
   typeLabel?: ReactNode;
+  /** 题干、选项与反馈使用的文字层级；默认沿用紧凑的 bodySmall。 */
+  textVariant?: TypographyVariant;
   submitText?: ReactNode;
   feedback?: { initial?: ReactNode; empty?: ReactNode; correct?: ReactNode; wrong?: ReactNode; sample?: ReactNode };
   instant?: boolean;
@@ -98,6 +100,7 @@ function optionFeedback(
   expectedValues: string[],
   multiple: boolean,
   fallback: ReactNode,
+  textVariant: TypographyVariant,
 ) {
   const selected = new Set(selectedValues.map(normalize));
   const expected = new Set(expectedValues);
@@ -110,7 +113,7 @@ function optionFeedback(
   ].filter((detail) => detail.message !== undefined && detail.message !== null && detail.message !== false && detail.message !== '');
   if (!details.length) return fallback;
   if (details.length === 1) return <><strong>{details[0].prefix}</strong>{details[0].message}</>;
-  return <ul className="dl-question-feedback-list">{details.map((detail, index) => <Typography as="li" variant="bodySmall" tone="inherit" key={index}><strong>{detail.prefix}</strong>{detail.message}</Typography>)}</ul>;
+  return <ul className="dl-question-feedback-list">{details.map((detail, index) => <Typography as="li" variant={textVariant} tone="inherit" key={index}><strong>{detail.prefix}</strong>{detail.message}</Typography>)}</ul>;
 }
 
 function typeLabel(type: QuestionType, multiple: boolean) {
@@ -130,6 +133,7 @@ export function Question({
   blanks = [],
   rows = 5,
   typeLabel: label,
+  textVariant = 'bodySmall',
   submitText = '检查答案',
   feedback = {},
   instant = !multiple && (type === 'choice' || type === 'judgement'),
@@ -200,7 +204,7 @@ export function Question({
           empty: storedResult.empty,
           answer: Array.isArray(storedResult.answer) ? storedResult.answer.map(String) : restoredAnswers,
           tone: storedResult.tone,
-          message: storedResult.message ?? (storedResult.ok ? feedback.correct ?? '回答正确。' : optionFeedback(options, restoredAnswers, expected, multiple, feedback.wrong ?? '再检查一下。')),
+          message: storedResult.message ?? (storedResult.ok ? feedback.correct ?? '回答正确。' : optionFeedback(options, restoredAnswers, expected, multiple, feedback.wrong ?? '再检查一下。', textVariant)),
         };
         setResult(restoredResult);
         onCheck?.(restoredResult);
@@ -241,7 +245,7 @@ export function Question({
           empty: restoredEmpty,
           answer: restoredAnswers,
           tone: restoredCorrect ? 'correct' : normalizedType === 'short' ? 'hint' : 'wrong',
-          message: restoredCorrect ? feedback.correct ?? '回答正确。' : optionFeedback(options, restoredAnswers, expected, multiple, feedback.wrong ?? '再检查一下。'),
+          message: restoredCorrect ? feedback.correct ?? '回答正确。' : optionFeedback(options, restoredAnswers, expected, multiple, feedback.wrong ?? '再检查一下。', textVariant),
         };
         setResult(restoredResult);
         onCheck?.(restoredResult);
@@ -281,7 +285,7 @@ export function Question({
       ? feedback.empty ?? '请先完成作答，再检查答案。'
       : normalizedType === 'short'
         ? feedback.sample ?? '此简答题尚未配置评阅服务，不能作为已完成作答。'
-        : ok ? feedback.correct ?? '回答正确。' : optionFeedback(options, candidateAnswers, expected, multiple, feedback.wrong ?? '再检查一下。');
+        : ok ? feedback.correct ?? '回答正确。' : optionFeedback(options, candidateAnswers, expected, multiple, feedback.wrong ?? '再检查一下。', textVariant);
     const next: QuestionCheckResult = {
       ok: !empty && ok,
       empty,
@@ -330,9 +334,9 @@ export function Question({
       }}
     >
       <header className="dl-question-head">
-        <Typography as="span" variant="bodySmall" tone="accent" className="dl-question-type">{label ?? typeLabel(normalizedType, multiple)}</Typography>
+        <Typography as="span" variant={textVariant} tone="accent" className="dl-question-type">{label ?? typeLabel(normalizedType, multiple)}</Typography>
         <div className="dl-question-title-row">
-          <Typography as="strong" variant="bodySmall" className="dl-question-stem">{normalizedType === 'fill' ? <FillTitle title={title} blanks={blanks.length ? blanks : [{ placeholder: '填写答案' }]} fields={fields} onChange={(index, value) => { setFields((current) => { const next = [...current]; next[index] = value; return next; }); setResult(null); }} /> : title}</Typography>
+          <Typography as="strong" variant={textVariant} className="dl-question-stem">{normalizedType === 'fill' ? <FillTitle title={title} blanks={blanks.length ? blanks : [{ placeholder: '填写答案' }]} fields={fields} onChange={(index, value) => { setFields((current) => { const next = [...current]; next[index] = value; return next; }); setResult(null); }} /> : title}</Typography>
           {!instant && <button className="edu-btn edu-btn--primary dl-question-submit" type="button" disabled={isReviewing} aria-busy={isReviewing} onClick={() => void submit()}><span>{isReviewing ? '正在分析' : submitText}</span></button>}
         </div>
       </header>
@@ -355,15 +359,15 @@ export function Question({
                 aria-pressed={isSelected}
                 onClick={() => void choose(value)}
               >
-                <Typography as="span" variant="bodySmall" tone="inherit" className="dl-option-key">{option.key ?? String.fromCharCode(65 + index)}</Typography>
-                <Typography as="span" variant="bodySmall" tone="inherit" className="dl-option-body">{option.label}</Typography>
+                <Typography as="span" variant={textVariant} tone="inherit" className="dl-option-key">{option.key ?? String.fromCharCode(65 + index)}</Typography>
+                <Typography as="span" variant={textVariant} tone="inherit" className="dl-option-body">{option.label}</Typography>
               </button>
             );
           })}
         </div>
       )}
 
-      {normalizedType === 'fill' && blanks.length > inlineBlanks && <div className="dl-question-fields">{blanks.slice(inlineBlanks).map((blank, index) => <label className="dl-question-field" key={index}><Typography as="span" variant="bodySmall" tone="accent">{blank.label}</Typography><input type="text" value={fields[index + inlineBlanks] ?? ''} placeholder={blank.placeholder} autoComplete="off" data-role="question-answer" onChange={(event) => { setFields((current) => { const next = [...current]; next[index + inlineBlanks] = event.target.value; return next; }); setResult(null); }} /></label>)}</div>}
+      {normalizedType === 'fill' && blanks.length > inlineBlanks && <div className="dl-question-fields">{blanks.slice(inlineBlanks).map((blank, index) => <label className="dl-question-field" key={index}><Typography as="span" variant={textVariant} tone="accent">{blank.label}</Typography><input type="text" value={fields[index + inlineBlanks] ?? ''} placeholder={blank.placeholder} autoComplete="off" data-role="question-answer" onChange={(event) => { setFields((current) => { const next = [...current]; next[index + inlineBlanks] = event.target.value; return next; }); setResult(null); }} /></label>)}</div>}
 
       {normalizedType === 'short' && (
         <div className="dl-question-fields">
@@ -383,6 +387,7 @@ export function Question({
 
       {showFeedback && <Feedback
         status={result?.tone ?? 'info'}
+        textVariant={textVariant}
         message={result?.message ?? feedback.initial}
         streaming={normalizedType === 'short' && Boolean(result && !result.empty)}
         className="dl-question-feedback"

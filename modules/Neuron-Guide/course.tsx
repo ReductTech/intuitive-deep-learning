@@ -8,9 +8,9 @@ import { SignalDiscoveryPage } from './pages/SignalDiscoveryPage/SignalDiscovery
 import { WeightedSumPage } from './pages/WeightedSumPage/WeightedSumPage';
 import { WeightedContributionTheoryPage } from './pages/WeightedContributionTheoryPage/WeightedContributionTheoryPage';
 import { BiasNaturalBoundaryPage, BiasThresholdTheoryPage } from './pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage';
+import { NematodeXorPage } from './pages/NematodeXorPage/NematodeXorPage';
 import { NeuronCompletionPage, NeuronLessonFooter } from './pages/NeuronLessonFooter/NeuronLessonFooter';
 import { ShallowLinearPage } from './pages/ShallowLinearPage/ShallowLinearPage';
-import { DeepLinearPage } from './pages/DeepLinearPage/DeepLinearPage';
 import { ReluIntroPage } from './pages/ReluIntroPage/ReluIntroPage';
 import { ReluExplanationPage } from './pages/ReluExplanationPage/ReluExplanationPage';
 import { ReluNetworkPage } from './pages/ReluNetworkPage/ReluNetworkPage';
@@ -47,10 +47,10 @@ export const neuronCourse: NeuronCourseItem[] = [
   { id: 'weighted-sum', title: '把一个现实因素，翻译成神经元能处理的输入', section: '输入信号', revealMode: 'cue', component: (c) => <WeightedSumPage onComplete={c.complete} /> },
   { id: 'extra-inputs', title: '从一个因素，到三个因素', section: '输入信号', revealMode: 'cue', component: (c) => <ExtraInputsPage onComplete={c.complete} /> },
   { id: 'weighted-contribution', title: '从加权求和到矩阵表示', section: '矩阵形式', revealMode: 'scroll', component: () => <WeightedContributionTheoryPage /> },
-  { id: 'bias-natural-boundary', title: '0，为什么是天然的分类边界？', section: '最终判断', revealMode: 'scroll', component: () => <BiasNaturalBoundaryPage /> },
-  { id: 'bias-threshold', title: '这道题的分界点，应该放在哪里？', section: '最终判断', revealMode: 'cue', component: (c) => <BiasThresholdTheoryPage onComplete={c.complete} /> },
-  { id: 'linear-shallow', title: '多个线性神经元的叠加', section: '线性网络', revealMode: 'cue', component: (c) => <ShallowLinearPage onComplete={c.complete} /> },
-  { id: 'linear-deep', title: '线性关系从直线扩展为平面', section: '线性网络', revealMode: 'cue', component: (c) => <DeepLinearPage onComplete={c.complete} /> },
+  { id: 'bias-natural-boundary', title: '矩阵计算之后，如何形成分类判断？', section: '最终判断', revealMode: 'scroll', component: () => <BiasNaturalBoundaryPage /> },
+  { id: 'bias-threshold', title: '偏置如何调整分类阈值？', section: '最终判断', revealMode: 'cue', component: (c) => <BiasThresholdTheoryPage onComplete={c.complete} /> },
+  { id: 'linear-shallow', title: '线性神经元的组合仍然是线性的', section: '线性网络', revealMode: 'cue', component: (c) => <ShallowLinearPage onComplete={c.complete} /> },
+  { id: 'nematode-xor', title: '线性分类的边界：秀丽隐杆线虫的双侧刺激', section: '从线性到非线性', revealMode: 'cue', component: (c) => <NematodeXorPage onComplete={c.complete} /> },
   { id: 'relu-intro', title: '从线性计算到非线性响应', section: '激活函数', revealMode: 'cue', component: (c) => <ReluIntroPage onComplete={c.complete} /> },
   { id: 'relu-explanation', title: '认识线性整流单元', section: '激活函数', revealMode: 'scroll', advanceLabel: '继续：组合多个带有 ReLU 的神经元', component: () => <ReluExplanationPage /> },
   { id: 'relu-network', title: '组合多个带有 ReLU 的神经元，曲线继续弯折', section: '激活函数', revealMode: 'cue', component: (c) => <ReluNetworkPage onComplete={c.complete} /> },
