@@ -118,8 +118,8 @@ export function SceneDeck({ catalog, moduleId, progressKey, getNotes }: SceneDec
   const [completedIds, setCompletedIds] = useState<string[]>(() => readProgress(deckValue(progressKey, initialDeck.id)));
   const [notesOpen, setNotesOpen] = useState(false);
   const [noteIndex, setNoteIndex] = useState(0);
-  const [sidebarWidth, setSidebarWidth] = useState(272);
-  const [inspectorWidth, setInspectorWidth] = useState(326);
+  const [sidebarWidth, setSidebarWidth] = useState(258);
+  const [inspectorWidth, setInspectorWidth] = useState(340);
   const [courseMenuOpen, setCourseMenuOpen] = useState(false);
   const [toolNotice, setToolNotice] = useState('');
   const scenes = activeDeck.scenes;
@@ -296,7 +296,7 @@ export function SceneDeck({ catalog, moduleId, progressKey, getNotes }: SceneDec
             </div>
           </div>
           {notesOpen && <>
-            <PanelResizeHandle label="调整智能讲稿栏宽度" onDelta={(delta) => setInspectorWidth((width) => clamp(width - delta, 300, 520))} />
+            <PanelResizeHandle label="调整智能讲稿栏宽度" onDelta={(delta) => setInspectorWidth((width) => clamp(width - delta, 290, 540))} />
             <SpeakerNotesPanel notes={notes} noteIndex={noteIndex} onChange={setNoteIndex} canAdvanceScene={sceneIndex < scenes.length - 1} onAdvanceScene={() => navigate(sceneIndex + 1)} sceneTitle={scene.title} onClose={() => setNotesOpen(false)} />
           </>}
         </div>
@@ -345,9 +345,11 @@ const Thumbnail = memo(function Thumbnail({ item, index, active, complete, onNav
   </div>;
 });
 
-function SpeakerNotesPanel({ notes, noteIndex, onChange, canAdvanceScene, onAdvanceScene }: { notes: SpeakerNote[]; noteIndex: number; onChange: (index: number) => void; canAdvanceScene: boolean; onAdvanceScene: () => void }) {
+function SpeakerNotesPanel({ notes, noteIndex, onChange, canAdvanceScene, onAdvanceScene, sceneTitle, onClose }: { notes: SpeakerNote[]; noteIndex: number; onChange: (index: number) => void; canAdvanceScene: boolean; onAdvanceScene: () => void; sceneTitle: string; onClose: () => void }) {
   const safeNoteIndex = Math.max(0, Math.min(noteIndex, notes.length - 1));
-  const note = notes[safeNoteIndex];
+  const note: SpeakerNote | undefined = notes[safeNoteIndex];
+  const noteText = note?.text ?? '';
+  const noteSelectors = note?.selectors ?? [];
   const [targetRect, setTargetRect] = useState<DOMRect | null>(null);
   const [narrationActive, setNarrationActive] = useState(false);
   const [narrationPaused, setNarrationPaused] = useState(false);
@@ -356,9 +358,9 @@ function SpeakerNotesPanel({ notes, noteIndex, onChange, canAdvanceScene, onAdva
   advanceRef.current = { notesLength: notes.length, noteIndex: safeNoteIndex, canAdvanceScene, onChange, onAdvanceScene };
 
   useEffect(() => {
-    if (!narrationActive || !speechSupported) return;
+    if (!narrationActive || !speechSupported || !noteText) return;
     const synth = window.speechSynthesis;
-    const utterance = new SpeechSynthesisUtterance(note.text);
+    const utterance = new SpeechSynthesisUtterance(noteText);
     const voices = synth.getVoices();
     utterance.voice = voices.find((voice) => voice.lang.toLowerCase() === 'zh-cn') ?? voices.find((voice) => voice.lang.toLowerCase().startsWith('zh')) ?? null;
     utterance.lang = utterance.voice?.lang ?? 'zh-CN';
@@ -374,7 +376,7 @@ function SpeakerNotesPanel({ notes, noteIndex, onChange, canAdvanceScene, onAdva
     synth.speak(utterance);
     setNarrationPaused(false);
     return () => { utterance.onend = null; utterance.onerror = null; synth.cancel(); };
-  }, [narrationActive, note.text, speechSupported]);
+  }, [narrationActive, noteText, speechSupported]);
 
   useEffect(() => () => window.speechSynthesis?.cancel(), []);
 
@@ -392,39 +394,55 @@ function SpeakerNotesPanel({ notes, noteIndex, onChange, canAdvanceScene, onAdva
     setNarrationPaused(false);
   };
   const narrationStatus = !speechSupported ? '语音不可用' : narrationActive ? (narrationPaused ? '已暂停' : '正在朗读') : '准备朗读';
-  const progress = ((safeNoteIndex + 1) / notes.length) * 100;
   const goToNext = () => {
     if (safeNoteIndex < notes.length - 1) onChange(safeNoteIndex + 1);
     else if (canAdvanceScene) onAdvanceScene();
   };
   useLayoutEffect(() => {
-    const update = () => { const stage = document.querySelector('[data-ppt-canvas]'); const target = stage ? note.selectors.map((selector) => stage.querySelector(selector)).find(Boolean) : null; setTargetRect(target?.getBoundingClientRect() ?? null); };
+    const update = () => {
+      const stage = document.querySelector('[data-ppt-canvas]');
+      const target = stage && noteSelectors.length ? noteSelectors.map((selector) => stage.querySelector(selector)).find(Boolean) : null;
+      setTargetRect(target?.getBoundingClientRect() ?? null);
+    };
     update();
     const timer = window.setInterval(update, 240);
     window.addEventListener('resize', update);
     return () => { window.clearInterval(timer); window.removeEventListener('resize', update); };
   }, [note]);
   return (
-    <aside className="scenedeck-inspector" aria-label="智能讲稿检查器">
-      {targetRect && <div className="scenedeck-focus-ring" style={{ top: targetRect.top - 7, left: targetRect.left - 7, width: targetRect.width + 14, height: targetRect.height + 14 }} aria-hidden="true" />}
-      <div className="scenedeck-inspector__head">
-        <Typography as="h2" variant="h3" tone="inherit">智能讲稿</Typography>
-        <div className={'scenedeck-inspector__status' + (narrationActive && !narrationPaused ? ' is-active' : '')}><span aria-hidden="true" /><Typography as="span" variant="bodySmall" tone="inherit">{narrationStatus}</Typography></div>
-      </div>
-      <div className="scenedeck-inspector__progress-head">
-        <Typography as="span" variant="bodySmall" tone="muted">当前讲稿</Typography>
-        <Typography as="span" variant="bodySmall" tone="muted">{safeNoteIndex + 1} / {notes.length}</Typography>
-      </div>
-      <div className="scenedeck-inspector__progress" role="progressbar" aria-label="讲稿进度" aria-valuemin={1} aria-valuemax={notes.length} aria-valuenow={safeNoteIndex + 1}><span style={{ width: progress + '%' }} /></div>
-      <div className="scenedeck-inspector__script"><Typography variant="bodySmall" tone="main">{note.text}</Typography></div>
-      <div className="scenedeck-inspector__target"><span aria-hidden="true" /><Typography as="span" variant="bodySmall" tone="inherit">已聚焦当前区域</Typography></div>
-      <div className="scenedeck-inspector__transport" aria-label="讲稿播放控制">
-        <button type="button" disabled={safeNoteIndex === 0} onClick={() => onChange(safeNoteIndex - 1)} aria-label="上一段" title="上一段">‹</button>
-        <button className="is-primary" type="button" onClick={toggleNarration} disabled={!speechSupported} aria-label={narrationActive && !narrationPaused ? '暂停朗读' : narrationPaused ? '继续朗读' : '开始朗读'} title={speechSupported ? (narrationActive && !narrationPaused ? '暂停朗读' : '开始朗读') : '当前浏览器不支持语音朗读'}>{narrationActive && !narrationPaused ? 'Ⅱ' : '▶'}</button>
-        <button type="button" onClick={stopNarration} disabled={!narrationActive} aria-label="停止朗读" title="停止朗读">■</button>
-        <button type="button" disabled={safeNoteIndex === notes.length - 1 && !canAdvanceScene} onClick={goToNext} aria-label="下一段" title="下一段">›</button>
-      </div>
-      <Typography variant="bodySmall" tone="muted" className="scenedeck-inspector__continuous">连续播放</Typography>
+    <aside className="scenedeck-notes" aria-label="智能讲稿">
+      {targetRect && <div className="scenedeck-focus-ring" style={{ top: targetRect.top - 6, left: targetRect.left - 6, width: targetRect.width + 12, height: targetRect.height + 12 }} aria-hidden="true" />}
+      <header className="scenedeck-notes__head">
+        <span className="scenedeck-notes__badge" aria-hidden="true"><Icon name="sparkle" /></span>
+        <span className="scenedeck-notes__heading">
+          <Typography as="h2" variant="body" tone="inherit">智能讲稿</Typography>
+          <Typography as="span" variant="bodySmall" tone="muted" wrap="truncate">{sceneTitle}</Typography>
+        </span>
+        <button className="scenedeck-notes__close" type="button" onClick={onClose} aria-label="关闭智能讲稿" title="关闭（N）"><Icon name="close" /></button>
+      </header>
+      {note ? <>
+        <div className="scenedeck-notes__meter" role="progressbar" aria-label="讲稿进度" aria-valuemin={1} aria-valuemax={notes.length} aria-valuenow={safeNoteIndex + 1}>
+          {notes.map((item, index) => <button key={item.text + index} type="button" className={'scenedeck-notes__tick' + (index === safeNoteIndex ? ' is-current' : '') + (index < safeNoteIndex ? ' is-done' : '')} onClick={() => onChange(index)} aria-label={'跳到第 ' + (index + 1) + ' 段'} title={'第 ' + (index + 1) + ' 段'} />)}
+        </div>
+        <div className="scenedeck-notes__meta">
+          <span className={'scenedeck-notes__status' + (narrationActive && !narrationPaused ? ' is-live' : '')}><span aria-hidden="true" /><Typography as="span" variant="bodySmall" tone="inherit" wrap="nowrap">{narrationStatus}</Typography></span>
+          <Typography as="span" variant="bodySmall" tone="muted" wrap="nowrap" className="scenedeck-notes__counter">第 {safeNoteIndex + 1} / {notes.length} 段</Typography>
+        </div>
+        <div className="scenedeck-notes__script">
+          <Typography as="p" variant="body" tone="main">{note.text}</Typography>
+        </div>
+        <div className="scenedeck-notes__transport" aria-label="讲稿播放控制">
+          <button className="scenedeck-notes__button" type="button" disabled={safeNoteIndex === 0} onClick={() => onChange(safeNoteIndex - 1)} title="上一段"><Icon name="chevronLeft" /><Typography as="span" variant="bodySmall" tone="inherit" wrap="nowrap">上一段</Typography></button>
+          <button className="scenedeck-notes__button is-primary" type="button" onClick={toggleNarration} disabled={!speechSupported} title={speechSupported ? (narrationActive && !narrationPaused ? '暂停朗读' : '开始朗读') : '当前浏览器不支持语音朗读'}><Icon name={narrationActive && !narrationPaused ? 'pause' : 'play'} /><Typography as="span" variant="bodySmall" tone="inherit" wrap="nowrap">{narrationActive && !narrationPaused ? '暂停' : narrationPaused ? '继续' : '朗读'}</Typography></button>
+          <button className="scenedeck-notes__button" type="button" onClick={stopNarration} disabled={!narrationActive} title="停止朗读"><Icon name="stop" /><Typography as="span" variant="bodySmall" tone="inherit" wrap="nowrap">停止</Typography></button>
+          <button className="scenedeck-notes__button" type="button" disabled={safeNoteIndex === notes.length - 1 && !canAdvanceScene} onClick={goToNext} title="下一段"><Icon name="chevronRight" /><Typography as="span" variant="bodySmall" tone="inherit" wrap="nowrap">下一段</Typography></button>
+        </div>
+        {targetRect && <div className="scenedeck-notes__focus"><span aria-hidden="true" /><Typography as="span" variant="bodySmall" tone="inherit" wrap="nowrap">已聚焦当前区域</Typography></div>}
+        <Typography as="p" variant="bodySmall" tone="muted" className="scenedeck-notes__hint">{canAdvanceScene ? '每段读完自动继续，读完本页自动翻页。' : '每段读完自动继续下一段。'}</Typography>
+      </> : <div className="scenedeck-notes__empty">
+        <Typography as="p" variant="body" tone="muted">这一页还没有讲稿。</Typography>
+        <Typography as="p" variant="bodySmall" tone="muted">补充讲稿后，这里会逐段显示提示并支持朗读。</Typography>
+      </div>}
     </aside>
   );
 }
