@@ -1,7 +1,5 @@
 import { AIMessage, HumanMessage, type BaseMessage } from "@langchain/core/messages";
 import type { StructuredToolInterface } from "@langchain/core/tools";
-import { ChatOpenAI } from "@langchain/openai";
-import { createAgent } from "langchain";
 import type { AgentEvent, Settings } from "./types";
 
 export const SYSTEM_PROMPT = `你是「Web Agent」——一个运行在浏览器里的智能体 Demo。
@@ -15,7 +13,7 @@ export const SYSTEM_PROMPT = `你是「Web Agent」——一个运行在浏览�
 
 回答要求：
 - 用中文回答，语气专业但简洁。
-- 使用 Markdown：小标题、短列表、必要时用表格；公式用行内代码或 LaTeX 风格文本。
+- 使用 Markdown：小标题、短列表、必要时用表格；公式写成行内代码或 LaTeX 风格文本。
 - 引用工具返回的来源链接，让用户能自行核对。
 - 结尾不要写「希望这对你有帮助」之类的客套话。`;
 
@@ -95,34 +93,24 @@ function prettyArgs(input: unknown): string {
   return String(input ?? "");
 }
 
-function friendlyError(error: unknown): string {
+export function friendlyError(error: unknown): string {
   const message = error instanceof Error ? error.message : String(error);
   if (/401|invalid_api_key|Incorrect API key/i.test(message)) {
-    return "API Key 无效或已过期（401）。请在右上角设置里检查 Key，或切回演示模式。";
+    return "API Key 无效或已过期（401）。请在设置里检查 Key，或切换到离线演示模式。";
   }
   if (/429|rate limit/i.test(message)) {
     return "请求被限流（429）。稍等几秒再试，或换一个模型。";
   }
-  if (/Failed to fetch|NetworkError|Load failed/i.test(message)) {
-    return `网络请求失败：无法连接到接口地址。请检查 Base URL、网络代理，以及该服务是否允许浏览器跨域调用（CORS）。`;
+  if (/insufficient|quota|余额|额度/i.test(message)) {
+    return `账户额度不足：${message}`;
   }
-  if (/404|model_not_found|does not exist/i.test(message)) {
-    return `模型不可用：${message}。请在设置里确认模型名称。`;
+  if (/Failed to fetch|NetworkError|Load failed|fetch failed/i.test(message)) {
+    return "网络请求失败：无法连接到接口地址。请检查 Base URL、本机网络代理，以及该服务是否允许浏览器跨域调用（CORS）。";
+  }
+  if (/404|model_not_found|does not exist|not supported/i.test(message)) {
+    return `模型不可用：${message}。请在设置里更换模型，例如 gpt-5.4-mini。`;
   }
   return message;
-}
-
-export function buildModel(settings: Settings): ChatOpenAI {
-  return new ChatOpenAI({
-    model: settings.model,
-    apiKey: settings.apiKey || "not-needed",
-    temperature: settings.temperature,
-    streaming: true,
-    maxRetries: 1,
-    configuration: {
-      baseURL: settings.baseUrl || undefined,
-    },
-  });
 }
 
 export function toMessages(
@@ -140,10 +128,24 @@ export function toMessages(
 export async function runLiveAgent(params: RunAgentParams): Promise<void> {
   const { settings, tools, emit, signal, history, input } = params;
   if (!settings.apiKey) {
-    throw new Error("缺少 API Key：请在设置里填写，或切换到演示模式。");
+    throw new Error("缺少 API Key：请在设置里填写，或切换到离线演示模式。");
   }
 
-  const model = buildModel(settings);
+  // LangChain 体积较大，只有真正跑模型时才加载
+  const [{ ChatOpenAI }, { createAgent }] = await Promise.all([
+    import("@langchain/openai"),
+    import("langchain"),
+  ]);
+
+  const model = new ChatOpenAI({
+    model: settings.model,
+    apiKey: settings.apiKey,
+    temperature: settings.temperature,
+    streaming: true,
+    maxRetries: 1,
+    configuration: { baseURL: settings.baseUrl || undefined },
+  });
+
   const agent = createAgent({ model, tools, systemPrompt: SYSTEM_PROMPT });
   const messages = toMessages(history, input);
 
@@ -181,5 +183,3 @@ export async function runLiveAgent(params: RunAgentParams): Promise<void> {
     }
   }
 }
-
-export { friendlyError };
