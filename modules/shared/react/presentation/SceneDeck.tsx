@@ -57,9 +57,33 @@ function useSceneScale(viewportRef: RefObject<HTMLDivElement | null>) {
 
 function requestStageFullscreen(viewport: HTMLDivElement | null) {
   if (!viewport?.requestFullscreen) return;
-  const fullscreenScale = Math.min(window.screen.width / SCENE_WIDTH, window.screen.height / SCENE_HEIGHT);
-  viewport.style.setProperty('--scenedeck-fullscreen-scale', String(fullscreenScale));
   void viewport.requestFullscreen({ navigationUI: 'hide' });
+}
+
+/** The presentation scale is measured from the fullscreen element itself, so the slide fills the screen edge to edge. */
+function useFullscreenScale(viewportRef: RefObject<HTMLDivElement | null>) {
+  useEffect(() => {
+    const viewport = viewportRef.current;
+    if (!viewport) return;
+    const apply = () => {
+      if (document.fullscreenElement !== viewport) {
+        viewport.style.removeProperty('--scenedeck-fullscreen-scale');
+        return;
+      }
+      const width = viewport.clientWidth || window.innerWidth;
+      const height = viewport.clientHeight || window.innerHeight;
+      if (!width || !height) return;
+      viewport.style.setProperty('--scenedeck-fullscreen-scale', String(Math.min(width / SCENE_WIDTH, height / SCENE_HEIGHT)));
+    };
+    const onFullscreenChange = () => { apply(); window.requestAnimationFrame(apply); };
+    apply();
+    document.addEventListener('fullscreenchange', onFullscreenChange);
+    window.addEventListener('resize', apply);
+    return () => {
+      document.removeEventListener('fullscreenchange', onFullscreenChange);
+      window.removeEventListener('resize', apply);
+    };
+  }, [viewportRef]);
 }
 
 const ICON_PATHS = {
@@ -129,6 +153,7 @@ export function SceneDeck({ catalog, moduleId, progressKey, getNotes }: SceneDec
   const notes = useMemo(() => getNotes?.(scene.id, activeDeck.id) ?? [], [activeDeck.id, getNotes, scene.id]);
   const scale = useSceneScale(viewportRef);
   const thumbnailScale = useThumbnailScale(sidebarListRef);
+  useFullscreenScale(viewportRef);
 
   useLayoutEffect(() => setNoteIndex(0), [scene.id]);
 

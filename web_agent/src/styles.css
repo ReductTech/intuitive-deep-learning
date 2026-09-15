@@ -1031,11 +1031,14 @@ pre {
   color: var(--text);
   font-family: inherit;
   font-size: 27.2px;
-  line-height: 1.62;
+  line-height: 1.6;
   resize: none;
   outline: none;
-  padding: 7.5px 0;
+  padding: 6px 0;
   max-height: 252px;
+  /* 高度跟随内容：不依赖 JS 写死的内联高度，字号变化也不会裁字 */
+  field-sizing: content;
+  overflow-y: auto;
 }
 
 .composer-box textarea::placeholder {
@@ -1050,6 +1053,7 @@ pre {
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
   color: #fff;
   font-size: 26px;
+  line-height: 1.35;
   font-weight: 600;
   box-shadow: 0 10px 24px rgba(111, 140, 255, 0.3);
   transition: all 0.16s ease;

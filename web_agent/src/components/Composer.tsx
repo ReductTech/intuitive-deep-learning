@@ -6,6 +6,12 @@ const SUGGESTIONS = [
   "什么是 Transformer 架构",
 ];
 
+/** 支持 field-sizing 的浏览器交给 CSS 撑高，其余走 JS 兜底 */
+const SUPPORTS_FIELD_SIZING =
+  typeof CSS !== "undefined" &&
+  typeof CSS.supports === "function" &&
+  CSS.supports("field-sizing", "content");
+
 export function Composer({
   onSend,
   onStop,
@@ -23,8 +29,13 @@ export function Composer({
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    if (SUPPORTS_FIELD_SIZING) {
+      el.style.removeProperty("height");
+      return;
+    }
+    // 兜底：按内容重算高度，上限交给 CSS 的 max-height 裁剪
     el.style.height = "auto";
-    el.style.height = `${Math.min(el.scrollHeight, 168)}px`;
+    el.style.height = `${el.scrollHeight}px`;
   }, [value]);
 
   const submit = () => {
