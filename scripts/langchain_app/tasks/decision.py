@@ -1,11 +1,13 @@
 from __future__ import annotations
 
 from functools import lru_cache
+import re
 from typing import Any, Literal
 
 from ..dependencies import load_parts
 from ..structured import run_structured
 from .common import optional_text, require_text
+from .decision_cache import cached_decision_intake, cached_extra_decision_factors
 
 
 FACTOR_DIMENSIONS = """
@@ -22,6 +24,28 @@ FACTOR_DIMENSIONS = """
 
 因素名可以使用上面的维度名，也可以结合当前决策做具体化，例如把“经济条件”写成“经济压力”，但语义必须明确属于其中一个维度，不要创造范围外的新维度。
 """.strip()
+
+
+def split_value_scale(
+    question: Any,
+    min_desc: Any = None,
+    max_desc: Any = None,
+) -> tuple[str, str, str]:
+    text = str(question or "").strip()
+    explicit_min = str(min_desc or "").strip()
+    explicit_max = str(max_desc or "").strip()
+    match = re.search(r"[（(]([^（）()]*)[）)]\s*$", text)
+    if match:
+        scale = match.group(1)
+        text = text[:match.start()].strip()
+        if not explicit_min or not explicit_max:
+            parts = re.split(r"[,，]\s*1\s*[=:：]\s*", scale, maxsplit=1)
+            if len(parts) == 2:
+                zero_match = re.match(r"\s*0\s*[=:：]\s*(.+?)\s*$", parts[0])
+                if zero_match:
+                    explicit_min = explicit_min or zero_match.group(1).strip()
+                    explicit_max = explicit_max or parts[1].strip()
+    return text, explicit_min, explicit_max
 
 
 INTAKE_PROMPT = """
@@ -47,6 +71,7 @@ INTAKE_PROMPT = """
    - first_factor_direction：原始强度越高越支持 positive_label 时为 positive，越削弱时为 negative。
    - first_factor_value_label：用户可以直接评分的具体原始变量名。
    - first_factor_value_question：询问用户当前真实强度的问题，不要替用户给出答案。
+   - first_factor_min_desc / first_factor_max_desc：分别描述 0 和 1 代表什么，不要把它们写进 value_question 的括号。
    - first_factor_explanation：一句简短说明，解释它为什么影响当前决策。
    - suggested_importance：网页第一幕展示的建议权重，0-1；这是因素对当前决策的重要性，不是用户的真实强度。
 9. suggested_importance 需要有区分度，避免无理由固定输出 0.5。
@@ -76,9 +101,10 @@ EXTRA_FACTORS_PROMPT = """
 6. value_label 是用户可以直接评分的具体原始变量名，不要为了保持正向而改写成不自然的变量。
 7. suggested_importance 是 AI 给出的建议权重 w，范围 0-1；用户不会填写或修改这个权重。
 8. value_question 询问用户目前在 value_label 上的真实状态，也就是让用户填写输入 x。
-9. 不要输出 importance_question，也不要替用户建议 value。
-10. explanation 用一句简短说明解释这个因素为什么影响当前决策。
-11. 所有内容都围绕规范后的当前决策，不要重新引入多选、对比或并列结构。
+9. min_desc 和 max_desc 分别说明评分 0 与评分 1 的含义，简洁、对称，不要包含“0=”或“1=”前缀。
+10. 不要把量表说明放进 value_question 的括号；不要输出 importance_question，也不要替用户建议 value。
+11. explanation 用一句简短说明解释这个因素为什么影响当前决策。
+12. 所有内容都围绕规范后的当前决策，不要重新引入多选、对比或并列结构。
 
 输出必须严格符合下面格式：
 {format_instructions}
@@ -101,12 +127,19 @@ def prepare_intake_result(result: dict[str, Any]) -> dict[str, Any]:
     }
     if status == "ok":
         direction = str(result.get("first_factor_direction") or "positive")
+        first_question, first_min_desc, first_max_desc = split_value_scale(
+            result.get("first_factor_value_question"),
+            result.get("first_factor_min_desc"),
+            result.get("first_factor_max_desc"),
+        )
         response["primary_factor"] = {
             "name": str(result.get("first_factor_name") or "").strip(),
             "direction": direction,
             "value_transform": value_transform(direction),
             "value_label": str(result.get("first_factor_value_label") or "").strip(),
-            "value_question": str(result.get("first_factor_value_question") or "").strip(),
+            "value_question": first_question,
+            "min_desc": first_min_desc,
+            "max_desc": first_max_desc,
             "explanation": str(result.get("first_factor_explanation") or "").strip(),
             "suggested_importance": float(result.get("suggested_importance", 0.5)),
         }
@@ -123,6 +156,14 @@ def prepare_extra_factors_result(result: dict[str, Any]) -> dict[str, Any]:
             continue
         item = dict(factor)
         direction = str(item.get("direction") or "positive")
+        question, min_desc, max_desc = split_value_scale(
+            item.get("value_question"),
+            item.get("min_desc"),
+            item.get("max_desc"),
+        )
+        item["value_question"] = question
+        item["min_desc"] = min_desc
+        item["max_desc"] = max_desc
         item["value_transform"] = value_transform(direction)
         prepared.append(item)
     return {"factors": prepared}
@@ -143,6 +184,8 @@ def _parsers() -> tuple[Any, Any]:
         )
         first_factor_value_label: str = parts.Field(description="The concrete raw variable the learner can rate.")
         first_factor_value_question: str = parts.Field(description="A natural question asking for the learner's current raw value.")
+        first_factor_min_desc: str = parts.Field(default="", description="What a raw score of 0 means, without a numeric prefix.")
+        first_factor_max_desc: str = parts.Field(default="", description="What a raw score of 1 means, without a numeric prefix.")
         first_factor_explanation: str = parts.Field(description="One concise explanation of why this factor matters.")
         suggested_importance: float = parts.Field(ge=0, le=1, description="Suggested first-scene importance weight.")
         reason: str = parts.Field(description="A concise explanation for normalization, refusal, or uncertainty.")
@@ -154,6 +197,8 @@ def _parsers() -> tuple[Any, Any]:
         )
         value_label: str = parts.Field(description="The concrete raw variable the learner can rate.")
         value_question: str = parts.Field(description="A natural question asking for the learner's current raw value.")
+        min_desc: str = parts.Field(default="", description="What a raw score of 0 means, without a numeric prefix.")
+        max_desc: str = parts.Field(default="", description="What a raw score of 1 means, without a numeric prefix.")
         suggested_importance: float = parts.Field(
             ge=0,
             le=1,
@@ -170,7 +215,7 @@ def _parsers() -> tuple[Any, Any]:
     )
 
 
-def analyze_decision_intake(payload: dict[str, Any], timeout: float) -> dict[str, Any]:
+def generate_decision_intake_uncached(payload: dict[str, Any], timeout: float) -> dict[str, Any]:
     raw_decision = optional_text(payload, "decision", "读研")
     parser, _ = _parsers()
     return run_structured(
@@ -183,7 +228,15 @@ def analyze_decision_intake(payload: dict[str, Any], timeout: float) -> dict[str
     )
 
 
-def generate_extra_decision_factors(payload: dict[str, Any], timeout: float) -> dict[str, Any]:
+def analyze_decision_intake(payload: dict[str, Any], timeout: float) -> dict[str, Any]:
+    raw_decision = optional_text(payload, "decision", "读研")
+    cached = cached_decision_intake(raw_decision)
+    if cached is not None:
+        return cached
+    return generate_decision_intake_uncached(payload, timeout)
+
+
+def generate_extra_decision_factors_uncached(payload: dict[str, Any], timeout: float) -> dict[str, Any]:
     decision = require_text(payload, "decision", "缺少规范化后的决策。")
     positive_label = require_text(payload, "positive_label", "缺少正向标签。")
     negative_label = require_text(payload, "negative_label", "缺少反向标签。")
@@ -206,3 +259,10 @@ def generate_extra_decision_factors(payload: dict[str, Any], timeout: float) -> 
         error_tag="decision-extra-factors-parse-error",
         transform=prepare_extra_factors_result,
     )
+
+
+def generate_extra_decision_factors(payload: dict[str, Any], timeout: float) -> dict[str, Any]:
+    cached = cached_extra_decision_factors(payload)
+    if cached is not None:
+        return cached
+    return generate_extra_decision_factors_uncached(payload, timeout)

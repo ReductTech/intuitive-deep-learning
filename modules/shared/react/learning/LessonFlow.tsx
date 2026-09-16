@@ -29,6 +29,23 @@ export interface LessonFlowProps {
 
 interface LessonProgressState { completedIds?: string[]; visibleCount?: number; completed?: boolean; }
 
+function readLocalProgress(progressKey: string): LessonProgressState | null {
+  try {
+    const value = window.localStorage.getItem(progressKey);
+    return value ? JSON.parse(value) as LessonProgressState : null;
+  } catch {
+    return null;
+  }
+}
+
+function writeLocalProgress(progressKey: string, state: LessonProgressState) {
+  try {
+    window.localStorage.setItem(progressKey, JSON.stringify(state));
+  } catch {
+    // Telemetry remains the fallback when storage is unavailable.
+  }
+}
+
 /** Manages lesson-step visibility; individual blocks only report their own completion. */
 export function LessonFlow({
   steps,
@@ -57,6 +74,7 @@ export function LessonFlow({
     setVisibleCount(Math.min(1, steps.length));
     setRevealedIndex(null);
     setCueIndex(null);
+    writeLocalProgress(progressKey, { completedIds: [], visibleCount: Math.min(1, steps.length), completed: false });
     emitTelemetry('lesson_reset', rootRef.current, { state_key: progressKey, state: { completedIds: [], visibleCount: Math.min(1, steps.length), completed: false } });
   }, [progressKey, steps.length]);
 
@@ -70,6 +88,7 @@ export function LessonFlow({
     completedIdsRef.current = nextCompleted;
     visibleCountRef.current = nextVisibleCount;
     setCompletedIds(nextCompleted);
+    writeLocalProgress(progressKey, { completedIds: nextCompleted, visibleCount: nextVisibleCount, completed: lessonCompleted });
     emitTelemetry('lesson_progress', rootRef.current, { state_key: progressKey, state: { completedIds: nextCompleted, visibleCount: nextVisibleCount, completed: lessonCompleted } });
     if (lessonCompleted) emitTelemetry('module_complete', rootRef.current, { state_key: `module:${moduleKey}`, state: { completed: true, completedIds: nextCompleted } });
     if (nextIndex < steps.length) {
@@ -95,13 +114,14 @@ export function LessonFlow({
     let active = true;
     void getTelemetryState<LessonProgressState>(progressKey, moduleKey).then((entry) => {
       if (!active) return;
-      if (!entry?.state) {
+      const restoredState = readLocalProgress(progressKey) ?? entry?.state;
+      if (!restoredState) {
         hydratedRef.current = true;
         setHydrated(true);
         return;
       }
-      const restoredIds = Array.isArray(entry.state.completedIds) ? entry.state.completedIds.filter((id) => steps.some((step) => step.id === id)) : [];
-      const restoredVisible = Number(entry.state.visibleCount);
+      const restoredIds = Array.isArray(restoredState.completedIds) ? restoredState.completedIds.filter((id) => steps.some((step) => step.id === id)) : [];
+      const restoredVisible = Number(restoredState.visibleCount);
       const nextVisibleCount = Number.isFinite(restoredVisible) ? Math.min(steps.length, Math.max(1, restoredVisible)) : Math.min(steps.length, restoredIds.length + 1);
       completedIdsRef.current = restoredIds;
       visibleCountRef.current = nextVisibleCount;

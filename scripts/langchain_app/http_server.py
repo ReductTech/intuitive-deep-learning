@@ -13,6 +13,7 @@ from .dependencies import dependency_status
 from .errors import INTERNAL_ERROR, NOT_FOUND, user_facing_input_error, user_facing_service_error
 from .registry import ENDPOINTS, ROUTES
 from .structured import TaskResult
+from .tasks.decision_cache import decision_cache_status
 
 
 class LangChainServiceHandler(BaseHTTPRequestHandler):
@@ -127,6 +128,7 @@ class LangChainServiceHandler(BaseHTTPRequestHandler):
                 "apiKeyConfigured": bool(LLM_SETTINGS.auth_token),
                 "settingsPath": str(LLM_SETTINGS.source_path),
                 "dependencies": dependency_status(),
+                "precomputedCaches": {"decisionCandidates": decision_cache_status()},
                 "endpoints": [endpoint.path for endpoint in ENDPOINTS],
             },
         )

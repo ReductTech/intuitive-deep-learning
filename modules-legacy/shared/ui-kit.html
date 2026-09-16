@@ -1,0 +1,1671 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DL UI Kit · 教学界面组件</title>
+  <link rel="stylesheet" href="./base.css">
+  <link rel="stylesheet" href="./module-components.css">
+  <style>
+    .kit-shell {
+      max-width: 1180px;
+    }
+
+    .kit-header {
+      max-width: 760px;
+      margin-bottom: 26px;
+    }
+
+    .kit-header .edu-title {
+      font-size: 36px;
+      letter-spacing: 0;
+    }
+
+    .kit-section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 14px;
+      border-bottom: 1px solid var(--ui-border);
+      padding-bottom: 14px;
+    }
+
+    .kit-section-head h2 {
+      margin: 0;
+      color: var(--ui-text-main);
+      font-size: 24px;
+      line-height: 1.25;
+    }
+
+    .kit-section-head p {
+      max-width: 620px;
+      margin: 0;
+      color: var(--ui-text-muted);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .foundation-catalog {
+      display: grid;
+      gap: 30px;
+    }
+
+    .foundation-entry {
+      border-bottom: 1px solid var(--ui-border);
+      padding: 8px 0 30px;
+    }
+
+    .foundation-entry-head {
+      max-width: 820px;
+      margin-bottom: 14px;
+    }
+
+    .foundation-entry-head h3 {
+      margin: 0;
+      color: var(--ui-text-main);
+      font-size: 17px;
+      font-weight: 900;
+      line-height: 1.35;
+    }
+
+    .foundation-entry-head p {
+      margin: 6px 0 0;
+      color: var(--ui-text-muted);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .foundation-preview {
+      width: min(940px, 100%);
+    }
+
+    .foundation-preview--compact {
+      width: min(760px, 100%);
+    }
+
+    .foundation-stack {
+      display: grid;
+      gap: 12px;
+    }
+
+    .foundation-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .foundation-value-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .visual-catalog {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px 28px;
+    }
+
+    .visual-entry {
+      display: grid;
+      min-width: 0;
+      align-content: start;
+      gap: 12px;
+      border-bottom: 1px solid var(--ui-border);
+      padding: 8px 0 26px;
+    }
+
+    .visual-entry--wide {
+      grid-column: 1 / -1;
+    }
+
+    .visual-entry-head h3 {
+      margin: 0;
+      color: var(--ui-text-main);
+      font-size: 17px;
+      font-weight: 900;
+      line-height: 1.35;
+    }
+
+    .visual-entry-head p {
+      margin: 6px 0 0;
+      color: var(--ui-text-muted);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .visual-canvas,
+    .visual-plot {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 8;
+      border: 1px solid var(--ui-border);
+      border-radius: var(--ui-radius-sm);
+      background: var(--ui-bg-muted);
+    }
+
+    .visual-canvas {
+      height: auto;
+      touch-action: none;
+    }
+
+    .visual-plot {
+      min-height: 260px;
+      overflow: hidden;
+    }
+
+    .visual-plot .plot-container,
+    .visual-plot .svg-container {
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    .visual-canvas--short {
+      aspect-ratio: 16 / 6;
+    }
+
+    .visual-canvas--tall {
+      aspect-ratio: 16 / 10;
+    }
+
+    .visual-readout {
+      min-height: 20px;
+      color: var(--ui-text-muted);
+      font-family: var(--ui-font-mono);
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1.5;
+    }
+
+    .button-catalog {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 28px;
+    }
+
+    .button-entry {
+      display: grid;
+      grid-template-columns: minmax(148px, 0.42fr) minmax(0, 1fr);
+      align-items: center;
+      gap: 18px;
+      min-height: 116px;
+      border-bottom: 1px solid var(--ui-border);
+      padding: 18px 0;
+    }
+
+    .button-preview {
+      display: flex;
+      min-width: 0;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .button-copy {
+      min-width: 0;
+    }
+
+    .button-copy h3 {
+      margin: 0;
+      color: var(--ui-text-main);
+      font-size: 15px;
+      font-weight: 900;
+      line-height: 1.35;
+    }
+
+    .button-copy p {
+      margin: 6px 0 0;
+      color: var(--ui-text-muted);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .button-class {
+      display: inline-block;
+      margin-top: 7px;
+      color: var(--ui-accent);
+      font-family: var(--ui-font-mono);
+      font-size: 11px;
+      font-weight: 800;
+      overflow-wrap: anywhere;
+    }
+
+    .kit-section + .kit-section {
+      margin-top: 34px;
+    }
+
+    .control-catalog {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 28px;
+    }
+
+    .control-entry {
+      display: grid;
+      grid-template-columns: minmax(190px, 0.56fr) minmax(0, 1fr);
+      align-items: center;
+      gap: 18px;
+      min-height: 136px;
+      border-bottom: 1px solid var(--ui-border);
+      padding: 18px 0;
+    }
+
+    .control-preview,
+    .control-copy {
+      min-width: 0;
+    }
+
+    .control-preview {
+      display: flex;
+      align-items: center;
+    }
+
+    .control-copy h3 {
+      margin: 0;
+      color: var(--ui-text-main);
+      font-size: 15px;
+      font-weight: 900;
+      line-height: 1.35;
+    }
+
+    .control-copy p {
+      margin: 6px 0 0;
+      color: var(--ui-text-muted);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .control-class {
+      display: inline-block;
+      margin-top: 7px;
+      color: var(--ui-accent);
+      font-family: var(--ui-font-mono);
+      font-size: 11px;
+      font-weight: 800;
+      overflow-wrap: anywhere;
+    }
+
+    .flow-patterns {
+      display: grid;
+      gap: 34px;
+    }
+
+    .flow-pattern {
+      width: min(760px, 100%);
+      margin: 0 auto;
+      border-top: 1px solid var(--ui-border);
+      padding: 28px 0 8px;
+    }
+
+    .flow-pattern-head {
+      max-width: 680px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .flow-pattern-head h3 {
+      margin: 0;
+      color: var(--ui-accent);
+      font-size: 21px;
+      font-weight: 950;
+      line-height: 1.3;
+    }
+
+    .flow-pattern-head p {
+      margin: 8px 0 0;
+      color: var(--ui-text-muted);
+      font-size: 13px;
+      font-weight: 760;
+      line-height: 1.7;
+    }
+
+    .flow-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 9px;
+      margin-top: 16px;
+    }
+
+    .flow-result {
+      margin-top: 24px;
+      box-shadow: none;
+    }
+
+    .flow-result .edu-stage-head {
+      margin-bottom: 0;
+    }
+
+    .flow-result-actions {
+      display: flex;
+      justify-content: center;
+      margin-top: 14px;
+    }
+
+    .question-catalog {
+      display: grid;
+      width: min(820px, 100%);
+      gap: 22px;
+      margin: 0 auto;
+    }
+
+    .related-video-demo {
+      width: 100%;
+    }
+
+    .related-video-demo .dl-related-section {
+      margin-top: 0;
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    .flow-scroll-area[hidden],
+    .flow-scroll-indicator[hidden] {
+      display: none;
+    }
+
+    .flow-scroll-indicator {
+      position: fixed;
+      bottom: max(18px, env(safe-area-inset-bottom));
+      left: 50%;
+      z-index: 120;
+      display: grid;
+      grid-template-columns: 34px auto;
+      grid-template-rows: auto auto;
+      align-items: center;
+      column-gap: 10px;
+      min-width: 196px;
+      border: 1px solid rgba(39, 68, 110, 0.18);
+      border-radius: var(--ui-radius-pill);
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: 0 16px 42px rgba(33, 50, 74, 0.18);
+      color: var(--ui-accent);
+      padding: 9px 15px 9px 10px;
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+      backdrop-filter: blur(14px);
+      animation: flow-indicator-bob 1.15s ease-in-out infinite;
+    }
+
+    .flow-scroll-indicator:hover {
+      border-color: rgba(39, 68, 110, 0.34);
+      background: #fff;
+    }
+
+    .flow-scroll-indicator:focus-visible {
+      outline: 3px solid rgba(240, 126, 71, 0.28);
+      outline-offset: 3px;
+    }
+
+    .flow-scroll-indicator-mark {
+      position: relative;
+      grid-row: 1 / 3;
+      display: grid;
+      width: 34px;
+      height: 34px;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--ui-accent-alt);
+      box-shadow: 0 0 0 0 rgba(240, 126, 71, 0.28);
+      animation: flow-indicator-glow 1.15s ease-out infinite;
+    }
+
+    .flow-scroll-indicator-mark::before {
+      width: 8px;
+      height: 8px;
+      border-right: 2px solid #fff;
+      border-bottom: 2px solid #fff;
+      content: "";
+      transform: translateY(-2px) rotate(45deg);
+    }
+
+    .flow-scroll-indicator strong {
+      align-self: end;
+      font-size: 13px;
+      font-weight: 950;
+      line-height: 1.25;
+    }
+
+    .flow-scroll-indicator small {
+      align-self: start;
+      color: var(--ui-text-muted);
+      font-size: 10px;
+      font-weight: 800;
+      line-height: 1.25;
+    }
+
+    @keyframes flow-indicator-bob {
+      0%,
+      100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(5px); }
+    }
+
+    @keyframes flow-indicator-glow {
+      0% { box-shadow: 0 0 0 0 rgba(240, 126, 71, 0.32); }
+      100% { box-shadow: 0 0 0 10px rgba(240, 126, 71, 0); }
+    }
+
+    @media (max-width: 900px) {
+      .button-catalog,
+      .control-catalog {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .kit-section-head {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .button-entry,
+      .control-entry {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .foundation-value-row,
+      .visual-catalog {
+        grid-template-columns: 1fr;
+      }
+
+      .visual-entry--wide {
+        grid-column: auto;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .flow-scroll-indicator,
+      .flow-scroll-indicator-mark {
+        animation: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="edu-root">
+    <section class="edu-shell kit-shell">
+      <header class="kit-header">
+        <h1 class="edu-title">UI Kit</h1>
+        <p class="edu-subtitle">教学模块的统一界面组件与交互规范。</p>
+      </header>
+
+      <section class="kit-section" aria-labelledby="foundationTitle">
+        <header class="kit-section-head">
+          <h2 id="foundationTitle" data-i18n="uiKit.foundation.title">基础展示</h2>
+          <p data-i18n="uiKit.foundation.description">定义每个教学小块的固定结构，以及正文中允许复用的提示、指标、公式和代码运行组件。</p>
+        </header>
+
+        <div class="foundation-catalog">
+          <article class="foundation-entry">
+            <header class="foundation-entry-head">
+              <h3 data-i18n="uiKit.foundation.contentBlock.name">标准内容块</h3>
+              <p data-i18n="uiKit.foundation.contentBlock.usage">每个小块只允许一个大标题、一个副标题和一个正文区。正文可以放段落与标准组件；出现第二个主题时，应拆成新的内容块。</p>
+            </header>
+
+            <section class="edu-content-block foundation-preview" data-i18n-scope="loss.distance">
+              <header class="edu-content-head">
+                <h3 class="edu-content-title"><span data-i18n="loss.distance.title">损失就是距离</span></h3>
+                <p class="edu-content-subtitle"><span data-i18n="loss.distance.subtitle">Loss 衡量真实值和预测值之间差多少。这里先用一条数轴，把这种差距直接画出来。</span></p>
+              </header>
+              <div class="edu-content-body">
+                <p class="edu-body"><span data-i18n="loss.distance.body.intro">训练的目标不是记住一个答案，而是持续缩小预测与真实结果之间的距离。训练的目标不是记住一个答案，而是持续缩小预测与真实结果之间的距离。训练的目标不是记住一个答案，而是持续缩小预测与真实结果之间的距离。训练的目标不是记住一个答案，而是持续缩小预测与真实结果之间的距离。训练的目标不是记住一个答案，而是持续缩小预测与真实结果之间的距离。训练的目标不是记住一个答案，而是持续缩小预测与真实结果之间的距离。</span></p>
+                <p class="edu-body"><span data-i18n="loss.distance.body.observe">先改变预测值，再观察 </span><strong class="edu-emphasis" data-i18n="loss.distance.body.lossName">L1 Loss</strong><span data-i18n="loss.distance.body.change"> 如何变化。</span></p>
+              </div>
+            </section>
+          </article>
+
+          <article class="foundation-entry">
+            <header class="foundation-entry-head">
+              <h3 data-i18n="uiKit.foundation.callout.name">提示框</h3>
+              <p data-i18n="uiKit.foundation.callout.usage">颜色和播放方式是两个独立维度。橙、蓝、绿、红都可以直接显示，也都可以逐字显示；不要用颜色判断是否自动播放。</p>
+            </header>
+
+            <div class="foundation-stack foundation-preview--compact">
+              <div class="edu-callout edu-callout--orange">
+                <strong class="edu-callout-label" data-i18n="loss.task.label">你的任务</strong>
+                <span class="edu-callout-text" data-i18n="loss.task.body">拖动绿色预测值，让它与红色真实值重合，把 Loss 缩小到 0。</span>
+              </div>
+
+              <div class="edu-callout edu-callout--orange edu-callout--stream">
+                <strong class="edu-callout-label" data-i18n="loss.orangeStream.label">思考提示</strong>
+                <span class="edu-callout-text" id="orangeStreamOutput" data-i18n="loss.orangeStream.body" data-stream-output>先比较预测值和真实值，再判断应该向左还是向右移动。</span>
+              </div>
+
+              <div class="edu-callout edu-callout--blue">
+                <strong class="edu-callout-label" data-i18n="loss.observation.label">观察结果</strong>
+                <span class="edu-callout-text" data-i18n="loss.observation.body">预测值越接近真实值，当前样本产生的损失越小。</span>
+              </div>
+
+              <div class="edu-callout edu-callout--blue edu-callout--stream">
+                <strong class="edu-callout-label" data-i18n="loss.blueStream.label">逐步解释</strong>
+                <span class="edu-callout-text" id="blueStreamOutput" data-i18n="loss.blueStream.body" data-stream-output>预测值每靠近真实值一步，损失就会随距离一起减小。</span>
+              </div>
+
+              <div class="edu-callout edu-callout--green">
+                <strong class="edu-callout-label" data-i18n="loss.success.label">完成提示</strong>
+                <span class="edu-callout-text" data-i18n="loss.success.body">预测值已经与真实值重合，本轮损失降到了 0。</span>
+              </div>
+
+              <div class="edu-callout edu-callout--green edu-callout--stream">
+                <strong class="edu-callout-label" data-i18n="loss.greenStream.label">正确反馈</strong>
+                <span class="edu-callout-text" id="greenStreamOutput" data-i18n="loss.greenStream.body" data-stream-output>方向判断正确，继续缩小距离就能进一步降低损失。</span>
+              </div>
+
+              <div class="edu-callout edu-callout--red">
+                <strong class="edu-callout-label" data-i18n="loss.error.label">错误提示</strong>
+                <span class="edu-callout-text" data-i18n="loss.error.body">预测值正在远离真实值，当前操作会让损失继续增大。</span>
+              </div>
+
+              <div class="edu-callout edu-callout--red edu-callout--stream">
+                <strong class="edu-callout-label" data-i18n="loss.redStream.label">风险提醒</strong>
+                <span class="edu-callout-text" id="redStreamOutput" data-i18n="loss.redStream.body" data-stream-output>学习率过大可能越过最低点，导致训练过程来回震荡。</span>
+              </div>
+            </div>
+            <div class="foundation-actions">
+              <button class="edu-btn" type="button" data-stream-replay="orangeStreamOutput"><span data-i18n="uiKit.foundation.callout.replayOrange">重播橙色逐字提示</span></button>
+              <button class="edu-btn" type="button" data-stream-replay="blueStreamOutput"><span data-i18n="uiKit.foundation.callout.replayBlue">重播蓝色逐字提示</span></button>
+              <button class="edu-btn" type="button" data-stream-replay="greenStreamOutput"><span data-i18n="uiKit.foundation.callout.replayGreen">重播绿色逐字提示</span></button>
+              <button class="edu-btn" type="button" data-stream-replay="redStreamOutput"><span data-i18n="uiKit.foundation.callout.replayRed">重播红色逐字提示</span></button>
+            </div>
+          </article>
+
+          <article class="foundation-entry">
+            <header class="foundation-entry-head">
+              <h3 data-i18n="uiKit.foundation.noticeStrip.name">紧凑提示条</h3>
+              <p data-i18n="uiKit.foundation.noticeStrip.usage">用于紧跟图表、模型或控制区显示一句当前状态。它比提示框更轻，不承载长解释、任务说明或答题反馈。</p>
+            </header>
+
+            <div class="foundation-stack foundation-preview--compact">
+              <div class="edu-notice-strip edu-notice-strip--blue">
+                <strong data-i18n="uiKit.foundation.noticeStrip.blueLead">观察状态：</strong>
+                <span data-i18n="uiKit.foundation.noticeStrip.blueBody">已经有 3 个线性神经元了。它们叠加后仍然只是一条直线。</span>
+              </div>
+              <div class="edu-notice-strip edu-notice-strip--orange">
+                <strong data-i18n="uiKit.foundation.noticeStrip.orangeLead">操作提醒：</strong>
+                <span data-i18n="uiKit.foundation.noticeStrip.orangeBody">继续调整参数，比较曲线改变前后的形状。</span>
+              </div>
+              <div class="edu-notice-strip edu-notice-strip--green">
+                <strong data-i18n="uiKit.foundation.noticeStrip.greenLead">阶段完成：</strong>
+                <span data-i18n="uiKit.foundation.noticeStrip.greenBody">当前结果已经满足目标，可以进入下一步。</span>
+              </div>
+              <div class="edu-notice-strip edu-notice-strip--red">
+                <strong data-i18n="uiKit.foundation.noticeStrip.redLead">需要调整：</strong>
+                <span data-i18n="uiKit.foundation.noticeStrip.redBody">当前参数使输出偏离目标，请检查输入范围。</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="foundation-entry">
+            <header class="foundation-entry-head">
+              <h3 data-i18n="uiKit.foundation.valueTile.name">小型指标块</h3>
+              <p data-i18n="uiKit.foundation.valueTile.usage">用于一个短标签和一个关键结果。橙色表示重点结果，蓝色表示普通指标，绿色表示成功，红色表示错误或风险。</p>
+            </header>
+
+            <div class="foundation-value-row foundation-preview">
+              <div class="edu-value-tile edu-value-tile--orange">
+                <span class="edu-value-label" data-i18n-ignore="true">L1 Loss = |真实值 - 预测值|</span>
+                <output class="edu-value-number" data-i18n-ignore="true">5.4</output>
+              </div>
+              <div class="edu-value-tile edu-value-tile--blue">
+                <span class="edu-value-label" data-i18n="metrics.accuracy">验证准确率</span>
+                <output class="edu-value-number" data-i18n-ignore="true">92.4%</output>
+              </div>
+              <div class="edu-value-tile edu-value-tile--success">
+                <span class="edu-value-label" data-i18n="metrics.completed">已完成样本</span>
+                <output class="edu-value-number" data-i18n-ignore="true">128</output>
+              </div>
+              <div class="edu-value-tile edu-value-tile--danger">
+                <span class="edu-value-label" data-i18n="metrics.misclassified">误分类样本</span>
+                <output class="edu-value-number" data-i18n-ignore="true">7</output>
+              </div>
+            </div>
+          </article>
+
+          <article class="foundation-entry">
+            <header class="foundation-entry-head">
+              <h3 data-i18n="uiKit.foundation.formula.name">公式块</h3>
+              <p data-i18n="uiKit.foundation.formula.usage">用于必须独立阅读的公式。普通公式直接排列；带分母的公式使用标准分式结构，保证等号与整条分数线垂直居中。</p>
+            </header>
+
+            <div class="foundation-stack foundation-preview--compact">
+              <div class="edu-formula-block">
+                <div class="edu-formula" aria-label="L2 损失等于真实值减预测值的差的平方" data-i18n-aria-label="loss.formula.expression.aria">
+                  <span class="edu-formula-term" tabindex="0" data-i18n-ignore="true" data-tooltip="L₂：当前样本的平方损失" data-i18n-tooltip="loss.formula.l2.tooltip" aria-label="L2，当前样本的平方损失" data-i18n-aria-label="loss.formula.l2.aria">L₂</span><span data-i18n-ignore="true">(</span><span class="edu-formula-term" tabindex="0" data-i18n-ignore="true" data-tooltip="y：样本的真实目标值" data-i18n-tooltip="loss.formula.target.tooltip" aria-label="y，样本的真实目标值" data-i18n-aria-label="loss.formula.target.aria">y</span><span data-i18n-ignore="true">, </span><span class="edu-formula-term" tabindex="0" data-i18n-ignore="true" data-tooltip="ŷ：模型给出的预测值" data-i18n-tooltip="loss.formula.prediction.tooltip" aria-label="y hat，模型给出的预测值" data-i18n-aria-label="loss.formula.prediction.aria">ŷ</span><span data-i18n-ignore="true">) = (</span><span class="edu-formula-term" tabindex="0" data-i18n-ignore="true" data-tooltip="y：样本的真实目标值" data-i18n-tooltip="loss.formula.target.tooltip" aria-label="y，样本的真实目标值" data-i18n-aria-label="loss.formula.target.aria">y</span><span data-i18n-ignore="true"> - </span><span class="edu-formula-term" tabindex="0" data-i18n-ignore="true" data-tooltip="ŷ：模型给出的预测值" data-i18n-tooltip="loss.formula.prediction.tooltip" aria-label="y hat，模型给出的预测值" data-i18n-aria-label="loss.formula.prediction.aria">ŷ</span><span data-i18n-ignore="true">)</span><span class="edu-formula-term" tabindex="0" data-i18n-ignore="true" data-tooltip="平方：放大较大的预测误差，并消除正负号" data-i18n-tooltip="loss.formula.square.tooltip" aria-label="平方，放大较大的预测误差并消除正负号" data-i18n-aria-label="loss.formula.square.aria">²</span>
+                </div>
+              </div>
+
+              <div class="edu-formula-block">
+                <div class="edu-formula edu-formula--fraction" aria-label="Sigmoid 函数，sigma z 等于一除以一加 e 的负 z 次方">
+                  <span class="edu-formula-prefix" data-i18n-ignore="true">
+                    <span class="edu-formula-term" tabindex="0" data-tooltip="σ：Sigmoid 函数，把任意实数映射到 0～1" aria-label="sigma，Sigmoid 函数">σ</span><span>(</span><span class="edu-formula-term" tabindex="0" data-tooltip="z：模型输出的原始分数" aria-label="z，模型输出的原始分数">z</span><span>) =</span>
+                  </span>
+                  <span class="edu-fraction" data-i18n-ignore="true">
+                    <span class="edu-fraction-numerator">1</span>
+                    <span class="edu-fraction-denominator">1 + e<sup>−<span class="edu-formula-term" tabindex="0" data-tooltip="z：模型输出的原始分数" aria-label="z，模型输出的原始分数">z</span></sup></span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="foundation-entry">
+            <header class="foundation-entry-head">
+              <h3 id="codeBlockDemoTitle" data-i18n="uiKit.foundation.codeBlock.name">代码运行块</h3>
+              <p data-i18n="uiKit.foundation.codeBlock.usage">代码主体只读并使用语法颜色区分。需要学习者完成的位置只能嵌入单行填空，同时保留语言、运行状态、启动、停止、运行时间和请求帮助。</p>
+            </header>
+
+            <section class="edu-code-block foundation-preview" aria-labelledby="codeBlockDemoTitle">
+              <header class="edu-code-toolbar">
+                <span class="edu-code-language" data-i18n-ignore="true">Python</span>
+                <span class="edu-code-status" id="codeRunStatus"><span id="codeRunStatusText" data-i18n="uiKit.code.status.ready">就绪</span></span>
+                <span class="edu-code-runtime"><span data-i18n="uiKit.code.runtime.label">运行时间</span><output id="codeRuntime" data-i18n-ignore="true">0.0 s</output></span>
+                <div class="edu-code-actions">
+                  <button class="edu-btn edu-btn--primary" id="codeStartButton" type="button"><span class="edu-code-action-icon" aria-hidden="true">&#9654;</span><span data-i18n="uiKit.code.start">启动</span></button>
+                  <button class="edu-btn" id="codeStopButton" type="button" disabled><span class="edu-code-action-icon" aria-hidden="true">&#9632;</span><span data-i18n="uiKit.code.stop">停止</span></button>
+                  <button class="edu-btn" id="codeHelpButton" type="button" aria-expanded="false" aria-controls="codeHelp"><span class="edu-code-action-icon" aria-hidden="true">?</span><span data-i18n="uiKit.code.help.request">请求帮助</span></button>
+                </div>
+              </header>
+              <pre class="edu-code-source"><code><span class="edu-code-line" data-i18n-ignore="true"><span class="edu-code-token--keyword">import</span> <span class="edu-code-token--module">torch</span></span>
+<span class="edu-code-line" aria-hidden="true"> </span>
+<span class="edu-code-line" data-i18n-ignore="true">prediction <span class="edu-code-token--operator">=</span> torch.<span class="edu-code-token--function">tensor</span>([<span class="edu-code-token--number">1.6</span>])</span>
+<span class="edu-code-line" data-i18n-ignore="true">target <span class="edu-code-token--operator">=</span> torch.<span class="edu-code-token--function">tensor</span>([<span class="edu-code-token--number">7.0</span>])</span>
+<span class="edu-code-line" data-i18n-ignore="true">loss <span class="edu-code-token--operator">=</span> torch.<input class="edu-code-blank" id="codeBlank" type="text" maxlength="12" autocomplete="off" autocapitalize="none" spellcheck="false" aria-label="填入缺失的函数名" data-i18n-aria-label="uiKit.code.blank.label">(target <span class="edu-code-token--operator">-</span> prediction)</span>
+<span class="edu-code-line" aria-hidden="true"> </span>
+<span class="edu-code-line" data-i18n-ignore="true"><span class="edu-code-token--function">print</span>(<span class="edu-code-token--string">f"L2 loss: {loss.item():.2f}"</span>)</span></code></pre>
+              <div class="edu-code-help" id="codeHelp" hidden>
+                <span id="codeHelpText" data-i18n="uiKit.code.help.body">这里需要填写 PyTorch 中执行平方运算的函数名。</span>
+              </div>
+            </section>
+          </article>
+        </div>
+      </section>
+
+      <section class="kit-section" aria-labelledby="visualsTitle">
+        <header class="kit-section-head">
+          <h2 id="visualsTitle" data-i18n="uiKit.visuals.title">神经元与坐标</h2>
+          <p data-i18n="uiKit.visuals.description">用于展示网络结构、函数关系和训练误差的共享可视化。坐标画布保留拖动、缩放或旋转交互。</p>
+        </header>
+
+        <div class="visual-catalog">
+          <article class="visual-entry visual-entry--wide">
+            <header class="visual-entry-head">
+              <h3 data-i18n="uiKit.visuals.neuron.name">轻量神经元结构</h3>
+              <p data-i18n="uiKit.visuals.neuron.usage">用于解释输入、权重、加权汇总与输出之间的关系。</p>
+            </header>
+            <div id="networkGraphDemo" data-i18n-ignore="true"></div>
+          </article>
+
+          <article class="visual-entry">
+            <header class="visual-entry-head">
+              <h3 data-i18n="uiKit.visuals.plot2d.name">二维坐标轴与函数曲线</h3>
+              <p data-i18n="uiKit.visuals.plot2d.usage">拖动平移坐标，使用滚轮缩放。</p>
+            </header>
+            <div class="visual-plot" id="plot2dPlot" role="img" aria-label="可平移缩放的二维函数坐标轴" data-i18n-aria-label="uiKit.visuals.plot2d.aria"></div>
+            <output class="visual-readout" id="plot2dReadout" data-i18n-ignore="true">x = [-1.50, 1.50], y = [-1.10, 1.10]</output>
+          </article>
+
+          <article class="visual-entry">
+            <header class="visual-entry-head">
+              <h3 data-i18n="uiKit.visuals.plot3d.name">三维坐标轴与曲面</h3>
+              <p data-i18n="uiKit.visuals.plot3d.usage">拖动旋转坐标，使用滚轮缩放。</p>
+            </header>
+            <div class="visual-plot" id="plot3dPlot" role="img" aria-label="可旋转缩放的三维函数坐标轴" data-i18n-aria-label="uiKit.visuals.plot3d.aria"></div>
+            <output class="visual-readout" id="plot3dReadout" data-i18n-ignore="true">camera = 1.35, 1.35, 0.95</output>
+          </article>
+
+          <article class="visual-entry visual-entry--wide">
+            <header class="visual-entry-head">
+              <h3 data-i18n="uiKit.visuals.trainingHistory.name">训练指标曲线</h3>
+              <p data-i18n="uiKit.visuals.trainingHistory.usage">用于同时观察训练过程中 Loss 的下降和 Accuracy 的上升；悬浮可比较同一轮次的两项指标。</p>
+            </header>
+            <div class="visual-plot" id="trainingHistoryPlot" role="img" aria-label="Loss 下降且 Accuracy 上升的训练指标曲线" data-i18n-aria-label="uiKit.visuals.trainingHistory.aria"></div>
+            <output class="visual-readout" id="trainingHistoryReadout" data-i18n-ignore="true">Epoch 20 · Loss 0.12 · Accuracy 91%</output>
+          </article>
+
+          <article class="visual-entry">
+            <header class="visual-entry-head">
+              <h3 data-i18n="uiKit.visuals.numberLine.name">可拖动数轴</h3>
+              <p data-i18n="uiKit.visuals.numberLine.usage">用于直接比较真实值、预测值及两者距离。</p>
+            </header>
+            <canvas class="visual-canvas visual-canvas--short" id="numberLineCanvas" width="720" height="270" aria-label="可拖动预测值的数轴" data-i18n-aria-label="uiKit.visuals.numberLine.aria"></canvas>
+            <output class="visual-readout" id="numberLineReadout" data-i18n-ignore="true">prediction = 1.6, L1 = 5.4</output>
+          </article>
+
+          <article class="visual-entry">
+            <header class="visual-entry-head">
+              <h3 data-i18n="uiKit.visuals.loss.name">Loss 曲线坐标</h3>
+              <p data-i18n="uiKit.visuals.loss.usage">用于并列观察不同损失函数，并支持平移与缩放。</p>
+            </header>
+            <canvas class="visual-canvas visual-canvas--tall" id="lossCanvas" width="760" height="475" aria-label="可平移缩放的损失函数曲线" data-i18n-aria-label="uiKit.visuals.loss.aria"></canvas>
+            <output class="visual-readout" id="lossReadout" data-i18n-ignore="true">zoom = 1.00, pan = 0, 0</output>
+          </article>
+        </div>
+      </section>
+
+      <section class="kit-section" aria-labelledby="buttonsTitle">
+        <header class="kit-section-head">
+          <h2 id="buttonsTitle">按钮</h2>
+          <p>按钮样式由操作语义决定，不按模块单独设计。同一区域通常只保留一个主操作。</p>
+        </header>
+
+        <div class="button-catalog">
+          <article class="button-entry">
+            <div class="button-preview">
+              <button class="edu-btn" type="button">换个样本</button>
+            </div>
+            <div class="button-copy">
+              <h3>默认按钮</h3>
+              <p>用于次要操作，例如切换样本、重置局部设置或返回上一步，不应抢过主任务的视觉优先级。</p>
+              <code class="button-class">.edu-btn</code>
+            </div>
+          </article>
+
+          <article class="button-entry">
+            <div class="button-preview">
+              <button class="edu-btn edu-btn--primary" type="button">开始训练</button>
+            </div>
+            <div class="button-copy">
+              <h3>主操作按钮</h3>
+              <p>用于当前阶段最重要的动作，例如开始训练、提交答案或进入下一步。同一区域通常只出现一个。</p>
+              <code class="button-class">.edu-btn .edu-btn--primary</code>
+            </div>
+          </article>
+
+          <article class="button-entry">
+            <div class="button-preview">
+              <button class="edu-btn edu-btn--warn" type="button">随机初始化</button>
+            </div>
+            <div class="button-copy">
+              <h3>警告按钮</h3>
+              <p>用于会明显改变当前实验结果、但仍然可以恢复的操作。点击前需要让学习者预期到变化。</p>
+              <code class="button-class">.edu-btn .edu-btn--warn</code>
+            </div>
+          </article>
+
+          <article class="button-entry">
+            <div class="button-preview">
+              <button class="edu-btn edu-btn--danger" type="button">清空记录</button>
+            </div>
+            <div class="button-copy">
+              <h3>危险按钮</h3>
+              <p>仅用于删除、清空或不可直接撤销的操作。普通错误反馈不能使用危险按钮代替。</p>
+              <code class="button-class">.edu-btn .edu-btn--danger</code>
+            </div>
+          </article>
+
+          <article class="button-entry">
+            <div class="button-preview">
+              <button class="edu-btn edu-btn--primary dl-button-hint" id="attentionButton" type="button" data-dl-button-hint>点击继续</button>
+            </div>
+            <div class="button-copy">
+              <h3>提示点击按钮</h3>
+              <p>用于下一步已经出现、但学习者可能没有注意到的情况。初始发光，首次鼠标移入、键盘聚焦或点击后永久停止提示。</p>
+              <code class="button-class">.dl-button-hint · [data-dl-button-hint]</code>
+            </div>
+          </article>
+
+          <article class="button-entry">
+            <div class="button-preview">
+              <button class="edu-btn edu-btn--explain" type="button" data-dl-explain="学习率决定每次参数更新的步幅。数值过大容易越过最低点，数值过小则会让训练变慢。" aria-expanded="false">询问</button>
+            </div>
+            <div class="button-copy">
+              <h3>询问按钮</h3>
+              <p>用于就近解释概念或参数。鼠标悬浮、键盘聚焦或触屏点击时显示解释框；解释框进入浏览器最高显示层，不受卡片裁剪。</p>
+              <code class="button-class">.edu-btn--explain · [data-dl-explain]</code>
+            </div>
+          </article>
+
+          <article class="button-entry">
+            <div class="button-preview">
+              <button class="edu-btn is-loading" type="button" disabled aria-busy="true"><span data-i18n="uiKit.buttons.loading.label">等待数据</span></button>
+            </div>
+            <div class="button-copy">
+              <h3 data-i18n="uiKit.buttons.loading.name">等待按钮</h3>
+              <p data-i18n="uiKit.buttons.loading.usage">用于请求已经提交、正在等待结果的短暂状态。按钮不可重复点击，旋转边缘表示处理仍在继续；普通的前置条件禁用状态不使用动画。</p>
+              <code class="button-class">.edu-btn .is-loading · disabled · aria-busy="true"</code>
+            </div>
+          </article>
+
+          <article class="button-entry">
+            <div class="button-preview">
+              <button class="edu-btn edu-btn--primary" type="button" disabled><span data-i18n="uiKit.buttons.disabled.label">继续训练</span></button>
+            </div>
+            <div class="button-copy">
+              <h3 data-i18n="uiKit.buttons.disabled.name">禁用按钮</h3>
+              <p data-i18n="uiKit.buttons.disabled.usage">用于前置条件尚未满足、当前操作不可执行的状态。必须在附近说明解锁条件；禁用期间保持静态，不显示等待动画。</p>
+              <code class="button-class">.edu-btn .edu-btn--primary · disabled</code>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="kit-section" aria-labelledby="controlsTitle">
+        <header class="kit-section-head">
+          <h2 id="controlsTitle">参数与选项控件</h2>
+          <p>根据数据类型选择控件：单项选择用下拉或单选，多项选择用复选框，二元设置用开关，数值范围用滑杆。</p>
+        </header>
+
+        <div class="control-catalog">
+          <article class="control-entry">
+            <div class="control-preview">
+              <label class="edu-control" for="hintInput">
+                <span class="edu-label">输入答案</span>
+                <input class="edu-input" id="hintInput" type="text" placeholder="请在这里输入" autocomplete="off" data-dl-input-hint>
+              </label>
+            </div>
+            <div class="control-copy">
+              <h3>提示输入框</h3>
+              <p>用于输入任务已经出现、但学习者可能没有注意到的情况。初始持续闪烁，首次鼠标移入、键盘聚焦、点击或输入后永久停止提示。</p>
+              <code class="control-class">.edu-input · [data-dl-input-hint] · DLModuleUI.bindInputHints()</code>
+            </div>
+          </article>
+
+          <article class="control-entry">
+            <div class="control-preview">
+              <div class="edu-control">
+                <span class="edu-label" id="datasetLabel">数据集</span>
+                <div class="edu-selectbox" data-dl-selectbox>
+                  <button class="edu-selectbox-trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="datasetMenu" aria-labelledby="datasetLabel datasetValue">
+                    <span id="datasetValue" data-selectbox-value>手写数字 MNIST</span>
+                  </button>
+                  <div class="edu-selectbox-menu" id="datasetMenu" role="listbox" aria-labelledby="datasetLabel" hidden>
+                    <button class="edu-selectbox-option" type="button" role="option" aria-selected="true" data-value="mnist">手写数字 MNIST</button>
+                    <button class="edu-selectbox-option" type="button" role="option" aria-selected="false" data-value="cifar10">彩色图像 CIFAR-10</button>
+                    <button class="edu-selectbox-option" type="button" role="option" aria-selected="false" data-value="lfw">人脸数据 LFW</button>
+                  </div>
+                  <input type="hidden" name="dataset" value="mnist">
+                </div>
+              </div>
+            </div>
+            <div class="control-copy">
+              <h3>下拉列表</h3>
+              <p>用于从多个互斥选项中选择一个，适合选项较多或不需要同时比较的情况。</p>
+              <code class="control-class">.edu-selectbox · DLModuleUI.bindSelectbox()</code>
+            </div>
+          </article>
+
+          <article class="control-entry">
+            <div class="control-preview">
+              <div class="edu-check-group">
+                <label class="edu-check">
+                  <input type="checkbox" checked>
+                  <span>显示网格</span>
+                </label>
+                <label class="edu-check edu-check--option">
+                  <input type="checkbox">
+                  <span>中心墨迹</span>
+                </label>
+              </div>
+            </div>
+            <div class="control-copy">
+              <h3>复选框：普通与候选</h3>
+              <p>普通样式用于设置列表；带边框样式用于需要被看作独立候选项的特征、标签或筛选条件。</p>
+              <code class="control-class">.edu-check · .edu-check--option</code>
+            </div>
+          </article>
+
+          <article class="control-entry">
+            <div class="control-preview">
+              <fieldset class="edu-control edu-fieldset">
+                <legend class="edu-label">激活函数</legend>
+                <div class="edu-radio-group">
+                  <label class="edu-radio"><input type="radio" name="activation" checked><span>ReLU</span></label>
+                  <label class="edu-radio"><input type="radio" name="activation"><span>Sigmoid</span></label>
+                </div>
+              </fieldset>
+            </div>
+            <div class="control-copy">
+              <h3>单选组</h3>
+              <p>用于少量互斥选项，并且需要让学习者直接看到所有可选值的情况。</p>
+              <code class="control-class">.edu-radio-group .edu-radio</code>
+            </div>
+          </article>
+
+          <article class="control-entry">
+            <div class="control-preview">
+              <label class="edu-switch">
+                <input type="checkbox" checked>
+                <span>显示决策边界</span>
+              </label>
+            </div>
+            <div class="control-copy">
+              <h3>滑块开关</h3>
+              <p>用于立即生效且持续保持的二元设置，例如显示或隐藏辅助信息。</p>
+              <code class="control-class">.edu-switch</code>
+            </div>
+          </article>
+
+          <article class="control-entry">
+            <div class="control-preview">
+              <label class="edu-control" for="learningRateRange">
+                <span class="edu-control-head">
+                  <span class="edu-label">学习率</span>
+                  <output class="edu-control-value" id="learningRateValue" for="learningRateRange" data-i18n-ignore="true">0.50</output>
+                </span>
+                <input class="edu-range" id="learningRateRange" type="range" min="0" max="1" step="0.01" value="0.5" data-dl-range data-range-digits="2">
+              </label>
+            </div>
+            <div class="control-copy">
+              <h3>固定样式滑杆</h3>
+              <p>适合已有默认值的参数。页面打开时直接显示当前值，拖动只更新数值，不出现待操作提示。</p>
+              <code class="control-class">[data-dl-range] · data-range-digits="2"</code>
+            </div>
+          </article>
+
+          <article class="control-entry">
+            <div class="control-preview">
+              <label class="edu-control is-unset" for="layerRange">
+                <span class="edu-control-head">
+                  <span class="edu-label">隐藏层数</span>
+                  <output class="edu-control-value" id="layerValue" for="layerRange" data-i18n-ignore="true"></output>
+                </span>
+                <input class="edu-range is-unset" id="layerRange" type="range" min="1" max="5" step="1" value="3" data-dl-range data-range-digits="0" data-range-suffix=" 层" aria-valuetext="尚未输入">
+                <span class="edu-range-scale" aria-hidden="true"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></span>
+              </label>
+            </div>
+            <div class="control-copy">
+              <h3>提示操作滑杆</h3>
+              <p>适合必须由学习者亲自选择的参数。初始闪烁且不显示数值，首次拖动后自动变成固定样式并显示真实值。</p>
+              <code class="control-class">[data-dl-range].is-unset · .edu-control.is-unset</code>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="kit-section" aria-labelledby="flowTitle">
+        <header class="kit-section-head">
+          <h2 id="flowTitle">流程控制</h2>
+          <p>流程模式必须纵向出现。直接弹出用于连续结果；下拉提示用于需要学习者确认后再进入的下一阶段。</p>
+        </header>
+
+        <div class="flow-patterns">
+          <article class="flow-pattern">
+            <header class="flow-pattern-head">
+              <span class="edu-kicker">模式 1</span>
+              <h3>直接弹出</h3>
+              <p>当前操作完成后，下一段内容立即出现。适合结果短、上下文连续，而且不需要学习者再次确认的流程。</p>
+            </header>
+
+            <div class="flow-actions">
+              <button class="edu-btn edu-btn--primary" id="directShowButton" type="button">完成并显示结果</button>
+            </div>
+
+            <section class="edu-stage flow-result" id="directResult" hidden aria-hidden="true" aria-labelledby="directResultTitle">
+              <header class="edu-stage-head">
+                <div class="edu-stage-copy">
+                  <span class="edu-kicker">结果已出现</span>
+                  <h4 class="edu-stage-title" id="directResultTitle">模型已经完成这一轮计算</h4>
+                  <p class="edu-stage-description">这里可以直接展示结果、解释或下一项操作。</p>
+                </div>
+              </header>
+              <div class="flow-result-actions">
+                <button class="edu-btn" id="directHideButton" type="button">收起结果</button>
+              </div>
+            </section>
+          </article>
+
+          <article class="flow-pattern">
+            <!--
+              AGENT IMPLEMENTATION NOTE — 模式 2 禁止制造滚动留白：
+              下拉提示出现时，只显示固定在视口底部的 flow-scroll-indicator。
+              不得添加 flow-scroll-runway、spacer、空 div、min-height 或其它用于撑高页面的占位区域。
+              学习者滚轮向下或点击提示后，直接显示真实的下一阶段内容。
+              /AGENT IMPLEMENTATION NOTE
+            -->
+            <header class="flow-pattern-head">
+              <span class="edu-kicker">模式 2</span>
+              <h3>下拉提示</h3>
+              <p>当前步骤完成后，视口底部出现轻量指示标，但页面不新增空白占位。学习者向下滚动鼠标滚轮或点击提示后，真实的下一阶段内容直接展开。</p>
+            </header>
+
+            <div class="flow-actions">
+              <button class="edu-btn edu-btn--primary" id="cueCreateButton" type="button">完成当前步骤</button>
+              <button class="edu-btn" id="cueResetButton" type="button">重置演示</button>
+            </div>
+
+            <button class="flow-scroll-indicator" id="scrollIndicator" type="button" aria-controls="cueResult" hidden>
+              <span class="flow-scroll-indicator-mark" aria-hidden="true"></span>
+              <strong>下方有新内容</strong>
+              <small>滚动或点击查看</small>
+            </button>
+
+            <div class="flow-scroll-area" id="scrollFlowArea" hidden aria-hidden="true">
+              <section class="edu-stage flow-result" id="cueResult" hidden aria-hidden="true" aria-labelledby="cueResultTitle">
+                <header class="edu-stage-head">
+                  <div class="edu-stage-copy">
+                    <span class="edu-kicker">下一阶段</span>
+                    <h4 class="edu-stage-title" id="cueResultTitle">开始解释刚才观察到的现象</h4>
+                    <p class="edu-stage-description">滚动提示适合阶段边界明显、下一段内容较长的教学流程。</p>
+                  </div>
+                </header>
+                <div class="flow-result-actions">
+                  <button class="edu-btn" id="cueHideButton" type="button">收起下一阶段</button>
+                </div>
+              </section>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="kit-section" aria-labelledby="questionsTitle">
+        <header class="kit-section-head">
+          <h2 id="questionsTitle">考试题型</h2>
+          <p>所有题型采用单栏。单选和判断点击即判；多选、填空和简答完成作答后提交。</p>
+        </header>
+
+        <div class="question-catalog">
+          <section class="dl-question" id="panelChoiceDemo" data-question-type="panel-choice">
+            <header class="dl-question-head">
+              <span class="dl-question-type" data-i18n="uiKit.questions.panel.type">面板单选题</span>
+              <div class="dl-question-title-row">
+                <strong class="dl-question-stem" data-i18n="uiKit.questions.panel.title">下面哪个面板展示的是可计算的函数坐标图？</strong>
+              </div>
+            </header>
+
+            <div class="dl-panel-choice-grid" role="group" aria-label="媒体面板选项" data-i18n-aria-label="uiKit.questions.panel.optionsAria">
+              <article class="dl-panel-choice" data-panel-choice data-correct="true">
+                <canvas class="dl-panel-choice-media" id="panelChoiceCanvas" width="520" height="320" aria-label="带坐标轴的一次函数图像" data-i18n-aria-label="uiKit.questions.panel.axisAria" data-panel-interactive></canvas>
+                <button class="dl-panel-choice-answer" type="button" data-panel-choice-trigger aria-pressed="false">
+                  <span class="dl-panel-choice-key" data-i18n-ignore="true">A</span>
+                  <strong class="dl-panel-choice-title" data-i18n-ignore="true">y = 0.72x - 0.18</strong>
+                  <span class="dl-panel-choice-caption" data-i18n="uiKit.questions.panel.axisCaption">坐标轴与曲线</span>
+                </button>
+              </article>
+
+              <article class="dl-panel-choice" data-panel-choice data-correct="false">
+                <img class="dl-panel-choice-media" src="../Loss-Guide-2/auto_drive.jpg" alt="自动驾驶道路场景">
+                <button class="dl-panel-choice-answer" type="button" data-panel-choice-trigger aria-pressed="false">
+                  <span class="dl-panel-choice-key" data-i18n-ignore="true">B</span>
+                  <strong class="dl-panel-choice-title" data-i18n="uiKit.questions.panel.imageTitle">道路样本</strong>
+                  <span class="dl-panel-choice-caption" data-i18n="uiKit.questions.panel.imageCaption">图片内容</span>
+                </button>
+              </article>
+
+              <article class="dl-panel-choice" data-panel-choice data-correct="false">
+                <video class="dl-panel-choice-media" controls muted loop playsinline preload="metadata" src="../Face-Recog-Lab/game_assets/yuhuanong_shouye.mp4" aria-label="动态教学场景" data-i18n-aria-label="uiKit.questions.panel.videoAria" data-panel-interactive></video>
+                <button class="dl-panel-choice-answer" type="button" data-panel-choice-trigger aria-pressed="false">
+                  <span class="dl-panel-choice-key" data-i18n-ignore="true">C</span>
+                  <strong class="dl-panel-choice-title" data-i18n="uiKit.questions.panel.videoTitle">动态场景</strong>
+                  <span class="dl-panel-choice-caption" data-i18n="uiKit.questions.panel.videoCaption">视频内容</span>
+                </button>
+              </article>
+            </div>
+
+            <div class="edu-callout edu-callout--blue" id="panelChoiceFeedback" aria-live="polite">
+              <strong class="edu-callout-label" data-i18n="uiKit.questions.panel.feedbackLabel">判断提示</strong>
+              <span class="edu-callout-text" data-i18n="uiKit.questions.panel.feedbackInitial">面板中的媒体槽可以替换为坐标轴、图片、视频或其它可视化。</span>
+            </div>
+          </section>
+          <div id="singleChoiceDemo"></div>
+          <div id="judgementDemo"></div>
+          <div id="multipleChoiceDemo"></div>
+          <div id="fillBlankDemo"></div>
+          <div id="shortAnswerDemo"></div>
+        </div>
+      </section>
+
+      <!--
+        AGENT IMPLEMENTATION NOTE — 推荐视频必须整体迁移：
+        引用、生成或迁移“推荐视频 / 推荐资源”时，必须复制下面完整的 edu-content-block，
+        不能只复制 relatedVideosDemo 或 DLModuleUI.renderRelatedVideos(...)。
+        edu-resource-actions 是推荐资源的固定组成部分，两个按钮默认成对出现、不可遗漏：
+        1. 左侧“返回课程目录” -> ../CourseMap/
+           模块服务：http://127.0.0.1:59411/CourseMap/
+           Live Server：从 modules/ 作为站点根目录打开 /CourseMap/
+        2. 右侧主按钮“学习下一个” -> ../MLP_playground/
+           模块服务：http://127.0.0.1:59411/MLP_playground/
+           Live Server：从 modules/ 作为站点根目录打开 /MLP_playground/
+        迁移到正式课程时只替换“学习下一个”的目标模块地址，导航结构和两个按钮仍须一起保留。
+        /AGENT IMPLEMENTATION NOTE
+      -->
+      <section class="kit-section" aria-labelledby="relatedVideosTitle">
+        <header class="kit-section-head">
+          <h2 id="relatedVideosTitle" data-i18n="uiKit.relatedVideos.title">推荐视频</h2>
+          <p data-i18n="uiKit.relatedVideos.description">放在教学模块底部，使用完整单栏宽度展示与当前主题直接相关的视频资源。</p>
+        </header>
+        <section class="edu-content-block foundation-preview" data-i18n-scope="uiKit.relatedVideos.content">
+          <header class="edu-content-head">
+            <h3 class="edu-content-title"><span data-i18n="uiKit.relatedVideos.content.title">推荐资源</span></h3>
+            <p class="edu-content-subtitle"><span data-i18n="uiKit.relatedVideos.content.subtitle">继续观看与当前主题直接相关的视频，巩固刚才完成的学习内容。</span></p>
+          </header>
+          <div class="edu-content-body">
+            <div class="related-video-demo" id="relatedVideosDemo" data-i18n-ignore="true"></div>
+            <nav class="edu-resource-actions" aria-label="学习导航" data-i18n-aria-label="uiKit.relatedVideos.actions.aria">
+              <a class="edu-btn" href="../CourseMap/">
+                <span data-i18n="uiKit.relatedVideos.actions.back">返回课程目录</span>
+              </a>
+              <a class="edu-btn edu-btn--primary" href="../MLP_playground/">
+                <span data-i18n="uiKit.relatedVideos.actions.next">学习下一个</span>
+              </a>
+            </nav>
+          </div>
+        </section>
+      </section>
+    </section>
+  </main>
+  <script src="./plotly-3.6.0.min.js"></script>
+  <script src="./canvas-utils.js"></script>
+  <script src="./plot-utils.js"></script>
+  <script src="./module-components.js"></script>
+  <script>
+    (function () {
+      'use strict';
+
+      var directResult = document.querySelector('#directResult');
+      var cueResult = document.querySelector('#cueResult');
+      var scrollFlowArea = document.querySelector('#scrollFlowArea');
+      var scrollIndicator = document.querySelector('#scrollIndicator');
+      var streamMessages = {};
+      var codeStartButton = document.querySelector('#codeStartButton');
+      var codeStopButton = document.querySelector('#codeStopButton');
+      var codeHelpButton = document.querySelector('#codeHelpButton');
+      var codeHelp = document.querySelector('#codeHelp');
+      var codeHelpText = document.querySelector('#codeHelpText');
+      var codeBlank = document.querySelector('#codeBlank');
+      var codeRunStatus = document.querySelector('#codeRunStatus');
+      var codeRunStatusText = document.querySelector('#codeRunStatusText');
+      var codeRuntime = document.querySelector('#codeRuntime');
+      var codeTimer = 0;
+      var codeStartedAt = 0;
+
+      var plotColors = {
+        blue: '#27446e',
+        red: '#c43f52',
+        orange: '#f07e47',
+        green: '#228d5c',
+        grid: '#dfe6f1',
+        axis: '#68778f',
+        tick: '#9fb0c8',
+        bg: '#fbfdff'
+      };
+      var plot2dPlot = document.querySelector('#plot2dPlot');
+      var plot3dPlot = document.querySelector('#plot3dPlot');
+      var trainingHistoryPlot = document.querySelector('#trainingHistoryPlot');
+      var numberLineCanvas = document.querySelector('#numberLineCanvas');
+      var lossCanvas = document.querySelector('#lossCanvas');
+      var panelChoiceCanvas = document.querySelector('#panelChoiceCanvas');
+      var lossView = { zoom: 1, panX: 0, panY: 0, dragging: false, moved: false, lastX: 0, lastY: 0 };
+      var panelChoiceView = { zoom: 1, panX: 0, panY: 0, dragging: false, moved: false, lastX: 0, lastY: 0 };
+      var numberLineState = { gt: 7, pred: 1.6, dragging: false };
+
+      function fixed(value) {
+        return Number(value).toFixed(2);
+      }
+
+      function updatePlot2dReadout(graph) {
+        if (!graph || !graph._fullLayout) return;
+        var xRange = graph._fullLayout.xaxis.range;
+        var yRange = graph._fullLayout.yaxis.range;
+        document.querySelector('#plot2dReadout').value = 'x = [' + fixed(xRange[0]) + ', ' + fixed(xRange[1]) + '], y = [' + fixed(yRange[0]) + ', ' + fixed(yRange[1]) + ']';
+      }
+
+      function updatePlot3dReadout(camera) {
+        var eye = camera && camera.eye ? camera.eye : { x: 1.35, y: 1.35, z: 0.95 };
+        document.querySelector('#plot3dReadout').value = 'camera = ' + fixed(eye.x) + ', ' + fixed(eye.y) + ', ' + fixed(eye.z);
+      }
+
+      function mountPlotlyDemos() {
+        return Promise.all([
+          DLPlot.mountFunction2D(plot2dPlot, {
+            colors: plotColors,
+            fn: function (xValue) { return 0.54 * Math.sin(3 * xValue) + 0.28 * xValue; },
+            xMin: -1.5,
+            xMax: 1.5,
+            samples: 180,
+            xRange: [-1.5, 1.5],
+            yRange: [-1.1, 1.1],
+            name: '函数曲线',
+            color: plotColors.orange,
+            width: 4,
+            onReady: updatePlot2dReadout,
+            onRelayout: function (_, graph) { updatePlot2dReadout(graph); },
+          }),
+          DLPlot.mountSurfaceFunction3D(plot3dPlot, {
+            colors: plotColors,
+            fn: function (xValue, yValue) { return 0.5 * Math.sin(2.2 * xValue) + 0.35 * yValue; },
+            min: -1,
+            max: 1,
+            samples: 30,
+            camera: { eye: { x: 1.35, y: 1.35, z: 0.95 } },
+            onReady: function () { updatePlot3dReadout(); },
+            onRelayout: function (event) {
+              if (event['scene.camera']) updatePlot3dReadout(event['scene.camera']);
+            },
+          }),
+          DLPlot.mountTrainingHistory(trainingHistoryPlot, {
+            colors: plotColors,
+            epochs: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+            loss: [1.28, 1.09, 0.93, 0.81, 0.70, 0.61, 0.54, 0.47, 0.42, 0.37, 0.33, 0.29, 0.26, 0.23, 0.21, 0.19, 0.17, 0.15, 0.14, 0.12],
+            accuracy: [0.38, 0.45, 0.52, 0.58, 0.63, 0.67, 0.71, 0.74, 0.77, 0.79, 0.81, 0.83, 0.85, 0.86, 0.87, 0.88, 0.89, 0.90, 0.905, 0.91],
+          }),
+        ]).catch(function (error) {
+          document.querySelector('#plot2dReadout').value = 'Plotly 二维图加载失败';
+          document.querySelector('#plot3dReadout').value = 'Plotly 三维图加载失败';
+          document.querySelector('#trainingHistoryReadout').value = 'Plotly 训练指标图加载失败';
+          console.error(error);
+        });
+      }
+
+      function drawNumberLine(time) {
+        DLPlot.drawNumberLine(numberLineCanvas, {
+          colors: plotColors,
+          gt: numberLineState.gt,
+          pred: numberLineState.pred,
+          isDragging: numberLineState.dragging,
+          highlightPred: !numberLineState.dragging,
+          pulseTime: time || window.performance.now()
+        });
+        document.querySelector('#numberLineReadout').value = 'prediction = ' + numberLineState.pred.toFixed(1) + ', L1 = ' + Math.abs(numberLineState.gt - numberLineState.pred).toFixed(1);
+      }
+
+      function drawLoss() {
+        DLPlot.drawLossComparison(lossCanvas, {
+          colors: plotColors,
+          gt: 3,
+          pred: 7,
+          view: lossView
+        });
+        document.querySelector('#lossReadout').value = 'zoom = ' + lossView.zoom.toFixed(2) + ', pan = ' + Math.round(lossView.panX) + ', ' + Math.round(lossView.panY);
+      }
+
+      function drawPanelChoice() {
+        var ctx = DLCanvas.prepare(panelChoiceCanvas);
+        var options = {
+          colors: plotColors,
+          zoom: panelChoiceView.zoom,
+          panX: panelChoiceView.panX,
+          panY: panelChoiceView.panY,
+          scaleFactor: 0.32,
+          gridMin: -1,
+          gridMax: 1,
+          gridStep: 0.25,
+          axisRange: 1.2,
+          fill: plotColors.bg
+        };
+        DLPlot.drawAxes2D(ctx, panelChoiceCanvas, options);
+        DLPlot.strokeFunction(ctx, panelChoiceCanvas, function (x) {
+          return 0.72 * x - 0.18;
+        }, Object.assign({}, options, {
+          color: plotColors.green,
+          xMin: -1.2,
+          xMax: 1.2,
+          samples: 120
+        }));
+      }
+
+      function drawVisuals() {
+        drawNumberLine();
+        drawLoss();
+        drawPanelChoice();
+      }
+
+      document.querySelector('#networkGraphDemo').innerHTML = DLModuleUI.renderNetworkGraph({
+        factors: [
+          { label: '输入 x1', value: '0.80', weight: 0.8, weightLabel: '0.80' },
+          { label: '输入 x2', value: '0.35', weight: 0.45, weightLabel: '0.45' },
+          { label: '输入 x3', value: '0.62', weight: 0.66, weightLabel: '0.66' }
+        ],
+        unitTitle: '神经元',
+        unitLabel: '加权求和',
+        outputTitle: '输出',
+        outputValue: '0.73',
+        markerId: 'uiKitNeuronArrowHead',
+        ariaLabel: '三个输入经过不同权重进入神经元，再产生一个输出'
+      });
+
+      DLPlot.bindDraggableNumberLine(numberLineCanvas, {
+        getValue: function () { return numberLineState.pred; },
+        setValue: function (value) { numberLineState.pred = Math.round(value * 10) / 10; },
+        step: 0.1,
+        onDragStart: function () {
+          numberLineState.dragging = true;
+          drawNumberLine();
+        },
+        onDrag: drawNumberLine,
+        onDragEnd: function () {
+          numberLineState.dragging = false;
+          drawNumberLine();
+        },
+        onHover: drawNumberLine
+      });
+      DLPlot.bindPanZoom(lossCanvas, lossView, {
+        zoomMin: 0.55,
+        zoomMax: 2.6,
+        zoomInFactor: 1.1,
+        zoomOutFactor: 0.9,
+        onChange: drawLoss
+      });
+      DLPlot.bindPanZoom(panelChoiceCanvas, panelChoiceView, {
+        zoomMin: 0.55,
+        zoomMax: 3,
+        zoomInFactor: 1.08,
+        zoomOutFactor: 0.92,
+        onChange: drawPanelChoice
+      });
+      DLCanvas.observe([numberLineCanvas, lossCanvas, panelChoiceCanvas], drawVisuals);
+      drawVisuals();
+      mountPlotlyDemos();
+
+      DLModuleUI.bindInputHints(document);
+      DLModuleUI.bindSelectboxes(document);
+      document.querySelectorAll('[data-stream-output]').forEach(function (output) {
+        streamMessages[output.id] = output.textContent.trim();
+        DLModuleUI.streamText(output, streamMessages[output.id], { interval: 30 });
+      });
+
+      document.querySelectorAll('[data-stream-replay]').forEach(function (button) {
+        button.addEventListener('click', function () {
+          var outputId = button.getAttribute('data-stream-replay');
+          var output = document.querySelector('#' + outputId);
+          if (output && streamMessages[outputId]) {
+            DLModuleUI.streamText(output, streamMessages[outputId], { interval: 30 });
+          }
+        });
+      });
+
+      function setCodeStatus(state, key, label) {
+        codeRunStatus.classList.remove('is-running', 'is-stopped', 'is-warning');
+        if (state) codeRunStatus.classList.add(state);
+        codeRunStatusText.setAttribute('data-i18n', key);
+        codeRunStatusText.textContent = label;
+      }
+
+      function showCodeHelp(key, label) {
+        codeHelpText.setAttribute('data-i18n', key);
+        codeHelpText.textContent = label;
+        codeHelp.hidden = false;
+        codeHelpButton.setAttribute('aria-expanded', 'true');
+      }
+
+      function updateCodeRuntime() {
+        codeRuntime.value = ((window.performance.now() - codeStartedAt) / 1000).toFixed(1) + ' s';
+      }
+
+      codeStartButton.addEventListener('click', function () {
+        var answer = codeBlank.value.trim().toLowerCase();
+        if (!answer) {
+          codeBlank.setAttribute('aria-invalid', 'true');
+          setCodeStatus('is-warning', 'uiKit.code.status.waitingForAnswer', '等待填写');
+          showCodeHelp('uiKit.code.help.empty', '先补全高亮位置中的函数名，再启动代码。');
+          codeBlank.focus();
+          return;
+        }
+        if (answer !== 'square') {
+          codeBlank.setAttribute('aria-invalid', 'true');
+          setCodeStatus('is-warning', 'uiKit.code.status.needsCorrection', '需要修正');
+          showCodeHelp('uiKit.code.help.wrong', '这个函数需要把输入逐元素平方。检查 PyTorch 的函数名。');
+          codeBlank.focus();
+          return;
+        }
+
+        if (codeTimer) window.clearInterval(codeTimer);
+        codeBlank.setAttribute('aria-invalid', 'false');
+        codeBlank.disabled = true;
+        codeHelp.hidden = true;
+        codeHelpButton.setAttribute('aria-expanded', 'false');
+        codeStartedAt = window.performance.now();
+        codeRuntime.value = '0.0 s';
+        codeStartButton.disabled = true;
+        codeStopButton.disabled = false;
+        setCodeStatus('is-running', 'uiKit.code.status.running', '运行中');
+        codeTimer = window.setInterval(updateCodeRuntime, 100);
+      });
+
+      codeStopButton.addEventListener('click', function () {
+        if (codeTimer) window.clearInterval(codeTimer);
+        codeTimer = 0;
+        updateCodeRuntime();
+        codeBlank.disabled = false;
+        codeStartButton.disabled = false;
+        codeStopButton.disabled = true;
+        setCodeStatus('is-stopped', 'uiKit.code.status.stopped', '已停止');
+      });
+
+      codeHelpButton.addEventListener('click', function () {
+        var willOpen = codeHelp.hidden;
+        if (willOpen) {
+          showCodeHelp('uiKit.code.help.body', '这里需要填写 PyTorch 中执行平方运算的函数名。');
+        }
+        else {
+          codeHelp.hidden = true;
+          codeHelpButton.setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      codeBlank.addEventListener('input', function () {
+        codeBlank.setAttribute('aria-invalid', 'false');
+        codeHelp.hidden = true;
+        codeHelpButton.setAttribute('aria-expanded', 'false');
+        if (!codeTimer) setCodeStatus('', 'uiKit.code.status.ready', '就绪');
+      });
+
+      codeBlank.addEventListener('keydown', function (event) {
+        if (event.key !== 'Enter') return;
+        event.preventDefault();
+        codeStartButton.click();
+      });
+
+      var scrollAnimationFrame = 0;
+      var scrollInteractionArmed = false;
+
+      function easeInOutCubic(value) {
+        return value < 0.5
+          ? 4 * value * value * value
+          : 1 - Math.pow(-2 * value + 2, 3) / 2;
+      }
+
+      function scrollToElement(element, duration) {
+        var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var startY = window.scrollY;
+        var targetY = Math.max(0, startY + element.getBoundingClientRect().top - 18);
+        if (reduceMotion) {
+          window.scrollTo(0, targetY);
+          return;
+        }
+
+        if (scrollAnimationFrame) window.cancelAnimationFrame(scrollAnimationFrame);
+        var startedAt = window.performance.now();
+
+        function step(now) {
+          var progress = Math.min(1, (now - startedAt) / duration);
+          var eased = easeInOutCubic(progress);
+          window.scrollTo(0, startY + (targetY - startY) * eased);
+          if (progress < 1) scrollAnimationFrame = window.requestAnimationFrame(step);
+          else scrollAnimationFrame = 0;
+        }
+
+        scrollAnimationFrame = window.requestAnimationFrame(step);
+      }
+
+      function showFlowResult(element, moveToTop) {
+        element.hidden = false;
+        element.setAttribute('aria-hidden', 'false');
+        element.classList.add('is-revealing');
+        element.addEventListener('animationend', function () {
+          element.classList.remove('is-revealing');
+        }, { once: true });
+        if (moveToTop) window.requestAnimationFrame(function () { scrollToElement(element, 520); });
+      }
+
+      function hideFlowResult(element) {
+        element.hidden = true;
+        element.setAttribute('aria-hidden', 'true');
+        element.classList.remove('is-revealing');
+      }
+
+      function confirmScrollCue() {
+        if (!scrollInteractionArmed || !cueResult.hidden) return;
+        scrollInteractionArmed = false;
+        scrollIndicator.hidden = true;
+        showFlowResult(cueResult, true);
+      }
+
+      function handleScrollCueWheel(event) {
+        if (event.deltaY > 0) confirmScrollCue();
+      }
+
+      document.querySelector('#directShowButton').addEventListener('click', function () {
+        showFlowResult(directResult, true);
+      });
+
+      document.querySelector('#directHideButton').addEventListener('click', function () {
+        hideFlowResult(directResult);
+      });
+
+      document.querySelector('#cueCreateButton').addEventListener('click', function () {
+        if (!scrollFlowArea.hidden) return;
+        scrollFlowArea.hidden = false;
+        scrollFlowArea.setAttribute('aria-hidden', 'false');
+        scrollIndicator.hidden = false;
+        scrollInteractionArmed = true;
+      });
+
+      document.querySelector('#cueResetButton').addEventListener('click', function () {
+        scrollInteractionArmed = false;
+        scrollIndicator.hidden = true;
+        scrollFlowArea.hidden = true;
+        scrollFlowArea.setAttribute('aria-hidden', 'true');
+        hideFlowResult(cueResult);
+      });
+
+      document.querySelector('#cueHideButton').addEventListener('click', function () {
+        document.querySelector('#cueResetButton').click();
+      });
+
+      scrollIndicator.addEventListener('click', function () {
+        confirmScrollCue();
+      });
+
+      window.addEventListener('wheel', handleScrollCueWheel, { passive: true });
+
+      function selectPanelChoice(choice) {
+        var choices = Array.from(document.querySelectorAll('#panelChoiceDemo [data-panel-choice]'));
+        if (choice.getAttribute('data-answer-locked') === 'true') return;
+        var correct = choice.getAttribute('data-correct') === 'true';
+        var feedback = document.querySelector('#panelChoiceFeedback');
+        var feedbackLabel = feedback.querySelector('.edu-callout-label');
+        var feedbackText = feedback.querySelector('.edu-callout-text');
+
+        choices.forEach(function (item) {
+          item.classList.remove('is-correct', 'is-wrong');
+          item.querySelector('[data-panel-choice-trigger]').setAttribute('aria-pressed', 'false');
+        });
+        choice.querySelector('[data-panel-choice-trigger]').setAttribute('aria-pressed', 'true');
+        choice.classList.add(correct ? 'is-correct' : 'is-wrong');
+        feedback.classList.remove('edu-callout--blue', 'edu-callout--green', 'edu-callout--red');
+        feedback.classList.add(correct ? 'edu-callout--green' : 'edu-callout--red');
+        feedbackLabel.setAttribute('data-i18n', correct ? 'uiKit.questions.panel.feedbackCorrectLabel' : 'uiKit.questions.panel.feedbackWrongLabel');
+        feedbackText.setAttribute('data-i18n', correct ? 'uiKit.questions.panel.feedbackCorrect' : 'uiKit.questions.panel.feedbackWrong');
+        feedbackLabel.textContent = correct ? '判断正确' : '再观察一次';
+        feedbackText.textContent = correct
+          ? '正确。坐标图使用坐标轴和曲线表达可计算的函数关系。'
+          : '这个面板展示的是普通媒体内容，不是由坐标轴和函数曲线组成的图像。';
+        if (correct) choices.forEach(function (item) {
+          item.setAttribute('data-answer-locked', 'true');
+          item.querySelector('[data-panel-choice-trigger]').disabled = true;
+        });
+      }
+
+      document.querySelectorAll('#panelChoiceDemo [data-panel-choice]').forEach(function (choice) {
+        choice.addEventListener('click', function (event) {
+          if (event.target.closest('[data-panel-interactive]')) return;
+          if (event.target.closest('[data-panel-choice-trigger]')) return;
+          selectPanelChoice(choice);
+        });
+        choice.querySelector('[data-panel-choice-trigger]').addEventListener('click', function () {
+          selectPanelChoice(choice);
+        });
+      });
+
+      DLModuleUI.mountQuestion('#singleChoiceDemo', {
+        type: 'choice',
+        title: '下列哪个函数图像一定是一条直线？',
+        options: [
+          { key: 'A', value: 'line', label: 'y = 0.7x - 0.2' },
+          { key: 'B', value: 'square', label: 'y = x²' },
+          { key: 'C', value: 'relu', label: 'y = max(0, x)' },
+          { key: 'D', value: 'sin', label: 'y = sin(x)' }
+        ],
+        answer: 'line',
+        feedback: {
+          correct: '正确。一次函数的图像是一条直线。',
+          wrong: '不正确。再观察它是否存在弯曲、折点或波动。'
+        }
+      });
+
+      DLModuleUI.mountQuestion('#judgementDemo', {
+        type: 'judgement',
+        title: '没有激活函数时，多层线性层叠加后仍然等价于线性变换。',
+        options: [
+          { key: '对', value: 'true', label: '正确' },
+          { key: '错', value: 'false', label: '错误' }
+        ],
+        answer: 'true',
+        feedback: {
+          correct: '正确。线性变换的复合仍然是线性变换。',
+          wrong: '不正确。增加线性层不会凭空产生非线性。'
+        }
+      });
+
+      DLModuleUI.mountQuestion('#multipleChoiceDemo', {
+        type: 'multiple',
+        title: '训练一个 MLP 时，哪些量通常会被更新？',
+        options: [
+          { key: 'A', value: 'weight', label: '权重 W' },
+          { key: 'B', value: 'bias', label: '偏置 b' },
+          { key: 'C', value: 'loss-name', label: '损失函数的名字' },
+          { key: 'D', value: 'input-data', label: '训练样本的原始标签' }
+        ],
+        answer: ['weight', 'bias'],
+        feedback: {
+          correct: '正确。训练通常更新权重和偏置。',
+          wrong: '再检查一次：训练改变模型参数，不会修改题目数据本身。'
+        }
+      });
+
+      DLModuleUI.mountQuestion('#fillBlankDemo', {
+        type: 'fill',
+        title: '二分类输出常用 ____ 把分数压到 0 到 1 之间。',
+        blanks: [
+          { label: '函数名', placeholder: '函数名', chars: 9 }
+        ],
+        answer: ['sigmoid'],
+        validator: function (answer) {
+          var value = String(answer[0] || '').trim().toLowerCase();
+          return value === 'sigmoid' || value === 'sigmoid函数' || value === '逻辑函数';
+        },
+        feedback: {
+          correct: '正确。Sigmoid 常用于把分数转换成概率形式。',
+          wrong: '提示：这个函数常写作 1 / (1 + e^-x)。'
+        }
+      });
+
+      DLModuleUI.mountQuestion('#shortAnswerDemo', {
+        type: 'short',
+        title: '请用自己的话解释：为什么分类问题不能总是直接使用 L1/L2 回归损失？',
+        feedback: {
+          sample: '参考方向：类别通常没有天然大小顺序或连续距离，直接编号会引入不存在的数值远近。分类问题更常使用概率分布和交叉熵。'
+        },
+        submitText: '提交回答'
+      });
+
+      document.querySelector('#relatedVideosDemo').innerHTML = DLModuleUI.renderRelatedVideos([
+        {
+          title: '示例视频：在页面中放大观看',
+          embed: '<iframe src="https://player.bilibili.com/player.html?isOutside=true&aid=116877569361841&bvid=BV1bgMt6UEtP&cid=39726941247&p=1" allowfullscreen scrolling="no"></iframe>'
+        },
+        { title: '示例视频卡片 B' },
+        { title: '示例视频卡片 C' },
+        { title: '示例视频卡片 D' }
+      ], {
+        showHeader: false,
+        ariaLabel: '教学模块推荐视频'
+      });
+
+    })();
+  </script>
+</body>
+</html>

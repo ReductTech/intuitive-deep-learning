@@ -12,7 +12,8 @@ import { AttentionHint } from '../feedback/AttentionHint';
 import { CatalogItem } from '../layout/CatalogItem';
 import { ContentBlock } from '../layout/ContentBlock';
 import { ModuleShell } from '../layout/ModuleShell';
-import { FormulaBlock, FormulaTerm } from '../learning/FormulaBlock';
+import { FormulaBlock } from '../learning/FormulaBlock';
+import { MathFormulaBlock, MathFormulaStatic, MathFormulaTerm } from '../learning/MathFormulaBlock';
 import { Question } from '../learning/Question';
 import { LessonFooter } from '../learning/LessonFooter';
 import { ProgressiveReveal } from '../learning/ProgressiveReveal';
@@ -27,6 +28,7 @@ import {
 } from '../typography/Typography';
 import { FunctionPlot, type FunctionSeries } from '../visuals/FunctionPlot';
 import { PlotlyChart, type PlotlyLayout, type PlotlyTrace } from '../visuals/PlotlyChart';
+import { defaultTheme } from '../theme';
 import '../ui-kit.css';
 
 const sigmoid = (x: number) => 1 / (1 + Math.exp(-x));
@@ -62,12 +64,6 @@ const typographyVariants: Array<{
   { variant: 'subtitle', label: '副标题', usage: '紧跟标题解释当前学习目标', sample: '拖动参数，观察训练过程如何改变。' },
   { variant: 'body', label: '正文', usage: '主要解释、结论和教学文案', sample: '学习率决定模型每次更新参数时迈出多大一步。' },
   { variant: 'bodySmall', label: '小正文', usage: '紧凑面板、控件附近的补充说明', sample: '真实结果仍需结合验证集表现判断。' },
-  { variant: 'label', label: '标签', usage: '表单、指标和状态名称', sample: '当前学习率' },
-  { variant: 'caption', label: '说明文字', usage: '图注、来源和低优先级帮助', sample: '数值保留三位小数' },
-  { variant: 'button', label: '按钮文字', usage: 'Button 等操作组件内部使用', sample: '继续学习' },
-  { variant: 'numeric', label: '关键数值', usage: '损失、准确率和动态读数', sample: '92.40%' },
-  { variant: 'code', label: '代码文字', usage: '变量、短代码和等宽文本', sample: 'learning_rate = 0.001' },
-  { variant: 'inherit', label: '继承', usage: '需要完整继承父组件文字样式时使用', sample: '继承父组件的排版' },
 ];
 
 const typographyTones: Array<{ tone: TypographyTone; label: string; usage: string }> = [
@@ -83,6 +79,14 @@ const typographyTones: Array<{ tone: TypographyTone; label: string; usage: strin
 
 export function UiKitPage() {
   return <ModuleShell title="UI Kit" subtitle="教学模块的统一界面组件与交互规范。" shellClassName="kit-shell edu-shell--scaled" headerClassName="kit-header">
+    <section className="kit-section" aria-labelledby="theme-title">
+      <header className="kit-section-head"><h2 id="theme-title">Shared 默认主题色</h2><p>{defaultTheme.description} 所有 Shared 组件默认使用这套语义颜色。</p></header>
+      <div className="kit-theme-preview">
+        <div className="kit-theme-preview__hero"><span className="kit-theme-preview__eyebrow">DEFAULT SHARED THEME</span><strong>{defaultTheme.name}</strong><small>颜色先按语义命名，再由组件使用 token；模块 CSS 不直接填写色值。</small></div>
+        <div className="kit-theme-swatches">{defaultTheme.colors.map((color) => <div className="kit-theme-swatch" key={color.token}><span className="kit-theme-swatch__chip" style={{ background: color.value }} aria-hidden="true" /><div><Typography as="strong" variant="bodySmall">{color.label}</Typography><Typography variant="bodySmall" tone="muted">{color.token} · {color.value}</Typography><Typography variant="bodySmall" tone="light">{color.usage}</Typography></div></div>)}</div>
+        <div className="kit-theme-live" aria-label="Shared 主题实时预览"><Typography as="h3" variant="h3">语义预览</Typography><div className="kit-theme-live__row"><Button variant="primary">主操作</Button><Button variant="warn">注意状态</Button><Button variant="danger">错误状态</Button><span className="kit-theme-live__success">✓ 已完成</span></div><div className="kit-theme-live__bar"><span style={{ width: '72%' }} /></div><Typography variant="bodySmall" tone="muted">深蓝 = 结构与解释　暖橙 = 注意与行动　绿色 = 成功反馈</Typography></div>
+      </div>
+    </section>
     <section className="kit-section" aria-labelledby="typography-title">
       <header className="kit-section-head">
         <h2 id="typography-title">文字系统 Typography</h2>
@@ -97,12 +101,12 @@ export function UiKitPage() {
           </header>
           <div className="kit-font-family-grid">
             <div>
-              <Typography variant="label" tone="muted">--ui-font-sans</Typography>
+              <Typography variant="bodySmall" tone="muted">--ui-font-sans</Typography>
               <Typography variant="h3">中文教学文字 Aa 123</Typography>
             </div>
             <div>
-              <Typography variant="label" tone="muted">--ui-font-mono</Typography>
-              <Typography variant="code">Loss = 0.024 · epoch_12</Typography>
+              <Typography variant="bodySmall" tone="muted">--ui-font-mono</Typography>
+              <Typography as="code" variant="bodySmall">Loss = 0.024 · epoch_12</Typography>
             </div>
           </div>
         </article>
@@ -116,9 +120,9 @@ export function UiKitPage() {
             {typographyVariants.map(({ variant, label, usage, sample }) => (
               <div className="kit-type-entry" key={variant}>
                 <div className="kit-type-meta">
-                  <Typography variant="label">{variant}</Typography>
-                  <Typography variant="caption" tone="muted">{label} · 默认 &lt;{String(typographyVariantMapping[variant])}&gt;</Typography>
-                  <Typography variant="caption" tone="light">{usage}</Typography>
+                  <Typography as="strong" variant="bodySmall">{variant}</Typography>
+                  <Typography variant="bodySmall" tone="muted">{label} · 默认 &lt;{String(typographyVariantMapping[variant])}&gt;</Typography>
+                  <Typography variant="bodySmall" tone="light">{usage}</Typography>
                 </div>
                 <Typography as="p" variant={variant}>{sample}</Typography>
               </div>
@@ -135,7 +139,7 @@ export function UiKitPage() {
             {typographyTones.map(({ tone, label, usage }) => (
               <div className="kit-tone-entry" key={tone}>
                 <Typography variant="body" tone={tone}>{label}</Typography>
-                <Typography variant="caption" tone="muted">{tone} · {usage}</Typography>
+                <Typography variant="bodySmall" tone="muted">{tone} · {usage}</Typography>
               </div>
             ))}
           </div>
@@ -152,10 +156,10 @@ export function UiKitPage() {
             <Typography variant="bodySmall" align="end">align="end"</Typography>
           </div>
           <div className="kit-wrap-grid">
-            <div><Typography variant="label" tone="muted">normal</Typography><Typography variant="bodySmall" wrap="normal">普通换行适合连续正文，这段内容会按照容器宽度自然进入下一行。</Typography></div>
-            <div><Typography variant="label" tone="muted">balance</Typography><Typography variant="h3" wrap="balance">平衡换行让多行标题的长度更加接近</Typography></div>
-            <div><Typography variant="label" tone="muted">nowrap</Typography><Typography variant="bodySmall" wrap="nowrap">保持单行，不裁切内容</Typography></div>
-            <div><Typography variant="label" tone="muted">truncate</Typography><Typography variant="bodySmall" wrap="truncate">单行空间不足时截断，并在结尾显示省略号</Typography></div>
+            <div><Typography as="strong" variant="bodySmall" tone="muted">normal</Typography><Typography variant="bodySmall" wrap="normal">普通换行适合连续正文，这段内容会按照容器宽度自然进入下一行。</Typography></div>
+            <div><Typography as="strong" variant="bodySmall" tone="muted">balance</Typography><Typography variant="h3" wrap="balance">平衡换行让多行标题的长度更加接近</Typography></div>
+            <div><Typography as="strong" variant="bodySmall" tone="muted">nowrap</Typography><Typography variant="bodySmall" wrap="nowrap">保持单行，不裁切内容</Typography></div>
+            <div><Typography as="strong" variant="bodySmall" tone="muted">truncate</Typography><Typography variant="bodySmall" wrap="truncate">单行空间不足时截断，并在结尾显示省略号</Typography></div>
           </div>
         </article>
 
@@ -166,7 +170,7 @@ export function UiKitPage() {
           </header>
           <div className="kit-type-guide-grid">
             <section>
-              <Typography as="h4" variant="label">独立文字</Typography>
+              <Typography as="h4" variant="h3">独立文字</Typography>
               <pre className="kit-code-sample"><code>{`<Typography variant="h2">
   当前训练状态
 </Typography>
@@ -176,7 +180,7 @@ export function UiKitPage() {
 </Typography>`}</code></pre>
             </section>
             <section>
-              <Typography as="h4" variant="label">Shared 组件文字</Typography>
+              <Typography as="h4" variant="h3">Shared 组件文字</Typography>
               <pre className="kit-code-sample"><code>{`<ModuleShell
   title="超参数与搜索策略"
   subtitle="观察参数如何影响训练"
@@ -185,11 +189,11 @@ export function UiKitPage() {
 <Button>继续学习</Button>`}</code></pre>
             </section>
             <section>
-              <Typography as="h4" variant="label">自定义现有样式</Typography>
+              <Typography as="h4" variant="h3">自定义现有样式</Typography>
               <Typography variant="bodySmall" tone="muted">在 <code>typography.css</code> 中修改对应的 <code>--ui-type-*</code> token，不在模块 CSS 中重写字号、字重或行高。</Typography>
             </section>
             <section>
-              <Typography as="h4" variant="label">新增文字等级</Typography>
+              <Typography as="h4" variant="h3">新增文字等级</Typography>
               <ol className="kit-type-steps">
                 <li>确认现有 variant 无法表达真实且可复用的语义。</li>
                 <li>向 TypographyVariant 和默认标签映射加入名称。</li>
@@ -208,7 +212,7 @@ export function UiKitPage() {
       <CatalogItem title="提示框" description="颜色和播放方式是两个独立维度。每种颜色都可以直接显示，也可以逐字显示。"><div className="foundation-stack foundation-preview--compact"><Callout tone="orange" label="你的任务" text="拖动绿色预测值，让它与红色真实值重合，把 Loss 缩小到 0。" /><ReplayableCallouts className="foundation-stack" replayLabel="重播四种逐字提示" items={[{ tone: 'orange', label: '思考提示', text: '先比较预测值和真实值，再判断应该向左还是向右移动。', streaming: true, streamInterval: 24 }, { tone: 'blue', label: '逐步解释', text: '预测值每靠近真实值一步，损失就会随距离一起减小。', streaming: true, streamInterval: 24 }, { tone: 'green', label: '正确反馈', text: '方向判断正确，继续缩小距离就能进一步降低损失。', streaming: true, streamInterval: 24 }, { tone: 'red', label: '风险提醒', text: '学习率过大可能越过最低点，导致训练过程来回震荡。', streaming: true, streamInterval: 24 }]} /><Feedback status="correct" label="正确反馈" message="方向判断正确，可以继续。" /><Feedback status="wrong" label="错误提示" message="当前操作让预测值远离真实值。" /></div></CatalogItem>
       <CatalogItem title="紧凑提示条" description="用于紧跟图表、模型或控制区显示一句当前状态。"><div className="foundation-stack foundation-preview--compact"><NoticeStrip tone="blue" lead="观察状态：">已经有 3 个线性神经元了。它们叠加后仍然只是一条直线。</NoticeStrip><NoticeStrip tone="orange" lead="操作提醒：">继续调整参数，比较曲线改变前后的形状。</NoticeStrip><NoticeStrip tone="green" lead="阶段完成：">当前结果已经满足目标，可以进入下一步。</NoticeStrip><NoticeStrip tone="red" lead="需要调整：">当前参数使输出偏离目标，请检查输入范围。</NoticeStrip></div></CatalogItem>
       <CatalogItem title="小型指标块" description="用于一个短标签和一个关键结果。"><div className="foundation-value-row foundation-preview"><ValueTile tone="orange" label="L1 Loss = |真实值 - 预测值|" value="5.4" /><ValueTile tone="blue" label="验证准确率" value="92.4%" /><ValueTile tone="success" label="已完成样本" value="128" /><ValueTile tone="danger" label="误分类样本" value="7" /></div></CatalogItem>
-      <CatalogItem title="公式块" description="注释粒度以独立数学含义为准：变量、函数、上下标等分别解释；括号、逗号、等号、加减乘除等结构符号默认不注释。"><div className="foundation-stack foundation-preview--compact"><FormulaBlock ariaLabel="L2 损失公式"><FormulaTerm tooltip="L₂：当前样本的平方损失">L₂</FormulaTerm> = (<FormulaTerm tooltip="y：样本的真实目标值">y</FormulaTerm> - <FormulaTerm tooltip="ŷ：模型给出的预测值">ŷ</FormulaTerm>)<sup><FormulaTerm tooltip="平方：放大较大的预测误差">²</FormulaTerm></sup></FormulaBlock><FormulaBlock ariaLabel="Sigmoid 函数" fraction={{ prefix: <><FormulaTerm tooltip="σ：Sigmoid 函数，把任意实数映射到 0～1">σ</FormulaTerm>(<FormulaTerm tooltip="z：模型输出的原始分数">z</FormulaTerm>) =</>, numerator: '1', denominator: <>1 + e<sup>−z</sup></> }} /></div></CatalogItem>
+      <CatalogItem title="可解释公式块（MathLive）" description="默认整条公式保持单一主色。只有教学任务明确需要对照、追踪或强调某个语义项时，才为对应 MathFormulaTerm 设置 tone；禁止为了装饰给公式片段随意加色。变量、函数和陌生结构使用 MathFormulaTerm，括号、等号等结构符号使用 MathFormulaStatic。"><MathFormulaBlock ariaLabel="带 L2 正则化的训练目标函数"><MathFormulaTerm latex="W^{*}" tooltip="W*：训练结束时找到的最优权重。" ariaLabel="W star，训练得到的最优权重" /><MathFormulaStatic latex="=" /><MathFormulaTerm latex="\underset{W}{\operatorname{arg\,min}}" tooltip="arg min：在候选权重中寻找让目标最小的一组。" ariaLabel="arg min，对 W 寻找最小目标值" /><MathFormulaStatic latex="(" /><MathFormulaTerm latex="\operatorname{Loss}" tooltip="Loss：衡量预测与真实答案之间的误差。" ariaLabel="Loss，损失函数" /><MathFormulaStatic latex="(" /><MathFormulaTerm latex="y" tooltip="y：样本的真实目标值。" ariaLabel="y，真实目标值" /><MathFormulaStatic latex="," /><MathFormulaTerm latex="\hat{y}" tooltip="ŷ：模型给出的预测值。" ariaLabel="y hat，预测值" /><MathFormulaStatic latex=")" /><MathFormulaStatic latex="+" /><MathFormulaTerm latex="\lambda" tooltip="λ：正则化强度；此处因示例需要强调正则项而使用暖色。" ariaLabel="lambda，正则化强度" tone="warm" /><MathFormulaTerm latex="\lVert W\rVert_2^2" tooltip="权重的 L2 正则项；此处与 λ 同属被强调的正则部分。" ariaLabel="W 的 L2 范数平方" tone="warm" /><MathFormulaStatic latex=")" /></MathFormulaBlock></CatalogItem>
     </div></section>
 
     <section className="kit-section" aria-labelledby="visual-title"><header className="kit-section-head"><h2 id="visual-title">坐标与曲线</h2><p>用于展示函数关系、曲面和训练误差的共享可视化。</p></header><div className="visual-catalog">
@@ -243,8 +247,8 @@ export function UiKitPage() {
     </div></section>
 
     <section className="kit-section" aria-labelledby="flow-title"><header className="kit-section-head"><h2 id="flow-title">流程控制</h2><p>直接弹出用于连续结果；下拉提示用于学习者确认后进入下一阶段。</p></header><div className="flow-patterns">
-      <article className="flow-pattern"><header className="flow-pattern-head"><span className="edu-kicker">模式 1</span><h3>直接弹出</h3><p>操作完成后，下一段内容立即出现。</p></header><ProgressiveReveal revealLabel="完成并显示结果" stage={{ className: 'flow-result', kicker: '结果已出现', title: '模型已完成这一轮计算', description: '这里可以直接展示结果、解释或下一项操作。' }}><NoticeStrip tone="green">当前阶段已完成。</NoticeStrip></ProgressiveReveal></article>
-      <article className="flow-pattern"><header className="flow-pattern-head"><span className="edu-kicker">模式 2</span><h3>下拉提示</h3><p>当前步骤完成后，轻量指示标记出下一段内容，不新增空白占位。</p></header><ProgressiveReveal mode="cue" revealLabel="完成当前步骤" resetLabel="重置演示" stage={{ className: 'flow-result', kicker: '下一阶段', title: '开始解释刚才观察到的现象', description: '滚动提示适合阶段边界明显、下一段内容较长的教学流程。' }}><NoticeStrip tone="blue">学习者已确认进入下一阶段。</NoticeStrip></ProgressiveReveal></article></div></section>
+      <article className="flow-pattern"><header className="flow-pattern-head"><span className="edu-kicker">模式 1</span><h3>直接弹出</h3><p>操作完成后，下一段内容立即出现。</p></header><ProgressiveReveal revealLabel="完成并显示结果" stage={{ className: 'flow-result', title: '模型已完成这一轮计算', description: '这里可以直接展示结果、解释或下一项操作。' }}><NoticeStrip tone="green">当前阶段已完成。</NoticeStrip></ProgressiveReveal></article>
+      <article className="flow-pattern"><header className="flow-pattern-head"><span className="edu-kicker">模式 2</span><h3>下拉提示</h3><p>当前步骤完成后，轻量指示标记出下一段内容，不新增空白占位。</p></header><ProgressiveReveal mode="cue" revealLabel="完成当前步骤" resetLabel="重置演示" stage={{ className: 'flow-result', title: '开始解释刚才观察到的现象', description: '滚动提示适合阶段边界明显、下一段内容较长的教学流程。' }}><NoticeStrip tone="blue">学习者已确认进入下一阶段。</NoticeStrip></ProgressiveReveal></article></div></section>
 
     <section className="kit-section" aria-labelledby="questions-title"><header className="kit-section-head"><h2 id="questions-title">考试题型</h2><p>所有题型采用单栏。单选和判断点击即判；多选、填空和简答完成作答后提交。</p></header><div className="question-catalog"><PanelChoiceQuestion title="下面哪个面板展示的是可计算的函数坐标图？" options={panelChoiceOptions} answer="curve" feedback={{ initial: '面板中的媒体槽可以替换为坐标轴、图片、视频或其他可视化。', correct: '判断正确：A 面板提供了可计算的坐标数据。', wrong: '再观察一次：图片或视频本身不是函数坐标图。' }} /><Question title="下面哪个函数可以把输入映射到 0～1？" options={[{ value: 'relu', label: 'ReLU', wrongFeedback: 'ReLU 的正半轴没有上界，输出不局限于 0～1。' }, { value: 'sigmoid', label: 'Sigmoid' }, { value: 'linear', label: 'Linear', wrongFeedback: '线性函数的输出通常没有 0～1 的范围限制。' }]} answer="sigmoid" feedback={{ correct: '回答正确。', wrong: '再想想输出范围。' }} /><Question type="judgement" title="没有激活函数时，多层线性层叠加后仍然等价于线性变换。" options={[{ key: 'T', value: 'true', label: '正确' }, { key: 'F', value: 'false', label: '错误', wrongFeedback: '多个线性变换复合后仍是线性变换，深度不会带来非线性表达能力。' }]} answer="true" /><Question type="multiple" multiple title="哪些属于训练指标？" options={[{ value: 'loss', label: 'Loss', missedFeedback: 'Loss 直接衡量预测误差，是常见训练指标。' }, { value: 'accuracy', label: 'Accuracy', missedFeedback: 'Accuracy 常用于观察训练阶段的预测正确率。' }, { value: 'color', label: '颜色', wrongFeedback: '颜色只是展示属性，不衡量模型训练表现。' }]} answer={['loss', 'accuracy']} /><Question type="fill" title="二分类输出常用 ____ 函数。" blanks={[{ label: '函数名', placeholder: '填写答案' }]} answer="sigmoid" /><Question type="short" title="请解释为什么较小的 Loss 有用。" feedback={{ sample: '已记录你的回答，可以对照后续解释继续完善。' }} /></div></section>
 

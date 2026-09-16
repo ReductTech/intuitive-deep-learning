@@ -1,4 +1,5 @@
 import { useId, useState, type ChangeEvent, type InputHTMLAttributes, type ReactNode } from 'react';
+import { Typography } from '../typography/Typography';
 import { classNames } from '../utils';
 
 export interface RangeControlProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
@@ -67,10 +68,10 @@ export function RangeControl({
       htmlFor={inputId}
     >
       <span className="edu-control-head">
-        <span className="edu-label">{label}</span>
-        <output className="edu-control-value" htmlFor={inputId} data-i18n-ignore="true">
+        <Typography as="span" variant="bodySmall" tone="muted" className="edu-label">{label}</Typography>
+        <Typography as="output" variant="bodySmall" tone="accent" className="edu-control-value" htmlFor={inputId} data-i18n-ignore="true">
           {formattedValue}
-        </output>
+        </Typography>
       </span>
       <input
         {...props}
@@ -96,7 +97,11 @@ export function RangeControl({
       />
       {scale && scale.length > 0 && (
         <span className="edu-range-scale" aria-hidden="true">
-          {scale.map((item, index) => <span key={index}><i aria-hidden="true" />{item}</span>)}
+          {scale.map((item, index) => (
+            <Typography as="span" variant="bodySmall" tone="inherit" key={index}>
+              <i aria-hidden="true" />{item}
+            </Typography>
+          ))}
         </span>
       )}
     </label>

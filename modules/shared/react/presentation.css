@@ -1,0 +1,74 @@
+/* Shared fixed-canvas presentation primitives.
+   Module-specific page composition must not be added to this file. */
+.edu-lesson-flow { display: grid; width: 100%; gap: 24px; }
+.edu-lesson-flow-step { width: 100%; min-width: 0; }
+.edu-lesson-flow-step > .lesson-step,
+.course-page-surface > .lesson-step {
+  box-sizing: border-box;
+  display: grid;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 10px;
+}
+
+.course-page-surface > .lesson-step > :first-child,
+.course-page-surface > .edu-content-block {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  max-width: 100%;
+}
+
+.lesson-canvas-frame {
+  position: relative;
+  width: 100%;
+  height: 900px;
+  min-width: 0;
+  overflow: visible;
+}
+
+.course-page-surface {
+  position: relative;
+  box-sizing: border-box;
+  width: 1600px;
+  height: 900px;
+  flex: 0 0 1600px;
+  transform: none;
+  transform-origin: top left;
+}
+
+.course-blog-shell {
+  width: 100%;
+  max-width: 1180px;
+  min-width: 0;
+}
+
+.course-blog-shell .lesson-canvas-frame {
+  display: block;
+  width: 100%;
+  height: 900px;
+  overflow: visible;
+}
+
+.course-blog-shell .course-page-surface {
+  width: 1600px;
+  height: 900px;
+  transform-origin: top left;
+}
+
+.ppt-body { width: 100vw; height: 100vh; overflow: hidden; background: #111827; }
+.ppt-body #root,
+.ppt-body .app-router { width: 100%; height: 100%; }
+.ppt-root { position: fixed; inset: 0; overflow: hidden; background: #111827; }
+.ppt-canvas { position: absolute; top: 50%; left: 50%; box-sizing: border-box; width: 1600px; height: 900px; overflow: hidden; background: radial-gradient(circle at 90% 3%, rgba(240,126,71,.08), transparent 25%), #f4f7fb; transform-origin: center; }
+.course-page-surface > .edu-stage { box-sizing: border-box; width: 100%; height: 100%; min-width: 0; max-width: 100%; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+.course-page-surface img,
+.course-page-surface video,
+.course-page-surface svg,
+.course-page-surface canvas,
+.course-page-surface model-viewer { max-width: 100%; }

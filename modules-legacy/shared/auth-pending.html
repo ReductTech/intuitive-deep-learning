@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>需要授权 · 深度学习互动课程</title>
+    <link rel="stylesheet" href="/shared/base.css" />
+    <link rel="stylesheet" href="/shared/auth-guard.css" />
+  </head>
+  <body>
+    <main class="dl-auth-pending-page edu-root">
+      <section class="dl-auth-pending-panel edu-shell">
+        <header class="edu-header">
+          <div>
+            <h1 class="edu-title">需要登录授权</h1>
+            <p class="edu-subtitle">登录后即可继续访问互动课程。</p>
+          </div>
+        </header>
+
+        <section class="edu-stage edu-content-block">
+          <div class="edu-content-body">
+            <p id="dlAuthPendingMessage" class="dl-auth-pending-message">
+              请在 GrowAgent 中完成登录，然后点击下方按钮继续。
+            </p>
+            <p id="dlAuthPendingError" class="dl-auth-pending-error" hidden></p>
+            <div class="dl-auth-pending-actions">
+              <button id="dlAuthPendingContinue" class="dl-auth-pending-button" type="button">
+                我已登录，继续
+              </button>
+            </div>
+          </div>
+        </section>
+      </section>
+    </main>
+  </body>
+</html>

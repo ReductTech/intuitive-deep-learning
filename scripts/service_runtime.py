@@ -56,6 +56,7 @@ LANGCHAIN_MARKERS = [
     "skill:intuitive-deep-learning:langchain",
 ]
 CNN_MARKERS = [
+    "intuitive-deep-learning/scripts/http_service.py",
     "intuitive-deep-learning/scripts/lenet5_cnn_service.py",
     "skill:intuitive-deep-learning:cnn",
 ]

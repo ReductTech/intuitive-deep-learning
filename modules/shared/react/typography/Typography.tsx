@@ -12,13 +12,7 @@ export type TypographyVariant =
   | 'h3'
   | 'subtitle'
   | 'body'
-  | 'bodySmall'
-  | 'label'
-  | 'caption'
-  | 'button'
-  | 'numeric'
-  | 'code'
-  | 'inherit';
+  | 'bodySmall';
 
 export type TypographyTone =
   | 'main'
@@ -55,12 +49,6 @@ export const typographyVariantMapping: Record<TypographyVariant, ElementType> = 
   subtitle: 'p',
   body: 'p',
   bodySmall: 'p',
-  label: 'span',
-  caption: 'span',
-  button: 'span',
-  numeric: 'span',
-  code: 'code',
-  inherit: 'span',
 };
 
 export function Typography<T extends ElementType = 'span'>({
