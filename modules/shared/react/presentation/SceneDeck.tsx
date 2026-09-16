@@ -42,10 +42,12 @@ function useSceneScale(viewportRef: RefObject<HTMLDivElement | null>) {
     if (!viewport) return;
     const update = () => {
       if (document.fullscreenElement === viewport) return;
-      const width = viewport.clientWidth;
-      const height = viewport.clientHeight;
+      const style = window.getComputedStyle(viewport);
+      const width = viewport.clientWidth - (parseFloat(style.paddingLeft) || 0) - (parseFloat(style.paddingRight) || 0);
+      const height = viewport.clientHeight - (parseFloat(style.paddingTop) || 0) - (parseFloat(style.paddingBottom) || 0);
       if (!width || !height) return;
-      setScale(Math.min(1, width / SCENE_WIDTH, height / SCENE_HEIGHT));
+      const fit = parseFloat(style.getPropertyValue('--sd-stage-fit')) || 1;
+      setScale(Math.min(1, width / SCENE_WIDTH, height / SCENE_HEIGHT) * fit);
     };
     update();
     const observer = new ResizeObserver(update);

@@ -1,0 +1,27 @@
+/* 收尾页：左边回顾整条链路，右边是推荐资源与导航。 */
+.ck-page--resources .ck-resources-layout {
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+  align-items: start;
+  gap: 20px;
+  overflow: hidden;
+}
+
+.ck-page--resources .ck-resources-recap {
+  display: grid;
+  min-width: 0;
+  gap: 12px;
+}
+
+.ck-page--resources .ck-guide-footer {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.ck-page--resources .ck-guide-footer .edu-lesson-footer-main { padding: 14px 22px; }
+
+.ck-page--resources .ck-guide-footer .edu-lesson-footer-resources { padding: 10px 22px 12px; }
+
+.ck-page--resources .ck-guide-footer .dl-video-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }

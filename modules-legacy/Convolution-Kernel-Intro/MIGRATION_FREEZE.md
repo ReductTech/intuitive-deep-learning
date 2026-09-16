@@ -1,5 +1,9 @@
 # Convolution-Kernel-Intro 迁移冻结
 
+> **迁移状态（已完成）**：React 版落在 modules/Convolution-Kernel-Intro/（按用户要求沿用原目录名，未加 -React 后缀），
+> 共 9 页，对应本文档的三幕结构：gomoku-play / gomoku-explain / binary-board / window-scan / kernel-design /
+> mnist-input / mnist-scan / mnist-readout / resources。本目录保持归档，只补齐了缺失的 shared CSS 与脚本引用（index.html），运行逻辑未改。
+
 > 迁移目标：`Convolution-Kernel-Intro-React`。本文件只记录迁移前事实与复用关系，不改变旧模块运行逻辑。正式课程链路已核实为 `Manual-Feature-Classification(-React) → Convolution-Kernel-Intro(-React) → LeNet5-CNN-Lab`。
 
 ## 页面与步骤表

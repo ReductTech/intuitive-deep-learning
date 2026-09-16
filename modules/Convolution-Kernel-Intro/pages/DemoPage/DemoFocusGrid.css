@@ -1,0 +1,102 @@
+/* 计算机眼中的棋盘特写：镜头跟着窗口平移，四周用白色渐变虚化掉。 */
+.ck-focus-grid {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border: 1px solid rgba(var(--ui-accent-rgb), 0.14);
+  border-radius: var(--ui-radius-sm);
+  background: #fff;
+}
+
+.ck-focus-field {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: grid;
+  width: calc(100% * var(--ck-image-cells) / var(--ck-view-cells));
+  height: calc(100% * var(--ck-image-cells) / var(--ck-view-cells));
+  grid-template-columns: repeat(var(--ck-image-cells), minmax(0, 1fr));
+  grid-template-rows: repeat(var(--ck-image-cells), minmax(0, 1fr));
+  transition: transform 480ms cubic-bezier(0.33, 0, 0.2, 1);
+}
+
+.ck-focus-cell {
+  display: grid;
+  min-width: 0;
+  place-items: center;
+  overflow: hidden;
+  color: #ccd5e2;
+  line-height: 1;
+}
+
+.ck-focus-cell.is-black { color: #4a5870; }
+
+.ck-focus-cell.is-white { color: #9aa6b9; }
+
+.ck-focus-cell.is-window { color: #3c4b64; }
+
+.ck-focus-cell.is-window.is-white { color: #8896ab; }
+
+.ck-focus-cell.is-win { box-shadow: inset 0 0 0 2px var(--ui-accent-alt); }
+
+.ck-focus-cell.is-hit {
+  position: relative;
+  z-index: 2;
+  border-radius: 20%;
+  background: var(--ui-success);
+  color: #fff;
+  box-shadow: 0 8px 18px rgba(var(--ui-success-rgb), 0.32);
+  transform: scale(1.06);
+  transition: transform 200ms ease, background-color 200ms ease;
+}
+
+/* 越靠边越白，最外一圈只剩一点点影子。 */
+.ck-focus-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background:
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0) 16%),
+    linear-gradient(to top, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0) 16%),
+    linear-gradient(to right, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0) 16%),
+    linear-gradient(to left, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0) 16%);
+}
+
+.ck-focus-window {
+  position: absolute;
+  z-index: 4;
+  border: 2px solid var(--ui-accent-alt);
+  border-radius: 6px;
+  background: rgba(var(--ui-accent-alt-rgb), 0.07);
+  box-shadow: 0 0 0 5px rgba(var(--ui-accent-alt-rgb), 0.1);
+  pointer-events: none;
+  transition:
+    left 480ms cubic-bezier(0.33, 0, 0.2, 1),
+    top 480ms cubic-bezier(0.33, 0, 0.2, 1);
+}
+
+.ck-focus-badge {
+  position: absolute;
+  bottom: 100%;
+  left: 100%;
+  display: flex;
+  width: max-content;
+  align-items: center;
+  border-radius: var(--ui-radius-pill);
+  background: var(--ui-accent-alt);
+  color: #fff;
+  padding: 3px 14px;
+  white-space: nowrap;
+  box-shadow: 0 8px 20px rgba(var(--ui-accent-alt-rgb), 0.32);
+  transform: translate(-14px, -14px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ck-focus-field,
+  .ck-focus-window,
+  .ck-focus-cell.is-hit { transition: none; }
+}

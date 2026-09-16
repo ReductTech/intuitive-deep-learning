@@ -1,0 +1,50 @@
+/* 第二幕第二页：左边是扫描对象，右边是算子与读数。 */
+.ck-operator-row {
+  display: grid;
+  min-width: 0;
+  justify-items: center;
+  gap: 10px;
+}
+
+.ck-operator-row .ck-kernel-grid { max-width: 150px; }
+
+.ck-page--scan .ck-side { align-content: start; }
+
+/* 计算过程是一层内部弹层：铺满右栏，但不改变整页版式。 */
+.ck-calc-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 12px;
+  border: 1px solid rgba(var(--ui-accent-rgb), 0.22);
+  border-radius: var(--ui-radius-md);
+  background: #fff;
+  padding: 16px 18px;
+  overflow: hidden;
+  box-shadow: 0 18px 40px rgba(39, 68, 110, 0.18);
+}
+
+.ck-calc-head {
+  display: flex;
+  min-width: 0;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.ck-calc-body {
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  place-content: center;
+}
+
+.ck-calc-body .ck-multiply-grid {
+  width: 100%;
+  max-width: 420px;
+}

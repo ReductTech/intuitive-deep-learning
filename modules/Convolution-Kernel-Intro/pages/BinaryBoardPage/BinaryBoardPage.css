@@ -1,0 +1,5 @@
+/* 第二幕第一页：两张 0 / 1 图。整页只剩一个视觉重点，就是左边的棋盘。 */
+.ck-page--binary .ck-figure-column { grid-template-rows: auto minmax(0, 1fr); }
+
+.ck-page--binary .ck-side { align-content: center; }
+

@@ -1,0 +1,52 @@
+/* 第二幕第三页：左边图像、右边算子工作台。 */
+.ck-steps {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ck-steps li {
+  display: grid;
+  min-width: 0;
+  place-items: center;
+  border: 1px solid rgba(var(--ui-accent-rgb), 0.18);
+  border-radius: var(--ui-radius-sm);
+  background: var(--ui-bg-muted);
+  padding: 6px 4px;
+  text-align: center;
+}
+
+.ck-steps li.is-current {
+  border-color: var(--ui-accent-alt);
+  background: rgba(var(--ui-accent-alt-rgb), 0.1);
+  color: var(--ui-accent-alt);
+}
+
+.ck-steps li.is-done {
+  border-color: rgba(var(--ui-success-rgb), 0.4);
+  background: rgba(var(--ui-success-rgb), 0.08);
+  color: var(--ui-success);
+}
+
+.ck-steps li.is-pending { opacity: 0.75; }
+
+.ck-design-grid-wrap {
+  display: grid;
+  min-width: 0;
+  place-items: center;
+}
+
+.ck-design-kernel {
+  width: 100%;
+  max-width: 240px;
+  margin: 0 auto;
+}
+
+.ck-page--design .ck-side { align-content: center; }
+
+.ck-page--design .ck-question { min-width: 0; }
+

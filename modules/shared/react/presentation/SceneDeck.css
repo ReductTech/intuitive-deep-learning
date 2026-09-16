@@ -126,7 +126,7 @@
 .scenedeck-thumbnail.is-active .scenedeck-thumbnail__title { color: var(--sd-ink); }
 
 /* ---------- stage ---------- */
-.scenedeck-stage-viewport { position: relative; display: grid; min-width: 0; min-height: 0; place-items: center; overflow: hidden; background: radial-gradient(115% 100% at 50% 0%, #f8fafd 0%, #e6ebf3 100%); }
+.scenedeck-stage-viewport { --sd-stage-fit: .84; position: relative; display: grid; min-width: 0; min-height: 0; place-items: center; overflow: hidden; background: radial-gradient(115% 100% at 50% 0%, #f8fafd 0%, #e6ebf3 100%); padding: 0; }
 .scenedeck-stage-grid { position: absolute; inset: 0; opacity: .5; background-image: radial-gradient(rgba(120,138,166,.42) 1px, transparent 1.2px); background-size: 24px 24px; }
 .scenedeck-stage { z-index: 1; contain: layout paint; border-radius: 12px; box-shadow: var(--sd-shadow-lg); will-change: transform; backface-visibility: hidden; }
 .scenedeck-stage-viewport:fullscreen { box-sizing: border-box; display: grid; width: 100vw; height: 100vh; min-width: 100vw; min-height: 100vh; margin: 0; border: 0; border-radius: 0; background: #f4f7fb; box-shadow: none; padding: 0; }

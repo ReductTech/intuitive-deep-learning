@@ -1,0 +1,5 @@
+/* 第三幕第一页：整页的重点就是左边那张 28 × 28 的数字图。 */
+.ck-page--mnist-input .ck-figure-column { grid-template-rows: auto minmax(0, 1fr) auto; }
+
+.ck-page--mnist-input .ck-side { align-content: center; }
+

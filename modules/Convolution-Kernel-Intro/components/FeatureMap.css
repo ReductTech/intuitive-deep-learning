@@ -1,0 +1,52 @@
+.ck-feature-map {
+  display: grid;
+  min-width: 0;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-width: 100%;
+  max-height: 100%;
+  grid-template-columns: repeat(var(--ck-feature-size, 26), minmax(0, 1fr));
+  gap: 1px;
+  border: 1px solid rgba(39, 68, 110, 0.2);
+  border-radius: var(--ui-radius-sm, 8px);
+  background: rgba(39, 68, 110, 0.1);
+  padding: 4px;
+  overflow: hidden;
+}
+
+.ck-feature-cell {
+  position: relative;
+  display: block;
+  min-width: 0;
+  border: 0;
+  border-radius: 1px;
+  background: rgba(39, 68, 110, 0.06);
+  padding: 0;
+}
+
+.ck-feature-cell.is-empty { background: rgba(39, 68, 110, 0.06); }
+
+.ck-feature-cell.is-current {
+  outline: 2px solid var(--ui-accent-alt, #f07e47);
+  outline-offset: -2px;
+  z-index: 2;
+}
+
+.ck-feature-cell.is-selected {
+  outline: 2px solid var(--ui-accent, #27446e);
+  outline-offset: -2px;
+  z-index: 3;
+}
+
+.ck-feature-map.is-interactive .ck-feature-cell:not(:disabled) { cursor: pointer; }
+
+.ck-feature-tip {
+  position: absolute;
+  inset: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+

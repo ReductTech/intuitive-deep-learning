@@ -1,0 +1,86 @@
+/* 开场演示：左边是棋盘，右边是 0 / 1 表，中间一条箭头把两者连起来。 */
+.course-page-surface .ck-page--demo {
+  grid-template-rows: auto minmax(0, 1fr) auto;
+}
+
+.ck-demo-stage {
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  grid-template-columns: minmax(0, 1fr) 190px minmax(0, 1fr);
+  align-items: stretch;
+  gap: 24px;
+}
+
+.ck-demo-card {
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 18px;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius-lg);
+  background: #fff;
+  box-shadow: var(--ui-shadow-soft);
+  padding: 18px 24px 24px;
+}
+
+.ck-demo-card-head {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 12px;
+}
+
+.ck-demo-card-mark {
+  flex-shrink: 0;
+  width: 6px;
+  height: 30px;
+  border-radius: 3px;
+  background: var(--ui-accent-alt);
+}
+
+.ck-demo-card-body {
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  place-items: center;
+}
+
+.ck-demo-card-body > .ck-square-frame {
+  width: auto;
+  height: 100%;
+}
+
+.ck-demo-bridge {
+  display: grid;
+  min-width: 0;
+  align-content: center;
+  justify-items: center;
+  gap: 12px;
+}
+
+.ck-demo-foot {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  justify-items: center;
+  gap: 10px;
+}
+
+.ck-demo-line { max-width: 100%; }
+
+.ck-demo-line-mark {
+  width: 56px;
+  height: 5px;
+  border-radius: 3px;
+  background: var(--ui-accent-alt);
+}
+
+.ck-demo-replay {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+}
