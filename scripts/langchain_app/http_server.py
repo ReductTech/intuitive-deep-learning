@@ -28,7 +28,7 @@ class LangChainServiceHandler(BaseHTTPRequestHandler):
         self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
         self.send_header(
             "Access-Control-Allow-Headers",
-            "Content-Type, Authorization, X-Course-ID, X-User-ID",
+            "Content-Type, Authorization, X-Course-ID",
         )
         self.send_header("Access-Control-Expose-Headers", "X-Request-ID")
 
