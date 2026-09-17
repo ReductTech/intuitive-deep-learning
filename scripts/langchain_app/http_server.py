@@ -26,7 +26,10 @@ class LangChainServiceHandler(BaseHTTPRequestHandler):
     def _send_cors_headers(self) -> None:
         self.send_header("Access-Control-Allow-Origin", CONFIG.allow_origin)
         self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-        self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization")
+        self.send_header(
+            "Access-Control-Allow-Headers",
+            "Content-Type, Authorization, X-Course-ID, X-User-ID",
+        )
         self.send_header("Access-Control-Expose-Headers", "X-Request-ID")
 
     def send_json(self, status: int, payload: dict[str, Any]) -> bool:
