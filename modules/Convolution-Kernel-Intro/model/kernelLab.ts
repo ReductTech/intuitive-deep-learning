@@ -50,12 +50,49 @@ export function winDirection(winLine: Cell[]): { dr: number; dc: number } {
   return { dr: Math.sign(second.row - first.row), dc: Math.sign(second.col - first.col) };
 }
 
-export function winDirectionLabel(winLine: Cell[]): string {
+/** 可以单独挑出来匹配的四个方向；每个方向都配一个 5 × 5 算子。 */
+export type KernelDirection = 'horizontal' | 'vertical' | 'diagonal' | 'antiDiagonal';
+
+export const KERNEL_DIRECTIONS: readonly KernelDirection[] = [
+  'horizontal',
+  'vertical',
+  'diagonal',
+  'antiDiagonal',
+];
+
+const DIRECTION_LABELS: Record<KernelDirection, string> = {
+  horizontal: '横向',
+  vertical: '竖向',
+  diagonal: '左上到右下斜线',
+  antiDiagonal: '右上到左下斜线',
+};
+
+/** 方向按钮上的短标签：一个汉字或一个箭头。 */
+const DIRECTION_SHORT_LABELS: Record<KernelDirection, string> = {
+  horizontal: '横',
+  vertical: '竖',
+  diagonal: '↘',
+  antiDiagonal: '↙',
+};
+
+export function directionLabel(direction: KernelDirection): string {
+  return DIRECTION_LABELS[direction];
+}
+
+export function directionShortLabel(direction: KernelDirection): string {
+  return DIRECTION_SHORT_LABELS[direction];
+}
+
+/** 终局连线落在哪个方向。 */
+export function directionForWinLine(winLine: Cell[]): KernelDirection {
   const dir = winDirection(winLine);
-  if (dir.dr === 0) return '横向';
-  if (dir.dc === 0) return '竖向';
-  if (dir.dr === dir.dc) return '左上到右下斜线';
-  return '右上到左下斜线';
+  if (dir.dr === 0) return 'horizontal';
+  if (dir.dc === 0) return 'vertical';
+  return dir.dr === dir.dc ? 'diagonal' : 'antiDiagonal';
+}
+
+export function winDirectionLabel(winLine: Cell[]): string {
+  return directionLabel(directionForWinLine(winLine));
 }
 
 export function matrixSize(matrix: Matrix): number {
@@ -94,10 +131,14 @@ export function verticalKernel(size: number = KERNEL_SIZE): Matrix {
 
 /** 与终局连线形状一致的算子：横向用横算子，斜线用同向的对角算子。 */
 export function kernelForWinDirection(winLine: Cell[]): Matrix {
-  const dir = winDirection(winLine);
-  if (dir.dr === 0) return horizontalKernel();
-  if (dir.dc === 0) return verticalKernel();
-  return dir.dr === dir.dc ? mainDiagonalKernel() : antiDiagonalKernel();
+  return kernelForDirection(directionForWinLine(winLine));
+}
+
+/** 四个方向各自对应的算子：一条横线、一条竖线、两条对角线。 */
+export function kernelForDirection(direction: KernelDirection): Matrix {
+  if (direction === 'horizontal') return horizontalKernel();
+  if (direction === 'vertical') return verticalKernel();
+  return direction === 'diagonal' ? mainDiagonalKernel() : antiDiagonalKernel();
 }
 
 export function flipHorizontal(matrix: Matrix): Matrix {
@@ -207,6 +248,57 @@ export function activationAt(
   kernel: Matrix,
 ): number {
   return dotProduct(kernel, patchMatrix(board, player, transform, top, left, kernel.length));
+}
+
+/**
+ * 棋盘坐标上的 5 × 5 小块：不补零，窗口只落在棋盘内部，
+ * 所以位置一共有 (15 − 5 + 1)² = 121 个。
+ */
+export function boardPatch(
+  board: Board,
+  player: number,
+  top: number,
+  left: number,
+  size: number = KERNEL_SIZE,
+): Matrix {
+  return Array.from({ length: size }, (_, row) => (
+    Array.from({ length: size }, (_, col) => boardValueAt(board, player, top + row, left + col))
+  ));
+}
+
+/** 直接按棋盘坐标算激活值，省掉补零圈那一层换算。 */
+export function boardActivation(
+  board: Board,
+  player: number,
+  top: number,
+  left: number,
+  kernel: Matrix,
+): number {
+  return dotProduct(kernel, boardPatch(board, player, top, left, kernel.length));
+}
+
+/** 遍历棋盘上所有窗口位置，返回最大激活值以及取得它的位置。 */
+export function bestBoardActivation(
+  board: Board,
+  player: number,
+  kernel: Matrix,
+): { value: number; positions: Cell[] } {
+  const size = kernel.length;
+  const max = BOARD_SIZE - size;
+  let value = -Infinity;
+  let positions: Cell[] = [];
+  for (let row = 0; row <= max; row += 1) {
+    for (let col = 0; col <= max; col += 1) {
+      const current = boardActivation(board, player, row, col, kernel);
+      if (current > value) {
+        value = current;
+        positions = [{ row, col }];
+      } else if (current === value) {
+        positions.push({ row, col });
+      }
+    }
+  }
+  return { value: Number.isFinite(value) ? value : 0, positions };
 }
 
 /** 遍历所有窗口位置，返回最大激活值以及取得它的位置。 */

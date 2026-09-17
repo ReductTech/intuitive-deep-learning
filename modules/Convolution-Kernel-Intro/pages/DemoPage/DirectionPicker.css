@@ -1,0 +1,53 @@
+/* 方向选择器：四个按钮各画一个 5 × 5 算子，选中的那个就是此刻贴在数字表上的窗口。 */
+.ck-direction-picker {
+  display: flex;
+  min-width: 0;
+  max-width: 100%;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.ck-direction-picker .edu-btn.ck-direction {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: var(--ui-radius-md);
+  padding: 4px 10px;
+}
+
+.ck-direction-picker .ck-direction > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ck-direction-picker .ck-direction.is-win { border-color: var(--ui-accent-alt); }
+
+.ck-direction-picker .ck-direction.is-win::after {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 10px;
+  height: 10px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: var(--ui-accent-alt);
+  content: "";
+}
+
+.ck-direction-glyph {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  grid-template-columns: repeat(var(--ck-glyph-size, 5), minmax(0, 1fr));
+  grid-template-rows: repeat(var(--ck-glyph-size, 5), minmax(0, 1fr));
+  gap: 1px;
+}
+
+.ck-direction-glyph .is-zero { border-radius: 1px; background: rgba(var(--ui-accent-rgb), 0.12); }
+
+.ck-direction-glyph .is-one { border-radius: 1px; background: currentColor; }

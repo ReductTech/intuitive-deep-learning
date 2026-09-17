@@ -1,6 +1,6 @@
-import type { CSSProperties, ReactNode } from 'react';
+import type { CSSProperties } from 'react';
 import { Typography } from '../../../shared/react';
-import { AI, EMPTY, HUMAN, inBounds, type Board, type Cell } from '../../model/gomokuEngine';
+import { EMPTY, HUMAN, inBounds, type Board, type Cell } from '../../model/gomokuEngine';
 import { IMAGE_PADDING, IMAGE_SIZE, type Matrix } from '../../model/kernelLab';
 import './DemoFocusGrid.css';
 
@@ -20,30 +20,30 @@ function cropOffset(windowStart: number): number {
 
 export interface DemoFocusGridProps {
   board: Board;
+  /** 记成 1 的那一方；另一方记 -1，空位记 0。 */
+  player?: number;
   kernel: Matrix;
   windowTop: number;
   windowLeft: number;
   windowSize: number;
   /** 结算之后要圈出来的那条连线。 */
   winLine: Cell[];
-  /** 贴在窗口右上角的小标签。 */
-  badge?: ReactNode;
   label?: string;
   className?: string;
 }
 
 /**
- * 计算机眼中的棋盘特写：黑子记 1，白子记 -1，空位记 0。
- * 四周逐层淡出，只有窗口里的命中格子放大成绿色色块。
+ * 计算机眼中的棋盘特写：选定一方的棋子记 1，另一方记 -1，空位记 0。
+ * 四周逐层淡出，只有窗口里与算子重叠的格子放大成绿色色块。
  */
 export function DemoFocusGrid({
   board,
+  player = HUMAN,
   kernel,
   windowTop,
   windowLeft,
   windowSize,
   winLine,
-  badge,
   label,
   className,
 }: DemoFocusGridProps) {
@@ -61,15 +61,15 @@ export function DemoFocusGrid({
       const localRow = row - windowTop;
       const localCol = col - windowLeft;
       const inWindow = localRow >= 0 && localRow < windowSize && localCol >= 0 && localCol < windowSize;
-      const isHit = inWindow && stone === HUMAN && kernel[localRow]?.[localCol] === 1;
-      const value = stone === HUMAN ? 1 : stone === AI ? -1 : 0;
+      const value = stone === player ? 1 : stone === EMPTY ? 0 : -1;
+      const isHit = inWindow && value === 1 && kernel[localRow]?.[localCol] === 1;
       const classes = [
         'ck-focus-cell',
         value === 1 && 'is-black',
         value === -1 && 'is-white',
         inWindow && 'is-window',
         isHit && 'is-hit',
-        stone === HUMAN && winKeys.has(boardRow + ':' + boardCol) && 'is-win',
+        value === 1 && winKeys.has(boardRow + ':' + boardCol) && 'is-win',
       ].filter(Boolean).join(' ');
       cells.push(
         <span key={row + ':' + col} className={classes}>
@@ -104,9 +104,7 @@ export function DemoFocusGrid({
           width: (windowSize * 100) / VIEW_CELLS + '%',
           height: (windowSize * 100) / VIEW_CELLS + '%',
         }}
-      >
-        {badge ? <span className="ck-focus-badge">{badge}</span> : null}
-      </span>
+      />
     </div>
   );
 }

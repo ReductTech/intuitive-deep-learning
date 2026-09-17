@@ -17,7 +17,7 @@
   min-width: 0;
   min-height: 0;
   margin: 0;
-  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr) auto;
   gap: 18px;
   border: 1px solid var(--ui-border);
   border-radius: var(--ui-radius-lg);
@@ -31,6 +31,12 @@
   min-width: 0;
   align-items: center;
   gap: 12px;
+}
+
+/* 右侧那行小字说明轮到谁落子。 */
+.ck-demo-turn {
+  margin-left: auto;
+  white-space: nowrap;
 }
 
 .ck-demo-card-mark {
@@ -53,6 +59,27 @@
   height: 100%;
 }
 
+/* 右边这一栏多了一行方向选择器，正方形特写排在它下面。 */
+.ck-demo-card-body--stack {
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 14px;
+}
+
+.ck-demo-card-foot {
+  display: flex;
+  min-width: 0;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.ck-demo-readout {
+  align-items: baseline;
+  gap: 6px;
+}
+
+.ck-demo-readout .ck-demo-legend { white-space: nowrap; }
+
 .ck-demo-bridge {
   display: grid;
   min-width: 0;
@@ -69,7 +96,7 @@
   gap: 10px;
 }
 
-.ck-demo-line { max-width: 100%; }
+.ck-demo-line { max-width: min(100%, 1000px); }
 
 .ck-demo-line-mark {
   width: 56px;
@@ -78,9 +105,12 @@
   background: var(--ui-accent-alt);
 }
 
-.ck-demo-replay {
+.ck-demo-actions {
   position: absolute;
   top: 50%;
   right: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   transform: translateY(-50%);
 }
