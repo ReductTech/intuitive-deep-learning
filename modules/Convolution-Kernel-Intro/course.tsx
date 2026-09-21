@@ -1,96 +1,75 @@
 import type { ReactNode } from 'react';
 import type { LessonFlowRevealMode, LessonStepContext } from '../shared/react';
-import { DemoPage } from './pages/DemoPage/DemoPage';
-import { GomokuGamePage } from './pages/GomokuGamePage/GomokuGamePage';
 import { GomokuExplainPage } from './pages/GomokuExplainPage/GomokuExplainPage';
-import { BinaryBoardPage } from './pages/BinaryBoardPage/BinaryBoardPage';
+import { GomokuPlayPage } from './pages/GomokuPlayPage/GomokuPlayPage';
+import { BoardAsNumbersPage } from './pages/BoardAsNumbersPage/BoardAsNumbersPage';
 import { WindowScanPage } from './pages/WindowScanPage/WindowScanPage';
 import { KernelDesignPage } from './pages/KernelDesignPage/KernelDesignPage';
-import { MnistInputPage } from './pages/MnistInputPage/MnistInputPage';
-import { MnistScanPage } from './pages/MnistScanPage/MnistScanPage';
-import { MnistReadoutPage } from './pages/MnistReadoutPage/MnistReadoutPage';
-import { ResourcesPage } from './pages/ResourcesPage/ResourcesPage';
+import { SweepAndNamePage } from './pages/SweepAndNamePage/SweepAndNamePage';
+import { LocalPatternPage } from './pages/LocalPatternPage/LocalPatternPage';
 
-export interface KernelCourseItem {
+export interface ConvolutionCourseItem {
   id: string;
   title: string;
   section: string;
   revealMode: LessonFlowRevealMode;
   component: (context: LessonStepContext) => ReactNode;
-  /** Optional per-surface visibility; omitted means visible everywhere. */
+  advanceLabel?: string;
+  /** 可选的分形态可见性；省略表示两种形态都显示。 */
   showInBlog?: boolean;
   showInPpt?: boolean;
 }
 
-export const kernelCourse: KernelCourseItem[] = [
-  {
-    id: 'demo-scan',
-    title: '卷积核，其实像在棋盘上找棋形',
-    section: '开场演示',
-    revealMode: 'scroll',
-    component: (context) => <DemoPage onComplete={context.complete} />,
-  },
+/** 课程页序与 outlines.json 的 pages 顺序一致。 */
+export const convolutionCourse: ConvolutionCourseItem[] = [
   {
     id: 'gomoku-play',
-    title: '你执黑先手，AI 执白后手',
+    title: '下完你的第一局',
     section: '从一局五子棋开始',
-    revealMode: 'scroll',
-    component: (context) => <GomokuGamePage onComplete={context.complete} />,
+    revealMode: 'cue',
+    component: (context) => <GomokuPlayPage onComplete={context.complete} />,
+  },
+  {
+    id: 'board-as-numbers',
+    title: '把棋形变成数字',
+    section: '从一局五子棋开始',
+    revealMode: 'cue',
+    component: (context) => <BoardAsNumbersPage onComplete={context.complete} />,
   },
   {
     id: 'gomoku-explain',
-    title: '计算机刚才是怎么判断胜负的？',
+    title: '计算机是怎么“看”出输赢的？',
     section: '从一局五子棋开始',
     revealMode: 'cue',
     component: (context) => <GomokuExplainPage onComplete={context.complete} />,
   },
   {
-    id: 'binary-board',
-    title: '把刚刚这盘棋拆成两个 0 / 1 图',
-    section: '把棋盘变成数字',
-    revealMode: 'cue',
-    component: (context) => <BinaryBoardPage onComplete={context.complete} />,
-  },
-  {
     id: 'window-scan',
-    title: '拖动窗口，找出响应最强的地方',
-    section: '把棋盘变成数字',
+    title: '拖着窗口，找出激活值最大的地方',
+    section: '从一局五子棋开始',
     revealMode: 'cue',
     component: (context) => <WindowScanPage onComplete={context.complete} />,
   },
   {
     id: 'kernel-design',
-    title: '换个方向，还能检测到吗？',
-    section: '设计你自己的算子',
+    title: '棋盘转了向，重新排一个算子',
+    section: '从一局五子棋开始',
     revealMode: 'cue',
     component: (context) => <KernelDesignPage onComplete={context.complete} />,
   },
   {
-    id: 'mnist-input',
-    title: '换一张手写数字，看看卷积的输入',
-    section: '换一张手写数字',
+    id: 'sweep-and-name',
+    title: '把窗口滑遍全图：这就是卷积',
+    section: '从一局五子棋开始',
     revealMode: 'cue',
-    component: (context) => <MnistInputPage onComplete={context.complete} />,
+    component: (context) => <SweepAndNamePage onComplete={context.complete} />,
   },
   {
-    id: 'mnist-scan',
-    title: '让卷积核扫过这张手写数字',
-    section: '换一张手写数字',
+    id: 'local-pattern',
+    title: '同一块输入，不同卷积核会看到不同模式',
+    section: '模板滑一遍',
     revealMode: 'cue',
-    component: (context) => <MnistScanPage onComplete={context.complete} />,
-  },
-  {
-    id: 'mnist-readout',
-    title: '换一个卷积核，它就会去找别的特征',
-    section: '换一张手写数字',
-    revealMode: 'cue',
-    component: (context) => <MnistReadoutPage onComplete={context.complete} />,
-  },
-  {
-    id: 'resources',
-    title: '你已经走完了一次完整的卷积',
-    section: '课程结尾',
-    revealMode: 'scroll',
-    component: (context) => <ResourcesPage onComplete={context.complete} />,
+    component: (context) => <LocalPatternPage onComplete={context.complete} />,
   },
 ];
+

@@ -1,156 +1,402 @@
-import { useEffect, useMemo, useState } from 'react';
-import { Button, Callout, ContentBlock, Typography, ValueTile } from '../../../shared/react';
-import { BinaryGrid } from '../../components/BinaryGrid';
-import { GameBlocked } from '../../components/GameReady';
-import { KernelGrid } from '../../components/KernelGrid';
-import { MultiplyGrid } from '../../components/MultiplyGrid';
-import { useKernelLesson } from '../../LessonContext';
-import { EMPTY, type Cell, type GomokuGame } from '../../model/gomokuEngine';
 import {
-  KERNEL_SIZE,
-  bestActivation,
-  buildDisplayCells,
-  dotProduct,
-  kernelForWinDirection,
-  patchMatrix,
-} from '../../model/kernelLab';
-import '../ck-pages.css';
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type CSSProperties,
+  type PointerEvent as ReactPointerEvent,
+} from 'react';
+import { ContentBlock, ExplainPanelButton, Typography } from '../../../shared/react';
+import { useGomokuOutcome } from '../../LessonContext';
+import { BOARD_SIZE, EMPTY, type Board, type Cell } from '../../model/gomokuEngine';
 import './WindowScanPage.css';
 
-const START: Cell = { row: 0, col: 0 };
+/** 小框和算子的边长：五子连成一线，正好装进 5 × 5。 */
+const KERNEL_SIZE = 5;
+/** 小框左上角能滑到的最远处：小框整个留在盘内。 */
+const WINDOW_LIMIT = BOARD_SIZE - KERNEL_SIZE;
+/** 小框正中间那一格。 */
+const WINDOW_MIDDLE = Math.floor(KERNEL_SIZE / 2);
+/** 一格占整盘的百分比：橙色小框按它定位，格子才是正方形。 */
+const UNIT = 100 / BOARD_SIZE;
+/** 前面几页放大看过的窗口，这一页只借它来定底色分层的中心。 */
+const ZOOM_SIZE = 9;
+/** 底色从中心往外一共分五层，再远都并到最外那一层。 */
+const RING_MAX = 4;
+
+/** 整盘和算子各自的行列索引。 */
+const BOARD_INDEX = Array.from({ length: BOARD_SIZE }, (_, index) => index);
+const KERNEL_INDEX = Array.from({ length: KERNEL_SIZE }, (_, index) => index);
+
+function cellKey(row: number, col: number): string {
+  return `${row}:${col}`;
+}
+
+function clamp(value: number, min: number, max: number): number {
+  return Math.min(max, Math.max(min, value));
+}
+
+/** 棋盘的数字版本：赢方的子记 1，对手的子记 -1，空点记 0。 */
+function toNumberGrid(board: Board, winner: number): number[][] {
+  return board.map((row) => row.map((stone) => {
+    if (stone === EMPTY) return 0;
+    return stone === winner ? 1 : -1;
+  }));
+}
+
+/** 以棋形的最小外接矩形为中心取一个 size × size 的窗口，返回窗口正中的那一格。 */
+function windowCentre(line: Cell[], size: number): Cell {
+  const lineRows = line.map((cell) => cell.row);
+  const lineCols = line.map((cell) => cell.col);
+  const middle = Math.floor((BOARD_SIZE - 1) / 2);
+  const midRow = lineRows.length ? Math.round((Math.min(...lineRows) + Math.max(...lineRows)) / 2) : middle;
+  const midCol = lineCols.length ? Math.round((Math.min(...lineCols) + Math.max(...lineCols)) / 2) : middle;
+  const half = Math.floor((size - 1) / 2);
+  const limit = Math.max(0, BOARD_SIZE - size);
+  return {
+    row: Math.min(Math.max(midRow - half, 0), limit) + half,
+    col: Math.min(Math.max(midCol - half, 0), limit) + half,
+  };
+}
+
+/** 按获胜方向生成 5 × 5 算子：五格连成一线的地方是 1，其余是 0。 */
+function kernelForWinDirection(line: Cell[]): number[][] {
+  const dr = line.length >= 2 ? Math.sign(line[1].row - line[0].row) : 0;
+  const dc = line.length >= 2 ? Math.sign(line[1].col - line[0].col) : 1;
+  return KERNEL_INDEX.map((row) => KERNEL_INDEX.map((col) => {
+    if (dc === 0) return col === WINDOW_MIDDLE ? 1 : 0;
+    if (dr === 0) return row === WINDOW_MIDDLE ? 1 : 0;
+    if (dr === dc) return row === col ? 1 : 0;
+    return row + col === KERNEL_SIZE - 1 ? 1 : 0;
+  }));
+}
+
+/** 小框左上角在 (top, left) 时，小框盖住的那 25 个数字。 */
+function windowPatch(grid: number[][], top: number, left: number): number[][] {
+  return KERNEL_INDEX.map((row) => KERNEL_INDEX.map((col) => grid[top + row][left + col]));
+}
+
+/** 激活值：小框里的数字和算子逐格相乘再相加。 */
+function windowActivation(grid: number[][], kernel: number[][], top: number, left: number): number {
+  return kernel.reduce((sum, kernelRow, row) => sum + kernelRow.reduce((rowSum, value, col) => (
+    rowSum + value * grid[top + row][left + col]
+  ), 0), 0);
+}
+
+/** 把小框滑遍整盘，返回最大的那个激活值。 */
+function bestActivation(grid: number[][], kernel: number[][]): number {
+  let best = -Infinity;
+  for (let row = 0; row <= WINDOW_LIMIT; row += 1) {
+    for (let col = 0; col <= WINDOW_LIMIT; col += 1) {
+      best = Math.max(best, windowActivation(grid, kernel, row, col));
+    }
+  }
+  return Number.isFinite(best) ? best : 0;
+}
+
+/**
+ * 开局位置：激活值最高的那一格是答案，开局不能停在那儿，
+ * 于是挑一个次高的、离它最近的位置——一进页面就是"还差一点"的状态。
+ */
+function startCellFor(grid: number[][], kernel: number[][]): Cell {
+  let best: Cell = { row: 0, col: 0 };
+  let bestValue = -Infinity;
+  for (let row = 0; row <= WINDOW_LIMIT; row += 1) {
+    for (let col = 0; col <= WINDOW_LIMIT; col += 1) {
+      const value = windowActivation(grid, kernel, row, col);
+      if (value > bestValue) {
+        bestValue = value;
+        best = { row, col };
+      }
+    }
+  }
+  if (bestValue <= 0) return best;
+
+  let start = best;
+  let startValue = -Infinity;
+  let startGap = Infinity;
+  for (let row = 0; row <= WINDOW_LIMIT; row += 1) {
+    for (let col = 0; col <= WINDOW_LIMIT; col += 1) {
+      const value = windowActivation(grid, kernel, row, col);
+      if (value >= bestValue) continue;
+      const gap = Math.abs(row - best.row) + Math.abs(col - best.col);
+      if (value > startValue || (value === startValue && gap < startGap)) {
+        startValue = value;
+        startGap = gap;
+        start = { row, col };
+      }
+    }
+  }
+  return start;
+}
 
 export interface WindowScanPageProps {
-  /** 找到最大激活值、看完扫描过程后进入设计算子的下一页。 */
   onComplete: () => void;
 }
 
 export function WindowScanPage({ onComplete }: WindowScanPageProps) {
-  const { game } = useKernelLesson();
-  const ready = game.gameOver && game.winner !== EMPTY;
+  const { outcome } = useGomokuOutcome();
+  const boardRef = useRef<HTMLDivElement | null>(null);
+  const dragOrigin = useRef<{ cell: Cell; topLeft: Cell } | null>(null);
+  const completedRef = useRef(false);
+
+  const grid = useMemo(() => toNumberGrid(outcome.board, outcome.winner), [outcome.board, outcome.winner]);
+  const kernel = useMemo(() => kernelForWinDirection(outcome.winLine), [outcome.winLine]);
+  const centre = useMemo(() => windowCentre(outcome.winLine, ZOOM_SIZE), [outcome.winLine]);
+  const best = useMemo(() => bestActivation(grid, kernel), [grid, kernel]);
+  const start = useMemo(() => startCellFor(grid, kernel), [grid, kernel]);
+
+  const [topLeft, setTopLeft] = useState<Cell>(start);
+  const [dragging, setDragging] = useState(false);
+
+  // 换了一盘棋就回到新的开局位置。
+  useEffect(() => setTopLeft(start), [start]);
+
+  const patch = windowPatch(grid, topLeft.row, topLeft.col);
+  const value = windowActivation(grid, kernel, topLeft.row, topLeft.col);
+  const found = best > 0 && value >= best;
+
+  /**
+   * 指针捕获之后事件只会发给棋盘本身，落在哪一格要自己按方框算。
+   * 每格正好是 1 / 15 的边长，除一下就得到格子索引。
+   */
+  const cellFromPointer = (event: ReactPointerEvent<HTMLDivElement>): Cell | null => {
+    const host = boardRef.current;
+    if (!host) return null;
+    const rect = host.getBoundingClientRect();
+    if (rect.width <= 0 || rect.height <= 0) return null;
+    return {
+      row: clamp(Math.floor(((event.clientY - rect.top) / rect.height) * BOARD_SIZE), 0, BOARD_SIZE - 1),
+      col: clamp(Math.floor(((event.clientX - rect.left) / rect.width) * BOARD_SIZE), 0, BOARD_SIZE - 1),
+    };
+  };
+
+  // 按住哪里都行：小框跟着指针走多少格就挪多少格，不会突然跳。
+  const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
+    const cell = cellFromPointer(event);
+    if (!cell) return;
+    dragOrigin.current = { cell, topLeft };
+    event.currentTarget.setPointerCapture(event.pointerId);
+    setDragging(true);
+  };
+
+  const handlePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
+    const origin = dragOrigin.current;
+    if (!dragging || !origin) return;
+    const cell = cellFromPointer(event);
+    if (!cell) return;
+    setTopLeft({
+      row: clamp(origin.topLeft.row + cell.row - origin.cell.row, 0, WINDOW_LIMIT),
+      col: clamp(origin.topLeft.col + cell.col - origin.cell.col, 0, WINDOW_LIMIT),
+    });
+  };
+
+  const endDrag = useCallback(() => {
+    dragOrigin.current = null;
+    setDragging(false);
+  }, []);
+
+  useEffect(() => {
+    if (!found || completedRef.current) return;
+    completedRef.current = true;
+    onComplete();
+  }, [found, onComplete]);
+
+  const windowStyle: CSSProperties = {
+    left: `${topLeft.col * UNIT}%`,
+    top: `${topLeft.row * UNIT}%`,
+    width: `${KERNEL_SIZE * UNIT}%`,
+    height: `${KERNEL_SIZE * UNIT}%`,
+  };
+
+  // 小框贴到棋盘上边时把手缩回框内，不然会被棋盘裁掉一半。
+  const windowClasses = [
+    'ck-window-scan__window',
+    topLeft.row === 0 ? 'is-clamped-top' : '',
+  ].filter(Boolean).join(' ');
+
   return (
     <ContentBlock
       headingLevel={1}
-      className="ck-page ck-page--scan"
-      title="拖动窗口，找出响应最强的地方"
-      subtitle="用一个小矩阵去检测图像里的特定模式：它的 1 和刚才那条获胜连线的形状一致。把 5 × 5 窗口挪到对齐的位置，就能得到最大的激活值。"
+      className="ck-window-scan"
+      title="拖着窗口，找出激活值最大的地方"
+      subtitle="小框里排的就是算子；它盖住的那 25 个数字抠出来当输入。两边全对上时，激活值最大。"
     >
-      {ready ? <WindowScanBody game={game} onComplete={onComplete} /> : <GameBlocked game={game} />}
-    </ContentBlock>
-  );
-}
-
-function WindowScanBody({ game, onComplete }: { game: GomokuGame; onComplete: () => void }) {
-  const [scan, setScan] = useState<Cell>(START);
-  const [foundMax, setFoundMax] = useState(false);
-  const [bestSoFar, setBestSoFar] = useState(0);
-  const [calcOpen, setCalcOpen] = useState(false);
-
-  const player = game.winner;
-  const kernel = useMemo(() => kernelForWinDirection(game.winLine), [game.winLine]);
-  const best = useMemo(
-    () => bestActivation(game.board, player, 'none', kernel),
-    [game.board, kernel, player],
-  );
-  const patch = useMemo(
-    () => patchMatrix(game.board, player, 'none', scan.row, scan.col),
-    [game.board, player, scan],
-  );
-  const cells = useMemo(
-    () => buildDisplayCells(game.board, player, {
-      kernel,
-      winLine: game.winLine,
-      window: { top: scan.row, left: scan.col },
-    }),
-    [game.board, game.winLine, kernel, player, scan],
-  );
-  const sum = dotProduct(kernel, patch);
-  const reached = best.value > 0 && sum === best.value;
-
-  useEffect(() => {
-    if (reached) setFoundMax(true);
-  }, [reached]);
-
-  useEffect(() => {
-    setBestSoFar((current) => (sum > current ? sum : current));
-  }, [sum]);
-
-  const hitCount = patch.reduce(
-    (total, line, row) => total + line.reduce((count, value, col) => count + (value && kernel[row][col] ? 1 : 0), 0),
-    0,
-  );
-  const readout = foundMax
-    ? '找到了。窗口里的 1 与算子的 1 完全对齐，激活值达到 ' + best.value + '。'
-    : '拖动橙色窗口，继续寻找激活值更高的位置。';
-
-  return (
-    <div className="ck-split">
-      <section className="ck-figure-column" aria-label="补零后的二值图像">
-        <Typography variant="bodySmall" tone="muted">
-          按住鼠标左键拖动橙色窗口；窗口中心会吸附到指针所在的格子。
-        </Typography>
-        <div className="ck-figure-area">
-          <div className="ck-square-frame">
-            <BinaryGrid
-              cells={cells}
-              windowTop={scan.row}
-              windowLeft={scan.col}
-              windowSize={KERNEL_SIZE}
-              interactive
-              onMoveWindow={(row, col) => setScan({ row, col })}
-              label="补零后的二值棋盘，可以拖动五乘五窗口"
-            />
-          </div>
-        </div>
-      </section>
-
-      <aside className="ck-side">
-        <div className="ck-tile-row ck-tile-row--two">
-          <ValueTile label="当前激活值" value={sum} tone={reached ? 'success' : 'blue'} />
-          <ValueTile label="已经找到的最大值" value={bestSoFar} tone="orange" />
-        </div>
-
-        <section className="ck-card">
-          <Typography as="h2" variant="h3" tone="accent">5 × 5 算子与当前窗口</Typography>
-          <div className="ck-operator-row">
-            <KernelGrid matrix={kernel} hitMask={patch} label="与获胜连线同方向的五乘五算子" />
-          </div>
-          <Typography variant="bodySmall" tone="muted">
-            乘积之和 = {sum}，其中 {hitCount} 个 1 落在算子的 1 上。
-          </Typography>
-          <div className="ck-actions">
-            <Button onClick={() => setCalcOpen(true)}>计算过程</Button>
-          </div>
-        </section>
-
-        <Callout tone={foundMax ? 'green' : 'blue'} label="扫描提示" text={readout} />
-
-        <div className="ck-actions">
-          {foundMax && (
-            <Button variant="primary" onClick={onComplete}>换一种模式试试吧</Button>
-          )}
-          <Button
-            disabled={bestSoFar === 0 && scan.row === START.row && scan.col === START.col}
-            onClick={() => setScan(START)}
+      <div className="ck-window-scan__layout">
+        <div className="ck-window-scan__board-slot">
+          <div
+            ref={boardRef}
+            className="ck-window-scan__board"
+            role="group"
+            aria-label="十五路棋盘写成的数字矩阵，上面放着一个可以拖动的 5 × 5 橙色小框，框里 5 个橙格按获胜连线的形状排好。"
+            onPointerDown={handlePointerDown}
+            onPointerMove={handlePointerMove}
+            onPointerUp={endDrag}
+            onPointerCancel={endDrag}
           >
-            窗口回到左上角
-          </Button>
+            {BOARD_INDEX.map((row) => BOARD_INDEX.map((col) => {
+              const cell = grid[row][col];
+              const inWindow = row >= topLeft.row && row < topLeft.row + KERNEL_SIZE
+                && col >= topLeft.col && col < topLeft.col + KERNEL_SIZE;
+              const op = inWindow ? kernel[row - topLeft.row][col - topLeft.col] : 0;
+              const hit = inWindow && op === 1 && cell === 1;
+              const ring = Math.min(RING_MAX, Math.max(Math.abs(row - centre.row), Math.abs(col - centre.col)));
+              const classes = [
+                'ck-window-scan__cell',
+                `ck-window-scan__cell--ring-${ring}`,
+                cell === 1 ? 'ck-window-scan__cell--one' : '',
+                cell === -1 ? 'ck-window-scan__cell--minus' : '',
+                inWindow && op === 1 ? 'ck-window-scan__cell--eye' : '',
+                hit ? 'ck-window-scan__cell--hit' : '',
+              ].filter(Boolean).join(' ');
+              return (
+                <div key={cellKey(row, col)} className={classes}>
+                  {/* 小框里排的是算子：0 / 1 跟着框在棋盘上走，绿色说明这一格的 1 压中了棋子。 */}
+                  {inWindow && (
+                    <Typography
+                      as="span"
+                      variant="body"
+                      tone={cell === 0 ? (op === 1 ? 'main' : 'muted') : 'inherit'}
+                      aria-hidden="true"
+                    >
+                      {op}
+                    </Typography>
+                  )}
+                </div>
+              );
+            }))}
+
+            <div className={windowClasses} style={windowStyle} aria-hidden="true">
+              <span className="ck-window-scan__grip">
+                <i /><i /><i />
+              </span>
+            </div>
+          </div>
+
+          <ul className="ck-window-scan__key">
+            <li className="ck-window-scan__key-item">
+              <span className="ck-window-scan__key-chip ck-window-scan__key-chip--one" aria-hidden="true" />
+              <Typography as="span" variant="body" tone="muted">橙 = 赢方的子</Typography>
+            </li>
+            <li className="ck-window-scan__key-item">
+              <span className="ck-window-scan__key-chip ck-window-scan__key-chip--minus" aria-hidden="true" />
+              <Typography as="span" variant="body" tone="muted">深蓝 = 对手的子</Typography>
+            </li>
+            <li className="ck-window-scan__key-item">
+              <span className="ck-window-scan__key-chip ck-window-scan__key-chip--hit" aria-hidden="true" />
+              <Typography as="span" variant="body" tone="muted">绿色 = 算子压中</Typography>
+            </li>
+          </ul>
         </div>
 
-      {calcOpen && (
-        <div className="ck-calc-overlay" role="dialog" aria-label="按位相乘再相加的计算过程">
-          <div className="ck-calc-head">
-            <Typography as="h2" variant="h3" tone="accent">按位相乘再相加</Typography>
-            <Button onClick={() => setCalcOpen(false)}>收起</Button>
+        <div className="ck-window-scan__panel">
+          <div className="ck-window-scan__compare">
+            <Typography as="span" variant="body" tone="muted">输入</Typography>
+            <span aria-hidden="true" />
+            <Typography as="span" variant="body" tone="muted">算子</Typography>
+
+            <div
+              className="ck-window-scan__grid"
+              role="group"
+              aria-label="橙色小框当前盖住的 5 × 5 输入数字，橙框标出算子上 5 个 1 看的位置。"
+            >
+              {KERNEL_INDEX.map((row) => KERNEL_INDEX.map((col) => {
+                const cell = patch[row][col];
+                const eye = kernel[row][col] === 1;
+                const hit = eye && cell === 1;
+                const classes = [
+                  'ck-window-scan__grid-cell',
+                  cell === 1 ? 'ck-window-scan__grid-cell--one' : '',
+                  cell === -1 ? 'ck-window-scan__grid-cell--minus' : '',
+                  eye ? 'ck-window-scan__grid-cell--eye' : '',
+                  hit ? 'ck-window-scan__grid-cell--hit' : '',
+                ].filter(Boolean).join(' ');
+                return (
+                  <div key={cellKey(row, col)} className={classes}>
+                    <Typography
+                      as="span"
+                      variant="body"
+                      tone={cell === 0 ? 'muted' : 'inherit'}
+                      aria-hidden="true"
+                    >
+                      {cell}
+                    </Typography>
+                  </div>
+                );
+              }))}
+            </div>
+
+            {/* 中间这个符号代表卷积，具体含义下一幕再讲。 */}
+            <Typography as="span" role="img" aria-label="卷积符号" variant="h2" tone="main">⊛</Typography>
+
+            <div
+              className="ck-window-scan__grid"
+              role="group"
+              aria-label="五乘五算子：五格连成一线的地方是 1，其余是 0。"
+            >
+              {KERNEL_INDEX.map((row) => KERNEL_INDEX.map((col) => {
+                const cell = kernel[row][col];
+                return (
+                  <div
+                    key={cellKey(row, col)}
+                    className={cell === 1 ? 'ck-window-scan__grid-cell ck-window-scan__grid-cell--one' : 'ck-window-scan__grid-cell'}
+                  >
+                    <Typography
+                      as="span"
+                      variant="body"
+                      tone={cell === 0 ? 'muted' : 'inherit'}
+                      aria-hidden="true"
+                    >
+                      {cell}
+                    </Typography>
+                  </div>
+                );
+              }))}
+            </div>
           </div>
-          <div className="ck-calc-body">
-            <MultiplyGrid kernel={kernel} patch={patch} />
+
+          <div className="ck-window-scan__result">
+            <Typography as="span" variant="body" tone="muted">激活值</Typography>
+            <div className="ck-window-scan__result-row">
+              <Typography as="span" variant="display" tone={found ? 'success' : 'accent'}>{value}</Typography>
+              <ExplainPanelButton label="查看激活值是怎么算出来的">
+                <Typography as="strong" variant="bodySmall" tone="accent">这个数是怎么来的？</Typography>
+                <Typography variant="bodySmall" tone="muted">
+                  25 个数字和算子逐格相乘，再全部加起来。
+                </Typography>
+                <div className="ck-window-scan__multiply" role="group" aria-label="窗口与算子逐格相乘的结果">
+                  {KERNEL_INDEX.map((row) => KERNEL_INDEX.map((col) => {
+                    const product = kernel[row][col] * patch[row][col];
+                    return (
+                      <div
+                        key={cellKey(row, col)}
+                        className={product === 0 ? 'ck-window-scan__multiply-cell' : 'ck-window-scan__multiply-cell is-active'}
+                      >
+                        <Typography as="span" variant="bodySmall" tone={product === 0 ? 'muted' : 'main'}>
+                          {`${kernel[row][col]}×${patch[row][col]}=${product}`}
+                        </Typography>
+                      </div>
+                    );
+                  }))}
+                </div>
+                <Typography as="p" variant="bodySmall" tone="accent">
+                  {`25 个乘积相加 = ${value}`}
+                </Typography>
+              </ExplainPanelButton>
+            </div>
           </div>
-          <Typography variant="bodySmall" tone="muted">
-            M 是 5 × 5 算子，X 是当前窗口；每个格子给出两个因数与它们的乘积，全部相加 = {sum}。
-          </Typography>
+
+          <div
+            className={found ? 'ck-window-scan__readout is-found' : 'ck-window-scan__readout'}
+            aria-live="polite"
+          >
+            <Typography as="p" variant="body" tone={found ? 'success' : 'main'}>
+              {found ? `找到了，5 个橙框全部压在棋子上，激活值 ${best}。` : '换个位置试试，还有更高的激活值。'}
+            </Typography>
+          </div>
         </div>
-      )}
-      </aside>
-    </div>
+      </div>
+    </ContentBlock>
   );
 }

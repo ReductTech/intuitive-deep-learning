@@ -1,9 +1,0 @@
-/* 第三幕第二页：左边是输入，右边是卷积核和它的输出特征图。 */
-.ck-page--mnist-scan .ck-figure-column { grid-template-rows: auto minmax(0, 1fr) auto; }
-
-.ck-page--mnist-scan .ck-side { align-content: start; }
-
-.ck-mnist-kernel { max-width: 110px; }
-
-.ck-pair-slot .ck-mnist-feature { max-width: 330px; }
-

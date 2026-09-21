@@ -18,14 +18,14 @@ Intuitive Deep Learning 是一套可本地运行的深度学习互动课程。�
 
 ## 课程路线
 
-课程共包含 4 个章节、11 个正式互动模块。推荐按章节顺序学习，也可以从 `CourseMap` 课程地图直接跳转到感兴趣的主题。
+课程共包含 4 个章节、10 个正式互动模块。推荐按章节顺序学习，也可以从 `CourseMap` 课程地图直接跳转到感兴趣的主题。
 
 | 章节 | 学习重点 | 互动模块 |
 | --- | --- | --- |
 | 第一章：神经网络入门 | 神经元、损失函数、梯度下降 | `Neuron-Guide`、`Loss-Guide`、`Gradient-Descent-Module` |
 | 第二章：MLP 与分类输出 | 激活函数、非线性分类、分类损失 | `Activation-Func-Module`、`MLP_playground`、`Loss-Guide-2` |
 | 第三章：数字图像与人工特征 | RGB 矩阵、手写数字、人工特征分类 | `Digital-Image-Module`、`Manual-Feature-Classification` |
-| 第四章：卷积网络与人脸识别 | 卷积核、LeNet-5、固定特征与端到端训练 | `Convolution-Kernel-Intro`、`LeNet5-CNN-Lab`、`Face-Recog-Lab` |
+| 第四章：卷积网络与人脸识别 | 卷积、LeNet-5、固定特征与端到端训练 | `LeNet5-CNN-Lab`、`Face-Recog-Lab` |
 
 ## 模块一览
 
@@ -40,7 +40,6 @@ Intuitive Deep Learning 是一套可本地运行的深度学习互动课程。�
 | `Loss-Guide-2` | 天气预测的两种输出 | 区分 Sigmoid + BCE 与 Softmax + Cross Entropy |
 | `Digital-Image-Module` | 数字图像如何变成 RGB 矩阵 | 理解像素、RGB 通道和图像矩阵表示 |
 | `Manual-Feature-Classification` | 人工特征的分类 | 用九宫格亮像素特征完成手写数字分类实验 |
-| `Convolution-Kernel-Intro` | 卷积核入门：从五子棋棋形开始 | 从局部模式扫描理解卷积核和特征图 |
 | `LeNet5-CNN-Lab` | 从人工卷积核到 LeNet-5 | 比较固定卷积核与可学习卷积核 |
 | `Face-Recog-Lab` | 人脸识别：固定卷积核到参数全训 | 对比冻结特征提取器与小型 CNN 端到端训练 |
 

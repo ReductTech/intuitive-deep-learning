@@ -1,308 +1,436 @@
-import { useEffect, useMemo, useState } from 'react';
-import { Button, Callout, ContentBlock, Question, Typography, ValueTile } from '../../../shared/react';
-import { BinaryGrid } from '../../components/BinaryGrid';
-import { GameBlocked } from '../../components/GameReady';
-import { KernelGrid } from '../../components/KernelGrid';
-import { useKernelLesson } from '../../LessonContext';
-import { EMPTY, type Cell, type GomokuGame } from '../../model/gomokuEngine';
 import {
-  KERNEL_SIZE,
-  bestActivation,
-  buildDisplayCells,
-  dotProduct,
-  kernelForWinDirection,
-  matrixEquals,
-  patchMatrix,
-  playerForLayer,
-  targetOppositeKernel,
-  transformActionText,
-  transformForWinDirection,
-  type ImageTransform,
-  type LayerKey,
-  type Matrix,
-} from '../../model/kernelLab';
-import '../ck-pages.css';
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type CSSProperties,
+  type PointerEvent as ReactPointerEvent,
+} from 'react';
+import { ContentBlock, Typography } from '../../../shared/react';
+import { useGomokuOutcome } from '../../LessonContext';
+import { BOARD_SIZE, EMPTY, type Board, type Cell } from '../../model/gomokuEngine';
 import './KernelDesignPage.css';
 
-type Phase = 'transform' | 'design' | 'scan' | 'complete';
+/** 算子和小框都按 5 × 5 排：五个子连成一线，正好装得下。 */
+const KERNEL_SIZE = 5;
+/** 小框正中间那一格。 */
+const MIDDLE = Math.floor(KERNEL_SIZE / 2);
+/** 小框左上角最远能挪到哪儿：整个框留在盘内。 */
+const WINDOW_LIMIT = BOARD_SIZE - KERNEL_SIZE;
+/** 一格正好是小框自身宽度的 1 / 5：位移全按这个比例算。 */
+const CELL_SHARE = 100 / KERNEL_SIZE;
+/** 前面几页放大看过的窗口，这一页只借它来定底色分层的中心。 */
+const ZOOM_SIZE = 9;
+/** 底色从中心往外一共分五层，再远都并到最外那一层。 */
+const RING_MAX = 4;
 
-const STEPS: ReadonlyArray<{ key: Phase; label: string }> = [
-  { key: 'transform', label: '变换图像' },
-  { key: 'design', label: '重新设计算子' },
-  { key: 'scan', label: '再扫一次' },
-  { key: 'complete', label: '回答问题' },
-];
+const BOARD_INDEX = Array.from({ length: BOARD_SIZE }, (_, index) => index);
+const KERNEL_INDEX = Array.from({ length: KERNEL_SIZE }, (_, index) => index);
 
-const QUESTION_OPTIONS = [
-  { key: 'A', value: 'brightness-only', label: '只改变输出数值的范围。' },
-  { key: 'B', value: 'position-only', label: '让同一特征出现在不同位置。' },
-  { key: 'C', value: 'spatial-pattern', label: '突出不同方向或形状的特征。' },
-  { key: 'D', value: 'same-sum', label: '权重总和相同，效果就相同。' },
-];
+/** 棋盘整盘转过一次：横竖的棋形转 90°，斜的棋形左右翻。 */
+type Transform = 'rotate' | 'flip';
+/** design = 还在点格子排算子；drag = 排对了，拖着框在盘上找。 */
+type Phase = 'design' | 'drag';
 
-const START: Cell = { row: 0, col: 0 };
+function cellKey(row: number, col: number): string {
+  return `${row}:${col}`;
+}
+
+function clamp(value: number, min: number, max: number): number {
+  return Math.min(Math.max(value, min), max);
+}
+
+/** 五个子连成的方向：只看行和列各自怎么变。 */
+function winDirection(line: Cell[]): { dr: number; dc: number } {
+  if (line.length < 2) return { dr: 0, dc: 1 };
+  return {
+    dr: Math.sign(line[1].row - line[0].row),
+    dc: Math.sign(line[1].col - line[0].col),
+  };
+}
+
+/** 横竖的棋形转 90°，斜的棋形左右翻——换完方向，那排 1 就对不上了。 */
+function transformFor(line: Cell[]): Transform {
+  const { dr, dc } = winDirection(line);
+  return dr === 0 || dc === 0 ? 'rotate' : 'flip';
+}
+
+function transformLabel(transform: Transform): string {
+  return transform === 'rotate' ? '棋盘顺时针转了 90°' : '棋盘左右翻了过来';
+}
+
+/** 棋盘上的 (row, col) 落到画面上的哪一格。 */
+function boardToDisplay(cell: Cell, transform: Transform): Cell {
+  if (transform === 'flip') return { row: cell.row, col: BOARD_SIZE - 1 - cell.col };
+  return { row: cell.col, col: BOARD_SIZE - 1 - cell.row };
+}
+
+/** 画面上第 (row, col) 格显示的是棋盘上的哪一格。 */
+function displayToBoard(row: number, col: number, transform: Transform): Cell {
+  if (transform === 'flip') return { row, col: BOARD_SIZE - 1 - col };
+  return { row: BOARD_SIZE - 1 - col, col: row };
+}
+
+/** 整盘棋子跟着一起转过之后的样子。 */
+function toDisplayBoard(board: Board, transform: Transform): Board {
+  return BOARD_INDEX.map((row) => BOARD_INDEX.map((col) => {
+    const source = displayToBoard(row, col, transform);
+    return board[source.row][source.col];
+  }));
+}
+
+/** 棋盘的数字版本：赢方的子记 1，对手的子记 -1，空点记 0。 */
+function toNumberGrid(board: Board, winner: number): number[][] {
+  return board.map((row) => row.map((stone) => {
+    if (stone === EMPTY) return 0;
+    return stone === winner ? 1 : -1;
+  }));
+}
+
+/** 按获胜方向生成 5 × 5 算子：五格连成一线的地方是 1，其余是 0。 */
+function kernelForWinDirection(line: Cell[]): number[][] {
+  const { dr, dc } = winDirection(line);
+  return KERNEL_INDEX.map((row) => KERNEL_INDEX.map((col) => {
+    if (dc === 0) return col === MIDDLE ? 1 : 0;
+    if (dr === 0) return row === MIDDLE ? 1 : 0;
+    if (dr === dc) return row === col ? 1 : 0;
+    return row + col === KERNEL_SIZE - 1 ? 1 : 0;
+  }));
+}
+
+/** 整块矩阵顺时针转 90°：原来那一行，转完立成一列。 */
+function rotateClockwise(kernel: number[][]): number[][] {
+  return KERNEL_INDEX.map((row) => KERNEL_INDEX.map((col) => kernel[KERNEL_SIZE - 1 - col][row]));
+}
+
+/** 整块矩阵左右翻一次。 */
+function flipHorizontal(kernel: number[][]): number[][] {
+  return KERNEL_INDEX.map((row) => KERNEL_INDEX.map((col) => kernel[row][KERNEL_SIZE - 1 - col]));
+}
+
+/** 这一页要排的算子：原来那排 1 跟着棋盘一起转（或翻）过去。 */
+function targetKernel(line: Cell[], transform: Transform): number[][] {
+  const base = kernelForWinDirection(line);
+  return transform === 'rotate' ? rotateClockwise(base) : flipHorizontal(base);
+}
+
+/** 以棋形的最小外接矩形为中心取一个 size × size 的窗口，返回窗口正中的那一格。 */
+function windowCentre(line: Cell[], size: number): Cell {
+  const lineRows = line.map((cell) => cell.row);
+  const lineCols = line.map((cell) => cell.col);
+  const middle = Math.floor((BOARD_SIZE - 1) / 2);
+  const midRow = lineRows.length ? Math.round((Math.min(...lineRows) + Math.max(...lineRows)) / 2) : middle;
+  const midCol = lineCols.length ? Math.round((Math.min(...lineCols) + Math.max(...lineCols)) / 2) : middle;
+  const half = Math.floor((size - 1) / 2);
+  const limit = Math.max(0, BOARD_SIZE - size);
+  return {
+    row: Math.min(Math.max(midRow - half, 0), limit) + half,
+    col: Math.min(Math.max(midCol - half, 0), limit) + half,
+  };
+}
+
+/** 算子盖住的那 25 个数字，按位相乘再相加，就是这一格的激活值。 */
+function activationAt(grid: number[][], kernel: number[][], top: number, left: number): number {
+  return kernel.reduce((sum, kernelRow, row) => sum + kernelRow.reduce((rowSum, value, col) => (
+    rowSum + value * grid[top + row][left + col]
+  ), 0), 0);
+}
+
+/** 扫遍整盘，找出激活值最高的那一格；并列时取最靠上的一格。 */
+function bestWindow(grid: number[][], kernel: number[][]): { position: Cell; value: number } {
+  let position: Cell = { row: 0, col: 0 };
+  let best = -Infinity;
+  for (let row = 0; row <= WINDOW_LIMIT; row += 1) {
+    for (let col = 0; col <= WINDOW_LIMIT; col += 1) {
+      const value = activationAt(grid, kernel, row, col);
+      if (value > best) {
+        best = value;
+        position = { row, col };
+      }
+    }
+  }
+  return { position, value: Number.isFinite(best) ? best : 0 };
+}
+
+function blankKernel(): number[][] {
+  return KERNEL_INDEX.map(() => KERNEL_INDEX.map(() => 0));
+}
+
+function sameKernel(a: number[][], b: number[][]): boolean {
+  return a.every((row, rowIndex) => row.every((value, colIndex) => value === b[rowIndex][colIndex]));
+}
 
 export interface KernelDesignPageProps {
-  /** 单选题答对、看清两次扫描的差别之后进入 MNIST 那一幕。 */
   onComplete: () => void;
 }
 
 export function KernelDesignPage({ onComplete }: KernelDesignPageProps) {
-  const { game } = useKernelLesson();
-  const ready = game.gameOver && game.winner !== EMPTY;
+  const { outcome } = useGomokuOutcome();
+  const boardRef = useRef<HTMLDivElement | null>(null);
+  const dragOrigin = useRef<{ cell: Cell; topLeft: Cell } | null>(null);
+  const completedRef = useRef(false);
+
+  const transform = useMemo(() => transformFor(outcome.winLine), [outcome.winLine]);
+  const displayBoard = useMemo(() => toDisplayBoard(outcome.board, transform), [outcome.board, transform]);
+  const grid = useMemo(() => toNumberGrid(displayBoard, outcome.winner), [displayBoard, outcome.winner]);
+  const displayWinLine = useMemo(
+    () => outcome.winLine.map((cell) => boardToDisplay(cell, transform)),
+    [outcome.winLine, transform],
+  );
+  const centre = useMemo(() => windowCentre(displayWinLine, ZOOM_SIZE), [displayWinLine]);
+  const answer = useMemo(() => targetKernel(outcome.winLine, transform), [outcome.winLine, transform]);
+  /** 拖着要找的那一格：激活值最高的位置，就压在赢的那五个子上。 */
+  const finish = useMemo(() => bestWindow(grid, answer), [grid, answer]);
+
+  const [kernel, setKernel] = useState<number[][]>(blankKernel);
+  const [hover, setHover] = useState<Cell | null>(null);
+  const [phase, setPhase] = useState<Phase>('design');
+  const [cursor, setCursor] = useState<Cell>({ row: 0, col: 0 });
+  const [dragging, setDragging] = useState(false);
+
+  // 换了一盘棋就回到空白算子，重新排。
+  useEffect(() => {
+    completedRef.current = false;
+    setKernel(blankKernel());
+    setHover(null);
+    setPhase('design');
+    setCursor({ row: 0, col: 0 });
+    setDragging(false);
+    dragOrigin.current = null;
+  }, [answer]);
+
+  const designing = phase === 'design';
+  const activation = activationAt(grid, kernel, cursor.row, cursor.col);
+  /** 框挪到激活值最大的那一格就算找着了；再拖走，提示也跟着回去。 */
+  const found = !designing && finish.value > 0 && activation >= finish.value;
+
+  useEffect(() => {
+    if (!found || completedRef.current) return;
+    completedRef.current = true;
+    onComplete();
+  }, [found, onComplete]);
+
+  /**
+   * 指针落在棋盘的第几行第几列：每格正好是 1 / 15 的边长，除一下就得到格子索引。
+   */
+  const cellFromPointer = (event: ReactPointerEvent<HTMLDivElement>): Cell | null => {
+    const host = boardRef.current;
+    if (!host) return null;
+    const rect = host.getBoundingClientRect();
+    if (rect.width <= 0 || rect.height <= 0) return null;
+    return {
+      row: clamp(Math.floor(((event.clientY - rect.top) / rect.height) * BOARD_SIZE), 0, BOARD_SIZE - 1),
+      col: clamp(Math.floor(((event.clientX - rect.left) / rect.width) * BOARD_SIZE), 0, BOARD_SIZE - 1),
+    };
+  };
+
+  // 按住哪里都行：小框跟着指针走多少格就挪多少格，不会突然跳。
+  const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (designing) return;
+    const cell = cellFromPointer(event);
+    if (!cell) return;
+    dragOrigin.current = { cell, topLeft: cursor };
+    event.currentTarget.setPointerCapture(event.pointerId);
+    setDragging(true);
+  };
+
+  const handlePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
+    const origin = dragOrigin.current;
+    if (!dragging || !origin) return;
+    const cell = cellFromPointer(event);
+    if (!cell) return;
+    setCursor({
+      row: clamp(origin.topLeft.row + cell.row - origin.cell.row, 0, WINDOW_LIMIT),
+      col: clamp(origin.topLeft.col + cell.col - origin.cell.col, 0, WINDOW_LIMIT),
+    });
+  };
+
+  const endDrag = useCallback(() => {
+    dragOrigin.current = null;
+    setDragging(false);
+  }, []);
+
+  const handleCellClick = (row: number, col: number) => {
+    if (!designing) return;
+    const next = kernel.map((values, rowIndex) => values.map((value, colIndex) => (
+      rowIndex === row && colIndex === col ? (value ? 0 : 1) : value
+    )));
+    setKernel(next);
+    setHover(null);
+    if (sameKernel(next, answer)) setPhase('drag');
+  };
+
+  const oneCount = kernel.reduce((sum, row) => sum + row.filter((value) => value === 1).length, 0);
+
+  const readoutText = designing
+    ? (oneCount === KERNEL_SIZE ? '1 够 5 个了，只是排得还不对。' : '点格子，照着五个子的排列把 1 摆好。')
+    : found
+      ? `就是这儿：新算子照样拿到最大的激活值 ${finish.value}。`
+      : '排对了。拖着框在盘上走，找出激活值最大的那一格。';
+
+  const windowStyle: CSSProperties = {
+    transform: `translate(${cursor.col * CELL_SHARE}%, ${cursor.row * CELL_SHARE}%)`,
+  };
+
+  // 小框贴到棋盘上边时，拖动的标记缩回框内，不然会被棋盘裁掉一半。
+  const windowClasses = [
+    'ck-redesign__window',
+    found ? 'is-found' : '',
+    cursor.row === 0 ? 'is-clamped-top' : '',
+  ].filter(Boolean).join(' ');
+
   return (
     <ContentBlock
       headingLevel={1}
-      className="ck-page ck-page--design"
-      title="换个方向，还能检测到吗？"
-      subtitle="把图像整体变换一次，原来的算子就对不上了。重新设计一个 5 × 5 算子，让它对新方向产生最强的响应。"
+      className="ck-redesign"
+      title="棋盘转了向，重新排一个算子"
+      subtitle="棋盘转了个方向，原来那排 1 立刻对不上。点格子重新摆好，再拖着框在盘上找出激活值最大的地方。"
     >
-      {ready ? <KernelDesignBody game={game} onComplete={onComplete} /> : <GameBlocked game={game} />}
-    </ContentBlock>
-  );
-}
+      <div className="ck-redesign__layout">
+        <div className="ck-redesign__board-slot">
+          <span className="ck-redesign__caption">
+            <Typography as="span" variant="body" tone="main">{transformLabel(transform)}</Typography>
+          </span>
 
-function KernelDesignBody({ game, onComplete }: { game: GomokuGame; onComplete: () => void }) {
-  const { designKernel, setDesignKernel } = useKernelLesson();
-  const [phase, setPhase] = useState<Phase>('transform');
-  const [transform, setTransform] = useState<ImageTransform>('none');
-  const [layer, setLayer] = useState<LayerKey>('winner');
-  const [scan, setScan] = useState<Cell>(START);
-  const [bestSoFar, setBestSoFar] = useState(0);
-  const [questionPassed, setQuestionPassed] = useState(false);
+          <div
+            ref={boardRef}
+            className={designing ? 'ck-redesign__board' : 'ck-redesign__board is-draggable'}
+            role="group"
+            aria-label={designing
+              ? `转过方向的棋盘。${transformLabel(transform)}。右边排好算子后，可以拖着它在盘上走。`
+              : `转过方向的棋盘。${transformLabel(transform)}。按住棋盘拖动那个 5 × 5 的小框，激活值最大的位置就压在赢的那五个子上。`}
+            onPointerDown={handlePointerDown}
+            onPointerMove={handlePointerMove}
+            onPointerUp={endDrag}
+            onPointerCancel={endDrag}
+          >
+            {BOARD_INDEX.map((row) => BOARD_INDEX.map((col) => {
+              const cell = grid[row][col];
+              const ring = Math.min(RING_MAX, Math.max(Math.abs(row - centre.row), Math.abs(col - centre.col)));
+              const classes = [
+                'ck-redesign__cell',
+                `ck-redesign__cell--ring-${ring}`,
+                cell === 1 ? 'ck-redesign__cell--one' : '',
+                cell === -1 ? 'ck-redesign__cell--minus' : '',
+              ].filter(Boolean).join(' ');
+              return <div key={cellKey(row, col)} className={classes} />;
+            }))}
 
-  const base = useMemo(() => kernelForWinDirection(game.winLine), [game.winLine]);
-  const target = useMemo(() => targetOppositeKernel(game.winLine, base), [base, game.winLine]);
-  const actionText = transformActionText(game.winLine);
-  const player = playerForLayer(game.winner, layer);
-  const kernel = phase === 'transform' ? base : designKernel;
-  const scanning = phase === 'scan' || phase === 'complete';
+            {!designing && (
+              /* 浮层自己再铺一遍同样的 15 × 15 网格：小框占住 5 × 5 格，
+                 既跟下面的格子对得齐，又不会挤走盘上的棋子。 */
+              <div className="ck-redesign__window-host">
+                <div
+                  className={windowClasses}
+                  style={windowStyle}
+                  aria-hidden="true"
+                >
+                  {KERNEL_INDEX.map((row) => KERNEL_INDEX.map((col) => {
+                    const op = kernel[row][col];
+                    const under = grid[cursor.row + row][cursor.col + col];
+                    const hit = op === 1 && under === 1;
+                    const classes = [
+                      'ck-redesign__window-cell',
+                      op === 1 ? 'is-op' : '',
+                      under !== 0 ? 'is-on-stone' : '',
+                      hit ? 'is-hit' : '',
+                    ].filter(Boolean).join(' ');
+                    return (
+                      <span key={cellKey(row, col)} className={classes}>
+                        <Typography as="span" variant="body" tone="inherit">{op}</Typography>
+                      </span>
+                    );
+                  }))}
 
-  const patch = useMemo(
-    () => (scanning ? patchMatrix(game.board, player, transform, scan.row, scan.col) : null),
-    [game.board, player, scan, scanning, transform],
-  );
-  const cells = useMemo(
-    () => buildDisplayCells(game.board, player, {
-      transform,
-      winLine: layer === 'winner' ? game.winLine : [],
-      kernel: scanning ? designKernel : null,
-      window: scanning ? { top: scan.row, left: scan.col } : null,
-    }),
-    [designKernel, game.board, game.winLine, layer, player, scan, scanning, transform],
-  );
-  const best = useMemo(
-    () => (scanning ? bestActivation(game.board, player, transform, designKernel) : { value: 0, positions: [] }),
-    [designKernel, game.board, player, scanning, transform],
-  );
-  const sum = patch ? dotProduct(designKernel, patch) : 0;
-  const reached = phase === 'scan' && best.value > 0 && sum === best.value;
+                  {/* 拖动标记：按住盘面任意处都能拖，这三个点只是告诉你这个框能拖。 */}
+                  <span className="ck-redesign__grip">
+                    <i />
+                    <i />
+                    <i />
+                  </span>
+                </div>
+              </div>
+            )}
+          </div>
 
-  useEffect(() => {
-    if (reached) setPhase('complete');
-  }, [reached]);
-
-  // 设计矩阵与目标矩阵一致时自动进入下一阶段；用副作用而不是在点击回调里判断，
-  // 这样连续快速点击也只会基于最新矩阵推进一次。
-  useEffect(() => {
-    if (phase !== 'design' || !matrixEquals(designKernel, target)) return;
-    setScan(START);
-    setBestSoFar(0);
-    setPhase('scan');
-  }, [designKernel, phase, target]);
-
-  useEffect(() => {
-    if (!scanning) return;
-    setBestSoFar((current) => (sum > current ? sum : current));
-  }, [scanning, sum]);
-
-  const stepIndex = STEPS.findIndex((step) => step.key === phase);
-  const targetOnes = countOnes(target);
-  const designedOnes = countOnes(designKernel);
-  const matchedOnes = designKernel.reduce(
-    (total, line, row) => total + line.reduce((count, value, col) => count + (value && target[row][col] ? 1 : 0), 0),
-    0,
-  );
-
-  const toggleCell = (row: number, col: number) => {
-    setDesignKernel((current) => current.map((line, r) => (
-      line.map((value, c) => (r === row && c === col ? (value ? 0 : 1) : value))
-    )));
-  };
-
-  const beginTransform = () => {
-    setTransform(transformForWinDirection(game.winLine));
-    setScan(START);
-    setPhase('design');
-  };
-
-  const readout = (
-    <div className="ck-tile-row ck-tile-row--two">
-      <ValueTile label="当前激活值" value={sum} tone={phase === 'complete' ? 'success' : 'blue'} />
-      <ValueTile label="已经找到的最大值" value={bestSoFar} tone="orange" />
-    </div>
-  );
-
-  return (
-    <div className="ck-split">
-      <section className="ck-figure-column" aria-label="被变换后的二值图像">
-        <div className="ck-switch">
-          <Typography variant="bodySmall" tone="muted">
-            {phase === 'transform'
-              ? '图像还没有变换：算子里的 1 与获胜连线仍然同方向。'
-              : '图像已经' + actionText + '，原来的五个 1 换了方向。'}
-          </Typography>
-          {scanning && (
-            <span className="ck-switch" role="group" aria-label="选择图层">
-              <Button active={layer === 'winner'} onClick={() => setLayer('winner')}>赢家图</Button>
-              <Button active={layer === 'loser'} onClick={() => setLayer('loser')}>输家图</Button>
-            </span>
-          )}
+          <ul className="ck-redesign__key">
+            <li className="ck-redesign__key-item">
+              <span className="ck-redesign__key-chip ck-redesign__key-chip--one" aria-hidden="true" />
+              <Typography as="span" variant="body" tone="muted">橙 = 赢方的子</Typography>
+            </li>
+            <li className="ck-redesign__key-item">
+              <span className="ck-redesign__key-chip ck-redesign__key-chip--minus" aria-hidden="true" />
+              <Typography as="span" variant="body" tone="muted">深蓝 = 对手的子</Typography>
+            </li>
+            {!designing && (
+              <li className="ck-redesign__key-item">
+                <span className="ck-redesign__key-chip ck-redesign__key-chip--hit" aria-hidden="true" />
+                <Typography as="span" variant="body" tone="muted">绿 = 算子压中</Typography>
+              </li>
+            )}
+          </ul>
         </div>
-        <div className="ck-figure-area">
-          <div className="ck-square-frame">
-            <BinaryGrid
-              cells={cells}
-              windowTop={scan.row}
-              windowLeft={scan.col}
-              windowSize={KERNEL_SIZE}
-              showWindow={scanning}
-              interactive={phase === 'scan'}
-              onMoveWindow={(row, col) => setScan({ row, col })}
-              label="变换后的二值棋盘"
-            />
+
+        <div className="ck-redesign__panel">
+          <div className="ck-redesign__label-row">
+            <Typography as="span" variant="body" tone="muted">算子</Typography>
+            <Typography as="span" variant="bodySmall" tone="muted">
+              {designing ? `已放 ${oneCount} / ${KERNEL_SIZE}` : '已经排好'}
+            </Typography>
+          </div>
+
+          <div
+            className="ck-redesign__grid"
+            role="group"
+            aria-label="可以点选的五乘五算子，点一下把 0 变成 1，再点一下变回 0。"
+          >
+            {KERNEL_INDEX.map((row) => KERNEL_INDEX.map((col) => {
+              const value = kernel[row][col];
+              const hovered = designing && hover !== null && hover.row === row && hover.col === col;
+              const preview = hovered ? (value ? 0 : 1) : value;
+              const classes = [
+                'ck-redesign__grid-cell',
+                !hovered && value === 1 ? 'ck-redesign__grid-cell--one' : '',
+                hovered && value === 0 ? 'ck-redesign__grid-cell--preview-one' : '',
+                hovered && value === 1 ? 'ck-redesign__grid-cell--preview-zero' : '',
+              ].filter(Boolean).join(' ');
+              return (
+                <button
+                  key={cellKey(row, col)}
+                  type="button"
+                  className={classes}
+                  disabled={!designing}
+                  aria-label={`第 ${row + 1} 行第 ${col + 1} 列，现在是 ${value}，点击变成 ${value ? 0 : 1}`}
+                  onMouseEnter={() => setHover({ row, col })}
+                  onMouseLeave={() => setHover(null)}
+                  onFocus={() => setHover({ row, col })}
+                  onBlur={() => setHover(null)}
+                  onClick={() => handleCellClick(row, col)}
+                >
+                  <Typography as="span" variant="body" tone={preview === 0 ? 'muted' : 'inherit'} aria-hidden="true">
+                    {preview}
+                  </Typography>
+                </button>
+              );
+            }))}
+          </div>
+
+          {!designing && (
+            <div className="ck-redesign__value">
+              <Typography as="span" variant="body" tone="muted">激活值</Typography>
+              <Typography as="span" variant="display" tone={found ? 'success' : 'accent'}>{activation}</Typography>
+            </div>
+          )}
+
+          <div
+            className={found ? 'ck-redesign__readout is-found' : 'ck-redesign__readout'}
+            aria-live="polite"
+          >
+            <Typography as="p" variant="body" tone={found ? 'success' : 'main'}>{readoutText}</Typography>
           </div>
         </div>
-        {phase === 'complete' && readout}
-      </section>
-
-      <aside className="ck-side">
-        {phase !== 'complete' && (
-          <ol className="ck-steps">
-            {STEPS.map((step, index) => (
-              <li
-                key={step.key}
-                className={index === stepIndex ? 'is-current' : index < stepIndex ? 'is-done' : 'is-pending'}
-              >
-                <Typography as="span" variant="bodySmall" tone="inherit">{step.label}</Typography>
-              </li>
-            ))}
-          </ol>
-        )}
-
-        {phase === 'transform' && (
-          <>
-            <section className="ck-card">
-              <Typography as="h2" variant="h3" tone="accent">先看清原来的算子</Typography>
-              <Typography variant="bodySmall" tone="muted">
-                这盘棋是沿着一个方向连成五子的，所以原来的算子把 1 排在同样的方向上，扫到那条线时激活值最大。
-              </Typography>
-              <KernelGrid matrix={base} label="与获胜连线同方向的五乘五算子" className="ck-design-kernel" />
-            </section>
-            <Callout
-              tone="orange"
-              label="要做的变换"
-              text={'把整张图' + actionText + '。形状变了，但算子还没有变——先看看它们还能不能对上。'}
-            />
-            <div className="ck-actions">
-              <Button variant="primary" onClick={beginTransform}>{actionText + '图像'}</Button>
-            </div>
-          </>
-        )}
-
-        {phase === 'design' && (
-          <>
-            <section className="ck-card">
-              <Typography as="h2" variant="h3" tone="accent">现在轮到你设计算子</Typography>
-              <Typography variant="bodySmall" tone="muted">
-                观察左边图像里 1 的排列，再调整下面的 5 × 5 小矩阵。悬浮方格会临时切换 0 / 1，点击才会保存。
-              </Typography>
-              <div className="ck-design-grid-wrap">
-                <KernelGrid
-                  matrix={designKernel}
-                  editable
-                  onToggle={toggleCell}
-                  label="可编辑的五乘五算子"
-                  className="ck-design-kernel"
-                />
-              </div>
-              <Typography variant="bodySmall" tone="muted">
-                已经放对 {matchedOnes} / {targetOnes} 个 1
-                {designedOnes > matchedOnes ? '，还有 ' + (designedOnes - matchedOnes) + ' 个 1 放在了不该放的位置。' : '。'}
-              </Typography>
-            </section>
-            <div className="ck-actions">
-              <Button disabled={designedOnes === 0} onClick={() => setDesignKernel((current) => zeroOnes(current))}>
-                清空
-              </Button>
-            </div>
-          </>
-        )}
-
-        {phase === 'scan' && (
-          <>
-            {readout}
-            <section className="ck-card">
-              <Typography as="h2" variant="h3" tone="accent">你设计的 5 × 5 算子</Typography>
-              <div className="ck-design-grid-wrap">
-                <KernelGrid
-                  matrix={designKernel}
-                  hitMask={patch}
-                  label="已设计的五乘五算子"
-                  className="ck-design-kernel"
-                />
-              </div>
-              <Typography variant="bodySmall" tone="muted">
-                新的方向上有 {targetOnes} 个 1，算子也放了 {designedOnes} 个——只在 1 完全对齐的窗口里，激活值才最大。
-              </Typography>
-            </section>
-            <Callout
-              tone="blue"
-              label="扫描提示"
-              text="拖动橙色窗口，在变换后的图像上再找一次最大激活值。"
-            />
-          </>
-        )}
-
-        {phase === 'complete' && (
-          <>
-            <Callout
-              tone="green"
-              label="两次扫描都对上了"
-              text="同一个算子只响应对应方向的图案。换句话说，算子决定模型能「看见」什么特征。"
-            />
-            <Question
-              type="choice"
-              typeLabel="单选题"
-              title="不同的算子，有什么不同的效果？"
-              options={QUESTION_OPTIONS}
-              answer="spatial-pattern"
-              textVariant="bodySmall"
-              persistenceKey="convolution-kernel-intro-kernel-effect-v1"
-              feedback={{
-                initial: '选一个最贴近刚才两次扫描的答案。',
-                correct: '正确。不同算子会突出不同的局部特征。',
-                wrong: '再想想：算子的排列不同，关注的局部特征也不同。',
-              }}
-              onCheck={(result) => { if (result.ok) setQuestionPassed(true); }}
-            />
-            <div className="ck-actions">
-              <Button variant="primary" disabled={!questionPassed} onClick={onComplete}>继续</Button>
-              {!questionPassed && (
-                <Typography variant="bodySmall" tone="muted">答对单选题以后进入下一幕。</Typography>
-              )}
-            </div>
-          </>
-        )}
-      </aside>
-    </div>
+      </div>
+    </ContentBlock>
   );
-}
-
-function countOnes(matrix: Matrix): number {
-  return matrix.reduce((total, line) => total + line.reduce((count, value) => count + (value ? 1 : 0), 0), 0);
-}
-
-function zeroOnes(matrix: Matrix): Matrix {
-  return matrix.map((line) => line.map(() => 0));
 }

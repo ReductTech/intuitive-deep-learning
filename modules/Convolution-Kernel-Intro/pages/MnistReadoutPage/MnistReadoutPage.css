@@ -1,9 +1,0 @@
-/* 第三幕第三页：比较不同卷积核在同一张数字图上的响应。 */
-.ck-page--mnist-readout .ck-figure-column { grid-template-rows: auto minmax(0, 1fr) auto; }
-
-.ck-page--mnist-readout .ck-side { align-content: start; }
-
-.ck-page--mnist-readout .ck-mnist-kernel { max-width: 110px; }
-
-.ck-page--mnist-readout .ck-mnist-feature { max-width: 280px; }
-

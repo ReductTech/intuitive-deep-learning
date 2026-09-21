@@ -3,10 +3,9 @@ import { LessonFlow, ModuleShell, type LessonFlowStep } from '../shared/react';
 import '../shared/react/styles.css';
 import '../shared/react/ui-kit.css';
 import '../shared/react/presentation.css';
-import { KernelLessonProvider } from './LessonContext';
-import { kernelCourse } from './course';
+import { convolutionCourse } from './course';
+import { GomokuLessonProvider } from './LessonContext';
 
-/** 把 1600 × 900 的逻辑页面缩放并居中到阅读栏宽度。 */
 function BlogLessonCanvas({ children }: { children: ReactNode }) {
   const frameRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
@@ -23,14 +22,14 @@ function BlogLessonCanvas({ children }: { children: ReactNode }) {
 
   return (
     <div ref={frameRef} className="lesson-canvas-frame" style={{ height: 900 * scale }}>
-      <div className="course-page-surface course-shell" style={{ transform: 'scale(' + scale + ')' }}>
+      <div className="course-page-surface course-shell" style={{ transform: `scale(${scale})` }}>
         {children}
       </div>
     </div>
   );
 }
 
-export const kernelLessonSteps: LessonFlowStep[] = kernelCourse
+export const convolutionLessonSteps: LessonFlowStep[] = convolutionCourse
   .filter((item) => item.showInBlog !== false)
   .map(({ id, revealMode, component }) => ({
     id,
@@ -40,14 +39,14 @@ export const kernelLessonSteps: LessonFlowStep[] = kernelCourse
 
 export function GuidePage() {
   return (
-    <KernelLessonProvider>
-      <ModuleShell
-        title="卷积核入门"
-        subtitle="先从一局五子棋开始：计算机怎样从棋盘里判断「谁赢了」？"
-        shellClassName="course-shell course-blog-shell"
-      >
-        <LessonFlow steps={kernelLessonSteps} persistenceKey="convolution-kernel-intro-guidepage-v1" />
-      </ModuleShell>
-    </KernelLessonProvider>
+    <ModuleShell
+      title="卷积核入门"
+      subtitle="从一局五子棋开始，一步步走到图像上的卷积。"
+      shellClassName="course-shell course-blog-shell"
+    >
+      <GomokuLessonProvider>
+        <LessonFlow steps={convolutionLessonSteps} persistenceKey="convolution-kernel-intro-guide-v1" />
+      </GomokuLessonProvider>
+    </ModuleShell>
   );
 }

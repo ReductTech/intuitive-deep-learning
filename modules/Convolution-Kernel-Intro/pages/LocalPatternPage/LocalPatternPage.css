@@ -1,0 +1,158 @@
+/* 第 07 页 · 同一块输入，不同卷积核会看到不同模式：左边一块固定输入，右边三张并列的核卡片。 */
+
+.course-shell .ck-pattern {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 18px;
+  min-height: 720px;
+  overflow: hidden;
+  padding: 26px 34px 24px;
+}
+
+.course-shell .ck-pattern > .edu-content-head {
+  max-width: none;
+  margin-bottom: 0;
+}
+
+.course-shell .ck-pattern > .edu-content-body {
+  display: grid;
+  min-height: 0;
+}
+
+/* 左 35% 是参照，右 65% 是三张卡；整组在正文里竖着居中。 */
+
+.course-shell .ck-pattern__stage {
+  display: grid;
+  grid-template-columns: minmax(0, 35fr) minmax(0, 65fr);
+  align-content: center;
+  align-items: center;
+  column-gap: 32px;
+  min-width: 0;
+  min-height: 0;
+}
+
+/* 左：全页唯一那块固定输入。 */
+
+.course-shell .ck-pattern__input {
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+  min-width: 0;
+  border: 1px solid rgba(39, 68, 110, .16);
+  border-radius: 18px;
+  background: rgba(39, 68, 110, .03);
+  padding: 26px;
+}
+
+/* 5 × 5 是同一个东西，左边那块输入大一号，卡片里的三个核小一号。 */
+
+.course-shell .ck-pattern__grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-rows: repeat(5, minmax(0, 1fr));
+  gap: 2px;
+  width: 300px;
+  aspect-ratio: 1 / 1;
+  max-width: 100%;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--ui-grid);
+  box-shadow: inset 0 0 0 1px rgba(39, 68, 110, .16);
+  user-select: none;
+}
+
+.course-shell .ck-pattern__grid--kernel {
+  width: 220px;
+}
+
+.course-shell .ck-pattern__cell {
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  background: #fff;
+  color: rgba(33, 50, 74, .3);
+  font-variant-numeric: tabular-nums;
+}
+
+/* 1 = 我方的子，-1 = 对手的子，0 = 空点。 */
+
+.course-shell .ck-pattern__cell--one { background: var(--ui-accent-alt); color: #fff; }
+.course-shell .ck-pattern__cell--minus { background: var(--ui-accent); color: #fff; }
+
+/* 右：三张卡并排，一张卡只放「核的名字 / 那个核 / 它的响应值」。 */
+
+.course-shell .ck-pattern__kernels {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: 22px;
+  min-width: 0;
+  min-height: 0;
+}
+
+.course-shell .ck-pattern__card {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 16px;
+  min-width: 0;
+  border: 1px solid rgba(39, 68, 110, .16);
+  border-radius: 18px;
+  background: #fff;
+  padding: 22px 18px;
+}
+
+.course-shell .ck-pattern__name {
+  display: grid;
+  min-width: 0;
+}
+
+.course-shell .ck-pattern__response {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+/* 没对上的两张卡先灰着：核里的 1 转成灰蓝。 */
+
+.course-shell .ck-pattern__card.is-idle .ck-pattern__cell--one {
+  background: rgba(39, 68, 110, .42);
+}
+
+/* 匹配得最好的那张：卡换暖底，核罩橙框，名字和响应值一起点亮。 */
+
+.course-shell .ck-pattern__card.is-top {
+  border-color: rgba(240, 126, 71, .55);
+  background: rgba(240, 126, 71, .09);
+  box-shadow: 0 14px 30px rgba(240, 126, 71, .16);
+}
+
+.course-shell .ck-pattern__card.is-top .ck-pattern__grid {
+  background: rgba(240, 126, 71, .22);
+  box-shadow: inset 0 0 0 3px var(--ui-accent-alt), 0 12px 26px rgba(240, 126, 71, .18);
+}
+
+.course-shell .ck-pattern__card.is-top .ck-pattern__name .ui-typography,
+.course-shell .ck-pattern__card.is-top .ck-pattern__response .ui-typography {
+  color: var(--ui-accent-alt);
+}
+
+/* 1600 × 900 固定画布：Blog / Guide 与 SceneDeck 共用同一套构图。 */
+
+.course-page-surface .ck-pattern {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+@media (max-width: 820px) {
+  .course-shell .ck-pattern { min-height: auto; padding: 22px; }
+  .course-shell .ck-pattern__stage { grid-template-columns: minmax(0, 1fr); row-gap: 26px; }
+  .course-shell .ck-pattern__kernels { grid-template-columns: minmax(0, 1fr); row-gap: 18px; }
+  .course-shell .ck-pattern__grid,
+  .course-shell .ck-pattern__grid--kernel { width: min(100%, 300px); }
+}
