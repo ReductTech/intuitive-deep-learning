@@ -9,7 +9,7 @@ import {
   type Board,
   type Cell,
   type Stone,
-} from '../../model/gomokuEngine';
+} from '../../gomokuEngine';
 import './BoardAsNumbersPage.css';
 
 /** 局部放大窗口的边长：棋形的最小外接矩形 5 × 5，四周各留两层，正好 9 × 9。 */
@@ -106,9 +106,10 @@ function drawNumbersBoard(
   board: Board,
   winLine: Cell[],
   spotlight: Cell | null,
+  origin: Cell,
 ) {
   const pad = size * BOARD_PAD_RATIO;
-  const gap = (size - pad * 2) / (BOARD_SIZE - 1);
+  const gap = (size - pad * 2) / (WINDOW_SIZE - 1);
   const stoneRadius = gap * 0.44;
   const pointX = (col: number) => pad + col * gap;
   const pointY = (row: number) => pad + row * gap;
@@ -118,7 +119,7 @@ function drawNumbersBoard(
   ctx.strokeStyle = 'rgba(126, 98, 58, .4)';
   ctx.lineWidth = Math.max(1, size / 900);
   ctx.beginPath();
-  for (let index = 0; index < BOARD_SIZE; index += 1) {
+  for (let index = 0; index < WINDOW_SIZE; index += 1) {
     const position = pad + index * gap;
     ctx.moveTo(pad, position);
     ctx.lineTo(size - pad, position);
@@ -128,7 +129,7 @@ function drawNumbersBoard(
   ctx.stroke();
 
   ctx.fillStyle = 'rgba(104, 78, 42, .66)';
-  STAR_POINTS.forEach(([row, col]) => {
+  STAR_POINTS.filter(([row, col]) => row >= origin.row && row < origin.row + WINDOW_SIZE && col >= origin.col && col < origin.col + WINDOW_SIZE).forEach(([row, col]) => {
     ctx.beginPath();
     ctx.arc(pointX(col), pointY(row), Math.max(1.6, gap * 0.13), 0, Math.PI * 2);
     ctx.fill();
@@ -142,32 +143,47 @@ function drawNumbersBoard(
     ctx.lineWidth = gap * 0.26;
     ctx.lineCap = 'round';
     ctx.beginPath();
-    ctx.moveTo(pointX(first.col), pointY(first.row));
-    ctx.lineTo(pointX(last.col), pointY(last.row));
+    ctx.moveTo(pointX(first.col - origin.col), pointY(first.row - origin.row));
+    ctx.lineTo(pointX(last.col - origin.col), pointY(last.row - origin.row));
     ctx.stroke();
     ctx.restore();
   }
 
   const onWinLine = (row: number, col: number) => winLine.some((cell) => cell.row === row && cell.col === col);
-  for (let row = 0; row < BOARD_SIZE; row += 1) {
-    for (let col = 0; col < BOARD_SIZE; col += 1) {
-      const stone = board[row][col];
+  for (let row = 0; row < WINDOW_SIZE; row += 1) {
+    for (let col = 0; col < WINDOW_SIZE; col += 1) {
+      const stone = board[origin.row + row][origin.col + col];
       if (stone === EMPTY) continue;
-      paintStone(ctx, pointX(col), pointY(row), stoneRadius, stone, onWinLine(row, col));
+      paintStone(ctx, pointX(col), pointY(row), stoneRadius, stone, onWinLine(origin.row + row, origin.col + col));
     }
   }
 
   if (spotlight) {
     ctx.save();
     ctx.beginPath();
-    ctx.arc(pointX(spotlight.col), pointY(spotlight.row), stoneRadius * 1.55, 0, Math.PI * 2);
+    ctx.arc(pointX(spotlight.col - origin.col), pointY(spotlight.row - origin.row), stoneRadius * 1.55, 0, Math.PI * 2);
     ctx.fillStyle = 'rgba(240, 126, 71, .16)';
     ctx.fill();
     ctx.beginPath();
-    ctx.arc(pointX(spotlight.col), pointY(spotlight.row), stoneRadius * 1.55, 0, Math.PI * 2);
+    ctx.arc(pointX(spotlight.col - origin.col), pointY(spotlight.row - origin.row), stoneRadius * 1.55, 0, Math.PI * 2);
     ctx.strokeStyle = 'rgba(240, 126, 71, .92)';
     ctx.lineWidth = Math.max(2, gap * 0.1);
     ctx.stroke();
+    ctx.restore();
+  }
+
+  if (winLine.length >= 2) {
+    const rows = winLine.map((cell) => cell.row - origin.row);
+    const cols = winLine.map((cell) => cell.col - origin.col);
+    const minRow = Math.max(0, Math.min(...rows));
+    const maxRow = Math.min(WINDOW_SIZE - 1, Math.max(...rows));
+    const minCol = Math.max(0, Math.min(...cols));
+    const maxCol = Math.min(WINDOW_SIZE - 1, Math.max(...cols));
+    ctx.save();
+    ctx.setLineDash([10, 8]);
+    ctx.strokeStyle = '#2d63ad';
+    ctx.lineWidth = 2.5;
+    ctx.strokeRect(pointX(minCol) - gap * .48, pointY(minRow) - gap * .48, (maxCol - minCol) * gap + gap * .96, (maxRow - minRow) * gap + gap * .96);
     ctx.restore();
   }
 }
@@ -177,9 +193,10 @@ interface NumbersBoardProps {
   winLine: Cell[];
   spotlight: Cell | null;
   label: string;
+  origin: Cell;
 }
 
-function NumbersBoard({ board, winLine, spotlight, label }: NumbersBoardProps) {
+function NumbersBoard({ board, winLine, spotlight, label, origin }: NumbersBoardProps) {
   const frameRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [size, setSize] = useState(0);
@@ -203,23 +220,23 @@ function NumbersBoard({ board, winLine, spotlight, label }: NumbersBoardProps) {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
     ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-    drawNumbersBoard(ctx, size, board, winLine, spotlight);
-  }, [size, board, winLine, spotlight]);
+    drawNumbersBoard(ctx, size, board, winLine, spotlight, origin);
+  }, [size, board, winLine, spotlight, origin]);
 
   return (
     <div className="ck-numbers__board" ref={frameRef}>
       <canvas ref={canvasRef} className="ck-numbers__board-canvas" role="img" aria-label={label} />
       <div className="ck-numbers__board-axis" aria-hidden="true">
         <div className="ck-numbers__board-axis-cols">
-          {COLUMN_LABELS.map((text, index) => (
-            <Typography key={text} as="span" variant="body" style={{ left: `${(index / (BOARD_SIZE - 1)) * 100}%` }}>
+          {Array.from({ length: WINDOW_SIZE }, (_, index) => COLUMN_LABELS[origin.col + index]).map((text, index) => (
+              <Typography key={text} as="span" variant="body" style={{ left: `${(index / (WINDOW_SIZE - 1)) * 100}%` }}>
               {text}
             </Typography>
           ))}
         </div>
         <div className="ck-numbers__board-axis-rows">
-          {ROW_LABELS.map((text, index) => (
-            <Typography key={text} as="span" variant="body" style={{ top: `${(index / (BOARD_SIZE - 1)) * 100}%` }}>
+          {Array.from({ length: WINDOW_SIZE }, (_, index) => ROW_LABELS[origin.row + index]).map((text, index) => (
+              <Typography key={text} as="span" variant="body" style={{ top: `${(index / (WINDOW_SIZE - 1)) * 100}%` }}>
               {text}
             </Typography>
           ))}
@@ -284,9 +301,11 @@ export function BoardAsNumbersPage({ onComplete }: BoardAsNumbersPageProps) {
 
   const lastRow = zoom.origin.row + WINDOW_SIZE - 1;
   const lastCol = zoom.origin.col + WINDOW_SIZE - 1;
+  const matrixRows = zoom.rows.slice(2, 7);
+  const matrixCols = zoom.cols.slice(2, 7);
   const matrixLabel = [
     `局部放大窗口：棋盘第 ${ROW_LABELS[zoom.origin.row]} 到 ${ROW_LABELS[lastRow]} 行、第 ${COLUMN_LABELS[zoom.origin.col]} 到 ${COLUMN_LABELS[lastCol]} 列，共 9 × 9 个数字。`,
-    `1 表示${winnerLabel}子，-1 表示${opponentLabel}子，0 表示空点。`,
+    `1 表示${winnerLabel}子，-1 表示${opponentLabel}子，0 表示空点。右侧显示中心 5 × 5 数字块。`,
   ].join('');
 
   const boardLabel = `十五路五子棋终局，${winnerLabel}胜，${direction}方向连成五子`;
@@ -301,15 +320,17 @@ export function BoardAsNumbersPage({ onComplete }: BoardAsNumbersPageProps) {
     >
       <div className="ck-numbers__layout">
         <div className="ck-numbers__stage">
-          <NumbersBoard board={board} winLine={outcome.winLine} spotlight={focus} label={boardLabel} />
+          <div className="ck-numbers__step-heading"><span>1</span><div><Typography as="h2" variant="h3" tone="accent">观察局部棋形</Typography><Typography variant="bodySmall" tone="muted">先只看这一小块区域。</Typography></div></div>
+          <NumbersBoard board={board} winLine={outcome.winLine} spotlight={focus} origin={zoom.origin} label={boardLabel} />
         </div>
 
         <FlowArrow />
 
         <div className="ck-numbers__map">
           <Typography as="h2" variant="h3" tone="accent" className="ck-numbers__map-title">
-            映射关系
+            编码规则
           </Typography>
+          <Typography variant="bodySmall" tone="muted" className="ck-numbers__map-subtitle">用数字表示每个位置的棋子类型。</Typography>
           <div className="ck-numbers__map-tiles">
             {tiles.map((tile) => {
               const kind = tile.value === 1 ? 'one' : tile.value === -1 ? 'minus' : 'zero';
@@ -336,11 +357,12 @@ export function BoardAsNumbersPage({ onComplete }: BoardAsNumbersPageProps) {
         <FlowArrow />
 
         <div className="ck-numbers__panel">
+          <div className="ck-numbers__step-heading"><span>3</span><div><Typography as="h2" variant="h3" tone="accent">对应的数字块</Typography><Typography variant="bodySmall" tone="muted">把左边的局部棋形写成数字矩阵。</Typography></div></div>
           <div className="ck-numbers__matrix">
             <div className="ck-numbers__matrix-corner" aria-hidden="true" />
 
             <div className="ck-numbers__matrix-cols" aria-hidden="true">
-              {zoom.cols.map((col) => (
+              {matrixCols.map((col) => (
                 <Typography
                   key={col}
                   as="span"
@@ -353,7 +375,7 @@ export function BoardAsNumbersPage({ onComplete }: BoardAsNumbersPageProps) {
             </div>
 
             <div className="ck-numbers__matrix-rows" aria-hidden="true">
-              {zoom.rows.map((row) => (
+              {matrixRows.map((row) => (
                 <Typography
                   key={row}
                   as="span"
@@ -371,7 +393,7 @@ export function BoardAsNumbersPage({ onComplete }: BoardAsNumbersPageProps) {
               aria-label={matrixLabel}
               onPointerLeave={() => onHoverCell(null)}
             >
-              {zoom.rows.map((row) => zoom.cols.map((col) => {
+              {matrixRows.map((row) => matrixCols.map((col) => {
                 const value = grid[row][col];
                 const ring = Math.min(
                   RING_MAX,

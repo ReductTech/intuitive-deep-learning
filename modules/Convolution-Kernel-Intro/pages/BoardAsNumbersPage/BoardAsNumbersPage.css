@@ -260,20 +260,20 @@
 }
 
 .course-shell .ck-numbers__matrix-cols {
-  grid-template-columns: repeat(9, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   padding: 0 1px;
 }
 
 .course-shell .ck-numbers__matrix-rows {
-  grid-template-rows: repeat(9, minmax(0, 1fr));
+  grid-template-rows: repeat(5, minmax(0, 1fr));
   padding: 1px 0;
 }
 
 .course-shell .ck-numbers__matrix-grid {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(9, minmax(0, 1fr));
-  grid-template-rows: repeat(9, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-rows: repeat(5, minmax(0, 1fr));
   gap: 1px;
   min-width: 0;
   min-height: 0;
@@ -322,3 +322,24 @@
   .course-shell .ck-numbers__layout { grid-template-columns: minmax(0, 1fr); }
   .course-shell .ck-numbers__arrow-slot { display: none; }
 }
+
+/* 统一成三块教学面板：每一块先给结论，再给视觉例子。 */
+.course-shell .ck-numbers__layout { grid-template-columns: minmax(0, 1fr) 28px minmax(260px, .78fr) 28px minmax(0, 1fr); gap: 18px; align-items: stretch; }
+.course-shell .ck-numbers__stage { grid-template-rows: auto minmax(0, 1fr); gap: 12px; padding: 18px; border: 1px solid rgba(39, 68, 110, .12); border-radius: 16px; background: rgba(255, 255, 255, .78); box-shadow: 0 10px 24px rgba(33, 50, 74, .07); }
+.course-shell .ck-numbers__step-heading { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.course-shell .ck-numbers__step-heading > span { display: grid; place-items: center; width: 38px; height: 38px; flex: 0 0 auto; border-radius: 50%; background: #e7f0ff; color: #2d63ad; font-size: 22px; font-weight: 700; }
+.course-shell .ck-numbers__step-heading > div { display: grid; gap: 2px; min-width: 0; }
+.course-shell .ck-numbers__step-heading h2 { margin: 0; }
+.course-shell .ck-numbers__board { width: 100%; max-height: 100%; border-radius: 10px; box-shadow: inset 0 0 0 1px rgba(120, 92, 54, .26); }
+.course-shell .ck-numbers__map { align-self: center; align-content: center; gap: 8px; border: 1px solid rgba(39, 68, 110, .12); border-radius: 16px; background: rgba(255, 255, 255, .86); box-shadow: 0 10px 24px rgba(33, 50, 74, .07); padding: 18px; }
+.course-shell .ck-numbers__map-title { margin: 0; }
+.course-shell .ck-numbers__map-subtitle { margin-bottom: 6px; }
+.course-shell .ck-numbers__map-tiles { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+.course-shell .ck-numbers__map-tile { grid-template-columns: minmax(0, 1fr) 68px; grid-template-rows: 1fr; min-height: 86px; border-radius: 12px; }
+.course-shell .ck-numbers__map-face { grid-template-columns: 44px minmax(0, 1fr); justify-items: start; align-items: center; gap: 12px; padding: 12px; }
+.course-shell .ck-numbers__map-face .ui-typography { grid-column: 2; grid-row: 1; font-weight: 700; color: var(--ui-text-main); }
+.course-shell .ck-numbers__map-icon { grid-column: 1; grid-row: 1; width: 42px; height: 42px; }
+.course-shell .ck-numbers__map-value { border-top: 0; border-left: 1px solid rgba(33, 50, 74, .1); padding: 10px 6px; }
+.course-shell .ck-numbers__arrow-slot { align-self: center; }
+.course-shell .ck-numbers__panel { grid-template-rows: auto minmax(0, 1fr); gap: 12px; align-content: start; padding: 18px; border: 1px solid rgba(39, 68, 110, .12); border-radius: 16px; background: rgba(255, 255, 255, .78); box-shadow: 0 10px 24px rgba(33, 50, 74, .07); }
+.course-shell .ck-numbers__matrix { width: 100%; max-width: 100%; }

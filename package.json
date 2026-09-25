@@ -10,13 +10,14 @@
     "cache:decision": "node scripts/generate_decision_candidate_cache.mjs"
   },
   "dependencies": {
+    "@icon-park/react": "^1.4.2",
     "react": "19.2.7",
     "react-dom": "19.2.7"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^4.4.1",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
+    "@vitejs/plugin-react": "^4.4.1",
     "typescript": "^5.8.3",
     "vite": "^6.3.5"
   }

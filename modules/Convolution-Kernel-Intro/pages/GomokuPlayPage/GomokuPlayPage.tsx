@@ -20,11 +20,12 @@ import {
   createBoard,
   placeStone,
   winDirectionLabel,
+  type GomokuDifficulty,
   type Board,
   type Cell,
   type Move,
   type Stone,
-} from '../../model/gomokuEngine';
+} from '../../gomokuEngine';
 import './GomokuPlayPage.css';
 
 const HUMAN = BLACK;
@@ -151,7 +152,7 @@ function drawPlayBoard(ctx: CanvasRenderingContext2D, options: PlayBoardDrawOpti
 
   if (interactive && hover && board[hover.row][hover.col] === EMPTY) {
     ctx.save();
-    ctx.globalAlpha = 0.4;
+    ctx.globalAlpha = 0.62;
     paintStone(ctx, pointX(hover.col), pointY(hover.row), stoneRadius, HUMAN, false);
     ctx.restore();
   }
@@ -197,6 +198,7 @@ function PlayBoard({
 }: PlayBoardProps) {
   const frameRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const previewRef = useRef<HTMLSpanElement | null>(null);
   const [size, setSize] = useState(0);
 
   useLayoutEffect(() => {
@@ -222,7 +224,7 @@ function PlayBoard({
       size,
       board,
       lastMove,
-      hover: interactive ? hover : null,
+      hover: null,
       cursor: interactive ? cursor : null,
       winLine,
       interactive,
@@ -241,9 +243,40 @@ function PlayBoard({
     const col = Math.round(offsetX / gap);
     const row = Math.round(offsetY / gap);
     if (row < 0 || row >= BOARD_SIZE || col < 0 || col >= BOARD_SIZE) return null;
-    if (Math.hypot(offsetX - col * gap, offsetY - row * gap) > gap * 0.64) return null;
+    if (Math.hypot(offsetX - col * gap, offsetY - row * gap) > gap * 0.92) return null;
     return { row, col };
   }, []);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const preview = previewRef.current;
+    if (!canvas || !preview || !interactive) return undefined;
+    const movePreview = (event: PointerEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      if (!rect.width) return;
+      const pad = rect.width * BOARD_PAD_RATIO;
+      const gap = (rect.width - pad * 2) / (BOARD_SIZE - 1);
+      const offsetX = event.clientX - rect.left - pad;
+      const offsetY = event.clientY - rect.top - pad;
+      const col = Math.max(0, Math.min(BOARD_SIZE - 1, Math.round(offsetX / gap)));
+      const row = Math.max(0, Math.min(BOARD_SIZE - 1, Math.round(offsetY / gap)));
+      const distance = Math.hypot(offsetX - col * gap, offsetY - row * gap);
+      if (distance > gap * 0.92 || board[row][col] !== EMPTY) {
+        preview.style.opacity = '0';
+        return;
+      }
+      preview.style.left = `${((pad + col * gap) / rect.width) * 100}%`;
+      preview.style.top = `${((pad + row * gap) / rect.width) * 100}%`;
+      preview.style.opacity = '0.62';
+    };
+    const clearPreview = () => { preview.style.opacity = '0'; };
+    canvas.addEventListener('pointermove', movePreview, { passive: true });
+    canvas.addEventListener('pointerleave', clearPreview, { passive: true });
+    return () => {
+      canvas.removeEventListener('pointermove', movePreview);
+      canvas.removeEventListener('pointerleave', clearPreview);
+    };
+  }, [board, interactive]);
 
   return (
     <div
@@ -255,8 +288,8 @@ function PlayBoard({
         className="ck-gomoku-play__board-canvas"
         tabIndex={0}
         aria-label={label}
-        onPointerMove={interactive ? (event) => onHoverCell(cellFromPointer(event)) : undefined}
-        onPointerLeave={interactive ? () => onHoverCell(null) : undefined}
+        onPointerMove={undefined}
+        onPointerLeave={undefined}
         onPointerUp={interactive ? (event) => {
           const cell = cellFromPointer(event);
           if (cell) onPickCell(cell);
@@ -265,6 +298,7 @@ function PlayBoard({
         onBlur={() => onFocusChange(false)}
         onKeyDown={onKeyDown}
       />
+      <span ref={previewRef} className="ck-gomoku-play__hover-stone" aria-hidden="true" />
       <div className="ck-gomoku-play__board-axis" aria-hidden="true">
         <div className="ck-gomoku-play__board-axis-cols">
           {COLUMN_LABELS.map((text, index) => (
@@ -325,6 +359,60 @@ interface GameState {
   draw: boolean;
 }
 
+type SituationTone = 'red' | 'orange' | 'green' | 'neutral';
+
+interface Situation {
+  tone: SituationTone;
+  label: string;
+  detail: string;
+}
+
+function countWinningMoves(board: Board, player: Stone): number {
+  let total = 0;
+  for (let row = 0; row < BOARD_SIZE; row += 1) {
+    for (let col = 0; col < BOARD_SIZE; col += 1) {
+      if (board[row][col] !== EMPTY) continue;
+      if (placeStone(board, { row, col }, player).winLine.length >= 5) total += 1;
+    }
+  }
+  return total;
+}
+
+function countOpenFourThreats(board: Board, player: Stone): number {
+  const directions = [[0, 1], [1, 0], [1, 1], [1, -1]] as const;
+  let total = 0;
+  directions.forEach(([dr, dc]) => {
+    for (let row = 0; row < BOARD_SIZE; row += 1) {
+      for (let col = 0; col < BOARD_SIZE; col += 1) {
+        const beforeRow = row - dr;
+        const beforeCol = col - dc;
+        const afterRow = row + dr * 4;
+        const afterCol = col + dc * 4;
+        if (beforeRow < 0 || beforeRow >= BOARD_SIZE || beforeCol < 0 || beforeCol >= BOARD_SIZE || afterRow < 0 || afterRow >= BOARD_SIZE || afterCol < 0 || afterCol >= BOARD_SIZE) continue;
+        if (board[beforeRow][beforeCol] !== EMPTY || board[afterRow][afterCol] !== EMPTY) continue;
+        let line = true;
+        for (let step = 0; step < 4; step += 1) {
+          if (board[row + dr * step][col + dc * step] !== player) line = false;
+        }
+        if (line) total += 1;
+      }
+    }
+  });
+  return total;
+}
+
+function getSituation(board: Board): Situation {
+  const humanWins = countWinningMoves(board, HUMAN);
+  const computerWins = countWinningMoves(board, COMPUTER);
+  const humanOpenFour = countOpenFourThreats(board, HUMAN);
+  const computerOpenFour = countOpenFourThreats(board, COMPUTER);
+  if (computerWins > 0) return { tone: 'red', label: '对手快赢了', detail: '白方下一步就能连成五子' };
+  if (humanWins > 0) return { tone: 'green', label: '胜券在握', detail: '黑方下一步就能连成五子' };
+  if (computerOpenFour > 0) return { tone: 'orange', label: '对手领先', detail: '白方的四子线两端都还留着空位' };
+  if (humanOpenFour > 0) return { tone: 'green', label: '优势在我', detail: '黑方已经连出有潜力的四子线' };
+  return { tone: 'neutral', label: '局势安全', detail: '双方都还在布局，先观察局部形状' };
+}
+
 function createGame(): GameState {
   return { board: createBoard(), history: [], lastMove: null, turn: 'human', winner: EMPTY, winLine: [], draw: false };
 }
@@ -358,6 +446,7 @@ export interface GomokuPlayPageProps {
 
 export function GomokuPlayPage({ onComplete }: GomokuPlayPageProps) {
   const [game, setGame] = useState<GameState>(createGame);
+  const [difficulty, setDifficulty] = useState<GomokuDifficulty>('easy');
   const [hover, setHover] = useState<Cell | null>(null);
   const [cursor, setCursor] = useState<Cell>({ row: 7, col: 7 });
   const [focused, setFocused] = useState(false);
@@ -369,12 +458,12 @@ export function GomokuPlayPage({ onComplete }: GomokuPlayPageProps) {
 
   useEffect(() => {
     if (game.turn !== 'computer') return undefined;
-    const decision = computeComputerMove(game.board, game.history);
+    const decision = computeComputerMove(game.board, game.history, difficulty);
     const timer = window.setTimeout(() => {
       setGame((current) => (current.turn === 'computer' ? applyMove(current, decision, COMPUTER) : current));
     }, 420);
     return () => window.clearTimeout(timer);
-  }, [game.turn, game.board, game.history]);
+  }, [game.turn, game.board, game.history, difficulty]);
 
   // 分出胜负后把终局交给 LessonContext，后面的页面继续用同一盘棋。
   useEffect(() => {
@@ -439,6 +528,16 @@ export function GomokuPlayPage({ onComplete }: GomokuPlayPageProps) {
     setHover(null);
   }, []);
 
+  const changeDifficulty = useCallback((nextDifficulty: GomokuDifficulty) => {
+    setDifficulty(nextDifficulty);
+    completedRef.current = false;
+    demoRef.current = false;
+    recordOutcome(null);
+    setGame(createGame());
+    setHover(null);
+    setCursor({ row: 7, col: 7 });
+  }, [recordOutcome]);
+
   const handleKeyDown = (event: ReactKeyboardEvent<HTMLCanvasElement>) => {
     const steps: Record<string, [number, number]> = {
       ArrowUp: [-1, 0], ArrowDown: [1, 0], ArrowLeft: [0, -1], ArrowRight: [0, 1],
@@ -473,48 +572,53 @@ export function GomokuPlayPage({ onComplete }: GomokuPlayPageProps) {
   }, [game]);
 
   const moveLabel = game.turn === 'over' ? `共 ${game.history.length} 手` : `已下 ${game.history.length} 手`;
+  const situation = useMemo(() => getSituation(game.board), [game.board]);
 
   return (
     <ContentBlock className="ck-gomoku-play" aria-label="十五路五子棋对局：你执黑，AI 执白">
       <div className="ck-gomoku-play__layout">
         <aside className="ck-gomoku-play__rail">
           <div className="ck-gomoku-play__intro">
-            <Typography as="h1" variant="h1" tone="accent">下完你的第一局</Typography>
-            <Typography variant="subtitle" tone="muted">你执黑先手，AI 执白。五子连珠即胜。</Typography>
+            <Typography as="h1" variant="h1" tone="accent">先看一小块</Typography>
+            <Typography variant="subtitle" tone="muted">别急着看整盘棋。<br />先盯住一个位置，看看它周围的几步。</Typography>
+          </div>
+          <div className="ck-gomoku-play__callout"><span className="ck-gomoku-play__callout-icon" aria-hidden="true">✦</span><div><Typography as="strong" variant="body" tone="accent">从一个小问题开始。</Typography><Typography as="p" variant="bodySmall" tone="muted">这颗棋子周围，哪一种摆法更有机会？先学会从局部找形状。这个办法之后会有一个专门的名字：卷积核。</Typography></div></div>
+
+          <div className="ck-gomoku-play__difficulty">
+            <Typography as="strong" variant="body" tone="accent">难度</Typography>
+            <div className="ck-gomoku-play__difficulty-options" role="group" aria-label="选择 AI 难度">
+              {([['easy', '简单'], ['medium', '中等'], ['hard', '困难']] as const).map(([value, label]) => <button key={value} type="button" className={difficulty === value ? 'is-active' : ''} aria-pressed={difficulty === value} onClick={() => changeDifficulty(value)}><Typography as="span" variant="body" tone="inherit">{label}</Typography></button>)}
+            </div>
+            <Typography variant="bodySmall" tone="muted">{difficulty === 'easy' ? '先只看落点附近，熟悉“局部”这件事。' : difficulty === 'medium' ? '多看一步，比较你的下一种走法。' : '多看几种可能，试着提前判断。'}</Typography>
           </div>
 
           <div className="ck-gomoku-play__actions">
-            <Button variant="primary" onClick={resetGame}><RestartIcon />重新开局</Button>
-            <Button onClick={undoMove} disabled={game.turn === 'over' || game.history.length === 0}><UndoIcon />悔一步</Button>
+            <Button variant="primary" onClick={undoMove} disabled={difficulty === 'hard' || game.turn === 'over' || game.history.length === 0}><UndoIcon />悔一步</Button>
+            <Button onClick={resetGame}><RestartIcon />重新开始</Button>
             <Button onClick={playDemo}><ExampleIcon />示例棋局</Button>
           </div>
         </aside>
 
         <div className="ck-gomoku-play__main">
           <div className="ck-gomoku-play__status" aria-live="polite">
-            <span className={`ck-gomoku-play__turn ck-gomoku-play__turn--${status.stone}`} aria-hidden="true" />
-            <Typography as="strong" variant="body" tone={status.accent ? 'accent' : 'main'}>{status.text}</Typography>
-            <Typography as="span" variant="body" tone="muted" className="ck-gomoku-play__moves">{moveLabel}</Typography>
+            <div className="ck-gomoku-play__status-player"><span className={`ck-gomoku-play__turn ck-gomoku-play__turn--${status.stone}`} aria-hidden="true" /><div><Typography as="strong" variant="body" tone={status.accent ? 'accent' : 'main'}>{status.text}</Typography><Typography as="span" variant="bodySmall" tone="muted">{game.turn === 'human' ? '先手' : game.turn === 'computer' ? 'AI 正在计算' : '本局结束'}</Typography></div></div>
+            <div className="ck-gomoku-play__status-move"><Typography as="span" variant="bodySmall" tone="muted">第</Typography><Typography as="strong" variant="h2" tone="accent">{game.history.length}</Typography><Typography as="span" variant="bodySmall" tone="muted">手</Typography></div>
+            <div className="ck-gomoku-play__status-situation">{difficulty === 'easy' && <span className={`ck-gomoku-play__lamp ck-gomoku-play__lamp--${situation.tone}`} aria-hidden="true" />}<div><Typography as="strong" variant="body" tone="accent">{difficulty === 'easy' ? situation.label : '深度搜索模式'}</Typography><Typography as="span" variant="bodySmall" tone="muted">{difficulty === 'easy' ? situation.detail : difficulty === 'medium' ? '提前一步观察反击' : '搜索更多候选步'}</Typography></div></div>
           </div>
-
-          <PlayBoard
-            board={game.board}
-            lastMove={game.lastMove}
-            winLine={game.winLine}
-            hover={hover}
-            cursor={cursor}
-            interactive={canPlay}
-            label={`十五路五子棋棋盘，${status.text}。方向键移动落点，回车落子。`}
-            onHoverCell={setHover}
-            onPickCell={playHuman}
-            onKeyDown={handleKeyDown}
-            onFocusChange={setFocused}
-          />
-
-          <div className="ck-gomoku-play__strip">
-            <Typography as="p" variant="body" tone="muted" className="ck-gomoku-play__rule">
-              黑先白后 · 连成五子即胜 · 不设禁手
-            </Typography>
+          <div className="ck-gomoku-play__board-stage">
+            <PlayBoard
+              board={game.board}
+              lastMove={game.lastMove}
+              winLine={game.winLine}
+              hover={hover}
+              cursor={cursor}
+              interactive={canPlay}
+              label={`十五路五子棋棋盘，${status.text}。方向键移动落点，回车落子。`}
+              onHoverCell={setHover}
+              onPickCell={playHuman}
+              onKeyDown={handleKeyDown}
+              onFocusChange={setFocused}
+            />
           </div>
         </div>
       </div>

@@ -6,6 +6,7 @@ export const WHITE = 2;
 export type Stone = typeof EMPTY | typeof BLACK | typeof WHITE;
 export type Player = typeof BLACK | typeof WHITE;
 export type Board = Stone[][];
+export type GomokuDifficulty = 'easy' | 'medium' | 'hard';
 
 export interface Cell {
   row: number;
@@ -228,10 +229,9 @@ interface ScoredCell extends Cell {
   defendKeys: PatternKey[];
 }
 
-/** 本地模式评分：同时评估进攻价值与封堵价值，不做全局搜索。 */
-export function computeComputerMove(board: Board, history: Move[]): Cell {
+function scoreCandidates(board: Board, history: Move[], includeRandomness: boolean): ScoredCell[] {
   const center = (BOARD_SIZE - 1) / 2;
-  const scored: ScoredCell[] = candidateMoves(board, history).map((move) => {
+  return candidateMoves(board, history).map((move) => {
     const attack = evaluateMove(board, move.row, move.col, WHITE);
     const defend = evaluateMove(board, move.row, move.col, BLACK);
     const centerScore = Math.max(0, 13 - Math.hypot(move.row - center, move.col - center)) * 18;
@@ -247,11 +247,60 @@ export function computeComputerMove(board: Board, history: Move[]): Cell {
       if (defend.keys.filter((key) => key === 'openThree').length >= 2) score += 24000;
       if (attack.keys.filter((key) => key === 'openThree').length >= 2) score += 20000;
     }
-    return { ...move, score: score + Math.random() * 70, attackKeys: attack.keys, defendKeys: defend.keys };
+    return { ...move, score: score + (includeRandomness ? Math.random() * 70 : 0), attackKeys: attack.keys, defendKeys: defend.keys };
   }).sort((a, b) => b.score - a.score);
+}
+
+function boardHeuristic(board: Board): number {
+  let score = 0;
+  for (let row = 0; row < BOARD_SIZE; row += 1) {
+    for (let col = 0; col < BOARD_SIZE; col += 1) {
+      if (board[row][col] !== EMPTY) continue;
+      score += evaluateMove(board, row, col, WHITE).score * 1.08;
+      score -= evaluateMove(board, row, col, BLACK).score * 1.04;
+    }
+  }
+  return score;
+}
+
+function searchReply(board: Board, history: Move[], depth: number): number {
+  if (depth <= 0) return boardHeuristic(board);
+  const replies = scoreCandidates(board, history, false).slice(0, 10);
+  if (!replies.length) return boardHeuristic(board);
+  let best = Number.POSITIVE_INFINITY;
+  for (const reply of replies) {
+    const placed = placeStone(board, reply, BLACK);
+    if (placed.winLine.length >= 5) return -520000;
+    const nextHistory: Move[] = [...history, { row: reply.row, col: reply.col, player: BLACK }];
+    const followUps = depth > 1 ? scoreCandidates(placed.board, nextHistory, false).slice(0, 5) : [];
+    const replyValue = followUps.length
+      ? Math.max(...followUps.map((followUp) => {
+        const next = placeStone(placed.board, followUp, WHITE);
+        return next.winLine.length >= 5 ? 520000 : followUp.score;
+      }))
+      : boardHeuristic(placed.board);
+    best = Math.min(best, replyValue);
+  }
+  return best;
+}
+
+/** 用模式评分模拟不同难度：简单看当前局面，中等预判一次，困难会先看对手的反击。 */
+export function computeComputerMove(board: Board, history: Move[], difficulty: GomokuDifficulty = 'easy'): Cell {
+  const center = Math.floor(BOARD_SIZE / 2);
+  const scored = scoreCandidates(board, history, difficulty === 'easy');
 
   const top = scored[0];
   if (!top) return { row: center, col: center };
+  if (difficulty !== 'easy') {
+    const depth = difficulty === 'hard' ? 2 : 1;
+    const lookahead = scored.slice(0, difficulty === 'hard' ? 14 : 10).map((move) => {
+      const placed = placeStone(board, move, WHITE);
+      if (placed.winLine.length >= 5) return { move, score: 520000 + move.score };
+      const nextHistory: Move[] = [...history, { row: move.row, col: move.col, player: WHITE }];
+      return { move, score: move.score + searchReply(placed.board, nextHistory, depth) * 0.05 };
+    }).sort((a, b) => b.score - a.score);
+    return lookahead[0]?.move ?? top;
+  }
   const forced = top.attackKeys.includes('win') || top.defendKeys.includes('win') || top.score > 260000;
   const pool = forced ? [top] : scored.filter((item, index) => index < 3 && item.score >= top.score * 0.88);
   const picked = pool[Math.floor(Math.random() * pool.length)] ?? top;

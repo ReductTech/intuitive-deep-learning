@@ -89,8 +89,13 @@
 .course-shell .ck-window-scan__cell--minus { background: var(--ui-accent); color: #fff; }
 
 /* 橙框 = 算子上那 5 个 1 盯着的位置；压到棋子就被绿色盖掉。 */
-.course-shell .ck-window-scan__cell--eye { box-shadow: inset 0 0 0 2px rgba(240, 126, 71, .92); }
+.course-shell .ck-window-scan__cell--eye { box-shadow: none; }
 .course-shell .ck-window-scan__cell--hit { background: var(--ui-success); color: #fff; box-shadow: none; }
+.course-shell .ck-window-scan__cell:not(.ck-window-scan__cell--one):not(.ck-window-scan__cell--minus) { background: #d5deec; }
+.course-shell .ck-window-scan__cell--mask-zero { background: transparent !important; color: transparent; }
+.course-shell .ck-window-scan__cell--mask-zero .ui-typography { display: none; }
+.course-shell .ck-window-scan__cell--eye:not(.ck-window-scan__cell--one):not(.ck-window-scan__cell--minus) { background: transparent !important; }
+.course-shell .ck-window-scan__cell--eye { box-shadow: inset 0 0 0 2px var(--ui-accent-alt); }
 
 /* 橙色小框与把手只做标记，指针事件穿过去落在格子上，拖起来才跟手。 */
 .course-shell .ck-window-scan__window {
@@ -98,7 +103,7 @@
   box-sizing: border-box;
   border: 3px solid var(--ui-accent-alt);
   border-radius: 8px;
-  background: rgba(240, 126, 71, .12);
+  background: transparent;
   pointer-events: none;
 }
 
@@ -184,6 +189,11 @@
   min-width: 0;
 }
 
+.course-shell .ck-window-scan__operator { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: #edf3fb; color: var(--ui-accent); }
+.course-shell .ck-window-scan__operator.is-unknown { color: var(--ui-accent-alt); animation: ck-window-operator-sway 1.8s ease-in-out infinite; }
+.course-shell .ck-window-scan__operator.is-ready { background: #e8f1ff; }
+@keyframes ck-window-operator-sway { 0%, 100% { transform: rotate(-8deg) translateX(-2px); } 50% { transform: rotate(8deg) translateX(2px); } }
+
 /*
  * 方块由每个格子自己撑成正方形，容器不再靠 aspect-ratio 定高。
  * 这样行高只会被格子本身决定，不会出现算出来不够高、数字被切掉的情况。
@@ -214,7 +224,7 @@
 
 .course-shell .ck-window-scan__grid-cell--one { background: var(--ui-accent-alt); color: #fff; }
 .course-shell .ck-window-scan__grid-cell--minus { background: var(--ui-accent); color: #fff; }
-.course-shell .ck-window-scan__grid-cell--eye { box-shadow: inset 0 0 0 2px rgba(240, 126, 71, .92); }
+.course-shell .ck-window-scan__grid-cell--eye { box-shadow: none; }
 .course-shell .ck-window-scan__grid-cell--hit { background: var(--ui-success); color: #fff; box-shadow: none; }
 
 .course-shell .ck-window-scan__result {
@@ -234,28 +244,13 @@
   min-width: 0;
 }
 
-/* 悬浮面板往左上开，别顶出画布下沿。 */
-
-.course-shell .ck-window-scan__result .explain-panel {
-  top: auto;
-  bottom: calc(100% + 14px);
-  left: auto;
-  right: -12px;
-  width: min(560px, calc(100vw - 60px));
-  max-width: none;
-  transform: none;
-}
-
-.course-shell .ck-window-scan__result .explain-panel::before {
-  top: auto;
-  bottom: -6px;
-  left: auto;
-  right: 24px;
-  border-top: 0;
-  border-left: 0;
-  border-bottom: 1px solid var(--ui-border);
-  border-right: 1px solid var(--ui-border);
-}
+.course-shell .ck-window-scan__match-meter { display: flex; align-items: end; gap: 6px; min-height: 46px; }
+.course-shell .ck-window-scan__match-meter span { display: grid; place-items: center; width: 34px; height: 18px; border-radius: 4px; background: #e6ecf5; color: #8290a5; font-size: 12px; transition: height 120ms ease, background 120ms ease; }
+.course-shell .ck-window-scan__match-meter span:nth-child(2) { height: 24px; }
+.course-shell .ck-window-scan__match-meter span:nth-child(3) { height: 30px; }
+.course-shell .ck-window-scan__match-meter span:nth-child(4) { height: 36px; }
+.course-shell .ck-window-scan__match-meter span:nth-child(5) { height: 42px; }
+.course-shell .ck-window-scan__match-meter span.is-filled { background: var(--ui-accent-alt); color: #fff; }
 
 .course-shell .ck-window-scan__multiply {
   display: grid;
@@ -281,6 +276,27 @@
   background: rgba(240, 126, 71, .07);
 }
 
+.course-shell .ck-window-scan__multiply-cell > .ui-typography {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  text-align: center;
+}
+
+.course-shell .ck-window-scan__sum-line {
+  display: flex;
+  justify-content: center;
+  min-width: 0;
+  margin-top: 8px;
+  border-top: 1px solid var(--ui-border);
+  padding-top: 8px;
+}
+
+.course-shell .ck-window-scan__sum-line .math-formula-static {
+  max-width: 100%;
+  color: var(--ui-accent-alt);
+  font-size: 16px;
+}
+
 .course-shell .ck-window-scan__readout {
   display: grid;
   place-items: center;
@@ -296,6 +312,24 @@
   border-color: rgba(34, 141, 92, .34);
   background: rgba(34, 141, 92, .07);
 }
+
+.course-shell .ck-window-scan__result-card {
+  align-content: start;
+  justify-items: stretch;
+  gap: 12px;
+  border: 1px solid var(--ui-border);
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 10px 24px rgba(39,68,110,.08);
+  padding: 18px 20px;
+  text-align: left;
+}
+.course-shell .ck-window-scan__result-card h3 { margin: 0; }
+.course-shell .ck-window-scan__score-row { display: grid; grid-template-columns: auto auto auto minmax(0, 1fr); align-items: center; gap: 10px; min-width: 0; }
+.course-shell .ck-window-scan__score-row strong { font-size: 44px; line-height: 1; }
+.course-shell .ck-window-scan__progress { height: 14px; overflow: hidden; border-radius: 999px; background: #e8edf5; }
+.course-shell .ck-window-scan__progress span { display: block; height: 100%; border-radius: inherit; background: var(--ui-accent-alt); transition: width .2s ease; }
+.course-shell .ck-window-scan__result-tip { margin-top: 2px; }
 
 /* 1600 × 900 固定画布：Blog / Guide 与 SceneDeck 共用同一套构图。 */
 
@@ -314,9 +348,415 @@
     border-left: 0;
     padding-left: 0;
   }
-  .course-shell .ck-window-scan__result .explain-panel {
-    right: auto;
-    left: 0;
-    width: min(560px, calc(100vw - 60px));
+}
+
+/* Slide fit and visual rhythm overrides. */
+.course-shell .ck-window-scan { gap: 12px; min-height: 0; padding: 20px 30px 18px; }
+.course-shell .ck-window-scan__layout { grid-template-columns: minmax(0, 53%) minmax(0, 47%); gap: 22px; }
+.course-shell .ck-window-scan__panel { align-content: start; gap: 12px; padding: 18px 0 0 24px; }
+.course-shell .ck-window-scan__readout { padding: 10px 14px; }
+.course-shell .ck-window-scan__readout .ui-typography { line-height: 1.35; }
+.course-shell .ck-window-scan__compare { column-gap: 10px; row-gap: 8px; }
+.course-shell .ck-window-scan__result-card { padding: 14px 16px; }
+.course-page-surface .ck-window-scan { padding: 20px 30px 18px; }
+
+/* 第 03 页的阅读顺序：棋盘窗口 → 输入与卷积核 → 激活值。 */
+.course-shell .ck-window-scan__layout {
+  grid-template-columns: minmax(0, 47%) minmax(0, 53%);
+  gap: 30px;
+}
+
+.course-shell .ck-window-scan__panel {
+  align-content: center;
+  gap: 20px;
+  border-left: 1px solid rgba(39, 68, 110, .15);
+  padding: 4px 0 4px 30px;
+}
+
+.course-shell .ck-window-scan__board {
+  border-color: rgba(39, 68, 110, .14);
+  background: #edf2f8;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .72), 0 12px 24px rgba(33, 50, 74, .08);
+}
+
+.course-shell .ck-window-scan__cell:not(.ck-window-scan__cell--one):not(.ck-window-scan__cell--minus) {
+  background: rgba(255, 255, 255, .22);
+}
+
+.course-shell .ck-window-scan__cell--eye:not(.ck-window-scan__cell--one):not(.ck-window-scan__cell--minus) {
+  background: rgba(240, 126, 71, .10) !important;
+}
+
+.course-shell .ck-window-scan__compare {
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  column-gap: clamp(14px, 2vw, 28px);
+  row-gap: 0;
+  align-items: center;
+}
+
+.course-shell .ck-window-scan__operand {
+  display: grid;
+  width: min(100%, 246px);
+  min-width: 0;
+  justify-items: center;
+  gap: 9px;
+  border: 1px solid rgba(39, 68, 110, .16);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, .72);
+  padding: 12px;
+  box-shadow: 0 8px 18px rgba(33, 50, 74, .06);
+}
+
+.course-shell .ck-window-scan__operand > .ui-typography {
+  color: var(--ui-accent);
+  font-weight: 750;
+}
+
+.course-shell .ck-window-scan__operand > .ck-window-scan__grid {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.course-shell .ck-window-scan__operator {
+  align-self: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(39, 68, 110, .16);
+  background: #f4f7fc;
+}
+
+.course-shell .ck-window-scan__operator.is-unknown { animation: none; color: var(--ui-accent); }
+.course-shell .ck-window-scan__operator.is-ready { background: #f4f7fc; }
+
+.course-shell .ck-window-scan__activation-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.course-shell .ck-window-scan__activation-label > .ui-typography { white-space: nowrap; }
+.course-shell .ck-window-scan__activation-label .explain-panel-wrap { flex: 0 0 auto; }
+
+.course-shell .ck-window-scan__result-card {
+  align-content: start;
+  gap: 10px;
+  border: 0;
+  border-top: 1px solid rgba(39, 68, 110, .16);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 18px 0 0;
+}
+
+.course-shell .ck-window-scan__result-heading {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  min-width: 0;
+}
+
+.course-shell .ck-window-scan__result-heading .math-formula-static {
+  color: var(--ui-accent);
+  font-family: var(--ui-font-mono);
+  font-size: var(--ui-type-body-size);
+  font-weight: 700;
+}
+
+.course-shell .ck-window-scan__score-row {
+  grid-template-columns: auto auto minmax(0, 1fr);
+  gap: 14px;
+}
+
+.course-shell .ck-window-scan__score-row strong {
+  font-size: 52px;
+}
+
+.course-shell .ck-window-scan__progress {
+  height: 12px;
+  border-radius: 6px;
+  background: #e5ebf3;
+}
+
+.course-shell .ck-window-scan__progress span {
+  background: var(--ui-success);
+}
+
+.course-shell .ck-window-scan__result-caption {
+  max-width: 100%;
+}
+
+.course-shell .ck-window-scan__result-tip {
+  margin-top: 2px;
+}
+
+@media (max-width: 820px) {
+  .course-shell .ck-window-scan__panel { border-left: 0; padding: 0; }
+}
+
+@media (max-width: 560px) {
+  .course-shell .ck-window-scan__compare {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
   }
+
+  .course-shell .ck-window-scan__operand {
+    width: min(100%, 280px);
+  }
+
+  .course-shell .ck-window-scan__operator {
+    transform: rotate(90deg);
+  }
+}
+
+/* Reference composition: a framed board beside two quiet teaching panels. */
+.course-shell .ck-window-scan {
+  gap: 14px;
+  padding: 18px 28px 22px;
+}
+
+.course-shell .ck-window-scan__layout {
+  grid-template-columns: minmax(0, 1fr) minmax(0, .98fr);
+  gap: 28px;
+}
+
+.course-shell .ck-window-scan__board-slot {
+  position: relative;
+  align-content: stretch;
+  justify-items: center;
+  gap: 14px;
+  border: 1px solid rgba(39, 68, 110, .12);
+  border-radius: 22px;
+  background: rgba(247, 250, 255, .9);
+  box-shadow: 0 12px 30px rgba(39, 68, 110, .08);
+  padding: 24px 22px 18px;
+}
+
+.course-shell .ck-window-scan__board {
+  width: min(100%, 650px);
+  height: auto;
+  align-self: center;
+  border-color: rgba(39, 68, 110, .1);
+  border-radius: 12px;
+  background: #dbe4f2;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .7), 0 8px 18px rgba(39, 68, 110, .08);
+}
+
+.course-shell .ck-window-scan__window-label {
+  position: absolute;
+  top: 34px;
+  left: 50%;
+  z-index: 5;
+  border-radius: 999px;
+  background: var(--ui-accent-alt);
+  color: #fff;
+  padding: 7px 20px;
+  font-weight: 800;
+  transform: translateX(-50%);
+  box-shadow: 0 5px 12px rgba(240, 126, 71, .22);
+}
+
+.course-shell .ck-window-scan__key {
+  width: 100%;
+  justify-content: space-around;
+  gap: 10px 22px;
+}
+
+.course-shell .ck-window-scan__panel {
+  box-sizing: border-box;
+  height: 100%;
+  align-content: stretch;
+  grid-template-rows: minmax(0, 1.18fr) minmax(0, .72fr) auto;
+  gap: 22px;
+  border: 1px solid rgba(39, 68, 110, .12);
+  border-radius: 22px;
+  background: rgba(247, 250, 255, .72);
+  box-shadow: 0 12px 30px rgba(39, 68, 110, .06);
+  padding: 20px;
+}
+
+.course-shell .ck-window-scan__compare {
+  grid-template-columns: minmax(0, 1fr) minmax(78px, .32fr) minmax(0, 1fr);
+  gap: 18px;
+  min-height: 0;
+  border: 1px solid rgba(39, 68, 110, .12);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, .95);
+  box-shadow: 0 12px 30px rgba(39, 68, 110, .08);
+  padding: 18px 24px 18px;
+}
+
+.course-shell .ck-window-scan__operand {
+  width: 100%;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+
+.course-shell .ck-window-scan__operand-heading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-width: 0;
+  margin-bottom: 2px;
+}
+
+.course-shell .ck-window-scan__operand-heading > div {
+  display: grid;
+  gap: 1px;
+  min-width: 0;
+}
+
+.course-shell .ck-window-scan__operand-heading .ui-typography {
+  white-space: nowrap;
+}
+
+.course-shell .ck-window-scan__operand-icon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 12px;
+  background: #e7efff;
+  color: #5b8de8;
+  font-size: 25px;
+  font-weight: 900;
+}
+
+.course-shell .ck-window-scan__operand > .ck-window-scan__grid {
+  width: min(100%, 236px);
+  border-radius: 8px;
+}
+
+.course-shell .ck-window-scan__operator-wrap {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.course-shell .ck-window-scan__operator {
+  width: 60px;
+  height: 60px;
+  border: 2px solid #b9d1fb;
+  border-radius: 50%;
+  background: #eaf2ff;
+  color: #173b7a;
+  font-size: 32px;
+  box-shadow: 0 5px 12px rgba(91, 141, 232, .12);
+}
+
+.course-shell .ck-window-scan__operator-note {
+  text-align: center;
+  white-space: nowrap;
+}
+
+.course-shell .ck-window-scan__result-card {
+  min-height: 0;
+  gap: 16px;
+  border: 1px solid rgba(39, 68, 110, .12);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, .95);
+  box-shadow: 0 12px 30px rgba(39, 68, 110, .08);
+  padding: 18px 18px 16px;
+}
+
+.course-shell .ck-window-scan__result-heading {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  min-width: 0;
+  padding-bottom: 2px;
+}
+
+.course-shell .ck-window-scan__result-heading .ui-typography {
+  color: var(--ui-accent);
+  font-weight: 800;
+}
+
+.course-shell .ck-window-scan__score-row {
+  grid-template-columns: minmax(0, 1fr) minmax(0, .96fr);
+  gap: 20px;
+  min-height: 0;
+  align-items: stretch;
+  padding: 0;
+}
+
+.course-shell .ck-window-scan__activation-box {
+  display: flex;
+  min-width: 0;
+  min-height: 92px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  border-radius: 16px;
+  background: #edf4ff;
+  padding: 16px 20px;
+}
+
+.course-shell .ck-window-scan__activation-label {
+  gap: 10px;
+}
+
+.course-shell .ck-window-scan__activation-label > .ui-typography {
+  color: var(--ui-accent);
+  font-weight: 800;
+}
+
+.course-shell .ck-window-scan__score-row > .ui-typography {
+  color: var(--ui-accent);
+  font-size: 54px;
+  font-weight: 900;
+}
+
+.course-shell .ck-window-scan__result-caption {
+  display: grid;
+  align-content: center;
+  min-width: 0;
+  min-height: 92px;
+  border-radius: 14px;
+  background: #fff7e9;
+  color: var(--ui-accent);
+  padding: 13px 16px;
+}
+
+.course-shell .ck-window-scan__instruction {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 16px;
+  border: 1px solid #c8dcfa;
+  border-radius: 16px;
+  background: #f6faff;
+  color: var(--ui-accent);
+  padding: 12px 22px;
+}
+
+.course-shell .ck-window-scan__instruction-icon {
+  display: grid;
+  width: 46px;
+  height: 46px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+  background: #e6efff;
+}
+
+@media (max-width: 820px) {
+  .course-shell .ck-window-scan__layout { grid-template-columns: minmax(0, 1fr); }
+  .course-shell .ck-window-scan__board-slot { min-height: 520px; }
+  .course-shell .ck-window-scan__compare { grid-template-columns: minmax(0, 1fr) minmax(64px, .28fr) minmax(0, 1fr); }
+}
+
+@media (max-width: 560px) {
+  .course-shell .ck-window-scan__compare { grid-template-columns: minmax(0, 1fr); }
+  .course-shell .ck-window-scan__operator-wrap { order: 2; }
+  .course-shell .ck-window-scan__operator { transform: none; }
+  .course-shell .ck-window-scan__operand:last-child { order: 3; }
+  .course-shell .ck-window-scan__score-row { grid-template-columns: minmax(0, 1fr); }
 }

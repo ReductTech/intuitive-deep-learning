@@ -9,7 +9,7 @@ import {
   type Board,
   type Cell,
   type Stone,
-} from './model/gomokuEngine';
+} from './gomokuEngine';
 
 /** 一局棋的终局快照：解释判胜与 0/1 矩阵都基于这一盘棋继续讲。 */
 export interface GomokuOutcome {

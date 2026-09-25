@@ -1,12 +1,11 @@
 import type { ReactNode } from 'react';
 import type { LessonFlowRevealMode, LessonStepContext } from '../shared/react';
-import { GomokuExplainPage } from './pages/GomokuExplainPage/GomokuExplainPage';
 import { GomokuPlayPage } from './pages/GomokuPlayPage/GomokuPlayPage';
 import { BoardAsNumbersPage } from './pages/BoardAsNumbersPage/BoardAsNumbersPage';
 import { WindowScanPage } from './pages/WindowScanPage/WindowScanPage';
 import { KernelDesignPage } from './pages/KernelDesignPage/KernelDesignPage';
-import { SweepAndNamePage } from './pages/SweepAndNamePage/SweepAndNamePage';
-import { LocalPatternPage } from './pages/LocalPatternPage/LocalPatternPage';
+import { KernelBasicsPage } from './pages/KernelBasicsPage/KernelBasicsPage';
+import { CorrelationConvolutionPage } from './pages/CorrelationConvolutionPage/CorrelationConvolutionPage';
 
 export interface ConvolutionCourseItem {
   id: string;
@@ -15,12 +14,10 @@ export interface ConvolutionCourseItem {
   revealMode: LessonFlowRevealMode;
   component: (context: LessonStepContext) => ReactNode;
   advanceLabel?: string;
-  /** 可选的分形态可见性；省略表示两种形态都显示。 */
   showInBlog?: boolean;
   showInPpt?: boolean;
 }
 
-/** 课程页序与 outlines.json 的 pages 顺序一致。 */
 export const convolutionCourse: ConvolutionCourseItem[] = [
   {
     id: 'gomoku-play',
@@ -37,13 +34,6 @@ export const convolutionCourse: ConvolutionCourseItem[] = [
     component: (context) => <BoardAsNumbersPage onComplete={context.complete} />,
   },
   {
-    id: 'gomoku-explain',
-    title: '计算机是怎么“看”出输赢的？',
-    section: '从一局五子棋开始',
-    revealMode: 'cue',
-    component: (context) => <GomokuExplainPage onComplete={context.complete} />,
-  },
-  {
     id: 'window-scan',
     title: '拖着窗口，找出激活值最大的地方',
     section: '从一局五子棋开始',
@@ -52,24 +42,23 @@ export const convolutionCourse: ConvolutionCourseItem[] = [
   },
   {
     id: 'kernel-design',
-    title: '棋盘转了向，重新排一个算子',
+    title: '棋盘转了向，重新排一个卷积核',
     section: '从一局五子棋开始',
     revealMode: 'cue',
     component: (context) => <KernelDesignPage onComplete={context.complete} />,
   },
   {
-    id: 'sweep-and-name',
-    title: '把窗口滑遍全图：这就是卷积',
-    section: '从一局五子棋开始',
+    id: 'kernel-basics',
+    title: '卷积核：从输入到输出',
+    section: '认识卷积核',
     revealMode: 'cue',
-    component: (context) => <SweepAndNamePage onComplete={context.complete} />,
+    component: (context) => <KernelBasicsPage onComplete={context.complete} />,
   },
   {
-    id: 'local-pattern',
-    title: '同一块输入，不同卷积核会看到不同模式',
-    section: '模板滑一遍',
+    id: 'correlation-convolution',
+    title: '互相关与卷积',
+    section: '认识卷积核',
     revealMode: 'cue',
-    component: (context) => <LocalPatternPage onComplete={context.complete} />,
+    component: (context) => <CorrelationConvolutionPage onComplete={context.complete} />,
   },
 ];
-

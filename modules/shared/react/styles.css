@@ -135,7 +135,7 @@ button, input, textarea, select { font: inherit; }
 
 .math-formula-block { width: min(100%, 980px); min-height: 132px; padding: clamp(20px, 3vw, 30px) clamp(16px, 3vw, 28px); }
 .math-formula { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0; color: var(--ui-accent); font-family: var(--ui-font-mono); font-size: var(--ui-type-formula-size); font-weight: var(--ui-type-formula-weight); line-height: var(--ui-type-formula-line-height); text-align: center; }
-.math-formula math-field { display: inline-flex; width: auto; min-width: 0; border: 0; border-radius: 0; outline: 0; background: transparent; color: currentColor; padding: 0; font: inherit; line-height: inherit; pointer-events: none; --caret-color: transparent; --selection-background-color: transparent; --contains-highlight-background-color: transparent; }
+.math-formula math-field, .math-formula-static math-field, .math-formula-term math-field { display: inline-flex; width: auto; min-width: 0; border: 0 !important; border-radius: 0; outline: 0; background: transparent; box-shadow: none; color: currentColor; padding: 0; font: inherit; line-height: inherit; pointer-events: none; --caret-color: transparent; --selection-background-color: transparent; --contains-highlight-background-color: transparent; }
 .math-formula-static, .math-formula-term { display: inline-flex; flex: 0 0 auto; align-items: center; color: inherit; }
 .math-formula-term { position: relative; cursor: help; outline: none; }
 .math-formula-term--warm { color: var(--ui-accent-alt); }
