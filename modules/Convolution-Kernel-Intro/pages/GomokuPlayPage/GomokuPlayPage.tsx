@@ -579,24 +579,11 @@ export function GomokuPlayPage({ onComplete }: GomokuPlayPageProps) {
       <div className="ck-gomoku-play__layout">
         <aside className="ck-gomoku-play__rail">
           <div className="ck-gomoku-play__intro">
-            <Typography as="h1" variant="h1" tone="accent">先看一小块</Typography>
-            <Typography variant="subtitle" tone="muted">别急着看整盘棋。<br />先盯住一个位置，看看它周围的几步。</Typography>
+            <Typography as="h1" variant="h1" tone="accent">先看局部</Typography>
+            <Typography variant="subtitle" tone="muted">卷积核要学的第一件事，<br />是从一小块区域读出形状。</Typography>
           </div>
-          <div className="ck-gomoku-play__callout"><span className="ck-gomoku-play__callout-icon" aria-hidden="true">✦</span><div><Typography as="strong" variant="body" tone="accent">从一个小问题开始。</Typography><Typography as="p" variant="bodySmall" tone="muted">这颗棋子周围，哪一种摆法更有机会？先学会从局部找形状。这个办法之后会有一个专门的名字：卷积核。</Typography></div></div>
+          <div className="ck-gomoku-play__callout"><span className="ck-gomoku-play__callout-icon" aria-hidden="true">✦</span><div><Typography as="strong" variant="body" tone="accent">从一个位置开始。</Typography><Typography as="p" variant="bodySmall" tone="muted">观察落点周围的几步：哪些棋子彼此呼应？哪些形状值得继续追踪？稍后，我们会把这种局部观察写成一个“卷积核”。</Typography></div></div>
 
-          <div className="ck-gomoku-play__difficulty">
-            <Typography as="strong" variant="body" tone="accent">难度</Typography>
-            <div className="ck-gomoku-play__difficulty-options" role="group" aria-label="选择 AI 难度">
-              {([['easy', '简单'], ['medium', '中等'], ['hard', '困难']] as const).map(([value, label]) => <button key={value} type="button" className={difficulty === value ? 'is-active' : ''} aria-pressed={difficulty === value} onClick={() => changeDifficulty(value)}><Typography as="span" variant="body" tone="inherit">{label}</Typography></button>)}
-            </div>
-            <Typography variant="bodySmall" tone="muted">{difficulty === 'easy' ? '先只看落点附近，熟悉“局部”这件事。' : difficulty === 'medium' ? '多看一步，比较你的下一种走法。' : '多看几种可能，试着提前判断。'}</Typography>
-          </div>
-
-          <div className="ck-gomoku-play__actions">
-            <Button variant="primary" onClick={undoMove} disabled={difficulty === 'hard' || game.turn === 'over' || game.history.length === 0}><UndoIcon />悔一步</Button>
-            <Button onClick={resetGame}><RestartIcon />重新开始</Button>
-            <Button onClick={playDemo}><ExampleIcon />示例棋局</Button>
-          </div>
         </aside>
 
         <div className="ck-gomoku-play__main">
@@ -604,6 +591,20 @@ export function GomokuPlayPage({ onComplete }: GomokuPlayPageProps) {
             <div className="ck-gomoku-play__status-player"><span className={`ck-gomoku-play__turn ck-gomoku-play__turn--${status.stone}`} aria-hidden="true" /><div><Typography as="strong" variant="body" tone={status.accent ? 'accent' : 'main'}>{status.text}</Typography><Typography as="span" variant="bodySmall" tone="muted">{game.turn === 'human' ? '先手' : game.turn === 'computer' ? 'AI 正在计算' : '本局结束'}</Typography></div></div>
             <div className="ck-gomoku-play__status-move"><Typography as="span" variant="bodySmall" tone="muted">第</Typography><Typography as="strong" variant="h2" tone="accent">{game.history.length}</Typography><Typography as="span" variant="bodySmall" tone="muted">手</Typography></div>
             <div className="ck-gomoku-play__status-situation">{difficulty === 'easy' && <span className={`ck-gomoku-play__lamp ck-gomoku-play__lamp--${situation.tone}`} aria-hidden="true" />}<div><Typography as="strong" variant="body" tone="accent">{difficulty === 'easy' ? situation.label : '深度搜索模式'}</Typography><Typography as="span" variant="bodySmall" tone="muted">{difficulty === 'easy' ? situation.detail : difficulty === 'medium' ? '提前一步观察反击' : '搜索更多候选步'}</Typography></div></div>
+            <div className="ck-gomoku-play__controls">
+              <div className="ck-gomoku-play__difficulty">
+                <div className="ck-gomoku-play__control-heading"><Typography as="strong" variant="body" tone="accent">观察范围</Typography><Typography as="span" variant="bodySmall" tone="muted">选择 AI 会看多远</Typography></div>
+                <div className="ck-gomoku-play__difficulty-options" role="group" aria-label="选择 AI 难度">
+                  {([['easy', '简单'], ['medium', '中等'], ['hard', '困难']] as const).map(([value, label]) => <button key={value} type="button" className={difficulty === value ? 'is-active' : ''} aria-pressed={difficulty === value} onClick={() => changeDifficulty(value)}><Typography as="span" variant="body" tone="inherit">{label}</Typography></button>)}
+                </div>
+                <Typography variant="bodySmall" tone="muted">{difficulty === 'easy' ? '只看附近，先练习发现局部形状。' : difficulty === 'medium' ? '多看一步，比较下一种可能。' : '搜索更多分支，提前判断走向。'}</Typography>
+              </div>
+              <div className="ck-gomoku-play__actions">
+                <Button variant="primary" onClick={undoMove} disabled={difficulty === 'hard' || game.turn === 'over' || game.history.length === 0}><UndoIcon />悔一步</Button>
+                <Button onClick={resetGame}><RestartIcon />重新开始</Button>
+                <Button onClick={playDemo}><ExampleIcon />示例棋局</Button>
+              </div>
+            </div>
           </div>
           <div className="ck-gomoku-play__board-stage">
             <PlayBoard

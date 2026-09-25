@@ -64,14 +64,14 @@
   grid-template-rows: auto minmax(0, 1fr) auto;
   align-items: center;
   justify-items: center;
-  gap: 6px;
+  gap: 5px;
   min-width: 0;
   min-height: 0;
   overflow: hidden;
   border: 1px solid #d2e2f6;
   border-radius: 10px;
-  background: #fbfdff;
-  padding: 8px 10px 8px;
+  background: #fcfdff;
+  padding: 9px 10px 8px;
   text-align: center;
 }
 .course-shell .ck-diff-kernel__card > h3 { margin: 0; }
@@ -80,17 +80,21 @@
   width: 100%;
   min-width: 0;
   min-height: 0;
+  align-content: center;
   place-items: center;
 }
 .course-shell .ck-diff-kernel__card-note {
   max-width: 100%;
-  min-height: 20px;
+  min-height: 22px;
+  align-self: end;
+  line-height: 1.35;
   text-align: center;
 }
 .course-shell .ck-diff-kernel__operator {
   display: grid;
   min-width: 0;
   place-items: center;
+  line-height: 1;
   font-weight: 800;
 }
 .course-shell .ck-diff-kernel__matrix {

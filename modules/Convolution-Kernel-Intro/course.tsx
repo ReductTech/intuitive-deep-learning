@@ -23,6 +23,7 @@ import { RgbConvolutionPage } from './pages/RgbConvolutionPage/RgbConvolutionPag
 import { MultiKernelPage } from './pages/MultiKernelPage/MultiKernelPage';
 import { ReceptiveFieldPage } from './pages/ReceptiveFieldPage/ReceptiveFieldPage';
 import { DilatedConvolutionPage } from './pages/DilatedConvolutionPage/DilatedConvolutionPage';
+import { DeformableConvolutionPage } from './pages/DeformableConvolutionPage/DeformableConvolutionPage';
 
 export interface ConvolutionCourseItem {
   id: string;
@@ -196,5 +197,12 @@ export const convolutionCourse: ConvolutionCourseItem[] = [
     section: '卷积扩展',
     revealMode: 'scroll',
     component: () => <DilatedConvolutionPage />,
+  },
+  {
+    id: 'deformable-convolution',
+    title: '可变形卷积：让采样位置适应局部结构',
+    section: '卷积扩展',
+    revealMode: 'scroll',
+    component: () => <DeformableConvolutionPage />,
   },
 ];
