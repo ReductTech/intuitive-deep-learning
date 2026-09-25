@@ -20,6 +20,7 @@ import { StridePage } from './pages/StridePage/StridePage';
 import { PaddingPage } from './pages/PaddingPage/PaddingPage';
 import { OutputSizeChallengePage } from './pages/OutputSizeChallengePage/OutputSizeChallengePage';
 import { RgbConvolutionPage } from './pages/RgbConvolutionPage/RgbConvolutionPage';
+import { MultiKernelPage } from './pages/MultiKernelPage/MultiKernelPage';
 import { ReceptiveFieldPage } from './pages/ReceptiveFieldPage/ReceptiveFieldPage';
 import { DilatedConvolutionPage } from './pages/DilatedConvolutionPage/DilatedConvolutionPage';
 
@@ -181,6 +182,13 @@ export const convolutionCourse: ConvolutionCourseItem[] = [
     section: '多通道卷积',
     revealMode: 'scroll',
     component: () => <RgbConvolutionPage />,
+  },
+  {
+    id: 'multi-kernel',
+    title: '多核卷积：一个卷积核，产生一个输出通道',
+    section: '多通道卷积',
+    revealMode: 'scroll',
+    component: () => <MultiKernelPage />,
   },
   {
     id: 'dilated-convolution',

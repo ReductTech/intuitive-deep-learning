@@ -40,10 +40,10 @@ export function DifferenceKernelPage() {
             <Typography as="h2" variant="h3" tone="accent">Sobel：把一维差分扩展成方向核</Typography>
           </header>
           <div className="ck-diff-kernel__cards">
-            <Card title="基础差分" note="比较左右像素的变化"><Matrix values={[[-1, 0, 1]]} label="一维左右差分核" row /></Card>
+            <Card title="基础差分" note="比较左右变化"><Matrix values={[[-1, 0, 1]]} label="一维左右差分核" row /></Card>
             <Typography as="span" variant="h1" tone="accent" className="ck-diff-kernel__operator">→</Typography>
-            <Card title="Sobel X" note="检测竖直边缘；中心行乘 2"><Matrix values={SOBEL_X} label="Sobel X：检测竖直边缘" /></Card>
-            <Card title="Sobel Y" note="检测水平边缘；中心列乘 2"><Matrix values={SOBEL_Y} label="Sobel Y：检测水平边缘" /></Card>
+            <Card title="Sobel X" note="竖直边缘；中心行 ×2"><Matrix values={SOBEL_X} label="Sobel X：检测竖直边缘" /></Card>
+            <Card title="Sobel Y" note="水平边缘；中心列 ×2"><Matrix values={SOBEL_Y} label="Sobel Y：检测水平边缘" /></Card>
           </div>
         </section>
         <section className="ck-diff-kernel__group">
@@ -52,9 +52,9 @@ export function DifferenceKernelPage() {
             <Typography as="h2" variant="h3" tone="accent">Laplacian：两个方向的二阶差分相加</Typography>
           </header>
           <div className="ck-diff-kernel__cards ck-diff-kernel__cards--laplacian">
-            <Card title="x 方向" note="一个方向上的二阶变化"><Matrix values={LAP_X} label="x 方向二阶差分核" /></Card>
+            <Card title="x 方向" note="一个方向的二阶变化"><Matrix values={LAP_X} label="x 方向二阶差分核" /></Card>
             <Typography as="span" variant="h1" tone="accent" className="ck-diff-kernel__operator">+</Typography>
-            <Card title="y 方向" note="另一个方向上的二阶变化"><Matrix values={LAP_Y} label="y 方向二阶差分核" /></Card>
+            <Card title="y 方向" note="另一个方向的二阶变化"><Matrix values={LAP_Y} label="y 方向二阶差分核" /></Card>
             <Typography as="span" variant="h1" tone="accent" className="ck-diff-kernel__operator">=</Typography>
             <Card title="Laplacian" note="合并两个方向的变化"><Matrix values={LAPLACIAN} label="Laplacian 二阶差分核" /></Card>
           </div>

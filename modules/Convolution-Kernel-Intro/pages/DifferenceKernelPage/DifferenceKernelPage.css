@@ -26,7 +26,7 @@
   border: 2px solid #c8dcf7;
   border-radius: 12px;
   background: #fff;
-  padding: 9px 12px 12px;
+  padding: 8px 12px 10px;
 }
 .course-shell .ck-diff-kernel__group-head {
   display: flex;
@@ -35,13 +35,13 @@
   min-width: 0;
   border-radius: 9px;
   background: #eaf2ff;
-  padding: 5px 10px;
+  padding: 4px 10px;
 }
 .course-shell .ck-diff-kernel__group-head h2 { min-width: 0; }
 .course-shell .ck-diff-kernel__group-number {
   display: grid;
-  width: 52px;
-  height: 52px;
+  width: 48px;
+  height: 48px;
   flex: 0 0 auto;
   place-items: center;
   border-radius: 8px;
@@ -52,7 +52,7 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) 44px minmax(0, 1.2fr) minmax(0, 1.2fr);
   align-items: stretch;
-  gap: 10px;
+  gap: 12px;
   min-width: 0;
   min-height: 0;
 }
@@ -64,14 +64,14 @@
   grid-template-rows: auto minmax(0, 1fr) auto;
   align-items: center;
   justify-items: center;
-  gap: 4px;
+  gap: 6px;
   min-width: 0;
   min-height: 0;
   overflow: hidden;
   border: 1px solid #d2e2f6;
   border-radius: 10px;
   background: #fbfdff;
-  padding: 6px 8px 7px;
+  padding: 8px 10px 8px;
   text-align: center;
 }
 .course-shell .ck-diff-kernel__card > h3 { margin: 0; }
@@ -84,20 +84,21 @@
 }
 .course-shell .ck-diff-kernel__card-note {
   max-width: 100%;
-  min-height: 18px;
+  min-height: 20px;
   text-align: center;
 }
 .course-shell .ck-diff-kernel__operator {
   display: grid;
   min-width: 0;
   place-items: center;
+  font-weight: 800;
 }
 .course-shell .ck-diff-kernel__matrix {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  width: min(100%, 142px);
+  width: min(100%, 154px);
   max-width: 100%;
-  max-height: 142px;
+  max-height: 154px;
   aspect-ratio: 1;
   gap: 1px;
   border: 2px solid #5f98df;
@@ -109,6 +110,8 @@
   max-height: none;
   aspect-ratio: 3 / 1;
 }
+.course-shell .ck-diff-kernel__matrix .math-formula-static { font-size: 2.25rem; line-height: 1; }
+.course-shell .ck-diff-kernel__operator .ui-typography { font-size: 3rem !important; }
 .course-shell .ck-diff-kernel__matrix > div {
   display: grid;
   min-width: 0;
