@@ -1,8 +1,29 @@
-import { defineConfig } from 'vite';
+import { defineConfig, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 
+function fixedLessonCanvas(): Plugin {
+  return {
+    name: 'fixed-lesson-canvas',
+    enforce: 'pre',
+    transform(source, id) {
+      const path = id.split('?')[0].replaceAll('\\', '/');
+      if (!/\/modules\/(?!shared\/)[^/]+\/pages\/.*\.css$/.test(path)) return null;
+
+      // 禁止修改缩放机制：模块页面只按 1600 × 900 画布排版，视口变化只缩放外层画布。
+      const css = source.replace(
+        /@media\s*\(\s*(max|min)-width\s*:\s*([^)]+)\)/g,
+        (_, boundary: string, value: string) => `@container lesson-slide (${boundary}-width: ${value.trim()})`,
+      );
+      if (/@media[^{}]*\b(?:width|height|orientation|aspect-ratio)\b/.test(css)) {
+        throw new Error(`课件页面不能使用视口断点：${path}。请使用固定画布容器规则。`);
+      }
+      return css === source ? null : { code: css, map: null };
+    },
+  };
+}
+
 export default defineConfig({
-  plugins: [react()],
+  plugins: [fixedLessonCanvas(), react()],
   build: {
     rollupOptions: {
       input: {

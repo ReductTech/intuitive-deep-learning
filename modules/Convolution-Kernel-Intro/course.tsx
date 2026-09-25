@@ -39,7 +39,7 @@ export interface ConvolutionCourseItem {
 export const convolutionCourse: ConvolutionCourseItem[] = [
   {
     id: 'gomoku-play',
-    title: '下完你的第一局',
+    title: '五子连线在哪里？',
     section: '从一局五子棋开始',
     revealMode: 'cue',
     component: (context) => <GomokuPlayPage onComplete={context.complete} />,

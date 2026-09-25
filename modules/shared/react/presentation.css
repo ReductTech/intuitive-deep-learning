@@ -33,11 +33,13 @@
 }
 
 .course-page-surface {
+  /* 禁止修改缩放机制：课件始终按 1600 × 900 排版，只由外层画布等比缩放。 */
   position: relative;
   box-sizing: border-box;
   width: 1600px;
   height: 900px;
   flex: 0 0 1600px;
+  container: lesson-slide / inline-size;
   transform: none;
   transform-origin: top left;
 }
