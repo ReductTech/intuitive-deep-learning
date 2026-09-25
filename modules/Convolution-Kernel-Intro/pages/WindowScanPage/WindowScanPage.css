@@ -632,10 +632,12 @@
 }
 
 .course-shell .ck-window-scan__operator-wrap {
-  display: grid;
-  align-content: center;
+  position: relative;
+  display: flex;
+  min-height: 100%;
+  align-items: center;
+  justify-content: center;
   justify-items: center;
-  gap: 10px;
   min-width: 0;
 }
 
@@ -651,8 +653,12 @@
 }
 
 .course-shell .ck-window-scan__operator-note {
+  position: absolute;
+  top: calc(50% + 38px);
+  left: 50%;
+  width: max-content;
   text-align: center;
-  white-space: nowrap;
+  transform: translateX(-50%);
 }
 
 .course-shell .ck-window-scan__result-card {

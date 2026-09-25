@@ -8,7 +8,6 @@
   var HUMAN = 1;
   var AI = 2;
   var OUT = 3;
-  var FEEDBACK_ENDPOINT = 'http://127.0.0.1:59414/kernel/gomoku-win-feedback';
   var calcHideTimer = 0;
   var mnistHideTimer = 0;
   var scrollAnimationFrame = 0;
@@ -720,42 +719,24 @@
   async function submitWinAnswer(checkResult) {
     if (!state.gameOver) return;
     var answer = String(checkResult && checkResult.answer && checkResult.answer[0] || '').trim();
-    if (!answer) {
-      return;
-    }
     var submit = winQuestion && winQuestion.submit;
     if (submit) {
       submit.disabled = true;
       submit.classList.add('is-loading');
       submit.setAttribute('aria-busy', 'true');
     }
-    if (winQuestion) winQuestion.streamFeedback('正在分析你的解释，请稍候。', 'hint');
-    try {
-      var response = await fetch(FEEDBACK_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          answer: answer,
-          board_size: BOARD_SIZE,
-          winner: playerName(state.winner),
-          win_direction: winDirectionLabel(),
-          win_line: state.winLine.map(function (cell) { return [cell.row, cell.col]; }),
-          ground_truth: GT_WIN_JUDGEMENT,
-        }),
-      });
-      var data = await response.json().catch(function () { return {}; });
-      var apiResult = window.DLModuleUI.requireServiceResult(response, data);
-      var feedback = window.DLModuleUI.shortAnswerFeedback(apiResult);
-      state.answerPassed = true;
-      if (winQuestion) winQuestion.streamFeedback(feedback.message, feedback.tone, { onComplete: showMatrixStage });
-    } catch (error) {
-      if (winQuestion) winQuestion.streamFeedback(window.DLModuleUI.friendlyErrorMessage(error), 'wrong');
-    } finally {
-      if (submit) {
-        submit.disabled = false;
-        submit.classList.remove('is-loading');
-        submit.setAttribute('aria-busy', 'false');
-      }
+    state.answerPassed = true;
+    if (winQuestion) {
+      winQuestion.streamFeedback(
+        answer ? '已记录你的解释，可以继续观察卷积矩阵。' : '已跳过解释，可以继续观察卷积矩阵。',
+        'hint'
+      );
+    }
+    showMatrixStage();
+    if (submit) {
+      submit.disabled = false;
+      submit.classList.remove('is-loading');
+      submit.setAttribute('aria-busy', 'false');
     }
   }
 

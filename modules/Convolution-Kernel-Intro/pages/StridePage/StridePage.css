@@ -1,0 +1,30 @@
+.course-shell .ck-stride { display:grid; grid-template-rows:auto minmax(0,1fr); gap:12px; min-width:0; min-height:0; overflow:hidden; border:1px solid rgba(49,74,112,.12); border-radius:16px; background:#fff; box-shadow:0 18px 38px rgba(31,54,88,.12); padding:22px 28px 18px; }
+.course-shell .ck-stride > .edu-content-head { max-width:none; margin-bottom:0; }
+.course-shell .ck-stride > .edu-content-body { display:grid; grid-template-rows:auto minmax(0,1fr) auto; gap:10px; min-width:0; min-height:0; }
+.course-shell .ck-stride__controls { display:flex; min-width:0; align-items:center; justify-content:center; gap:16px; border:1px solid rgba(91,116,151,.18); border-radius:12px; background:#f6f8fb; padding:8px 14px; }
+.course-shell .ck-stride__segmented { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); min-width:210px; border:1px solid #9db0ca; border-radius:9px; overflow:hidden; background:#fff; }
+.course-shell .ck-stride__segmented button { min-width:0; border:0; border-right:1px solid #c5d0df; background:#fff; color:#304b72; cursor:pointer; padding:8px 18px; }
+.course-shell .ck-stride__segmented button:last-child { border-right:0; }
+.course-shell .ck-stride__segmented button.is-selected { background:#304f83; color:#fff; }
+.course-shell .ck-stride__replay { display:flex; min-width:152px; flex:0 0 auto; align-items:center; justify-content:center; gap:8px; border:0; background:transparent; color:#304f83; cursor:pointer; padding:5px 8px; white-space:nowrap; }
+.course-shell .ck-stride__replay > span { display:grid; width:30px; height:30px; flex:0 0 auto; place-items:center; border-radius:50%; background:#304f83; color:#fff; font-size:19px; line-height:1; }
+.course-shell .ck-stride__workspace { display:grid; grid-template-columns:minmax(0,1fr) 52px minmax(0,1fr); align-items:stretch; gap:10px; min-width:0; min-height:0; border:1px solid #dbe3ee; border-radius:12px; background:#fff; padding:12px 14px; }
+.course-shell .ck-stride__stage { display:grid; grid-template-rows:auto minmax(0,1fr) auto; align-items:center; justify-items:center; gap:8px; min-width:0; min-height:0; }
+.course-shell .ck-stride__stage header { display:flex; width:100%; min-width:0; align-items:baseline; justify-content:space-between; gap:8px; border-radius:10px; background:#f1f5fa; padding:7px 11px; }
+.course-shell .ck-stride__stage header > .ui-typography { min-width:0; }
+.course-shell .ck-stride__input-wrap { display:grid; min-width:0; min-height:0; align-content:center; justify-items:center; gap:8px; }
+.course-shell .ck-stride__input-grid { display:grid; width:min(100%,330px); max-width:100%; aspect-ratio:1; grid-template-columns:repeat(var(--grid-size),minmax(0,1fr)); gap:2px; border:2px solid #9eafc7; background:#9eafc7; padding:2px; }
+.course-shell .ck-stride__input-grid span { min-width:0; min-height:0; background:#f9fbfd; transition:background-color .16s ease, box-shadow .16s ease; }
+.course-shell .ck-stride__input-grid span.is-active { background:#c9dcf5; box-shadow:inset 0 0 0 2px #4e7fbe; }
+.course-shell .ck-stride__progress { width:min(100%,330px); height:6px; overflow:hidden; border-radius:999px; background:#dce5f0; }
+.course-shell .ck-stride__progress span { display:block; height:100%; border-radius:inherit; background:#5c88c3; transition:width .2s ease; }
+.course-shell .ck-stride__arrow { display:grid; min-width:0; place-items:center; }
+.course-shell .ck-stride__output-grid { display:grid; width:min(100%,300px); max-width:100%; aspect-ratio:1; grid-template-columns:repeat(var(--grid-size),minmax(0,1fr)); gap:3px; border:2px solid #4e6e9d; background:#4e6e9d; padding:3px; }
+.course-shell .ck-stride__output-grid span { display:grid; min-width:0; min-height:0; place-items:center; background:#f7f9fc; color:#5c88c3; font-family:var(--ui-font-mono); font-size:clamp(14px,2vw,24px); font-weight:800; }
+.course-shell .ck-stride__output-grid span.is-revealed { background:#dbe8f8; }
+.course-shell .ck-stride__output-grid span.is-current { background:#edf4fc; box-shadow:inset 0 0 0 3px #5c88c3; }
+.course-shell .ck-stride__formula-panel { display:grid; grid-template-columns:auto minmax(0,1fr); align-items:center; gap:4px 12px; min-width:0; border:1px solid #dbe3ee; border-radius:12px; background:#f4f7fb; padding:7px 12px; }
+.course-shell .ck-stride__formula-panel > .edu-formula-block { min-height:54px; border:0; background:transparent; padding:3px; }
+.course-shell .ck-stride__examples { display:flex; min-width:0; grid-column:1 / -1; align-items:center; justify-content:center; gap:24px; border-top:1px solid #dbe3ee; padding-top:4px; }
+.course-shell .ck-stride__examples > .ui-typography { min-width:0; }
+.course-page-surface .ck-stride { width:100%; height:100%; min-height:0; }

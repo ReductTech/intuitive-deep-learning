@@ -1,0 +1,122 @@
+.course-shell .ck-weighted-kernel {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 16px;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  padding: 24px 34px 20px;
+}
+
+.course-shell .ck-weighted-kernel > .edu-content-head { max-width: none; margin-bottom: 0; }
+.course-shell .ck-weighted-kernel > .edu-content-body { display: grid; grid-template-rows: 144px minmax(0, 1fr) 58px; gap: 12px; min-width: 0; min-height: 0; }
+.course-shell .ck-weighted-kernel__body,
+.course-shell .ck-weighted-kernel__number-line,
+.course-shell .ck-weighted-kernel__calculation,
+.course-shell .ck-weighted-kernel__step { min-width: 0; max-width: 100%; }
+
+.course-shell .ck-weighted-kernel__number-line {
+  display: grid;
+  align-content: center;
+  min-height: 0;
+  height: 144px;
+  overflow: hidden;
+  gap: 6px;
+  border: 2px solid #c8dcf7;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #fff8f6, #ffffff 48%, #f2f7ff);
+  padding: 4px 28px 2px;
+}
+.course-shell .ck-weighted-kernel__line-head,
+.course-shell .ck-weighted-kernel__axis-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-width: 0; }
+.course-shell .ck-weighted-kernel__line-head > *,
+.course-shell .ck-weighted-kernel__axis-foot > * { min-width: 0; }
+.course-shell .ck-weighted-kernel__line-head > :first-child,
+.course-shell .ck-weighted-kernel__line-head > :last-child { border-radius: 10px; padding: 4px 18px; font-weight: 700; }
+.course-shell .ck-weighted-kernel__line-head > :first-child { background: #fff0ef; }
+.course-shell .ck-weighted-kernel__line-head > :last-child { background: #eaf3ff; }
+.course-shell .ck-weighted-kernel__axis { position: relative; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); align-items: start; min-height: 46px; margin: 0 7%; }
+.course-shell .ck-weighted-kernel__axis-left,
+.course-shell .ck-weighted-kernel__axis-right { position: absolute; top: 11px; height: 3px; background: #536d9c; }
+.course-shell .ck-weighted-kernel__axis-left { left: 0; right: 50%; background: linear-gradient(90deg, #536d9c, #d73338); }
+.course-shell .ck-weighted-kernel__axis-right { left: 50%; right: 0; background: linear-gradient(90deg, #6b7d9d, #1471dc); }
+.course-shell .ck-weighted-kernel__axis-left::before,
+.course-shell .ck-weighted-kernel__axis-right::after { position: absolute; top: -5px; content: ''; border-top: 7px solid transparent; border-bottom: 7px solid transparent; }
+.course-shell .ck-weighted-kernel__axis-left::before { left: -1px; border-right: 11px solid #536d9c; }
+.course-shell .ck-weighted-kernel__axis-right::after { right: -1px; border-left: 11px solid #536d9c; }
+.course-shell .ck-weighted-kernel__tick { z-index: 1; display: grid; justify-items: center; gap: 1px; min-width: 0; appearance: none; border: 0; background: transparent; padding: 0; cursor: pointer; color: inherit; }
+.course-shell .ck-weighted-kernel__tick:focus-visible { outline: 2px solid #1471dc; outline-offset: 4px; border-radius: 6px; }
+.course-shell .ck-weighted-kernel__tick i { width: 18px; height: 18px; border: 2px solid #637596; border-radius: 50%; background: #637596; }
+.course-shell .ck-weighted-kernel__tick.is-negative i { border-color: #df3538; background: #df3538; }
+.course-shell .ck-weighted-kernel__tick.is-positive i { border-color: #1471dc; background: #1471dc; }
+.course-shell .ck-weighted-kernel__tick.is-selected i { transform: scale(1.3); box-shadow: 0 0 0 4px rgba(20, 113, 220, .16); }
+.course-shell .ck-weighted-kernel__tick .ui-typography { text-align: center; }
+.course-shell .ck-weighted-kernel__axis-foot { display: grid; grid-template-columns: 1fr 1fr; align-items: center; }
+.course-shell .ck-weighted-kernel__axis-foot > :first-child { justify-self: center; border-radius: 8px; background: #eef1f6; padding: 2px 16px; }
+.course-shell .ck-weighted-kernel__axis-foot > :last-child { justify-self: end; }
+
+.course-shell .ck-weighted-kernel__calculation { display: grid; grid-template-columns: minmax(0, 1fr) 48px minmax(0, 1fr) 52px minmax(0, 1.08fr); align-items: stretch; gap: 10px; min-height: 0; overflow: hidden; }
+.course-shell .ck-weighted-kernel__step { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; justify-items: center; align-content: start; gap: 6px; min-height: 0; overflow: hidden; border: 2px solid #c8dcf7; border-radius: 12px; background: #ffffff; padding: 8px 12px 10px; text-align: center; }
+.course-shell .ck-weighted-kernel__step-head { display: flex; align-items: center; gap: 12px; width: 100%; min-width: 0; border-radius: 7px; background: rgba(49, 132, 220, .08); padding: 3px 8px; text-align: left; }
+.course-shell .ck-weighted-kernel__step-head > .ui-typography:last-child { min-width: 0; }
+.course-shell .ck-weighted-kernel__step-head h2 { margin: 0; }
+.course-shell .ck-weighted-kernel__step-head { border-radius: 10px; background: #eaf2ff; padding: 4px 8px; }
+.course-shell .ck-weighted-kernel__step-number { display: grid; width: 54px; height: 54px; flex: 0 0 auto; place-items: center; border-radius: 9px; background: #3f7fc1; }
+.course-shell .ck-weighted-kernel__step-number .ui-typography { color: #fff; }
+.course-shell .ck-weighted-kernel__step > .ui-typography:nth-child(2) { align-self: start; max-width: 100%; }
+.course-shell .ck-weighted-kernel__matrix { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: min(100%, 240px); max-width: 100%; aspect-ratio: 1; align-self: center; gap: 0; border: 2px solid #365b96; background: #365b96; padding: 0; }
+.course-shell .ck-weighted-kernel__matrix .math-formula-static { font-size: 3.2rem; line-height: 1; }
+.course-shell .ck-weighted-kernel__matrix--kernel { border-color: #2e6fe4; }
+.course-shell .ck-weighted-kernel__cell { display: grid; min-width: 0; place-items: center; border-right: 1px solid #365b96; border-bottom: 1px solid #365b96; background: #f5f8fc; }
+.course-shell .ck-weighted-kernel__cell:nth-child(2n) { border-right: 0; }
+.course-shell .ck-weighted-kernel__cell:nth-last-child(-n + 2) { border-bottom: 0; }
+.course-shell .ck-weighted-kernel__cell .math-formula-static { color: #173b7a; }
+.course-shell .ck-weighted-kernel__cell.is-negative { border-color: #e9a2a0; background: #fff0ef; }
+.course-shell .ck-weighted-kernel__cell.is-negative .math-formula-static { color: #d33136; }
+.course-shell .ck-weighted-kernel__matrix--input .ck-weighted-kernel__cell:nth-child(even) { background: #55575a; }
+.course-shell .ck-weighted-kernel__matrix--input .ck-weighted-kernel__cell:nth-child(even) .math-formula-static { color: #fff; }
+.course-shell .ck-weighted-kernel__matrix--input .ck-weighted-kernel__cell.is-bright { background: #f5f8fc; }
+.course-shell .ck-weighted-kernel__matrix--input .ck-weighted-kernel__cell.is-bright .math-formula-static { color: #173b7a; }
+.course-shell .ck-weighted-kernel__matrix--input .ck-weighted-kernel__cell.is-dark { background: #565656; }
+.course-shell .ck-weighted-kernel__matrix--input .ck-weighted-kernel__cell.is-dark .math-formula-static { color: #fff; }
+.course-shell .ck-weighted-kernel__matrix--input .ck-weighted-kernel__cell.is-neutral { background: #b7bec9; }
+.course-shell .ck-weighted-kernel__matrix-caption { max-width: 100%; font-weight: 700; }
+.course-shell .ck-weighted-kernel__operator { display: grid; place-items: center; min-width: 0; }
+.course-shell .ck-weighted-kernel__output { display: grid; width: 100%; max-width: 100%; min-height: 84px; place-items: center; align-self: center; border: 2px solid #8db8f5; border-radius: 10px; background: #eaf3ff; padding: 8px; }
+.course-shell .ck-weighted-kernel__output .math-formula-static { max-width: 100%; color: #145bd6; font-size: 4rem; line-height: 1; }
+.course-shell .ck-weighted-kernel__output-note { max-width: 100%; }
+.course-shell .ck-weighted-kernel__patterns { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; width: 100%; min-width: 0; padding: 2px; border: 1px solid #d6e3f4; border-radius: 10px; background: #f5f8fc; }
+.course-shell .ck-weighted-kernel__pattern { display: grid; grid-template-rows: 34px auto; justify-items: center; align-items: center; gap: 3px; min-width: 0; border: 1px solid transparent; border-radius: 8px; background: transparent; padding: 5px 3px; cursor: pointer; }
+.course-shell .ck-weighted-kernel__pattern.is-selected { border-color: #1471dc; background: #edf4ff; box-shadow: inset 0 0 0 1px #1471dc; }
+.course-shell .ck-weighted-kernel__pattern-swatch { display: grid; grid-template-columns: repeat(2, 1fr); width: 34px; aspect-ratio: 1; border: 1px solid #536d9c; }
+.course-shell .ck-weighted-kernel__pattern-swatch i { border: .5px solid rgba(83, 109, 156, .45); background: #f4f7fb; }
+.course-shell .ck-weighted-kernel__pattern-swatch i.is-bright { background: #565656; }
+.course-shell .ck-weighted-kernel__pattern-swatch i.is-neutral { background: linear-gradient(90deg, #f4f7fb 50%, #565656 50%); }
+.course-shell .ck-weighted-kernel__pattern .ui-typography { min-width: 0; text-align: center; white-space: nowrap; }
+.course-shell .ck-weighted-kernel__kernel-callout { width: 100%; border-radius: 10px; background: #eaf3ff; padding: 9px 10px; }
+.course-shell .ck-weighted-kernel__kernel-callout .ui-typography { font-weight: 700; }
+.course-shell .ck-weighted-kernel__interpretations { display: grid; gap: 5px; width: 100%; }
+.course-shell .ck-weighted-kernel__interpretations > div { display: grid; grid-template-columns: 86px minmax(0, 1fr); align-items: center; gap: 8px; min-height: 28px; border-radius: 8px; background: #f1f2f4; color: #718096; padding: 2px 10px; }
+.course-shell .ck-weighted-kernel__interpretations > div.is-active { background: #dceaff; color: #145bd6; }
+.course-shell .ck-weighted-kernel__interpretations .math-formula-static { justify-self: center; }
+.course-shell .ck-weighted-kernel__summary { display: grid; grid-template-columns: 48px auto minmax(0, 1fr); align-items: center; gap: 12px; min-width: 0; border: 2px solid #c8dcf7; border-radius: 10px; background: #edf4ff; padding: 6px 16px; }
+.course-shell .ck-weighted-kernel__summary-mark { display: grid; width: 44px; height: 44px; place-items: center; border-radius: 50%; background: #3f7fc1; }
+.course-shell .ck-weighted-kernel__summary-mark .ui-typography { color: #fff; }
+.course-shell .ck-weighted-kernel__summary > .ui-typography:last-child { min-width: 0; }
+.course-page-surface .ck-weighted-kernel { width: 100%; height: 100%; min-height: 0; }
+
+@media (max-width: 900px) {
+  .course-shell .ck-weighted-kernel { min-height: auto; overflow: visible; padding: 22px; }
+  .course-shell .ck-weighted-kernel > .edu-content-body { grid-template-rows: auto auto auto; }
+  .course-shell .ck-weighted-kernel__calculation { grid-template-columns: minmax(0, 1fr); }
+  .course-shell .ck-weighted-kernel__operator { min-height: 36px; transform: rotate(90deg); }
+  .course-shell .ck-weighted-kernel__step { min-height: 340px; }
+}
+@media (max-width: 560px) {
+  .course-shell .ck-weighted-kernel__number-line { padding-inline: 12px; }
+  .course-shell .ck-weighted-kernel__line-head { flex-wrap: wrap; justify-content: center; text-align: center; }
+  .course-shell .ck-weighted-kernel__axis { margin-inline: 2%; }
+  .course-shell .ck-weighted-kernel__summary { grid-template-columns: 42px minmax(0, 1fr); gap: 8px 10px; }
+  .course-shell .ck-weighted-kernel__summary-mark { width: 40px; height: 40px; }
+  .course-shell .ck-weighted-kernel__summary > .ui-typography:last-child { grid-column: 1 / -1; }
+}

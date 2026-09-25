@@ -7,7 +7,7 @@ import {
   type CSSProperties,
   type PointerEvent as ReactPointerEvent,
 } from 'react';
-import { GridFour, Light, Picture } from '@icon-park/react';
+import { Asterisk, GridFour, Light, Picture } from '@icon-park/react';
 import { ContentBlock, ExplainPanelButton, MathFormulaStatic, Typography } from '../../../shared/react';
 import { useGomokuOutcome } from '../../LessonContext';
 import { BOARD_SIZE, EMPTY, type Board, type Cell } from '../../gomokuEngine';
@@ -284,7 +284,6 @@ export function WindowScanPage({ onComplete }: WindowScanPageProps) {
                 <span className="ck-window-scan__operand-icon" aria-hidden="true"><Picture size="25" strokeWidth={4} strokeLinecap="round" strokeLinejoin="round" theme="multi-color" fill={['#5B8DE8', '#E7EFFF', '#FFFFFF', '#5B8DE8']} /></span>
                 <div>
                   <Typography as="strong" variant="h3" tone="main">输入窗口</Typography>
-                  <Typography as="span" variant="bodySmall" tone="muted">示例 5 × 5</Typography>
                 </div>
               </div>
               <div
@@ -315,7 +314,7 @@ export function WindowScanPage({ onComplete }: WindowScanPageProps) {
             </div>
 
             <div className="ck-window-scan__operator-wrap">
-              <Typography as="span" role="img" aria-label="卷积运算符" variant="h2" tone="main" className="ck-window-scan__operator is-ready">⊛</Typography>
+              <Typography as="span" role="img" aria-label="卷积运算符" variant="h2" tone="main" className="ck-window-scan__operator is-ready"><Asterisk size="28" strokeWidth={4} strokeLinecap="round" strokeLinejoin="round" theme="outline" fill="#173B7A" /></Typography>
               <Typography as="span" variant="bodySmall" tone="muted" className="ck-window-scan__operator-note">逐元素相乘<br />并求和</Typography>
             </div>
 
@@ -324,7 +323,6 @@ export function WindowScanPage({ onComplete }: WindowScanPageProps) {
                 <span className="ck-window-scan__operand-icon" aria-hidden="true"><GridFour size="25" strokeWidth={4} strokeLinecap="round" strokeLinejoin="round" theme="multi-color" fill={['#5B8DE8', '#E7EFFF', '#FFFFFF', '#5B8DE8']} /></span>
                 <div>
                   <Typography as="strong" variant="h3" tone="main">卷积核</Typography>
-                  <Typography as="span" variant="bodySmall" tone="muted">5 × 5</Typography>
                 </div>
               </div>
               <div
@@ -380,7 +378,7 @@ export function WindowScanPage({ onComplete }: WindowScanPageProps) {
           </div>
           <div className="ck-window-scan__instruction" role="status">
             <span className="ck-window-scan__instruction-icon" aria-hidden="true"><Light size="25" strokeWidth={4} strokeLinecap="round" strokeLinejoin="round" theme="multi-color" fill={['#5B8DE8', '#E7EFFF', '#FFFFFF', '#5B8DE8']} /></span>
-            <Typography as="span" variant="body" tone="muted">拖动左侧的 5 × 5 窗口，找到激活值最大的位置。</Typography>
+            <Typography as="span" variant="body" tone="muted">拖动左侧窗口，找到激活值最大的位置。</Typography>
           </div>
         </div>
       </div>

@@ -1,0 +1,128 @@
+.course-shell .ck-diff-kernel {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 14px;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  padding: 22px 32px 18px;
+}
+.course-shell .ck-diff-kernel > .edu-content-head { max-width: none; margin: 0; }
+.course-shell .ck-diff-kernel > .edu-content-body {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px;
+  min-width: 0;
+  min-height: 0;
+}
+.course-shell .ck-diff-kernel__body { display: contents; }
+.course-shell .ck-diff-kernel__group {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 10px;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  border: 2px solid #c8dcf7;
+  border-radius: 12px;
+  background: #fff;
+  padding: 9px 12px 12px;
+}
+.course-shell .ck-diff-kernel__group-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  border-radius: 9px;
+  background: #eaf2ff;
+  padding: 5px 10px;
+}
+.course-shell .ck-diff-kernel__group-head h2 { min-width: 0; }
+.course-shell .ck-diff-kernel__group-number {
+  display: grid;
+  width: 52px;
+  height: 52px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 8px;
+  background: #3f7fc1;
+}
+.course-shell .ck-diff-kernel__group-number .ui-typography { color: #fff; }
+.course-shell .ck-diff-kernel__cards {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 44px minmax(0, 1.2fr) minmax(0, 1.2fr);
+  align-items: stretch;
+  gap: 10px;
+  min-width: 0;
+  min-height: 0;
+}
+.course-shell .ck-diff-kernel__cards--laplacian {
+  grid-template-columns: minmax(0, 1.1fr) 44px minmax(0, 1.1fr) 44px minmax(0, 1.35fr);
+}
+.course-shell .ck-diff-kernel__card {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  align-items: center;
+  justify-items: center;
+  gap: 4px;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid #d2e2f6;
+  border-radius: 10px;
+  background: #fbfdff;
+  padding: 6px 8px 7px;
+  text-align: center;
+}
+.course-shell .ck-diff-kernel__card > h3 { margin: 0; }
+.course-shell .ck-diff-kernel__card-main {
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  place-items: center;
+}
+.course-shell .ck-diff-kernel__card-note {
+  max-width: 100%;
+  min-height: 18px;
+  text-align: center;
+}
+.course-shell .ck-diff-kernel__operator {
+  display: grid;
+  min-width: 0;
+  place-items: center;
+}
+.course-shell .ck-diff-kernel__matrix {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  width: min(100%, 142px);
+  max-width: 100%;
+  max-height: 142px;
+  aspect-ratio: 1;
+  gap: 1px;
+  border: 2px solid #5f98df;
+  background: #5f98df;
+  padding: 1px;
+}
+.course-shell .ck-diff-kernel__matrix.is-row {
+  width: min(100%, 220px);
+  max-height: none;
+  aspect-ratio: 3 / 1;
+}
+.course-shell .ck-diff-kernel__matrix > div {
+  display: grid;
+  min-width: 0;
+  place-items: center;
+  background: #f8fbff;
+}
+.course-shell .ck-diff-kernel__matrix .is-negative { background: #fff0ef; color: #cf252c; }
+.course-shell .ck-diff-kernel__matrix .is-heavy { background: #e4efff; color: #165fc4; }
+.course-page-surface .ck-diff-kernel { width: 100%; height: 100%; }
+@media (max-width: 900px) {
+  .course-shell .ck-diff-kernel { min-height: auto; overflow: visible; padding: 22px; }
+  .course-shell .ck-diff-kernel > .edu-content-body { grid-template-rows: auto auto; }
+  .course-shell .ck-diff-kernel__cards,
+  .course-shell .ck-diff-kernel__cards--laplacian { grid-template-columns: 1fr; }
+  .course-shell .ck-diff-kernel__operator { min-height: 34px; transform: rotate(90deg); }
+  .course-shell .ck-diff-kernel__group { min-height: 560px; }
+}

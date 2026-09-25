@@ -1,0 +1,39 @@
+.course-shell .ck-rgb { display:grid; grid-template-rows:auto minmax(0,1fr); gap:10px; min-width:0; min-height:0; overflow:hidden; border:1px solid rgba(49,74,112,.12); border-radius:16px; background:#fff; box-shadow:0 18px 38px rgba(31,54,88,.12); padding:18px 26px 14px; }
+.course-shell .ck-rgb > .edu-content-head { max-width:none; margin-bottom:0; }
+.course-shell .ck-rgb > .edu-content-body { display:grid; grid-template-rows:minmax(0,1fr) auto; gap:10px; min-width:0; min-height:0; }
+.course-shell .ck-rgb__flow { display:grid; grid-template-columns:minmax(0,1.08fr) 34px minmax(0,.96fr) 34px minmax(0,1.08fr); align-items:stretch; gap:8px; min-width:0; min-height:0; }
+.course-shell .ck-rgb__flow > section { display:grid; grid-template-rows:auto minmax(0,1fr) auto; gap:8px; min-width:0; min-height:0; overflow:hidden; border:1px solid #dbe3ee; border-radius:12px; background:#fff; padding:9px 10px; }
+.course-shell .ck-rgb__flow header { display:flex; min-width:0; align-items:baseline; justify-content:space-between; gap:8px; border-radius:9px; background:#f1f5fa; padding:6px 8px; }
+.course-shell .ck-rgb__flow header > .ui-typography { min-width:0; }
+.course-shell .ck-rgb__arrow { display:grid; min-width:0; place-items:center; }
+.course-shell .ck-rgb__channels { display:grid; grid-template-rows:repeat(3,minmax(0,1fr)); gap:7px; min-width:0; min-height:0; align-content:center; }
+.course-shell .ck-rgb__channel { display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; gap:8px; min-width:0; border-left:4px solid #a9b8cc; border-radius:8px; background:#f7f9fc; padding:5px 7px; }
+.course-shell .ck-rgb__channel.is-red { border-color:#d66b76; background:#fff5f5; }
+.course-shell .ck-rgb__channel.is-green { border-color:#6aa584; background:#f2faf5; }
+.course-shell .ck-rgb__channel.is-blue { border-color:#6d8ec3; background:#f2f6fc; }
+.course-shell .ck-rgb__photo { width:100%; max-width:168px; aspect-ratio:16 / 7; overflow:hidden; border-radius:6px; background:#e7edf5; }
+.course-shell .ck-rgb__photo img { display:block; width:100%; height:100%; object-fit:cover; filter:grayscale(1) contrast(.9); }
+.course-shell .ck-rgb__channel.is-red img { filter:grayscale(1) sepia(1) saturate(4) hue-rotate(300deg) brightness(1.05); }
+.course-shell .ck-rgb__channel.is-green img { filter:grayscale(1) sepia(1) saturate(3) hue-rotate(70deg) brightness(1.05); }
+.course-shell .ck-rgb__channel.is-blue img { filter:grayscale(1) sepia(1) saturate(4) hue-rotate(175deg) brightness(1.05); }
+.course-shell .ck-rgb__kernels { display:grid; align-content:center; gap:7px; min-width:0; }
+.course-shell .ck-rgb__kernel-row { display:grid; grid-template-columns:42px minmax(0,1fr); align-items:center; gap:8px; min-width:0; border-radius:8px; padding:5px 7px; }
+.course-shell .ck-rgb__kernel-row.is-red { background:#fff5f5; }
+.course-shell .ck-rgb__kernel-row.is-green { background:#f2faf5; }
+.course-shell .ck-rgb__kernel-row.is-blue { background:#f2f6fc; }
+.course-shell .ck-rgb__kernel-row > .ui-typography { font-family:var(--ui-font-mono); font-weight:800; }
+.course-shell .ck-rgb__kernel { display:grid; width:min(100%,128px); aspect-ratio:1; grid-template-columns:repeat(3,minmax(0,1fr)); gap:2px; border:1px solid #9eafc7; background:#9eafc7; padding:2px; }
+.course-shell .ck-rgb__kernel > div { display:grid; min-width:0; min-height:0; place-items:center; background:#fff; color:#304f83; }
+.course-shell .ck-rgb__kernel.is-red > div { background:#fff0f0; color:#ae4e5b; }
+.course-shell .ck-rgb__kernel.is-green > div { background:#edf8f0; color:#357455; }
+.course-shell .ck-rgb__kernel.is-blue > div { background:#edf3fc; color:#4167a0; }
+.course-shell .ck-rgb__sum { display:grid; align-content:center; gap:7px; min-width:0; text-align:center; }
+.course-shell .ck-rgb__sum-row { display:flex; min-width:0; align-items:center; justify-content:center; gap:7px; color:#7586a0; font-family:var(--ui-font-mono); font-size:18px; font-weight:800; }
+.course-shell .ck-rgb__sum-row span:not(.is-red):not(.is-green):not(.is-blue) { color:#71819a; }
+.course-shell .ck-rgb__sum-row .is-red { color:#ae4e5b; }.course-shell .ck-rgb__sum-row .is-green { color:#357455; }.course-shell .ck-rgb__sum-row .is-blue { color:#4167a0; }
+.course-shell .ck-rgb__sum .edu-formula-block { min-height:60px; border:1px solid #dbe3ee; border-radius:9px; background:#f4f7fb; padding:6px; }
+.course-shell .ck-rgb__response-map { display:grid; width:min(100%,300px); aspect-ratio:7 / 4; grid-template-columns:repeat(7,minmax(0,1fr)); gap:2px; align-self:center; border:2px solid #4e6e9d; background:#4e6e9d; padding:2px; }
+.course-shell .ck-rgb__response-map span { min-width:0; min-height:0; background:#e6eef9; }.course-shell .ck-rgb__response-map span.is-hot { background:#8db2e2; }
+.course-shell .ck-rgb__output-note { display:grid; gap:3px; min-width:0; border-radius:8px; background:#f4f7fb; padding:6px 8px; text-align:center; }
+.course-shell .ck-rgb__summary { display:grid; grid-template-columns:auto minmax(0,1fr) auto; align-items:center; gap:12px; min-width:0; border:1px solid #dbe3ee; border-radius:12px; background:#f4f7fb; padding:7px 12px; }.course-shell .ck-rgb__summary > .ui-typography { min-width:0; }.course-shell .ck-rgb__summary > .edu-formula-block { min-height:44px; border:0; background:transparent; padding:2px; }
+.course-page-surface .ck-rgb { width:100%; height:100%; min-height:0; }

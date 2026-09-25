@@ -1,0 +1,45 @@
+.course-shell .ck-second {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 14px;
+  min-height: 0;
+  overflow: hidden;
+  padding: 22px 30px 18px;
+}
+
+.course-shell .ck-second > .edu-content-head { max-width: none; margin: 0; }
+.course-shell .ck-second > .edu-content-body { display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: 14px; min-height: 0; }
+.course-shell .ck-second__layout { display: grid; grid-template-columns: minmax(0, .82fr) minmax(0, .92fr) minmax(0, 1.7fr); gap: 14px; min-width: 0; min-height: 0; }
+.course-shell .ck-second__panel { display: grid; align-content: center; justify-items: center; gap: 10px; min-width: 0; min-height: 0; overflow: hidden; border: 1px solid rgba(49, 132, 220, .28); border-radius: 9px; background: #fff; padding: 10px 12px; text-align: center; }
+.course-shell .ck-second__step-header { display: flex; align-items: center; width: 100%; gap: 12px; background: #e8f1fd; padding: 4px 8px; }
+.course-shell .ck-second__step-header h2 { margin: 0; }
+.course-shell .ck-second__step-number { display: grid; width: 48px; height: 48px; place-items: center; border-radius: 7px; background: #347bbb; }
+.course-shell .ck-second__panel > .ui-typography { max-width: 100%; }
+.course-shell .ck-second__image { display: block; width: 100%; max-width: 100%; object-fit: cover; border-radius: 4px; filter: grayscale(1); }
+.course-shell .ck-second__image-loading { width: 100%; background: #edf2f7; }
+.course-shell .ck-second__image--input { width: min(100%, 270px); aspect-ratio: 9 / 16; object-fit: contain; object-position: center; }
+.course-shell .ck-second__image--first { width: 100%; height: 250px; aspect-ratio: auto; object-position: center; }
+.course-shell .ck-second__image--second { height: 250px; aspect-ratio: auto; object-position: center; }
+.course-shell .ck-second__result { grid-template-rows: auto auto auto auto; align-content: center; min-height: 0; }
+.course-shell .ck-second__example { display: grid; grid-template-columns: minmax(0, 1fr) 28px minmax(0, 1fr) 28px minmax(0, 1fr); align-items: center; gap: 8px; width: 100%; border: 1px solid rgba(49, 132, 220, .25); border-radius: 8px; background: #f3f7fd; padding: 12px; }
+.course-shell .ck-second__example-step { display: grid; gap: 6px; min-width: 0; }
+.course-shell .ck-second__signal { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 2px; min-width: 0; }
+.course-shell .ck-second__signal.is-first { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.course-shell .ck-second__signal.is-second { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.course-shell .ck-second__signal span { display: grid; min-width: 0; min-height: 38px; place-items: center; border: 1px solid #6f9edf; background: #fff; color: #173b7a; }
+.course-shell .ck-second__signal.is-first span:nth-child(3) { background: #ffe7e7; color: #c92a2f; }
+.course-shell .ck-second__signal.is-second span:nth-child(2) { background: #ffe7e7; color: #c92a2f; }
+.course-shell .ck-second__signal.is-second span:nth-child(3) { background: #e7efff; color: #173b7a; }
+.course-shell .ck-second__example > p:last-child { grid-column: 1 / -1; }
+.course-shell .ck-second__result .ck-second__image--second { width: 100%; min-height: 0; object-fit: cover; }
+.course-shell .ck-second__summary { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 12px; border: 1px solid rgba(49, 132, 220, .4); border-radius: 8px; background: #edf4ff; padding: 11px 18px; }
+.course-page-surface .ck-second { width: 100%; height: 100%; }
+
+@media (max-width: 900px) {
+  .course-shell .ck-second { min-height: auto; overflow: visible; padding: 22px; }
+  .course-shell .ck-second > .edu-content-body { grid-template-rows: auto auto; }
+  .course-shell .ck-second__layout { grid-template-columns: 1fr; }
+  .course-shell .ck-second__panel { min-height: 320px; }
+  .course-shell .ck-second__example { grid-template-columns: 1fr; }
+  .course-shell .ck-second__example > .ui-typography { justify-self: center; }
+}

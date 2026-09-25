@@ -3,7 +3,6 @@
 
   var canvas = document.getElementById('drawCanvas');
   var ctx = canvas.getContext('2d');
-  var CLASSIFICATION_SCENARIO_ENDPOINT = 'http://127.0.0.1:59414/classification/scenario';
   var scenario = {
     subject: '网球',
     normalizedSubject: '网球',
@@ -138,13 +137,20 @@
   }
 
   async function requestClassificationScenario(subject) {
-    var response = await fetch(CLASSIFICATION_SCENARIO_ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ subject: subject })
-    });
-    var data = await response.json().catch(function () { return {}; });
-    return window.DLModuleUI.requireServiceResult(response, data);
+    return {
+      normalized_subject: subject || '样本',
+      task_question: '能不能根据两个可量化特征判断样本属于哪一类？',
+      positive_label: '正类',
+      negative_label: '负类',
+      feature_x: { axis_label: '特征 A' },
+      feature_y: { axis_label: '特征 B' },
+      intro_lines: [
+        '你写的是“' + (subject || '样本') + '”。我们把它变成一个二分类问题。',
+        '现在问题变成：能不能根据两个可量化特征判断样本属于哪一类？',
+        '先取两个可量化特征：特征 A，以及特征 B。',
+        '能画出一条边界分开两类点，就是分类模型要学习的事。'
+      ]
+    };
   }
 
   function playLines(output, thinking, lines) {

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent } from 'react';
+import { ClickTap, GridFour } from '@icon-park/react';
 import { AttentionHint, ContentBlock, NoticeStrip, Typography } from '../../../shared/react';
 import { useGomokuOutcome } from '../../LessonContext';
 import { BOARD_SIZE, EMPTY, type Board, type Cell } from '../../gomokuEngine';
@@ -91,10 +92,33 @@ export function KernelDesignPage({ onComplete }: KernelDesignPageProps) {
       </div>
       <div className="ck-window-scan__panel">
         <div className="ck-window-scan__compare ck-window-scan__compare--kernel-only">
-          {!kernelCorrect && <NoticeStrip tone="blue" lead="操作提示：" className="ck-window-scan__readout" role="status">按棋形调卷积核</NoticeStrip>}
-          <AttentionHint className="ck-window-scan__kernel-hint"><div className="ck-window-scan__grid ck-window-scan__grid--editable" role="group" aria-label="可点击编辑的卷积核">{KERNEL_INDEX.map((r) => KERNEL_INDEX.map((c) => { const cell = kernel[r][c]; const preview = hovered?.row === r && hovered?.col === c; const shown = preview ? (cell ? 0 : 1) : cell; return <button key={cellKey(r, c)} type="button" className={['ck-window-scan__grid-cell', shown === 1 ? 'ck-window-scan__grid-cell--one' : '', preview ? 'is-preview' : ''].filter(Boolean).join(' ')} onMouseEnter={() => setHovered({ row: r, col: c })} onMouseLeave={() => setHovered(null)} onFocus={() => setHovered({ row: r, col: c })} onBlur={() => setHovered(null)} onClick={() => toggleKernel(r, c)} aria-label={`第 ${r + 1} 行第 ${c + 1} 列，当前为 ${cell}，点击改为 ${cell ? 0 : 1}`}><Typography as="span" variant="body" tone={shown === 0 ? 'muted' : 'inherit'}>{shown}</Typography></button>; }))}</div></AttentionHint>
+          <div className="ck-window-scan__design-heading">
+            <span className="ck-window-scan__design-icon" aria-hidden="true"><GridFour size="28" strokeWidth={4} strokeLinecap="round" strokeLinejoin="round" theme="multi-color" fill={['#FFFFFF', '#2F80ED', '#5B8DE8', '#FFFFFF']} /></span>
+            <div>
+              <Typography as="h2" variant="h2" tone="main">操作提示</Typography>
+              <Typography as="p" variant="body" tone="muted">按棋形调整卷积核</Typography>
+            </div>
+          </div>
+          <div className="ck-window-scan__design-body">
+            <AttentionHint className="ck-window-scan__kernel-hint"><div className="ck-window-scan__grid ck-window-scan__grid--editable" role="group" aria-label="可点击编辑的卷积核">{KERNEL_INDEX.map((r) => KERNEL_INDEX.map((c) => { const cell = kernel[r][c]; const preview = hovered?.row === r && hovered?.col === c; const shown = preview ? (cell ? 0 : 1) : cell; return <button key={cellKey(r, c)} type="button" className={['ck-window-scan__grid-cell', shown === 1 ? 'ck-window-scan__grid-cell--one' : '', preview ? 'is-preview' : ''].filter(Boolean).join(' ')} onMouseEnter={() => setHovered({ row: r, col: c })} onMouseLeave={() => setHovered(null)} onFocus={() => setHovered({ row: r, col: c })} onBlur={() => setHovered(null)} onClick={() => toggleKernel(r, c)} aria-label={`第 ${r + 1} 行第 ${c + 1} 列，当前为 ${cell}，点击改为 ${cell ? 0 : 1}`}><Typography as="span" variant="body" tone={shown === 0 ? 'muted' : 'inherit'}>{shown}</Typography></button>; }))}</div></AttentionHint>
+            <div className="ck-window-scan__design-help">
+            <span className="ck-window-scan__design-help-icon" aria-hidden="true"><ClickTap size="30" strokeWidth={4} strokeLinecap="round" strokeLinejoin="round" theme="multi-color" fill={['#F57C00', '#FFFFFF', '#173B7A', '#F57C00']} /></span>
+            <Typography as="span" variant="body" tone="muted">点击格子，可以把该位置设为 1，再点一次变回 0。</Typography>
+            </div>
+          </div>
+          <NoticeStrip
+            tone={kernelCorrect ? 'green' : 'blue'}
+            className="ck-window-scan__design-status"
+            role="status"
+          >
+            {kernelCorrect
+              ? '卷积核方向正确，请拖动左侧窗口，寻找最大的激活值。'
+              : '当前还不对，继续点击格子，让卷积核与棋形方向一致。'}
+          </NoticeStrip>
         </div>
-        <div className="ck-window-scan__result ck-window-scan__result-card"><Typography as="h3" variant="h3" tone="main">当前效果</Typography><div className="ck-window-scan__score-row"><Typography as="span" variant="body" tone="muted">匹配度</Typography><Typography as="strong" variant="display" tone={kernelCorrect ? 'success' : 'main'}>{Math.max(0, Math.min(5, value))}</Typography><Typography as="span" variant="h3" tone="muted">/ 5</Typography><div className="ck-window-scan__progress" aria-label={`当前匹配度 ${Math.max(0, value)} / 5`}><span style={{ width: `${Math.max(0, Math.min(5, value)) * 20}%` }} /></div></div><NoticeStrip tone={kernelCorrect ? 'green' : 'blue'} className="ck-window-scan__result-tip" role="status">{kernelCorrect ? '✓ 模板方向正确了，现在可以拖动窗口。' : '💡 还可以更好，试着让模板方向与棋形完全对齐。'}</NoticeStrip></div>
+        <div className="ck-window-scan__result ck-window-scan__result-card">
+          <div className="ck-window-scan__design-score"><Typography as="span" variant="h3" tone="muted">匹配度</Typography><Typography as="strong" variant="display" tone={kernelCorrect ? 'success' : 'main'}>{Math.max(0, Math.min(5, value))}</Typography><Typography as="span" variant="h3" tone="muted">/ 5</Typography><div className="ck-window-scan__progress" aria-label={`当前匹配度 ${Math.max(0, value)} / 5`}><span style={{ width: `${Math.max(0, Math.min(5, value)) * 20}%` }} /></div></div>
+        </div>
       </div>
     </div>
   </ContentBlock>;

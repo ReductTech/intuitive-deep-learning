@@ -1,8 +1,6 @@
 (function () {
   'use strict';
 
-  var FEATURE_FEEDBACK_ENDPOINT = 'http://127.0.0.1:59414/digit/features-feedback';
-  var ORDER_FEEDBACK_ENDPOINT = 'http://127.0.0.1:59414/digit/vector-order-feedback';
   var IMAGE_SIZE = 28;
   var THRESHOLD = 0;
   var MLP_AUTO_SWITCH_MS = 2000;
@@ -922,7 +920,7 @@
       hintButton: true,
       feedback: { empty: '先写一句你的理由。' },
       onCheck: function (result) {
-        if (!result.empty) submitOrderReflection(result.answer && result.answer[0]);
+        submitOrderReflection(result.answer && result.answer[0]);
       },
     });
     window.setTimeout(function () {
@@ -965,39 +963,20 @@
 
   async function submitOrderReflection(answer) {
     answer = String(answer || '').trim();
-    if (!answer || !orderQuestionApi) return;
+    if (!orderQuestionApi) return;
     var submit = orderQuestionApi.submit;
     if (submit) {
       submit.disabled = true;
       submit.textContent = '正在分析...';
     }
-    orderQuestionApi.streamFeedback('正在分析你的想法，请稍候。', 'hint');
-    try {
-      var response = await fetch(ORDER_FEEDBACK_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          answer: answer,
-          selected_order: state.selectedVectorOption,
-        }),
-      });
-      var data = await response.json().catch(function () { return {}; });
-      var result = window.DLModuleUI.requireServiceResult(response, data);
-      var feedback = window.DLModuleUI.shortAnswerFeedback(result);
-      var tone = feedback.tone === 'correct' ? 'is-correct' : (feedback.tone === 'hint' ? 'is-close' : 'is-blocked');
-      orderQuestionApi.streamFeedback(feedback.message, feedback.tone, {
-        onComplete: function () { finishFeatureVectorStage(feedback.message, tone); }
-      });
-    } catch (error) {
-      var message = window.DLModuleUI.friendlyErrorMessage(error);
-      orderQuestionApi.streamFeedback(message, 'wrong', {
-        onComplete: function () { finishFeatureVectorStage(message, 'is-blocked'); }
-      });
-    } finally {
-      if (submit) {
-        submit.disabled = false;
-        submit.textContent = '提交回答';
-      }
+    var message = answer
+      ? '已记录你的想法。特征向量只要始终使用同一种排列方式，就可以进行比较。'
+      : '已跳过回答。特征向量只要始终使用同一种排列方式，就可以进行比较。';
+    orderQuestionApi.streamFeedback(message, 'hint');
+    finishFeatureVectorStage(message, 'is-correct');
+    if (submit) {
+      submit.disabled = false;
+      submit.textContent = '提交回答';
     }
   }
 
@@ -1511,46 +1490,15 @@
   async function submitFeatureReflection(event) {
     event.preventDefault();
     var answer = $('featureReflection').value.trim();
-    if (!answer) {
-      setFeedback($('featureReflectionFeedback'), '先写一句你的观察。', 'is-blocked');
-      $('featureReflection').focus();
-      return;
-    }
-
     $('featureReflectionSubmit').disabled = true;
     $('featureReflectionSubmit').textContent = '正在分析...';
-    setFeedback($('featureReflectionFeedback'), '正在分析你的观察，请稍候。', 'is-loading', true);
-    try {
-      var response = await fetch(FEATURE_FEEDBACK_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          answer: answer,
-          selected_region: REGION_LABELS[state.selectedRegion],
-          feature_name: REGION_LABELS[state.selectedRegion] + '像素数',
-        }),
-      });
-      var data = await response.json().catch(function () { return {}; });
-      var result = window.DLModuleUI.requireServiceResult(response, data);
-      var feedback = window.DLModuleUI.shortAnswerFeedback(result);
-      setFeedback(
-        $('featureReflectionFeedback'),
-        feedback.message,
-        feedback.tone === 'correct' ? 'is-correct' : (feedback.tone === 'hint' ? 'is-close' : 'is-blocked'),
-        true
-      );
-    } catch (error) {
-      setFeedback(
-        $('featureReflectionFeedback'),
-        window.DLModuleUI.friendlyErrorMessage(error),
-        'is-blocked',
-        true
-      );
-    } finally {
-      $('featureReflectionSubmit').disabled = false;
-      $('featureReflectionSubmit').textContent = '提交反馈';
-      mountMlpCue();
-    }
+    var message = answer
+      ? '已记录你的观察。特征就是把样本压成可比较的测量值。'
+      : '已跳过观察。特征就是把样本压成可比较的测量值。';
+    setFeedback($('featureReflectionFeedback'), message, 'is-correct', true);
+    $('featureReflectionSubmit').disabled = false;
+    $('featureReflectionSubmit').textContent = '提交反馈';
+    mountMlpCue();
   }
 
   function mountMlpCue() {

@@ -1,7 +1,6 @@
 (function () {
   'use strict';
 
-  var OBSERVATION_ENDPOINT = 'http://127.0.0.1:59414/image/observation-feedback';
   var MAX_IMAGE_SIDE = 512;
   var SAMPLE_SIZE = 3;
   var recommendedVideos = [
@@ -259,25 +258,15 @@
     submit.textContent = '正在分析';
     questionApi.streamFeedback('正在分析你的观察，请稍候。', 'hint');
 
-    try {
-      var response = await fetch(OBSERVATION_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ answer: answer })
-      });
-      var data = await response.json().catch(function () { return {}; });
-      var result = window.DLModuleUI.requireServiceResult(response, data);
-      var feedback = window.DLModuleUI.shortAnswerFeedback(result);
-      questionApi.streamFeedback(feedback.message, feedback.tone);
-    } catch (error) {
-      questionApi.streamFeedback(window.DLModuleUI.friendlyErrorMessage(error), 'wrong');
-    } finally {
-      submit.disabled = false;
-      submit.classList.remove('is-loading');
-      submit.removeAttribute('aria-busy');
-      submit.textContent = '提交观察';
-      showScene('colorScene');
-    }
+    questionApi.streamFeedback(
+      answer ? '已记录你的观察，可以继续调整 RGB 颜色。' : '已跳过观察，可以继续调整 RGB 颜色。',
+      'hint'
+    );
+    submit.disabled = false;
+    submit.classList.remove('is-loading');
+    submit.removeAttribute('aria-busy');
+    submit.textContent = '提交观察';
+    showScene('colorScene');
   }
 
   function updateColorLab() {
@@ -744,8 +733,7 @@
         sample: '正在分析你的观察…'
       },
       onCheck: function (result) {
-        if (result.empty || !result.answer[0]) return;
-        submitObservation(String(result.answer[0]).trim(), observationQuestion);
+        submitObservation(String((result.answer || [])[0] || '').trim(), observationQuestion);
       }
     });
     if (observationQuestion && observationQuestion.submit) {

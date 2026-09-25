@@ -1,8 +1,6 @@
 (function () {
   'use strict';
 
-  var DECISION_INTAKE_ENDPOINT = 'http://127.0.0.1:59414/decision/intake';
-  var EXTRA_FACTORS_ENDPOINT = 'http://127.0.0.1:59414/decision/extra-factors';
   var form = document.querySelector('#decisionForm');
   var input = document.querySelector('#decisionInput');
   var decisionStream = document.querySelector('.ng-decision-stream');
@@ -226,23 +224,28 @@ var decisionChoices = [
   }
 
   async function requestDecisionIntake(decision) {
-    var response = await fetch(DECISION_INTAKE_ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ decision: decision })
-    });
-    var data = await response.json().catch(function () { return {}; });
-    return window.DLModuleUI.requireServiceResult(response, data);
+    var label = String(decision || '这个决定').replace(/^(是否要|要不要)/, '').replace(/[？?。\s]+$/g, '') || '这个决定';
+    return {
+      decision: decision || '是否要做出这个决定',
+      positive_label: label,
+      negative_label: '不' + label,
+      primary_factor: {
+        name: '支持这个决定的证据',
+        value_label: '支持程度',
+        value_question: '支持“' + label + '”的证据现在有多强？',
+        explanation: '把一个复杂决定先拆成可以观察和评分的输入信号。',
+        importance: 7
+      }
+    };
   }
 
   async function requestExtraFactors(payload) {
-    var response = await fetch(EXTRA_FACTORS_ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
-    var data = await response.json().catch(function () { return {}; });
-    return window.DLModuleUI.requireServiceResult(response, data);
+    return {
+      factors: [
+        { name: '成本或风险', value_label: '成本风险', value_question: '成本或风险现在有多高？', importance: 5 },
+        { name: '预期收益', value_label: '预期收益', value_question: '预期收益现在有多高？', importance: 6 }
+      ]
+    };
   }
 
   function startExtraFactorsRequest(payload, requestSerial) {

@@ -1,0 +1,35 @@
+.course-shell .ck-challenge { display:grid; grid-template-rows:auto auto minmax(0,1fr) auto; gap:10px; min-width:0; min-height:0; overflow:hidden; border:1px solid rgba(49,74,112,.12); border-radius:16px; background:#fff; box-shadow:0 18px 38px rgba(31,54,88,.12); padding:20px 28px 16px; }
+.course-shell .ck-challenge > .edu-content-head { max-width:none; margin-bottom:0; }
+.course-shell .ck-challenge > .edu-content-body { display:contents; }
+.course-shell .ck-challenge__story { display:grid; grid-template-columns:auto minmax(0,1fr) auto; align-items:center; gap:10px; min-width:0; border:1px solid #dbe3ee; border-radius:12px; background:#f4f7fb; padding:7px 12px; }
+.course-shell .ck-challenge__story-mark { display:grid; width:34px; height:34px; place-items:center; border-radius:9px; background:#304f83; color:#fff; font-family:var(--ui-font-mono); font-size:12px; font-weight:800; }
+.course-shell .ck-challenge__story > .ui-typography { min-width:0; }
+.course-shell .ck-challenge__body { display:grid; grid-template-columns:230px minmax(0,1fr); gap:16px; min-width:0; min-height:0; }
+.course-shell .ck-challenge__chapters { display:grid; align-content:start; gap:8px; min-width:0; border-right:1px solid #dbe3ee; padding:4px 16px 0 0; }
+.course-shell .ck-challenge__chapters > button { display:grid; grid-template-columns:36px minmax(0,1fr); align-items:center; gap:9px; width:100%; min-width:0; border:1px solid transparent; border-radius:10px; background:#f4f7fb; color:#304b72; cursor:pointer; padding:8px 9px; text-align:left; }
+.course-shell .ck-challenge__chapters > button > span { display:grid; width:30px; height:30px; place-items:center; border-radius:8px; background:#e1eaf5; color:#5c78a2; font-family:var(--ui-font-mono); font-size:11px; font-weight:800; }
+.course-shell .ck-challenge__chapters > button.is-selected { border-color:#7696c2; background:#eaf1fa; color:#244776; }
+.course-shell .ck-challenge__chapters > button.is-selected > span { background:#304f83; color:#fff; }
+.course-shell .ck-challenge__chapters .ui-typography { min-width:0; overflow-wrap:normal; word-break:keep-all; }
+.course-shell .ck-challenge__work { display:grid; grid-template-rows:minmax(0,1fr) auto auto auto; gap:10px; min-width:0; min-height:0; }
+.course-shell .ck-challenge__dimension-row { display:grid; grid-template-columns:minmax(0,1fr) 38px minmax(0,1fr); align-items:center; justify-items:center; gap:8px; min-width:0; }
+.course-shell .ck-challenge__dimension-row > div { display:grid; justify-items:center; gap:3px; min-width:0; }
+.course-shell .ck-challenge__dimension-row strong { font-family:var(--ui-font-mono); }
+.course-shell .ck-challenge__mini-grid { display:grid; width:min(100%,220px); max-width:100%; aspect-ratio:1; grid-template-columns:repeat(var(--mini-size),minmax(0,1fr)); gap:2px; border:2px solid #9eafc7; background:#9eafc7; padding:2px; }
+.course-shell .ck-challenge__mini-grid span { min-width:0; min-height:0; background:#f9fbfd; }
+.course-shell .ck-challenge__mini-grid span.is-marked { background:#dbe8f8; }
+.course-shell .ck-challenge__mini-grid.is-active { border-color:#4e6e9d; }
+.course-shell .ck-challenge__controls { display:grid; grid-template-columns:repeat(3,minmax(105px,1fr)) auto; align-items:end; gap:10px; min-width:0; }
+.course-shell .ck-challenge__controls label { display:grid; gap:4px; min-width:0; }
+.course-shell .ck-challenge__controls select { min-width:0; border:1px solid #b6c6da; border-radius:8px; background:#fff; color:#304b72; cursor:pointer; padding:8px 10px; font:inherit; }
+.course-shell .ck-challenge__check { min-width:96px; border:0; border-radius:8px; background:#304f83; color:#fff; cursor:pointer; padding:9px 13px; }
+.course-shell .ck-challenge__formula { display:grid; grid-template-columns:auto minmax(0,1fr); align-items:center; gap:8px; min-width:0; border:1px solid #dbe3ee; border-radius:9px; background:#f4f7fb; padding:4px 8px; }
+.course-shell .ck-challenge__formula > .edu-formula-block { min-height:48px; border:0; background:transparent; padding:3px; }
+.course-shell .ck-challenge__feedback { min-width:0; border-left:3px solid #9db0ca; border-radius:0 8px 8px 0; background:#f4f7fb; color:#526883; padding:7px 10px; }
+.course-shell .ck-challenge__feedback.is-correct { border-color:#3f8c70; background:#edf7f2; color:#28634e; }
+.course-shell .ck-challenge__feedback.is-alternative { border-color:#5c88c3; background:#edf4fc; color:#345f94; }
+.course-shell .ck-challenge__feedback.is-wrong { border-color:#bd7180; background:#fbf0f2; color:#8b4352; }
+.course-shell .ck-challenge__footer { display:grid; grid-template-columns:auto minmax(0,1fr) auto; align-items:center; gap:10px; min-width:0; border-top:1px solid #dbe3ee; padding-top:7px; }
+.course-shell .ck-challenge__footer > .edu-formula-block { min-height:42px; border:0; background:transparent; padding:2px; }
+.course-shell .ck-challenge__footer > .ui-typography { min-width:0; }
+.course-page-surface .ck-challenge { width:100%; height:100%; min-height:0; }
