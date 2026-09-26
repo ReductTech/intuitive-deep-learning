@@ -21,12 +21,17 @@ export interface GomokuOutcome {
   source: 'played' | 'demo';
 }
 
+export type LessonKernel = number[][];
+
 interface GomokuLessonValue {
   outcome: GomokuOutcome;
   recordOutcome: (outcome: GomokuOutcome | null) => void;
+  designedKernel: LessonKernel | null;
+  recordDesignedKernel: (kernel: LessonKernel | null) => void;
 }
 
 const STORAGE_KEY = 'convolution-kernel-intro:gomoku-outcome';
+const KERNEL_STORAGE_KEY = 'convolution-kernel-intro:designed-kernel';
 const STATE_KEY = 'gomoku-outcome';
 
 const GomokuLessonContext = createContext<GomokuLessonValue | null>(null);
@@ -104,13 +109,46 @@ function writeStored(outcome: GomokuOutcome | null) {
   }
 }
 
+function normalizeKernel(value: unknown): LessonKernel | null {
+  if (!Array.isArray(value) || value.length !== 5) return null;
+  const rows: LessonKernel = [];
+  for (const row of value) {
+    if (!Array.isArray(row) || row.length !== 5 || row.some((cell) => cell !== 0 && cell !== 1)) return null;
+    rows.push([...row]);
+  }
+  return rows;
+}
+
+function readStoredKernel(): LessonKernel | null {
+  if (typeof window === 'undefined') return null;
+  try {
+    const raw = window.localStorage.getItem(KERNEL_STORAGE_KEY);
+    return raw ? normalizeKernel(JSON.parse(raw)) : null;
+  } catch {
+    return null;
+  }
+}
+
+function writeStoredKernel(kernel: LessonKernel | null) {
+  if (typeof window === 'undefined') return;
+  try {
+    if (kernel) window.localStorage.setItem(KERNEL_STORAGE_KEY, JSON.stringify(kernel));
+    else window.localStorage.removeItem(KERNEL_STORAGE_KEY);
+  } catch {
+    // 隐私模式下仍可在当前页面使用模板。
+  }
+}
+
 export function GomokuLessonProvider({ children }: { children: ReactNode }) {
   const [stored, setStored] = useState<GomokuOutcome | null>(readStored);
+  const [designedKernel, setDesignedKernel] = useState<LessonKernel | null>(readStoredKernel);
 
   const recordOutcome = useCallback((next: GomokuOutcome | null) => {
     const normalized = next ? normalizeOutcome(next) : null;
     writeStored(normalized);
     setStored(normalized);
+    writeStoredKernel(null);
+    setDesignedKernel(null);
     if (!normalized) return;
     emitTelemetry('gomoku_outcome_recorded', null, {
       state_key: STATE_KEY,
@@ -121,10 +159,18 @@ export function GomokuLessonProvider({ children }: { children: ReactNode }) {
     });
   }, []);
 
+  const recordDesignedKernel = useCallback((next: LessonKernel | null) => {
+    const normalized = normalizeKernel(next);
+    writeStoredKernel(normalized);
+    setDesignedKernel(normalized);
+  }, []);
+
   const value = useMemo<GomokuLessonValue>(() => ({
     outcome: stored ?? demoOutcome(),
     recordOutcome,
-  }), [recordOutcome, stored]);
+    designedKernel,
+    recordDesignedKernel,
+  }), [designedKernel, recordDesignedKernel, recordOutcome, stored]);
 
   return <GomokuLessonContext.Provider value={value}>{children}</GomokuLessonContext.Provider>;
 }

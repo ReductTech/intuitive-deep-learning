@@ -291,12 +291,6 @@
   padding-top: 8px;
 }
 
-.course-shell .ck-window-scan__sum-line .math-formula-static {
-  max-width: 100%;
-  color: var(--ui-accent-alt);
-  font-size: 16px;
-}
-
 .course-shell .ck-window-scan__readout {
   display: grid;
   place-items: center;
@@ -511,12 +505,12 @@
 
 /* Reference composition: a framed board beside two quiet teaching panels. */
 .course-shell .ck-window-scan {
-  gap: 14px;
-  padding: 18px 28px 22px;
+  gap: 8px;
+  padding: 10px 28px;
 }
 
 .course-shell .ck-window-scan__layout {
-  grid-template-columns: minmax(0, 1fr) minmax(0, .98fr);
+  grid-template-columns: minmax(0, .94fr) minmax(0, 1.06fr);
   gap: 28px;
 }
 
@@ -524,12 +518,12 @@
   position: relative;
   align-content: stretch;
   justify-items: center;
-  gap: 14px;
+  gap: 8px;
   border: 1px solid rgba(39, 68, 110, .12);
   border-radius: 22px;
   background: rgba(247, 250, 255, .9);
   box-shadow: 0 12px 30px rgba(39, 68, 110, .08);
-  padding: 24px 22px 18px;
+  padding: 10px 12px 8px;
 }
 
 .course-shell .ck-window-scan__board {
@@ -656,7 +650,7 @@
   position: absolute;
   top: calc(50% + 38px);
   left: 50%;
-  width: max-content;
+  width: 126px;
   text-align: center;
   transform: translateX(-50%);
 }
@@ -693,16 +687,21 @@
   padding: 0;
 }
 
+/* KernelDesignPage 仍带有旧的同名规则；限定到本页，避免得分区被挤成四列。 */
+.course-shell .ck-window-scan .ck-window-scan__score-row {
+  grid-template-columns: minmax(0, 160px) minmax(0, 1fr);
+}
+
 .course-shell .ck-window-scan__activation-box {
   display: flex;
   min-width: 0;
   min-height: 92px;
   align-items: center;
-  justify-content: space-between;
-  gap: 14px;
+  justify-content: center;
+  gap: 10px;
   border-radius: 16px;
   background: #edf4ff;
-  padding: 16px 20px;
+  padding: 8px 12px;
 }
 
 .course-shell .ck-window-scan__activation-label {
@@ -721,8 +720,9 @@
 }
 
 .course-shell .ck-window-scan__result-caption {
-  display: grid;
-  align-content: center;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   min-width: 0;
   min-height: 92px;
   border-radius: 14px;
@@ -730,6 +730,8 @@
   color: var(--ui-accent);
   padding: 13px 16px;
 }
+
+.course-shell .ck-window-scan__result-caption svg { flex: 0 0 auto; }
 
 .course-shell .ck-window-scan__instruction {
   display: flex;

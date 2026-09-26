@@ -7,8 +7,8 @@ import {
   type CSSProperties,
   type PointerEvent as ReactPointerEvent,
 } from 'react';
-import { Asterisk, GridFour, Light, Picture } from '@icon-park/react';
-import { ContentBlock, ExplainPanelButton, MathFormulaStatic, Typography } from '../../../shared/react';
+import { Asterisk, GridFour, Move, Picture, Tips } from '@icon-park/react';
+import { ContentBlock, ExplainPanelButton, Typography } from '../../../shared/react';
 import { useGomokuOutcome } from '../../LessonContext';
 import { BOARD_SIZE, EMPTY, type Board, type Cell } from '../../gomokuEngine';
 import './WindowScanPage.css';
@@ -147,11 +147,11 @@ export function WindowScanPage({ onComplete }: WindowScanPageProps) {
   const centre = useMemo(() => windowCentre(outcome.winLine, ZOOM_SIZE), [outcome.winLine]);
   const best = useMemo(() => bestActivation(grid, kernel), [grid, kernel]);
 
-  const [topLeft, setTopLeft] = useState<Cell>({ row: 0, col: 0 });
+  const [topLeft, setTopLeft] = useState<Cell>({ row: 4, col: 3 });
   const [dragging, setDragging] = useState(false);
 
   // 换了一盘棋就回到新的开局位置。
-  useEffect(() => setTopLeft({ row: 0, col: 0 }), [outcome.board]);
+  useEffect(() => setTopLeft({ row: 4, col: 3 }), [outcome.board]);
 
   const patch = windowPatch(grid, topLeft.row, topLeft.col);
   const value = windowActivation(grid, kernel, topLeft.row, topLeft.col);
@@ -220,8 +220,8 @@ export function WindowScanPage({ onComplete }: WindowScanPageProps) {
     <ContentBlock
       headingLevel={1}
       className="ck-window-scan"
-      title="拖着窗口，找出最大的激活值"
-      subtitle={found ? '窗口已经对准棋形；这一位置的响应最强。' : '拖动 5 × 5 窗口，寻找它在棋盘上的最大响应。'}
+      title="棋形的局部匹配"
+      subtitle="移动一个 5 × 5 模板，比较它与棋盘不同区域的匹配程度。"
     >
       <div className="ck-window-scan__layout">
         <div className="ck-window-scan__board-slot">
@@ -229,13 +229,12 @@ export function WindowScanPage({ onComplete }: WindowScanPageProps) {
             ref={boardRef}
             className="ck-window-scan__board"
             role="group"
-            aria-label="十五路棋盘写成的数字矩阵，上面放着一个可以拖动的 5 × 5 橙色小框，框里 5 个橙格按获胜连线的形状排好。"
+            aria-label="十五路棋盘写成的数字矩阵，橙色表示赢方棋子，蓝色表示输方棋子。拖动 5 × 5 窗口，比较不同区域的匹配得分。"
             onPointerDown={handlePointerDown}
             onPointerMove={handlePointerMove}
             onPointerUp={endDrag}
             onPointerCancel={endDrag}
           >
-            <Typography as="span" variant="body" tone="inherit" className="ck-window-scan__window-label">5 × 5 窗口</Typography>
             {BOARD_INDEX.map((row) => BOARD_INDEX.map((col) => {
               const cell = grid[row][col];
               const inWindow = row >= topLeft.row && row < topLeft.row + KERNEL_SIZE
@@ -268,11 +267,11 @@ export function WindowScanPage({ onComplete }: WindowScanPageProps) {
           <ul className="ck-window-scan__key">
             <li className="ck-window-scan__key-item">
               <span className="ck-window-scan__key-chip ck-window-scan__key-chip--one" aria-hidden="true" />
-              <Typography as="span" variant="body" tone="muted">橙 = 赢方的子</Typography>
+              <Typography as="span" variant="body" tone="muted">橙色＝赢方棋子（1）</Typography>
             </li>
             <li className="ck-window-scan__key-item">
               <span className="ck-window-scan__key-chip ck-window-scan__key-chip--minus" aria-hidden="true" />
-              <Typography as="span" variant="body" tone="muted">深蓝 = 对手的子</Typography>
+              <Typography as="span" variant="body" tone="muted">蓝色＝败方棋子（−1）</Typography>
             </li>
           </ul>
         </div>
@@ -283,13 +282,13 @@ export function WindowScanPage({ onComplete }: WindowScanPageProps) {
               <div className="ck-window-scan__operand-heading">
                 <span className="ck-window-scan__operand-icon" aria-hidden="true"><Picture size="25" strokeWidth={4} strokeLinecap="round" strokeLinejoin="round" theme="multi-color" fill={['#5B8DE8', '#E7EFFF', '#FFFFFF', '#5B8DE8']} /></span>
                 <div>
-                  <Typography as="strong" variant="h3" tone="main">输入窗口</Typography>
+                  <Typography as="strong" variant="h3" tone="main">当前区域</Typography>
                 </div>
               </div>
               <div
                 className="ck-window-scan__grid"
                 role="group"
-                aria-label="橙色小框当前盖住的 5 × 5 输入数字，橙框标出算子上 5 个 1 看的位置。"
+                aria-label="当前区域的 5 × 5 数值，橙色轮廓标出目标模板中的 1 对应的位置。"
               >
                 {KERNEL_INDEX.map((row) => KERNEL_INDEX.map((col) => {
                   const cell = patch[row][col];
@@ -315,20 +314,20 @@ export function WindowScanPage({ onComplete }: WindowScanPageProps) {
 
             <div className="ck-window-scan__operator-wrap">
               <Typography as="span" role="img" aria-label="卷积运算符" variant="h2" tone="main" className="ck-window-scan__operator is-ready"><Asterisk size="28" strokeWidth={4} strokeLinecap="round" strokeLinejoin="round" theme="outline" fill="#173B7A" /></Typography>
-              <Typography as="span" variant="bodySmall" tone="muted" className="ck-window-scan__operator-note">逐元素相乘<br />并求和</Typography>
+              <Typography as="span" variant="bodySmall" tone="muted" className="ck-window-scan__operator-note">对应位置相乘<br />并求和</Typography>
             </div>
 
             <div className="ck-window-scan__operand">
               <div className="ck-window-scan__operand-heading">
                 <span className="ck-window-scan__operand-icon" aria-hidden="true"><GridFour size="25" strokeWidth={4} strokeLinecap="round" strokeLinejoin="round" theme="multi-color" fill={['#5B8DE8', '#E7EFFF', '#FFFFFF', '#5B8DE8']} /></span>
                 <div>
-                  <Typography as="strong" variant="h3" tone="main">卷积核</Typography>
+                  <Typography as="strong" variant="h3" tone="main">目标模板</Typography>
                 </div>
               </div>
               <div
                 className="ck-window-scan__grid"
                 role="group"
-                aria-label="五乘五卷积核：五格连成一线的地方是 1，其余是 0。"
+                aria-label="五乘五目标模板：五格连成一线的地方是 1，其余是 0。"
               >
                 {KERNEL_INDEX.map((row) => KERNEL_INDEX.map((col) => {
                   const cell = kernel[row][col];
@@ -346,15 +345,14 @@ export function WindowScanPage({ onComplete }: WindowScanPageProps) {
 
           <div className="ck-window-scan__result ck-window-scan__result-card">
             <div className="ck-window-scan__result-heading">
-              <Typography as="span" variant="body" tone="muted">当前位置的响应</Typography>
+              <Typography as="span" variant="body" tone="muted">当前区域的得分</Typography>
             </div>
             <div className="ck-window-scan__score-row">
               <div className="ck-window-scan__activation-box">
-                <div className="ck-window-scan__activation-label">
-                  <Typography as="span" variant="body" tone="accent">激活值</Typography>
-                  <ExplainPanelButton label="查看激活值的计算过程" triggerText="?">
-                    <Typography as="strong" variant="bodySmall" tone="accent">激活值怎么得到？</Typography>
-                    <Typography variant="bodySmall" tone="muted">当前窗口与卷积核逐位置相乘，再把 25 个乘积相加。</Typography>
+                <Typography as="strong" variant="display" tone={found ? 'success' : 'main'}>{value < 0 ? `−${Math.abs(value)}` : value}</Typography>
+                <ExplainPanelButton label="查看匹配得分的计算过程" triggerText="?">
+                    <Typography as="strong" variant="bodySmall" tone="accent">匹配得分怎么得到？</Typography>
+                    <Typography variant="bodySmall" tone="muted">当前区域与目标模板对应位置相乘，再把 25 个乘积相加。</Typography>
                     <div className="ck-window-scan__multiply" role="grid" aria-label="当前窗口与卷积核的逐项乘积">
                       {KERNEL_INDEX.flatMap((row) => KERNEL_INDEX.map((col) => {
                         const product = kernel[row][col] * patch[row][col];
@@ -367,18 +365,16 @@ export function WindowScanPage({ onComplete }: WindowScanPageProps) {
                       }))}
                     </div>
                     <div className="ck-window-scan__sum-line" aria-label={`所有乘积相加等于 ${value}`}>
-                      <MathFormulaStatic latex={`\\sum_{i,j} M_{ij} X_{ij} = ${value}`} />
+                      <Typography as="span" variant="bodySmall" tone="accent">{`Σ（模板值 × 区域值）= ${value < 0 ? `−${Math.abs(value)}` : value}`}</Typography>
                     </div>
-                  </ExplainPanelButton>
-                </div>
-                <Typography as="strong" variant="display" tone={found ? 'success' : 'main'}>{value}</Typography>
+                </ExplainPanelButton>
               </div>
-              <Typography variant="bodySmall" tone="muted" className="ck-window-scan__result-caption">数值越大，表示当前窗口与卷积核的响应越强。</Typography>
+              <Typography variant="bodySmall" tone="muted" className="ck-window-scan__result-caption"><Tips size="36" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round" theme="multi-color" fill={['#EFA94B', '#FFF1D9', '#EFA94B']} /><span>得分越高，<br />当前位置越符合目标棋形。</span></Typography>
             </div>
           </div>
           <div className="ck-window-scan__instruction" role="status">
-            <span className="ck-window-scan__instruction-icon" aria-hidden="true"><Light size="25" strokeWidth={4} strokeLinecap="round" strokeLinejoin="round" theme="multi-color" fill={['#5B8DE8', '#E7EFFF', '#FFFFFF', '#5B8DE8']} /></span>
-            <Typography as="span" variant="body" tone="muted">拖动左侧窗口，找到激活值最大的位置。</Typography>
+            <span className="ck-window-scan__instruction-icon" aria-hidden="true"><Move size="27" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round" theme="multi-color" fill={['#5B8DE8', '#E7EFFF']} /></span>
+            <Typography as="span" variant="body" tone="muted">拖动左侧窗口，寻找匹配得分最高的位置。</Typography>
           </div>
         </div>
       </div>

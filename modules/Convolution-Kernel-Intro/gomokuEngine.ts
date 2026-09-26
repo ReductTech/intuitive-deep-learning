@@ -102,6 +102,54 @@ export function findWinLine(board: Board, row: number, col: number, player: Ston
   return best.length >= 5 ? best : [];
 }
 
+export type GomokuThreatLevel = 'green' | 'orange' | 'red';
+
+function wouldCompleteFive(board: Board, row: number, col: number, player: Player): boolean {
+  return DIRECTIONS.some(({ dr, dc }) => {
+    let length = 1;
+    for (const sign of [-1, 1]) {
+      for (let step = 1; step < 5; step += 1) {
+        const nextRow = row + dr * step * sign;
+        const nextCol = col + dc * step * sign;
+        if (!inBounds(nextRow, nextCol) || board[nextRow][nextCol] !== player) break;
+        length += 1;
+      }
+    }
+    return length >= 5;
+  });
+}
+
+function countWinningMoves(board: Board, player: Player, stopAfter: number): number {
+  let count = 0;
+  for (let row = 0; row < BOARD_SIZE; row += 1) {
+    for (let col = 0; col < BOARD_SIZE; col += 1) {
+      if (board[row][col] !== EMPTY || !wouldCompleteFive(board, row, col, player)) continue;
+      count += 1;
+      if (count >= stopAfter) return count;
+    }
+  }
+  return count;
+}
+
+/** 红：下一手能成五；橙：下一手能制造两个成五点；绿：当前没有这两种迫近威胁。 */
+export function getGomokuThreatLevel(board: Board, opponent: Player): GomokuThreatLevel {
+  const opponentStones = board.reduce((total, row) => total + row.filter((stone) => stone === opponent).length, 0);
+  if (opponentStones < 3) return 'green';
+  if (countWinningMoves(board, opponent, 1) > 0) return 'red';
+
+  const trial = cloneBoard(board);
+  for (let row = 0; row < BOARD_SIZE; row += 1) {
+    for (let col = 0; col < BOARD_SIZE; col += 1) {
+      if (trial[row][col] !== EMPTY) continue;
+      trial[row][col] = opponent;
+      const winningMoves = countWinningMoves(trial, opponent, 2);
+      trial[row][col] = EMPTY;
+      if (winningMoves >= 2) return 'orange';
+    }
+  }
+  return 'green';
+}
+
 /** 把一条获胜连线还原成方向说法，例如“斜 ↘”。 */
 export function winDirectionLabel(line: Cell[]): string {
   if (line.length < 2) return '';
@@ -314,20 +362,24 @@ export interface DemoPosition {
   winLine: Cell[];
 }
 
-/** 示例棋局：黑方在斜 ↘ 方向连成五子，用于课堂直接跳到终局。 */
+/** 示例棋局：中心开局、双方交替攻防，黑方最终以开放的斜线两端择一连五。 */
 export function buildDemoPosition(): DemoPosition {
   const board = createBoard();
   const history: Move[] = [];
-  const black: Array<[number, number]> = [[4, 3], [5, 4], [6, 5], [7, 6], [8, 7], [5, 8], [7, 4], [8, 5], [9, 5]];
-  const white: Array<[number, number]> = [[4, 6], [5, 6], [6, 7], [7, 8], [8, 8], [9, 6], [6, 3], [10, 5]];
-  black.forEach(([row, col]) => {
-    board[row][col] = BLACK;
-    history.push({ row, col, player: BLACK });
+  const moves: Array<[number, number]> = [
+    [7, 7], [7, 8], [7, 6], [8, 6], [6, 6], [8, 7],
+    [6, 7], [5, 7], [9, 6], [9, 7], [5, 5], [7, 5],
+    [5, 8], [6, 8], [4, 7], [9, 5], [8, 9], [6, 5],
+    [8, 8], [4, 4], [9, 9],
+  ];
+
+  moves.forEach(([row, col], index) => {
+    const player = index % 2 === 0 ? BLACK : WHITE;
+    board[row][col] = player;
+    history.push({ row, col, player });
   });
-  white.forEach(([row, col]) => {
-    board[row][col] = WHITE;
-    history.push({ row, col, player: WHITE });
-  });
-  const winLine = black.slice(0, 5).map(([row, col]) => ({ row, col }));
-  return { board, history, lastMove: { row: 8, col: 7, player: BLACK }, winLine };
+
+  const lastMove = history[history.length - 1];
+  const winLine = findWinLine(board, lastMove.row, lastMove.col, BLACK);
+  return { board, history, lastMove, winLine };
 }

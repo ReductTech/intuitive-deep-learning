@@ -34,6 +34,10 @@ export default defineConfig({
     },
   },
   server: {
+    // Windows 上 localhost 可能先解析到 ::1；单个双栈监听让 localhost 与 127.0.0.1 始终落到同一台开发服务器。
+    host: '::',
+    port: 5173,
+    strictPort: true,
     proxy: {
       '/__telemetry': {
         target: 'http://127.0.0.1:59411',

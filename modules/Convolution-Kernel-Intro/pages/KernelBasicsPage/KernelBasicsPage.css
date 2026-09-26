@@ -8,57 +8,60 @@
 }
 
 .course-shell .ck-convolution > .edu-content-head { max-width: none; margin-bottom: 0; }
-.course-shell .ck-convolution > .edu-content-body { display: grid; grid-template-rows: auto minmax(0, 1fr); gap: 14px; min-height: 0; }
+.course-shell .ck-convolution > .edu-content-body { display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: 14px; min-height: 0; }
+
+.course-shell .ck-convolution__explanation { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 18px; min-width: 0; }
 
 .course-shell .ck-convolution__definition {
   display: grid;
-  grid-template-columns: 104px minmax(0, 1fr) minmax(0, 1.14fr);
+  grid-template-columns: 88px minmax(0, 1fr);
+  grid-template-rows: auto auto;
   align-items: stretch;
   min-width: 0;
   border: 1px solid rgba(39, 68, 110, .14);
   border-radius: 10px;
-  background: linear-gradient(90deg, #e7eff8 0 104px, rgba(248, 250, 253, .96) 104px 100%);
+  background: linear-gradient(90deg, #e7eff8 0 88px, rgba(248, 250, 253, .96) 88px 100%);
 }
-.course-shell .ck-convolution__definition-label { display: grid; min-height: 116px; place-items: center; }
+.course-shell .ck-convolution__definition-label { display: grid; grid-row: 1 / 3; place-items: center; }
 .course-shell .ck-convolution__definition-label h3 { margin: 0; }
-.course-shell .ck-convolution__definition-copy { display: grid; align-content: center; gap: 6px; min-width: 0; padding: 16px 22px; }
+.course-shell .ck-convolution__definition-copy { display: grid; align-content: center; gap: 6px; min-width: 0; padding: 12px 18px 0; }
 .course-shell .ck-convolution__definition-copy .ui-typography { max-width: 100%; }
-.course-shell .ck-convolution__definition-formula { width: 100%; min-height: 116px; border: 0; background: transparent; padding: 12px 16px; }
+.course-shell .ck-convolution__definition-formula { width: 100%; min-height: 90px; border: 0; background: transparent; padding: 6px 12px 10px; }
 
-.course-shell .ck-convolution__workspace { display: grid; grid-template-columns: minmax(0, 1fr) minmax(380px, .42fr); gap: 24px; min-width: 0; min-height: 0; }
+.course-shell .ck-convolution__workspace { display: grid; min-width: 0; min-height: 0; }
 .course-shell .ck-convolution__flow { display: grid; grid-template-columns: minmax(0, 1fr) 38px minmax(150px, .44fr) 38px minmax(0, 1fr); align-items: center; gap: 10px; min-width: 0; min-height: 0; }
 .course-shell .ck-convolution__stage, .course-shell .ck-convolution__kernel-stage { display: grid; align-content: center; justify-items: center; gap: 5px; min-width: 0; min-height: 0; }
 .course-shell .ck-convolution__stage h2, .course-shell .ck-convolution__kernel-stage h2 { margin: 0; text-align: center; }
 .course-shell .ck-convolution__stage-note { max-width: 100%; text-align: center; }
 
-.course-shell .ck-convolution__image-frame { position: relative; width: min(100%, 430px); max-width: 100%; aspect-ratio: 16 / 9; overflow: hidden; border: 1px solid rgba(39, 68, 110, .18); border-radius: 8px; background: #e9edf3; box-shadow: 0 10px 22px rgba(33, 50, 74, .10); }
-.course-shell .ck-convolution__image-frame img { display: block; width: 100%; height: 100%; max-width: 100%; object-fit: cover; filter: grayscale(1) contrast(.9) brightness(1.04); }
+.course-shell .ck-convolution__image-frame { position: relative; width: min(100%, 370px); max-width: 100%; aspect-ratio: 16 / 9; overflow: hidden; border: 1px solid rgba(39, 68, 110, .18); border-radius: 8px; background: #e9edf3; box-shadow: 0 10px 22px rgba(33, 50, 74, .10); }
+.course-shell .ck-convolution__image-frame img { display: block; width: 100%; height: 100%; max-width: 100%; object-fit: contain; }
 .course-shell .ck-convolution__patch { position: absolute; box-sizing: border-box; border: 3px solid #3184dc; background: rgba(49, 132, 220, .13); box-shadow: 0 0 0 1px rgba(255, 255, 255, .84), 0 5px 14px rgba(49, 132, 220, .24); pointer-events: none; }
 .course-shell .ck-convolution__image-hover-target { position: absolute; inset: 0; z-index: 4; cursor: crosshair; }
 
 .course-shell .ck-convolution__matrix, .course-shell .ck-convolution__output-map { display: grid; gap: 2px; width: 100%; max-width: 100%; min-width: 0; border: 1px solid rgba(39, 68, 110, .18); border-radius: 7px; background: rgba(39, 68, 110, .16); padding: 2px; }
-.course-shell .ck-convolution__kernel-matrix { width: min(100%, 154px); aspect-ratio: 1; }
+.course-shell .ck-convolution__kernel-matrix { width: min(100%, 138px); aspect-ratio: 1; }
 .course-shell .ck-convolution__matrix-cell { display: grid; place-items: center; min-width: 0; aspect-ratio: 1; background: #fff; }
 .course-shell .ck-convolution__matrix-cell.is-negative { background: rgba(39, 68, 110, .11); color: var(--ui-accent); }
 .course-shell .ck-convolution__matrix-cell.is-positive { background: rgba(240, 126, 71, .17); color: var(--ui-accent-alt); }
 
-.course-shell .ck-convolution__output-map { position: relative; display: block; width: min(100%, 430px); aspect-ratio: 14 / 7; overflow: hidden; background: #edf2f7; }
+.course-shell .ck-convolution__output-map { position: relative; display: block; width: min(100%, 370px); aspect-ratio: 16 / 9; overflow: hidden; background: #edf2f7; }
 .course-shell .ck-convolution__output-map::after { position: absolute; inset: 0; z-index: 3; border: 1px solid rgba(255, 255, 255, .55); content: ''; pointer-events: none; }
 .course-shell .ck-convolution__output-canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; background: #edf2f7; image-rendering: auto; }
-.course-shell .ck-convolution__output-grid { position: absolute; inset: 0; z-index: 2; display: grid; grid-template-rows: repeat(7, minmax(0, 1fr)); }
+.course-shell .ck-convolution__output-grid { position: absolute; inset: 0; z-index: 2; display: grid; }
 .course-shell .ck-convolution__output-cell { appearance: none; display: block; min-width: 0; min-height: 0; overflow: hidden; border: 0; border-radius: 0; background: transparent; cursor: pointer; padding: 0; }
 .course-shell .ck-convolution__output-cell.is-selected { outline: 3px solid #3184dc; outline-offset: -3px; box-shadow: inset 0 0 0 2px #fff; }
 .course-shell .ck-convolution__output-cell:focus-visible { outline: 3px solid var(--ui-accent-alt); outline-offset: -3px; }
 .course-shell .ck-convolution__flow-arrow { display: grid; place-items: center; min-width: 0; }
 .course-shell .ck-convolution__flow-arrow .ui-typography { margin: 0; }
 
-.course-shell .ck-convolution__features { display: grid; align-content: start; gap: 18px; min-width: 0; min-height: 0; border-left: 1px solid rgba(39, 68, 110, .15); padding: 10px 0 8px 22px; }
+.course-shell .ck-convolution__features { display: grid; align-content: start; gap: 12px; min-width: 0; min-height: 0; border-left: 1px solid rgba(39, 68, 110, .15); padding: 10px 0 8px 22px; }
 .course-shell .ck-convolution__features h2 { margin: 0; }
-.course-shell .ck-convolution__feature-list { display: grid; gap: 14px; min-width: 0; }
+.course-shell .ck-convolution__feature-list { display: grid; gap: 9px; min-width: 0; }
 .course-shell .ck-convolution__feature-item { display: grid; grid-template-columns: 52px minmax(0, 1fr); align-items: start; gap: 14px; min-width: 0; }
-.course-shell .ck-convolution__feature-number { display: grid; width: 52px; height: 52px; place-items: center; border-radius: 50%; background: #e7eff8; color: var(--ui-accent); font-size: 28px; font-weight: 800; }
+.course-shell .ck-convolution__feature-number { display: grid; width: 52px; height: 52px; place-items: center; border-radius: 50%; background: #e7eff8; color: var(--ui-accent); }
 .course-shell .ck-convolution__feature-item h3 { margin: 0 0 4px; }
 .course-shell .ck-convolution__feature-item .ui-typography { max-width: 100%; }
 .course-shell .ck-convolution__value { color: var(--ui-accent-alt); font-weight: 700; }
-.course-shell .ck-convolution__loading { display: grid; place-items: center; width: 100%; aspect-ratio: 14 / 7; border: 1px solid var(--ui-border); background: var(--ui-bg-muted); }
+.course-shell .ck-convolution__loading { display: grid; place-items: center; width: 100%; aspect-ratio: 16 / 9; border: 1px solid var(--ui-border); background: var(--ui-bg-muted); }
 .course-page-surface .ck-convolution { width: 100%; height: 100%; min-height: 0; }

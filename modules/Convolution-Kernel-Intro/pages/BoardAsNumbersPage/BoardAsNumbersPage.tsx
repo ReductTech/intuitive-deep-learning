@@ -287,9 +287,9 @@ export function BoardAsNumbersPage({ onComplete }: BoardAsNumbersPageProps) {
   const winnerIcon = outcome.winner === BLACK ? 'black' : 'white';
   const loserIcon = outcome.winner === BLACK ? 'white' : 'black';
   const tiles: MapTile[] = [
-    { key: 'winner', label: '赢方', icon: winnerIcon, value: 1 },
-    { key: 'loser', label: '输方', icon: loserIcon, value: -1 },
-    { key: 'empty', label: '空点', icon: 'empty', value: 0 },
+    { key: 'winner', label: '目标棋子', icon: winnerIcon, value: 1 },
+    { key: 'loser', label: '对手棋子', icon: loserIcon, value: -1 },
+    { key: 'empty', label: '空位', icon: 'empty', value: 0 },
   ];
 
   // 指针进过窗口就算这一页走通了：这一页只需要看懂「棋形 = 数字」。
@@ -315,22 +315,19 @@ export function BoardAsNumbersPage({ onComplete }: BoardAsNumbersPageProps) {
     <ContentBlock
       headingLevel={1}
       className="ck-numbers"
-      title="把棋形变成数字"
-      subtitle="棋盘上每个位置，最后都写成一个数字。"
+      title="棋盘局部区域的数值表示"
+      subtitle="将棋子与空位映射为数值，得到对应的局部矩阵。"
     >
       <div className="ck-numbers__layout">
         <div className="ck-numbers__stage">
-          <div className="ck-numbers__step-heading"><span>1</span><div><Typography as="h2" variant="h3" tone="accent">观察局部棋形</Typography><Typography variant="bodySmall" tone="muted">先只看这一小块区域。</Typography></div></div>
+          <div className="ck-numbers__step-heading"><span>1</span><div><Typography as="h2" variant="h3" tone="accent">局部区域选取</Typography><Typography variant="bodySmall" tone="muted">选取五子连线附近的局部棋盘。</Typography></div></div>
           <NumbersBoard board={board} winLine={outcome.winLine} spotlight={focus} origin={zoom.origin} label={boardLabel} />
         </div>
 
         <FlowArrow />
 
         <div className="ck-numbers__map">
-          <Typography as="h2" variant="h3" tone="accent" className="ck-numbers__map-title">
-            编码规则
-          </Typography>
-          <Typography variant="bodySmall" tone="muted" className="ck-numbers__map-subtitle">用数字表示每个位置的棋子类型。</Typography>
+          <div className="ck-numbers__step-heading"><span>2</span><div><Typography as="h2" variant="h3" tone="accent">数值编码规则</Typography><Typography variant="bodySmall" tone="muted">目标棋子记为 1，对手棋子记为 −1，空位记为 0。</Typography></div></div>
           <div className="ck-numbers__map-tiles">
             {tiles.map((tile) => {
               const kind = tile.value === 1 ? 'one' : tile.value === -1 ? 'minus' : 'zero';
@@ -357,7 +354,7 @@ export function BoardAsNumbersPage({ onComplete }: BoardAsNumbersPageProps) {
         <FlowArrow />
 
         <div className="ck-numbers__panel">
-          <div className="ck-numbers__step-heading"><span>3</span><div><Typography as="h2" variant="h3" tone="accent">对应的数字块</Typography><Typography variant="bodySmall" tone="muted">把左边的局部棋形写成数字矩阵。</Typography></div></div>
+          <div className="ck-numbers__step-heading"><span>3</span><div><Typography as="h2" variant="h3" tone="accent">局部矩阵表示</Typography><Typography variant="bodySmall" tone="muted">按照相同的空间位置排列对应数值。</Typography></div></div>
           <div className="ck-numbers__matrix">
             <div className="ck-numbers__matrix-corner" aria-hidden="true" />
 

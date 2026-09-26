@@ -8,16 +8,22 @@
 .course-shell .ck-correlation__panel-head h2 { margin: 0; }
 .course-shell .ck-correlation__panel-head h2 span { font-size: .66em; font-weight: 600; }
 .course-shell .ck-correlation__formula { width: 100%; min-height: 76px; padding: 10px 12px; }
-.course-shell .ck-correlation__operation { display: grid; grid-template-columns: minmax(0, 1fr) 24px minmax(0, 1fr) 24px minmax(84px, .52fr); align-items: center; gap: 6px; min-width: 0; }
+.course-shell .ck-correlation__sum { display: inline-grid; flex: 0 0 auto; justify-items: center; align-items: center; line-height: 1; }
+.course-shell .ck-correlation__sum-bound { display: inline-flex; align-items: center; font-size: .55em; line-height: 1; }
+.course-shell .ck-correlation__sum-symbol { font-size: 1.55em; line-height: 1; }
+.course-shell .ck-correlation__operation { display: grid; grid-template-columns: minmax(0, 1fr) 28px minmax(0, 1fr) 54px minmax(84px, .52fr); align-items: center; gap: 6px; min-width: 0; }
 .course-shell .ck-correlation__object { display: grid; align-content: center; justify-items: center; gap: 5px; min-width: 0; }
 .course-shell .ck-correlation__object > .ui-typography { text-align: center; }
 .course-shell .ck-correlation__matrix { display: grid; gap: 2px; width: min(100%, 168px); max-width: 100%; aspect-ratio: 1; border: 1px solid #8fb8e8; border-radius: 5px; background: rgba(49, 132, 220, .18); padding: 2px; }
 .course-shell .ck-correlation__matrix.is-warm { border-color: rgba(240, 126, 71, .60); background: rgba(240, 126, 71, .17); }
 .course-shell .ck-correlation__matrix-cell { display: grid; place-items: center; min-width: 0; min-height: 0; background: rgba(255, 255, 255, .96); font-variant-numeric: tabular-nums; }
+.course-shell .ck-correlation__matrix-cell.is-kernel-row-1 { background: #e6f0ff; }
+.course-shell .ck-correlation__matrix-cell.is-kernel-row-2 { background: #fff1dc; }
+.course-shell .ck-correlation__matrix-cell.is-kernel-row-3 { background: #e6f4e9; }
 .course-shell .ck-correlation__matrix-cell .math-formula-static { color: var(--ui-text-main); font-size: 1.28rem; font-weight: 650; }
 .course-shell .ck-correlation__multiply, .course-shell .ck-correlation__arrow { display: grid; place-items: center; min-width: 0; }
 .course-shell .ck-correlation__multiply { font-size: 2.5rem; }
-.course-shell .ck-correlation__arrow { font-size: 2.8rem; }
+.course-shell .ck-correlation__arrow { font-size: 3rem; transform: translateY(14px); }
 .course-shell .ck-correlation__output { display: grid; align-content: center; justify-items: center; gap: 5px; min-width: 0; min-height: 96px; border: 1px solid var(--ui-accent); border-radius: 6px; background: #f5f8fd; padding: 8px 4px; }
 .course-shell .ck-correlation__output .math-formula-static { color: var(--ui-accent); font-size: 1.34rem; font-weight: 700; }
 .course-shell .ck-correlation__conclusion { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 10px; min-width: 0; border: 1px solid rgba(49, 132, 220, .42); border-radius: 8px; background: rgba(230, 238, 247, .72); padding: 10px 16px; }

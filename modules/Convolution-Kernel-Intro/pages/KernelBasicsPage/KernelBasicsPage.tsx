@@ -1,22 +1,58 @@
 import { useEffect, useRef, useState } from 'react';
 import { ContentBlock, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, Typography } from '../../../shared/react';
-import buildingImage from '../../assets/xiandaijianzhu.png';
+import cityImage from '../../assets/mengdelian.png';
+import bridgeImage from '../../assets/xielaqiao.png';
+import { useGomokuOutcome } from '../../LessonContext';
 import './KernelBasicsPage.css';
 
 const GRID_WIDTH = 16;
 const GRID_HEIGHT = 9;
 const KERNEL_SIZE = 3;
 const DOWNSAMPLE_FACTOR = 4;
-const PREVIEW_WIDTH = 14;
-const PREVIEW_HEIGHT = 7;
+const PREVIEW_WIDTH = GRID_WIDTH - KERNEL_SIZE + 1;
+const PREVIEW_HEIGHT = GRID_HEIGHT - KERNEL_SIZE + 1;
 const INITIAL_POSITION = { row: 3, col: 6 };
 
-/** A simple vertical-edge detector, applied directly as cross-correlation. */
-const KERNEL = [
-  [-1, 0, 1],
-  [-1, 0, 1],
-  [-1, 0, 1],
-];
+type FilterDirection = 'horizontal' | 'vertical' | 'descending' | 'ascending';
+
+const FILTERS: Record<FilterDirection, { image: string; name: string; kernel: number[][]; scale: number }> = {
+  horizontal: {
+    image: cityImage,
+    name: '水平直线检测核',
+    kernel: [[-1, -2, -1], [0, 0, 0], [1, 2, 1]],
+    scale: 4,
+  },
+  vertical: {
+    image: cityImage,
+    name: '竖直直线检测核',
+    kernel: [[-1, 0, 1], [-2, 0, 2], [-1, 0, 1]],
+    scale: 4,
+  },
+  descending: {
+    image: bridgeImage,
+    name: '斜线检测核 ↘',
+    kernel: [[2, -1, -1], [-1, 2, -1], [-1, -1, 2]],
+    scale: 6,
+  },
+  ascending: {
+    image: bridgeImage,
+    name: '斜线检测核 ↙',
+    kernel: [[-1, -1, 2], [-1, 2, -1], [2, -1, -1]],
+    scale: 6,
+  },
+};
+
+function directionFromDesign(designedKernel: number[][] | null): FilterDirection {
+  if (!designedKernel) return 'descending';
+  const size = designedKernel.length;
+  const scores: { direction: FilterDirection; count: number }[] = [
+    { direction: 'horizontal', count: Math.max(...designedKernel.map(row => row.filter(value => value === 1).length)) },
+    { direction: 'vertical', count: Math.max(...designedKernel[0].map((_, col) => designedKernel.reduce((sum, row) => sum + Number(row[col] === 1), 0))) },
+    { direction: 'descending', count: designedKernel.reduce((sum, row, index) => sum + Number(row[index] === 1), 0) },
+    { direction: 'ascending', count: designedKernel.reduce((sum, row, index) => sum + Number(row[size - 1 - index] === 1), 0) },
+  ];
+  return scores.reduce((best, current) => current.count > best.count ? current : best).direction;
+}
 
 interface ConvolutionData {
   inputImageUrl?: string;
@@ -44,11 +80,12 @@ function crossCorrelation(input: Float32Array, inputWidth: number, inputHeight: 
   return { output, outputWidth, outputHeight };
 }
 
-function useConvolutionData(): ConvolutionData | null {
+function useConvolutionData(imageSource: string, kernel: number[][]): ConvolutionData | null {
   const [data, setData] = useState<ConvolutionData | null>(null);
 
   useEffect(() => {
     let active = true;
+    setData(null);
     const image = new Image();
     image.onload = () => {
       if (!active) return;
@@ -61,17 +98,23 @@ function useConvolutionData(): ConvolutionData | null {
       if (!context) return;
       // Downsample first: each new pixel represents a 4 x 4 block of the source image.
       context.drawImage(image, 0, 0, inputWidth, inputHeight);
-      const pixels = context.getImageData(0, 0, inputWidth, inputHeight).data;
+      const imageData = context.getImageData(0, 0, inputWidth, inputHeight);
+      const pixels = imageData.data;
       const input = new Float32Array(inputWidth * inputHeight);
       for (let row = 0; row < inputHeight; row += 1) for (let col = 0; col < inputWidth; col += 1) {
         const offset = (row * inputWidth + col) * 4;
-        input[row * inputWidth + col] = (0.299 * pixels[offset] + 0.587 * pixels[offset + 1] + 0.114 * pixels[offset + 2]) / 255;
+        const luminance = Math.round(0.299 * pixels[offset] + 0.587 * pixels[offset + 1] + 0.114 * pixels[offset + 2]);
+        input[row * inputWidth + col] = luminance / 255;
+        pixels[offset] = luminance;
+        pixels[offset + 1] = luminance;
+        pixels[offset + 2] = luminance;
       }
-      setData({ ...crossCorrelation(input, inputWidth, inputHeight, KERNEL), inputImageUrl: canvas.toDataURL('image/png') });
+      context.putImageData(imageData, 0, 0);
+      setData({ ...crossCorrelation(input, inputWidth, inputHeight, kernel), inputImageUrl: canvas.toDataURL('image/png') });
     };
-    image.src = buildingImage;
+    image.src = imageSource;
     return () => { active = false; };
-  }, []);
+  }, [imageSource, kernel]);
 
   return data;
 }
@@ -97,15 +140,15 @@ function InputImage({ selected, imageSrc, onHover }: { selected: { row: number; 
   };
   return (
     <div className="ck-convolution__image-frame">
-      <img src={imageSrc} alt="缩小后的建筑灰度图，用于卷积演示" />
+      <img src={imageSrc} alt="缩小后的灰度图，用于卷积演示" />
       <div className="ck-convolution__patch" style={patchStyle} aria-hidden="true" />
       <div
         className="ck-convolution__image-hover-target"
         aria-hidden="true"
         onPointerMove={(event) => {
           const rect = event.currentTarget.getBoundingClientRect();
-          const col = Math.max(0, Math.min(PREVIEW_WIDTH - 1, Math.floor(((event.clientX - rect.left) / rect.width) * GRID_WIDTH)));
-          const row = Math.max(0, Math.min(PREVIEW_HEIGHT - 1, Math.floor(((event.clientY - rect.top) / rect.height) * GRID_HEIGHT)));
+          const col = Math.max(0, Math.min(PREVIEW_WIDTH - 1, Math.floor(((event.clientX - rect.left) / rect.width) * GRID_WIDTH - KERNEL_SIZE / 2)));
+          const row = Math.max(0, Math.min(PREVIEW_HEIGHT - 1, Math.floor(((event.clientY - rect.top) / rect.height) * GRID_HEIGHT - KERNEL_SIZE / 2)));
           onHover({ row, col });
         }}
       />
@@ -113,8 +156,8 @@ function InputImage({ selected, imageSrc, onHover }: { selected: { row: number; 
   );
 }
 
-/** Render every pixel of the actual response matrix. The fixed [-3, 3] range follows from this kernel and input pixels in [0, 1]. */
-function ResponseCanvas({ output, width, height }: { output: Float32Array; width: number; height: number }) {
+/** Signed filter responses are shown by magnitude, while the underlying matrix retains its sign. */
+function ResponseCanvas({ output, width, height, scale }: { output: Float32Array; width: number; height: number; scale: number }) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
@@ -128,10 +171,8 @@ function ResponseCanvas({ output, width, height }: { output: Float32Array; width
     output.forEach((value, index) => {
       const rowIndex = Math.floor(index / width);
       const colIndex = index % width;
-      // Keep a fixed display scale; never normalize against the current image's maximum response.
-      const normalized = Math.max(-1, Math.min(1, value));
-      const strength = Math.abs(normalized);
-      const gray = Math.round(248 - strength * 210);
+      const normalized = Math.max(0, Math.min(1, Math.abs(value) / scale));
+      const gray = Math.round(normalized * 255);
       const offset = (rowIndex * width + colIndex) * 4;
       pixels.data[offset] = gray;
       pixels.data[offset + 1] = gray;
@@ -139,12 +180,12 @@ function ResponseCanvas({ output, width, height }: { output: Float32Array; width
       pixels.data[offset + 3] = 255;
     });
     context.putImageData(pixels, 0, 0);
-  }, [output, width, height]);
+  }, [output, width, height, scale]);
 
   return <canvas ref={canvasRef} className="ck-convolution__output-canvas" aria-hidden="true" />;
 }
 
-function OutputMap({ data, selected, onSelect }: { data: ConvolutionData; selected: { row: number; col: number }; onSelect: (position: { row: number; col: number }) => void }) {
+function OutputMap({ data, selected, scale, onSelect }: { data: ConvolutionData; selected: { row: number; col: number }; scale: number; onSelect: (position: { row: number; col: number }) => void }) {
   const sampleAt = (row: number, col: number) => {
     const sourceRow = Math.round(row * (data.outputHeight - 1) / (PREVIEW_HEIGHT - 1));
     const sourceCol = Math.round(col * (data.outputWidth - 1) / (PREVIEW_WIDTH - 1));
@@ -152,8 +193,8 @@ function OutputMap({ data, selected, onSelect }: { data: ConvolutionData; select
   };
   return (
     <div className="ck-convolution__output-map">
-      <ResponseCanvas output={data.output} width={data.outputWidth} height={data.outputHeight} />
-      <div className="ck-convolution__output-grid" role="grid" aria-label="卷积输出特征图，点击任意位置查看该位置的响应" style={{ gridTemplateColumns: `repeat(${PREVIEW_WIDTH}, minmax(0, 1fr))` }}>
+      <ResponseCanvas output={data.output} width={data.outputWidth} height={data.outputHeight} scale={scale} />
+      <div className="ck-convolution__output-grid" role="grid" aria-label="卷积输出特征图，点击任意位置查看该位置的响应" style={{ gridTemplateColumns: `repeat(${PREVIEW_WIDTH}, minmax(0, 1fr))`, gridTemplateRows: `repeat(${PREVIEW_HEIGHT}, minmax(0, 1fr))` }}>
         {Array.from({ length: PREVIEW_WIDTH * PREVIEW_HEIGHT }, (_, index) => {
           const rowIndex = Math.floor(index / PREVIEW_WIDTH);
           const colIndex = index % PREVIEW_WIDTH;
@@ -181,7 +222,10 @@ export interface KernelBasicsPageProps {
 }
 
 export function KernelBasicsPage({ onComplete }: KernelBasicsPageProps) {
-  const data = useConvolutionData();
+  const { designedKernel } = useGomokuOutcome();
+  const filter = FILTERS[directionFromDesign(designedKernel)];
+  const data = useConvolutionData(filter.image, filter.kernel);
+  const responseScale = filter.scale;
   const [selected, setSelected] = useState(INITIAL_POSITION);
   const completedRef = useRef(false);
   const selectOutput = (position: { row: number; col: number }) => {
@@ -199,27 +243,12 @@ export function KernelBasicsPage({ onComplete }: KernelBasicsPageProps) {
       title="卷积核"
       subtitle="卷积核是一个较小的权重矩阵，用来提取输入图像中的局部模式。"
     >
-      <div className="ck-convolution__definition">
-        <div className="ck-convolution__definition-label"><Typography as="span" variant="h3" tone="accent">定义</Typography></div>
-        <div className="ck-convolution__definition-copy">
-          <Typography variant="body">卷积核 <strong>W</strong> 在输入图像 <strong>X</strong> 的局部区域上滑动，逐元素相乘并求和，得到输出值 <strong>Y</strong>。</Typography>
-          <Typography variant="bodySmall" tone="muted">一个局部窗口对应输出特征图中的一个位置。</Typography>
-        </div>
-        <MathFormulaBlock ariaLabel="二维互相关公式" className="ck-convolution__definition-formula">
-          <MathFormulaTerm latex="Y_{i,j}" tooltip="Y：输出特征图在位置 i,j 的值。" ariaLabel="Y i j，输出值" />
-          <MathFormulaStatic latex="=" />
-          <MathFormulaStatic latex="\sum_{u=0}^{K_h-1}\sum_{v=0}^{K_w-1}" />
-          <MathFormulaTerm latex="W_{u,v}" tooltip="W：卷积核中的权重。" ariaLabel="W u v，卷积核权重" />
-          <MathFormulaTerm latex="X_{i+u,j+v}" tooltip="X：输入图像中对应局部窗口的像素。" ariaLabel="X i 加 u，j 加 v，输入像素" />
-        </MathFormulaBlock>
-      </div>
-
       <div className="ck-convolution__workspace">
         <section className="ck-convolution__flow" aria-label="输入图像、卷积核与输出特征图">
           <div className="ck-convolution__stage">
             <Typography as="h2" variant="h3" tone="accent">输入图像 X</Typography>
             <Typography variant="bodySmall" tone="muted">灰度图，单通道 · 每个像素对应原图 4×4 区域</Typography>
-            <InputImage selected={selected} imageSrc={data?.inputImageUrl ?? buildingImage} onHover={selectOutput} />
+            <InputImage selected={selected} imageSrc={data?.inputImageUrl ?? filter.image} onHover={selectOutput} />
             <Typography variant="bodySmall" tone="muted" className="ck-convolution__stage-note">蓝框：当前取出的局部区域</Typography>
           </div>
 
@@ -227,20 +256,36 @@ export function KernelBasicsPage({ onComplete }: KernelBasicsPageProps) {
 
           <div className="ck-convolution__kernel-stage">
             <Typography as="h2" variant="h3" tone="accent">卷积核 W</Typography>
-            <Typography variant="bodySmall" tone="muted">示例：竖直边缘</Typography>
-            <Matrix values={KERNEL} label="原始卷积核 W" className="ck-convolution__kernel-matrix" />
+            <Typography variant="bodySmall" tone="muted">{filter.name}</Typography>
+            <Matrix values={filter.kernel} label={`${filter.name}`} className="ck-convolution__kernel-matrix" />
           </div>
 
           <div className="ck-convolution__flow-arrow" aria-hidden="true"><Typography as="span" variant="h2" tone="accent">→</Typography></div>
 
           <div className="ck-convolution__stage">
             <Typography as="h2" variant="h3" tone="accent">输出特征图 Y</Typography>
-            <Typography variant="bodySmall" tone="muted">每个位置代表一次局部响应</Typography>
-            {data ? <OutputMap data={data} selected={selected} onSelect={selectOutput} /> : <div className="ck-convolution__loading"><Typography variant="bodySmall" tone="muted">正在读取图像…</Typography></div>}
+            <Typography variant="bodySmall" tone="muted">亮度表示局部响应的强度 |Y|</Typography>
+            {data ? <OutputMap data={data} selected={selected} scale={responseScale} onSelect={selectOutput} /> : <div className="ck-convolution__loading"><Typography variant="bodySmall" tone="muted">正在读取图像…</Typography></div>}
             <Typography variant="bodySmall" tone="muted" className="ck-convolution__stage-note">悬浮或点击，查看当前位置的响应</Typography>
           </div>
         </section>
+      </div>
 
+      <div className="ck-convolution__explanation">
+        <div className="ck-convolution__definition">
+          <div className="ck-convolution__definition-label"><Typography as="span" variant="h3" tone="accent">定义</Typography></div>
+          <div className="ck-convolution__definition-copy">
+            <Typography variant="body">卷积核 <strong>W</strong> 在输入图像 <strong>X</strong> 的局部区域上滑动，逐元素相乘并求和，得到输出值 <strong>Y</strong>。</Typography>
+            <Typography variant="bodySmall" tone="muted">一个局部窗口对应输出特征图中的一个位置。</Typography>
+          </div>
+          <MathFormulaBlock ariaLabel="二维互相关公式" className="ck-convolution__definition-formula">
+            <MathFormulaTerm latex="Y_{i,j}" tooltip="Y：输出特征图在位置 i,j 的值。" ariaLabel="Y i j，输出值" />
+            <MathFormulaStatic latex="=" />
+            <MathFormulaStatic latex="\sum_{u=0}^{K_h-1}\sum_{v=0}^{K_w-1}" />
+            <MathFormulaTerm latex="W_{u,v}" tooltip="W：卷积核中的权重。" ariaLabel="W u v，卷积核权重" />
+            <MathFormulaTerm latex="X_{i+u,j+v}" tooltip="X：输入图像中对应局部窗口的像素。" ariaLabel="X i 加 u，j 加 v，输入像素" />
+          </MathFormulaBlock>
+        </div>
         <aside className="ck-convolution__features" aria-labelledby="convolution-features-title">
           <Typography as="h2" variant="h3" tone="accent" id="convolution-features-title">卷积核的关键特征</Typography>
           <div className="ck-convolution__feature-list">

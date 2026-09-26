@@ -39,28 +39,28 @@ export interface ConvolutionCourseItem {
 export const convolutionCourse: ConvolutionCourseItem[] = [
   {
     id: 'gomoku-play',
-    title: '五子连线在哪里？',
+    title: '从五子棋开始认识卷积核',
     section: '从一局五子棋开始',
     revealMode: 'cue',
     component: (context) => <GomokuPlayPage onComplete={context.complete} />,
   },
   {
     id: 'board-as-numbers',
-    title: '把棋形变成数字',
+    title: '棋盘局部区域的数值表示',
     section: '从一局五子棋开始',
     revealMode: 'cue',
     component: (context) => <BoardAsNumbersPage onComplete={context.complete} />,
   },
   {
     id: 'window-scan',
-    title: '拖着窗口，找出激活值最大的地方',
+    title: '棋形的局部匹配',
     section: '从一局五子棋开始',
     revealMode: 'cue',
     component: (context) => <WindowScanPage onComplete={context.complete} />,
   },
   {
     id: 'kernel-design',
-    title: '棋盘转了向，重新排一个卷积核',
+    title: '根据棋形调整模板',
     section: '从一局五子棋开始',
     revealMode: 'cue',
     component: (context) => <KernelDesignPage onComplete={context.complete} />,

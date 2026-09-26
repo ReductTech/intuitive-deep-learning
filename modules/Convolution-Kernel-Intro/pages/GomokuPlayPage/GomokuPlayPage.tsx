@@ -10,6 +10,7 @@ import {
 } from 'react';
 import { Button, ContentBlock, Typography } from '../../../shared/react';
 import { useGomokuOutcome } from '../../LessonContext';
+import bgVideo from '../../assets/bg_video.mp4';
 import {
   BLACK,
   BOARD_SIZE,
@@ -18,8 +19,8 @@ import {
   buildDemoPosition,
   computeComputerMove,
   createBoard,
+  getGomokuThreatLevel,
   placeStone,
-  winDirectionLabel,
   type GomokuDifficulty,
   type Board,
   type Cell,
@@ -359,58 +360,18 @@ interface GameState {
   draw: boolean;
 }
 
-type SituationTone = 'red' | 'orange' | 'green' | 'neutral';
+type SituationTone = 'red' | 'orange' | 'green';
 
 interface Situation {
   tone: SituationTone;
   label: string;
-  detail: string;
-}
-
-function countWinningMoves(board: Board, player: Stone): number {
-  let total = 0;
-  for (let row = 0; row < BOARD_SIZE; row += 1) {
-    for (let col = 0; col < BOARD_SIZE; col += 1) {
-      if (board[row][col] !== EMPTY) continue;
-      if (placeStone(board, { row, col }, player).winLine.length >= 5) total += 1;
-    }
-  }
-  return total;
-}
-
-function countOpenFourThreats(board: Board, player: Stone): number {
-  const directions = [[0, 1], [1, 0], [1, 1], [1, -1]] as const;
-  let total = 0;
-  directions.forEach(([dr, dc]) => {
-    for (let row = 0; row < BOARD_SIZE; row += 1) {
-      for (let col = 0; col < BOARD_SIZE; col += 1) {
-        const beforeRow = row - dr;
-        const beforeCol = col - dc;
-        const afterRow = row + dr * 4;
-        const afterCol = col + dc * 4;
-        if (beforeRow < 0 || beforeRow >= BOARD_SIZE || beforeCol < 0 || beforeCol >= BOARD_SIZE || afterRow < 0 || afterRow >= BOARD_SIZE || afterCol < 0 || afterCol >= BOARD_SIZE) continue;
-        if (board[beforeRow][beforeCol] !== EMPTY || board[afterRow][afterCol] !== EMPTY) continue;
-        let line = true;
-        for (let step = 0; step < 4; step += 1) {
-          if (board[row + dr * step][col + dc * step] !== player) line = false;
-        }
-        if (line) total += 1;
-      }
-    }
-  });
-  return total;
 }
 
 function getSituation(board: Board): Situation {
-  const humanWins = countWinningMoves(board, HUMAN);
-  const computerWins = countWinningMoves(board, COMPUTER);
-  const humanOpenFour = countOpenFourThreats(board, HUMAN);
-  const computerOpenFour = countOpenFourThreats(board, COMPUTER);
-  if (computerWins > 0) return { tone: 'red', label: '对手快赢了', detail: '白方下一步就能连成五子' };
-  if (humanWins > 0) return { tone: 'green', label: '胜券在握', detail: '黑方下一步就能连成五子' };
-  if (computerOpenFour > 0) return { tone: 'orange', label: '对手领先', detail: '白方的四子线两端都还留着空位' };
-  if (humanOpenFour > 0) return { tone: 'green', label: '优势在我', detail: '黑方已经连出有潜力的四子线' };
-  return { tone: 'neutral', label: '局势安全', detail: '双方正在布局，留意棋子之间的连线' };
+  const tone = getGomokuThreatLevel(board, COMPUTER);
+  if (tone === 'red') return { tone, label: '对手已连四' };
+  if (tone === 'orange') return { tone, label: '必须防守' };
+  return { tone, label: '放心落子' };
 }
 
 function createGame(): GameState {
@@ -560,46 +521,47 @@ export function GomokuPlayPage({ onComplete }: GomokuPlayPageProps) {
   const status = useMemo<{ text: string; stone: 'black' | 'white'; accent: boolean }>(() => {
     if (game.winner !== EMPTY) {
       return {
-        text: `${game.winner === HUMAN ? '黑胜' : '白胜'} · ${winDirectionLabel(game.winLine)}`,
+        text: game.winner === HUMAN ? '你获胜' : 'AI 获胜',
         stone: game.winner === HUMAN ? 'black' : 'white',
         accent: true,
       };
     }
     if (game.draw) return { text: '平局', stone: 'black', accent: true };
     return game.turn === 'human'
-      ? { text: '轮到你了 · 黑方', stone: 'black', accent: false }
-      : { text: 'AI 思考中 · 白方', stone: 'white', accent: false };
+      ? { text: '轮到你', stone: 'black', accent: false }
+      : { text: '轮到 AI', stone: 'white', accent: false };
   }, [game]);
 
-  const situation = useMemo(() => getSituation(game.board), [game.board]);
+  const situation = useMemo(() => difficulty === 'easy' ? getSituation(game.board) : null, [game.board, difficulty]);
 
   return (
     <ContentBlock className="ck-gomoku-play" aria-label="十五路五子棋对局：你执黑，AI 执白">
+      <video className="ck-gomoku-play__background-video" autoPlay muted loop playsInline aria-hidden="true">
+        <source src={bgVideo} type="video/mp4" />
+      </video>
       <div className="ck-gomoku-play__layout">
         <aside className="ck-gomoku-play__rail">
           <div className="ck-gomoku-play__intro">
-            <Typography as="h1" variant="h1" tone="accent">五子连线在哪里？</Typography>
-            <Typography variant="subtitle" tone="muted">五颗棋子连成一线，却可能出现在不同位置、不同方向。计算机怎样找到它？</Typography>
+            <Typography as="h1" variant="h1" tone="accent">从五子棋开始<br />认识卷积核</Typography>
           </div>
-          <div className="ck-gomoku-play__callout"><span className="ck-gomoku-play__callout-icon" aria-hidden="true">✦</span><div><Typography as="strong" variant="body" tone="accent">完成一局五子棋。</Typography><Typography as="p" variant="bodySmall" tone="muted">你执黑，与 AI 下完一局。终局棋盘会变成数字，再由一个小窗口寻找其中的获胜连线。</Typography></div></div>
-
+          <div className="ck-gomoku-play__brief">
+            <Typography as="p" variant="subtitle" tone="main">先来下一局五子棋。</Typography>
+            <Typography as="p" variant="subtitle" tone="main">你执黑，与 AI 对弈。</Typography>
+          </div>
         </aside>
 
         <div className="ck-gomoku-play__main">
           <div className="ck-gomoku-play__status" aria-live="polite">
             <div className="ck-gomoku-play__panel-heading"><Typography as="span" variant="bodySmall" tone="muted">对局面板</Typography><span aria-hidden="true" className="ck-gomoku-play__panel-line" /></div>
-            <div className="ck-gomoku-play__match-summary">
-              <div className="ck-gomoku-play__status-player"><span className={`ck-gomoku-play__turn ck-gomoku-play__turn--${status.stone}`} aria-hidden="true" /><div><Typography as="strong" variant="body" tone={status.accent ? 'accent' : 'main'}>{status.text}</Typography><Typography as="span" variant="bodySmall" tone="muted">{game.turn === 'human' ? '你执黑' : game.turn === 'computer' ? 'AI 正在计算' : '本局结束'}</Typography></div></div>
-              <div className="ck-gomoku-play__status-move"><Typography as="strong" variant="h2" tone="accent">{game.history.length}</Typography><Typography as="span" variant="bodySmall" tone="muted">手</Typography></div>
-            </div>
-            <div className="ck-gomoku-play__status-situation">{difficulty === 'easy' && <span className={`ck-gomoku-play__lamp ck-gomoku-play__lamp--${situation.tone}`} aria-hidden="true" />}<div><Typography as="strong" variant="body" tone="accent">{difficulty === 'easy' ? situation.label : '深度搜索模式'}</Typography><Typography as="span" variant="bodySmall" tone="muted">{difficulty === 'easy' ? situation.detail : difficulty === 'medium' ? '提前一步观察反击' : '搜索更多候选步'}</Typography></div></div>
+            <div className="ck-gomoku-play__status-player"><span className={`ck-gomoku-play__turn ck-gomoku-play__turn--${status.stone}`} aria-hidden="true" /><Typography as="strong" variant="body" tone={status.accent ? 'accent' : 'main'}>{status.text}</Typography></div>
+            <div className="ck-gomoku-play__status-situation">{situation ? <span className={`ck-gomoku-play__lamp ck-gomoku-play__lamp--${situation.tone}`} aria-hidden="true" /> : <span className="ck-gomoku-play__lamp ck-gomoku-play__lamp--off" aria-hidden="true" />}<Typography as="strong" variant="body" tone={situation ? 'accent' : 'muted'}>{situation?.label ?? '提示已关闭'}</Typography></div>
             <div className="ck-gomoku-play__controls">
               <div className="ck-gomoku-play__difficulty">
-                <div className="ck-gomoku-play__control-heading"><Typography as="strong" variant="body" tone="accent">观察范围</Typography><Typography as="span" variant="bodySmall" tone="muted">AI 会看多远</Typography></div>
+                <div className="ck-gomoku-play__control-heading"><Typography as="strong" variant="body" tone="accent">对弈难度</Typography></div>
                 <div className="ck-gomoku-play__difficulty-options" role="group" aria-label="选择 AI 难度">
                   {([['easy', '简单'], ['medium', '中等'], ['hard', '困难']] as const).map(([value, label]) => <button key={value} type="button" className={difficulty === value ? 'is-active' : ''} aria-pressed={difficulty === value} onClick={() => changeDifficulty(value)}><Typography as="span" variant="body" tone="inherit">{label}</Typography></button>)}
                 </div>
-                <Typography as="p" variant="bodySmall" tone="muted">{difficulty === 'easy' ? '只看附近，练习发现局部形状。' : difficulty === 'medium' ? '多看一步，比较下一种可能。' : '搜索更多分支，提前判断走向。'}</Typography>
+                <Typography as="p" variant="bodySmall" tone="muted">{difficulty === 'easy' ? '轻松的体验' : difficulty === 'medium' ? '势均力敌' : '棋逢强敌'}</Typography>
               </div>
               <div className="ck-gomoku-play__actions">
                 <Typography as="strong" variant="body" tone="accent">棋局操作</Typography>
