@@ -1,0 +1,104 @@
+.course-page-surface .ngtw-matrix-representation {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  grid-template-rows: auto minmax(0, 1fr);
+  overflow: hidden;
+}
+
+.ngtw-matrix-representation > .edu-content-head { max-width: 1100px; margin-bottom: 8px; }
+.ngtw-matrix-representation > .edu-content-body {
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  grid-template-rows: auto 24px auto minmax(0, 1fr) auto auto;
+  gap: 10px;
+  align-content: stretch;
+}
+
+.ngtw-matrix-representation__expanded,
+.ngtw-matrix-representation__compact {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: minmax(210px, .35fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 20px;
+  border: 1px solid #f1d9c6;
+  border-left: 4px solid #e47e38;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #fffaf6, #f8fbff);
+  padding: 12px 18px;
+}
+.ngtw-matrix-representation__expanded .edu-formula-block,
+.ngtw-matrix-representation__compact .edu-formula-block {
+  width: 100%;
+  min-width: 0;
+  min-height: 92px;
+  border: 1px solid #e1e8f1;
+  background: rgba(247, 250, 254, .9);
+  padding: 12px 16px;
+}
+
+.ngtw-matrix-representation__formula-line,
+.ngtw-matrix-representation__formula-detail,
+.ngtw-matrix-representation__compact-formula,
+.ngtw-matrix-representation__compact-detail { min-width: 0; overflow-wrap: anywhere; }
+
+.ngtw-matrix-representation__formula-line,
+.ngtw-matrix-representation__compact-formula {
+  color: #263f68;
+  font-family: var(--ui-font-mono);
+}
+
+.ngtw-matrix-representation__formula-detail,
+.ngtw-matrix-representation__compact-detail {
+  margin-top: 4px;
+  color: #73849d;
+  font-family: var(--ui-font-mono);
+}
+
+.ngtw-matrix-representation__down-arrow { color: #8ea4c4; font-family: var(--ui-font-mono); font-size: 30px; font-weight: 800; }
+
+.ngtw-matrix-representation__vector-card {
+  border: 1px solid #e6d5c8;
+  border-left: 4px solid #e37d38;
+}
+
+.ngtw-matrix-representation__vector-card--inputs { border-color: #d8e3f0; border-left-color: #6e9fe2; }
+.ngtw-matrix-representation__vector-card .edu-formula-block { min-height: 114px; border: 0; background: transparent; padding: 6px; }
+.ngtw-matrix-representation__vector-equation { color: #263f68; font-family: var(--ui-font-mono); font-size: var(--ui-type-formula-size); font-weight: var(--ui-type-formula-weight); line-height: var(--ui-type-formula-line-height); }
+
+.ngtw-matrix-representation__bracket-vector {
+  display: inline-grid;
+}
+
+.ngtw-matrix-representation__bracket-vector--row { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.ngtw-matrix-representation__bracket-vector--column { grid-template-rows: repeat(3, minmax(0, 1fr)); }
+
+.ngtw-matrix-representation__bracket-vector::before,
+.ngtw-matrix-representation__bracket-vector::after { position: absolute; inset-block: 0; width: 7px; border-block: 2px solid currentColor; content: ''; }
+.ngtw-matrix-representation__bracket-vector::before { left: 0; border-left: 2px solid currentColor; }
+.ngtw-matrix-representation__bracket-vector::after { right: 0; border-right: 2px solid currentColor; }
+.ngtw-matrix-representation__bracket-vector--warm { color: #d87732; }
+.ngtw-matrix-representation__bracket-vector--blue { color: #426b9e; }
+
+.ngtw-matrix-representation__multiply { color: #8ca0c1; font-family: var(--ui-font-mono); font-size: 42px; font-weight: 800; }
+.ngtw-matrix-representation__compact { border-color: #d5e8d9; border-left-color: #4e9a68; background: linear-gradient(90deg, #f8fdf9, #fff); }
+.ngtw-matrix-representation__compact .edu-formula-block { background: #f5fbf7; }
+.ngtw-matrix-representation__key-point { border: 1px solid #eedfc9; }
+
+@media (max-width: 980px) {
+  .ngtw-matrix-representation__vectors { grid-template-columns: minmax(0, 1fr); }
+  .ngtw-matrix-representation__multiply { height: 30px; transform: rotate(90deg); }
+}
+
+@media (max-width: 720px) {
+  .course-page-surface .ngtw-matrix-representation { height: auto; min-height: 100%; overflow: visible; }
+  .ngtw-matrix-representation > .edu-content-body { grid-template-rows: auto; overflow: visible; }
+  .ngtw-matrix-representation__expanded,
+  .ngtw-matrix-representation__compact,
+  .ngtw-matrix-representation__vector-card { grid-template-columns: minmax(0, 1fr); }
+  .ngtw-matrix-representation__key-point { align-items: flex-start; flex-direction: column; gap: 2px; }
+}
+

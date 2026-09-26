@@ -1,0 +1,22 @@
+{
+  "id": "tldraw-demo",
+  "title": "tldraw 可编辑画布 · 接入演示",
+  "description": "在现有 React 页面内嵌入真正可编辑的 tldraw 画布，体验绘制、移动、缩放与撤销。",
+  "path": "/modules/tldraw-demo",
+  "badge": "新增演示 · 可编辑",
+  "moduleType": "teaching",
+  "difficulty": "introductory",
+  "audience": "general",
+  "entry": "TldrawDemoPage.tsx",
+  "pages": [
+    {
+      "id": "editable-canvas",
+      "title": "亲手编辑一张神经元示意图",
+      "goal": "体验 tldraw 作为课程中的可编辑画布。",
+      "summary": "在画布里增添图形和箭头，拖动、缩放并撤销操作。",
+      "interaction": "使用 tldraw 工具栏自由编辑，改动保存在当前浏览器。",
+      "next": "根据体验判断是否适合放入正式课程页面。",
+      "snippet": ""
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+.course-shell .ck-sobel { display:grid; grid-template-rows:auto minmax(0,1fr); gap:12px; width:100%; height:100%; min-width:0; min-height:0; overflow:hidden; padding:16px 28px 14px; }
+.course-shell .ck-sobel > .edu-content-head { max-width:none; margin:0; }
+.course-shell .ck-sobel > .edu-content-body { display:grid; grid-template-rows:305px minmax(0,1fr) 64px; gap:12px; min-width:0; min-height:0; }
+.course-shell .ck-sobel__construction { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; min-width:0; min-height:0; }
+.course-shell .ck-sobel__step, .course-shell .ck-sobel__example { display:grid; min-width:0; min-height:0; border:1px solid #c8dcf7; border-radius:12px; background:#fff; overflow:hidden; }
+.course-shell .ck-sobel__step { grid-template-rows:66px minmax(0,1fr); }
+.course-shell .ck-sobel__step-header { display:flex; align-items:center; gap:14px; min-width:0; padding:5px 16px; background:#edf4ff; }
+.course-shell .ck-sobel__step-header > .ui-typography { min-width:0; margin:0; }
+.course-shell .ck-sobel__step-header .edu-switch { flex:0 0 auto; margin-left:auto; }
+.course-shell .ck-sobel__step-number { display:grid; flex:0 0 54px; width:54px; height:54px; place-items:center; border-radius:50%; background:#4381ce; }
+.course-shell .ck-sobel__step-number .ui-typography { color:#fff; }
+.course-shell .ck-sobel__step-main { display:grid; align-content:center; justify-items:center; gap:20px; min-width:0; min-height:0; padding:16px; }
+.course-shell .ck-sobel__step-copy { display:grid; justify-items:center; gap:4px; min-width:0; text-align:center; }
+.course-shell .ck-sobel__step-copy p { margin:0; }
+.course-shell .ck-sobel__step-main--smoothing { grid-template-columns:minmax(0,.36fr) minmax(0,.64fr); align-items:center; justify-items:stretch; gap:12px; }
+.course-shell .ck-sobel__step-main--vertical-diff { grid-template-columns:minmax(0,.36fr) minmax(0,.64fr); align-items:center; justify-items:stretch; gap:12px; }
+.course-shell .ck-sobel__step-main--horizontal-smoothing { grid-template-columns:minmax(0,1fr); align-content:center; justify-items:center; }
+.course-shell .ck-sobel__step-main--combined { grid-template-rows:50px minmax(0,1fr); gap:8px; padding:10px 18px; }
+.course-shell .ck-sobel__matrix { display:grid; width:100%; max-width:100%; border:1px solid #729ce3; }
+.course-shell .ck-sobel__matrix > span { display:grid; min-width:0; min-height:0; place-items:center; border-right:1px solid #aec6ee; border-bottom:1px solid #aec6ee; color:#142d67; background:#f7faff; }
+.course-shell .ck-sobel__matrix > span.is-negative { color:#cf2828; background:#fff1f0; border-color:#ef9f9f; }
+.course-shell .ck-sobel__matrix > span.is-positive { color:#184dbc; background:#e9f2ff; }
+.course-shell .ck-sobel__matrix > span.is-zero { background:#f7faff; }
+.course-shell .ck-sobel__matrix .math-formula-static { font-size:2rem; }
+.course-shell .ck-sobel__matrix--row { width:300px; height:76px; }
+.course-shell .ck-sobel__matrix--column { width:90px; height:170px; justify-self:center; }
+.course-shell .ck-sobel__matrix--sobel { width:218px; height:146px; }
+.course-shell .ck-sobel__matrix--sobel .math-formula-static { font-size:1.55rem; }
+.course-shell .ck-sobel__composition { width:100%; min-height:0; border:0; background:transparent; padding:0; }
+.course-shell .ck-sobel__composition .math-formula { flex-wrap:nowrap; white-space:nowrap; font-size:1.7rem; }
+.course-shell .ck-sobel__combination { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,.85fr); align-items:center; justify-items:center; gap:10px; width:100%; min-width:0; min-height:0; text-align:center; }
+.course-shell .ck-sobel__examples { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; min-width:0; min-height:0; }
+.course-shell .ck-sobel__example { grid-template-rows:64px minmax(0,1fr); }
+.course-shell .ck-sobel__example-head { display:flex; align-items:center; justify-content:space-between; gap:8px; min-width:0; padding:8px 18px; background:#edf4ff; }
+.course-shell .ck-sobel__example-head h2 { min-width:0; margin:0; white-space:nowrap; }
+.course-shell .ck-sobel__example-visuals { display:grid; grid-template-columns:minmax(0,1fr) 90px minmax(0,1fr); align-items:center; gap:10px; min-width:0; min-height:0; padding:12px 18px 10px; }
+.course-shell .ck-sobel__example-visuals figure { display:grid; grid-template-rows:minmax(0,1fr) 34px; gap:4px; min-width:0; min-height:0; height:100%; margin:0; text-align:center; }
+.course-shell .ck-sobel__example-visuals img { display:block; width:100%; height:100%; max-width:100%; min-height:0; border:1px solid #a8afb8; object-fit:cover; }
+.course-shell .ck-sobel__example-visuals figcaption { white-space:nowrap; }
+.course-shell .ck-sobel__apply { display:grid; justify-items:center; align-content:center; gap:0; min-width:0; }
+.course-shell .ck-sobel__apply .math-formula-static { font-size:1.8rem; }
+.course-shell .ck-sobel__apply > span:last-child { color:#174db8; font-size:3rem; line-height:1; }
+.course-shell .ck-sobel__summary { display:flex; align-items:center; gap:12px; min-width:0; min-height:0; border-radius:12px; background:#edf4ff; padding:5px 16px; }
+.course-shell .ck-sobel__summary-icon { display:grid; flex:0 0 50px; width:50px; height:50px; place-items:center; border-radius:50%; background:#4381ce; color:#fff; }
+.course-shell .ck-sobel__summary > .ui-typography { min-width:0; margin:0; }

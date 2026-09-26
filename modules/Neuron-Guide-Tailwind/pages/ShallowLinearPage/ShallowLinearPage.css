@@ -1,0 +1,127 @@
+.ngtw-shallow-linear {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  grid-template-rows: auto minmax(0, 1fr);
+  border-radius: var(--ui-radius-lg);
+  box-shadow: var(--ui-shadow-soft);
+  padding: 26px 32px 22px;
+}
+
+.ngtw-shallow-linear > .edu-content-head {
+  min-width: 0;
+  margin-bottom: 14px;
+}
+
+.ngtw-shallow-linear > .edu-content-body {
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 10px;
+}
+
+.ngtw-shallow-toolbar {
+  border: 0;
+  border-left: 4px solid rgba(39, 68, 110, .52);
+  border-radius: var(--ui-radius-sm);
+  background: linear-gradient(90deg, rgba(39, 68, 110, .065), rgba(39, 68, 110, .018));
+}
+
+.ngtw-shallow-toolbar__context {
+  white-space: nowrap;
+}
+
+.ngtw-shallow-toolbar__context .ui-typography { margin: 0; }
+
+.ngtw-shallow-toolbar .ngtw-activation-actions {
+  flex: 0 0 auto;
+  min-width: 0;
+  max-width: 100%;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.ngtw-shallow-toolbar .ngtw-activation-actions .edu-btn {
+  min-height: 0;
+  padding: 0 13px;
+}
+
+.ngtw-shallow-linear .ngtw-activation-network-stage {
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  grid-template-columns: minmax(300px, .82fr) minmax(0, 1.48fr);
+  gap: 20px;
+}
+
+.ngtw-shallow-linear .ngtw-shallow-panel {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  max-width: 100%;
+  flex-direction: column;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 0;
+}
+
+.ngtw-shallow-linear .ngtw-shallow-panel--plot {
+  border-left: 1px solid var(--ui-border);
+  padding-left: 20px;
+}
+
+.ngtw-shallow-linear .ngtw-activation-visual-box {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius-md);
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(25, 42, 70, .06);
+}
+
+.ngtw-shallow-linear .ngtw-shallow-panel--network .ngtw-activation-visual-box {
+  border-color: rgba(39, 68, 110, .16);
+  background: linear-gradient(180deg, #f5f8fd 0%, #edf3fb 100%);
+  box-shadow: none;
+}
+
+.course-page-surface .ngtw-shallow-linear .ngtw-activation-stage-plot,
+.course-page-surface .ngtw-shallow-linear .ngtw-network-figure,
+.course-page-surface .ngtw-shallow-linear .ngtw-network-diagram {
+  min-height: 0 !important;
+}
+
+.course-page-surface .ngtw-shallow-linear .ngtw-activation-stage-plot {
+  height: 100%;
+}
+
+.course-page-surface .ngtw-shallow-linear .ngtw-network-figure {
+  height: 100%;
+}
+
+.ngtw-shallow-conclusion {
+  border-top: 1px solid rgba(34, 141, 92, .32);
+  border-radius: 0 0 var(--ui-radius-sm) var(--ui-radius-sm);
+  background: linear-gradient(90deg, rgba(34, 141, 92, .08), rgba(34, 141, 92, .02));
+}
+
+.ngtw-shallow-conclusion > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+
+.ngtw-shallow-conclusion .ui-typography { margin: 0; }
+
+@media (max-width: 1120px) {
+  .ngtw-shallow-linear .ngtw-activation-network-stage { grid-template-columns: minmax(0, 1fr); }
+  .ngtw-shallow-linear .ngtw-shallow-panel--plot { border-left: 0; border-top: 1px solid var(--ui-border); padding-top: 14px; padding-left: 0; }
+  .ngtw-shallow-toolbar { align-items: flex-start; flex-direction: column; }
+  .ngtw-shallow-toolbar .ngtw-activation-actions { justify-content: flex-start; }
+}
+

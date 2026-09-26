@@ -1,45 +1,44 @@
 .course-shell .ck-gradient { display:grid; grid-template-rows:auto minmax(0,1fr); gap:12px; min-width:0; min-height:0; overflow:hidden; padding:18px 30px 16px; }
 .course-shell .ck-gradient > .edu-content-head { max-width:none; margin-bottom:0; }
-.course-shell .ck-gradient > .edu-content-body { display:grid; grid-template-rows:auto minmax(0,1fr) auto; gap:12px; min-width:0; min-height:0; }
-.course-shell .ck-gradient__formula-strip { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1.15fr); align-items:center; min-width:0; border:1px solid var(--ui-border); border-radius:var(--ui-radius-sm); background:var(--ui-bg-muted); padding:8px 18px; }
-.course-shell .ck-gradient__formula-strip > div { display:grid; min-width:0; align-items:center; justify-items:center; gap:3px; padding:0 14px; }
-.course-shell .ck-gradient__formula-strip > div + div { border-left:1px solid var(--ui-border-strong); }
-.course-shell .ck-gradient__formula-strip .math-formula-block { width:100%; min-height:48px; border:0; background:transparent; padding:2px; }
-.course-shell .ck-gradient__formula-strip .math-formula { max-width:100%; }
-.course-shell .ck-gradient__formula-strip .math-formula-static { max-width:100%; color:var(--ui-accent); }
-.course-shell .ck-gradient__columns { display:grid; grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr) minmax(0,1.22fr); gap:14px; min-width:0; min-height:0; }
-.course-shell .ck-gradient__panel { display:grid; grid-template-rows:auto minmax(0,1fr); align-content:stretch; justify-items:center; gap:9px; min-width:0; min-height:0; overflow:hidden; border:1px solid var(--ui-border); border-radius:var(--ui-radius-sm); background:var(--ui-bg-card); padding:9px 12px 10px; text-align:center; }
-.course-shell .ck-gradient__step-header { display:flex; width:100%; min-width:0; align-items:center; gap:12px; border-radius:var(--ui-radius-sm); background:var(--ui-accent-soft); padding:4px 8px; }
+.course-shell .ck-gradient > .edu-content-body { display:grid; grid-template-rows:150px minmax(0,1fr) 72px; gap:14px; min-width:0; min-height:0; }
+.course-shell .ck-gradient__formula-strip { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); align-items:center; min-width:0; min-height:0; border-radius:12px; background:#eef5fd; padding:14px 20px; }
+.course-shell .ck-gradient__formula-strip > div { display:grid; align-content:center; justify-items:center; gap:4px; min-width:0; min-height:0; padding:0 16px; }
+.course-shell .ck-gradient__formula-strip > div + div { border-left:1px solid #a9c5ed; }
+.course-shell .ck-gradient__formula-strip .math-formula-block { width:100%; min-height:0; border:0; background:transparent; padding:0; }
+.course-shell .ck-gradient__formula-strip .math-formula { flex-wrap:nowrap; font-size:2.6rem; }
+.course-shell .ck-gradient__columns { display:grid; grid-template-columns:minmax(0,.95fr) minmax(0,1.25fr) minmax(0,.95fr); gap:16px; min-width:0; min-height:0; }
+.course-shell .ck-gradient__panel { display:grid; justify-items:center; gap:10px; min-width:0; min-height:0; overflow:hidden; border:1px solid #c8dcf7; border-radius:12px; background:#fff; padding:10px 14px; text-align:center; }
+.course-shell .ck-gradient__step-header { display:flex; width:100%; min-width:0; align-items:center; gap:16px; }
 .course-shell .ck-gradient__step-header > .ui-typography { min-width:0; margin:0; }
-.course-shell .ck-gradient__step-number { display:grid; width:52px; height:52px; flex:0 0 auto; place-items:center; border-radius:var(--ui-radius-sm); background:var(--ui-accent); }
+.course-shell .ck-gradient__step-number { display:grid; width:62px; height:62px; flex:0 0 auto; place-items:center; border-radius:50%; background:#3f7fc1; }
 .course-shell .ck-gradient__step-number .ui-typography { color:#fff; }
-.course-shell .ck-gradient__image { display:block; width:100%; max-width:100%; object-fit:cover; }
-.course-shell .ck-gradient__input-image { height:100%; min-height:0; border-radius:var(--ui-radius-sm); filter:grayscale(1) contrast(.92); }
-.course-shell .ck-gradient__panel:first-child { grid-template-rows:auto minmax(0,1fr) auto auto; }
-.course-shell .ck-gradient__caption { display:grid; width:100%; min-width:0; place-items:center; border-radius:var(--ui-radius-sm); background:var(--ui-accent-soft); padding:7px 10px; }
-.course-shell .ck-gradient__panel--difference { grid-template-rows:auto minmax(0,1fr); }
-.course-shell .ck-gradient__difference-grid { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:8px; width:100%; min-width:0; min-height:0; }
-.course-shell .ck-gradient__difference-card { display:grid; grid-template-rows:auto auto minmax(0,1fr) auto; align-content:stretch; justify-items:center; gap:6px; min-width:0; min-height:0; overflow:hidden; border:1px solid var(--ui-border); border-radius:var(--ui-radius-sm); background:var(--ui-bg-card); padding:7px 7px; }
-.course-shell .ck-gradient__difference-card > .ui-typography { min-width:0; }
-.course-shell .ck-gradient__kernel-formula { display:grid; width:min(100%,220px); max-width:100%; min-width:0; place-items:center; }
-.course-shell .ck-gradient__kernel-formula .math-formula-block { width:100%; min-height:72px; max-width:100%; padding:6px 8px; }
-.course-shell .ck-gradient__kernel-formula.is-vertical { width:min(100%,155px); }
-.course-shell .ck-gradient__kernel-formula.is-vertical .math-formula-block { min-height:96px; }
-.course-shell .ck-gradient__edge-image { height:100%; min-height:0; border-radius:var(--ui-radius-sm); filter:grayscale(1) invert(1) contrast(1.65); }
-.course-shell .ck-gradient__loading { min-height:220px; border-radius:var(--ui-radius-sm); background:var(--ui-bg-muted); }
-.course-shell .ck-gradient__panel--gradient { grid-template-rows:auto minmax(0,1fr) auto; }
-.course-shell .ck-gradient__gradient-flow { display:grid; grid-template-columns:minmax(0,.7fr) 26px minmax(96px,.66fr) 26px minmax(0,1.25fr); align-items:center; gap:4px; width:100%; min-width:0; min-height:0; }
-.course-shell .ck-gradient__small-results { display:grid; grid-template-rows:minmax(0,1fr) minmax(0,1fr); gap:7px; min-width:0; min-height:0; }
-.course-shell .ck-gradient__small-results > div { display:grid; grid-template-rows:minmax(0,1fr) auto; justify-items:center; gap:3px; min-width:0; min-height:0; }
-.course-shell .ck-gradient__result-thumb { height:100%; min-height:0; border-radius:var(--ui-radius-sm); filter:grayscale(1) invert(1) contrast(1.65); }
-.course-shell .ck-gradient__merge-arrow { display:grid; min-width:0; place-items:center; }
-.course-shell .ck-gradient__merge-box { display:grid; min-width:0; place-items:center; border:1px solid var(--ui-focus); border-radius:var(--ui-radius-sm); background:var(--ui-accent-soft); padding:8px 4px; }
-.course-shell .ck-gradient__merge-box .math-formula-block { width:100%; min-height:48px; border:0; background:transparent; padding:2px; }
-.course-shell .ck-gradient__merge-box .math-formula-static { max-width:100%; color:var(--ui-accent); }
-.course-shell .ck-gradient__gradient-image { height:100%; min-height:0; border-radius:var(--ui-radius-sm); filter:grayscale(1) invert(1) contrast(1.95); }
-.course-shell .ck-gradient__summary { display:grid; grid-template-columns:48px auto minmax(0,1fr); align-items:center; gap:13px; min-width:0; border:1px solid var(--ui-focus); border-radius:var(--ui-radius-sm); background:var(--ui-accent-soft); padding:8px 18px; }
-.course-shell .ck-gradient__summary-icon { display:grid; width:48px; height:48px; place-items:center; border-radius:50%; background:var(--ui-accent); color:#fff; }
+.course-shell .ck-gradient__image { display:block; width:100%; max-width:100%; min-height:0; object-fit:cover; }
+.course-shell .ck-gradient__panel--input { grid-template-rows:62px minmax(0,1fr) 38px; }
+.course-shell .ck-gradient__input-image { height:100%; border-radius:4px; filter:grayscale(1); }
+.course-shell .ck-gradient__panel--difference { grid-template-rows:62px minmax(0,1fr); }
+.course-shell .ck-gradient__difference-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; width:100%; min-width:0; min-height:0; }
+.course-shell .ck-gradient__difference-card { display:grid; grid-template-rows:36px minmax(0,1fr) 44px 54px 44px; justify-items:center; gap:4px; min-width:0; min-height:0; position:relative; }
+.course-shell .ck-gradient__difference-card + .ck-gradient__difference-card { border-left:1px solid #d7e4f7; padding-left:12px; }
+.course-shell .ck-gradient__kernel-display { display:grid; width:100%; height:100%; min-width:0; min-height:0; place-items:center; }
+.course-shell .ck-gradient__kernel { display:grid; grid-template-columns:repeat(2,1fr); width:216px; height:100px; max-width:100%; border:1px solid #6ca0e6; }
+.course-shell .ck-gradient__kernel.is-vertical { grid-template-columns:1fr; grid-template-rows:repeat(2,1fr); width:104px; height:174px; max-height:100%; }
+.course-shell .ck-gradient__kernel > span { display:grid; place-items:center; background:#eaf2ff; }
+.course-shell .ck-gradient__kernel > span + span { border-left:1px solid #ee8b8b; background:#fff0ef; color:#db4545; }
+.course-shell .ck-gradient__kernel.is-vertical > span + span { border-left:0; border-top:1px solid #ee8b8b; }
+.course-shell .ck-gradient__kernel .math-formula-static { font-size:2.8rem; }
+.course-shell .ck-gradient__preview { position:relative; display:grid; place-items:center; width:100%; min-width:0; z-index:5; }
+.course-shell .ck-gradient__preview-trigger { display:grid; width:48px; height:48px; place-items:center; border:1px solid #9ebfee; border-radius:50%; background:#edf4ff; color:#2458a5; cursor:help; }
+.course-shell .ck-gradient__preview-trigger:hover, .course-shell .ck-gradient__preview-trigger:focus-visible { background:#dceaff; border-color:#5d91db; outline:2px solid #a7c7f3; outline-offset:2px; }
+.course-shell .ck-gradient__preview-popover { position:absolute; bottom:calc(100% + 8px); left:50%; width:min(264px, 100%); height:164px; max-width:100%; padding:5px; border:1px solid #9ebfee; border-radius:8px; background:#fff; box-shadow:0 14px 34px rgba(19,49,97,.22); opacity:0; visibility:hidden; pointer-events:none; transform:translate(-50%, 6px); transition:opacity .14s ease, transform .14s ease, visibility .14s ease; }
+.course-shell .ck-gradient__preview:hover .ck-gradient__preview-popover, .course-shell .ck-gradient__preview:focus-within .ck-gradient__preview-popover { opacity:1; visibility:visible; transform:translate(-50%, 0); }
+.course-shell .ck-gradient__edge-image { height:100%; border-radius:4px; }
+.course-shell .ck-gradient__result-symbol { align-self:center; font-size:2.5rem; }
+.course-shell .ck-gradient__difference-card > .ui-typography:last-child { align-self:start; }
+.course-shell .ck-gradient__panel--gradient { grid-template-rows:62px minmax(0,1fr) 54px; }
+.course-shell .ck-gradient__gradient-image { height:100%; border-radius:4px; }
+.course-shell .ck-gradient__magnitude-caption { align-self:center; font-size:2.3rem; }
+.course-shell .ck-gradient__loading { min-height:0; border-radius:4px; background:#111827; }
+.course-shell .ck-gradient__summary { display:grid; grid-template-columns:64px auto minmax(0,1fr); align-items:center; gap:14px; min-width:0; min-height:0; border-radius:12px; background:#edf4ff; padding:8px 14px; }
+.course-shell .ck-gradient__summary-icon { display:grid; width:58px; height:58px; place-items:center; border-radius:50%; background:#3f7fc1; color:#fff; }
 .course-shell .ck-gradient__summary > .ui-typography:last-child { min-width:0; }
 .course-page-surface .ck-gradient { width:100%; height:100%; min-height:0; }
-@media (max-width:920px) { .course-shell .ck-gradient { min-height:auto; overflow:visible; padding:22px; } .course-shell .ck-gradient > .edu-content-body { grid-template-rows:auto auto auto; } .course-shell .ck-gradient__formula-strip { grid-template-columns:1fr; gap:8px; } .course-shell .ck-gradient__formula-strip > div + div { border-left:0; border-top:1px solid var(--ui-border-strong); padding-top:8px; } .course-shell .ck-gradient__columns { grid-template-columns:1fr; } .course-shell .ck-gradient__panel { min-height:420px; } }
-@media (max-width:560px) { .course-shell .ck-gradient__difference-grid { grid-template-columns:1fr; } .course-shell .ck-gradient__gradient-flow { grid-template-columns:1fr; } .course-shell .ck-gradient__merge-arrow { transform:rotate(90deg); } .course-shell .ck-gradient__summary { grid-template-columns:42px minmax(0,1fr); gap:8px 10px; } .course-shell .ck-gradient__summary-icon { width:42px; height:42px; } .course-shell .ck-gradient__summary > .ui-typography:last-child { grid-column:1 / -1; } }

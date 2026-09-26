@@ -1,0 +1,36 @@
+.course-shell .ck-laplacian { display:grid; grid-template-rows:auto minmax(0,1fr); gap:12px; width:100%; height:100%; min-width:0; min-height:0; overflow:hidden; padding:18px 28px 14px; }
+.course-shell .ck-laplacian > .edu-content-head { max-width:none; margin:0; }
+.course-shell .ck-laplacian > .edu-content-body { display:grid; grid-template-rows:304px minmax(0,1fr) 64px; gap:12px; min-width:0; min-height:0; }
+.course-shell .ck-laplacian__construction { display:grid; grid-template-columns:minmax(0,1fr) 54px minmax(0,1.3fr) 54px minmax(0,1fr); align-items:stretch; gap:8px; min-width:0; min-height:0; border:1px solid #a8c9f6; border-radius:12px; background:#fcfdff; padding:14px; }
+.course-shell .ck-laplacian__step { display:grid; grid-template-rows:62px minmax(0,1fr); gap:8px; min-width:0; min-height:0; }
+.course-shell .ck-laplacian__step-header { display:flex; align-items:center; gap:14px; min-width:0; border-radius:10px; background:#eaf3ff; padding:5px 12px; }
+.course-shell .ck-laplacian__step-header h2 { min-width:0; margin:0; white-space:nowrap; }
+.course-shell .ck-laplacian__step-number { display:grid; flex:0 0 50px; width:50px; height:50px; place-items:center; border-radius:50%; background:#3d7fc9; }
+.course-shell .ck-laplacian__step-number .ui-typography { color:#fff; }
+.course-shell .ck-laplacian__arrow { display:grid; align-self:center; place-items:center; min-width:0; color:#8ab6ef; font-size:4.5rem; line-height:1; }
+.course-shell .ck-laplacian__one-dimensional { display:flex; align-items:center; justify-content:center; gap:4px; min-width:0; min-height:0; }
+.course-shell .ck-laplacian__bracket { color:#142f67; font-family:Georgia,serif; font-size:5rem; line-height:1; }
+.course-shell .ck-laplacian__matrix { display:grid; width:150px; height:150px; max-width:100%; border:1px solid #6f8fb9; background:#fff; }
+.course-shell .ck-laplacian__matrix > span { display:grid; min-width:0; min-height:0; place-items:center; border-right:1px solid #a4b5d2; border-bottom:1px solid #a4b5d2; color:#142f67; }
+.course-shell .ck-laplacian__matrix > span.is-positive { color:#124cae; background:#e2efff; }
+.course-shell .ck-laplacian__matrix > span.is-negative { color:#b52c35; background:#ffe0e0; }
+.course-shell .ck-laplacian__matrix .math-formula-static { font-size:2.1rem; }
+.course-shell .ck-laplacian__matrix--row { width:280px; height:72px; }
+.course-shell .ck-laplacian__matrix--row .math-formula-static { font-size:2.8rem; }
+.course-shell .ck-laplacian__directions { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); align-items:center; gap:14px; min-width:0; min-height:0; }
+.course-shell .ck-laplacian__directions > div { display:grid; grid-template-columns:auto auto; grid-template-rows:36px minmax(0,1fr); align-content:center; justify-content:center; justify-items:center; column-gap:4px; min-width:0; min-height:0; }
+.course-shell .ck-laplacian__directions > div > .ck-laplacian__matrix { grid-column:1 / -1; align-self:center; }
+.course-shell .ck-laplacian__directions .math-formula-term, .course-shell .ck-laplacian__directions .math-formula-static { font-size:1.9rem; }
+.course-shell .ck-laplacian__result { display:grid; grid-template-rows:minmax(0,1fr) 38px; align-items:center; justify-items:center; gap:4px; min-width:0; min-height:0; }
+.course-shell .ck-laplacian__result-matrix { display:flex; align-items:center; justify-content:center; gap:4px; min-width:0; min-height:0; }
+.course-shell .ck-laplacian__result-matrix > .math-formula-term, .course-shell .ck-laplacian__result-matrix > .math-formula-static { font-size:2.2rem; }
+.course-shell .ck-laplacian__center-note { display:grid; place-items:center; width:max-content; max-width:100%; min-height:34px; border-radius:8px; background:#ffe4e4; padding:2px 12px; }
+.course-shell .ck-laplacian__images { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; min-width:0; min-height:0; }
+.course-shell .ck-laplacian__image-card { display:grid; grid-template-rows:minmax(0,1fr) 75px; gap:6px; min-width:0; min-height:0; border:1px solid #c8dcf7; border-radius:12px; background:#f7fbff; padding:8px; }
+.course-shell .ck-laplacian__image-wrap { min-width:0; min-height:0; overflow:hidden; border-radius:5px; background:#d9e3ef; }
+.course-shell .ck-laplacian__image-wrap img, .course-shell .ck-laplacian__loading { display:block; width:100%; height:100%; max-width:100%; object-fit:cover; object-position:center; }
+.course-shell .ck-laplacian__image-caption { display:grid; align-content:center; justify-items:center; gap:2px; min-width:0; min-height:0; text-align:center; }
+.course-shell .ck-laplacian__image-caption > .ui-typography { margin:0; }
+.course-shell .ck-laplacian__summary { display:flex; align-items:center; gap:14px; min-width:0; min-height:0; border:1px solid #c8dcf7; border-radius:12px; background:#edf4ff; padding:5px 16px; }
+.course-shell .ck-laplacian__summary-icon { display:grid; flex:0 0 48px; width:48px; height:48px; place-items:center; border-radius:50%; background:#3d7fc9; color:#fff; }
+.course-shell .ck-laplacian__summary > .ui-typography { min-width:0; margin:0; }

@@ -1,5 +1,6 @@
 import { defineConfig, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite';
 
 function fixedLessonCanvas(): Plugin {
   return {
@@ -23,7 +24,7 @@ function fixedLessonCanvas(): Plugin {
 }
 
 export default defineConfig({
-  plugins: [fixedLessonCanvas(), react()],
+  plugins: [fixedLessonCanvas(), react(), tailwindcss()],
   build: {
     rollupOptions: {
       input: {

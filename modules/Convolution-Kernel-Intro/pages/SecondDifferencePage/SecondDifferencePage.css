@@ -1,45 +1,37 @@
-.course-shell .ck-second {
-  display: grid;
-  grid-template-rows: auto minmax(0, 1fr);
-  gap: 14px;
-  min-height: 0;
-  overflow: hidden;
-  padding: 22px 30px 18px;
-}
-
+.course-shell .ck-second { display: grid; grid-template-rows: auto minmax(0, 1fr); gap: 12px; width: 100%; height: 100%; min-height: 0; overflow: hidden; padding: 18px 28px 14px; }
 .course-shell .ck-second > .edu-content-head { max-width: none; margin: 0; }
-.course-shell .ck-second > .edu-content-body { display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: 14px; min-height: 0; }
-.course-shell .ck-second__layout { display: grid; grid-template-columns: minmax(0, .82fr) minmax(0, .92fr) minmax(0, 1.7fr); gap: 14px; min-width: 0; min-height: 0; }
-.course-shell .ck-second__panel { display: grid; align-content: center; justify-items: center; gap: 10px; min-width: 0; min-height: 0; overflow: hidden; border: 1px solid rgba(49, 132, 220, .28); border-radius: 9px; background: #fff; padding: 10px 12px; text-align: center; }
-.course-shell .ck-second__step-header { display: flex; align-items: center; width: 100%; gap: 12px; background: #e8f1fd; padding: 4px 8px; }
-.course-shell .ck-second__step-header h2 { margin: 0; }
-.course-shell .ck-second__step-number { display: grid; width: 48px; height: 48px; place-items: center; border-radius: 7px; background: #347bbb; }
-.course-shell .ck-second__panel > .ui-typography { max-width: 100%; }
-.course-shell .ck-second__image { display: block; width: 100%; max-width: 100%; object-fit: cover; border-radius: 4px; filter: grayscale(1); }
-.course-shell .ck-second__image-loading { width: 100%; background: #edf2f7; }
-.course-shell .ck-second__image--input { width: min(100%, 270px); aspect-ratio: 9 / 16; object-fit: contain; object-position: center; }
-.course-shell .ck-second__image--first { width: 100%; height: 250px; aspect-ratio: auto; object-position: center; }
-.course-shell .ck-second__image--second { height: 250px; aspect-ratio: auto; object-position: center; }
-.course-shell .ck-second__result { grid-template-rows: auto auto auto auto; align-content: center; min-height: 0; }
-.course-shell .ck-second__example { display: grid; grid-template-columns: minmax(0, 1fr) 28px minmax(0, 1fr) 28px minmax(0, 1fr); align-items: center; gap: 8px; width: 100%; border: 1px solid rgba(49, 132, 220, .25); border-radius: 8px; background: #f3f7fd; padding: 12px; }
-.course-shell .ck-second__example-step { display: grid; gap: 6px; min-width: 0; }
-.course-shell .ck-second__signal { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 2px; min-width: 0; }
-.course-shell .ck-second__signal.is-first { grid-template-columns: repeat(5, minmax(0, 1fr)); }
-.course-shell .ck-second__signal.is-second { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.course-shell .ck-second__signal span { display: grid; min-width: 0; min-height: 38px; place-items: center; border: 1px solid #6f9edf; background: #fff; color: #173b7a; }
-.course-shell .ck-second__signal.is-first span:nth-child(3) { background: #ffe7e7; color: #c92a2f; }
-.course-shell .ck-second__signal.is-second span:nth-child(2) { background: #ffe7e7; color: #c92a2f; }
-.course-shell .ck-second__signal.is-second span:nth-child(3) { background: #e7efff; color: #173b7a; }
-.course-shell .ck-second__example > p:last-child { grid-column: 1 / -1; }
-.course-shell .ck-second__result .ck-second__image--second { width: 100%; min-height: 0; object-fit: cover; }
-.course-shell .ck-second__summary { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 12px; border: 1px solid rgba(49, 132, 220, .4); border-radius: 8px; background: #edf4ff; padding: 11px 18px; }
-.course-page-surface .ck-second { width: 100%; height: 100%; }
-
-@media (max-width: 900px) {
-  .course-shell .ck-second { min-height: auto; overflow: visible; padding: 22px; }
-  .course-shell .ck-second > .edu-content-body { grid-template-rows: auto auto; }
-  .course-shell .ck-second__layout { grid-template-columns: 1fr; }
-  .course-shell .ck-second__panel { min-height: 320px; }
-  .course-shell .ck-second__example { grid-template-columns: 1fr; }
-  .course-shell .ck-second__example > .ui-typography { justify-self: center; }
-}
+.course-shell .ck-second > .edu-content-body { display: grid; grid-template-rows: minmax(0, 1fr) 150px 62px; gap: 12px; min-height: 0; }
+.course-shell .ck-second__layout { display: grid; grid-template-columns: minmax(0, 1fr) 48px minmax(0, 1fr) 48px minmax(0, 1fr); align-items: stretch; gap: 8px; min-width: 0; min-height: 0; }
+.course-shell .ck-second__panel { display: grid; gap: 8px; min-width: 0; min-height: 0; border: 1px solid #c5d9f4; border-radius: 10px; background: #fff; padding: 10px; text-align: center; }
+.course-shell .ck-second__panel--input { grid-template-rows: 56px minmax(0, 1fr) 68px; }
+.course-shell .ck-second__panel--difference { grid-template-rows: 56px 74px minmax(0, 1fr) 78px; }
+.course-shell .ck-second__step-header { display: flex; align-items: center; width: 100%; min-width: 0; gap: 12px; border-radius: 8px; background: #eaf2ff; padding: 3px 10px; text-align: left; }
+.course-shell .ck-second__step-header h2 { margin: 0; white-space: nowrap; }
+.course-shell .ck-second__step-number { display: grid; flex: 0 0 48px; width: 48px; height: 48px; place-items: center; border-radius: 50%; background: #347ac8; color: #fff; }
+.course-shell .ck-second__image, .course-shell .ck-second__image-loading { display: block; width: 100%; height: 100%; min-height: 0; border-radius: 4px; object-fit: cover; background: #e9eff7; }
+.course-shell .ck-second__image--input { filter: grayscale(1); object-position: center 56%; }
+.course-shell .ck-second__formula, .course-shell .ck-second__explanation, .course-shell .ck-second__emphasis { display: grid; align-content: center; justify-items: center; min-height: 0; border-radius: 8px; background: #f0f5fc; }
+.course-shell .ck-second__formula { width: 100%; min-height: 0; padding: 4px; }
+.course-shell .ck-second__formula .math-formula { flex-wrap: nowrap; white-space: nowrap; }
+.course-shell .ck-second__kernel-next { margin-left: .35em; }
+.course-shell .ck-second__formula .math-formula-static { max-width: 100%; }
+.course-shell .ck-second__explanation { padding: 6px 14px; }
+.course-shell .ck-second__explanation p { margin: 0; }
+.course-shell .ck-second__arrow { display: grid; place-items: center; align-self: center; color: #8fb9f3; }
+.course-shell .ck-second__example { display: grid; grid-template-columns: 204px minmax(0, 1.2fr) minmax(0, .9fr); align-items: center; gap: 14px; min-width: 0; min-height: 0; border: 1px solid #c5d9f4; border-radius: 9px; background: #fff; padding: 8px 12px; }
+.course-shell .ck-second__example-badge { display: grid; place-items: center; align-self: start; min-height: 58px; border-radius: 12px; background: #174585; color: #fff; }
+.course-shell .ck-second__example-signals { display: grid; grid-template-rows: repeat(3, 1fr); gap: 5px; min-width: 0; }
+.course-shell .ck-second__example-signals > div { display: grid; grid-template-columns: 206px minmax(0, 1fr); align-items: center; gap: 8px; min-width: 0; }
+.course-shell .ck-second__example-signals > div > .ui-typography { white-space: nowrap; }
+.course-shell .ck-second__signal { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 4px; min-width: 0; }
+.course-shell .ck-second__signal.is-first { grid-template-columns: repeat(5, minmax(0, 1fr)); width: 83.333%; justify-self: center; }
+.course-shell .ck-second__signal.is-second { grid-template-columns: repeat(4, minmax(0, 1fr)); width: 66.667%; justify-self: center; }
+.course-shell .ck-second__signal span { display: grid; min-width: 0; min-height: 34px; place-items: center; border: 1px solid #8eb7f3; border-radius: 4px; background: #fff; color: #173b7a; }
+.course-shell .ck-second__signal.is-first span:nth-child(3), .course-shell .ck-second__signal.is-second span:nth-child(2) { background: #ffe4e4; color: #c92a2f; }
+.course-shell .ck-second__signal.is-second span:nth-child(3) { background: #dceaff; color: #174da1; }
+.course-shell .ck-second__example-takeaway { display: grid; align-content: center; gap: 2px; min-width: 0; height: 100%; border-left: 2px solid #b9d0f4; border-radius: 0 9px 9px 0; background: #edf4ff; padding: 10px 18px; }
+.course-shell .ck-second__example-takeaway p { margin: 0; }
+.course-shell .ck-second__example-takeaway strong { color: #bd3236; }
+.course-shell .ck-second__example-takeaway p + p strong { color: #0950ad; }
+.course-shell .ck-second__summary { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 14px; min-height: 0; border: 1px solid #c5d9f4; border-radius: 9px; background: #eaf2ff; padding: 5px 16px; }
+.course-shell .ck-second__summary p { margin: 0; }

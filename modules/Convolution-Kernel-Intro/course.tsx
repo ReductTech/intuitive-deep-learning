@@ -9,7 +9,8 @@ import { CorrelationConvolutionPage } from './pages/CorrelationConvolutionPage/C
 import { WeightedKernelPage } from './pages/WeightedKernelPage/WeightedKernelPage';
 import { GradientPage } from './pages/GradientPage/GradientPage';
 import { SecondDifferencePage } from './pages/SecondDifferencePage/SecondDifferencePage';
-import { DifferenceKernelPage } from './pages/DifferenceKernelPage/DifferenceKernelPage';
+import { SobelConstructionPage } from './pages/SobelConstructionPage/SobelConstructionPage';
+import { LaplacianConstructionPage } from './pages/LaplacianConstructionPage/LaplacianConstructionPage';
 import { CommonKernelsPage } from './pages/CommonKernelsPage/CommonKernelsPage';
 import { TranslationEquivariancePage } from './pages/TranslationEquivariancePage/TranslationEquivariancePage';
 import { ConvolutionPropertiesPage } from './pages/ConvolutionPropertiesPage/ConvolutionPropertiesPage';
@@ -88,42 +89,49 @@ export const convolutionCourse: ConvolutionCourseItem[] = [
   },
   {
     id: 'gradient',
-    title: '一阶差分与梯度',
+    title: '一阶差分：从方向变化到梯度',
     section: '认识卷积核',
     revealMode: 'scroll',
     component: () => <GradientPage />,
   },
   {
     id: 'second-difference',
-    title: '二阶变化',
+    title: '二阶差分：变化如何继续变化',
     section: '认识卷积核',
     revealMode: 'scroll',
     component: () => <SecondDifferencePage />,
   },
   {
-    id: 'difference-kernel',
-    title: '从差分到卷积核',
+    id: 'sobel-construction',
+    title: '从一阶差分到 Sobel',
     section: '认识卷积核',
     revealMode: 'scroll',
-    component: () => <DifferenceKernelPage />,
+    component: () => <SobelConstructionPage />,
+  },
+  {
+    id: 'laplacian-construction',
+    title: '从二阶差分到 Laplacian',
+    section: '认识卷积核',
+    revealMode: 'scroll',
+    component: () => <LaplacianConstructionPage />,
   },
   {
     id: 'common-kernels',
-    title: '常见人工卷积核',
+    title: '卷积核工作台',
     section: '认识卷积核',
     revealMode: 'cue',
     component: () => <CommonKernelsPage />,
   },
   {
     id: 'sparse-connectivity',
-    title: '稀疏连接：卷积为什么更省参数？',
+    title: '稀疏连接：为什么参数更少？',
     section: '卷积的性质',
     revealMode: 'scroll',
     component: () => <SparseConnectivityPage />,
   },
   {
     id: 'weight-sharing',
-    title: '权重共享：同一个卷积核反复使用',
+    title: '权重共享：同一套权重反复使用',
     section: '卷积的性质',
     revealMode: 'scroll',
     component: () => <WeightSharingPage />,

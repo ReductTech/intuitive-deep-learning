@@ -1,0 +1,142 @@
+.ngtw-activation-catalog {
+  min-width: 0;
+  max-width: 100%;
+  border-top: 3px solid var(--ui-accent);
+  border-radius: var(--ui-radius-lg);
+  box-shadow: var(--ui-shadow-soft);
+  padding: clamp(16px, 2.4vw, 22px);
+}
+
+.ngtw-activation-catalog > .edu-content-head { margin-bottom: 16px; }
+
+.ngtw-activation-catalog__properties {
+  border-top: 1px solid var(--ui-border);
+  background: linear-gradient(90deg, rgba(39, 68, 110, .055), rgba(39, 68, 110, .015));
+}
+
+.ngtw-activation-catalog__properties-head,
+.ngtw-activation-catalog__properties-head .ui-typography,
+.ngtw-activation-catalog__properties-grid > div,
+.ngtw-activation-catalog__properties-grid > div .ui-typography {
+  margin: 0;
+}
+
+.ngtw-activation-catalog__properties-grid > div {
+  display: grid;
+  min-width: 0;
+  gap: 2px;
+}
+
+.ngtw-activation-catalog__card {
+  border: 1px solid var(--ui-border);
+  border-top: 3px solid var(--ui-accent-alt);
+  border-radius: var(--ui-radius-md);
+}
+
+.ngtw-activation-catalog__card--leakyRelu { border-top-color: var(--ui-success); }
+
+.ngtw-activation-catalog__card--gelu { border-top-color: #7057a3; }
+
+.ngtw-activation-catalog__card--sigmoid { border-top-color: var(--ui-accent); }
+
+@media (max-width: 980px) {
+  .ngtw-activation-catalog__grid { grid-template-columns: minmax(0, 1fr); }
+}
+
+.ngtw-activation-plot,
+.ngtw-activation-plot .plot-container,
+.ngtw-activation-plot .svg-container { width: 100% !important; height: 100% !important; }
+.ngtw-activation-choice-plot { touch-action: none; }
+.ngtw-activation-network-lab { border-top: 3px solid var(--ui-accent); }
+.ngtw-activation-actions { justify-content: flex-end; }
+.ngtw-activation-actions .edu-btn:disabled { cursor: not-allowed; opacity: .54; transform: none; }
+.ngtw-activation-network-panel { border: 1px solid var(--ui-border); border-radius: var(--ui-radius-sm); }
+.ngtw-activation-panel-head .ui-typography { margin: 0; }
+.ngtw-activation-visual-box { flex: 1; border: 1px solid var(--ui-border); border-radius: var(--ui-radius-sm); background: linear-gradient(180deg, #fbfdff, #f5f8fc); }
+.ngtw-activation-function-plot { aspect-ratio: 21 / 13; border: 1px solid var(--ui-border); border-radius: var(--ui-radius-sm); }
+
+/* Three cards share the upper band; the lower band carries the comparison. */
+.course-page-surface .ngtw-activation-catalog {
+  display: grid;
+  min-height: 0;
+  grid-template-rows: auto minmax(0, 1fr);
+  overflow: hidden;
+}
+
+.course-page-surface .ngtw-activation-catalog > .edu-content-head {
+  min-width: 0;
+  margin-bottom: 12px;
+}
+
+.course-page-surface .ngtw-activation-catalog > .edu-content-body {
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.course-page-surface .ngtw-activation-catalog__grid {
+  min-width: 0;
+  min-height: 0;
+  grid-template-rows: minmax(0, 1fr);
+  gap: 10px;
+}
+
+.course-page-surface .ngtw-activation-catalog__card {
+  min-height: 0;
+  overflow: visible;
+  grid-template-rows: minmax(230px, 1fr) auto auto auto;
+  align-content: stretch;
+  gap: 4px;
+  padding: 9px;
+}
+
+.course-page-surface .ngtw-activation-catalog__card:hover,
+.course-page-surface .ngtw-activation-catalog__card:focus-within {
+  z-index: 3;
+}
+
+.course-page-surface .ngtw-activation-catalog__formula {
+  box-sizing: border-box;
+}
+
+.course-page-surface .ngtw-activation-catalog__properties {
+  min-height: 0;
+  padding: 14px 6px 4px;
+}
+
+.course-page-surface .ngtw-activation-catalog .ngtw-activation-function-plot {
+  height: 100%;
+  min-height: 0 !important;
+  aspect-ratio: auto;
+}
+
+.course-page-surface .ngtw-activation-catalog__properties-grid {
+  gap: 14px;
+}
+
+.course-page-surface .ngtw-activation-catalog__card > .ui-typography:last-child {
+  min-height: 0;
+  overflow: visible;
+}
+
+@media (max-width: 1120px) {
+  .ngtw-activation-network-stage { grid-template-columns: 1fr; }
+  .ngtw-activation-network-lab .edu-stage-head { align-items: flex-start; flex-direction: column; }
+  .ngtw-activation-actions { justify-content: flex-start; }
+}
+
+@media (max-width: 760px) {
+  .ngtw-activation-network-panel { min-height: 480px; }
+  .ngtw-activation-visual-box { min-height: 360px; }
+  .ngtw-activation-stage-plot { min-height: 360px !important; }
+  .ngtw-activation-wide-plot { height: 430px; }
+}
+
+@keyframes ngtw-shared-reveal {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
