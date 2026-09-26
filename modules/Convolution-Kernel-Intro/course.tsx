@@ -13,13 +13,11 @@ import { SobelConstructionPage } from './pages/SobelConstructionPage/SobelConstr
 import { LaplacianConstructionPage } from './pages/LaplacianConstructionPage/LaplacianConstructionPage';
 import { CommonKernelsPage } from './pages/CommonKernelsPage/CommonKernelsPage';
 import { TranslationEquivariancePage } from './pages/TranslationEquivariancePage/TranslationEquivariancePage';
-import { ConvolutionPropertiesPage } from './pages/ConvolutionPropertiesPage/ConvolutionPropertiesPage';
 import { SparseConnectivityPage } from './pages/SparseConnectivityPage/SparseConnectivityPage';
 import { WeightSharingPage } from './pages/WeightSharingPage/WeightSharingPage';
 import { KernelSizePage } from './pages/KernelSizePage/KernelSizePage';
 import { StridePage } from './pages/StridePage/StridePage';
 import { PaddingPage } from './pages/PaddingPage/PaddingPage';
-import { OutputSizeChallengePage } from './pages/OutputSizeChallengePage/OutputSizeChallengePage';
 import { RgbConvolutionPage } from './pages/RgbConvolutionPage/RgbConvolutionPage';
 import { MultiKernelPage } from './pages/MultiKernelPage/MultiKernelPage';
 import { ReceptiveFieldPage } from './pages/ReceptiveFieldPage/ReceptiveFieldPage';
@@ -144,13 +142,6 @@ export const convolutionCourse: ConvolutionCourseItem[] = [
     component: () => <TranslationEquivariancePage />,
   },
   {
-    id: 'convolution-properties',
-    title: '卷积的三大性质',
-    section: '卷积的性质',
-    revealMode: 'scroll',
-    component: () => <ConvolutionPropertiesPage />,
-  },
-  {
     id: 'receptive-field',
     title: '卷积核的堆叠与感受野',
     section: '卷积的性质',
@@ -179,13 +170,6 @@ export const convolutionCourse: ConvolutionCourseItem[] = [
     component: () => <PaddingPage />,
   },
   {
-    id: 'output-size-challenge',
-    title: '输出尺寸侦探：找到一组参数',
-    section: '输出尺寸',
-    revealMode: 'cue',
-    component: () => <OutputSizeChallengePage />,
-  },
-  {
     id: 'rgb-convolution',
     title: 'RGB 多通道卷积',
     section: '多通道卷积',
@@ -194,7 +178,7 @@ export const convolutionCourse: ConvolutionCourseItem[] = [
   },
   {
     id: 'multi-kernel',
-    title: '多核卷积：一个卷积核，产生一个输出通道',
+    title: '多核卷积：卷积核数量决定输出深度',
     section: '多通道卷积',
     revealMode: 'scroll',
     component: () => <MultiKernelPage />,

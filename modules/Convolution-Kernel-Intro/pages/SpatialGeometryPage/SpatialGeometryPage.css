@@ -1,0 +1,33 @@
+.course-shell .ck-spatial { display:grid; grid-template-rows:auto minmax(0,1fr); gap:14px; width:100%; height:100%; min-width:0; min-height:0; overflow:hidden; padding:18px 28px 16px; }
+.course-shell .ck-spatial > .edu-content-head { max-width:none; margin:0; }
+.course-shell .ck-spatial > .edu-content-body { display:grid; grid-template-rows:minmax(0,1fr); min-width:0; min-height:0; }
+.course-shell .ck-spatial__workspace { display:grid; grid-template-columns:minmax(0,.39fr) minmax(0,1.13fr) minmax(0,.88fr); gap:14px; min-width:0; min-height:0; }
+.course-shell .ck-spatial__picker,.course-shell .ck-spatial__input-stage,.course-shell .ck-spatial__output-stage,.course-shell .ck-spatial__formula-stage { min-width:0; min-height:0; border:1px solid #cbdcf4; border-radius:13px; background:#fff; }
+.course-shell .ck-spatial__picker { display:grid; grid-template-rows:auto minmax(0,1fr) auto; justify-items:center; gap:12px; padding:18px 13px; }
+.course-shell .ck-spatial__picker > .ui-typography { min-width:0; margin:0; }
+.course-shell .ck-spatial__choices { display:grid; align-content:center; gap:12px; width:100%; min-width:0; }
+.course-shell .ck-spatial__choices button { display:grid; min-width:0; min-height:92px; place-items:center; border:1px solid #d2dfef; border-radius:12px; background:#f5f8fd; color:#73829b; cursor:pointer; box-shadow:0 5px 14px rgba(35,68,115,.06); }
+.course-shell .ck-spatial__choices button.is-selected { position:relative; z-index:1; border-color:#74a3eb; background:#e4efff; color:#173e83; box-shadow:0 12px 28px rgba(43,91,174,.2); }
+.course-shell .ck-spatial__stepper { display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:8px; width:100%; min-width:0; }
+.course-shell .ck-spatial__stepper button { display:grid; min-width:0; min-height:38px; place-items:center; border:1px solid #cbdcf4; border-radius:8px; background:#f4f8fe; color:#2757a1; cursor:pointer; }
+.course-shell .ck-spatial__stepper > .ui-typography { white-space:nowrap; }
+.course-shell .ck-spatial__input-stage { display:grid; grid-template-rows:auto auto minmax(0,1fr) auto; justify-items:center; align-items:center; gap:8px; padding:17px 18px 15px; }
+.course-shell .ck-spatial__input-stage > .ui-typography { margin:0; text-align:center; }
+.course-shell .ck-spatial__input-grid { position:relative; display:grid; grid-template-columns:repeat(var(--grid-size),minmax(0,1fr)); width:min(100%,440px); max-width:100%; aspect-ratio:1; overflow:hidden; border:2px solid #8ea5c7; border-radius:7px; background:#adc0db; }
+.course-shell .ck-spatial__input-grid > span:not(.ck-spatial__window-outline) { min-width:0; min-height:0; border-right:1px solid #aabdd8; border-bottom:1px solid #aabdd8; background:#f5f8fd; }
+.course-shell .ck-spatial__input-grid > span.is-padding:not(.ck-spatial__window-outline) { background:#e0edff; }
+.course-shell .ck-spatial__input-grid > span.is-window:not(.ck-spatial__window-outline) { background:#cfe1ff; }
+.course-shell .ck-spatial__input-grid > span.is-window.is-padding:not(.ck-spatial__window-outline) { background:#b9d4fb; }
+.course-shell .ck-spatial__window-outline { position:absolute; z-index:1; box-sizing:border-box; border:3px solid #397cf2; border-radius:5px; background:rgba(52,122,236,.06); box-shadow:0 0 0 2px rgba(255,255,255,.65) inset,0 7px 18px rgba(36,95,188,.15); pointer-events:none; transition:top .16s ease,left .16s ease; }
+.course-shell .ck-spatial__right { display:grid; grid-template-rows:minmax(0,1fr) auto; gap:14px; min-width:0; min-height:0; }
+.course-shell .ck-spatial__output-stage { display:grid; grid-template-rows:auto minmax(0,1fr) auto; justify-items:center; align-items:center; gap:8px; padding:17px 14px 12px; }
+.course-shell .ck-spatial__output-stage > .ui-typography { margin:0; text-align:center; }
+.course-shell .ck-spatial__output-grid { display:grid; grid-template-columns:repeat(var(--grid-size),minmax(0,1fr)); width:min(100%,calc(var(--grid-size) * 72px),340px); max-width:100%; aspect-ratio:1; overflow:hidden; border:2px solid #8299bb; border-radius:7px; background:#a6bad7; }
+.course-shell .ck-spatial__output-grid button { display:grid; min-width:0; min-height:0; place-items:center; border:0; border-right:1px solid #a6bad7; border-bottom:1px solid #a6bad7; background:#f4f7fc; cursor:pointer; }
+.course-shell .ck-spatial__output-grid button::after { content:""; width:26%; aspect-ratio:1; border-radius:50%; background:#5a99f4; }
+.course-shell .ck-spatial__output-grid button.is-selected { background:#d7e8ff; box-shadow:inset 0 0 0 3px #397cf2; }
+.course-shell .ck-spatial__output-grid button.is-selected::after { background:#236ee0; }
+.course-shell .ck-spatial__formula-stage { display:grid; justify-items:center; align-content:center; gap:8px; padding:12px 15px; text-align:center; }
+.course-shell .ck-spatial__formula-stage > .ui-typography { min-width:0; margin:0; }
+.course-shell .ck-spatial__formula-stage > .edu-formula-block { width:100%; max-width:100%; min-height:64px; border:0; background:#edf4ff; padding:7px; }
+.course-shell .ck-spatial button:focus-visible { outline:3px solid #82b3f5; outline-offset:2px; }

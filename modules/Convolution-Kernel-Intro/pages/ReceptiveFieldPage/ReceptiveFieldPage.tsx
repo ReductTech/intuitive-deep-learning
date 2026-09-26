@@ -1,21 +1,53 @@
 import { useState } from 'react';
-import type { CSSProperties } from 'react';
 import { ContentBlock, Typography } from '../../../shared/react';
+import { ReceptiveFieldScene, type CellSelection } from './ReceptiveFieldScene';
 import './ReceptiveFieldPage.css';
 
-const layerLabels = ['输入图像', '第 1 层', '第 2 层', '第 3 层'];
-
-function Plane({ level, selected, onSelect }: { level: number; selected: boolean; onSelect: () => void }) {
-  const size = level === 0 ? 11 : level === 1 ? 9 : level === 2 ? 7 : 5;
-  const hotSize = Math.min(size, 3 + level * 2);
-  return <button type="button" className={`ck-field__plane ck-field__plane--${level} ${selected ? 'is-selected' : ''}`} onMouseEnter={onSelect} onFocus={onSelect} aria-label={`${layerLabels[level]}，感受野高亮区域`} style={{ '--plane-size': size, '--hot-size': hotSize } as CSSProperties}>{Array.from({ length: size * size }, (_, index) => { const row = Math.floor(index / size); const col = index % size; const offset = Math.floor((size - hotSize) / 2); return <span key={index} className={row >= offset && row < offset + hotSize && col >= offset && col < offset + hotSize ? 'is-hot' : ''} />; })}</button>;
-}
+const SIZES = [9, 7, 5, 3, 1];
+const nameOf = (level: number) => level === 0 ? '输入图像' : `第 ${level} 层特征图`;
 
 export function ReceptiveFieldPage() {
-  const [layers, setLayers] = useState(2);
-  const [selected, setSelected] = useState(2);
-  const addLayer = () => { setLayers((current) => Math.min(3, current + 1)); setSelected((current) => Math.min(3, current + 1)); };
-  return <ContentBlock headingLevel={1} className="ck-field" title="卷积核的堆叠与感受野" subtitle="层数增加后，上层一个位置对应下层更大的输入范围。">
-    <div className="ck-field__layout"><section className="ck-field__visual"><div className="ck-field__stack">{Array.from({ length: layers + 1 }, (_, index) => { const level = layers - index; return <div className="ck-field__layer" key={level}><div className="ck-field__layer-label"><Typography variant="bodySmall" tone="accent">{layerLabels[level]}</Typography><Typography variant="bodySmall" tone="muted">特征图</Typography></div><Plane level={level} selected={selected === level} onSelect={() => setSelected(level)} />{level > 0 && <Typography as="span" variant="bodySmall" tone="accent" className="ck-field__kernel-label">3×3 卷积</Typography>}</div>; })}</div><button type="button" className="ck-field__add" onClick={addLayer} disabled={layers === 3}><span aria-hidden="true">+</span><Typography as="span" variant="body" tone="inherit">添加卷积层</Typography></button></section><aside className="ck-field__aside"><section><header><span aria-hidden="true">⌁</span><Typography as="h2" variant="h3" tone="accent">交互方式</Typography></header><ol><li>悬停上层网格，查看下层感受野</li><li>点击“添加卷积层”，继续堆叠</li></ol></section><section><header><span aria-hidden="true">○</span><Typography as="h2" variant="h3" tone="accent">你会看到</Typography></header><ol><li>层数越多，感受野越大</li><li>前面学局部，后面看更大范围</li></ol></section></aside></div><footer className="ck-field__summary"><Typography as="span" variant="h3" tone="accent">堆叠卷积核的意义：</Typography><Typography variant="body">在保持局部建模的同时，逐步扩大感受野。</Typography></footer>
+  const [layers, setLayers] = useState(3);
+  const [selected, setSelected] = useState<CellSelection>({ level: 3, row: 1, col: 1 });
+  const [resetViewToken, setResetViewToken] = useState(0);
+  const addLayer = () => {
+    if (layers >= 4) return;
+    const next = layers + 1;
+    const middle = Math.floor(SIZES[next] / 2);
+    setLayers(next);
+    setSelected({ level: next, row: middle, col: middle });
+  };
+  const removeLayer = () => {
+    if (layers <= 1) return;
+    const next = layers - 1;
+    setLayers(next);
+    if (selected.level > next) {
+      const middle = Math.floor(SIZES[next] / 2);
+      setSelected({ level: next, row: middle, col: middle });
+    }
+  };
+  const observations = Array.from({ length: selected.level + 1 }, (_, index) => selected.level - index);
+
+  return <ContentBlock headingLevel={1} className="ck-field" title="卷积核的堆叠与感受野" subtitle="点选任一特征位置，观察它在每个下层对应的范围；拖动模型可旋转，滚轮可缩放。">
+    <div className="ck-field__layout">
+      <section className="ck-field__visual" aria-label="卷积层叠模型">
+        <div className="ck-field__visual-hint"><Typography variant="bodySmall" tone="muted">点击格子选位置 · 拖动旋转 · 滚轮缩放</Typography></div>
+        <ReceptiveFieldScene layers={layers} selected={selected} onSelect={setSelected} resetViewToken={resetViewToken} />
+      </section>
+      <aside className="ck-field__aside">
+        <section className="ck-field__controls">
+          <button type="button" className="ck-field__add" onClick={addLayer} disabled={layers === 4}><Typography as="span" variant="h3" tone="inherit">＋ 添加卷积层</Typography></button>
+          <div className="ck-field__rule"><Typography variant="bodySmall" tone="accent">3 × 3 卷积</Typography><Typography variant="bodySmall" tone="accent">步长 1 · 无填充</Typography></div>
+          <div className="ck-field__actions"><button type="button" onClick={removeLayer} disabled={layers === 1}><Typography as="span" variant="bodySmall" tone="inherit">减少一层</Typography></button><button type="button" onClick={() => setResetViewToken((current) => current + 1)}><Typography as="span" variant="bodySmall" tone="inherit">重置视角</Typography></button></div>
+        </section>
+        <section className="ck-field__observation">
+          <Typography as="h2" variant="h3" tone="accent">当前观察</Typography>
+          <div className="ck-field__observation-list">
+            {observations.map((level) => <div key={level} className="ck-field__observation-row"><Typography variant="bodySmall" tone="accent">{nameOf(level)}</Typography><Typography variant="bodySmall" tone="accent">{1 + 2 * (selected.level - level)} × {1 + 2 * (selected.level - level)}</Typography></div>)}
+          </div>
+          <div className="ck-field__takeaway"><Typography variant="bodySmall" tone="accent">每多经过一层 3 × 3 卷积，感受野边长增加 2。</Typography></div>
+        </section>
+      </aside>
+    </div>
   </ContentBlock>;
 }
