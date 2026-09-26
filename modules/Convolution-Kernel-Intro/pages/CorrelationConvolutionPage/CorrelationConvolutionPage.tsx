@@ -48,7 +48,7 @@ function CorrelationFormula({ strict }: { strict: boolean }) {
       <MathFormulaStatic latex="+" />
       <MathFormulaTerm latex="v" tooltip="v：卷积核中的列偏移。" ariaLabel="v，列偏移" />
       <MathFormulaStatic latex=")" />
-      <MathFormulaTerm latex={strict ? '\widetilde K' : 'K'} tooltip={strict ? 'K：这里使用旋转 180° 后的卷积核。' : 'K：这里直接使用原始卷积核。'} ariaLabel={strict ? 'K，旋转后的卷积核' : 'K，原始卷积核'} />
+      <MathFormulaTerm latex={strict ? String.raw`\widetilde{K}` : 'K'} tooltip={strict ? 'K：这里使用旋转 180° 后的卷积核。' : 'K：这里直接使用原始卷积核。'} ariaLabel={strict ? 'K，旋转后的卷积核' : 'K，原始卷积核'} />
       <MathFormulaStatic latex="(" />
       <MathFormulaTerm latex="u" tooltip="u：卷积核的行索引。" ariaLabel="u，卷积核行索引" />
       <MathFormulaStatic latex="," />

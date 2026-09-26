@@ -45,19 +45,21 @@ export function WeightedKernelPage() {
   const [selectedPatternId, setSelectedPatternId] = useState<(typeof INPUT_PATTERNS)[number]['id']>('left-bright');
   const selectedPattern = INPUT_PATTERNS.find((pattern) => pattern.id === selectedPatternId) ?? INPUT_PATTERNS[0];
   const output = selectedPattern.values.flat().reduce((sum, value, index) => sum + value * KERNEL.flat()[index], 0);
+  const [topLeft, topRight, bottomLeft, bottomRight] = selectedPattern.values.flat();
   return (
     <ContentBlock
       headingLevel={1}
       className="ck-weighted-kernel"
-      title="卷积核里的权重，决定如何匹配"
-      subtitle="正权重奖励相符，负权重压低相反；权重绝对值越大，影响越强。"
+      title="权重决定局部响应"
+      subtitle="每个位置的输入按对应权重参与求和，权重的符号、大小和空间排列共同决定输出响应。"
     >
       <div className="ck-weighted-kernel__body">
         <section className="ck-weighted-kernel__number-line" aria-label="权重的符号与强度">
           <div className="ck-weighted-kernel__line-head">
-            <Typography variant="bodySmall" tone="danger"><MathFormulaStatic latex="w<0" />　反向 / 负向贡献</Typography>
-            <Typography variant="bodySmall" tone="muted">方向看符号，强度看绝对值</Typography>
-            <Typography variant="bodySmall" tone="accent"><MathFormulaStatic latex="w>0" />　正向贡献</Typography>
+            <Typography variant="bodySmall" tone="accent"><MathFormulaStatic latex="w>0" />　加入</Typography>
+            <Typography variant="bodySmall" tone="danger"><MathFormulaStatic latex="w<0" />　减去</Typography>
+            <Typography variant="bodySmall" tone="muted"><MathFormulaStatic latex="w=0" />　忽略</Typography>
+            <Typography variant="bodySmall" tone="accent"><MathFormulaStatic latex="|w|" /> 越大影响越强</Typography>
           </div>
           <div className="ck-weighted-kernel__axis" role="group" aria-label="悬浮查看不同权重的含义">
             <span className="ck-weighted-kernel__axis-left" />
@@ -87,7 +89,7 @@ export function WeightedKernelPage() {
           <article className="ck-weighted-kernel__step">
             <header className="ck-weighted-kernel__step-head">
               <span className="ck-weighted-kernel__step-number"><Typography as="span" variant="h3" tone="light">1</Typography></span>
-              <Typography as="h2" variant="h3" tone="accent">输入 <MathFormulaStatic latex="x" /></Typography>
+              <Typography as="h2" variant="h3" tone="accent">输入区域 <MathFormulaStatic latex="x" /></Typography>
             </header>
             <Matrix values={selectedPattern.values} label={`输入矩阵：${selectedPattern.label}`} kind="input" />
             <Typography variant="body" tone="accent" className="ck-weighted-kernel__matrix-caption">{selectedPattern.label}</Typography>
@@ -104,7 +106,11 @@ export function WeightedKernelPage() {
               <Typography as="h2" variant="h3" tone="accent">卷积核 <MathFormulaStatic latex="w" /></Typography>
             </header>
             <Matrix values={KERNEL} label="卷积核矩阵：第一列为正一，第二列为负一" kind="kernel" />
-            <div className="ck-weighted-kernel__kernel-callout"><Typography variant="body" tone="accent">它在比较：左边是否比右边大</Typography></div>
+            <div className="ck-weighted-kernel__kernel-callout">
+              <Typography variant="body" tone="accent">左列相加，右列相减</Typography>
+              <MathFormulaStatic latex={`${topLeft}\\times1+${topRight}\\times(-1)+${bottomLeft}\\times1+${bottomRight}\\times(-1)`} />
+              <MathFormulaStatic latex={`=(${topLeft}+${bottomLeft})-(${topRight}+${bottomRight})=${output}`} />
+            </div>
           </article>
 
           <Typography as="span" variant="h1" tone="accent" className="ck-weighted-kernel__operator" aria-hidden="true">→</Typography>
@@ -112,15 +118,15 @@ export function WeightedKernelPage() {
           <article className="ck-weighted-kernel__step ck-weighted-kernel__step--output">
             <header className="ck-weighted-kernel__step-head">
               <span className="ck-weighted-kernel__step-number"><Typography as="span" variant="h3" tone="light">3</Typography></span>
-              <Typography as="h2" variant="h3" tone="accent">输出 <MathFormulaStatic latex="y" /></Typography>
+              <Typography as="h2" variant="h3" tone="accent">局部响应 <MathFormulaStatic latex="y" /></Typography>
             </header>
               <div className="ck-weighted-kernel__output">
               <MathFormulaStatic latex={`y=${output >= 0 ? '+' : ''}${output}`} aria-label={`y 等于 ${output}`} />
             </div>
             <div className="ck-weighted-kernel__interpretations">
-              <div className={output > 0 ? 'is-active' : ''}><MathFormulaStatic latex="y>0" /><Typography variant="bodySmall" tone="inherit">与模板一致</Typography></div>
-              <div className={output < 0 ? 'is-active' : ''}><MathFormulaStatic latex="y<0" /><Typography variant="bodySmall" tone="inherit">与模板相反</Typography></div>
-              <div className={output === 0 ? 'is-active' : ''}><MathFormulaStatic latex="y\approx0" /><Typography variant="bodySmall" tone="inherit">差异弱 / 抵消</Typography></div>
+              <div className={output > 0 ? 'is-active' : ''}><MathFormulaStatic latex="y>0" /><Typography variant="bodySmall" tone="inherit">左侧更亮</Typography></div>
+              <div className={output < 0 ? 'is-active' : ''}><MathFormulaStatic latex="y<0" /><Typography variant="bodySmall" tone="inherit">右侧更亮</Typography></div>
+              <div className={output === 0 ? 'is-active' : ''}><MathFormulaStatic latex="y=0" /><Typography variant="bodySmall" tone="inherit">左右相同</Typography></div>
             </div>
           </article>
         </section>
@@ -128,7 +134,7 @@ export function WeightedKernelPage() {
         <footer className="ck-weighted-kernel__summary">
           <span className="ck-weighted-kernel__summary-mark" aria-hidden="true"><Typography as="span" variant="h3" tone="light">i</Typography></span>
           <Typography as="span" variant="h3" tone="accent">总结：</Typography>
-          <Typography variant="body">权重 <MathFormulaStatic latex="w" /> 看如何计入，输出 <MathFormulaStatic latex="y" /> 看输入与模板的匹配程度。</Typography>
+          <Typography variant="body">正负权重的组合，可以把局部差异转化为带符号的响应。</Typography>
         </footer>
       </div>
     </ContentBlock>

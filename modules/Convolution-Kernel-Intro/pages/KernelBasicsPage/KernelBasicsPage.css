@@ -47,7 +47,7 @@
 
 .course-shell .ck-convolution__output-map { position: relative; display: block; width: min(100%, 370px); aspect-ratio: 16 / 9; overflow: hidden; background: #edf2f7; }
 .course-shell .ck-convolution__output-map::after { position: absolute; inset: 0; z-index: 3; border: 1px solid rgba(255, 255, 255, .55); content: ''; pointer-events: none; }
-.course-shell .ck-convolution__output-canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; background: #edf2f7; image-rendering: auto; }
+.course-shell .ck-convolution__output-canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; background: #edf2f7; image-rendering: pixelated; }
 .course-shell .ck-convolution__output-grid { position: absolute; inset: 0; z-index: 2; display: grid; }
 .course-shell .ck-convolution__output-cell { appearance: none; display: block; min-width: 0; min-height: 0; overflow: hidden; border: 0; border-radius: 0; background: transparent; cursor: pointer; padding: 0; }
 .course-shell .ck-convolution__output-cell.is-selected { outline: 3px solid #3184dc; outline-offset: -3px; box-shadow: inset 0 0 0 2px #fff; }

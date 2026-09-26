@@ -8,37 +8,34 @@ import './KernelBasicsPage.css';
 const GRID_WIDTH = 16;
 const GRID_HEIGHT = 9;
 const KERNEL_SIZE = 3;
-const DOWNSAMPLE_FACTOR = 4;
+const INPUT_WIDTH = 370;
+const DISPLAY_SCALE = 3;
 const PREVIEW_WIDTH = GRID_WIDTH - KERNEL_SIZE + 1;
 const PREVIEW_HEIGHT = GRID_HEIGHT - KERNEL_SIZE + 1;
 const INITIAL_POSITION = { row: 3, col: 6 };
 
 type FilterDirection = 'horizontal' | 'vertical' | 'descending' | 'ascending';
 
-const FILTERS: Record<FilterDirection, { image: string; name: string; kernel: number[][]; scale: number }> = {
+const FILTERS: Record<FilterDirection, { image: string; name: string; kernel: number[][] }> = {
   horizontal: {
     image: cityImage,
     name: '水平直线检测核',
     kernel: [[-1, -2, -1], [0, 0, 0], [1, 2, 1]],
-    scale: 4,
   },
   vertical: {
     image: cityImage,
     name: '竖直直线检测核',
     kernel: [[-1, 0, 1], [-2, 0, 2], [-1, 0, 1]],
-    scale: 4,
   },
   descending: {
     image: bridgeImage,
     name: '斜线检测核 ↘',
     kernel: [[2, -1, -1], [-1, 2, -1], [-1, -1, 2]],
-    scale: 6,
   },
   ascending: {
     image: bridgeImage,
     name: '斜线检测核 ↙',
     kernel: [[-1, -1, 2], [-1, 2, -1], [2, -1, -1]],
-    scale: 6,
   },
 };
 
@@ -56,6 +53,8 @@ function directionFromDesign(designedKernel: number[][] | null): FilterDirection
 
 interface ConvolutionData {
   inputImageUrl?: string;
+  inputWidth: number;
+  inputHeight: number;
   output: Float32Array;
   outputWidth: number;
   outputHeight: number;
@@ -77,7 +76,14 @@ function crossCorrelation(input: Float32Array, inputWidth: number, inputHeight: 
       output[row * outputWidth + col] = sum;
     }
   }
-  return { output, outputWidth, outputHeight };
+  return { inputWidth, inputHeight, output, outputWidth, outputHeight };
+}
+
+function previewRegion(index: number, outputSize: number, previewSize: number) {
+  return {
+    start: Math.floor(index * outputSize / previewSize),
+    end: Math.ceil((index + 1) * outputSize / previewSize),
+  };
 }
 
 function useConvolutionData(imageSource: string, kernel: number[][]): ConvolutionData | null {
@@ -89,14 +95,14 @@ function useConvolutionData(imageSource: string, kernel: number[][]): Convolutio
     const image = new Image();
     image.onload = () => {
       if (!active) return;
-      const inputWidth = Math.floor(image.naturalWidth / DOWNSAMPLE_FACTOR);
-      const inputHeight = Math.floor(image.naturalHeight / DOWNSAMPLE_FACTOR);
+      const inputWidth = INPUT_WIDTH;
+      const inputHeight = Math.round(image.naturalHeight / image.naturalWidth * inputWidth);
       const canvas = document.createElement('canvas');
       canvas.width = inputWidth;
       canvas.height = inputHeight;
       const context = canvas.getContext('2d', { willReadFrequently: true });
       if (!context) return;
-      // Downsample first: each new pixel represents a 4 x 4 block of the source image.
+      // Resize once to the displayed input resolution, then convolve that exact pixel grid.
       context.drawImage(image, 0, 0, inputWidth, inputHeight);
       const imageData = context.getImageData(0, 0, inputWidth, inputHeight);
       const pixels = imageData.data;
@@ -131,24 +137,29 @@ function Matrix({ values, label, className = '' }: { values: number[][]; label: 
   );
 }
 
-function InputImage({ selected, imageSrc, onHover }: { selected: { row: number; col: number }; imageSrc: string; onHover: (position: { row: number; col: number }) => void }) {
-  const patchStyle = {
-    left: `${selected.col / GRID_WIDTH * 100}%`,
-    top: `${selected.row / GRID_HEIGHT * 100}%`,
-    width: `${KERNEL_SIZE / GRID_WIDTH * 100}%`,
-    height: `${KERNEL_SIZE / GRID_HEIGHT * 100}%`,
-  };
+function InputImage({ selected, imageSrc, data, onHover }: { selected: { row: number; col: number }; imageSrc: string; data: ConvolutionData | null; onHover: (position: { row: number; col: number }) => void }) {
+  const cols = data && previewRegion(selected.col, data.outputWidth, PREVIEW_WIDTH);
+  const rows = data && previewRegion(selected.row, data.outputHeight, PREVIEW_HEIGHT);
+  const patchStyle = data && cols && rows ? {
+    left: `${cols.start / data.inputWidth * 100}%`,
+    top: `${rows.start / data.inputHeight * 100}%`,
+    width: `${(cols.end - cols.start + KERNEL_SIZE - 1) / data.inputWidth * 100}%`,
+    height: `${(rows.end - rows.start + KERNEL_SIZE - 1) / data.inputHeight * 100}%`,
+  } : undefined;
   return (
     <div className="ck-convolution__image-frame">
       <img src={imageSrc} alt="缩小后的灰度图，用于卷积演示" />
-      <div className="ck-convolution__patch" style={patchStyle} aria-hidden="true" />
+      {patchStyle && <div className="ck-convolution__patch" style={patchStyle} aria-hidden="true" />}
       <div
         className="ck-convolution__image-hover-target"
         aria-hidden="true"
         onPointerMove={(event) => {
+          if (!data) return;
           const rect = event.currentTarget.getBoundingClientRect();
-          const col = Math.max(0, Math.min(PREVIEW_WIDTH - 1, Math.floor(((event.clientX - rect.left) / rect.width) * GRID_WIDTH - KERNEL_SIZE / 2)));
-          const row = Math.max(0, Math.min(PREVIEW_HEIGHT - 1, Math.floor(((event.clientY - rect.top) / rect.height) * GRID_HEIGHT - KERNEL_SIZE / 2)));
+          const sourceCol = ((event.clientX - rect.left) / rect.width) * data.inputWidth - (KERNEL_SIZE - 1) / 2;
+          const sourceRow = ((event.clientY - rect.top) / rect.height) * data.inputHeight - (KERNEL_SIZE - 1) / 2;
+          const col = Math.max(0, Math.min(PREVIEW_WIDTH - 1, Math.floor(sourceCol / data.outputWidth * PREVIEW_WIDTH)));
+          const row = Math.max(0, Math.min(PREVIEW_HEIGHT - 1, Math.floor(sourceRow / data.outputHeight * PREVIEW_HEIGHT)));
           onHover({ row, col });
         }}
       />
@@ -156,8 +167,8 @@ function InputImage({ selected, imageSrc, onHover }: { selected: { row: number; 
   );
 }
 
-/** Signed filter responses are shown by magnitude, while the underlying matrix retains its sign. */
-function ResponseCanvas({ output, width, height, scale }: { output: Float32Array; width: number; height: number; scale: number }) {
+/** Fixed signed scale for every image: negative is dark, zero is mid gray, positive is light. */
+function ResponseCanvas({ output, width, height }: { output: Float32Array; width: number; height: number }) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
@@ -171,8 +182,8 @@ function ResponseCanvas({ output, width, height, scale }: { output: Float32Array
     output.forEach((value, index) => {
       const rowIndex = Math.floor(index / width);
       const colIndex = index % width;
-      const normalized = Math.max(0, Math.min(1, Math.abs(value) / scale));
-      const gray = Math.round(normalized * 255);
+      const normalized = Math.max(-1, Math.min(1, value / DISPLAY_SCALE));
+      const gray = Math.round((normalized + 1) * 127.5);
       const offset = (rowIndex * width + colIndex) * 4;
       pixels.data[offset] = gray;
       pixels.data[offset + 1] = gray;
@@ -180,25 +191,31 @@ function ResponseCanvas({ output, width, height, scale }: { output: Float32Array
       pixels.data[offset + 3] = 255;
     });
     context.putImageData(pixels, 0, 0);
-  }, [output, width, height, scale]);
+  }, [output, width, height]);
 
   return <canvas ref={canvasRef} className="ck-convolution__output-canvas" aria-hidden="true" />;
 }
 
-function OutputMap({ data, selected, scale, onSelect }: { data: ConvolutionData; selected: { row: number; col: number }; scale: number; onSelect: (position: { row: number; col: number }) => void }) {
-  const sampleAt = (row: number, col: number) => {
-    const sourceRow = Math.round(row * (data.outputHeight - 1) / (PREVIEW_HEIGHT - 1));
-    const sourceCol = Math.round(col * (data.outputWidth - 1) / (PREVIEW_WIDTH - 1));
-    return data.output[sourceRow * data.outputWidth + sourceCol];
+function OutputMap({ data, selected, onSelect }: { data: ConvolutionData; selected: { row: number; col: number }; onSelect: (position: { row: number; col: number }) => void }) {
+  const averageAt = (row: number, col: number) => {
+    const rows = previewRegion(row, data.outputHeight, PREVIEW_HEIGHT);
+    const cols = previewRegion(col, data.outputWidth, PREVIEW_WIDTH);
+    let total = 0;
+    for (let sourceRow = rows.start; sourceRow < rows.end; sourceRow += 1) {
+      for (let sourceCol = cols.start; sourceCol < cols.end; sourceCol += 1) {
+        total += data.output[sourceRow * data.outputWidth + sourceCol];
+      }
+    }
+    return total / ((rows.end - rows.start) * (cols.end - cols.start));
   };
   return (
-    <div className="ck-convolution__output-map">
-      <ResponseCanvas output={data.output} width={data.outputWidth} height={data.outputHeight} scale={scale} />
-      <div className="ck-convolution__output-grid" role="grid" aria-label="卷积输出特征图，点击任意位置查看该位置的响应" style={{ gridTemplateColumns: `repeat(${PREVIEW_WIDTH}, minmax(0, 1fr))`, gridTemplateRows: `repeat(${PREVIEW_HEIGHT}, minmax(0, 1fr))` }}>
+    <div className="ck-convolution__output-map" style={{ aspectRatio: `${data.outputWidth} / ${data.outputHeight}` }}>
+      <ResponseCanvas output={data.output} width={data.outputWidth} height={data.outputHeight} />
+      <div className="ck-convolution__output-grid" role="grid" aria-label="卷积输出特征图，点击任意区域查看其中的平均响应" style={{ gridTemplateColumns: `repeat(${PREVIEW_WIDTH}, minmax(0, 1fr))`, gridTemplateRows: `repeat(${PREVIEW_HEIGHT}, minmax(0, 1fr))` }}>
         {Array.from({ length: PREVIEW_WIDTH * PREVIEW_HEIGHT }, (_, index) => {
           const rowIndex = Math.floor(index / PREVIEW_WIDTH);
           const colIndex = index % PREVIEW_WIDTH;
-          const value = sampleAt(rowIndex, colIndex) ?? 0;
+          const value = averageAt(rowIndex, colIndex);
           const isSelected = selected.row === rowIndex && selected.col === colIndex;
           return (
             <button
@@ -208,7 +225,7 @@ function OutputMap({ data, selected, scale, onSelect }: { data: ConvolutionData;
               onClick={() => onSelect({ row: rowIndex, col: colIndex })}
               onPointerEnter={() => onSelect({ row: rowIndex, col: colIndex })}
               onFocus={() => onSelect({ row: rowIndex, col: colIndex })}
-              aria-label={`输出第 ${rowIndex + 1} 行第 ${colIndex + 1} 列，值 ${value.toFixed(2)}`}
+              aria-label={`输出第 ${rowIndex + 1} 行第 ${colIndex + 1} 个区域，平均响应 ${value.toFixed(2)}`}
             />
           );
         })}
@@ -225,7 +242,6 @@ export function KernelBasicsPage({ onComplete }: KernelBasicsPageProps) {
   const { designedKernel } = useGomokuOutcome();
   const filter = FILTERS[directionFromDesign(designedKernel)];
   const data = useConvolutionData(filter.image, filter.kernel);
-  const responseScale = filter.scale;
   const [selected, setSelected] = useState(INITIAL_POSITION);
   const completedRef = useRef(false);
   const selectOutput = (position: { row: number; col: number }) => {
@@ -247,9 +263,9 @@ export function KernelBasicsPage({ onComplete }: KernelBasicsPageProps) {
         <section className="ck-convolution__flow" aria-label="输入图像、卷积核与输出特征图">
           <div className="ck-convolution__stage">
             <Typography as="h2" variant="h3" tone="accent">输入图像 X</Typography>
-            <Typography variant="bodySmall" tone="muted">灰度图，单通道 · 每个像素对应原图 4×4 区域</Typography>
-            <InputImage selected={selected} imageSrc={data?.inputImageUrl ?? filter.image} onHover={selectOutput} />
-            <Typography variant="bodySmall" tone="muted" className="ck-convolution__stage-note">蓝框：当前取出的局部区域</Typography>
+            <Typography variant="bodySmall" tone="muted">缩小后的灰度图 · 每次读取 3×3 像素</Typography>
+            <InputImage selected={selected} imageSrc={data?.inputImageUrl ?? filter.image} data={data} onHover={selectOutput} />
+            <Typography variant="bodySmall" tone="muted" className="ck-convolution__stage-note">蓝框：右侧所选区域读取的输入范围</Typography>
           </div>
 
           <div className="ck-convolution__flow-arrow" aria-hidden="true"><Typography as="span" variant="h2" tone="accent">→</Typography></div>
@@ -264,9 +280,9 @@ export function KernelBasicsPage({ onComplete }: KernelBasicsPageProps) {
 
           <div className="ck-convolution__stage">
             <Typography as="h2" variant="h3" tone="accent">输出特征图 Y</Typography>
-            <Typography variant="bodySmall" tone="muted">亮度表示局部响应的强度 |Y|</Typography>
-            {data ? <OutputMap data={data} selected={selected} scale={responseScale} onSelect={selectOutput} /> : <div className="ck-convolution__loading"><Typography variant="bodySmall" tone="muted">正在读取图像…</Typography></div>}
-            <Typography variant="bodySmall" tone="muted" className="ck-convolution__stage-note">悬浮或点击，查看当前位置的响应</Typography>
+            <Typography variant="bodySmall" tone="muted">统一 ±3：浅正 · 深负 · 中灰零</Typography>
+            {data ? <OutputMap data={data} selected={selected} onSelect={selectOutput} /> : <div className="ck-convolution__loading"><Typography variant="bodySmall" tone="muted">正在读取图像…</Typography></div>}
+            <Typography variant="bodySmall" tone="muted" className="ck-convolution__stage-note">悬浮或点击，查看对应输入范围</Typography>
           </div>
         </section>
       </div>

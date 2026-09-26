@@ -95,6 +95,7 @@
 .course-shell .ck-weighted-kernel__pattern .ui-typography { min-width: 0; text-align: center; white-space: nowrap; }
 .course-shell .ck-weighted-kernel__kernel-callout { width: 100%; border-radius: 10px; background: #eaf3ff; padding: 9px 10px; }
 .course-shell .ck-weighted-kernel__kernel-callout .ui-typography { font-weight: 700; }
+.course-shell .ck-weighted-kernel__kernel-callout .math-formula-static { max-width: 100%; font-size: 1.15rem; }
 .course-shell .ck-weighted-kernel__interpretations { display: grid; gap: 5px; width: 100%; }
 .course-shell .ck-weighted-kernel__interpretations > div { display: grid; grid-template-columns: 86px minmax(0, 1fr); align-items: center; gap: 8px; min-height: 28px; border-radius: 8px; background: #f1f2f4; color: #718096; padding: 2px 10px; }
 .course-shell .ck-weighted-kernel__interpretations > div.is-active { background: #dceaff; color: #145bd6; }
