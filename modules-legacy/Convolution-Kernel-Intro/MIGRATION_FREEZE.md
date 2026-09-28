@@ -46,7 +46,7 @@
 
 | 能力 | 直接复用 shared | 模块私有保留 |
 | --- | --- | --- |
-| 页面外壳和标准内容 | `ModuleShell`、`LessonStage`、`ContentBlock` | 游戏、算子与 MNIST 的双栏和响应式细节 |
+| 页面外壳和标准内容 | `ModuleShell`、原生内容容器、`ContentBlock` | 游戏、算子与 MNIST 的双栏和响应式细节 |
 | 教学流程 | `LessonFlow`、现有 Scroll Cue | `game → operator → mnist` 内部状态机 |
 | 标准控件和反馈 | `Button`、`Question`、`Callout`、`NoticeStrip`、`ValueTile`、`ExplainPanelButton` | 五子棋画布、拖动扫描、可编辑核、计算弹层、特征图点击与核预览 |
 | 状态存储 | shared Telemetry API | 模块私有 typed `usePersistedActivity` 与恢复去重 |

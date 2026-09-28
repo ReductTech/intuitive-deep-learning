@@ -1,6 +1,5 @@
 export * from './layout/ModuleShell';
 export * from './layout/ContentBlock';
-export * from './layout/LessonStage';
 export * from './layout/CatalogItem';
 export * from './typography';
 
@@ -24,6 +23,7 @@ export * from './learning/MathFormulaBlock';
 export * from './learning/MathFormulaSymbols';
 export * from './learning/RelatedVideos';
 export * from './learning/LessonFooter';
+export * from './ending/CourseEndingPage';
 export * from './learning/LessonDevelopers';
 export * from './learning/developers';
 export * from './learning/PageRating';
@@ -37,5 +37,6 @@ export * from './visuals/PlotlyChart';
 export * from './visuals/plotSampling';
 export * from './visuals/FunctionPlot';
 export * from './telemetry';
+export * from './assets';
 export * from './theme';
 export * from './presentation';

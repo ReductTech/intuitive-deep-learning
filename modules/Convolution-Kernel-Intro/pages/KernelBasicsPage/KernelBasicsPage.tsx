@@ -1,15 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
-import { ContentBlock, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, Typography } from '../../../shared/react';
-import cityImage from '../../assets/mengdelian.png';
-import bridgeImage from '../../assets/xielaqiao.png';
+import { ContentBlock, moduleAssetUrl, Typography } from '../../../shared/react';
 import { useGomokuOutcome } from '../../LessonContext';
 import './KernelBasicsPage.css';
+
+const moduleAssetId = '38cd1c79-d8b7-462a-b208-a567c5cd89c4';
+const cityImage = moduleAssetUrl(moduleAssetId, 'mengdelian.png');
+const bridgeImage = moduleAssetUrl(moduleAssetId, 'xielaqiao.png');
 
 const GRID_WIDTH = 16;
 const GRID_HEIGHT = 9;
 const KERNEL_SIZE = 3;
 const INPUT_WIDTH = 370;
-const DISPLAY_SCALE = 3;
 const PREVIEW_WIDTH = GRID_WIDTH - KERNEL_SIZE + 1;
 const PREVIEW_HEIGHT = GRID_HEIGHT - KERNEL_SIZE + 1;
 const INITIAL_POSITION = { row: 3, col: 6 };
@@ -147,7 +148,7 @@ function InputImage({ selected, imageSrc, data, onHover }: { selected: { row: nu
     height: `${(rows.end - rows.start + KERNEL_SIZE - 1) / data.inputHeight * 100}%`,
   } : undefined;
   return (
-    <div className="ck-convolution__image-frame">
+    <div className="ck-convolution__image-frame" style={data ? { aspectRatio: `${data.inputWidth} / ${data.inputHeight}` } : undefined}>
       <img src={imageSrc} alt="缩小后的灰度图，用于卷积演示" />
       {patchStyle && <div className="ck-convolution__patch" style={patchStyle} aria-hidden="true" />}
       <div
@@ -167,7 +168,7 @@ function InputImage({ selected, imageSrc, data, onHover }: { selected: { row: nu
   );
 }
 
-/** Fixed signed scale for every image: negative is dark, zero is mid gray, positive is light. */
+/** Match page 8: response magnitude is shown as brightness on a black background. */
 function ResponseCanvas({ output, width, height }: { output: Float32Array; width: number; height: number }) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -179,11 +180,12 @@ function ResponseCanvas({ output, width, height }: { output: Float32Array; width
     const context = canvas.getContext('2d');
     if (!context) return;
     const pixels = context.createImageData(width, height);
+    const strengths = Array.from(output, (value) => Math.abs(value)).sort((a, b) => a - b);
+    const scale = Math.max(.025, strengths[Math.floor(strengths.length * .985)] ?? .025);
     output.forEach((value, index) => {
       const rowIndex = Math.floor(index / width);
       const colIndex = index % width;
-      const normalized = Math.max(-1, Math.min(1, value / DISPLAY_SCALE));
-      const gray = Math.round((normalized + 1) * 127.5);
+      const gray = Math.round(Math.min(1, Math.abs(value) / scale) * 255);
       const offset = (rowIndex * width + colIndex) * 4;
       pixels.data[offset] = gray;
       pixels.data[offset + 1] = gray;
@@ -257,69 +259,35 @@ export function KernelBasicsPage({ onComplete }: KernelBasicsPageProps) {
       headingLevel={1}
       className="ck-convolution"
       title="卷积核"
-      subtitle="卷积核是一个较小的权重矩阵，用来提取输入图像中的局部模式。"
+      subtitle="卷积核在输入图像的局部区域上计算响应，并逐位置生成输出特征图。"
     >
       <div className="ck-convolution__workspace">
         <section className="ck-convolution__flow" aria-label="输入图像、卷积核与输出特征图">
           <div className="ck-convolution__stage">
             <Typography as="h2" variant="h3" tone="accent">输入图像 X</Typography>
-            <Typography variant="bodySmall" tone="muted">缩小后的灰度图 · 每次读取 3×3 像素</Typography>
             <InputImage selected={selected} imageSrc={data?.inputImageUrl ?? filter.image} data={data} onHover={selectOutput} />
-            <Typography variant="bodySmall" tone="muted" className="ck-convolution__stage-note">蓝框：右侧所选区域读取的输入范围</Typography>
+            <Typography variant="bodySmall" tone="muted" className="ck-convolution__stage-note">蓝框表示当前参与计算的局部窗口</Typography>
           </div>
 
           <div className="ck-convolution__flow-arrow" aria-hidden="true"><Typography as="span" variant="h2" tone="accent">→</Typography></div>
 
           <div className="ck-convolution__kernel-stage">
             <Typography as="h2" variant="h3" tone="accent">卷积核 W</Typography>
-            <Typography variant="bodySmall" tone="muted">{filter.name}</Typography>
             <Matrix values={filter.kernel} label={`${filter.name}`} className="ck-convolution__kernel-matrix" />
+            <Typography variant="bodySmall" tone="muted">在局部窗口上逐元素相乘并求和</Typography>
           </div>
 
           <div className="ck-convolution__flow-arrow" aria-hidden="true"><Typography as="span" variant="h2" tone="accent">→</Typography></div>
 
           <div className="ck-convolution__stage">
             <Typography as="h2" variant="h3" tone="accent">输出特征图 Y</Typography>
-            <Typography variant="bodySmall" tone="muted">统一 ±3：浅正 · 深负 · 中灰零</Typography>
             {data ? <OutputMap data={data} selected={selected} onSelect={selectOutput} /> : <div className="ck-convolution__loading"><Typography variant="bodySmall" tone="muted">正在读取图像…</Typography></div>}
-            <Typography variant="bodySmall" tone="muted" className="ck-convolution__stage-note">悬浮或点击，查看对应输入范围</Typography>
+            <Typography variant="bodySmall" tone="muted" className="ck-convolution__stage-note">一个局部窗口对应一个输出位置</Typography>
           </div>
         </section>
       </div>
 
-      <div className="ck-convolution__explanation">
-        <div className="ck-convolution__definition">
-          <div className="ck-convolution__definition-label"><Typography as="span" variant="h3" tone="accent">定义</Typography></div>
-          <div className="ck-convolution__definition-copy">
-            <Typography variant="body">卷积核 <strong>W</strong> 在输入图像 <strong>X</strong> 的局部区域上滑动，逐元素相乘并求和，得到输出值 <strong>Y</strong>。</Typography>
-            <Typography variant="bodySmall" tone="muted">一个局部窗口对应输出特征图中的一个位置。</Typography>
-          </div>
-          <MathFormulaBlock ariaLabel="二维互相关公式" className="ck-convolution__definition-formula">
-            <MathFormulaTerm latex="Y_{i,j}" tooltip="Y：输出特征图在位置 i,j 的值。" ariaLabel="Y i j，输出值" />
-            <MathFormulaStatic latex="=" />
-            <MathFormulaStatic latex="\sum_{u=0}^{K_h-1}\sum_{v=0}^{K_w-1}" />
-            <MathFormulaTerm latex="W_{u,v}" tooltip="W：卷积核中的权重。" ariaLabel="W u v，卷积核权重" />
-            <MathFormulaTerm latex="X_{i+u,j+v}" tooltip="X：输入图像中对应局部窗口的像素。" ariaLabel="X i 加 u，j 加 v，输入像素" />
-          </MathFormulaBlock>
-        </div>
-        <aside className="ck-convolution__features" aria-labelledby="convolution-features-title">
-          <Typography as="h2" variant="h3" tone="accent" id="convolution-features-title">卷积核的关键特征</Typography>
-          <div className="ck-convolution__feature-list">
-            <div className="ck-convolution__feature-item">
-              <span className="ck-convolution__feature-number">1</span>
-              <div><Typography as="h3" variant="h3" tone="accent">尺寸</Typography><Typography variant="bodySmall" tone="muted">卷积核只看输入中的一个小窗口。</Typography></div>
-            </div>
-            <div className="ck-convolution__feature-item">
-              <span className="ck-convolution__feature-number">2</span>
-              <div><Typography as="h3" variant="h3" tone="accent">权重</Typography><Typography variant="bodySmall" tone="muted">每个元素都是可正可负的权重，用于强调或抑制不同位置。</Typography></div>
-            </div>
-            <div className="ck-convolution__feature-item">
-              <span className="ck-convolution__feature-number">3</span>
-              <div><Typography as="h3" variant="h3" tone="accent">局部作用</Typography><Typography variant="bodySmall" tone="muted">卷积核在输入上移动，把每个局部窗口变成一个响应值。</Typography></div>
-            </div>
-          </div>
-        </aside>
-      </div>
+      <div className="ck-convolution__explanation"><Typography variant="body" tone="accent">局部窗口经过卷积核计算得到<strong>一个响应值</strong>；窗口在输入图像上滑动后，所有响应共同组成<strong>输出特征图</strong>。</Typography></div>
     </ContentBlock>
   );
 }

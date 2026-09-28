@@ -3,6 +3,7 @@ import { LessonFlow, ModuleShell, Typography, type LessonFlowStep } from '../sha
 import '../shared/react/styles.css';
 import '../shared/react/ui-kit.css';
 import '../shared/react/presentation.css';
+import './tailwind.css';
 import { convolutionCourse } from './course';
 import { GomokuLessonProvider } from './LessonContext';
 
@@ -80,8 +81,8 @@ function BlogLessonCanvas({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <div ref={frameRef} className="lesson-canvas-frame" style={{ height: 900 * scale }}>
-      <div className="course-page-surface course-shell" style={{ transform: `scale(${scale})` }}>
+    <div ref={frameRef} className="lesson-canvas-frame relative w-full overflow-hidden" style={{ height: 900 * scale }}>
+      <div className="course-page-surface course-shell cktw-canvas origin-top-left" style={{ transform: `scale(${scale})` }}>
         {children}
       </div>
     </div>
@@ -107,11 +108,9 @@ export function GuidePage() {
     <ModuleShell
       title="卷积核入门"
       subtitle="从一局五子棋开始，一步步走到图像上的卷积。"
-      shellClassName="course-shell course-blog-shell"
+      shellClassName="course-shell course-blog-shell cktw-root bg-[#f4f7fb] text-[#21334e]"
     >
-      <GomokuLessonProvider>
-        <LessonFlow steps={convolutionLessonSteps} persistenceKey="convolution-kernel-intro-guide-v1" />
-      </GomokuLessonProvider>
+      <GomokuLessonProvider><LessonFlow steps={convolutionLessonSteps} persistenceKey="convolution-kernel-intro-guide-v1" /></GomokuLessonProvider>
     </ModuleShell>
   );
 }

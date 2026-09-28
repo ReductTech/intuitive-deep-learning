@@ -1,9 +1,9 @@
 {
   "id": "neuron-guide",
   "title": "认识人工神经元",
-  "description": "从秀丽隐杆线虫的刺激反应出发，经由生物神经元的结构抽象，理解人工神经元的输入、权重、加权和与偏置。",
+  "description": "从真实决策出发，逐步建立输入、权重、加权和、偏置与激活函数的神经元模型。",
   "path": "/modules/neuron-guide",
-  "badge": "互动课程",
+  "badge": "神经网络基础",
   "moduleType": "teaching",
   "difficulty": "introductory",
   "audience": "general",
@@ -11,7 +11,7 @@
   "ppt": {
     "entry": "neuronPpt.tsx",
     "path": "/scenedeck/",
-    "player": true
+    "player": false
   },
   "pages": [
     {
@@ -172,12 +172,14 @@
       "title": "推荐资源",
       "goal": "给出继续学习神经元与神经网络的入口。",
       "summary": "推荐与神经元、神经网络和深度学习相关的延伸材料。",
-      "interaction": "无。",
+      "interaction": "点击视频后在居中播放框中观看。",
       "next": "无，课程结束。",
       "snippet": ""
     }
-  ]
+  ],
+  "moduleIdentity": {
+    "version": 1,
+    "id": "9acfbca1-b881-457e-add6-21e0b6b855a0",
+    "signature": "Zxhguwo5julZ9r6IlK8PPFq81qpL/clC3GCtYHMcEBRQ7uUBrXBNOL7uxmzH1apZVcacd6J7ov/RU3K0KF3bCg=="
+  }
 }
-
-
-

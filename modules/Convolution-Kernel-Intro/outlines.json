@@ -1,14 +1,18 @@
 {
   "id": "convolution-kernel-intro",
   "title": "卷积基础：从五子棋棋形到图像卷积",
-  "description": "从一局五子棋开始，观察局部形状如何被编码、扫描和比较。",
+  "description": "从棋盘上的局部形状出发，理解卷积核、特征图、感受野和多通道卷积。",
   "path": "/modules/convolution-kernel-intro",
-  "badge": "互动课程",
+  "badge": "卷积基础",
   "moduleType": "teaching",
   "difficulty": "intermediate",
   "audience": "undergraduate",
   "entry": "GuidePage.tsx",
-  "ppt": { "entry": "convolutionKernelPpt.tsx", "path": "/scenedeck/", "player": true },
+  "ppt": {
+    "entry": "convolutionKernelPpt.tsx",
+    "path": "/scenedeck/",
+    "player": true
+  },
   "pages": [
     {
       "id": "gomoku-play",
@@ -216,6 +220,20 @@
       "interaction": "切换规则采样、学习偏移、重新加权求和三个步骤。",
       "next": "卷积扩展内容完成。",
       "snippet": "普通卷积固定在 p₀+pₙ 处取样；可变形卷积增加偏移 Δpₙ，在 p₀+pₙ+Δpₙ 处取值，但仍然按照权重 wₙ 求和。"
+    },
+    {
+      "id": "course-ending",
+      "title": "本节完成：卷积核",
+      "goal": "回顾从局部匹配到卷积特征提取的完整认知链。",
+      "summary": "把局部响应、卷积核、特征图和感受野压缩成一条可继续学习的路径。",
+      "interaction": "点击延伸视频或进入下一节课程。",
+      "next": "课程结束。",
+      "snippet": "你已经从五子棋的局部形状出发，理解卷积核如何扫描输入、产生响应，并通过共享权重提取特征。"
     }
-  ]
+  ],
+  "moduleIdentity": {
+    "version": 1,
+    "id": "38cd1c79-d8b7-462a-b208-a567c5cd89c4",
+    "signature": "kcbUmdbS3/trprxJB0PuSzm/8nY9P4LQtU5QNWFRycT2kqsD2xFmY1tbqz6mYxxnockT7Pu87HXvC3ZxE2BTDw=="
+  }
 }

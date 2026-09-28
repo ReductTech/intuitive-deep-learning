@@ -1,3 +1,4 @@
+import { useMemo, useState } from 'react';
 import { Button } from '../controls/Button';
 import { ExplainPanelButton } from '../controls/ExplainPanelButton';
 import { RangeControl } from '../controls/RangeControl';
@@ -15,7 +16,7 @@ import { ModuleShell } from '../layout/ModuleShell';
 import { FormulaBlock } from '../learning/FormulaBlock';
 import { MathFormulaBlock, MathFormulaStatic, MathFormulaTerm } from '../learning/MathFormulaBlock';
 import { Question } from '../learning/Question';
-import { LessonFooter } from '../learning/LessonFooter';
+import { CourseEndingPage } from '../ending/CourseEndingPage';
 import { ProgressiveReveal } from '../learning/ProgressiveReveal';
 import { PanelChoiceQuestion } from '../learning/PanelChoiceQuestion';
 import { CodeCompletionBlock } from '../learning/CodeCompletionBlock';
@@ -77,8 +78,93 @@ const typographyTones: Array<{ tone: TypographyTone; label: string; usage: strin
   { tone: 'inherit', label: '继承颜色', usage: '由父组件决定颜色' },
 ];
 
+type ReferenceCategory = '布局' | '排版' | '控件' | '反馈' | '教学' | '可视化';
+
+const referenceCategories: Array<'全部' | ReferenceCategory> = ['全部', '布局', '排版', '控件', '反馈', '教学', '可视化'];
+
+const componentReferences: Array<{
+  name: string;
+  category: ReferenceCategory;
+  source: string;
+  imports?: string[];
+  anchor: string;
+  purpose: string;
+  example: string;
+}> = [
+  { name: 'ModuleShell', category: '布局', source: 'layout/ModuleShell.tsx', imports: ['ModuleShell', 'ContentBlock'], anchor: 'foundation-title', purpose: '课程页面外壳和页面级标题。', example: '<ModuleShell title="课程名称" subtitle="本页目标"><ContentBlock title="第一步">课程内容</ContentBlock></ModuleShell>' },
+  { name: 'ContentBlock', category: '布局', source: 'layout/ContentBlock.tsx', anchor: 'foundation-title', purpose: '标题、副标题和正文组成的标准内容块。', example: '<ContentBlock title="损失就是距离" subtitle="比较预测值与真实值。">...</ContentBlock>' },
+  { name: 'Typography', category: '排版', source: 'typography/Typography.tsx', anchor: 'typography-title', purpose: '设置文字语义等级、颜色角色、对齐和换行。', example: '<Typography as="h2" variant="h2" tone="accent">主要结论</Typography>' },
+  { name: 'Button', category: '控件', source: 'controls/Button.tsx', anchor: 'buttons-title', purpose: '根据操作语义显示默认、主操作、警告或危险按钮。', example: '<Button variant="primary" onClick={() => {}}>开始训练</Button>' },
+  { name: 'ExplainPanelButton', category: '控件', source: 'controls/ExplainPanelButton.tsx', anchor: 'buttons-title', purpose: '在按钮附近显示可交互的解释面板。', example: '<ExplainPanelButton><strong>学习率</strong><p>决定每次更新的步幅。</p></ExplainPanelButton>' },
+  { name: 'TextInput', category: '控件', source: 'controls/TextInput.tsx', anchor: 'controls-title', purpose: '带标签、说明和校验状态的文本输入。', example: '<TextInput label="输入答案" placeholder="请填写" defaultValue="" />' },
+  { name: 'Select', category: '控件', source: 'controls/Select.tsx', anchor: 'controls-title', purpose: '从互斥选项中选择一个值。', example: '<Select label="数据集" defaultValue="mnist" options={[{ value: "mnist", label: "MNIST" }, { value: "cifar10", label: "CIFAR-10" }]} />' },
+  { name: 'Switch', category: '控件', source: 'controls/Switch.tsx', anchor: 'controls-title', purpose: '切换立即生效的二元设置。', example: '<Switch label="显示边界" defaultChecked />' },
+  { name: 'RangeControl', category: '控件', source: 'controls/RangeControl.tsx', anchor: 'controls-title', purpose: '设置连续数值或预定义离散档位。', example: '<RangeControl label="学习率" min={0} max={1} step={0.01} defaultValue={0.5} digits={2} />' },
+  { name: 'Callout', category: '反馈', source: 'feedback/Callout.tsx', anchor: 'foundation-title', purpose: '呈现带语义颜色和标签的重点提示。', example: '<Callout tone="orange" label="任务" text="把预测值移到真实值附近。" />' },
+  { name: 'NoticeStrip', category: '反馈', source: 'feedback/NoticeStrip.tsx', anchor: 'foundation-title', purpose: '在图表或操作区旁显示一条状态信息。', example: '<NoticeStrip tone="blue" lead="观察：">误差正在减小。</NoticeStrip>' },
+  { name: 'Feedback', category: '反馈', source: 'feedback/Feedback.tsx', anchor: 'foundation-title', purpose: '显示答案或操作的正确、错误反馈。', example: '<Feedback status="correct" label="正确" message="方向判断正确。" />' },
+  { name: 'AttentionHint', category: '反馈', source: 'feedback/AttentionHint.tsx', anchor: 'hint-title', purpose: '短暂标记学习者下一步可以操作的对象。', example: '<AttentionHint><Button>拖动参数</Button></AttentionHint>' },
+  { name: 'ReplayableCallouts', category: '反馈', source: 'feedback/ReplayableCallouts.tsx', anchor: 'foundation-title', purpose: '按顺序播放并允许重播多条讲解提示。', example: '<ReplayableCallouts replayLabel="重播提示" items={[{ tone: "blue", label: "观察", text: "预测值正在接近真实值。" }]} />' },
+  { name: 'ProgressiveReveal', category: '教学', source: 'learning/ProgressiveReveal.tsx', anchor: 'flow-title', purpose: '在学习者确认后显示下一阶段内容。', example: '<ProgressiveReveal revealLabel="继续">阶段内容</ProgressiveReveal>' },
+  { name: 'LessonFlow', category: '教学', source: 'learning/LessonFlow.tsx', imports: ['LessonFlow', 'Button'], anchor: 'flow-title', purpose: '按完成状态逐步推进多阶段课程流程。', example: '<LessonFlow steps={[{ id: "observe", render: ({ complete }) => <Button onClick={complete}>完成观察</Button> }]} />' },
+  { name: 'ScrollCue', category: '教学', source: 'learning/ScrollCue.tsx', anchor: 'flow-title', purpose: '提示学习者滚动查看已经揭示的下一阶段；通常由 ProgressiveReveal 管理。', example: '<ScrollCue targetRef={stageRef} onDismiss={() => setCueVisible(false)}>下一阶段已出现。</ScrollCue>' },
+  { name: 'Question', category: '教学', source: 'learning/Question.tsx', anchor: 'questions-title', purpose: '单选、判断、多选、填空和简答题。', example: '<Question title="哪个函数输出范围为 0 到 1？" options={[{ value: "relu", label: "ReLU" }, { value: "sigmoid", label: "Sigmoid" }]} answer="sigmoid" />' },
+  { name: 'PanelChoiceQuestion', category: '教学', source: 'learning/PanelChoiceQuestion.tsx', imports: ['PanelChoiceQuestion', 'FunctionPlot'], anchor: 'questions-title', purpose: '让学习者根据可视化面板作答。', example: '<PanelChoiceQuestion title="哪个面板是坐标图？" options={[{ value: "curve", title: "函数曲线", media: <FunctionPlot fn={(x) => x} ariaLabel="线性函数" /> }]} answer="curve" />' },
+  { name: 'MathFormulaBlock', category: '教学', source: 'learning/MathFormulaBlock.tsx', imports: ['MathFormulaBlock', 'MathFormulaTerm', 'MathFormulaStatic'], anchor: 'foundation-title', purpose: '将公式拆成可解释的语义项和结构符号。', example: '<MathFormulaBlock ariaLabel="损失公式"><MathFormulaTerm latex="L" tooltip="损失" /><MathFormulaStatic latex="=" /><MathFormulaTerm latex="|y - ŷ|" tooltip="预测误差" /></MathFormulaBlock>' },
+  { name: 'FormulaBlock', category: '教学', source: 'learning/FormulaBlock.tsx', imports: ['FormulaBlock', 'FormulaTerm'], anchor: 'foundation-title', purpose: '展示静态公式，并为可解释的公式项添加提示。', example: '<FormulaBlock ariaLabel="线性函数">y = <FormulaTerm tooltip="权重">w</FormulaTerm>x + b</FormulaBlock>' },
+  { name: 'ValueTile', category: '教学', source: 'learning/ValueTile.tsx', anchor: 'foundation-title', purpose: '突出显示一个短标签和一个关键数值。', example: '<ValueTile tone="blue" label="验证准确率" value="92.4%" />' },
+  { name: 'CodeCompletionBlock', category: '教学', source: 'learning/CodeCompletionBlock.tsx', anchor: 'code-title', purpose: '呈现只开放指定空位的代码练习。', example: '<CodeCompletionBlock language="Python" expectedAnswer="square" inputLabel="函数名" help="使用张量平方函数。" beforeInput="loss = torch." afterInput="(error)" />' },
+  { name: 'FunctionPlot', category: '可视化', source: 'visuals/FunctionPlot.tsx', anchor: 'visual-title', purpose: '绘制可缩放、可平移的函数坐标图。', example: '<FunctionPlot fn={(x) => 1 / (1 + Math.exp(-x))} ariaLabel="Sigmoid 曲线" />' },
+  { name: 'PlotlyChart', category: '可视化', source: 'visuals/PlotlyChart.tsx', anchor: 'visual-title', purpose: '渲染三维曲面或其他 Plotly 图表。', example: '<PlotlyChart data={[]} layout={{}} aria-label="损失曲面" />' },
+  { name: 'EChartsChart', category: '可视化', source: 'visuals/EChartsChart.tsx', anchor: 'visual-title', purpose: '将 ECharts option 渲染到可自适应尺寸的容器。', example: '<EChartsChart option={{ xAxis: { type: "category", data: ["A", "B"] }, yAxis: {}, series: [{ type: "bar", data: [2, 4] }] }} />' },
+  { name: 'CourseEndingPage', category: '教学', source: 'ending/CourseEndingPage.tsx', imports: ['CourseEndingPage'], anchor: 'ending-title', purpose: '统一的课程结尾页：总结、知识点、资源、开发者、评分和反馈。', example: '<CourseEndingPage title="课程标题" summary="课程总结" topics={["知识点一"]} pageKey="course-ending" />' },
+];
+
 export function UiKitPage() {
-  return <ModuleShell title="UI Kit" subtitle="教学模块的统一界面组件与交互规范。" shellClassName="kit-shell edu-shell--scaled" headerClassName="kit-header">
+  const [query, setQuery] = useState('');
+  const [category, setCategory] = useState<'全部' | ReferenceCategory>('全部');
+  const [copiedName, setCopiedName] = useState('');
+  const filteredReferences = useMemo(() => {
+    const normalizedQuery = query.trim().toLocaleLowerCase();
+    return componentReferences.filter((item) => {
+      const matchesCategory = category === '全部' || item.category === category;
+      const matchesQuery = !normalizedQuery || `${item.name} ${item.category} ${item.source} ${item.purpose}`.toLocaleLowerCase().includes(normalizedQuery);
+      return matchesCategory && matchesQuery;
+    });
+  }, [category, query]);
+
+  async function copyExample(item: (typeof componentReferences)[number]) {
+    const snippet = `import { ${(item.imports ?? [item.name]).join(', ')} } from "../../../shared/react";\n\n${item.example}`;
+    try {
+      await navigator.clipboard.writeText(snippet);
+      setCopiedName(item.name);
+      window.setTimeout(() => setCopiedName(''), 1600);
+    } catch {
+      setCopiedName('clipboard-unavailable');
+      window.setTimeout(() => setCopiedName(''), 2000);
+    }
+  }
+
+  return <ModuleShell title="Shared UI Kit" subtitle="组件目录与可运行示例。" shellClassName="kit-shell edu-shell--scaled" headerClassName="kit-header">
+    <div className="kit-page">
+      <section className="kit-section kit-reference-section" aria-labelledby="reference-title">
+        <header className="kit-section-head"><h2 id="reference-title">组件速查</h2><p>按职责查找组件；每项包含源码位置、使用场景和可复制的页面示例。</p></header>
+        <div className="kit-reference-tools">
+          <label className="kit-reference-search">搜索组件或用途<input type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="例如：滑杆、反馈、曲线" /></label>
+          <label className="kit-reference-category">类别<select value={category} onChange={(event) => setCategory(event.target.value as '全部' | ReferenceCategory)}>{referenceCategories.map((value) => <option key={value} value={value}>{value}</option>)}</select></label>
+          <output className="kit-reference-count" aria-live="polite">{filteredReferences.length} / {componentReferences.length}</output>
+        </div>
+        <div className="kit-reference-list">
+          {filteredReferences.map((item) => (
+            <article className="kit-reference-row" key={item.name}>
+              <div className="kit-reference-meta"><a href={`#${item.anchor}`}>{item.name}</a><span>{item.category}</span><code>{item.source}</code><p>{item.purpose}</p></div>
+              <div className="kit-reference-example"><pre><code>{item.example}</code></pre><button type="button" onClick={() => void copyExample(item)}>{copiedName === item.name ? '已复制' : copiedName === 'clipboard-unavailable' ? '复制失败' : '复制代码'}</button></div>
+            </article>
+          ))}
+          {filteredReferences.length === 0 && <p className="kit-reference-empty">没有匹配的组件。</p>}
+        </div>
+        <p className="kit-reference-import">页面目录下的组件通常从 <code>../../../shared/react</code> 导入；组件详细属性以右侧源码路径和 TypeScript Props 为准。</p>
+      </section>
     <section className="kit-section" aria-labelledby="theme-title">
       <header className="kit-section-head"><h2 id="theme-title">Shared 默认主题色</h2><p>{defaultTheme.description} 所有 Shared 组件默认使用这套语义颜色。</p></header>
       <div className="kit-theme-preview">
@@ -247,13 +333,14 @@ export function UiKitPage() {
     </div></section>
 
     <section className="kit-section" aria-labelledby="flow-title"><header className="kit-section-head"><h2 id="flow-title">流程控制</h2><p>直接弹出用于连续结果；下拉提示用于学习者确认后进入下一阶段。</p></header><div className="flow-patterns">
-      <article className="flow-pattern"><header className="flow-pattern-head"><span className="edu-kicker">模式 1</span><h3>直接弹出</h3><p>操作完成后，下一段内容立即出现。</p></header><ProgressiveReveal revealLabel="完成并显示结果" stage={{ className: 'flow-result', title: '模型已完成这一轮计算', description: '这里可以直接展示结果、解释或下一项操作。' }}><NoticeStrip tone="green">当前阶段已完成。</NoticeStrip></ProgressiveReveal></article>
-      <article className="flow-pattern"><header className="flow-pattern-head"><span className="edu-kicker">模式 2</span><h3>下拉提示</h3><p>当前步骤完成后，轻量指示标记出下一段内容，不新增空白占位。</p></header><ProgressiveReveal mode="cue" revealLabel="完成当前步骤" resetLabel="重置演示" stage={{ className: 'flow-result', title: '开始解释刚才观察到的现象', description: '滚动提示适合阶段边界明显、下一段内容较长的教学流程。' }}><NoticeStrip tone="blue">学习者已确认进入下一阶段。</NoticeStrip></ProgressiveReveal></article></div></section>
+      <article className="flow-pattern"><header className="flow-pattern-head"><span className="edu-kicker">模式 1</span><h3>直接弹出</h3><p>操作完成后，下一段内容立即出现。</p></header><ProgressiveReveal revealLabel="完成并显示结果" contentClassName="flow-result"><NoticeStrip tone="green">当前阶段已完成。</NoticeStrip></ProgressiveReveal></article>
+      <article className="flow-pattern"><header className="flow-pattern-head"><span className="edu-kicker">模式 2</span><h3>下拉提示</h3><p>当前步骤完成后，轻量指示标记出下一段内容，不新增空白占位。</p></header><ProgressiveReveal mode="cue" revealLabel="完成当前步骤" resetLabel="重置演示" contentClassName="flow-result"><NoticeStrip tone="blue">学习者已确认进入下一阶段。</NoticeStrip></ProgressiveReveal></article></div></section>
 
     <section className="kit-section" aria-labelledby="questions-title"><header className="kit-section-head"><h2 id="questions-title">考试题型</h2><p>所有题型采用单栏。单选和判断点击即判；多选、填空和简答完成作答后提交。</p></header><div className="question-catalog"><PanelChoiceQuestion title="下面哪个面板展示的是可计算的函数坐标图？" options={panelChoiceOptions} answer="curve" feedback={{ initial: '面板中的媒体槽可以替换为坐标轴、图片、视频或其他可视化。', correct: '判断正确：A 面板提供了可计算的坐标数据。', wrong: '再观察一次：图片或视频本身不是函数坐标图。' }} /><Question title="下面哪个函数可以把输入映射到 0～1？" options={[{ value: 'relu', label: 'ReLU', wrongFeedback: 'ReLU 的正半轴没有上界，输出不局限于 0～1。' }, { value: 'sigmoid', label: 'Sigmoid' }, { value: 'linear', label: 'Linear', wrongFeedback: '线性函数的输出通常没有 0～1 的范围限制。' }]} answer="sigmoid" feedback={{ correct: '回答正确。', wrong: '再想想输出范围。' }} /><Question type="judgement" title="没有激活函数时，多层线性层叠加后仍然等价于线性变换。" options={[{ key: 'T', value: 'true', label: '正确' }, { key: 'F', value: 'false', label: '错误', wrongFeedback: '多个线性变换复合后仍是线性变换，深度不会带来非线性表达能力。' }]} answer="true" /><Question type="multiple" multiple title="哪些属于训练指标？" options={[{ value: 'loss', label: 'Loss', missedFeedback: 'Loss 直接衡量预测误差，是常见训练指标。' }, { value: 'accuracy', label: 'Accuracy', missedFeedback: 'Accuracy 常用于观察训练阶段的预测正确率。' }, { value: 'color', label: '颜色', wrongFeedback: '颜色只是展示属性，不衡量模型训练表现。' }]} answer={['loss', 'accuracy']} /><Question type="fill" title="二分类输出常用 ____ 函数。" blanks={[{ label: '函数名', placeholder: '填写答案' }]} answer="sigmoid" /><Question type="short" title="请解释为什么较小的 Loss 有用。" feedback={{ sample: '已记录你的回答，可以对照后续解释继续完善。' }} /></div></section>
 
     <section className="kit-section" aria-labelledby="code-title"><header className="kit-section-head"><h2 id="code-title">代码运行块</h2><p>代码主体只读，学习者只填写指定的单行空位，并看到运行状态、帮助和运行时间。</p></header><CodeCompletionBlock className="foundation-preview" language="Python" expectedAnswer="square" inputLabel="填入缺失的函数名" help="这里需要填写 PyTorch 中执行平方运算的函数名。" prefixLines={<><span className="edu-code-line"><span className="edu-code-token--keyword">import</span> <span className="edu-code-token--module">torch</span></span>{'\n'}<span className="edu-code-line">prediction = torch.tensor([1.6])</span>{'\n'}<span className="edu-code-line">target = torch.tensor([7.0])</span>{'\n'}</>} beforeInput="loss = torch." afterInput=" (target - prediction)" /></section>
 
-    <section className="kit-section" aria-labelledby="ending-title"><header className="kit-section-head"><h2 id="ending-title">课程结尾</h2><p>用一个清晰的完成状态收束本节内容，再提供继续学习和延伸观看的入口。</p></header><LessonFooter title="继续你的学习旅程" description="你可以返回课程目录，或在准备好后继续前往下一步。" back={{ href: '../CourseMap/', label: '返回课程目录' }} next={{ href: '../MLP_playground/', label: '学习下一课' }} videos={[{ title: '从直觉理解神经元', embed: '<iframe src="//player.bilibili.com/player.html?isOutside=true&aid=116933504537855&bvid=BV1k3KE6uERK&cid=40029127550&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>' }, { title: '损失如何指导学习？', embed: '<iframe src="//player.bilibili.com/player.html?isOutside=true&aid=116933504537855&bvid=BV1k3KE6uERK&cid=40029127550&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>' }, { title: '激活函数为什么重要？', embed: '<iframe src="//player.bilibili.com/player.html?isOutside=true&aid=116933504537855&bvid=BV1k3KE6uERK&cid=40029127550&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>' }, { title: '从误差到参数更新', embed: '<iframe src="//player.bilibili.com/player.html?isOutside=true&aid=116933504537855&bvid=BV1k3KE6uERK&cid=40029127550&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>' }, { title: '继续探索多层网络', embed: '<iframe src="//player.bilibili.com/player.html?isOutside=true&aid=116933504537855&bvid=BV1k3KE6uERK&cid=40029127550&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>' }]} /></section>
+    <section className="kit-section" aria-labelledby="ending-title"><header className="kit-section-head"><h2 id="ending-title">课程结尾</h2><p>统一显示课程总结、知识点、延伸资源、开发者、评分和反馈入口。</p></header><div className="kit-ending-preview"><CourseEndingPage pageKey="ui-kit-course-ending" title="继续你的学习旅程" summary="在这里填写本节课程的简要总结，概括主要内容、核心收获以及需要重点关注的要点。" topics={['知识点一', '知识点二', '知识点三', '知识点四']} backHref="#reference-title" resources={[{ title: '什么是神经元？', description: '从生物神经元出发，理解人工神经元的计算过程。', embedUrl: 'https://player.bilibili.com/player.html?isOutside=true&aid=480613389&bvid=BV1FT41127Qg&cid=972217281&p=1' }, { title: '从神经元到万能逼近', description: '从单个神经元延伸到神经网络的表达能力。', embedUrl: 'https://player.bilibili.com/player.html?isOutside=true&aid=116418058131506&bvid=BV1BPdqB6E9H&cid=37571920704&p=1' }, { title: '那么，什么是卷积？', description: '用直观的方式理解卷积运算的基本思想。', embedUrl: 'https://player.bilibili.com/player.html?isOutside=true&aid=391585555&bvid=BV1Vd4y1e7pj&cid=931763043&p=1' }, { title: '卷积神经网络动画', description: '通过动画观察卷积神经网络如何处理图像。', embedUrl: 'https://player.bilibili.com/player.html?isOutside=true&aid=486552336&bvid=BV16N411y7cV&cid=1140750257&p=1' }]} /></div></section>
+    </div>
   </ModuleShell>;
 }

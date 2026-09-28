@@ -1,4 +1,4 @@
-import { defineConfig, type Plugin } from 'vite';
+import { defineConfig, loadEnv, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 
@@ -23,27 +23,32 @@ function fixedLessonCanvas(): Plugin {
   };
 }
 
-export default defineConfig({
-  plugins: [fixedLessonCanvas(), react(), tailwindcss()],
-  build: {
-    rollupOptions: {
-      input: {
-        app: 'index.html',
-        webPpt: 'web_ppt/index.html',
-        webPptSlide: 'web_ppt/slide.html',
+export default defineConfig(({ mode }) => {
+  const assetBaseUrl = loadEnv(mode, '.', '').VITE_ASSET_BASE_URL?.trim();
+  return {
+    plugins: [fixedLessonCanvas(), react(), tailwindcss()],
+    publicDir: 'assets',
+    build: {
+      copyPublicDir: !assetBaseUrl,
+      rollupOptions: {
+        input: {
+          app: 'index.html',
+          webPpt: 'web_ppt/index.html',
+          webPptSlide: 'web_ppt/slide.html',
+        },
       },
     },
-  },
-  server: {
-    // Windows 上 localhost 可能先解析到 ::1；单个双栈监听让 localhost 与 127.0.0.1 始终落到同一台开发服务器。
-    host: '::',
-    port: 5173,
-    strictPort: true,
-    proxy: {
-      '/__telemetry': {
-        target: 'http://127.0.0.1:59411',
-        changeOrigin: true,
+    server: {
+      // Windows 上 localhost 可能先解析到 ::1；单个双栈监听让 localhost 与 127.0.0.1 始终落到同一台开发服务器。
+      host: '::',
+      port: 5173,
+      strictPort: true,
+      proxy: {
+        '/__telemetry': {
+          target: 'http://127.0.0.1:59411',
+          changeOrigin: true,
+        },
       },
     },
-  },
+  };
 });

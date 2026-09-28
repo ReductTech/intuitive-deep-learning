@@ -50,17 +50,17 @@ export function ActivationCatalogPage() {
   return (
     <ContentBlock
       headingLevel={1}
-      className="ng-activation-catalog"
+      className="ngtw-activation-catalog"
       title="认识这些被广泛使用的激活函数"
       subtitle="激活函数有不同形状，也会给网络带来不同的数值特性；它们共同完成同一件事：打破纯线性叠加。"
     >
-      <div className="ng-activation-catalog__grid">
+      <div className="ngtw-activation-catalog__grid grid min-w-0 max-w-full grid-cols-[repeat(3,_minmax(0,_1fr))] gap-[12px]">
         {activations.map((activation) => (
-            <article className={`ng-activation-catalog__card ng-activation-catalog__card--${activation.type}`} key={activation.type}>
+            <article className={`ngtw-activation-catalog__card relative grid min-w-0 max-w-full grid-rows-[minmax(150px,_1fr)_auto_auto_auto] content-start gap-[5px] bg-[#fff] p-[10px] ngtw-activation-catalog__card--${activation.type}`} key={activation.type}>
             <ActivationFunctionPlot type={activation.type} />
             <Typography as="h3" variant="subtitle" tone="accent">{activation.name}</Typography>
             <FormulaBlock
-              className="ng-activation-catalog__formula"
+              className="ngtw-activation-catalog__formula min-h-[92px] w-full p-[12px]"
               ariaLabel={`${activation.name} 的数学表达式`}
             >
               <ActivationFormula type={activation.type} />
@@ -69,12 +69,12 @@ export function ActivationCatalogPage() {
           </article>
         ))}
       </div>
-      <section className="ng-activation-catalog__properties" aria-label="激活函数的数学性质">
-        <div className="ng-activation-catalog__properties-head">
+      <section className="ngtw-activation-catalog__properties grid min-w-0 max-w-full grid-cols-[minmax(210px,_.72fr)_minmax(0,_1.6fr)] items-center gap-[22px] p-[18px_6px_4px]" aria-label="激活函数的数学性质">
+        <div className="ngtw-activation-catalog__properties-head">
           <Typography as="h2" variant="subtitle" tone="accent">激活函数的数学性质</Typography>
           <Typography variant="bodySmall" tone="muted">三者都把线性输入变成可学习的非线性输出。</Typography>
         </div>
-        <div className="ng-activation-catalog__properties-grid">
+        <div className="ngtw-activation-catalog__properties-grid grid min-w-0 grid-cols-[repeat(3,_minmax(0,_1fr))] gap-[18px]">
           <div>
             <Typography as="strong" variant="body" tone="main">定义域</Typography>
             <Typography variant="bodySmall" tone="muted">通常对整个实数域有定义。</Typography>
@@ -125,7 +125,7 @@ export function Function2DChoicePlot({ type }: Function2DChoicePlotProps) {
 
   return (
     <FunctionPlot
-      className="ng-activation-plot ng-activation-choice-plot"
+      className="ngtw-activation-plot min-w-0 overflow-hidden ngtw-activation-choice-plot h-[156px] min-h-[156px]"
       fn={definition.fn}
       stroke={FUNCTION_COLORS[type]}
       initialCenter={{ x: 0, y: 0 }}
@@ -175,7 +175,7 @@ export function ShallowOutputPlot({ model, activeSeriesId = null }: ShallowOutpu
 
   return (
     <FunctionPlot
-      className="ng-activation-plot ng-activation-stage-plot"
+      className="ngtw-activation-plot min-w-0 overflow-hidden ngtw-activation-stage-plot h-full min-h-[430px]"
       series={series}
       initialCenter={{ x: 0, y: 0 }}
       initialScale={{ x: 2.4 / 760, y: 2.4 / 420 }}
@@ -226,7 +226,7 @@ export function ReluNetworkPlot({ count, neurons }: ReluNetworkPlotProps) {
 
   return (
     <FunctionPlot
-      className="ng-activation-plot ng-activation-stage-plot"
+      className="ngtw-activation-plot min-w-0 overflow-hidden ngtw-activation-stage-plot h-full min-h-[430px]"
       series={series}
       verticalGuides={verticalGuides}
       initialCenter={{ x: 0, y: 0 }}
@@ -271,7 +271,7 @@ export function ApproximationPlot({ count }: ApproximationPlotProps) {
 
   return (
     <FunctionPlot
-      className="ng-activation-plot ng-activation-wide-plot"
+      className="ngtw-activation-plot min-w-0 overflow-hidden ngtw-activation-wide-plot w-full h-[520px] min-h-[430px]"
       series={series}
       verticalGuides={verticalGuides}
       initialCenter={{ x: 0, y: 0 }}
@@ -357,7 +357,7 @@ export function ActivationFunctionPlot({ type }: ActivationFunctionPlotProps) {
 
   return (
     <FunctionPlot
-      className="ng-activation-plot ng-activation-function-plot"
+      className="ngtw-activation-plot min-w-0 overflow-hidden ngtw-activation-function-plot w-full h-auto min-h-[180px] bg-[#fbfdff]"
       fn={definition.fn}
       stroke={definition.color}
       fontScale={1.45}
@@ -1201,3 +1201,4 @@ export function PersistedPlotlyChart({
     />
   );
 }
+

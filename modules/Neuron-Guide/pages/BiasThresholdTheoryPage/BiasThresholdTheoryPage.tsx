@@ -72,7 +72,7 @@ function ClassificationAxis({
   const [holding, setHolding] = useState(false);
   const boundaryPosition = axisPosition(boundary, min, max);
   const draggable = Boolean(onBoundaryChange);
-  const style = { '--ng-boundary-position': `${boundaryPosition}%` } as CSSProperties;
+  const style = { '--ngtw-boundary-position': `${boundaryPosition}%` } as CSSProperties;
 
   const valueFromPointer = useCallback((clientX: number) => {
     const rect = axisRef.current?.getBoundingClientRect();
@@ -124,30 +124,30 @@ function ClassificationAxis({
     commit(event.key === 'Home' ? min : max);
   };
 
-  const boundaryClassName = `ng-bias-axis__boundary${boundaryPosition <= 2 ? ' is-at-start' : boundaryPosition >= 98 ? ' is-at-end' : ''}${draggable ? ' is-draggable' : ''}${holding ? ' is-holding' : ''}${draggable && pulsing ? ' is-pulsing' : ''}`;
+  const boundaryClassName = `ngtw-bias-axis__boundary${boundaryPosition <= 2 ? ' is-at-start' : boundaryPosition >= 98 ? ' is-at-end' : ''}${draggable ? ' is-draggable' : ''}${holding ? ' is-holding' : ''}${draggable && pulsing ? ' is-pulsing' : ''}`;
   // 区间太窄时藏起区域标签，避免文字被裁成半截。
   const zoneLabelFits = (share: number) => share >= 18;
   const boundaryBody = (
     <>
       {boundaryLabel && <Typography as="span" variant="bodySmall" tone="warning" wrap="nowrap">{boundaryLabel}</Typography>}
       <i />
-      {draggable && <span className="ng-bias-axis__grip" aria-hidden="true" />}
+      {draggable && <span className="ngtw-bias-axis__grip absolute bottom-[-2px] left-[50%] flex w-[22px] h-[22px] items-center justify-center gap-[3px] rounded-[50%] bg-[var(--ui-accent-alt)] ml-[-11px]" aria-hidden="true" />}
     </>
   );
 
   return (
-    <div className={`ng-bias-axis ${className}`.trim()} style={style} ref={axisRef}>
-      <div className="ng-bias-axis__zones" aria-hidden="true">
-        <span className="ng-bias-axis__zone ng-bias-axis__zone--negative">
+    <div className={`ngtw-bias-axis relative w-full h-[174px] min-w-0 max-w-full ${className}`.trim()} style={style} ref={axisRef}>
+      <div className="ngtw-bias-axis__zones absolute top-[45px] right-0 left-0 grid min-w-0 grid-cols-[var(--ngtw-boundary-position)_minmax(0,_1fr)] rounded-[6px_6px_0_0] overflow-hidden" aria-hidden="true">
+        <span className="ngtw-bias-axis__zone flex min-w-0 max-w-full justify-center overflow-hidden p-[12px_10px] text-center ngtw-bias-axis__zone--negative">
           {leftLabel && zoneLabelFits(boundaryPosition) && <Typography as="span" variant="bodySmall" tone={negativeTone}>{leftLabel}</Typography>}
         </span>
-        <span className="ng-bias-axis__zone ng-bias-axis__zone--positive">
+        <span className="ngtw-bias-axis__zone flex min-w-0 max-w-full justify-center overflow-hidden p-[12px_10px] text-center ngtw-bias-axis__zone--positive">
           {rightLabel && zoneLabelFits(100 - boundaryPosition) && <Typography as="span" variant="bodySmall" tone="success">{rightLabel}</Typography>}
         </span>
       </div>
 
-      <div className="ng-bias-axis__line" aria-hidden="true" />
-      {note && <Typography as="span" variant="bodySmall" tone="muted" className="ng-bias-axis__note">{note}</Typography>}
+      <div className="ngtw-bias-axis__line absolute right-0 left-0 h-[3px] rounded-[2px] bg-[var(--ui-accent)]" aria-hidden="true" />
+      {note && <Typography as="span" variant="bodySmall" tone="muted" className="ngtw-bias-axis__note">{note}</Typography>}
       {showBoundary && (draggable ? (
         <button
           type="button"
@@ -158,7 +158,7 @@ function ClassificationAxis({
           aria-valuemax={max}
           aria-valuenow={boundary}
           aria-valuetext={`分界点 ${formatScore(boundary)}`}
-          data-ng-bias-handle
+          data-ngtw-bias-handle
           onPointerDown={startDrag}
           onPointerMove={moveDrag}
           onPointerUp={endDrag}
@@ -171,7 +171,7 @@ function ClassificationAxis({
         <div className={boundaryClassName} aria-hidden="true">{boundaryBody}</div>
       ))}
 
-      <div className="ng-bias-axis__ticks" aria-hidden="true">
+      <div className="ngtw-bias-axis__ticks" aria-hidden="true">
         {ticks.map((tick) => (
           <Typography as="span" variant="bodySmall" tone="main" key={tick} style={{ left: `${axisPosition(tick, min, max)}%` }}>
             {tick}
@@ -182,7 +182,7 @@ function ClassificationAxis({
       {markers.map((marker) => {
         const markerPosition = axisPosition(marker.value, min, max);
         return (
-          <div className={`ng-bias-axis__marker ng-bias-axis__marker--${marker.tone}`} style={{ left: `${markerPosition}%` }} key={marker.label}>
+          <div className={`ngtw-bias-axis__marker absolute flex min-w-0 max-w-full flex-col items-center gap-[6px] ngtw-bias-axis__marker--${marker.tone}`} style={{ left: `${markerPosition}%` }} key={marker.label}>
             <Typography as="span" variant="bodySmall" tone={marker.tone === 'green' ? 'success' : marker.tone === 'red' ? 'danger' : 'main'} wrap="nowrap">
               {marker.label}
             </Typography>
@@ -196,8 +196,8 @@ function ClassificationAxis({
 
 function NaturalBoundaryFigure() {
   return (
-    <div className="ng-bias-natural-figure">
-      <div className="ng-bias-natural-figure__labels">
+    <div className="ngtw-bias-natural-figure">
+      <div className="ngtw-bias-natural-figure__labels grid min-w-0 grid-cols-[repeat(2,_minmax(0,_1fr))] text-center">
         <Typography as="span" variant="bodySmall" tone="danger">一类</Typography>
         <Typography as="span" variant="bodySmall" tone="success">另一类</Typography>
       </div>
@@ -214,41 +214,41 @@ export function BiasNaturalBoundaryPage() {
   return (
     <ContentBlock
       headingLevel={1}
-      className="ng-bias-page ng-bias-boundary-page"
+      className="ngtw-bias-page ngtw-bias-boundary-page"
       title="矩阵计算之后，如何形成分类判断？"
       subtitle="矩阵计算最终得到一个数值。神经元需要根据这个数值，将输入划分为两类。"
     >
-      <div className="ng-bias-boundary-story">
-        <section className="ng-bias-concept ng-bias-concept--natural">
-          <header className="ng-bias-concept__head">
-            <Typography as="span" variant="h3" tone="accent" className="ng-bias-concept__number">1</Typography>
+      <div className="ngtw-bias-boundary-story grid w-full h-full min-w-0 min-h-0 max-w-full grid-cols-[minmax(0,_1fr)_72px_minmax(0,_1.08fr)] items-stretch">
+        <section className="ngtw-bias-concept grid min-w-0 min-h-0 max-w-full grid-rows-[auto_minmax(0,_1fr)_auto] gap-[24px] p-[28px_30px_26px] ngtw-bias-concept--natural">
+          <header className="ngtw-bias-concept__head grid min-w-0 max-w-full grid-cols-[54px_minmax(0,_1fr)] items-center gap-[16px]">
+            <Typography as="span" variant="h3" tone="accent" className="ngtw-bias-concept__number">1</Typography>
             <div>
               <Typography as="h2" variant="h3" tone="main">正负号可以承担分类</Typography>
               <Typography variant="bodySmall" tone="muted">0 左侧为负数，右侧为非负数</Typography>
             </div>
           </header>
           <NaturalBoundaryFigure />
-          <div className="ng-bias-concept__takeaway">
+          <div className="ngtw-bias-concept__takeaway min-w-0 p-[14px_18px]">
             <Typography variant="body" tone="accent">当结果分布在 0 的两侧时，符号可以直接区分两类。</Typography>
           </div>
         </section>
 
-        <div className="ng-bias-boundary-story__turn" aria-hidden="true">
+        <div className="ngtw-bias-boundary-story__turn grid min-w-0 grid-rows-[minmax(0,_1fr)_auto_minmax(0,_1fr)] place-items-center gap-[12px]" aria-hidden="true">
           <span />
           <Typography as="span" variant="bodySmall" tone="warning">问题在于</Typography>
           <span />
         </div>
 
-        <section className="ng-bias-concept ng-bias-concept--problem">
-          <header className="ng-bias-concept__head">
-            <Typography as="span" variant="h3" tone="warning" className="ng-bias-concept__number">2</Typography>
+        <section className="ngtw-bias-concept grid min-w-0 min-h-0 max-w-full grid-rows-[auto_minmax(0,_1fr)_auto] gap-[24px] p-[28px_30px_26px] ngtw-bias-concept--problem">
+          <header className="ngtw-bias-concept__head grid min-w-0 max-w-full grid-cols-[54px_minmax(0,_1fr)] items-center gap-[16px]">
+            <Typography as="span" variant="h3" tone="warning" className="ngtw-bias-concept__number">2</Typography>
             <div>
               <Typography as="h2" variant="h3" tone="main">现在，所有结果都在 0 的右侧</Typography>
               <Typography variant="bodySmall" tone="muted">当前输入与权重均为 0–1，加权和 y 的取值范围为 0–3</Typography>
             </div>
           </header>
-          <div className="ng-bias-range-figure">
-            <Typography as="span" variant="bodySmall" tone="warning" className="ng-bias-range-figure__zero-note">0 的左侧没有结果</Typography>
+          <div className="ngtw-bias-range-figure relative pt-[28px]">
+            <Typography as="span" variant="bodySmall" tone="warning" className="ngtw-bias-range-figure__zero-note">0 的左侧没有结果</Typography>
             <ClassificationAxis
               min={-0.75}
               max={3}
@@ -260,7 +260,7 @@ export function BiasNaturalBoundaryPage() {
               markers={[{ value: outputY, label: `当前 y = ${formatScore(outputY)}`, tone: 'green' }]}
             />
           </div>
-          <div className="ng-bias-concept__takeaway ng-bias-concept__takeaway--problem">
+          <div className="ngtw-bias-concept__takeaway min-w-0 p-[14px_18px] ngtw-bias-concept__takeaway--problem">
             <Typography variant="body" tone="main">
               没有 bias 时，结果不会跨过 0，因而无法形成有效分类。
             </Typography>
@@ -297,14 +297,14 @@ export function BiasThresholdTheoryPage({ onComplete }: { onComplete?: () => voi
   return (
     <ContentBlock
       headingLevel={1}
-      className="ng-bias-page ng-bias-choice-page"
+      className="ngtw-bias-page ngtw-bias-choice-page"
       title="偏置如何调整分类阈值？"
       subtitle="当加权和的实际范围不跨过 0 时，需要先确定合适的分界点，再用偏置将它移动到 0。"
     >
-      <div className="ng-bias-choice-layout">
-        <section className="ng-bias-question-pane">
+      <div className="ngtw-bias-choice-layout grid w-full h-full min-w-0 min-h-0 max-w-full grid-cols-[minmax(0,_.6fr)_minmax(0,_1.4fr)] gap-[28px]">
+        <section className="ngtw-bias-question-pane content-center p-[28px_30px]">
           <Question
-            className="ng-bias-midpoint-question"
+            className="ngtw-bias-midpoint-question bg-[transparent] p-0"
             type="choice"
             typeLabel="先预测"
             textVariant="body"
@@ -326,16 +326,16 @@ export function BiasThresholdTheoryPage({ onComplete }: { onComplete?: () => voi
           />
         </section>
 
-        <section className={`ng-bias-answer-pane${answeredCorrectly ? ' is-revealed' : ''}`} aria-live="polite">
-          <header className="ng-bias-answer-pane__head">
-            <div className="ng-bias-answer-pane__rule">
+        <section className={`ngtw-bias-answer-pane relative grid-rows-[auto_minmax(0,_1fr)_auto] gap-[16px] p-[26px_30px] overflow-hidden${answeredCorrectly ? ' is-revealed' : ''}`} aria-live="polite">
+          <header className="ngtw-bias-answer-pane__head grid min-w-0 grid-cols-[minmax(0,_1fr)] items-center pb-[14px]">
+            <div className="ngtw-bias-answer-pane__rule grid min-w-0 gap-[4px]">
               <Typography as="span" variant="bodySmall" tone="success">分类规则</Typography>
               <Typography as="h2" variant="h3" tone="main">加权和越过分界点，判为「输出 1」</Typography>
             </div>
           </header>
 
-          <div className="ng-bias-answer-pane__visual">
-            <div className="ng-bias-axis-head">
+          <div className="ngtw-bias-answer-pane__visual grid min-w-0 min-h-0 max-w-full content-center gap-[12px]">
+            <div className="ngtw-bias-axis-head flex min-w-0 items-baseline justify-between gap-[16px]">
               <Typography as="span" variant="bodySmall" tone="muted">加权和 y 的全部可能范围：0–3</Typography>
               <Typography as="span" variant="bodySmall" tone={answeredCorrectly ? (atMidpoint ? 'success' : 'warning') : 'muted'}>
                 {answeredCorrectly
@@ -364,20 +364,20 @@ export function BiasThresholdTheoryPage({ onComplete }: { onComplete?: () => voi
               showBoundary={answeredCorrectly}
               pulsing={!boundaryDragged}
               note={answeredCorrectly ? undefined : '分界线待解锁'}
-              className={`ng-bias-axis--answer${answeredCorrectly ? '' : ' ng-bias-axis--locked'}`}
+              className={`ngtw-bias-axis--answer h-[216px]${answeredCorrectly ? '' : ' ngtw-bias-axis--locked'}`}
             />
           </div>
 
-          <div className="ng-bias-answer-pane__result">
+          <div className="ngtw-bias-answer-pane__result grid min-w-0 min-h-0 max-w-full content-center pt-[14px]">
             {answeredCorrectly ? (
-              <div className="ng-bias-answer-pane__decision">
+              <div className="ngtw-bias-answer-pane__decision flex min-w-0 max-w-full items-center justify-between gap-[18px]">
                 <Typography as="strong" variant="h3" tone={aboveBoundary ? 'success' : 'accent'}>
                   {`y = ${formatScore(outputY)} ${aboveBoundary ? '≥' : '<'} ${formatScore(boundary)}`}
                 </Typography>
                 <Typography as="strong" variant="body" tone="main">{`倾向“${tendency}”`}</Typography>
               </div>
             ) : (
-              <div className="ng-bias-answer-pane__waiting">
+              <div className="ngtw-bias-answer-pane__waiting grid min-w-0 justify-items-center gap-[9px] text-center">
                 <span aria-hidden="true">?</span>
                 <Typography variant="body" tone="muted">选择正确答案后，这里会显示可拖动的分界线。</Typography>
               </div>
@@ -388,3 +388,4 @@ export function BiasThresholdTheoryPage({ onComplete }: { onComplete?: () => voi
     </ContentBlock>
   );
 }
+

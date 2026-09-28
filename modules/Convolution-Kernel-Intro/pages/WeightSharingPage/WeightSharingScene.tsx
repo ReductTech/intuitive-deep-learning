@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { Typography } from '../../../shared/react';
 
 export type SharingKind = 'independent' | 'shared';
 type Tile = THREE.Mesh<THREE.BoxGeometry, THREE.MeshStandardMaterial>;
-const SCAN_ORDER = [0, 1, 2, 5, 8, 7, 6, 3, 4];
+const SCAN_ORDER = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 const KERNEL_COLORS = [0x3d7de0, 0x8169dd, 0x18a0a1, 0xe49b46, 0x3868c8, 0xba6aaf, 0x41a477, 0x9b78db, 0x417fdb];
 
 function Fallback({ kind, active }: { kind: SharingKind; active: number }) {
@@ -44,28 +45,34 @@ export function WeightSharingScene({ kind }: { kind: SharingKind }) {
 
     const scene = new THREE.Scene();
     const camera = new THREE.OrthographicCamera(-6.4, 6.4, 3.15, -3.15, .1, 100);
-    camera.position.set(0, .15, 13);
+    camera.position.set(6, 1.6, 12);
     camera.lookAt(0, 0, 0);
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.enablePan = false;
+    controls.minZoom = .7;
+    controls.maxZoom = 2.5;
+    controls.minPolarAngle = .25;
+    controls.maxPolarAngle = Math.PI - .25;
     scene.add(new THREE.AmbientLight(0xffffff, 2.1));
     const light = new THREE.DirectionalLight(0xd4e6ff, 3.2);
     light.position.set(-3, 5, 8);
     scene.add(light);
-    const tileGeometry = new THREE.BoxGeometry(.52, .52, .18);
+    const tileGeometry = new THREE.BoxGeometry(.18, .52, .52);
     const edgeGeometry = new THREE.EdgesGeometry(tileGeometry);
 
-    const makeGrid = (size: number, x: number, tilt: number): { group: THREE.Group; tiles: Tile[] } => {
+    const makeGrid = (size: number, x: number): { group: THREE.Group; tiles: Tile[] } => {
       const group = new THREE.Group();
       group.position.x = x;
-      group.rotation.set(-.16, tilt, 0);
       scene.add(group);
-      const back = new THREE.Mesh(new THREE.BoxGeometry(size * .59 + .12, size * .59 + .12, .06), new THREE.MeshStandardMaterial({ color: 0xe7effc, transparent: true, opacity: .6 }));
-      back.position.z = -.16;
+      const back = new THREE.Mesh(new THREE.BoxGeometry(.06, size * .59 + .12, size * .59 + .12), new THREE.MeshStandardMaterial({ color: 0xe7effc, transparent: true, opacity: .6, depthWrite: false }));
+      back.position.x = -.16;
       group.add(back);
       const tiles: Tile[] = [];
       for (let row = 0; row < size; row += 1) for (let col = 0; col < size; col += 1) {
         const material = new THREE.MeshStandardMaterial({ color: 0xeaf2ff, emissive: 0x173c72, emissiveIntensity: .08, roughness: .3, metalness: .08, transparent: true, opacity: .96 });
         const tile = new THREE.Mesh(tileGeometry, material);
-        tile.position.set((col - (size - 1) / 2) * .59, ((size - 1) / 2 - row) * .59, .04);
+        tile.position.set(.04, ((size - 1) / 2 - row) * .59, ((size - 1) / 2 - col) * .59);
         tile.add(new THREE.LineSegments(edgeGeometry, new THREE.LineBasicMaterial({ color: 0xadc8ec, transparent: true, opacity: .9 })));
         group.add(tile);
         tiles.push(tile);
@@ -73,10 +80,10 @@ export function WeightSharingScene({ kind }: { kind: SharingKind }) {
       group.updateMatrixWorld(true);
       return { group, tiles };
     };
-    const input = makeGrid(5, -3.7, -.45);
+    const input = makeGrid(5, -3.7);
     // 独立权重对应九个真实的核对象；共享权重始终只有一个核对象。
     const kernelVersions = Array.from({ length: kind === 'shared' ? 1 : 9 }, (_, version) => {
-      const grid = makeGrid(3, 0, .22);
+      const grid = makeGrid(3, 0);
       const base = new THREE.Color(kind === 'shared' ? 0x3d7de0 : KERNEL_COLORS[version]);
       grid.tiles.forEach((tile, cell) => {
         const variation = kind === 'shared' ? (cell % 3) * .08 : ((version * 5 + cell * 3 + version * cell) % 9) * .055;
@@ -88,12 +95,12 @@ export function WeightSharingScene({ kind }: { kind: SharingKind }) {
       return grid;
     });
     let activeKernel = kernelVersions[0];
-    const output = makeGrid(3, 3.6, .45);
-    const lineMaterial = new THREE.LineBasicMaterial({ color: kind === 'shared' ? 0x2e73d8 : 0x7386cd, transparent: true, opacity: .45, depthTest: false });
-    const particleMaterial = new THREE.PointsMaterial({ color: kind === 'shared' ? 0x236dec : 0x7a64e5, size: .11, transparent: true, opacity: .9, depthTest: false });
+    const output = makeGrid(3, 3.6);
+    const lineMaterial = new THREE.LineBasicMaterial({ color: kind === 'shared' ? 0x2e73d8 : 0x7386cd, transparent: true, opacity: .45, depthTest: true, depthWrite: false });
+    const particleMaterial = new THREE.PointsMaterial({ color: kind === 'shared' ? 0x236dec : 0x7a64e5, size: .11, transparent: true, opacity: .9, depthTest: true, depthWrite: false });
     let lines: THREE.LineSegments | null = null;
     let particles: THREE.Points | null = null;
-    let paths: { from: THREE.Vector3; middle: THREE.Vector3; to: THREE.Vector3 }[] = [];
+    let paths: { from: THREE.Vector3; middleIn: THREE.Vector3; middleOut: THREE.Vector3; to: THREE.Vector3 }[] = [];
     let particlePositions: Float32Array | null = null;
 
     const select = (index: number) => {
@@ -119,23 +126,24 @@ export function WeightSharingScene({ kind }: { kind: SharingKind }) {
       });
       if (lines) { scene.remove(lines); lines.geometry.dispose(); }
       if (particles) { scene.remove(particles); particles.geometry.dispose(); }
-      const target = output.group.localToWorld(output.tiles[index].position.clone().add(new THREE.Vector3(0, 0, .15)));
+      const target = output.group.localToWorld(output.tiles[index].position.clone().add(new THREE.Vector3(-.15, 0, 0)));
       paths = sourceIndices.map((inputIndex, pathIndex) => ({
-        from: input.group.localToWorld(input.tiles[inputIndex].position.clone().add(new THREE.Vector3(0, 0, .15))),
-        middle: activeKernel.group.localToWorld(activeKernel.tiles[pathIndex].position.clone().add(new THREE.Vector3(0, 0, .15))),
+        from: input.group.localToWorld(input.tiles[inputIndex].position.clone().add(new THREE.Vector3(.15, 0, 0))),
+        middleIn: activeKernel.group.localToWorld(activeKernel.tiles[pathIndex].position.clone().add(new THREE.Vector3(-.15, 0, 0))),
+        middleOut: activeKernel.group.localToWorld(activeKernel.tiles[pathIndex].position.clone().add(new THREE.Vector3(.15, 0, 0))),
         to: target.clone(),
       }));
       const positions = new Float32Array(paths.length * 12);
       paths.forEach((path, pathIndex) => {
         positions.set(path.from.toArray(), pathIndex * 12);
-        positions.set(path.middle.toArray(), pathIndex * 12 + 3);
-        positions.set(path.middle.toArray(), pathIndex * 12 + 6);
+        positions.set(path.middleIn.toArray(), pathIndex * 12 + 3);
+        positions.set(path.middleOut.toArray(), pathIndex * 12 + 6);
         positions.set(path.to.toArray(), pathIndex * 12 + 9);
       });
       const lineGeometry = new THREE.BufferGeometry();
       lineGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
       lines = new THREE.LineSegments(lineGeometry, lineMaterial);
-      lines.renderOrder = 1;
+      lines.renderOrder = -1;
       scene.add(lines);
       particlePositions = new Float32Array(paths.length * 3);
       const particleGeometry = new THREE.BufferGeometry();
@@ -160,13 +168,14 @@ export function WeightSharingScene({ kind }: { kind: SharingKind }) {
         if (particles && particlePositions) {
           paths.forEach((path, index) => {
             const t = (now * .00045 + index * .09) % 1;
-            const point = t < .5 ? path.from.clone().lerp(path.middle, t * 2) : path.middle.clone().lerp(path.to, (t - .5) * 2);
+            const point = t < .5 ? path.from.clone().lerp(path.middleIn, t * 2) : path.middleOut.clone().lerp(path.to, (t - .5) * 2);
             particlePositions!.set(point.toArray(), index * 3);
           });
           (particles.geometry.getAttribute('position') as THREE.BufferAttribute).needsUpdate = true;
         }
         output.tiles[SCAN_ORDER[scanStep]].material.emissiveIntensity = .5 + .2 * Math.sin(now * .005);
         activeKernel.group.scale.setScalar(1 + .02 * Math.sin(now * .004));
+        controls.update();
         renderer.render(scene, camera);
         lastRender = now;
       }
@@ -189,6 +198,7 @@ export function WeightSharingScene({ kind }: { kind: SharingKind }) {
       cancelAnimationFrame(frame);
       observer.disconnect();
       visibilityObserver.disconnect();
+      controls.dispose();
       if (lines) lines.geometry.dispose();
       if (particles) particles.geometry.dispose();
       lineMaterial.dispose();

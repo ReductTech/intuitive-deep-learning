@@ -129,3 +129,4 @@ export async function analyzeDecision(decision: string): Promise<DecisionAnalysi
     factors: [primaryFactor, normalizeFactor(extras[0]), normalizeFactor(extras[1])],
   };
 }
+

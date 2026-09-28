@@ -3,16 +3,12 @@
 .course-shell .ck-window-scan {
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
-  gap: 18px;
+  row-gap: 0;
   min-height: 720px;
   overflow: hidden;
   padding: 26px 34px 24px;
 }
 
-.course-shell .ck-window-scan > .edu-content-head {
-  max-width: none;
-  margin-bottom: 0;
-}
 
 .course-shell .ck-window-scan > .edu-content-body {
   display: grid;

@@ -1,9 +1,9 @@
-import { memo, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent, type RefObject } from 'react';
+import { memo, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type PointerEvent as ReactPointerEvent, type RefObject } from 'react';
 import { Typography } from '../typography';
+import { moduleAssetUrl } from '../assets';
 import { emitTelemetry, getTelemetryState } from '../telemetry';
 import type { DeckDefinition, LessonContext, SceneDeckProps, SceneDefinition, SpeakerNote } from './types';
 import '../styles.css';
-import '../ui-kit.css';
 import '../presentation.css';
 import './SceneDeck.css';
 
@@ -116,28 +116,27 @@ function Icon({ name, className }: { name: IconName; className?: string }) {
   return <svg className={'scenedeck-icon' + (className ? ' ' + className : '')} viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill={filled ? 'currentColor' : 'none'} stroke={filled ? 'none' : 'currentColor'} strokeWidth={name === 'more' ? 2.6 : filled ? 0 : 1.7} strokeLinecap="round" strokeLinejoin="round"><path d={ICON_PATHS[name]} /></svg>;
 }
 
-/** Thumbnails render a real 1600x900 scene; the scale follows the sidebar width. */
-function useThumbnailScale(listRef: RefObject<HTMLDivElement | null>) {
-  const [scale, setScale] = useState(0.125);
-  useLayoutEffect(() => {
-    const list = listRef.current;
-    if (!list) return;
-    const update = () => {
-      const width = list.querySelector<HTMLElement>('.scenedeck-thumbnail__preview')?.clientWidth ?? 0;
-      if (width > 40) setScale(width / SCENE_WIDTH);
-    };
-    update();
-    const observer = new ResizeObserver(update);
-    observer.observe(list);
-    return () => observer.disconnect();
-  }, [listRef]);
-  return scale;
+export function SceneDeck(props: SceneDeckProps) {
+  if (new URLSearchParams(window.location.search).get('scenedeckCapture') === '1') {
+    return <SceneDeckCapture catalog={props.catalog} />;
+  }
+  return <SceneDeckPlayer {...props} />;
 }
 
-export function SceneDeck({ catalog, moduleId, progressKey, getNotes }: SceneDeckProps) {
+/** One isolated scene for the thumbnail generator; the sidebar never mounts here. */
+function SceneDeckCapture({ catalog }: Pick<SceneDeckProps, 'catalog'>) {
+  const deck = deckFromUrl(catalog);
+  const scene = deck.scenes[sceneIndexFromUrl(deck.scenes)] ?? deck.scenes[0];
+  return <main className="scenedeck-capture" data-scene-deck-capture data-deck-id={deck.id} data-scene-id={scene.id} data-scene-ids={JSON.stringify(deck.scenes.map((item) => item.id))}>
+    <div className="ppt-canvas scenedeck-stage course-shell" data-ppt-canvas>
+      <SceneSurface scene={scene} complete={() => undefined} reset={() => undefined} isComplete={false} />
+    </div>
+  </main>;
+}
+
+function SceneDeckPlayer({ catalog, moduleId, assetId, progressKey, getNotes }: SceneDeckProps) {
   const appRef = useRef<HTMLDivElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
-  const sidebarListRef = useRef<HTMLDivElement>(null);
   const initialDeck = useMemo(() => deckFromUrl(catalog), [catalog]);
   const [activeDeck, setActiveDeck] = useState<DeckDefinition>(initialDeck);
   const [sceneIndex, setSceneIndex] = useState(() => sceneIndexFromUrl(initialDeck.scenes));
@@ -151,10 +150,10 @@ export function SceneDeck({ catalog, moduleId, progressKey, getNotes }: SceneDec
   const scenes = activeDeck.scenes;
   const scene = scenes[sceneIndex] ?? scenes[0];
   const activeModuleId = deckValue(moduleId, activeDeck.id);
+  const activeAssetId = deckValue(assetId, activeDeck.id);
   const activeProgressKey = deckValue(progressKey, activeDeck.id);
   const notes = useMemo(() => getNotes?.(scene.id, activeDeck.id) ?? [], [activeDeck.id, getNotes, scene.id]);
   const scale = useSceneScale(viewportRef);
-  const thumbnailScale = useThumbnailScale(sidebarListRef);
   useFullscreenScale(viewportRef);
 
   useLayoutEffect(() => setNoteIndex(0), [scene.id]);
@@ -309,8 +308,8 @@ export function SceneDeck({ catalog, moduleId, progressKey, getNotes }: SceneDec
           <Typography as="span" variant="bodySmall" tone="inherit">幻灯片</Typography>
           <span className="scenedeck-sidebar__count"><Typography as="span" variant="bodySmall" tone="inherit">{String(sceneIndex + 1).padStart(2, '0')} / {scenes.length}</Typography></span>
         </div>
-        <div className="scenedeck-sidebar__list" ref={sidebarListRef} style={{ '--sd-thumb-scale': thumbnailScale } as CSSProperties}>
-          {scenes.map((item, index) => <Thumbnail key={item.id} item={item} index={index} active={index === sceneIndex} complete={completedIds.includes(item.id)} onNavigate={navigate} />)}
+        <div className="scenedeck-sidebar__list">
+          {scenes.map((item, index) => <Thumbnail key={activeDeck.id + ':' + item.id} item={item} index={index} active={index === sceneIndex} complete={completedIds.includes(item.id)} src={moduleAssetUrl(activeAssetId, `scenedeck-thumbnails/${item.id}.png`)} onNavigate={navigate} />)}
         </div>
       </aside>
       <PanelResizeHandle label="调整缩略图栏宽度" onDelta={(delta) => setSidebarWidth((width) => clamp(width + delta, 200, 430))} />
@@ -356,14 +355,13 @@ function PanelResizeHandle({ label, onDelta }: { label: string; onDelta: (delta:
   return <button className="scenedeck-panel-resize" type="button" aria-label={label} onPointerDown={onPointerDown}><span /></button>;
 }
 
-const Thumbnail = memo(function Thumbnail({ item, index, active, complete, onNavigate }: { item: SceneDefinition; index: number; active: boolean; complete: boolean; onNavigate: (index: number) => void }) {
+const Thumbnail = memo(function Thumbnail({ item, index, active, complete, src, onNavigate }: { item: SceneDefinition; index: number; active: boolean; complete: boolean; src?: string; onNavigate: (index: number) => void }) {
+  const [imageFailed, setImageFailed] = useState(false);
   const activate = () => onNavigate(index);
   return <div className={'scenedeck-thumbnail' + (active ? ' is-active' : '')} role="button" tabIndex={0} onClick={activate} onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); activate(); } }} aria-current={active ? 'page' : undefined}>
     <span className="scenedeck-thumbnail__frame">
       <span className="scenedeck-thumbnail__preview">
-        <span className="scenedeck-thumbnail__surface course-page-surface ppt-slide-surface course-shell" aria-hidden="true">
-          {item.render({ complete: () => undefined, reset: () => undefined, isComplete: complete })}
-        </span>
+        {src && !imageFailed ? <img className="scenedeck-thumbnail__image" src={src} alt="" loading="lazy" decoding="async" onError={() => setImageFailed(true)} /> : <span className="scenedeck-thumbnail__fallback" aria-hidden="true">{item.section}</span>}
       </span>
       <Typography as="span" variant="bodySmall" tone="inherit" className="scenedeck-thumbnail__index">{String(index + 1).padStart(2, '0')}</Typography>
       {complete && <span className="scenedeck-thumbnail__check" role="img" aria-label="已完成" title="已完成"><Icon name="check" /></span>}

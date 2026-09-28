@@ -107,7 +107,7 @@ const base = [
   '.ppt-root { position: fixed; inset: 0; overflow: hidden; background: #111827; }',
   '.ppt-canvas { position: absolute; top: 50%; left: 50%; box-sizing: border-box; width: 1600px; height: 900px; overflow: hidden; background: radial-gradient(circle at 90% 3%, rgba(240,126,71,.08), transparent 25%), #f4f7fb; transform-origin: center; }',
   '.ppt-slide-surface { position: absolute; inset: 0; box-sizing: border-box; width: 1600px; height: 900px; }',
-  '.ppt-slide-surface > .edu-content-block, .ppt-slide-surface > .edu-stage { box-sizing: border-box; width: 100%; height: 100%; min-width: 0; max-width: 100%; border: 0; border-radius: 0; background: transparent; box-shadow: none; }',
+  '.ppt-slide-surface > .edu-content-block { box-sizing: border-box; width: 100%; height: 100%; min-width: 0; max-width: 100%; border: 0; border-radius: 0; background: transparent; box-shadow: none; }',
   '.ppt-slide-surface img, .ppt-slide-surface video, .ppt-slide-surface svg, .ppt-slide-surface canvas, .ppt-slide-surface model-viewer { max-width: 100%; }',
 ].join('\n');
 

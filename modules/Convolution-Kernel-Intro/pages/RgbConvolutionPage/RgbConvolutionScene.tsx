@@ -10,11 +10,15 @@ const KERNEL_SIZE = 3;
 const KERNEL_FACE = KERNEL_SIZE * CELL;
 const OUTPUT_SIZE = SIZE - KERNEL_SIZE + 1;
 const SCAN_MS = 350;
+const FILTER_MS = 820;
 const CHANNEL_DEPTH = .32;
 const INPUT_DEPTH = 3 * CHANNEL_DEPTH;
 const KERNEL_DEPTH = INPUT_DEPTH;
 const CHANNEL_COLORS = [0xef7180, 0x65be91, 0x5c95ee];
-const FILTER_WEIGHTS = [[.3, .5, .2], [.6, .2, .2], [.2, .6, .2], [.2, .2, .6]];
+const FILTER_COLORS = [0x4f83ea, 0xe99547, 0x42b6a6, 0xb375de];
+const FILTER_WEIGHTS = Array.from({ length: 4 }, (_, filter) => Array.from({ length: 3 }, (_, channel) => Array.from({ length: 3 }, (_, row) => Array.from({ length: 3 }, (_, col) =>
+  Math.sin((filter + 1) * 17.3 + (channel + 1) * 9.1 + row * 6.7 + col * 3.9) * .8 + .2,
+))));
 
 export function rgbValue(channel: number, row: number, col: number) {
   const horizontal = (col + 1) / 8;
@@ -32,7 +36,19 @@ export function rgbPatchMean(channel: number, row: number, col: number) {
 }
 
 export function rgbResponse(row: number, col: number, filterIndex = 0) {
-  return FILTER_WEIGHTS[filterIndex].reduce((sum, weight, channel) => sum + weight * rgbPatchMean(channel, row, col), 0);
+  let sum = 0, magnitude = 0;
+  for (let channel = 0; channel < 3; channel += 1) for (let dy = 0; dy < 3; dy += 1) for (let dx = 0; dx < 3; dx += 1) {
+    const weight = FILTER_WEIGHTS[filterIndex][channel][dy][dx];
+    sum += weight * (rgbValue(channel, row + dy, col + dx) - .5);
+    magnitude += Math.abs(weight);
+  }
+  return Math.max(.08, Math.min(.94, .5 + sum / magnitude * 2.5));
+}
+
+function outputColor(filterIndex: number, response: number, strength: number) {
+  const filterColor = new THREE.Color(FILTER_COLORS[filterIndex]);
+  const blend = strength >= 1 ? .58 + .36 * response : (.12 + .72 * response) * strength;
+  return new THREE.Color(0xf7faff).lerp(filterColor, blend);
 }
 
 function Fallback({ selected, onSelect, kernelCount }: { selected: RgbPosition; onSelect: (value: RgbPosition) => void; kernelCount: KernelCount }) {
@@ -45,6 +61,7 @@ function Fallback({ selected, onSelect, kernelCount }: { selected: RgbPosition; 
 
 export function RgbConvolutionScene({ selected, onSelect, kernelCount = 1 }: { selected: RgbPosition; onSelect: (value: RgbPosition) => void; kernelCount?: KernelCount }) {
   const mountRef = useRef<HTMLDivElement>(null);
+  const viewRef = useRef<{ position: THREE.Vector3; target: THREE.Vector3; zoom: number } | null>(null);
   const controllerRef = useRef<((value: RgbPosition) => void) | null>(null);
   const onSelectRef = useRef(onSelect);
   const [fallback, setFallback] = useState(false);
@@ -54,6 +71,8 @@ export function RgbConvolutionScene({ selected, onSelect, kernelCount = 1 }: { s
   useEffect(() => {
     const mount = mountRef.current;
     if (!mount) return;
+    const multiKernel = kernelCount > 1;
+    const kernelScale = multiKernel ? .68 : 1;
     const outputDepth = kernelCount * CHANNEL_DEPTH;
     let renderer: THREE.WebGLRenderer;
     try { renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' }); }
@@ -64,12 +83,12 @@ export function RgbConvolutionScene({ selected, onSelect, kernelCount = 1 }: { s
     mount.appendChild(renderer.domElement);
     const scene = new THREE.Scene();
     const camera = new THREE.OrthographicCamera(-7, 7, 3.2, -3.2, .1, 100);
-    camera.position.set(4.1, 1.25, 12);
-    camera.lookAt(0, 0, 0);
-    camera.zoom = 1.2;
+    camera.position.copy(viewRef.current?.position ?? new THREE.Vector3(4.1, 1.25, 12));
+    camera.lookAt(viewRef.current?.target ?? new THREE.Vector3(0, 0, 0));
+    camera.zoom = viewRef.current?.zoom ?? 1.2;
     camera.updateProjectionMatrix();
     const controls = new OrbitControls(camera, renderer.domElement);
-    controls.target.set(0, 0, 0);
+    controls.target.copy(viewRef.current?.target ?? new THREE.Vector3(0, 0, 0));
     controls.enableDamping = true;
     controls.dampingFactor = .08;
     controls.enablePan = false;
@@ -121,11 +140,11 @@ export function RgbConvolutionScene({ selected, onSelect, kernelCount = 1 }: { s
       const mapTiles: Tile[] = [];
       for (let row = 0; row < OUTPUT_SIZE; row += 1) for (let col = 0; col < OUTPUT_SIZE; col += 1) {
         const value = rgbResponse(row, col, filterIndex);
-        const tile = new THREE.Mesh(tileGeometry, new THREE.MeshStandardMaterial({ color: new THREE.Color(0xeaf2ff).lerp(new THREE.Color(0x619aed), value), emissive: 0x174f9e, emissiveIntensity: .03, roughness: .32 }));
+        const tile = new THREE.Mesh(tileGeometry, new THREE.MeshStandardMaterial({ color: outputColor(filterIndex, value, .45), emissive: FILTER_COLORS[filterIndex], emissiveIntensity: .03, roughness: .32 }));
         tile.position.set((filterIndex - (kernelCount - 1) / 2) * CHANNEL_DEPTH, (2 - row) * CELL, (2 - col) * CELL);
         tile.userData.cell = { row, col } satisfies RgbPosition;
         tile.userData.filterIndex = filterIndex;
-        tile.add(new THREE.LineSegments(edgeGeometry, new THREE.LineBasicMaterial({ color: 0xa0bde4, transparent: true, opacity: .72 })));
+        tile.add(new THREE.LineSegments(edgeGeometry, new THREE.LineBasicMaterial({ color: new THREE.Color(FILTER_COLORS[filterIndex]).lerp(new THREE.Color(0xffffff), .38), transparent: true, opacity: .72 })));
         outputGroup.add(tile);
         mapTiles.push(tile);
         pickable.push(tile);
@@ -137,7 +156,7 @@ export function RgbConvolutionScene({ selected, onSelect, kernelCount = 1 }: { s
     kernelGroup.position.set(0, 0, 0);
     scene.add(kernelGroup);
     const kernelSegmentWidth = CHANNEL_DEPTH;
-    const kernelGeometry = new THREE.BoxGeometry(kernelSegmentWidth, KERNEL_FACE, KERNEL_FACE);
+    const kernelGeometry = new THREE.BoxGeometry(kernelSegmentWidth - .006, CELL - .006, CELL - .006);
     const gridPoints: THREE.Vector3[] = [];
     const halfFace = KERNEL_FACE / 2;
     const halfDepth = KERNEL_DEPTH / 2;
@@ -161,23 +180,26 @@ export function RgbConvolutionScene({ selected, onSelect, kernelCount = 1 }: { s
     const kernelBoxes: Array<THREE.Mesh<THREE.BoxGeometry, THREE.MeshStandardMaterial>[]> = [];
     for (let filterIndex = 0; filterIndex < kernelCount; filterIndex += 1) {
       const rod = new THREE.Group();
-      const spread = kernelCount === 1 ? 0 : kernelCount === 2 ? .62 : .59;
-      rod.position.y = kernelCount === 4 ? (filterIndex < 2 ? spread : -spread) : (filterIndex === 0 ? spread : -spread);
-      rod.position.z = kernelCount === 4 ? (filterIndex % 2 === 0 ? -spread : spread) : 0;
+      rod.scale.set(1, kernelScale, kernelScale);
+      rod.position.y = kernelCount === 4 ? (filterIndex < 2 ? .45 : -.45) : kernelCount === 2 ? (filterIndex === 0 ? .45 : -.45) : 0;
+      rod.position.z = kernelCount === 4 ? (filterIndex % 2 === 0 ? -.45 : .45) : 0;
       kernelGroup.add(rod);
       kernelGroups.push(rod);
-      const boxes = CHANNEL_COLORS.map((color, channel) => {
-        const box = new THREE.Mesh(kernelGeometry, new THREE.MeshStandardMaterial({ color, emissive: color, emissiveIntensity: .08, roughness: .28, metalness: .08 }));
-        box.position.x = (channel - 1) * kernelSegmentWidth;
+      const boxes: THREE.Mesh<THREE.BoxGeometry, THREE.MeshStandardMaterial>[] = [];
+      for (let channel = 0; channel < 3; channel += 1) for (let row = 0; row < 3; row += 1) for (let col = 0; col < 3; col += 1) {
+        const weight = FILTER_WEIGHTS[filterIndex][channel][row][col];
+        const color = new THREE.Color(0xf2f5fc).lerp(new THREE.Color(FILTER_COLORS[filterIndex]), .27 + .55 * (weight + .6) / 1.6);
+        const box = new THREE.Mesh(kernelGeometry, new THREE.MeshStandardMaterial({ color, emissive: FILTER_COLORS[filterIndex], emissiveIntensity: .06, roughness: .28, metalness: .08 }));
+        box.position.set((channel - 1) * kernelSegmentWidth, (1 - row) * CELL, (1 - col) * CELL);
         rod.add(box);
-        return box;
-      });
+        boxes.push(box);
+      }
       kernelBoxes.push(boxes);
       rod.add(new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(KERNEL_DEPTH, KERNEL_FACE, KERNEL_FACE)), new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: .82 })));
       rod.add(new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(gridPoints), new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: .74, depthTest: true, depthWrite: false })));
     }
     const scanWindow = new THREE.LineSegments(
-      new THREE.EdgesGeometry(new THREE.BoxGeometry(INPUT_DEPTH + .04, KERNEL_FACE + .045, KERNEL_FACE + .045)),
+      new THREE.EdgesGeometry(new THREE.BoxGeometry(INPUT_DEPTH + .04, (multiKernel ? SIZE * CELL : KERNEL_FACE) + .045, (multiKernel ? SIZE * CELL : KERNEL_FACE) + .045)),
       new THREE.LineBasicMaterial({ color: 0x346fe0, transparent: true, opacity: .9, depthTest: true, depthWrite: false }),
     );
     scanWindow.position.x = -3.45;
@@ -206,40 +228,48 @@ export function RgbConvolutionScene({ selected, onSelect, kernelCount = 1 }: { s
     };
     let selectedOutput: Tile | null = null;
     let activeFilter = 0;
+    let currentPosition = selected;
     const update = (position: RgbPosition) => {
+      currentPosition = position;
       const index = position.row * OUTPUT_SIZE + position.col;
       inputGroups.forEach((group, channel) => {
         inputTiles[channel].forEach((tile, tileIndex) => {
           const tileRow = Math.floor(tileIndex / SIZE), tileCol = tileIndex % SIZE;
-          const active = tileRow >= position.row && tileRow < position.row + KERNEL_SIZE && tileCol >= position.col && tileCol < position.col + KERNEL_SIZE;
-          tile.material.emissiveIntensity = active ? .65 : .02;
+          const active = multiKernel || (tileRow >= position.row && tileRow < position.row + KERNEL_SIZE && tileCol >= position.col && tileCol < position.col + KERNEL_SIZE);
+          tile.material.emissiveIntensity = active ? (multiKernel ? .12 : .65) : .02;
           tile.material.opacity = active ? 1 : .83;
-          tile.scale.setScalar(active ? 1.13 : 1);
+          tile.scale.setScalar(active && !multiKernel ? 1.13 : 1);
         });
         group.updateMatrixWorld(true);
       });
       outputTiles.forEach((mapTiles, filterIndex) => mapTiles.forEach((tile, tileIndex) => {
-        const active = filterIndex === activeFilter && tileIndex === index;
-        tile.material.emissiveIntensity = active ? .8 : .03;
-        tile.material.color.setHex(active ? 0x3b85f3 : new THREE.Color(0xeaf2ff).lerp(new THREE.Color(0x619aed), rgbResponse(Math.floor(tileIndex / OUTPUT_SIZE), tileIndex % OUTPUT_SIZE, filterIndex)).getHex());
-        tile.scale.setScalar(active ? 1.12 : 1);
+        const mapActive = filterIndex === activeFilter;
+        const cellActive = !multiKernel && mapActive && tileIndex === index;
+        const response = rgbResponse(Math.floor(tileIndex / OUTPUT_SIZE), tileIndex % OUTPUT_SIZE, filterIndex);
+        tile.material.emissiveIntensity = cellActive ? .8 : mapActive && !multiKernel ? .18 : .015;
+        tile.material.color.copy(outputColor(filterIndex, response, cellActive ? 1 : mapActive && !multiKernel ? .8 : .4));
+        tile.scale.setScalar(cellActive ? 1.12 : 1);
       }));
-      selectedOutput = outputTiles[activeFilter][index];
+      selectedOutput = multiKernel ? null : outputTiles[activeFilter][index];
       scene.updateMatrixWorld(true);
       clearConnections();
       flowPaths.length = 0;
-      scanWindow.position.set(-3.45, (2 - position.row) * CELL, (2 - position.col) * CELL);
-      const centerY = (2 - position.row) * CELL, centerZ = (2 - position.col) * CELL;
+      scanWindow.position.set(-3.45, multiKernel ? 0 : (2 - position.row) * CELL, multiKernel ? 0 : (2 - position.col) * CELL);
+      const centerY = multiKernel ? 0 : (2 - position.row) * CELL, centerZ = multiKernel ? 0 : (2 - position.col) * CELL;
       const rod = kernelGroups[activeFilter];
+      const inputHalfFace = multiKernel ? SIZE * CELL / 2 : halfFace;
+      const outputHalfFace = multiKernel ? OUTPUT_SIZE * CELL / 2 : CELL / 2;
+      const rodHalfFace = halfFace * kernelScale;
+      const rodHalfDepth = KERNEL_DEPTH / 2;
       for (const ySign of [-1, 1]) for (const zSign of [-1, 1]) {
-        const source = new THREE.Vector3(-3.45 + INPUT_DEPTH / 2, centerY + ySign * halfFace, centerZ + zSign * halfFace);
-        const kernel = new THREE.Vector3(-KERNEL_DEPTH / 2, rod.position.y + ySign * halfFace, rod.position.z + zSign * halfFace);
+        const source = new THREE.Vector3(-3.45 + INPUT_DEPTH / 2, centerY + ySign * inputHalfFace, centerZ + zSign * inputHalfFace);
+        const kernel = new THREE.Vector3(rod.position.x - rodHalfDepth, rod.position.y + ySign * rodHalfFace, rod.position.z + zSign * rodHalfFace);
         addLine(source, kernel, 0x9bb7ed);
         flowPaths.push([source, kernel]);
       }
       for (const ySign of [-1, 1]) for (const zSign of [-1, 1]) {
-        const kernel = new THREE.Vector3(KERNEL_DEPTH / 2, rod.position.y + ySign * halfFace, rod.position.z + zSign * halfFace);
-        const output = new THREE.Vector3(3.45 + (activeFilter - (kernelCount - 1) / 2) * CHANNEL_DEPTH - CHANNEL_DEPTH / 2, centerY + ySign * CELL / 2, centerZ + zSign * CELL / 2);
+        const kernel = new THREE.Vector3(rod.position.x + rodHalfDepth, rod.position.y + ySign * rodHalfFace, rod.position.z + zSign * rodHalfFace);
+        const output = new THREE.Vector3(3.45 + (activeFilter - (kernelCount - 1) / 2) * CHANNEL_DEPTH - CHANNEL_DEPTH / 2, centerY + ySign * outputHalfFace, centerZ + zSign * outputHalfFace);
         addLine(kernel, output, 0x7da4e6);
         flowPaths.push([kernel, output]);
       }
@@ -252,7 +282,7 @@ export function RgbConvolutionScene({ selected, onSelect, kernelCount = 1 }: { s
     let pointerStart: { x: number; y: number } | null = null;
     let scanIndex = selected.row * OUTPUT_SIZE + selected.col;
     let pauseUntil = 0;
-    let nextScanAt = performance.now() + SCAN_MS;
+    let nextScanAt = performance.now() + (multiKernel ? FILTER_MS : SCAN_MS);
     const pick = (event: PointerEvent) => {
       const rect = renderer.domElement.getBoundingClientRect();
       pointer.set((event.clientX - rect.left) / rect.width * 2 - 1, -(event.clientY - rect.top) / rect.height * 2 + 1);
@@ -270,8 +300,9 @@ export function RgbConvolutionScene({ selected, onSelect, kernelCount = 1 }: { s
         const position = hit.userData.cell as RgbPosition;
         if (typeof hit.userData.filterIndex === 'number') activeFilter = hit.userData.filterIndex;
         scanIndex = position.row * OUTPUT_SIZE + position.col;
-        pauseUntil = performance.now() + 3500;
-        nextScanAt = pauseUntil + SCAN_MS;
+        pauseUntil = performance.now() + (multiKernel ? 850 : 3500);
+        nextScanAt = pauseUntil + (multiKernel ? FILTER_MS : SCAN_MS);
+        if (multiKernel) update(position);
         onSelectRef.current(position);
       }
     };
@@ -299,17 +330,33 @@ export function RgbConvolutionScene({ selected, onSelect, kernelCount = 1 }: { s
     const animate = (now: number) => {
       if (visible && now - lastRender >= 33) {
         if (now >= nextScanAt && now >= pauseUntil) {
-          scanIndex = (scanIndex + 1) % (OUTPUT_SIZE * OUTPUT_SIZE);
-          if (scanIndex === 0) activeFilter = (activeFilter + 1) % kernelCount;
-          nextScanAt = now + SCAN_MS;
-          onSelectRef.current({ row: Math.floor(scanIndex / OUTPUT_SIZE), col: scanIndex % OUTPUT_SIZE });
+          if (multiKernel) {
+            activeFilter = (activeFilter + 1) % kernelCount;
+            update(currentPosition);
+          } else {
+            scanIndex = (scanIndex + 1) % (OUTPUT_SIZE * OUTPUT_SIZE);
+            if (scanIndex === 0) activeFilter = (activeFilter + 1) % kernelCount;
+            onSelectRef.current({ row: Math.floor(scanIndex / OUTPUT_SIZE), col: scanIndex % OUTPUT_SIZE });
+          }
+          nextScanAt = now + (multiKernel ? FILTER_MS : SCAN_MS);
         }
-        const phase = Math.max(0, Math.min(1, 1 - (nextScanAt - now) / SCAN_MS));
+        const phase = Math.max(0, Math.min(1, 1 - (nextScanAt - now) / (multiKernel ? FILTER_MS : SCAN_MS)));
+        if (multiKernel) {
+          // The output lights up only after the second group of particles arrives.
+          const reveal = Math.max(0, Math.min(1, (phase - .64) / .1));
+          outputTiles[activeFilter].forEach((tile, index) => {
+            const response = rgbResponse(Math.floor(index / OUTPUT_SIZE), index % OUTPUT_SIZE, activeFilter);
+            const idle = outputColor(activeFilter, response, .4);
+            const lit = outputColor(activeFilter, response, 1);
+            tile.material.color.copy(idle.lerp(lit, reveal));
+            tile.material.emissiveIntensity = .015 + reveal * (.7 + .13 * Math.sin(now * .018) ** 2);
+          });
+        }
         flowParticles.forEach((particle, index) => {
           const path = flowPaths[index];
           if (!path) return;
-          const begin = index < 4 ? 0 : .5;
-          const end = index < 4 ? .58 : 1;
+          const begin = index < 4 ? 0 : multiKernel ? .28 : .5;
+          const end = index < 4 ? (multiKernel ? .28 : .58) : (multiKernel ? .64 : 1);
           particle.visible = phase >= begin && phase <= end;
           if (particle.visible) particle.position.copy(path[0]).lerp(path[1], Math.max(0, Math.min(1, (phase - begin) / (end - begin))));
         });
@@ -325,6 +372,7 @@ export function RgbConvolutionScene({ selected, onSelect, kernelCount = 1 }: { s
     frame = requestAnimationFrame(animate);
     return () => {
       controllerRef.current = null;
+      viewRef.current = { position: camera.position.clone(), target: controls.target.clone(), zoom: camera.zoom };
       cancelAnimationFrame(frame);
       visibilityObserver.disconnect();
       resizeObserver.disconnect();

@@ -1,4 +1,5 @@
-.course-page-surface .ng-three-factor-sum {
+/* ContentBlock 的画布约束和 Shared 组件内部节点仍用局部 CSS。 */
+.course-page-surface .ngtw-three-factor-sum {
   display: grid;
   width: 100%;
   height: 100%;
@@ -8,97 +9,20 @@
   overflow: hidden;
 }
 
-.ng-three-factor-sum > .edu-content-head { max-width: 1100px; margin-bottom: 0; }
-.ng-three-factor-sum > .edu-content-body { display: contents; }
+.ngtw-three-factor-sum > .edu-content-head { max-width: 1100px; margin-bottom: 0; }
+.ngtw-three-factor-sum > .edu-content-body { display: contents; }
+.ngtw-three-factor-sum__column-labels span:not(:first-child) { text-align: center; }
+.ngtw-three-factor-sum__factor-title h3 { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ngtw-three-factor-sum__factor-title .explain-panel-wrap { flex: 0 0 auto; }
+.ngtw-three-factor-sum__factor-title .explain-panel { left: 0; transform: none; }
+.ngtw-three-factor-sum__factor-title .explain-panel::before { left: 21px; }
+.ngtw-three-factor-sum__factor-control .edu-control-head { gap: 5px; }
+.ngtw-three-factor-sum__factor-control .edu-range { width: 100%; }
 
-.ng-three-factor-sum__layout {
-  display: grid;
-  min-width: 0;
-  min-height: 0;
-  grid-template-columns: minmax(0, 1fr) 44px minmax(116px, 128px) 44px minmax(170px, 188px);
-  align-items: stretch;
-  gap: 10px;
-}
-
-.ng-three-factor-sum__factor-list {
-  display: grid;
-  min-width: 0;
-  min-height: 0;
-  grid-template-rows: auto repeat(3, minmax(0, 1fr));
-  gap: 10px;
-}
-
-.ng-three-factor-sum__column-labels {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 210px 220px 88px;
-  align-items: end;
-  gap: 18px;
-  padding: 0 14px 2px;
-}
-
-.ng-three-factor-sum__column-labels span:not(:first-child) { text-align: center; }
-
-.ng-three-factor-sum__factor-row {
-  display: grid;
-  min-width: 0;
-  grid-template-columns: minmax(0, 1fr) 210px 220px 88px;
-  align-items: center;
-  gap: 18px;
-  border: 1px solid #e1e8f0;
-  border-radius: 12px;
-  background: #fff;
-  box-shadow: 0 7px 18px rgba(44, 70, 105, .06);
-  padding: 12px 14px;
-}
-
-.ng-three-factor-sum__factor-info {
-  display: grid;
-  min-width: 0;
-  grid-template-columns: 48px minmax(0, 1fr);
-  align-items: center;
-  gap: 10px;
-}
-
-.ng-three-factor-sum__factor-number {
-  display: grid;
-  width: 44px;
-  height: 44px;
-  flex: 0 0 44px;
-  place-items: center;
-  border-radius: 8px;
-  background: #f1f5fa;
-}
-
-.ng-three-factor-sum__factor-copy,
-.ng-three-factor-sum__factor-control {
-  display: grid;
-  min-width: 0;
-}
-
-.ng-three-factor-sum__factor-copy { gap: 2px; }
-.ng-three-factor-sum__factor-title { display: flex; min-width: 0; align-items: center; gap: 8px; }
-.ng-three-factor-sum__factor-title h3 { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.ng-three-factor-sum__factor-title .explain-panel-wrap { flex: 0 0 auto; }
-.ng-three-factor-sum__factor-title .explain-panel { left: 0; transform: none; }
-.ng-three-factor-sum__factor-title .explain-panel::before { left: 21px; }
-.ng-three-factor-sum__factor-control { gap: 3px; }
-.ng-three-factor-sum__factor-control .edu-control-head { gap: 5px; }
-.ng-three-factor-sum__factor-control .edu-range { width: 100%; }
-
-.ng-three-factor-sum__connector {
-  display: grid;
-  min-width: 0;
-  place-items: center;
-  color: #5a76a2;
-  font-family: var(--ui-font-mono);
-  font-size: 34px;
-  font-weight: 800;
-}
-
-.ng-three-factor-sum__weight-control { --ui-accent: #9ba5b2; }
-.ng-three-factor-sum__weight-control .edu-control-value { color: #8f99a7; }
-/* w 永远是只读的建议值：自己画滑杆，用“橙色但浅”表示可看不可改。 */
-.ng-three-factor-sum__weight-control .edu-range {
+/* 权重滑杆由 Shared RangeControl 渲染，伪元素需要浏览器专用选择器。 */
+.ngtw-three-factor-sum__weight-control { --ui-accent: #9ba5b2; }
+.ngtw-three-factor-sum__weight-control .edu-control-value { color: #8f99a7; }
+.ngtw-three-factor-sum__weight-control .edu-range {
   --weight-fill: #b5bec9;
   --weight-track: #dde3ea;
   --weight-thumb: #adb7c4;
@@ -107,140 +31,38 @@
   background: transparent;
   cursor: not-allowed;
 }
-.ng-three-factor-sum__weight-control .edu-range::-webkit-slider-runnable-track {
+.ngtw-three-factor-sum__weight-control .edu-range::-webkit-slider-runnable-track {
   height: 6px;
   border-radius: var(--ui-radius-pill);
   background: linear-gradient(to right, var(--weight-fill) 0 calc(8px + (100% - 16px) * var(--weight-ratio, 0)), var(--weight-track) calc(8px + (100% - 16px) * var(--weight-ratio, 0)) 100%);
 }
-.ng-three-factor-sum__weight-control .edu-range::-webkit-slider-thumb { width: 16px; height: 16px; margin-top: -5px; border: 2px solid #fff; border-radius: 50%; background: var(--weight-thumb); box-shadow: 0 0 0 2px rgba(104,119,143,.14); appearance: none; }
-.ng-three-factor-sum__weight-control .edu-range::-moz-range-progress { height: 6px; border-radius: var(--ui-radius-pill); background: var(--weight-fill); }
-.ng-three-factor-sum__weight-control .edu-range::-moz-range-track { height: 6px; border-radius: var(--ui-radius-pill); background: var(--weight-track); }
-.ng-three-factor-sum__weight-control .edu-range::-moz-range-thumb { width: 16px; height: 16px; border: 2px solid #fff; border-radius: 50%; background: var(--weight-thumb); }
+.ngtw-three-factor-sum__weight-control .edu-range::-webkit-slider-thumb { width: 16px; height: 16px; margin-top: -5px; border: 2px solid #fff; border-radius: 50%; background: var(--weight-thumb); box-shadow: 0 0 0 2px rgba(104,119,143,.14); appearance: none; }
+.ngtw-three-factor-sum__weight-control .edu-range::-moz-range-progress { height: 6px; border-radius: var(--ui-radius-pill); background: var(--weight-fill); }
+.ngtw-three-factor-sum__weight-control .edu-range::-moz-range-track { height: 6px; border-radius: var(--ui-radius-pill); background: var(--weight-track); }
+.ngtw-three-factor-sum__weight-control .edu-range::-moz-range-thumb { width: 16px; height: 16px; border: 2px solid #fff; border-radius: 50%; background: var(--weight-thumb); }
 
-/* 还没轮到的输入：整格变灰，等提示走到它才解锁。 */
-.ng-three-factor-sum__factor-control.is-pending { --ui-accent: #9ba5b2; }
-.ng-three-factor-sum__factor-control.is-pending .edu-label { color: #9aa4b2; }
-.ng-three-factor-sum__factor-control.is-pending .edu-range { accent-color: #a3abb7; cursor: not-allowed; }
-.ng-three-factor-sum__factor-control.is-pending .edu-control-value { color: #9aa4b2; }
-
-/* 当前轮到调节的输入：整块高亮提示。 */
-.ng-three-factor-sum__factor-control.is-guiding { border-radius: 10px; }
-
-/* 三个输入都调完以后，权重列统一点亮成橙色。 */
-.ng-three-factor-sum__weight-control .edu-label,
-.ng-three-factor-sum__weight-control .edu-control-value { transition: color .24s ease; }
-
-.ng-three-factor-sum__weight-control.is-lit {
+.ngtw-three-factor-sum__factor-control.is-pending { --ui-accent: #9ba5b2; }
+.ngtw-three-factor-sum__factor-control.is-pending .edu-label { color: #9aa4b2; }
+.ngtw-three-factor-sum__factor-control.is-pending .edu-range { accent-color: #a3abb7; cursor: not-allowed; }
+.ngtw-three-factor-sum__factor-control.is-pending .edu-control-value { color: #9aa4b2; }
+.ngtw-three-factor-sum__factor-control.is-guiding { border-radius: 10px; }
+.ngtw-three-factor-sum__weight-control .edu-label,
+.ngtw-three-factor-sum__weight-control .edu-control-value { transition: color .24s ease; }
+.ngtw-three-factor-sum__weight-control.is-lit {
   --ui-accent: var(--ui-accent-alt);
-  /* 只加底色，不加 padding，避免点亮时滑杆尺寸跳动。 */
   background: rgba(var(--ui-accent-alt-rgb), .07);
   border-radius: 10px;
-  animation: ng-three-factor-weight-lit 1.2s ease-out 1;
+  animation: ngtw-three-factor-weight-lit 1.2s ease-out 1;
 }
+.ngtw-three-factor-sum__weight-control.is-lit .edu-label,
+.ngtw-three-factor-sum__weight-control.is-lit .edu-control-value { color: var(--ui-accent-alt); }
+.ngtw-three-factor-sum__weight-control.is-lit .edu-range { --weight-fill: #f08a4c; --weight-track: #dfe4ea; --weight-thumb: #ef9a63; }
 
-.ng-three-factor-sum__weight-control.is-lit .edu-label { color: var(--ui-accent-alt); }
-.ng-three-factor-sum__weight-control.is-lit .edu-control-value { color: var(--ui-accent-alt); }
-.ng-three-factor-sum__weight-control.is-lit .edu-range { --weight-fill: #f08a4c; --weight-track: #dfe4ea; --weight-thumb: #ef9a63; }
-
-@keyframes ng-three-factor-weight-lit {
+@keyframes ngtw-three-factor-weight-lit {
   0% { box-shadow: 0 0 0 0 rgba(var(--ui-accent-alt-rgb), .34); }
   100% { box-shadow: 0 0 0 16px rgba(var(--ui-accent-alt-rgb), 0); }
 }
 
-.ng-three-factor-sum__weight-label {
-  display: flex;
-  min-width: 0;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-}
+.ngtw-three-factor-sum__weight-label .explain-panel { left: 50%; }
+.ngtw-three-factor-sum__weight-label .explain-panel-trigger { width: 32px; height: 32px; font-size: 17px; }
 
-.ng-three-factor-sum__weight-label .explain-panel { left: 50%; }
-.ng-three-factor-sum__weight-label .explain-panel-trigger { width: 32px; height: 32px; font-size: 17px; }
-
-.ng-three-factor-sum__contribution {
-  display: grid;
-  justify-items: end;
-  gap: 1px;
-  border-left: 1px solid #e4ebf2;
-  padding-left: 12px;
-}
-
-.ng-three-factor-sum__result,
-.ng-three-factor-sum__output {
-  display: grid;
-  min-width: 0;
-  min-height: 0;
-  align-content: center;
-  justify-items: center;
-  gap: 8px;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  padding: 16px;
-  text-align: center;
-}
-
-.ng-three-factor-sum__output { background: transparent; }
-
-.ng-three-factor-sum__sigma {
-  display: grid;
-  width: 76px;
-  height: 76px;
-  place-items: center;
-  border-radius: 50%;
-  background: #e58b4e;
-  box-shadow: 0 10px 20px rgba(196, 105, 48, .18);
-  color: #fff;
-  font-family: Georgia, serif;
-  font-size: 48px;
-  font-weight: 700;
-}
-
-.ng-three-factor-sum__total {
-  display: grid;
-  width: 100%;
-  gap: 5px;
-  border-radius: 10px;
-  background: #fff0ec;
-  padding: 14px 10px;
-  text-align: center;
-}
-
-.ng-three-factor-sum__tip {
-  display: grid;
-  min-width: 0;
-  min-height: 124px;
-  grid-template-columns: 180px minmax(0, 1fr);
-  align-items: stretch;
-  overflow: hidden;
-  border: 1px solid #e1e1e1;
-  border-radius: 16px;
-  background: #f9f9f9;
-}
-
-.ng-three-factor-sum__video { min-width: 0; overflow: hidden; background: #f9f9f9; }
-.ng-three-factor-sum__video video { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 22%; }
-.ng-three-factor-sum__tip-copy { display: grid; align-content: center; gap: 6px; min-width: 0; padding: 16px 26px; }
-.ng-three-factor-sum__tip-copy p { width: 100%; max-width: none; overflow-wrap: anywhere; }
-
-@media (max-width: 1050px) {
-  .ng-three-factor-sum__layout { grid-template-columns: minmax(0, 1fr) 30px 112px 30px 150px; gap: 7px; }
-  .ng-three-factor-sum__factor-row { grid-template-columns: minmax(0, 1fr) 180px 180px 70px; gap: 10px; }
-  .ng-three-factor-sum__factor-info { grid-template-columns: 48px minmax(0, 1fr); }
-}
-
-@media (max-width: 780px) {
-  .course-page-surface .ng-three-factor-sum { height: auto; min-height: 100%; overflow: visible; }
-  .ng-three-factor-sum__layout { grid-template-columns: minmax(0, 1fr); }
-  .ng-three-factor-sum__connector { display: none; }
-  .ng-three-factor-sum__factor-list { grid-template-rows: auto repeat(3, auto); }
-  .ng-three-factor-sum__column-labels { display: none; }
-  .ng-three-factor-sum__factor-row { grid-template-columns: minmax(0, 1fr); gap: 12px; }
-  .ng-three-factor-sum__factor-info { grid-template-columns: 48px minmax(0, 1fr); }
-  .ng-three-factor-sum__factor-control { grid-column: 1 / -1; }
-  .ng-three-factor-sum__weight { grid-column: 1 / -1; }
-  .ng-three-factor-sum__contribution { grid-column: 1 / -1; grid-template-columns: auto auto; justify-content: end; border-left: 0; border-top: 1px solid #e4ebf2; padding: 8px 0 0; }
-  .ng-three-factor-sum__tip { grid-template-columns: 110px minmax(0, 1fr); }
-  .ng-three-factor-sum__tip-copy { padding: 13px 16px; }
-}

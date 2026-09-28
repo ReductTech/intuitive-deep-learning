@@ -1,4 +1,4 @@
-.ng-shallow-linear {
+.ngtw-shallow-linear {
   position: relative;
   display: grid;
   min-width: 0;
@@ -9,12 +9,12 @@
   padding: 26px 32px 22px;
 }
 
-.ng-shallow-linear > .edu-content-head {
+.ngtw-shallow-linear > .edu-content-head {
   min-width: 0;
   margin-bottom: 14px;
 }
 
-.ng-shallow-linear > .edu-content-body {
+.ngtw-shallow-linear > .edu-content-body {
   display: grid;
   min-width: 0;
   min-height: 0;
@@ -22,32 +22,20 @@
   gap: 10px;
 }
 
-.ng-shallow-toolbar {
-  display: flex;
-  min-width: 0;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  min-height: 56px;
+.ngtw-shallow-toolbar {
   border: 0;
   border-left: 4px solid rgba(39, 68, 110, .52);
   border-radius: var(--ui-radius-sm);
   background: linear-gradient(90deg, rgba(39, 68, 110, .065), rgba(39, 68, 110, .018));
-  padding: 4px 8px 4px 12px;
 }
 
-.ng-shallow-toolbar__context {
-  display: flex;
-  min-width: 0;
-  max-width: 100%;
-  align-items: center;
-  gap: 6px;
+.ngtw-shallow-toolbar__context {
   white-space: nowrap;
 }
 
-.ng-shallow-toolbar__context .ui-typography { margin: 0; }
+.ngtw-shallow-toolbar__context .ui-typography { margin: 0; }
 
-.ng-shallow-toolbar .ng-activation-actions {
+.ngtw-shallow-toolbar .ngtw-activation-actions {
   flex: 0 0 auto;
   min-width: 0;
   max-width: 100%;
@@ -55,12 +43,12 @@
   justify-content: flex-end;
 }
 
-.ng-shallow-toolbar .ng-activation-actions .edu-btn {
+.ngtw-shallow-toolbar .ngtw-activation-actions .edu-btn {
   min-height: 0;
   padding: 0 13px;
 }
 
-.ng-shallow-linear .ng-activation-network-stage {
+.ngtw-shallow-linear .ngtw-activation-network-stage {
   display: grid;
   min-width: 0;
   min-height: 0;
@@ -68,7 +56,7 @@
   gap: 20px;
 }
 
-.ng-shallow-linear .ng-shallow-panel {
+.ngtw-shallow-linear .ngtw-shallow-panel {
   display: flex;
   min-width: 0;
   min-height: 0;
@@ -80,12 +68,12 @@
   padding: 0;
 }
 
-.ng-shallow-linear .ng-shallow-panel--plot {
+.ngtw-shallow-linear .ngtw-shallow-panel--plot {
   border-left: 1px solid var(--ui-border);
   padding-left: 20px;
 }
 
-.ng-shallow-linear .ng-activation-visual-box {
+.ngtw-shallow-linear .ngtw-activation-visual-box {
   flex: 1 1 auto;
   min-width: 0;
   min-height: 0;
@@ -96,48 +84,44 @@
   box-shadow: 0 8px 24px rgba(25, 42, 70, .06);
 }
 
-.ng-shallow-linear .ng-shallow-panel--network .ng-activation-visual-box {
+.ngtw-shallow-linear .ngtw-shallow-panel--network .ngtw-activation-visual-box {
   border-color: rgba(39, 68, 110, .16);
   background: linear-gradient(180deg, #f5f8fd 0%, #edf3fb 100%);
   box-shadow: none;
 }
 
-.course-page-surface .ng-shallow-linear .ng-activation-stage-plot,
-.course-page-surface .ng-shallow-linear .ng-network-figure,
-.course-page-surface .ng-shallow-linear .ng-network-diagram {
+.course-page-surface .ngtw-shallow-linear .ngtw-activation-stage-plot,
+.course-page-surface .ngtw-shallow-linear .ngtw-network-figure,
+.course-page-surface .ngtw-shallow-linear .ngtw-network-diagram {
   min-height: 0 !important;
 }
 
-.course-page-surface .ng-shallow-linear .ng-activation-stage-plot {
+.course-page-surface .ngtw-shallow-linear .ngtw-activation-stage-plot {
   height: 100%;
 }
 
-.course-page-surface .ng-shallow-linear .ng-network-figure {
+.course-page-surface .ngtw-shallow-linear .ngtw-network-figure {
   height: 100%;
 }
 
-.ng-shallow-conclusion {
-  display: flex;
-  min-width: 0;
-  align-items: center;
-  gap: 12px;
+.ngtw-shallow-conclusion {
   border-top: 1px solid rgba(34, 141, 92, .32);
   border-radius: 0 0 var(--ui-radius-sm) var(--ui-radius-sm);
   background: linear-gradient(90deg, rgba(34, 141, 92, .08), rgba(34, 141, 92, .02));
-  padding: 10px 14px;
 }
 
-.ng-shallow-conclusion > * {
+.ngtw-shallow-conclusion > * {
   min-width: 0;
   max-width: 100%;
 }
 
 
-.ng-shallow-conclusion .ui-typography { margin: 0; }
+.ngtw-shallow-conclusion .ui-typography { margin: 0; }
 
 @media (max-width: 1120px) {
-  .ng-shallow-linear .ng-activation-network-stage { grid-template-columns: minmax(0, 1fr); }
-  .ng-shallow-linear .ng-shallow-panel--plot { border-left: 0; border-top: 1px solid var(--ui-border); padding-top: 14px; padding-left: 0; }
-  .ng-shallow-toolbar { align-items: flex-start; flex-direction: column; }
-  .ng-shallow-toolbar .ng-activation-actions { justify-content: flex-start; }
+  .ngtw-shallow-linear .ngtw-activation-network-stage { grid-template-columns: minmax(0, 1fr); }
+  .ngtw-shallow-linear .ngtw-shallow-panel--plot { border-left: 0; border-top: 1px solid var(--ui-border); padding-top: 14px; padding-left: 0; }
+  .ngtw-shallow-toolbar { align-items: flex-start; flex-direction: column; }
+  .ngtw-shallow-toolbar .ngtw-activation-actions { justify-content: flex-start; }
 }
+

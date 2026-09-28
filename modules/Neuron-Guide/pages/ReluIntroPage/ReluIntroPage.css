@@ -10,82 +10,33 @@
   margin-bottom: 16px;
 }
 
-.ng-response-lab {
-  display: grid;
-  min-width: 0;
-  max-width: 100%;
-  gap: 16px;
-}
-
-.ng-response-lab__scene {
-  position: relative;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  align-content: center;
-  gap: 42px;
-  min-width: 0;
-  min-height: 410px;
-  overflow: hidden;
+.ngtw-response-lab__scene {
   border: 1px solid var(--ui-border);
   border-radius: var(--ui-radius-lg);
-  background: #f7f9fc;
-  padding: 38px 54px;
 }
 
-.ng-response-lab__threshold-view,
-.ng-response-lab__instruction > div:first-child,
-.ng-response-lab__current {
+.ngtw-response-lab__threshold-view,
+.ngtw-response-lab__instruction > div:first-child,
+.ngtw-response-lab__current {
   display: grid;
   min-width: 0;
   gap: 4px;
 }
 
-.ng-response-lab__threshold-view { gap: 18px; }
+.ngtw-response-lab__current { flex: 0 0 auto; border-right: 3px solid var(--ui-accent-alt); }
 
-.ng-response-lab__instruction {
-  display: flex;
-  min-width: 0;
-  align-items: end;
-  justify-content: space-between;
-  gap: 18px;
-}
-
-.ng-response-lab__current { flex: 0 0 auto; justify-items: end; border-right: 3px solid var(--ui-accent-alt); padding-right: 14px; }
-
-.ng-response-lab__neuron-demo {
-  display: grid;
-  grid-template-columns: minmax(0, .62fr) minmax(0, 1.38fr);
-  min-width: 0;
-  align-items: center;
-  gap: 64px;
+.ngtw-response-lab__neuron-demo {
   border: 1px solid var(--ui-border);
   border-radius: var(--ui-radius-lg);
-  background: #fff;
-  padding: 34px 54px;
 }
 
-.ng-response-lab__neuron-state {
-  display: grid;
-  place-items: center;
-  gap: 18px;
-  text-align: center;
-}
-
-.ng-response-lab__charge-ring {
-  position: relative;
-  display: grid;
-  width: 210px;
-  max-width: 100%;
+.ngtw-response-lab__charge-ring {
   aspect-ratio: 1;
-  place-items: center;
-  border-radius: 50%;
-  background: #e6ebf2;
-  padding: 13px;
   box-shadow: 0 14px 32px rgb(28 51 86 / 10%);
   transition: background 90ms linear, transform 90ms linear, box-shadow 90ms linear;
 }
 
-.ng-response-lab__charge-ring::after {
+.ngtw-response-lab__charge-ring::after {
   position: absolute;
   inset: 23px;
   border: 1px solid rgb(255 255 255 / 78%);
@@ -93,71 +44,43 @@
   content: '';
 }
 
-.ng-response-lab__neuron-core {
-  position: relative;
+.ngtw-response-lab__neuron-core {
   z-index: 1;
-  display: grid;
-  width: 100%;
-  height: 100%;
   place-content: center;
-  place-items: center;
-  gap: 5px;
   border: 9px solid #fff;
-  border-radius: 50%;
-  background: var(--ui-text-light);
   color: #fff;
   transition: background 120ms ease, box-shadow 120ms ease;
 }
 
-.ng-response-lab.is-active .ng-response-lab__charge-ring {
+.ngtw-response-lab.is-active .ngtw-response-lab__charge-ring {
   background: var(--ui-success);
-  transform: scale(var(--ng-output-scale));
+  transform: scale(var(--ngtw-output-scale));
   box-shadow:
     0 0 0 10px rgb(72 143 100 / 7%),
-    0 0 var(--ng-output-glow) rgb(72 143 100 / var(--ng-output-alpha));
+    0 0 var(--ngtw-output-glow) rgb(72 143 100 / var(--ngtw-output-alpha));
 }
 
-.ng-response-lab.is-active .ng-response-lab__neuron-core { background: var(--ui-success); }
+.ngtw-response-lab.is-active .ngtw-response-lab__neuron-core { background: var(--ui-success); }
 
-.ng-response-lab__suppressed-flash {
-  position: absolute;
-  inset: -2px;
+.ngtw-response-lab__suppressed-flash {
   border: 5px solid var(--ui-accent-alt);
-  border-radius: 50%;
   pointer-events: none;
-  animation: ng-suppressed-breathe 620ms ease-in-out infinite;
+  animation: ngtw-suppressed-breathe 620ms ease-in-out infinite;
 }
 
-.ng-response-lab__single-control {
-  position: relative;
-  display: grid;
-  min-width: 0;
-  gap: 22px;
+.ngtw-response-lab__single-control {
   border-radius: var(--ui-radius-sm);
-  background: #f7f9fc;
-  padding: 28px 30px 34px;
 }
 
-.ng-response-lab__control-head {
-  display: flex;
-  min-width: 0;
-  align-items: center;
-  justify-content: space-between;
-  gap: 18px;
-}
-
-.ng-response-lab__control-track {
-  position: relative;
-  height: 18px;
-  border-radius: 999px;
+.ngtw-response-lab__control-track {
   background: linear-gradient(90deg, #cfd7e4 0 50%, rgb(72 143 100 / 24%) 50% 100%);
   box-shadow: inset 0 2px 4px rgb(28 51 86 / 12%);
 }
 
-.ng-response-lab__control-track::after {
+.ngtw-response-lab__control-track::after {
   position: absolute;
   top: 50%;
-  left: clamp(18px, var(--ng-signal-position), calc(100% - 18px));
+  left: clamp(18px, var(--ngtw-signal-position), calc(100% - 18px));
   z-index: 3;
   width: 38px;
   height: 38px;
@@ -170,21 +93,16 @@
   box-shadow: 0 0 0 2px rgb(240 126 71 / 22%), var(--ui-shadow-soft);
 }
 
-.ng-response-lab.is-active .ng-response-lab__control-track::after {
+.ngtw-response-lab.is-active .ngtw-response-lab__control-track::after {
   background: var(--ui-success);
   box-shadow: 0 0 0 2px rgb(72 143 100 / 24%), 0 0 24px rgb(72 143 100 / 22%);
 }
 
-.ng-response-lab__control-threshold {
-  position: absolute;
-  top: -18px;
-  left: 50%;
-  display: grid;
-  place-items: center;
+.ngtw-response-lab__control-threshold {
   transform: translate(-50%, -100%);
 }
 
-.ng-response-lab__control-threshold::after {
+.ngtw-response-lab__control-threshold::after {
   width: 4px;
   height: 40px;
   border-radius: 999px;
@@ -193,49 +111,38 @@
   opacity: .44;
 }
 
-.ng-response-lab__direct-control {
-  position: absolute;
-  inset: -14px 0;
+.ngtw-response-lab__direct-control {
   z-index: 5;
-  width: 100%;
   height: calc(100% + 28px);
-  margin: 0;
   cursor: ew-resize;
   opacity: 0;
   touch-action: none;
 }
 
-.ng-response-lab__direct-control:active { cursor: grabbing; }
-.ng-response-lab__control-track:focus-within { outline: 3px solid var(--ui-focus); outline-offset: 5px; }
+.ngtw-response-lab__direct-control:active { cursor: grabbing; }
+.ngtw-response-lab__control-track:focus-within { outline: 3px solid var(--ui-focus); outline-offset: 5px; }
 
-.ng-response-lab__result {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  min-width: 0;
-  align-items: center;
-  gap: 18px;
+.ngtw-response-lab__result {
   border-left: 4px solid var(--ui-text-light);
   border-radius: var(--ui-radius-sm);
-  background: #fff;
-  padding: 16px 20px;
 }
 
-.ng-response-lab.is-active .ng-response-lab__result {
+.ngtw-response-lab.is-active .ngtw-response-lab__result {
   border-left-color: var(--ui-success);
   background: rgb(72 143 100 / 6%);
 }
 
 @media (max-width: 760px) {
-  .ng-response-lab__instruction,
-  .ng-response-lab__result {
+  .ngtw-response-lab__instruction,
+  .ngtw-response-lab__result {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     align-items: stretch;
   }
 
-  .ng-response-lab__scene { gap: 40px; padding: 28px 20px; }
+  .ngtw-response-lab__scene { gap: 40px; padding: 28px 20px; }
 
-  .ng-response-lab__neuron-demo {
+  .ngtw-response-lab__neuron-demo {
     grid-template-columns: minmax(0, 1fr);
     gap: 34px;
     padding: 28px 20px;
@@ -243,10 +150,11 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .ng-response-lab__suppressed-flash { animation: none; }
+  .ngtw-response-lab__suppressed-flash { animation: none; }
 }
 
-@keyframes ng-suppressed-breathe {
+@keyframes ngtw-suppressed-breathe {
   0%, 100% { opacity: .12; transform: scale(.98); }
   50% { opacity: .58; transform: scale(1.08); }
 }
+

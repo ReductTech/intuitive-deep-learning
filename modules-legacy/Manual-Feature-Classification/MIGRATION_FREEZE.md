@@ -35,7 +35,7 @@
 
 | 能力 | 直接复用 | 模块私有保留 |
 | --- | --- | --- |
-| 页面外壳、标准阶段与内容卡片 | `ModuleShell`、`LessonStage`、`ContentBlock` | 旧模块响应式网格与画布细节 |
+| 页面外壳、标准阶段与内容卡片 | `ModuleShell`、原生内容容器、`ContentBlock` | 旧模块响应式网格与画布细节 |
 | 教学流程与课程完成 | `LessonFlow` | 三段活动内部状态机 |
 | 标准按钮、题目、反馈、结尾 | `Button`、`Question`、`Callout`、`LessonFooter` | 悬停路径预览、画布点击游戏 |
 | 状态存储 | shared Telemetry API | 模块私有 `usePersistedActivity` 适配 |

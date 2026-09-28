@@ -34,14 +34,14 @@ export function NeuronDecisionBridgePage() {
   return (
     <ContentBlock
       headingLevel={1}
-      className="ng-lecture-stage ng-neuron-decision-bridge"
+      className="ngtw-lecture-stage ngtw-neuron-decision-bridge"
       title="一个神经元很简单，组合起来却极其复杂"
     >
-      <section className="ng-neuron-decision-bridge__stage" aria-label="神经元组合状态实验">
-        <div className="ng-neuron-decision-bridge__network">
-          <svg className="ng-neuron-decision-bridge__wires" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+      <section className="ngtw-neuron-decision-bridge__stage grid min-w-0 max-w-full grid-cols-[minmax(0,1.55fr)_minmax(0,.75fr)] gap-[18px]" aria-label="神经元组合状态实验">
+        <div className="ngtw-neuron-decision-bridge__network relative min-w-0 max-w-full min-h-[390px] overflow-hidden rounded-[28px]">
+          <svg className="ngtw-neuron-decision-bridge__wires absolute inset-0 w-full h-full max-w-full overflow-visible" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
             <defs>
-              <linearGradient id="ng-signal-gradient" x1="0" x2="1">
+              <linearGradient id="ngtw-signal-gradient" x1="0" x2="1">
                 <stop offset="0" stopColor="#2d7d68" />
                 <stop offset="1" stopColor="#f07e47" />
               </linearGradient>
@@ -53,35 +53,35 @@ export function NeuronDecisionBridgePage() {
 
           {neurons.map((neuron, index) => (
             <button
-              className={`ng-neuron-decision-bridge__neuron ${states[index] ? 'is-active' : ''}`}
+              className={`ngtw-neuron-decision-bridge__neuron absolute grid w-[112px] max-w-[22%] gap-[2px] rounded-[50%] bg-[rgba(255,255,255,.92)] text-center ${states[index] ? 'is-active' : ''}`}
               style={{ left: `${neuron.x}%`, top: `${neuron.y}%` }}
               type="button"
               aria-pressed={states[index]}
               key={neuron.label}
               onClick={() => setStates((current) => current.map((state, itemIndex) => itemIndex === index ? !state : state))}
             >
-              <span className="ng-neuron-decision-bridge__neuron-pulse" aria-hidden="true" />
+              <span className="ngtw-neuron-decision-bridge__neuron-pulse absolute inset-[-1px] rounded-[inherit]" aria-hidden="true" />
               <Typography as="strong" variant="h3" tone="inherit">{neuron.short}</Typography>
               <Typography as="span" variant="bodySmall" tone="inherit">{states[index] ? '1 · 响应' : '0 · 静默'}</Typography>
             </button>
           ))}
 
-          <div className="ng-neuron-decision-bridge__core" aria-live="polite">
-            <span className="ng-neuron-decision-bridge__core-orbit" aria-hidden="true" />
+          <div className="ngtw-neuron-decision-bridge__core absolute left-[61%] top-[50%] grid w-[190px] h-[190px] justify-items-center gap-[1px] overflow-visible rounded-[50%] bg-[rgba(255,255,255,.94)] text-center" aria-live="polite">
+            <span className="ngtw-neuron-decision-bridge__core-orbit absolute inset-[-23px] rounded-[50%]" aria-hidden="true" />
             <Typography variant="body" tone="muted">三个输出组合</Typography>
             <Typography as="span" variant="body" tone="accent">{stateCode}</Typography>
             <Typography as="strong" variant="body" tone="success">{outcome.title}</Typography>
           </div>
 
-          <div className="ng-neuron-decision-bridge__decision">
+          <div className="ngtw-neuron-decision-bridge__decision absolute right-[4%] top-[50%] grid w-[22%] min-w-0 gap-[5px] p-[9px_0_9px_12px]">
             <Typography variant="body" tone="warning">组合后的状态</Typography>
             <Typography as="strong" variant="h3" tone="accent">{outcome.title}</Typography>
             <Typography variant="body" tone="muted">{outcome.rule}</Typography>
           </div>
         </div>
 
-        <div className="ng-neuron-decision-bridge__states" aria-label="八种组合状态">
-          <div className="ng-neuron-decision-bridge__state-grid">
+        <div className="ngtw-neuron-decision-bridge__states grid min-w-0 max-w-full grid-rows-[minmax(0,1fr)_auto] gap-[12px] rounded-[28px] p-[20px]" aria-label="八种组合状态">
+          <div className="ngtw-neuron-decision-bridge__state-grid grid min-w-0 grid-cols-[repeat(2,minmax(0,1fr))] content-center gap-[8px]">
             {combinations.map((combination, index) => (
               <button
                 type="button"
@@ -90,7 +90,7 @@ export function NeuronDecisionBridgePage() {
                 key={combination}
                 onClick={() => chooseCombination(index)}
               >
-                <span className="ng-neuron-decision-bridge__bits" aria-hidden="true">
+                <span className="ngtw-neuron-decision-bridge__bits flex gap-[2px]" aria-hidden="true">
                   {combination.split('').map((bit, bitIndex) => <i className={bit === '1' ? 'is-on' : ''} key={bitIndex} />)}
                 </span>
                 <Typography as="code" variant="body" tone="inherit">{combination}</Typography>
@@ -98,7 +98,7 @@ export function NeuronDecisionBridgePage() {
               </button>
             ))}
           </div>
-          <div className="ng-neuron-decision-bridge__scale">
+          <div className="ngtw-neuron-decision-bridge__scale grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-[10px] pt-[14px] text-center">
             <div><Typography variant="body" tone="muted" wrap="nowrap">3 个二值输出</Typography><Typography as="strong" variant="h1" tone="accent" wrap="nowrap">2³ = 8</Typography></div>
             <Typography as="span" variant="h3" tone="warning" aria-hidden="true">→</Typography>
             <div><Typography variant="body" tone="muted" wrap="nowrap">秀丽隐杆线虫的302 个神经元</Typography><Typography as="strong" variant="h1" tone="accent" wrap="nowrap">2³⁰² ≈ 8.1 × 10⁹⁰</Typography></div>
@@ -106,10 +106,11 @@ export function NeuronDecisionBridgePage() {
         </div>
       </section>
 
-      <div className="ng-neuron-decision-bridge__conclusion">
+      <div className="ngtw-neuron-decision-bridge__conclusion grid min-w-0 max-w-full items-center p-[14px_20px]">
         <Typography as="strong" variant="h3" tone="accent">在极度简化的二值模型中，每增加一个神经元，可能的状态组合数就翻一倍。</Typography>
       </div>
     </ContentBlock>
   );
 }
+
 

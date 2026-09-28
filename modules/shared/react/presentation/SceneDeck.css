@@ -109,15 +109,8 @@
 .scenedeck-thumbnail__frame { position: relative; display: block; min-width: 0; }
 .scenedeck-thumbnail__preview { position: relative; display: block; width: 100%; aspect-ratio: 1600 / 900; overflow: hidden; border: 1px solid #dee4ee; border-radius: 8px; background: #fff; content-visibility: auto; contain-intrinsic-size: auto 110px; }
 .scenedeck-thumbnail.is-active .scenedeck-thumbnail__preview { border-color: #a7c0ff; }
-.scenedeck-thumbnail__surface { position: absolute; top: 0; left: 0; display: block; width: 1600px; height: 900px; overflow: hidden; transform: scale(var(--sd-thumb-scale, .125)); transform-origin: top left; pointer-events: none; }
-.scenedeck-thumbnail__surface > .edu-content-block { width: 1600px; height: 900px; min-height: 900px; }
-.scenedeck-thumbnail__surface > * { pointer-events: none !important; }
-.scenedeck-thumbnail__surface .edu-scroll-cue,
-.scenedeck-thumbnail__surface .flow-scroll-indicator { display: none !important; }
-.scenedeck-thumbnail__surface img,
-.scenedeck-thumbnail__surface video,
-.scenedeck-thumbnail__surface svg,
-.scenedeck-thumbnail__surface canvas { max-width: 100%; }
+.scenedeck-thumbnail__image { display: block; width: 100%; height: 100%; object-fit: cover; }
+.scenedeck-thumbnail__fallback { display: grid; width: 100%; height: 100%; place-items: center; background: #f2f5fa; color: #6a7484; padding: 12px; text-align: center; font-size: 14px; }
 .scenedeck-thumbnail__index { position: absolute; top: 6px; left: 6px; border-radius: 999px; background: rgba(22,30,45,.62); color: #fff; padding: 0 7px; font-variant-numeric: tabular-nums; backdrop-filter: blur(4px); }
 .scenedeck-thumbnail.is-active .scenedeck-thumbnail__index { background: var(--sd-blue); }
 .scenedeck-thumbnail__check { position: absolute; top: 6px; right: 6px; display: grid; width: 17px; height: 17px; place-items: center; border-radius: 50%; background: var(--sd-green); color: #fff; box-shadow: 0 3px 8px rgba(47,158,99,.36); }
@@ -133,6 +126,8 @@
 .scenedeck-stage-viewport:fullscreen::backdrop { background: #f4f7fb; }
 .scenedeck-stage-viewport:fullscreen .scenedeck-stage-grid { display: none; }
 .scenedeck-stage-viewport:fullscreen .scenedeck-stage { position: relative; top: auto; left: auto; flex: 0 0 auto; margin: 0; border: 0; border-radius: 0; box-shadow: none; transform: none !important; zoom: var(--scenedeck-fullscreen-scale, 1); }
+.scenedeck-capture { position: relative; width: 1600px; height: 900px; overflow: hidden; background: #f4f7fb; color: var(--sd-ink); font-family: var(--ui-font-sans); }
+.scenedeck-capture .scenedeck-stage { top: 0; left: 0; border-radius: 0; box-shadow: none; transform: none; }
 
 /* ---------- speaker notes ---------- */
 .scenedeck-notes { position: relative; display: grid; min-width: 0; min-height: 0; align-content: start; gap: 0; overflow-y: auto; border-left: 1px solid var(--sd-border); background: #fff; padding: 16px 16px 22px; }

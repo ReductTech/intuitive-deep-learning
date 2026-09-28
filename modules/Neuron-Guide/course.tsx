@@ -31,7 +31,7 @@ export interface NeuronCourseItem {
 
 export const lessonContextOptions = {
   moduleId: 'neuron-guide',
-  stateKey: 'activity:neuron-guide-core-v3',
+  stateKey: 'activity:neuron-guide-core-v1',
   events: {
     decisionAnalyzed: 'neuron_decision_analyzed',
     importanceAccepted: 'neuron_weight_suggestion_accepted',
@@ -59,6 +59,7 @@ export const neuronCourse: NeuronCourseItem[] = [
   { id: 'ending', title: '你已经搭出了一个人工神经元', section: '课程结尾', revealMode: 'scroll', component: () => <NeuronCompletionPage /> },
   { id: 'resources', title: '推荐资源', section: '课程结尾', revealMode: 'immediate', component: () => <NeuronLessonFooter /> },
 ];
+
 
 
 

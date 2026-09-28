@@ -1,4 +1,8 @@
 import { SceneDeck, type DeckDefinition, type SceneDefinition, type SpeakerNote } from '../shared/react/presentation';
+import './tailwind.css';
+import '../shared/react/styles.css';
+import '../shared/react/ui-kit.css';
+import '../shared/react/presentation.css';
 import { convolutionCourse } from './course';
 import { GomokuLessonProvider } from './LessonContext';
 import outlines from './outlines.json';
@@ -20,7 +24,7 @@ const scenes: SceneDefinition[] = convolutionCourse
   }));
 
 export const deck: DeckDefinition = {
-  id: 'convolution-kernel-intro',
+    id: 'convolution-kernel-intro',
   title: '卷积核入门',
   subtitle: `从五子棋棋形到图像卷积 · ${scenes.length} 页`,
   scenes,
@@ -33,6 +37,7 @@ export function ConvolutionKernelPpt() {
     <SceneDeck
       catalog={catalog}
       moduleId="convolution-kernel-intro"
+      assetId="38cd1c79-d8b7-462a-b208-a567c5cd89c4"
       progressKey="lesson-flow:convolution-kernel-intro-guide-v1"
       getNotes={getPptNotes}
     />

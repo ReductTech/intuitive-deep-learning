@@ -102,8 +102,6 @@ export function findWinLine(board: Board, row: number, col: number, player: Ston
   return best.length >= 5 ? best : [];
 }
 
-export type GomokuThreatLevel = 'green' | 'orange' | 'red';
-
 function wouldCompleteFive(board: Board, row: number, col: number, player: Player): boolean {
   return DIRECTIONS.some(({ dr, dc }) => {
     let length = 1;
@@ -119,35 +117,26 @@ function wouldCompleteFive(board: Board, row: number, col: number, player: Playe
   });
 }
 
-function countWinningMoves(board: Board, player: Player, stopAfter: number): number {
-  let count = 0;
+/** 只统计现在确实空着、下一手落下就能成五的位置，包含跳四和边界情况。 */
+export function immediateWinningMoves(board: Board, player: Player, stopAfter = BOARD_SIZE * BOARD_SIZE): Cell[] {
+  const moves: Cell[] = [];
+  const candidates = new Set<number>();
   for (let row = 0; row < BOARD_SIZE; row += 1) {
     for (let col = 0; col < BOARD_SIZE; col += 1) {
-      if (board[row][col] !== EMPTY || !wouldCompleteFive(board, row, col, player)) continue;
-      count += 1;
-      if (count >= stopAfter) return count;
+      if (board[row][col] !== player) continue;
+      for (let dr = -1; dr <= 1; dr += 1) for (let dc = -1; dc <= 1; dc += 1) {
+        const nextRow = row + dr, nextCol = col + dc;
+        if (inBounds(nextRow, nextCol) && board[nextRow][nextCol] === EMPTY) candidates.add(nextRow * BOARD_SIZE + nextCol);
+      }
     }
   }
-  return count;
-}
-
-/** 红：下一手能成五；橙：下一手能制造两个成五点；绿：当前没有这两种迫近威胁。 */
-export function getGomokuThreatLevel(board: Board, opponent: Player): GomokuThreatLevel {
-  const opponentStones = board.reduce((total, row) => total + row.filter((stone) => stone === opponent).length, 0);
-  if (opponentStones < 3) return 'green';
-  if (countWinningMoves(board, opponent, 1) > 0) return 'red';
-
-  const trial = cloneBoard(board);
-  for (let row = 0; row < BOARD_SIZE; row += 1) {
-    for (let col = 0; col < BOARD_SIZE; col += 1) {
-      if (trial[row][col] !== EMPTY) continue;
-      trial[row][col] = opponent;
-      const winningMoves = countWinningMoves(trial, opponent, 2);
-      trial[row][col] = EMPTY;
-      if (winningMoves >= 2) return 'orange';
-    }
+  for (const index of [...candidates].sort((a, b) => a - b)) {
+    const row = Math.floor(index / BOARD_SIZE), col = index % BOARD_SIZE;
+    if (!wouldCompleteFive(board, row, col, player)) continue;
+    moves.push({ row, col });
+    if (moves.length >= stopAfter) return moves;
   }
-  return 'green';
+  return moves;
 }
 
 /** 把一条获胜连线还原成方向说法，例如“斜 ↘”。 */
@@ -271,6 +260,61 @@ function candidateMoves(board: Board, history: Move[]): Cell[] {
   return moves;
 }
 
+/** 一手后产生两个不同的成五点，普通的一手封堵无法同时占住两点。 */
+export function forkMoves(board: Board, history: Move[], player: Player, stopAfter = BOARD_SIZE * BOARD_SIZE): Cell[] {
+  const forks: Cell[] = [];
+  const trial = cloneBoard(board);
+  for (const move of candidateMoves(board, history)) {
+    trial[move.row][move.col] = player;
+    const winningCount = immediateWinningMoves(trial, player, 2).length;
+    trial[move.row][move.col] = EMPTY;
+    if (winningCount < 2) continue;
+    forks.push(move);
+    if (forks.length >= stopAfter) break;
+  }
+  return forks;
+}
+
+/** 模拟落子、逐个封住后续活四点，再确认另一方向是否仍能形成双重成五点。 */
+export function crossingThreatMoves(board: Board, history: Move[], player: Player, stopAfter = BOARD_SIZE * BOARD_SIZE): Cell[] {
+  const opponent = otherPlayer(player);
+  const trial = cloneBoard(board);
+  const threats: Cell[] = [];
+  for (const move of candidateMoves(board, history)) {
+    let nearbyOwnStones = 0;
+    for (let dr = -2; dr <= 2; dr += 1) for (let dc = -2; dc <= 2; dc += 1) {
+      if (inBounds(move.row + dr, move.col + dc) && board[move.row + dr][move.col + dc] === player) nearbyOwnStones += 1;
+    }
+    if (nearbyOwnStones < 2) continue;
+    trial[move.row][move.col] = player;
+    const nextHistory: Move[] = [...history, { ...move, player }];
+    if (immediateWinningMoves(trial, opponent, 1).length) { trial[move.row][move.col] = EMPTY; continue; }
+    const extensions = forkMoves(trial, nextHistory, player);
+    const directions = new Set<number>();
+    for (const extension of extensions) {
+      const dr = extension.row - move.row;
+      const dc = extension.col - move.col;
+      if (Math.max(Math.abs(dr), Math.abs(dc)) > 4) continue;
+      if (dr === 0) directions.add(0);
+      else if (dc === 0) directions.add(1);
+      else if (Math.abs(dr) === Math.abs(dc)) directions.add(Math.sign(dr) === Math.sign(dc) ? 2 : 3);
+    }
+    if (directions.size >= 2) {
+      const survivesEachDirectBlock = extensions.every((block) => {
+        trial[block.row][block.col] = opponent;
+        const defenderHistory: Move[] = [...nextHistory, { ...block, player: opponent }];
+        const stillHasFork = forkMoves(trial, defenderHistory, player, 1).length > 0;
+        trial[block.row][block.col] = EMPTY;
+        return stillHasFork;
+      });
+      if (survivesEachDirectBlock) threats.push(move);
+    }
+    trial[move.row][move.col] = EMPTY;
+    if (threats.length >= stopAfter) break;
+  }
+  return threats;
+}
+
 interface ScoredCell extends Cell {
   score: number;
   attackKeys: PatternKey[];
@@ -353,6 +397,104 @@ export function computeComputerMove(board: Board, history: Move[], difficulty: G
   const pool = forced ? [top] : scored.filter((item, index) => index < 3 && item.score >= top.score * 0.88);
   const picked = pool[Math.floor(Math.random() * pool.length)] ?? top;
   return { row: picked.row, col: picked.col };
+}
+
+const HINT_WIN_SCORE = 10_000_000;
+
+function sameCell(a: Cell, b: Cell): boolean {
+  return a.row === b.row && a.col === b.col;
+}
+
+/** 搜索只扩展最有价值的落点；确定的成五点及必须封堵的点始终保留。 */
+function hintSearchMoves(board: Board, history: Move[], player: Player, limit: number): Cell[] {
+  const ownWins = immediateWinningMoves(board, player);
+  if (ownWins.length) return ownWins;
+  const opponentWins = immediateWinningMoves(board, otherPlayer(player));
+  if (opponentWins.length) return opponentWins;
+  return candidateMoves(board, history).map((move) => {
+    const attack = evaluateMove(board, move.row, move.col, player).score;
+    const defense = evaluateMove(board, move.row, move.col, otherPlayer(player)).score;
+    return { ...move, score: attack * 1.12 + defense + localDensity(board, move.row, move.col) * 24 };
+  }).sort((a, b) => b.score - a.score).slice(0, limit);
+}
+
+function hintPositionScore(board: Board, history: Move[], nextPlayer: Player): number {
+  if (immediateWinningMoves(board, nextPlayer, 1).length) return nextPlayer === BLACK ? HINT_WIN_SCORE / 2 : -HINT_WIN_SCORE / 2;
+  let blackBest = 0;
+  let whiteBest = 0;
+  for (const move of candidateMoves(board, history)) {
+    blackBest = Math.max(blackBest, evaluateMove(board, move.row, move.col, BLACK).score);
+    whiteBest = Math.max(whiteBest, evaluateMove(board, move.row, move.col, WHITE).score);
+  }
+  return blackBest * 1.08 - whiteBest * 1.1;
+}
+
+/** 黑白交替搜索，包含精确的终局判断和 alpha-beta 剪枝。 */
+function searchHintLine(board: Board, history: Move[], player: Player, depth: number, alpha: number, beta: number): number {
+  if (depth === 0) return hintPositionScore(board, history, player);
+  const moves = hintSearchMoves(board, history, player, depth >= 3 ? 8 : depth === 2 ? 6 : 4);
+  if (!moves.length) return 0;
+  let best = player === BLACK ? -Infinity : Infinity;
+  for (const move of moves) {
+    board[move.row][move.col] = player;
+    history.push({ ...move, player });
+    const won = wouldCompleteFive(board, move.row, move.col, player);
+    const value = won ? (player === BLACK ? HINT_WIN_SCORE + depth : -HINT_WIN_SCORE - depth)
+      : searchHintLine(board, history, otherPlayer(player), depth - 1, alpha, beta);
+    history.pop();
+    board[move.row][move.col] = EMPTY;
+    if (player === BLACK) {
+      best = Math.max(best, value);
+      alpha = Math.max(alpha, best);
+    } else {
+      best = Math.min(best, value);
+      beta = Math.min(beta, best);
+    }
+    if (beta <= alpha) break;
+  }
+  return best;
+}
+
+export interface HumanAdvice {
+  cell: Cell;
+  mode: 'attack' | 'defense';
+}
+
+/** 给黑棋的建议：先找确定的胜负手，再搜索双方后续应手。不会改变白棋的难度。 */
+export function computeHumanAdvice(board: Board, history: Move[]): HumanAdvice {
+  const center = Math.floor(BOARD_SIZE / 2);
+  const ownWins = immediateWinningMoves(board, BLACK);
+  if (ownWins.length) return { cell: ownWins[0], mode: 'attack' };
+  const opponentWins = immediateWinningMoves(board, WHITE);
+  if (opponentWins.length) return { cell: opponentWins[0], mode: 'defense' };
+  const ownForks = forkMoves(board, history, BLACK);
+  if (ownForks.length) return { cell: ownForks[0], mode: 'attack' };
+  const opponentForks = forkMoves(board, history, WHITE);
+  const opponentCrossings = opponentForks.length ? [] : crossingThreatMoves(board, history, WHITE);
+  const urgentBlocks = opponentForks.length ? opponentForks : opponentCrossings;
+  const ranked = hintSearchMoves(board, history, BLACK, 16);
+  const rootMoves = urgentBlocks.length
+    ? urgentBlocks
+    : ranked.length ? ranked : [{ row: center, col: center }];
+  const trial = cloneBoard(board);
+  const line = history.slice();
+  let bestMove = rootMoves[0];
+  let bestValue = -Infinity;
+  let alpha = -Infinity;
+  for (const move of rootMoves) {
+    trial[move.row][move.col] = BLACK;
+    line.push({ ...move, player: BLACK });
+    const value = searchHintLine(trial, line, WHITE, 3, alpha, Infinity)
+      + evaluateMove(board, move.row, move.col, BLACK).score * 0.004;
+    line.pop();
+    trial[move.row][move.col] = EMPTY;
+    if (value > bestValue) { bestValue = value; bestMove = move; }
+    alpha = Math.max(alpha, bestValue);
+  }
+  const blocksThreat = urgentBlocks.some((move) => sameCell(move, bestMove));
+  const defensiveWeight = evaluateMove(board, bestMove.row, bestMove.col, WHITE).score;
+  const attackingWeight = evaluateMove(board, bestMove.row, bestMove.col, BLACK).score;
+  return { cell: bestMove, mode: blocksThreat || defensiveWeight > attackingWeight * 1.5 ? 'defense' : 'attack' };
 }
 
 export interface DemoPosition {

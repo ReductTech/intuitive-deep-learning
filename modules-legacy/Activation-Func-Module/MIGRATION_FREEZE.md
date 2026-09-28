@@ -105,7 +105,7 @@ Telemetry 的现有状态接口会按同一 `state_key` 读取最新业务快照
 |---|---|---|---|---|
 | 页面标题、统一宽度和响应式外壳 | `ModuleShell` | 直接复用 | 只传标题、副标题和模块 class | 否 |
 | 教学推进与逐段展开 | `LessonFlow` + `ScrollCue` | 直接复用，按真实交互门槛拆 9 个稳定步骤 | 每个实验只报告自己的完成事实；首次操作可保留一个可清理的短延时 | 否 |
-| 标准标题、说明、线性结论 | `ContentBlock`、`LessonStage`、`Callout` | 通过内容配置和组合表达 | 课程文案、公式和局部网格 | 否；不创建绑定死的 `IntroBlock/SummaryBlock` |
+| 标准标题、说明、线性结论 | `ContentBlock`、原生内容容器、`Callout` | 通过内容配置和组合表达 | 课程文案、公式和局部网格 | 否；不创建绑定死的 `IntroBlock/SummaryBlock` |
 | 二维 / 三维面板题 | 模块私有 `PersistedPanelChoice`，复用 shared 视觉 class、`Feedback` 和 Plotly | 保留 Panel Choice 外观 | 可交互媒体与答题按钮分离、正确后锁定、Telemetry 恢复、完成回调 | 否；当前 `PanelChoiceQuestion` 把整卡做成 button，Plotly 拖动可能误答，且没有 persistence/lock/onComplete |
 | 2D 函数、网络输出、ReLU、逼近和激活函数图 | `PlotlyChart` + `sampleFunction2D` | 直接复用 Plotly 生命周期、坐标轴基础能力和采样工具 | 函数、trace、颜色、折点、图例和固定范围 | 否 |
 | 3D 选择曲面和深层等价平面 | `PlotlyChart` + `sampleSurface3D` | 直接复用，保留 Plotly 旋转/缩放 | 曲面函数、colorscale、camera、视角持久化适配 | 否 |

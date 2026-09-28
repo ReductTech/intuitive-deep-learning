@@ -102,6 +102,19 @@ bash scripts/run-lesson-page.sh --stop
 
 ## 开发与校验
 
+### SceneDeck 缩略图
+
+左栏使用各模块 `assets/scenedeck-thumbnails/` 中的静态图片，不再同时运行所有幻灯片组件。修改课件页面后，可按模块重新生成默认画面的缩略图：
+
+```bash
+npm install
+python -m pip install -r requirements-thumbnails.txt
+python -m playwright install chromium
+python scripts/generate_scenedeck_thumbnails.py --module convolution-kernel-intro
+```
+
+`--module` 接受 `outlines.json` 中的模块 ID 或模块目录名；可加 `--slide <页面ID>` 只更新一页。程序自行启动临时 Vite 服务，逐页截取 1600 × 900 默认画面，再缩成 400 × 225 PNG，写入指定模块的 `assets/scenedeck-thumbnails/`。已有系统 Chrome 或 Edge 时，可以省略 Playwright 的 Chromium 安装步骤。生成的图片应随课件内容一起提交；未生成的页面在左栏显示章节占位，不会运行页面组件。
+
 模块规范见 [modules/README.md](modules/README.md)。新增或修改模块元数据后，重新生成并校验模块索引：
 
 ```bash

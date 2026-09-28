@@ -18,5 +18,10 @@
       "next": "根据体验判断是否适合放入正式课程页面。",
       "snippet": ""
     }
-  ]
+  ],
+  "moduleIdentity": {
+    "version": 1,
+    "id": "923756e0-ce6c-412a-b5f1-b7d9fb38ef73",
+    "signature": "gf+H0nGup4p57s4EFD7SHjMLktEZ8PhgSGqW4TbVsJ5oHVlMROwtiCQtcT3I9fSq8LCILoQICnUbgeR4Wb5BAQ=="
+  }
 }

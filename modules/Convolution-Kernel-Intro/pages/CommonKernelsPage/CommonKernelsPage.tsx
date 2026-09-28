@@ -1,13 +1,15 @@
 import { useEffect, useRef, useState, type ChangeEvent } from 'react';
-import { Down, Refresh, Up, UploadPicture } from '@icon-park/react';
-import { ContentBlock, MathFormulaStatic, Typography } from '../../../shared/react';
-import buildingImage from '../../assets/xiandaijianzhu.png';
-import bridgeImage from '../../assets/xielaqiao.png';
-import mountainImage from '../../assets/caiermate.png';
-import zebraImage from '../../assets/zebra.png';
-import pineappleImage from '../../assets/pineapple.png';
-import cityImage from '../../assets/be_city.png';
+import { Down, Up, UploadPicture } from '@icon-park/react';
+import { ContentBlock, MathFormulaStatic, moduleAssetUrl, Typography } from '../../../shared/react';
 import './CommonKernelsPage.css';
+
+const moduleAssetId = '38cd1c79-d8b7-462a-b208-a567c5cd89c4';
+const buildingImage = moduleAssetUrl(moduleAssetId, 'xiandaijianzhu.png');
+const bridgeImage = moduleAssetUrl(moduleAssetId, 'xielaqiao.png');
+const mountainImage = moduleAssetUrl(moduleAssetId, 'caiermate.png');
+const zebraImage = moduleAssetUrl(moduleAssetId, 'zebra.png');
+const pineappleImage = moduleAssetUrl(moduleAssetId, 'pineapple.png');
+const cityImage = moduleAssetUrl(moduleAssetId, 'be_city.png');
 
 type Matrix3 = readonly [readonly [number, number, number], readonly [number, number, number], readonly [number, number, number]];
 type ViewMode = 'gray' | 'edge' | 'signed';
@@ -105,6 +107,7 @@ export function CommonKernelsPage() {
   const [error, setError] = useState('');
   const uploadRef = useRef<HTMLInputElement>(null);
   const imageSelectorRef = useRef<HTMLDivElement>(null);
+  const kernelSelectorRef = useRef<HTMLDivElement>(null);
   const objectUrlRef = useRef<string | null>(null);
   const images = customImage ? [...IMAGE_OPTIONS, customImage] : IMAGE_OPTIONS;
   const selectedImage = images[imageIndex] ?? IMAGE_OPTIONS[0];
@@ -137,6 +140,26 @@ export function CommonKernelsPage() {
     return () => selector.removeEventListener('wheel', handleWheel);
   }, [images.length]);
   useEffect(() => {
+    const selector = kernelSelectorRef.current;
+    if (!selector) return;
+    let wheelDelta = 0;
+    let lastSwitch = 0;
+    const handleWheel = (event: WheelEvent) => {
+      event.preventDefault();
+      event.stopPropagation();
+      const now = performance.now();
+      if (now - lastSwitch < 280) return;
+      wheelDelta += event.deltaY;
+      if (Math.abs(wheelDelta) < 40) return;
+      const direction = Math.sign(wheelDelta);
+      wheelDelta = 0;
+      lastSwitch = now;
+      setKernelIndex((current) => wrap(current + direction, KERNELS.length));
+    };
+    selector.addEventListener('wheel', handleWheel, { passive: false });
+    return () => selector.removeEventListener('wheel', handleWheel);
+  }, []);
+  useEffect(() => {
     let active = true;
     setResult('');
     const image = new Image();
@@ -159,17 +182,7 @@ export function CommonKernelsPage() {
     setError('');
   }
 
-  function reset() {
-    setImageIndex(0);
-    setImageDirection('down');
-    setKernelIndex(DEFAULT_KERNEL_INDEX);
-    setCustomImage(null);
-    setError('');
-    if (objectUrlRef.current) { URL.revokeObjectURL(objectUrlRef.current); objectUrlRef.current = null; }
-  }
-
   return <ContentBlock headingLevel={1} className="ck-common" title="卷积核工作台" subtitle="选择图像与卷积核，实时观察不同算子产生的真实卷积输出。">
-    <button className="ck-common__reset" type="button" onClick={reset}><Refresh theme="outline" size="22" /><Typography as="span" variant="bodySmall" tone="inherit">重置</Typography></button>
     <div className="ck-common__workspace">
       <section className="ck-common__stage ck-common__stage--images" aria-label="选择图像"><StageHeader number="1" title="选择图像" />
         <div className="ck-common__image-selector" ref={imageSelectorRef}>
@@ -181,7 +194,7 @@ export function CommonKernelsPage() {
         <button className="ck-common__upload" type="button" onClick={() => uploadRef.current?.click()}><UploadPicture theme="outline" size="23" /><Typography as="span" variant="bodySmall" tone="inherit">上传图片</Typography></button>
       </section>
       <section className="ck-common__stage ck-common__stage--kernels" aria-label="选择卷积核"><StageHeader number="2" title="选择卷积核" />
-        <div className="ck-common__kernel-selector">
+        <div className="ck-common__kernel-selector" ref={kernelSelectorRef}>
           <button className="ck-common__arrow-button" type="button" aria-label="上一个卷积核" onClick={() => setKernelIndex(wrap(kernelIndex - 1, KERNELS.length))}><Up theme="outline" size="30" /></button>
           <div className="ck-common__kernel-stack"><div className="ck-common__kernel-ghost is-before"><Matrix values={previousKernel.matrix} mini /><Typography variant="bodySmall" tone="muted">{previousKernel.name}</Typography></div><div className="ck-common__active-kernel"><Matrix values={selectedKernel.matrix} /><Typography as="h3" variant="h3" tone="accent">{selectedKernel.name}</Typography><Typography variant="bodySmall" tone="muted">{selectedKernel.note}</Typography></div><div className="ck-common__kernel-ghost is-after"><Matrix values={nextKernel.matrix} mini /><Typography variant="bodySmall" tone="muted">{nextKernel.name}</Typography></div></div>
           <button className="ck-common__arrow-button" type="button" aria-label="下一个卷积核" onClick={() => setKernelIndex(wrap(kernelIndex + 1, KERNELS.length))}><Down theme="outline" size="30" /></button>

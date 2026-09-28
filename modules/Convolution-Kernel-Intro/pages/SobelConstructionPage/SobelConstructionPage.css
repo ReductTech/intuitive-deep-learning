@@ -1,5 +1,4 @@
-.course-shell .ck-sobel { display:grid; grid-template-rows:auto minmax(0,1fr); gap:12px; width:100%; height:100%; min-width:0; min-height:0; overflow:hidden; padding:16px 28px 14px; }
-.course-shell .ck-sobel > .edu-content-head { max-width:none; margin:0; }
+.course-shell .ck-sobel { display:grid; grid-template-rows:auto minmax(0,1fr); row-gap:0; width:100%; height:100%; min-width:0; min-height:0; overflow:hidden; padding:16px 28px 14px; }
 .course-shell .ck-sobel > .edu-content-body { display:grid; grid-template-rows:305px minmax(0,1fr) 64px; gap:12px; min-width:0; min-height:0; }
 .course-shell .ck-sobel__construction { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; min-width:0; min-height:0; }
 .course-shell .ck-sobel__step, .course-shell .ck-sobel__example { display:grid; min-width:0; min-height:0; border:1px solid #c8dcf7; border-radius:12px; background:#fff; overflow:hidden; }

@@ -1,13 +1,5 @@
-.course-shell .ng-decision-stream {
-  position: relative;
-  display: grid;
-  align-content: center;
-  gap: 10px;
-  min-height: 220px;
-  padding: 18px 0;
-  overflow: hidden;
+.course-shell .ngtw-decision-stream {
   border: 1px solid #cad5e4;
-  border-radius: 8px;
   background:
     linear-gradient(rgba(39, 68, 110, 0.045) 1px, transparent 1px),
     linear-gradient(90deg, rgba(39, 68, 110, 0.045) 1px, transparent 1px),
@@ -16,8 +8,8 @@
   box-shadow: inset 0 1px 0 #fff, inset 0 -18px 38px rgba(39, 68, 110, 0.035), 0 12px 28px rgba(39, 68, 110, 0.08);
 }
 
-.course-shell .ng-decision-stream::before,
-.course-shell .ng-decision-stream::after {
+.course-shell .ngtw-decision-stream::before,
+.course-shell .ngtw-decision-stream::after {
   position: absolute;
   z-index: 2;
   top: 0;
@@ -27,62 +19,48 @@
   pointer-events: none;
 }
 
-.course-shell .ng-decision-stream::before {
+.course-shell .ngtw-decision-stream::before {
   left: 0;
   background: linear-gradient(90deg, #f7f9fc 12%, rgba(247, 249, 252, 0));
 }
 
-.course-shell .ng-decision-stream::after {
+.course-shell .ngtw-decision-stream::after {
   right: 0;
   background: linear-gradient(270deg, #f7f9fc 12%, rgba(247, 249, 252, 0));
 }
 
-.course-shell .ng-marquee-row {
-  display: flex;
-  width: 100%;
-  overflow: hidden;
-}
-
-.course-shell .ng-marquee-track {
-  display: flex;
+.course-shell .ngtw-marquee-track {
   width: max-content;
-  animation: ng-guide-marquee-left 96s linear infinite;
+  animation: ngtw-guide-marquee-left 96s linear infinite;
   will-change: transform;
 }
 
-.course-shell .ng-marquee-row--right .ng-marquee-track {
-  animation-name: ng-guide-marquee-right;
+.course-shell .ngtw-marquee-row--right .ngtw-marquee-track {
+  animation-name: ngtw-guide-marquee-right;
 }
 
-.course-shell .ng-choice-group {
-  display: flex;
+.course-shell .ngtw-choice-group {
   flex: 0 0 auto;
-  gap: 10px;
-  padding-right: 10px;
 }
 
-.course-shell .ng-choice-chip {
-  min-height: 42px;
+.course-shell .ngtw-choice-chip {
   border: 1px solid #b9c7da;
   border-left: 4px solid #f07e47;
-  border-radius: 7px;
-  background: #fff;
   box-shadow: 0 3px 0 rgba(39, 68, 110, 0.11), 0 7px 16px rgba(39, 68, 110, 0.06);
   color: #21334e;
-  padding: 8px 17px;
   white-space: nowrap;
   cursor: pointer;
   transition: border-color 140ms ease, background 140ms ease, color 140ms ease, box-shadow 140ms ease, transform 140ms ease;
 }
 
-.course-shell .ng-choice-chip[data-tone="1"] { border-left-color: #2d7d68; }
+.course-shell .ngtw-choice-chip[data-tone="1"] { border-left-color: #2d7d68; }
 
-.course-shell .ng-choice-chip[data-tone="2"] { border-left-color: #987334; }
+.course-shell .ngtw-choice-chip[data-tone="2"] { border-left-color: #987334; }
 
-.course-shell .ng-choice-chip[data-tone="3"] { border-left-color: #6b5c9a; }
+.course-shell .ngtw-choice-chip[data-tone="3"] { border-left-color: #6b5c9a; }
 
-.course-shell .ng-choice-chip:hover,
-.course-shell .ng-choice-chip:focus-visible {
+.course-shell .ngtw-choice-chip:hover,
+.course-shell .ngtw-choice-chip:focus-visible {
   border-color: #5d789e;
   background: #edf3fa;
   box-shadow: 0 3px 0 rgba(39, 68, 110, 0.16), 0 9px 20px rgba(39, 68, 110, 0.12);
@@ -90,7 +68,7 @@
   transform: translateY(-1px);
 }
 
-.course-shell .ng-choice-chip.is-selected {
+.course-shell .ngtw-choice-chip.is-selected {
   border-color: #27446e;
   border-left-color: #ff8a52;
   background: #27446e;
@@ -98,30 +76,24 @@
   color: #fff;
 }
 
-.course-shell .ng-input-row {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  align-items: center;
+.course-shell .ngtw-input-row {
   border: 2px solid #c3cede;
-  border-radius: 8px;
-  background: #f9fbfd;
-  overflow: hidden;
   box-shadow: inset 0 1px 2px rgba(39, 68, 110, 0.04);
   transition: border-color 140ms ease, box-shadow 140ms ease, background 140ms ease;
 }
 
-.course-shell .ng-input-row:focus-within {
+.course-shell .ngtw-input-row:focus-within {
   border-color: var(--ui-accent);
   box-shadow: 0 0 0 3px rgba(39, 68, 110, 0.1);
 }
 
-.course-shell .ng-input-row.is-confirmed {
+.course-shell .ngtw-input-row.is-confirmed {
   border-color: #2d7d68;
   background: #f5fbf8;
   box-shadow: 0 0 0 3px rgba(45, 125, 104, 0.1);
 }
 
-.course-shell .ng-input-prefix {
+.course-shell .ngtw-input-prefix {
   align-self: stretch;
   display: grid;
   place-items: center;
@@ -131,11 +103,7 @@
   padding: 0 14px;
 }
 
-.course-shell .ng-decision-input-control {
-  display: contents;
-}
-
-.course-shell .ng-input-row .edu-input {
+.course-shell .ngtw-input-row .edu-input {
   border: 0;
   border-radius: 0;
   box-shadow: none;
@@ -146,24 +114,17 @@
   line-height: var(--ui-type-body-line-height);
 }
 
-.course-shell .ng-input-row .edu-input::placeholder {
+.course-shell .ngtw-input-row .edu-input::placeholder {
   color: #9aa8ba;
   opacity: 1;
 }
 
-.course-shell .ng-opening-status { margin: 0; }
-
-.course-shell .ng-decision-result {
-  position: relative;
-  display: grid;
-  gap: 0;
+.course-shell .ngtw-decision-result {
   border-top: 1px solid var(--ui-border);
-  background: transparent;
-  padding: 18px 0 0;
-  animation: ng-guide-reveal 260ms ease both;
+  animation: ngtw-guide-reveal 260ms ease both;
 }
 
-.course-shell .ng-decision-result__head {
+.course-shell .ngtw-decision-result__head {
   position: relative;
   z-index: 1;
   display: flex;
@@ -179,17 +140,11 @@
   padding: 13px 18px;
 }
 
-.course-shell .ng-decision-result__head > div { display: grid; gap: 3px; }
+.course-shell .ngtw-decision-result__head > div { display: grid; gap: 3px; }
 
-.course-shell .ng-decision-result__head > p { max-width: 46%; text-align: right; }
+.course-shell .ngtw-decision-result__head > p { max-width: 46%; text-align: right; }
 
-.course-shell .ng-decision-result__factors {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
-}
-
-.course-shell .ng-decision-result__factors article {
+.course-shell .ngtw-decision-result__factors article {
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
   gap: 8px;
@@ -201,51 +156,27 @@
   padding: 16px 18px;
 }
 
-.course-shell .ng-decision-result__factor-head {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-}
-
-.course-shell .ng-decision-composer {
-  display: grid;
-  gap: 18px;
+.course-shell .ngtw-decision-composer {
   border: 1px solid var(--ui-border);
   border-top: 4px solid var(--ui-accent-alt);
   background: linear-gradient(145deg, #fff 0%, rgba(240,126,71,.045) 100%);
-  padding: 22px 24px;
 }
 
-.course-shell .ng-decision-composer__main {
-  display: grid;
-  gap: 9px;
-}
-
-.course-shell .ng-decision-composer__action {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: stretch;
-  gap: 12px;
-}
-
-.course-shell .ng-decision-composer__action .edu-button {
+.course-shell .ngtw-decision-composer__action .edu-button {
   min-width: 174px;
 }
 
-.course-shell .ng-decision-composer__presets {
-  display: grid;
-  gap: 10px;
+.course-shell .ngtw-decision-composer__presets {
   border-top: 1px solid rgba(39,68,110,.14);
-  padding-top: 15px;
 }
 
-.course-shell .ng-decision-composer__presets .ng-decision-stream {
+.course-shell .ngtw-decision-composer__presets .ngtw-decision-stream {
   min-height: 260px;
   margin: 0;
   padding-block: 14px;
 }
 
-.course-shell .ng-decision-result__branches {
+.course-shell .ngtw-decision-result__branches {
   position: relative;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -254,7 +185,7 @@
   margin-inline: auto;
 }
 
-.course-shell .ng-decision-result__branches::before {
+.course-shell .ngtw-decision-result__branches::before {
   position: absolute;
   top: 0;
   left: 50%;
@@ -264,7 +195,7 @@
   content: '';
 }
 
-.course-shell .ng-decision-result__branches::after {
+.course-shell .ngtw-decision-result__branches::after {
   position: absolute;
   top: 17px;
   right: 16.66%;
@@ -274,11 +205,11 @@
   content: '';
 }
 
-.course-shell .ng-decision-result__branches i {
+.course-shell .ngtw-decision-result__branches i {
   position: relative;
 }
 
-.course-shell .ng-decision-result__branches i::after {
+.course-shell .ngtw-decision-result__branches i::after {
   position: absolute;
   top: 17px;
   left: 50%;
@@ -288,12 +219,12 @@
   content: '';
 }
 
-.course-shell .ng-decision-result__factors.is-empty {
+.course-shell .ngtw-decision-result__factors.is-empty {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   min-height: 164px;
 }
 
-.course-shell .ng-decision-result__factors .ng-decision-result__placeholder {
+.course-shell .ngtw-decision-result__factors .ngtw-decision-result__placeholder {
   position: relative;
   min-height: 164px;
   grid-template-rows: 1fr auto;
@@ -308,19 +239,19 @@
   padding: 24px 28px 20px;
 }
 
-.course-shell .ng-decision-result__factors .ng-decision-result__placeholder:nth-child(2) {
+.course-shell .ngtw-decision-result__factors .ngtw-decision-result__placeholder:nth-child(2) {
   background:
     radial-gradient(circle at 50% 42%, rgba(45,125,104,.075), transparent 34%),
     linear-gradient(145deg, rgba(255,255,255,.96), rgba(247,249,252,.72));
 }
 
-.course-shell .ng-decision-result__factors .ng-decision-result__placeholder:nth-child(3) {
+.course-shell .ngtw-decision-result__factors .ngtw-decision-result__placeholder:nth-child(3) {
   background:
     radial-gradient(circle at 50% 42%, rgba(107,92,154,.075), transparent 34%),
     linear-gradient(145deg, rgba(255,255,255,.96), rgba(247,249,252,.72));
 }
 
-.course-shell .ng-decision-result__placeholder-index {
+.course-shell .ngtw-decision-result__placeholder-index {
   position: absolute;
   top: 15px;
   left: 17px;
@@ -328,114 +259,96 @@
   opacity: .7;
 }
 
-.course-shell .ng-decision-result__unknown {
-  display: grid;
-  width: 62px;
-  height: 62px;
-  place-items: center;
-  align-self: center;
+.course-shell .ngtw-decision-result__unknown {
   border: 1px dashed rgba(39,68,110,.3);
-  border-radius: 50%;
-  background: rgba(255,255,255,.82);
   box-shadow: 0 0 0 8px rgba(39,68,110,.025);
 }
 
-.course-shell .ng-decision-result__question { opacity: .5; }
+.course-shell .ngtw-decision-result__question { opacity: .5; }
 
-.course-shell .ng-decision-result__skeleton {
-  display: grid;
-  width: 100%;
-  gap: 7px;
-}
-
-.course-shell .ng-decision-result__skeleton i {
+.course-shell .ngtw-decision-result__skeleton i {
   height: 5px;
   border-radius: var(--ui-radius-pill);
   background: rgba(39,68,110,.09);
 }
 
-.course-shell .ng-decision-result__skeleton i:nth-child(2) { width: 78%; }
+.course-shell .ngtw-decision-result__skeleton i:nth-child(2) { width: 78%; }
 
-.course-shell .ng-decision-result__skeleton i:nth-child(3) { width: 54%; }
+.course-shell .ngtw-decision-result__skeleton i:nth-child(3) { width: 54%; }
 
-.course-shell .ng-decision-result__placeholder.is-loading::after {
+.course-shell .ngtw-decision-result__placeholder.is-loading::after {
   position: absolute;
   inset: 0;
   background: linear-gradient(105deg, transparent 32%, rgba(255,255,255,.7) 48%, transparent 64%);
   content: '';
   pointer-events: none;
   transform: translateX(-100%);
-  animation: ng-decision-placeholder-scan 1.6s ease-in-out infinite;
+  animation: ngtw-decision-placeholder-scan 1.6s ease-in-out infinite;
 }
 
-.course-shell .ng-decision-result__loading {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.course-shell .ng-decision-result__loading > i {
+.course-shell .ngtw-decision-result__loading > i {
   width: 18px;
   height: 18px;
   border: 2px solid rgba(39,68,110,.18);
   border-top-color: var(--ui-accent-alt);
   border-radius: 50%;
-  animation: ng-decision-loading-spin 800ms linear infinite;
+  animation: ngtw-decision-loading-spin 800ms linear infinite;
 }
 
-.course-shell .ng-decision-result__factors article:nth-child(2) { border-top-color: var(--ui-success); }
+.course-shell .ngtw-decision-result__factors article:nth-child(2) { border-top-color: var(--ui-success); }
 
-.course-shell .ng-decision-result__factors article:nth-child(3) { border-top-color: #6b5c9a; }
+.course-shell .ngtw-decision-result__factors article:nth-child(3) { border-top-color: #6b5c9a; }
 
 @media (max-width: 820px) {
-  .course-shell .ng-decision-result__factors { grid-template-columns: 1fr; }
-  .course-shell .ng-decision-result__factors.is-empty { grid-template-columns: 1fr; }
-  .course-shell .ng-decision-result__head { align-items: start; flex-direction: column; }
-  .course-shell .ng-decision-result__head > p { max-width: none; text-align: left; }
-  .course-shell .ng-decision-composer__action { grid-template-columns: 1fr; }
-  .course-shell .ng-decision-composer__action .edu-button { width: 100%; }
-  .course-shell .ng-decision-result__head { width: 100%; }
-  .course-shell .ng-decision-result__branches { display: none; }
+  .course-shell .ngtw-decision-result__factors { grid-template-columns: 1fr; }
+  .course-shell .ngtw-decision-result__factors.is-empty { grid-template-columns: 1fr; }
+  .course-shell .ngtw-decision-result__head { align-items: start; flex-direction: column; }
+  .course-shell .ngtw-decision-result__head > p { max-width: none; text-align: left; }
+  .course-shell .ngtw-decision-composer__action { grid-template-columns: 1fr; }
+  .course-shell .ngtw-decision-composer__action .edu-button { width: 100%; }
+  .course-shell .ngtw-decision-result__head { width: 100%; }
+  .course-shell .ngtw-decision-result__branches { display: none; }
 }
 
 @media (max-width: 640px) {
-  .course-shell .ng-decision-stream { min-height: 210px; gap: 9px; padding: 16px 0; }
-  .course-shell .ng-choice-chip { min-height: 40px; padding: 7px 13px; }
-  .course-shell .ng-input-row { grid-template-columns: 1fr; }
-  .course-shell .ng-input-prefix { min-height: 38px; border-right: 0; border-bottom: 1px solid var(--ui-border); }
+  .course-shell .ngtw-decision-stream { min-height: 210px; gap: 9px; padding: 16px 0; }
+  .course-shell .ngtw-choice-chip { min-height: 40px; padding: 7px 13px; }
+  .course-shell .ngtw-input-row { grid-template-columns: 1fr; }
+  .course-shell .ngtw-input-prefix { min-height: 38px; border-right: 0; border-bottom: 1px solid var(--ui-border); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .course-shell .ng-marquee-track { animation: none; }
-  .course-shell .ng-marquee-row--right .ng-marquee-track { transform: translateX(-18%); }
+  .course-shell .ngtw-marquee-track { animation: none; }
+  .course-shell .ngtw-marquee-row--right .ngtw-marquee-track { transform: translateX(-18%); }
 }
 
-@keyframes ng-decision-placeholder-scan { to { transform: translateX(100%); } }
+@keyframes ngtw-decision-placeholder-scan { to { transform: translateX(100%); } }
 
-@keyframes ng-decision-loading-spin { to { transform: rotate(360deg); } }
+@keyframes ngtw-decision-loading-spin { to { transform: rotate(360deg); } }
 
-@keyframes ng-guide-marquee-left { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes ngtw-guide-marquee-left { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-@keyframes ng-guide-marquee-right { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+@keyframes ngtw-guide-marquee-right { from { transform: translateX(-50%); } to { transform: translateX(0); } }
 
 /* 1600×900 composition: compact composer above a flexible three-branch result. */
-.course-page-surface .ng-decision-discovery {
+.course-page-surface .ngtw-decision-discovery {
   width: 100%;
   height: 100%;
   min-height: 0;
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
 }
-.course-page-surface .ng-decision-discovery .edu-content-body {
+.course-page-surface .ngtw-decision-discovery .edu-content-body {
   min-height: 0;
   grid-template-rows: auto minmax(0, 1fr);
   gap: 14px;
 }
-.course-page-surface .ng-decision-composer { min-height: 0; gap: 14px; padding: 14px 18px; }
-.course-page-surface .ng-decision-composer__presets .ng-decision-stream { min-height: 178px; }
-.course-page-surface .ng-decision-stream .ng-marquee-row:nth-child(n+4) { display: none; }
-.course-page-surface .ng-decision-result { min-height: 0; border-top: 0; padding-top: 0; }
-.course-page-surface .ng-decision-result__factors { min-height: 0; }
-.course-page-surface .ng-decision-result__factors .ng-decision-result__placeholder,
-.course-page-surface .ng-decision-result__factors article { min-height: 132px; }
+.course-page-surface .ngtw-decision-composer { min-height: 0; gap: 14px; padding: 14px 18px; }
+.course-page-surface .ngtw-decision-composer__presets .ngtw-decision-stream { min-height: 178px; }
+.course-page-surface .ngtw-decision-stream .ngtw-marquee-row:nth-child(n+4) { display: none; }
+.course-page-surface .ngtw-decision-result { min-height: 0; border-top: 0; padding-top: 0; }
+.course-page-surface .ngtw-decision-result__factors { min-height: 0; }
+.course-page-surface .ngtw-decision-result__factors .ngtw-decision-result__placeholder,
+.course-page-surface .ngtw-decision-result__factors article { min-height: 132px; }
+
 

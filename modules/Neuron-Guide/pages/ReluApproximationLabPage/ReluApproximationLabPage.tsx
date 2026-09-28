@@ -263,12 +263,12 @@ export function ReluApproximationLabPage({ onComplete }: ReluApproximationLabPag
   return (
     <ContentBlock
       headingLevel={1}
-      className="ng-relu-approximation-lab"
+      className="ngtw-relu-approximation-lab"
       title="足够多带有 ReLU 的神经元，就能逼近任意曲线"
       subtitle="在画布上画出一条目标曲线，再让浏览器直接训练一个由 ReLU 神经元组成的小网络。"
     >
-      <section className="ng-relu-drawing-panel">
-        <header className="ng-relu-drawing-toolbar">
+      <section className="ngtw-relu-drawing-panel grid min-w-0 max-w-full grid-rows-[auto_minmax(0,_1fr)] gap-[10px] bg-[#fff] p-[12px]">
+        <header className="ngtw-relu-drawing-toolbar grid min-w-0 max-w-full items-center grid-cols-[auto_minmax(360px,_1fr)_minmax(210px,_auto)_auto] gap-[16px] min-h-[54px] bg-[var(--ui-surface-soft)] p-[6px_10px]">
           <Typography as="strong" variant="body" tone="main" wrap="nowrap">绘制目标曲线</Typography>
           <RangeControl
             label="ReLU 神经元"
@@ -279,29 +279,29 @@ export function ReluApproximationLabPage({ onComplete }: ReluApproximationLabPag
             suffix=" 个"
             onChange={(event) => changeNeuronCount(Number(event.currentTarget.value))}
           />
-          <Typography className="ng-relu-drawing-toolbar__status" variant="bodySmall" tone="muted" wrap="nowrap">
+          <Typography className="ngtw-relu-drawing-toolbar__status" variant="bodySmall" tone="muted" wrap="nowrap">
             {!target.length
               ? '拖动画布开始绘制'
               : loss === null
                 ? '目标已记录，可以开始训练'
                 : `进度 ${epoch}%，误差 ${loss.toFixed(4)}`}
           </Typography>
-          <div className="ng-activation-actions">
+          <div className="ngtw-activation-actions flex flex-wrap gap-[8px]">
             <Button variant="primary" disabled={!target.length || training} onClick={train}>{training ? '训练中…' : '训练网络'}</Button>
             <Button disabled={!target.length && !raw.length} onClick={clear}>重新绘制</Button>
           </div>
         </header>
-        <div className="ng-relu-drawing-board">
-          <div className="ng-relu-drawing-panel__legend" aria-label="图例">
+        <div className="ngtw-relu-drawing-board relative min-w-0 w-full max-w-full overflow-hidden bg-[#fbfdff]">
+          <div className="ngtw-relu-drawing-panel__legend absolute top-[14px] right-[16px] flex items-center gap-[16px] bg-[rgba(251,_253,_255,_.92)] p-[6px_10px]" aria-label="图例">
             <Typography as="span" variant="bodySmall" tone="accent">目标曲线</Typography>
             <Typography as="span" variant="bodySmall" tone="warning">模型输出</Typography>
           </div>
           {!target.length && !raw.length && (
-            <Typography className="ng-relu-drawing-board__prompt" variant="subtitle" tone="muted">在画布上拖动，画出任意曲线</Typography>
+            <Typography className="ngtw-relu-drawing-board__prompt" variant="subtitle" tone="muted">在画布上拖动，画出任意曲线</Typography>
           )}
           <svg
             ref={svgRef}
-            className="ng-relu-drawing-board__svg"
+            className="ngtw-relu-drawing-board__svg block w-full h-full max-w-full"
             viewBox={`0 0 ${VIEW_WIDTH} ${VIEW_HEIGHT}`}
             preserveAspectRatio="none"
             role="img"
@@ -311,20 +311,21 @@ export function ReluApproximationLabPage({ onComplete }: ReluApproximationLabPag
             onPointerUp={finishDrawing}
             onPointerCancel={finishDrawing}
           >
-            <g className="ng-relu-drawing-board__grid" aria-hidden="true">
+            <g className="ngtw-relu-drawing-board__grid" aria-hidden="true">
               {[.2, .4, .6, .8].map((ratio) => <line key={`v-${ratio}`} x1={VIEW_WIDTH * ratio} x2={VIEW_WIDTH * ratio} y1="0" y2={VIEW_HEIGHT} />)}
               {[.2, .4, .6, .8].map((ratio) => <line key={`h-${ratio}`} x1="0" x2={VIEW_WIDTH} y1={VIEW_HEIGHT * ratio} y2={VIEW_HEIGHT * ratio} />)}
               <line className="is-axis" x1={VIEW_WIDTH / 2} x2={VIEW_WIDTH / 2} y1="0" y2={VIEW_HEIGHT} />
               <line className="is-axis" x1="0" x2={VIEW_WIDTH} y1={VIEW_HEIGHT / 2} y2={VIEW_HEIGHT / 2} />
             </g>
-            {targetPath && <path className="ng-relu-drawing-board__target" d={targetPath} />}
-            {predictionPath && <path className="ng-relu-drawing-board__prediction" d={predictionPath} />}
+            {targetPath && <path className="ngtw-relu-drawing-board__target" d={targetPath} />}
+            {predictionPath && <path className="ngtw-relu-drawing-board__prediction" d={predictionPath} />}
           </svg>
         </div>
       </section>
     </ContentBlock>
   );
 }
+
 
 
 

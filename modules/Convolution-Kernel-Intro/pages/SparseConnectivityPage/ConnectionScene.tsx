@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { Typography } from '../../../shared/react';
 
 export type ConnectionKind = 'dense' | 'local';
 type Tile = THREE.Mesh<THREE.BoxGeometry, THREE.MeshStandardMaterial>;
-const SCAN_ORDER = [0, 1, 2, 5, 8, 7, 6, 3, 4];
+const SCAN_ORDER = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 
 function Fallback({ kind }: { kind: ConnectionKind }) {
   const input = Array.from({ length: 25 }, (_, index) => ({ x: 45 + (index % 5) * 36, y: 50 + Math.floor(index / 5) * 36, index }));
@@ -33,31 +34,36 @@ export function ConnectionScene({ kind }: { kind: ConnectionKind }) {
 
     const scene = new THREE.Scene();
     const camera = new THREE.OrthographicCamera(-6.5, 6.5, 3.35, -3.35, .1, 100);
-    camera.position.set(0, .1, 13);
+    camera.position.set(6, 1.6, 12);
     camera.lookAt(0, 0, 0);
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.enablePan = false;
+    controls.minZoom = .7;
+    controls.maxZoom = 2.5;
+    controls.minPolarAngle = .25;
+    controls.maxPolarAngle = Math.PI - .25;
     scene.add(new THREE.AmbientLight(0xffffff, 2.2));
     const light = new THREE.DirectionalLight(0xcde4ff, 3.4);
     light.position.set(-3, 5, 9);
     scene.add(light);
-    const tileGeometry = new THREE.BoxGeometry(.66, .66, .19);
+    const tileGeometry = new THREE.BoxGeometry(.19, .66, .66);
     const edgeGeometry = new THREE.EdgesGeometry(tileGeometry);
     const inputGroup = new THREE.Group();
     const outputGroup = new THREE.Group();
     inputGroup.position.x = -3.35;
-    inputGroup.rotation.set(-.2, -.58, 0);
     outputGroup.position.x = 3.35;
-    outputGroup.rotation.set(-.2, .58, 0);
     scene.add(inputGroup, outputGroup);
 
     const createGrid = (group: THREE.Group, size: number): Tile[] => {
-      const back = new THREE.Mesh(new THREE.BoxGeometry(size * .76 + .13, size * .76 + .13, .07), new THREE.MeshStandardMaterial({ color: 0xe6efff, transparent: true, opacity: .55 }));
-      back.position.z = -.16;
+      const back = new THREE.Mesh(new THREE.BoxGeometry(.07, size * .76 + .13, size * .76 + .13), new THREE.MeshStandardMaterial({ color: 0xe6efff, transparent: true, opacity: .55, depthWrite: false }));
+      back.position.x = -.16;
       group.add(back);
       const tiles: Tile[] = [];
       for (let row = 0; row < size; row += 1) for (let col = 0; col < size; col += 1) {
         const material = new THREE.MeshStandardMaterial({ color: 0xe8f1ff, emissive: 0x102d5f, emissiveIntensity: .08, metalness: .08, roughness: .29, transparent: true, opacity: .94 });
         const tile = new THREE.Mesh(tileGeometry, material);
-        tile.position.set((col - (size - 1) / 2) * .76, ((size - 1) / 2 - row) * .76, .04);
+        tile.position.set(.04, ((size - 1) / 2 - row) * .76, ((size - 1) / 2 - col) * .76);
         tile.add(new THREE.LineSegments(edgeGeometry, new THREE.LineBasicMaterial({ color: 0x9cbdeb, transparent: true, opacity: .85 })));
         group.add(tile);
         tiles.push(tile);
@@ -68,8 +74,8 @@ export function ConnectionScene({ kind }: { kind: ConnectionKind }) {
     const outputs = createGrid(outputGroup, 3);
     inputGroup.updateMatrixWorld(true);
     outputGroup.updateMatrixWorld(true);
-    const lineMaterial = new THREE.LineBasicMaterial({ color: kind === 'dense' ? 0x6f91d2 : 0x3479e9, transparent: true, opacity: kind === 'dense' ? .31 : .62, depthTest: false });
-    const particleMaterial = new THREE.PointsMaterial({ color: 0x2767e2, size: kind === 'dense' ? .085 : .12, transparent: true, opacity: .9, depthTest: false });
+    const lineMaterial = new THREE.LineBasicMaterial({ color: kind === 'dense' ? 0x6f91d2 : 0x3479e9, transparent: true, opacity: kind === 'dense' ? .31 : .62, depthTest: true, depthWrite: false });
+    const particleMaterial = new THREE.PointsMaterial({ color: 0x2767e2, size: kind === 'dense' ? .085 : .12, transparent: true, opacity: .9, depthTest: true, depthWrite: false });
     let lines: THREE.LineSegments | null = null;
     let particles: THREE.Points | null = null;
     let paths: { from: THREE.Vector3; to: THREE.Vector3 }[] = [];
@@ -95,14 +101,14 @@ export function ConnectionScene({ kind }: { kind: ConnectionKind }) {
       });
       if (lines) { scene.remove(lines); lines.geometry.dispose(); }
       if (particles) { scene.remove(particles); particles.geometry.dispose(); }
-      const target = outputGroup.localToWorld(outputs[index].position.clone().add(new THREE.Vector3(0, 0, .15)));
-      paths = sourceIndices.map((inputIndex) => ({ from: inputGroup.localToWorld(inputs[inputIndex].position.clone().add(new THREE.Vector3(0, 0, .15))), to: target.clone() }));
+      const target = outputGroup.localToWorld(outputs[index].position.clone().add(new THREE.Vector3(-.15, 0, 0)));
+      paths = sourceIndices.map((inputIndex) => ({ from: inputGroup.localToWorld(inputs[inputIndex].position.clone().add(new THREE.Vector3(.15, 0, 0))), to: target.clone() }));
       const positions = new Float32Array(paths.length * 6);
       paths.forEach((path, pathIndex) => { positions.set(path.from.toArray(), pathIndex * 6); positions.set(path.to.toArray(), pathIndex * 6 + 3); });
       const lineGeometry = new THREE.BufferGeometry();
       lineGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
       lines = new THREE.LineSegments(lineGeometry, lineMaterial);
-      lines.renderOrder = 1;
+      lines.renderOrder = -1;
       scene.add(lines);
       particlePositions = new Float32Array(paths.length * 3);
       const particleGeometry = new THREE.BufferGeometry();
@@ -132,6 +138,7 @@ export function ConnectionScene({ kind }: { kind: ConnectionKind }) {
       }
       if (now - lastRender >= 33) {
         outputs[SCAN_ORDER[step]].material.emissiveIntensity = .55 + .22 * Math.sin(now * .005);
+        controls.update();
         renderer.render(scene, camera);
         lastRender = now;
       }
@@ -154,6 +161,7 @@ export function ConnectionScene({ kind }: { kind: ConnectionKind }) {
       cancelAnimationFrame(frame);
       observer.disconnect();
       visibilityObserver.disconnect();
+      controls.dispose();
       if (lines) lines.geometry.dispose();
       if (particles) particles.geometry.dispose();
       lineMaterial.dispose();

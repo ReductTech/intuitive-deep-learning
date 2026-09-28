@@ -1,5 +1,4 @@
-.course-shell .ck-gradient { display:grid; grid-template-rows:auto minmax(0,1fr); gap:12px; min-width:0; min-height:0; overflow:hidden; padding:18px 30px 16px; }
-.course-shell .ck-gradient > .edu-content-head { max-width:none; margin-bottom:0; }
+.course-shell .ck-gradient { display:grid; grid-template-rows:auto minmax(0,1fr); row-gap:0; min-width:0; min-height:0; overflow:hidden; padding:18px 30px 16px; }
 .course-shell .ck-gradient > .edu-content-body { display:grid; grid-template-rows:150px minmax(0,1fr) 72px; gap:14px; min-width:0; min-height:0; }
 .course-shell .ck-gradient__formula-strip { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); align-items:center; min-width:0; min-height:0; border-radius:12px; background:#eef5fd; padding:14px 20px; }
 .course-shell .ck-gradient__formula-strip > div { display:grid; align-content:center; justify-items:center; gap:4px; min-width:0; min-height:0; padding:0 16px; }

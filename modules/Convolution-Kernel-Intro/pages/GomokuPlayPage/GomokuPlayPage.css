@@ -52,6 +52,8 @@
 .course-shell .ck-gomoku-play__board { grid-column: 1; grid-row: 1; --ck-play-pad: 7.5%; position: relative; justify-self: center; align-self: center; width: min(100%, 820px); height: min(100%, 820px); aspect-ratio: 1 / 1; max-width: 100%; max-height: 100%; overflow: hidden; border: 1px solid rgba(120, 92, 54, .26); border-radius: 16px; background: var(--ck-board-paper); box-shadow: 0 16px 32px rgba(33, 50, 74, .16), inset 0 0 0 1px rgba(255, 255, 255, .2); }
 .course-shell .ck-gomoku-play__board-canvas { display: block; width: 100%; height: 100%; touch-action: none; }
 .course-shell .ck-gomoku-play__hover-stone { position: absolute; z-index: 2; width: 5.8%; aspect-ratio: 1; transform: translate(-50%, -50%); pointer-events: none; opacity: 0; border-radius: 50%; background: radial-gradient(circle at 34% 30%, #66758b, #2b394f 48%, #101925 100%); box-shadow: 0 3px 8px rgba(16, 24, 38, .28); transition: opacity 40ms linear; }
+.course-shell .ck-gomoku-play__hint-stone { position:absolute; z-index:1; width:5.8%; aspect-ratio:1; transform:translate(-50%,-50%); pointer-events:none; border:2px dashed rgba(23,59,120,.75); border-radius:50%; background:radial-gradient(circle at 34% 30%,rgba(102,117,139,.55),rgba(43,57,79,.45) 48%,rgba(16,25,37,.35) 100%); box-shadow:0 0 0 5px rgba(244,248,255,.42); animation:ck-gomoku-hint-appear .25s ease-out both; }
+@keyframes ck-gomoku-hint-appear { from { opacity:0; scale:.7; } to { opacity:1; scale:1; } }
 .course-shell .ck-gomoku-play__board.is-interactive .ck-gomoku-play__board-canvas { cursor: crosshair; }
 .course-shell .ck-gomoku-play__board-canvas:focus { outline: none; }
 .course-shell .ck-gomoku-play__board-canvas:focus-visible { outline: 3px solid rgba(240, 126, 71, .38); outline-offset: -5px; }

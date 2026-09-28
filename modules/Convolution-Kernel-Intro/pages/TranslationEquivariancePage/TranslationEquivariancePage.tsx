@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from 'react';
-import { ContentBlock, Typography } from '../../../shared/react';
-import backgroundUrl from '../../assets/layerd_scene/bg.png';
-import ufoUrl from '../../assets/layerd_scene/ufo.png';
-import pillarUrl from '../../assets/layerd_scene/pillar.png';
-import foliageUrl from '../../assets/layerd_scene/dark_foliage.png';
+import { ContentBlock, moduleAssetUrl, Typography } from '../../../shared/react';
 import './TranslationEquivariancePage.css';
+
+const moduleAssetId = '38cd1c79-d8b7-462a-b208-a567c5cd89c4';
+const backgroundUrl = moduleAssetUrl(moduleAssetId, 'layerd_scene/bg.png');
+const ufoUrl = moduleAssetUrl(moduleAssetId, 'layerd_scene/ufo.png');
+const pillarUrl = moduleAssetUrl(moduleAssetId, 'layerd_scene/pillar.png');
+const foliageUrl = moduleAssetUrl(moduleAssetId, 'layerd_scene/dark_foliage.png');
 
 const MAP_WIDTH = 80;
 const MAP_HEIGHT = 58;
@@ -74,7 +76,29 @@ export function TranslationEquivariancePage() {
   const sourceRef = useRef<HTMLCanvasElement | null>(null);
   const imagesRef = useRef<SceneImages | null>(null);
   const [position, setPosition] = useState<Position>({ x: .57, y: .52 });
+  const positionRef = useRef<Position>({ x: .57, y: .52 });
+  const pointerInsideRef = useRef(false);
   const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    let frame = 0;
+    let lastUpdate = 0;
+    const startedAt = performance.now();
+    const animate = (now: number) => {
+      if (!pointerInsideRef.current && now - lastUpdate >= 33) {
+        const angle = (now - startedAt) * .00075;
+        const target = { x: .57 + .23 * Math.cos(angle), y: .43 + .12 * Math.sin(angle) };
+        const current = positionRef.current;
+        const next = { x: current.x + (target.x - current.x) * .075, y: current.y + (target.y - current.y) * .075 };
+        positionRef.current = next;
+        setPosition(next);
+        lastUpdate = now;
+      }
+      frame = requestAnimationFrame(animate);
+    };
+    frame = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(frame);
+  }, []);
 
   useEffect(() => {
     let active = true;
@@ -98,7 +122,9 @@ export function TranslationEquivariancePage() {
     const scene = sceneRef.current;
     if (!scene) return;
     const rect = scene.getBoundingClientRect();
-    setPosition({ x: Math.max(.07, Math.min(.93, (event.clientX - rect.left) / rect.width)), y: Math.max(.08, Math.min(.92, (event.clientY - rect.top) / rect.height)) });
+    const next = { x: Math.max(.07, Math.min(.93, (event.clientX - rect.left) / rect.width)), y: Math.max(.08, Math.min(.92, (event.clientY - rect.top) / rect.height)) };
+    positionRef.current = next;
+    setPosition(next);
   };
   const ufoStyle = { left: `${position.x * 100}%`, top: `${position.y * 100}%` } as CSSProperties;
 
@@ -106,13 +132,13 @@ export function TranslationEquivariancePage() {
     <div className="ck-translation__workspace">
       <section className="ck-translation__panel ck-translation__input-panel">
         <header><Typography as="h2" variant="h3" tone="accent">1　输入场景</Typography></header>
-        <div className="ck-translation__scene" ref={sceneRef} onPointerMove={moveUfo} aria-label="移动鼠标可控制中间景深的 UFO，前景柱子和树叶会遮挡它">
+        <div className="ck-translation__scene" ref={sceneRef} onPointerEnter={(event) => { pointerInsideRef.current = true; moveUfo(event); }} onPointerMove={moveUfo} onPointerLeave={() => { pointerInsideRef.current = false; }} aria-label="UFO 自动绕圈飞行；移动鼠标可接管轨迹，离开后继续绕圈，前景柱子和树叶会遮挡它">
           <img className="ck-translation__background" src={backgroundUrl} alt="夜晚的城堡和桥梁背景" draggable="false" />
           <img className="ck-translation__ufo" src={ufoUrl} alt="可随鼠标平移的 UFO" style={ufoStyle} draggable="false" />
           <img className="ck-translation__pillar" src={pillarUrl} alt="前景柱子" draggable="false" />
           <img className="ck-translation__foliage" src={foliageUrl} alt="前景树叶" draggable="false" />
         </div>
-        <Typography variant="bodySmall" tone="muted">移动鼠标控制 UFO；柱子和树叶位于它的前方。</Typography>
+        <Typography variant="body" tone="muted">移动鼠标控制 UFO</Typography>
       </section>
       <section className="ck-translation__panel ck-translation__kernel-panel">
         <header><Typography as="h2" variant="h3" tone="accent">2　固定卷积核</Typography></header>
@@ -123,8 +149,12 @@ export function TranslationEquivariancePage() {
       </section>
       <section className="ck-translation__panel ck-translation__output-panel">
         <header><Typography as="h2" variant="h3" tone="accent">3　输出特征图</Typography></header>
-        <canvas ref={heatmapRef} className="ck-translation__heatmap" width={MAP_WIDTH} height={MAP_HEIGHT} role="img" aria-label="当前可见场景的灰度图经过 Laplacian 卷积得到的实时边界响应强度图" />
-        <Typography variant="bodySmall" tone="muted">亮处表示更强的局部亮度变化；背景边界也会保留。</Typography>
+        <div className="ck-translation__heatmap-frame">
+          <canvas ref={heatmapRef} className="ck-translation__heatmap" width={MAP_WIDTH} height={MAP_HEIGHT} role="img" aria-label="当前可见场景的灰度图经过 Laplacian 卷积得到的实时边界响应强度图" />
+          <span className="ck-translation__heatmap-badge" tabIndex={0} aria-describedby="ck-translation-heatmap-tip">热力图</span>
+          <span className="ck-translation__heatmap-tooltip" id="ck-translation-heatmap-tip" role="tooltip">颜色表示响应强度，越暖越强。</span>
+        </div>
+        <Typography variant="body" tone="muted">更亮的区域意味着更强的局部特征响应</Typography>
       </section>
     </div>
     <div className="ck-translation__summary"><Typography as="strong" variant="h3" tone="accent">结论</Typography><Typography variant="body" tone="accent">UFO 平移时，响应位置随之平移；进入前景遮挡区域时，响应可能减弱。</Typography></div>

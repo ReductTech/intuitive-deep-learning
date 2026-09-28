@@ -90,18 +90,18 @@ export function ReluIntroPage({ onComplete }: ReluIntroPageProps) {
     ? Math.max(0, Math.min(1, result.z / (RELU_INTRO_MAX_X * RELU_INTRO_WEIGHT)))
     : 0;
   const responseStyle = {
-    '--ng-signal-position': `${normalizedSignal * 100}%`,
-    '--ng-output-level': positiveLevel,
-    '--ng-output-scale': 1 + positiveLevel * 0.14,
-    '--ng-output-glow': `${8 + positiveLevel * 34}px`,
-    '--ng-output-alpha': 0.08 + positiveLevel * 0.28,
+    '--ngtw-signal-position': `${normalizedSignal * 100}%`,
+    '--ngtw-output-level': positiveLevel,
+    '--ngtw-output-scale': 1 + positiveLevel * 0.14,
+    '--ngtw-output-glow': `${8 + positiveLevel * 34}px`,
+    '--ngtw-output-alpha': 0.08 + positiveLevel * 0.28,
   } as CSSProperties;
 
   return (
     <ContentBlock
       ref={rootRef}
       headingLevel={1}
-      className="ng-activation-network-lab ng-activation-relu-intro"
+      className="ngtw-activation-network-lab ngtw-activation-relu-intro"
       title="从线性计算到非线性响应"
       subtitle="加权结果 z 越过 0 之前，输出一直是 0；越过之后才开始增长。这条规则就是激活函数。"
       data-telemetry-manual
@@ -111,26 +111,26 @@ export function ReluIntroPage({ onComplete }: ReluIntroPageProps) {
         <NoticeStrip tone="blue"><Typography variant="body" tone="inherit">正在恢复交互状态…</Typography></NoticeStrip>
       ) : (
         <div
-          className={`ng-response-lab${!state.touched ? ' is-waiting' : isSuppressed ? ' is-suppressed' : ' is-active'}`}
+          className={`ngtw-response-lab grid min-w-0 max-w-full gap-[16px]${!state.touched ? ' is-waiting' : isSuppressed ? ' is-suppressed' : ' is-active'}`}
           style={responseStyle}
         >
-          <div className="ng-response-lab__scene">
-            <div className="ng-response-lab__threshold-view">
-              <div className="ng-response-lab__instruction">
+          <div className="ngtw-response-lab__scene relative grid grid-cols-[minmax(0,_1fr)] content-center gap-[42px] min-w-0 min-h-[410px] overflow-hidden bg-[#f7f9fc] p-[38px_54px]">
+            <div className="ngtw-response-lab__threshold-view gap-[18px]">
+              <div className="ngtw-response-lab__instruction flex min-w-0 items-end justify-between gap-[18px]">
                 <div>
                   <Typography as="strong" variant="h3" tone="main">改变 z，观察输出如何变化</Typography>
                   <Typography as="p" variant="body" tone="muted">注意零点前后：哪一段保持不变，哪一段开始增长？</Typography>
                 </div>
-                <div className="ng-response-lab__current">
+                <div className="ngtw-response-lab__current justify-items-end pr-[14px]">
                   <Typography as="span" variant="body" tone="muted">加权结果</Typography>
                   <Typography as="strong" variant="h3" tone="warning">z = {state.touched ? formatNumber(result.z) : '—'}</Typography>
                 </div>
               </div>
-              <div className="ng-response-lab__neuron-demo">
-                <div className="ng-response-lab__neuron-state">
-                  <div className="ng-response-lab__charge-ring" aria-hidden="true">
-                    {state.touched && isSuppressed ? <i className="ng-response-lab__suppressed-flash" /> : null}
-                    <div className="ng-response-lab__neuron-core">
+              <div className="ngtw-response-lab__neuron-demo grid grid-cols-[minmax(0,_.62fr)_minmax(0,_1.38fr)] min-w-0 items-center gap-[64px] bg-[#fff] p-[34px_54px]">
+                <div className="ngtw-response-lab__neuron-state grid place-items-center gap-[18px] text-center">
+                  <div className="ngtw-response-lab__charge-ring relative grid w-[210px] max-w-full place-items-center rounded-[50%] bg-[#e6ebf2] p-[13px]" aria-hidden="true">
+                    {state.touched && isSuppressed ? <i className="ngtw-response-lab__suppressed-flash absolute inset-[-2px] rounded-[50%]" /> : null}
+                    <div className="ngtw-response-lab__neuron-core relative grid w-full h-full place-items-center gap-[5px] rounded-[50%] bg-[var(--ui-text-light)]">
                       <Typography as="span" variant="body" tone="inherit">最终输出</Typography>
                       <Typography as="strong" variant="h3" tone="inherit">y = {state.touched ? formatNumber(result.y) : '—'}</Typography>
                     </div>
@@ -140,17 +140,17 @@ export function ReluIntroPage({ onComplete }: ReluIntroPageProps) {
                   </Typography>
                 </div>
 
-                <div className="ng-response-lab__single-control">
-                  <div className="ng-response-lab__control-head">
+                <div className="ngtw-response-lab__single-control relative grid min-w-0 gap-[22px] bg-[#f7f9fc] p-[28px_30px_34px]">
+                  <div className="ngtw-response-lab__control-head flex min-w-0 items-center justify-between gap-[18px]">
                     <Typography as="strong" variant="subtitle" tone="main">调节加权结果 z</Typography>
                     <Typography as="strong" variant="subtitle" tone="warning">{state.touched ? formatNumber(result.z) : '—'}</Typography>
                   </div>
-                  <div className="ng-response-lab__control-track">
-                    <div className="ng-response-lab__control-threshold">
+                  <div className="ngtw-response-lab__control-track relative h-[18px] rounded-[999px]">
+                    <div className="ngtw-response-lab__control-threshold absolute top-[-18px] left-[50%] grid place-items-center">
                       <Typography as="span" variant="body" tone="muted">响应起点 z = 0</Typography>
                     </div>
                     <input
-                      className="ng-response-lab__direct-control"
+                      className="ngtw-response-lab__direct-control absolute inset-[-14px_0] w-full m-0"
                       type="range"
                       aria-label="调节加权结果 z"
                       min={RELU_INTRO_MIN_X * RELU_INTRO_WEIGHT}
@@ -169,7 +169,7 @@ export function ReluIntroPage({ onComplete }: ReluIntroPageProps) {
               </div>
             </div>
 
-            <div className={`ng-response-lab__result${state.touched ? ' is-visible' : ''}`}>
+            <div className={`ngtw-response-lab__result grid grid-cols-[auto_minmax(0,_1fr)] min-w-0 items-center gap-[18px] bg-[#fff] p-[16px_20px]${state.touched ? ' is-visible' : ''}`}>
               <Typography as="strong" variant="subtitle" tone={isSuppressed ? 'main' : 'success'}>
                 {!state.touched ? '拖动滑块开始观察' : isSuppressed ? '输出保持不变' : '输出开始增长'}
               </Typography>
@@ -188,6 +188,7 @@ export function ReluIntroPage({ onComplete }: ReluIntroPageProps) {
     </ContentBlock>
   );
 }
+
 
 
 

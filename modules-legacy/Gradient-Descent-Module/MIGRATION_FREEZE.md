@@ -98,7 +98,7 @@ Telemetry 的现有状态接口会对同一 `state_key` 只取最新事件（`sc
 |---|---|---|---|---|
 | 页面标题、统一宽度与响应式外壳 | `ModuleShell` | 直接复用 | 仅传标题、副标题和模块 class | 否 |
 | 三段教学主流程 | `LessonFlow` | 直接复用；建议步骤为 `manual-tuning → auto-update → full-network-training → resources` | 每个 block 只报告自己的完成条件 | 否 |
-| 每段标题、说明和布局 | `ContentBlock`，必要时 `LessonStage` | 直接组合 | 课程文本和局部网格 class | 否 |
+| 每段标题、说明和布局 | `ContentBlock`，必要时使用原生内容容器 | 直接组合 | 课程文本和局部网格 class | 否 |
 | 方向、权重影响题 | `Question` + 模块私有完成态包装 | 复用 choice 外观、反馈、Telemetry 和稳定 `persistenceKey` | 旧题答对后会锁定；shared `Question` 没有 disabled/controlled answer，因此由本地 wrapper 在正确后切换为不可编辑完成态 | 否；单模块锁题需求先本地适配 |
 | 三道偏导题 | 模块私有 `NumericFillQuestion`，组合 `TextInput/Feedback` 或复用 Question 外观 token | 保留 shared 排版和反馈语义 | 旧校验是 `Number(value)` 后误差 `<0.001`，所以 `3`、`3.0`、`+3` 等都应通过；shared `Question` 当前只做规范化字符串精确比较，不能直接配置等价实现 | 否；不能为本模块立即扩大 shared validator API |
 | 震荡开放题 | `Question type="short"` + `review` | 复用通用题目 UI 和 SQLite 结果恢复 | 模块私有 `oscillationFeedback.ts` 负责请求/响应适配；模块决定“失败也放行” | 否 |

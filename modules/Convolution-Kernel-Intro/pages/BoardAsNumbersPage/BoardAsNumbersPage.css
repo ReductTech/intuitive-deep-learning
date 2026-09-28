@@ -3,16 +3,11 @@
 .course-shell .ck-numbers {
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
-  gap: 18px;
+  row-gap: 0;
   min-height: 720px;
   overflow: hidden;
   padding: 26px 34px 24px;
-  background: linear-gradient(rgba(255, 255, 255, .82), rgba(255, 255, 255, .82)), url('../../assets/bg1.png') center / cover no-repeat;
-}
-
-.course-shell .ck-numbers > .edu-content-head {
-  max-width: none;
-  margin-bottom: 0;
+  background: linear-gradient(rgba(255, 255, 255, .82), rgba(255, 255, 255, .82)), var(--ck-numbers-background) center / cover no-repeat;
 }
 
 .course-shell .ck-numbers > .edu-content-body {

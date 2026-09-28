@@ -1,32 +1,24 @@
-.ng-relu-explanation {
+.ngtw-relu-explanation {
   border-radius: var(--ui-radius-lg);
   box-shadow: var(--ui-shadow-soft);
   padding: clamp(16px, 2.4vw, 22px);
 }
 
-.ng-relu-explanation > .edu-content-head { margin-bottom: 16px; }
+.ngtw-relu-explanation > .edu-content-head { margin-bottom: 16px; }
 
-.ng-relu-explanation .edu-content-head,
-.ng-relu-explanation .edu-content-subtitle {
+.ngtw-relu-explanation .edu-content-head,
+.ngtw-relu-explanation .edu-content-subtitle {
   width: 100%;
   max-width: none;
 }
 
-.ng-relu-explanation__layout {
-  display: grid;
-  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
-  gap: 28px;
+.ngtw-relu-explanation__layout > * {
   min-width: 0;
   max-width: 100%;
 }
 
-.ng-relu-explanation__layout > * {
-  min-width: 0;
-  max-width: 100%;
-}
-
-.ng-relu-explanation__definition,
-.ng-relu-explanation__figure {
+.ngtw-relu-explanation__definition,
+.ngtw-relu-explanation__figure {
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -37,19 +29,11 @@
   background: var(--ui-bg-card);
 }
 
-.ng-relu-explanation__formula {
-  max-width: 100%;
+.ngtw-relu-explanation__formula {
   border-inline-start: 4px solid var(--ui-accent-alt);
 }
 
-.ng-relu-explanation__cases {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
-  min-width: 0;
-}
-
-.ng-relu-explanation__cases > div {
+.ngtw-relu-explanation__cases > div {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -60,39 +44,24 @@
   background: var(--ui-bg-muted);
 }
 
-.ng-relu-explanation__cases > div:last-child {
+.ngtw-relu-explanation__cases > div:last-child {
   border-color: color-mix(in srgb, var(--ui-success) 34%, var(--ui-border));
 }
 
-.ng-relu-explanation__figure-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  min-width: 0;
-}
-
-.ng-relu-explanation__plot {
+.ngtw-relu-explanation__plot {
   flex: 1;
-  min-width: 0;
-  min-height: 430px;
-  max-width: 100%;
-}
-
-.ng-relu-explanation__function-plot {
-  width: 100%;
-  max-width: 100%;
 }
 
 @media (max-width: 760px) {
-  .ng-relu-explanation__layout { grid-template-columns: minmax(0, 1fr); }
+  .ngtw-relu-explanation__layout { grid-template-columns: minmax(0, 1fr); }
 }
 
 @media (max-width: 760px) {
-  .ng-relu-explanation__cases { grid-template-columns: minmax(0, 1fr); }
+  .ngtw-relu-explanation__cases { grid-template-columns: minmax(0, 1fr); }
 }
 
 @media (max-width: 760px) {
-  .ng-relu-explanation__plot { min-height: 330px; }
+  .ngtw-relu-explanation__plot { min-height: 330px; }
 }
+
 

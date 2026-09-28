@@ -13,6 +13,7 @@ export interface ModulePageOutline {
 
 export interface ActiveModule {
   id: string;
+  assetId: string;
   title: string;
   description: string;
   path: string;
@@ -37,6 +38,7 @@ export interface ActiveModule {
 
 interface ModuleOutlineFile {
   id?: string;
+  moduleIdentity?: { id?: string };
   title?: string;
   description?: string;
   path?: string;
@@ -81,6 +83,7 @@ export const activeModules: ActiveModule[] = Object.entries(outlineFiles)
     const pptExports = entryExports(dir, outline.ppt?.entry);
     return {
       id: outline.id ?? dir,
+      assetId: outline.moduleIdentity?.id ?? outline.id ?? dir,
       title: outline.title ?? dir,
       description: outline.description ?? '',
       path: outline.path ?? `/modules/${dir.toLowerCase()}`,

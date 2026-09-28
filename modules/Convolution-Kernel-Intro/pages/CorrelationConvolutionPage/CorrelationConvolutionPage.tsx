@@ -4,12 +4,13 @@ import './CorrelationConvolutionPage.css';
 const INPUT_SYMBOLS = Array.from({ length: 3 }, (_, row) => Array.from({ length: 3 }, (_, col) => `x_{${row + 1}${col + 1}}`));
 const KERNEL_SYMBOLS = Array.from({ length: 3 }, (_, row) => Array.from({ length: 3 }, (_, col) => `k_{${row + 1}${col + 1}}`));
 const ROTATED_KERNEL_SYMBOLS = KERNEL_SYMBOLS.slice().reverse().map((row) => row.slice().reverse());
+const KERNEL_CELL_COLORS = ['#dcecff', '#cee2fc', '#bad7fa', '#fff0df', '#ffe3ca', '#fbd5b5', '#e1f5e8', '#ccebdc', '#b5e2cc'];
 
 function Matrix({ values, label, warm = false, rotated = false }: { values: string[][]; label: string; warm?: boolean; rotated?: boolean }) {
   return (
     <div className={`ck-correlation__matrix ${warm ? 'is-warm' : ''}`} role="img" aria-label={label} style={{ gridTemplateColumns: `repeat(${values[0].length}, minmax(0, 1fr))` }}>
       {values.flatMap((row, rowIndex) => row.map((value, colIndex) => (
-        <div key={`${rowIndex}-${colIndex}`} className={`ck-correlation__matrix-cell${warm ? ` is-kernel-row-${rotated ? 3 - rowIndex : rowIndex + 1}` : ''}`}>
+        <div key={`${rowIndex}-${colIndex}`} className="ck-correlation__matrix-cell" style={warm ? { backgroundColor: KERNEL_CELL_COLORS[rotated ? 8 - (rowIndex * 3 + colIndex) : rowIndex * 3 + colIndex] } : undefined}>
           <MathFormulaStatic latex={value} aria-label={value.replace(/[{}]/g, '')} />
         </div>
       )))}
@@ -17,43 +18,14 @@ function Matrix({ values, label, warm = false, rotated = false }: { values: stri
   );
 }
 
-function SumSymbol({ index, limit }: { index: 'u' | 'v'; limit: 'm' | 'n' }) {
-  return (
-    <span className="ck-correlation__sum" aria-label={`${index} 从零到 ${limit} 减一`}>
-      <span className="ck-correlation__sum-bound"><MathFormulaTerm latex={limit} tooltip={`${limit}：卷积核的${limit === 'm' ? '行数' : '列数'}。`} ariaLabel={`${limit}，卷积核${limit === 'm' ? '行数' : '列数'}`} /><MathFormulaStatic latex="-1" /></span>
-      <MathFormulaStatic latex="\sum" className="ck-correlation__sum-symbol" />
-      <span className="ck-correlation__sum-bound"><MathFormulaTerm latex={index} tooltip={`${index}：卷积核中的${index === 'u' ? '行' : '列'}索引。`} ariaLabel={`${index}，卷积核${index === 'u' ? '行' : '列'}索引`} /><MathFormulaStatic latex="=0" /></span>
-    </span>
-  );
-}
-
 function CorrelationFormula({ strict }: { strict: boolean }) {
   return (
     <MathFormulaBlock ariaLabel={strict ? '严格卷积公式' : '互相关公式'} className="ck-correlation__formula">
-      <MathFormulaTerm latex="y" tooltip="y：当前位置的输出值。" ariaLabel="y，输出值" />
-      <MathFormulaStatic latex="(" />
-      <MathFormulaTerm latex="i" tooltip="i：输出位置的行索引。" ariaLabel="i，输出行索引" />
-      <MathFormulaStatic latex="," />
-      <MathFormulaTerm latex="j" tooltip="j：输出位置的列索引。" ariaLabel="j，输出列索引" />
-      <MathFormulaStatic latex=")=" />
-      <SumSymbol index="u" limit="m" />
-      <SumSymbol index="v" limit="n" />
-      <MathFormulaTerm latex="X" tooltip="X：输入图像。" ariaLabel="X，输入图像" />
-      <MathFormulaStatic latex="(" />
-      <MathFormulaTerm latex="i" tooltip="i：当前窗口的起始行。" ariaLabel="i，窗口起始行" />
-      <MathFormulaStatic latex="+" />
-      <MathFormulaTerm latex="u" tooltip="u：卷积核中的行偏移。" ariaLabel="u，行偏移" />
-      <MathFormulaStatic latex="," />
-      <MathFormulaTerm latex="j" tooltip="j：当前窗口的起始列。" ariaLabel="j，窗口起始列" />
-      <MathFormulaStatic latex="+" />
-      <MathFormulaTerm latex="v" tooltip="v：卷积核中的列偏移。" ariaLabel="v，列偏移" />
-      <MathFormulaStatic latex=")" />
-      <MathFormulaTerm latex={strict ? String.raw`\widetilde{K}` : 'K'} tooltip={strict ? 'K：这里使用旋转 180° 后的卷积核。' : 'K：这里直接使用原始卷积核。'} ariaLabel={strict ? 'K，旋转后的卷积核' : 'K，原始卷积核'} />
-      <MathFormulaStatic latex="(" />
-      <MathFormulaTerm latex="u" tooltip="u：卷积核的行索引。" ariaLabel="u，卷积核行索引" />
-      <MathFormulaStatic latex="," />
-      <MathFormulaTerm latex="v" tooltip="v：卷积核的列索引。" ariaLabel="v，卷积核列索引" />
-      <MathFormulaStatic latex=")" />
+      <MathFormulaTerm latex="y(i,j)=" tooltip="位置 (i,j) 的输出响应。" />
+      <MathFormulaTerm latex={String.raw`\sum_{u=0}^{m-1}`} tooltip="沿卷积核的 m 行求和；u 是行索引。" />
+      <MathFormulaTerm latex={String.raw`\sum_{v=0}^{n-1}`} tooltip="沿卷积核的 n 列求和；v 是列索引。" />
+      <MathFormulaTerm latex="X(i+u,j+v)" tooltip="输入图像在当前窗口内 (u,v) 位置的像素。" />
+      <MathFormulaTerm latex={strict ? String.raw`\widetilde{K}(u,v)` : 'K(u,v)'} tooltip={strict ? '旋转 180° 后的卷积核在 (u,v) 处的权重。' : '原始卷积核在 (u,v) 处的权重。'} />
     </MathFormulaBlock>
   );
 }

@@ -7,14 +7,14 @@ import './MultiKernelPage.css';
 const KERNEL_COUNTS: KernelCount[] = [1, 2, 4];
 
 export function MultiKernelPage() {
-  const [selected, setSelected] = useState<RgbPosition>({ row: 2, col: 2 });
+  const [selected, setSelected] = useState<RgbPosition>({ row: 0, col: 0 });
   const [kernelCount, setKernelCount] = useState<KernelCount>(2);
 
   return <ContentBlock headingLevel={1} className="ck-rgb ck-multi-replica" title="多核卷积：卷积核数量决定输出深度" subtitle="每个 3 × 3 × 3 卷积核都覆盖三个输入通道；选择 1、2 或 4 个核，观察输出特征图的深度如何变化。">
     <div className="ck-rgb__stage">
       <div className="ck-rgb__scene-wrap">
         <RgbConvolutionScene selected={selected} onSelect={setSelected} kernelCount={kernelCount} />
-        <div className="ck-rgb__hint"><Typography variant="bodySmall" tone="muted">自动逐格卷积 · 点击格子暂停观察 · 拖动旋转 · 滚轮缩放</Typography></div>
+        <div className="ck-rgb__hint"><Typography variant="bodySmall" tone="muted">卷积核依次读取输入 · 点击格子暂停观察 · 拖动旋转 · 滚轮缩放</Typography></div>
         <div className="ck-multi-replica__selector" role="group" aria-label="选择卷积核数量">
           {KERNEL_COUNTS.map((count) => <button key={count} type="button" aria-pressed={kernelCount === count} className={kernelCount === count ? 'is-selected' : ''} onClick={() => setKernelCount(count)}><Typography as="span" variant="bodySmall" tone="inherit">{count} 个核</Typography></button>)}
         </div>

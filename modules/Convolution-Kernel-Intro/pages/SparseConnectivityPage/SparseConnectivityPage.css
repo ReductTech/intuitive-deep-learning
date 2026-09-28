@@ -1,5 +1,4 @@
-.course-shell .ck-sparse { display:grid; grid-template-rows:auto minmax(0,1fr); gap:14px; width:100%; height:100%; min-width:0; min-height:0; overflow:hidden; padding:18px 28px 16px; }
-.course-shell .ck-sparse > .edu-content-head { max-width:none; margin:0; }
+.course-shell .ck-sparse { display:grid; grid-template-rows:auto minmax(0,1fr); row-gap:0; width:100%; height:100%; min-width:0; min-height:0; overflow:hidden; padding:18px 28px 16px; }
 .course-shell .ck-sparse > .edu-content-body { display:grid; grid-template-rows:minmax(0,1fr) auto; gap:12px; min-width:0; min-height:0; }
 .course-shell .ck-sparse__comparison { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; min-width:0; min-height:0; }
 .course-shell .ck-sparse__panel { display:grid; grid-template-rows:54px auto minmax(0,1fr) 98px; gap:7px; min-width:0; min-height:0; overflow:hidden; border:1px solid #c6daf6; border-radius:14px; background:linear-gradient(145deg,#fff 54%,#f8fbff); padding:12px 14px 13px; }
@@ -9,7 +8,8 @@
 .course-shell .ck-sparse__number .ui-typography { color:#fff; }
 .course-shell .ck-sparse__description { min-width:0; margin:0; padding:0 8px; }
 .course-shell .ck-sparse__scene { position:relative; min-width:0; min-height:0; overflow:hidden; border-radius:10px; background:radial-gradient(ellipse at 48% 68%,#e8f1ff 0%,#f7faff 54%,#fff 84%); }
-.course-shell .ck-sparse__scene canvas { display:block; width:100%; height:100%; max-width:100%; }
+.course-shell .ck-sparse__scene canvas { display:block; width:100%; height:100%; max-width:100%; cursor:grab; touch-action:none; }
+.course-shell .ck-sparse__scene canvas:active { cursor:grabbing; }
 .course-shell .ck-sparse__scene-labels { position:absolute; z-index:2; top:5px; right:36px; left:36px; display:flex; justify-content:space-between; gap:20px; pointer-events:none; }
 .course-shell .ck-sparse__scene-labels .ui-typography { min-width:0; text-align:center; }
 .course-shell .ck-sparse__parameter { display:grid; grid-template-columns:1fr auto; grid-template-rows:auto auto; align-items:center; gap:0 10px; min-width:0; border:1px solid #d4e2f7; border-radius:10px; background:#eef5ff; padding:9px 16px; }

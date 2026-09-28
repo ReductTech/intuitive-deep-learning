@@ -8,6 +8,7 @@ pydantic==2.12.4
 pydantic_core==2.41.5
 
 # Core dependencies
+cryptography>=44.0
 numpy
 opencv-python-headless
 insightface

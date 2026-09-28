@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { Button } from '../controls/Button';
-import { LessonStage, type LessonStageProps } from '../layout/LessonStage';
 import { ScrollCue } from './ScrollCue';
 
 export type ProgressiveRevealMode = 'scroll' | 'cue';
@@ -10,7 +9,7 @@ export interface ProgressiveRevealProps {
   revealLabel: ReactNode;
   resetLabel?: ReactNode;
   cueText?: ReactNode;
-  stage: Omit<LessonStageProps, 'children' | 'ref'>;
+  contentClassName?: string;
   children: ReactNode;
 }
 
@@ -19,7 +18,7 @@ export function ProgressiveReveal({
   revealLabel,
   resetLabel,
   cueText = '下方出现了新模块，向下滚动查看',
-  stage,
+  contentClassName,
   children,
 }: ProgressiveRevealProps) {
   const [visible, setVisible] = useState(false);
@@ -61,7 +60,7 @@ export function ProgressiveReveal({
         <Button variant="primary" onClick={reveal}>{revealLabel}</Button>
         {resetLabel !== undefined && <Button onClick={reset}>{resetLabel}</Button>}
       </div>
-      {visible && <LessonStage {...stage} ref={stageRef}>{children}</LessonStage>}
+      {visible && <section className={contentClassName} ref={stageRef}>{children}</section>}
       {visible && cueVisible && mode === 'cue' && (
         <ScrollCue targetRef={stageRef} onDismiss={() => setCueVisible(false)}>{cueText}</ScrollCue>
       )}

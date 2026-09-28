@@ -8,9 +8,8 @@ import {
   type KeyboardEvent as ReactKeyboardEvent,
   type PointerEvent as ReactPointerEvent,
 } from 'react';
-import { Button, ContentBlock, Typography } from '../../../shared/react';
+import { Button, ContentBlock, moduleAssetUrl, Typography } from '../../../shared/react';
 import { useGomokuOutcome } from '../../LessonContext';
-import bgVideo from '../../assets/bg_video.mp4';
 import {
   BLACK,
   BOARD_SIZE,
@@ -18,8 +17,8 @@ import {
   WHITE,
   buildDemoPosition,
   computeComputerMove,
+  computeHumanAdvice,
   createBoard,
-  getGomokuThreatLevel,
   placeStone,
   type GomokuDifficulty,
   type Board,
@@ -28,6 +27,8 @@ import {
   type Stone,
 } from '../../gomokuEngine';
 import './GomokuPlayPage.css';
+
+const bgVideo = moduleAssetUrl('38cd1c79-d8b7-462a-b208-a567c5cd89c4', 'bg_video.mp4');
 
 const HUMAN = BLACK;
 const COMPUTER = WHITE;
@@ -176,6 +177,7 @@ interface PlayBoardProps {
   winLine: Cell[];
   hover: Cell | null;
   cursor: Cell | null;
+  hint: Cell | null;
   interactive: boolean;
   label: string;
   onHoverCell: (cell: Cell | null) => void;
@@ -190,6 +192,7 @@ function PlayBoard({
   winLine,
   hover,
   cursor,
+  hint,
   interactive,
   label,
   onHoverCell,
@@ -300,6 +303,7 @@ function PlayBoard({
         onKeyDown={onKeyDown}
       />
       <span ref={previewRef} className="ck-gomoku-play__hover-stone" aria-hidden="true" />
+      {interactive && hint && <span className="ck-gomoku-play__hint-stone" style={{ left: `${(BOARD_PAD_RATIO + hint.col * (1 - 2 * BOARD_PAD_RATIO) / (BOARD_SIZE - 1)) * 100}%`, top: `${(BOARD_PAD_RATIO + hint.row * (1 - 2 * BOARD_PAD_RATIO) / (BOARD_SIZE - 1)) * 100}%` }} aria-hidden="true" />}
       <div className="ck-gomoku-play__board-axis" aria-hidden="true">
         <div className="ck-gomoku-play__board-axis-cols">
           {COLUMN_LABELS.map((text, index) => (
@@ -360,20 +364,6 @@ interface GameState {
   draw: boolean;
 }
 
-type SituationTone = 'red' | 'orange' | 'green';
-
-interface Situation {
-  tone: SituationTone;
-  label: string;
-}
-
-function getSituation(board: Board): Situation {
-  const tone = getGomokuThreatLevel(board, COMPUTER);
-  if (tone === 'red') return { tone, label: '对手已连四' };
-  if (tone === 'orange') return { tone, label: '必须防守' };
-  return { tone, label: '放心落子' };
-}
-
 function createGame(): GameState {
   return { board: createBoard(), history: [], lastMove: null, turn: 'human', winner: EMPTY, winLine: [], draw: false };
 }
@@ -411,11 +401,22 @@ export function GomokuPlayPage({ onComplete }: GomokuPlayPageProps) {
   const [hover, setHover] = useState<Cell | null>(null);
   const [cursor, setCursor] = useState<Cell>({ row: 7, col: 7 });
   const [focused, setFocused] = useState(false);
+  const [hintCell, setHintCell] = useState<Cell | null>(null);
   const completedRef = useRef(false);
   const demoRef = useRef(false);
   const { recordOutcome } = useGomokuOutcome();
 
   const canPlay = game.turn === 'human';
+  const advice = useMemo(() => difficulty === 'easy' && canPlay
+    ? computeHumanAdvice(game.board, game.history) : null,
+  [difficulty, canPlay, game.board, game.history]);
+
+  useEffect(() => {
+    setHintCell(null);
+    if (!advice) return undefined;
+    const timer = window.setTimeout(() => setHintCell(advice.cell), 3000);
+    return () => window.clearTimeout(timer);
+  }, [advice]);
 
   useEffect(() => {
     if (game.turn !== 'computer') return undefined;
@@ -532,7 +533,9 @@ export function GomokuPlayPage({ onComplete }: GomokuPlayPageProps) {
       : { text: '轮到 AI', stone: 'white', accent: false };
   }, [game]);
 
-  const situation = useMemo(() => difficulty === 'easy' ? getSituation(game.board) : null, [game.board, difficulty]);
+  const situation = advice
+    ? { tone: advice.mode === 'defense' ? 'orange' : 'green', label: advice.mode === 'defense' ? '防守' : '进攻' }
+    : null;
 
   return (
     <ContentBlock className="ck-gomoku-play" aria-label="十五路五子棋对局：你执黑，AI 执白">
@@ -554,7 +557,7 @@ export function GomokuPlayPage({ onComplete }: GomokuPlayPageProps) {
           <div className="ck-gomoku-play__status" aria-live="polite">
             <div className="ck-gomoku-play__panel-heading"><Typography as="span" variant="bodySmall" tone="muted">对局面板</Typography><span aria-hidden="true" className="ck-gomoku-play__panel-line" /></div>
             <div className="ck-gomoku-play__status-player"><span className={`ck-gomoku-play__turn ck-gomoku-play__turn--${status.stone}`} aria-hidden="true" /><Typography as="strong" variant="body" tone={status.accent ? 'accent' : 'main'}>{status.text}</Typography></div>
-            <div className="ck-gomoku-play__status-situation">{situation ? <span className={`ck-gomoku-play__lamp ck-gomoku-play__lamp--${situation.tone}`} aria-hidden="true" /> : <span className="ck-gomoku-play__lamp ck-gomoku-play__lamp--off" aria-hidden="true" />}<Typography as="strong" variant="body" tone={situation ? 'accent' : 'muted'}>{situation?.label ?? '提示已关闭'}</Typography></div>
+            <div className="ck-gomoku-play__status-situation">{situation ? <span className={`ck-gomoku-play__lamp ck-gomoku-play__lamp--${situation.tone}`} aria-hidden="true" /> : <span className="ck-gomoku-play__lamp ck-gomoku-play__lamp--off" aria-hidden="true" />}<Typography as="strong" variant="body" tone={situation ? 'accent' : 'muted'}>{situation?.label ?? (difficulty !== 'easy' ? '提示已关闭' : game.turn === 'computer' ? '等待 AI 落子' : game.turn === 'over' ? '对局结束' : '思考下一手')}</Typography></div>
             <div className="ck-gomoku-play__controls">
               <div className="ck-gomoku-play__difficulty">
                 <div className="ck-gomoku-play__control-heading"><Typography as="strong" variant="body" tone="accent">对弈难度</Typography></div>
@@ -578,8 +581,9 @@ export function GomokuPlayPage({ onComplete }: GomokuPlayPageProps) {
               winLine={game.winLine}
               hover={hover}
               cursor={cursor}
+              hint={hintCell}
               interactive={canPlay}
-              label={`十五路五子棋棋盘，${status.text}。方向键移动落点，回车落子。`}
+              label={`十五路五子棋棋盘，${status.text}。${hintCell && advice ? `建议${advice.mode === 'defense' ? '防守' : '进攻'}落点 ${COLUMN_LABELS[hintCell.col]}${hintCell.row + 1}。` : ''}方向键移动落点，回车落子。`}
               onHoverCell={setHover}
               onPickCell={playHuman}
               onKeyDown={handleKeyDown}
