@@ -1,85 +1,125 @@
-import { useState } from 'react';
-import { ContentBlock, moduleAssetUrl, Typography } from '../../../shared/react';
+import { useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';
+import { moduleAssetUrl, Typography } from '../../../shared/react';
 import './DigitRecognitionOpeningPage.css';
 
 const ASSET_ID = '80396753-7fc8-4f55-9188-bddbdb828169';
-const specimens = [
-  { id: 'A', src: moduleAssetUrl(ASSET_ID, 'digits/6.png'), digit: '6' },
-  { id: 'B', src: moduleAssetUrl(ASSET_ID, 'digits/8.png'), digit: '8' },
-  { id: 'C', src: moduleAssetUrl(ASSET_ID, 'digits/6-alt.png'), digit: '6' },
-] as const;
+const background = moduleAssetUrl(ASSET_ID, '1980_usa_bg.png');
+const cheque = moduleAssetUrl(ASSET_ID, 'cheque.png');
+const scanner = moduleAssetUrl(ASSET_ID, 'scanner_logo.png');
+const DEMO_DIGITS = ['5', '0', '8', '7'] as const;
+const BOX_COUNT = DEMO_DIGITS.length;
+const CANVAS_SIZE = 180;
 
+type ActiveStroke = { index: number; pointerId: number; x: number; y: number };
+
+/** The handwriting is real canvas ink. The output is a temporary mock until a recognizer is connected. */
 export function DigitRecognitionOpeningPage() {
-  const [selected, setSelected] = useState<string[]>([]);
-  const [attempted, setAttempted] = useState(false);
-  const solved = selected.length === 2 && selected.includes('A') && selected.includes('C');
+  const canvases = useRef<Array<HTMLCanvasElement | null>>([]);
+  const activeStroke = useRef<ActiveStroke | null>(null);
+  const [written, setWritten] = useState<boolean[]>(Array(BOX_COUNT).fill(false));
+  const completed = written.filter(Boolean).length;
 
-  const choose = (id: string) => {
-    setAttempted(false);
-    setSelected((current) => current.includes(id)
-      ? current.filter((item) => item !== id)
-      : current.length === 2 ? [current[1], id] : [...current, id]);
+  const point = (event: ReactPointerEvent<HTMLCanvasElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    return {
+      x: (event.clientX - rect.left) * CANVAS_SIZE / rect.width,
+      y: (event.clientY - rect.top) * CANVAS_SIZE / rect.height,
+    };
   };
 
-  return <ContentBlock
-    className="vfl-digit-intro"
-    headingLevel={1}
-    title="计算机是如何识别一个数字的？"
-    subtitle="先看三张真实的手写数字。哪两张写的是同一个数字？"
-  >
-    <div className="vfl-digit-intro__stage">
-      <div className="vfl-digit-intro__eyebrow">
-        <Typography as="span" variant="bodySmall" tone="inherit">视觉挑战 / 01</Typography>
-        <Typography as="span" variant="bodySmall" tone="inherit">选出两张 · 点击笔迹</Typography>
-      </div>
+  const startStroke = (index: number, event: ReactPointerEvent<HTMLCanvasElement>) => {
+    event.preventDefault();
+    const canvas = event.currentTarget;
+    const context = canvas.getContext('2d');
+    if (!context) return;
+    canvas.setPointerCapture(event.pointerId);
+    const current = point(event);
+    context.fillStyle = '#143b66';
+    context.beginPath();
+    context.arc(current.x, current.y, 5.5, 0, Math.PI * 2);
+    context.fill();
+    activeStroke.current = { index, pointerId: event.pointerId, ...current };
+  };
 
-      <div className="vfl-digit-intro__specimens" role="group" aria-label="选择两张表示同一个数字的手写样本">
-        {specimens.map((sample, index) => {
-          const active = selected.includes(sample.id);
-          return <button
-            className={`vfl-digit-intro__specimen${active ? ' is-selected' : ''}${solved && active ? ' is-matched' : ''}`}
-            type="button"
-            key={sample.id}
-            aria-pressed={active}
-            aria-label={`笔迹 ${sample.id}${active ? '，已选中' : ''}`}
-            onClick={() => choose(sample.id)}
-          >
-            <span className="vfl-digit-intro__specimen-top">
-              <Typography as="span" variant="bodySmall" tone="inherit">笔迹 {sample.id}</Typography>
-              <span className="vfl-digit-intro__index">0{index + 1}</span>
-            </span>
-            <span className="vfl-digit-intro__image-frame">
-              <img src={sample.src} alt="" draggable={false} />
-            </span>
-            <span className="vfl-digit-intro__specimen-bottom">
-              <Typography as="span" variant="bodySmall" tone="inherit">{solved ? `数字 ${sample.digit}` : active ? '已选中' : '点击选择'}</Typography>
-              <span aria-hidden="true">{active ? '✓' : '↗'}</span>
-            </span>
-          </button>;
-        })}
-      </div>
+  const moveStroke = (index: number, event: ReactPointerEvent<HTMLCanvasElement>) => {
+    const previous = activeStroke.current;
+    if (!previous || previous.index !== index || previous.pointerId !== event.pointerId) return;
+    event.preventDefault();
+    const context = event.currentTarget.getContext('2d');
+    if (!context) return;
+    const current = point(event);
+    context.strokeStyle = '#143b66';
+    context.lineWidth = 11;
+    context.lineCap = 'round';
+    context.lineJoin = 'round';
+    context.beginPath();
+    context.moveTo(previous.x, previous.y);
+    context.lineTo(current.x, current.y);
+    context.stroke();
+    activeStroke.current = { index, pointerId: event.pointerId, ...current };
+  };
 
-      <div className="vfl-digit-intro__answer" aria-live="polite">
-        <div className="vfl-digit-intro__answer-marker" aria-hidden="true">{solved ? '✓' : '?'}</div>
-        <div className="vfl-digit-intro__answer-copy">
-          <Typography as="h2" variant="h3" tone="inherit">
-            {solved ? '写法不同，你依然认出了同一个 6。' : selected.length < 2 ? '你是凭什么认出它们的？' : '再看看笔画的整体形状。'}
-          </Typography>
-          <Typography as="p" variant="body" tone="inherit">
-            {solved
-              ? '计算机接收到的是图像里的像素。要完成同样的判断，它得先从像素中找到有用的形状线索。'
-              : selected.length < 2
-                ? '你可能没有逐格比较像素，却能越过笔迹差异，看出形状之间的关系。'
-                : '这两张并不是同一个数字。再次点击可以取消选择，也可以直接选另一张。'}
-          </Typography>
+  const endStroke = (event: ReactPointerEvent<HTMLCanvasElement>) => {
+    const stroke = activeStroke.current;
+    if (stroke?.pointerId !== event.pointerId) return;
+    activeStroke.current = null;
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
+    setWritten((previous) => previous.map((value, cell) => cell === stroke.index ? true : value));
+  };
+
+  const clear = () => {
+    activeStroke.current = null;
+    canvases.current.forEach((canvas) => canvas?.getContext('2d')?.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE));
+    setWritten(Array(BOX_COUNT).fill(false));
+  };
+
+  return <main className="vfl-check-opening" style={{ backgroundImage: `url(${background})` }}>
+    <header className="vfl-check-opening__heading">
+      <Typography as="h1" variant="display" tone="inherit">计算机如何读懂手写数字？</Typography>
+      <div className="vfl-check-opening__rule" aria-hidden="true" />
+      <Typography as="p" variant="subtitle" tone="inherit">先把识别器看成一个黑盒，只关注输入与输出。</Typography>
+    </header>
+
+    <div className="vfl-check-opening__cheque">
+      <img src={cheque} alt="一张留有手写金额位置的复古银行支票" draggable={false} />
+      <div className="vfl-check-opening__amount" role="group" aria-label="支票金额，四个可手写的数字格">
+        {DEMO_DIGITS.map((_, index) => <div className="vfl-check-opening__digit-cell" key={index}>
+          <canvas
+            ref={(node) => { canvases.current[index] = node; }}
+            width={CANVAS_SIZE}
+            height={CANVAS_SIZE}
+            aria-label={`在金额第 ${index + 1} 格手写一个数字`}
+            onPointerDown={(event) => startStroke(index, event)}
+            onPointerMove={(event) => moveStroke(index, event)}
+            onPointerUp={endStroke}
+            onPointerCancel={endStroke}
+          />
+        </div>)}
+      </div>
+    </div>
+
+    <div className="vfl-check-opening__scan-bridge" aria-hidden="true">
+      <span className="vfl-check-opening__arrow">➜</span>
+      <img src={scanner} alt="" draggable={false} />
+      <span className="vfl-check-opening__arrow">➜</span>
+    </div>
+
+    <section className="vfl-check-opening__terminal" aria-label="手写数字识别结果演示">
+      <div className="vfl-check-opening__terminal-bar">
+        <span className="vfl-check-opening__lights" aria-hidden="true"><i /><i /><i /></span>
+        <Typography as="span" variant="bodySmall" tone="inherit">DIGIT READER</Typography>
+      </div>
+      <div className="vfl-check-opening__terminal-screen">
+        <Typography as="span" variant="bodySmall" tone="muted">识别结果 · 演示</Typography>
+        <div className="vfl-check-opening__readout" aria-live="polite" aria-label={`模拟识别结果：${DEMO_DIGITS.map((digit, index) => written[index] ? digit : '空').join('，')}`}>
+          {DEMO_DIGITS.map((digit, index) => <Typography as="span" variant="display" tone="inherit" key={index}>{written[index] ? digit : '·'}</Typography>)}
+          <span className="vfl-check-opening__caret" aria-hidden="true" />
         </div>
-        {!solved && selected.length === 2 && <button className="vfl-digit-intro__retry" type="button" onClick={() => { setSelected([]); setAttempted(true); }} aria-label="清空选择并重试">重新选择 ↻</button>}
-        {attempted && <span className="vfl-digit-intro__sr-only" role="status">已清空选择，可以重新选择两张笔迹。</span>}
+        <div className="vfl-check-opening__terminal-foot">
+          <Typography as="span" variant="bodySmall" tone="muted">{completed === 0 ? '请在支票金额格中手写' : `已读取 ${completed} / ${BOX_COUNT} 格`}</Typography>
+          <button type="button" onClick={clear} disabled={completed === 0} aria-label="清空支票上的手写数字">清空</button>
+        </div>
       </div>
-    </div>
-    <div className="vfl-digit-intro__next">
-      <span className="vfl-digit-intro__next-line" aria-hidden="true" />
-      <Typography as="p" variant="bodySmall" tone="muted">接下来：同样是一个数字，不同笔迹的像素究竟有多不一样？</Typography>
-    </div>
-  </ContentBlock>;
+    </section>
+  </main>;
 }

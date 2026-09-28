@@ -28,7 +28,7 @@ function LessonCanvas({ children }: { children: ReactNode }) {
 export function GuidePage() {
   return <ModuleShell
     title="视觉特征学习"
-    subtitle="从手写数字的形状线索出发，探索视觉特征怎样成为可以学习的参数。"
+    subtitle="从支票上的手写金额出发，探索计算机如何学习视觉特征。"
     shellClassName="course-shell course-blog-shell"
   >
     <LessonCanvas><DigitRecognitionOpeningPage /></LessonCanvas>
