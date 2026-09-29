@@ -276,6 +276,19 @@ class StructuredTaskTests(unittest.TestCase):
             )
         self.assertEqual(generic_result["level"], "close")
 
+        inline_client = ScriptedClient([
+            {"verdict": "正确", "level": "correct", "is_correct": True, "explanation": "抓住了要点。"},
+            {"verdict": "正确", "level": "correct", "is_correct": True, "explanation": "抓住了要点。"},
+            {"verdict": "正确", "level": "correct", "is_correct": True, "explanation": "抓住了要点。"},
+        ])
+        with patch.object(structured, "DEFAULT_CLIENT", inline_client):
+            first = ROUTES["/short-answer/evaluate"]({"question": "为什么数像素？", "reference_answer": "可比较。", "answer": "可以比较。"}, 1.0)
+            repeat = ROUTES["/short-answer/evaluate"]({"question": "为什么数像素？", "reference_answer": "可比较。", "answer": "不同的表述。"}, 1.0)
+            different = ROUTES["/short-answer/evaluate"]({"question": "为什么数像素？", "reference_answer": "表示区域墨迹。", "answer": "可以比较。"}, 1.0)
+        self.assertEqual(first["task_id"], repeat["task_id"])
+        self.assertNotEqual(first["task_id"], different["task_id"])
+        self.assertTrue(first["task_id"].startswith("inline:"))
+
         design = {
             "family": "quadratic",
             "scale": 1.0,

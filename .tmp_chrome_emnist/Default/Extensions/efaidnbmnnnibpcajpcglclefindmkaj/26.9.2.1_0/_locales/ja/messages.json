@@ -1,0 +1,1778 @@
+{
+   "ConvertVerbDescription": {
+      "message": "文書と PDF 間の変換を行います。"
+   },
+   "Disable": {
+      "message": "無効化"
+   },
+   "EditVerbDescription": {
+      "message": "PDF 内でページの並べ替え、回転、または削除を行います。"
+   },
+   "Enable": {
+      "message": "有効化"
+   },
+   "LearnMoreURL": {
+      "message": "https://helpx.adobe.com/jp/acrobat/kb/acrobat-pro-aip-for-chrome.html"
+   },
+   "LearnMoreURLEdge": {
+      "message": "https://helpx.adobe.com/jp/acrobat/kb/acrobat-pro-aip-for-edge.html"
+   },
+   "LocalFileAccessAndSummaryCoachmarkButton": {
+      "message": "要約を有効にする"
+   },
+   "LocalFileAccessAndSummaryCoachmarkSubtext": {
+      "message": "クレジット残高により利用可能です"
+   },
+   "acrobatEmbeddedTouchPointPreferenceDescription": {
+      "message": "ショートカットを使用して拡張機能内で PDF を開き、編集、要約、保存などを簡単に行うことができます。"
+   },
+   "acrobatEmbeddedTouchPointPreferenceTitle": {
+      "message": "埋め込まれた web PDF に Acrobat ショートカットを表示"
+   },
+   "acrobatGdriveTripleDotMenuTouchPointText": {
+      "message": "Acrobat で開く"
+   },
+   "acrobatGmailFteToolTipButton": {
+      "message": "OK"
+   },
+   "acrobatGmailFteToolTipDescription": {
+      "message": "Acrobat を使用して Chrome で直接編集、変換、コメントおよび署名"
+   },
+   "acrobatGmailFteToolTipTitle": {
+      "message": "この PDF を Acrobat で開く"
+   },
+   "acrobatGsuiteFteToolTipButton": {
+      "message": "了解しました"
+   },
+   "acrobatGsuiteFteToolTipButtonDV": {
+      "message": "OK"
+   },
+   "acrobatGsuiteFteToolTipButtonNonDV": {
+      "message": "OK"
+   },
+   "acrobatGsuiteFteToolTipDescription": {
+      "message": "Acrobat を使用して Chrome で直接編集、変換、コメントおよび署名"
+   },
+   "acrobatGsuiteFteToolTipDescriptionDV": {
+      "message": "Acrobat をデフォルトの PDF ビューアーに設定して、$surfaceName$ から編集、コメント、変換、電子サインなどの PDF ツールを試せます。",
+      "placeholders": {
+         "surfaceName": {
+            "content": "$1"
+         }
+      }
+   },
+   "acrobatGsuiteFteToolTipDescriptionNonDV": {
+      "message": "直接 $surfaceName$ から編集、コメント、変換、電子サインなどの Acrobat PDF ツールを試せます。",
+      "placeholders": {
+         "surfaceName": {
+            "content": "$1"
+         }
+      }
+   },
+   "acrobatGsuiteFteToolTipTitle": {
+      "message": "この PDF を Acrobat で開く"
+   },
+   "acrobatGsuiteFteToolTipTitleDV": {
+      "message": "すべての PDF を Adobe Acrobat で開く"
+   },
+   "acrobatGsuiteFteToolTipTitleNonDV": {
+      "message": "この PDF を Adobe Acrobat で開く"
+   },
+   "acrobatGsuiteTouchPointPreferenceDescription": {
+      "message": "Acrobat アイコンを Gmail や Google ドライブに追加すると、PDF を Acrobat で素早く開いて、PDF ツールにアクセスできます。"
+   },
+   "acrobatGsuiteTouchPointPreferenceTitle": {
+      "message": "Acrobat を Gmail と Google ドライブに統合"
+   },
+   "acrobatLinkedInPDFTouchPointPreferenceDescription": {
+      "message": "Acrobat を Gmail、Google ドライブ、Outlook、LinkedIn などの web サイトと統合して、PDF ツールに簡単にアクセスできます。"
+   },
+   "acrobatTouchPointInOtherSitesPrefDescription": {
+      "message": "Acrobat を Gmail、Google ドライブ、Outlook、LinkedIn などの web サイトと統合して、PDF ツールに簡単にアクセスできます。"
+   },
+   "acrobatTouchPointInOtherSitesPreferenceDescription": {
+      "message": "Acrobat を Gmail や Google ドライブなどの web サイトと統合して、PDF ツールに簡単にアクセスできます。"
+   },
+   "acrobatTouchPointInOtherSitesPreferenceTitle": {
+      "message": "Acrobat オプションを他の web サイトで表示"
+   },
+   "acrobatTouchPointInOtherSurfacesPreferenceDescription": {
+      "message": "Acrobat を Gmail、Google ドライブ、Outlook などの web サイトと統合して、PDF ツールに簡単にアクセスできます。"
+   },
+   "addEffectsImageContextMenuV2ChatGPT": {
+      "message": "効果を追加"
+   },
+   "addWebpageToExistingPdfSpaceContextMenu": {
+      "message": "既存の PDF スペースに web ページを追加..."
+   },
+   "addWebpageToExistingStudySpaceContextMenu": {
+      "message": "Web ページを既存の学習スペースに追加…"
+   },
+   "addWebpageToNewPdfSpaceContextMenu": {
+      "message": "Web ページを新しい PDF スペースに追加..."
+   },
+   "addWebpageToNewStudySpaceContextMenu": {
+      "message": "Web ページを新しい学習スペースに追加…"
+   },
+   "addWebpageToProjectContextMenuTitle": {
+      "message": "PDF スペースに追加..."
+   },
+   "addWebpageToProjectFailed": {
+      "message": "Web ページを PDF スペースに追加できませんでした"
+   },
+   "addWebpageToProjectFailedStudy": {
+      "message": "Web ページを学習スペースに追加できませんでした"
+   },
+   "addWebpageToProjectIngestionStarted": {
+      "message": "この web ページを PDF スペースに追加中です。準備が整い次第、通知されます。"
+   },
+   "addWebpageToProjectIngestionStartedStudy": {
+      "message": "この web ページを学習スペースに追加中です。準備が整い次第、通知されます。"
+   },
+   "addWebpageToProjectSuccess": {
+      "message": "Web ページが $collectionName$ に追加されました",
+      "placeholders": {
+         "collectionName": {
+            "content": "$1"
+         }
+      }
+   },
+   "addWebpageToProjectViewAction": {
+      "message": "PDF スペースを表示"
+   },
+   "addWebpageToProjectViewActionStudy": {
+      "message": "学習スペースを表示"
+   },
+   "addWebpageUpsellContactAdminMessage": {
+      "message": "この機能を有効にするには、管理者にお問い合わせください。"
+   },
+   "adobeAcrobatParentMenuTitle": {
+      "message": "Adobe Acrobat : PDF と PDF スペースを作成、編集"
+   },
+   "adobeAcrobatParentMenuTitleStudySpace": {
+      "message": "Adobe Acrobat : PDF と学習スペースを作成、編集"
+   },
+   "adobeYoloErrorMessage": {
+      "message": "このリンクは無効です"
+   },
+   "adobeYoloMessage": {
+      "message": "Acrobat にログイン中..."
+   },
+   "aiAcBody": {
+      "message": "Acrobat AI アシスタントで web ページを素早く要約して、重要なインサイトを取得できます。"
+   },
+   "aiAcHeader": {
+      "message": "Acrobat 拡張機能でより多くの機能を活用"
+   },
+   "analyticsOptinTitle": {
+      "message": "使用状況データを送信"
+   },
+   "appearancePrefDesc": {
+      "message": "ダークテーマとライトテーマを切り替える"
+   },
+   "appearancePrefOp1": {
+      "message": "システム設定を使用"
+   },
+   "appearancePrefOp2": {
+      "message": "ダークモード"
+   },
+   "appearancePrefOp3": {
+      "message": "ライトモード"
+   },
+   "appearancePrefTitle": {
+      "message": "ダークモード設定"
+   },
+   "askAIAssistant": {
+      "message": "AI アシスタントに質問"
+   },
+   "askAIAssistantContextMenu": {
+      "message": "Web ページについて AI アシスタントに質問"
+   },
+   "askAIAssistantSelectedContent": {
+      "message": "AI アシスタントに質問"
+   },
+   "askAssistantBannerContentText": {
+      "message": "AI アシスタントで web ページの要約と重要なインサイトを素早く入手可能。"
+   },
+   "askAssistantBannerTitle": {
+      "message": "Web ページ用 AI アシスタント"
+   },
+   "autoEnhanceImageContextMenuV2ChatGPT": {
+      "message": "自動補正"
+   },
+   "bypassGenAIWebpageEligibilityDescription": {
+      "message": "有効にすると、購入資格の確認結果に関係なく、すべての web ページで生成 AI 機能を利用できます。この設定は、アドビの内部ユーザーのみが使用できます。"
+   },
+   "bypassGenAIWebpageEligibilityTitle": {
+      "message": "すべてのページで web ページ用 AI アシスタントを有効にする"
+   },
+   "canQuesBriefOverview": {
+      "message": "この記事の内容を簡単に説明"
+   },
+   "canQuesCreateFAQ": {
+      "message": "この情報に基づいて FAQ リストを作成"
+   },
+   "canQuesDraftEmail": {
+      "message": "要点をまとめた電子メールの下書きを作成"
+   },
+   "canQuesImpTopics": {
+      "message": "重要なトピックとキーワードをすべて一覧表示"
+   },
+   "canQuesSummarise": {
+      "message": "この記事を要約"
+   },
+   "cancel": {
+      "message": "キャンセル"
+   },
+   "chatgptCanvasConvertToPDF": {
+      "message": "PDF に変換"
+   },
+   "chatgptCanvasConvertToPDFTooltip": {
+      "message": "Acrobat で変換して開く"
+   },
+   "chatgptCanvasFteDescription": {
+      "message": "Acrobat を使用してチャットを PDF に変換し、それをブラウザー内で編集できます。"
+   },
+   "chatgptCanvasFteTitle": {
+      "message": "Adobe Acrobat を使用して PDF に変換"
+   },
+   "chatgptConvertToPDF": {
+      "message": "チャットを PDF に変換"
+   },
+   "chatgptConvertToPDFFteDescription": {
+      "message": "Acrobat を使用してチャットを PDF に変換し、それをブラウザー内で編集できます。"
+   },
+   "chatgptConvertToPDFFteTitle": {
+      "message": "Adobe Acrobat を使用して PDF に変換"
+   },
+   "chatgptConvertToPDFTooltip": {
+      "message": "Acrobat で変換して開く"
+   },
+   "chatgptDeepResearchDefaultTitle": {
+      "message": "ChatGPT Deep Research"
+   },
+   "chatgptDefaultTitleText": {
+      "message": "ChatGPT"
+   },
+   "chatgptLongChatInterrupt": {
+      "message": "スクロールが中断されました。クリック、スクロール、またはタブの切り替えを行わずに、もう一度お試しください。"
+   },
+   "chatgptLongChatPhase1Desc": {
+      "message": "このページは、PDF に変換される前に自動スクロールされ、チャット全体が読み込まれます。"
+   },
+   "chatgptLongChatPhase1Title": {
+      "message": "長い会話が検出されました..."
+   },
+   "chatgptLongChatPhase2Desc": {
+      "message": "クリック、スクロール、またはタブの切り替えを行わないでください。処理がキャンセルされます。"
+   },
+   "chatgptLongChatPhase2Title": {
+      "message": "会話を読み込み中..."
+   },
+   "chatgptLongChatPhase3Desc": {
+      "message": "変換は新しいタブで開始されます。"
+   },
+   "chatgptLongChatPhase3Title": {
+      "message": "もう少しで完了です..."
+   },
+   "chatgptResponseExportToPDF": {
+      "message": "PDF に変換"
+   },
+   "chatgptResponseExportToPDFTooltip": {
+      "message": "この回答を PDF に変換して、編集または共有できます。"
+   },
+   "chatgptResponseFteDescription": {
+      "message": "Adobe Acrobat 拡張機能を使用して、ChatGPT の回答を直接 PDF に変換できます。"
+   },
+   "chatgptResponseFteTitle": {
+      "message": "あらゆる回答を PDF に変換"
+   },
+   "closeButton": {
+      "message": "閉じる"
+   },
+   "clusterBeta": {
+      "message": "Beta"
+   },
+   "clusterDevelop": {
+      "message": "開発"
+   },
+   "clusterRelease": {
+      "message": "リリース"
+   },
+   "conversionErrorDescription": {
+      "message": "問題をご報告ください。内容を確認し、原因を調査いたします。"
+   },
+   "conversionErrorDocumentTitle": {
+      "message": "エラー"
+   },
+   "conversionErrorGoToAcrobat": {
+      "message": "Acrobat に移動"
+   },
+   "conversionErrorReportError": {
+      "message": "エラーを報告"
+   },
+   "conversionErrorTitle": {
+      "message": "ファイルを変換できませんでした"
+   },
+   "convertToPDFFTEBody": {
+      "message": "$surfaceName$ を Adobe Acrobat 拡張機能で直接 PDF に変換し、編集、署名などのツールにアクセスできます。",
+      "placeholders": {
+         "surfaceName": {
+            "content": "$1"
+         }
+      }
+   },
+   "convertToPDFFTEHeading": {
+      "message": "この$docTypeName$を PDF に変換",
+      "placeholders": {
+         "docTypeName": {
+            "content": "$1"
+         }
+      }
+   },
+   "convertToPDFTouchPointTooltip": {
+      "message": "Acrobat で変換して開く"
+   },
+   "convertToPdf": {
+      "message": "PDF に変換"
+   },
+   "convertToPdfErrorToastMessage": {
+      "message": "ファイルを PDF に変換できません。"
+   },
+   "convertToPdfPasswordProtectedError": {
+      "message": "パスワードで保護されたファイルは PDF に変換できません"
+   },
+   "convertToPdfTabCloseErrorToastMessage": {
+      "message": "ファイルを変換できません。変換中は Acrobat タブを開いたままにして、もう一度お試しください。"
+   },
+   "convertToPdfToastMessage": {
+      "message": "ファイルを変換中です。Acrobat のタブを開いたままにしてください。準備ができ次第、通知されます。"
+   },
+   "convertToPdfUsingAcrobatTooltip": {
+      "message": "Acrobat を使用して文書を PDF に変換"
+   },
+   "convertWebpageToPDFContextMenu": {
+      "message": "Web ページを PDF に変換"
+   },
+   "convertedTabTitle": {
+      "message": "ファイルが変換されました"
+   },
+   "convertingInNewTabKeepOpenTooltip": {
+      "message": "新しいタブで変換しています。Acrobat のタブを開いたままにしてください。"
+   },
+   "convertingTabTitle": {
+      "message": "ファイルを変換中"
+   },
+   "convertingTooltip": {
+      "message": "ファイルは新しいタブで変換中です。準備ができ次第、通知されます。"
+   },
+   "convertingTouchPointText": {
+      "message": "変換中..."
+   },
+   "cropAndResizeImageContextMenuV2ChatGPT": {
+      "message": "トリミングとサイズ変更"
+   },
+   "cropImageContextMenu": {
+      "message": "画像をトリミング"
+   },
+   "dcWebBookmarkTitle": {
+      "message": "Adobe Acrobat ホーム"
+   },
+   "directFlowErrorTabTitle": {
+      "message": "エラー"
+   },
+   "directFlowNotificationButtonText": {
+      "message": "ファイルに移動"
+   },
+   "directFlowNotificationTitle": {
+      "message": "ファイルの準備ができました"
+   },
+   "directFlowNotificationTitlePlural": {
+      "message": "ファイルの準備ができました"
+   },
+   "doNotShowButton": {
+      "message": "次回から表示しない"
+   },
+   "domainPreferenceTitle": {
+      "message": "Web サイトで AI アシスタントの FAB が非表示になっています"
+   },
+   "downloadBannerContinue": {
+      "message": "オンにする"
+   },
+   "downloadBannerText": {
+      "message": "アプリを Chrome のデフォルト PDF ビューアーとして設定し、ダウンロードしたすべての PDF を Acrobat で開く"
+   },
+   "editImageContextMenu": {
+      "message": "画像を編集"
+   },
+   "editImageMoreOptionsFteDescription": {
+      "message": "Acrobat と Adobe Express を使って画像を PDF に変換したり、ブラウザー上で直接編集したりできます。"
+   },
+   "editImageMoreOptionsFteTitle": {
+      "message": "画像を変換および編集"
+   },
+   "editMegaVerbText": {
+      "message": "編集"
+   },
+   "effectsImageContextMenu": {
+      "message": "効果を適用"
+   },
+   "embeddedPDFHideIconForNow": {
+      "message": "アイコンを一時的に非表示"
+   },
+   "embeddedPDFManagePreferences": {
+      "message": "環境設定を管理"
+   },
+   "embeddedPDFOpenInAcrobatTooltip": {
+      "message": "Acrobat で開く"
+   },
+   "embeddedPDFOpenPDFInAcrobat": {
+      "message": "PDF を Acrobat で開く"
+   },
+   "embeddedPDFTouchPointFTEBody": {
+      "message": "Acrobat 拡張機能から直接編集、要約などを行います。このショートカットは環境設定からいつでも非表示にできます。"
+   },
+   "embeddedPDFTouchPointFTEHeader": {
+      "message": "この PDF を Adobe Acrobat で開く"
+   },
+   "enableGenAIFeaturesDescription": {
+      "message": "生成 AI 機能を使用すると、ファイルがクラウド上で処理され、生成 AI 機能が提供されます。この機能をオフにすると、ファイルが処理されなくなり、生成 AI が無効になります。この設定は、いつでも有効に戻すことができます。"
+   },
+   "enableGenAIFeaturesTitle": {
+      "message": "Acrobat で生成 AI 機能を有効にする"
+   },
+   "envDev": {
+      "message": "開発"
+   },
+   "envLocalDev": {
+      "message": "ローカル開発"
+   },
+   "envProd": {
+      "message": "本番"
+   },
+   "envStage": {
+      "message": "ステージ"
+   },
+   "envTest": {
+      "message": "テスト"
+   },
+   "errorBoundaryDescription": {
+      "message": "予期しないエラーが発生しました。もう一度お試しください。"
+   },
+   "errorBoundaryRetryButton": {
+      "message": "再試行"
+   },
+   "errorBoundaryTitle": {
+      "message": "エラーが発生しました"
+   },
+   "explainSelectedContent": {
+      "message": "AI を使用して解説"
+   },
+   "expressContextualFteCtaLabel": {
+      "message": "閉じる"
+   },
+   "expressContextualFteDescription": {
+      "message": "Adobe Express の技術を利用した Adobe Acrobat で、トリミング、背景の削除、カラーの調整などを行えます。"
+   },
+   "expressContextualFteTitle": {
+      "message": "画像を素早く簡単に編集"
+   },
+   "expressDropdownMenuTitle": {
+      "message": "Adobe Acrobat"
+   },
+   "expressDropdownMenuTooltip": {
+      "message": "Adobe Express の技術を利用して、トリミングや背景の削除などを簡単に行えます。"
+   },
+   "expressEditImageParentContextMenu": {
+      "message": "画像を編集"
+   },
+   "expressEditImagePoweredByExpressContextMenu": {
+      "message": "Powered by Adobe Express"
+   },
+   "expressExportOptionsDownloadLabel": {
+      "message": "ダウンロード"
+   },
+   "expressExportOptionsSaveLabel": {
+      "message": "保存"
+   },
+   "expressFTEDescription": {
+      "message": "右クリックで背景をトリミング、削除、AI を使用した画像の再構成ができます。"
+   },
+   "expressFTEFooter": {
+      "message": "\u003Cb>Adobe Acrobat\u003C/b> 経由"
+   },
+   "expressFTETitle": {
+      "message": "Adobe Express で画像を編集"
+   },
+   "expressHideforSession": {
+      "message": "一時的に非表示"
+   },
+   "expressManageinSettings": {
+      "message": "環境設定"
+   },
+   "expressPopoverFTEDescription": {
+      "message": "オンライン画像を右クリックして、Adobe Express で背景の削除やトリミング、AI を使用した画像の再構成を素早く実行"
+   },
+   "expressPopoverFTETitle": {
+      "message": "ブラウザーで直接画像を編集"
+   },
+   "expressPublishModalTitle": {
+      "message": "画像をダウンロード中..."
+   },
+   "expressTouchpointPreferenceDescription": {
+      "message": "Adobe Acrobat 拡張機能を使用すると、Adobe Express で画像を編集できます。この機能は、オフにすると削除されます。いつでも再度有効にできます。"
+   },
+   "expressTouchpointPreferenceTitle": {
+      "message": "Acrobat の Adobe Express アクションを有効にする"
+   },
+   "extensionMenuTitle": {
+      "message": "Acrobat 拡張機能 - すべての PDF ツールにアクセス"
+   },
+   "fabHomeTooltipFteText": {
+      "message": "ブラウザーで Acrobat の新しいホームを確認"
+   },
+   "fabNudgeLabelArticleAbout": {
+      "message": "この記事はどのような内容ですか？"
+   },
+   "fabNudgeLabelKeyFigures": {
+      "message": "重要な数値はどれですか？"
+   },
+   "fabNudgeLabelKeyTakeaways": {
+      "message": "重要なポイントは何ですか？"
+   },
+   "fabNudgeLabelKeyTerms": {
+      "message": "重要な用語の意味を教えてください。"
+   },
+   "fabNudgeLabelMainThemes": {
+      "message": "主なテーマは何ですか？"
+   },
+   "fabNudgeLabelPageAbout": {
+      "message": "このページはどのような内容ですか？"
+   },
+   "fabNudgeLabelSimplify": {
+      "message": "もっとわかりやすく説明できますか？"
+   },
+   "fabNudgePromptArticleKeyTakeaways": {
+      "message": "この記事の要点は何ですか？"
+   },
+   "fabNudgePromptArticleMainThemes": {
+      "message": "この記事の主なテーマや主張は何ですか？"
+   },
+   "fabNudgePromptArticleSimplify": {
+      "message": "この記事の内容をわかりやすく説明してください。"
+   },
+   "fabNudgePromptArticleSummary": {
+      "message": "この記事の内容を要約してください。"
+   },
+   "fabNudgePromptKeyFigures": {
+      "message": "このページから重要な事実、数値、日付を抽出してください。"
+   },
+   "fabNudgePromptKeyTerms": {
+      "message": "このページの重要な用語や専門用語を特定し、定義してください。"
+   },
+   "fabNudgePromptPageKeyTakeaways": {
+      "message": "このページの要点は何ですか？"
+   },
+   "fabNudgePromptPageMainThemes": {
+      "message": "このページの主なテーマや主張は何ですか？"
+   },
+   "fabNudgePromptPageSimplify": {
+      "message": "このページの内容をわかりやすく説明してください。"
+   },
+   "fabNudgePromptPageSummary": {
+      "message": "このページの内容を要約してください。"
+   },
+   "fabPillAskAI": {
+      "message": "ページについて AI に質問"
+   },
+   "fabPillConvertToPDF": {
+      "message": "PDF に変換"
+   },
+   "fabPillSummarize": {
+      "message": "AI で要約"
+   },
+   "fabPillsFteHeaderText": {
+      "message": "Acrobat 拡張機能でより多くの機能を活用"
+   },
+   "fabPillsHeaderText": {
+      "message": "Adobe Acrobat"
+   },
+   "failToastText": {
+      "message": "予期しないエラーが発生しました。後でもう一度お試しください。"
+   },
+   "fileReadyTabTitle": {
+      "message": "ファイルの準備ができました"
+   },
+   "frictionlesOfflineMessage": {
+      "message": "ネットワーク管理者に連絡して接続を再開してください"
+   },
+   "frictionlessWidgetErrorGeneric": {
+      "message": "読み込み中にエラーが発生しました。もう一度お試しください。"
+   },
+   "frictionlessWidgetErrorInitFailed": {
+      "message": "ウィジェットを初期化できませんでした。もう一度お試しください。"
+   },
+   "frictionlessWidgetErrorLoadFailed": {
+      "message": "ウィジェットの読み込みに失敗しました。接続を確認して、もう一度お試しください。"
+   },
+   "frictionlessWidgetErrorLoading": {
+      "message": "ウィジェットの読み込みエラー"
+   },
+   "frictionlessWidgetErrorTimeout": {
+      "message": "このセクションを読み込めません"
+   },
+   "frictionlessWidgetErrorTimeoutMessage": {
+      "message": "このリクエストに通常よりも時間がかかっています。"
+   },
+   "frictionlessWidgetErrorUnableToLoad": {
+      "message": "読み込めません"
+   },
+   "frictionlessWidgetErrorUnsupportedFormat": {
+      "message": "はサポートされている形式ではありません"
+   },
+   "frictionlessWidgetErrorUploadFailed": {
+      "message": "ファイルのアップロード中にエラーが発生しました"
+   },
+   "frictionlessWidgetNoConnectionTitle": {
+      "message": "接続されていません"
+   },
+   "frictionlessWidgetOfflineMessage": {
+      "message": "インターネット接続を確認して、もう一度お試しください。"
+   },
+   "frictionlessWidgetOfflineRetryInfo": {
+      "message": "オンラインに戻ると、自動的に再試行します。"
+   },
+   "frictionlessWidgetOfflineTitle": {
+      "message": "現在オフラインです"
+   },
+   "frictionlessWidgetRetryButton": {
+      "message": "再試行"
+   },
+   "fteDocTypeNameFile": {
+      "message": "ファイル"
+   },
+   "fteDocTypeNamePresentation": {
+      "message": "プレゼンテーション"
+   },
+   "fteDocTypeNameSheet": {
+      "message": "シート"
+   },
+   "fteOwnershipSideRedCardContent": {
+      "message": "Acrobat をデフォルトの PDF ビューアとして設定すると、Chrome で直接、コメント追加、フォーム入力、署名などがおこなえます。"
+   },
+   "fteSideCardPrimaryHeader": {
+      "message": "Acrobat を使用"
+   },
+   "fteSideCardSecondaryHeader": {
+      "message": "Chrome で直接使用"
+   },
+   "gDriveDVPAppListCoachMarkContent": {
+      "message": "次回から Acrobat で Google ドライブ PDF を直接開くには、「デフォルトで使用」チェックボックスを有効にします。"
+   },
+   "gDriveDVPCoachMarkTitle": {
+      "message": "Acrobat をデフォルトのビューアーとして設定"
+   },
+   "gDriveDVPManageAppCoachMarkContent": {
+      "message": "「アプリを管理」をクリックし、Acrobat ですべての Google ドライブの PDF を直接開いて表示、コメント、編集"
+   },
+   "gSuiteDVPAddOnDefaultDesc": {
+      "message": "Acrobat アドオンがデフォルトに設定されました"
+   },
+   "gdriveConvertToPdfFteToolTipDescription": {
+      "message": "Google ドライブのファイルを PDF に変換し、ブラウザー上で直接編集できます。ダウンロードは不要です。"
+   },
+   "gdriveConvertToPdfFteToolTipTitle": {
+      "message": "Acrobat を使用してファイルを PDF に変換"
+   },
+   "gdriveEditPdf": {
+      "message": "PDF を編集"
+   },
+   "gdriveEditPdfFteToolTipDescription": {
+      "message": "編集、コメント、変換、電子サインなどの PDF ツールをブラウザーから直接試せます。"
+   },
+   "gdriveEditPdfFteToolTipTitle": {
+      "message": "Acrobat で PDF を編集"
+   },
+   "gdriveImplicitDVFTEBody": {
+      "message": "Google ドライブのアイコンから PDF を Acrobat 拡張機能で開けます。Acrobat のその他 (...) メニューから、これをデフォルトに設定します。"
+   },
+   "gdriveImplicitDVFTEHeader": {
+      "message": "PDF を Acrobat でいつでも表示"
+   },
+   "gdriveImplicitDVNotification": {
+      "message": "PDF は Google ドライブで開きます。"
+   },
+   "geminiChatFteDescription": {
+      "message": "Adobe Acrobat でチャットを PDF に変換し、それをブラウザー内で編集できます。"
+   },
+   "geminiChatFteTitle": {
+      "message": "Adobe Acrobat を使用して PDF に変換"
+   },
+   "geminiChatNotLoadedToastButtonText": {
+      "message": "このまま続行"
+   },
+   "geminiChatNotLoadedToastMessage": {
+      "message": "一部のメッセージが含まれていません。チャット全体を変換するには、上部までスクロールしてください。"
+   },
+   "geminiConvertToPDFChatTouchpointHoverTooltip": {
+      "message": "このチャットを Acrobat で開く"
+   },
+   "geminiConvertToPDFChatTouchpointText": {
+      "message": "チャットを PDF に変換"
+   },
+   "geminiConvertToPDFResponseTouchpointText": {
+      "message": "PDF に変換"
+   },
+   "geminiDefaultTitleText": {
+      "message": "Gemini"
+   },
+   "geminiResponseFteDescription": {
+      "message": "Adobe Acrobat 拡張機能を使用して、Gemini の回答を直接 PDF に変換できます。"
+   },
+   "geminiResponseFteTitle": {
+      "message": "この回答を PDF に変換"
+   },
+   "genAIFabPreferenceDescription": {
+      "message": "ブラウザーウィンドウの端に、常に Al アシスタントボタンを表示できます。"
+   },
+   "genAIFabPreferenceTitle": {
+      "message": "AI アシスタントボタン"
+   },
+   "generativeFillImageContextMenu": {
+      "message": "生成塗りつぶし"
+   },
+   "genericDVPCoachMarkContent": {
+      "message": "「アプリの管理」をクリックし、Acrobat アドオンまでスクロールして、「デフォルトで使用」チェックボックスをクリックします。"
+   },
+   "getInsight": {
+      "message": "Acrobat AI アシスタントでインサイト取得"
+   },
+   "gmailConvertEmailToPDF": {
+      "message": "PDF に変換"
+   },
+   "gmailConvertEmailToPDFFteDescription": {
+      "message": "電子メール本文を添付ファイルなしで PDF に変換し、ファイルをダウンロードします。"
+   },
+   "gmailConvertEmailToPDFFteTitle": {
+      "message": "この電子メールを PDF に変換"
+   },
+   "gmailConvertEmailToPDFTooltip": {
+      "message": "電子メールを PDF に変換"
+   },
+   "gmailConvertToPdf": {
+      "message": "PDF に変換"
+   },
+   "gmailConvertToPdfFteToolTipDescription": {
+      "message": "Gmail のファイルを PDF に変換し、ブラウザー上で直接編集できます。ダウンロードは不要です。"
+   },
+   "gmailConvertToPdfFteToolTipTitle": {
+      "message": "Acrobat を使用してファイルを PDF に変換"
+   },
+   "gmailEditPdf": {
+      "message": "PDF を編集"
+   },
+   "gmailEditPdfFteToolTipDescription": {
+      "message": "編集、コメント、変換、電子サインなどの PDF ツールをブラウザーから直接試せます。"
+   },
+   "gmailEditPdfFteToolTipTitle": {
+      "message": "Acrobat で PDF を編集"
+   },
+   "gmailImplicitDVFTEBody": {
+      "message": "Gmail のアイコンから PDF を Acrobat 拡張機能で開けます。Acrobat のその他 (...) メニューから、これをデフォルトに設定します。"
+   },
+   "gmailImplicitDVFTEHeader": {
+      "message": "PDF を Acrobat でいつでも表示"
+   },
+   "gmailImplicitDVNotification": {
+      "message": "PDF 添付ファイルは Gmail で開かれます。"
+   },
+   "gmailPromptFTETooltip": {
+      "message": "PDF を Acrobat で開いて編集や署名などのツールを使用"
+   },
+   "goToPreferences": {
+      "message": "環境設定に移動"
+   },
+   "googleSheetsOrientationHeading": {
+      "message": "方向"
+   },
+   "googleSheetsOrientationLandscape": {
+      "message": "横"
+   },
+   "googleSheetsOrientationPortrait": {
+      "message": "縦"
+   },
+   "googleSheetsScaleFitColumns": {
+      "message": "すべての列を 1 ページに調整"
+   },
+   "googleSheetsScaleFitRows": {
+      "message": "すべての行を 1 ページに調整"
+   },
+   "googleSheetsScaleFitSheet": {
+      "message": "すべてを 1 ページに調整"
+   },
+   "googleSheetsScaleHeading": {
+      "message": "拡大縮小"
+   },
+   "googleSheetsSettingsDialogTitle": {
+      "message": "PDF に変換"
+   },
+   "gsuiteEditWithAcrobat": {
+      "message": "Acrobat で編集"
+   },
+   "gsuiteOpenWithAcrobat": {
+      "message": "Acrobat で開く"
+   },
+   "hideFabForDomain": {
+      "message": "このサイトで無効化"
+   },
+   "hideForNow": {
+      "message": "一時的に非表示"
+   },
+   "imageToolsContextMenuTooltip": {
+      "message": "Adobe Acrobat および Adobe Express の編集オプション"
+   },
+   "imageToolsDropdownContextMenu": {
+      "message": "ツールを編集"
+   },
+   "imageToolsDropdownFteDescription": {
+      "message": "Adobe Acrobat で画像を PDF に変換したり、Adobe Express を使用してブラウザー内で編集したりできます。"
+   },
+   "imageToolsDropdownFteTitle": {
+      "message": "Gmail で画像を変換および編集"
+   },
+   "imageToolsDropdownFteTitleForGdrive": {
+      "message": "Google ドライブ内の画像を変換および編集"
+   },
+   "insertObjectImageContextMenu": {
+      "message": "オブジェクトを挿入"
+   },
+   "linkedInChatPDFTouchPointFTEBody": {
+      "message": "Adobe Acrobat を使用して、編集、電子サイン、AI によるインサイトを得られます。"
+   },
+   "linkedInChatPDFTouchPointFTEHeader": {
+      "message": "Adobe Acrobat PDF ツールを試す"
+   },
+   "linkedInFeedPDFTouchPointFTEBody": {
+      "message": "この PDF を Acrobat 拡張機能で開くと、編集、要約などの操作が可能になります。"
+   },
+   "linkedInFeedPDFTouchPointFTEHeader": {
+      "message": "この PDF を Adobe Acrobat で開く"
+   },
+   "linkedInOpenInAcrobat": {
+      "message": "Acrobat で開く"
+   },
+   "linkedInSummarizePDF": {
+      "message": "PDF を要約"
+   },
+   "localFileAccessAndSummaryCoachmarkDescription": {
+      "message": "ファイルを Acrobat に読み込ませると、AI を活用して要約を素早く入手できます。"
+   },
+   "localFileAccessAndSummaryCoachmarkHeader": {
+      "message": "この文書の要約を表示"
+   },
+   "localFileAnimationCoachmarkDescription": {
+      "message": "Acrobat 拡張機能でこのデバイスからファイルを開くには、ファイル URL へのアクセスを許可します。"
+   },
+   "localFileAnimationCoachmarkHeader": {
+      "message": "たった 1 ステップで完了します"
+   },
+   "localFileBlockingPageOpenInChrome": {
+      "message": "このファイルを Chrome で開く"
+   },
+   "localFileBlockingPageTitle": {
+      "message": "Acrobat 拡張機能を有効にする"
+   },
+   "localFileOptionDesc": {
+      "message": "Acrobat 拡張機能でファイルの URL へのアクセスを許可すると、Chrome で Acrobat 内のすべての PDF を開くことができます。"
+   },
+   "localFileOptionTitle": {
+      "message": "Acrobat でローカル PDF を開く"
+   },
+   "localFilePromptContinueButton": {
+      "message": "続行"
+   },
+   "localFilePromptDescription": {
+      "message": "このデバイス上のファイルへのアクセスを Acrobat に許可すると、すべてのツールにすぐにアクセスでき、PDF の編集、ファイルの変換、電子サインを瞬時に実行できます。"
+   },
+   "localFilePromptHeader": {
+      "message": "Acrobat で開いて編集、署名などを実行"
+   },
+   "localFileSummaryCoachmarkHeader": {
+      "message": "もう少しで完了です。要約を有効にするには、Acrobat にファイル URL へのアクセスを許可してください。"
+   },
+   "localFteContinue": {
+      "message": "設定に移動"
+   },
+   "localFteDescription": {
+      "message": "Acrobat 拡張機能を最大限に活かして、すべての PDF を開くために使用できます。拡張機能設定で「ファイルの URL へのアクセスを許可する」をオンにしてください。"
+   },
+   "localFteDontShowAgainText": {
+      "message": "次回から表示しない"
+   },
+   "localFteTitle": {
+      "message": "Acrobat に切り替えて、ローカルファイルを開く"
+   },
+   "magicScanButtonText": {
+      "message": "Adobe Scan でアップロード"
+   },
+   "magicScanConfirmCancel": {
+      "message": "キャンセル"
+   },
+   "magicScanConfirmDesc": {
+      "message": "「$filename$」はモバイルデバイスからこのサイトへ直接アップロードされます",
+      "placeholders": {
+         "filename": {
+            "content": "$1"
+         }
+      }
+   },
+   "magicScanConfirmSkip": {
+      "message": "次から表示しない"
+   },
+   "magicScanConfirmTitle": {
+      "message": "アップロードを確認"
+   },
+   "magicScanConfirmUpload": {
+      "message": "確認"
+   },
+   "magicScanExpiresIn": {
+      "message": "残り時間 : "
+   },
+   "magicScanOffline": {
+      "message": "デバイスがオフラインになっているようです。インターネットに接続して再試行してください。"
+   },
+   "magicScanOverlayDescription": {
+      "message": "この QR コードをスマートフォンまたはタブレットのカメラでスキャンすると、モバイルデバイスから直接ファイルをアップロードできます。"
+   },
+   "magicScanOverlayInstructions": {
+      "message": "開始するには、このコードにスマートフォンのカメラを向けてください。"
+   },
+   "magicScanOverlayTitle": {
+      "message": "スキャンしてモバイルからアップロード"
+   },
+   "magicScanPreparing": {
+      "message": "文書を準備中..."
+   },
+   "magicScanRefreshLabel": {
+      "message": "更新"
+   },
+   "magicScanReloadQR": {
+      "message": "クリックして QR コードを再読み込み"
+   },
+   "magicScanSessionClaimed": {
+      "message": "QR コードをスキャンしました。モバイルデバイスで続行してください。"
+   },
+   "magicScanStartAgain": {
+      "message": "最初からやり直してください。"
+   },
+   "magicScanStatusExpired": {
+      "message": "QR コードは期限切れです。"
+   },
+   "magicScanStatusFailed": {
+      "message": "スキャンに失敗しました。もう一度お試しください。"
+   },
+   "msWordConvertToPdfFTEBody": {
+      "message": "Adobe Acrobat 拡張機能を使用して Microsoft Word 文書を PDF に変換し、さらに編集、署名などのツールをご利用いただけます。"
+   },
+   "msWordConvertToPdfFTETitle": {
+      "message": "この文書を PDF に変換"
+   },
+   "msWordSaveChangesTooltip": {
+      "message": "続行する前に、「$shortcut$」を押して変更を保存してください。",
+      "placeholders": {
+         "shortcut": {
+            "content": "$1"
+         }
+      }
+   },
+   "neverDisplayFab": {
+      "message": "表示しない"
+   },
+   "openInAcrobat": {
+      "message": "Acrobat で開く"
+   },
+   "optionsAutoSavedLabel": {
+      "message": "保存済み"
+   },
+   "optionsAutoSavingLabel": {
+      "message": "保存中..."
+   },
+   "optionsFailurePrompt": {
+      "message": "変更を保存できません。後でもう一度お試しください"
+   },
+   "optionsSuccessPrompt": {
+      "message": "環境設定が正常に保存されました"
+   },
+   "optionsSuccessPromptReloadRequired": {
+      "message": "環境設定は再読み込み後にのみ反映されます"
+   },
+   "outlookErrorToastDescription": {
+      "message": "問題が発生しました。ファイルを閉じて、もう一度お試しください。"
+   },
+   "outlookErrorToastTitle": {
+      "message": "ファイルを開けません"
+   },
+   "outlookImplicitDVFTEBody": {
+      "message": "Get access to PDF tools like edit, convert, and e-sign. Turn this off anytime from Acrobat extension Preferences."
+   },
+   "outlookImplicitDVFTEHeader": {
+      "message": "Outlook PDFs will open in Acrobat"
+   },
+   "outlookImplicitDVNotification": {
+      "message": "PDF attachments will now open in Outlook. To open them in Acrobat, select the Acrobat icon."
+   },
+   "outlookPDFTouchPointFTEBody": {
+      "message": "PDF を Acrobat で開いて、編集、要約、署名を行えます。"
+   },
+   "outlookPDFTouchPointFTEHeader": {
+      "message": "この PDF を Adobe Acrobat で開く"
+   },
+   "outlookPDFTouchPointTooltip": {
+      "message": "Open in Acrobat"
+   },
+   "paywallCreditsExpiredToastMessage": {
+      "message": "今月の無料クレジットの有効期限が切れました。利用の継続には、購入が必要です。"
+   },
+   "pdfOpenInAcrobatContextMenu": {
+      "message": "Acrobat で開く"
+   },
+   "pdfOwnerShipDmbConfirmBtn": {
+      "message": "続行"
+   },
+   "pdfOwnerShipSideRedCardConfirmBtn": {
+      "message": "続行"
+   },
+   "pdfOwnershipDefSideCardcontent": {
+      "message": "Adobe Acrobat をデフォルトの PDF ビューアとして設定すると、表示、コメント追加、フォーム入力、署名などがおこなえます。"
+   },
+   "pdfOwnershipExploreAcrobat": {
+      "message": "Chrome で Acrobat を使用"
+   },
+   "pdfOwnershipExploreAcrobatEdge": {
+      "message": "Microsoft Edge で Acrobat を使用"
+   },
+   "pdfOwnershipExploreOptionsDescription": {
+      "message": "Acrobat をブラウザーのデフォルト PDF ビューアーに設定して、コメント、入力と署名などの PDF ツールを素早く利用できます。"
+   },
+   "pdfOwnershipExploreOptionsTitle": {
+      "message": "すべての PDF を Acrobat で開く"
+   },
+   "pdfOwnershipPromptCancel": {
+      "message": "今はしない"
+   },
+   "pdfOwnershipPromptContent": {
+      "message": "Adobe Acrobat をデフォルトのビューアーとして設定すると、Chrome で PDF をさらに活用できます。"
+   },
+   "pdfOwnershipPromptContent2": {
+      "message": "Acrobat をデフォルトの PDF ビューアとして設定して、Google Chrome で直接、PDF を使用します。コメント追加、フォーム入力、署名を行い、変換や圧縮などのツールをお試しいただけます。"
+   },
+   "pdfOwnershipPromptContentEdge": {
+      "message": "Adobe Acrobat をデフォルトのビューアーに設定すると、Microsoft Edge で PDF をさらに活用できます。"
+   },
+   "pdfOwnershipPromptDeny": {
+      "message": "いいえ、結構です"
+   },
+   "pdfOwnershipPromptOk": {
+      "message": "既定に設定"
+   },
+   "pdfOwnershipPromptOkFullscreen": {
+      "message": "今すぐ試す"
+   },
+   "pdfReadyTabTitle": {
+      "message": "PDF 準備完了"
+   },
+   "pdfToWordContextMenu": {
+      "message": "PDF を Word に変換"
+   },
+   "pdfToolsDropdownContextMenu": {
+      "message": "PDF ツール"
+   },
+   "pdfToolsFteTooltipButton": {
+      "message": "閉じる"
+   },
+   "pdfToolsFteTooltipDescription": {
+      "message": "Gmail から PDF を直接開き、Adobe Acrobat で編集、コメント、変換、電子サインなどのツールをお試しください。"
+   },
+   "pdfToolsFteTooltipTitle": {
+      "message": "豊富な PDF ツールを試す"
+   },
+   "popupNoConnection": {
+      "message": "接続エラー"
+   },
+   "popupOfflineMessage": {
+      "message": "管理者に連絡して接続を再開してください。"
+   },
+   "preferenceAcrobatIntegrationsDescription": {
+      "message": "Gmail、Google ドライブなどのサポート対象のブラウザー統合で Acrobat をデフォルトの PDF ビューアにします。"
+   },
+   "preferenceAcrobatIntegrationsTitle": {
+      "message": "Acrobat 統合を有効にする"
+   },
+   "preferenceAdobeExpressDescription": {
+      "message": "Adobe Acrobat 拡張機能から Adobe Express を使用して画像を編集します。"
+   },
+   "preferenceAdobeExpressTitle": {
+      "message": "Acrobat で Adobe Express を有効にする"
+   },
+   "preferenceAdobeInternalConnectedAppDescription": {
+      "message": "拡張機能のターゲット連携アプリケーションを選択します。この設定は表示のみを模擬し、機能は動作しない場合があります。"
+   },
+   "preferenceAdobeInternalConnectedAppTitle": {
+      "message": "連携アプリケーション"
+   },
+   "preferenceAdobeInternalEnvironmentDescription": {
+      "message": "拡張機能のターゲット環境を選択します。"
+   },
+   "preferenceAdobeInternalEnvironmentTitle": {
+      "message": "開発環境"
+   },
+   "preferenceAdobeInternalGenAIClusterDescription": {
+      "message": "生成 AI サービスのターゲットクラスターを選択します。"
+   },
+   "preferenceAdobeInternalGenAIClusterTitle": {
+      "message": "生成 AI クラスター"
+   },
+   "preferenceAdobeInternalTabLabel": {
+      "message": "アドビ社外秘"
+   },
+   "preferenceAssistantWebPageBadgeText": {
+      "message": "Beta"
+   },
+   "preferenceAssistantWebPageContent": {
+      "message": "AI アシスタントで web ページの要約と重要なインサイトを素早く入手可能。"
+   },
+   "preferenceAssistantWebPageTitle": {
+      "message": "Web ページ用 AI アシスタント"
+   },
+   "preferenceAutoOpenConvertedPDFDescription": {
+      "message": "Acrobat 拡張機能で web ページを PDF に変換後、自動的に Acrobat で開きます。"
+   },
+   "preferenceBrowserDefaultViewershipDescription": {
+      "message": "オンラインリンク、Gmail、Google ドライブから PDF を開くには、Acrobat をデフォルトのビューアーとして設定します。"
+   },
+   "preferenceBrowserDefaultViewershipDescriptionEdge": {
+      "message": "オンラインリンクから PDF を開くには、Acrobat をデフォルトのビューアーとして設定します。"
+   },
+   "preferenceBrowserDefaultViewershipDescriptionOutlook": {
+      "message": "Set Acrobat as your default viewer to open PDFs from online links, Gmail, Google Drive, and Microsoft Outlook."
+   },
+   "preferenceBrowserDefaultViewershipTitle": {
+      "message": "ブラウザーから Acrobat の PDF を開く"
+   },
+   "preferenceChromeMimeHandlerDescription": {
+      "message": "有効にすると、PDF は Chrome のネイティブ MIME ハンドラーを介してアドビビューアーで開かれ、元の URL がアドレスバーに保持されます。無効にすると、代わりに拡張機能のリダイレクトフローが使用されます。"
+   },
+   "preferenceChromeMimeHandlerTitle": {
+      "message": "MIME ハンドラーを有効にする"
+   },
+   "preferenceConnectedAppsTabLabel": {
+      "message": "連携アプリ"
+   },
+   "preferenceDisplayThemeDescription": {
+      "message": "ダークモードまたはライトモードを選択します。"
+   },
+   "preferenceDisplayThemeTitle": {
+      "message": "表示テーマを設定"
+   },
+   "preferenceEmbeddedPDFsTitle": {
+      "message": "埋め込み PDF"
+   },
+   "preferenceErrorBoundaryRetry": {
+      "message": "再試行"
+   },
+   "preferenceErrorBoundaryTitle": {
+      "message": "エラーが発生しました"
+   },
+   "preferenceGeneralTabLabel": {
+      "message": "一般"
+   },
+   "preferenceGenerativeAITabLabel": {
+      "message": "生成 AI"
+   },
+   "preferenceGoogleSearchToolsDescription": {
+      "message": "検索内容に基づき、ブラウザーで使用する PDF ツールをアドビが推奨することを許可します (アドビには送信されません)。"
+   },
+   "preferenceGoogleSearchToolsTitle": {
+      "message": "Google 検索結果に Acrobat ツールを表示"
+   },
+   "preferenceGroupAccordionTitle": {
+      "message": "詳細設定"
+   },
+   "preferenceHideAcrobatDomainListTitle": {
+      "message": "Acrobat が無効になっている web サイト"
+   },
+   "preferenceHideFabDomainListTitle": {
+      "message": "AI アシスタントが無効になっている web サイト"
+   },
+   "preferenceHideSummaryBarDomainListTitle": {
+      "message": "AI アシスタント要約バナーが非表示になっている web サイト"
+   },
+   "preferenceLanguageDescription": {
+      "message": "希望する言語を選択します。"
+   },
+   "preferenceLanguageTitle": {
+      "message": "言語を設定"
+   },
+   "preferenceLearnerExperienceDescription": {
+      "message": "有効にすると、学習者向けの機能を使用して、学習、理解、学業管理をより効果的に行うことができます。"
+   },
+   "preferenceLearnerExperienceTitle": {
+      "message": "Acrobat で学習エクスペリエンスを有効にする"
+   },
+   "preferenceLinkedInTitle": {
+      "message": "LinkedIn"
+   },
+   "preferenceOfflineModeDescription": {
+      "message": "ネットワーク接続を確認してもう一度やり直してください。"
+   },
+   "preferenceOfflineModeTitle": {
+      "message": "現在ご利用になれません。"
+   },
+   "preferenceOnlinePDFsTitle": {
+      "message": "オンライン PDF"
+   },
+   "preferenceOpenLocalFilesDescription": {
+      "message": "このオプションは Chrome ブラウザーで管理されます。「ファイルの URL へのアクセスを許可する」をオンにすると、Acrobat で PDF が開きます。"
+   },
+   "preferenceOpenLocalFilesTitle": {
+      "message": "Acrobat でローカルファイルを開く"
+   },
+   "preferenceOpenLocalFilesTurnOffButtonLabel": {
+      "message": "オフにする"
+   },
+   "preferenceOpenLocalFilesTurnOnButtonLabel": {
+      "message": "オンにする"
+   },
+   "preferenceOptinDescription": {
+      "message": "製品機能の改善のため、ユーザーの Acrobat 拡張機能の使用状況に関する情報をアドビに送信します。"
+   },
+   "preferenceOptinLearnMore": {
+      "message": "詳細情報"
+   },
+   "preferenceOutlookTitle": {
+      "message": "Microsoft Outlook"
+   },
+   "preferencePrivacyTabLabel": {
+      "message": "プライバシー"
+   },
+   "preferenceSaveLocationDescription": {
+      "message": "ファイルをアドビクラウドストレージに保存するか、コンピューターに保存するか、あるいは毎回保存場所を確認するかを選択できます。"
+   },
+   "preferenceSaveLocationTitle": {
+      "message": "ファイルの保存場所を設定"
+   },
+   "preferenceShowAIAssistantButtonDescription": {
+      "message": "ブラウザーウィンドウの端に常に Al アシスタントボタンを表示します。"
+   },
+   "preferenceShowAIAssistantButtonTitle": {
+      "message": "AI アシスタントボタンを表示"
+   },
+   "preferenceShowAISummaryBannerDescription": {
+      "message": "AI アシスタント要約に対応している web ページでは、常に AI アシスタント要約バナーを表示します。"
+   },
+   "preferenceShowAISummaryBannerTitle": {
+      "message": "AI アシスタント要約バナーを表示"
+   },
+   "preferenceShowAcrobatAssistantShortcutDescription": {
+      "message": "ブラウザーウィンドウの端から PDF ツールと AI アシスタントにアクセスできます。"
+   },
+   "preferenceShowAcrobatAssistantShortcutTitle": {
+      "message": "ブラウザーで Acrobat を常に表示"
+   },
+   "preferenceShowFeatureGuidanceDescription": {
+      "message": "Acrobat 拡張機能でアップデートや機能の使い方などのガイダンスを表示できるようにします。"
+   },
+   "preferenceShowFeatureGuidanceTitle": {
+      "message": "機能ガイダンスを表示"
+   },
+   "preferenceShowGenAIFabPillsTitle": {
+      "message": "AI アシスタントパネルに AI オプションを表示"
+   },
+   "preferenceShowLessText": {
+      "message": "表示件数を減らす"
+   },
+   "preferenceShowMoreText": {
+      "message": "さらに表示"
+   },
+   "preferenceShowNotificationsDescription": {
+      "message": "Acrobat 拡張機能でアップデートや機能の使い方などの通知を表示できるようにします。"
+   },
+   "preferenceShowNotificationsTitle": {
+      "message": "通知を表示"
+   },
+   "preferenceShowOpenInAcrobatShortcutCheckboxGroupFooter": {
+      "message": "アプリのデフォルトビューアーとして設定されている場合は、Acrobat ショートカットは表示されません。"
+   },
+   "preferenceShowOpenInAcrobatShortcutCheckboxGroupFooterLinkText": {
+      "message": "デフォルトのビューアーとして設定"
+   },
+   "preferenceShowOpenInAcrobatShortcutDescription": {
+      "message": "ショートカットを追加すると、Gmail や Google ドライブなどから PDF を Acrobat で開けます。"
+   },
+   "preferenceShowOpenInAcrobatShortcutTitle": {
+      "message": "「Acrobat で開く」ショートカットを他のアプリに表示"
+   },
+   "preferenceShowSummarizeBarOnWebpagesTitle": {
+      "message": "Web ページに要約バーを表示"
+   },
+   "preferenceShowWhatsAppShortcutTitle": {
+      "message": "「WhatsApp に送信」ショートカットを表示"
+   },
+   "preferenceTurnOnAIFeaturesDescription": {
+      "message": "生成 AI 機能を使用するために、クラウドでファイルを処理できるようにします。注意 : この機能をオフにすると、クラウドでのファイル処理が停止し、生成 AI 機能が無効になります。必要に応じて、いつでも再度オンにできます。"
+   },
+   "preferenceTurnOnAIFeaturesTitle": {
+      "message": "Acrobat で生成 AI 機能を有効にする"
+   },
+   "preferenceTurnOnGenAIWebpagesDescription": {
+      "message": "あらゆる web ページで AI アシスタントにアクセスして、要約やインサイトを取得できます。このアクセスを削除するには、この設定を無効にしてください。"
+   },
+   "preferenceTurnOnGenAIWebpagesTitle": {
+      "message": "ブラウザーで生成 AI を有効にする"
+   },
+   "preferenceWebpageConversionDescription": {
+      "message": "Web ページを PDF として保存する設定 (余白やフォントなどのレイアウトオプション) を更新します。"
+   },
+   "preferenceWebpageConversionTitle": {
+      "message": "Web ページの変換設定を変更"
+   },
+   "preferenceWhatsNewAutoOpenTitle": {
+      "message": "アップデート時に自動で開く設定を有効にする"
+   },
+   "preferences": {
+      "message": "環境設定"
+   },
+   "productAcrobat": {
+      "message": "Acrobat"
+   },
+   "productNoApp": {
+      "message": "アプリなし"
+   },
+   "productReader": {
+      "message": "Reader"
+   },
+   "refreshButtonInFailToast": {
+      "message": "更新"
+   },
+   "removeBackgroundImageContextMenu": {
+      "message": "背景を削除"
+   },
+   "removeBackgroundImageContextMenuV2ChatGPT": {
+      "message": "背景を削除"
+   },
+   "removeObjectImageContextMenu": {
+      "message": "オブジェクトを削除"
+   },
+   "saveLocationOp1": {
+      "message": "毎回確認する"
+   },
+   "saveLocationOp2": {
+      "message": "アドビクラウドストレージ"
+   },
+   "saveLocationOp3": {
+      "message": "マイコンピューター"
+   },
+   "saveLocationPreferenceDescription": {
+      "message": "ファイルを保存する場所を設定"
+   },
+   "saveLocationPreferenceTitle": {
+      "message": "ファイルの場所を保存"
+   },
+   "selectFileButton": {
+      "message": "ファイルを選択"
+   },
+   "sessionExpiredDescription": {
+      "message": "ファイルをアップロードして、もう一度お試しください。"
+   },
+   "sessionExpiredDocumentTitle": {
+      "message": "セッションが期限切れです"
+   },
+   "sessionExpiredTitle": {
+      "message": "セッションがタイムアウトしました"
+   },
+   "sessionExpiredToastText": {
+      "message": "セッションが期限切れになりました。ページを更新してから、もう一度お試しください。"
+   },
+   "sharepointPreferenceMessage": {
+      "message": "Acrobat で SharePoint ファイルのチェックアウトを許可します。"
+   },
+   "sidepanelLoaderText": {
+      "message": "Acrobat AI アシスタントを使用して要約や重要なインサイトを入手"
+   },
+   "sidepanelLocationPreferenceButtonText": {
+      "message": "ブラウザー設定で変更"
+   },
+   "sidepanelLocationPreferenceDescription": {
+      "message": "ブラウザーウィンドウの左側または右側にサイドパネルを配置します。サイドパネルは、Google Chrome 11.4 以降でのみ使用できます。"
+   },
+   "sidepanelLocationPreferenceTitle": {
+      "message": "AI アシスタントパネルの場所"
+   },
+   "stripTextOpenAcrobat": {
+      "message": "Acrobat で開く"
+   },
+   "stripTextOpenFillnSign": {
+      "message": "Acrobat で入力と署名"
+   },
+   "studentToolsTouchpointCheatsheet": {
+      "message": "チートシートを作成"
+   },
+   "studentToolsTouchpointFabFlashcards": {
+      "message": "フラッシュカードを作成"
+   },
+   "studentToolsTouchpointFabLoading": {
+      "message": "作成中..."
+   },
+   "studentToolsTouchpointFabMindmap": {
+      "message": "マインドマップを作成"
+   },
+   "studentToolsTouchpointFabNotes": {
+      "message": "メモを生成"
+   },
+   "studentToolsTouchpointFabQuiz": {
+      "message": "クイズを作成"
+   },
+   "studentToolsTouchpointFabStudyGuide": {
+      "message": "学習ガイドを作成"
+   },
+   "studentToolsTouchpointFlashcards": {
+      "message": "このページからフラッシュカードを作成"
+   },
+   "studentToolsTouchpointFlashcardsFromFile": {
+      "message": "ファイルからフラッシュカードを作成"
+   },
+   "studentToolsTouchpointMindmap": {
+      "message": "マインドマップを生成"
+   },
+   "studentToolsTouchpointQuiz": {
+      "message": "このページからクイズを作成"
+   },
+   "studentToolsTouchpointStudyGuide": {
+      "message": "学習ガイドを作成"
+   },
+   "studentToolsTouchpointStudyGuideContextMenu": {
+      "message": "このページを学習ガイドに変換"
+   },
+   "successToastText": {
+      "message": "ダウンロードした PDF が Adobe Acrobat で開くようになりました"
+   },
+   "summarizeWebpageContextMenu": {
+      "message": "AI で web ページを要約"
+   },
+   "summarizeWebpageSelectedContent": {
+      "message": "これを要約"
+   },
+   "summaryBarCloseTooltip": {
+      "message": "オプションを非表示"
+   },
+   "summaryBarCtaLabel": {
+      "message": "Acrobat AI アシスタントを使ってこのページを要約できます。"
+   },
+   "summaryBarDismissMenuAriaLabel": {
+      "message": "AI アシスタント要約バナーオプション"
+   },
+   "surfaceNameChatGPT": {
+      "message": "ChatGPT"
+   },
+   "surfaceNameGdrive": {
+      "message": "Google ドライブ"
+   },
+   "surfaceNameGemini": {
+      "message": "Gemini"
+   },
+   "surfaceNameGmail": {
+      "message": "Gmail"
+   },
+   "surfaceNameGoogleDocs": {
+      "message": "Google ドキュメント"
+   },
+   "surfaceNameGoogleSheets": {
+      "message": "Google スプレッドシート"
+   },
+   "surfaceNameGoogleSlides": {
+      "message": "Google スライド"
+   },
+   "surfaceNameMSWord": {
+      "message": "Microsoft Word"
+   },
+   "surfaceNameWikipedia": {
+      "message": "Wikipedia"
+   },
+   "tooltipTextDisabled": {
+      "message": "この web ページでは AI アシスタントは使用できません"
+   },
+   "tooltipTextEnabled": {
+      "message": "AI アシスタントを使用して要約や重要なインサイトを取得"
+   },
+   "tooltipTextEnabledHome": {
+      "message": "ブラウザーから直接、変換、編集、AI アシスタントを利用"
+   },
+   "tooltipTextSubText": {
+      "message": "Adobe Acrobat の技術を利用しています"
+   },
+   "tryAgain": {
+      "message": "再試行"
+   },
+   "unsupportedFileTypeToastText": {
+      "message": "このファイルの種類はサポートされていません。別のファイルを編集してみてください。"
+   },
+   "userLocale": {
+      "message": "ユーザーの言語"
+   },
+   "web2pdfAddButtonText": {
+      "message": "既存の PDF に追加..."
+   },
+   "web2pdfAlwaysShow": {
+      "message": "PDF で自動的に表示"
+   },
+   "web2pdfAppendLinkContextMenu": {
+      "message": "リンクの参照先を既存の PDF に追加"
+   },
+   "web2pdfAppendPageContextMenu": {
+      "message": "既存の PDF に Web ページを追加..."
+   },
+   "web2pdfBadVersion": {
+      "message": "このバージョンの Chrome では Adobe Acrobat がサポートされていません。最低バージョンは $version$ です",
+      "placeholders": {
+         "version": {
+            "content": "$1"
+         }
+      }
+   },
+   "web2pdfBadVersionEdge": {
+      "message": "このバージョンの Edge では Adobe Acrobat がサポートされていません。最低バージョンは $version$ です",
+      "placeholders": {
+         "version": {
+            "content": "$1"
+         }
+      }
+   },
+   "web2pdfClickToOpen": {
+      "message": "下のリンクをクリックして Acrobat で PDF ファイルを開きます。"
+   },
+   "web2pdfConvertButtonToolTip": {
+      "message": "Acrobat 拡張機能 - すべての PDF ツールにアクセス"
+   },
+   "web2pdfConvertButtonToolTipERPReader": {
+      "message": "Acrobat Reader の拡張機能は現在無効になっています。IT 管理者にお問い合わせください"
+   },
+   "web2pdfConvertButtonToolTipReader": {
+      "message": "PDF を Acrobat Reader で開く"
+   },
+   "web2pdfConvertLinkContextMenu": {
+      "message": "リンクの参照先を Adobe PDF に変換"
+   },
+   "web2pdfConvertPageContextMenu": {
+      "message": "Web ページを Adobe PDF に変換..."
+   },
+   "web2pdfCopyText": {
+      "message": "Acrobat にコピー中"
+   },
+   "web2pdfDestinationText": {
+      "message": "保存先フォルダー :"
+   },
+   "web2pdfDoneButtonText": {
+      "message": "完了"
+   },
+   "web2pdfExtnDescription": {
+      "message": "ブラウザーで Acrobat を使用して、PDF の表示、変換、圧縮、および署名をおこないます"
+   },
+   "web2pdfExtnDescriptionBeta": {
+      "message": "ブラウザーで Acrobat を使用して、PDF の表示、変換、圧縮、および署名をおこないます"
+   },
+   "web2pdfExtnDescriptionChrome": {
+      "message": "Adobe Acrobat PDF ツールを使用して、Google Chrome でより多くの機能を実行できます。表示、入力、コメント、署名、変換、圧縮ツールをお試しください。"
+   },
+   "web2pdfExtnDescriptionEdge": {
+      "message": "Adobe Acrobat PDF ツールを使用して、Microsoft Edge でより多くの機能を実行できます。表示、入力、コメント、署名、変換、圧縮ツールをお試しください。"
+   },
+   "web2pdfExtnName": {
+      "message": "Adobe Acrobat : PDF の編集、変換、署名ツール"
+   },
+   "web2pdfExtnNameBeta": {
+      "message": "Adobe Acrobat ベータ版"
+   },
+   "web2pdfExtnNameEdge": {
+      "message": "Adobe Acrobat : PDF の編集、変換、署名ツール"
+   },
+   "web2pdfExtnNameStage": {
+      "message": "Adobe Acrobat ステージ"
+   },
+   "web2pdfFileLockedError": {
+      "message": "別のプロセスで使用されているので、ファイルを保存できませんでした。"
+   },
+   "web2pdfFilename": {
+      "message": "ファイル名 :"
+   },
+   "web2pdfFrictionlessToggleDescription": {
+      "message": "Adobe Acrobat 拡張機能は、タスクの実行に役立つ PDF ツールを推奨します。当社の推奨事項は、お客様がデバイスで検索し、実行した内容に基づいており、この情報がアドビに送信されることはありません。"
+   },
+   "web2pdfFrictionlessUrl": {
+      "message": "https://www.adobe.com/go/fl_chromeext_jp"
+   },
+   "web2pdfFrictionlessUrlEdge": {
+      "message": "https://www.adobe.com/jp/acrobat/online.html?x_api_client_id=edge_extension&x_api_client_location=trefoil&mv=other&mv2=edge_extension:trefoil&trackingid=HM85XB76"
+   },
+   "web2pdfHTMLJSError": {
+      "message": "Web ページを処理中にエラーが発生しました。"
+   },
+   "web2pdfHTMLTooLarge": {
+      "message": "HTML コンテンツが大きすぎて処理できません。 "
+   },
+   "web2pdfInfoHoverPopup": {
+      "message": "Adobe Acrobat 拡張機能は、タスクの実行に役立つ PDF ツールを推奨します。当社の推奨事項は、お客様がデバイスで検索し、実行した内容に基づいており、この情報がアドビに送信されることはありません。この機能を無効にするには、\u003Cspan class = \"tooltip-content-settings\">こちら\u003C/span> をクリックしてください。"
+   },
+   "web2pdfLoaderTitle": {
+      "message": "読み込み中..."
+   },
+   "web2pdfMissingMac": {
+      "message": "Adobe Acrobat for Chrome は、Mac ではまだご利用いただけません"
+   },
+   "web2pdfMissingMacEdge": {
+      "message": "Microsoft Edge 向け Adobe Acrobat は、Mac ではまだご利用いただけません"
+   },
+   "web2pdfNoFoldersText": {
+      "message": "Acrobat DC ストレージにフォルダーがありません。"
+   },
+   "web2pdfNoWritePermissionOnSelectedFile": {
+      "message": "選択されたファイルに書き込む権限がありません。"
+   },
+   "web2pdfOpenButtonText": {
+      "message": "Acrobat で開く"
+   },
+   "web2pdfOpenButtonTextOlder": {
+      "message": "Adobe PDF をダウンロード"
+   },
+   "web2pdfOpenButtonTextReader": {
+      "message": "Acrobat Reader で開く"
+   },
+   "web2pdfOpenConvertedPDFDescription": {
+      "message": "Web ページから PDF への変換が完了すると、変換された PDF が Acrobat で自動的に開きます。"
+   },
+   "web2pdfOpenConvertedPDFTitle": {
+      "message": "変換された PDF を Acrobat で自動的に開く"
+   },
+   "web2pdfOpenInDCButtonText": {
+      "message": "PDF を Acrobat で開く"
+   },
+   "web2pdfOptOut": {
+      "message": "製品の機能向上のために、この拡張ではお客様の製品の使用状況に関する情報をアドビに送信します。"
+   },
+   "web2pdfOptOutDisabled": {
+      "message": "使用状況データが共有されることはありません。"
+   },
+   "web2pdfOptions": {
+      "message": "オプション"
+   },
+   "web2pdfOptionsTitle": {
+      "message": "Adobe Acrobat の環境設定"
+   },
+   "web2pdfPDFOpenFailed": {
+      "message": "PDF を開けませんでした"
+   },
+   "web2pdfPDFOpenFailedv2": {
+      "message": "開けませんでした"
+   },
+   "web2pdfPDFOpened": {
+      "message": "PDF を開きました"
+   },
+   "web2pdfPDFOpening": {
+      "message": "PDF を開いています"
+   },
+   "web2pdfPreferencesButtonText": {
+      "message": "環境設定..."
+   },
+   "web2pdfPreferencesNewText": {
+      "message": "変換設定..."
+   },
+   "web2pdfPrivacy": {
+      "message": "Adobe Acrobat について"
+   },
+   "web2pdfReplaceWarning": {
+      "message": "は既に存在します。\n 置き換えますか？"
+   },
+   "web2pdfSave": {
+      "message": "保存"
+   },
+   "web2pdfSaveButton": {
+      "message": "環境設定を保存"
+   },
+   "web2pdfShowPDFTools": {
+      "message": "Google の検索結果と共に表示"
+   },
+   "web2pdfShowPDFViewerOption": {
+      "message": "デフォルトの PDF ビューアーとして Acrobat を使用"
+   },
+   "web2pdfShowPersistentOpen": {
+      "message": "「Acrobat で開く」を表示"
+   },
+   "web2pdfShowPersistentOpenAlways": {
+      "message": "「Acrobat で開く」を常に表示する"
+   },
+   "web2pdfShowPersistentOpenDescription": {
+      "message": "オプションを表示して、毎回 Acrobat で PDF を開きます。"
+   },
+   "web2pdfStatusCancelled": {
+      "message": "変換はキャンセルされました"
+   },
+   "web2pdfStatusComplete": {
+      "message": "正常に変換されました"
+   },
+   "web2pdfStatusDownloading": {
+      "message": "変換用にダウンロード中..."
+   },
+   "web2pdfStatusDownloadingPDF": {
+      "message": "PDF をダウンロード中"
+   },
+   "web2pdfStatusFailure": {
+      "message": "変換できませんでした"
+   },
+   "web2pdfStatusInProgress": {
+      "message": "変換中..."
+   },
+   "web2pdfStatusUnknownFailure": {
+      "message": "不明なエラー"
+   },
+   "web2pdfStatusWaiting": {
+      "message": "変換を待機中..."
+   },
+   "web2pdfTitle": {
+      "message": "Adobe Acrobat"
+   },
+   "web2pdfUnsupportedAcrobatVersion": {
+      "message": "サポートされているバージョンの Acrobat が見つかりませんでした。\u003Ca target='_blank' href='https://acrobat.adobe.com/jp/ja/free-trial-download.html?trackingid=29NMCS7T&mv=other'>7 日間無料の体験版\u003C/a>をインストールしてください。"
+   },
+   "web2pdfUntitledFileName": {
+      "message": "名称未設定"
+   },
+   "webpagePDFConversion": {
+      "message": "Web ページから PDF への変換設定"
+   },
+   "webpagePDFConversionDescription": {
+      "message": "Web ページを PDF として保存する場合に、余白やフォントなどのレイアウトの詳細を設定できます。"
+   },
+   "whatsNewAutoOpenDescription": {
+      "message": "新しいアップデートが利用可能になった際に Acrobat が web ページを自動的に開くことを許可します。"
+   },
+   "whatsNewAutoOpenTitle": {
+      "message": "アップデート通知時に自動で開く設定を有効にする"
+   },
+   "wikipediaConvertToPdfFTEBody": {
+      "message": "Wikipedia ページを PDF に変換し、ブラウザーから移動することなく編集できます。"
+   },
+   "wikipediaConvertToPdfFTETitle": {
+      "message": "このページを PDF に変換"
+   },
+   "wikipediaConvertToPdfHoverTooltip": {
+      "message": "この Wikipedia ページを Acrobat で PDF に変換"
+   },
+   "wikipediaConvertToPdfToastMessage": {
+      "message": "ページを PDF に変換中です。完了後に通知されますので、Acrobat のタブを開いたままにしてください。"
+   },
+   "wikipediaConvertingTooltip": {
+      "message": "新しいタブで処理中です。ファイルの準備ができ次第、通知されます。"
+   },
+   "wikipediaDefaultTitleText": {
+      "message": "Wikipedia 記事"
+   }
+}

@@ -1,0 +1,18 @@
+/*************************************************************************
+* ADOBE CONFIDENTIAL
+* ___________________
+*
+*  Copyright 2015 Adobe Systems Incorporated
+*  All Rights Reserved.
+*
+* NOTICE:  All information contained herein is, and remains
+* the property of Adobe Systems Incorporated and its suppliers,
+* if any.  The intellectual and technical concepts contained
+* herein are proprietary to Adobe Systems Incorporated and its
+* suppliers and are protected by all applicable intellectual property laws,
+* including trade secret and or copyright laws.
+* Dissemination of this information or reproduction of this material
+* is strictly forbidden unless prior written permission is obtained
+* from Adobe Systems Incorporated.
+**************************************************************************/
+.frictionless-offline-ui{align-items:center;background:#fafafa;border-radius:8px;display:flex;flex-direction:column;justify-content:center;min-height:300px;padding:40px 20px;text-align:center;transition:background .3s ease}.offline-icon{margin-bottom:20px}.offline-title{color:#2c2c2c;font-size:18px;font-weight:600;margin-bottom:8px;transition:color .3s ease}.offline-message{color:#6e6e6e;font-size:14px;line-height:1.5;margin-bottom:16px;transition:color .3s ease}.offline-retry-info{color:#959595;font-size:12px;font-style:italic;transition:color .3s ease}body[data-theme=dark] .frictionless-offline-ui{background:#2c2c2c}body[data-theme=dark] .offline-title{color:#e8e8e8}body[data-theme=dark] .offline-message{color:#b8b8b8}body[data-theme=dark] .offline-retry-info{color:#888}body[data-theme=dark] .offline-icon svg circle,body[data-theme=dark] .offline-icon svg path{stroke:#b8b8b8}body[data-theme=dark] .offline-icon svg line{stroke:#e34850}.frictionless-error-ui{align-items:center;background:#fafafa;border-radius:8px;display:flex;flex-direction:column;justify-content:center;min-height:300px;padding:40px 20px;text-align:center;transition:background .3s ease}.error-icon{margin-bottom:20px}.error-ui-title{color:#e34850;font-size:18px;font-weight:600;margin-bottom:8px;transition:color .3s ease}.error-ui-message{color:#6e6e6e;font-size:14px;line-height:1.5;margin-bottom:24px;max-width:300px;transition:color .3s ease}.error-retry-btn{background:#1473e6;border:none;border-radius:16px;color:#fff;cursor:pointer;font-size:14px;font-weight:500;padding:10px 24px;transition:background .2s ease}.error-retry-btn:hover{background:#0d66d0}.error-retry-btn:active{background:#095aba}body[data-theme=dark] .frictionless-error-ui{background:#2c2c2c}body[data-theme=dark] .error-ui-title{color:#ff6b6b}body[data-theme=dark] .error-ui-message{color:#b8b8b8}body[data-theme=dark] .error-icon svg circle,body[data-theme=dark] .error-icon svg line{stroke:#ff6b6b}.hidden{display:none!important}

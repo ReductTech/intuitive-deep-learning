@@ -1,0 +1,18 @@
+/*************************************************************************
+* ADOBE CONFIDENTIAL
+* ___________________
+*
+*  Copyright 2015 Adobe Systems Incorporated
+*  All Rights Reserved.
+*
+* NOTICE:  All information contained herein is, and remains
+* the property of Adobe Systems Incorporated and its suppliers,
+* if any.  The intellectual and technical concepts contained
+* herein are proprietary to Adobe Systems Incorporated and its
+* suppliers and are protected by all applicable intellectual property laws,
+* including trade secret and or copyright laws.
+* Dissemination of this information or reproduction of this material
+* is strictly forbidden unless prior written permission is obtained
+* from Adobe Systems Incorporated.
+**************************************************************************/
+export function qs(t,e=document){return e.querySelector(t)}export function qsa(t,e=document){return[...e.querySelectorAll(t)]}export function onReady(t){"loading"===document.readyState?document.addEventListener("DOMContentLoaded",t):t()}export function setStyles(t,e){t&&Object.assign(t.style,e)}export function setCss(t,e,n){t&&("object"==typeof e?Object.assign(t.style,e):t.style[e]=n)}export function getOffset(t){if(!t)return{};const e=t.getBoundingClientRect();return{top:e.top+window.scrollY,left:e.left+window.scrollX}}export function isVisible(t){return!!t&&(null!==t.offsetParent||"none"!==getComputedStyle(t).display)}export function escapeHtml(t){const e=document.createElement("div");return e.textContent=t,e.innerHTML}export function animateOpacity(t,e,n,o="linear",r){const s=t instanceof Element?[t]:[...t].filter(Boolean);0!==s.length?(s.forEach(t=>{t.style.transition=`opacity ${n}ms ${o}`,requestAnimationFrame(()=>{t.style.opacity=String(e)})}),setTimeout(()=>r?.(),n)):r?.()}export function stopAnimation(t,e){(t instanceof Element?[t]:[...t].filter(Boolean)).forEach(t=>{t.style.transition="",e&&Object.assign(t.style,e)})}export function addClass(t,e,n=document){qsa(t,n).forEach(t=>t.classList.add(e))}export function removeClass(t,e,n=document){qsa(t,n).forEach(t=>t.classList.remove(e))}export function toggleClass(t,e,n=document){qsa(t,n).forEach(t=>t.classList.toggle(e))}export function setText(t,e,n=document){qsa(t,n).forEach(t=>{t.textContent=e})}export function setHtml(t,e,n=document){qsa(t,n).forEach(t=>{t.innerHTML=e})}export function setProp(t,e,n,o=document){qsa(t,o).forEach(t=>{t[e]=n})}export function onClick(t,e,n=document){qsa(t,n).forEach(t=>t.addEventListener("click",e))}export function onEvent(t,e,n,o=document){qsa(t,o).forEach(t=>t.addEventListener(e,n))}export function bindHover(t,e,n){const o=function(t){return"string"==typeof t?qsa(t):Array.isArray(t)?t.filter(Boolean):[t].filter(Boolean)}(t);return o.forEach(t=>{t.addEventListener("mouseenter",e),t.addEventListener("mouseleave",n)}),()=>{o.forEach(t=>{t.removeEventListener("mouseenter",e),t.removeEventListener("mouseleave",n)})}}function t(t){if("string"!=typeof t)return!1;const e=t.trim().toLowerCase();return!e.startsWith("javascript:")&&!e.startsWith("data:")}export function createEl(e,n={}){const o=e.replace(/\/$/,""),r=document.createElement(o),{class:s,text:c,html:i,css:a,...l}=n;return s&&(r.className=s),void 0!==c&&(r.textContent=c),void 0!==i&&(r.innerHTML=i),a&&Object.assign(r.style,a),Object.entries(l).forEach(([e,n])=>{null!=n&&("for"!==e?("href"!==e&&"src"!==e||t(n))&&r.setAttribute(e,n):r.htmlFor=n)}),r}export function appendChild(t,e){const n="string"==typeof t?qs(t):t;return n&&e&&n.appendChild(e),e}export function createIframe(e,n,o){const r=document.createElement("iframe");return e&&(r.id=e),n&&t(n)&&(r.src=n),o&&Object.assign(r.style,o),r}

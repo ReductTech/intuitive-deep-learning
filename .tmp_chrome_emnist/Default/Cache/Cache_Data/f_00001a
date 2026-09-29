@@ -1,0 +1,564 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/modules/Memory-Test/GuidePage.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=2be87a0d"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+var _s = $RefreshSig$(), _s2 = $RefreshSig$();
+import __vite__cjsImport3_react from "/node_modules/.vite/deps/react.js?v=2be87a0d"; const useCallback = __vite__cjsImport3_react["useCallback"]; const useEffect = __vite__cjsImport3_react["useEffect"]; const useRef = __vite__cjsImport3_react["useRef"]; const useState = __vite__cjsImport3_react["useState"];
+import { Button, ModuleShell, PageRating, Question, RangeControl, Switch, Typography } from "/modules/shared/react/index.ts";
+import { moduleAssetUrl } from "/modules/shared/react/assets.ts";
+import { bridgeStatus, listMemory, makeEvent, MEMORY_MODULE_ID, MEMORY_SKILL_ID, reportEvent } from "/modules/Memory-Test/memoryBridge.ts";
+import "/modules/Memory-Test/MemoryTest.css";
+const VIDEO_URL = moduleAssetUrl("f1751a2d-ea22-4f92-9fa4-32b506c011de", "memory-test.mp4");
+function TestQuestionPair({
+  pageId,
+  record,
+  choiceTitle,
+  choiceOptions,
+  choiceAnswer,
+  shortTitle
+}) {
+  const reportAnswer = (questionId, kind, result) => {
+    if (result.empty) return;
+    record(pageId, "answer_submit", { question_id: questionId, question_type: kind, answer: result.answer, correct: kind === "choice" ? result.ok : null });
+  };
+  return /* @__PURE__ */ jsxDEV("div", { className: "mt-questions", children: [
+    /* @__PURE__ */ jsxDEV(Question, { type: "choice", instant: false, title: choiceTitle, options: choiceOptions, answer: choiceAnswer, persistenceKey: `memory-test:${pageId}:choice`, onCheck: (result) => reportAnswer(`${pageId}:choice`, "choice", result) }, void 0, false, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+      lineNumber: 44,
+      columnNumber: 5
+    }, this),
+    /* @__PURE__ */ jsxDEV(Question, { type: "short", title: shortTitle, rows: 3, persistenceKey: `memory-test:${pageId}:short`, feedback: { sample: "测试题只记录回答，不进行 AI 评分。" }, onCheck: (result) => reportAnswer(`${pageId}:short`, "short", result) }, void 0, false, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+      lineNumber: 45,
+      columnNumber: 5
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+    lineNumber: 43,
+    columnNumber: 10
+  }, this);
+}
+_c = TestQuestionPair;
+function Canvas({ pageId, index, title, description, children }) {
+  _s();
+  const frameRef = useRef(null);
+  const [scale, setScale] = useState(1);
+  useEffect(() => {
+    const frame = frameRef.current;
+    if (!frame) return;
+    const update = () => setScale(Math.min(1, frame.clientWidth / 1600));
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(frame);
+    return () => observer.disconnect();
+  }, []);
+  return /* @__PURE__ */ jsxDEV("div", { ref: frameRef, className: "mt-frame", style: { height: 900 * scale }, children: /* @__PURE__ */ jsxDEV("section", { className: "mt-canvas", "data-page-id": pageId, style: { transform: `scale(${scale})` }, children: [
+    /* @__PURE__ */ jsxDEV("header", { className: "mt-canvas-head", children: [
+      /* @__PURE__ */ jsxDEV(Typography, { as: "span", variant: "bodySmall", tone: "accent", children: [
+        "MEMORY TEST / ",
+        String(index + 1).padStart(2, "0")
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+        lineNumber: 64,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV(Typography, { as: "h2", variant: "display", children: title }, void 0, false, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+        lineNumber: 65,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV(Typography, { as: "p", variant: "subtitle", tone: "muted", children: description }, void 0, false, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+        lineNumber: 66,
+        columnNumber: 9
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+      lineNumber: 63,
+      columnNumber: 7
+    }, this),
+    children
+  ] }, void 0, true, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+    lineNumber: 62,
+    columnNumber: 5
+  }, this) }, void 0, false, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+    lineNumber: 61,
+    columnNumber: 10
+  }, this);
+}
+_s(Canvas, "znA0qZzl3l8aSYSV4wWk8N+jUO4=");
+_c2 = Canvas;
+function ConnectionPanel({
+  logs,
+  onRefresh,
+  onList,
+  onAuth,
+  queryOptions,
+  setQueryOptions,
+  queryResult,
+  bridgeMessage
+}) {
+  const status = bridgeStatus();
+  return /* @__PURE__ */ jsxDEV("aside", { className: "mt-panel", "aria-label": "技能记忆接口状态", children: [
+    /* @__PURE__ */ jsxDEV("div", { className: "mt-panel-top", children: [
+      /* @__PURE__ */ jsxDEV("div", { children: [
+        /* @__PURE__ */ jsxDEV(Typography, { as: "h2", variant: "h3", children: "接口状态" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+          lineNumber: 86,
+          columnNumber: 12
+        }, this),
+        /* @__PURE__ */ jsxDEV(Typography, { as: "p", variant: "bodySmall", tone: "muted", children: "写入直接走宿主 JS 桥接；记录中不传用户 ID。" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+          lineNumber: 86,
+          columnNumber: 62
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+        lineNumber: 86,
+        columnNumber: 7
+      }, this),
+      /* @__PURE__ */ jsxDEV("div", { className: "mt-panel-actions", children: [
+        /* @__PURE__ */ jsxDEV(Button, { type: "button", onClick: onRefresh, children: "重新检测" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+          lineNumber: 88,
+          columnNumber: 9
+        }, this),
+        /* @__PURE__ */ jsxDEV(Button, { type: "button", onClick: onAuth, children: "检查登录" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+          lineNumber: 89,
+          columnNumber: 9
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+        lineNumber: 87,
+        columnNumber: 7
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+      lineNumber: 85,
+      columnNumber: 5
+    }, this),
+    /* @__PURE__ */ jsxDEV("div", { className: "mt-flags", children: [
+      /* @__PURE__ */ jsxDEV("span", { children: [
+        "页面：",
+        status.embedded ? "嵌入" : "独立"
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+        lineNumber: 92,
+        columnNumber: 31
+      }, this),
+      /* @__PURE__ */ jsxDEV("span", { children: [
+        "reportSkillMemory：",
+        status.report ? "可用" : "未找到"
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+        lineNumber: 92,
+        columnNumber: 78
+      }, this),
+      /* @__PURE__ */ jsxDEV("span", { children: [
+        "skillMemoryList：",
+        status.list ? "可用" : "未找到"
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+        lineNumber: 92,
+        columnNumber: 139
+      }, this),
+      /* @__PURE__ */ jsxDEV("span", { children: [
+        "checkAuthSession：",
+        status.auth ? "可用" : "未找到"
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+        lineNumber: 92,
+        columnNumber: 196
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+      lineNumber: 92,
+      columnNumber: 5
+    }, this),
+    bridgeMessage && /* @__PURE__ */ jsxDEV(Typography, { as: "p", variant: "bodySmall", tone: "muted", role: "status", children: bridgeMessage }, void 0, false, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+      lineNumber: 93,
+      columnNumber: 23
+    }, this),
+    /* @__PURE__ */ jsxDEV("div", { className: "mt-panel-grid", children: [
+      /* @__PURE__ */ jsxDEV("section", { children: [
+        /* @__PURE__ */ jsxDEV(Typography, { as: "h3", variant: "body", children: "最近写入" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+          lineNumber: 95,
+          columnNumber: 16
+        }, this),
+        /* @__PURE__ */ jsxDEV("ol", { className: "mt-log", children: logs.length ? logs.slice(0, 6).map(({ event, status: result, detail }) => /* @__PURE__ */ jsxDEV("li", { children: [
+          /* @__PURE__ */ jsxDEV("code", { children: event.event_name }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+            lineNumber: 95,
+            columnNumber: 191
+          }, this),
+          /* @__PURE__ */ jsxDEV("span", { children: event.page_id }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+            lineNumber: 95,
+            columnNumber: 222
+          }, this),
+          /* @__PURE__ */ jsxDEV("strong", { "data-status": result, children: result }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+            lineNumber: 95,
+            columnNumber: 250
+          }, this),
+          detail && /* @__PURE__ */ jsxDEV("small", { title: detail, children: detail }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+            lineNumber: 95,
+            columnNumber: 307
+          }, this)
+        ] }, event.event_id, true, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+          lineNumber: 95,
+          columnNumber: 166
+        }, this)) : /* @__PURE__ */ jsxDEV("li", { children: "完成下方操作后显示结果。" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+          lineNumber: 95,
+          columnNumber: 355
+        }, this) }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+          lineNumber: 95,
+          columnNumber: 68
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+        lineNumber: 95,
+        columnNumber: 7
+      }, this),
+      /* @__PURE__ */ jsxDEV("section", { children: [
+        /* @__PURE__ */ jsxDEV(Typography, { as: "h3", variant: "body", children: "读取验证" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+          lineNumber: 96,
+          columnNumber: 16
+        }, this),
+        /* @__PURE__ */ jsxDEV("label", { className: "mt-query-label", htmlFor: "mt-query", children: "skillMemoryList 参数 JSON（接口参数未在本仓库定义，可修改）" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+          lineNumber: 96,
+          columnNumber: 68
+        }, this),
+        /* @__PURE__ */ jsxDEV("textarea", { id: "mt-query", value: queryOptions, onChange: (event) => setQueryOptions(event.target.value), rows: 2 }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+          lineNumber: 96,
+          columnNumber: 169
+        }, this),
+        /* @__PURE__ */ jsxDEV(Button, { type: "button", variant: "primary", onClick: onList, children: "调用 skillMemoryList" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+          lineNumber: 96,
+          columnNumber: 283
+        }, this),
+        /* @__PURE__ */ jsxDEV("pre", { className: "mt-query-result", children: queryResult || "点击后显示原始返回值。" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+          lineNumber: 96,
+          columnNumber: 367
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+        lineNumber: 96,
+        columnNumber: 7
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+      lineNumber: 94,
+      columnNumber: 5
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+    lineNumber: 84,
+    columnNumber: 10
+  }, this);
+}
+_c3 = ConnectionPanel;
+export function GuidePage() {
+  _s2();
+  const [page, setPage] = useState(0);
+  const [logs, setLogs] = useState([]);
+  const [bridgeMessage, setBridgeMessage] = useState("");
+  const [queryOptions, setQueryOptions] = useState(JSON.stringify({ skill_id: MEMORY_SKILL_ID, page: 1, page_size: 20 }));
+  const [queryResult, setQueryResult] = useState("");
+  const [slider, setSlider] = useState(40);
+  const [enabled, setEnabled] = useState(false);
+  const [counter, setCounter] = useState(0);
+  const [videoPlayed, setVideoPlayed] = useState(false);
+  const runId = useRef(crypto.randomUUID());
+  const sendChain = useRef(Promise.resolve());
+  const pageIds = ["choice-and-button", "slider-and-toggle", "actions-and-review", "ending"];
+  const record = useCallback((pageId, eventName, properties = {}) => {
+    const event = makeEvent(runId.current, pageId, eventName, properties);
+    setLogs((current) => [{ event, status: "等待" }, ...current].slice(0, 30));
+    sendChain.current = sendChain.current.catch(() => void 0).then(async () => {
+      try {
+        const result = await reportEvent(event);
+        setLogs((current) => current.map((entry) => entry.event.event_id === event.event_id ? { ...entry, status: "成功", detail: JSON.stringify(result) } : entry));
+      } catch (error) {
+        setLogs((current) => current.map((entry) => entry.event.event_id === event.event_id ? { ...entry, status: "失败", detail: String(error) } : entry));
+      }
+    });
+  }, []);
+  const changePage = (next) => {
+    const bounded = Math.max(0, Math.min(3, next));
+    if (bounded === page) return;
+    record(pageIds[page], "page_leave", { next_page: pageIds[bounded] });
+    setPage(bounded);
+    record(pageIds[bounded], "page_view", { previous_page: pageIds[page] });
+  };
+  const refreshBridge = () => {
+    const status = bridgeStatus();
+    setBridgeMessage(status.report ? "写入桥接已就绪。实际用户归属需要在宿主登录环境验证。" : "当前课程页没有写入桥接。若这是 iframe，请确认桥接脚本运行在 iframe 自己的 window 中。");
+  };
+  const checkAuth = async () => {
+    const ipc = window.__growAgentIpc;
+    if (typeof ipc?.checkAuthSession !== "function") {
+      setBridgeMessage("当前页面没有 checkAuthSession。");
+      return;
+    }
+    try {
+      const result = await ipc.checkAuthSession();
+      setBridgeMessage(`登录接口已返回；ok=${String(result?.ok ?? "未提供")}。`);
+    } catch (error) {
+      setBridgeMessage(`登录检查失败：${String(error)}`);
+    }
+  };
+  const query = async () => {
+    try {
+      const parsed = JSON.parse(queryOptions);
+      if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) throw new Error("参数必须是 JSON 对象");
+      setQueryResult("正在查询…");
+      const result = await listMemory(parsed);
+      setQueryResult(JSON.stringify(result, null, 2));
+    } catch (error) {
+      setQueryResult(`查询失败：${String(error)}`);
+    }
+  };
+  return /* @__PURE__ */ jsxDEV(ModuleShell, { title: "Memory Test", subtitle: "在嵌入式课程里验证技能记忆写入、读取与交互采集。", badge: "测试模块", shellClassName: "mt-shell", "data-telemetry-manual": true, children: [
+    /* @__PURE__ */ jsxDEV(ConnectionPanel, { logs, onRefresh: refreshBridge, onList: () => void query(), onAuth: () => void checkAuth(), queryOptions, setQueryOptions, queryResult, bridgeMessage }, void 0, false, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+      lineNumber: 161,
+      columnNumber: 5
+    }, this),
+    page === 0 && /* @__PURE__ */ jsxDEV(Canvas, { pageId: pageIds[0], index: 0, title: "选择，然后留下一个回答", description: "先完成两道题，再点按钮。每次提交都会直接写入技能记忆。", children: [
+      /* @__PURE__ */ jsxDEV(TestQuestionPair, { pageId: pageIds[0], record, choiceTitle: "这次测试的写入由哪个接口完成？", choiceOptions: [{ value: "reportSkillMemory", label: "reportSkillMemory" }, { value: "skillMemoryList", label: "skillMemoryList" }, { value: "localStorage", label: "localStorage" }], choiceAnswer: "reportSkillMemory", shortTitle: "用一句话描述你希望记住的学习行为。" }, void 0, false, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+        lineNumber: 163,
+        columnNumber: 7
+      }, this),
+      /* @__PURE__ */ jsxDEV("div", { className: "mt-action-row", children: [
+        /* @__PURE__ */ jsxDEV(Button, { variant: "primary", onClick: () => record(pageIds[0], "button_click", { button_id: "primary-test" }), children: "主按钮测试" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+          lineNumber: 164,
+          columnNumber: 38
+        }, this),
+        /* @__PURE__ */ jsxDEV(Button, { onClick: () => record(pageIds[0], "button_click", { button_id: "secondary-test" }), children: "次按钮测试" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+          lineNumber: 164,
+          columnNumber: 160
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+        lineNumber: 164,
+        columnNumber: 7
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+      lineNumber: 162,
+      columnNumber: 20
+    }, this),
+    page === 1 && /* @__PURE__ */ jsxDEV(Canvas, { pageId: pageIds[1], index: 1, title: "连续输入也能被记录", description: "拖动滑块、切换开关，再提交选择与简答。", children: [
+      /* @__PURE__ */ jsxDEV("div", { className: "mt-controls", children: [
+        /* @__PURE__ */ jsxDEV(RangeControl, { label: "学习信心", min: 0, max: 100, step: 1, value: slider, suffix: "%", onChange: (event) => setSlider(Number(event.currentTarget.value)), onPointerUp: (event) => record(pageIds[1], "slider_commit", { control_id: "confidence", value: Number(event.currentTarget.value) }), onKeyUp: (event) => record(pageIds[1], "slider_commit", { control_id: "confidence", value: Number(event.currentTarget.value) }) }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+          lineNumber: 167,
+          columnNumber: 36
+        }, this),
+        /* @__PURE__ */ jsxDEV(Switch, { label: enabled ? "练习模式：开" : "练习模式：关", checked: enabled, onChange: (event) => {
+          const next = event.currentTarget.checked;
+          setEnabled(next);
+          record(pageIds[1], "toggle_change", { control_id: "practice-mode", enabled: next });
+        } }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+          lineNumber: 167,
+          columnNumber: 447
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+        lineNumber: 167,
+        columnNumber: 7
+      }, this),
+      /* @__PURE__ */ jsxDEV(TestQuestionPair, { pageId: pageIds[1], record, choiceTitle: "滑块应在什么时机上报最终值？", choiceOptions: [{ value: "commit", label: "用户结束拖动时" }, { value: "every-frame", label: "每一帧都上报" }, { value: "never", label: "永不上报" }], choiceAnswer: "commit", shortTitle: "滑块的变化可以帮助你观察什么？" }, void 0, false, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+        lineNumber: 168,
+        columnNumber: 7
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+      lineNumber: 166,
+      columnNumber: 20
+    }, this),
+    page === 2 && /* @__PURE__ */ jsxDEV(Canvas, { pageId: pageIds[2], index: 2, title: "再做一组组合操作", description: "用计数按钮和重置按钮制造连续事件，再完成两道题。", children: [
+      /* @__PURE__ */ jsxDEV("div", { className: "mt-action-row", children: [
+        /* @__PURE__ */ jsxDEV(Button, { variant: "primary", onClick: () => {
+          const next = counter + 1;
+          setCounter(next);
+          record(pageIds[2], "counter_increment", { value: next });
+        }, children: [
+          "点击计数：",
+          counter
+        ] }, void 0, true, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+          lineNumber: 171,
+          columnNumber: 38
+        }, this),
+        /* @__PURE__ */ jsxDEV(Button, { onClick: () => {
+          setCounter(0);
+          record(pageIds[2], "counter_reset", { previous_value: counter });
+        }, children: "重置计数" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+          lineNumber: 171,
+          columnNumber: 205
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+        lineNumber: 171,
+        columnNumber: 7
+      }, this),
+      /* @__PURE__ */ jsxDEV(TestQuestionPair, { pageId: pageIds[2], record, choiceTitle: "一条测试事件是否应该带上用户 ID？", choiceOptions: [{ value: "no", label: "不用；由宿主登录态归属" }, { value: "yes", label: "必须由页面自己填写" }], choiceAnswer: "no", shortTitle: "如果写入失败，你想从页面上看到什么提示？" }, void 0, false, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+        lineNumber: 172,
+        columnNumber: 7
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+      lineNumber: 170,
+      columnNumber: 20
+    }, this),
+    page === 3 && /* @__PURE__ */ jsxDEV(Canvas, { pageId: pageIds[3], index: 3, title: "测试结束", description: "播放一段本地测试视频，再给本页打星。最后使用上方查询按钮核对记录。", children: /* @__PURE__ */ jsxDEV("div", { className: "mt-ending", children: [
+      /* @__PURE__ */ jsxDEV("div", { className: "mt-video-wrap", children: [
+        /* @__PURE__ */ jsxDEV("video", { controls: true, preload: "metadata", src: VIDEO_URL, onPlay: () => {
+          if (!videoPlayed) {
+            setVideoPlayed(true);
+            record(pageIds[3], "video_play", { video_id: "memory-test-video" });
+          }
+        }, onEnded: () => record(pageIds[3], "video_complete", { video_id: "memory-test-video" }) }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+          lineNumber: 175,
+          columnNumber: 65
+        }, this),
+        /* @__PURE__ */ jsxDEV(Typography, { as: "p", variant: "bodySmall", tone: "muted", children: "本地生成的短视频，只用于验证播放操作。" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+          lineNumber: 175,
+          columnNumber: 333
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+        lineNumber: 175,
+        columnNumber: 34
+      }, this),
+      /* @__PURE__ */ jsxDEV("div", { className: "mt-rating", children: [
+        /* @__PURE__ */ jsxDEV(Typography, { as: "h3", variant: "h2", children: "给这次体验打分" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+          lineNumber: 175,
+          columnNumber: 450
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { onClickCapture: (event) => {
+          const target = event.target instanceof Element ? event.target.closest(".edu-page-rating-stars button") : null;
+          if (target) {
+            const match = target.getAttribute("aria-label")?.match(/(\d)/);
+            if (match) record(pageIds[3], "page_rating", { rating: Number(match[1]), page_key: "memory-test-ending" });
+          }
+        }, children: /* @__PURE__ */ jsxDEV(PageRating, { pageKey: "memory-test-ending" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+          lineNumber: 175,
+          columnNumber: 833
+        }, this) }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+          lineNumber: 175,
+          columnNumber: 503
+        }, this),
+        /* @__PURE__ */ jsxDEV(Typography, { as: "p", variant: "bodySmall", tone: "muted", children: "评分后，上方“最近写入”会显示桥接结果。" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+          lineNumber: 175,
+          columnNumber: 882
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+        lineNumber: 175,
+        columnNumber: 423
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+      lineNumber: 175,
+      columnNumber: 7
+    }, this) }, void 0, false, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+      lineNumber: 174,
+      columnNumber: 20
+    }, this),
+    /* @__PURE__ */ jsxDEV("nav", { className: "mt-navigation", "aria-label": "测试页面导航", children: [
+      /* @__PURE__ */ jsxDEV(Button, { disabled: page === 0, onClick: () => changePage(page - 1), children: "上一页" }, void 0, false, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+        lineNumber: 177,
+        columnNumber: 56
+      }, this),
+      /* @__PURE__ */ jsxDEV(Typography, { as: "span", variant: "bodySmall", tone: "muted", children: [
+        page + 1,
+        " / 4 · ",
+        MEMORY_MODULE_ID
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+        lineNumber: 177,
+        columnNumber: 135
+      }, this),
+      /* @__PURE__ */ jsxDEV(Button, { variant: "primary", disabled: page === 3, onClick: () => changePage(page + 1), children: "下一页" }, void 0, false, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+        lineNumber: 177,
+        columnNumber: 238
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+      lineNumber: 177,
+      columnNumber: 5
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx",
+    lineNumber: 160,
+    columnNumber: 10
+  }, this);
+}
+_s2(GuidePage, "iKIs7pNPn6iqyaX9LC2E+9C7+m0=");
+_c4 = GuidePage;
+var _c, _c2, _c3, _c4;
+$RefreshReg$(_c, "TestQuestionPair");
+$RefreshReg$(_c2, "Canvas");
+$RefreshReg$(_c3, "ConnectionPanel");
+$RefreshReg$(_c4, "GuidePage");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Memory-Test/GuidePage.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,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QkFBQyxTQUFJLFdBQVUsaUJBQWdCLGNBQVcsVUFBUztBQUFBLDZCQUFDLFVBQU8sVUFBVTlELFNBQVMsR0FBRyxTQUFTLE1BQU0rQixXQUFXL0IsT0FBTyxDQUFDLEdBQUcsbUJBQW5FO0FBQUE7QUFBQTtBQUFBO0FBQUEsYUFBc0U7QUFBQSxNQUFTLHVCQUFDLGNBQVcsSUFBRyxRQUFPLFNBQVEsYUFBWSxNQUFLLFNBQVNBO0FBQUFBLGVBQU87QUFBQSxRQUFFO0FBQUEsUUFBUXpFO0FBQUFBLFdBQXpFO0FBQUE7QUFBQTtBQUFBO0FBQUEsYUFBMEY7QUFBQSxNQUFhLHVCQUFDLFVBQU8sU0FBUSxXQUFVLFVBQVV5RSxTQUFTLEdBQUcsU0FBUyxNQUFNK0IsV0FBVy9CLE9BQU8sQ0FBQyxHQUFHLG1CQUFyRjtBQUFBO0FBQUE7QUFBQTtBQUFBLGFBQXdGO0FBQUEsU0FBalU7QUFBQTtBQUFBO0FBQUE7QUFBQSxXQUEwVTtBQUFBLE9BakJyVTtBQUFBO0FBQUE7QUFBQTtBQUFBLFNBa0JQO0FBQ0Y7QUFBQ0QsSUE5RWVELFdBQVM7QUFBQSxNQUFUQTtBQUFTLElBQUFqRCxJQUFBa0gsS0FBQWxFLEtBQUFtRTtBQUFBLGFBQUFuSCxJQUFBO0FBQUEsYUFBQWtILEtBQUE7QUFBQSxhQUFBbEUsS0FBQTtBQUFBLGFBQUFtRSxLQUFBIiwibmFtZXMiOlsidXNlQ2FsbGJhY2siLCJ1c2VFZmZlY3QiLCJ1c2VSZWYiLCJ1c2VTdGF0ZSIsIkJ1dHRvbiIsIk1vZHVsZVNoZWxsIiwiUGFnZVJhdGluZyIsIlF1ZXN0aW9uIiwiUmFuZ2VDb250cm9sIiwiU3dpdGNoIiwiVHlwb2dyYXBoeSIsIm1vZHVsZUFzc2V0VXJsIiwiYnJpZGdlU3RhdHVzIiwibGlzdE1lbW9yeSIsIm1ha2VFdmVudCIsIk1FTU9SWV9NT0RVTEVfSUQiLCJNRU1PUllfU0tJTExfSUQiLCJyZXBvcnRFdmVudCIsIlZJREVPX1VSTCIsIlRlc3RRdWVzdGlvblBhaXIiLCJwYWdlSWQiLCJyZWNvcmQiLCJjaG9pY2VUaXRsZSIsImNob2ljZU9wdGlvbnMiLCJjaG9pY2VBbnN3ZXIiLCJzaG9ydFRpdGxlIiwicmVwb3J0QW5zd2VyIiwicXVlc3Rpb25JZCIsImtpbmQiLCJyZXN1bHQiLCJlbXB0eSIsInF1ZXN0aW9uX2lkIiwicXVlc3Rpb25fdHlwZSIsImFuc3dlciIsImNvcnJlY3QiLCJvayIsInNhbXBsZSIsIl9jIiwiQ2FudmFzIiwiaW5kZXgiLCJ0aXRsZSIsImRlc2NyaXB0aW9uIiwiY2hpbGRyZW4iLCJfcyIsImZyYW1lUmVmIiwic2NhbGUiLCJzZXRTY2FsZSIsImZyYW1lIiwiY3VycmVudCIsInVwZGF0ZSIsIk1hdGgiLCJtaW4iLCJjbGllbnRXaWR0aCIsIm9ic2VydmVyIiwiUmVzaXplT2JzZXJ2ZXIiLCJvYnNlcnZlIiwiZGlzY29ubmVjdCIsImhlaWdodCIsInRyYW5zZm9ybSIsIlN0cmluZyIsInBhZFN0YXJ0IiwiQ29ubmVjdGlvblBhbmVsIiwibG9ncyIsIm9uUmVmcmVzaCIsIm9uTGlzdCIsIm9uQXV0aCIsInF1ZXJ5T3B0aW9ucyIsInNldFF1ZXJ5T3B0aW9ucyIsInF1ZXJ5UmVzdWx0IiwiYnJpZGdlTWVzc2FnZSIsInN0YXR1cyIsImVtYmVkZGVkIiwicmVwb3J0IiwibGlzdCIsImF1dGgiLCJsZW5ndGgiLCJzbGljZSIsIm1hcCIsImV2ZW50IiwiZGV0YWlsIiwiZXZlbnRfbmFtZSIsInBhZ2VfaWQiLCJldmVudF9pZCIsInRhcmdldCIsInZhbHVlIiwiX2MzIiwiR3VpZGVQYWdlIiwiX3MyIiwicGFnZSIsInNldFBhZ2UiLCJzZXRMb2dzIiwic2V0QnJpZGdlTWVzc2FnZSIsIkpTT04iLCJzdHJpbmdpZnkiLCJza2lsbF9pZCIsInBhZ2Vfc2l6ZSIsInNldFF1ZXJ5UmVzdWx0Iiwic2xpZGVyIiwic2V0U2xpZGVyIiwiZW5hYmxlZCIsInNldEVuYWJsZWQiLCJjb3VudGVyIiwic2V0Q291bnRlciIsInZpZGVvUGxheWVkIiwic2V0VmlkZW9QbGF5ZWQiLCJydW5JZCIsImNyeXB0byIsInJhbmRvbVVVSUQiLCJzZW5kQ2hhaW4iLCJQcm9taXNlIiwicmVzb2x2ZSIsInBhZ2VJZHMiLCJldmVudE5hbWUiLCJwcm9wZXJ0aWVzIiwiY2F0Y2giLCJ1bmRlZmluZWQiLCJ0aGVuIiwiZW50cnkiLCJlcnJvciIsImNoYW5nZVBhZ2UiLCJuZXh0IiwiYm91bmRlZCIsIm1heCIsIm5leHRfcGFnZSIsInByZXZpb3VzX3BhZ2UiLCJyZWZyZXNoQnJpZGdlIiwiY2hlY2tBdXRoIiwiaXBjIiwid2luZG93IiwiX19ncm93QWdlbnRJcGMiLCJjaGVja0F1dGhTZXNzaW9uIiwicXVlcnkiLCJwYXJzZWQiLCJwYXJzZSIsIkFycmF5IiwiaXNBcnJheSIsIkVycm9yIiwibGFiZWwiLCJidXR0b25faWQiLCJOdW1iZXIiLCJjdXJyZW50VGFyZ2V0IiwiY29udHJvbF9pZCIsImNoZWNrZWQiLCJwcmV2aW91c192YWx1ZSIsInZpZGVvX2lkIiwiRWxlbWVudCIsImNsb3Nlc3QiLCJtYXRjaCIsImdldEF0dHJpYnV0ZSIsInJhdGluZyIsInBhZ2Vfa2V5IiwiX2MyIiwiX2M0Il0sImlnbm9yZUxpc3QiOltdLCJzb3VyY2VzIjpbIkd1aWRlUGFnZS50c3giXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgdXNlQ2FsbGJhY2ssIHVzZUVmZmVjdCwgdXNlUmVmLCB1c2VTdGF0ZSwgdHlwZSBSZWFjdE5vZGUgfSBmcm9tICdyZWFjdCc7XG5pbXBvcnQgeyBCdXR0b24sIE1vZHVsZVNoZWxsLCBQYWdlUmF0aW5nLCBRdWVzdGlvbiwgUmFuZ2VDb250cm9sLCBTd2l0Y2gsIFR5cG9ncmFwaHksIHR5cGUgUXVlc3Rpb25DaGVja1Jlc3VsdCB9IGZyb20gJy4uL3NoYXJlZC9yZWFjdCc7XG5pbXBvcnQgeyBtb2R1bGVBc3NldFVybCB9IGZyb20gJy4uL3NoYXJlZC9yZWFjdC9hc3NldHMnO1xuaW1wb3J0IHsgYnJpZGdlU3RhdHVzLCBsaXN0TWVtb3J5LCBtYWtlRXZlbnQsIE1FTU9SWV9NT0RVTEVfSUQsIE1FTU9SWV9TS0lMTF9JRCwgcmVwb3J0RXZlbnQsIHR5cGUgTWVtb3J5RXZlbnQgfSBmcm9tICcuL21lbW9yeUJyaWRnZSc7XG5pbXBvcnQgJy4vTWVtb3J5VGVzdC5jc3MnO1xuXG5jb25zdCBWSURFT19VUkwgPSBtb2R1bGVBc3NldFVybCgnZjE3NTFhMmQtZWEyMi00ZjkyLTlmYTQtMzJiNTA2YzAxMWRlJywgJ21lbW9yeS10ZXN0Lm1wNCcpO1xuXG50eXBlIExvZ0VudHJ5ID0geyBldmVudDogTWVtb3J5RXZlbnQ7IHN0YXR1czogJ+etieW+hScgfCAn5oiQ5YqfJyB8ICflpLHotKUnOyBkZXRhaWw/OiBzdHJpbmcgfTtcbnR5cGUgUmVjb3JkRXZlbnQgPSAocGFnZUlkOiBzdHJpbmcsIGV2ZW50TmFtZTogc3RyaW5nLCBwcm9wZXJ0aWVzPzogUmVjb3JkPHN0cmluZywgdW5rbm93bj4pID0+IHZvaWQ7XG5cbmZ1bmN0aW9uIFRlc3RRdWVzdGlvblBhaXIoeyBwYWdlSWQsIHJlY29yZCwgY2hvaWNlVGl0bGUsIGNob2ljZU9wdGlvbnMsIGNob2ljZUFuc3dlciwgc2hvcnRUaXRsZSB9OiB7XG4gIHBhZ2VJZDogc3RyaW5nO1xuICByZWNvcmQ6IFJlY29yZEV2ZW50O1xuICBjaG9pY2VUaXRsZTogc3RyaW5nO1xuICBjaG9pY2VPcHRpb25zOiBBcnJheTx7IHZhbHVlOiBzdHJpbmc7IGxhYmVsOiBzdHJpbmcgfT47XG4gIGNob2ljZUFuc3dlcjogc3RyaW5nO1xuICBzaG9ydFRpdGxlOiBzdHJpbmc7XG59KSB7XG4gIGNvbnN0IHJlcG9ydEFuc3dlciA9IChxdWVzdGlvbklkOiBzdHJpbmcsIGtpbmQ6IHN0cmluZywgcmVzdWx0OiBRdWVzdGlvbkNoZWNrUmVzdWx0KSA9PiB7XG4gICAgaWYgKHJlc3VsdC5lbXB0eSkgcmV0dXJuO1xuICAgIHJlY29yZChwYWdlSWQsICdhbnN3ZXJfc3VibWl0JywgeyBxdWVzdGlvbl9pZDogcXVlc3Rpb25JZCwgcXVlc3Rpb25fdHlwZToga2luZCwgYW5zd2VyOiByZXN1bHQuYW5zd2VyLCBjb3JyZWN0OiBraW5kID09PSAnY2hvaWNlJyA/IHJlc3VsdC5vayA6IG51bGwgfSk7XG4gIH07XG4gIHJldHVybiA8ZGl2IGNsYXNzTmFtZT1cIm10LXF1ZXN0aW9uc1wiPlxuICAgIDxRdWVzdGlvbiB0eXBlPVwiY2hvaWNlXCIgaW5zdGFudD17ZmFsc2V9IHRpdGxlPXtjaG9pY2VUaXRsZX0gb3B0aW9ucz17Y2hvaWNlT3B0aW9uc30gYW5zd2VyPXtjaG9pY2VBbnN3ZXJ9IHBlcnNpc3RlbmNlS2V5PXtgbWVtb3J5LXRlc3Q6JHtwYWdlSWR9OmNob2ljZWB9IG9uQ2hlY2s9eyhyZXN1bHQpID0+IHJlcG9ydEFuc3dlcihgJHtwYWdlSWR9OmNob2ljZWAsICdjaG9pY2UnLCByZXN1bHQpfSAvPlxuICAgIDxRdWVzdGlvbiB0eXBlPVwic2hvcnRcIiB0aXRsZT17c2hvcnRUaXRsZX0gcm93cz17M30gcGVyc2lzdGVuY2VLZXk9e2BtZW1vcnktdGVzdDoke3BhZ2VJZH06c2hvcnRgfSBmZWVkYmFjaz17eyBzYW1wbGU6ICfmtYvor5Xpopjlj6rorrDlvZXlm57nrZTvvIzkuI3ov5vooYwgQUkg6K+E5YiG44CCJyB9fSBvbkNoZWNrPXsocmVzdWx0KSA9PiByZXBvcnRBbnN3ZXIoYCR7cGFnZUlkfTpzaG9ydGAsICdzaG9ydCcsIHJlc3VsdCl9IC8+XG4gIDwvZGl2Pjtcbn1cblxuZnVuY3Rpb24gQ2FudmFzKHsgcGFnZUlkLCBpbmRleCwgdGl0bGUsIGRlc2NyaXB0aW9uLCBjaGlsZHJlbiB9OiB7IHBhZ2VJZDogc3RyaW5nOyBpbmRleDogbnVtYmVyOyB0aXRsZTogc3RyaW5nOyBkZXNjcmlwdGlvbjogc3RyaW5nOyBjaGlsZHJlbjogUmVhY3ROb2RlIH0pIHtcbiAgY29uc3QgZnJhbWVSZWYgPSB1c2VSZWY8SFRNTERpdkVsZW1lbnQ+KG51bGwpO1xuICBjb25zdCBbc2NhbGUsIHNldFNjYWxlXSA9IHVzZVN0YXRlKDEpO1xuICB1c2VFZmZlY3QoKCkgPT4ge1xuICAgIGNvbnN0IGZyYW1lID0gZnJhbWVSZWYuY3VycmVudDtcbiAgICBpZiAoIWZyYW1lKSByZXR1cm47XG4gICAgY29uc3QgdXBkYXRlID0gKCkgPT4gc2V0U2NhbGUoTWF0aC5taW4oMSwgZnJhbWUuY2xpZW50V2lkdGggLyAxNjAwKSk7XG4gICAgdXBkYXRlKCk7XG4gICAgY29uc3Qgb2JzZXJ2ZXIgPSBuZXcgUmVzaXplT2JzZXJ2ZXIodXBkYXRlKTtcbiAgICBvYnNlcnZlci5vYnNlcnZlKGZyYW1lKTtcbiAgICByZXR1cm4gKCkgPT4gb2JzZXJ2ZXIuZGlzY29ubmVjdCgpO1xuICB9LCBbXSk7XG4gIHJldHVybiA8ZGl2IHJlZj17ZnJhbWVSZWZ9IGNsYXNzTmFtZT1cIm10LWZyYW1lXCIgc3R5bGU9e3sgaGVpZ2h0OiA5MDAgKiBzY2FsZSB9fT5cbiAgICA8c2VjdGlvbiBjbGFzc05hbWU9XCJtdC1jYW52YXNcIiBkYXRhLXBhZ2UtaWQ9e3BhZ2VJZH0gc3R5bGU9e3sgdHJhbnNmb3JtOiBgc2NhbGUoJHtzY2FsZX0pYCB9fT5cbiAgICAgIDxoZWFkZXIgY2xhc3NOYW1lPVwibXQtY2FudmFzLWhlYWRcIj5cbiAgICAgICAgPFR5cG9ncmFwaHkgYXM9XCJzcGFuXCIgdmFyaWFudD1cImJvZHlTbWFsbFwiIHRvbmU9XCJhY2NlbnRcIj5NRU1PUlkgVEVTVCAvIHtTdHJpbmcoaW5kZXggKyAxKS5wYWRTdGFydCgyLCAnMCcpfTwvVHlwb2dyYXBoeT5cbiAgICAgICAgPFR5cG9ncmFwaHkgYXM9XCJoMlwiIHZhcmlhbnQ9XCJkaXNwbGF5XCI+e3RpdGxlfTwvVHlwb2dyYXBoeT5cbiAgICAgICAgPFR5cG9ncmFwaHkgYXM9XCJwXCIgdmFyaWFudD1cInN1YnRpdGxlXCIgdG9uZT1cIm11dGVkXCI+e2Rlc2NyaXB0aW9ufTwvVHlwb2dyYXBoeT5cbiAgICAgIDwvaGVhZGVyPlxuICAgICAge2NoaWxkcmVufVxuICAgIDwvc2VjdGlvbj5cbiAgPC9kaXY+O1xufVxuXG5mdW5jdGlvbiBDb25uZWN0aW9uUGFuZWwoeyBsb2dzLCBvblJlZnJlc2gsIG9uTGlzdCwgb25BdXRoLCBxdWVyeU9wdGlvbnMsIHNldFF1ZXJ5T3B0aW9ucywgcXVlcnlSZXN1bHQsIGJyaWRnZU1lc3NhZ2UgfToge1xuICBsb2dzOiBMb2dFbnRyeVtdO1xuICBvblJlZnJlc2g6ICgpID0+IHZvaWQ7XG4gIG9uTGlzdDogKCkgPT4gdm9pZDtcbiAgb25BdXRoOiAoKSA9PiB2b2lkO1xuICBxdWVyeU9wdGlvbnM6IHN0cmluZztcbiAgc2V0UXVlcnlPcHRpb25zOiAodmFsdWU6IHN0cmluZykgPT4gdm9pZDtcbiAgcXVlcnlSZXN1bHQ6IHN0cmluZztcbiAgYnJpZGdlTWVzc2FnZTogc3RyaW5nO1xufSkge1xuICBjb25zdCBzdGF0dXMgPSBicmlkZ2VTdGF0dXMoKTtcbiAgcmV0dXJuIDxhc2lkZSBjbGFzc05hbWU9XCJtdC1wYW5lbFwiIGFyaWEtbGFiZWw9XCLmioDog73orrDlv4bmjqXlj6PnirbmgIFcIj5cbiAgICA8ZGl2IGNsYXNzTmFtZT1cIm10LXBhbmVsLXRvcFwiPlxuICAgICAgPGRpdj48VHlwb2dyYXBoeSBhcz1cImgyXCIgdmFyaWFudD1cImgzXCI+5o6l5Y+j54q25oCBPC9UeXBvZ3JhcGh5PjxUeXBvZ3JhcGh5IGFzPVwicFwiIHZhcmlhbnQ9XCJib2R5U21hbGxcIiB0b25lPVwibXV0ZWRcIj7lhpnlhaXnm7TmjqXotbDlrr/kuLsgSlMg5qGl5o6l77yb6K6w5b2V5Lit5LiN5Lyg55So5oi3IElE44CCPC9UeXBvZ3JhcGh5PjwvZGl2PlxuICAgICAgPGRpdiBjbGFzc05hbWU9XCJtdC1wYW5lbC1hY3Rpb25zXCI+XG4gICAgICAgIDxCdXR0b24gdHlwZT1cImJ1dHRvblwiIG9uQ2xpY2s9e29uUmVmcmVzaH0+6YeN5paw5qOA5rWLPC9CdXR0b24+XG4gICAgICAgIDxCdXR0b24gdHlwZT1cImJ1dHRvblwiIG9uQ2xpY2s9e29uQXV0aH0+5qOA5p+l55m75b2VPC9CdXR0b24+XG4gICAgICA8L2Rpdj5cbiAgICA8L2Rpdj5cbiAgICA8ZGl2IGNsYXNzTmFtZT1cIm10LWZsYWdzXCI+PHNwYW4+6aG16Z2i77yae3N0YXR1cy5lbWJlZGRlZCA/ICfltYzlhaUnIDogJ+eLrOeriyd9PC9zcGFuPjxzcGFuPnJlcG9ydFNraWxsTWVtb3J577yae3N0YXR1cy5yZXBvcnQgPyAn5Y+v55SoJyA6ICfmnKrmib7liLAnfTwvc3Bhbj48c3Bhbj5za2lsbE1lbW9yeUxpc3TvvJp7c3RhdHVzLmxpc3QgPyAn5Y+v55SoJyA6ICfmnKrmib7liLAnfTwvc3Bhbj48c3Bhbj5jaGVja0F1dGhTZXNzaW9u77yae3N0YXR1cy5hdXRoID8gJ+WPr+eUqCcgOiAn5pyq5om+5YiwJ308L3NwYW4+PC9kaXY+XG4gICAge2JyaWRnZU1lc3NhZ2UgJiYgPFR5cG9ncmFwaHkgYXM9XCJwXCIgdmFyaWFudD1cImJvZHlTbWFsbFwiIHRvbmU9XCJtdXRlZFwiIHJvbGU9XCJzdGF0dXNcIj57YnJpZGdlTWVzc2FnZX08L1R5cG9ncmFwaHk+fVxuICAgIDxkaXYgY2xhc3NOYW1lPVwibXQtcGFuZWwtZ3JpZFwiPlxuICAgICAgPHNlY3Rpb24+PFR5cG9ncmFwaHkgYXM9XCJoM1wiIHZhcmlhbnQ9XCJib2R5XCIgPuacgOi/keWGmeWFpTwvVHlwb2dyYXBoeT48b2wgY2xhc3NOYW1lPVwibXQtbG9nXCI+e2xvZ3MubGVuZ3RoID8gbG9ncy5zbGljZSgwLCA2KS5tYXAoKHsgZXZlbnQsIHN0YXR1czogcmVzdWx0LCBkZXRhaWwgfSkgPT4gPGxpIGtleT17ZXZlbnQuZXZlbnRfaWR9Pjxjb2RlPntldmVudC5ldmVudF9uYW1lfTwvY29kZT48c3Bhbj57ZXZlbnQucGFnZV9pZH08L3NwYW4+PHN0cm9uZyBkYXRhLXN0YXR1cz17cmVzdWx0fT57cmVzdWx0fTwvc3Ryb25nPntkZXRhaWwgJiYgPHNtYWxsIHRpdGxlPXtkZXRhaWx9PntkZXRhaWx9PC9zbWFsbD59PC9saT4pIDogPGxpPuWujOaIkOS4i+aWueaTjeS9nOWQjuaYvuekuue7k+aenOOAgjwvbGk+fTwvb2w+PC9zZWN0aW9uPlxuICAgICAgPHNlY3Rpb24+PFR5cG9ncmFwaHkgYXM9XCJoM1wiIHZhcmlhbnQ9XCJib2R5XCI+6K+75Y+W6aqM6K+BPC9UeXBvZ3JhcGh5PjxsYWJlbCBjbGFzc05hbWU9XCJtdC1xdWVyeS1sYWJlbFwiIGh0bWxGb3I9XCJtdC1xdWVyeVwiPnNraWxsTWVtb3J5TGlzdCDlj4LmlbAgSlNPTu+8iOaOpeWPo+WPguaVsOacquWcqOacrOS7k+W6k+WumuS5ie+8jOWPr+S/ruaUue+8iTwvbGFiZWw+PHRleHRhcmVhIGlkPVwibXQtcXVlcnlcIiB2YWx1ZT17cXVlcnlPcHRpb25zfSBvbkNoYW5nZT17KGV2ZW50KSA9PiBzZXRRdWVyeU9wdGlvbnMoZXZlbnQudGFyZ2V0LnZhbHVlKX0gcm93cz17Mn0gLz48QnV0dG9uIHR5cGU9XCJidXR0b25cIiB2YXJpYW50PVwicHJpbWFyeVwiIG9uQ2xpY2s9e29uTGlzdH0+6LCD55SoIHNraWxsTWVtb3J5TGlzdDwvQnV0dG9uPjxwcmUgY2xhc3NOYW1lPVwibXQtcXVlcnktcmVzdWx0XCI+e3F1ZXJ5UmVzdWx0IHx8ICfngrnlh7vlkI7mmL7npLrljp/lp4vov5Tlm57lgLzjgIInfTwvcHJlPjwvc2VjdGlvbj5cbiAgICA8L2Rpdj5cbiAgPC9hc2lkZT47XG59XG5cbmV4cG9ydCBmdW5jdGlvbiBHdWlkZVBhZ2UoKSB7XG4gIGNvbnN0IFtwYWdlLCBzZXRQYWdlXSA9IHVzZVN0YXRlKDApO1xuICBjb25zdCBbbG9ncywgc2V0TG9nc10gPSB1c2VTdGF0ZTxMb2dFbnRyeVtdPihbXSk7XG4gIGNvbnN0IFticmlkZ2VNZXNzYWdlLCBzZXRCcmlkZ2VNZXNzYWdlXSA9IHVzZVN0YXRlKCcnKTtcbiAgY29uc3QgW3F1ZXJ5T3B0aW9ucywgc2V0UXVlcnlPcHRpb25zXSA9IHVzZVN0YXRlKEpTT04uc3RyaW5naWZ5KHsgc2tpbGxfaWQ6IE1FTU9SWV9TS0lMTF9JRCwgcGFnZTogMSwgcGFnZV9zaXplOiAyMCB9KSk7XG4gIGNvbnN0IFtxdWVyeVJlc3VsdCwgc2V0UXVlcnlSZXN1bHRdID0gdXNlU3RhdGUoJycpO1xuICBjb25zdCBbc2xpZGVyLCBzZXRTbGlkZXJdID0gdXNlU3RhdGUoNDApO1xuICBjb25zdCBbZW5hYmxlZCwgc2V0RW5hYmxlZF0gPSB1c2VTdGF0ZShmYWxzZSk7XG4gIGNvbnN0IFtjb3VudGVyLCBzZXRDb3VudGVyXSA9IHVzZVN0YXRlKDApO1xuICBjb25zdCBbdmlkZW9QbGF5ZWQsIHNldFZpZGVvUGxheWVkXSA9IHVzZVN0YXRlKGZhbHNlKTtcbiAgY29uc3QgcnVuSWQgPSB1c2VSZWYoY3J5cHRvLnJhbmRvbVVVSUQoKSk7XG4gIGNvbnN0IHNlbmRDaGFpbiA9IHVzZVJlZihQcm9taXNlLnJlc29sdmUoKSk7XG4gIGNvbnN0IHBhZ2VJZHMgPSBbJ2Nob2ljZS1hbmQtYnV0dG9uJywgJ3NsaWRlci1hbmQtdG9nZ2xlJywgJ2FjdGlvbnMtYW5kLXJldmlldycsICdlbmRpbmcnXTtcblxuICBjb25zdCByZWNvcmQgPSB1c2VDYWxsYmFjazxSZWNvcmRFdmVudD4oKHBhZ2VJZCwgZXZlbnROYW1lLCBwcm9wZXJ0aWVzID0ge30pID0+IHtcbiAgICBjb25zdCBldmVudCA9IG1ha2VFdmVudChydW5JZC5jdXJyZW50LCBwYWdlSWQsIGV2ZW50TmFtZSwgcHJvcGVydGllcyk7XG4gICAgc2V0TG9ncygoY3VycmVudCkgPT4gW3sgZXZlbnQsIHN0YXR1czogJ+etieW+hScgYXMgY29uc3QgfSwgLi4uY3VycmVudF0uc2xpY2UoMCwgMzApKTtcbiAgICBzZW5kQ2hhaW4uY3VycmVudCA9IHNlbmRDaGFpbi5jdXJyZW50LmNhdGNoKCgpID0+IHVuZGVmaW5lZCkudGhlbihhc3luYyAoKSA9PiB7XG4gICAgICB0cnkge1xuICAgICAgICBjb25zdCByZXN1bHQgPSBhd2FpdCByZXBvcnRFdmVudChldmVudCk7XG4gICAgICAgIHNldExvZ3MoKGN1cnJlbnQpID0+IGN1cnJlbnQubWFwKChlbnRyeSkgPT4gZW50cnkuZXZlbnQuZXZlbnRfaWQgPT09IGV2ZW50LmV2ZW50X2lkID8geyAuLi5lbnRyeSwgc3RhdHVzOiAn5oiQ5YqfJywgZGV0YWlsOiBKU09OLnN0cmluZ2lmeShyZXN1bHQpIH0gOiBlbnRyeSkpO1xuICAgICAgfSBjYXRjaCAoZXJyb3IpIHtcbiAgICAgICAgc2V0TG9ncygoY3VycmVudCkgPT4gY3VycmVudC5tYXAoKGVudHJ5KSA9PiBlbnRyeS5ldmVudC5ldmVudF9pZCA9PT0gZXZlbnQuZXZlbnRfaWQgPyB7IC4uLmVudHJ5LCBzdGF0dXM6ICflpLHotKUnLCBkZXRhaWw6IFN0cmluZyhlcnJvcikgfSA6IGVudHJ5KSk7XG4gICAgICB9XG4gICAgfSk7XG4gIH0sIFtdKTtcblxuICBjb25zdCBjaGFuZ2VQYWdlID0gKG5leHQ6IG51bWJlcikgPT4ge1xuICAgIGNvbnN0IGJvdW5kZWQgPSBNYXRoLm1heCgwLCBNYXRoLm1pbigzLCBuZXh0KSk7XG4gICAgaWYgKGJvdW5kZWQgPT09IHBhZ2UpIHJldHVybjtcbiAgICByZWNvcmQocGFnZUlkc1twYWdlXSwgJ3BhZ2VfbGVhdmUnLCB7IG5leHRfcGFnZTogcGFnZUlkc1tib3VuZGVkXSB9KTtcbiAgICBzZXRQYWdlKGJvdW5kZWQpO1xuICAgIHJlY29yZChwYWdlSWRzW2JvdW5kZWRdLCAncGFnZV92aWV3JywgeyBwcmV2aW91c19wYWdlOiBwYWdlSWRzW3BhZ2VdIH0pO1xuICB9O1xuXG4gIGNvbnN0IHJlZnJlc2hCcmlkZ2UgPSAoKSA9PiB7XG4gICAgY29uc3Qgc3RhdHVzID0gYnJpZGdlU3RhdHVzKCk7XG4gICAgc2V0QnJpZGdlTWVzc2FnZShzdGF0dXMucmVwb3J0ID8gJ+WGmeWFpeahpeaOpeW3suWwsee7quOAguWunumZheeUqOaIt+W9kuWxnumcgOimgeWcqOWuv+S4u+eZu+W9leeOr+Wig+mqjOivgeOAgicgOiAn5b2T5YmN6K++56iL6aG15rKh5pyJ5YaZ5YWl5qGl5o6l44CC6Iul6L+Z5pivIGlmcmFtZe+8jOivt+ehruiupOahpeaOpeiEmuacrOi/kOihjOWcqCBpZnJhbWUg6Ieq5bex55qEIHdpbmRvdyDkuK3jgIInKTtcbiAgfTtcblxuICBjb25zdCBjaGVja0F1dGggPSBhc3luYyAoKSA9PiB7XG4gICAgY29uc3QgaXBjID0gd2luZG93Ll9fZ3Jvd0FnZW50SXBjO1xuICAgIGlmICh0eXBlb2YgaXBjPy5jaGVja0F1dGhTZXNzaW9uICE9PSAnZnVuY3Rpb24nKSB7IHNldEJyaWRnZU1lc3NhZ2UoJ+W9k+WJjemhtemdouayoeaciSBjaGVja0F1dGhTZXNzaW9u44CCJyk7IHJldHVybjsgfVxuICAgIHRyeSB7XG4gICAgICBjb25zdCByZXN1bHQgPSBhd2FpdCBpcGMuY2hlY2tBdXRoU2Vzc2lvbigpO1xuICAgICAgc2V0QnJpZGdlTWVzc2FnZShg55m75b2V5o6l5Y+j5bey6L+U5Zue77ybb2s9JHtTdHJpbmcoKHJlc3VsdCBhcyB7IG9rPzogdW5rbm93biB9IHwgbnVsbCk/Lm9rID8/ICfmnKrmj5DkvpsnKX3jgIJgKTtcbiAgICB9IGNhdGNoIChlcnJvcikgeyBzZXRCcmlkZ2VNZXNzYWdlKGDnmbvlvZXmo4Dmn6XlpLHotKXvvJoke1N0cmluZyhlcnJvcil9YCk7IH1cbiAgfTtcblxuICBjb25zdCBxdWVyeSA9IGFzeW5jICgpID0+IHtcbiAgICB0cnkge1xuICAgICAgY29uc3QgcGFyc2VkOiB1bmtub3duID0gSlNPTi5wYXJzZShxdWVyeU9wdGlvbnMpO1xuICAgICAgaWYgKCFwYXJzZWQgfHwgdHlwZW9mIHBhcnNlZCAhPT0gJ29iamVjdCcgfHwgQXJyYXkuaXNBcnJheShwYXJzZWQpKSB0aHJvdyBuZXcgRXJyb3IoJ+WPguaVsOW/hemhu+aYryBKU09OIOWvueixoScpO1xuICAgICAgc2V0UXVlcnlSZXN1bHQoJ+ato+WcqOafpeivouKApicpO1xuICAgICAgY29uc3QgcmVzdWx0ID0gYXdhaXQgbGlzdE1lbW9yeShwYXJzZWQgYXMgUmVjb3JkPHN0cmluZywgdW5rbm93bj4pO1xuICAgICAgc2V0UXVlcnlSZXN1bHQoSlNPTi5zdHJpbmdpZnkocmVzdWx0LCBudWxsLCAyKSk7XG4gICAgfSBjYXRjaCAoZXJyb3IpIHsgc2V0UXVlcnlSZXN1bHQoYOafpeivouWksei0pe+8miR7U3RyaW5nKGVycm9yKX1gKTsgfVxuICB9O1xuXG4gIHJldHVybiA8TW9kdWxlU2hlbGwgdGl0bGU9XCJNZW1vcnkgVGVzdFwiIHN1YnRpdGxlPVwi5Zyo5bWM5YWl5byP6K++56iL6YeM6aqM6K+B5oqA6IO96K6w5b+G5YaZ5YWl44CB6K+75Y+W5LiO5Lqk5LqS6YeH6ZuG44CCXCIgYmFkZ2U9XCLmtYvor5XmqKHlnZdcIiBzaGVsbENsYXNzTmFtZT1cIm10LXNoZWxsXCIgZGF0YS10ZWxlbWV0cnktbWFudWFsPlxuICAgIDxDb25uZWN0aW9uUGFuZWwgbG9ncz17bG9nc30gb25SZWZyZXNoPXtyZWZyZXNoQnJpZGdlfSBvbkxpc3Q9eygpID0+IHZvaWQgcXVlcnkoKX0gb25BdXRoPXsoKSA9PiB2b2lkIGNoZWNrQXV0aCgpfSBxdWVyeU9wdGlvbnM9e3F1ZXJ5T3B0aW9uc30gc2V0UXVlcnlPcHRpb25zPXtzZXRRdWVyeU9wdGlvbnN9IHF1ZXJ5UmVzdWx0PXtxdWVyeVJlc3VsdH0gYnJpZGdlTWVzc2FnZT17YnJpZGdlTWVzc2FnZX0gLz5cbiAgICB7cGFnZSA9PT0gMCAmJiA8Q2FudmFzIHBhZ2VJZD17cGFnZUlkc1swXX0gaW5kZXg9ezB9IHRpdGxlPVwi6YCJ5oup77yM54S25ZCO55WZ5LiL5LiA5Liq5Zue562UXCIgZGVzY3JpcHRpb249XCLlhYjlrozmiJDkuKTpgZPpopjvvIzlho3ngrnmjInpkq7jgILmr4/mrKHmj5DkuqTpg73kvJrnm7TmjqXlhpnlhaXmioDog73orrDlv4bjgIJcIj5cbiAgICAgIDxUZXN0UXVlc3Rpb25QYWlyIHBhZ2VJZD17cGFnZUlkc1swXX0gcmVjb3JkPXtyZWNvcmR9IGNob2ljZVRpdGxlPVwi6L+Z5qyh5rWL6K+V55qE5YaZ5YWl55Sx5ZOq5Liq5o6l5Y+j5a6M5oiQ77yfXCIgY2hvaWNlT3B0aW9ucz17W3sgdmFsdWU6ICdyZXBvcnRTa2lsbE1lbW9yeScsIGxhYmVsOiAncmVwb3J0U2tpbGxNZW1vcnknIH0sIHsgdmFsdWU6ICdza2lsbE1lbW9yeUxpc3QnLCBsYWJlbDogJ3NraWxsTWVtb3J5TGlzdCcgfSwgeyB2YWx1ZTogJ2xvY2FsU3RvcmFnZScsIGxhYmVsOiAnbG9jYWxTdG9yYWdlJyB9XX0gY2hvaWNlQW5zd2VyPVwicmVwb3J0U2tpbGxNZW1vcnlcIiBzaG9ydFRpdGxlPVwi55So5LiA5Y+l6K+d5o+P6L+w5L2g5biM5pyb6K6w5L2P55qE5a2m5Lmg6KGM5Li644CCXCIgLz5cbiAgICAgIDxkaXYgY2xhc3NOYW1lPVwibXQtYWN0aW9uLXJvd1wiPjxCdXR0b24gdmFyaWFudD1cInByaW1hcnlcIiBvbkNsaWNrPXsoKSA9PiByZWNvcmQocGFnZUlkc1swXSwgJ2J1dHRvbl9jbGljaycsIHsgYnV0dG9uX2lkOiAncHJpbWFyeS10ZXN0JyB9KX0+5Li75oyJ6ZKu5rWL6K+VPC9CdXR0b24+PEJ1dHRvbiBvbkNsaWNrPXsoKSA9PiByZWNvcmQocGFnZUlkc1swXSwgJ2J1dHRvbl9jbGljaycsIHsgYnV0dG9uX2lkOiAnc2Vjb25kYXJ5LXRlc3QnIH0pfT7mrKHmjInpkq7mtYvor5U8L0J1dHRvbj48L2Rpdj5cbiAgICA8L0NhbnZhcz59XG4gICAge3BhZ2UgPT09IDEgJiYgPENhbnZhcyBwYWdlSWQ9e3BhZ2VJZHNbMV19IGluZGV4PXsxfSB0aXRsZT1cIui/nue7rei+k+WFpeS5n+iDveiiq+iusOW9lVwiIGRlc2NyaXB0aW9uPVwi5ouW5Yqo5ruR5Z2X44CB5YiH5o2i5byA5YWz77yM5YaN5o+Q5Lqk6YCJ5oup5LiO566A562U44CCXCI+XG4gICAgICA8ZGl2IGNsYXNzTmFtZT1cIm10LWNvbnRyb2xzXCI+PFJhbmdlQ29udHJvbCBsYWJlbD1cIuWtpuS5oOS/oeW/g1wiIG1pbj17MH0gbWF4PXsxMDB9IHN0ZXA9ezF9IHZhbHVlPXtzbGlkZXJ9IHN1ZmZpeD1cIiVcIiBvbkNoYW5nZT17KGV2ZW50KSA9PiBzZXRTbGlkZXIoTnVtYmVyKGV2ZW50LmN1cnJlbnRUYXJnZXQudmFsdWUpKX0gb25Qb2ludGVyVXA9eyhldmVudCkgPT4gcmVjb3JkKHBhZ2VJZHNbMV0sICdzbGlkZXJfY29tbWl0JywgeyBjb250cm9sX2lkOiAnY29uZmlkZW5jZScsIHZhbHVlOiBOdW1iZXIoZXZlbnQuY3VycmVudFRhcmdldC52YWx1ZSkgfSl9IG9uS2V5VXA9eyhldmVudCkgPT4gcmVjb3JkKHBhZ2VJZHNbMV0sICdzbGlkZXJfY29tbWl0JywgeyBjb250cm9sX2lkOiAnY29uZmlkZW5jZScsIHZhbHVlOiBOdW1iZXIoZXZlbnQuY3VycmVudFRhcmdldC52YWx1ZSkgfSl9IC8+PFN3aXRjaCBsYWJlbD17ZW5hYmxlZCA/ICfnu4PkuaDmqKHlvI/vvJrlvIAnIDogJ+e7g+S5oOaooeW8j++8muWFsyd9IGNoZWNrZWQ9e2VuYWJsZWR9IG9uQ2hhbmdlPXsoZXZlbnQpID0+IHsgY29uc3QgbmV4dCA9IGV2ZW50LmN1cnJlbnRUYXJnZXQuY2hlY2tlZDsgc2V0RW5hYmxlZChuZXh0KTsgcmVjb3JkKHBhZ2VJZHNbMV0sICd0b2dnbGVfY2hhbmdlJywgeyBjb250cm9sX2lkOiAncHJhY3RpY2UtbW9kZScsIGVuYWJsZWQ6IG5leHQgfSk7IH19IC8+PC9kaXY+XG4gICAgICA8VGVzdFF1ZXN0aW9uUGFpciBwYWdlSWQ9e3BhZ2VJZHNbMV19IHJlY29yZD17cmVjb3JkfSBjaG9pY2VUaXRsZT1cIua7keWdl+W6lOWcqOS7gOS5iOaXtuacuuS4iuaKpeacgOe7iOWAvO+8n1wiIGNob2ljZU9wdGlvbnM9e1t7IHZhbHVlOiAnY29tbWl0JywgbGFiZWw6ICfnlKjmiLfnu5PmnZ/mi5bliqjml7YnIH0sIHsgdmFsdWU6ICdldmVyeS1mcmFtZScsIGxhYmVsOiAn5q+P5LiA5bin6YO95LiK5oqlJyB9LCB7IHZhbHVlOiAnbmV2ZXInLCBsYWJlbDogJ+awuOS4jeS4iuaKpScgfV19IGNob2ljZUFuc3dlcj1cImNvbW1pdFwiIHNob3J0VGl0bGU9XCLmu5HlnZfnmoTlj5jljJblj6/ku6XluK7liqnkvaDop4Llr5/ku4DkuYjvvJ9cIiAvPlxuICAgIDwvQ2FudmFzPn1cbiAgICB7cGFnZSA9PT0gMiAmJiA8Q2FudmFzIHBhZ2VJZD17cGFnZUlkc1syXX0gaW5kZXg9ezJ9IHRpdGxlPVwi5YaN5YGa5LiA57uE57uE5ZCI5pON5L2cXCIgZGVzY3JpcHRpb249XCLnlKjorqHmlbDmjInpkq7lkozph43nva7mjInpkq7liLbpgKDov57nu63kuovku7bvvIzlho3lrozmiJDkuKTpgZPpopjjgIJcIj5cbiAgICAgIDxkaXYgY2xhc3NOYW1lPVwibXQtYWN0aW9uLXJvd1wiPjxCdXR0b24gdmFyaWFudD1cInByaW1hcnlcIiBvbkNsaWNrPXsoKSA9PiB7IGNvbnN0IG5leHQgPSBjb3VudGVyICsgMTsgc2V0Q291bnRlcihuZXh0KTsgcmVjb3JkKHBhZ2VJZHNbMl0sICdjb3VudGVyX2luY3JlbWVudCcsIHsgdmFsdWU6IG5leHQgfSk7IH19PueCueWHu+iuoeaVsO+8mntjb3VudGVyfTwvQnV0dG9uPjxCdXR0b24gb25DbGljaz17KCkgPT4geyBzZXRDb3VudGVyKDApOyByZWNvcmQocGFnZUlkc1syXSwgJ2NvdW50ZXJfcmVzZXQnLCB7IHByZXZpb3VzX3ZhbHVlOiBjb3VudGVyIH0pOyB9fT7ph43nva7orqHmlbA8L0J1dHRvbj48L2Rpdj5cbiAgICAgIDxUZXN0UXVlc3Rpb25QYWlyIHBhZ2VJZD17cGFnZUlkc1syXX0gcmVjb3JkPXtyZWNvcmR9IGNob2ljZVRpdGxlPVwi5LiA5p2h5rWL6K+V5LqL5Lu25piv5ZCm5bqU6K+l5bim5LiK55So5oi3IElE77yfXCIgY2hvaWNlT3B0aW9ucz17W3sgdmFsdWU6ICdubycsIGxhYmVsOiAn5LiN55So77yb55Sx5a6/5Li755m75b2V5oCB5b2S5bGeJyB9LCB7IHZhbHVlOiAneWVzJywgbGFiZWw6ICflv4XpobvnlLHpobXpnaLoh6rlt7HloavlhpknIH1dfSBjaG9pY2VBbnN3ZXI9XCJub1wiIHNob3J0VGl0bGU9XCLlpoLmnpzlhpnlhaXlpLHotKXvvIzkvaDmg7Pku47pobXpnaLkuIrnnIvliLDku4DkuYjmj5DnpLrvvJ9cIiAvPlxuICAgIDwvQ2FudmFzPn1cbiAgICB7cGFnZSA9PT0gMyAmJiA8Q2FudmFzIHBhZ2VJZD17cGFnZUlkc1szXX0gaW5kZXg9ezN9IHRpdGxlPVwi5rWL6K+V57uT5p2fXCIgZGVzY3JpcHRpb249XCLmkq3mlL7kuIDmrrXmnKzlnLDmtYvor5Xop4bpopHvvIzlho3nu5nmnKzpobXmiZPmmJ/jgILmnIDlkI7kvb/nlKjkuIrmlrnmn6Xor6LmjInpkq7moLjlr7norrDlvZXjgIJcIj5cbiAgICAgIDxkaXYgY2xhc3NOYW1lPVwibXQtZW5kaW5nXCI+PGRpdiBjbGFzc05hbWU9XCJtdC12aWRlby13cmFwXCI+PHZpZGVvIGNvbnRyb2xzIHByZWxvYWQ9XCJtZXRhZGF0YVwiIHNyYz17VklERU9fVVJMfSBvblBsYXk9eygpID0+IHsgaWYgKCF2aWRlb1BsYXllZCkgeyBzZXRWaWRlb1BsYXllZCh0cnVlKTsgcmVjb3JkKHBhZ2VJZHNbM10sICd2aWRlb19wbGF5JywgeyB2aWRlb19pZDogJ21lbW9yeS10ZXN0LXZpZGVvJyB9KTsgfSB9fSBvbkVuZGVkPXsoKSA9PiByZWNvcmQocGFnZUlkc1szXSwgJ3ZpZGVvX2NvbXBsZXRlJywgeyB2aWRlb19pZDogJ21lbW9yeS10ZXN0LXZpZGVvJyB9KX0gLz48VHlwb2dyYXBoeSBhcz1cInBcIiB2YXJpYW50PVwiYm9keVNtYWxsXCIgdG9uZT1cIm11dGVkXCI+5pys5Zyw55Sf5oiQ55qE55+t6KeG6aKR77yM5Y+q55So5LqO6aqM6K+B5pKt5pS+5pON5L2c44CCPC9UeXBvZ3JhcGh5PjwvZGl2PjxkaXYgY2xhc3NOYW1lPVwibXQtcmF0aW5nXCI+PFR5cG9ncmFwaHkgYXM9XCJoM1wiIHZhcmlhbnQ9XCJoMlwiPue7mei/measoeS9k+mqjOaJk+WIhjwvVHlwb2dyYXBoeT48ZGl2IG9uQ2xpY2tDYXB0dXJlPXsoZXZlbnQpID0+IHsgY29uc3QgdGFyZ2V0ID0gZXZlbnQudGFyZ2V0IGluc3RhbmNlb2YgRWxlbWVudCA/IGV2ZW50LnRhcmdldC5jbG9zZXN0KCcuZWR1LXBhZ2UtcmF0aW5nLXN0YXJzIGJ1dHRvbicpIDogbnVsbDsgaWYgKHRhcmdldCkgeyBjb25zdCBtYXRjaCA9IHRhcmdldC5nZXRBdHRyaWJ1dGUoJ2FyaWEtbGFiZWwnKT8ubWF0Y2goLyhcXGQpLyk7IGlmIChtYXRjaCkgcmVjb3JkKHBhZ2VJZHNbM10sICdwYWdlX3JhdGluZycsIHsgcmF0aW5nOiBOdW1iZXIobWF0Y2hbMV0pLCBwYWdlX2tleTogJ21lbW9yeS10ZXN0LWVuZGluZycgfSk7IH0gfX0+PFBhZ2VSYXRpbmcgcGFnZUtleT1cIm1lbW9yeS10ZXN0LWVuZGluZ1wiIC8+PC9kaXY+PFR5cG9ncmFwaHkgYXM9XCJwXCIgdmFyaWFudD1cImJvZHlTbWFsbFwiIHRvbmU9XCJtdXRlZFwiPuivhOWIhuWQju+8jOS4iuaWueKAnOacgOi/keWGmeWFpeKAneS8muaYvuekuuahpeaOpee7k+aenOOAgjwvVHlwb2dyYXBoeT48L2Rpdj48L2Rpdj5cbiAgICA8L0NhbnZhcz59XG4gICAgPG5hdiBjbGFzc05hbWU9XCJtdC1uYXZpZ2F0aW9uXCIgYXJpYS1sYWJlbD1cIua1i+ivlemhtemdouWvvOiIqlwiPjxCdXR0b24gZGlzYWJsZWQ9e3BhZ2UgPT09IDB9IG9uQ2xpY2s9eygpID0+IGNoYW5nZVBhZ2UocGFnZSAtIDEpfT7kuIrkuIDpobU8L0J1dHRvbj48VHlwb2dyYXBoeSBhcz1cInNwYW5cIiB2YXJpYW50PVwiYm9keVNtYWxsXCIgdG9uZT1cIm11dGVkXCI+e3BhZ2UgKyAxfSAvIDQgwrcge01FTU9SWV9NT0RVTEVfSUR9PC9UeXBvZ3JhcGh5PjxCdXR0b24gdmFyaWFudD1cInByaW1hcnlcIiBkaXNhYmxlZD17cGFnZSA9PT0gM30gb25DbGljaz17KCkgPT4gY2hhbmdlUGFnZShwYWdlICsgMSl9PuS4i+S4gOmhtTwvQnV0dG9uPjwvbmF2PlxuICA8L01vZHVsZVNoZWxsPjtcbn1cbiJdLCJmaWxlIjoiQzovVXNlcnMvT2NlYW4vRG9jdW1lbnRzL0dpdEh1Yi9pbnR1aXRpdmUtZGVlcC1sZWFybmluZy9tb2R1bGVzL01lbW9yeS1UZXN0L0d1aWRlUGFnZS50c3gifQ==

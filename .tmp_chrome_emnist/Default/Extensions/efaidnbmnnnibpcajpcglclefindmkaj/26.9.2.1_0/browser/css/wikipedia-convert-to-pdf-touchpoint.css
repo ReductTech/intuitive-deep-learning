@@ -1,0 +1,18 @@
+/*************************************************************************
+* ADOBE CONFIDENTIAL
+* ___________________
+*
+*  Copyright 2015 Adobe Systems Incorporated
+*  All Rights Reserved.
+*
+* NOTICE:  All information contained herein is, and remains
+* the property of Adobe Systems Incorporated and its suppliers,
+* if any.  The intellectual and technical concepts contained
+* herein are proprietary to Adobe Systems Incorporated and its
+* suppliers and are protected by all applicable intellectual property laws,
+* including trade secret and or copyright laws.
+* Dissemination of this information or reproduction of this material
+* is strictly forbidden unless prior written permission is obtained
+* from Adobe Systems Incorporated.
+**************************************************************************/
+.wikipedia-convert-to-pdf-touchpoint-container{position:relative}.acrobat-convert-to-pdf-touch-point{align-items:center;color:var(--color-progressive,#36c);cursor:pointer;display:inline-flex;font-weight:400;gap:6px;text-decoration:none}.acrobat-convert-to-pdf-touch-point:visited{color:var(--color-progressive,#36c)}.acrobat-convert-to-pdf-touch-point:hover{border-bottom-color:var(--border-color-base,#a2a9b1);text-decoration:none}.acrobat-convert-to-pdf-touch-point:focus-visible{border-bottom-color:transparent;outline:2px solid var(--color-progressive,#36c);outline-offset:1px}.acrobat-convert-to-pdf-touch-point:focus:not(:focus-visible){border-bottom-color:transparent;outline:none}.wikipedia-convert-to-pdf-touchpoint-icon{flex-shrink:0;height:16px;width:16px}.acrobat-convert-to-pdf-touch-point-loader{display:none;flex-shrink:0}.acrobat-convert-to-pdf-touch-point-text{display:inline-block;line-height:inherit}.acrobat-convert-to-pdf-touch-point-tooltip{background-color:#202122;border-radius:2px;box-sizing:border-box;color:#fff;display:block;font-family:sans-serif;font-size:12px;font-weight:400;left:50%;line-height:16px;max-width:min(220px,calc(100vw - 24px));opacity:0;padding:4px 8px;pointer-events:none;position:absolute;text-align:center;top:calc(100% + 6px);transform:translateX(-50%);transition:opacity .1s ease;white-space:normal;width:max-content;z-index:100}.wikipedia-convert-to-pdf-touchpoint-container:focus-within>.acrobat-convert-to-pdf-touch-point-tooltip,.wikipedia-convert-to-pdf-touchpoint-container:hover>.acrobat-convert-to-pdf-touch-point-tooltip{opacity:1}.wikipedia-convert-to-pdf-touchpoint-container.loading .acrobat-convert-to-pdf-touch-point{color:var(--color-base,#202122)!important;cursor:default;pointer-events:none}.wikipedia-convert-to-pdf-touchpoint-container.loading .acrobat-convert-to-pdf-touch-point:hover{border-bottom-color:transparent}.wikipedia-convert-to-pdf-touchpoint-container.loading .wikipedia-convert-to-pdf-touchpoint-icon{display:none}.wikipedia-convert-to-pdf-touchpoint-container.loading .acrobat-convert-to-pdf-touch-point-loader{display:flex;height:16px;width:16px}.wikipedia-convert-to-pdf-touchpoint-fte-active .acrobat-convert-to-pdf-touch-point-tooltip{display:none!important}

@@ -1,0 +1,18 @@
+/*************************************************************************
+* ADOBE CONFIDENTIAL
+* ___________________
+*
+*  Copyright 2015 Adobe Systems Incorporated
+*  All Rights Reserved.
+*
+* NOTICE:  All information contained herein is, and remains
+* the property of Adobe Systems Incorporated and its suppliers,
+* if any.  The intellectual and technical concepts contained
+* herein are proprietary to Adobe Systems Incorporated and its
+* suppliers and are protected by all applicable intellectual property laws,
+* including trade secret and or copyright laws.
+* Dissemination of this information or reproduction of this material
+* is strictly forbidden unless prior written permission is obtained
+* from Adobe Systems Incorporated.
+**************************************************************************/
+.outlook-acrobat-touch-point{align-items:center;border-radius:2px;cursor:pointer;display:flex;gap:4px;height:32px;justify-content:center;padding-left:6px;padding-right:6px;pointer-events:all;position:relative}.outlook-acrobat-touch-point:hover{background:#f0f0f0}.outlook-acrobat-touch-point.fte-hover:hover{background:none!important}.outlook-acrobat-touch-point.selected,.outlook-acrobat-touch-point:active{background:#ebebeb}.outlook-acrobat-touch-point:focus-visible{height:27px;outline:1px solid #848484}.outlook-acrobat-touch-point.new-header-position{padding:2px 14px}.acrobat-icon{height:16px;width:16px}.acrobat-icon,.acrobat-text{display:inline;vertical-align:middle!important}.acrobat-text{color:#424242;font-family:Segoe UI,sans-serif;font-size:14px;font-weight:400;letter-spacing:0;line-height:100%}.outlook-acrobat-message-view-touchpoint{box-sizing:border-box;margin-left:-28px;margin-top:-9px}.outlook-acrobat-list-view-touchpoint,.outlook-acrobat-message-view-touchpoint{align-items:center;cursor:pointer;display:inline-flex;flex-shrink:0;height:18px;justify-content:center;width:18px}.outlook-acrobat-list-view-touchpoint{line-height:0;margin-right:-4px;vertical-align:middle}.outlook-acrobat-list-view-touchpoint-badge,.outlook-acrobat-message-view-touchpoint-badge{align-items:center;background-color:#b30b00;border-radius:4px;box-sizing:border-box;display:flex;height:18px;justify-content:center;width:18px}.outlook-acrobat-list-view-touchpoint:hover .outlook-acrobat-list-view-touchpoint-badge,.outlook-acrobat-message-view-touchpoint:hover .outlook-acrobat-message-view-touchpoint-badge{background-color:#811b0e}.outlook-acrobat-touchpoint-tooltip{background-color:#292929;border-radius:6px;color:#fff;font-family:AdobeClean-Regular,Segoe UI,sans-serif;font-size:9px;font-weight:400;line-height:12px;padding:3px 8px;pointer-events:none;position:fixed;text-wrap:nowrap;z-index:2147483647}.outlook-acrobat-touchpoint-tooltip:after{border-left:4px solid transparent;border-right:4px solid transparent;border-top:4px solid #292929;content:"";height:0;left:var(--tooltip-arrow-left,50%);position:absolute;top:100%;transform:translateX(-50%);width:0}.outlook-acrobat-list-view-touchpoint-icon,.outlook-acrobat-message-view-touchpoint-icon{display:block;height:12px;width:12px}.outlook-acrobat-list-view-touchpoint:focus-visible .outlook-acrobat-list-view-touchpoint-badge,.outlook-acrobat-message-view-touchpoint:focus-visible .outlook-acrobat-message-view-touchpoint-badge{background-color:#811b0e}@media (prefers-color-scheme:dark){.outlook-acrobat-touchpoint-tooltip{background-color:#3d3d3d}.outlook-acrobat-touchpoint-tooltip:after{border-top-color:#3d3d3d}}

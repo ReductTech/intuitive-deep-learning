@@ -1,0 +1,40 @@
+{
+  "type": "object",
+  "properties": {
+    "OpenHelpx": {
+      "title": "Open helpx tab.",
+      "description": "If set to false then it won't open helpx.",
+      "type": "string"
+    },
+    "UsageMeasurement": {
+      "title": "Turn on/off usage Analytics",
+      "description": "To disable usage measurement, set UsageMeasurement to false in the group policy.",
+      "type": "string"
+    },
+    "UninstallPopup": {
+      "title": "Show/Hide Uninstall popup for free users",
+      "description": "To disable uninstall popup after user becomes free, set UninstallPopup to false",
+      "type": "string"
+    },
+    "DisableGenAI": {
+      "title": "Disable GenAI features",
+      "description": "To disable GenAI features, set DisableGenAI to true",
+      "type": "string"
+    },
+    "DisableWhatsNewAutoOpen": {
+      "title": "Disable auto-opening of What's New page",
+      "description": "To disable the auto-opening of the What's New page, set DisableWhatsNewAutoOpen to true",
+      "type": "string"
+    },
+    "DisableExpress": {
+      "title": "Disable Express features",
+      "description": "To disable Express features for Edit Image, set DisableExpress to true.",
+      "type": "string"
+    },
+    "DisableShareTextToWhatsApp": {
+      "title": "Disable Share text to WhatsApp option",
+      "description": "To disable the \"Share text to WhatsApp\" option in the PDF viewer context menu, set DisableShareTextToWhatsApp to true.",
+      "type": "string"
+    }
+  }
+}

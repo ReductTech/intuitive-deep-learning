@@ -1,0 +1,1778 @@
+{
+   "ConvertVerbDescription": {
+      "message": "Převádějte dokumenty z a do formátu PDF."
+   },
+   "Disable": {
+      "message": "Zakázat"
+   },
+   "EditVerbDescription": {
+      "message": "Přeskupujte, odstraňujte nebo otáčejte stránky v souborech PDF."
+   },
+   "Enable": {
+      "message": "Povolit"
+   },
+   "LearnMoreURL": {
+      "message": "https://helpx.adobe.com/cz/acrobat/kb/acrobat-pro-aip-for-chrome.html"
+   },
+   "LearnMoreURLEdge": {
+      "message": "https://helpx.adobe.com/cz/acrobat/kb/acrobat-pro-aip-for-edge.html"
+   },
+   "LocalFileAccessAndSummaryCoachmarkButton": {
+      "message": "Povolit přehledy"
+   },
+   "LocalFileAccessAndSummaryCoachmarkSubtext": {
+      "message": "V závislosti na dostupných kreditech"
+   },
+   "acrobatEmbeddedTouchPointPreferenceDescription": {
+      "message": "Zástupce můžete použít k otevření souborů PDF v rámci rozšíření pro snadné úpravy, shrnutí, ukládání atd."
+   },
+   "acrobatEmbeddedTouchPointPreferenceTitle": {
+      "message": "Zobrazení zástupce aplikace Acrobat ve vložených webových souborech PDF"
+   },
+   "acrobatGdriveTripleDotMenuTouchPointText": {
+      "message": "Otevřít v programu Acrobat"
+   },
+   "acrobatGmailFteToolTipButton": {
+      "message": "Chápu"
+   },
+   "acrobatGmailFteToolTipDescription": {
+      "message": "Upravujte, převádějte formát, komentujte a podepisujte – přímo v prohlížeči Chrome s aplikací Acrobat"
+   },
+   "acrobatGmailFteToolTipTitle": {
+      "message": "Otevřít toto PDF v aplikaci Acrobat"
+   },
+   "acrobatGsuiteFteToolTipButton": {
+      "message": "Chápu"
+   },
+   "acrobatGsuiteFteToolTipButtonDV": {
+      "message": "OK"
+   },
+   "acrobatGsuiteFteToolTipButtonNonDV": {
+      "message": "OK"
+   },
+   "acrobatGsuiteFteToolTipDescription": {
+      "message": "Upravujte, převádějte formát, komentujte a podepisujte – přímo v prohlížeči Chrome s aplikací Acrobat"
+   },
+   "acrobatGsuiteFteToolTipDescriptionDV": {
+      "message": "Vyzkoušejte nástroje pro práci s PDF, jako jsou úpravy, poznámky, převod formátu a e-podpisy, v $surfaceName$, a to tím, že Acrobat nastavíte jako výchozí prohlížeč PDF.",
+      "placeholders": {
+         "surfaceName": {
+            "content": "$1"
+         }
+      }
+   },
+   "acrobatGsuiteFteToolTipDescriptionNonDV": {
+      "message": "Vyzkoušejte nástroje pro práci s PDF aplikace Acrobat, jako jsou úpravy, poznámky, převod formátu a e-podpisy – přímo z $surfaceName$.",
+      "placeholders": {
+         "surfaceName": {
+            "content": "$1"
+         }
+      }
+   },
+   "acrobatGsuiteFteToolTipTitle": {
+      "message": "Otevřít toto PDF v aplikaci Acrobat"
+   },
+   "acrobatGsuiteFteToolTipTitleDV": {
+      "message": "Otevírat všechny soubory PDF v aplikaci Adobe Acrobat"
+   },
+   "acrobatGsuiteFteToolTipTitleNonDV": {
+      "message": "Otevřete toto PDF v aplikaci Adobe Acrobat"
+   },
+   "acrobatGsuiteTouchPointPreferenceDescription": {
+      "message": "Přidejte ikony aplikace Acrobat do služeb Gmail a Disk Google, a rychle tak otevírejte soubory PDF v aplikaci Acrobat s přístupem k nástrojům PDF."
+   },
+   "acrobatGsuiteTouchPointPreferenceTitle": {
+      "message": "Integrujte aplikaci Acrobat do služeb Gmail a Disk Google"
+   },
+   "acrobatLinkedInPDFTouchPointPreferenceDescription": {
+      "message": "Integrujte aplikaci Acrobat s webovými stránkami, jako jsou Gmail, Disk Google, Outlook a LinkedIn, a získejte snadný přístup k nástrojům PDF."
+   },
+   "acrobatTouchPointInOtherSitesPrefDescription": {
+      "message": "Integrujte aplikaci Acrobat s webovými stránkami, jako jsou Gmail, Disk Google, Outlook, LinkedIn a další, a získejte snadný přístup k nástrojům PDF."
+   },
+   "acrobatTouchPointInOtherSitesPreferenceDescription": {
+      "message": "Integrujte aplikaci Acrobat s webovými stránkami, včetně služeb Gmail a Disk Google, a získejte snadný přístup k nástrojům PDF."
+   },
+   "acrobatTouchPointInOtherSitesPreferenceTitle": {
+      "message": "Zobrazit možnosti aplikace Acrobat na jiných webových stránkách"
+   },
+   "acrobatTouchPointInOtherSurfacesPreferenceDescription": {
+      "message": "Integrujte aplikaci Acrobat s webovými stránkami, včetně služeb Gmail, Disk Google a Outlook, a získejte snadný přístup k nástrojům PDF."
+   },
+   "addEffectsImageContextMenuV2ChatGPT": {
+      "message": "Přidat efekty"
+   },
+   "addWebpageToExistingPdfSpaceContextMenu": {
+      "message": "Přidat webovou stránku do stávajícího PDF Prostoru..."
+   },
+   "addWebpageToExistingStudySpaceContextMenu": {
+      "message": "Přidat webovou stránku do stávajícího Studentského prostoru…"
+   },
+   "addWebpageToNewPdfSpaceContextMenu": {
+      "message": "Přidat webovou stránku do nového PDF Prostoru..."
+   },
+   "addWebpageToNewStudySpaceContextMenu": {
+      "message": "Přidat webovou stránku do nového Studentského prostoru…"
+   },
+   "addWebpageToProjectContextMenuTitle": {
+      "message": "Přidat do PDF Prostoru..."
+   },
+   "addWebpageToProjectFailed": {
+      "message": "Nezdařilo se přidat webovou stránku do PDF Prostoru"
+   },
+   "addWebpageToProjectFailedStudy": {
+      "message": "Nezdařilo se přidat webovou stránku do Studentského prostoru"
+   },
+   "addWebpageToProjectIngestionStarted": {
+      "message": "Přidáváme tuto webovou stránku do vašeho PDF prostoru. Až bude připravena dáme vám vědět."
+   },
+   "addWebpageToProjectIngestionStartedStudy": {
+      "message": "Přidáváme tuto webovou stránku do vašeho Studentského prostoru. Až bude připravena dáme vám vědět."
+   },
+   "addWebpageToProjectSuccess": {
+      "message": "Webové stránky přidány do kolekce $collectionName$",
+      "placeholders": {
+         "collectionName": {
+            "content": "$1"
+         }
+      }
+   },
+   "addWebpageToProjectViewAction": {
+      "message": "Zobrazit PDF Prostor"
+   },
+   "addWebpageToProjectViewActionStudy": {
+      "message": "Zobrazit Studentský prostor"
+   },
+   "addWebpageUpsellContactAdminMessage": {
+      "message": "Chcete-li tuto funkci povolit, obraťte se na správce."
+   },
+   "adobeAcrobatParentMenuTitle": {
+      "message": "Adobe Acrobat: Vytvářejte a upravujte soubory PDF a PDF Prostory"
+   },
+   "adobeAcrobatParentMenuTitleStudySpace": {
+      "message": "Adobe Acrobat: Vytvářejte a upravujte soubory PDF a Studentského prostory"
+   },
+   "adobeYoloErrorMessage": {
+      "message": "Je nám líto, tento odkaz je neplatný"
+   },
+   "adobeYoloMessage": {
+      "message": "Přihlašování do aplikace Acrobat..."
+   },
+   "aiAcBody": {
+      "message": "Rychle shrňte webové stránky a získejte klíčové poznatky pomocí nástroje Acrobat AI Asistent."
+   },
+   "aiAcHeader": {
+      "message": "Zvládněte více s rozšířením aplikace Acrobat"
+   },
+   "analyticsOptinTitle": {
+      "message": "Odeslání dat o využití"
+   },
+   "appearancePrefDesc": {
+      "message": "Přepínání mezi tmavým a světlým motivem"
+   },
+   "appearancePrefOp1": {
+      "message": "Použít systémové nastavení"
+   },
+   "appearancePrefOp2": {
+      "message": "Tmavý režim"
+   },
+   "appearancePrefOp3": {
+      "message": "Světlý režim"
+   },
+   "appearancePrefTitle": {
+      "message": "Nastavení tmavého režimu"
+   },
+   "askAIAssistant": {
+      "message": "Zeptat se AI Asistenta"
+   },
+   "askAIAssistantContextMenu": {
+      "message": "Zeptejte se AI Asistenta na webové stránky"
+   },
+   "askAIAssistantSelectedContent": {
+      "message": "Zeptat se AI Asistenta"
+   },
+   "askAssistantBannerContentText": {
+      "message": "Získejte rychlé přehledy a klíčové informace z webových stránek s AI Asistentem"
+   },
+   "askAssistantBannerTitle": {
+      "message": "AI Asistent pro webové stránky"
+   },
+   "autoEnhanceImageContextMenuV2ChatGPT": {
+      "message": "Automaticky vylepšit"
+   },
+   "bypassGenAIWebpageEligibilityDescription": {
+      "message": "Pokud je tato možnost povolena, budou funkce generativní AI dostupné na všech webových stránkách bez ohledu na kontroly způsobilosti. Toto nastavení je dostupné pouze pro interní uživatele Adobe."
+   },
+   "bypassGenAIWebpageEligibilityTitle": {
+      "message": "Povolit AI Asistenta pro webové stránky na všech stránkách"
+   },
+   "canQuesBriefOverview": {
+      "message": "Vytvoř stručný přehled tohoto článku"
+   },
+   "canQuesCreateFAQ": {
+      "message": "Vytvoř z těchto informací seznam častých dotazů"
+   },
+   "canQuesDraftEmail": {
+      "message": "Vypracuj e-mail shrnující klíčové body"
+   },
+   "canQuesImpTopics": {
+      "message": "Vypiš všechna důležitá témata a klíčová slova"
+   },
+   "canQuesSummarise": {
+      "message": "Souhrn článku"
+   },
+   "cancel": {
+      "message": "Zrušit"
+   },
+   "chatgptCanvasConvertToPDF": {
+      "message": "Převést do PDF"
+   },
+   "chatgptCanvasConvertToPDFTooltip": {
+      "message": "Konvertovat a otevřít v aplikaci Acrobat."
+   },
+   "chatgptCanvasFteDescription": {
+      "message": "Převádějte chaty do souborů PDF pomocí aplikace Acrobat a upravujte je v prohlížeči."
+   },
+   "chatgptCanvasFteTitle": {
+      "message": "Převést do PDF pomocí aplikace Adobe Acrobat"
+   },
+   "chatgptConvertToPDF": {
+      "message": "Převést chat na PDF"
+   },
+   "chatgptConvertToPDFFteDescription": {
+      "message": "Převádějte chaty do souborů PDF pomocí aplikace Acrobat a upravujte je v prohlížeči."
+   },
+   "chatgptConvertToPDFFteTitle": {
+      "message": "Převést do PDF pomocí aplikace Adobe Acrobat"
+   },
+   "chatgptConvertToPDFTooltip": {
+      "message": "Konvertovat a otevřít v aplikaci Acrobat."
+   },
+   "chatgptDeepResearchDefaultTitle": {
+      "message": "Hluboký výzkum ChatGPT"
+   },
+   "chatgptDefaultTitleText": {
+      "message": "ChatGPT"
+   },
+   "chatgptLongChatInterrupt": {
+      "message": "Skrolování bylo přerušeno. Zkuste to znovu bez klikání, skrolování nebo přepínání karet."
+   },
+   "chatgptLongChatPhase1Desc": {
+      "message": "Tato stránka před převodem do PDF automaticky skroluje a načte celý chat."
+   },
+   "chatgptLongChatPhase1Title": {
+      "message": "Zjištěna dlouhá konverzace..."
+   },
+   "chatgptLongChatPhase2Desc": {
+      "message": "Neklikejte, neskrolujte ani nepřepínejte karty. To by zrušilo proces."
+   },
+   "chatgptLongChatPhase2Title": {
+      "message": "Načítání konverzace..."
+   },
+   "chatgptLongChatPhase3Desc": {
+      "message": "Převod začne na nové kartě."
+   },
+   "chatgptLongChatPhase3Title": {
+      "message": "Už to skoro je..."
+   },
+   "chatgptResponseExportToPDF": {
+      "message": "Převést do PDF"
+   },
+   "chatgptResponseExportToPDFTooltip": {
+      "message": "Převeďte tuto odpověď do PDF, aby se dala upravit nebo sdílet."
+   },
+   "chatgptResponseFteDescription": {
+      "message": "Převádějte odpovědi služby ChatGPT do PDF přímo pomocí rozšíření Adobe Acrobat."
+   },
+   "chatgptResponseFteTitle": {
+      "message": "Převést jakoukoli odpověď do formátu PDF"
+   },
+   "closeButton": {
+      "message": "Zavřít"
+   },
+   "clusterBeta": {
+      "message": "Beta"
+   },
+   "clusterDevelop": {
+      "message": "Vyvinout"
+   },
+   "clusterRelease": {
+      "message": "Uvolnit"
+   },
+   "conversionErrorDescription": {
+      "message": "Ohlaste to a my se podíváme, co se nepovedlo."
+   },
+   "conversionErrorDocumentTitle": {
+      "message": "Chyba"
+   },
+   "conversionErrorGoToAcrobat": {
+      "message": "Přejděte do aplikace Acrobat"
+   },
+   "conversionErrorReportError": {
+      "message": "Nahlásit chybu"
+   },
+   "conversionErrorTitle": {
+      "message": "Soubor nelze převést"
+   },
+   "convertToPDFFTEBody": {
+      "message": "Převeďte $surfaceName$ do PDF přímo pomocí rozšíření aplikace Adobe Acrobat a nástrojů pro přístup k úpravám, podepisování a dalším funkcím.",
+      "placeholders": {
+         "surfaceName": {
+            "content": "$1"
+         }
+      }
+   },
+   "convertToPDFFTEHeading": {
+      "message": "Převést $docTypeName$ do formátu PDF",
+      "placeholders": {
+         "docTypeName": {
+            "content": "$1"
+         }
+      }
+   },
+   "convertToPDFTouchPointTooltip": {
+      "message": "Konvertovat a otevřít v aplikaci Acrobat."
+   },
+   "convertToPdf": {
+      "message": "Převést do PDF"
+   },
+   "convertToPdfErrorToastMessage": {
+      "message": "Soubor nelze převést do formátu PDF."
+   },
+   "convertToPdfPasswordProtectedError": {
+      "message": "Soubory chráněné heslem nelze převést do PDF"
+   },
+   "convertToPdfTabCloseErrorToastMessage": {
+      "message": "Soubor nelze převést. Během převodu ponechte kartu Acrobat otevřenou a zkuste to znovu."
+   },
+   "convertToPdfToastMessage": {
+      "message": "Probíhá převod souboru. Ponechte kartu Acrobat otevřenou a budete upozorněni, až bude připravena."
+   },
+   "convertToPdfUsingAcrobatTooltip": {
+      "message": "Převod dokumentu do PDF pomocí aplikace Acrobat"
+   },
+   "convertWebpageToPDFContextMenu": {
+      "message": "Převést webovou stránku do PDF"
+   },
+   "convertedTabTitle": {
+      "message": "Soubor byl převeden"
+   },
+   "convertingInNewTabKeepOpenTooltip": {
+      "message": "Převod probíhá v novém okně. Ponechte kartu Acrobat otevřenou."
+   },
+   "convertingTabTitle": {
+      "message": "Převádění souboru"
+   },
+   "convertingTooltip": {
+      "message": "Soubor se převádí na nové kartě. Oznámíme vám, až bude připraven."
+   },
+   "convertingTouchPointText": {
+      "message": "Převádí se..."
+   },
+   "cropAndResizeImageContextMenuV2ChatGPT": {
+      "message": "Oříznout a změnit velikost"
+   },
+   "cropImageContextMenu": {
+      "message": "Oříznout obrázek"
+   },
+   "dcWebBookmarkTitle": {
+      "message": "Domovská stránka aplikace Adobe Acrobat"
+   },
+   "directFlowErrorTabTitle": {
+      "message": "Chyba"
+   },
+   "directFlowNotificationButtonText": {
+      "message": "Přejděte do souboru"
+   },
+   "directFlowNotificationTitle": {
+      "message": "Soubor je připraven"
+   },
+   "directFlowNotificationTitlePlural": {
+      "message": "Soubory jsou připraveny"
+   },
+   "doNotShowButton": {
+      "message": "Příště nezobrazovat"
+   },
+   "domainPreferenceTitle": {
+      "message": "Webové stránky, kde je karta AI Asistenta skrytá"
+   },
+   "downloadBannerContinue": {
+      "message": "Zapnout"
+   },
+   "downloadBannerText": {
+      "message": "Otevírejte všechny stažené soubory PDF v aplikaci Acrobat nastavením aplikace jako výchozího prohlížeče PDF v prohlížeči Chrome"
+   },
+   "editImageContextMenu": {
+      "message": "Upravit obrázek"
+   },
+   "editImageMoreOptionsFteDescription": {
+      "message": "Převádějte obrázky do PDF nebo je upravujte přímo v prohlížeči pomocí aplikací Acrobat a Adobe Express."
+   },
+   "editImageMoreOptionsFteTitle": {
+      "message": "Převádějte a upravujte obrázky"
+   },
+   "editMegaVerbText": {
+      "message": "Upravit"
+   },
+   "effectsImageContextMenu": {
+      "message": "Použít efekty"
+   },
+   "embeddedPDFHideIconForNow": {
+      "message": "Prozatím skrýt ikonu"
+   },
+   "embeddedPDFManagePreferences": {
+      "message": "Spravovat předvolby"
+   },
+   "embeddedPDFOpenInAcrobatTooltip": {
+      "message": "Otevřít v aplikaci Acrobat"
+   },
+   "embeddedPDFOpenPDFInAcrobat": {
+      "message": "Otevřít PDF v Acrobatu"
+   },
+   "embeddedPDFTouchPointFTEBody": {
+      "message": "Provádějte úpravy, vytvářejte souhrny a více přímo z rozšíření aplikace Acrobat. Tohoto zástupce můžete kdykoli skrýt v nabídce Předvolby."
+   },
+   "embeddedPDFTouchPointFTEHeader": {
+      "message": "Otevřete toto PDF v aplikaci Adobe Acrobat"
+   },
+   "enableGenAIFeaturesDescription": {
+      "message": "Soubor bude zpracován v cloudu, aby bylo možné využívat generativní AI, když použijete příslušnou funkci. Vypnutím této možnosti zabráníte zpracování souboru a zakážete generativní AI. Můžete ji kdykoli znovu aktivovat."
+   },
+   "enableGenAIFeaturesTitle": {
+      "message": "Povolit funkce generativní AI v aplikaci Acrobat"
+   },
+   "envDev": {
+      "message": "Vývoj"
+   },
+   "envLocalDev": {
+      "message": "Místní vývoj"
+   },
+   "envProd": {
+      "message": "Produkce"
+   },
+   "envStage": {
+      "message": "Fáze"
+   },
+   "envTest": {
+      "message": "Testovat"
+   },
+   "errorBoundaryDescription": {
+      "message": "Vyskytla se neočekávaná chyba. Zkuste to znovu."
+   },
+   "errorBoundaryRetryButton": {
+      "message": "Zkusit znovu"
+   },
+   "errorBoundaryTitle": {
+      "message": "Došlo k chybě"
+   },
+   "explainSelectedContent": {
+      "message": "Vysvětlit pomocí AI"
+   },
+   "expressContextualFteCtaLabel": {
+      "message": "Zavřít"
+   },
+   "expressContextualFteDescription": {
+      "message": "Ořezávejte, odstraňujte pozadí, upravujte barvy a více v aplikaci Adobe Acrobat, s využitím služby Adobe Express."
+   },
+   "expressContextualFteTitle": {
+      "message": "Upravujte obrázky rychle a snadno"
+   },
+   "expressDropdownMenuTitle": {
+      "message": "Adobe Acrobat"
+   },
+   "expressDropdownMenuTooltip": {
+      "message": "Snadno ořezávejte, odstraňujte pozadí a více. Využívá aplikaci Adobe Express."
+   },
+   "expressEditImageParentContextMenu": {
+      "message": "Upravit obrázek"
+   },
+   "expressEditImagePoweredByExpressContextMenu": {
+      "message": "Využívá technologii Adobe Express"
+   },
+   "expressExportOptionsDownloadLabel": {
+      "message": "Stáhnout"
+   },
+   "expressExportOptionsSaveLabel": {
+      "message": "Uložit"
+   },
+   "expressFTEDescription": {
+      "message": "Kliknutím pravým tlačítkem můžete obrázek oříznout, odstranit pozadí nebo upravit s využitím umělé inteligence."
+   },
+   "expressFTEFooter": {
+      "message": "Přes \u003Cb>Adobe Acrobat\u003C/b>"
+   },
+   "expressFTETitle": {
+      "message": "Upravit obrázek pomocí aplikace Adobe Express"
+   },
+   "expressHideforSession": {
+      "message": "Prozatím skrýt"
+   },
+   "expressManageinSettings": {
+      "message": "Předvolby"
+   },
+   "expressPopoverFTEDescription": {
+      "message": "Kliknutím pravým tlačítkem na libovolný obrázek online rychle odstraníte pozadí, oříznete ho nebo celkově proměníte pomocí AI v aplikaci Adobe Express"
+   },
+   "expressPopoverFTETitle": {
+      "message": "Upravujte snímky přímo v prohlížeči"
+   },
+   "expressPublishModalTitle": {
+      "message": "Stahování obrázku..."
+   },
+   "expressTouchpointPreferenceDescription": {
+      "message": "Rozšíření Adobe Acrobat umožňuje upravovat obrázky pomocí aplikace Adobe Express. Vypnutím této funkce tuto funkci odstraníte. Můžete ji kdykoli znovu aktivovat."
+   },
+   "expressTouchpointPreferenceTitle": {
+      "message": "Povolit akce aplikace Adobe Express v aplikaci Acrobat"
+   },
+   "extensionMenuTitle": {
+      "message": "Rozšíření Acrobat – zkratka ke všem vašim nástrojům PDF"
+   },
+   "fabHomeTooltipFteText": {
+      "message": "Prohlédněte si nové prostředí aplikace Acrobat přímo v prohlížeči"
+   },
+   "fabNudgeLabelArticleAbout": {
+      "message": "O čem je tento článek?"
+   },
+   "fabNudgeLabelKeyFigures": {
+      "message": "Jaké jsou hlavní číselné údaje?"
+   },
+   "fabNudgeLabelKeyTakeaways": {
+      "message": "Jaké jsou hlavní poznatky?"
+   },
+   "fabNudgeLabelKeyTerms": {
+      "message": "Co znamenají hlavní pojmy?"
+   },
+   "fabNudgeLabelMainThemes": {
+      "message": "Jaká jsou hlavní témata?"
+   },
+   "fabNudgeLabelPageAbout": {
+      "message": "O čem je tato stránka?"
+   },
+   "fabNudgeLabelSimplify": {
+      "message": "Můžeš to zjednodušit?"
+   },
+   "fabNudgePromptArticleKeyTakeaways": {
+      "message": "Jaké jsou hlavní poznatky z tohoto článku?"
+   },
+   "fabNudgePromptArticleMainThemes": {
+      "message": "Jaká jsou hlavní témata nebo argumenty v tomto článku?"
+   },
+   "fabNudgePromptArticleSimplify": {
+      "message": "Vysvětli obsah tohoto článku srozumitelným a jednoduchým jazykem."
+   },
+   "fabNudgePromptArticleSummary": {
+      "message": "Shrň, o čem tento článek je."
+   },
+   "fabNudgePromptKeyFigures": {
+      "message": "Extrahuj z této stránky hlavní fakta, čísla a data."
+   },
+   "fabNudgePromptKeyTerms": {
+      "message": "Urči a definuj hlavní pojmy nebo odborný žargon na této stránce."
+   },
+   "fabNudgePromptPageKeyTakeaways": {
+      "message": "Jaké jsou hlavní poznatky z této stránky?"
+   },
+   "fabNudgePromptPageMainThemes": {
+      "message": "Jaká jsou hlavní témata nebo argumenty na této stránce?"
+   },
+   "fabNudgePromptPageSimplify": {
+      "message": "Vysvětli obsah této stránky srozumitelným a jednoduchým jazykem."
+   },
+   "fabNudgePromptPageSummary": {
+      "message": "Shrň, o čem tato stránka je."
+   },
+   "fabPillAskAI": {
+      "message": "Zeptejte se AI na něco ohledně stránky"
+   },
+   "fabPillConvertToPDF": {
+      "message": "Převést do PDF"
+   },
+   "fabPillSummarize": {
+      "message": "Shrnutí s AI"
+   },
+   "fabPillsFteHeaderText": {
+      "message": "Zvládněte více s rozšířením aplikace Acrobat"
+   },
+   "fabPillsHeaderText": {
+      "message": "Adobe Acrobat"
+   },
+   "failToastText": {
+      "message": "Vyskytla se neznámá chyba. Zkuste to znovu později."
+   },
+   "fileReadyTabTitle": {
+      "message": "Soubor je připraven"
+   },
+   "frictionlesOfflineMessage": {
+      "message": "Kvůli obnově připojení se obraťte na správce sítě"
+   },
+   "frictionlessWidgetErrorGeneric": {
+      "message": "Během načítání se vyskytla chyba. Zkuste to prosím znovu."
+   },
+   "frictionlessWidgetErrorInitFailed": {
+      "message": "Widget se nepodařilo inicializovat. Zkuste to znovu."
+   },
+   "frictionlessWidgetErrorLoadFailed": {
+      "message": "Widget se nepodařilo načíst. Zkontrolujte prosím připojení a zkuste to znovu."
+   },
+   "frictionlessWidgetErrorLoading": {
+      "message": "Při načítání widgetu došlo k chybě"
+   },
+   "frictionlessWidgetErrorTimeout": {
+      "message": "Tuto sekci nelze načíst"
+   },
+   "frictionlessWidgetErrorTimeoutMessage": {
+      "message": "Požadavek trvá déle, než se očekávalo."
+   },
+   "frictionlessWidgetErrorUnableToLoad": {
+      "message": "Nelze načíst"
+   },
+   "frictionlessWidgetErrorUnsupportedFormat": {
+      "message": "není v podporovaném formátu"
+   },
+   "frictionlessWidgetErrorUploadFailed": {
+      "message": "Při odesílání souboru došlo k chybě"
+   },
+   "frictionlessWidgetNoConnectionTitle": {
+      "message": "Bez připojení"
+   },
+   "frictionlessWidgetOfflineMessage": {
+      "message": "Zkontrolujte připojení k internetu a zkuste to znovu."
+   },
+   "frictionlessWidgetOfflineRetryInfo": {
+      "message": "Automaticky to zkusíme ještě jednou, jakmile budete znovu online."
+   },
+   "frictionlessWidgetOfflineTitle": {
+      "message": "Jste offline"
+   },
+   "frictionlessWidgetRetryButton": {
+      "message": "Opakovat"
+   },
+   "fteDocTypeNameFile": {
+      "message": "soubor"
+   },
+   "fteDocTypeNamePresentation": {
+      "message": "prezentace"
+   },
+   "fteDocTypeNameSheet": {
+      "message": "list"
+   },
+   "fteOwnershipSideRedCardContent": {
+      "message": "Nastavte aplikaci Acrobat jako výchozí prohlížeč souborů PDF a získejte mimo jiné možnosti přidávat poznámky, vyplňovat formuláře a podepisovat."
+   },
+   "fteSideCardPrimaryHeader": {
+      "message": "Použijte aplikaci Acrobat"
+   },
+   "fteSideCardSecondaryHeader": {
+      "message": "přímo v prohližeči Chrome"
+   },
+   "gDriveDVPAppListCoachMarkContent": {
+      "message": "Zaškrtnutím políčka „Použít ve výchozím nastavení“ příště soubory PDF z Disku Google otevřete přímo v aplikaci Acrobat"
+   },
+   "gDriveDVPCoachMarkTitle": {
+      "message": "Nastavit aplikaci Acrobat jako výchozí prohlížeč"
+   },
+   "gDriveDVPManageAppCoachMarkContent": {
+      "message": "Kliknutím na možnost 'správa aplikací' můžete zobrazit, komentovat a upravovat soubory PDF otevřením všech souborů PDF Disku Google přímo v aplikaci Acrobat"
+   },
+   "gSuiteDVPAddOnDefaultDesc": {
+      "message": "Doplněk Acrobat je nyní nastaven jako výchozí"
+   },
+   "gdriveConvertToPdfFteToolTipDescription": {
+      "message": "Převádějte soubory Disku Google do PDF a upravujte je přímo v prohlížeči. Není třeba nic stahovat."
+   },
+   "gdriveConvertToPdfFteToolTipTitle": {
+      "message": "Převádějte soubory do PDF pomocí aplikace Acrobat"
+   },
+   "gdriveEditPdf": {
+      "message": "Upravit PDF"
+   },
+   "gdriveEditPdfFteToolTipDescription": {
+      "message": "Vyzkoušejte nástroje pro práci s PDF, jako jsou úpravy, poznámky, převod formátu a e-podpisy – přímo v prohlížeči."
+   },
+   "gdriveEditPdfFteToolTipTitle": {
+      "message": "Úpravy PDF v aplikaci Acrobat"
+   },
+   "gdriveImplicitDVFTEBody": {
+      "message": "Otevřete soubory PDF v rozšíření aplikace Acrobat pomocí ikony v aplikaci Disk Google. Nastavte ji jako výchozí z nabídky Více (...) aplikace Acrobat."
+   },
+   "gdriveImplicitDVFTEHeader": {
+      "message": "Prohlížejte soubory PDF v aplikaci Acrobat kdykoli"
+   },
+   "gdriveImplicitDVNotification": {
+      "message": "Soubory PDF se otevřou ve službě Disk Google."
+   },
+   "geminiChatFteDescription": {
+      "message": "Převádějte chaty do souborů PDF pomocí aplikace Adobe Acrobat a upravujte je v prohlížeči."
+   },
+   "geminiChatFteTitle": {
+      "message": "Převést do PDF pomocí aplikace Adobe Acrobat"
+   },
+   "geminiChatNotLoadedToastButtonText": {
+      "message": "Přesto pokračovat"
+   },
+   "geminiChatNotLoadedToastMessage": {
+      "message": "Některé zprávy nejsou zahrnuty. Přejděte nahoru a převeďte celý chat."
+   },
+   "geminiConvertToPDFChatTouchpointHoverTooltip": {
+      "message": "Otevřít tento chat v aplikaci Acrobat"
+   },
+   "geminiConvertToPDFChatTouchpointText": {
+      "message": "Převést chat na PDF"
+   },
+   "geminiConvertToPDFResponseTouchpointText": {
+      "message": "Převést do PDF"
+   },
+   "geminiDefaultTitleText": {
+      "message": "Gemini"
+   },
+   "geminiResponseFteDescription": {
+      "message": "Převádějte odpovědi služby Gemini do PDF přímo pomocí rozšíření Adobe Acrobat."
+   },
+   "geminiResponseFteTitle": {
+      "message": "Převést tuto odpověď do formátu PDF"
+   },
+   "genAIFabPreferenceDescription": {
+      "message": "Vždy zobrazit tlačítko Al Asistent na okraji okna prohlížeče."
+   },
+   "genAIFabPreferenceTitle": {
+      "message": "Tlačítko Al Asistenta"
+   },
+   "generativeFillImageContextMenu": {
+      "message": "Generativní výplň"
+   },
+   "genericDVPCoachMarkContent": {
+      "message": "Klikněte na možnost „Správa aplikací“, poté přejděte dolů k doplňku Acrobat a klikněte na zaškrtávací políčko „Použít ve výchozím nastavení“"
+   },
+   "getInsight": {
+      "message": "Získejte poznatky pomocí nástroje Acrobat AI Asistent"
+   },
+   "gmailConvertEmailToPDF": {
+      "message": "Převést do PDF"
+   },
+   "gmailConvertEmailToPDFFteDescription": {
+      "message": "Převeďte tělo e-mailu do PDF bez příloh a stáhněte si soubor."
+   },
+   "gmailConvertEmailToPDFFteTitle": {
+      "message": "Převést tento e-mail do PDF"
+   },
+   "gmailConvertEmailToPDFTooltip": {
+      "message": "Převeďte e-mail do PDF"
+   },
+   "gmailConvertToPdf": {
+      "message": "Převést do PDF"
+   },
+   "gmailConvertToPdfFteToolTipDescription": {
+      "message": "Převádějte soubory Gmail do PDF a upravujte je přímo v prohlížeči. Není třeba nic stahovat."
+   },
+   "gmailConvertToPdfFteToolTipTitle": {
+      "message": "Převádějte soubory do PDF pomocí aplikace Acrobat"
+   },
+   "gmailEditPdf": {
+      "message": "Upravit PDF"
+   },
+   "gmailEditPdfFteToolTipDescription": {
+      "message": "Vyzkoušejte nástroje pro práci s PDF, jako jsou úpravy, poznámky, převod formátu a e-podpisy – přímo v prohlížeči."
+   },
+   "gmailEditPdfFteToolTipTitle": {
+      "message": "Úpravy PDF v aplikaci Acrobat"
+   },
+   "gmailImplicitDVFTEBody": {
+      "message": "Otevřete soubory PDF v rozšíření aplikace Acrobat pomocí ikony v aplikaci Gmail. Nastavte ji jako výchozí z nabídky Více (...) aplikace Acrobat."
+   },
+   "gmailImplicitDVFTEHeader": {
+      "message": "Prohlížejte soubory PDF v aplikaci Acrobat kdykoli"
+   },
+   "gmailImplicitDVNotification": {
+      "message": "Přílohy PDF se otevřou v Gmailu."
+   },
+   "gmailPromptFTETooltip": {
+      "message": "Otevírejte PDF v aplikaci Acrobat a používejte nástroje jako Upravit, Podepsat a další"
+   },
+   "goToPreferences": {
+      "message": "Přejděte nabídky Předvolby"
+   },
+   "googleSheetsOrientationHeading": {
+      "message": "Orientace"
+   },
+   "googleSheetsOrientationLandscape": {
+      "message": "Na šířku"
+   },
+   "googleSheetsOrientationPortrait": {
+      "message": "Na výšku"
+   },
+   "googleSheetsScaleFitColumns": {
+      "message": "Přizpůsobit všechny sloupce na jednu stránku"
+   },
+   "googleSheetsScaleFitRows": {
+      "message": "Přizpůsobit všechny řádky na jednu stránku"
+   },
+   "googleSheetsScaleFitSheet": {
+      "message": "Přizpůsobit vše na jednu stránku"
+   },
+   "googleSheetsScaleHeading": {
+      "message": "Měřítko"
+   },
+   "googleSheetsSettingsDialogTitle": {
+      "message": "Převést do PDF"
+   },
+   "gsuiteEditWithAcrobat": {
+      "message": "Upravit s aplikací Acrobat"
+   },
+   "gsuiteOpenWithAcrobat": {
+      "message": "Otevřít v aplikaci Acrobat"
+   },
+   "hideFabForDomain": {
+      "message": "Zakázat pro tento web"
+   },
+   "hideForNow": {
+      "message": "Prozatím skrýt"
+   },
+   "imageToolsContextMenuTooltip": {
+      "message": "Možnosti úprav v aplikacích Adobe Acrobat a Adobe Express"
+   },
+   "imageToolsDropdownContextMenu": {
+      "message": "Nástroje pro úpravy"
+   },
+   "imageToolsDropdownFteDescription": {
+      "message": "Převádějte obrázky do souborů PDF pomocí aplikace Adobe Acrobat nebo je upravujte v prohlížeči pomocí aplikace Adobe Express."
+   },
+   "imageToolsDropdownFteTitle": {
+      "message": "Převádějte a upravujte obrázky v Gmailu"
+   },
+   "imageToolsDropdownFteTitleForGdrive": {
+      "message": "Převádějte a upravujte obrázky v Google Drive"
+   },
+   "insertObjectImageContextMenu": {
+      "message": "Vložit objekt"
+   },
+   "linkedInChatPDFTouchPointFTEBody": {
+      "message": "Pomocí aplikace Adobe Acrobat můžete upravovat, elektronicky podepisovat a získávat informace od AI."
+   },
+   "linkedInChatPDFTouchPointFTEHeader": {
+      "message": "Vyzkoušejte PDF nástroje aplikace Adobe Acrobat"
+   },
+   "linkedInFeedPDFTouchPointFTEBody": {
+      "message": "Upravujte, vytvářejte souhrny a více otevřením tohoto PDF v rozšíření Acrobat."
+   },
+   "linkedInFeedPDFTouchPointFTEHeader": {
+      "message": "Otevřete toto PDF v aplikaci Adobe Acrobat"
+   },
+   "linkedInOpenInAcrobat": {
+      "message": "Otevřít v aplikaci Acrobat"
+   },
+   "linkedInSummarizePDF": {
+      "message": "Shrnutí PDF"
+   },
+   "localFileAccessAndSummaryCoachmarkDescription": {
+      "message": "Získejte rychlé shrnutí založené na umělé inteligenci tím, že povolíte aplikaci Acrobat přístup k souboru."
+   },
+   "localFileAccessAndSummaryCoachmarkHeader": {
+      "message": "Získejte souhrn tohoto dokumentu"
+   },
+   "localFileAnimationCoachmarkDescription": {
+      "message": "Povolte přístup k URL adresám souborů, aby bylo možné otevírat soubory z tohoto zařízení v rozšíření Acrobat."
+   },
+   "localFileAnimationCoachmarkHeader": {
+      "message": "Zbývá poslední krok!"
+   },
+   "localFileBlockingPageOpenInChrome": {
+      "message": "Otevřít tento soubor v prohlížeči Chrome"
+   },
+   "localFileBlockingPageTitle": {
+      "message": "Povolit rozšíření Acrobat"
+   },
+   "localFileOptionDesc": {
+      "message": "Udělte rozšíření aplikace Acrobat přístup k místním adresám URL souborů, abyste mohli otevřít všechny své soubory PDF v aplikaci Acrobat v prohlížeči Chrome."
+   },
+   "localFileOptionTitle": {
+      "message": "Otevírání místních souborů PDF v aplikaci Acrobat"
+   },
+   "localFilePromptContinueButton": {
+      "message": "Pokračovat"
+   },
+   "localFilePromptDescription": {
+      "message": "Povolte aplikaci Acrobat přístup k souborům z tohoto zařízení a mějte po ruce všechny nástroje, abyste mohli rychle upravovat soubory PDF, převádět soubory a elektronicky podepisovat."
+   },
+   "localFilePromptHeader": {
+      "message": "Otevřete aplikaci Acrobat a můžete provádět úpravy, podpisy a další akce"
+   },
+   "localFileSummaryCoachmarkHeader": {
+      "message": "Už to skoro je. Povolte aplikaci Acrobat přístup k URL adresám souborů a souhrny aktivujte."
+   },
+   "localFteContinue": {
+      "message": "Přejděte do Nastavení"
+   },
+   "localFteDescription": {
+      "message": "Využijte rozšíření aplikace Acrobat na maximum a použijte jej k otevření všech souborů PDF. Povolte v nastavení rozšíření možnost Povolit přístup k URL souborů."
+   },
+   "localFteDontShowAgainText": {
+      "message": "Příště nezobrazovat"
+   },
+   "localFteTitle": {
+      "message": "Přepnout do aplikace Acrobat a otevřít místní soubory"
+   },
+   "magicScanButtonText": {
+      "message": "Nahrát pomocí aplikace Adobe Scan"
+   },
+   "magicScanConfirmCancel": {
+      "message": "Zrušit"
+   },
+   "magicScanConfirmDesc": {
+      "message": "Soubor „$filename$“ bude nahrán přímo na tuto stránku z vašeho mobilního zařízení",
+      "placeholders": {
+         "filename": {
+            "content": "$1"
+         }
+      }
+   },
+   "magicScanConfirmSkip": {
+      "message": "Příště nezobrazovat"
+   },
+   "magicScanConfirmTitle": {
+      "message": "Potvrďte odeslání"
+   },
+   "magicScanConfirmUpload": {
+      "message": "Potvrdit"
+   },
+   "magicScanExpiresIn": {
+      "message": "Zbývající čas:"
+   },
+   "magicScanOffline": {
+      "message": "Vypadá to, že zařízení je offline. Připojte se k internetu a zkuste to znovu."
+   },
+   "magicScanOverlayDescription": {
+      "message": "Naskenováním tohoto QR kódu pomocí fotoaparátu telefonu nebo tabletu nahrajete soubory přímo z mobilního zařízení."
+   },
+   "magicScanOverlayInstructions": {
+      "message": "Začněte tím, že namíříte fotoaparát telefonu na tento kód."
+   },
+   "magicScanOverlayTitle": {
+      "message": "Naskenujte a odešlete z mobilu"
+   },
+   "magicScanPreparing": {
+      "message": "Příprava dokumentu…"
+   },
+   "magicScanRefreshLabel": {
+      "message": "Obnovit"
+   },
+   "magicScanReloadQR": {
+      "message": "Kliknutím znovu načtěte kód QR"
+   },
+   "magicScanSessionClaimed": {
+      "message": "Naskenován kód QR. Pokračujte na svém mobilním zařízení."
+   },
+   "magicScanStartAgain": {
+      "message": "Začněte znovu."
+   },
+   "magicScanStatusExpired": {
+      "message": "Platnost QR kódu vypršela."
+   },
+   "magicScanStatusFailed": {
+      "message": "Skenování se nezdařilo. Opakujte akci."
+   },
+   "msWordConvertToPdfFTEBody": {
+      "message": "Převádějte dokumenty Microsoft Word do formátu PDF pomocí rozšíření Adobe Acrobat a získejte nástroje pro úpravy, podepisování a další."
+   },
+   "msWordConvertToPdfFTETitle": {
+      "message": "Převést tento dokument do PDF"
+   },
+   "msWordSaveChangesTooltip": {
+      "message": "Stiskněte $shortcut$ a uložte všechny změny, než budete pokračovat.",
+      "placeholders": {
+         "shortcut": {
+            "content": "$1"
+         }
+      }
+   },
+   "neverDisplayFab": {
+      "message": "Nikdy nezobrazovat"
+   },
+   "openInAcrobat": {
+      "message": "Otevřít v Acrobatu"
+   },
+   "optionsAutoSavedLabel": {
+      "message": "Uloženo"
+   },
+   "optionsAutoSavingLabel": {
+      "message": "Probíhá ukládání..."
+   },
+   "optionsFailurePrompt": {
+      "message": "Nemůžeme uložit vaše změny. Zkuste to znovu později"
+   },
+   "optionsSuccessPrompt": {
+      "message": "Předvolby úspěšně uloženy"
+   },
+   "optionsSuccessPromptReloadRequired": {
+      "message": "Předvolby se projeví až po opětovném načtení"
+   },
+   "outlookErrorToastDescription": {
+      "message": "Došlo k chybě. Zavřete soubor a zkuste to znovu."
+   },
+   "outlookErrorToastTitle": {
+      "message": "Soubor nelze otevřít"
+   },
+   "outlookImplicitDVFTEBody": {
+      "message": "Get access to PDF tools like edit, convert, and e-sign. Turn this off anytime from Acrobat extension Preferences."
+   },
+   "outlookImplicitDVFTEHeader": {
+      "message": "Outlook PDFs will open in Acrobat"
+   },
+   "outlookImplicitDVNotification": {
+      "message": "PDF attachments will now open in Outlook. To open them in Acrobat, select the Acrobat icon."
+   },
+   "outlookPDFTouchPointFTEBody": {
+      "message": "Upravujte, shrňte a podepisujte soubory PDF tak, že je otevřete v aplikaci Acrobat."
+   },
+   "outlookPDFTouchPointFTEHeader": {
+      "message": "Otevřete toto PDF v aplikaci Adobe Acrobat"
+   },
+   "outlookPDFTouchPointTooltip": {
+      "message": "Open in Acrobat"
+   },
+   "paywallCreditsExpiredToastMessage": {
+      "message": "Platnost vašich bezplatných kreditů na tento měsíc vypršela. Pořiďte si předplatné a pokračujte."
+   },
+   "pdfOpenInAcrobatContextMenu": {
+      "message": "Otevřít v aplikaci Acrobat"
+   },
+   "pdfOwnerShipDmbConfirmBtn": {
+      "message": "Pokračovat"
+   },
+   "pdfOwnerShipSideRedCardConfirmBtn": {
+      "message": "Pokračovat"
+   },
+   "pdfOwnershipDefSideCardcontent": {
+      "message": "Nastavte aplikaci Adobe Acrobat jako výchozí prohlížeč souborů PDF a získejte mimo jiné možnosti prohlížet, přidávat poznámky, vyplňovat formuláře a podepisovat."
+   },
+   "pdfOwnershipExploreAcrobat": {
+      "message": "Použít Acrobat v prohlížeči Chrome"
+   },
+   "pdfOwnershipExploreAcrobatEdge": {
+      "message": "Používejte Acrobat v Microsoft Edge"
+   },
+   "pdfOwnershipExploreOptionsDescription": {
+      "message": "Nastavte ve svém prohlížeči Acrobat jako výchozí aplikaci pro prohlížení souborů PDF a získáte rychlý přístup k funkcím přidávání poznámek, vyplnění a podepisování a dalším nástrojům PDF."
+   },
+   "pdfOwnershipExploreOptionsTitle": {
+      "message": "Otevřít všechny soubory PDF v aplikaci Acrobat"
+   },
+   "pdfOwnershipPromptCancel": {
+      "message": "Nyní ne"
+   },
+   "pdfOwnershipPromptContent": {
+      "message": "Pokud nastavíte aplikaci Adobe Acrobat jako svůj výchozí prohlížeč souborů PDF, můžete se soubory dělat mnohem více úkonů v prohlížeči Chrome."
+   },
+   "pdfOwnershipPromptContent2": {
+      "message": "Nastavte aplikaci Acrobat jako výchozí prohlížeč souborů PDF a pracujte se soubory PDF přímo v prohlížeči Google Chrome. Přidávejte poznámky, vyplňujte a podepisujte nebo vyzkoušejte například nástroje pro konverzi a kompresi."
+   },
+   "pdfOwnershipPromptContentEdge": {
+      "message": "Nastavte Adobe Acrobat jako výchozí prohlížeč a dělejte s PDF v prohlížeči Microsoft Edge více."
+   },
+   "pdfOwnershipPromptDeny": {
+      "message": "Ne, děkuji"
+   },
+   "pdfOwnershipPromptOk": {
+      "message": "Nastavit jako výchozí"
+   },
+   "pdfOwnershipPromptOkFullscreen": {
+      "message": "Vyzkoušet nyní"
+   },
+   "pdfReadyTabTitle": {
+      "message": "Dokument PDF připraven"
+   },
+   "pdfToWordContextMenu": {
+      "message": "Převést PDF do formátu Word"
+   },
+   "pdfToolsDropdownContextMenu": {
+      "message": "Nástroje PDF"
+   },
+   "pdfToolsFteTooltipButton": {
+      "message": "Zavřít"
+   },
+   "pdfToolsFteTooltipDescription": {
+      "message": "Otevírejte soubory PDF přímo ze služby Gmail a vyzkoušejte nástroje, jako jsou úpravy, přidávání poznámek, převod a elektronický podpis pomocí aplikace Adobe Acrobat."
+   },
+   "pdfToolsFteTooltipTitle": {
+      "message": "Prohlédněte si řadu nástrojů PDF"
+   },
+   "popupNoConnection": {
+      "message": "Žádné připojení"
+   },
+   "popupOfflineMessage": {
+      "message": "Chcete-li obnovit připojení, obraťte se na správce"
+   },
+   "preferenceAcrobatIntegrationsDescription": {
+      "message": "Nastaví aplikaci Acrobat jako výchozí prohlížeč PDF pro podporované integrace prohlížečů, jako jsou Gmail, Google Drive a další."
+   },
+   "preferenceAcrobatIntegrationsTitle": {
+      "message": "Povolit integrace aplikace Acrobat"
+   },
+   "preferenceAdobeExpressDescription": {
+      "message": "Upravujte obrázky pomocí technologie Adobe Express z rozšíření aplikace Adobe Acrobat."
+   },
+   "preferenceAdobeExpressTitle": {
+      "message": "Povolit aplikaci Adobe Express v aplikaci Acrobat"
+   },
+   "preferenceAdobeInternalConnectedAppDescription": {
+      "message": "Vyberte cílovou připojenou aplikaci pro funkce rozšíření. Toto nastavení pouze napodobuje zobrazení, funkce může být narušena."
+   },
+   "preferenceAdobeInternalConnectedAppTitle": {
+      "message": "Připojená aplikace"
+   },
+   "preferenceAdobeInternalEnvironmentDescription": {
+      "message": "Vyberte cílové prostředí pro rozšíření."
+   },
+   "preferenceAdobeInternalEnvironmentTitle": {
+      "message": "Vývojové prostředí"
+   },
+   "preferenceAdobeInternalGenAIClusterDescription": {
+      "message": "Vyberte cílový cluster pro služby GenAI."
+   },
+   "preferenceAdobeInternalGenAIClusterTitle": {
+      "message": "Cluster generativní AI"
+   },
+   "preferenceAdobeInternalTabLabel": {
+      "message": "Interní Adobe"
+   },
+   "preferenceAssistantWebPageBadgeText": {
+      "message": "Beta"
+   },
+   "preferenceAssistantWebPageContent": {
+      "message": "Získejte rychlé přehledy a klíčové informace z webových stránek s AI Asistentem"
+   },
+   "preferenceAssistantWebPageTitle": {
+      "message": "AI Asistent pro webové stránky"
+   },
+   "preferenceAutoOpenConvertedPDFDescription": {
+      "message": "Po převodu webové stránky do PDF pomocí rozšíření aplikace Acrobat se automaticky otevře převedený soubor PDF v aplikaci Acrobat."
+   },
+   "preferenceBrowserDefaultViewershipDescription": {
+      "message": "Nastavte Acrobat coby výchozí prohlížeč k otevření souborů PDF z online odkazů a služeb Gmail a Disk Google."
+   },
+   "preferenceBrowserDefaultViewershipDescriptionEdge": {
+      "message": "Nastavte Acrobat coby výchozí prohlížeč k otevření souborů PDF z online odkazů."
+   },
+   "preferenceBrowserDefaultViewershipDescriptionOutlook": {
+      "message": "Set Acrobat as your default viewer to open PDFs from online links, Gmail, Google Drive, and Microsoft Outlook."
+   },
+   "preferenceBrowserDefaultViewershipTitle": {
+      "message": "Otevírání souborů PDF v aplikaci Acrobat z prohlížeče"
+   },
+   "preferenceChromeMimeHandlerDescription": {
+      "message": "Pokud je tato funkce zapnutá, soubory PDF se otevírají v prohlížeči Adobe prostřednictvím nativního MIME-handleru prohlížeče Chrome – původní URL adresa zůstává zachována v adresním řádku. Když je tato funkce vypnutá, použije se místo toho přesměrování prostřednictvím rozšíření."
+   },
+   "preferenceChromeMimeHandlerTitle": {
+      "message": "Povolit zpracování MIME"
+   },
+   "preferenceConnectedAppsTabLabel": {
+      "message": "Připojené aplikace"
+   },
+   "preferenceDisplayThemeDescription": {
+      "message": "Vyberte tmavý režim nebo světlý režim."
+   },
+   "preferenceDisplayThemeTitle": {
+      "message": "Nastavit motiv displeje"
+   },
+   "preferenceEmbeddedPDFsTitle": {
+      "message": "Vložené PDF"
+   },
+   "preferenceErrorBoundaryRetry": {
+      "message": "Zkusit znovu"
+   },
+   "preferenceErrorBoundaryTitle": {
+      "message": "Vyskytla se chyba"
+   },
+   "preferenceGeneralTabLabel": {
+      "message": "Všeobecné"
+   },
+   "preferenceGenerativeAITabLabel": {
+      "message": "Generativní umělá inteligence"
+   },
+   "preferenceGoogleSearchToolsDescription": {
+      "message": "Povolí aplikaci Acrobat doporučit nástroje PDF, které budou v prohlížeči používány na základě vašich hledání, která nebudou odeslána společnosti Adobe."
+   },
+   "preferenceGoogleSearchToolsTitle": {
+      "message": "Zobrazit nástroje aplikace Acrobat s výsledky vyhledávání Google"
+   },
+   "preferenceGroupAccordionTitle": {
+      "message": "Rozšířená nastavení"
+   },
+   "preferenceHideAcrobatDomainListTitle": {
+      "message": "Webové stránky, na kterých je aplikace Acrobat zakázána"
+   },
+   "preferenceHideFabDomainListTitle": {
+      "message": "Webové stránky, kde je AI Asistent vypnutý"
+   },
+   "preferenceHideSummaryBarDomainListTitle": {
+      "message": "Webové stránky, kde je banner se shrnutím AI Asistenta skrytý"
+   },
+   "preferenceLanguageDescription": {
+      "message": "Vyberte preferovaný jazyk."
+   },
+   "preferenceLanguageTitle": {
+      "message": "Nastavit jazyk"
+   },
+   "preferenceLearnerExperienceDescription": {
+      "message": "Pokud je tato možnost povolena, jsou k dispozici funkce zaměřené na studenty, které vám pomohou efektivněji studovat, učit se a spravovat akademickou práci."
+   },
+   "preferenceLearnerExperienceTitle": {
+      "message": "Povolte studentský režim v aplikaci Acrobat"
+   },
+   "preferenceLinkedInTitle": {
+      "message": "LinkedIn"
+   },
+   "preferenceOfflineModeDescription": {
+      "message": "Zkontrolujte připojení k síti a zkuste to znovu."
+   },
+   "preferenceOfflineModeTitle": {
+      "message": "Aktuálně nedostupné"
+   },
+   "preferenceOnlinePDFsTitle": {
+      "message": "Online soubory PDF"
+   },
+   "preferenceOpenLocalFilesDescription": {
+      "message": "Tato možnost je spravována prohlížečem Chrome. Zapněte možnost „Povolit přístup k adresám URL“ a otevřete soubory PDF v aplikaci Acrobat."
+   },
+   "preferenceOpenLocalFilesTitle": {
+      "message": "Otevřít místní soubory v aplikaci Acrobat"
+   },
+   "preferenceOpenLocalFilesTurnOffButtonLabel": {
+      "message": "Vypnout"
+   },
+   "preferenceOpenLocalFilesTurnOnButtonLabel": {
+      "message": "Zapnout"
+   },
+   "preferenceOptinDescription": {
+      "message": "Odešlete společnosti Adobe informace o tom, jak rozšíření aplikace Acrobat používáte ke zlepšení funkcí produktu. "
+   },
+   "preferenceOptinLearnMore": {
+      "message": "Další informace"
+   },
+   "preferenceOutlookTitle": {
+      "message": "Microsoft Outlook"
+   },
+   "preferencePrivacyTabLabel": {
+      "message": "Soukromí"
+   },
+   "preferenceSaveLocationDescription": {
+      "message": "Ukládejte soubory do cloudového úložiště Adobe, ukládejte je do počítače nebo se pokaždé nechte dotázat, kam je chcete uložit."
+   },
+   "preferenceSaveLocationTitle": {
+      "message": "Nastavit umístění pro ukládání souborů"
+   },
+   "preferenceShowAIAssistantButtonDescription": {
+      "message": "Vždy zobrazit tlačítko Al Asistent na okraji okna prohlížeče."
+   },
+   "preferenceShowAIAssistantButtonTitle": {
+      "message": "Zobrazit tlačítko AI Asistenta"
+   },
+   "preferenceShowAISummaryBannerDescription": {
+      "message": "Pokud je podporován, vždy zobrazte banner se shrnutí AI Asistenta na webových stránkách."
+   },
+   "preferenceShowAISummaryBannerTitle": {
+      "message": "Zobrazit banner se shrnutím AI Asistenta"
+   },
+   "preferenceShowAcrobatAssistantShortcutDescription": {
+      "message": "Nástroje pro práci s PDF a AI Asistenta můžete spustit přímo z okraje okna prohlížeče."
+   },
+   "preferenceShowAcrobatAssistantShortcutTitle": {
+      "message": "Mějte přístup k aplikaci Acrobat v prohlížeči"
+   },
+   "preferenceShowFeatureGuidanceDescription": {
+      "message": "Nechte rozšíření aplikace Acrobat zobrazit pokyny k aktualizacím, o používání funkcí a další."
+   },
+   "preferenceShowFeatureGuidanceTitle": {
+      "message": "Zobrazit pokyny k funkcím"
+   },
+   "preferenceShowGenAIFabPillsTitle": {
+      "message": "Zobrazit možnosti AI na panelu AI Asistent"
+   },
+   "preferenceShowLessText": {
+      "message": "Zobrazit méně"
+   },
+   "preferenceShowMoreText": {
+      "message": "Zobrazit více"
+   },
+   "preferenceShowNotificationsDescription": {
+      "message": "Nechte rozšíření aplikace Acrobat zobrazovat oznámení o aktualizacích, o používání funkcí a další."
+   },
+   "preferenceShowNotificationsTitle": {
+      "message": "Zobrazit oznámení"
+   },
+   "preferenceShowOpenInAcrobatShortcutCheckboxGroupFooter": {
+      "message": "Zkratka aplikace Acrobat se nezobrazí, pokud je již nastavena jako výchozí prohlížeč pro tuto aplikaci."
+   },
+   "preferenceShowOpenInAcrobatShortcutCheckboxGroupFooterLinkText": {
+      "message": "nastavte jako výchozí prohlížeč"
+   },
+   "preferenceShowOpenInAcrobatShortcutDescription": {
+      "message": "Přidejte zkratku pro otevření souborů PDF v Acrobatu z Gmailu, Disku Google a dalších."
+   },
+   "preferenceShowOpenInAcrobatShortcutTitle": {
+      "message": "Zobrazit zkratku „Otevřít v aplikaci Acrobat“ v jiných aplikacích"
+   },
+   "preferenceShowSummarizeBarOnWebpagesTitle": {
+      "message": "Zobrazit panel shrnutí na webových stránkách"
+   },
+   "preferenceShowWhatsAppShortcutTitle": {
+      "message": "Zobrazit zkratku „Poslat na WhatsApp“"
+   },
+   "preferenceTurnOnAIFeaturesDescription": {
+      "message": "Umožněte zpracování souborů v cloudu, aby bylo možné využívat generativní funkce umělé inteligence. Poznámka: Vypnutím této funkce zakážete generativní funkce umělé inteligence tím, že zabráníte zpracování souborů v cloudu. Můžete ji kdykoli znovu zapnout."
+   },
+   "preferenceTurnOnAIFeaturesTitle": {
+      "message": "Zapnout funkce generativní umělé inteligence v aplikaci Acrobat"
+   },
+   "preferenceTurnOnGenAIWebpagesDescription": {
+      "message": "Na jakékoli webové stránce můžete využít AI Asistenta k získání shrnutí a analýz. Pokud chcete přístup zrušit, tuto funkci můžete vypnout."
+   },
+   "preferenceTurnOnGenAIWebpagesTitle": {
+      "message": "Zapněte generativní AI v prohlížeči"
+   },
+   "preferenceWebpageConversionDescription": {
+      "message": "Proveďte aktualizace nastavení pro ukládání webových stránek jako PDF, včetně okrajů, písem a dalších možností rozvržení."
+   },
+   "preferenceWebpageConversionTitle": {
+      "message": "Upravit nastavení převodu webové stránky"
+   },
+   "preferenceWhatsNewAutoOpenTitle": {
+      "message": "Povolit automatické otevření pro aktualizaci"
+   },
+   "preferences": {
+      "message": "Předvolby"
+   },
+   "productAcrobat": {
+      "message": "Acrobat"
+   },
+   "productNoApp": {
+      "message": "Žádná aplikace"
+   },
+   "productReader": {
+      "message": "Reader"
+   },
+   "refreshButtonInFailToast": {
+      "message": "Obnovit"
+   },
+   "removeBackgroundImageContextMenu": {
+      "message": "Odebrat pozadí"
+   },
+   "removeBackgroundImageContextMenuV2ChatGPT": {
+      "message": "Odstranit pozadí"
+   },
+   "removeObjectImageContextMenu": {
+      "message": "Odebrat objekt"
+   },
+   "saveLocationOp1": {
+      "message": "Vždy se zeptat"
+   },
+   "saveLocationOp2": {
+      "message": "Adobe"
+   },
+   "saveLocationOp3": {
+      "message": "Tento počítač"
+   },
+   "saveLocationPreferenceDescription": {
+      "message": "Nastavte umístění pro uložení souborů"
+   },
+   "saveLocationPreferenceTitle": {
+      "message": "Uložit umístění souborů"
+   },
+   "selectFileButton": {
+      "message": "Vyberte soubor"
+   },
+   "sessionExpiredDescription": {
+      "message": "Nahrajte soubor a zkuste to znovu."
+   },
+   "sessionExpiredDocumentTitle": {
+      "message": "Platnost relace vypršela"
+   },
+   "sessionExpiredTitle": {
+      "message": "Platnost vaší relace skončila"
+   },
+   "sessionExpiredToastText": {
+      "message": "Platnost relace skončila. Obnovte stránku a zkuste to znovu."
+   },
+   "sharepointPreferenceMessage": {
+      "message": "Povolit stažení souborů SharePoint v aplikaci Acrobat."
+   },
+   "sidepanelLoaderText": {
+      "message": "Získejte souhrny a klíčové poznatky pomocí nástroje Acrobat AI Asistent"
+   },
+   "sidepanelLocationPreferenceButtonText": {
+      "message": "Změnit v nastavení prohlížeče"
+   },
+   "sidepanelLocationPreferenceDescription": {
+      "message": "Umístěte boční panel na levou nebo pravou stranu okna prohlížeče. Boční panel je k dispozici pouze v prohlížeči Google Chrome 11.4 nebo novějším."
+   },
+   "sidepanelLocationPreferenceTitle": {
+      "message": "Umístění panelu AI Asistent"
+   },
+   "stripTextOpenAcrobat": {
+      "message": "Otevřít v aplikaci Acrobat"
+   },
+   "stripTextOpenFillnSign": {
+      "message": "Vyplnit a podepsat v aplikaci Acrobat"
+   },
+   "studentToolsTouchpointCheatsheet": {
+      "message": "Vytvořit tahák"
+   },
+   "studentToolsTouchpointFabFlashcards": {
+      "message": "Vytvořit karty"
+   },
+   "studentToolsTouchpointFabLoading": {
+      "message": "Vytváření…"
+   },
+   "studentToolsTouchpointFabMindmap": {
+      "message": "Vytvořit myšlenkovou mapu"
+   },
+   "studentToolsTouchpointFabNotes": {
+      "message": "Vygenerovat poznámky"
+   },
+   "studentToolsTouchpointFabQuiz": {
+      "message": "Vytvořit kvíz"
+   },
+   "studentToolsTouchpointFabStudyGuide": {
+      "message": "Vytvořit studijní příručku"
+   },
+   "studentToolsTouchpointFlashcards": {
+      "message": "Vytvoř z této stránky kartičky"
+   },
+   "studentToolsTouchpointFlashcardsFromFile": {
+      "message": "Vytvořit kartičky ze souboru"
+   },
+   "studentToolsTouchpointMindmap": {
+      "message": "Generovat myšlenkovou mapu"
+   },
+   "studentToolsTouchpointQuiz": {
+      "message": "Vytvoř z této stránky kvíz"
+   },
+   "studentToolsTouchpointStudyGuide": {
+      "message": "Vytvoř studijní příručku"
+   },
+   "studentToolsTouchpointStudyGuideContextMenu": {
+      "message": "Vytvoř z této stránky studijní příručku"
+   },
+   "successToastText": {
+      "message": "Stažené soubory PDF se nyní budou otevírat v aplikaci Adobe Acrobat"
+   },
+   "summarizeWebpageContextMenu": {
+      "message": "Nechte si stránku shrnout pomocí AI."
+   },
+   "summarizeWebpageSelectedContent": {
+      "message": "Shrň tohle"
+   },
+   "summaryBarCloseTooltip": {
+      "message": "Skrýt možnosti"
+   },
+   "summaryBarCtaLabel": {
+      "message": "Shrňte tuto stránku pomocí AI Asistenta aplikace Acrobat."
+   },
+   "summaryBarDismissMenuAriaLabel": {
+      "message": "Banner se shrnutím možností AI Asistenta"
+   },
+   "surfaceNameChatGPT": {
+      "message": "ChatGPT"
+   },
+   "surfaceNameGdrive": {
+      "message": "Disk Google"
+   },
+   "surfaceNameGemini": {
+      "message": "Gemini"
+   },
+   "surfaceNameGmail": {
+      "message": "Gmail"
+   },
+   "surfaceNameGoogleDocs": {
+      "message": "Dokumenty Google"
+   },
+   "surfaceNameGoogleSheets": {
+      "message": "Tabulky Google"
+   },
+   "surfaceNameGoogleSlides": {
+      "message": "Prezentace Google"
+   },
+   "surfaceNameMSWord": {
+      "message": "Microsoft Word"
+   },
+   "surfaceNameWikipedia": {
+      "message": "Wikipedia"
+   },
+   "tooltipTextDisabled": {
+      "message": "AI Asistent není pro tuto webovou stránku k dispozici"
+   },
+   "tooltipTextEnabled": {
+      "message": "Získejte souhrny a klíčové poznatky pomocí nástroje AI Asistent"
+   },
+   "tooltipTextEnabledHome": {
+      "message": "Převádějte, upravujte a pracujte s AI Asistentem přímo z prohlížeče"
+   },
+   "tooltipTextSubText": {
+      "message": "využívá službu Adobe Acrobat"
+   },
+   "tryAgain": {
+      "message": "Zkusit znovu"
+   },
+   "unsupportedFileTypeToastText": {
+      "message": "Tento typ souboru není podporován. Můžete zkusit upravit jiný soubor."
+   },
+   "userLocale": {
+      "message": "Národní prostředí uživatele"
+   },
+   "web2pdfAddButtonText": {
+      "message": "Přidat do existujícího PDF..."
+   },
+   "web2pdfAlwaysShow": {
+      "message": "Zobrazit automaticky pro soubory PDF"
+   },
+   "web2pdfAppendLinkContextMenu": {
+      "message": "Připojit cíl vazby k existujícímu PDF"
+   },
+   "web2pdfAppendPageContextMenu": {
+      "message": "Přidat webovou stránku do existujícího PDF..."
+   },
+   "web2pdfBadVersion": {
+      "message": "Tato verze prohlížeče Chrome nepodporuje aplikaci Adobe Acrobat.  Minimální číslo verze je: $version$",
+      "placeholders": {
+         "version": {
+            "content": "$1"
+         }
+      }
+   },
+   "web2pdfBadVersionEdge": {
+      "message": "Tato verze prohlížeče Edge nepodporuje aplikaci Adobe Acrobat.  Minimální číslo verze je: $version$",
+      "placeholders": {
+         "version": {
+            "content": "$1"
+         }
+      }
+   },
+   "web2pdfClickToOpen": {
+      "message": "Kliknutím na odkaz níže otevřete dokument PDF v aplikaci Acrobat."
+   },
+   "web2pdfConvertButtonToolTip": {
+      "message": "Rozšíření Acrobat – zkratka ke všem vašim nástrojům PDF."
+   },
+   "web2pdfConvertButtonToolTipERPReader": {
+      "message": "Rozšíření pro Acrobat Reader je nyní vypnuto. Obraťte se na správce IT"
+   },
+   "web2pdfConvertButtonToolTipReader": {
+      "message": "Otevřít PDF v Acrobat Readeru"
+   },
+   "web2pdfConvertLinkContextMenu": {
+      "message": "Převést cíl vazby do Adobe PDF"
+   },
+   "web2pdfConvertPageContextMenu": {
+      "message": "Převést webovou stránku do Adobe PDF..."
+   },
+   "web2pdfCopyText": {
+      "message": "Kopírování do aplikace Acrobat"
+   },
+   "web2pdfDestinationText": {
+      "message": "Cílová složka:"
+   },
+   "web2pdfDoneButtonText": {
+      "message": "Hotovo"
+   },
+   "web2pdfExtnDescription": {
+      "message": "Pomocí aplikace Acrobat v prohlížeči můžete prohlížet, převádět, komprimovat a podepisovat soubory PDF"
+   },
+   "web2pdfExtnDescriptionBeta": {
+      "message": "Pomocí aplikace Acrobat v prohlížeči můžete prohlížet, převádět, komprimovat a podepisovat soubory PDF"
+   },
+   "web2pdfExtnDescriptionChrome": {
+      "message": "Buďte produktivnější při práci se soubory PDF v prohlížeči Google Chrome pomocí nástrojů Adobe Acrobat pro prohlížení, vyplňování, přidávání poznámek a podepisování. Vyzkoušejte také nástroje pro převod a kompresi."
+   },
+   "web2pdfExtnDescriptionEdge": {
+      "message": "Zvládněte toho v Microsoft Edge víc s PDF nástroji Adobe Acrobat pro prohlížení, vyplnění, poznámky, podpis, převod a kompresi."
+   },
+   "web2pdfExtnName": {
+      "message": "Adobe Acrobat: nástroje pro úpravu, převod a podpis souborů PDF"
+   },
+   "web2pdfExtnNameBeta": {
+      "message": "Adobe Acrobat Beta"
+   },
+   "web2pdfExtnNameEdge": {
+      "message": "Adobe Acrobat: nástroje pro úpravu, převod a podpis souborů PDF"
+   },
+   "web2pdfExtnNameStage": {
+      "message": "Adobe Acrobat Stage"
+   },
+   "web2pdfFileLockedError": {
+      "message": "Soubor nemůže být uložen, protože je používán jiným procesem."
+   },
+   "web2pdfFilename": {
+      "message": "Název souboru:"
+   },
+   "web2pdfFrictionlessToggleDescription": {
+      "message": "Rozšíření Adobe Acrobat doporučuje nástroje pro práci s PDF. Naše doporučení vychází z vašich hledání a z toho, co se objevuje v zařízení. Vyhledávání se neodesílají společnosti Adobe."
+   },
+   "web2pdfFrictionlessUrl": {
+      "message": "https://www.adobe.com/go/fl_chromeext_cz"
+   },
+   "web2pdfFrictionlessUrlEdge": {
+      "message": "https://www.adobe.com/cz/acrobat/online.html?x_api_client_id=edge_extension&x_api_client_location=trefoil&mv=other&mv2=edge_extension:trefoil&trackingid=HM85XB76"
+   },
+   "web2pdfHTMLJSError": {
+      "message": "Chyba při zpracování webové stránky."
+   },
+   "web2pdfHTMLTooLarge": {
+      "message": "Obsah HTML je příliš velký, nelze zpracovat."
+   },
+   "web2pdfInfoHoverPopup": {
+      "message": "Rozšíření Adobe Acrobat doporučuje nástroje pro práci s PDF. Naše doporučení vychází z vašich hledání a z toho, co se objevuje v zařízení. Vyhledávání se neodesílají společnosti Adobe. Pokud chcete tuto funkci vypnout, klikněte \u003Cspan class = \"tooltip-content-settings\">zde\u003C/span>."
+   },
+   "web2pdfLoaderTitle": {
+      "message": "Nahrávání..."
+   },
+   "web2pdfMissingMac": {
+      "message": "Aplikace Adobe Acrobat for Chrome ještě není dostupná na platformě Mac"
+   },
+   "web2pdfMissingMacEdge": {
+      "message": "Aplikace Adobe Acrobat pro Microsoft Edge ještě není dostupná na platformě Mac"
+   },
+   "web2pdfNoFoldersText": {
+      "message": "Ve vašem úložišti aplikace Acrobat DC nejsou žádné složky."
+   },
+   "web2pdfNoWritePermissionOnSelectedFile": {
+      "message": "Nemáte oprávnění zápisu do vybraného souboru."
+   },
+   "web2pdfOpenButtonText": {
+      "message": "Otevřít v Acrobatu"
+   },
+   "web2pdfOpenButtonTextOlder": {
+      "message": "Stáhnout Adobe PDF"
+   },
+   "web2pdfOpenButtonTextReader": {
+      "message": "Otevřít v Acrobat Readeru"
+   },
+   "web2pdfOpenConvertedPDFDescription": {
+      "message": "Po dokončení převodu webové stránky na soubor PDF se soubor PDF automaticky otevře v aplikaci Acrobat."
+   },
+   "web2pdfOpenConvertedPDFTitle": {
+      "message": "Automaticky otevřít převedené soubory PDF v aplikaci Acrobat"
+   },
+   "web2pdfOpenInDCButtonText": {
+      "message": "Otevřít PDF v Acrobatu"
+   },
+   "web2pdfOptOut": {
+      "message": "Za účelem vylepšování funkcí produktu odesílá toto rozšíření společnosti Adobe informace o způsobu, jakým jej používáte."
+   },
+   "web2pdfOptOutDisabled": {
+      "message": "Nebudou sdílena žádná vaše data použití."
+   },
+   "web2pdfOptions": {
+      "message": "Volby"
+   },
+   "web2pdfOptionsTitle": {
+      "message": "Předvolby Adobe Acrobat"
+   },
+   "web2pdfPDFOpenFailed": {
+      "message": "Soubor PDF se nepodařilo otevřít"
+   },
+   "web2pdfPDFOpenFailedv2": {
+      "message": "Soubor se nepodařilo otevřít"
+   },
+   "web2pdfPDFOpened": {
+      "message": "Soubor PDF je otevřen"
+   },
+   "web2pdfPDFOpening": {
+      "message": "Otevírání souboru PDF"
+   },
+   "web2pdfPreferencesButtonText": {
+      "message": "Předvolby..."
+   },
+   "web2pdfPreferencesNewText": {
+      "message": "Nastavení převodu..."
+   },
+   "web2pdfPrivacy": {
+      "message": "O aplikaci Adobe Acrobat"
+   },
+   "web2pdfReplaceWarning": {
+      "message": "již existuje.\nChcete ho nahradit?"
+   },
+   "web2pdfSave": {
+      "message": "Uložit"
+   },
+   "web2pdfSaveButton": {
+      "message": "Uložit předvolby"
+   },
+   "web2pdfShowPDFTools": {
+      "message": "Zobrazit s výsledky hledání Google"
+   },
+   "web2pdfShowPDFViewerOption": {
+      "message": "Použít Acrobat jako výchozí prohlížeč PDF"
+   },
+   "web2pdfShowPersistentOpen": {
+      "message": "Zobrazit tlačítko \"Otevřít v Acrobatu\""
+   },
+   "web2pdfShowPersistentOpenAlways": {
+      "message": "Vždy zobrazit tlačítko \"Otevřít v Acrobatu\""
+   },
+   "web2pdfShowPersistentOpenDescription": {
+      "message": "Vždy zobrazovat možnost otevřít soubor PDF v aplikaci Acrobat."
+   },
+   "web2pdfStatusCancelled": {
+      "message": "Převod zrušen"
+   },
+   "web2pdfStatusComplete": {
+      "message": "Převod byl úspěšný"
+   },
+   "web2pdfStatusDownloading": {
+      "message": "Stahování souboru pro převod..."
+   },
+   "web2pdfStatusDownloadingPDF": {
+      "message": "Stahování souboru PDF"
+   },
+   "web2pdfStatusFailure": {
+      "message": "Chyba převodu"
+   },
+   "web2pdfStatusInProgress": {
+      "message": "Probíhá převod..."
+   },
+   "web2pdfStatusUnknownFailure": {
+      "message": "Neznámá chyba"
+   },
+   "web2pdfStatusWaiting": {
+      "message": "Čekání na převod..."
+   },
+   "web2pdfTitle": {
+      "message": "Adobe Acrobat"
+   },
+   "web2pdfUnsupportedAcrobatVersion": {
+      "message": "Nemůžeme najít podporovanou verzi aplikace Acrobat. Nainstalujte si \u003Ca target='_blank' href='https://acrobat.adobe.com/cz/cs/free-trial-download.html?trackingid=29NMCS7T&mv=other'>bezplatnou 7denní zkušební verzi\u003C/a>."
+   },
+   "web2pdfUntitledFileName": {
+      "message": "bez názvu"
+   },
+   "webpagePDFConversion": {
+      "message": "Nastavení převodu webové stránky do PDF"
+   },
+   "webpagePDFConversionDescription": {
+      "message": "Při ukládání webových stránek ve formátu PDF můžete nastavit okraje, písma a další podrobnosti rozvržení"
+   },
+   "whatsNewAutoOpenDescription": {
+      "message": "Povolte aplikaci Acrobat, aby automaticky otevřela webovou stránku, když jsou k dispozici nové aktualizace."
+   },
+   "whatsNewAutoOpenTitle": {
+      "message": "Povolit automatické otevření pro oznámení aktualizací"
+   },
+   "wikipediaConvertToPdfFTEBody": {
+      "message": "Přeměňte stránky Wikipedie v PDF a upravujte je, aniž byste museli opustit prohlížeč."
+   },
+   "wikipediaConvertToPdfFTETitle": {
+      "message": "Převést tuto stránku do PDF"
+   },
+   "wikipediaConvertToPdfHoverTooltip": {
+      "message": "Proměňte tuto stránku Wikipedie v PDF pomocí aplikace Acrobat"
+   },
+   "wikipediaConvertToPdfToastMessage": {
+      "message": "Převeďte stránku do PDF. Nechte kartu Acrobat otevřenou a dostanete upozornění, až bude hotovo."
+   },
+   "wikipediaConvertingTooltip": {
+      "message": "Zpracovává se na nové kartě. Až bude soubor připraven, upozorníme vás"
+   },
+   "wikipediaDefaultTitleText": {
+      "message": "Článek na Wikipedii"
+   }
+}

@@ -1,0 +1,18 @@
+/*************************************************************************
+* ADOBE CONFIDENTIAL
+* ___________________
+*
+*  Copyright 2015 Adobe Systems Incorporated
+*  All Rights Reserved.
+*
+* NOTICE:  All information contained herein is, and remains
+* the property of Adobe Systems Incorporated and its suppliers,
+* if any.  The intellectual and technical concepts contained
+* herein are proprietary to Adobe Systems Incorporated and its
+* suppliers and are protected by all applicable intellectual property laws,
+* including trade secret and or copyright laws.
+* Dissemination of this information or reproduction of this material
+* is strictly forbidden unless prior written permission is obtained
+* from Adobe Systems Incorporated.
+**************************************************************************/
+import{dcLocalStorage as e}from"../../common/local-storage.js";import{SIDE_PANEL_HASH_ROUTES as t}from"../../common/constant.js";import{util as o}from"../../browser/js/content-util.js";import{checkCdnConnectivity as r}from"../../common/util.js";import{connectSidePanelPort as n,createSendAnalytics as s,getSidePanelTabId as a,isHomeShellRoute as m}from"./sidePanelUtil.js";import{fetchAndSendHtmlContent as i}from"./htmlContentFetcher.js";import{getGenAiPrerenderState as d,shouldShowTrefoilLoader as l,showTrefoilLoader as c}from"./loaderUIHelper.js";import{Cdn as p}from"./cdn.js";import{initHomeMode as h}from"./home.js";import{initOfflineMode as u}from"./offline.js";import{registerHostedShellListeners as f}from"./shell-listeners.js";import{initShellTheme as g,resolveTheme as E}from"./themeUtil.js";const I=(e,t)=>{const o=document.createElement("iframe");o.id="sidepanelPreRendered",o.title="Adobe Chatbot",o.srcdoc=((e,t)=>{const o=(new DOMParser).parseFromString(e,"text/html"),r=new RegExp(`spectrum--${"dark"===t?"light":"dark"}\\b`,"g"),n=`spectrum--${t}`;return o.documentElement.style.colorScheme=t,o.querySelectorAll("[class]").forEach(e=>{e.setAttribute("class",e.getAttribute("class").replace(r,n))}),o.documentElement.outerHTML})(e,t),document.body.appendChild(o)};const b=Date.now();await e.init(),g({getDarkModeEnabled:()=>e.getItem("isSidePanelDarkModeEnabled"),getTheme:()=>e.getItem("theme")});const w=e.getItem("isSidePanelHomeEnabled");let P=e.getItem("touchpoint");e.removeItem("touchpoint");let j=e.getItem("hashRoute");e.removeItem("hashRoute"),P||(P="ExtensionAction",j=t.HOME),w||(j=t.SIDE_PANEL);const S=m(j),y=document.getElementById("tooltipTextEnabled");w&&S&&y&&(y.id="tooltipTextEnabledHome"),o.translateElementsByAppLocale(".translate");const D=await d(j,P);if(l(D)&&c(),chrome.runtime.sendMessage({type:"sidepanel_render_mode",tabId:a(),renderMode:`${D?.showPreRendered?"csssr":"trefoil"}:${S?"home":"genai"}`}).catch(()=>{}),D?.showPreRendered){const t=e.getItem("isSidePanelDarkModeEnabled")?E(e.getItem("theme")):"light";I(D.ssrHtml,t)}const H=e.getItem("sidepanelUrl");if(H){await r(H)?S?await h(b,j,P):await async function(e,t,o,r){const n=a(),m=s(n);m(`DCBrowserExt:SidePanel:Opened:${t||"Unspecified"}`);const d=new p({initTimeStamp:e,hostedHashRoute:r,touchpoint:t,ssrHtml:o?.ssrHtml,hasPendingPrompt:!!o?.hasPendingPrompt,onIframeLoad:()=>m(`DCBrowserExt:SidePanel:IframeLoaded:${t}`),onIframeError:()=>m(`DCBrowserExt:SidePanel:IframeLoadError:${t}`)});f({cdn:d,sendAnalytics:m,tabId:n,touchpoint:t,hashRoute:r}),await i({cdn:d,tabId:d.tabId,touchpoint:t})}(b,P,D,j):u(b)}else{const e=a();n(e,b),chrome.runtime.sendMessage({type:"sidepanel_close_reason",tabId:e,reason:"NoSidepanelUrl"})}

@@ -1,0 +1,18 @@
+/*************************************************************************
+* ADOBE CONFIDENTIAL
+* ___________________
+*
+*  Copyright 2015 Adobe Systems Incorporated
+*  All Rights Reserved.
+*
+* NOTICE:  All information contained herein is, and remains
+* the property of Adobe Systems Incorporated and its suppliers,
+* if any.  The intellectual and technical concepts contained
+* herein are proprietary to Adobe Systems Incorporated and its
+* suppliers and are protected by all applicable intellectual property laws,
+* including trade secret and or copyright laws.
+* Dissemination of this information or reproduction of this material
+* is strictly forbidden unless prior written permission is obtained
+* from Adobe Systems Incorporated.
+**************************************************************************/
+import{floodgate as a}from"./floodgate.js";import{dcLocalStorage as e}from"../common/local-storage.js";import{analytics as t}from"../common/analytics.js";import{loggingApi as r}from"../common/loggingApi.js";import{util as i}from"./util.js";import{CACHE_PURGE_SCHEME as n}from"./constant.js";import{safeJsonParse as o}from"../common/util.js";const s=new class{static API_CODES={Summarizer:"SUM",Writer:"WRT",Rewriter:"RWT",LanguageModel:"LM",LanguageDetector:"LD",Proofreader:"PRF",Translator:"TRN"};static STATUS_CODES={available:"A",unavailable:"U",downloadable:"DL",downloading:"DG",api_not_available:"NA",error_checking:"ERR"};constructor(){this.STORAGE_KEY="gemini_nano_model_check",this.FEATURE_FLAG="dc-cv-gemini-nano-check-availability",this.SUPPORTED_APIS=[{name:"Summarizer"},{name:"Writer"},{name:"Rewriter"},{name:"LanguageModel"},{name:"LanguageDetector"},{name:"Proofreader"},{name:"Translator",availabilityOptions:{sourceLanguage:"en",targetLanguage:"en"}}]}static async checkApiAvailability(a,e){try{return await(self[a]?.availability(e))??"api_not_available"}catch(e){return r.error({message:`Error checking ${a} availability`,error:e?.message}),"error_checking"}}getFeatureFlagMetadata(){try{const e=a.getFeatureMeta(this.FEATURE_FLAG);if(e){const a=o(e,{});return a?.checkCounter||0}return 0}catch(a){return r.error({message:"Error getting feature flag metadata",error:a?.message}),0}}async isFeatureFlagEnabled(){try{return!!await a.hasFlag(this.FEATURE_FLAG,n.NO_CALL)}catch(a){return r.error({message:"Error checking feature flag",error:a?.message}),!1}}getStoredCheckData(){try{return e.getItem(this.STORAGE_KEY)}catch(a){return r.error({message:"Error getting stored check data",error:a?.message}),null}}async shouldRunCheck(){if(i.isEdge())return!1;if(!await this.isFeatureFlagEnabled())return!1;const a=this.getStoredCheckData();if(!a)return!0;return this.getFeatureFlagMetadata()!==a?.checkCounter}async checkAndLogChromeBuiltInAiApi(){try{if(!await this.shouldRunCheck())return;const a=this.getFeatureFlagMetadata(),r=await Promise.all(this.SUPPORTED_APIS.map(async({name:a,availabilityOptions:e})=>{const t=await this.constructor.checkApiAvailability(a,e),r={...e,status:t},i=this.constructor.API_CODES[a]||a,n=this.constructor.STATUS_CODES[t]||t,{sourceLanguage:o,targetLanguage:s}=e||{};return{name:a,value:r,availabilityLabel:e?`${i}:${n}:${o}-${s}`:`${i}:${n}`}})),i=Object.fromEntries(r.map(({name:a,value:e})=>[a,e])),n=r.map(({availabilityLabel:a})=>a).join(",");t.event(t.e.GEMINI_NANO_MODEL_AVAILABILITY,{chromeBuiltInApiAvailability:n}),e.setItem(this.STORAGE_KEY,{availabilities:i,checkCounter:a})}catch(a){t.event(t.e.GEMINI_NANO_MODEL_AVAILABILITY,{chromeBuiltInApiAvailability:"ERROR_IN_CHECKING"})}}};export{s as llmUtil};

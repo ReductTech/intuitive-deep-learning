@@ -1,0 +1,18 @@
+/*************************************************************************
+* ADOBE CONFIDENTIAL
+* ___________________
+*
+*  Copyright 2015 Adobe Systems Incorporated
+*  All Rights Reserved.
+*
+* NOTICE:  All information contained herein is, and remains
+* the property of Adobe Systems Incorporated and its suppliers,
+* if any.  The intellectual and technical concepts contained
+* herein are proprietary to Adobe Systems Incorporated and its
+* suppliers and are protected by all applicable intellectual property laws,
+* including trade secret and or copyright laws.
+* Dissemination of this information or reproduction of this material
+* is strictly forbidden unless prior written permission is obtained
+* from Adobe Systems Incorporated.
+**************************************************************************/
+import{isProbablyReaderableAsync as e,isFullParseReaderable as t}from"./sidePanelUtil.js";const n=(e,{width:t=600,height:n=40,top:a=100,left:o=0}={})=>{const r={top:a,left:o,right:o+t,bottom:a+n,width:t,height:n};e.getBoundingClientRect=()=>r,Object.defineProperty(e,"clientHeight",{configurable:!0,value:n}),Object.defineProperty(e,"clientWidth",{configurable:!0,value:t})},a=()=>{n(document.documentElement),n(document.body)};describe("isProbablyReaderableAsync",()=>{beforeEach(()=>{document.body.innerHTML="",jest.useFakeTimers(),global.chrome.runtime.sendMessage=jest.fn().mockResolvedValue({isOpen:!1})}),afterEach(()=>{jest.useRealTimers()}),it("passes immediately for a real <p>-based article (fast heuristic)",async()=>{document.body.innerHTML=`\n            <article>\n                <p>${"Lorem ipsum dolor sit amet, real paragraph content. ".repeat(10)}</p>\n            </article>\n        `,a(),document.querySelectorAll("article, p").forEach(e=>n(e)),await expect(e(document)).resolves.toBe(!0),expect(global.chrome.runtime.sendMessage).not.toHaveBeenCalled()}),it("still fails for a div-based article body (no full-parse fallback here by design)",async()=>{document.body.innerHTML=`\n            <div class="story-wrapper">\n                <div class="story-body">${"Sentence about a real news event that keeps going on. ".repeat(20)}</div>\n            </div>\n        `,a(),document.querySelectorAll(".story-wrapper, .story-body").forEach(e=>n(e));const t=e(document);await jest.advanceTimersByTimeAsync(5e3),await expect(t).resolves.toBe(!1)}),it("fails when the page has no substantial content anywhere",async()=>{document.body.innerHTML='\n            <nav><a href="/a">Home</a><a href="/b">About</a></nav>\n        ',a(),document.querySelectorAll("nav, a").forEach(e=>n(e));const t=e(document);await jest.advanceTimersByTimeAsync(5e3),await expect(t).resolves.toBe(!1)})}),describe("isFullParseReaderable",()=>{beforeEach(()=>{document.body.innerHTML=""}),it("recognizes a div-based article body that the fast heuristic would miss",()=>{document.body.innerHTML=`\n            <div class="story-wrapper">\n                <div class="story-body">${"Sentence about a real news event that keeps going on. ".repeat(20)}</div>\n            </div>\n        `,expect(t(document)).toBe(!0)}),it("does not mutate the live document (parses a clone)",()=>{document.body.innerHTML=`\n            <div class="story-wrapper">\n                <div class="story-body">${"Sentence about a real news event that keeps going on. ".repeat(20)}</div>\n            </div>\n        `;const e=document.body.innerHTML;t(document),expect(document.body.innerHTML).toBe(e)}),it("returns false when there's no substantial content anywhere",()=>{document.body.innerHTML='\n            <nav><a href="/a">Home</a><a href="/b">About</a></nav>\n        ',expect(t(document)).toBe(!1)})});

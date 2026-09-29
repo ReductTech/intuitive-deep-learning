@@ -13,7 +13,7 @@ import numpy as np
 DEFAULT_HOST = "0.0.0.0"
 DEFAULT_PORT = 59415
 ROOT = Path(__file__).resolve().parents[1]
-DATASET_DIR = ROOT / "dataset"
+DATASET_DIR = ROOT / "assets" / "dataset"
 MNIST_DIR = DATASET_DIR / "mnist"
 OLIVETTI_DIR = DATASET_DIR / "olivetti"
 LFW_BALANCED_DIR = DATASET_DIR / "lfw-50-balanced"
@@ -154,7 +154,7 @@ def load_lfw_balanced_dataset() -> tuple[np.ndarray, np.ndarray, np.ndarray, dic
         raise FileNotFoundError(
             "Packed LFW balanced dataset is missing: "
             + ", ".join(missing)
-            + ". Run scripts/prepare_lfw_mini_dataset.py --pack-from dataset/lfw-mini --output-dir dataset/lfw-50-balanced --pack-min-faces 50 --samples-per-class 50 --train-per-class 40 first."
+            + ". Run scripts/prepare_lfw_mini_dataset.py --pack-from assets/dataset/lfw-mini --output-dir assets/dataset/lfw-50-balanced --pack-min-faces 50 --samples-per-class 50 --train-per-class 40 first."
         )
     images = np.load(LFW_FACE_PATH, allow_pickle=False)
     labels = np.load(LFW_TARGET_PATH, allow_pickle=False).astype(np.int64)

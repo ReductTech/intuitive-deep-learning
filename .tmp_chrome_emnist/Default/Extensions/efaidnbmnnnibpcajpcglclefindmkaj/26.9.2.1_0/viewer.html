@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<!--
+/*************************************************************************
+*
+* ADOBE CONFIDENTIAL
+* ___________________
+*
+*  Copyright 2020 Adobe Systems Incorporated
+*  All Rights Reserved.
+*
+* NOTICE:  All information contained herein is, and remains
+* the property of Adobe Systems Incorporated and its suppliers,
+* if any.  The intellectual and technical concepts contained
+* herein are proprietary to Adobe Systems Incorporated and its
+* suppliers and may be covered by U.S. and Foreign Patents,
+* patents in process, and are protected by trade secret or copyright law.
+* Dissemination of this information or reproduction of this material
+* is strictly forbidden unless prior written permission is obtained
+* from Adobe Systems Incorporated.
+**************************************************************************/
+-->
+<html lang="en">
+<head>
+    <title>Loading...</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta http-equiv="Cache-control" content="private, max-age=2592000">
+    <script type="module" src="/browser/js/viewer/trefoilLoader.js"></script>
+    <style>
+        .main {
+            margin: 0px;
+            overflow: hidden;
+            display: block;
+        }
+        .loader-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 100vw;
+            height: 100vh;
+            gap: 20px;
+            background-color: #ffffff;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
+        }
+        .loader-container.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+    </style>
+    <script src="/browser/js/ch-settings.js"></script>
+</head>
+
+<body class="main">
+<header></header>
+<div class="loader-container">
+    <div id="acrobat-trefoil-loader"></div>
+</div>
+<div id="Adobe-dc-view" class="main">
+    <script type="module" src="/browser/js/viewer/index.js"></script>
+</div>
+<form id="google-yolo-authorize-form" method="post"></form>
+</body>
+</html>

@@ -1,0 +1,1778 @@
+{
+   "ConvertVerbDescription": {
+      "message": "将文档与 PDF 相互转换。"
+   },
+   "Disable": {
+      "message": "停用"
+   },
+   "EditVerbDescription": {
+      "message": "重排序、旋转或删除 PDF 中的页面。"
+   },
+   "Enable": {
+      "message": "启用"
+   },
+   "LearnMoreURL": {
+      "message": "https://helpx.adobe.com/cn/acrobat/kb/acrobat-pro-aip-for-chrome.html"
+   },
+   "LearnMoreURLEdge": {
+      "message": "https://helpx.adobe.com/cn/acrobat/kb/acrobat-pro-aip-for-edge.html"
+   },
+   "LocalFileAccessAndSummaryCoachmarkButton": {
+      "message": "启用摘要功能"
+   },
+   "LocalFileAccessAndSummaryCoachmarkSubtext": {
+      "message": "视可用积分而定"
+   },
+   "acrobatEmbeddedTouchPointPreferenceDescription": {
+      "message": "您可以使用此快捷方式在扩展程序中打开 PDF，以便轻松进行编辑、总结和保存等操作。"
+   },
+   "acrobatEmbeddedTouchPointPreferenceTitle": {
+      "message": "在嵌入式 Web PDF 中显示 Acrobat 快捷方式"
+   },
+   "acrobatGdriveTripleDotMenuTouchPointText": {
+      "message": "使用 Acrobat 打开"
+   },
+   "acrobatGmailFteToolTipButton": {
+      "message": "明白了"
+   },
+   "acrobatGmailFteToolTipDescription": {
+      "message": "使用 Acrobat 直接在 Chrome 中编辑、转换、注释和签名"
+   },
+   "acrobatGmailFteToolTipTitle": {
+      "message": "在 Acrobat 中打开此 PDF"
+   },
+   "acrobatGsuiteFteToolTipButton": {
+      "message": "明白了"
+   },
+   "acrobatGsuiteFteToolTipButtonDV": {
+      "message": "确定"
+   },
+   "acrobatGsuiteFteToolTipButtonNonDV": {
+      "message": "确定"
+   },
+   "acrobatGsuiteFteToolTipDescription": {
+      "message": "使用 Acrobat 直接在 Chrome 中编辑、转换、注释和签名"
+   },
+   "acrobatGsuiteFteToolTipDescriptionDV": {
+      "message": "通过将 Acrobat 设置为默认的 PDF 查看器，从 $surfaceName$ 中尝试编辑、注释、转换和电子签名等 PDF 工具。",
+      "placeholders": {
+         "surfaceName": {
+            "content": "$1"
+         }
+      }
+   },
+   "acrobatGsuiteFteToolTipDescriptionNonDV": {
+      "message": "直接从 $surfaceName$ 尝试 Acrobat PDF 工具如编辑、注释、转换和电子签名。",
+      "placeholders": {
+         "surfaceName": {
+            "content": "$1"
+         }
+      }
+   },
+   "acrobatGsuiteFteToolTipTitle": {
+      "message": "在 Acrobat 中打开此 PDF"
+   },
+   "acrobatGsuiteFteToolTipTitleDV": {
+      "message": "在 Adobe Acrobat 中打开所有 PDF"
+   },
+   "acrobatGsuiteFteToolTipTitleNonDV": {
+      "message": "在 Adobe Acrobat 中打开此 PDF"
+   },
+   "acrobatGsuiteTouchPointPreferenceDescription": {
+      "message": "将 Acrobat 图标添加至 Gmail 和 Google Drive 以在 Acrobat 中快速打开 PDF 并访问 PDF 工具。"
+   },
+   "acrobatGsuiteTouchPointPreferenceTitle": {
+      "message": "将 Acrobat 集成至 Gmail 和 Google Drive"
+   },
+   "acrobatLinkedInPDFTouchPointPreferenceDescription": {
+      "message": "将 Acrobat 与 Gmail、Google Drive、Outlook 和 LinkedIn 等网站集成，以便轻松使用 PDF 工具。"
+   },
+   "acrobatTouchPointInOtherSitesPrefDescription": {
+      "message": "将 Acrobat 与 Gmail、Google Drive、Outlook、LinkedIn 等网站集成，以便轻松使用 PDF 工具。"
+   },
+   "acrobatTouchPointInOtherSitesPreferenceDescription": {
+      "message": "将 Acrobat 与 Gmail 和 Google Drive 等网站集成，以便轻松访问 PDF 工具。"
+   },
+   "acrobatTouchPointInOtherSitesPreferenceTitle": {
+      "message": "在其他网站上显示 Acrobat 选项"
+   },
+   "acrobatTouchPointInOtherSurfacesPreferenceDescription": {
+      "message": "将 Acrobat 与 Gmail、Google Drive 和 Outlook 等网站集成，以便轻松访问 PDF 工具。"
+   },
+   "addEffectsImageContextMenuV2ChatGPT": {
+      "message": "添加效果"
+   },
+   "addWebpageToExistingPdfSpaceContextMenu": {
+      "message": "将网页添加到现有的 PDF 空间…"
+   },
+   "addWebpageToExistingStudySpaceContextMenu": {
+      "message": "将网页添加到现有的学生空间…"
+   },
+   "addWebpageToNewPdfSpaceContextMenu": {
+      "message": "将网页添加到新的 PDF 空间…"
+   },
+   "addWebpageToNewStudySpaceContextMenu": {
+      "message": "将网页添加到新的学生空间…"
+   },
+   "addWebpageToProjectContextMenuTitle": {
+      "message": "添加到 PDF 空间…"
+   },
+   "addWebpageToProjectFailed": {
+      "message": "无法将网页添加到 PDF 空间"
+   },
+   "addWebpageToProjectFailedStudy": {
+      "message": "无法将网页添加到学生空间"
+   },
+   "addWebpageToProjectIngestionStarted": {
+      "message": "正在将此网页添加至您的 PDF 空间。准备就绪后，即刻通知您。"
+   },
+   "addWebpageToProjectIngestionStartedStudy": {
+      "message": "正在将此网页添加至您的学生空间。准备就绪后，即刻通知您。"
+   },
+   "addWebpageToProjectSuccess": {
+      "message": "网页已添加至 $collectionName$",
+      "placeholders": {
+         "collectionName": {
+            "content": "$1"
+         }
+      }
+   },
+   "addWebpageToProjectViewAction": {
+      "message": "查看 PDF 空间"
+   },
+   "addWebpageToProjectViewActionStudy": {
+      "message": "查看学生空间"
+   },
+   "addWebpageUpsellContactAdminMessage": {
+      "message": "请联系您的管理员以启用此功能。"
+   },
+   "adobeAcrobatParentMenuTitle": {
+      "message": "Adobe Acrobat：创建、编辑 PDF 及 PDF 空间"
+   },
+   "adobeAcrobatParentMenuTitleStudySpace": {
+      "message": "Adobe Acrobat：创建、编辑 PDF 及学生空间"
+   },
+   "adobeYoloErrorMessage": {
+      "message": "抱歉，此链接无效"
+   },
+   "adobeYoloMessage": {
+      "message": "正在登录至 Acrobat..."
+   },
+   "aiAcBody": {
+      "message": "使用 Acrobat AI 助手快速汇总网页并获取关键见解。"
+   },
+   "aiAcHeader": {
+      "message": "使用 Acrobat 扩展程序执行更多操作"
+   },
+   "analyticsOptinTitle": {
+      "message": "发送使用情况数据"
+   },
+   "appearancePrefDesc": {
+      "message": "在深色和浅色主题之间切换"
+   },
+   "appearancePrefOp1": {
+      "message": "使用系统设置"
+   },
+   "appearancePrefOp2": {
+      "message": "深色模式"
+   },
+   "appearancePrefOp3": {
+      "message": "浅色模式"
+   },
+   "appearancePrefTitle": {
+      "message": "深色模式设置"
+   },
+   "askAIAssistant": {
+      "message": "询问 AI 助手"
+   },
+   "askAIAssistantContextMenu": {
+      "message": "就网页内容向 AI 助手提出问题"
+   },
+   "askAIAssistantSelectedContent": {
+      "message": "询问 AI 助手"
+   },
+   "askAssistantBannerContentText": {
+      "message": "使用 AI 助手获取网页的快速摘要和关键见解。"
+   },
+   "askAssistantBannerTitle": {
+      "message": "适用于网页的 AI 助手"
+   },
+   "autoEnhanceImageContextMenuV2ChatGPT": {
+      "message": "自动增强"
+   },
+   "bypassGenAIWebpageEligibilityDescription": {
+      "message": "启用后，生成式 AI 功能将在所有网页上可用，且无需进行资格检查。此设置仅适用于 Adobe 内部用户。"
+   },
+   "bypassGenAIWebpageEligibilityTitle": {
+      "message": "在所有页面上启用适用于网页的 AI 助手"
+   },
+   "canQuesBriefOverview": {
+      "message": "提供本文的简要概述"
+   },
+   "canQuesCreateFAQ": {
+      "message": "根据此信息创建常见问题解答列表"
+   },
+   "canQuesDraftEmail": {
+      "message": "起草一封总结要点的电子邮件"
+   },
+   "canQuesImpTopics": {
+      "message": "列出所有重要主题和关键词"
+   },
+   "canQuesSummarise": {
+      "message": "总结本文"
+   },
+   "cancel": {
+      "message": "取消"
+   },
+   "chatgptCanvasConvertToPDF": {
+      "message": "转换为 PDF"
+   },
+   "chatgptCanvasConvertToPDFTooltip": {
+      "message": "转换并在 Acrobat 中打开"
+   },
+   "chatgptCanvasFteDescription": {
+      "message": "使用 Acrobat 将您的聊天内容转换为 PDF，并在浏览器中进行编辑。"
+   },
+   "chatgptCanvasFteTitle": {
+      "message": "使用 Adobe Acrobat 转换为 PDF"
+   },
+   "chatgptConvertToPDF": {
+      "message": "将聊天转换为 PDF"
+   },
+   "chatgptConvertToPDFFteDescription": {
+      "message": "使用 Acrobat 将您的聊天内容转换为 PDF，并在浏览器中进行编辑。"
+   },
+   "chatgptConvertToPDFFteTitle": {
+      "message": "使用 Adobe Acrobat 转换为 PDF"
+   },
+   "chatgptConvertToPDFTooltip": {
+      "message": "转换并在 Acrobat 中打开"
+   },
+   "chatgptDeepResearchDefaultTitle": {
+      "message": "ChatGPT 深度研究"
+   },
+   "chatgptDefaultTitleText": {
+      "message": "ChatGPT"
+   },
+   "chatgptLongChatInterrupt": {
+      "message": "滚动操作已被中断。请重试，期间不要点击、滚动或切换标签页。"
+   },
+   "chatgptLongChatPhase1Desc": {
+      "message": "此页面将自动滚动，以加载您的完整聊天记录，然后再转换为 PDF。"
+   },
+   "chatgptLongChatPhase1Title": {
+      "message": "检测到长对话…"
+   },
+   "chatgptLongChatPhase2Desc": {
+      "message": "请勿点击、滚动或切换标签页。此操作将会取消进程。"
+   },
+   "chatgptLongChatPhase2Title": {
+      "message": "正在加载对话…"
+   },
+   "chatgptLongChatPhase3Desc": {
+      "message": "转换将在新标签页中开始。"
+   },
+   "chatgptLongChatPhase3Title": {
+      "message": "即将完成..."
+   },
+   "chatgptResponseExportToPDF": {
+      "message": "转换为 PDF"
+   },
+   "chatgptResponseExportToPDFTooltip": {
+      "message": "将此回复转换为 PDF，以便编辑或共享。"
+   },
+   "chatgptResponseFteDescription": {
+      "message": "使用 Adobe Acrobat 扩展程序，直接将 ChatGPT 回复转换为 PDF。"
+   },
+   "chatgptResponseFteTitle": {
+      "message": "将所有回复转换为 PDF"
+   },
+   "closeButton": {
+      "message": "关闭"
+   },
+   "clusterBeta": {
+      "message": "Beta"
+   },
+   "clusterDevelop": {
+      "message": "开发"
+   },
+   "clusterRelease": {
+      "message": "版本"
+   },
+   "conversionErrorDescription": {
+      "message": "报告问题，我们会调查出错的原因。"
+   },
+   "conversionErrorDocumentTitle": {
+      "message": "错误"
+   },
+   "conversionErrorGoToAcrobat": {
+      "message": "转到 Acrobat"
+   },
+   "conversionErrorReportError": {
+      "message": "报告错误"
+   },
+   "conversionErrorTitle": {
+      "message": "我们无法转换您的文件"
+   },
+   "convertToPDFFTEBody": {
+      "message": "使用 Adobe Acrobat 扩展程序可直接将您的 $surfaceName$ 转换为 PDF，并支持访问编辑、签名等工具。",
+      "placeholders": {
+         "surfaceName": {
+            "content": "$1"
+         }
+      }
+   },
+   "convertToPDFFTEHeading": {
+      "message": "将此 $docTypeName$ 转换为 PDF",
+      "placeholders": {
+         "docTypeName": {
+            "content": "$1"
+         }
+      }
+   },
+   "convertToPDFTouchPointTooltip": {
+      "message": "转换并在 Acrobat 中打开"
+   },
+   "convertToPdf": {
+      "message": "转换为 PDF"
+   },
+   "convertToPdfErrorToastMessage": {
+      "message": "无法将您的文件转换为 PDF。"
+   },
+   "convertToPdfPasswordProtectedError": {
+      "message": "受密码保护的文件无法转换为 PDF"
+   },
+   "convertToPdfTabCloseErrorToastMessage": {
+      "message": "无法转换文件。在转换过程中保持 Acrobat 标签页打开，然后重试。"
+   },
+   "convertToPdfToastMessage": {
+      "message": "正在转换您的文件。请保持 Acrobat 标签页打开，准备就绪后，您将会收到通知。"
+   },
+   "convertToPdfUsingAcrobatTooltip": {
+      "message": "使用 Acrobat 将文档转换为 PDF"
+   },
+   "convertWebpageToPDFContextMenu": {
+      "message": "将网页转换为 PDF"
+   },
+   "convertedTabTitle": {
+      "message": "文件已转换"
+   },
+   "convertingInNewTabKeepOpenTooltip": {
+      "message": "正在新标签页中转换。请保持 Acrobat 标签页打开。"
+   },
+   "convertingTabTitle": {
+      "message": "正在转换文件"
+   },
+   "convertingTooltip": {
+      "message": "您的文件正在新标签页中进行转换。准备就绪后，我们会通知您。"
+   },
+   "convertingTouchPointText": {
+      "message": "正在转换..."
+   },
+   "cropAndResizeImageContextMenuV2ChatGPT": {
+      "message": "裁切并调整大小"
+   },
+   "cropImageContextMenu": {
+      "message": "裁剪图像"
+   },
+   "dcWebBookmarkTitle": {
+      "message": "Adobe Acrobat 主页"
+   },
+   "directFlowErrorTabTitle": {
+      "message": "错误"
+   },
+   "directFlowNotificationButtonText": {
+      "message": "转至文件"
+   },
+   "directFlowNotificationTitle": {
+      "message": "您的文件已准备就绪"
+   },
+   "directFlowNotificationTitlePlural": {
+      "message": "您的文件已就绪"
+   },
+   "doNotShowButton": {
+      "message": "不再显示"
+   },
+   "domainPreferenceTitle": {
+      "message": "隐藏 AI 助手 FAB 的网站"
+   },
+   "downloadBannerContinue": {
+      "message": "开启"
+   },
+   "downloadBannerText": {
+      "message": "通过在 Chrome 中将 Acrobat 设置为默认 PDF 查看器，在该应用程序中打开所有下载的 PDF"
+   },
+   "editImageContextMenu": {
+      "message": "编辑图像"
+   },
+   "editImageMoreOptionsFteDescription": {
+      "message": "使用 Acrobat 和 Adobe Express，将图像转换为 PDF，或直接在浏览器中编辑图像。"
+   },
+   "editImageMoreOptionsFteTitle": {
+      "message": "转换和编辑图像"
+   },
+   "editMegaVerbText": {
+      "message": "编辑"
+   },
+   "effectsImageContextMenu": {
+      "message": "应用效果"
+   },
+   "embeddedPDFHideIconForNow": {
+      "message": "暂时隐藏图标"
+   },
+   "embeddedPDFManagePreferences": {
+      "message": "管理首选项"
+   },
+   "embeddedPDFOpenInAcrobatTooltip": {
+      "message": "在 Acrobat 中打开"
+   },
+   "embeddedPDFOpenPDFInAcrobat": {
+      "message": "在 Acrobat 中打开 PDF"
+   },
+   "embeddedPDFTouchPointFTEBody": {
+      "message": "直接通过 Acrobat 扩展程序进行编辑、总结等操作。您可以随时在“首选项”中隐藏此快捷方式。"
+   },
+   "embeddedPDFTouchPointFTEHeader": {
+      "message": "在 Adobe Acrobat 中打开此 PDF"
+   },
+   "enableGenAIFeaturesDescription": {
+      "message": "当您使用生成式 AI 功能时，您的文件将在云端进行处理，以提供生成式 AI 功能。关闭此功能可防止处理您的文件，并禁用生成式 AI。您可以随时将其重新激活。"
+   },
+   "enableGenAIFeaturesTitle": {
+      "message": "在 Acrobat 中启用生成式 AI 功能"
+   },
+   "envDev": {
+      "message": "开发版"
+   },
+   "envLocalDev": {
+      "message": "本地开发"
+   },
+   "envProd": {
+      "message": "制作"
+   },
+   "envStage": {
+      "message": "阶段"
+   },
+   "envTest": {
+      "message": "测试"
+   },
+   "errorBoundaryDescription": {
+      "message": "我们遇到了意外错误。请重试。"
+   },
+   "errorBoundaryRetryButton": {
+      "message": "重试"
+   },
+   "errorBoundaryTitle": {
+      "message": "出现错误"
+   },
+   "explainSelectedContent": {
+      "message": "使用 AI 进行解释"
+   },
+   "expressContextualFteCtaLabel": {
+      "message": "关闭"
+   },
+   "expressContextualFteDescription": {
+      "message": "在由 Adobe Express 提供支持的 Adobe Acrobat 中，裁切图像、移除背景、调整颜色等更多操作。"
+   },
+   "expressContextualFteTitle": {
+      "message": "快速轻松地编辑图像"
+   },
+   "expressDropdownMenuTitle": {
+      "message": "Adobe Acrobat"
+   },
+   "expressDropdownMenuTooltip": {
+      "message": "轻松裁切、移除背景等。由 Adobe Express 提供支持。"
+   },
+   "expressEditImageParentContextMenu": {
+      "message": "编辑图像"
+   },
+   "expressEditImagePoweredByExpressContextMenu": {
+      "message": "由 Adobe Express 提供支持"
+   },
+   "expressExportOptionsDownloadLabel": {
+      "message": "下载"
+   },
+   "expressExportOptionsSaveLabel": {
+      "message": "保存"
+   },
+   "expressFTEDescription": {
+      "message": "右键单击以裁切、移除背景或使用 AI 重新构想图像。"
+   },
+   "expressFTEFooter": {
+      "message": "通过 \u003Cb>Adobe Acrobat\u003C/b>"
+   },
+   "expressFTETitle": {
+      "message": "使用 Adobe Express 编辑图像"
+   },
+   "expressHideforSession": {
+      "message": "现在隐藏"
+   },
+   "expressManageinSettings": {
+      "message": "首选项"
+   },
+   "expressPopoverFTEDescription": {
+      "message": "右键单击任何线上图像以通过 Adobe Express 的 AI 功能快速移除背景、裁切或重新构图"
+   },
+   "expressPopoverFTETitle": {
+      "message": "直接在浏览器中编辑图像"
+   },
+   "expressPublishModalTitle": {
+      "message": "正在下载图像..."
+   },
+   "expressTouchpointPreferenceDescription": {
+      "message": "借助 Adobe Acrobat 扩展程序，您可以使用 Adobe Express 编辑图像。关闭此功能后，相关功能将无法使用。您可以随时重新激活该功能。"
+   },
+   "expressTouchpointPreferenceTitle": {
+      "message": "启用 Acrobat 中的 Adobe Express 操作"
+   },
+   "extensionMenuTitle": {
+      "message": "Acrobat 扩展程序 - 所有 PDF 工具的快捷方式"
+   },
+   "fabHomeTooltipFteText": {
+      "message": "在浏览器中查看 Acrobat 的新主页"
+   },
+   "fabNudgeLabelArticleAbout": {
+      "message": "本文讲述的是什么内容？"
+   },
+   "fabNudgeLabelKeyFigures": {
+      "message": "关键数据有哪些？"
+   },
+   "fabNudgeLabelKeyTakeaways": {
+      "message": "关键要点是什么？"
+   },
+   "fabNudgeLabelKeyTerms": {
+      "message": "关键术语代表什么含义？"
+   },
+   "fabNudgeLabelMainThemes": {
+      "message": "主要主题是什么？"
+   },
+   "fabNudgeLabelPageAbout": {
+      "message": "此页面讲述的是什么内容？"
+   },
+   "fabNudgeLabelSimplify": {
+      "message": "您可以简化这段内容吗？"
+   },
+   "fabNudgePromptArticleKeyTakeaways": {
+      "message": "本文的关键要点是什么？"
+   },
+   "fabNudgePromptArticleMainThemes": {
+      "message": "本文的主要主题或论点是什么？"
+   },
+   "fabNudgePromptArticleSimplify": {
+      "message": "请用通俗易懂的简单语言解释本文。"
+   },
+   "fabNudgePromptArticleSummary": {
+      "message": "请总结本文的主要内容。"
+   },
+   "fabNudgePromptKeyFigures": {
+      "message": "请提取此页面中的关键事实、数据以及日期。"
+   },
+   "fabNudgePromptKeyTerms": {
+      "message": "请识别并解释此页面中的关键术语或专业行话。"
+   },
+   "fabNudgePromptPageKeyTakeaways": {
+      "message": "此页面的关键要点是什么？"
+   },
+   "fabNudgePromptPageMainThemes": {
+      "message": "此页面的主要主题或论点是什么？"
+   },
+   "fabNudgePromptPageSimplify": {
+      "message": "请用通俗易懂的简单语言解释此页面。"
+   },
+   "fabNudgePromptPageSummary": {
+      "message": "请总结此页面的主要内容。"
+   },
+   "fabPillAskAI": {
+      "message": "就页面内容询问 AI"
+   },
+   "fabPillConvertToPDF": {
+      "message": "转换为 PDF"
+   },
+   "fabPillSummarize": {
+      "message": "使用 AI 进行总结"
+   },
+   "fabPillsFteHeaderText": {
+      "message": "使用 Acrobat 扩展程序执行更多操作"
+   },
+   "fabPillsHeaderText": {
+      "message": "Adobe Acrobat"
+   },
+   "failToastText": {
+      "message": "出现意外错误，请稍后重试。"
+   },
+   "fileReadyTabTitle": {
+      "message": "文件已就绪"
+   },
+   "frictionlesOfflineMessage": {
+      "message": "无法连线，请联系网络管理员协助恢复连接"
+   },
+   "frictionlessWidgetErrorGeneric": {
+      "message": "加载时出错。请重试。"
+   },
+   "frictionlessWidgetErrorInitFailed": {
+      "message": "初始化小组件失败，请重试。"
+   },
+   "frictionlessWidgetErrorLoadFailed": {
+      "message": "小组件加载失败。请检查您的连接并重试。"
+   },
+   "frictionlessWidgetErrorLoading": {
+      "message": "加载小组件时出错"
+   },
+   "frictionlessWidgetErrorTimeout": {
+      "message": "无法加载此部分"
+   },
+   "frictionlessWidgetErrorTimeoutMessage": {
+      "message": "请求耗时超出预期。"
+   },
+   "frictionlessWidgetErrorUnableToLoad": {
+      "message": "无法加载"
+   },
+   "frictionlessWidgetErrorUnsupportedFormat": {
+      "message": "不是受支持的格式"
+   },
+   "frictionlessWidgetErrorUploadFailed": {
+      "message": "上传文件时出现错误"
+   },
+   "frictionlessWidgetNoConnectionTitle": {
+      "message": "无连接"
+   },
+   "frictionlessWidgetOfflineMessage": {
+      "message": "请检查互联网连接，然后重试。"
+   },
+   "frictionlessWidgetOfflineRetryInfo": {
+      "message": "当您重新在线时，我们将自动重试。"
+   },
+   "frictionlessWidgetOfflineTitle": {
+      "message": "您处于离线状态"
+   },
+   "frictionlessWidgetRetryButton": {
+      "message": "重试"
+   },
+   "fteDocTypeNameFile": {
+      "message": "文件"
+   },
+   "fteDocTypeNamePresentation": {
+      "message": "演示文稿"
+   },
+   "fteDocTypeNameSheet": {
+      "message": "纸张"
+   },
+   "fteOwnershipSideRedCardContent": {
+      "message": "将 Acrobat 设为默认的 PDF 查看器，即可直接在 Chrome 中注释、填写表单、签名及执行更多操作。"
+   },
+   "fteSideCardPrimaryHeader": {
+      "message": "使用 Acrobat"
+   },
+   "fteSideCardSecondaryHeader": {
+      "message": "直接在 Chrome 中"
+   },
+   "gDriveDVPAppListCoachMarkContent": {
+      "message": "启用“默认使用”复选框，从下次开始即可直接在 Acrobat 中打开 Google Drive 的 PDF 文件"
+   },
+   "gDriveDVPCoachMarkTitle": {
+      "message": "将 Acrobat 设置为默认查看器"
+   },
+   "gDriveDVPManageAppCoachMarkContent": {
+      "message": "单击'管理应用程序'可以通过直接在 Acrobat 中打开所有 Google Drive 的 PDF 文件来查看、注释和编辑 PDF 文件"
+   },
+   "gSuiteDVPAddOnDefaultDesc": {
+      "message": "Acrobat 加载项现已设置为默认选项"
+   },
+   "gdriveConvertToPdfFteToolTipDescription": {
+      "message": "将 Google Drive 文件转换为 PDF，并可直接在浏览器中编辑，无需下载即可完成。"
+   },
+   "gdriveConvertToPdfFteToolTipTitle": {
+      "message": "使用 Acrobat 将文件转换为 PDF"
+   },
+   "gdriveEditPdf": {
+      "message": "编辑 PDF"
+   },
+   "gdriveEditPdfFteToolTipDescription": {
+      "message": "直接在浏览器中尝试使用 PDF 工具，如编辑、注释、转换和电子签名。"
+   },
+   "gdriveEditPdfFteToolTipTitle": {
+      "message": "在 Acrobat 中编辑 PDF"
+   },
+   "gdriveImplicitDVFTEBody": {
+      "message": "在 Google Drive 中点击 Acrobat 扩展程序图标即可打开 PDF。您可在 Acrobat“更多”(...) 菜单中将其设置为默认打开方式。"
+   },
+   "gdriveImplicitDVFTEHeader": {
+      "message": "随时在 Acrobat 中查看 PDF"
+   },
+   "gdriveImplicitDVNotification": {
+      "message": "PDF 将在 Google Drive 中打开。"
+   },
+   "geminiChatFteDescription": {
+      "message": "使用 Adobe Acrobat 将您的聊天内容转换为 PDF，并在浏览器中进行编辑。"
+   },
+   "geminiChatFteTitle": {
+      "message": "使用 Adobe Acrobat 转换为 PDF"
+   },
+   "geminiChatNotLoadedToastButtonText": {
+      "message": "仍要继续"
+   },
+   "geminiChatNotLoadedToastMessage": {
+      "message": "部分消息未包含在内。请滚动到顶部以转换完整聊天内容。"
+   },
+   "geminiConvertToPDFChatTouchpointHoverTooltip": {
+      "message": "在 Acrobat 中打开此聊天内容"
+   },
+   "geminiConvertToPDFChatTouchpointText": {
+      "message": "将聊天转换为 PDF"
+   },
+   "geminiConvertToPDFResponseTouchpointText": {
+      "message": "转换为 PDF"
+   },
+   "geminiDefaultTitleText": {
+      "message": "Gemini"
+   },
+   "geminiResponseFteDescription": {
+      "message": "使用 Adobe Acrobat 扩展程序直接将 Gemini 回复转换为 PDF。"
+   },
+   "geminiResponseFteTitle": {
+      "message": "将此回复转换为 PDF"
+   },
+   "genAIFabPreferenceDescription": {
+      "message": "始终在浏览器窗口的边缘显示 Al 助手按钮。"
+   },
+   "genAIFabPreferenceTitle": {
+      "message": "AI 助手按钮"
+   },
+   "generativeFillImageContextMenu": {
+      "message": "生成式填充"
+   },
+   "genericDVPCoachMarkContent": {
+      "message": "点击“管理应用程序”，然后向下滚动到 Acrobat 加载项并单击“默认使用”复选框"
+   },
+   "getInsight": {
+      "message": "使用 Acrobat AI 助手获取见解"
+   },
+   "gmailConvertEmailToPDF": {
+      "message": "转换为 PDF"
+   },
+   "gmailConvertEmailToPDFFteDescription": {
+      "message": "将电子邮件正文转换为 PDF，不包括附件，并下载您的文件。"
+   },
+   "gmailConvertEmailToPDFFteTitle": {
+      "message": "将此电子邮件转换为 PDF"
+   },
+   "gmailConvertEmailToPDFTooltip": {
+      "message": "将您的电子邮件转换为 PDF"
+   },
+   "gmailConvertToPdf": {
+      "message": "转换为 PDF"
+   },
+   "gmailConvertToPdfFteToolTipDescription": {
+      "message": "将 Gmail 文件转换为 PDF，并可直接在浏览器中编辑，无需下载即可完成。"
+   },
+   "gmailConvertToPdfFteToolTipTitle": {
+      "message": "使用 Acrobat 将文件转换为 PDF"
+   },
+   "gmailEditPdf": {
+      "message": "编辑 PDF"
+   },
+   "gmailEditPdfFteToolTipDescription": {
+      "message": "直接在浏览器中尝试使用 PDF 工具，如编辑、注释、转换和电子签名。"
+   },
+   "gmailEditPdfFteToolTipTitle": {
+      "message": "在 Acrobat 中编辑 PDF"
+   },
+   "gmailImplicitDVFTEBody": {
+      "message": "在 Gmail 中点击 Acrobat 扩展程序图标即可打开 PDF。您可在 Acrobat“更多”(...) 菜单中将其设置为默认打开方式。"
+   },
+   "gmailImplicitDVFTEHeader": {
+      "message": "随时在 Acrobat 中查看 PDF"
+   },
+   "gmailImplicitDVNotification": {
+      "message": "PDF 附件将在 Gmail 中打开。"
+   },
+   "gmailPromptFTETooltip": {
+      "message": "在 Acrobat 中打开 PDF 以使用编辑、签名等工具"
+   },
+   "goToPreferences": {
+      "message": "转到“首选项”"
+   },
+   "googleSheetsOrientationHeading": {
+      "message": "方向"
+   },
+   "googleSheetsOrientationLandscape": {
+      "message": "横向"
+   },
+   "googleSheetsOrientationPortrait": {
+      "message": "纵向"
+   },
+   "googleSheetsScaleFitColumns": {
+      "message": "将所有列调整至一页"
+   },
+   "googleSheetsScaleFitRows": {
+      "message": "将所有行调整至一页"
+   },
+   "googleSheetsScaleFitSheet": {
+      "message": "将所有内容调整至一页"
+   },
+   "googleSheetsScaleHeading": {
+      "message": "缩放"
+   },
+   "googleSheetsSettingsDialogTitle": {
+      "message": "转换为 PDF"
+   },
+   "gsuiteEditWithAcrobat": {
+      "message": "使用 Acrobat 编辑"
+   },
+   "gsuiteOpenWithAcrobat": {
+      "message": "在 Acrobat 中打开"
+   },
+   "hideFabForDomain": {
+      "message": "请禁用此网站"
+   },
+   "hideForNow": {
+      "message": "现在隐藏"
+   },
+   "imageToolsContextMenuTooltip": {
+      "message": "Adobe Acrobat 和 Adobe Express 提供的编辑选项"
+   },
+   "imageToolsDropdownContextMenu": {
+      "message": "“编辑”工具"
+   },
+   "imageToolsDropdownFteDescription": {
+      "message": "使用 Adobe Acrobat 将您的图像转换为 PDF，或使用 Adobe Express 在浏览器中进行编辑。"
+   },
+   "imageToolsDropdownFteTitle": {
+      "message": "在 Gmail 中转换和编辑图像"
+   },
+   "imageToolsDropdownFteTitleForGdrive": {
+      "message": "在 Google Drive 中转换和编辑图像"
+   },
+   "insertObjectImageContextMenu": {
+      "message": "插入对象"
+   },
+   "linkedInChatPDFTouchPointFTEBody": {
+      "message": "使用 Adobe Acrobat 进行编辑、电子签名并获取 AI 驱动的见解。"
+   },
+   "linkedInChatPDFTouchPointFTEHeader": {
+      "message": "试用 Adobe Acrobat PDF 工具"
+   },
+   "linkedInFeedPDFTouchPointFTEBody": {
+      "message": "在 Acrobat 扩展程序中打开此 PDF，可进行编辑、总结等操作。"
+   },
+   "linkedInFeedPDFTouchPointFTEHeader": {
+      "message": "在 Adobe Acrobat 中打开此 PDF"
+   },
+   "linkedInOpenInAcrobat": {
+      "message": "在 Acrobat 中打开"
+   },
+   "linkedInSummarizePDF": {
+      "message": "总结 PDF"
+   },
+   "localFileAccessAndSummaryCoachmarkDescription": {
+      "message": "允许 Acrobat 访问文件，即可快速获取 AI 驱动的摘要。"
+   },
+   "localFileAccessAndSummaryCoachmarkHeader": {
+      "message": "获取此文档的摘要"
+   },
+   "localFileAnimationCoachmarkDescription": {
+      "message": "允许访问文件 URL，以便在 Acrobat 扩展程序中打开此设备上的文件。"
+   },
+   "localFileAnimationCoachmarkHeader": {
+      "message": "只需一步即可完成！"
+   },
+   "localFileBlockingPageOpenInChrome": {
+      "message": "在 Chrome 中打开此文件"
+   },
+   "localFileBlockingPageTitle": {
+      "message": "启用 Acrobat 扩展程序"
+   },
+   "localFileOptionDesc": {
+      "message": "授权 Acrobat 扩展程序访问您的本地文件 URL，以在 Chrome 中打开 Acrobat 中的所有 PDF 文件。"
+   },
+   "localFileOptionTitle": {
+      "message": "正在 Acrobat 中打开本地 PDF"
+   },
+   "localFilePromptContinueButton": {
+      "message": "继续"
+   },
+   "localFilePromptDescription": {
+      "message": "允许 Acrobat 访问此设备上的文件，即刻使用所有工具，快速编辑 PDF、转换文件并轻松完成电子签名。"
+   },
+   "localFilePromptHeader": {
+      "message": "在 Acrobat 中打开以进行编辑、签名等操作"
+   },
+   "localFileSummaryCoachmarkHeader": {
+      "message": "即将完成。请允许 Acrobat 访问文件 URL 以启用摘要功能。"
+   },
+   "localFteContinue": {
+      "message": "转至设置"
+   },
+   "localFteDescription": {
+      "message": "充分利用 Acrobat 扩展程序并使用它打开所有 PDF。在扩展程序设置中打开“允许”以访问文件 URL。"
+   },
+   "localFteDontShowAgainText": {
+      "message": "不再显示此消息"
+   },
+   "localFteTitle": {
+      "message": "切换到 Acrobat 以打开本地文件"
+   },
+   "magicScanButtonText": {
+      "message": "使用 Adobe Scan 上传"
+   },
+   "magicScanConfirmCancel": {
+      "message": "取消"
+   },
+   "magicScanConfirmDesc": {
+      "message": "“$filename$”将直接从您的移动设备上传到本网站",
+      "placeholders": {
+         "filename": {
+            "content": "$1"
+         }
+      }
+   },
+   "magicScanConfirmSkip": {
+      "message": "不再显示此消息"
+   },
+   "magicScanConfirmTitle": {
+      "message": "确认上传"
+   },
+   "magicScanConfirmUpload": {
+      "message": "确认"
+   },
+   "magicScanExpiresIn": {
+      "message": "剩余时间："
+   },
+   "magicScanOffline": {
+      "message": "您的设备似乎处于离线状态。请连接到互联网，然后重试。"
+   },
+   "magicScanOverlayDescription": {
+      "message": "使用手机或平板电脑的摄像头扫描此 QR 代码，即可直接从您的移动设备上传文件。"
+   },
+   "magicScanOverlayInstructions": {
+      "message": "将手机摄像头对准此 QR 代码即可开始。"
+   },
+   "magicScanOverlayTitle": {
+      "message": "扫描后从移动设备上传"
+   },
+   "magicScanPreparing": {
+      "message": "正在准备您的文档…"
+   },
+   "magicScanRefreshLabel": {
+      "message": "刷新"
+   },
+   "magicScanReloadQR": {
+      "message": "点击重新加载 QR 代码"
+   },
+   "magicScanSessionClaimed": {
+      "message": "QR 代码已扫描。请在您的移动设备上继续操作。"
+   },
+   "magicScanStartAgain": {
+      "message": "重新开始。"
+   },
+   "magicScanStatusExpired": {
+      "message": "QR 代码已过期。"
+   },
+   "magicScanStatusFailed": {
+      "message": "扫描失败。请重试。"
+   },
+   "msWordConvertToPdfFTEBody": {
+      "message": "使用 Adobe Acrobat 扩展程序将您的 Microsoft Word 文档转换为 PDF，并获得编辑、签名等工具。"
+   },
+   "msWordConvertToPdfFTETitle": {
+      "message": "将此文档转换为 PDF"
+   },
+   "msWordSaveChangesTooltip": {
+      "message": "继续之前，按 $shortcut$ 键保存所有更改。",
+      "placeholders": {
+         "shortcut": {
+            "content": "$1"
+         }
+      }
+   },
+   "neverDisplayFab": {
+      "message": "从不显示"
+   },
+   "openInAcrobat": {
+      "message": "在 Acrobat 中打开"
+   },
+   "optionsAutoSavedLabel": {
+      "message": "已保存"
+   },
+   "optionsAutoSavingLabel": {
+      "message": "正在保存…"
+   },
+   "optionsFailurePrompt": {
+      "message": "我们无法保存您的更改。请稍后再试"
+   },
+   "optionsSuccessPrompt": {
+      "message": "已成功保存首选项"
+   },
+   "optionsSuccessPromptReloadRequired": {
+      "message": "只有在重新加载后才会反映首选项"
+   },
+   "outlookErrorToastDescription": {
+      "message": "出现错误。请关闭文件，然后重试。"
+   },
+   "outlookErrorToastTitle": {
+      "message": "无法打开文件"
+   },
+   "outlookImplicitDVFTEBody": {
+      "message": "Get access to PDF tools like edit, convert, and e-sign. Turn this off anytime from Acrobat extension Preferences."
+   },
+   "outlookImplicitDVFTEHeader": {
+      "message": "Outlook PDFs will open in Acrobat"
+   },
+   "outlookImplicitDVNotification": {
+      "message": "PDF attachments will now open in Outlook. To open them in Acrobat, select the Acrobat icon."
+   },
+   "outlookPDFTouchPointFTEBody": {
+      "message": "在 Acrobat 中打开 PDF 即可执行编辑、总结和签署操作。"
+   },
+   "outlookPDFTouchPointFTEHeader": {
+      "message": "在 Adobe Acrobat 中打开此 PDF"
+   },
+   "outlookPDFTouchPointTooltip": {
+      "message": "Open in Acrobat"
+   },
+   "paywallCreditsExpiredToastMessage": {
+      "message": "您本月的免费积分已过期。请订阅以继续。"
+   },
+   "pdfOpenInAcrobatContextMenu": {
+      "message": "在 Acrobat 中打开"
+   },
+   "pdfOwnerShipDmbConfirmBtn": {
+      "message": "继续"
+   },
+   "pdfOwnerShipSideRedCardConfirmBtn": {
+      "message": "继续"
+   },
+   "pdfOwnershipDefSideCardcontent": {
+      "message": "将 Adobe Acrobat 设为默认的 PDF 查看器，即可查看、注释、填写表单、签名及执行更多操作。"
+   },
+   "pdfOwnershipExploreAcrobat": {
+      "message": "在 Chrome 中使用 Acrobat"
+   },
+   "pdfOwnershipExploreAcrobatEdge": {
+      "message": "在 Microsoft Edge 中使用 Acrobat"
+   },
+   "pdfOwnershipExploreOptionsDescription": {
+      "message": "将 Acrobat 设置为浏览器中的默认 PDF 查看器，以快速访问注释、填写和签名以及其他 PDF 工具。"
+   },
+   "pdfOwnershipExploreOptionsTitle": {
+      "message": "在 Acrobat 中打开所有 PDF"
+   },
+   "pdfOwnershipPromptCancel": {
+      "message": "暂不"
+   },
+   "pdfOwnershipPromptContent": {
+      "message": "将 Adobe Acrobat 设为默认查看器，在 Chrome 中对 PDF 执行更多操作。"
+   },
+   "pdfOwnershipPromptContent2": {
+      "message": "将 Acrobat 设为默认的 PDF 查看器以直接在 Google Chrome 中使用 PDF。可以注释、填写、签名和尝试转换和压缩等工具。"
+   },
+   "pdfOwnershipPromptContentEdge": {
+      "message": "将 Adobe Acrobat 设为默认查看器，在 Microsoft Edge 中对 PDF 执行更多操作。"
+   },
+   "pdfOwnershipPromptDeny": {
+      "message": "不，谢谢"
+   },
+   "pdfOwnershipPromptOk": {
+      "message": "设置为默认"
+   },
+   "pdfOwnershipPromptOkFullscreen": {
+      "message": "立即试用"
+   },
+   "pdfReadyTabTitle": {
+      "message": "PDF 已就绪"
+   },
+   "pdfToWordContextMenu": {
+      "message": "将 PDF 转换为 Word"
+   },
+   "pdfToolsDropdownContextMenu": {
+      "message": "PDF 工具"
+   },
+   "pdfToolsFteTooltipButton": {
+      "message": "关闭"
+   },
+   "pdfToolsFteTooltipDescription": {
+      "message": "直接通过 Gmail 打开 PDF，并试用 Adobe Acrobat 的编辑、注释、转换和电子签名等工具。"
+   },
+   "pdfToolsFteTooltipTitle": {
+      "message": "探索一系列 PDF 工具"
+   },
+   "popupNoConnection": {
+      "message": "无连接"
+   },
+   "popupOfflineMessage": {
+      "message": "请联系您的管理员恢复连接"
+   },
+   "preferenceAcrobatIntegrationsDescription": {
+      "message": "将 Acrobat 设置为受支持浏览器集成（如 Gmail、Google Drive 等）的默认 PDF 查看器。"
+   },
+   "preferenceAcrobatIntegrationsTitle": {
+      "message": "启用 Acrobat 集成"
+   },
+   "preferenceAdobeExpressDescription": {
+      "message": "通过 Adobe Acrobat 扩展程序，使用 Adobe Express 编辑图像。"
+   },
+   "preferenceAdobeExpressTitle": {
+      "message": "在 Acrobat 中启用 Adobe Express"
+   },
+   "preferenceAdobeInternalConnectedAppDescription": {
+      "message": "选择扩展功能的目标连接应用程序。此设置仅模拟界面视图，实际功能可能无法正常使用。"
+   },
+   "preferenceAdobeInternalConnectedAppTitle": {
+      "message": "已连接的应用程序"
+   },
+   "preferenceAdobeInternalEnvironmentDescription": {
+      "message": "选择扩展程序的目标环境。"
+   },
+   "preferenceAdobeInternalEnvironmentTitle": {
+      "message": "开发环境"
+   },
+   "preferenceAdobeInternalGenAIClusterDescription": {
+      "message": "选择生成式 AI 服务的目标群集。"
+   },
+   "preferenceAdobeInternalGenAIClusterTitle": {
+      "message": "生成式 AI 群集"
+   },
+   "preferenceAdobeInternalTabLabel": {
+      "message": "Adobe 内部"
+   },
+   "preferenceAssistantWebPageBadgeText": {
+      "message": "Beta"
+   },
+   "preferenceAssistantWebPageContent": {
+      "message": "使用 AI 助手获取网页的快速摘要和关键见解。"
+   },
+   "preferenceAssistantWebPageTitle": {
+      "message": "适用于网页的 AI 助手"
+   },
+   "preferenceAutoOpenConvertedPDFDescription": {
+      "message": "使用 Acrobat 扩展程序将网页转换为 PDF 后，系统将自动在 Acrobat 中打开转换后的 PDF。"
+   },
+   "preferenceBrowserDefaultViewershipDescription": {
+      "message": "将 Acrobat 设置为默认查看器，以便直接打开来自在线链接、Gmail 和 Google Drive 的 PDF 文件。"
+   },
+   "preferenceBrowserDefaultViewershipDescriptionEdge": {
+      "message": "将 Acrobat 设置为默认查看器，即可从在线链接打开 PDF。"
+   },
+   "preferenceBrowserDefaultViewershipDescriptionOutlook": {
+      "message": "Set Acrobat as your default viewer to open PDFs from online links, Gmail, Google Drive, and Microsoft Outlook."
+   },
+   "preferenceBrowserDefaultViewershipTitle": {
+      "message": "从浏览器中使用 Acrobat 打开 PDF"
+   },
+   "preferenceChromeMimeHandlerDescription": {
+      "message": "启用后，PDF 会通过 Chrome 原生 MIME 处理程序在 Adobe 查看器中打开——原始 URL 保留在地址栏中。禁用后，则改用扩展程序的重定向流程。"
+   },
+   "preferenceChromeMimeHandlerTitle": {
+      "message": "启用 MIME 处理程序"
+   },
+   "preferenceConnectedAppsTabLabel": {
+      "message": "已连接的应用程序"
+   },
+   "preferenceDisplayThemeDescription": {
+      "message": "选择深色模式或浅色模式。"
+   },
+   "preferenceDisplayThemeTitle": {
+      "message": "设置显示主题"
+   },
+   "preferenceEmbeddedPDFsTitle": {
+      "message": "嵌入的 PDF"
+   },
+   "preferenceErrorBoundaryRetry": {
+      "message": "重试"
+   },
+   "preferenceErrorBoundaryTitle": {
+      "message": "出现错误"
+   },
+   "preferenceGeneralTabLabel": {
+      "message": "常规"
+   },
+   "preferenceGenerativeAITabLabel": {
+      "message": "生成式 AI"
+   },
+   "preferenceGoogleSearchToolsDescription": {
+      "message": "允许 Acrobat 根据您的搜索记录推荐在浏览器中使用的 PDF 工具（相关搜索内容不会发送至 Adobe）。"
+   },
+   "preferenceGoogleSearchToolsTitle": {
+      "message": "在 Google 搜索结果中显示 Acrobat 工具"
+   },
+   "preferenceGroupAccordionTitle": {
+      "message": "高级设置"
+   },
+   "preferenceHideAcrobatDomainListTitle": {
+      "message": "已禁用 Acrobat 的网站"
+   },
+   "preferenceHideFabDomainListTitle": {
+      "message": "禁用 AI 助手的网站"
+   },
+   "preferenceHideSummaryBarDomainListTitle": {
+      "message": "隐藏 AI 助手摘要横幅的网站"
+   },
+   "preferenceLanguageDescription": {
+      "message": "选择您的首选语言。"
+   },
+   "preferenceLanguageTitle": {
+      "message": "设置语言"
+   },
+   "preferenceLearnerExperienceDescription": {
+      "message": "启用后，以学生为中心的功能可帮助您更有效地学习和管理学业。"
+   },
+   "preferenceLearnerExperienceTitle": {
+      "message": "在 Acrobat 中启用学生体验"
+   },
+   "preferenceLinkedInTitle": {
+      "message": "LinkedIn"
+   },
+   "preferenceOfflineModeDescription": {
+      "message": "请检查您的网络连接，然后重试。"
+   },
+   "preferenceOfflineModeTitle": {
+      "message": "当前不可用"
+   },
+   "preferenceOnlinePDFsTitle": {
+      "message": "在线 PDF"
+   },
+   "preferenceOpenLocalFilesDescription": {
+      "message": "此选项由 Chrome 浏览器管理。开启“允许访问文件 URL”，以在 Acrobat 中打开 PDF。"
+   },
+   "preferenceOpenLocalFilesTitle": {
+      "message": "在 Acrobat 中打开本地文件"
+   },
+   "preferenceOpenLocalFilesTurnOffButtonLabel": {
+      "message": "关闭"
+   },
+   "preferenceOpenLocalFilesTurnOnButtonLabel": {
+      "message": "开启"
+   },
+   "preferenceOptinDescription": {
+      "message": "向 Adobe 发送有关您如何使用 Acrobat 扩展程序的信息，以改进产品功能。"
+   },
+   "preferenceOptinLearnMore": {
+      "message": "了解详情"
+   },
+   "preferenceOutlookTitle": {
+      "message": "Microsoft Outlook"
+   },
+   "preferencePrivacyTabLabel": {
+      "message": "隐私"
+   },
+   "preferenceSaveLocationDescription": {
+      "message": "可将文件保存至 Adobe 云存储、您的计算机，或者每次保存时均询问保存位置。"
+   },
+   "preferenceSaveLocationTitle": {
+      "message": "设置文件保存位置"
+   },
+   "preferenceShowAIAssistantButtonDescription": {
+      "message": "始终在浏览器窗口的边缘显示 AI 助手按钮。"
+   },
+   "preferenceShowAIAssistantButtonTitle": {
+      "message": "显示“AI 助手”按钮"
+   },
+   "preferenceShowAISummaryBannerDescription": {
+      "message": "在支持的网页上始终显示 AI 助手摘要横幅。"
+   },
+   "preferenceShowAISummaryBannerTitle": {
+      "message": "显示 AI 助手摘要横幅"
+   },
+   "preferenceShowAcrobatAssistantShortcutDescription": {
+      "message": "从浏览器窗口边缘访问 PDF 工具和 AI 助手。"
+   },
+   "preferenceShowAcrobatAssistantShortcutTitle": {
+      "message": "让 Acrobat 在浏览器中保持可见"
+   },
+   "preferenceShowFeatureGuidanceDescription": {
+      "message": "允许 Acrobat 扩展程序显示有关更新、功能使用指南等方面的指导。"
+   },
+   "preferenceShowFeatureGuidanceTitle": {
+      "message": "显示功能指南"
+   },
+   "preferenceShowGenAIFabPillsTitle": {
+      "message": "显示 AI 助手面板中的 AI 选项"
+   },
+   "preferenceShowLessText": {
+      "message": "显示更少"
+   },
+   "preferenceShowMoreText": {
+      "message": "显示更多"
+   },
+   "preferenceShowNotificationsDescription": {
+      "message": "允许 Acrobat 扩展程序显示有关更新、功能使用指南等方面的通知。"
+   },
+   "preferenceShowNotificationsTitle": {
+      "message": "显示通知"
+   },
+   "preferenceShowOpenInAcrobatShortcutCheckboxGroupFooter": {
+      "message": "如果 Acrobat 已被设置为该应用程序的默认查看器，则其快捷方式将不会显示。"
+   },
+   "preferenceShowOpenInAcrobatShortcutCheckboxGroupFooterLinkText": {
+      "message": "设为默认查看器"
+   },
+   "preferenceShowOpenInAcrobatShortcutDescription": {
+      "message": "添加快捷方式，以便从 Gmail、Google Drive 等平台中使用 Acrobat 打开 PDF。"
+   },
+   "preferenceShowOpenInAcrobatShortcutTitle": {
+      "message": "在其他应用程序中显示“在 Acrobat 中打开”快捷方式"
+   },
+   "preferenceShowSummarizeBarOnWebpagesTitle": {
+      "message": "在网页上显示摘要栏"
+   },
+   "preferenceShowWhatsAppShortcutTitle": {
+      "message": "显示“发送到 WhatsApp”快捷方式"
+   },
+   "preferenceTurnOnAIFeaturesDescription": {
+      "message": "允许在云端处理您的文件，以便使用生成式 AI 功能。注意：如果关闭此功能，则会阻止您的文件在云端进行处理，进而禁用生成式 AI 功能；您可以随时重新开启此功能。"
+   },
+   "preferenceTurnOnAIFeaturesTitle": {
+      "message": "在 Acrobat 中开启生成式 AI 功能"
+   },
+   "preferenceTurnOnGenAIWebpagesDescription": {
+      "message": "在任何网页上访问 AI 助手，获取摘要和洞察。关闭此选项即可移除该访问权限。"
+   },
+   "preferenceTurnOnGenAIWebpagesTitle": {
+      "message": "在浏览器中开启生成式 AI"
+   },
+   "preferenceWebpageConversionDescription": {
+      "message": "更新将网页保存为 PDF 的设置，包括边距、字体及其他布局选项。"
+   },
+   "preferenceWebpageConversionTitle": {
+      "message": "修改网页转换设置"
+   },
+   "preferenceWhatsNewAutoOpenTitle": {
+      "message": "启用更新后自动打开功能"
+   },
+   "preferences": {
+      "message": "首选项"
+   },
+   "productAcrobat": {
+      "message": "Acrobat"
+   },
+   "productNoApp": {
+      "message": "无应用程序"
+   },
+   "productReader": {
+      "message": "Reader"
+   },
+   "refreshButtonInFailToast": {
+      "message": "刷新"
+   },
+   "removeBackgroundImageContextMenu": {
+      "message": "删除背景"
+   },
+   "removeBackgroundImageContextMenuV2ChatGPT": {
+      "message": "移除背景"
+   },
+   "removeObjectImageContextMenu": {
+      "message": "移除对象"
+   },
+   "saveLocationOp1": {
+      "message": "每次询问"
+   },
+   "saveLocationOp2": {
+      "message": "Adobe 云存储"
+   },
+   "saveLocationOp3": {
+      "message": "我的电脑"
+   },
+   "saveLocationPreferenceDescription": {
+      "message": "设置保存文件的位置"
+   },
+   "saveLocationPreferenceTitle": {
+      "message": "将文件保存到相应位置"
+   },
+   "selectFileButton": {
+      "message": "选择文件"
+   },
+   "sessionExpiredDescription": {
+      "message": "请上传文件并重试。"
+   },
+   "sessionExpiredDocumentTitle": {
+      "message": "会话已过期"
+   },
+   "sessionExpiredTitle": {
+      "message": "会话已超时"
+   },
+   "sessionExpiredToastText": {
+      "message": "会话已过期。请刷新页面后重试。"
+   },
+   "sharepointPreferenceMessage": {
+      "message": "允许在 Acrobat 中签出 SharePoint 文件。"
+   },
+   "sidepanelLoaderText": {
+      "message": "使用 Acrobat AI 助手获取摘要和关键见解"
+   },
+   "sidepanelLocationPreferenceButtonText": {
+      "message": "在浏览器设置中更改"
+   },
+   "sidepanelLocationPreferenceDescription": {
+      "message": "将侧面板放置在浏览器窗口的左侧或右侧。侧面板仅在 Google Chrome 11.4（或更高版本）中可用。"
+   },
+   "sidepanelLocationPreferenceTitle": {
+      "message": "AI 助手面板位置"
+   },
+   "stripTextOpenAcrobat": {
+      "message": "在 Acrobat 中打开"
+   },
+   "stripTextOpenFillnSign": {
+      "message": "Acrobat 中的“填写和签名”"
+   },
+   "studentToolsTouchpointCheatsheet": {
+      "message": "创建速查表"
+   },
+   "studentToolsTouchpointFabFlashcards": {
+      "message": "创建抽认卡"
+   },
+   "studentToolsTouchpointFabLoading": {
+      "message": "正在创建…"
+   },
+   "studentToolsTouchpointFabMindmap": {
+      "message": "创建思维导图"
+   },
+   "studentToolsTouchpointFabNotes": {
+      "message": "生成笔记"
+   },
+   "studentToolsTouchpointFabQuiz": {
+      "message": "创建测验"
+   },
+   "studentToolsTouchpointFabStudyGuide": {
+      "message": "创建学习指南"
+   },
+   "studentToolsTouchpointFlashcards": {
+      "message": "基于此页面创建抽认卡"
+   },
+   "studentToolsTouchpointFlashcardsFromFile": {
+      "message": "基于此文件创建抽认卡"
+   },
+   "studentToolsTouchpointMindmap": {
+      "message": "生成思维导图"
+   },
+   "studentToolsTouchpointQuiz": {
+      "message": "基于此页面创建测验"
+   },
+   "studentToolsTouchpointStudyGuide": {
+      "message": "创建学习指南"
+   },
+   "studentToolsTouchpointStudyGuideContextMenu": {
+      "message": "将此页面转换为学习指南"
+   },
+   "successToastText": {
+      "message": "PDF 下载文件现在将在 Adobe Acrobat 中打开"
+   },
+   "summarizeWebpageContextMenu": {
+      "message": "用 AI 总结网页内容"
+   },
+   "summarizeWebpageSelectedContent": {
+      "message": "总结此内容"
+   },
+   "summaryBarCloseTooltip": {
+      "message": "隐藏选项"
+   },
+   "summaryBarCtaLabel": {
+      "message": "使用 Acrobat AI 助手总结此页面。"
+   },
+   "summaryBarDismissMenuAriaLabel": {
+      "message": "AI 助手摘要横幅选项"
+   },
+   "surfaceNameChatGPT": {
+      "message": "ChatGPT"
+   },
+   "surfaceNameGdrive": {
+      "message": "Google Drive"
+   },
+   "surfaceNameGemini": {
+      "message": "Gemini"
+   },
+   "surfaceNameGmail": {
+      "message": "Gmail"
+   },
+   "surfaceNameGoogleDocs": {
+      "message": "Google 文档"
+   },
+   "surfaceNameGoogleSheets": {
+      "message": "Google 表格"
+   },
+   "surfaceNameGoogleSlides": {
+      "message": "Google 幻灯片"
+   },
+   "surfaceNameMSWord": {
+      "message": "Microsoft Word"
+   },
+   "surfaceNameWikipedia": {
+      "message": "维基百科"
+   },
+   "tooltipTextDisabled": {
+      "message": "AI 助手不适用于此网页"
+   },
+   "tooltipTextEnabled": {
+      "message": "使用 AI 助手获取摘要和关键见解"
+   },
+   "tooltipTextEnabledHome": {
+      "message": "直接在浏览器中转换、编辑并使用 AI 助手"
+   },
+   "tooltipTextSubText": {
+      "message": "由 Adobe Acrobat 提供支持"
+   },
+   "tryAgain": {
+      "message": "重试"
+   },
+   "unsupportedFileTypeToastText": {
+      "message": "不支持此文件类型。您可以尝试在另一个文件中编辑。"
+   },
+   "userLocale": {
+      "message": "用户区域设置"
+   },
+   "web2pdfAddButtonText": {
+      "message": "添加到现有的 PDF..."
+   },
+   "web2pdfAlwaysShow": {
+      "message": "自动显示于 PDF"
+   },
+   "web2pdfAppendLinkContextMenu": {
+      "message": "将链接目标追加到现有的 PDF"
+   },
+   "web2pdfAppendPageContextMenu": {
+      "message": "将网页添加到现有的 PDF..."
+   },
+   "web2pdfBadVersion": {
+      "message": "此 Chrome 版本不支持 Adobe Acrobat。最低版本为: $version$",
+      "placeholders": {
+         "version": {
+            "content": "$1"
+         }
+      }
+   },
+   "web2pdfBadVersionEdge": {
+      "message": "此 Edge 版本不支持 Adobe Acrobat。最低版本为: $version$",
+      "placeholders": {
+         "version": {
+            "content": "$1"
+         }
+      }
+   },
+   "web2pdfClickToOpen": {
+      "message": "单击下面的链接以在 Acrobat 中打开 PDF。"
+   },
+   "web2pdfConvertButtonToolTip": {
+      "message": "Acrobat 扩展程序 - 所有 PDF 工具的快捷键。"
+   },
+   "web2pdfConvertButtonToolTipERPReader": {
+      "message": "Acrobat Reader 扩展当前处于禁用状态。请联系您的 IT 管理员。"
+   },
+   "web2pdfConvertButtonToolTipReader": {
+      "message": "在 Acrobat Reader 中打开 PDF"
+   },
+   "web2pdfConvertLinkContextMenu": {
+      "message": "将链接目标转换为 Adobe PDF"
+   },
+   "web2pdfConvertPageContextMenu": {
+      "message": "将网页转换为 Adobe PDF..."
+   },
+   "web2pdfCopyText": {
+      "message": "正在复制到 Acrobat"
+   },
+   "web2pdfDestinationText": {
+      "message": "目标文件夹："
+   },
+   "web2pdfDoneButtonText": {
+      "message": "完成"
+   },
+   "web2pdfExtnDescription": {
+      "message": "在浏览器中使用 Acrobat 对 PDF 进行查看、转换、压缩和签名"
+   },
+   "web2pdfExtnDescriptionBeta": {
+      "message": "在浏览器中使用 Acrobat 对 PDF 进行查看、转换、压缩和签名"
+   },
+   "web2pdfExtnDescriptionChrome": {
+      "message": "利用 Adobe Acrobat PDF 工具在 Google Chrome 中完成更多任务：查看、填充、注释、签名，您还可以试试转换和压缩工具。"
+   },
+   "web2pdfExtnDescriptionEdge": {
+      "message": "利用 Adobe Acrobat PDF 工具在 Microsoft Edge 中完成更多任务：查看、填充、注释、签名，您还可以试试转换和压缩工具。"
+   },
+   "web2pdfExtnName": {
+      "message": "Adobe Acrobat：PDF 编辑、转化、签名工具"
+   },
+   "web2pdfExtnNameBeta": {
+      "message": "Adobe Acrobat 测试版"
+   },
+   "web2pdfExtnNameEdge": {
+      "message": "Adobe Acrobat：PDF 编辑、转化、签名工具"
+   },
+   "web2pdfExtnNameStage": {
+      "message": "Adobe Acrobat 阶段"
+   },
+   "web2pdfFileLockedError": {
+      "message": "文件无法保存，因为正在被另一进程使用。"
+   },
+   "web2pdfFilename": {
+      "message": "文件名："
+   },
+   "web2pdfFrictionlessToggleDescription": {
+      "message": "为了有助于您完成任务，Adobe Acrobat 扩展推荐了 PDF 工具。我们的推荐是基于您的搜索以及设备上的某些活动；您的搜索内容不会发送到 Adobe。"
+   },
+   "web2pdfFrictionlessUrl": {
+      "message": "https://www.adobe.com/go/fl_chromeext_cn"
+   },
+   "web2pdfFrictionlessUrlEdge": {
+      "message": "https://www.adobe.com/cn/acrobat/online.html?x_api_client_id=edge_extension&x_api_client_location=trefoil&mv=other&mv2=edge_extension:trefoil&trackingid=HM85XB76"
+   },
+   "web2pdfHTMLJSError": {
+      "message": "处理网页时出错。"
+   },
+   "web2pdfHTMLTooLarge": {
+      "message": "HTML 内容过大，无法处理。"
+   },
+   "web2pdfInfoHoverPopup": {
+      "message": "为了有助于您完成任务，Adobe Acrobat 扩展推荐了 PDF 工具。我们的推荐是基于您的搜索以及设备上的某些活动；您的搜索内容不会发送到 Adobe。单击\u003Cspan class = \"tooltip-content-settings\">此处\u003C/span>可禁用此功能。"
+   },
+   "web2pdfLoaderTitle": {
+      "message": "正在加载..."
+   },
+   "web2pdfMissingMac": {
+      "message": "Adobe Acrobat for Chrome 尚不适用于 Mac"
+   },
+   "web2pdfMissingMacEdge": {
+      "message": "Adobe Acrobat for Microsoft Edge 尚不适用于 Mac"
+   },
+   "web2pdfNoFoldersText": {
+      "message": "您的 Acrobat DC 存储中没有文件夹。"
+   },
+   "web2pdfNoWritePermissionOnSelectedFile": {
+      "message": "您对选定的文件没有写入权限。"
+   },
+   "web2pdfOpenButtonText": {
+      "message": "在 Acrobat 中打开"
+   },
+   "web2pdfOpenButtonTextOlder": {
+      "message": "下载 Adobe PDF"
+   },
+   "web2pdfOpenButtonTextReader": {
+      "message": "在 Acrobat Reader 中打开"
+   },
+   "web2pdfOpenConvertedPDFDescription": {
+      "message": "完成网页到 PDF 的转换后，将自动在 Acrobat 中打开转换后的 PDF。"
+   },
+   "web2pdfOpenConvertedPDFTitle": {
+      "message": "自动在 Acrobat 中打开转换后的 PDF"
+   },
+   "web2pdfOpenInDCButtonText": {
+      "message": "在 Acrobat 中打开 PDF"
+   },
+   "web2pdfOptOut": {
+      "message": "为改进产品功能，此扩展会向 Adobe 发送有关您如何使用它的信息。"
+   },
+   "web2pdfOptOutDisabled": {
+      "message": "您的使用情况数据不会被共享。"
+   },
+   "web2pdfOptions": {
+      "message": "选项"
+   },
+   "web2pdfOptionsTitle": {
+      "message": "Adobe Acrobat 偏好设置"
+   },
+   "web2pdfPDFOpenFailed": {
+      "message": "未能打开 PDF"
+   },
+   "web2pdfPDFOpenFailedv2": {
+      "message": "无法打开"
+   },
+   "web2pdfPDFOpened": {
+      "message": "已打开 PDF"
+   },
+   "web2pdfPDFOpening": {
+      "message": "正在打开 PDF"
+   },
+   "web2pdfPreferencesButtonText": {
+      "message": "首选项..."
+   },
+   "web2pdfPreferencesNewText": {
+      "message": "转换设置..."
+   },
+   "web2pdfPrivacy": {
+      "message": "关于 Adobe Acrobat"
+   },
+   "web2pdfReplaceWarning": {
+      "message": "已存在。\n要替换它吗？"
+   },
+   "web2pdfSave": {
+      "message": "保存"
+   },
+   "web2pdfSaveButton": {
+      "message": "保存首选项"
+   },
+   "web2pdfShowPDFTools": {
+      "message": "显示 Google 搜索结果"
+   },
+   "web2pdfShowPDFViewerOption": {
+      "message": "使用 Acrobat 作为默认的 PDF 查看器"
+   },
+   "web2pdfShowPersistentOpen": {
+      "message": "显示“在 Acrobat 中打开”"
+   },
+   "web2pdfShowPersistentOpenAlways": {
+      "message": "始终显示“在 Acrobat 中打开”"
+   },
+   "web2pdfShowPersistentOpenDescription": {
+      "message": "每次都显示在 Acrobat 中打开 PDF 的选项。"
+   },
+   "web2pdfStatusCancelled": {
+      "message": "转换已取消"
+   },
+   "web2pdfStatusComplete": {
+      "message": "转换成功"
+   },
+   "web2pdfStatusDownloading": {
+      "message": "正在下载以进行转换..."
+   },
+   "web2pdfStatusDownloadingPDF": {
+      "message": "正在下载 PDF"
+   },
+   "web2pdfStatusFailure": {
+      "message": "转换失败"
+   },
+   "web2pdfStatusInProgress": {
+      "message": "正在转换..."
+   },
+   "web2pdfStatusUnknownFailure": {
+      "message": "未知的故障"
+   },
+   "web2pdfStatusWaiting": {
+      "message": "正在等待转换..."
+   },
+   "web2pdfTitle": {
+      "message": "Adobe Acrobat"
+   },
+   "web2pdfUnsupportedAcrobatVersion": {
+      "message": "无法找到支持的 Acrobat 版本。请安装\u003Ca target='_blank' href='https://acrobat.adobe.com/cn/zh-Hans/free-trial-download.html?trackingid=29NMCS7T&mv=other'>免费的 7 天试用版\u003C/a>。"
+   },
+   "web2pdfUntitledFileName": {
+      "message": "未命名"
+   },
+   "webpagePDFConversion": {
+      "message": "网页至 PDF 转换设置"
+   },
+   "webpagePDFConversionDescription": {
+      "message": "将网页保存为 PDF 时，您可以设置页边距、字体和其他布局细节 "
+   },
+   "whatsNewAutoOpenDescription": {
+      "message": "允许 Acrobat 在有可用的新更新时自动打开网页。"
+   },
+   "whatsNewAutoOpenTitle": {
+      "message": "启用更新公告的自动打开功能"
+   },
+   "wikipediaConvertToPdfFTEBody": {
+      "message": "将维基百科页面转换为 PDF，无需离开浏览器即可进行编辑。"
+   },
+   "wikipediaConvertToPdfFTETitle": {
+      "message": "将此页面转换为 PDF"
+   },
+   "wikipediaConvertToPdfHoverTooltip": {
+      "message": "使用 Acrobat 将此维基百科页面转换为 PDF"
+   },
+   "wikipediaConvertToPdfToastMessage": {
+      "message": "正在将页面转换为 PDF。请保持 Acrobat 标签页打开，转换完成后您将收到通知。"
+   },
+   "wikipediaConvertingTooltip": {
+      "message": "正在新标签页中处理。文件准备就绪后，我们会通知您"
+   },
+   "wikipediaDefaultTitleText": {
+      "message": "维基百科文章"
+   }
+}

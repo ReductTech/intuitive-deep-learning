@@ -1,0 +1,18 @@
+/*************************************************************************
+* ADOBE CONFIDENTIAL
+* ___________________
+*
+*  Copyright 2015 Adobe Systems Incorporated
+*  All Rights Reserved.
+*
+* NOTICE:  All information contained herein is, and remains
+* the property of Adobe Systems Incorporated and its suppliers,
+* if any.  The intellectual and technical concepts contained
+* herein are proprietary to Adobe Systems Incorporated and its
+* suppliers and are protected by all applicable intellectual property laws,
+* including trade secret and or copyright laws.
+* Dissemination of this information or reproduction of this material
+* is strictly forbidden unless prior written permission is obtained
+* from Adobe Systems Incorporated.
+**************************************************************************/
+.a129d813-express-tooltip{border:1px solid #75757566;border-radius:7px;box-shadow:0 2px 21px 0 rgba(0,0,0,.15);height:auto;overflow:hidden;position:fixed;right:12px;top:12px;width:296px;z-index:1000000}.a129d813-express-tooltip .a129d813-image-container{background-image:linear-gradient(#ffde80,#ff5acb);-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box;display:flex;height:206px;width:100%}.a129d813-express-tooltip .a129d813-coachmark-image{height:100%;width:100%}.a129d813-express-tooltip .a129d813-close-button{align-items:center;cursor:pointer;display:flex;height:40px;justify-content:center;position:absolute;right:0;top:0;width:40px}.a129d813-express-tooltip .a129d813-close-button-icon{height:10px;width:10px}.a129d813-express-tooltip .a129d813-content-container{align-items:baseline;background-color:#fff;display:flex;flex-direction:column;height:auto;row-gap:8px}.a129d813-express-tooltip .a129d813-express-header{align-items:flex-start;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box;display:flex;flex-direction:column;padding:16px 24px 0;row-gap:8px;width:100%}.a129d813-express-tooltip .a129d813-express-tooltip-icon{height:24px;width:24.89px}.a129d813-express-tooltip .a129d813-header-content{color:#000;font-family:Adobe Clean,adobe-clean,AdobeClean-Bold,sans-serif!important;font-size:16px;font-weight:700;line-height:20px}.a129d813-express-tooltip .a129d813-description-content{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box;color:#222;display:flex;font-family:Adobe Clean,adobe-clean,AdobeClean-Regular,sans-serif!important;font-size:14px;font-weight:400;line-height:21px;padding:0 24px 24px;width:100%}

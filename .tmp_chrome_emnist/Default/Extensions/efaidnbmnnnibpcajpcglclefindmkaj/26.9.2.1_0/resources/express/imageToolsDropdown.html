@@ -1,0 +1,423 @@
+<!-- imageToolsDropdown.html -->
+
+<style>
+  .cc440d50ba-express-entrypoint-button {
+      display: flex;
+      flex-direction: row;
+      padding: 8px 16px;
+      position: relative;
+      cursor: pointer;
+      background-color: #E8E8E8;
+      color: rgba(0, 0, 0, 0.84);
+      align-items: center;
+      border-radius: 100px;
+      box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+  }
+
+  .cc440d50ba-express-entrypoint-button:hover,
+  .cc440d50ba-express-entrypoint-button.is-open {
+      background-color: #000000;
+      color: #FFFFFF;
+  }
+
+  .cc440d50ba-express-entrypoint-button .cc440d50ba-express-entrypoint-button-icon {
+      display: flex;
+      align-items: center;
+      box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+  }
+
+  .cc440d50ba-express-entrypoint-button .cc440d50ba-express-entrypoint-button-icon img {
+      width: 18px;
+      height: 18px;
+      margin-right: 8px;
+  }
+
+  .cc440d50ba-express-entrypoint-button .cc440d50ba-express-entrypoint-button-text {
+      font-family: "Adobe Clean", adobe-clean, "AdobeClean-Regular", sans-serif !important;
+      display: flex;
+      padding-bottom: 2px;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 100%;
+      box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+  }
+
+  /* Compact (icon-only): same as previous – 32px button, icon centered in boundary */
+  .cc440d50ba-express-entrypoint-button.cc440d50ba-express-entrypoint-button-compact {
+      width: 32px;
+      min-width: 32px;
+      height: 32px;
+      padding: 0;
+      justify-content: center;
+  }
+  .cc440d50ba-express-entrypoint-button.cc440d50ba-express-entrypoint-button-compact .cc440d50ba-express-entrypoint-button-text {
+      display: none !important;
+  }
+  .cc440d50ba-express-entrypoint-button.cc440d50ba-express-entrypoint-button-compact .cc440d50ba-express-entrypoint-button-icon {
+      padding: 0;
+      width: 32px;
+      height: 32px;
+      box-sizing: border-box;
+      justify-content: center;
+      align-items: center;
+  }
+  .cc440d50ba-express-entrypoint-button.cc440d50ba-express-entrypoint-button-compact .cc440d50ba-express-entrypoint-button-icon img {
+      margin-right: 0;
+  }
+
+  .cc440d50ba-express-dropdown-menu {
+      width: 170px;
+      height: fit-content;
+      max-height: 130px;
+      display: none;
+      position: absolute;
+      box-shadow: 0px 2px 8px 0px #00000029;
+      border-radius: 10px;
+      margin-top: 6px;
+      padding: 8px;
+      background:  #FFFFFF;
+      z-index: 1000;
+      box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+  }
+
+  /* Transparent bridge that fills the margin-top gap between button and dropdown,
+     preventing mouseleave from firing as the cursor moves between them. */
+  .cc440d50ba-express-dropdown-hover-bridge {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      height: 6px; /* must match margin-top of cc440d50ba-express-dropdown-menu */
+      display: none;
+  }
+
+  /* The ~ (general sibling) combinator shows the hover bridge whenever the dropdown
+     menu has its "show" class active, keeping the bridge visible as long as the menu
+     is open so the user can move the cursor from the button into the dropdown. */
+  .cc440d50ba-express-dropdown-menu-show ~ .cc440d50ba-express-dropdown-hover-bridge {
+      display: block;
+  }
+
+  .cc440d50ba-express-dropdown-menu-show {
+      display: block;
+  }
+
+  .cc440d50ba-express-dropdown-menu-content {
+      width: 154px;
+      display: flex;
+      flex-direction: column;
+  }
+
+  .cc440d50ba-express-dropdown-menu-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+  }
+
+  .cc440d50ba-express-dropdown-menu-content-header {
+      display: flex;
+      flex-direction: column;
+      padding: 6px 12px 8px 12px;
+      box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+  }
+
+  .cc440d50ba-express-dropdown-menu-content-header-title-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 8px;
+  }
+
+  .cc440d50ba-express-dropdown-menu-content-header-title-row-icon {
+      display: flex;
+      align-items: center;
+      width: 18px;
+      gap: 10px;
+      padding-top: 6px;
+      padding-bottom: 6px;
+  }
+
+  .cc440d50ba-express-dropdown-menu-content-header-title-row-icon img {
+      width: 100%;
+  }
+
+  .cc440d50ba-express-dropdown-menu-content-header-title-row-title {
+      font-family: "Adobe Clean", adobe-clean, "AdobeClean-Regular", sans-serif !important;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 100%;
+      letter-spacing: 0%;
+      color: #292929;
+  }
+
+  .cc440d50ba-express-dropdown-menu-content-header-title-row-subtitle {
+      height: 15px;
+      font-family: "Adobe Clean", adobe-clean, "AdobeClean-Regular", sans-serif !important;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 100%;
+      letter-spacing: 0%;
+      color: #505050;
+  }
+
+  .cc440d50ba-express-dropdown-menu-content-item-group {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+  }
+
+  .cc440d50ba-express-dropdown-menu-content-item {
+      display: flex;
+      align-items: center;
+      width: 153px;
+      height: 32px;
+      padding-right: 12px;
+      padding-left: 12px;
+      cursor: pointer;
+      box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+  }
+
+  .cc440d50ba-express-dropdown-menu-content-item:hover {
+      border-radius: 8px;
+      overflow: hidden;
+      background: #E9E9E9;
+  }
+
+  .cc440d50ba-express-dropdown-menu-content-item-icon {
+      display: flex;
+      align-items: center;
+      padding-right: 6px;
+      box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+  }
+  .cc440d50ba-express-item-convert-to-pdf .cc440d50ba-express-dropdown-menu-content-item-icon {
+      padding-right: 0;
+  }
+
+  .cc440d50ba-express-dropdown-menu-content-item-text {
+      gap: 1px;
+      padding-top: 6px;
+      padding-bottom: 7px;
+      font-family: "Adobe Clean", adobe-clean, "AdobeClean-Bold", sans-serif !important;
+      font-weight: 500;
+      font-size: 13px;
+      line-height: 100%;
+      letter-spacing: 0%;
+      color: #292929;
+      box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+  }
+
+  .cc440d50ba-express-dropdown-divider {
+      display: block;
+      width: 146px;
+      height: 2px;
+      background-color: #E1E1E1;
+      margin: 5px 4px;
+  }
+
+  .cc440d50ba-express-dropdown-section-header {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      padding: 0;
+      flex: none;
+      width: 154px;
+  }
+
+  .cc440d50ba-express-dropdown-section-header-text {
+      font-family: sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      font-style: normal;
+      color: rgba(143, 143, 143, 1);
+      margin: 0;
+      padding: 6px 4px 4px;
+      line-height: 14px;
+      letter-spacing: 0;
+      width: 100%;
+      box-sizing: border-box;
+  }
+
+  .gmailNativeViewer .cc440d50ba-express-entrypoint-button,
+  .gdriveNativeViewer .cc440d50ba-express-entrypoint-button {
+      display: none;
+      background-color: rgba(0, 0, 0, 0.75);
+      color: rgba(235, 235, 235, 1);
+      border: 2px solid rgba(75, 75, 75, 1);
+      border-radius: 100px;
+  }
+
+  /* Gmail becomes visible at 800px */
+  @media screen and (min-width: 800px) {
+      .gmailNativeViewer .cc440d50ba-express-entrypoint-button {
+          display: flex;
+      }
+  }
+
+  /* GDrive has more icons in header, so button becomes visible at larger screen width */
+  @media screen and (min-width: 880px) {
+      .gdriveNativeViewer .cc440d50ba-express-entrypoint-button {
+          display: flex;
+      }
+  }
+  
+  .gmailNativeViewer .cc440d50ba-express-entrypoint-button:hover,
+  .gdriveNativeViewer .cc440d50ba-express-entrypoint-button:hover {
+      background: rgba(75, 75, 75, 1);
+  }
+
+  .gmailNativeViewer .cc440d50ba-express-entrypoint-button.is-open,
+  .gdriveNativeViewer .cc440d50ba-express-entrypoint-button.is-open {
+      background: rgba(255, 255, 255, 0.25);
+  }
+
+  .gmailNativeViewer .cc440d50ba-express-entrypoint-button-icon svg path,
+  .gdriveNativeViewer .cc440d50ba-express-entrypoint-button-icon svg path {
+      fill: #FFFFFF;
+  }
+
+  /* Hide dropdown menu on small screens */
+  @media screen and (max-width: 800px) {
+      .gmailNativeViewer .cc440d50ba-express-dropdown-menu-show {
+          display: none;
+      }
+  }
+
+  @media screen and (max-width: 880px) {
+      .gdriveNativeViewer .cc440d50ba-express-dropdown-menu-show {
+          display: none;
+      }
+  }
+
+  .cc440d50ba-tooltiptext {
+      font-family: "Adobe Clean", adobe-clean, "AdobeClean-Bold", sans-serif !important;
+      pointer-events: none;
+      cursor: default;
+      font-weight: 400;
+      font-size: 12px;
+      visibility: hidden;
+      width: 170px;
+      top: 119%;
+      line-height: 15px;
+      background-color: #292929;
+      color: #fff;
+      text-align: left;
+      border-radius: 7px;
+      padding: 4px 9px 5px 9px;
+      position: absolute;
+      z-index: 10000;
+      box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+  }
+
+  .cc440d50ba-tooltiptext-bottom::after {
+      content: "";
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: transparent transparent #292929 transparent;
+  }
+
+  .cc440d50ba-tooltiptext-top::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: #292929 transparent transparent transparent;
+  }
+
+  .cc440d50ba-tooltiptext-left::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 100%;
+      margin-top: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: transparent transparent transparent #292929;
+  }
+
+  .cc440d50ba-tooltiptext-right::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: 100%;
+      margin-top: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: transparent #292929 transparent transparent;
+  }
+
+  .gmailNativeViewer.cc440d50ba-tooltiptext,
+  .gdriveNativeViewer.cc440d50ba-tooltiptext {
+      background-color: #DBDBDB;
+      color: #111111;
+  }
+
+  .gmailNativeViewer.cc440d50ba-tooltiptext-bottom::after,
+  .gdriveNativeViewer.cc440d50ba-tooltiptext-bottom::after {
+      border-color: transparent transparent #DBDBDB transparent;
+  }
+
+</style>
+
+<div>
+<div id="edit-tools-preview-adobe-entry-point" class="cc440d50ba-express-entrypoint-button">
+  <div class="cc440d50ba-express-entrypoint-button-icon">
+    <img class="cc440d50ba-express-entrypoint-button-icon-img" src="" />
+  </div>
+  <div id="imageToolsDropdownContextMenu" class="cc440d50ba-express-entrypoint-button-text translate">
+  </div>
+</div>
+<div class="cc440d50ba-express-dropdown-menu">
+    <div class="cc440d50ba-express-dropdown-menu-content">
+        <div class="cc440d50ba-express-dropdown-menu-content-item-group">
+          <div class="cc440d50ba-express-dropdown-menu-content-item cc440d50ba-express-item-convert-to-pdf">
+            <div class="cc440d50ba-express-dropdown-menu-content-item-icon">
+              <img class="cc440d50ba-express-dropdown-menu-content-item-icon-img" src="" />
+            </div>
+            <div id="convertToPdf" class="cc440d50ba-express-dropdown-menu-content-item-text translate"></div>
+          </div>
+        </div>
+        <div class="cc440d50ba-express-dropdown-divider"></div>
+        <div class="cc440d50ba-express-dropdown-section-header">
+          <div id="expressEditImagePoweredByExpressContextMenu" class="cc440d50ba-express-dropdown-section-header-text translate"></div>
+        </div>
+        <div class="cc440d50ba-express-dropdown-menu-content-item-group">
+          <div class="cc440d50ba-express-dropdown-menu-content-item cc440d50ba-express-item-edit-image">
+            <div class="cc440d50ba-express-dropdown-menu-content-item-icon">
+              <img class="cc440d50ba-express-dropdown-menu-content-item-icon-img" src="" />
+            </div>
+            <div id="editImageContextMenu" class="cc440d50ba-express-dropdown-menu-content-item-text translate"></div>
+          </div>
+        </div>
+    </div>
+</div>
+<div class="cc440d50ba-express-dropdown-hover-bridge"></div>
+</div>

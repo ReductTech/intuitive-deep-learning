@@ -1,0 +1,321 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/modules/Convolution-Kernel-Intro/pages/TranslationEquivariancePage/TranslationEquivariancePage.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=2be87a0d"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/TranslationEquivariancePage/TranslationEquivariancePage.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+var _s = $RefreshSig$();
+import __vite__cjsImport3_react from "/node_modules/.vite/deps/react.js?v=2be87a0d"; const useEffect = __vite__cjsImport3_react["useEffect"]; const useRef = __vite__cjsImport3_react["useRef"]; const useState = __vite__cjsImport3_react["useState"];
+import { ContentBlock, moduleAssetUrl, Typography } from "/modules/shared/react/index.ts";
+import "/modules/Convolution-Kernel-Intro/pages/TranslationEquivariancePage/TranslationEquivariancePage.css";
+const moduleAssetId = "38cd1c79-d8b7-462a-b208-a567c5cd89c4";
+const backgroundUrl = moduleAssetUrl(moduleAssetId, "layerd_scene/bg.png");
+const ufoUrl = moduleAssetUrl(moduleAssetId, "layerd_scene/ufo.png");
+const pillarUrl = moduleAssetUrl(moduleAssetId, "layerd_scene/pillar.png");
+const foliageUrl = moduleAssetUrl(moduleAssetId, "layerd_scene/dark_foliage.png");
+const MAP_WIDTH = 80;
+const MAP_HEIGHT = 58;
+const LAPLACIAN_KERNEL = [[0, 1, 0], [1, -4, 1], [0, 1, 0]];
+function loadImage(src) {
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    image.onload = () => resolve(image);
+    image.onerror = reject;
+    image.src = src;
+  });
+}
+function heatColor(value) {
+  const stops = [[8, 29, 88], [27, 73, 172], [39, 137, 244], [27, 221, 215], [252, 226, 64], [255, 100, 50]];
+  const scaled = Math.max(0, Math.min(1, value)) * (stops.length - 1);
+  const index = Math.min(stops.length - 2, Math.floor(scaled));
+  const t = scaled - index;
+  return stops[index].map((channel, component) => Math.round(channel + (stops[index + 1][component] - channel) * t));
+}
+function renderResponse(canvas, source, images, position) {
+  const sourceContext = source.getContext("2d", { willReadFrequently: true });
+  const outputContext = canvas.getContext("2d");
+  if (!sourceContext || !outputContext) return;
+  const w = MAP_WIDTH, h = MAP_HEIGHT;
+  sourceContext.clearRect(0, 0, w, h);
+  sourceContext.drawImage(images.background, 0, 0, w, h);
+  const ufoWidth = w * 0.2;
+  const ufoHeight = ufoWidth * 869 / 1700;
+  const ufoScale = images.ufo.naturalWidth / 2048;
+  sourceContext.drawImage(images.ufo, 175 * ufoScale, 608 * ufoScale, 1700 * ufoScale, 869 * ufoScale, position.x * w - ufoWidth / 2, position.y * h - ufoHeight / 2, ufoWidth, ufoHeight);
+  sourceContext.drawImage(images.pillar, 0, 0, w * 0.34, h);
+  const foliageSize = w * 0.37;
+  sourceContext.drawImage(images.foliage, w - foliageSize, h - foliageSize, foliageSize, foliageSize);
+  const pixels = sourceContext.getImageData(0, 0, w, h).data;
+  const grayscale = new Float32Array(w * h);
+  for (let index = 0; index < grayscale.length; index += 1) {
+    const red = pixels[index * 4], green = pixels[index * 4 + 1], blue = pixels[index * 4 + 2];
+    grayscale[index] = (0.2126 * red + 0.7152 * green + 0.0722 * blue) / 255;
+  }
+  const output = outputContext.createImageData(w, h);
+  for (let y = 0; y < h; y += 1) for (let x = 0; x < w; x += 1) {
+    let response = 0;
+    for (let ky = -1; ky <= 1; ky += 1) for (let kx = -1; kx <= 1; kx += 1) {
+      const sampleY = Math.max(0, Math.min(h - 1, y + ky));
+      const sampleX = Math.max(0, Math.min(w - 1, x + kx));
+      response += grayscale[sampleY * w + sampleX] * LAPLACIAN_KERNEL[ky + 1][kx + 1];
+    }
+    const [red, green, blue] = heatColor(Math.abs(response) / 0.55);
+    const offset = (y * w + x) * 4;
+    output.data[offset] = red;
+    output.data[offset + 1] = green;
+    output.data[offset + 2] = blue;
+    output.data[offset + 3] = 255;
+  }
+  outputContext.putImageData(output, 0, 0);
+}
+export function TranslationEquivariancePage() {
+  _s();
+  const sceneRef = useRef(null);
+  const heatmapRef = useRef(null);
+  const sourceRef = useRef(null);
+  const imagesRef = useRef(null);
+  const [position, setPosition] = useState({ x: 0.57, y: 0.52 });
+  const positionRef = useRef({ x: 0.57, y: 0.52 });
+  const pointerInsideRef = useRef(false);
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    let frame = 0;
+    let lastUpdate = 0;
+    const startedAt = performance.now();
+    const animate = (now) => {
+      if (!pointerInsideRef.current && now - lastUpdate >= 33) {
+        const angle = (now - startedAt) * 75e-5;
+        const target = { x: 0.57 + 0.23 * Math.cos(angle), y: 0.43 + 0.12 * Math.sin(angle) };
+        const current = positionRef.current;
+        const next = { x: current.x + (target.x - current.x) * 0.075, y: current.y + (target.y - current.y) * 0.075 };
+        positionRef.current = next;
+        setPosition(next);
+        lastUpdate = now;
+      }
+      frame = requestAnimationFrame(animate);
+    };
+    frame = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(frame);
+  }, []);
+  useEffect(() => {
+    let active = true;
+    Promise.all([loadImage(backgroundUrl), loadImage(ufoUrl), loadImage(pillarUrl), loadImage(foliageUrl)]).then(([background, ufo, pillar, foliage]) => {
+      if (!active) return;
+      imagesRef.current = { background, ufo, pillar, foliage };
+      const source = document.createElement("canvas");
+      source.width = MAP_WIDTH;
+      source.height = MAP_HEIGHT;
+      sourceRef.current = source;
+      setReady(true);
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
+  useEffect(() => {
+    if (ready && heatmapRef.current && sourceRef.current && imagesRef.current) renderResponse(heatmapRef.current, sourceRef.current, imagesRef.current, position);
+  }, [position, ready]);
+  const moveUfo = (event) => {
+    const scene = sceneRef.current;
+    if (!scene) return;
+    const rect = scene.getBoundingClientRect();
+    const next = { x: Math.max(0.07, Math.min(0.93, (event.clientX - rect.left) / rect.width)), y: Math.max(0.08, Math.min(0.92, (event.clientY - rect.top) / rect.height)) };
+    positionRef.current = next;
+    setPosition(next);
+  };
+  const ufoStyle = { left: `${position.x * 100}%`, top: `${position.y * 100}%` };
+  return /* @__PURE__ */ jsxDEV(ContentBlock, { headingLevel: 1, className: "ck-translation", title: "平移等变性", subtitle: "输入中的目标移到哪里，固定卷积核产生的对应响应也移到哪里。", children: [
+    /* @__PURE__ */ jsxDEV("div", { className: "ck-translation__workspace", children: [
+      /* @__PURE__ */ jsxDEV("section", { className: "ck-translation__panel ck-translation__input-panel", children: [
+        /* @__PURE__ */ jsxDEV("header", { children: /* @__PURE__ */ jsxDEV(Typography, { as: "h2", variant: "h3", tone: "accent", children: "1　输入场景" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/TranslationEquivariancePage/TranslationEquivariancePage.tsx",
+          lineNumber: 153,
+          columnNumber: 17
+        }, this) }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/TranslationEquivariancePage/TranslationEquivariancePage.tsx",
+          lineNumber: 153,
+          columnNumber: 9
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { className: "ck-translation__scene", ref: sceneRef, onPointerEnter: (event) => {
+          pointerInsideRef.current = true;
+          moveUfo(event);
+        }, onPointerMove: moveUfo, onPointerLeave: () => {
+          pointerInsideRef.current = false;
+        }, "aria-label": "UFO 自动绕圈飞行；移动鼠标可接管轨迹，离开后继续绕圈，前景柱子和树叶会遮挡它", children: [
+          /* @__PURE__ */ jsxDEV("img", { className: "ck-translation__background", src: backgroundUrl, alt: "夜晚的城堡和桥梁背景", draggable: "false" }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/TranslationEquivariancePage/TranslationEquivariancePage.tsx",
+            lineNumber: 155,
+            columnNumber: 11
+          }, this),
+          /* @__PURE__ */ jsxDEV("img", { className: "ck-translation__ufo", src: ufoUrl, alt: "可随鼠标平移的 UFO", style: ufoStyle, draggable: "false" }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/TranslationEquivariancePage/TranslationEquivariancePage.tsx",
+            lineNumber: 156,
+            columnNumber: 11
+          }, this),
+          /* @__PURE__ */ jsxDEV("img", { className: "ck-translation__pillar", src: pillarUrl, alt: "前景柱子", draggable: "false" }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/TranslationEquivariancePage/TranslationEquivariancePage.tsx",
+            lineNumber: 157,
+            columnNumber: 11
+          }, this),
+          /* @__PURE__ */ jsxDEV("img", { className: "ck-translation__foliage", src: foliageUrl, alt: "前景树叶", draggable: "false" }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/TranslationEquivariancePage/TranslationEquivariancePage.tsx",
+            lineNumber: 158,
+            columnNumber: 11
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/TranslationEquivariancePage/TranslationEquivariancePage.tsx",
+          lineNumber: 154,
+          columnNumber: 9
+        }, this),
+        /* @__PURE__ */ jsxDEV(Typography, { variant: "body", tone: "muted", children: "移动鼠标控制 UFO" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/TranslationEquivariancePage/TranslationEquivariancePage.tsx",
+          lineNumber: 160,
+          columnNumber: 9
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/TranslationEquivariancePage/TranslationEquivariancePage.tsx",
+        lineNumber: 152,
+        columnNumber: 7
+      }, this),
+      /* @__PURE__ */ jsxDEV("section", { className: "ck-translation__panel ck-translation__kernel-panel", children: [
+        /* @__PURE__ */ jsxDEV("header", { children: /* @__PURE__ */ jsxDEV(Typography, { as: "h2", variant: "h3", tone: "accent", children: "2　固定卷积核" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/TranslationEquivariancePage/TranslationEquivariancePage.tsx",
+          lineNumber: 163,
+          columnNumber: 17
+        }, this) }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/TranslationEquivariancePage/TranslationEquivariancePage.tsx",
+          lineNumber: 163,
+          columnNumber: 9
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { className: "ck-translation__kernel", role: "img", "aria-label": "四邻域 Laplacian 卷积核，中心为负四，上下左右为一，四角为零", children: LAPLACIAN_KERNEL.flatMap((row, rowIndex) => row.map((value, colIndex) => /* @__PURE__ */ jsxDEV("span", { className: value > 0 ? "is-positive" : value < 0 ? "is-negative" : "is-zero", children: /* @__PURE__ */ jsxDEV(Typography, { as: "span", variant: "body", tone: "inherit", children: value }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/TranslationEquivariancePage/TranslationEquivariancePage.tsx",
+          lineNumber: 165,
+          columnNumber: 201
+        }, this) }, `${rowIndex}-${colIndex}`, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/TranslationEquivariancePage/TranslationEquivariancePage.tsx",
+          lineNumber: 165,
+          columnNumber: 85
+        }, this))) }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/TranslationEquivariancePage/TranslationEquivariancePage.tsx",
+          lineNumber: 164,
+          columnNumber: 9
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { className: "ck-translation__kernel-note", children: [
+          /* @__PURE__ */ jsxDEV(Typography, { variant: "bodySmall", tone: "accent", children: "Laplacian · 检测亮度边界" }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/TranslationEquivariancePage/TranslationEquivariancePage.tsx",
+            lineNumber: 167,
+            columnNumber: 54
+          }, this),
+          /* @__PURE__ */ jsxDEV(Typography, { variant: "bodySmall", tone: "muted", children: "同一组权重在整张图上滑动。" }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/TranslationEquivariancePage/TranslationEquivariancePage.tsx",
+            lineNumber: 167,
+            columnNumber: 131
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/TranslationEquivariancePage/TranslationEquivariancePage.tsx",
+          lineNumber: 167,
+          columnNumber: 9
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/TranslationEquivariancePage/TranslationEquivariancePage.tsx",
+        lineNumber: 162,
+        columnNumber: 7
+      }, this),
+      /* @__PURE__ */ jsxDEV("section", { className: "ck-translation__panel ck-translation__output-panel", children: [
+        /* @__PURE__ */ jsxDEV("header", { children: /* @__PURE__ */ jsxDEV(Typography, { as: "h2", variant: "h3", tone: "accent", children: "3　输出特征图" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/TranslationEquivariancePage/TranslationEquivariancePage.tsx",
+          lineNumber: 170,
+          columnNumber: 17
+        }, this) }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/TranslationEquivariancePage/TranslationEquivariancePage.tsx",
+          lineNumber: 170,
+          columnNumber: 9
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { className: "ck-translation__heatmap-frame", children: [
+          /* @__PURE__ */ jsxDEV("canvas", { ref: heatmapRef, className: "ck-translation__heatmap", width: MAP_WIDTH, height: MAP_HEIGHT, role: "img", "aria-label": "当前可见场景的灰度图经过 Laplacian 卷积得到的实时边界响应强度图" }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/TranslationEquivariancePage/TranslationEquivariancePage.tsx",
+            lineNumber: 172,
+            columnNumber: 11
+          }, this),
+          /* @__PURE__ */ jsxDEV("span", { className: "ck-translation__heatmap-badge", tabIndex: 0, "aria-describedby": "ck-translation-heatmap-tip", children: "热力图" }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/TranslationEquivariancePage/TranslationEquivariancePage.tsx",
+            lineNumber: 173,
+            columnNumber: 11
+          }, this),
+          /* @__PURE__ */ jsxDEV("span", { className: "ck-translation__heatmap-tooltip", id: "ck-translation-heatmap-tip", role: "tooltip", children: "颜色表示响应强度，越暖越强。" }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/TranslationEquivariancePage/TranslationEquivariancePage.tsx",
+            lineNumber: 174,
+            columnNumber: 11
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/TranslationEquivariancePage/TranslationEquivariancePage.tsx",
+          lineNumber: 171,
+          columnNumber: 9
+        }, this),
+        /* @__PURE__ */ jsxDEV(Typography, { variant: "body", tone: "muted", children: "更亮的区域意味着更强的局部特征响应" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/TranslationEquivariancePage/TranslationEquivariancePage.tsx",
+          lineNumber: 176,
+          columnNumber: 9
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/TranslationEquivariancePage/TranslationEquivariancePage.tsx",
+        lineNumber: 169,
+        columnNumber: 7
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/TranslationEquivariancePage/TranslationEquivariancePage.tsx",
+      lineNumber: 151,
+      columnNumber: 5
+    }, this),
+    /* @__PURE__ */ jsxDEV("div", { className: "ck-translation__summary", children: [
+      /* @__PURE__ */ jsxDEV(Typography, { as: "strong", variant: "h3", tone: "accent", children: "结论" }, void 0, false, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/TranslationEquivariancePage/TranslationEquivariancePage.tsx",
+        lineNumber: 179,
+        columnNumber: 46
+      }, this),
+      /* @__PURE__ */ jsxDEV(Typography, { variant: "body", tone: "accent", children: "UFO 平移时，响应位置随之平移；进入前景遮挡区域时，响应可能减弱。" }, void 0, false, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/TranslationEquivariancePage/TranslationEquivariancePage.tsx",
+        lineNumber: 179,
+        columnNumber: 112
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/TranslationEquivariancePage/TranslationEquivariancePage.tsx",
+      lineNumber: 179,
+      columnNumber: 5
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/TranslationEquivariancePage/TranslationEquivariancePage.tsx",
+    lineNumber: 150,
+    columnNumber: 10
+  }, this);
+}
+_s(TranslationEquivariancePage, "LNc3SAqpSGnY24bJexZSgwRg0mY=");
+_c = TranslationEquivariancePage;
+var _c;
+$RefreshReg$(_c, "TranslationEquivariancePage");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/TranslationEquivariancePage/TranslationEquivariancePage.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/TranslationEquivariancePage/TranslationEquivariancePage.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,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QU8sTUFBSyxTQUFRLGlDQUF4QztBQUFBO0FBQUE7QUFBQTtBQUFBLGVBQXlEO0FBQUEsV0FQM0Q7QUFBQTtBQUFBO0FBQUE7QUFBQSxhQVFBO0FBQUEsU0ExQkY7QUFBQTtBQUFBO0FBQUE7QUFBQSxXQTJCQTtBQUFBLElBQ0EsdUJBQUMsU0FBSSxXQUFVLDJCQUEwQjtBQUFBLDZCQUFDLGNBQVcsSUFBRyxVQUFTLFNBQVEsTUFBSyxNQUFLLFVBQVMsa0JBQW5EO0FBQUE7QUFBQTtBQUFBO0FBQUEsYUFBcUQ7QUFBQSxNQUFhLHVCQUFDLGNBQVcsU0FBUSxRQUFPLE1BQUssVUFBUyxrREFBekM7QUFBQTtBQUFBO0FBQUE7QUFBQSxhQUEyRTtBQUFBLFNBQXRMO0FBQUE7QUFBQTtBQUFBO0FBQUEsV0FBbU07QUFBQSxPQTdCOUw7QUFBQTtBQUFBO0FBQUE7QUFBQSxTQThCUDtBQUNGO0FBQUNxRSxHQXpGZUQsNkJBQTJCO0FBQUEsS0FBM0JBO0FBQTJCLElBQUE4QztBQUFBLGFBQUFBLElBQUEiLCJuYW1lcyI6WyJ1c2VFZmZlY3QiLCJ1c2VSZWYiLCJ1c2VTdGF0ZSIsIkNvbnRlbnRCbG9jayIsIm1vZHVsZUFzc2V0VXJsIiwiVHlwb2dyYXBoeSIsIm1vZHVsZUFzc2V0SWQiLCJiYWNrZ3JvdW5kVXJsIiwidWZvVXJsIiwicGlsbGFyVXJsIiwiZm9saWFnZVVybCIsIk1BUF9XSURUSCIsIk1BUF9IRUlHSFQiLCJMQVBMQUNJQU5fS0VSTkVMIiwibG9hZEltYWdlIiwic3JjIiwiUHJvbWlzZSIsInJlc29sdmUiLCJyZWplY3QiLCJpbWFnZSIsIkltYWdlIiwib25sb2FkIiwib25lcnJvciIsImhlYXRDb2xvciIsInZhbHVlIiwic3RvcHMiLCJzY2FsZWQiLCJNYXRoIiwibWF4IiwibWluIiwibGVuZ3RoIiwiaW5kZXgiLCJmbG9vciIsInQiLCJtYXAiLCJjaGFubmVsIiwiY29tcG9uZW50Iiwicm91bmQiLCJyZW5kZXJSZXNwb25zZSIsImNhbnZhcyIsInNvdXJjZSIsImltYWdlcyIsInBvc2l0aW9uIiwic291cmNlQ29udGV4dCIsImdldENvbnRleHQiLCJ3aWxsUmVhZEZyZXF1ZW50bHkiLCJvdXRwdXRDb250ZXh0IiwidyIsImgiLCJjbGVhclJlY3QiLCJkcmF3SW1hZ2UiLCJiYWNrZ3JvdW5kIiwidWZvV2lkdGgiLCJ1Zm9IZWlnaHQiLCJ1Zm9TY2FsZSIsInVmbyIsIm5hdHVyYWxXaWR0aCIsIngiLCJ5IiwicGlsbGFyIiwiZm9saWFnZVNpemUiLCJmb2xpYWdlIiwicGl4ZWxzIiwiZ2V0SW1hZ2VEYXRhIiwiZGF0YSIsImdyYXlzY2FsZSIsIkZsb2F0MzJBcnJheSIsInJlZCIsImdyZWVuIiwiYmx1ZSIsIm91dHB1dCIsImNyZWF0ZUltYWdlRGF0YSIsInJlc3BvbnNlIiwia3kiLCJreCIsInNhbXBsZVkiLCJzYW1wbGVYIiwiYWJzIiwib2Zmc2V0IiwicHV0SW1hZ2VEYXRhIiwiVHJhbnNsYXRpb25FcXVpdmFyaWFuY2VQYWdlIiwiX3MiLCJzY2VuZVJlZiIsImhlYXRtYXBSZWYiLCJzb3VyY2VSZWYiLCJpbWFnZXNSZWYiLCJzZXRQb3NpdGlvbiIsInBvc2l0aW9uUmVmIiwicG9pbnRlckluc2lkZVJlZiIsInJlYWR5Iiwic2V0UmVhZHkiLCJmcmFtZSIsImxhc3RVcGRhdGUiLCJzdGFydGVkQXQiLCJwZXJmb3JtYW5jZSIsIm5vdyIsImFuaW1hdGUiLCJjdXJyZW50IiwiYW5nbGUiLCJ0YXJnZXQiLCJjb3MiLCJzaW4iLCJuZXh0IiwicmVxdWVzdEFuaW1hdGlvbkZyYW1lIiwiY2FuY2VsQW5pbWF0aW9uRnJhbWUiLCJhY3RpdmUiLCJhbGwiLCJ0aGVuIiwiZG9jdW1lbnQiLCJjcmVhdGVFbGVtZW50Iiwid2lkdGgiLCJoZWlnaHQiLCJtb3ZlVWZvIiwiZXZlbnQiLCJzY2VuZSIsInJlY3QiLCJnZXRCb3VuZGluZ0NsaWVudFJlY3QiLCJjbGllbnRYIiwibGVmdCIsImNsaWVudFkiLCJ0b3AiLCJ1Zm9TdHlsZSIsImZsYXRNYXAiLCJyb3ciLCJyb3dJbmRleCIsImNvbEluZGV4IiwiX2MiXSwiaWdub3JlTGlzdCI6W10sInNvdXJjZXMiOlsiVHJhbnNsYXRpb25FcXVpdmFyaWFuY2VQYWdlLnRzeCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyB1c2VFZmZlY3QsIHVzZVJlZiwgdXNlU3RhdGUsIHR5cGUgQ1NTUHJvcGVydGllcywgdHlwZSBQb2ludGVyRXZlbnQgfSBmcm9tICdyZWFjdCc7XG5pbXBvcnQgeyBDb250ZW50QmxvY2ssIG1vZHVsZUFzc2V0VXJsLCBUeXBvZ3JhcGh5IH0gZnJvbSAnLi4vLi4vLi4vc2hhcmVkL3JlYWN0JztcbmltcG9ydCAnLi9UcmFuc2xhdGlvbkVxdWl2YXJpYW5jZVBhZ2UuY3NzJztcblxuY29uc3QgbW9kdWxlQXNzZXRJZCA9ICczOGNkMWM3OS1kOGI3LTQ2MmEtYjIwOC1hNTY3YzVjZDg5YzQnO1xuY29uc3QgYmFja2dyb3VuZFVybCA9IG1vZHVsZUFzc2V0VXJsKG1vZHVsZUFzc2V0SWQsICdsYXllcmRfc2NlbmUvYmcucG5nJyk7XG5jb25zdCB1Zm9VcmwgPSBtb2R1bGVBc3NldFVybChtb2R1bGVBc3NldElkLCAnbGF5ZXJkX3NjZW5lL3Vmby5wbmcnKTtcbmNvbnN0IHBpbGxhclVybCA9IG1vZHVsZUFzc2V0VXJsKG1vZHVsZUFzc2V0SWQsICdsYXllcmRfc2NlbmUvcGlsbGFyLnBuZycpO1xuY29uc3QgZm9saWFnZVVybCA9IG1vZHVsZUFzc2V0VXJsKG1vZHVsZUFzc2V0SWQsICdsYXllcmRfc2NlbmUvZGFya19mb2xpYWdlLnBuZycpO1xuXG5jb25zdCBNQVBfV0lEVEggPSA4MDtcbmNvbnN0IE1BUF9IRUlHSFQgPSA1ODtcbmNvbnN0IExBUExBQ0lBTl9LRVJORUwgPSBbWzAsIDEsIDBdLCBbMSwgLTQsIDFdLCBbMCwgMSwgMF1dO1xuaW50ZXJmYWNlIFBvc2l0aW9uIHsgeDogbnVtYmVyOyB5OiBudW1iZXI7IH1cbmludGVyZmFjZSBTY2VuZUltYWdlcyB7IGJhY2tncm91bmQ6IEhUTUxJbWFnZUVsZW1lbnQ7IHVmbzogSFRNTEltYWdlRWxlbWVudDsgcGlsbGFyOiBIVE1MSW1hZ2VFbGVtZW50OyBmb2xpYWdlOiBIVE1MSW1hZ2VFbGVtZW50OyB9XG5cbmZ1bmN0aW9uIGxvYWRJbWFnZShzcmM6IHN0cmluZyk6IFByb21pc2U8SFRNTEltYWdlRWxlbWVudD4ge1xuICByZXR1cm4gbmV3IFByb21pc2UoKHJlc29sdmUsIHJlamVjdCkgPT4ge1xuICAgIGNvbnN0IGltYWdlID0gbmV3IEltYWdlKCk7XG4gICAgaW1hZ2Uub25sb2FkID0gKCkgPT4gcmVzb2x2ZShpbWFnZSk7XG4gICAgaW1hZ2Uub25lcnJvciA9IHJlamVjdDtcbiAgICBpbWFnZS5zcmMgPSBzcmM7XG4gIH0pO1xufVxuXG5mdW5jdGlvbiBoZWF0Q29sb3IodmFsdWU6IG51bWJlcik6IFtudW1iZXIsIG51bWJlciwgbnVtYmVyXSB7XG4gIGNvbnN0IHN0b3BzOiBbbnVtYmVyLCBudW1iZXIsIG51bWJlcl1bXSA9IFtbOCwgMjksIDg4XSwgWzI3LCA3MywgMTcyXSwgWzM5LCAxMzcsIDI0NF0sIFsyNywgMjIxLCAyMTVdLCBbMjUyLCAyMjYsIDY0XSwgWzI1NSwgMTAwLCA1MF1dO1xuICBjb25zdCBzY2FsZWQgPSBNYXRoLm1heCgwLCBNYXRoLm1pbigxLCB2YWx1ZSkpICogKHN0b3BzLmxlbmd0aCAtIDEpO1xuICBjb25zdCBpbmRleCA9IE1hdGgubWluKHN0b3BzLmxlbmd0aCAtIDIsIE1hdGguZmxvb3Ioc2NhbGVkKSk7XG4gIGNvbnN0IHQgPSBzY2FsZWQgLSBpbmRleDtcbiAgcmV0dXJuIHN0b3BzW2luZGV4XS5tYXAoKGNoYW5uZWwsIGNvbXBvbmVudCkgPT4gTWF0aC5yb3VuZChjaGFubmVsICsgKHN0b3BzW2luZGV4ICsgMV1bY29tcG9uZW50XSAtIGNoYW5uZWwpICogdCkpIGFzIFtudW1iZXIsIG51bWJlciwgbnVtYmVyXTtcbn1cblxuZnVuY3Rpb24gcmVuZGVyUmVzcG9uc2UoY2FudmFzOiBIVE1MQ2FudmFzRWxlbWVudCwgc291cmNlOiBIVE1MQ2FudmFzRWxlbWVudCwgaW1hZ2VzOiBTY2VuZUltYWdlcywgcG9zaXRpb246IFBvc2l0aW9uKSB7XG4gIGNvbnN0IHNvdXJjZUNvbnRleHQgPSBzb3VyY2UuZ2V0Q29udGV4dCgnMmQnLCB7IHdpbGxSZWFkRnJlcXVlbnRseTogdHJ1ZSB9KTtcbiAgY29uc3Qgb3V0cHV0Q29udGV4dCA9IGNhbnZhcy5nZXRDb250ZXh0KCcyZCcpO1xuICBpZiAoIXNvdXJjZUNvbnRleHQgfHwgIW91dHB1dENvbnRleHQpIHJldHVybjtcbiAgY29uc3QgdyA9IE1BUF9XSURUSCwgaCA9IE1BUF9IRUlHSFQ7XG4gIHNvdXJjZUNvbnRleHQuY2xlYXJSZWN0KDAsIDAsIHcsIGgpO1xuICBzb3VyY2VDb250ZXh0LmRyYXdJbWFnZShpbWFnZXMuYmFja2dyb3VuZCwgMCwgMCwgdywgaCk7XG4gIGNvbnN0IHVmb1dpZHRoID0gdyAqIC4yO1xuICBjb25zdCB1Zm9IZWlnaHQgPSB1Zm9XaWR0aCAqIDg2OSAvIDE3MDA7XG4gIGNvbnN0IHVmb1NjYWxlID0gaW1hZ2VzLnVmby5uYXR1cmFsV2lkdGggLyAyMDQ4O1xuICBzb3VyY2VDb250ZXh0LmRyYXdJbWFnZShpbWFnZXMudWZvLCAxNzUgKiB1Zm9TY2FsZSwgNjA4ICogdWZvU2NhbGUsIDE3MDAgKiB1Zm9TY2FsZSwgODY5ICogdWZvU2NhbGUsIHBvc2l0aW9uLnggKiB3IC0gdWZvV2lkdGggLyAyLCBwb3NpdGlvbi55ICogaCAtIHVmb0hlaWdodCAvIDIsIHVmb1dpZHRoLCB1Zm9IZWlnaHQpO1xuICBzb3VyY2VDb250ZXh0LmRyYXdJbWFnZShpbWFnZXMucGlsbGFyLCAwLCAwLCB3ICogLjM0LCBoKTtcbiAgY29uc3QgZm9saWFnZVNpemUgPSB3ICogLjM3O1xuICBzb3VyY2VDb250ZXh0LmRyYXdJbWFnZShpbWFnZXMuZm9saWFnZSwgdyAtIGZvbGlhZ2VTaXplLCBoIC0gZm9saWFnZVNpemUsIGZvbGlhZ2VTaXplLCBmb2xpYWdlU2l6ZSk7XG4gIGNvbnN0IHBpeGVscyA9IHNvdXJjZUNvbnRleHQuZ2V0SW1hZ2VEYXRhKDAsIDAsIHcsIGgpLmRhdGE7XG4gIGNvbnN0IGdyYXlzY2FsZSA9IG5ldyBGbG9hdDMyQXJyYXkodyAqIGgpO1xuICBmb3IgKGxldCBpbmRleCA9IDA7IGluZGV4IDwgZ3JheXNjYWxlLmxlbmd0aDsgaW5kZXggKz0gMSkge1xuICAgIGNvbnN0IHJlZCA9IHBpeGVsc1tpbmRleCAqIDRdLCBncmVlbiA9IHBpeGVsc1tpbmRleCAqIDQgKyAxXSwgYmx1ZSA9IHBpeGVsc1tpbmRleCAqIDQgKyAyXTtcbiAgICBncmF5c2NhbGVbaW5kZXhdID0gKDAuMjEyNiAqIHJlZCArIDAuNzE1MiAqIGdyZWVuICsgMC4wNzIyICogYmx1ZSkgLyAyNTU7XG4gIH1cbiAgY29uc3Qgb3V0cHV0ID0gb3V0cHV0Q29udGV4dC5jcmVhdGVJbWFnZURhdGEodywgaCk7XG4gIGZvciAobGV0IHkgPSAwOyB5IDwgaDsgeSArPSAxKSBmb3IgKGxldCB4ID0gMDsgeCA8IHc7IHggKz0gMSkge1xuICAgIGxldCByZXNwb25zZSA9IDA7XG4gICAgZm9yIChsZXQga3kgPSAtMTsga3kgPD0gMTsga3kgKz0gMSkgZm9yIChsZXQga3ggPSAtMTsga3ggPD0gMTsga3ggKz0gMSkge1xuICAgICAgY29uc3Qgc2FtcGxlWSA9IE1hdGgubWF4KDAsIE1hdGgubWluKGggLSAxLCB5ICsga3kpKTtcbiAgICAgIGNvbnN0IHNhbXBsZVggPSBNYXRoLm1heCgwLCBNYXRoLm1pbih3IC0gMSwgeCArIGt4KSk7XG4gICAgICByZXNwb25zZSArPSBncmF5c2NhbGVbc2FtcGxlWSAqIHcgKyBzYW1wbGVYXSAqIExBUExBQ0lBTl9LRVJORUxba3kgKyAxXVtreCArIDFdO1xuICAgIH1cbiAgICAvLyDlhajnqIvkvb/nlKjnm7jlkIznmoTlk43lupTojIPlm7TvvIznp7vliqjnm67moIfml7bkuI3kvJrpgJDluKfph43mlrDmi4nkvLjkuq7luqbjgIJcbiAgICBjb25zdCBbcmVkLCBncmVlbiwgYmx1ZV0gPSBoZWF0Q29sb3IoTWF0aC5hYnMocmVzcG9uc2UpIC8gMC41NSk7XG4gICAgY29uc3Qgb2Zmc2V0ID0gKHkgKiB3ICsgeCkgKiA0O1xuICAgIG91dHB1dC5kYXRhW29mZnNldF0gPSByZWQ7XG4gICAgb3V0cHV0LmRhdGFbb2Zmc2V0ICsgMV0gPSBncmVlbjtcbiAgICBvdXRwdXQuZGF0YVtvZmZzZXQgKyAyXSA9IGJsdWU7XG4gICAgb3V0cHV0LmRhdGFbb2Zmc2V0ICsgM10gPSAyNTU7XG4gIH1cbiAgb3V0cHV0Q29udGV4dC5wdXRJbWFnZURhdGEob3V0cHV0LCAwLCAwKTtcbn1cblxuZXhwb3J0IGZ1bmN0aW9uIFRyYW5zbGF0aW9uRXF1aXZhcmlhbmNlUGFnZSgpIHtcbiAgY29uc3Qgc2NlbmVSZWYgPSB1c2VSZWY8SFRNTERpdkVsZW1lbnQ+KG51bGwpO1xuICBjb25zdCBoZWF0bWFwUmVmID0gdXNlUmVmPEhUTUxDYW52YXNFbGVtZW50PihudWxsKTtcbiAgY29uc3Qgc291cmNlUmVmID0gdXNlUmVmPEhUTUxDYW52YXNFbGVtZW50IHwgbnVsbD4obnVsbCk7XG4gIGNvbnN0IGltYWdlc1JlZiA9IHVzZVJlZjxTY2VuZUltYWdlcyB8IG51bGw+KG51bGwpO1xuICBjb25zdCBbcG9zaXRpb24sIHNldFBvc2l0aW9uXSA9IHVzZVN0YXRlPFBvc2l0aW9uPih7IHg6IC41NywgeTogLjUyIH0pO1xuICBjb25zdCBwb3NpdGlvblJlZiA9IHVzZVJlZjxQb3NpdGlvbj4oeyB4OiAuNTcsIHk6IC41MiB9KTtcbiAgY29uc3QgcG9pbnRlckluc2lkZVJlZiA9IHVzZVJlZihmYWxzZSk7XG4gIGNvbnN0IFtyZWFkeSwgc2V0UmVhZHldID0gdXNlU3RhdGUoZmFsc2UpO1xuXG4gIHVzZUVmZmVjdCgoKSA9PiB7XG4gICAgbGV0IGZyYW1lID0gMDtcbiAgICBsZXQgbGFzdFVwZGF0ZSA9IDA7XG4gICAgY29uc3Qgc3RhcnRlZEF0ID0gcGVyZm9ybWFuY2Uubm93KCk7XG4gICAgY29uc3QgYW5pbWF0ZSA9IChub3c6IG51bWJlcikgPT4ge1xuICAgICAgaWYgKCFwb2ludGVySW5zaWRlUmVmLmN1cnJlbnQgJiYgbm93IC0gbGFzdFVwZGF0ZSA+PSAzMykge1xuICAgICAgICBjb25zdCBhbmdsZSA9IChub3cgLSBzdGFydGVkQXQpICogLjAwMDc1O1xuICAgICAgICBjb25zdCB0YXJnZXQgPSB7IHg6IC41NyArIC4yMyAqIE1hdGguY29zKGFuZ2xlKSwgeTogLjQzICsgLjEyICogTWF0aC5zaW4oYW5nbGUpIH07XG4gICAgICAgIGNvbnN0IGN1cnJlbnQgPSBwb3NpdGlvblJlZi5jdXJyZW50O1xuICAgICAgICBjb25zdCBuZXh0ID0geyB4OiBjdXJyZW50LnggKyAodGFyZ2V0LnggLSBjdXJyZW50LngpICogLjA3NSwgeTogY3VycmVudC55ICsgKHRhcmdldC55IC0gY3VycmVudC55KSAqIC4wNzUgfTtcbiAgICAgICAgcG9zaXRpb25SZWYuY3VycmVudCA9IG5leHQ7XG4gICAgICAgIHNldFBvc2l0aW9uKG5leHQpO1xuICAgICAgICBsYXN0VXBkYXRlID0gbm93O1xuICAgICAgfVxuICAgICAgZnJhbWUgPSByZXF1ZXN0QW5pbWF0aW9uRnJhbWUoYW5pbWF0ZSk7XG4gICAgfTtcbiAgICBmcmFtZSA9IHJlcXVlc3RBbmltYXRpb25GcmFtZShhbmltYXRlKTtcbiAgICByZXR1cm4gKCkgPT4gY2FuY2VsQW5pbWF0aW9uRnJhbWUoZnJhbWUpO1xuICB9LCBbXSk7XG5cbiAgdXNlRWZmZWN0KCgpID0+IHtcbiAgICBsZXQgYWN0aXZlID0gdHJ1ZTtcbiAgICBQcm9taXNlLmFsbChbbG9hZEltYWdlKGJhY2tncm91bmRVcmwpLCBsb2FkSW1hZ2UodWZvVXJsKSwgbG9hZEltYWdlKHBpbGxhclVybCksIGxvYWRJbWFnZShmb2xpYWdlVXJsKV0pLnRoZW4oKFtiYWNrZ3JvdW5kLCB1Zm8sIHBpbGxhciwgZm9saWFnZV0pID0+IHtcbiAgICAgIGlmICghYWN0aXZlKSByZXR1cm47XG4gICAgICBpbWFnZXNSZWYuY3VycmVudCA9IHsgYmFja2dyb3VuZCwgdWZvLCBwaWxsYXIsIGZvbGlhZ2UgfTtcbiAgICAgIGNvbnN0IHNvdXJjZSA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2NhbnZhcycpO1xuICAgICAgc291cmNlLndpZHRoID0gTUFQX1dJRFRIO1xuICAgICAgc291cmNlLmhlaWdodCA9IE1BUF9IRUlHSFQ7XG4gICAgICBzb3VyY2VSZWYuY3VycmVudCA9IHNvdXJjZTtcbiAgICAgIHNldFJlYWR5KHRydWUpO1xuICAgIH0pO1xuICAgIHJldHVybiAoKSA9PiB7IGFjdGl2ZSA9IGZhbHNlOyB9O1xuICB9LCBbXSk7XG5cbiAgdXNlRWZmZWN0KCgpID0+IHtcbiAgICBpZiAocmVhZHkgJiYgaGVhdG1hcFJlZi5jdXJyZW50ICYmIHNvdXJjZVJlZi5jdXJyZW50ICYmIGltYWdlc1JlZi5jdXJyZW50KSByZW5kZXJSZXNwb25zZShoZWF0bWFwUmVmLmN1cnJlbnQsIHNvdXJjZVJlZi5jdXJyZW50LCBpbWFnZXNSZWYuY3VycmVudCwgcG9zaXRpb24pO1xuICB9LCBbcG9zaXRpb24sIHJlYWR5XSk7XG5cbiAgY29uc3QgbW92ZVVmbyA9IChldmVudDogUG9pbnRlckV2ZW50PEhUTUxEaXZFbGVtZW50PikgPT4ge1xuICAgIGNvbnN0IHNjZW5lID0gc2NlbmVSZWYuY3VycmVudDtcbiAgICBpZiAoIXNjZW5lKSByZXR1cm47XG4gICAgY29uc3QgcmVjdCA9IHNjZW5lLmdldEJvdW5kaW5nQ2xpZW50UmVjdCgpO1xuICAgIGNvbnN0IG5leHQgPSB7IHg6IE1hdGgubWF4KC4wNywgTWF0aC5taW4oLjkzLCAoZXZlbnQuY2xpZW50WCAtIHJlY3QubGVmdCkgLyByZWN0LndpZHRoKSksIHk6IE1hdGgubWF4KC4wOCwgTWF0aC5taW4oLjkyLCAoZXZlbnQuY2xpZW50WSAtIHJlY3QudG9wKSAvIHJlY3QuaGVpZ2h0KSkgfTtcbiAgICBwb3NpdGlvblJlZi5jdXJyZW50ID0gbmV4dDtcbiAgICBzZXRQb3NpdGlvbihuZXh0KTtcbiAgfTtcbiAgY29uc3QgdWZvU3R5bGUgPSB7IGxlZnQ6IGAke3Bvc2l0aW9uLnggKiAxMDB9JWAsIHRvcDogYCR7cG9zaXRpb24ueSAqIDEwMH0lYCB9IGFzIENTU1Byb3BlcnRpZXM7XG5cbiAgcmV0dXJuIDxDb250ZW50QmxvY2sgaGVhZGluZ0xldmVsPXsxfSBjbGFzc05hbWU9XCJjay10cmFuc2xhdGlvblwiIHRpdGxlPVwi5bmz56e7562J5Y+Y5oCnXCIgc3VidGl0bGU9XCLovpPlhaXkuK3nmoTnm67moIfnp7vliLDlk6rph4zvvIzlm7rlrprljbfnp6/moLjkuqfnlJ/nmoTlr7nlupTlk43lupTkuZ/np7vliLDlk6rph4zjgIJcIj5cbiAgICA8ZGl2IGNsYXNzTmFtZT1cImNrLXRyYW5zbGF0aW9uX193b3Jrc3BhY2VcIj5cbiAgICAgIDxzZWN0aW9uIGNsYXNzTmFtZT1cImNrLXRyYW5zbGF0aW9uX19wYW5lbCBjay10cmFuc2xhdGlvbl9faW5wdXQtcGFuZWxcIj5cbiAgICAgICAgPGhlYWRlcj48VHlwb2dyYXBoeSBhcz1cImgyXCIgdmFyaWFudD1cImgzXCIgdG9uZT1cImFjY2VudFwiPjHjgIDovpPlhaXlnLrmma88L1R5cG9ncmFwaHk+PC9oZWFkZXI+XG4gICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiY2stdHJhbnNsYXRpb25fX3NjZW5lXCIgcmVmPXtzY2VuZVJlZn0gb25Qb2ludGVyRW50ZXI9eyhldmVudCkgPT4geyBwb2ludGVySW5zaWRlUmVmLmN1cnJlbnQgPSB0cnVlOyBtb3ZlVWZvKGV2ZW50KTsgfX0gb25Qb2ludGVyTW92ZT17bW92ZVVmb30gb25Qb2ludGVyTGVhdmU9eygpID0+IHsgcG9pbnRlckluc2lkZVJlZi5jdXJyZW50ID0gZmFsc2U7IH19IGFyaWEtbGFiZWw9XCJVRk8g6Ieq5Yqo57uV5ZyI6aOe6KGM77yb56e75Yqo6byg5qCH5Y+v5o6l566h6L2o6L+577yM56a75byA5ZCO57un57ut57uV5ZyI77yM5YmN5pmv5p+x5a2Q5ZKM5qCR5Y+25Lya6YGu5oyh5a6DXCI+XG4gICAgICAgICAgPGltZyBjbGFzc05hbWU9XCJjay10cmFuc2xhdGlvbl9fYmFja2dyb3VuZFwiIHNyYz17YmFja2dyb3VuZFVybH0gYWx0PVwi5aSc5pma55qE5Z+O5aCh5ZKM5qGl5qKB6IOM5pmvXCIgZHJhZ2dhYmxlPVwiZmFsc2VcIiAvPlxuICAgICAgICAgIDxpbWcgY2xhc3NOYW1lPVwiY2stdHJhbnNsYXRpb25fX3Vmb1wiIHNyYz17dWZvVXJsfSBhbHQ9XCLlj6/pmo/pvKDmoIflubPnp7vnmoQgVUZPXCIgc3R5bGU9e3Vmb1N0eWxlfSBkcmFnZ2FibGU9XCJmYWxzZVwiIC8+XG4gICAgICAgICAgPGltZyBjbGFzc05hbWU9XCJjay10cmFuc2xhdGlvbl9fcGlsbGFyXCIgc3JjPXtwaWxsYXJVcmx9IGFsdD1cIuWJjeaZr+afseWtkFwiIGRyYWdnYWJsZT1cImZhbHNlXCIgLz5cbiAgICAgICAgICA8aW1nIGNsYXNzTmFtZT1cImNrLXRyYW5zbGF0aW9uX19mb2xpYWdlXCIgc3JjPXtmb2xpYWdlVXJsfSBhbHQ9XCLliY3mma/moJHlj7ZcIiBkcmFnZ2FibGU9XCJmYWxzZVwiIC8+XG4gICAgICAgIDwvZGl2PlxuICAgICAgICA8VHlwb2dyYXBoeSB2YXJpYW50PVwiYm9keVwiIHRvbmU9XCJtdXRlZFwiPuenu+WKqOm8oOagh+aOp+WItiBVRk88L1R5cG9ncmFwaHk+XG4gICAgICA8L3NlY3Rpb24+XG4gICAgICA8c2VjdGlvbiBjbGFzc05hbWU9XCJjay10cmFuc2xhdGlvbl9fcGFuZWwgY2stdHJhbnNsYXRpb25fX2tlcm5lbC1wYW5lbFwiPlxuICAgICAgICA8aGVhZGVyPjxUeXBvZ3JhcGh5IGFzPVwiaDJcIiB2YXJpYW50PVwiaDNcIiB0b25lPVwiYWNjZW50XCI+MuOAgOWbuuWumuWNt+enr+aguDwvVHlwb2dyYXBoeT48L2hlYWRlcj5cbiAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJjay10cmFuc2xhdGlvbl9fa2VybmVsXCIgcm9sZT1cImltZ1wiIGFyaWEtbGFiZWw9XCLlm5vpgrvln58gTGFwbGFjaWFuIOWNt+enr+aguO+8jOS4reW/g+S4uui0n+Wbm++8jOS4iuS4i+W3puWPs+S4uuS4gO+8jOWbm+inkuS4uumbtlwiPlxuICAgICAgICAgIHtMQVBMQUNJQU5fS0VSTkVMLmZsYXRNYXAoKHJvdywgcm93SW5kZXgpID0+IHJvdy5tYXAoKHZhbHVlLCBjb2xJbmRleCkgPT4gPHNwYW4gY2xhc3NOYW1lPXt2YWx1ZSA+IDAgPyAnaXMtcG9zaXRpdmUnIDogdmFsdWUgPCAwID8gJ2lzLW5lZ2F0aXZlJyA6ICdpcy16ZXJvJ30ga2V5PXtgJHtyb3dJbmRleH0tJHtjb2xJbmRleH1gfT48VHlwb2dyYXBoeSBhcz1cInNwYW5cIiB2YXJpYW50PVwiYm9keVwiIHRvbmU9XCJpbmhlcml0XCI+e3ZhbHVlfTwvVHlwb2dyYXBoeT48L3NwYW4+KSl9XG4gICAgICAgIDwvZGl2PlxuICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImNrLXRyYW5zbGF0aW9uX19rZXJuZWwtbm90ZVwiPjxUeXBvZ3JhcGh5IHZhcmlhbnQ9XCJib2R5U21hbGxcIiB0b25lPVwiYWNjZW50XCI+TGFwbGFjaWFuIMK3IOajgOa1i+S6ruW6pui+ueeVjDwvVHlwb2dyYXBoeT48VHlwb2dyYXBoeSB2YXJpYW50PVwiYm9keVNtYWxsXCIgdG9uZT1cIm11dGVkXCI+5ZCM5LiA57uE5p2D6YeN5Zyo5pW05byg5Zu+5LiK5ruR5Yqo44CCPC9UeXBvZ3JhcGh5PjwvZGl2PlxuICAgICAgPC9zZWN0aW9uPlxuICAgICAgPHNlY3Rpb24gY2xhc3NOYW1lPVwiY2stdHJhbnNsYXRpb25fX3BhbmVsIGNrLXRyYW5zbGF0aW9uX19vdXRwdXQtcGFuZWxcIj5cbiAgICAgICAgPGhlYWRlcj48VHlwb2dyYXBoeSBhcz1cImgyXCIgdmFyaWFudD1cImgzXCIgdG9uZT1cImFjY2VudFwiPjPjgIDovpPlh7rnibnlvoHlm748L1R5cG9ncmFwaHk+PC9oZWFkZXI+XG4gICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiY2stdHJhbnNsYXRpb25fX2hlYXRtYXAtZnJhbWVcIj5cbiAgICAgICAgICA8Y2FudmFzIHJlZj17aGVhdG1hcFJlZn0gY2xhc3NOYW1lPVwiY2stdHJhbnNsYXRpb25fX2hlYXRtYXBcIiB3aWR0aD17TUFQX1dJRFRIfSBoZWlnaHQ9e01BUF9IRUlHSFR9IHJvbGU9XCJpbWdcIiBhcmlhLWxhYmVsPVwi5b2T5YmN5Y+v6KeB5Zy65pmv55qE54Gw5bqm5Zu+57uP6L+HIExhcGxhY2lhbiDljbfnp6/lvpfliLDnmoTlrp7ml7bovrnnlYzlk43lupTlvLrluqblm75cIiAvPlxuICAgICAgICAgIDxzcGFuIGNsYXNzTmFtZT1cImNrLXRyYW5zbGF0aW9uX19oZWF0bWFwLWJhZGdlXCIgdGFiSW5kZXg9ezB9IGFyaWEtZGVzY3JpYmVkYnk9XCJjay10cmFuc2xhdGlvbi1oZWF0bWFwLXRpcFwiPueDreWKm+Wbvjwvc3Bhbj5cbiAgICAgICAgICA8c3BhbiBjbGFzc05hbWU9XCJjay10cmFuc2xhdGlvbl9faGVhdG1hcC10b29sdGlwXCIgaWQ9XCJjay10cmFuc2xhdGlvbi1oZWF0bWFwLXRpcFwiIHJvbGU9XCJ0b29sdGlwXCI+6aKc6Imy6KGo56S65ZON5bqU5by65bqm77yM6LaK5pqW6LaK5by644CCPC9zcGFuPlxuICAgICAgICA8L2Rpdj5cbiAgICAgICAgPFR5cG9ncmFwaHkgdmFyaWFudD1cImJvZHlcIiB0b25lPVwibXV0ZWRcIj7mm7Tkuq7nmoTljLrln5/mhI/lkbPnnYDmm7TlvLrnmoTlsYDpg6jnibnlvoHlk43lupQ8L1R5cG9ncmFwaHk+XG4gICAgICA8L3NlY3Rpb24+XG4gICAgPC9kaXY+XG4gICAgPGRpdiBjbGFzc05hbWU9XCJjay10cmFuc2xhdGlvbl9fc3VtbWFyeVwiPjxUeXBvZ3JhcGh5IGFzPVwic3Ryb25nXCIgdmFyaWFudD1cImgzXCIgdG9uZT1cImFjY2VudFwiPue7k+iuujwvVHlwb2dyYXBoeT48VHlwb2dyYXBoeSB2YXJpYW50PVwiYm9keVwiIHRvbmU9XCJhY2NlbnRcIj5VRk8g5bmz56e75pe277yM5ZON5bqU5L2N572u6ZqP5LmL5bmz56e777yb6L+b5YWl5YmN5pmv6YGu5oyh5Yy65Z+f5pe277yM5ZON5bqU5Y+v6IO95YeP5byx44CCPC9UeXBvZ3JhcGh5PjwvZGl2PlxuICA8L0NvbnRlbnRCbG9jaz47XG59XG4iXSwiZmlsZSI6IkM6L1VzZXJzL09jZWFuL0RvY3VtZW50cy9HaXRIdWIvaW50dWl0aXZlLWRlZXAtbGVhcm5pbmcvbW9kdWxlcy9Db252b2x1dGlvbi1LZXJuZWwtSW50cm8vcGFnZXMvVHJhbnNsYXRpb25FcXVpdmFyaWFuY2VQYWdlL1RyYW5zbGF0aW9uRXF1aXZhcmlhbmNlUGFnZS50c3gifQ==

@@ -1,0 +1,18 @@
+/*************************************************************************
+* ADOBE CONFIDENTIAL
+* ___________________
+*
+*  Copyright 2015 Adobe Systems Incorporated
+*  All Rights Reserved.
+*
+* NOTICE:  All information contained herein is, and remains
+* the property of Adobe Systems Incorporated and its suppliers,
+* if any.  The intellectual and technical concepts contained
+* herein are proprietary to Adobe Systems Incorporated and its
+* suppliers and are protected by all applicable intellectual property laws,
+* including trade secret and or copyright laws.
+* Dissemination of this information or reproduction of this material
+* is strictly forbidden unless prior written permission is obtained
+* from Adobe Systems Incorporated.
+**************************************************************************/
+@font-face{font-family:AdobeClean-Bold;src:url(fonts/AdobeClean-Bold.otf) format("opentype")}.adobe-dc-view-downloadBanner{background-color:#fff;border-top:1px solid #d3d3d3;bottom:0;left:0;padding-bottom:8px;padding-top:8px;position:fixed;width:100%}.adobe-dc-view-downloadBanner,.download-banner-main{align-items:center;display:flex;justify-content:center}.accordian-header-img{margin-right:10px}.button{border-radius:8px;margin-left:70px}.tripleDotMenu{border-radius:4px;position:fixed;right:25px}.tripleDotMenu:hover{background-color:#d3d3d3;cursor:pointer}.menuList{background-color:#fff;border:1px solid #d3d3d3;border-radius:4px;box-shadow:0 0 3px 0 #d3d3d3;display:none;padding:2px;position:absolute;right:25px}.menuItem{cursor:pointer;padding:5px}

@@ -1,0 +1,176 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/modules/Tldraw-Demo/TldrawDemoPage.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=2be87a0d"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Tldraw-Demo/TldrawDemoPage.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+import { Typography } from "/modules/shared/react/index.ts";
+import "/modules/shared/react/styles.css";
+import "/modules/shared/react/ui-kit.css";
+import "/modules/Tldraw-Demo/tldraw-demo.css";
+const editorHtml = `<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="https://esm.sh/tldraw@5.4.2/tldraw.css" />
+  <style>
+    html, body, #root { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+    #status { position: absolute; inset: 0; display: grid; place-items: center; font: 16px system-ui; color: #425466; background: #fff; }
+    #status.error { padding: 24px; text-align: center; color: #9f2639; }
+  </style>
+  <script type="importmap">
+    {
+      "imports": {
+        "react": "https://esm.sh/react@19.2.7",
+        "react/jsx-runtime": "https://esm.sh/react@19.2.7/jsx-runtime",
+        "react-dom": "https://esm.sh/react-dom@19.2.7?external=react",
+        "react-dom/client": "https://esm.sh/react-dom@19.2.7/client?external=react"
+      }
+    }
+  <\/script>
+</head>
+<body>
+  <div id="root"></div>
+  <div id="status" role="status">正在载入 tldraw 可编辑画布…</div>
+  <script type="module">
+    const showFailure = (message) => {
+      const status = document.getElementById('status') || document.createElement('div');
+      status.id = 'status';
+      status.className = 'error';
+      status.textContent = message;
+      document.body.appendChild(status);
+    };
+    window.addEventListener('error', (event) => showFailure('画布运行出错：' + event.message));
+    window.addEventListener('unhandledrejection', (event) => showFailure('画布运行出错：' + String(event.reason)));
+    try {
+      const [{ default: React }, { createRoot }, { Tldraw, createShapeId, toRichText }] = await Promise.all([
+        import('react'),
+        import('react-dom/client'),
+        import('https://esm.sh/tldraw@5.4.2?external=react,react-dom')
+      ]);
+      const seedDiagram = (editor) => {
+        if (editor.getCurrentPageShapeIds().size > 0) return;
+        const inputId = createShapeId();
+        const neuronId = createShapeId();
+        const outputId = createShapeId();
+        const firstArrowId = createShapeId();
+        const secondArrowId = createShapeId();
+        editor.run(() => {
+          editor.createShapes([
+            { id: inputId, type: 'geo', x: 80, y: 170, props: { geo: 'rectangle', w: 190, h: 120, color: 'light-blue', fill: 'semi', richText: toRichText('输入 x') } },
+            { id: neuronId, type: 'geo', x: 380, y: 155, props: { geo: 'ellipse', w: 170, h: 150, color: 'violet', fill: 'semi', richText: toRichText('神经元') } },
+            { id: outputId, type: 'geo', x: 660, y: 170, props: { geo: 'rectangle', w: 190, h: 120, color: 'green', fill: 'semi', richText: toRichText('输出 y') } },
+            { id: firstArrowId, type: 'arrow', x: 270, y: 230, props: { start: { x: 0, y: 0 }, end: { x: 110, y: 0 } } },
+            { id: secondArrowId, type: 'arrow', x: 550, y: 230, props: { start: { x: 0, y: 0 }, end: { x: 110, y: 0 } } }
+          ]);
+          editor.createBindings([
+            { fromId: firstArrowId, toId: inputId, type: 'arrow', props: { terminal: 'start', normalizedAnchor: { x: 1, y: 0.5 }, isExact: false, isPrecise: true } },
+            { fromId: firstArrowId, toId: neuronId, type: 'arrow', props: { terminal: 'end', normalizedAnchor: { x: 0, y: 0.5 }, isExact: false, isPrecise: true } },
+            { fromId: secondArrowId, toId: neuronId, type: 'arrow', props: { terminal: 'start', normalizedAnchor: { x: 1, y: 0.5 }, isExact: false, isPrecise: true } },
+            { fromId: secondArrowId, toId: outputId, type: 'arrow', props: { terminal: 'end', normalizedAnchor: { x: 0, y: 0.5 }, isExact: false, isPrecise: true } }
+          ]);
+        }, { history: 'ignore' });
+        editor.zoomToBounds({ x: -50, y: 20, w: 1030, h: 420 }, { immediate: true });
+      };
+      createRoot(document.getElementById('root')).render(
+        React.createElement(Tldraw, {
+          persistenceKey: 'intuitive-deep-learning-tldraw-demo-v3',
+          onMount: seedDiagram
+        })
+      );
+      document.getElementById('status').remove();
+    } catch (error) {
+      showFailure('画布载入失败。请确认网络可以访问 esm.sh，然后刷新页面。');
+      console.error('[tldraw demo]', error);
+    }
+  <\/script>
+</body>
+</html>`;
+export function TldrawDemoPage() {
+  return /* @__PURE__ */ jsxDEV("main", { className: "tld-demo", children: [
+    /* @__PURE__ */ jsxDEV("header", { className: "tld-demo__header", children: [
+      /* @__PURE__ */ jsxDEV("div", { className: "tld-demo__heading", children: [
+        /* @__PURE__ */ jsxDEV(Typography, { as: "span", variant: "bodySmall", className: "tld-demo__eyebrow", children: "可编辑画布接入演示" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Tldraw-Demo/TldrawDemoPage.tsx",
+          lineNumber: 111,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV(Typography, { as: "h1", variant: "h1", children: "tldraw × 神经元课程" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Tldraw-Demo/TldrawDemoPage.tsx",
+          lineNumber: 112,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV(Typography, { as: "p", variant: "bodySmall", children: "试着画一个输入 → 神经元 → 输出的结构。双击文字可修改，拖动画布可移动，滚轮可缩放。" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Tldraw-Demo/TldrawDemoPage.tsx",
+          lineNumber: 113,
+          columnNumber: 11
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Tldraw-Demo/TldrawDemoPage.tsx",
+        lineNumber: 110,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV("a", { className: "tld-demo__back", href: "/", children: "返回模块目录" }, void 0, false, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Tldraw-Demo/TldrawDemoPage.tsx",
+        lineNumber: 115,
+        columnNumber: 9
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Tldraw-Demo/TldrawDemoPage.tsx",
+      lineNumber: 109,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV("section", { className: "tld-demo__frame", "aria-label": "tldraw 可编辑画布", children: /* @__PURE__ */ jsxDEV("iframe", { title: "tldraw 可编辑画布", srcDoc: editorHtml, allow: "clipboard-read; clipboard-write" }, void 0, false, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Tldraw-Demo/TldrawDemoPage.tsx",
+      lineNumber: 118,
+      columnNumber: 9
+    }, this) }, void 0, false, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Tldraw-Demo/TldrawDemoPage.tsx",
+      lineNumber: 117,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV("footer", { className: "tld-demo__footer", children: /* @__PURE__ */ jsxDEV(Typography, { as: "p", variant: "bodySmall", children: "画布改动保存在当前浏览器；这是独立演示模块，首次打开需要联网加载 tldraw。" }, void 0, false, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Tldraw-Demo/TldrawDemoPage.tsx",
+      lineNumber: 121,
+      columnNumber: 9
+    }, this) }, void 0, false, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Tldraw-Demo/TldrawDemoPage.tsx",
+      lineNumber: 120,
+      columnNumber: 7
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Tldraw-Demo/TldrawDemoPage.tsx",
+    lineNumber: 108,
+    columnNumber: 5
+  }, this);
+}
+_c = TldrawDemoPage;
+var _c;
+$RefreshReg$(_c, "TldrawDemoPage");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Tldraw-Demo/TldrawDemoPage.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Tldraw-Demo/TldrawDemoPage.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJtYXBwaW5ncyI6IkFBMkZVOzs7Ozs7Ozs7Ozs7Ozs7O0FBM0ZWLFNBQVNBLGtCQUFrQjtBQUMzQixPQUFPO0FBQ1AsT0FBTztBQUNQLE9BQU87QUFHUCxNQUFNQyxhQUFhO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBZ0ZaLGdCQUFTQyxpQkFBaUI7QUFDL0IsU0FDRSx1QkFBQyxVQUFLLFdBQVUsWUFDZDtBQUFBLDJCQUFDLFlBQU8sV0FBVSxvQkFDaEI7QUFBQSw2QkFBQyxTQUFJLFdBQVUscUJBQ2I7QUFBQSwrQkFBQyxjQUFXLElBQUcsUUFBTyxTQUFRLGFBQVksV0FBVSxxQkFBb0IseUJBQXhFO0FBQUE7QUFBQTtBQUFBO0FBQUEsZUFBaUY7QUFBQSxRQUNqRix1QkFBQyxjQUFXLElBQUcsTUFBSyxTQUFRLE1BQUssOEJBQWpDO0FBQUE7QUFBQTtBQUFBO0FBQUEsZUFBK0M7QUFBQSxRQUMvQyx1QkFBQyxjQUFXLElBQUcsS0FBSSxTQUFRLGFBQVksNERBQXZDO0FBQUE7QUFBQTtBQUFBO0FBQUEsZUFBbUY7QUFBQSxXQUhyRjtBQUFBO0FBQUE7QUFBQTtBQUFBLGFBSUE7QUFBQSxNQUNBLHVCQUFDLE9BQUUsV0FBVSxrQkFBaUIsTUFBSyxLQUFJLHNCQUF2QztBQUFBO0FBQUE7QUFBQTtBQUFBLGFBQTZDO0FBQUEsU0FOL0M7QUFBQTtBQUFBO0FBQUE7QUFBQSxXQU9BO0FBQUEsSUFDQSx1QkFBQyxhQUFRLFdBQVUsbUJBQWtCLGNBQVcsZ0JBQzlDLGlDQUFDLFlBQU8sT0FBTSxnQkFBZSxRQUFRRCxZQUFZLE9BQU0scUNBQXZEO0FBQUE7QUFBQTtBQUFBO0FBQUEsV0FBd0YsS0FEMUY7QUFBQTtBQUFBO0FBQUE7QUFBQSxXQUVBO0FBQUEsSUFDQSx1QkFBQyxZQUFPLFdBQVUsb0JBQ2hCLGlDQUFDLGNBQVcsSUFBRyxLQUFJLFNBQVEsYUFBWSx3REFBdkM7QUFBQTtBQUFBO0FBQUE7QUFBQSxXQUErRSxLQURqRjtBQUFBO0FBQUE7QUFBQTtBQUFBLFdBRUE7QUFBQSxPQWRGO0FBQUE7QUFBQTtBQUFBO0FBQUEsU0FlQTtBQUVKO0FBQUNFLEtBbkJlRDtBQUFjLElBQUFDO0FBQUEsYUFBQUEsSUFBQSIsIm5hbWVzIjpbIlR5cG9ncmFwaHkiLCJlZGl0b3JIdG1sIiwiVGxkcmF3RGVtb1BhZ2UiLCJfYyJdLCJpZ25vcmVMaXN0IjpbXSwic291cmNlcyI6WyJUbGRyYXdEZW1vUGFnZS50c3giXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgVHlwb2dyYXBoeSB9IGZyb20gJy4uL3NoYXJlZC9yZWFjdCc7XG5pbXBvcnQgJy4uL3NoYXJlZC9yZWFjdC9zdHlsZXMuY3NzJztcbmltcG9ydCAnLi4vc2hhcmVkL3JlYWN0L3VpLWtpdC5jc3MnO1xuaW1wb3J0ICcuL3RsZHJhdy1kZW1vLmNzcyc7XG5cbi8vIOa8lOekuumhteeUqOeLrOeriyBpZnJhbWUg6ZqU56a7IHRsZHJhdyDnmoTlhajlsYDmoLflvI/vvJvlm6DmraTkuI3pnIDopoHkv67mlLnnjrDmnInkvp3otZbmiJbor77nqIvmlofku7bjgIJcbmNvbnN0IGVkaXRvckh0bWwgPSBgPCFkb2N0eXBlIGh0bWw+XG48aHRtbCBsYW5nPVwiemgtQ05cIj5cbjxoZWFkPlxuICA8bWV0YSBjaGFyc2V0PVwidXRmLThcIiAvPlxuICA8bWV0YSBuYW1lPVwidmlld3BvcnRcIiBjb250ZW50PVwid2lkdGg9ZGV2aWNlLXdpZHRoLCBpbml0aWFsLXNjYWxlPTFcIiAvPlxuICA8bGluayByZWw9XCJzdHlsZXNoZWV0XCIgaHJlZj1cImh0dHBzOi8vZXNtLnNoL3RsZHJhd0A1LjQuMi90bGRyYXcuY3NzXCIgLz5cbiAgPHN0eWxlPlxuICAgIGh0bWwsIGJvZHksICNyb290IHsgd2lkdGg6IDEwMCU7IGhlaWdodDogMTAwJTsgbWFyZ2luOiAwOyBvdmVyZmxvdzogaGlkZGVuOyB9XG4gICAgI3N0YXR1cyB7IHBvc2l0aW9uOiBhYnNvbHV0ZTsgaW5zZXQ6IDA7IGRpc3BsYXk6IGdyaWQ7IHBsYWNlLWl0ZW1zOiBjZW50ZXI7IGZvbnQ6IDE2cHggc3lzdGVtLXVpOyBjb2xvcjogIzQyNTQ2NjsgYmFja2dyb3VuZDogI2ZmZjsgfVxuICAgICNzdGF0dXMuZXJyb3IgeyBwYWRkaW5nOiAyNHB4OyB0ZXh0LWFsaWduOiBjZW50ZXI7IGNvbG9yOiAjOWYyNjM5OyB9XG4gIDwvc3R5bGU+XG4gIDxzY3JpcHQgdHlwZT1cImltcG9ydG1hcFwiPlxuICAgIHtcbiAgICAgIFwiaW1wb3J0c1wiOiB7XG4gICAgICAgIFwicmVhY3RcIjogXCJodHRwczovL2VzbS5zaC9yZWFjdEAxOS4yLjdcIixcbiAgICAgICAgXCJyZWFjdC9qc3gtcnVudGltZVwiOiBcImh0dHBzOi8vZXNtLnNoL3JlYWN0QDE5LjIuNy9qc3gtcnVudGltZVwiLFxuICAgICAgICBcInJlYWN0LWRvbVwiOiBcImh0dHBzOi8vZXNtLnNoL3JlYWN0LWRvbUAxOS4yLjc/ZXh0ZXJuYWw9cmVhY3RcIixcbiAgICAgICAgXCJyZWFjdC1kb20vY2xpZW50XCI6IFwiaHR0cHM6Ly9lc20uc2gvcmVhY3QtZG9tQDE5LjIuNy9jbGllbnQ/ZXh0ZXJuYWw9cmVhY3RcIlxuICAgICAgfVxuICAgIH1cbiAgPC9zY3JpcHQ+XG48L2hlYWQ+XG48Ym9keT5cbiAgPGRpdiBpZD1cInJvb3RcIj48L2Rpdj5cbiAgPGRpdiBpZD1cInN0YXR1c1wiIHJvbGU9XCJzdGF0dXNcIj7mraPlnKjovb3lhaUgdGxkcmF3IOWPr+e8lui+keeUu+W4g+KApjwvZGl2PlxuICA8c2NyaXB0IHR5cGU9XCJtb2R1bGVcIj5cbiAgICBjb25zdCBzaG93RmFpbHVyZSA9IChtZXNzYWdlKSA9PiB7XG4gICAgICBjb25zdCBzdGF0dXMgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnc3RhdHVzJykgfHwgZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnZGl2Jyk7XG4gICAgICBzdGF0dXMuaWQgPSAnc3RhdHVzJztcbiAgICAgIHN0YXR1cy5jbGFzc05hbWUgPSAnZXJyb3InO1xuICAgICAgc3RhdHVzLnRleHRDb250ZW50ID0gbWVzc2FnZTtcbiAgICAgIGRvY3VtZW50LmJvZHkuYXBwZW5kQ2hpbGQoc3RhdHVzKTtcbiAgICB9O1xuICAgIHdpbmRvdy5hZGRFdmVudExpc3RlbmVyKCdlcnJvcicsIChldmVudCkgPT4gc2hvd0ZhaWx1cmUoJ+eUu+W4g+i/kOihjOWHuumUme+8micgKyBldmVudC5tZXNzYWdlKSk7XG4gICAgd2luZG93LmFkZEV2ZW50TGlzdGVuZXIoJ3VuaGFuZGxlZHJlamVjdGlvbicsIChldmVudCkgPT4gc2hvd0ZhaWx1cmUoJ+eUu+W4g+i/kOihjOWHuumUme+8micgKyBTdHJpbmcoZXZlbnQucmVhc29uKSkpO1xuICAgIHRyeSB7XG4gICAgICBjb25zdCBbeyBkZWZhdWx0OiBSZWFjdCB9LCB7IGNyZWF0ZVJvb3QgfSwgeyBUbGRyYXcsIGNyZWF0ZVNoYXBlSWQsIHRvUmljaFRleHQgfV0gPSBhd2FpdCBQcm9taXNlLmFsbChbXG4gICAgICAgIGltcG9ydCgncmVhY3QnKSxcbiAgICAgICAgaW1wb3J0KCdyZWFjdC1kb20vY2xpZW50JyksXG4gICAgICAgIGltcG9ydCgnaHR0cHM6Ly9lc20uc2gvdGxkcmF3QDUuNC4yP2V4dGVybmFsPXJlYWN0LHJlYWN0LWRvbScpXG4gICAgICBdKTtcbiAgICAgIGNvbnN0IHNlZWREaWFncmFtID0gKGVkaXRvcikgPT4ge1xuICAgICAgICBpZiAoZWRpdG9yLmdldEN1cnJlbnRQYWdlU2hhcGVJZHMoKS5zaXplID4gMCkgcmV0dXJuO1xuICAgICAgICBjb25zdCBpbnB1dElkID0gY3JlYXRlU2hhcGVJZCgpO1xuICAgICAgICBjb25zdCBuZXVyb25JZCA9IGNyZWF0ZVNoYXBlSWQoKTtcbiAgICAgICAgY29uc3Qgb3V0cHV0SWQgPSBjcmVhdGVTaGFwZUlkKCk7XG4gICAgICAgIGNvbnN0IGZpcnN0QXJyb3dJZCA9IGNyZWF0ZVNoYXBlSWQoKTtcbiAgICAgICAgY29uc3Qgc2Vjb25kQXJyb3dJZCA9IGNyZWF0ZVNoYXBlSWQoKTtcbiAgICAgICAgZWRpdG9yLnJ1bigoKSA9PiB7XG4gICAgICAgICAgZWRpdG9yLmNyZWF0ZVNoYXBlcyhbXG4gICAgICAgICAgICB7IGlkOiBpbnB1dElkLCB0eXBlOiAnZ2VvJywgeDogODAsIHk6IDE3MCwgcHJvcHM6IHsgZ2VvOiAncmVjdGFuZ2xlJywgdzogMTkwLCBoOiAxMjAsIGNvbG9yOiAnbGlnaHQtYmx1ZScsIGZpbGw6ICdzZW1pJywgcmljaFRleHQ6IHRvUmljaFRleHQoJ+i+k+WFpSB4JykgfSB9LFxuICAgICAgICAgICAgeyBpZDogbmV1cm9uSWQsIHR5cGU6ICdnZW8nLCB4OiAzODAsIHk6IDE1NSwgcHJvcHM6IHsgZ2VvOiAnZWxsaXBzZScsIHc6IDE3MCwgaDogMTUwLCBjb2xvcjogJ3Zpb2xldCcsIGZpbGw6ICdzZW1pJywgcmljaFRleHQ6IHRvUmljaFRleHQoJ+elnue7j+WFgycpIH0gfSxcbiAgICAgICAgICAgIHsgaWQ6IG91dHB1dElkLCB0eXBlOiAnZ2VvJywgeDogNjYwLCB5OiAxNzAsIHByb3BzOiB7IGdlbzogJ3JlY3RhbmdsZScsIHc6IDE5MCwgaDogMTIwLCBjb2xvcjogJ2dyZWVuJywgZmlsbDogJ3NlbWknLCByaWNoVGV4dDogdG9SaWNoVGV4dCgn6L6T5Ye6IHknKSB9IH0sXG4gICAgICAgICAgICB7IGlkOiBmaXJzdEFycm93SWQsIHR5cGU6ICdhcnJvdycsIHg6IDI3MCwgeTogMjMwLCBwcm9wczogeyBzdGFydDogeyB4OiAwLCB5OiAwIH0sIGVuZDogeyB4OiAxMTAsIHk6IDAgfSB9IH0sXG4gICAgICAgICAgICB7IGlkOiBzZWNvbmRBcnJvd0lkLCB0eXBlOiAnYXJyb3cnLCB4OiA1NTAsIHk6IDIzMCwgcHJvcHM6IHsgc3RhcnQ6IHsgeDogMCwgeTogMCB9LCBlbmQ6IHsgeDogMTEwLCB5OiAwIH0gfSB9XG4gICAgICAgICAgXSk7XG4gICAgICAgICAgZWRpdG9yLmNyZWF0ZUJpbmRpbmdzKFtcbiAgICAgICAgICAgIHsgZnJvbUlkOiBmaXJzdEFycm93SWQsIHRvSWQ6IGlucHV0SWQsIHR5cGU6ICdhcnJvdycsIHByb3BzOiB7IHRlcm1pbmFsOiAnc3RhcnQnLCBub3JtYWxpemVkQW5jaG9yOiB7IHg6IDEsIHk6IDAuNSB9LCBpc0V4YWN0OiBmYWxzZSwgaXNQcmVjaXNlOiB0cnVlIH0gfSxcbiAgICAgICAgICAgIHsgZnJvbUlkOiBmaXJzdEFycm93SWQsIHRvSWQ6IG5ldXJvbklkLCB0eXBlOiAnYXJyb3cnLCBwcm9wczogeyB0ZXJtaW5hbDogJ2VuZCcsIG5vcm1hbGl6ZWRBbmNob3I6IHsgeDogMCwgeTogMC41IH0sIGlzRXhhY3Q6IGZhbHNlLCBpc1ByZWNpc2U6IHRydWUgfSB9LFxuICAgICAgICAgICAgeyBmcm9tSWQ6IHNlY29uZEFycm93SWQsIHRvSWQ6IG5ldXJvbklkLCB0eXBlOiAnYXJyb3cnLCBwcm9wczogeyB0ZXJtaW5hbDogJ3N0YXJ0Jywgbm9ybWFsaXplZEFuY2hvcjogeyB4OiAxLCB5OiAwLjUgfSwgaXNFeGFjdDogZmFsc2UsIGlzUHJlY2lzZTogdHJ1ZSB9IH0sXG4gICAgICAgICAgICB7IGZyb21JZDogc2Vjb25kQXJyb3dJZCwgdG9JZDogb3V0cHV0SWQsIHR5cGU6ICdhcnJvdycsIHByb3BzOiB7IHRlcm1pbmFsOiAnZW5kJywgbm9ybWFsaXplZEFuY2hvcjogeyB4OiAwLCB5OiAwLjUgfSwgaXNFeGFjdDogZmFsc2UsIGlzUHJlY2lzZTogdHJ1ZSB9IH1cbiAgICAgICAgICBdKTtcbiAgICAgICAgfSwgeyBoaXN0b3J5OiAnaWdub3JlJyB9KTtcbiAgICAgICAgZWRpdG9yLnpvb21Ub0JvdW5kcyh7IHg6IC01MCwgeTogMjAsIHc6IDEwMzAsIGg6IDQyMCB9LCB7IGltbWVkaWF0ZTogdHJ1ZSB9KTtcbiAgICAgIH07XG4gICAgICBjcmVhdGVSb290KGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdyb290JykpLnJlbmRlcihcbiAgICAgICAgUmVhY3QuY3JlYXRlRWxlbWVudChUbGRyYXcsIHtcbiAgICAgICAgICBwZXJzaXN0ZW5jZUtleTogJ2ludHVpdGl2ZS1kZWVwLWxlYXJuaW5nLXRsZHJhdy1kZW1vLXYzJyxcbiAgICAgICAgICBvbk1vdW50OiBzZWVkRGlhZ3JhbVxuICAgICAgICB9KVxuICAgICAgKTtcbiAgICAgIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdzdGF0dXMnKS5yZW1vdmUoKTtcbiAgICB9IGNhdGNoIChlcnJvcikge1xuICAgICAgc2hvd0ZhaWx1cmUoJ+eUu+W4g+i9veWFpeWksei0peOAguivt+ehruiupOe9kee7nOWPr+S7peiuv+mXriBlc20uc2jvvIznhLblkI7liLfmlrDpobXpnaLjgIInKTtcbiAgICAgIGNvbnNvbGUuZXJyb3IoJ1t0bGRyYXcgZGVtb10nLCBlcnJvcik7XG4gICAgfVxuICA8L3NjcmlwdD5cbjwvYm9keT5cbjwvaHRtbD5gO1xuXG5leHBvcnQgZnVuY3Rpb24gVGxkcmF3RGVtb1BhZ2UoKSB7XG4gIHJldHVybiAoXG4gICAgPG1haW4gY2xhc3NOYW1lPVwidGxkLWRlbW9cIj5cbiAgICAgIDxoZWFkZXIgY2xhc3NOYW1lPVwidGxkLWRlbW9fX2hlYWRlclwiPlxuICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cInRsZC1kZW1vX19oZWFkaW5nXCI+XG4gICAgICAgICAgPFR5cG9ncmFwaHkgYXM9XCJzcGFuXCIgdmFyaWFudD1cImJvZHlTbWFsbFwiIGNsYXNzTmFtZT1cInRsZC1kZW1vX19leWVicm93XCI+5Y+v57yW6L6R55S75biD5o6l5YWl5ryU56S6PC9UeXBvZ3JhcGh5PlxuICAgICAgICAgIDxUeXBvZ3JhcGh5IGFzPVwiaDFcIiB2YXJpYW50PVwiaDFcIj50bGRyYXcgw5cg56We57uP5YWD6K++56iLPC9UeXBvZ3JhcGh5PlxuICAgICAgICAgIDxUeXBvZ3JhcGh5IGFzPVwicFwiIHZhcmlhbnQ9XCJib2R5U21hbGxcIj7or5XnnYDnlLvkuIDkuKrovpPlhaUg4oaSIOelnue7j+WFgyDihpIg6L6T5Ye655qE57uT5p6E44CC5Y+M5Ye75paH5a2X5Y+v5L+u5pS577yM5ouW5Yqo55S75biD5Y+v56e75Yqo77yM5rua6L2u5Y+v57yp5pS+44CCPC9UeXBvZ3JhcGh5PlxuICAgICAgICA8L2Rpdj5cbiAgICAgICAgPGEgY2xhc3NOYW1lPVwidGxkLWRlbW9fX2JhY2tcIiBocmVmPVwiL1wiPui/lOWbnuaooeWdl+ebruW9lTwvYT5cbiAgICAgIDwvaGVhZGVyPlxuICAgICAgPHNlY3Rpb24gY2xhc3NOYW1lPVwidGxkLWRlbW9fX2ZyYW1lXCIgYXJpYS1sYWJlbD1cInRsZHJhdyDlj6/nvJbovpHnlLvluINcIj5cbiAgICAgICAgPGlmcmFtZSB0aXRsZT1cInRsZHJhdyDlj6/nvJbovpHnlLvluINcIiBzcmNEb2M9e2VkaXRvckh0bWx9IGFsbG93PVwiY2xpcGJvYXJkLXJlYWQ7IGNsaXBib2FyZC13cml0ZVwiIC8+XG4gICAgICA8L3NlY3Rpb24+XG4gICAgICA8Zm9vdGVyIGNsYXNzTmFtZT1cInRsZC1kZW1vX19mb290ZXJcIj5cbiAgICAgICAgPFR5cG9ncmFwaHkgYXM9XCJwXCIgdmFyaWFudD1cImJvZHlTbWFsbFwiPueUu+W4g+aUueWKqOS/neWtmOWcqOW9k+WJjea1j+iniOWZqO+8m+i/meaYr+eLrOeri+a8lOekuuaooeWdl++8jOmmluasoeaJk+W8gOmcgOimgeiBlOe9keWKoOi9vSB0bGRyYXfjgII8L1R5cG9ncmFwaHk+XG4gICAgICA8L2Zvb3Rlcj5cbiAgICA8L21haW4+XG4gICk7XG59XG4iXSwiZmlsZSI6IkM6L1VzZXJzL09jZWFuL0RvY3VtZW50cy9HaXRIdWIvaW50dWl0aXZlLWRlZXAtbGVhcm5pbmcvbW9kdWxlcy9UbGRyYXctRGVtby9UbGRyYXdEZW1vUGFnZS50c3gifQ==

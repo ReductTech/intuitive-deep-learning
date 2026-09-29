@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!--
+/*************************************************************************
+* ADOBE CONFIDENTIAL
+* ___________________
+*
+*  Copyright 2025 Adobe Systems Incorporated
+*  All Rights Reserved.
+**************************************************************************/
+-->
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title id="web2pdfOptionsTitle">Adobe Acrobat Preferences</title>
+
+    <!-- Import CSS -->
+    <link href="../../../dist/PreferencePage.css" type="text/css" rel="stylesheet" />
+    
+    <!-- ch-settings.js is generated during build (see gulpfile.js) - provides global SETTINGS object -->
+    <script src="./ch-settings.js"></script>
+
+    <!-- Bundled Spectrum -->
+    <link href="../../../dist/spectrum.css" type="text/css" rel="stylesheet" />
+
+    <style>
+
+        #preference-page-root {
+            width: 100%;
+            min-height: 100vh;
+        }
+    </style>
+</head>
+
+<body class="spectrum spectrum--medium" style="overflow: hidden">
+    <div id="preference-page-root"></div>
+
+    <!-- Load preferences page bundle -->
+    <script type="module" src="../../../dist/PreferencePage.js"></script>
+</body>
+
+</html>

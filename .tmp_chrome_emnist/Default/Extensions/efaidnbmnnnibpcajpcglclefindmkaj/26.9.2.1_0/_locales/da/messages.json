@@ -1,0 +1,1778 @@
+{
+   "ConvertVerbDescription": {
+      "message": "Konvertér dokumenter til eller fra PDF."
+   },
+   "Disable": {
+      "message": "Deaktiver"
+   },
+   "EditVerbDescription": {
+      "message": "Omarranger, roter og slet sider i din PDF."
+   },
+   "Enable": {
+      "message": "Aktivér"
+   },
+   "LearnMoreURL": {
+      "message": "https://helpx.adobe.com/dk/acrobat/kb/acrobat-pro-aip-for-chrome.html"
+   },
+   "LearnMoreURLEdge": {
+      "message": "https://helpx.adobe.com/dk/acrobat/kb/acrobat-pro-aip-for-edge.html"
+   },
+   "LocalFileAccessAndSummaryCoachmarkButton": {
+      "message": "Aktivér opsummeringer"
+   },
+   "LocalFileAccessAndSummaryCoachmarkSubtext": {
+      "message": "Underlagt tilgængelige kreditter"
+   },
+   "acrobatEmbeddedTouchPointPreferenceDescription": {
+      "message": "Genvejen kan bruges til at åbne PDF'er i udvidelsen, så man nemt kan redigere, sammenfatte, gemme og meget mere."
+   },
+   "acrobatEmbeddedTouchPointPreferenceTitle": {
+      "message": "Vis Acrobat-genvej i indlejrede web-PDF'er"
+   },
+   "acrobatGdriveTripleDotMenuTouchPointText": {
+      "message": "Åbn med Acrobat"
+   },
+   "acrobatGmailFteToolTipButton": {
+      "message": "Forstået"
+   },
+   "acrobatGmailFteToolTipDescription": {
+      "message": "Rediger, konverter, kommenter og underskriv – direkte i Chrome med Acrobat"
+   },
+   "acrobatGmailFteToolTipTitle": {
+      "message": "Åbn denne PDF i Acrobat"
+   },
+   "acrobatGsuiteFteToolTipButton": {
+      "message": "Forstået"
+   },
+   "acrobatGsuiteFteToolTipButtonDV": {
+      "message": "OK"
+   },
+   "acrobatGsuiteFteToolTipButtonNonDV": {
+      "message": "OK"
+   },
+   "acrobatGsuiteFteToolTipDescription": {
+      "message": "Rediger, konverter, kommenter og underskriv – direkte i Chrome med Acrobat"
+   },
+   "acrobatGsuiteFteToolTipDescriptionDV": {
+      "message": "Prøv PDF-værktøjer som rediger, kommenter, konvertér og e-underskriv fra $surfaceName$ ved at gøre Acrobat til din standard PDF-fremviser.",
+      "placeholders": {
+         "surfaceName": {
+            "content": "$1"
+         }
+      }
+   },
+   "acrobatGsuiteFteToolTipDescriptionNonDV": {
+      "message": "Prøv Acrobats PDF-værktøjer som rediger, kommenter, konvertér og e-underskriv – direkte fra $surfaceName$.",
+      "placeholders": {
+         "surfaceName": {
+            "content": "$1"
+         }
+      }
+   },
+   "acrobatGsuiteFteToolTipTitle": {
+      "message": "Åbn denne PDF i Acrobat"
+   },
+   "acrobatGsuiteFteToolTipTitleDV": {
+      "message": "Åbn alle PDF'er i Adobe Acrobat"
+   },
+   "acrobatGsuiteFteToolTipTitleNonDV": {
+      "message": "Åbn denne PDF i Adobe Acrobat"
+   },
+   "acrobatGsuiteTouchPointPreferenceDescription": {
+      "message": "Føj Acrobat-ikoner til Gmail og Google Drev for hurtigt at åbne PDF'er i Acrobat og tilgå PDF-værktøjer."
+   },
+   "acrobatGsuiteTouchPointPreferenceTitle": {
+      "message": "Integrer Acrobat i Gmail og Google Drev"
+   },
+   "acrobatLinkedInPDFTouchPointPreferenceDescription": {
+      "message": "Integrer Acrobat med websteder, inkl. Gmail, Google Drev, Outlook og LinkedIn for at få nem adgang til PDF-værktøjer."
+   },
+   "acrobatTouchPointInOtherSitesPrefDescription": {
+      "message": "Integrer Acrobat med websteder såsom Gmail, Google Drev, Outlook og LinkedIn for at få nem adgang til PDF-værktøjer."
+   },
+   "acrobatTouchPointInOtherSitesPreferenceDescription": {
+      "message": "Integrer Acrobat med websteder, inkl. Gmail og Google Drev, for at få nem adgang til PDF-værktøjer."
+   },
+   "acrobatTouchPointInOtherSitesPreferenceTitle": {
+      "message": "Vis Acrobat-indstillinger i andre websteder"
+   },
+   "acrobatTouchPointInOtherSurfacesPreferenceDescription": {
+      "message": "Integrer Acrobat med websteder, inkl. Gmail, Google Drev og Outlook for at få nem adgang til PDF-værktøjer."
+   },
+   "addEffectsImageContextMenuV2ChatGPT": {
+      "message": "Tilføj effekter"
+   },
+   "addWebpageToExistingPdfSpaceContextMenu": {
+      "message": "Tilføj webside til eksisterende PDF Space ..."
+   },
+   "addWebpageToExistingStudySpaceContextMenu": {
+      "message": "Føj webside til eksisterende Space til studerende..."
+   },
+   "addWebpageToNewPdfSpaceContextMenu": {
+      "message": "Føj webside til et nyt PDF Space ..."
+   },
+   "addWebpageToNewStudySpaceContextMenu": {
+      "message": "Føj webside til et nyt Space til studerende..."
+   },
+   "addWebpageToProjectContextMenuTitle": {
+      "message": "Føj til et PDF Space..."
+   },
+   "addWebpageToProjectFailed": {
+      "message": "Kunne ikke føje webside til PDF Space"
+   },
+   "addWebpageToProjectFailedStudy": {
+      "message": "Kunne ikke føje webside til Space til studerende"
+   },
+   "addWebpageToProjectIngestionStarted": {
+      "message": "Vi føjer denne webside til dit PDF Space. Du får besked, når det er klar."
+   },
+   "addWebpageToProjectIngestionStartedStudy": {
+      "message": "Vi føjer denne webside til dit Space til studerende. Du får besked, når det er klar."
+   },
+   "addWebpageToProjectSuccess": {
+      "message": "Webside føjet til $collectionName$",
+      "placeholders": {
+         "collectionName": {
+            "content": "$1"
+         }
+      }
+   },
+   "addWebpageToProjectViewAction": {
+      "message": "Se PDF Space"
+   },
+   "addWebpageToProjectViewActionStudy": {
+      "message": "Se Space til studerende"
+   },
+   "addWebpageUpsellContactAdminMessage": {
+      "message": "Kontakt din administrator for at aktivere denne funktion."
+   },
+   "adobeAcrobatParentMenuTitle": {
+      "message": "Adobe Acrobat: Opret og rediger PDF'er og PDF Spaces"
+   },
+   "adobeAcrobatParentMenuTitleStudySpace": {
+      "message": "Adobe Acrobat: Opret og rediger PDF'er og Spaces til studerende"
+   },
+   "adobeYoloErrorMessage": {
+      "message": "Dette link er ugyldigt"
+   },
+   "adobeYoloMessage": {
+      "message": "Logger dig på Acrobat..."
+   },
+   "aiAcBody": {
+      "message": "Opsummer hurtigt websider, og få vigtig indsigt med Acrobat AI-assistenten."
+   },
+   "aiAcHeader": {
+      "message": "Gør mere med din Acrobat-udvidelse"
+   },
+   "analyticsOptinTitle": {
+      "message": "Send brugsdata"
+   },
+   "appearancePrefDesc": {
+      "message": "Skift mellem mørkt og lyst tema"
+   },
+   "appearancePrefOp1": {
+      "message": "Brug systemindstillinger"
+   },
+   "appearancePrefOp2": {
+      "message": "Mørk tilstand"
+   },
+   "appearancePrefOp3": {
+      "message": "Lys tilstand"
+   },
+   "appearancePrefTitle": {
+      "message": "Indstillinger for Mørk tilstand"
+   },
+   "askAIAssistant": {
+      "message": "Spørg AI-assistenten"
+   },
+   "askAIAssistantContextMenu": {
+      "message": "Spørg AI-assistenten om webside"
+   },
+   "askAIAssistantSelectedContent": {
+      "message": "Spørg AI-assistenten"
+   },
+   "askAssistantBannerContentText": {
+      "message": "Få hurtige opsummeringer og vigtig indsigt med AI-assistent om websider."
+   },
+   "askAssistantBannerTitle": {
+      "message": "AI-assistent til websider"
+   },
+   "autoEnhanceImageContextMenuV2ChatGPT": {
+      "message": "Automatisk forbedring"
+   },
+   "bypassGenAIWebpageEligibilityDescription": {
+      "message": "Når GenAI-funktioner er aktiveret, vil de være tilgængelige på alle websider uanset kvalificeringstjek. Denne indstilling er kun tilgængelig for interne Adobe-brugere."
+   },
+   "bypassGenAIWebpageEligibilityTitle": {
+      "message": "Aktivér AI-assistenten til websider på alle sider"
+   },
+   "canQuesBriefOverview": {
+      "message": "Giv en kort oversigt over denne artikel"
+   },
+   "canQuesCreateFAQ": {
+      "message": "Opret en FAQ-liste baseret på disse oplysninger"
+   },
+   "canQuesDraftEmail": {
+      "message": "Skriv en mail, der opsummerer de vigtigste punkter"
+   },
+   "canQuesImpTopics": {
+      "message": "Angiv alle vigtige emner og nøgleord"
+   },
+   "canQuesSummarise": {
+      "message": "Sammenfat denne artikel"
+   },
+   "cancel": {
+      "message": "Annuller"
+   },
+   "chatgptCanvasConvertToPDF": {
+      "message": "Konverter til PDF"
+   },
+   "chatgptCanvasConvertToPDFTooltip": {
+      "message": "Kovertér og åbn i Acrobat"
+   },
+   "chatgptCanvasFteDescription": {
+      "message": "Konvertér dine chats til PDF med Acrobat, og rediger dem direkte i browseren."
+   },
+   "chatgptCanvasFteTitle": {
+      "message": "Konvertér til PDF med Adobe Acrobat"
+   },
+   "chatgptConvertToPDF": {
+      "message": "Konvertér chat til PDF"
+   },
+   "chatgptConvertToPDFFteDescription": {
+      "message": "Konvertér dine chats til PDF med Acrobat, og rediger dem direkte i browseren."
+   },
+   "chatgptConvertToPDFFteTitle": {
+      "message": "Konvertér til PDF med Adobe Acrobat"
+   },
+   "chatgptConvertToPDFTooltip": {
+      "message": "Kovertér og åbn i Acrobat"
+   },
+   "chatgptDeepResearchDefaultTitle": {
+      "message": "ChatGPT Deep Research"
+   },
+   "chatgptDefaultTitleText": {
+      "message": "ChatGPT"
+   },
+   "chatgptLongChatInterrupt": {
+      "message": "Rulning blev afbrudt. Prøv igen uden at klikke, rulle eller skifte faner."
+   },
+   "chatgptLongChatPhase1Desc": {
+      "message": "Denne side vil rulle automatisk for at indlæse hele din chat, før den konverteres til PDF."
+   },
+   "chatgptLongChatPhase1Title": {
+      "message": "Lang samtale registreret..."
+   },
+   "chatgptLongChatPhase2Desc": {
+      "message": "Lad være med at klikke, rulle eller skifte faner. Dette vil afbryde processen."
+   },
+   "chatgptLongChatPhase2Title": {
+      "message": "Indlæser samtale..."
+   },
+   "chatgptLongChatPhase3Desc": {
+      "message": "Konverteringen begynder i en ny fane."
+   },
+   "chatgptLongChatPhase3Title": {
+      "message": "Næsten færdig..."
+   },
+   "chatgptResponseExportToPDF": {
+      "message": "Konvertér til PDF"
+   },
+   "chatgptResponseExportToPDFTooltip": {
+      "message": "Gør dette svar til en PDF, så du kan redigere eller dele det."
+   },
+   "chatgptResponseFteDescription": {
+      "message": "Konvertér ChatGPT-svar direkte til PDF-filer med Adobe Acrobat-udvidelsen."
+   },
+   "chatgptResponseFteTitle": {
+      "message": "Konvertér ethvert svar til en PDF"
+   },
+   "closeButton": {
+      "message": "Luk"
+   },
+   "clusterBeta": {
+      "message": "Beta"
+   },
+   "clusterDevelop": {
+      "message": "Udvikl"
+   },
+   "clusterRelease": {
+      "message": "Version"
+   },
+   "conversionErrorDescription": {
+      "message": "Rapportér det, så undersøger vi, hvad der gik galt."
+   },
+   "conversionErrorDocumentTitle": {
+      "message": "Fejl"
+   },
+   "conversionErrorGoToAcrobat": {
+      "message": "Gå til Acrobat"
+   },
+   "conversionErrorReportError": {
+      "message": "Rapportér fejl"
+   },
+   "conversionErrorTitle": {
+      "message": "Vi kunne ikke konvertere din fil"
+   },
+   "convertToPDFFTEBody": {
+      "message": "Konvertér din $surfaceName$ til PDF’er direkte med Adobe Acrobat-udvidelsen, og tilgå værktøjer til redigering, underskrivelse og mere.",
+      "placeholders": {
+         "surfaceName": {
+            "content": "$1"
+         }
+      }
+   },
+   "convertToPDFFTEHeading": {
+      "message": "Konvertér denne $docTypeName$ til en PDF",
+      "placeholders": {
+         "docTypeName": {
+            "content": "$1"
+         }
+      }
+   },
+   "convertToPDFTouchPointTooltip": {
+      "message": "Kovertér og åbn i Acrobat"
+   },
+   "convertToPdf": {
+      "message": "Konverter til PDF"
+   },
+   "convertToPdfErrorToastMessage": {
+      "message": "Kunne ikke konvertere din fil til PDF."
+   },
+   "convertToPdfPasswordProtectedError": {
+      "message": "Adgangskodebeskyttede filer kan ikke konverteres til PDF"
+   },
+   "convertToPdfTabCloseErrorToastMessage": {
+      "message": "Kunne ikke konvertere filen. Hold Acrobat-fanen åben under konverteringen, og prøv igen."
+   },
+   "convertToPdfToastMessage": {
+      "message": "Konverterer din fil nu. Hold Acrobat-fanen åben. Du får besked, når den er klar."
+   },
+   "convertToPdfUsingAcrobatTooltip": {
+      "message": "Konvertér dokument til PDF med Acrobat"
+   },
+   "convertWebpageToPDFContextMenu": {
+      "message": "Konvertér webside til PDF"
+   },
+   "convertedTabTitle": {
+      "message": "Fil konverteret"
+   },
+   "convertingInNewTabKeepOpenTooltip": {
+      "message": "Konverterer i en ny fane. Hold Acrobat-fanen åben."
+   },
+   "convertingTabTitle": {
+      "message": "Konverterer fil"
+   },
+   "convertingTooltip": {
+      "message": "Din fil konverteres i en ny fane. Vi giver dig besked, når den er klar."
+   },
+   "convertingTouchPointText": {
+      "message": "Konverterer..."
+   },
+   "cropAndResizeImageContextMenuV2ChatGPT": {
+      "message": "Beskær og tilpas størrelse"
+   },
+   "cropImageContextMenu": {
+      "message": "Beskær billede"
+   },
+   "dcWebBookmarkTitle": {
+      "message": "Adobe Acrobat Hjem"
+   },
+   "directFlowErrorTabTitle": {
+      "message": "Fejl"
+   },
+   "directFlowNotificationButtonText": {
+      "message": "Gå til fil"
+   },
+   "directFlowNotificationTitle": {
+      "message": "Din fil er klar"
+   },
+   "directFlowNotificationTitlePlural": {
+      "message": "Dine filer er klar"
+   },
+   "doNotShowButton": {
+      "message": "Vis ikke igen"
+   },
+   "domainPreferenceTitle": {
+      "message": "Websteder, hvor AI-assistent FAB er skjult"
+   },
+   "downloadBannerContinue": {
+      "message": "Aktivér"
+   },
+   "downloadBannerText": {
+      "message": "Åbn alle downloadede PDF'er i Acrobat ved at indstille appen som standard-PDF-fremviser i Chrome"
+   },
+   "editImageContextMenu": {
+      "message": "Rediger billede"
+   },
+   "editImageMoreOptionsFteDescription": {
+      "message": "Konvertér billeder til PDF’er eller rediger dem direkte i browseren med Acrobat og Adobe Express."
+   },
+   "editImageMoreOptionsFteTitle": {
+      "message": "Konvertér og rediger billeder"
+   },
+   "editMegaVerbText": {
+      "message": "Rediger"
+   },
+   "effectsImageContextMenu": {
+      "message": "Anvend effekter"
+   },
+   "embeddedPDFHideIconForNow": {
+      "message": "Skjul ikonet indtil videre"
+   },
+   "embeddedPDFManagePreferences": {
+      "message": "Administrer indstillinger"
+   },
+   "embeddedPDFOpenInAcrobatTooltip": {
+      "message": "Åbn i Acrobat"
+   },
+   "embeddedPDFOpenPDFInAcrobat": {
+      "message": "Åbn PDF i Acrobat"
+   },
+   "embeddedPDFTouchPointFTEBody": {
+      "message": "Rediger, sammenfat og meget mere direkte fra Acrobat-udvidelsen. Du kan skjule denne genvej når som helst i Indstillinger."
+   },
+   "embeddedPDFTouchPointFTEHeader": {
+      "message": "Åbn denne PDF i Adobe Acrobat"
+   },
+   "enableGenAIFeaturesDescription": {
+      "message": "Din fil behandles i skyen for at levere generative AI-egenskaber, når du bruger en generativ AI-funktion. Hvis du slår denne funktion fra, forhindres din fil i at blive behandlet, og generativ AI deaktiveres. Du kan når som helst genaktivere funktionen."
+   },
+   "enableGenAIFeaturesTitle": {
+      "message": "Aktivér generative AI-funktioner i Acrobat."
+   },
+   "envDev": {
+      "message": "Udv"
+   },
+   "envLocalDev": {
+      "message": "Lokal udv"
+   },
+   "envProd": {
+      "message": "Produktion"
+   },
+   "envStage": {
+      "message": "Stadie"
+   },
+   "envTest": {
+      "message": "Test"
+   },
+   "errorBoundaryDescription": {
+      "message": "Vi stødte på en uventet fejl. Prøv igen."
+   },
+   "errorBoundaryRetryButton": {
+      "message": "Prøv igen"
+   },
+   "errorBoundaryTitle": {
+      "message": "Der opstod en fejl"
+   },
+   "explainSelectedContent": {
+      "message": "Forklar ved hjælp af AI"
+   },
+   "expressContextualFteCtaLabel": {
+      "message": "Luk"
+   },
+   "expressContextualFteDescription": {
+      "message": "Beskær, fjern baggrund, juster farver og meget mere i Adobe Acrobat, drevet af Adobe Express."
+   },
+   "expressContextualFteTitle": {
+      "message": "Rediger billeder hurtigt og nemt"
+   },
+   "expressDropdownMenuTitle": {
+      "message": "Adobe Acrobat"
+   },
+   "expressDropdownMenuTooltip": {
+      "message": "Du kan nemt beskære, fjerne baggrund og mere. Drevet af Adobe Express."
+   },
+   "expressEditImageParentContextMenu": {
+      "message": "Rediger billede"
+   },
+   "expressEditImagePoweredByExpressContextMenu": {
+      "message": "Leveret af Adobe Express"
+   },
+   "expressExportOptionsDownloadLabel": {
+      "message": "Download"
+   },
+   "expressExportOptionsSaveLabel": {
+      "message": "Gem"
+   },
+   "expressFTEDescription": {
+      "message": "Højreklik for at beskære, fjerne baggrund eller genfortolke et billede med AI."
+   },
+   "expressFTEFooter": {
+      "message": "Via \u003Cb>Adobe Acrobat\u003C/b>"
+   },
+   "expressFTETitle": {
+      "message": "Rediger billede med Adobe Express"
+   },
+   "expressHideforSession": {
+      "message": "Skjul indtil videre"
+   },
+   "expressManageinSettings": {
+      "message": "Indstillinger"
+   },
+   "expressPopoverFTEDescription": {
+      "message": "Højreklik på et onlinebillede for hurtigt at fjerne baggrunden, beskære eller genfortolke det via AI med Adobe Express"
+   },
+   "expressPopoverFTETitle": {
+      "message": "Rediger billeder i din browser"
+   },
+   "expressPublishModalTitle": {
+      "message": "Downloader billede..."
+   },
+   "expressTouchpointPreferenceDescription": {
+      "message": "Adobe Acrobat-udvidelsen giver dig mulighed for at redigere billeder med Adobe Express. Hvis du deaktiverer funktionen, fjernes denne mulighed. Du kan altid genaktivere den."
+   },
+   "expressTouchpointPreferenceTitle": {
+      "message": "Aktivér Adobe Express-handlinger i Acrobat"
+   },
+   "extensionMenuTitle": {
+      "message": "Acrobat-udvidelse – genvej til alle dine PDF-værktøjer"
+   },
+   "fabHomeTooltipFteText": {
+      "message": "Se Acrobats nye startside i din browser"
+   },
+   "fabNudgeLabelArticleAbout": {
+      "message": "Hvad handler denne artikel om?"
+   },
+   "fabNudgeLabelKeyFigures": {
+      "message": "Hvad er de vigtigste tal?"
+   },
+   "fabNudgeLabelKeyTakeaways": {
+      "message": "Hvad er hovedbudskaberne?"
+   },
+   "fabNudgeLabelKeyTerms": {
+      "message": "Hvad betyder nøglebegreberne?"
+   },
+   "fabNudgeLabelMainThemes": {
+      "message": "Hvad er de primære temaer?"
+   },
+   "fabNudgeLabelPageAbout": {
+      "message": "Hvad handler denne side om?"
+   },
+   "fabNudgeLabelSimplify": {
+      "message": "Kan du gøre dette enklere?"
+   },
+   "fabNudgePromptArticleKeyTakeaways": {
+      "message": "Hvad er de vigtigste konklusioner i denne artikel?"
+   },
+   "fabNudgePromptArticleMainThemes": {
+      "message": "Hvad er de vigtigste temaer eller argumenter i denne artikel?"
+   },
+   "fabNudgePromptArticleSimplify": {
+      "message": "Forklar denne artikel i et enkelt og let forståeligt sprog."
+   },
+   "fabNudgePromptArticleSummary": {
+      "message": "Opsummér, hvad denne artikel handler om."
+   },
+   "fabNudgePromptKeyFigures": {
+      "message": "Udtræk de vigtigste fakta, tal og datoer fra denne side."
+   },
+   "fabNudgePromptKeyTerms": {
+      "message": "Identificer og definér nøglebegreberne eller fagudtrykkene på denne side."
+   },
+   "fabNudgePromptPageKeyTakeaways": {
+      "message": "Hvad er de vigtigste konklusioner på denne side?"
+   },
+   "fabNudgePromptPageMainThemes": {
+      "message": "Hvad er de vigtigste temaer eller argumenter på denne side?"
+   },
+   "fabNudgePromptPageSimplify": {
+      "message": "Forklar denne side i et enkelt og let forståeligt sprog."
+   },
+   "fabNudgePromptPageSummary": {
+      "message": "Opsummér, hvad denne side handler om."
+   },
+   "fabPillAskAI": {
+      "message": "Spørg AI om siden"
+   },
+   "fabPillConvertToPDF": {
+      "message": "Konvertér til PDF"
+   },
+   "fabPillSummarize": {
+      "message": "Opsummer med AI"
+   },
+   "fabPillsFteHeaderText": {
+      "message": "Gør mere med din Acrobat-udvidelse"
+   },
+   "fabPillsHeaderText": {
+      "message": "Adobe Acrobat"
+   },
+   "failToastText": {
+      "message": "Der opstod en uventet fejl. Prøv igen senere."
+   },
+   "fileReadyTabTitle": {
+      "message": "Fil er klar"
+   },
+   "frictionlesOfflineMessage": {
+      "message": "Kontakt din netværksadministrator for at fortsætte forbindelsen"
+   },
+   "frictionlessWidgetErrorGeneric": {
+      "message": "Der opstod en fejl ved indlæsningen. Prøv igen."
+   },
+   "frictionlessWidgetErrorInitFailed": {
+      "message": "Kunne ikke initialisere widgetten. Prøv igen."
+   },
+   "frictionlessWidgetErrorLoadFailed": {
+      "message": "Widgetten kunne ikke indlæses. Kontrollér din forbindelse, og prøv igen."
+   },
+   "frictionlessWidgetErrorLoading": {
+      "message": "Fejl ved indlæsning af widget"
+   },
+   "frictionlessWidgetErrorTimeout": {
+      "message": "Kan ikke indlæse dette afsnit"
+   },
+   "frictionlessWidgetErrorTimeoutMessage": {
+      "message": "Anmodningen tager længere tid end ventet."
+   },
+   "frictionlessWidgetErrorUnableToLoad": {
+      "message": "Kan ikke indlæse"
+   },
+   "frictionlessWidgetErrorUnsupportedFormat": {
+      "message": "er ikke et understøttet format"
+   },
+   "frictionlessWidgetErrorUploadFailed": {
+      "message": "Der opstod en fejl under upload af filen"
+   },
+   "frictionlessWidgetNoConnectionTitle": {
+      "message": "Ingen forbindelse"
+   },
+   "frictionlessWidgetOfflineMessage": {
+      "message": "Kontrollér din internetforbindelse og prøv igen."
+   },
+   "frictionlessWidgetOfflineRetryInfo": {
+      "message": "Vi prøver automatisk igen, når du igen er online."
+   },
+   "frictionlessWidgetOfflineTitle": {
+      "message": "Du er offline"
+   },
+   "frictionlessWidgetRetryButton": {
+      "message": "Prøv igen"
+   },
+   "fteDocTypeNameFile": {
+      "message": "fil"
+   },
+   "fteDocTypeNamePresentation": {
+      "message": "præsentation"
+   },
+   "fteDocTypeNameSheet": {
+      "message": "ark"
+   },
+   "fteOwnershipSideRedCardContent": {
+      "message": "Kommentér, udfyld formularer, underskriv og mere direkte i Chrome, når du angiver Acrobat som din standard PDF-fremviser."
+   },
+   "fteSideCardPrimaryHeader": {
+      "message": "Brug Acrobat"
+   },
+   "fteSideCardSecondaryHeader": {
+      "message": "direkte i Chrome"
+   },
+   "gDriveDVPAppListCoachMarkContent": {
+      "message": "Markér afkrydsningsfeltet 'Brug som standard' for at åbne Google Drev PDF'er i Acrobat fra næste gang"
+   },
+   "gDriveDVPCoachMarkTitle": {
+      "message": "Indstil Acrobat som standardfremviser"
+   },
+   "gDriveDVPManageAppCoachMarkContent": {
+      "message": "Klik på 'Administrer apps' for at se, kommentere og redigere PDF'er ved at åbne alle Google Drev PDF'er direkte i Acrobat"
+   },
+   "gSuiteDVPAddOnDefaultDesc": {
+      "message": "Acrobat-udvidelsen er nu indstillet som standard"
+   },
+   "gdriveConvertToPdfFteToolTipDescription": {
+      "message": "Konvertér filer i Google Drev til PDF, og rediger dem direkte i din browser. Ingen download kræves."
+   },
+   "gdriveConvertToPdfFteToolTipTitle": {
+      "message": "Konvertér filer til PDF'er med Acrobat"
+   },
+   "gdriveEditPdf": {
+      "message": "Rediger PDF"
+   },
+   "gdriveEditPdfFteToolTipDescription": {
+      "message": "Prøv PDF-værktøjer som rediger, skriv kommentar, konvertér og e-underskriv – direkte i din browser."
+   },
+   "gdriveEditPdfFteToolTipTitle": {
+      "message": "Rediger PDF’er i Acrobat"
+   },
+   "gdriveImplicitDVFTEBody": {
+      "message": "Åbn PDF'er i Acrobat-udvidelsen fra ikonet i Google Drev. Angiv denne som standard fra menuen Mere (...) i Acrobat."
+   },
+   "gdriveImplicitDVFTEHeader": {
+      "message": "Se PDF’er i Acrobat når som helst"
+   },
+   "gdriveImplicitDVNotification": {
+      "message": "PDF'er åbnes i Google Drev."
+   },
+   "geminiChatFteDescription": {
+      "message": "Konvertér dine chats til PDF-filer med Adobe Acrobat, og rediger dem direkte i browseren."
+   },
+   "geminiChatFteTitle": {
+      "message": "Konvertér til PDF med Adobe Acrobat"
+   },
+   "geminiChatNotLoadedToastButtonText": {
+      "message": "Fortsæt alligevel"
+   },
+   "geminiChatNotLoadedToastMessage": {
+      "message": "Nogle beskeder er ikke medtaget. Rul til toppen for at konvertere den komplette chat."
+   },
+   "geminiConvertToPDFChatTouchpointHoverTooltip": {
+      "message": "Åbn denne chat i Acrobat"
+   },
+   "geminiConvertToPDFChatTouchpointText": {
+      "message": "Konvertér chat til PDF"
+   },
+   "geminiConvertToPDFResponseTouchpointText": {
+      "message": "Konverter til PDF"
+   },
+   "geminiDefaultTitleText": {
+      "message": "Gemini"
+   },
+   "geminiResponseFteDescription": {
+      "message": "Konvertér Gemini-svar direkte til PDF med Adobe Acrobat-udvidelsen."
+   },
+   "geminiResponseFteTitle": {
+      "message": "Konvertér dette svar til PDF"
+   },
+   "genAIFabPreferenceDescription": {
+      "message": "Vis altid AI-assistentens knap i kanten af dit browservindue."
+   },
+   "genAIFabPreferenceTitle": {
+      "message": "Knap til AI-assistent"
+   },
+   "generativeFillImageContextMenu": {
+      "message": "Generativ udfyldning"
+   },
+   "genericDVPCoachMarkContent": {
+      "message": "Klik på 'Administrer apps', rul ned til Acrobat-udvidelse, og klik på afkrydsningsfeltet 'Brug som standard'"
+   },
+   "getInsight": {
+      "message": "Få indsigt med Acrobats AI-assistent"
+   },
+   "gmailConvertEmailToPDF": {
+      "message": "Konvertér til PDF"
+   },
+   "gmailConvertEmailToPDFFteDescription": {
+      "message": "Konvertér mailens indhold til PDF uden vedhæftede filer, og download din fil."
+   },
+   "gmailConvertEmailToPDFFteTitle": {
+      "message": "Konvertér denne mail til PDF"
+   },
+   "gmailConvertEmailToPDFTooltip": {
+      "message": "Konvertér din mail til PDF"
+   },
+   "gmailConvertToPdf": {
+      "message": "Konvertér til PDF"
+   },
+   "gmailConvertToPdfFteToolTipDescription": {
+      "message": "Konvertér Gmail-filer til PDF'er, og rediger dem direkte i din browser. Ingen download kræves."
+   },
+   "gmailConvertToPdfFteToolTipTitle": {
+      "message": "Konvertér filer til PDF'er med Acrobat"
+   },
+   "gmailEditPdf": {
+      "message": "Rediger PDF"
+   },
+   "gmailEditPdfFteToolTipDescription": {
+      "message": "Prøv PDF-værktøjer som rediger, skriv kommentar, konvertér og e-underskriv – direkte fra din browser."
+   },
+   "gmailEditPdfFteToolTipTitle": {
+      "message": "Rediger PDF’er i Acrobat"
+   },
+   "gmailImplicitDVFTEBody": {
+      "message": "Åbn PDF’er i Acrobat-udvidelsen fra ikonet i Gmail. Angiv denne som standard fra menuen Acrobat Mere (...)."
+   },
+   "gmailImplicitDVFTEHeader": {
+      "message": "Se PDF’er i Acrobat når som helst"
+   },
+   "gmailImplicitDVNotification": {
+      "message": "Vedhæftede PDF’er åbnes i Gmail."
+   },
+   "gmailPromptFTETooltip": {
+      "message": "Åbn PDF'er i Acrobat for at bruge værktøjer som Rediger, Underskriv og mere"
+   },
+   "goToPreferences": {
+      "message": "Gå til Indstillinger"
+   },
+   "googleSheetsOrientationHeading": {
+      "message": "Retning"
+   },
+   "googleSheetsOrientationLandscape": {
+      "message": "Liggende"
+   },
+   "googleSheetsOrientationPortrait": {
+      "message": "Stående"
+   },
+   "googleSheetsScaleFitColumns": {
+      "message": "Tilpas alle kolonner til én side"
+   },
+   "googleSheetsScaleFitRows": {
+      "message": "Tilpas alle rækker til én side"
+   },
+   "googleSheetsScaleFitSheet": {
+      "message": "Tilpas alt til én side"
+   },
+   "googleSheetsScaleHeading": {
+      "message": "Skala"
+   },
+   "googleSheetsSettingsDialogTitle": {
+      "message": "Konvertér til PDF"
+   },
+   "gsuiteEditWithAcrobat": {
+      "message": "Rediger med Acrobat"
+   },
+   "gsuiteOpenWithAcrobat": {
+      "message": "Åbn i Acrobat"
+   },
+   "hideFabForDomain": {
+      "message": "Deaktiver for dette websted"
+   },
+   "hideForNow": {
+      "message": "Skjul indtil videre"
+   },
+   "imageToolsContextMenuTooltip": {
+      "message": "Skift indstillinger fra Adobe Acrobat og Adobe Express"
+   },
+   "imageToolsDropdownContextMenu": {
+      "message": "Redigeringsværktøjer"
+   },
+   "imageToolsDropdownFteDescription": {
+      "message": "Konvertér dine billeder til PDF'er med Adobe Acrobat, eller rediger dem i browseren med Adobe Express."
+   },
+   "imageToolsDropdownFteTitle": {
+      "message": "Konvertér og rediger billeder i Gmail"
+   },
+   "imageToolsDropdownFteTitleForGdrive": {
+      "message": "Konvertér og rediger billeder i Google Drev"
+   },
+   "insertObjectImageContextMenu": {
+      "message": "Indsæt objekt"
+   },
+   "linkedInChatPDFTouchPointFTEBody": {
+      "message": "Rediger, e-underskriv og få AI-baseret indsigt ved at bruge Adobe Acrobat."
+   },
+   "linkedInChatPDFTouchPointFTEHeader": {
+      "message": "Prøv Adobe Acrobat PDF-værktøjer"
+   },
+   "linkedInFeedPDFTouchPointFTEBody": {
+      "message": "Rediger, opsummer og mere ved at åbne denne PDF i Acrobat-udvidelsen."
+   },
+   "linkedInFeedPDFTouchPointFTEHeader": {
+      "message": "Åbn denne PDF i Adobe Acrobat"
+   },
+   "linkedInOpenInAcrobat": {
+      "message": "Åbn i Acrobat"
+   },
+   "linkedInSummarizePDF": {
+      "message": "Opsummer PDF"
+   },
+   "localFileAccessAndSummaryCoachmarkDescription": {
+      "message": "Få en hurtig AI-baseret opsummering ved at give Acrobat adgang til filen."
+   },
+   "localFileAccessAndSummaryCoachmarkHeader": {
+      "message": "Få en opsummering af dette dokument"
+   },
+   "localFileAnimationCoachmarkDescription": {
+      "message": "Giv adgang til fil-URL'er for at åbne filer fra denne enhed i Acrobat-udvidelsen."
+   },
+   "localFileAnimationCoachmarkHeader": {
+      "message": "Blot ét trin, og du er færdig."
+   },
+   "localFileBlockingPageOpenInChrome": {
+      "message": "Åbn denne fil i Chrome"
+   },
+   "localFileBlockingPageTitle": {
+      "message": "Aktivér Acrobat-udvidelse"
+   },
+   "localFileOptionDesc": {
+      "message": "Giv Acrobat-udvidelsen adgang til dine lokale fil-URL'er for at åbne alle dine PDF'er i Acrobat i Chrome."
+   },
+   "localFileOptionTitle": {
+      "message": "Åbning af alle PDF'er i Acrobat"
+   },
+   "localFilePromptContinueButton": {
+      "message": "Fortsæt"
+   },
+   "localFilePromptDescription": {
+      "message": "Lad Acrobat få adgang til filer på denne enhed og få omgående adgang til alle dine værktøjer, så du kan redigere PDF'er, konvertere filer og e-underskrive i en ruf."
+   },
+   "localFilePromptHeader": {
+      "message": "Åbn i Acrobat for at redigere, underskrive og mere"
+   },
+   "localFileSummaryCoachmarkHeader": {
+      "message": "Du er der næsten. Giv Acrobat adgang til filers webadresser for at aktivere opsummeringer."
+   },
+   "localFteContinue": {
+      "message": "Gå til indstillinger"
+   },
+   "localFteDescription": {
+      "message": "Få mest muligt ud af Acrobat-udvidelsen, og brug den til at åbne alle PDF'er. Aktivér Tillad adgang til fil-URL'er i udvidelsesindstillingerne."
+   },
+   "localFteDontShowAgainText": {
+      "message": "Vis ikke igen"
+   },
+   "localFteTitle": {
+      "message": "Skift til Acrobat for at åbne dine lokale filer"
+   },
+   "magicScanButtonText": {
+      "message": "Upload med Adobe Scan"
+   },
+   "magicScanConfirmCancel": {
+      "message": "Annuller"
+   },
+   "magicScanConfirmDesc": {
+      "message": "'$filename$' vil blive uploadet direkte til dette websted fra din mobilenhed",
+      "placeholders": {
+         "filename": {
+            "content": "$1"
+         }
+      }
+   },
+   "magicScanConfirmSkip": {
+      "message": "Vis ikke igen"
+   },
+   "magicScanConfirmTitle": {
+      "message": "Bekræft upload"
+   },
+   "magicScanConfirmUpload": {
+      "message": "Bekræft"
+   },
+   "magicScanExpiresIn": {
+      "message": "Resterende tid:"
+   },
+   "magicScanOffline": {
+      "message": "Det lader til, at din enhed er offline. Opret internetforbindelse, og prøv igen."
+   },
+   "magicScanOverlayDescription": {
+      "message": "Scan denne QR-kode med kameraet på din telefon eller tablet for at uploade billeder direkte fra din mobilenhed."
+   },
+   "magicScanOverlayInstructions": {
+      "message": "Vend dit mobilkamera mod koden for at komme i gang."
+   },
+   "magicScanOverlayTitle": {
+      "message": "Scan for at uploade fra mobil"
+   },
+   "magicScanPreparing": {
+      "message": "Forbereder dit dokument …"
+   },
+   "magicScanRefreshLabel": {
+      "message": "Opdater"
+   },
+   "magicScanReloadQR": {
+      "message": "Klik for at genindlæse QR-koden"
+   },
+   "magicScanSessionClaimed": {
+      "message": "QR-kode scannet. Fortsæt på din mobilenhed."
+   },
+   "magicScanStartAgain": {
+      "message": "Start forfra."
+   },
+   "magicScanStatusExpired": {
+      "message": "QR-koden er udløbet."
+   },
+   "magicScanStatusFailed": {
+      "message": "Scan mislykkedes. Prøv igen."
+   },
+   "msWordConvertToPdfFTEBody": {
+      "message": "Konvertér dine Microsoft Word-dokumenter til PDF’er med Adobe Acrobat-udvidelsen, og få værktøjer til at redigere, underskrive og meget mere."
+   },
+   "msWordConvertToPdfFTETitle": {
+      "message": "Konvertér dette dokument til en PDF"
+   },
+   "msWordSaveChangesTooltip": {
+      "message": "Tryk på $shortcut$ for at gemme eventuelle ændringer, før du fortsætter.",
+      "placeholders": {
+         "shortcut": {
+            "content": "$1"
+         }
+      }
+   },
+   "neverDisplayFab": {
+      "message": "Vis aldrig"
+   },
+   "openInAcrobat": {
+      "message": "Åbn i Acrobat"
+   },
+   "optionsAutoSavedLabel": {
+      "message": "Gemt"
+   },
+   "optionsAutoSavingLabel": {
+      "message": "Gemmer..."
+   },
+   "optionsFailurePrompt": {
+      "message": "Vi kunne ikke gemme dine ændringer. Prøv igen senere."
+   },
+   "optionsSuccessPrompt": {
+      "message": "Indstillingerne blev gemt"
+   },
+   "optionsSuccessPromptReloadRequired": {
+      "message": "Indstillingen afspejles kun efter genindlæsning"
+   },
+   "outlookErrorToastDescription": {
+      "message": "Der opstod en fejl. Luk filen, og prøv igen."
+   },
+   "outlookErrorToastTitle": {
+      "message": "Kan ikke åbne fil"
+   },
+   "outlookImplicitDVFTEBody": {
+      "message": "Get access to PDF tools like edit, convert, and e-sign. Turn this off anytime from Acrobat extension Preferences."
+   },
+   "outlookImplicitDVFTEHeader": {
+      "message": "Outlook PDFs will open in Acrobat"
+   },
+   "outlookImplicitDVNotification": {
+      "message": "PDF attachments will now open in Outlook. To open them in Acrobat, select the Acrobat icon."
+   },
+   "outlookPDFTouchPointFTEBody": {
+      "message": "Rediger, opsummer og underskriv PDF'er ved at åbne dem i Acrobat."
+   },
+   "outlookPDFTouchPointFTEHeader": {
+      "message": "Åbn denne PDF i Adobe Acrobat"
+   },
+   "outlookPDFTouchPointTooltip": {
+      "message": "Open in Acrobat"
+   },
+   "paywallCreditsExpiredToastMessage": {
+      "message": "Dine gratis kreditter for denne måned er udløbet. Abonnér for at fortsætte."
+   },
+   "pdfOpenInAcrobatContextMenu": {
+      "message": "Åbn i Acrobat"
+   },
+   "pdfOwnerShipDmbConfirmBtn": {
+      "message": "Fortsæt"
+   },
+   "pdfOwnerShipSideRedCardConfirmBtn": {
+      "message": "Fortsæt"
+   },
+   "pdfOwnershipDefSideCardcontent": {
+      "message": "Vis, kommentér, udfyld formularer, underskriv og mere, når du angiver Adobe Acrobat som din standard PDF-fremviser."
+   },
+   "pdfOwnershipExploreAcrobat": {
+      "message": "Brug Acrobat i Chrome"
+   },
+   "pdfOwnershipExploreAcrobatEdge": {
+      "message": "Brug Acrobat i Microsoft Edge"
+   },
+   "pdfOwnershipExploreOptionsDescription": {
+      "message": "Gør Acrobat til standard PDF-fremviseren i din browser for at få hurtig adgang til kommentering, Udfyld og underskriv og andre PDF-værktøjer."
+   },
+   "pdfOwnershipExploreOptionsTitle": {
+      "message": "Åbn alle PDF'er i Acrobat"
+   },
+   "pdfOwnershipPromptCancel": {
+      "message": "Ikke nu"
+   },
+   "pdfOwnershipPromptContent": {
+      "message": "Gør mere med PDF'er i Chrome, når du indstiller Adobe Acrobat som din standardfremviser."
+   },
+   "pdfOwnershipPromptContent2": {
+      "message": "Angiv Acrobat som din standard PDF-fremviser for at bruge PDF'er direkte i Google Chrome. Kommentér, udfyld, underskriv, og prøv værktøjer som konvertér og komprimér."
+   },
+   "pdfOwnershipPromptContentEdge": {
+      "message": "Gør mere med PDF'er i Microsoft Edge, når du indstiller Adobe Acrobat som din standardfremviser."
+   },
+   "pdfOwnershipPromptDeny": {
+      "message": "Nej tak"
+   },
+   "pdfOwnershipPromptOk": {
+      "message": "Angiv som standard"
+   },
+   "pdfOwnershipPromptOkFullscreen": {
+      "message": "Prøv det nu"
+   },
+   "pdfReadyTabTitle": {
+      "message": "PDF klar"
+   },
+   "pdfToWordContextMenu": {
+      "message": "Konvertér PDF til Word"
+   },
+   "pdfToolsDropdownContextMenu": {
+      "message": "PDF-værktøjer"
+   },
+   "pdfToolsFteTooltipButton": {
+      "message": "Luk"
+   },
+   "pdfToolsFteTooltipDescription": {
+      "message": "Åbn PDF'er direkte i Gmail, og prøv værktøjer såsom redigering, kommentering, konvertering og e-underskrivelse med Adobe Acrobat."
+   },
+   "pdfToolsFteTooltipTitle": {
+      "message": "Udforsk et udvalg af PDF-værktøjer"
+   },
+   "popupNoConnection": {
+      "message": "Ingen forbindelse"
+   },
+   "popupOfflineMessage": {
+      "message": "Kontakt din administrator for at fortsætte forbindelsen"
+   },
+   "preferenceAcrobatIntegrationsDescription": {
+      "message": "Gør Acrobat til standard PDF-fremviser for understøttede browserintegrationer såsom Gmail, Google Drev m.fl."
+   },
+   "preferenceAcrobatIntegrationsTitle": {
+      "message": "Aktivér Acrobat-integrationer"
+   },
+   "preferenceAdobeExpressDescription": {
+      "message": "Rediger billeder med Adobe Express fra Adobe Acrobat-udvidelse."
+   },
+   "preferenceAdobeExpressTitle": {
+      "message": "Aktivér Adobe Express i Acrobat"
+   },
+   "preferenceAdobeInternalConnectedAppDescription": {
+      "message": "Vælg det ønskede forbundne program for udvidelsens funktioner. Denne indstilling simulerer kun visningerne. Funktionaliteten kan blive brudt."
+   },
+   "preferenceAdobeInternalConnectedAppTitle": {
+      "message": "Forbundet program"
+   },
+   "preferenceAdobeInternalEnvironmentDescription": {
+      "message": "Vælg det ønskede miljø til udvidelsen."
+   },
+   "preferenceAdobeInternalEnvironmentTitle": {
+      "message": "Udviklingsmiljø"
+   },
+   "preferenceAdobeInternalGenAIClusterDescription": {
+      "message": "Vælg den ønskede klynge for GenAI-tjenester."
+   },
+   "preferenceAdobeInternalGenAIClusterTitle": {
+      "message": "GenAI-klynge"
+   },
+   "preferenceAdobeInternalTabLabel": {
+      "message": "Intern Adobe"
+   },
+   "preferenceAssistantWebPageBadgeText": {
+      "message": "Beta"
+   },
+   "preferenceAssistantWebPageContent": {
+      "message": "Få hurtige opsummeringer og vigtig indsigt med AI-assistent om websider."
+   },
+   "preferenceAssistantWebPageTitle": {
+      "message": "AI-assistent til websider"
+   },
+   "preferenceAutoOpenConvertedPDFDescription": {
+      "message": "Efter at have konverteret en webside til PDF med Acrobat-udvidelsen skal du automatisk åbne den konverterede PDF i Acrobat."
+   },
+   "preferenceBrowserDefaultViewershipDescription": {
+      "message": "Vælg Acrobat som din standardfremviser for at åbne PDF'er gennem online links, Gmail og Google Drive."
+   },
+   "preferenceBrowserDefaultViewershipDescriptionEdge": {
+      "message": "Vælg Acrobat som din standardviser til åbning af PDF’er gennem onlinelinks."
+   },
+   "preferenceBrowserDefaultViewershipDescriptionOutlook": {
+      "message": "Set Acrobat as your default viewer to open PDFs from online links, Gmail, Google Drive, and Microsoft Outlook."
+   },
+   "preferenceBrowserDefaultViewershipTitle": {
+      "message": "Åbn PDF'er i Acrobat fra din browser"
+   },
+   "preferenceChromeMimeHandlerDescription": {
+      "message": "Når funktionen er aktiveret, åbnes PDF-filer i Adobes fremviser via Chromes oprindelige MIME-håndtering – den oprindelige URL bevares i adresselinjen. Når den er deaktiveret, bruges udvidelsens omdirigeringsforløb i stedet."
+   },
+   "preferenceChromeMimeHandlerTitle": {
+      "message": "Aktivér MIME-handler"
+   },
+   "preferenceConnectedAppsTabLabel": {
+      "message": "Forbundne apps"
+   },
+   "preferenceDisplayThemeDescription": {
+      "message": "Vælg mørk tilstand eller lys tilstand."
+   },
+   "preferenceDisplayThemeTitle": {
+      "message": "Indstil visningstema"
+   },
+   "preferenceEmbeddedPDFsTitle": {
+      "message": "Integrerede PDF-filer"
+   },
+   "preferenceErrorBoundaryRetry": {
+      "message": "Prøv igen"
+   },
+   "preferenceErrorBoundaryTitle": {
+      "message": "Der opstod en fejl"
+   },
+   "preferenceGeneralTabLabel": {
+      "message": "Generelt"
+   },
+   "preferenceGenerativeAITabLabel": {
+      "message": "Generativ AI"
+   },
+   "preferenceGoogleSearchToolsDescription": {
+      "message": "Tillad Acrobat at anbefale PDF-værktøjer, der skal bruges i din browser, baseret på dine søgninger, som ikke sendes til Adobe."
+   },
+   "preferenceGoogleSearchToolsTitle": {
+      "message": "Vis Acrobat-værktøjer med Google-søgeresultater"
+   },
+   "preferenceGroupAccordionTitle": {
+      "message": "Avancerede indstillinger"
+   },
+   "preferenceHideAcrobatDomainListTitle": {
+      "message": "Websteder, hvor Acrobat er deaktiveret"
+   },
+   "preferenceHideFabDomainListTitle": {
+      "message": "Websteder, hvor AI-assistenten er deaktiveret"
+   },
+   "preferenceHideSummaryBarDomainListTitle": {
+      "message": "Websteder, hvor AI-assistentens opsummeringsbanner er skjult"
+   },
+   "preferenceLanguageDescription": {
+      "message": "Vælg dit foretrukne sprog."
+   },
+   "preferenceLanguageTitle": {
+      "message": "Indstil sprog"
+   },
+   "preferenceLearnerExperienceDescription": {
+      "message": "Når det er aktiveret, er studieorienterede funktioner tilgængelige for at hjælpe dig med at studere, lære og klare akademisk arbejde mere effektivt."
+   },
+   "preferenceLearnerExperienceTitle": {
+      "message": "Aktivér studieoplevelsen i Acrobat"
+   },
+   "preferenceLinkedInTitle": {
+      "message": "LinkedIn"
+   },
+   "preferenceOfflineModeDescription": {
+      "message": "Kontrollér din netværksforbindelse, og prøv igen."
+   },
+   "preferenceOfflineModeTitle": {
+      "message": "Utilgængelig i øjeblikket"
+   },
+   "preferenceOnlinePDFsTitle": {
+      "message": "Online PDF'er"
+   },
+   "preferenceOpenLocalFilesDescription": {
+      "message": "Denne muligheden administreres af Chrome-browseren. Aktivér “Tillad adgang til fil-URL'er” for at åbne PDF'er i Acrobat."
+   },
+   "preferenceOpenLocalFilesTitle": {
+      "message": "Åbn lokale filer i Acrobat"
+   },
+   "preferenceOpenLocalFilesTurnOffButtonLabel": {
+      "message": "Slå fra"
+   },
+   "preferenceOpenLocalFilesTurnOnButtonLabel": {
+      "message": "Aktivér"
+   },
+   "preferenceOptinDescription": {
+      "message": "Send Adobe-oplysninger om, hvordan du bruger Acrobat-udvidelsen til at forbedre produktfunktioner. "
+   },
+   "preferenceOptinLearnMore": {
+      "message": "Få mere at vide"
+   },
+   "preferenceOutlookTitle": {
+      "message": "Microsoft Outlook"
+   },
+   "preferencePrivacyTabLabel": {
+      "message": "Beskyttelse af personlige oplysninger"
+   },
+   "preferenceSaveLocationDescription": {
+      "message": "Gem dine filer i Adobe Cloud Storage, gem på din computer, eller vælg hver gang, hvor de skal gemmes."
+   },
+   "preferenceSaveLocationTitle": {
+      "message": "Vælg, hvor filer skal gemmes"
+   },
+   "preferenceShowAIAssistantButtonDescription": {
+      "message": "Vis altid knappen for AI-assistent i kanten af dit browservindue."
+   },
+   "preferenceShowAIAssistantButtonTitle": {
+      "message": "Vis knap for AI-assistent"
+   },
+   "preferenceShowAISummaryBannerDescription": {
+      "message": "Vis altid AI-assistentens opsummeringsbanner på websider, når det understøttes."
+   },
+   "preferenceShowAISummaryBannerTitle": {
+      "message": "Vis AI-assistentens opsummeringsbanner"
+   },
+   "preferenceShowAcrobatAssistantShortcutDescription": {
+      "message": "Få adgang til PDF-værktøjer og AI-assistenten fra kanten af dit browservindue."
+   },
+   "preferenceShowAcrobatAssistantShortcutTitle": {
+      "message": "Hold Acrobat synlig i din browser"
+   },
+   "preferenceShowFeatureGuidanceDescription": {
+      "message": "Lad Acrobat-udvidelsen vise vejledning om opdateringer, hvordan funktioner bruges og meget mere."
+   },
+   "preferenceShowFeatureGuidanceTitle": {
+      "message": "Vis funktionsvejledning"
+   },
+   "preferenceShowGenAIFabPillsTitle": {
+      "message": "Vis AI-indstillinger i panelet for AI-assistenten"
+   },
+   "preferenceShowLessText": {
+      "message": "Vis mindre"
+   },
+   "preferenceShowMoreText": {
+      "message": "Vis mere"
+   },
+   "preferenceShowNotificationsDescription": {
+      "message": "Lad Acrobat-udvidelsen vise notifikationer om opdateringer, hvordan funktioner bruges og meget mere."
+   },
+   "preferenceShowNotificationsTitle": {
+      "message": "Vis notifikationer"
+   },
+   "preferenceShowOpenInAcrobatShortcutCheckboxGroupFooter": {
+      "message": "Acrobat-genvejen vises ikke, hvis den allerede er indstillet som din standardfremviser for den app."
+   },
+   "preferenceShowOpenInAcrobatShortcutCheckboxGroupFooterLinkText": {
+      "message": "angiv som din standardfremviser"
+   },
+   "preferenceShowOpenInAcrobatShortcutDescription": {
+      "message": "Tilføj en genvej for at åbne PDF'er i Acrobat fra Gmail, Google Drev m.fl."
+   },
+   "preferenceShowOpenInAcrobatShortcutTitle": {
+      "message": "Vis \"Åbn i Acrobat\"-genvejen i andre apps"
+   },
+   "preferenceShowSummarizeBarOnWebpagesTitle": {
+      "message": "Vis opsummeringslinje på websider"
+   },
+   "preferenceShowWhatsAppShortcutTitle": {
+      "message": "Vis genvejen \"Send til WhatsApp\""
+   },
+   "preferenceTurnOnAIFeaturesDescription": {
+      "message": "Tillad, at dine filer behandles i clouden for at bruge generative AI-funktioner. Bemærk! Hvis denne funktion slås fra, deaktiveres generative AI-funktioner ved at forhindre dine filer i at blive behandlet i clouden. Du kan altid slå den til igen."
+   },
+   "preferenceTurnOnAIFeaturesTitle": {
+      "message": "Aktivér generative AI-funktioner i Acrobat"
+   },
+   "preferenceTurnOnGenAIWebpagesDescription": {
+      "message": "Få adgang til AI-assistenten på enhver webside for at få opsummeringer og indsigt. Slå dette fra for at fjerne adgangen."
+   },
+   "preferenceTurnOnGenAIWebpagesTitle": {
+      "message": "Slå generativ AI til i din browser"
+   },
+   "preferenceWebpageConversionDescription": {
+      "message": "Foretag opdateringer af indstillinger for at gemme websider som PDF'er, inkl. margener, skrifttyper og andre layoutindstillinger."
+   },
+   "preferenceWebpageConversionTitle": {
+      "message": "Rediger indstillinger for websidekonvertering"
+   },
+   "preferenceWhatsNewAutoOpenTitle": {
+      "message": "Aktivér automatisk åbning for at opdatere"
+   },
+   "preferences": {
+      "message": "Indstillinger"
+   },
+   "productAcrobat": {
+      "message": "Acrobat"
+   },
+   "productNoApp": {
+      "message": "Ingen app"
+   },
+   "productReader": {
+      "message": "Reader"
+   },
+   "refreshButtonInFailToast": {
+      "message": "Opdater"
+   },
+   "removeBackgroundImageContextMenu": {
+      "message": "Fjern baggrund"
+   },
+   "removeBackgroundImageContextMenuV2ChatGPT": {
+      "message": "Fjern baggrund"
+   },
+   "removeObjectImageContextMenu": {
+      "message": "Fjern objekt"
+   },
+   "saveLocationOp1": {
+      "message": "Spørg hver gang"
+   },
+   "saveLocationOp2": {
+      "message": "Adobes cloudlager"
+   },
+   "saveLocationOp3": {
+      "message": "Denne computer"
+   },
+   "saveLocationPreferenceDescription": {
+      "message": "Vælg en placering, hvor dine filer skal gemmes"
+   },
+   "saveLocationPreferenceTitle": {
+      "message": "Placering af gemte filer"
+   },
+   "selectFileButton": {
+      "message": "Vælg en fil"
+   },
+   "sessionExpiredDescription": {
+      "message": "Upload filen, og prøv igen."
+   },
+   "sessionExpiredDocumentTitle": {
+      "message": "Session udløbet"
+   },
+   "sessionExpiredTitle": {
+      "message": "Din session er udløbet"
+   },
+   "sessionExpiredToastText": {
+      "message": "Session udløbet. Opdater siden, og prøv igen."
+   },
+   "sharepointPreferenceMessage": {
+      "message": "Tillad udtjekning af SharePoint-filer i Acrobat."
+   },
+   "sidepanelLoaderText": {
+      "message": "Få opsummeringer og vigtig indsigt med Acrobats AI-assistent"
+   },
+   "sidepanelLocationPreferenceButtonText": {
+      "message": "Skift i browserindstillinger"
+   },
+   "sidepanelLocationPreferenceDescription": {
+      "message": "Placer sidepanelet på venstre eller højre side af browservinduet. Sidepanelet er kun tilgængeligt i Google Chrome 11.4 eller senere."
+   },
+   "sidepanelLocationPreferenceTitle": {
+      "message": "AI-assistentens panelplacering"
+   },
+   "stripTextOpenAcrobat": {
+      "message": "Åbn i Acrobat"
+   },
+   "stripTextOpenFillnSign": {
+      "message": "Udfyld og underskriv i Acrobat"
+   },
+   "studentToolsTouchpointCheatsheet": {
+      "message": "Opret et huskeark"
+   },
+   "studentToolsTouchpointFabFlashcards": {
+      "message": "Opret billedkort"
+   },
+   "studentToolsTouchpointFabLoading": {
+      "message": "Opretter…"
+   },
+   "studentToolsTouchpointFabMindmap": {
+      "message": "Opret en mindmap"
+   },
+   "studentToolsTouchpointFabNotes": {
+      "message": "Generér noter"
+   },
+   "studentToolsTouchpointFabQuiz": {
+      "message": "Opret en quiz"
+   },
+   "studentToolsTouchpointFabStudyGuide": {
+      "message": "Opret en studievejledning"
+   },
+   "studentToolsTouchpointFlashcards": {
+      "message": "Opret billedkort ud fra denne side"
+   },
+   "studentToolsTouchpointFlashcardsFromFile": {
+      "message": "Opret billedkort ud fra filen"
+   },
+   "studentToolsTouchpointMindmap": {
+      "message": "Generér en mindmap"
+   },
+   "studentToolsTouchpointQuiz": {
+      "message": "Opret en quiz ud fra denne side"
+   },
+   "studentToolsTouchpointStudyGuide": {
+      "message": "Opret en studieguide"
+   },
+   "studentToolsTouchpointStudyGuideContextMenu": {
+      "message": "Lav denne side om til en studievejledning"
+   },
+   "successToastText": {
+      "message": "PDF-downloads åbnes nu i Adobes Acrobat"
+   },
+   "summarizeWebpageContextMenu": {
+      "message": "Sammenfat websider med AI"
+   },
+   "summarizeWebpageSelectedContent": {
+      "message": "Sammenfat dette"
+   },
+   "summaryBarCloseTooltip": {
+      "message": "Skjul indstillinger"
+   },
+   "summaryBarCtaLabel": {
+      "message": "Opsummer denne side ved hjælp af Acrobat AI-assistent."
+   },
+   "summaryBarDismissMenuAriaLabel": {
+      "message": "Indstillinger for AI-assistentens opsummeringsbanner"
+   },
+   "surfaceNameChatGPT": {
+      "message": "ChatGPT"
+   },
+   "surfaceNameGdrive": {
+      "message": "Google Drev"
+   },
+   "surfaceNameGemini": {
+      "message": "Gemini"
+   },
+   "surfaceNameGmail": {
+      "message": "Gmail"
+   },
+   "surfaceNameGoogleDocs": {
+      "message": "Google Docs"
+   },
+   "surfaceNameGoogleSheets": {
+      "message": "Google Sheets"
+   },
+   "surfaceNameGoogleSlides": {
+      "message": "Google Slides"
+   },
+   "surfaceNameMSWord": {
+      "message": "Microsoft Word"
+   },
+   "surfaceNameWikipedia": {
+      "message": "Wikipedia"
+   },
+   "tooltipTextDisabled": {
+      "message": "AI-assistenten er ikke tilgængelig for denne webside"
+   },
+   "tooltipTextEnabled": {
+      "message": "Få opsummeringer og vigtig indsigt med AI-assistenten"
+   },
+   "tooltipTextEnabledHome": {
+      "message": "Konvertér, rediger og arbejd med AI-assistenten direkte i din browser"
+   },
+   "tooltipTextSubText": {
+      "message": "leveret af Adobe Acrobat"
+   },
+   "tryAgain": {
+      "message": "Prøv igen"
+   },
+   "unsupportedFileTypeToastText": {
+      "message": "Denne filtype understøttes ikke. Du kan prøve at redigere en anden fil."
+   },
+   "userLocale": {
+      "message": "Brugersprog"
+   },
+   "web2pdfAddButtonText": {
+      "message": "Føj til eksisterende PDF..."
+   },
+   "web2pdfAlwaysShow": {
+      "message": "Vis automatisk for PDF-filer"
+   },
+   "web2pdfAppendLinkContextMenu": {
+      "message": "Føj linkdestination til eksisterende PDF"
+   },
+   "web2pdfAppendPageContextMenu": {
+      "message": "Føj webside til eksisterende PDF..."
+   },
+   "web2pdfBadVersion": {
+      "message": "Denne version af Chrome understøtter ikke Adobe Acrobat. Tidligste version, der kræves: $version$",
+      "placeholders": {
+         "version": {
+            "content": "$1"
+         }
+      }
+   },
+   "web2pdfBadVersionEdge": {
+      "message": "Denne version af Edge understøtter ikke Adobe Acrobat. Mindsteversionen er: $version$",
+      "placeholders": {
+         "version": {
+            "content": "$1"
+         }
+      }
+   },
+   "web2pdfClickToOpen": {
+      "message": "Klik på linket herunder for at åbne PDF-filen i Acrobat."
+   },
+   "web2pdfConvertButtonToolTip": {
+      "message": "Acrobat-udvidelse – genvej til alle dine PDF-værktøjer."
+   },
+   "web2pdfConvertButtonToolTipERPReader": {
+      "message": "Acrobat Reader-udvidelsen er i øjeblikket deaktiveret. Kontakt din IT-administrator."
+   },
+   "web2pdfConvertButtonToolTipReader": {
+      "message": "Åbn PDF i Acrobat Reader"
+   },
+   "web2pdfConvertLinkContextMenu": {
+      "message": "Konverter linkdestination til Adobe PDF"
+   },
+   "web2pdfConvertPageContextMenu": {
+      "message": "Konverter webside til Adobe PDF..."
+   },
+   "web2pdfCopyText": {
+      "message": "Kopierer til Acrobat"
+   },
+   "web2pdfDestinationText": {
+      "message": "Destinationsmappe:"
+   },
+   "web2pdfDoneButtonText": {
+      "message": "Udført"
+   },
+   "web2pdfExtnDescription": {
+      "message": "Brug Acrobat i browseren til at vise, konvertere, komprimere og underskrive PDF'er"
+   },
+   "web2pdfExtnDescriptionBeta": {
+      "message": "Brug Acrobat i browseren til at vise, konvertere, komprimere og underskrive PDF'er"
+   },
+   "web2pdfExtnDescriptionChrome": {
+      "message": "Gør mere i Google Chrome med Adobe Acrobat PDF-værktøjer. Vis, udfyld, kommentér, underskriv – og prøv også konverterings- og komprimeringsværktøjerne."
+   },
+   "web2pdfExtnDescriptionEdge": {
+      "message": "Gør mere i Microsoft Edge med Adobe Acrobat PDF-værktøjer. Udfyld, underskriv, og prøv konverterings- og komprimeringsværktøjer."
+   },
+   "web2pdfExtnName": {
+      "message": "Adobe Acrobat: værktøjer til at redigere, konvertere og underskrive PDF"
+   },
+   "web2pdfExtnNameBeta": {
+      "message": "Adobe Acrobat Beta"
+   },
+   "web2pdfExtnNameEdge": {
+      "message": "Adobe Acrobat: værktøjer til at redigere, konvertere og underskrive PDF"
+   },
+   "web2pdfExtnNameStage": {
+      "message": "Adobe Acrobat Stage"
+   },
+   "web2pdfFileLockedError": {
+      "message": "Filen kan ikke gemmes, fordi den anvendes af en anden proces."
+   },
+   "web2pdfFilename": {
+      "message": "Filnavn:"
+   },
+   "web2pdfFrictionlessToggleDescription": {
+      "message": "Adobe Acrobat-udvidelsen anbefaler PDF-værktøjer til at hjælpe dig med at udføre din opgave. Vores anbefaling er baseret på, hvad du har søgt efter og sker på din enhed. Søgninger sendes ikke til Adobe."
+   },
+   "web2pdfFrictionlessUrl": {
+      "message": "https://www.adobe.com/go/fl_chromeext_dk"
+   },
+   "web2pdfFrictionlessUrlEdge": {
+      "message": "https://www.adobe.com/dk/acrobat/online.html?x_api_client_id=edge_extension&x_api_client_location=trefoil&mv=other&mv2=edge_extension:trefoil&trackingid=HM85XB76"
+   },
+   "web2pdfHTMLJSError": {
+      "message": "Fejl ved behandling af webside."
+   },
+   "web2pdfHTMLTooLarge": {
+      "message": "HTML-indholdet er for stort til at kunne behandles."
+   },
+   "web2pdfInfoHoverPopup": {
+      "message": "Adobe Acrobat-udvidelsen anbefaler PDF-værktøjer til at hjælpe dig med at udføre din opgave. Vores anbefaling er baseret på, hvad du har søgt efter og sker på din enhed. Søgninger sendes ikke til Adobe. Klik \u003Cspan class = \"tooltip-content-settings\">her\u003C/span> for at deaktivere denne funktion."
+   },
+   "web2pdfLoaderTitle": {
+      "message": "Indlæser ..."
+   },
+   "web2pdfMissingMac": {
+      "message": "Adobe Acrobat til Chrome er endnu ikke tilgængelig til Mac"
+   },
+   "web2pdfMissingMacEdge": {
+      "message": "Adobe Acrobat til Microsoft Edge er endnu ikke tilgængelig til Mac"
+   },
+   "web2pdfNoFoldersText": {
+      "message": "Du har ingen mapper i dit Acrobat DC-lager."
+   },
+   "web2pdfNoWritePermissionOnSelectedFile": {
+      "message": "Du har ikke skrivetilladelser til den valgte fil."
+   },
+   "web2pdfOpenButtonText": {
+      "message": "Åbn i Acrobat"
+   },
+   "web2pdfOpenButtonTextOlder": {
+      "message": "Download Adobe PDF"
+   },
+   "web2pdfOpenButtonTextReader": {
+      "message": "Åbn i Acrobat Reader"
+   },
+   "web2pdfOpenConvertedPDFDescription": {
+      "message": "Åbn automatisk den konverterede PDF i Acrobat, når websiden er blevet konverteret til PDF."
+   },
+   "web2pdfOpenConvertedPDFTitle": {
+      "message": "Åbn automatisk konverterede PDF'er i Acrobat"
+   },
+   "web2pdfOpenInDCButtonText": {
+      "message": "Åbn PDF i Acrobat"
+   },
+   "web2pdfOptOut": {
+      "message": "For at forbedre produktfunktioner sender denne udvidelse oplysninger om, hvordan du bruger den, til Adobe."
+   },
+   "web2pdfOptOutDisabled": {
+      "message": "Ingen af dine brugsdata deles."
+   },
+   "web2pdfOptions": {
+      "message": "Indstillinger"
+   },
+   "web2pdfOptionsTitle": {
+      "message": "Adobe Acrobat-indstillinger"
+   },
+   "web2pdfPDFOpenFailed": {
+      "message": "Kunne ikke åbne PDF"
+   },
+   "web2pdfPDFOpenFailedv2": {
+      "message": "Kunne ikke åbne"
+   },
+   "web2pdfPDFOpened": {
+      "message": "PDF åbnet"
+   },
+   "web2pdfPDFOpening": {
+      "message": "Åbner PDF"
+   },
+   "web2pdfPreferencesButtonText": {
+      "message": "Indstillinger..."
+   },
+   "web2pdfPreferencesNewText": {
+      "message": "Konverteringsindstillinger..."
+   },
+   "web2pdfPrivacy": {
+      "message": "Om Adobe Acrobat"
+   },
+   "web2pdfReplaceWarning": {
+      "message": "findes allerede.\n Skal filen overskrives?"
+   },
+   "web2pdfSave": {
+      "message": "Gem"
+   },
+   "web2pdfSaveButton": {
+      "message": "Gem indstillinger"
+   },
+   "web2pdfShowPDFTools": {
+      "message": "Vis med Google-søgeresultater"
+   },
+   "web2pdfShowPDFViewerOption": {
+      "message": "Brug Acrobat som standardfremviser af PDF'er"
+   },
+   "web2pdfShowPersistentOpen": {
+      "message": "Vis \"Åbn i Acrobat\""
+   },
+   "web2pdfShowPersistentOpenAlways": {
+      "message": "Vis altid \"Åbn i Acrobat\""
+   },
+   "web2pdfShowPersistentOpenDescription": {
+      "message": "Vis mulighed for at åbne PDF i Acrobat hver gang."
+   },
+   "web2pdfStatusCancelled": {
+      "message": "Konvertering annulleret"
+   },
+   "web2pdfStatusComplete": {
+      "message": "Konvertering fuldført"
+   },
+   "web2pdfStatusDownloading": {
+      "message": "Downloader til konvertering..."
+   },
+   "web2pdfStatusDownloadingPDF": {
+      "message": "Downloader PDF"
+   },
+   "web2pdfStatusFailure": {
+      "message": "Konverteringsfejl"
+   },
+   "web2pdfStatusInProgress": {
+      "message": "Konvertering i gang..."
+   },
+   "web2pdfStatusUnknownFailure": {
+      "message": "Ukendt fejl"
+   },
+   "web2pdfStatusWaiting": {
+      "message": "Venter på at konvertere..."
+   },
+   "web2pdfTitle": {
+      "message": "Adobe Acrobat"
+   },
+   "web2pdfUnsupportedAcrobatVersion": {
+      "message": "Der kunne ikke findes en understøttet version af Acrobat. Installér en \u003Ca target='_blank' href='https://acrobat.adobe.com/dk/da/free-trial-download.html?trackingid=29NMCS7T&mv=other'>gratis 7 dages prøveversion\u003C/a>."
+   },
+   "web2pdfUntitledFileName": {
+      "message": "ikke navngivet"
+   },
+   "webpagePDFConversion": {
+      "message": "Indstilling for webside til PDF-konvertering"
+   },
+   "webpagePDFConversionDescription": {
+      "message": "Når du gemmer websider som PDF'er, kan du indstille margener, skrifttyper og andre layoutdetaljer"
+   },
+   "whatsNewAutoOpenDescription": {
+      "message": "Tillad Acrobat at åbne en webside automatisk, når nye opdateringer er tilgængelige."
+   },
+   "whatsNewAutoOpenTitle": {
+      "message": "Aktiver auto-åbn for meddelelser om opdateringer"
+   },
+   "wikipediaConvertToPdfFTEBody": {
+      "message": "Omdan Wikipedia-sider til PDF-filer og rediger dem uden at forlade din browser."
+   },
+   "wikipediaConvertToPdfFTETitle": {
+      "message": "Konvertér denne mail til en PDF"
+   },
+   "wikipediaConvertToPdfHoverTooltip": {
+      "message": "Omdan denne Wikipedia-side til en PDF med Acrobat"
+   },
+   "wikipediaConvertToPdfToastMessage": {
+      "message": "Konverterer side til en PDF. Hold Acrobat-fanen åben for at få besked, når den er klar."
+   },
+   "wikipediaConvertingTooltip": {
+      "message": "Behandler i en ny fane. Vi giver dig besked, når din fil er klar"
+   },
+   "wikipediaDefaultTitleText": {
+      "message": "Wikipedia-artikel"
+   }
+}

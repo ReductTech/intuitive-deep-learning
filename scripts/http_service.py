@@ -10,6 +10,7 @@ from urllib.parse import parse_qs, urlparse
 
 import insightface_tool
 import gpu_service
+from emnist_inference_service import CHECKPOINT_PATH, predict_digits
 from dataset_service import *
 from gpu_service import *
 
@@ -64,6 +65,7 @@ class Handler(BaseHTTPRequestHandler):
                     "lfw_balanced_faces": LFW_FACE_PATH.exists(),
                     "lfw_balanced_targets": LFW_TARGET_PATH.exists(),
                     "face_demo": FACE_DEMO_IMAGE_PATH.exists(),
+                    "emnist_mobilenet_v3": CHECKPOINT_PATH.exists(),
                 },
             })
             return
@@ -78,7 +80,7 @@ class Handler(BaseHTTPRequestHandler):
             return
         if path == "/face-recog/demo-image":
             if not FACE_DEMO_IMAGE_PATH.exists():
-                self.send_json(404, {"ok": False, "error": "dataset/face_demo.png not found"})
+                self.send_json(404, {"ok": False, "error": "assets/dataset/face_demo.png not found"})
                 return
             self.send_binary(200, FACE_DEMO_IMAGE_PATH.read_bytes(), "image/png")
             return
@@ -90,6 +92,7 @@ class Handler(BaseHTTPRequestHandler):
             "/lenet5/fixed-kernel-preview",
             "/lenet5/fixed-kernel-train",
             "/lenet5/sequence-sample",
+            "/emnist/predict-digits",
             "/face-recog/fixed-kernel-preview",
             "/face-recog/fixed-kernel-train",
             "/face-recog/lenet-train",
@@ -110,6 +113,8 @@ class Handler(BaseHTTPRequestHandler):
                 result = train_fixed_kernel(body)
             elif path == "/lenet5/sequence-sample":
                 result = build_sequence_sample(body)
+            elif path == "/emnist/predict-digits":
+                result = predict_digits(body)
             elif path == "/face-recog/fixed-kernel-preview":
                 result = preview_face_fixed_kernel(body)
             elif path == "/face-recog/fixed-kernel-train":
@@ -121,6 +126,8 @@ class Handler(BaseHTTPRequestHandler):
             else:
                 result = train_face_lenet(body)
             self.send_json(200, {"ok": True, "result": result})
+        except ValueError as exc:
+            self.send_json(400, {"ok": False, "error": str(exc)})
         except Exception as exc:
             print(f"[lenet5-cnn-service:error] {type(exc).__name__}: {exc}", flush=True)
             print(traceback.format_exc(), flush=True)

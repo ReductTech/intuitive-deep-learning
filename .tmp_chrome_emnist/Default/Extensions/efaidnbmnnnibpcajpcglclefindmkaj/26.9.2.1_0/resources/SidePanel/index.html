@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="module" src="sidepanel.js" defer></script>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        #sidepanel {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        #sidepanelPreRendered {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .loader-container {
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 100vw;
+            height: 100vh;
+            gap: 20px;
+        }
+
+        body.theme-dark .loader-container {
+            background: #1f1f1f;
+        }
+
+        body.theme-dark #tooltipTextEnabled,
+        body.theme-dark #tooltipTextEnabledHome {
+            color: #ffffff;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #lottie-animation {
+            height: 80px;
+        }
+
+        #tooltipTextEnabled,
+        #tooltipTextEnabledHome {
+            font-family: 'Adobe Clean', sans-serif;
+            font-size: 14px;
+            line-height: 21px;
+            text-align: center;
+            vertical-align: middle;
+            width: 212px;
+        }
+
+        #offline-error {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            gap: 24px;
+            padding: 10px 64px;
+            box-sizing: border-box;
+            background: #ffffff;
+            font-family: 'Adobe Clean', sans-serif;
+        }
+
+        body.theme-dark #offline-error {
+            background: #1e1e1e;
+        }
+
+        body.theme-dark #popupNoConnection,
+        body.theme-dark #popupOfflineMessage {
+            color: #ffffff;
+        }
+
+        #offline-error.hidden {
+            display: none;
+        }
+
+        #offline-error img {
+            width: 98px;
+            height: 98px;
+        }
+
+        #offline-error-icon-dark {
+            display: none;
+        }
+
+        body.theme-dark #offline-error-icon-light {
+            display: none;
+        }
+
+        body.theme-dark #offline-error-icon-dark {
+            display: block;
+        }
+
+        #offline-error-text {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        #popupNoConnection {
+            font-size: 20px;
+            font-weight: 800;
+            line-height: 24px;
+            color: #222222;
+            text-align: center;
+        }
+
+        #popupOfflineMessage {
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 24px;
+            color: #222222;
+            text-align: center;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div id="offline-error" class="hidden">
+        <!-- Only one shown at a time — toggled via body.theme-dark, see the CSS above. -->
+        <img id="offline-error-icon-light" src="../../browser/images/Error/B_Illu_Acrobat_n_connections_160x160px.svg" alt="" aria-hidden="true" />
+        <img id="offline-error-icon-dark" src="../../browser/images/Error/B_Illu_Acrobat_n_connections_D_160x160px.svg" alt="" aria-hidden="true" />
+        <div id="offline-error-text">
+            <div id="popupNoConnection" class="translate"></div>
+            <div id="popupOfflineMessage" class="translate"></div>
+        </div>
+    </div>
+    <div class="loader-container hidden">
+        <div id="lottie-animation"></div>
+        <div id="tooltipTextEnabled" class="translate"></div>
+    </div>
+    <iframe
+        id="sidepanel"
+        title="Adobe Chatbot"
+        class="hidden"
+    >
+    </iframe>
+</body>
+</html>

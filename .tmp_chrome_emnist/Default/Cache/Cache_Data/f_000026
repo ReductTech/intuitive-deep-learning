@@ -1,0 +1,345 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=2be87a0d"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+import { ContentBlock, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, Typography } from "/modules/shared/react/index.ts";
+import "/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.css";
+const INPUT_SYMBOLS = Array.from({ length: 3 }, (_, row) => Array.from({ length: 3 }, (_2, col) => `x_{${row + 1}${col + 1}}`));
+const KERNEL_SYMBOLS = Array.from({ length: 3 }, (_, row) => Array.from({ length: 3 }, (_2, col) => `k_{${row + 1}${col + 1}}`));
+const ROTATED_KERNEL_SYMBOLS = KERNEL_SYMBOLS.slice().reverse().map(_c = (row) => row.slice().reverse());
+_c2 = ROTATED_KERNEL_SYMBOLS;
+const KERNEL_CELL_COLORS = ["#dcecff", "#cee2fc", "#bad7fa", "#fff0df", "#ffe3ca", "#fbd5b5", "#e1f5e8", "#ccebdc", "#b5e2cc"];
+function Matrix({ values, label, warm = false, rotated = false }) {
+  return /* @__PURE__ */ jsxDEV("div", { className: `ck-correlation__matrix ${warm ? "is-warm" : ""}`, role: "img", "aria-label": label, style: { gridTemplateColumns: `repeat(${values[0].length}, minmax(0, 1fr))` }, children: values.flatMap((row, rowIndex) => row.map(
+    (value, colIndex) => /* @__PURE__ */ jsxDEV("div", { className: "ck-correlation__matrix-cell", style: warm ? { backgroundColor: KERNEL_CELL_COLORS[rotated ? 8 - (rowIndex * 3 + colIndex) : rowIndex * 3 + colIndex] } : void 0, children: /* @__PURE__ */ jsxDEV(MathFormulaStatic, { latex: value, "aria-label": value.replace(/[{}]/g, "") }, void 0, false, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+      lineNumber: 33,
+      columnNumber: 11
+    }, this) }, `${rowIndex}-${colIndex}`, false, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+      lineNumber: 32,
+      columnNumber: 7
+    }, this)
+  )) }, void 0, false, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+    lineNumber: 30,
+    columnNumber: 5
+  }, this);
+}
+_c3 = Matrix;
+function CorrelationFormula({ strict }) {
+  return /* @__PURE__ */ jsxDEV(MathFormulaBlock, { ariaLabel: strict ? "严格卷积公式" : "互相关公式", className: "ck-correlation__formula", children: [
+    /* @__PURE__ */ jsxDEV(MathFormulaTerm, { latex: "y(i,j)=", tooltip: "位置 (i,j) 的输出响应。" }, void 0, false, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+      lineNumber: 43,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV(MathFormulaTerm, { latex: String.raw`\sum_{u=0}^{m-1}`, tooltip: "沿卷积核的 m 行求和；u 是行索引。" }, void 0, false, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+      lineNumber: 44,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV(MathFormulaTerm, { latex: String.raw`\sum_{v=0}^{n-1}`, tooltip: "沿卷积核的 n 列求和；v 是列索引。" }, void 0, false, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+      lineNumber: 45,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV(MathFormulaTerm, { latex: "X(i+u,j+v)", tooltip: "输入图像在当前窗口内 (u,v) 位置的像素。" }, void 0, false, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+      lineNumber: 46,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV(MathFormulaTerm, { latex: strict ? String.raw`\widetilde{K}(u,v)` : "K(u,v)", tooltip: strict ? "旋转 180° 后的卷积核在 (u,v) 处的权重。" : "原始卷积核在 (u,v) 处的权重。" }, void 0, false, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+      lineNumber: 47,
+      columnNumber: 7
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+    lineNumber: 42,
+    columnNumber: 5
+  }, this);
+}
+_c4 = CorrelationFormula;
+export function CorrelationConvolutionPage({ onComplete }) {
+  return /* @__PURE__ */ jsxDEV(
+    ContentBlock,
+    {
+      headingLevel: 1,
+      className: "ck-correlation",
+      title: "互相关与卷积",
+      subtitle: "严格卷积需要先将核旋转 180°；深度学习中的“卷积”通常实际采用互相关。",
+      children: [
+        /* @__PURE__ */ jsxDEV("div", { className: "ck-correlation__comparison", children: [
+          /* @__PURE__ */ jsxDEV("section", { className: "ck-correlation__panel", "aria-labelledby": "cross-correlation-title", children: [
+            /* @__PURE__ */ jsxDEV("header", { className: "ck-correlation__panel-head", children: [
+              /* @__PURE__ */ jsxDEV(Typography, { as: "h2", variant: "h3", tone: "accent", id: "cross-correlation-title", children: [
+                "互相关 ",
+                /* @__PURE__ */ jsxDEV("span", { children: "(cross-correlation)" }, void 0, false, {
+                  fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+                  lineNumber: 67,
+                  columnNumber: 93
+                }, this)
+              ] }, void 0, true, {
+                fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+                lineNumber: 67,
+                columnNumber: 13
+              }, this),
+              /* @__PURE__ */ jsxDEV(Typography, { variant: "bodySmall", tone: "muted", children: [
+                "直接使用卷积核 ",
+                /* @__PURE__ */ jsxDEV("strong", { children: "K" }, void 0, false, {
+                  fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+                  lineNumber: 68,
+                  columnNumber: 66
+                }, this),
+                "，不做旋转。"
+              ] }, void 0, true, {
+                fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+                lineNumber: 68,
+                columnNumber: 13
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+              lineNumber: 66,
+              columnNumber: 11
+            }, this),
+            /* @__PURE__ */ jsxDEV(CorrelationFormula, { strict: false }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+              lineNumber: 70,
+              columnNumber: 11
+            }, this),
+            /* @__PURE__ */ jsxDEV("div", { className: "ck-correlation__operation", children: [
+              /* @__PURE__ */ jsxDEV("div", { className: "ck-correlation__object", children: [
+                /* @__PURE__ */ jsxDEV(Typography, { variant: "bodySmall", tone: "muted", children: "输入局部窗口" }, void 0, false, {
+                  fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+                  lineNumber: 73,
+                  columnNumber: 15
+                }, this),
+                /* @__PURE__ */ jsxDEV(Matrix, { values: INPUT_SYMBOLS, label: "互相关的代数输入局部窗口，元素为 x11 到 x33" }, void 0, false, {
+                  fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+                  lineNumber: 74,
+                  columnNumber: 15
+                }, this)
+              ] }, void 0, true, {
+                fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+                lineNumber: 72,
+                columnNumber: 13
+              }, this),
+              /* @__PURE__ */ jsxDEV(Typography, { as: "span", variant: "h2", tone: "accent", className: "ck-correlation__multiply", "aria-hidden": "true", children: "×" }, void 0, false, {
+                fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+                lineNumber: 76,
+                columnNumber: 13
+              }, this),
+              /* @__PURE__ */ jsxDEV("div", { className: "ck-correlation__object", children: [
+                /* @__PURE__ */ jsxDEV(Typography, { variant: "bodySmall", tone: "muted", children: "原始卷积核" }, void 0, false, {
+                  fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+                  lineNumber: 78,
+                  columnNumber: 15
+                }, this),
+                /* @__PURE__ */ jsxDEV(Matrix, { values: KERNEL_SYMBOLS, label: "互相关直接使用的代数卷积核，元素为 k11 到 k33", warm: true }, void 0, false, {
+                  fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+                  lineNumber: 79,
+                  columnNumber: 15
+                }, this)
+              ] }, void 0, true, {
+                fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+                lineNumber: 77,
+                columnNumber: 13
+              }, this),
+              /* @__PURE__ */ jsxDEV(Typography, { as: "span", variant: "h2", tone: "accent", className: "ck-correlation__arrow", "aria-hidden": "true", children: "→" }, void 0, false, {
+                fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+                lineNumber: 81,
+                columnNumber: 13
+              }, this),
+              /* @__PURE__ */ jsxDEV("div", { className: "ck-correlation__output", "aria-label": "互相关输出 y i j", children: [
+                /* @__PURE__ */ jsxDEV(Typography, { variant: "bodySmall", tone: "muted", children: "输出" }, void 0, false, {
+                  fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+                  lineNumber: 83,
+                  columnNumber: 15
+                }, this),
+                /* @__PURE__ */ jsxDEV(MathFormulaStatic, { latex: "y(i,j)", "aria-label": "y i j" }, void 0, false, {
+                  fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+                  lineNumber: 84,
+                  columnNumber: 15
+                }, this)
+              ] }, void 0, true, {
+                fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+                lineNumber: 82,
+                columnNumber: 13
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+              lineNumber: 71,
+              columnNumber: 11
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+            lineNumber: 65,
+            columnNumber: 9
+          }, this),
+          /* @__PURE__ */ jsxDEV("section", { className: "ck-correlation__panel ck-correlation__panel--strict", "aria-labelledby": "convolution-title", children: [
+            /* @__PURE__ */ jsxDEV("header", { className: "ck-correlation__panel-head", children: [
+              /* @__PURE__ */ jsxDEV(Typography, { as: "h2", variant: "h3", tone: "accent", id: "convolution-title", children: [
+                "严格卷积 ",
+                /* @__PURE__ */ jsxDEV("span", { children: "(convolution)" }, void 0, false, {
+                  fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+                  lineNumber: 91,
+                  columnNumber: 88
+                }, this)
+              ] }, void 0, true, {
+                fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+                lineNumber: 91,
+                columnNumber: 13
+              }, this),
+              /* @__PURE__ */ jsxDEV(Typography, { variant: "bodySmall", tone: "muted", children: "先将卷积核旋转 180°，再逐元素相乘并求和。" }, void 0, false, {
+                fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+                lineNumber: 92,
+                columnNumber: 13
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+              lineNumber: 90,
+              columnNumber: 11
+            }, this),
+            /* @__PURE__ */ jsxDEV(CorrelationFormula, { strict: true }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+              lineNumber: 94,
+              columnNumber: 11
+            }, this),
+            /* @__PURE__ */ jsxDEV("div", { className: "ck-correlation__operation", children: [
+              /* @__PURE__ */ jsxDEV("div", { className: "ck-correlation__object", children: [
+                /* @__PURE__ */ jsxDEV(Typography, { variant: "bodySmall", tone: "muted", children: "输入局部窗口" }, void 0, false, {
+                  fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+                  lineNumber: 97,
+                  columnNumber: 15
+                }, this),
+                /* @__PURE__ */ jsxDEV(Matrix, { values: INPUT_SYMBOLS, label: "严格卷积的代数输入局部窗口，元素为 x11 到 x33" }, void 0, false, {
+                  fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+                  lineNumber: 98,
+                  columnNumber: 15
+                }, this)
+              ] }, void 0, true, {
+                fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+                lineNumber: 96,
+                columnNumber: 13
+              }, this),
+              /* @__PURE__ */ jsxDEV(Typography, { as: "span", variant: "h2", tone: "accent", className: "ck-correlation__multiply", "aria-hidden": "true", children: "×" }, void 0, false, {
+                fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+                lineNumber: 100,
+                columnNumber: 13
+              }, this),
+              /* @__PURE__ */ jsxDEV("div", { className: "ck-correlation__object", children: [
+                /* @__PURE__ */ jsxDEV(Typography, { variant: "bodySmall", tone: "muted", children: "旋转后的卷积核" }, void 0, false, {
+                  fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+                  lineNumber: 102,
+                  columnNumber: 15
+                }, this),
+                /* @__PURE__ */ jsxDEV(Matrix, { values: ROTATED_KERNEL_SYMBOLS, label: "严格卷积的旋转代数卷积核，元素次序由 k33 到 k11", warm: true, rotated: true }, void 0, false, {
+                  fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+                  lineNumber: 103,
+                  columnNumber: 15
+                }, this)
+              ] }, void 0, true, {
+                fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+                lineNumber: 101,
+                columnNumber: 13
+              }, this),
+              /* @__PURE__ */ jsxDEV(Typography, { as: "span", variant: "h2", tone: "accent", className: "ck-correlation__arrow", "aria-hidden": "true", children: "→" }, void 0, false, {
+                fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+                lineNumber: 105,
+                columnNumber: 13
+              }, this),
+              /* @__PURE__ */ jsxDEV("div", { className: "ck-correlation__output", "aria-label": "严格卷积输出 y i j", children: [
+                /* @__PURE__ */ jsxDEV(Typography, { variant: "bodySmall", tone: "muted", children: "输出" }, void 0, false, {
+                  fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+                  lineNumber: 107,
+                  columnNumber: 15
+                }, this),
+                /* @__PURE__ */ jsxDEV(MathFormulaStatic, { latex: "y(i,j)", "aria-label": "y i j" }, void 0, false, {
+                  fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+                  lineNumber: 108,
+                  columnNumber: 15
+                }, this)
+              ] }, void 0, true, {
+                fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+                lineNumber: 106,
+                columnNumber: 13
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+              lineNumber: 95,
+              columnNumber: 11
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+            lineNumber: 89,
+            columnNumber: 9
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+          lineNumber: 64,
+          columnNumber: 7
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { className: "ck-correlation__conclusion", children: [
+          /* @__PURE__ */ jsxDEV(Typography, { as: "span", variant: "h3", tone: "accent", children: "结论：" }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+            lineNumber: 115,
+            columnNumber: 9
+          }, this),
+          /* @__PURE__ */ jsxDEV(Typography, { variant: "body", children: "严格卷积先旋转核 180°；深度学习中的“卷积”通常指互相关。" }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+            lineNumber: 116,
+            columnNumber: 9
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+          lineNumber: 114,
+          columnNumber: 7
+        }, this)
+      ]
+    },
+    void 0,
+    true,
+    {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx",
+      lineNumber: 58,
+      columnNumber: 5
+    },
+    this
+  );
+}
+_c5 = CorrelationConvolutionPage;
+var _c, _c2, _c3, _c4, _c5;
+$RefreshReg$(_c, "ROTATED_KERNEL_SYMBOLS$KERNEL_SYMBOLS.slice().reverse().map");
+$RefreshReg$(_c2, "ROTATED_KERNEL_SYMBOLS");
+$RefreshReg$(_c3, "Matrix");
+$RefreshReg$(_c4, "CorrelationFormula");
+$RefreshReg$(_c5, "CorrelationConvolutionPage");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/CorrelationConvolutionPage/CorrelationConvolutionPage.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,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LGdCQUNqRDtBQUFBLHVDQUFDLGNBQVcsU0FBUSxhQUFZLE1BQUssU0FBUSxrQkFBN0M7QUFBQTtBQUFBO0FBQUE7QUFBQSx1QkFBK0M7QUFBQSxnQkFDL0MsdUJBQUMscUJBQWtCLE9BQU0sVUFBUyxjQUFXLFdBQTdDO0FBQUE7QUFBQTtBQUFBO0FBQUEsdUJBQW9EO0FBQUEsbUJBRnREO0FBQUE7QUFBQTtBQUFBO0FBQUEscUJBR0E7QUFBQSxpQkFkRjtBQUFBO0FBQUE7QUFBQTtBQUFBLG1CQWVBO0FBQUEsZUFyQkY7QUFBQTtBQUFBO0FBQUE7QUFBQSxpQkFzQkE7QUFBQSxhQS9DRjtBQUFBO0FBQUE7QUFBQTtBQUFBLGVBZ0RBO0FBQUEsUUFFQSx1QkFBQyxTQUFJLFdBQVUsOEJBQ2I7QUFBQSxpQ0FBQyxjQUFXLElBQUcsUUFBTyxTQUFRLE1BQUssTUFBSyxVQUFTLG1CQUFqRDtBQUFBO0FBQUE7QUFBQTtBQUFBLGlCQUFvRDtBQUFBLFVBQ3BELHVCQUFDLGNBQVcsU0FBUSxRQUFPLCtDQUEzQjtBQUFBO0FBQUE7QUFBQTtBQUFBLGlCQUEwRDtBQUFBLGFBRjVEO0FBQUE7QUFBQTtBQUFBO0FBQUEsZUFHQTtBQUFBO0FBQUE7QUFBQSxJQTNERjtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUEsRUE0REE7QUFFSjtBQUFDNEIsTUFoRWVGO0FBQTBCLElBQUF0QixJQUFBQyxLQUFBZSxLQUFBSyxLQUFBRztBQUFBLGFBQUF4QixJQUFBO0FBQUEsYUFBQUMsS0FBQTtBQUFBLGFBQUFlLEtBQUE7QUFBQSxhQUFBSyxLQUFBO0FBQUEsYUFBQUcsS0FBQSIsIm5hbWVzIjpbIkNvbnRlbnRCbG9jayIsIk1hdGhGb3JtdWxhQmxvY2siLCJNYXRoRm9ybXVsYVN0YXRpYyIsIk1hdGhGb3JtdWxhVGVybSIsIlR5cG9ncmFwaHkiLCJJTlBVVF9TWU1CT0xTIiwiQXJyYXkiLCJmcm9tIiwibGVuZ3RoIiwiXyIsInJvdyIsImNvbCIsIktFUk5FTF9TWU1CT0xTIiwiUk9UQVRFRF9LRVJORUxfU1lNQk9MUyIsInNsaWNlIiwicmV2ZXJzZSIsIm1hcCIsIl9jIiwiX2MyIiwiS0VSTkVMX0NFTExfQ09MT1JTIiwiTWF0cml4IiwidmFsdWVzIiwibGFiZWwiLCJ3YXJtIiwicm90YXRlZCIsImdyaWRUZW1wbGF0ZUNvbHVtbnMiLCJmbGF0TWFwIiwicm93SW5kZXgiLCJ2YWx1ZSIsImNvbEluZGV4IiwiYmFja2dyb3VuZENvbG9yIiwidW5kZWZpbmVkIiwicmVwbGFjZSIsIl9jMyIsIkNvcnJlbGF0aW9uRm9ybXVsYSIsInN0cmljdCIsIlN0cmluZyIsInJhdyIsIl9jNCIsIkNvcnJlbGF0aW9uQ29udm9sdXRpb25QYWdlIiwib25Db21wbGV0ZSIsIl9jNSJdLCJpZ25vcmVMaXN0IjpbXSwic291cmNlcyI6WyJDb3JyZWxhdGlvbkNvbnZvbHV0aW9uUGFnZS50c3giXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgQ29udGVudEJsb2NrLCBNYXRoRm9ybXVsYUJsb2NrLCBNYXRoRm9ybXVsYVN0YXRpYywgTWF0aEZvcm11bGFUZXJtLCBUeXBvZ3JhcGh5IH0gZnJvbSAnLi4vLi4vLi4vc2hhcmVkL3JlYWN0JztcbmltcG9ydCAnLi9Db3JyZWxhdGlvbkNvbnZvbHV0aW9uUGFnZS5jc3MnO1xuXG5jb25zdCBJTlBVVF9TWU1CT0xTID0gQXJyYXkuZnJvbSh7IGxlbmd0aDogMyB9LCAoXywgcm93KSA9PiBBcnJheS5mcm9tKHsgbGVuZ3RoOiAzIH0sIChfLCBjb2wpID0+IGB4X3ske3JvdyArIDF9JHtjb2wgKyAxfX1gKSk7XG5jb25zdCBLRVJORUxfU1lNQk9MUyA9IEFycmF5LmZyb20oeyBsZW5ndGg6IDMgfSwgKF8sIHJvdykgPT4gQXJyYXkuZnJvbSh7IGxlbmd0aDogMyB9LCAoXywgY29sKSA9PiBga197JHtyb3cgKyAxfSR7Y29sICsgMX19YCkpO1xuY29uc3QgUk9UQVRFRF9LRVJORUxfU1lNQk9MUyA9IEtFUk5FTF9TWU1CT0xTLnNsaWNlKCkucmV2ZXJzZSgpLm1hcCgocm93KSA9PiByb3cuc2xpY2UoKS5yZXZlcnNlKCkpO1xuY29uc3QgS0VSTkVMX0NFTExfQ09MT1JTID0gWycjZGNlY2ZmJywgJyNjZWUyZmMnLCAnI2JhZDdmYScsICcjZmZmMGRmJywgJyNmZmUzY2EnLCAnI2ZiZDViNScsICcjZTFmNWU4JywgJyNjY2ViZGMnLCAnI2I1ZTJjYyddO1xuXG5mdW5jdGlvbiBNYXRyaXgoeyB2YWx1ZXMsIGxhYmVsLCB3YXJtID0gZmFsc2UsIHJvdGF0ZWQgPSBmYWxzZSB9OiB7IHZhbHVlczogc3RyaW5nW11bXTsgbGFiZWw6IHN0cmluZzsgd2FybT86IGJvb2xlYW47IHJvdGF0ZWQ/OiBib29sZWFuIH0pIHtcbiAgcmV0dXJuIChcbiAgICA8ZGl2IGNsYXNzTmFtZT17YGNrLWNvcnJlbGF0aW9uX19tYXRyaXggJHt3YXJtID8gJ2lzLXdhcm0nIDogJyd9YH0gcm9sZT1cImltZ1wiIGFyaWEtbGFiZWw9e2xhYmVsfSBzdHlsZT17eyBncmlkVGVtcGxhdGVDb2x1bW5zOiBgcmVwZWF0KCR7dmFsdWVzWzBdLmxlbmd0aH0sIG1pbm1heCgwLCAxZnIpKWAgfX0+XG4gICAgICB7dmFsdWVzLmZsYXRNYXAoKHJvdywgcm93SW5kZXgpID0+IHJvdy5tYXAoKHZhbHVlLCBjb2xJbmRleCkgPT4gKFxuICAgICAgICA8ZGl2IGtleT17YCR7cm93SW5kZXh9LSR7Y29sSW5kZXh9YH0gY2xhc3NOYW1lPVwiY2stY29ycmVsYXRpb25fX21hdHJpeC1jZWxsXCIgc3R5bGU9e3dhcm0gPyB7IGJhY2tncm91bmRDb2xvcjogS0VSTkVMX0NFTExfQ09MT1JTW3JvdGF0ZWQgPyA4IC0gKHJvd0luZGV4ICogMyArIGNvbEluZGV4KSA6IHJvd0luZGV4ICogMyArIGNvbEluZGV4XSB9IDogdW5kZWZpbmVkfT5cbiAgICAgICAgICA8TWF0aEZvcm11bGFTdGF0aWMgbGF0ZXg9e3ZhbHVlfSBhcmlhLWxhYmVsPXt2YWx1ZS5yZXBsYWNlKC9be31dL2csICcnKX0gLz5cbiAgICAgICAgPC9kaXY+XG4gICAgICApKSl9XG4gICAgPC9kaXY+XG4gICk7XG59XG5cbmZ1bmN0aW9uIENvcnJlbGF0aW9uRm9ybXVsYSh7IHN0cmljdCB9OiB7IHN0cmljdDogYm9vbGVhbiB9KSB7XG4gIHJldHVybiAoXG4gICAgPE1hdGhGb3JtdWxhQmxvY2sgYXJpYUxhYmVsPXtzdHJpY3QgPyAn5Lil5qC85Y2356ev5YWs5byPJyA6ICfkupLnm7jlhbPlhazlvI8nfSBjbGFzc05hbWU9XCJjay1jb3JyZWxhdGlvbl9fZm9ybXVsYVwiPlxuICAgICAgPE1hdGhGb3JtdWxhVGVybSBsYXRleD1cInkoaSxqKT1cIiB0b29sdGlwPVwi5L2N572uIChpLGopIOeahOi+k+WHuuWTjeW6lOOAglwiIC8+XG4gICAgICA8TWF0aEZvcm11bGFUZXJtIGxhdGV4PXtTdHJpbmcucmF3YFxcc3VtX3t1PTB9XnttLTF9YH0gdG9vbHRpcD1cIuayv+WNt+enr+aguOeahCBtIOihjOaxguWSjO+8m3Ug5piv6KGM57Si5byV44CCXCIgLz5cbiAgICAgIDxNYXRoRm9ybXVsYVRlcm0gbGF0ZXg9e1N0cmluZy5yYXdgXFxzdW1fe3Y9MH1ee24tMX1gfSB0b29sdGlwPVwi5rK/5Y2356ev5qC455qEIG4g5YiX5rGC5ZKM77ybdiDmmK/liJfntKLlvJXjgIJcIiAvPlxuICAgICAgPE1hdGhGb3JtdWxhVGVybSBsYXRleD1cIlgoaSt1LGordilcIiB0b29sdGlwPVwi6L6T5YWl5Zu+5YOP5Zyo5b2T5YmN56qX5Y+j5YaFICh1LHYpIOS9jee9rueahOWDj+e0oOOAglwiIC8+XG4gICAgICA8TWF0aEZvcm11bGFUZXJtIGxhdGV4PXtzdHJpY3QgPyBTdHJpbmcucmF3YFxcd2lkZXRpbGRle0t9KHUsdilgIDogJ0sodSx2KSd9IHRvb2x0aXA9e3N0cmljdCA/ICfml4vovawgMTgwwrAg5ZCO55qE5Y2356ev5qC45ZyoICh1LHYpIOWkhOeahOadg+mHjeOAgicgOiAn5Y6f5aeL5Y2356ev5qC45ZyoICh1LHYpIOWkhOeahOadg+mHjeOAgid9IC8+XG4gICAgPC9NYXRoRm9ybXVsYUJsb2NrPlxuICApO1xufVxuXG5leHBvcnQgaW50ZXJmYWNlIENvcnJlbGF0aW9uQ29udm9sdXRpb25QYWdlUHJvcHMge1xuICBvbkNvbXBsZXRlOiAoKSA9PiB2b2lkO1xufVxuXG5leHBvcnQgZnVuY3Rpb24gQ29ycmVsYXRpb25Db252b2x1dGlvblBhZ2UoeyBvbkNvbXBsZXRlIH06IENvcnJlbGF0aW9uQ29udm9sdXRpb25QYWdlUHJvcHMpIHtcbiAgcmV0dXJuIChcbiAgICA8Q29udGVudEJsb2NrXG4gICAgICBoZWFkaW5nTGV2ZWw9ezF9XG4gICAgICBjbGFzc05hbWU9XCJjay1jb3JyZWxhdGlvblwiXG4gICAgICB0aXRsZT1cIuS6kuebuOWFs+S4juWNt+enr1wiXG4gICAgICBzdWJ0aXRsZT1cIuS4peagvOWNt+enr+mcgOimgeWFiOWwhuaguOaXi+i9rCAxODDCsO+8m+a3seW6puWtpuS5oOS4reeahOKAnOWNt+enr+KAnemAmuW4uOWunumZhemHh+eUqOS6kuebuOWFs+OAglwiXG4gICAgPlxuICAgICAgPGRpdiBjbGFzc05hbWU9XCJjay1jb3JyZWxhdGlvbl9fY29tcGFyaXNvblwiPlxuICAgICAgICA8c2VjdGlvbiBjbGFzc05hbWU9XCJjay1jb3JyZWxhdGlvbl9fcGFuZWxcIiBhcmlhLWxhYmVsbGVkYnk9XCJjcm9zcy1jb3JyZWxhdGlvbi10aXRsZVwiPlxuICAgICAgICAgIDxoZWFkZXIgY2xhc3NOYW1lPVwiY2stY29ycmVsYXRpb25fX3BhbmVsLWhlYWRcIj5cbiAgICAgICAgICAgIDxUeXBvZ3JhcGh5IGFzPVwiaDJcIiB2YXJpYW50PVwiaDNcIiB0b25lPVwiYWNjZW50XCIgaWQ9XCJjcm9zcy1jb3JyZWxhdGlvbi10aXRsZVwiPuS6kuebuOWFsyA8c3Bhbj4oY3Jvc3MtY29ycmVsYXRpb24pPC9zcGFuPjwvVHlwb2dyYXBoeT5cbiAgICAgICAgICAgIDxUeXBvZ3JhcGh5IHZhcmlhbnQ9XCJib2R5U21hbGxcIiB0b25lPVwibXV0ZWRcIj7nm7TmjqXkvb/nlKjljbfnp6/moLggPHN0cm9uZz5LPC9zdHJvbmc+77yM5LiN5YGa5peL6L2s44CCPC9UeXBvZ3JhcGh5PlxuICAgICAgICAgIDwvaGVhZGVyPlxuICAgICAgICAgIDxDb3JyZWxhdGlvbkZvcm11bGEgc3RyaWN0PXtmYWxzZX0gLz5cbiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImNrLWNvcnJlbGF0aW9uX19vcGVyYXRpb25cIj5cbiAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiY2stY29ycmVsYXRpb25fX29iamVjdFwiPlxuICAgICAgICAgICAgICA8VHlwb2dyYXBoeSB2YXJpYW50PVwiYm9keVNtYWxsXCIgdG9uZT1cIm11dGVkXCI+6L6T5YWl5bGA6YOo56qX5Y+jPC9UeXBvZ3JhcGh5PlxuICAgICAgICAgICAgICA8TWF0cml4IHZhbHVlcz17SU5QVVRfU1lNQk9MU30gbGFiZWw9XCLkupLnm7jlhbPnmoTku6PmlbDovpPlhaXlsYDpg6jnqpflj6PvvIzlhYPntKDkuLogeDExIOWIsCB4MzNcIiAvPlxuICAgICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgICA8VHlwb2dyYXBoeSBhcz1cInNwYW5cIiB2YXJpYW50PVwiaDJcIiB0b25lPVwiYWNjZW50XCIgY2xhc3NOYW1lPVwiY2stY29ycmVsYXRpb25fX211bHRpcGx5XCIgYXJpYS1oaWRkZW49XCJ0cnVlXCI+w5c8L1R5cG9ncmFwaHk+XG4gICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImNrLWNvcnJlbGF0aW9uX19vYmplY3RcIj5cbiAgICAgICAgICAgICAgPFR5cG9ncmFwaHkgdmFyaWFudD1cImJvZHlTbWFsbFwiIHRvbmU9XCJtdXRlZFwiPuWOn+Wni+WNt+enr+aguDwvVHlwb2dyYXBoeT5cbiAgICAgICAgICAgICAgPE1hdHJpeCB2YWx1ZXM9e0tFUk5FTF9TWU1CT0xTfSBsYWJlbD1cIuS6kuebuOWFs+ebtOaOpeS9v+eUqOeahOS7o+aVsOWNt+enr+aguO+8jOWFg+e0oOS4uiBrMTEg5YiwIGszM1wiIHdhcm0gLz5cbiAgICAgICAgICAgIDwvZGl2PlxuICAgICAgICAgICAgPFR5cG9ncmFwaHkgYXM9XCJzcGFuXCIgdmFyaWFudD1cImgyXCIgdG9uZT1cImFjY2VudFwiIGNsYXNzTmFtZT1cImNrLWNvcnJlbGF0aW9uX19hcnJvd1wiIGFyaWEtaGlkZGVuPVwidHJ1ZVwiPuKGkjwvVHlwb2dyYXBoeT5cbiAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiY2stY29ycmVsYXRpb25fX291dHB1dFwiIGFyaWEtbGFiZWw9XCLkupLnm7jlhbPovpPlh7ogeSBpIGpcIj5cbiAgICAgICAgICAgICAgPFR5cG9ncmFwaHkgdmFyaWFudD1cImJvZHlTbWFsbFwiIHRvbmU9XCJtdXRlZFwiPui+k+WHujwvVHlwb2dyYXBoeT5cbiAgICAgICAgICAgICAgPE1hdGhGb3JtdWxhU3RhdGljIGxhdGV4PVwieShpLGopXCIgYXJpYS1sYWJlbD1cInkgaSBqXCIgLz5cbiAgICAgICAgICAgIDwvZGl2PlxuICAgICAgICAgIDwvZGl2PlxuICAgICAgICA8L3NlY3Rpb24+XG5cbiAgICAgICAgPHNlY3Rpb24gY2xhc3NOYW1lPVwiY2stY29ycmVsYXRpb25fX3BhbmVsIGNrLWNvcnJlbGF0aW9uX19wYW5lbC0tc3RyaWN0XCIgYXJpYS1sYWJlbGxlZGJ5PVwiY29udm9sdXRpb24tdGl0bGVcIj5cbiAgICAgICAgICA8aGVhZGVyIGNsYXNzTmFtZT1cImNrLWNvcnJlbGF0aW9uX19wYW5lbC1oZWFkXCI+XG4gICAgICAgICAgICA8VHlwb2dyYXBoeSBhcz1cImgyXCIgdmFyaWFudD1cImgzXCIgdG9uZT1cImFjY2VudFwiIGlkPVwiY29udm9sdXRpb24tdGl0bGVcIj7kuKXmoLzljbfnp68gPHNwYW4+KGNvbnZvbHV0aW9uKTwvc3Bhbj48L1R5cG9ncmFwaHk+XG4gICAgICAgICAgICA8VHlwb2dyYXBoeSB2YXJpYW50PVwiYm9keVNtYWxsXCIgdG9uZT1cIm11dGVkXCI+5YWI5bCG5Y2356ev5qC45peL6L2sIDE4MMKw77yM5YaN6YCQ5YWD57Sg55u45LmY5bm25rGC5ZKM44CCPC9UeXBvZ3JhcGh5PlxuICAgICAgICAgIDwvaGVhZGVyPlxuICAgICAgICAgIDxDb3JyZWxhdGlvbkZvcm11bGEgc3RyaWN0IC8+XG4gICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJjay1jb3JyZWxhdGlvbl9fb3BlcmF0aW9uXCI+XG4gICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImNrLWNvcnJlbGF0aW9uX19vYmplY3RcIj5cbiAgICAgICAgICAgICAgPFR5cG9ncmFwaHkgdmFyaWFudD1cImJvZHlTbWFsbFwiIHRvbmU9XCJtdXRlZFwiPui+k+WFpeWxgOmDqOeql+WPozwvVHlwb2dyYXBoeT5cbiAgICAgICAgICAgICAgPE1hdHJpeCB2YWx1ZXM9e0lOUFVUX1NZTUJPTFN9IGxhYmVsPVwi5Lil5qC85Y2356ev55qE5Luj5pWw6L6T5YWl5bGA6YOo56qX5Y+j77yM5YWD57Sg5Li6IHgxMSDliLAgeDMzXCIgLz5cbiAgICAgICAgICAgIDwvZGl2PlxuICAgICAgICAgICAgPFR5cG9ncmFwaHkgYXM9XCJzcGFuXCIgdmFyaWFudD1cImgyXCIgdG9uZT1cImFjY2VudFwiIGNsYXNzTmFtZT1cImNrLWNvcnJlbGF0aW9uX19tdWx0aXBseVwiIGFyaWEtaGlkZGVuPVwidHJ1ZVwiPsOXPC9UeXBvZ3JhcGh5PlxuICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJjay1jb3JyZWxhdGlvbl9fb2JqZWN0XCI+XG4gICAgICAgICAgICAgIDxUeXBvZ3JhcGh5IHZhcmlhbnQ9XCJib2R5U21hbGxcIiB0b25lPVwibXV0ZWRcIj7ml4vovazlkI7nmoTljbfnp6/moLg8L1R5cG9ncmFwaHk+XG4gICAgICAgICAgICAgIDxNYXRyaXggdmFsdWVzPXtST1RBVEVEX0tFUk5FTF9TWU1CT0xTfSBsYWJlbD1cIuS4peagvOWNt+enr+eahOaXi+i9rOS7o+aVsOWNt+enr+aguO+8jOWFg+e0oOasoeW6j+eUsSBrMzMg5YiwIGsxMVwiIHdhcm0gcm90YXRlZCAvPlxuICAgICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgICA8VHlwb2dyYXBoeSBhcz1cInNwYW5cIiB2YXJpYW50PVwiaDJcIiB0b25lPVwiYWNjZW50XCIgY2xhc3NOYW1lPVwiY2stY29ycmVsYXRpb25fX2Fycm93XCIgYXJpYS1oaWRkZW49XCJ0cnVlXCI+4oaSPC9UeXBvZ3JhcGh5PlxuICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJjay1jb3JyZWxhdGlvbl9fb3V0cHV0XCIgYXJpYS1sYWJlbD1cIuS4peagvOWNt+enr+i+k+WHuiB5IGkgalwiPlxuICAgICAgICAgICAgICA8VHlwb2dyYXBoeSB2YXJpYW50PVwiYm9keVNtYWxsXCIgdG9uZT1cIm11dGVkXCI+6L6T5Ye6PC9UeXBvZ3JhcGh5PlxuICAgICAgICAgICAgICA8TWF0aEZvcm11bGFTdGF0aWMgbGF0ZXg9XCJ5KGksailcIiBhcmlhLWxhYmVsPVwieSBpIGpcIiAvPlxuICAgICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgPC9kaXY+XG4gICAgICAgIDwvc2VjdGlvbj5cbiAgICAgIDwvZGl2PlxuXG4gICAgICA8ZGl2IGNsYXNzTmFtZT1cImNrLWNvcnJlbGF0aW9uX19jb25jbHVzaW9uXCI+XG4gICAgICAgIDxUeXBvZ3JhcGh5IGFzPVwic3BhblwiIHZhcmlhbnQ9XCJoM1wiIHRvbmU9XCJhY2NlbnRcIj7nu5PorrrvvJo8L1R5cG9ncmFwaHk+XG4gICAgICAgIDxUeXBvZ3JhcGh5IHZhcmlhbnQ9XCJib2R5XCI+5Lil5qC85Y2356ev5YWI5peL6L2s5qC4IDE4MMKw77yb5rex5bqm5a2m5Lmg5Lit55qE4oCc5Y2356ev4oCd6YCa5bi45oyH5LqS55u45YWz44CCPC9UeXBvZ3JhcGh5PlxuICAgICAgPC9kaXY+XG4gICAgPC9Db250ZW50QmxvY2s+XG4gICk7XG59XG4iXSwiZmlsZSI6IkM6L1VzZXJzL09jZWFuL0RvY3VtZW50cy9HaXRIdWIvaW50dWl0aXZlLWRlZXAtbGVhcm5pbmcvbW9kdWxlcy9Db252b2x1dGlvbi1LZXJuZWwtSW50cm8vcGFnZXMvQ29ycmVsYXRpb25Db252b2x1dGlvblBhZ2UvQ29ycmVsYXRpb25Db252b2x1dGlvblBhZ2UudHN4In0=

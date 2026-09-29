@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<!--
+/*************************************************************************
+*
+* ADOBE CONFIDENTIAL
+* ___________________
+*
+*  Copyright 2020 Adobe Systems Incorporated
+*  All Rights Reserved.
+*
+* NOTICE:  All information contained herein is, and remains
+* the property of Adobe Systems Incorporated and its suppliers,
+* if any.  The intellectual and technical concepts contained
+* herein are proprietary to Adobe Systems Incorporated and its
+* suppliers and may be covered by U.S. and Foreign Patents,
+* patents in process, and are protected by trade secret or copyright law.
+* Dissemination of this information or reproduction of this material
+* is strictly forbidden unless prior written permission is obtained
+* from Adobe Systems Incorporated.
+**************************************************************************/
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../css/new-popup.css" type="text/css" rel="stylesheet"/>
+    <script type="module" src="popup.js"></script>
+</head>
+<body>
+    <!-- Default UI Context -->
+    <div id="default-container" class="context-container context-default">
+        <iframe id="cdn-iframe" loading="eager" class="iframe loader"></iframe>
+
+        <div id="offline-mode" class="offline-mode hidden">
+            <div class="offline-mode-header">
+                <div id="branding" class="header-pane">
+                    <div class="header-icon"></div>
+                    <div class="header-text" id="web2pdfTitle">Adobe Acrobat</div>
+                </div>
+                <div class="header-pane">
+                    <div class="settings">
+                        <input type="button" class="settings-icon" />
+                        <span id="web2pdfOptionsTitle"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="offline-mode-body">
+                <div class="offline-mode-icon"></div>
+                <h2 id="offlineModeTitle" class="offline-mode-title"></h2>
+                <div id="offlineModeMessage" class="offline-mode-message"></div>
+            </div>
+
+            <div id="footer" class="offline-mode-footer hidden">
+                <label class="toggle-container">
+                    <input id="toggle-input" type="checkbox" />
+                    <span class="slider"></span>
+                </label>
+                <label class="footer-text" id="pdfOwnershipExploreAcrobat" for="always-show"></label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Local File Coachmark Context -->
+    <div id="local-file-coachmark-container" class="context-container">
+        <div id="local-file-animated-fte"></div>
+        <h1 id="localFileAnimationCoachmarkHeader" class="local-file-animation-coachmark-header translate"></h1>
+        <p id="localFileAnimationCoachmarkDescription" class="local-file-animation-coachmark-desc translate"></p>
+    </div>
+    <!-- Local File Access and Summary Coachmark Context -->
+    <div id="local-file-access-and-summary-coachmark-container"
+        class="context-container">
+        <div id="local-file-access-and-summary-coachmark-container-content" class="local-file-access-and-summary-coachmark-container-content-second-time">
+            <video id="local-file-access-and-summary-coachmark-fte" autoplay loop muted playsinline>
+                <source id="local-file-access-and-summary-coachmark-fte-primary" type="video/mp4">
+                <source id="local-file-access-and-summary-coachmark-fte-fallback" type="video/mp4">
+            </video>
+            <div id="LocalFileAccessAndSummaryCoachmarkHeader" class="translate"></div>
+            <div id="local-file-access-and-summary-coachmark-card-content">
+                <div id="local-file-access-and-summary-coachmark-card-content-text">
+                    <div id="LocalFileAccessAndSummaryCoachmarkDescription" class="translate"></div>
+                    <div id="LocalFileAccessAndSummaryCoachmarkSubtext" class="translate"></div>
+                </div>
+            </div>
+            <div id="local-file-access-and-summary-coachmark-card-content-button-container">
+                <button id="local-file-access-and-summary-coachmark-card-content-button">
+                    <div class="local-file-access-and-summary-coachmark-card-content-button-icon"></div>
+                    <span id="LocalFileAccessAndSummaryCoachmarkButton" class="translate"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- Local File Summary Coachmark Context -->
+    <div id="local-file-summary-coachmark-container" class="context-container">
+        <video id="local-file-summary-coachmark-fte" autoplay loop muted playsinline>
+            <source id="local-file-summary-coachmark-fte-primary" type="video/mp4">
+            <source id="local-file-summary-coachmark-fte-fallback" type="video/mp4">
+        </video>
+        <div id="LocalFileSummaryCoachmarkHeader" class="translate"></div>
+    </div>
+
+    <!-- Direct Flow Complete Notification Context -->
+    <div id="direct-flow-complete-container" class="context-container">
+        <div class="direct-flow-notification">
+            <button id="direct-flow-notification-close-button" class="direct-flow-notification-close-button" aria-label="">
+                <img src="../images/cross_10_n.svg" alt="" width="8" height="8" />
+            </button>
+            <p id="directFlowNotificationTitle" class="direct-flow-notification-title translate"></p>
+            <div id="direct-flow-notification-items" class="direct-flow-notification-items"></div>
+        </div>
+    </div>
+</body>
+</html>

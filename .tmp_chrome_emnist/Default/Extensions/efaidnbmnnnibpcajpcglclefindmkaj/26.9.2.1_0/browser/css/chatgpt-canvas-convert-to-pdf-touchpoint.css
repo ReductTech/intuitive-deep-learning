@@ -1,0 +1,18 @@
+/*************************************************************************
+* ADOBE CONFIDENTIAL
+* ___________________
+*
+*  Copyright 2015 Adobe Systems Incorporated
+*  All Rights Reserved.
+*
+* NOTICE:  All information contained herein is, and remains
+* the property of Adobe Systems Incorporated and its suppliers,
+* if any.  The intellectual and technical concepts contained
+* herein are proprietary to Adobe Systems Incorporated and its
+* suppliers and are protected by all applicable intellectual property laws,
+* including trade secret and or copyright laws.
+* Dissemination of this information or reproduction of this material
+* is strictly forbidden unless prior written permission is obtained
+* from Adobe Systems Incorporated.
+**************************************************************************/
+.acrobat-chatgpt-canvas-edit-convert-btn-tooltip{align-items:flex-start;background:#6b6b6b;border-radius:5px;color:#fff;display:flex;flex-direction:column;font-family:AdobeClean-Regular;font-size:12px;font-style:normal;font-weight:400;line-height:16px;padding:3px 9px 5px;pointer-events:none;position:fixed;transform:translateX(-50%);white-space:nowrap;z-index:10000}.acrobat-chatgpt-canvas-edit-convert-btn-tooltip:before{border:5px solid transparent;border-bottom-color:#6b6b6b;bottom:100%;content:"";left:50%;margin-left:-5px;position:absolute}.acrobat-chatgpt-canvas-edit-convert-btn{align-items:center;background:transparent;border:none;border-radius:8px;cursor:pointer;display:flex;flex-shrink:0;height:36px;justify-content:center;outline:none;padding:0;width:36px}.acrobat-chatgpt-canvas-edit-convert-btn:hover{background-color:rgba(0,0,0,.1)}.acrobat-chatgpt-canvas-edit-convert-btn:focus-visible{background-color:rgba(0,0,0,.1);outline:2px solid #0060df;outline-offset:2px}html.dark .acrobat-chatgpt-canvas-edit-convert-btn:focus-visible,html.dark .acrobat-chatgpt-canvas-edit-convert-btn:hover{background-color:hsla(0,0%,100%,.1)}.acrobat-chatgpt-canvas-edit-convert-btn img{flex-shrink:0;height:18px;width:18px}

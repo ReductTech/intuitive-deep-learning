@@ -1,0 +1,380 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/modules/Neuron-Guide/pages/ReluNetworkPage/ReluNetworkPage.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=2be87a0d"; const Fragment = __vite__cjsImport0_react_jsxDevRuntime["Fragment"]; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ReluNetworkPage/ReluNetworkPage.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+var _s = $RefreshSig$();
+import __vite__cjsImport3_react from "/node_modules/.vite/deps/react.js?v=2be87a0d"; const useMemo = __vite__cjsImport3_react["useMemo"]; const useRef = __vite__cjsImport3_react["useRef"];
+import "/modules/Neuron-Guide/pages/ReluNetworkPage/ReluNetworkPage.css";
+import { Button, ContentBlock, NoticeStrip, Typography } from "/modules/shared/react/index.ts";
+import { ReluNetworkPlot, usePersistedActivity } from "/modules/Neuron-Guide/pages/ActivationCatalogPage/ActivationCatalogPage.tsx";
+import {
+  NetworkCanvas
+} from "/modules/Neuron-Guide/pages/NetworkCanvas/NetworkCanvas.tsx";
+import {
+  formatNumber,
+  formatSigned,
+  formatSubscript,
+  MAX_RELU_NEURON_COUNT,
+  MIN_RELU_NEURON_COUNT,
+  RELU_OUTPUT_BIAS
+} from "/modules/Neuron-Guide/pages/ActivationCatalogPage/ActivationCatalogPage.tsx";
+const STATE_KEY = "activity:neuron-guide-relu-network-v1";
+function createReluNeuron(index) {
+  const w = 0.72 + Math.random() * 0.58;
+  const spacing = 1.6 / MAX_RELU_NEURON_COUNT;
+  const center = -0.8 + spacing * (index + 0.5);
+  const kink = Math.max(-0.92, Math.min(0.92, center + (Math.random() - 0.5) * spacing * 0.72));
+  const magnitude = 0.38 + Math.random() * 0.58;
+  return {
+    w,
+    b: -w * kink,
+    v: Math.random() > 0.42 ? magnitude : -magnitude
+  };
+}
+function createReluNeurons() {
+  return Array.from({ length: MAX_RELU_NEURON_COUNT }, (_, index) => createReluNeuron(index));
+}
+function createInitialSnapshot() {
+  return { count: MIN_RELU_NEURON_COUNT, neurons: createReluNeurons(), completed: false };
+}
+function normalizeSnapshot(value) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return null;
+  const candidate = value;
+  const count = Number(candidate.count);
+  if (!Number.isFinite(count) || !Array.isArray(candidate.neurons)) return null;
+  const neurons = candidate.neurons.filter(
+    (neuron) => Boolean(neuron) && typeof neuron === "object" && Number.isFinite(Number(neuron.w)) && Number.isFinite(Number(neuron.b)) && Number.isFinite(Number(neuron.v))
+  );
+  if (neurons.length !== MAX_RELU_NEURON_COUNT) return null;
+  const normalizedCount = Math.max(
+    MIN_RELU_NEURON_COUNT,
+    Math.min(MAX_RELU_NEURON_COUNT, Math.trunc(count))
+  );
+  return {
+    count: normalizedCount,
+    neurons: neurons.map(({ w, b, v }) => ({ w: Number(w), b: Number(b), v: Number(v) })),
+    completed: Boolean(candidate.completed || normalizedCount >= MAX_RELU_NEURON_COUNT)
+  };
+}
+function buildCanvas(count, allNeurons) {
+  const neurons = allNeurons.slice(0, count);
+  const layers = [
+    {
+      title: "输入 (1)",
+      nodes: [{
+        label: "x",
+        tone: "input",
+        details: {
+          title: "输入 x",
+          body: "同一个输入 x 送给每个神经元；每个神经元用自己的权重 wᵢ 和偏置 bᵢ 处理它。"
+        }
+      }]
+    },
+    {
+      title: `ReLU 层 (${count})`,
+      nodes: neurons.map((neuron, index) => ({
+        label: `h${index + 1}`,
+        tone: "relu",
+        activation: "relu",
+        details: {
+          title: `h${index + 1} 的 ReLU 输出`,
+          content: /* @__PURE__ */ jsxDEV(Typography, { as: "code", variant: "body", tone: "inherit", wrap: "nowrap", children: [
+            `h${index + 1} = ReLU(w${formatSubscript(index + 1)}x + b${formatSubscript(index + 1)})`,
+            /* @__PURE__ */ jsxDEV("br", {}, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ReluNetworkPage/ReluNetworkPage.tsx",
+              lineNumber: 117,
+              columnNumber: 15
+            }, this),
+            `   = ReLU(${formatNumber(neuron.w)}x ${formatSigned(neuron.b)})`
+          ] }, void 0, true, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ReluNetworkPage/ReluNetworkPage.tsx",
+            lineNumber: 115,
+            columnNumber: 9
+          }, this),
+          body: `w${formatSubscript(index + 1)} 给输入 x 加权，b${formatSubscript(index + 1)} 决定折点位置。`
+        }
+      }))
+    },
+    {
+      title: "输出 (1)",
+      nodes: [{
+        label: "y",
+        tone: "output",
+        details: {
+          title: "最终输出 y",
+          content: /* @__PURE__ */ jsxDEV(Typography, { as: "code", variant: "body", tone: "inherit", wrap: "nowrap", children: [
+            "y = Σ vᵢhᵢ ",
+            formatSigned(RELU_OUTPUT_BIAS)
+          ] }, void 0, true, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ReluNetworkPage/ReluNetworkPage.tsx",
+            lineNumber: 133,
+            columnNumber: 9
+          }, this),
+          body: "hᵢ 是第 i 个 ReLU 神经元的输出，vᵢ 是它连到 y 的权重：把每个 hᵢ 按自己的 vᵢ 加权后相加，就得到 y。"
+        }
+      }]
+    }
+  ];
+  const connections = [];
+  neurons.forEach((neuron, index) => {
+    connections.push({ fromLayer: 0, fromIndex: 0, toLayer: 1, toIndex: index, weight: neuron.w });
+    connections.push({ fromLayer: 1, fromIndex: index, toLayer: 2, toIndex: 0, weight: neuron.v });
+  });
+  return { layers, connections };
+}
+export function ReluNetworkPage({ onComplete }) {
+  _s();
+  const rootRef = useRef(null);
+  const { state, hydrated, commit } = usePersistedActivity({
+    stateKey: STATE_KEY,
+    createInitial: createInitialSnapshot,
+    normalizeState: normalizeSnapshot,
+    getElement: () => rootRef.current
+  });
+  const count = state?.count ?? MIN_RELU_NEURON_COUNT;
+  const canvas = useMemo(() => buildCanvas(count, state?.neurons ?? []), [count, state?.neurons]);
+  const changeCount = (nextCount, operation) => {
+    if (!state) return;
+    const boundedCount = Math.max(MIN_RELU_NEURON_COUNT, Math.min(MAX_RELU_NEURON_COUNT, nextCount));
+    const completed = state.completed || boundedCount >= MAX_RELU_NEURON_COUNT;
+    const neurons = [...state.neurons];
+    if (operation === "add" && boundedCount > state.count) {
+      neurons[boundedCount - 1] = createReluNeuron(boundedCount - 1);
+    }
+    const next = { ...state, count: boundedCount, neurons, completed };
+    commit(`neuron_guide_relu_neuron_${operation}`, next, {
+      neuron_count: boundedCount,
+      operation
+    });
+    if (!state.completed && completed) onComplete();
+  };
+  const randomize = () => {
+    if (!state) return;
+    commit("neuron_guide_relu_parameters_randomize", {
+      ...state,
+      neurons: createReluNeurons()
+    }, { neuron_count: state.count });
+  };
+  return /* @__PURE__ */ jsxDEV(
+    ContentBlock,
+    {
+      ref: rootRef,
+      headingLevel: 1,
+      className: "ngtw-activation-network-lab ngtw-relu-network",
+      title: "组合多个带有 ReLU 的神经元，曲线继续弯折",
+      subtitle: "每个神经元有自己的 w 和 b，会在不同的 x 位置由抑制切换为激活；再加一个神经元，曲线就多一个折点。",
+      "data-telemetry-manual": true,
+      "aria-busy": !hydrated,
+      children: !state ? /* @__PURE__ */ jsxDEV(NoticeStrip, { tone: "blue", children: /* @__PURE__ */ jsxDEV(Typography, { variant: "body", tone: "inherit", children: "正在恢复神经元数量…" }, void 0, false, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ReluNetworkPage/ReluNetworkPage.tsx",
+        lineNumber: 200,
+        columnNumber: 32
+      }, this) }, void 0, false, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ReluNetworkPage/ReluNetworkPage.tsx",
+        lineNumber: 200,
+        columnNumber: 7
+      }, this) : /* @__PURE__ */ jsxDEV(Fragment, { children: [
+        /* @__PURE__ */ jsxDEV("div", { className: "ngtw-relu-toolbar flex min-w-0 max-w-full items-center justify-between gap-[12px] min-h-[56px] p-[4px_8px_4px_12px]", children: [
+          /* @__PURE__ */ jsxDEV("div", { className: "ngtw-relu-toolbar__context flex min-w-0 max-w-full items-center gap-[6px]", children: [
+            /* @__PURE__ */ jsxDEV(Typography, { as: "span", variant: "body", tone: "muted", children: "当前结构：" }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ReluNetworkPage/ReluNetworkPage.tsx",
+              lineNumber: 205,
+              columnNumber: 15
+            }, this),
+            /* @__PURE__ */ jsxDEV(Typography, { as: "strong", variant: "body", tone: "accent", children: [
+              count,
+              " 个 ReLU 神经元"
+            ] }, void 0, true, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ReluNetworkPage/ReluNetworkPage.tsx",
+              lineNumber: 206,
+              columnNumber: 15
+            }, this),
+            /* @__PURE__ */ jsxDEV(Typography, { as: "span", variant: "body", tone: "muted", children: "汇合为" }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ReluNetworkPage/ReluNetworkPage.tsx",
+              lineNumber: 207,
+              columnNumber: 15
+            }, this),
+            /* @__PURE__ */ jsxDEV(Typography, { as: "strong", variant: "body", tone: "success", children: "1 个输出" }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ReluNetworkPage/ReluNetworkPage.tsx",
+              lineNumber: 208,
+              columnNumber: 15
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ReluNetworkPage/ReluNetworkPage.tsx",
+            lineNumber: 204,
+            columnNumber: 13
+          }, this),
+          /* @__PURE__ */ jsxDEV("div", { className: "ngtw-activation-actions flex flex-wrap gap-[8px]", "aria-label": "调整网络结构", children: [
+            /* @__PURE__ */ jsxDEV(Button, { variant: "primary", disabled: !hydrated || count >= MAX_RELU_NEURON_COUNT, onClick: () => changeCount(count + 1, "add"), children: "添加神经元" }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ReluNetworkPage/ReluNetworkPage.tsx",
+              lineNumber: 211,
+              columnNumber: 15
+            }, this),
+            /* @__PURE__ */ jsxDEV(Button, { disabled: !hydrated || count <= MIN_RELU_NEURON_COUNT, onClick: () => changeCount(count - 1, "remove"), children: "删除神经元" }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ReluNetworkPage/ReluNetworkPage.tsx",
+              lineNumber: 214,
+              columnNumber: 15
+            }, this),
+            /* @__PURE__ */ jsxDEV(Button, { disabled: !hydrated, onClick: randomize, children: "随机参数" }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ReluNetworkPage/ReluNetworkPage.tsx",
+              lineNumber: 217,
+              columnNumber: 15
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ReluNetworkPage/ReluNetworkPage.tsx",
+            lineNumber: 210,
+            columnNumber: 13
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ReluNetworkPage/ReluNetworkPage.tsx",
+          lineNumber: 203,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { className: "ngtw-activation-network-stage grid grid-cols-[minmax(0,_.95fr)_minmax(0,_1.05fr)] items-stretch gap-[14px]", children: [
+          /* @__PURE__ */ jsxDEV("section", { className: "ngtw-activation-network-panel relative flex min-w-0 min-h-[560px] flex-col bg-[#fff] p-[14px] ngtw-relu-panel ngtw-relu-panel--network", "aria-label": "网络结构", children: [
+            /* @__PURE__ */ jsxDEV("header", { className: "ngtw-activation-panel-head flex items-baseline justify-between gap-[12px] mb-[10px]", children: [
+              /* @__PURE__ */ jsxDEV(Typography, { as: "h3", variant: "subtitle", tone: "main", children: "把多个 ReLU 神经元组合起来" }, void 0, false, {
+                fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ReluNetworkPage/ReluNetworkPage.tsx",
+                lineNumber: 224,
+                columnNumber: 17
+              }, this),
+              /* @__PURE__ */ jsxDEV(Typography, { as: "span", variant: "bodySmall", tone: "muted", children: "hᵢ = ReLU(wᵢx + bᵢ)" }, void 0, false, {
+                fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ReluNetworkPage/ReluNetworkPage.tsx",
+                lineNumber: 225,
+                columnNumber: 17
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ReluNetworkPage/ReluNetworkPage.tsx",
+              lineNumber: 223,
+              columnNumber: 15
+            }, this),
+            /* @__PURE__ */ jsxDEV("div", { className: "ngtw-activation-visual-box relative min-h-[430px] overflow-hidden ngtw-activation-visual-box--model", children: /* @__PURE__ */ jsxDEV(
+              NetworkCanvas,
+              {
+                layers: canvas.layers,
+                connections: canvas.connections,
+                ariaLabel: "多个 ReLU 神经元组合形成分段线性输出",
+                caption: "圆点表示计算，悬停节点看 wᵢ、bᵢ、vᵢ",
+                height: 410,
+                fontScale: 1.15
+              },
+              void 0,
+              false,
+              {
+                fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ReluNetworkPage/ReluNetworkPage.tsx",
+                lineNumber: 228,
+                columnNumber: 17
+              },
+              this
+            ) }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ReluNetworkPage/ReluNetworkPage.tsx",
+              lineNumber: 227,
+              columnNumber: 15
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ReluNetworkPage/ReluNetworkPage.tsx",
+            lineNumber: 222,
+            columnNumber: 13
+          }, this),
+          /* @__PURE__ */ jsxDEV("section", { className: "ngtw-activation-network-panel relative flex min-w-0 min-h-[560px] flex-col bg-[#fff] p-[14px] ngtw-relu-panel ngtw-relu-panel--plot", "aria-label": "输出曲线", children: [
+            /* @__PURE__ */ jsxDEV("header", { className: "ngtw-activation-panel-head flex items-baseline justify-between gap-[12px] mb-[10px]", children: [
+              /* @__PURE__ */ jsxDEV(Typography, { as: "h3", variant: "subtitle", tone: "main", children: "从一个折点到多个折点" }, void 0, false, {
+                fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ReluNetworkPage/ReluNetworkPage.tsx",
+                lineNumber: 241,
+                columnNumber: 17
+              }, this),
+              /* @__PURE__ */ jsxDEV(Typography, { as: "span", variant: "bodySmall", tone: "muted", children: "虚线对应每个神经元的响应起点" }, void 0, false, {
+                fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ReluNetworkPage/ReluNetworkPage.tsx",
+                lineNumber: 242,
+                columnNumber: 17
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ReluNetworkPage/ReluNetworkPage.tsx",
+              lineNumber: 240,
+              columnNumber: 15
+            }, this),
+            /* @__PURE__ */ jsxDEV("div", { className: "ngtw-activation-visual-box relative min-h-[430px] overflow-hidden", children: /* @__PURE__ */ jsxDEV(ReluNetworkPlot, { count, neurons: state.neurons }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ReluNetworkPage/ReluNetworkPage.tsx",
+              lineNumber: 245,
+              columnNumber: 17
+            }, this) }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ReluNetworkPage/ReluNetworkPage.tsx",
+              lineNumber: 244,
+              columnNumber: 15
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ReluNetworkPage/ReluNetworkPage.tsx",
+            lineNumber: 239,
+            columnNumber: 13
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ReluNetworkPage/ReluNetworkPage.tsx",
+          lineNumber: 221,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { className: "ngtw-relu-conclusion flex min-w-0 max-w-full items-center gap-[12px] p-[10px_14px]", children: [
+          /* @__PURE__ */ jsxDEV(Typography, { as: "strong", variant: "subtitle", tone: "success", children: "结论" }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ReluNetworkPage/ReluNetworkPage.tsx",
+            lineNumber: 251,
+            columnNumber: 13
+          }, this),
+          /* @__PURE__ */ jsxDEV(Typography, { variant: "body", tone: "main", children: "每个 ReLU 神经元贡献一个折点，折点越多，输出越接近任意曲线。" }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ReluNetworkPage/ReluNetworkPage.tsx",
+            lineNumber: 252,
+            columnNumber: 13
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ReluNetworkPage/ReluNetworkPage.tsx",
+          lineNumber: 250,
+          columnNumber: 11
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ReluNetworkPage/ReluNetworkPage.tsx",
+        lineNumber: 202,
+        columnNumber: 7
+      }, this)
+    },
+    void 0,
+    false,
+    {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ReluNetworkPage/ReluNetworkPage.tsx",
+      lineNumber: 190,
+      columnNumber: 5
+    },
+    this
+  );
+}
+_s(ReluNetworkPage, "1H7L7/fvm4KXxN9cTuh/BJ8SPwc=", false, function() {
+  return [usePersistedActivity];
+});
+_c = ReluNetworkPage;
+var _c;
+$RefreshReg$(_c, "ReluNetworkPage");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ReluNetworkPage/ReluNetworkPage.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ReluNetworkPage/ReluNetworkPage.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,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VSxxRUFDYixpQ0FBQyxtQkFBZ0IsT0FBYyxTQUFTWSxNQUFNdEMsV0FBOUM7QUFBQTtBQUFBO0FBQUE7QUFBQSxtQkFBc0QsS0FEeEQ7QUFBQTtBQUFBO0FBQUE7QUFBQSxtQkFFQTtBQUFBLGVBUEY7QUFBQTtBQUFBO0FBQUE7QUFBQSxpQkFRQTtBQUFBLGFBMUJGO0FBQUE7QUFBQTtBQUFBO0FBQUEsZUEyQkE7QUFBQSxRQUVBLHVCQUFDLFNBQUksV0FBVSxzRkFDYjtBQUFBLGlDQUFDLGNBQVcsSUFBRyxVQUFTLFNBQVEsWUFBVyxNQUFLLFdBQVUsa0JBQTFEO0FBQUE7QUFBQTtBQUFBO0FBQUEsaUJBQTREO0FBQUEsVUFDNUQsdUJBQUMsY0FBVyxTQUFRLFFBQU8sTUFBSyxRQUFPLGlEQUF2QztBQUFBO0FBQUE7QUFBQTtBQUFBLGlCQUF3RTtBQUFBLGFBRjFFO0FBQUE7QUFBQTtBQUFBO0FBQUEsZUFHQTtBQUFBLFdBbkRGO0FBQUE7QUFBQTtBQUFBO0FBQUEsYUFvREE7QUFBQTtBQUFBLElBaEVKO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQSxFQWtFQTtBQUVKO0FBQUNvQyxHQXhHZUYsaUJBQWU7QUFBQSxVQUVPL0Qsb0JBQW9CO0FBQUE7QUFBQSxLQUYxQytEO0FBQWUsSUFBQW9CO0FBQUEsYUFBQUEsSUFBQSIsIm5hbWVzIjpbInVzZU1lbW8iLCJ1c2VSZWYiLCJCdXR0b24iLCJDb250ZW50QmxvY2siLCJOb3RpY2VTdHJpcCIsIlR5cG9ncmFwaHkiLCJSZWx1TmV0d29ya1Bsb3QiLCJ1c2VQZXJzaXN0ZWRBY3Rpdml0eSIsIk5ldHdvcmtDYW52YXMiLCJmb3JtYXROdW1iZXIiLCJmb3JtYXRTaWduZWQiLCJmb3JtYXRTdWJzY3JpcHQiLCJNQVhfUkVMVV9ORVVST05fQ09VTlQiLCJNSU5fUkVMVV9ORVVST05fQ09VTlQiLCJSRUxVX09VVFBVVF9CSUFTIiwiU1RBVEVfS0VZIiwiY3JlYXRlUmVsdU5ldXJvbiIsImluZGV4IiwidyIsIk1hdGgiLCJyYW5kb20iLCJzcGFjaW5nIiwiY2VudGVyIiwia2luayIsIm1heCIsIm1pbiIsIm1hZ25pdHVkZSIsImIiLCJ2IiwiY3JlYXRlUmVsdU5ldXJvbnMiLCJBcnJheSIsImZyb20iLCJsZW5ndGgiLCJfIiwiY3JlYXRlSW5pdGlhbFNuYXBzaG90IiwiY291bnQiLCJuZXVyb25zIiwiY29tcGxldGVkIiwibm9ybWFsaXplU25hcHNob3QiLCJ2YWx1ZSIsImlzQXJyYXkiLCJjYW5kaWRhdGUiLCJOdW1iZXIiLCJpc0Zpbml0ZSIsImZpbHRlciIsIm5ldXJvbiIsIkJvb2xlYW4iLCJub3JtYWxpemVkQ291bnQiLCJ0cnVuYyIsIm1hcCIsImJ1aWxkQ2FudmFzIiwiYWxsTmV1cm9ucyIsInNsaWNlIiwibGF5ZXJzIiwidGl0bGUiLCJub2RlcyIsImxhYmVsIiwidG9uZSIsImRldGFpbHMiLCJib2R5IiwiYWN0aXZhdGlvbiIsImNvbnRlbnQiLCJjb25uZWN0aW9ucyIsImZvckVhY2giLCJwdXNoIiwiZnJvbUxheWVyIiwiZnJvbUluZGV4IiwidG9MYXllciIsInRvSW5kZXgiLCJ3ZWlnaHQiLCJSZWx1TmV0d29ya1BhZ2UiLCJvbkNvbXBsZXRlIiwiX3MiLCJyb290UmVmIiwic3RhdGUiLCJoeWRyYXRlZCIsImNvbW1pdCIsInN0YXRlS2V5IiwiY3JlYXRlSW5pdGlhbCIsIm5vcm1hbGl6ZVN0YXRlIiwiZ2V0RWxlbWVudCIsImN1cnJlbnQiLCJjYW52YXMiLCJjaGFuZ2VDb3VudCIsIm5leHRDb3VudCIsIm9wZXJhdGlvbiIsImJvdW5kZWRDb3VudCIsIm5leHQiLCJuZXVyb25fY291bnQiLCJyYW5kb21pemUiLCJfYyJdLCJpZ25vcmVMaXN0IjpbXSwic291cmNlcyI6WyJSZWx1TmV0d29ya1BhZ2UudHN4Il0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IHVzZU1lbW8sIHVzZVJlZiB9IGZyb20gJ3JlYWN0JztcbmltcG9ydCBcIi4vUmVsdU5ldHdvcmtQYWdlLmNzc1wiO1xuaW1wb3J0IHsgQnV0dG9uLCBDb250ZW50QmxvY2ssIE5vdGljZVN0cmlwLCBUeXBvZ3JhcGh5IH0gZnJvbSAnLi4vLi4vLi4vc2hhcmVkL3JlYWN0JztcbmltcG9ydCB7IFJlbHVOZXR3b3JrUGxvdCwgdXNlUGVyc2lzdGVkQWN0aXZpdHkgfSBmcm9tICcuLi9BY3RpdmF0aW9uQ2F0YWxvZ1BhZ2UvQWN0aXZhdGlvbkNhdGFsb2dQYWdlJztcbmltcG9ydCB7XG4gIE5ldHdvcmtDYW52YXMsXG4gIHR5cGUgTmV0d29ya0Nvbm5lY3Rpb24sXG4gIHR5cGUgTmV0d29ya0xheWVyLFxufSBmcm9tICcuLi9OZXR3b3JrQ2FudmFzL05ldHdvcmtDYW52YXMnO1xuaW1wb3J0IHtcbiAgZm9ybWF0TnVtYmVyLFxuICBmb3JtYXRTaWduZWQsXG4gIGZvcm1hdFN1YnNjcmlwdCxcbiAgTUFYX1JFTFVfTkVVUk9OX0NPVU5ULFxuICBNSU5fUkVMVV9ORVVST05fQ09VTlQsXG4gIFJFTFVfT1VUUFVUX0JJQVMsXG4gIHR5cGUgU2hhbGxvd05ldXJvbixcbn0gZnJvbSAnLi4vQWN0aXZhdGlvbkNhdGFsb2dQYWdlL0FjdGl2YXRpb25DYXRhbG9nUGFnZSc7XG5cbmNvbnN0IFNUQVRFX0tFWSA9ICdhY3Rpdml0eTpuZXVyb24tZ3VpZGUtcmVsdS1uZXR3b3JrLXYxJztcblxuaW50ZXJmYWNlIFJlbHVOZXR3b3JrU25hcHNob3Qge1xuICBjb3VudDogbnVtYmVyO1xuICBuZXVyb25zOiBTaGFsbG93TmV1cm9uW107XG4gIGNvbXBsZXRlZDogYm9vbGVhbjtcbn1cblxuZnVuY3Rpb24gY3JlYXRlUmVsdU5ldXJvbihpbmRleDogbnVtYmVyKTogU2hhbGxvd05ldXJvbiB7XG4gIGNvbnN0IHcgPSAwLjcyICsgTWF0aC5yYW5kb20oKSAqIDAuNTg7XG4gIGNvbnN0IHNwYWNpbmcgPSAxLjYgLyBNQVhfUkVMVV9ORVVST05fQ09VTlQ7XG4gIGNvbnN0IGNlbnRlciA9IC0wLjggKyBzcGFjaW5nICogKGluZGV4ICsgMC41KTtcbiAgY29uc3Qga2luayA9IE1hdGgubWF4KC0wLjkyLCBNYXRoLm1pbigwLjkyLCBjZW50ZXIgKyAoTWF0aC5yYW5kb20oKSAtIDAuNSkgKiBzcGFjaW5nICogMC43MikpO1xuICBjb25zdCBtYWduaXR1ZGUgPSAwLjM4ICsgTWF0aC5yYW5kb20oKSAqIDAuNTg7XG4gIHJldHVybiB7XG4gICAgdyxcbiAgICBiOiAtdyAqIGtpbmssXG4gICAgdjogTWF0aC5yYW5kb20oKSA+IDAuNDIgPyBtYWduaXR1ZGUgOiAtbWFnbml0dWRlLFxuICB9O1xufVxuXG5mdW5jdGlvbiBjcmVhdGVSZWx1TmV1cm9ucygpOiBTaGFsbG93TmV1cm9uW10ge1xuICByZXR1cm4gQXJyYXkuZnJvbSh7IGxlbmd0aDogTUFYX1JFTFVfTkVVUk9OX0NPVU5UIH0sIChfLCBpbmRleCkgPT4gY3JlYXRlUmVsdU5ldXJvbihpbmRleCkpO1xufVxuXG5mdW5jdGlvbiBjcmVhdGVJbml0aWFsU25hcHNob3QoKTogUmVsdU5ldHdvcmtTbmFwc2hvdCB7XG4gIHJldHVybiB7IGNvdW50OiBNSU5fUkVMVV9ORVVST05fQ09VTlQsIG5ldXJvbnM6IGNyZWF0ZVJlbHVOZXVyb25zKCksIGNvbXBsZXRlZDogZmFsc2UgfTtcbn1cblxuZnVuY3Rpb24gbm9ybWFsaXplU25hcHNob3QodmFsdWU6IHVua25vd24pOiBSZWx1TmV0d29ya1NuYXBzaG90IHwgbnVsbCB7XG4gIGlmICghdmFsdWUgfHwgdHlwZW9mIHZhbHVlICE9PSAnb2JqZWN0JyB8fCBBcnJheS5pc0FycmF5KHZhbHVlKSkgcmV0dXJuIG51bGw7XG4gIGNvbnN0IGNhbmRpZGF0ZSA9IHZhbHVlIGFzIFBhcnRpYWw8UmVsdU5ldHdvcmtTbmFwc2hvdD47XG4gIGNvbnN0IGNvdW50ID0gTnVtYmVyKGNhbmRpZGF0ZS5jb3VudCk7XG4gIGlmICghTnVtYmVyLmlzRmluaXRlKGNvdW50KSB8fCAhQXJyYXkuaXNBcnJheShjYW5kaWRhdGUubmV1cm9ucykpIHJldHVybiBudWxsO1xuICBjb25zdCBuZXVyb25zID0gY2FuZGlkYXRlLm5ldXJvbnMuZmlsdGVyKChuZXVyb24pOiBuZXVyb24gaXMgU2hhbGxvd05ldXJvbiA9PiAoXG4gICAgQm9vbGVhbihuZXVyb24pXG4gICAgJiYgdHlwZW9mIG5ldXJvbiA9PT0gJ29iamVjdCdcbiAgICAmJiBOdW1iZXIuaXNGaW5pdGUoTnVtYmVyKG5ldXJvbi53KSlcbiAgICAmJiBOdW1iZXIuaXNGaW5pdGUoTnVtYmVyKG5ldXJvbi5iKSlcbiAgICAmJiBOdW1iZXIuaXNGaW5pdGUoTnVtYmVyKG5ldXJvbi52KSlcbiAgKSk7XG4gIGlmIChuZXVyb25zLmxlbmd0aCAhPT0gTUFYX1JFTFVfTkVVUk9OX0NPVU5UKSByZXR1cm4gbnVsbDtcbiAgY29uc3Qgbm9ybWFsaXplZENvdW50ID0gTWF0aC5tYXgoXG4gICAgTUlOX1JFTFVfTkVVUk9OX0NPVU5ULFxuICAgIE1hdGgubWluKE1BWF9SRUxVX05FVVJPTl9DT1VOVCwgTWF0aC50cnVuYyhjb3VudCkpLFxuICApO1xuICByZXR1cm4ge1xuICAgIGNvdW50OiBub3JtYWxpemVkQ291bnQsXG4gICAgbmV1cm9uczogbmV1cm9ucy5tYXAoKHsgdywgYiwgdiB9KSA9PiAoeyB3OiBOdW1iZXIodyksIGI6IE51bWJlcihiKSwgdjogTnVtYmVyKHYpIH0pKSxcbiAgICBjb21wbGV0ZWQ6IEJvb2xlYW4oY2FuZGlkYXRlLmNvbXBsZXRlZCB8fCBub3JtYWxpemVkQ291bnQgPj0gTUFYX1JFTFVfTkVVUk9OX0NPVU5UKSxcbiAgfTtcbn1cblxuZnVuY3Rpb24gYnVpbGRDYW52YXMoY291bnQ6IG51bWJlciwgYWxsTmV1cm9uczogcmVhZG9ubHkgU2hhbGxvd05ldXJvbltdKTogeyBsYXllcnM6IE5ldHdvcmtMYXllcltdOyBjb25uZWN0aW9uczogTmV0d29ya0Nvbm5lY3Rpb25bXSB9IHtcbiAgY29uc3QgbmV1cm9ucyA9IGFsbE5ldXJvbnMuc2xpY2UoMCwgY291bnQpO1xuICBjb25zdCBsYXllcnM6IE5ldHdvcmtMYXllcltdID0gW1xuICAgIHtcbiAgICAgIHRpdGxlOiAn6L6T5YWlICgxKScsXG4gICAgICBub2RlczogW3tcbiAgICAgICAgbGFiZWw6ICd4JyxcbiAgICAgICAgdG9uZTogJ2lucHV0JyxcbiAgICAgICAgZGV0YWlsczoge1xuICAgICAgICAgIHRpdGxlOiAn6L6T5YWlIHgnLFxuICAgICAgICAgIGJvZHk6ICflkIzkuIDkuKrovpPlhaUgeCDpgIHnu5nmr4/kuKrnpZ7nu4/lhYPvvJvmr4/kuKrnpZ7nu4/lhYPnlKjoh6rlt7HnmoTmnYPph40gd+G1oiDlkozlgY/nva4gYuG1oiDlpITnkIblroPjgIInLFxuICAgICAgICB9LFxuICAgICAgfV0sXG4gICAgfSxcbiAgICB7XG4gICAgICB0aXRsZTogYFJlTFUg5bGCICgke2NvdW50fSlgLFxuICAgICAgbm9kZXM6IG5ldXJvbnMubWFwKChuZXVyb24sIGluZGV4KSA9PiAoe1xuICAgICAgICBsYWJlbDogYGgke2luZGV4ICsgMX1gLFxuICAgICAgICB0b25lOiAncmVsdScgYXMgY29uc3QsXG4gICAgICAgIGFjdGl2YXRpb246ICdyZWx1JyxcbiAgICAgICAgZGV0YWlsczoge1xuICAgICAgICAgIHRpdGxlOiBgaCR7aW5kZXggKyAxfSDnmoQgUmVMVSDovpPlh7pgLFxuICAgICAgICAgIGNvbnRlbnQ6IChcbiAgICAgICAgICAgIDxUeXBvZ3JhcGh5IGFzPVwiY29kZVwiIHZhcmlhbnQ9XCJib2R5XCIgdG9uZT1cImluaGVyaXRcIiB3cmFwPVwibm93cmFwXCI+XG4gICAgICAgICAgICAgIHtgaCR7aW5kZXggKyAxfSA9IFJlTFUodyR7Zm9ybWF0U3Vic2NyaXB0KGluZGV4ICsgMSl9eCArIGIke2Zvcm1hdFN1YnNjcmlwdChpbmRleCArIDEpfSlgfVxuICAgICAgICAgICAgICA8YnIgLz5cbiAgICAgICAgICAgICAge2BcXHUwMEEwXFx1MDBBMFxcdTAwQTA9IFJlTFUoJHtmb3JtYXROdW1iZXIobmV1cm9uLncpfXggJHtmb3JtYXRTaWduZWQobmV1cm9uLmIpfSlgfVxuICAgICAgICAgICAgPC9UeXBvZ3JhcGh5PlxuICAgICAgICAgICksXG4gICAgICAgICAgYm9keTogYHcke2Zvcm1hdFN1YnNjcmlwdChpbmRleCArIDEpfSDnu5novpPlhaUgeCDliqDmnYPvvIxiJHtmb3JtYXRTdWJzY3JpcHQoaW5kZXggKyAxKX0g5Yaz5a6a5oqY54K55L2N572u44CCYCxcbiAgICAgICAgfSxcbiAgICAgIH0pKSxcbiAgICB9LFxuICAgIHtcbiAgICAgIHRpdGxlOiAn6L6T5Ye6ICgxKScsXG4gICAgICBub2RlczogW3tcbiAgICAgICAgbGFiZWw6ICd5JyxcbiAgICAgICAgdG9uZTogJ291dHB1dCcsXG4gICAgICAgIGRldGFpbHM6IHtcbiAgICAgICAgICB0aXRsZTogJ+acgOe7iOi+k+WHuiB5JyxcbiAgICAgICAgICBjb250ZW50OiAoXG4gICAgICAgICAgICA8VHlwb2dyYXBoeSBhcz1cImNvZGVcIiB2YXJpYW50PVwiYm9keVwiIHRvbmU9XCJpbmhlcml0XCIgd3JhcD1cIm5vd3JhcFwiPlxuICAgICAgICAgICAgICB5ID0gzqMgduG1omjhtaIge2Zvcm1hdFNpZ25lZChSRUxVX09VVFBVVF9CSUFTKX1cbiAgICAgICAgICAgIDwvVHlwb2dyYXBoeT5cbiAgICAgICAgICApLFxuICAgICAgICAgIGJvZHk6ICdo4bWiIOaYr+esrCBpIOS4qiBSZUxVIOelnue7j+WFg+eahOi+k+WHuu+8jHbhtaIg5piv5a6D6L+e5YiwIHkg55qE5p2D6YeN77ya5oqK5q+P5LiqIGjhtaIg5oyJ6Ieq5bex55qEIHbhtaIg5Yqg5p2D5ZCO55u45Yqg77yM5bCx5b6X5YiwIHnjgIInLFxuICAgICAgICB9LFxuICAgICAgfV0sXG4gICAgfSxcbiAgXTtcbiAgY29uc3QgY29ubmVjdGlvbnM6IE5ldHdvcmtDb25uZWN0aW9uW10gPSBbXTtcbiAgbmV1cm9ucy5mb3JFYWNoKChuZXVyb24sIGluZGV4KSA9PiB7XG4gICAgY29ubmVjdGlvbnMucHVzaCh7IGZyb21MYXllcjogMCwgZnJvbUluZGV4OiAwLCB0b0xheWVyOiAxLCB0b0luZGV4OiBpbmRleCwgd2VpZ2h0OiBuZXVyb24udyB9KTtcbiAgICBjb25uZWN0aW9ucy5wdXNoKHsgZnJvbUxheWVyOiAxLCBmcm9tSW5kZXg6IGluZGV4LCB0b0xheWVyOiAyLCB0b0luZGV4OiAwLCB3ZWlnaHQ6IG5ldXJvbi52IH0pO1xuICB9KTtcbiAgcmV0dXJuIHsgbGF5ZXJzLCBjb25uZWN0aW9ucyB9O1xufVxuXG5leHBvcnQgaW50ZXJmYWNlIFJlbHVOZXR3b3JrUGFnZVByb3BzIHtcbiAgb25Db21wbGV0ZTogKCkgPT4gdm9pZDtcbn1cblxuZXhwb3J0IGZ1bmN0aW9uIFJlbHVOZXR3b3JrUGFnZSh7IG9uQ29tcGxldGUgfTogUmVsdU5ldHdvcmtQYWdlUHJvcHMpIHtcbiAgY29uc3Qgcm9vdFJlZiA9IHVzZVJlZjxIVE1MRWxlbWVudCB8IG51bGw+KG51bGwpO1xuICBjb25zdCB7IHN0YXRlLCBoeWRyYXRlZCwgY29tbWl0IH0gPSB1c2VQZXJzaXN0ZWRBY3Rpdml0eTxSZWx1TmV0d29ya1NuYXBzaG90Pih7XG4gICAgc3RhdGVLZXk6IFNUQVRFX0tFWSxcbiAgICBjcmVhdGVJbml0aWFsOiBjcmVhdGVJbml0aWFsU25hcHNob3QsXG4gICAgbm9ybWFsaXplU3RhdGU6IG5vcm1hbGl6ZVNuYXBzaG90LFxuICAgIGdldEVsZW1lbnQ6ICgpID0+IHJvb3RSZWYuY3VycmVudCxcbiAgfSk7XG4gIGNvbnN0IGNvdW50ID0gc3RhdGU/LmNvdW50ID8/IE1JTl9SRUxVX05FVVJPTl9DT1VOVDtcbiAgY29uc3QgY2FudmFzID0gdXNlTWVtbygoKSA9PiBidWlsZENhbnZhcyhjb3VudCwgc3RhdGU/Lm5ldXJvbnMgPz8gW10pLCBbY291bnQsIHN0YXRlPy5uZXVyb25zXSk7XG5cbiAgY29uc3QgY2hhbmdlQ291bnQgPSAobmV4dENvdW50OiBudW1iZXIsIG9wZXJhdGlvbjogJ2FkZCcgfCAncmVtb3ZlJykgPT4ge1xuICAgIGlmICghc3RhdGUpIHJldHVybjtcbiAgICBjb25zdCBib3VuZGVkQ291bnQgPSBNYXRoLm1heChNSU5fUkVMVV9ORVVST05fQ09VTlQsIE1hdGgubWluKE1BWF9SRUxVX05FVVJPTl9DT1VOVCwgbmV4dENvdW50KSk7XG4gICAgY29uc3QgY29tcGxldGVkID0gc3RhdGUuY29tcGxldGVkIHx8IGJvdW5kZWRDb3VudCA+PSBNQVhfUkVMVV9ORVVST05fQ09VTlQ7XG4gICAgY29uc3QgbmV1cm9ucyA9IFsuLi5zdGF0ZS5uZXVyb25zXTtcbiAgICBpZiAob3BlcmF0aW9uID09PSAnYWRkJyAmJiBib3VuZGVkQ291bnQgPiBzdGF0ZS5jb3VudCkge1xuICAgICAgbmV1cm9uc1tib3VuZGVkQ291bnQgLSAxXSA9IGNyZWF0ZVJlbHVOZXVyb24oYm91bmRlZENvdW50IC0gMSk7XG4gICAgfVxuICAgIGNvbnN0IG5leHQgPSB7IC4uLnN0YXRlLCBjb3VudDogYm91bmRlZENvdW50LCBuZXVyb25zLCBjb21wbGV0ZWQgfTtcbiAgICBjb21taXQoYG5ldXJvbl9ndWlkZV9yZWx1X25ldXJvbl8ke29wZXJhdGlvbn1gLCBuZXh0LCB7XG4gICAgICBuZXVyb25fY291bnQ6IGJvdW5kZWRDb3VudCxcbiAgICAgIG9wZXJhdGlvbixcbiAgICB9KTtcbiAgICBpZiAoIXN0YXRlLmNvbXBsZXRlZCAmJiBjb21wbGV0ZWQpIG9uQ29tcGxldGUoKTtcbiAgfTtcblxuICBjb25zdCByYW5kb21pemUgPSAoKSA9PiB7XG4gICAgaWYgKCFzdGF0ZSkgcmV0dXJuO1xuICAgIGNvbW1pdCgnbmV1cm9uX2d1aWRlX3JlbHVfcGFyYW1ldGVyc19yYW5kb21pemUnLCB7XG4gICAgICAuLi5zdGF0ZSxcbiAgICAgIG5ldXJvbnM6IGNyZWF0ZVJlbHVOZXVyb25zKCksXG4gICAgfSwgeyBuZXVyb25fY291bnQ6IHN0YXRlLmNvdW50IH0pO1xuICB9O1xuXG4gIHJldHVybiAoXG4gICAgPENvbnRlbnRCbG9ja1xuICAgICAgcmVmPXtyb290UmVmfVxuICAgICAgaGVhZGluZ0xldmVsPXsxfVxuICAgICAgY2xhc3NOYW1lPVwibmd0dy1hY3RpdmF0aW9uLW5ldHdvcmstbGFiIG5ndHctcmVsdS1uZXR3b3JrXCJcbiAgICAgIHRpdGxlPVwi57uE5ZCI5aSa5Liq5bim5pyJIFJlTFUg55qE56We57uP5YWD77yM5puy57q/57un57ut5byv5oqYXCJcbiAgICAgIHN1YnRpdGxlPVwi5q+P5Liq56We57uP5YWD5pyJ6Ieq5bex55qEIHcg5ZKMIGLvvIzkvJrlnKjkuI3lkIznmoQgeCDkvY3nva7nlLHmipHliLbliIfmjaLkuLrmv4DmtLvvvJvlho3liqDkuIDkuKrnpZ7nu4/lhYPvvIzmm7Lnur/lsLHlpJrkuIDkuKrmipjngrnjgIJcIlxuICAgICAgZGF0YS10ZWxlbWV0cnktbWFudWFsXG4gICAgICBhcmlhLWJ1c3k9eyFoeWRyYXRlZH1cbiAgICA+XG4gICAgICB7IXN0YXRlID8gKFxuICAgICAgICA8Tm90aWNlU3RyaXAgdG9uZT1cImJsdWVcIj48VHlwb2dyYXBoeSB2YXJpYW50PVwiYm9keVwiIHRvbmU9XCJpbmhlcml0XCI+5q2j5Zyo5oGi5aSN56We57uP5YWD5pWw6YeP4oCmPC9UeXBvZ3JhcGh5PjwvTm90aWNlU3RyaXA+XG4gICAgICApIDogKFxuICAgICAgICA8PlxuICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwibmd0dy1yZWx1LXRvb2xiYXIgZmxleCBtaW4tdy0wIG1heC13LWZ1bGwgaXRlbXMtY2VudGVyIGp1c3RpZnktYmV0d2VlbiBnYXAtWzEycHhdIG1pbi1oLVs1NnB4XSBwLVs0cHhfOHB4XzRweF8xMnB4XVwiPlxuICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJuZ3R3LXJlbHUtdG9vbGJhcl9fY29udGV4dCBmbGV4IG1pbi13LTAgbWF4LXctZnVsbCBpdGVtcy1jZW50ZXIgZ2FwLVs2cHhdXCI+XG4gICAgICAgICAgICAgIDxUeXBvZ3JhcGh5IGFzPVwic3BhblwiIHZhcmlhbnQ9XCJib2R5XCIgdG9uZT1cIm11dGVkXCI+5b2T5YmN57uT5p6E77yaPC9UeXBvZ3JhcGh5PlxuICAgICAgICAgICAgICA8VHlwb2dyYXBoeSBhcz1cInN0cm9uZ1wiIHZhcmlhbnQ9XCJib2R5XCIgdG9uZT1cImFjY2VudFwiPntjb3VudH0g5LiqIFJlTFUg56We57uP5YWDPC9UeXBvZ3JhcGh5PlxuICAgICAgICAgICAgICA8VHlwb2dyYXBoeSBhcz1cInNwYW5cIiB2YXJpYW50PVwiYm9keVwiIHRvbmU9XCJtdXRlZFwiPuaxh+WQiOS4ujwvVHlwb2dyYXBoeT5cbiAgICAgICAgICAgICAgPFR5cG9ncmFwaHkgYXM9XCJzdHJvbmdcIiB2YXJpYW50PVwiYm9keVwiIHRvbmU9XCJzdWNjZXNzXCI+MSDkuKrovpPlh7o8L1R5cG9ncmFwaHk+XG4gICAgICAgICAgICA8L2Rpdj5cbiAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwibmd0dy1hY3RpdmF0aW9uLWFjdGlvbnMgZmxleCBmbGV4LXdyYXAgZ2FwLVs4cHhdXCIgYXJpYS1sYWJlbD1cIuiwg+aVtOe9kee7nOe7k+aehFwiPlxuICAgICAgICAgICAgICA8QnV0dG9uIHZhcmlhbnQ9XCJwcmltYXJ5XCIgZGlzYWJsZWQ9eyFoeWRyYXRlZCB8fCBjb3VudCA+PSBNQVhfUkVMVV9ORVVST05fQ09VTlR9IG9uQ2xpY2s9eygpID0+IGNoYW5nZUNvdW50KGNvdW50ICsgMSwgJ2FkZCcpfT5cbiAgICAgICAgICAgICAgICDmt7vliqDnpZ7nu4/lhYNcbiAgICAgICAgICAgICAgPC9CdXR0b24+XG4gICAgICAgICAgICAgIDxCdXR0b24gZGlzYWJsZWQ9eyFoeWRyYXRlZCB8fCBjb3VudCA8PSBNSU5fUkVMVV9ORVVST05fQ09VTlR9IG9uQ2xpY2s9eygpID0+IGNoYW5nZUNvdW50KGNvdW50IC0gMSwgJ3JlbW92ZScpfT5cbiAgICAgICAgICAgICAgICDliKDpmaTnpZ7nu4/lhYNcbiAgICAgICAgICAgICAgPC9CdXR0b24+XG4gICAgICAgICAgICAgIDxCdXR0b24gZGlzYWJsZWQ9eyFoeWRyYXRlZH0gb25DbGljaz17cmFuZG9taXplfT7pmo/mnLrlj4LmlbA8L0J1dHRvbj5cbiAgICAgICAgICAgIDwvZGl2PlxuICAgICAgICAgIDwvZGl2PlxuXG4gICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJuZ3R3LWFjdGl2YXRpb24tbmV0d29yay1zdGFnZSBncmlkIGdyaWQtY29scy1bbWlubWF4KDAsXy45NWZyKV9taW5tYXgoMCxfMS4wNWZyKV0gaXRlbXMtc3RyZXRjaCBnYXAtWzE0cHhdXCI+XG4gICAgICAgICAgICA8c2VjdGlvbiBjbGFzc05hbWU9XCJuZ3R3LWFjdGl2YXRpb24tbmV0d29yay1wYW5lbCByZWxhdGl2ZSBmbGV4IG1pbi13LTAgbWluLWgtWzU2MHB4XSBmbGV4LWNvbCBiZy1bI2ZmZl0gcC1bMTRweF0gbmd0dy1yZWx1LXBhbmVsIG5ndHctcmVsdS1wYW5lbC0tbmV0d29ya1wiIGFyaWEtbGFiZWw9XCLnvZHnu5znu5PmnoRcIj5cbiAgICAgICAgICAgICAgPGhlYWRlciBjbGFzc05hbWU9XCJuZ3R3LWFjdGl2YXRpb24tcGFuZWwtaGVhZCBmbGV4IGl0ZW1zLWJhc2VsaW5lIGp1c3RpZnktYmV0d2VlbiBnYXAtWzEycHhdIG1iLVsxMHB4XVwiPlxuICAgICAgICAgICAgICAgIDxUeXBvZ3JhcGh5IGFzPVwiaDNcIiB2YXJpYW50PVwic3VidGl0bGVcIiB0b25lPVwibWFpblwiPuaKiuWkmuS4qiBSZUxVIOelnue7j+WFg+e7hOWQiOi1t+adpTwvVHlwb2dyYXBoeT5cbiAgICAgICAgICAgICAgICA8VHlwb2dyYXBoeSBhcz1cInNwYW5cIiB2YXJpYW50PVwiYm9keVNtYWxsXCIgdG9uZT1cIm11dGVkXCI+aOG1oiA9IFJlTFUod+G1onggKyBi4bWiKTwvVHlwb2dyYXBoeT5cbiAgICAgICAgICAgICAgPC9oZWFkZXI+XG4gICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwibmd0dy1hY3RpdmF0aW9uLXZpc3VhbC1ib3ggcmVsYXRpdmUgbWluLWgtWzQzMHB4XSBvdmVyZmxvdy1oaWRkZW4gbmd0dy1hY3RpdmF0aW9uLXZpc3VhbC1ib3gtLW1vZGVsXCI+XG4gICAgICAgICAgICAgICAgPE5ldHdvcmtDYW52YXNcbiAgICAgICAgICAgICAgICAgIGxheWVycz17Y2FudmFzLmxheWVyc31cbiAgICAgICAgICAgICAgICAgIGNvbm5lY3Rpb25zPXtjYW52YXMuY29ubmVjdGlvbnN9XG4gICAgICAgICAgICAgICAgICBhcmlhTGFiZWw9XCLlpJrkuKogUmVMVSDnpZ7nu4/lhYPnu4TlkIjlvaLmiJDliIbmrrXnur/mgKfovpPlh7pcIlxuICAgICAgICAgICAgICAgICAgY2FwdGlvbj1cIuWchueCueihqOekuuiuoeeul++8jOaCrOWBnOiKgueCueeciyB34bWi44CBYuG1ouOAgXbhtaJcIlxuICAgICAgICAgICAgICAgICAgaGVpZ2h0PXs0MTB9XG4gICAgICAgICAgICAgICAgICBmb250U2NhbGU9ezEuMTV9XG4gICAgICAgICAgICAgICAgLz5cbiAgICAgICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgICA8L3NlY3Rpb24+XG5cbiAgICAgICAgICAgIDxzZWN0aW9uIGNsYXNzTmFtZT1cIm5ndHctYWN0aXZhdGlvbi1uZXR3b3JrLXBhbmVsIHJlbGF0aXZlIGZsZXggbWluLXctMCBtaW4taC1bNTYwcHhdIGZsZXgtY29sIGJnLVsjZmZmXSBwLVsxNHB4XSBuZ3R3LXJlbHUtcGFuZWwgbmd0dy1yZWx1LXBhbmVsLS1wbG90XCIgYXJpYS1sYWJlbD1cIui+k+WHuuabsue6v1wiPlxuICAgICAgICAgICAgICA8aGVhZGVyIGNsYXNzTmFtZT1cIm5ndHctYWN0aXZhdGlvbi1wYW5lbC1oZWFkIGZsZXggaXRlbXMtYmFzZWxpbmUganVzdGlmeS1iZXR3ZWVuIGdhcC1bMTJweF0gbWItWzEwcHhdXCI+XG4gICAgICAgICAgICAgICAgPFR5cG9ncmFwaHkgYXM9XCJoM1wiIHZhcmlhbnQ9XCJzdWJ0aXRsZVwiIHRvbmU9XCJtYWluXCI+5LuO5LiA5Liq5oqY54K55Yiw5aSa5Liq5oqY54K5PC9UeXBvZ3JhcGh5PlxuICAgICAgICAgICAgICAgIDxUeXBvZ3JhcGh5IGFzPVwic3BhblwiIHZhcmlhbnQ9XCJib2R5U21hbGxcIiB0b25lPVwibXV0ZWRcIj7omZrnur/lr7nlupTmr4/kuKrnpZ7nu4/lhYPnmoTlk43lupTotbfngrk8L1R5cG9ncmFwaHk+XG4gICAgICAgICAgICAgIDwvaGVhZGVyPlxuICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cIm5ndHctYWN0aXZhdGlvbi12aXN1YWwtYm94IHJlbGF0aXZlIG1pbi1oLVs0MzBweF0gb3ZlcmZsb3ctaGlkZGVuXCI+XG4gICAgICAgICAgICAgICAgPFJlbHVOZXR3b3JrUGxvdCBjb3VudD17Y291bnR9IG5ldXJvbnM9e3N0YXRlLm5ldXJvbnN9IC8+XG4gICAgICAgICAgICAgIDwvZGl2PlxuICAgICAgICAgICAgPC9zZWN0aW9uPlxuICAgICAgICAgIDwvZGl2PlxuXG4gICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJuZ3R3LXJlbHUtY29uY2x1c2lvbiBmbGV4IG1pbi13LTAgbWF4LXctZnVsbCBpdGVtcy1jZW50ZXIgZ2FwLVsxMnB4XSBwLVsxMHB4XzE0cHhdXCI+XG4gICAgICAgICAgICA8VHlwb2dyYXBoeSBhcz1cInN0cm9uZ1wiIHZhcmlhbnQ9XCJzdWJ0aXRsZVwiIHRvbmU9XCJzdWNjZXNzXCI+57uT6K66PC9UeXBvZ3JhcGh5PlxuICAgICAgICAgICAgPFR5cG9ncmFwaHkgdmFyaWFudD1cImJvZHlcIiB0b25lPVwibWFpblwiPuavj+S4qiBSZUxVIOelnue7j+WFg+i0oeeMruS4gOS4quaKmOeCue+8jOaKmOeCuei2iuWkmu+8jOi+k+WHuui2iuaOpei/keS7u+aEj+absue6v+OAgjwvVHlwb2dyYXBoeT5cbiAgICAgICAgICA8L2Rpdj5cbiAgICAgICAgPC8+XG4gICAgICApfVxuICAgIDwvQ29udGVudEJsb2NrPlxuICApO1xufVxuXHJcbiJdLCJmaWxlIjoiQzovVXNlcnMvT2NlYW4vRG9jdW1lbnRzL0dpdEh1Yi9pbnR1aXRpdmUtZGVlcC1sZWFybmluZy9tb2R1bGVzL05ldXJvbi1HdWlkZS9wYWdlcy9SZWx1TmV0d29ya1BhZ2UvUmVsdU5ldHdvcmtQYWdlLnRzeCJ9

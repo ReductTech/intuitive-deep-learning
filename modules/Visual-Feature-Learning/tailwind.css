@@ -1,0 +1,27 @@
+/* Module utilities only: Shared UI owns the reset and base typography. */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities) source(none);
+@source "./pages";
+@source "./pages/FeatureExtractionPage/FeatureExtractionPage.tsx";
+@source "./pages/NineGridFeaturePage/NineGridFeaturePage.tsx";
+@source "./pages/FeatureVectorPage/FeatureVectorPage.tsx";
+@source "./pages/ManualFeatureClassifierPage/ManualFeatureClassifierPage.tsx";
+@source "./pages/NineGridInformationLossPage/NineGridInformationLossPage.tsx";
+@source "./pages/FixedDigitPage/FixedDigitPage.tsx";
+@source "./pages/TwoStageRecognitionPage/TwoStageRecognitionPage.tsx";
+@source "./pages/SingleToSequencePage/SingleToSequencePage.tsx";
+/* Keep the vector page's layout available to a running Vite server after this page is added. */
+@source inline("grid-cols-[310px_490px_590px] grid-cols-[9fr_9fr_10fr] grid-rows-[9fr_9fr_10fr] h-[570px] h-[418px] w-[418px] p-[22px] mt-[26px] gap-[20px]");
+
+@theme inline {
+  --color-lesson-card: var(--ui-bg-card);
+  --color-lesson-muted: var(--ui-bg-muted);
+  --color-lesson-soft: var(--ui-bg-soft);
+  --color-lesson-accent: var(--ui-accent);
+  --color-lesson-border: var(--ui-border);
+  --color-lesson-success: var(--ui-success);
+  --radius-lesson-sm: var(--ui-radius-sm);
+  --radius-lesson-md: var(--ui-radius-md);
+  --radius-lesson-lg: var(--ui-radius-lg);
+}

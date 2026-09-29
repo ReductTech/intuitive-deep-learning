@@ -1,0 +1,95 @@
+<!--
+/*************************************************************************
+* ADOBE CONFIDENTIAL
+* ___________________
+*
+*  Copyright 2025 Adobe Systems Incorporated
+*  All Rights Reserved.
+*
+* NOTICE:  All information contained herein is, and remains
+* the property of Adobe Systems Incorporated and its suppliers,
+* if any.  The intellectual and technical concepts contained
+* herein are proprietary to Adobe Systems Incorporated and its
+* suppliers and are protected by all applicable intellectual property laws,
+* including trade secret and or copyright laws.
+* Dissemination of this information or reproduction of this material
+* is strictly forbidden unless prior written permission is obtained
+* from Adobe Systems Incorporated.
+**************************************************************************/
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Outlook Error</title>
+    <style>
+    .acrobat-error-toast {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        position: fixed;
+        top: 7px;
+        right: 10px;
+        width: 328px;
+        padding: 12px 10px;
+        background: #FFFFFF;
+        border: 1px solid #F0F0F0;
+        box-shadow: 0 1px 4px 0 #00000026;
+        z-index: 1000000;
+        gap: 12px;
+        border-radius: 2px;
+    }
+    .acrobat-error-toast-content {
+        flex: 1 1 0;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+    .acrobat-error-toast-header-row {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 8px;
+    }
+    .acrobat-error-toast-title {
+        font-family: "Inter", sans-serif;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 20px;
+        color: #963131;
+    }
+    .acrobat-error-toast-close {
+        width: 24px;
+        height: 24px;
+        background: none;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        border: none;
+        padding: 0;
+    }
+    .acrobat-error-toast-message {
+        font-family: "Inter", sans-serif;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 21px;
+        color: #616161;
+        margin-top: 2px;
+    }
+    </style>
+</head>
+<body>
+    <div id="acrobat-error-toast" class="acrobat-error-toast">
+        <img class="acrobat-error-icon" id="acrobat-error-icon" width="50" height="50" alt="Error icon">
+        <div class="acrobat-error-toast-content">
+            <div class="acrobat-error-toast-header-row">
+                <div id="error-toast-title" class="acrobat-error-toast-title"></div>
+                <button class="acrobat-error-toast-close" aria-label="Close">
+                    <img class="acrobat-error-close" id="acrobat-error-close-btn" width="18" height="18" alt="Close">
+                </button>
+            </div>
+            <div id="error-toast-message" class="acrobat-error-toast-message"></div>
+        </div>
+    </div>
+</body>
+</html> 

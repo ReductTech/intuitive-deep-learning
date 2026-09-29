@@ -26,7 +26,7 @@ from typing import Any
 SCRIPT_DIR = Path(__file__).resolve().parent
 SKILL_DIR = SCRIPT_DIR.parent
 MODULES_DIR = SKILL_DIR / "modules"
-DATASET_DIR = SKILL_DIR / "dataset"
+DATASET_DIR = SKILL_DIR / "assets" / "dataset"
 RUNTIME_LOG_DIR = SKILL_DIR / "runtime_logs"
 RUNTIME_STATE_PATH = RUNTIME_LOG_DIR / "runtime_state.json"
 

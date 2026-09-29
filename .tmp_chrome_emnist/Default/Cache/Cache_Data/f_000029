@@ -1,0 +1,497 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=2be87a0d"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+var _s = $RefreshSig$(), _s2 = $RefreshSig$();
+import __vite__cjsImport3_react from "/node_modules/.vite/deps/react.js?v=2be87a0d"; const useEffect = __vite__cjsImport3_react["useEffect"]; const useState = __vite__cjsImport3_react["useState"];
+import { ContentBlock, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, moduleAssetUrl, Typography } from "/modules/shared/react/index.ts";
+import "/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.css";
+const zermattImage = moduleAssetUrl("38cd1c79-d8b7-462a-b208-a567c5cd89c4", "caiermate.png");
+function toGray(pixels, width, height) {
+  const gray = new Float32Array(width * height);
+  for (let index = 0; index < gray.length; index += 1) {
+    const offset = index * 4;
+    gray[index] = (pixels[offset] * 0.299 + pixels[offset + 1] * 0.587 + pixels[offset + 2] * 0.114) / 255;
+  }
+  return gray;
+}
+function difference(values, width, height, kernel) {
+  const outputWidth = width - kernel.length + 1;
+  const output = new Float32Array(outputWidth * height);
+  for (let row = 0; row < height; row += 1) {
+    for (let col = 0; col < outputWidth; col += 1) {
+      let sum = 0;
+      for (let kernelCol = 0; kernelCol < kernel.length; kernelCol += 1) {
+        sum += kernel[kernelCol] * values[row * width + col + kernelCol];
+      }
+      output[row * outputWidth + col] = sum;
+    }
+  }
+  return { values: output, width: outputWidth, height };
+}
+function responseScale(values) {
+  const magnitudes = Array.from(values, (value) => Math.abs(value)).sort((a, b) => a - b);
+  return Math.max(0.02, magnitudes[Math.floor(magnitudes.length * 0.985)] ?? 0.02);
+}
+function renderGray(values, width, height, scale) {
+  const canvas = document.createElement("canvas");
+  canvas.width = width;
+  canvas.height = height;
+  const context = canvas.getContext("2d");
+  if (!context) return "";
+  const output = context.createImageData(width, height);
+  for (let index = 0; index < values.length; index += 1) {
+    const shade = Math.round(Math.min(1, Math.abs(values[index]) / scale) * 255);
+    const offset = index * 4;
+    output.data[offset] = shade;
+    output.data[offset + 1] = shade;
+    output.data[offset + 2] = shade;
+    output.data[offset + 3] = 255;
+  }
+  context.putImageData(output, 0, 0);
+  return canvas.toDataURL("image/png");
+}
+function buildDifferenceImages(image) {
+  const width = 560;
+  const height = Math.max(1, Math.round(width * image.naturalHeight / image.naturalWidth));
+  const source = document.createElement("canvas");
+  source.width = width;
+  source.height = height;
+  const sourceContext = source.getContext("2d", { willReadFrequently: true });
+  if (!sourceContext) return null;
+  sourceContext.drawImage(image, 0, 0, width, height);
+  const input = toGray(sourceContext.getImageData(0, 0, width, height).data, width, height);
+  const first = difference(input, width, height, [-1, 1]);
+  const second = difference(first.values, first.width, first.height, [-1, 1]);
+  return {
+    input: source.toDataURL("image/png"),
+    first: renderGray(first.values, first.width, first.height, responseScale(first.values)),
+    second: renderGray(second.values, second.width, second.height, responseScale(second.values))
+  };
+}
+function useDifferenceImages() {
+  _s();
+  const [images, setImages] = useState(null);
+  useEffect(() => {
+    let active = true;
+    const image = new Image();
+    image.onload = () => {
+      if (active) setImages(buildDifferenceImages(image));
+    };
+    image.src = zermattImage;
+    return () => {
+      active = false;
+    };
+  }, []);
+  return images;
+}
+_s(useDifferenceImages, "1vh5OZMc1B9DNsrOB9lCRib8LTI=");
+function StepHeader({ number, children }) {
+  return /* @__PURE__ */ jsxDEV("header", { className: "ck-second__step-header", children: [
+    /* @__PURE__ */ jsxDEV(Typography, { as: "span", variant: "h3", tone: "light", className: "ck-second__step-number", children: number }, void 0, false, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+      lineNumber: 116,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV(Typography, { as: "h2", variant: "h3", tone: "accent", children }, void 0, false, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+      lineNumber: 117,
+      columnNumber: 7
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+    lineNumber: 115,
+    columnNumber: 5
+  }, this);
+}
+_c = StepHeader;
+function Signal({ values, tone = "" }) {
+  return /* @__PURE__ */ jsxDEV("div", { className: `ck-second__signal ${tone}`, role: "img", "aria-label": values.join("，"), children: values.map((value, index) => /* @__PURE__ */ jsxDEV(Typography, { as: "span", variant: "bodySmall", tone: "accent", children: value }, `${value}-${index}`, false, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+    lineNumber: 125,
+    columnNumber: 37
+  }, this)) }, void 0, false, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+    lineNumber: 124,
+    columnNumber: 5
+  }, this);
+}
+_c2 = Signal;
+function DifferenceImage({ src, alt, className = "" }) {
+  return src ? /* @__PURE__ */ jsxDEV("img", { className: `ck-second__image ${className}`, src, alt }, void 0, false, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+    lineNumber: 132,
+    columnNumber: 3
+  }, this) : /* @__PURE__ */ jsxDEV("div", { className: `ck-second__image-loading ${className}`, role: "img", "aria-label": `${alt}正在计算` }, void 0, false, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+    lineNumber: 133,
+    columnNumber: 3
+  }, this);
+}
+_c3 = DifferenceImage;
+function DifferenceFormula({ order }) {
+  const input = order === 1 ? "I" : "D^{(1)}";
+  return /* @__PURE__ */ jsxDEV(MathFormulaBlock, { ariaLabel: `${order === 1 ? "一阶" : "二阶"}差分公式`, className: "ck-second__formula", children: [
+    /* @__PURE__ */ jsxDEV(MathFormulaTerm, { latex: `D^{(${order})}`, tooltip: `D 的上标 ${order}：第 ${order} 次差分的结果。`, ariaLabel: `第 ${order} 次差分的结果` }, void 0, false, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+      lineNumber: 140,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV(MathFormulaStatic, { latex: "=" }, void 0, false, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+      lineNumber: 141,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV(MathFormulaTerm, { latex: input, tooltip: order === 1 ? "I：输入的灰度图像。" : "D 的上标 1：已经计算出的一阶差分。", ariaLabel: order === 1 ? "输入灰度图像" : "一阶差分结果" }, void 0, false, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+      lineNumber: 142,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV(MathFormulaTerm, { latex: "*", tooltip: "将相邻位置与差分核对应相乘并求和。", ariaLabel: "应用差分核" }, void 0, false, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+      lineNumber: 143,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV(MathFormulaStatic, { latex: "[" }, void 0, false, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+      lineNumber: 144,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV(MathFormulaTerm, { latex: "-1", tooltip: "−1：减去当前像素值。", ariaLabel: "负一，减去当前像素值" }, void 0, false, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+      lineNumber: 145,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV(MathFormulaTerm, { latex: "1", tooltip: "1：加上右侧相邻像素值。", ariaLabel: "正一，加上右侧相邻像素值", className: "ck-second__kernel-next" }, void 0, false, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+      lineNumber: 146,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV(MathFormulaStatic, { latex: "]" }, void 0, false, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+      lineNumber: 147,
+      columnNumber: 7
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+    lineNumber: 139,
+    columnNumber: 5
+  }, this);
+}
+_c4 = DifferenceFormula;
+export function SecondDifferencePage() {
+  _s2();
+  const images = useDifferenceImages();
+  return /* @__PURE__ */ jsxDEV(ContentBlock, { headingLevel: 1, className: "ck-second", title: "二阶差分：变化如何继续变化", subtitle: "一阶差分描述局部变化，二阶差分进一步描述变化率是否发生突变。", children: [
+    /* @__PURE__ */ jsxDEV("div", { className: "ck-second__layout", children: [
+      /* @__PURE__ */ jsxDEV("article", { className: "ck-second__panel ck-second__panel--input", children: [
+        /* @__PURE__ */ jsxDEV(StepHeader, { number: "1", children: [
+          "原图 ",
+          /* @__PURE__ */ jsxDEV(MathFormulaStatic, { latex: "I" }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+            lineNumber: 158,
+            columnNumber: 37
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+          lineNumber: 158,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV(DifferenceImage, { src: images?.input, alt: "采尔马特山间建筑的灰度原图", className: "ck-second__image--input" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+          lineNumber: 159,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { className: "ck-second__explanation", children: [
+          /* @__PURE__ */ jsxDEV(Typography, { variant: "body", tone: "accent", children: "像素值本身" }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+            lineNumber: 160,
+            columnNumber: 51
+          }, this),
+          /* @__PURE__ */ jsxDEV(Typography, { variant: "body", tone: "accent", children: "不直接表示变化" }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+            lineNumber: 160,
+            columnNumber: 110
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+          lineNumber: 160,
+          columnNumber: 11
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+        lineNumber: 157,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV(Typography, { as: "span", variant: "h1", tone: "accent", className: "ck-second__arrow", "aria-hidden": "true", children: "→" }, void 0, false, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+        lineNumber: 162,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV("article", { className: "ck-second__panel ck-second__panel--difference", children: [
+        /* @__PURE__ */ jsxDEV(StepHeader, { number: "2", children: "一阶差分" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+          lineNumber: 164,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV(DifferenceFormula, { order: 1 }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+          lineNumber: 165,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV(DifferenceImage, { src: images?.first, alt: "采尔马特建筑局部的一阶差分图", className: "ck-second__image--first" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+          lineNumber: 166,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { className: "ck-second__explanation", children: /* @__PURE__ */ jsxDEV(Typography, { variant: "body", tone: "accent", children: [
+          "比较相邻像素，描述变化强弱；",
+          /* @__PURE__ */ jsxDEV("br", {}, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+            lineNumber: 167,
+            columnNumber: 106
+          }, this),
+          "常突出边缘。"
+        ] }, void 0, true, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+          lineNumber: 167,
+          columnNumber: 51
+        }, this) }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+          lineNumber: 167,
+          columnNumber: 11
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+        lineNumber: 163,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV(Typography, { as: "span", variant: "h1", tone: "accent", className: "ck-second__arrow", "aria-hidden": "true", children: "→" }, void 0, false, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+        lineNumber: 169,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV("article", { className: "ck-second__panel ck-second__panel--difference", children: [
+        /* @__PURE__ */ jsxDEV(StepHeader, { number: "3", children: "二阶差分" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+          lineNumber: 171,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV(DifferenceFormula, { order: 2 }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+          lineNumber: 172,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV(DifferenceImage, { src: images?.second, alt: "采尔马特建筑局部的二阶差分图", className: "ck-second__image--second" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+          lineNumber: 173,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { className: "ck-second__explanation", children: /* @__PURE__ */ jsxDEV(Typography, { variant: "body", tone: "accent", children: [
+          "再次求差，观察变化率突变；",
+          /* @__PURE__ */ jsxDEV("br", {}, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+            lineNumber: 174,
+            columnNumber: 105
+          }, this),
+          "对尖锐边缘更敏感。"
+        ] }, void 0, true, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+          lineNumber: 174,
+          columnNumber: 51
+        }, this) }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+          lineNumber: 174,
+          columnNumber: 11
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+        lineNumber: 170,
+        columnNumber: 9
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+      lineNumber: 156,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV("section", { className: "ck-second__example", "aria-label": "一维信号的两次差分示例", children: [
+      /* @__PURE__ */ jsxDEV(Typography, { variant: "h3", tone: "light", className: "ck-second__example-badge", children: "一维示例" }, void 0, false, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+        lineNumber: 178,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV("div", { className: "ck-second__example-signals", children: [
+        /* @__PURE__ */ jsxDEV("div", { children: [
+          /* @__PURE__ */ jsxDEV(Typography, { variant: "bodySmall", tone: "accent", children: [
+            "原始信号 ",
+            /* @__PURE__ */ jsxDEV(MathFormulaStatic, { latex: "f(x)" }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+              lineNumber: 180,
+              columnNumber: 67
+            }, this),
+            "："
+          ] }, void 0, true, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+            lineNumber: 180,
+            columnNumber: 16
+          }, this),
+          /* @__PURE__ */ jsxDEV(Signal, { values: ["2", "2", "2", "8", "8", "8"] }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+            lineNumber: 180,
+            columnNumber: 115
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+          lineNumber: 180,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { children: [
+          /* @__PURE__ */ jsxDEV(Typography, { variant: "bodySmall", tone: "accent", children: [
+            "一阶差分 ",
+            /* @__PURE__ */ jsxDEV(MathFormulaStatic, { latex: "D^{(1)}" }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+              lineNumber: 181,
+              columnNumber: 67
+            }, this),
+            "："
+          ] }, void 0, true, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+            lineNumber: 181,
+            columnNumber: 16
+          }, this),
+          /* @__PURE__ */ jsxDEV(Signal, { values: ["0", "0", "+6", "0", "0"], tone: "is-first" }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+            lineNumber: 181,
+            columnNumber: 118
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+          lineNumber: 181,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { children: [
+          /* @__PURE__ */ jsxDEV(Typography, { variant: "bodySmall", tone: "accent", children: [
+            "二阶差分 ",
+            /* @__PURE__ */ jsxDEV(MathFormulaStatic, { latex: "D^{(2)}" }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+              lineNumber: 182,
+              columnNumber: 67
+            }, this),
+            "："
+          ] }, void 0, true, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+            lineNumber: 182,
+            columnNumber: 16
+          }, this),
+          /* @__PURE__ */ jsxDEV(Signal, { values: ["0", "+6", "−6", "0"], tone: "is-second" }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+            lineNumber: 182,
+            columnNumber: 118
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+          lineNumber: 182,
+          columnNumber: 11
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+        lineNumber: 179,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV("div", { className: "ck-second__example-takeaway", children: [
+        /* @__PURE__ */ jsxDEV(Typography, { variant: "body", tone: "accent", children: [
+          "一阶差分找哪里",
+          /* @__PURE__ */ jsxDEV("strong", { children: "开始变" }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+            lineNumber: 184,
+            columnNumber: 102
+          }, this),
+          "，"
+        ] }, void 0, true, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+          lineNumber: 184,
+          columnNumber: 54
+        }, this),
+        /* @__PURE__ */ jsxDEV(Typography, { variant: "body", tone: "accent", children: [
+          "二阶差分看变化在哪里",
+          /* @__PURE__ */ jsxDEV("strong", { children: "突然发生" }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+            lineNumber: 184,
+            columnNumber: 187
+          }, this),
+          "。"
+        ] }, void 0, true, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+          lineNumber: 184,
+          columnNumber: 136
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+        lineNumber: 184,
+        columnNumber: 9
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+      lineNumber: 177,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV("footer", { className: "ck-second__summary", children: [
+      /* @__PURE__ */ jsxDEV(Typography, { as: "span", variant: "h3", tone: "accent", children: "总结：" }, void 0, false, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+        lineNumber: 187,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV(Typography, { variant: "body", children: "一阶差分看局部变化，二阶差分看变化率如何变化。前者强调“有没有变化”，后者强调“变化是否突变”。" }, void 0, false, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+        lineNumber: 188,
+        columnNumber: 9
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+      lineNumber: 186,
+      columnNumber: 7
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx",
+    lineNumber: 155,
+    columnNumber: 5
+  }, this);
+}
+_s2(SecondDifferencePage, "8BBi3M3y5O/83u4TF0fqHQr3mg8=", false, function() {
+  return [useDifferenceImages];
+});
+_c5 = SecondDifferencePage;
+var _c, _c2, _c3, _c4, _c5;
+$RefreshReg$(_c, "StepHeader");
+$RefreshReg$(_c2, "Signal");
+$RefreshReg$(_c3, "DifferenceImage");
+$RefreshReg$(_c4, "DifferenceFormula");
+$RefreshReg$(_c5, "SecondDifferencePage");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/SecondDifferencePage/SecondDifferencePage.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,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O0FBQUE7QUFBQTtBQUFBLGFBQW9EO0FBQUEsTUFDcEQsdUJBQUMsY0FBVyxTQUFRLFFBQU8sZ0VBQTNCO0FBQUE7QUFBQTtBQUFBO0FBQUEsYUFBMkU7QUFBQSxTQUY3RTtBQUFBO0FBQUE7QUFBQTtBQUFBLFdBR0E7QUFBQSxPQWxDRjtBQUFBO0FBQUE7QUFBQTtBQUFBLFNBbUNBO0FBRUo7QUFBQzBCLElBeENlRCxzQkFBb0I7QUFBQSxVQUNuQnhCLG1CQUFtQjtBQUFBO0FBQUEsTUFEcEJ3QjtBQUFvQixJQUFBYixJQUFBSyxLQUFBSSxLQUFBRyxLQUFBRztBQUFBLGFBQUFmLElBQUE7QUFBQSxhQUFBSyxLQUFBO0FBQUEsYUFBQUksS0FBQTtBQUFBLGFBQUFHLEtBQUE7QUFBQSxhQUFBRyxLQUFBIiwibmFtZXMiOlsidXNlRWZmZWN0IiwidXNlU3RhdGUiLCJDb250ZW50QmxvY2siLCJNYXRoRm9ybXVsYUJsb2NrIiwiTWF0aEZvcm11bGFTdGF0aWMiLCJNYXRoRm9ybXVsYVRlcm0iLCJtb2R1bGVBc3NldFVybCIsIlR5cG9ncmFwaHkiLCJ6ZXJtYXR0SW1hZ2UiLCJ0b0dyYXkiLCJwaXhlbHMiLCJ3aWR0aCIsImhlaWdodCIsImdyYXkiLCJGbG9hdDMyQXJyYXkiLCJpbmRleCIsImxlbmd0aCIsIm9mZnNldCIsImRpZmZlcmVuY2UiLCJ2YWx1ZXMiLCJrZXJuZWwiLCJvdXRwdXRXaWR0aCIsIm91dHB1dCIsInJvdyIsImNvbCIsInN1bSIsImtlcm5lbENvbCIsInJlc3BvbnNlU2NhbGUiLCJtYWduaXR1ZGVzIiwiQXJyYXkiLCJmcm9tIiwidmFsdWUiLCJNYXRoIiwiYWJzIiwic29ydCIsImEiLCJiIiwibWF4IiwiZmxvb3IiLCJyZW5kZXJHcmF5Iiwic2NhbGUiLCJjYW52YXMiLCJkb2N1bWVudCIsImNyZWF0ZUVsZW1lbnQiLCJjb250ZXh0IiwiZ2V0Q29udGV4dCIsImNyZWF0ZUltYWdlRGF0YSIsInNoYWRlIiwicm91bmQiLCJtaW4iLCJkYXRhIiwicHV0SW1hZ2VEYXRhIiwidG9EYXRhVVJMIiwiYnVpbGREaWZmZXJlbmNlSW1hZ2VzIiwiaW1hZ2UiLCJuYXR1cmFsSGVpZ2h0IiwibmF0dXJhbFdpZHRoIiwic291cmNlIiwic291cmNlQ29udGV4dCIsIndpbGxSZWFkRnJlcXVlbnRseSIsImRyYXdJbWFnZSIsImlucHV0IiwiZ2V0SW1hZ2VEYXRhIiwiZmlyc3QiLCJzZWNvbmQiLCJ1c2VEaWZmZXJlbmNlSW1hZ2VzIiwiX3MiLCJpbWFnZXMiLCJzZXRJbWFnZXMiLCJhY3RpdmUiLCJJbWFnZSIsIm9ubG9hZCIsInNyYyIsIlN0ZXBIZWFkZXIiLCJudW1iZXIiLCJjaGlsZHJlbiIsIl9jIiwiU2lnbmFsIiwidG9uZSIsImpvaW4iLCJtYXAiLCJfYzIiLCJEaWZmZXJlbmNlSW1hZ2UiLCJhbHQiLCJjbGFzc05hbWUiLCJfYzMiLCJEaWZmZXJlbmNlRm9ybXVsYSIsIm9yZGVyIiwiX2M0IiwiU2Vjb25kRGlmZmVyZW5jZVBhZ2UiLCJfczIiLCJfYzUiXSwiaWdub3JlTGlzdCI6W10sInNvdXJjZXMiOlsiU2Vjb25kRGlmZmVyZW5jZVBhZ2UudHN4Il0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IHVzZUVmZmVjdCwgdXNlU3RhdGUsIHR5cGUgUmVhY3ROb2RlIH0gZnJvbSAncmVhY3QnO1xuaW1wb3J0IHsgQ29udGVudEJsb2NrLCBNYXRoRm9ybXVsYUJsb2NrLCBNYXRoRm9ybXVsYVN0YXRpYywgTWF0aEZvcm11bGFUZXJtLCBtb2R1bGVBc3NldFVybCwgVHlwb2dyYXBoeSB9IGZyb20gJy4uLy4uLy4uL3NoYXJlZC9yZWFjdCc7XG5pbXBvcnQgJy4vU2Vjb25kRGlmZmVyZW5jZVBhZ2UuY3NzJztcblxuY29uc3QgemVybWF0dEltYWdlID0gbW9kdWxlQXNzZXRVcmwoJzM4Y2QxYzc5LWQ4YjctNDYyYS1iMjA4LWE1NjdjNWNkODljNCcsICdjYWllcm1hdGUucG5nJyk7XG5cbmludGVyZmFjZSBEaWZmZXJlbmNlSW1hZ2VzIHtcbiAgaW5wdXQ6IHN0cmluZztcbiAgZmlyc3Q6IHN0cmluZztcbiAgc2Vjb25kOiBzdHJpbmc7XG59XG5cbmZ1bmN0aW9uIHRvR3JheShwaXhlbHM6IFVpbnQ4Q2xhbXBlZEFycmF5LCB3aWR0aDogbnVtYmVyLCBoZWlnaHQ6IG51bWJlcikge1xuICBjb25zdCBncmF5ID0gbmV3IEZsb2F0MzJBcnJheSh3aWR0aCAqIGhlaWdodCk7XG4gIGZvciAobGV0IGluZGV4ID0gMDsgaW5kZXggPCBncmF5Lmxlbmd0aDsgaW5kZXggKz0gMSkge1xuICAgIGNvbnN0IG9mZnNldCA9IGluZGV4ICogNDtcbiAgICBncmF5W2luZGV4XSA9IChwaXhlbHNbb2Zmc2V0XSAqIDAuMjk5ICsgcGl4ZWxzW29mZnNldCArIDFdICogMC41ODcgKyBwaXhlbHNbb2Zmc2V0ICsgMl0gKiAwLjExNCkgLyAyNTU7XG4gIH1cbiAgcmV0dXJuIGdyYXk7XG59XG5cbmZ1bmN0aW9uIGRpZmZlcmVuY2UodmFsdWVzOiBGbG9hdDMyQXJyYXksIHdpZHRoOiBudW1iZXIsIGhlaWdodDogbnVtYmVyLCBrZXJuZWw6IG51bWJlcltdKSB7XG4gIGNvbnN0IG91dHB1dFdpZHRoID0gd2lkdGggLSBrZXJuZWwubGVuZ3RoICsgMTtcbiAgY29uc3Qgb3V0cHV0ID0gbmV3IEZsb2F0MzJBcnJheShvdXRwdXRXaWR0aCAqIGhlaWdodCk7XG4gIGZvciAobGV0IHJvdyA9IDA7IHJvdyA8IGhlaWdodDsgcm93ICs9IDEpIHtcbiAgICBmb3IgKGxldCBjb2wgPSAwOyBjb2wgPCBvdXRwdXRXaWR0aDsgY29sICs9IDEpIHtcbiAgICAgIGxldCBzdW0gPSAwO1xuICAgICAgZm9yIChsZXQga2VybmVsQ29sID0gMDsga2VybmVsQ29sIDwga2VybmVsLmxlbmd0aDsga2VybmVsQ29sICs9IDEpIHtcbiAgICAgICAgc3VtICs9IGtlcm5lbFtrZXJuZWxDb2xdICogdmFsdWVzW3JvdyAqIHdpZHRoICsgY29sICsga2VybmVsQ29sXTtcbiAgICAgIH1cbiAgICAgIG91dHB1dFtyb3cgKiBvdXRwdXRXaWR0aCArIGNvbF0gPSBzdW07XG4gICAgfVxuICB9XG4gIHJldHVybiB7IHZhbHVlczogb3V0cHV0LCB3aWR0aDogb3V0cHV0V2lkdGgsIGhlaWdodCB9O1xufVxuXG5mdW5jdGlvbiByZXNwb25zZVNjYWxlKHZhbHVlczogRmxvYXQzMkFycmF5KSB7XG4gIGNvbnN0IG1hZ25pdHVkZXMgPSBBcnJheS5mcm9tKHZhbHVlcywgKHZhbHVlKSA9PiBNYXRoLmFicyh2YWx1ZSkpLnNvcnQoKGEsIGIpID0+IGEgLSBiKTtcbiAgcmV0dXJuIE1hdGgubWF4KDAuMDIsIG1hZ25pdHVkZXNbTWF0aC5mbG9vcihtYWduaXR1ZGVzLmxlbmd0aCAqIDAuOTg1KV0gPz8gMC4wMik7XG59XG5cbmZ1bmN0aW9uIHJlbmRlckdyYXkodmFsdWVzOiBGbG9hdDMyQXJyYXksIHdpZHRoOiBudW1iZXIsIGhlaWdodDogbnVtYmVyLCBzY2FsZTogbnVtYmVyKSB7XG4gIGNvbnN0IGNhbnZhcyA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2NhbnZhcycpO1xuICBjYW52YXMud2lkdGggPSB3aWR0aDtcbiAgY2FudmFzLmhlaWdodCA9IGhlaWdodDtcbiAgY29uc3QgY29udGV4dCA9IGNhbnZhcy5nZXRDb250ZXh0KCcyZCcpO1xuICBpZiAoIWNvbnRleHQpIHJldHVybiAnJztcbiAgY29uc3Qgb3V0cHV0ID0gY29udGV4dC5jcmVhdGVJbWFnZURhdGEod2lkdGgsIGhlaWdodCk7XG4gIGZvciAobGV0IGluZGV4ID0gMDsgaW5kZXggPCB2YWx1ZXMubGVuZ3RoOyBpbmRleCArPSAxKSB7XG4gICAgY29uc3Qgc2hhZGUgPSBNYXRoLnJvdW5kKE1hdGgubWluKDEsIE1hdGguYWJzKHZhbHVlc1tpbmRleF0pIC8gc2NhbGUpICogMjU1KTtcbiAgICBjb25zdCBvZmZzZXQgPSBpbmRleCAqIDQ7XG4gICAgb3V0cHV0LmRhdGFbb2Zmc2V0XSA9IHNoYWRlO1xuICAgIG91dHB1dC5kYXRhW29mZnNldCArIDFdID0gc2hhZGU7XG4gICAgb3V0cHV0LmRhdGFbb2Zmc2V0ICsgMl0gPSBzaGFkZTtcbiAgICBvdXRwdXQuZGF0YVtvZmZzZXQgKyAzXSA9IDI1NTtcbiAgfVxuICBjb250ZXh0LnB1dEltYWdlRGF0YShvdXRwdXQsIDAsIDApO1xuICByZXR1cm4gY2FudmFzLnRvRGF0YVVSTCgnaW1hZ2UvcG5nJyk7XG59XG5cbmZ1bmN0aW9uIGJ1aWxkRGlmZmVyZW5jZUltYWdlcyhpbWFnZTogSFRNTEltYWdlRWxlbWVudCk6IERpZmZlcmVuY2VJbWFnZXMgfCBudWxsIHtcbiAgY29uc3Qgd2lkdGggPSA1NjA7XG4gIGNvbnN0IGhlaWdodCA9IE1hdGgubWF4KDEsIE1hdGgucm91bmQod2lkdGggKiBpbWFnZS5uYXR1cmFsSGVpZ2h0IC8gaW1hZ2UubmF0dXJhbFdpZHRoKSk7XG4gIGNvbnN0IHNvdXJjZSA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2NhbnZhcycpO1xuICBzb3VyY2Uud2lkdGggPSB3aWR0aDtcbiAgc291cmNlLmhlaWdodCA9IGhlaWdodDtcbiAgY29uc3Qgc291cmNlQ29udGV4dCA9IHNvdXJjZS5nZXRDb250ZXh0KCcyZCcsIHsgd2lsbFJlYWRGcmVxdWVudGx5OiB0cnVlIH0pO1xuICBpZiAoIXNvdXJjZUNvbnRleHQpIHJldHVybiBudWxsO1xuICBzb3VyY2VDb250ZXh0LmRyYXdJbWFnZShpbWFnZSwgMCwgMCwgd2lkdGgsIGhlaWdodCk7XG4gIGNvbnN0IGlucHV0ID0gdG9HcmF5KHNvdXJjZUNvbnRleHQuZ2V0SW1hZ2VEYXRhKDAsIDAsIHdpZHRoLCBoZWlnaHQpLmRhdGEsIHdpZHRoLCBoZWlnaHQpO1xuICBjb25zdCBmaXJzdCA9IGRpZmZlcmVuY2UoaW5wdXQsIHdpZHRoLCBoZWlnaHQsIFstMSwgMV0pO1xuICBjb25zdCBzZWNvbmQgPSBkaWZmZXJlbmNlKGZpcnN0LnZhbHVlcywgZmlyc3Qud2lkdGgsIGZpcnN0LmhlaWdodCwgWy0xLCAxXSk7XG4gIHJldHVybiB7XG4gICAgaW5wdXQ6IHNvdXJjZS50b0RhdGFVUkwoJ2ltYWdlL3BuZycpLFxuICAgIGZpcnN0OiByZW5kZXJHcmF5KGZpcnN0LnZhbHVlcywgZmlyc3Qud2lkdGgsIGZpcnN0LmhlaWdodCwgcmVzcG9uc2VTY2FsZShmaXJzdC52YWx1ZXMpKSxcbiAgICBzZWNvbmQ6IHJlbmRlckdyYXkoc2Vjb25kLnZhbHVlcywgc2Vjb25kLndpZHRoLCBzZWNvbmQuaGVpZ2h0LCByZXNwb25zZVNjYWxlKHNlY29uZC52YWx1ZXMpKSxcbiAgfTtcbn1cblxuZnVuY3Rpb24gdXNlRGlmZmVyZW5jZUltYWdlcygpIHtcbiAgY29uc3QgW2ltYWdlcywgc2V0SW1hZ2VzXSA9IHVzZVN0YXRlPERpZmZlcmVuY2VJbWFnZXMgfCBudWxsPihudWxsKTtcbiAgdXNlRWZmZWN0KCgpID0+IHtcbiAgICBsZXQgYWN0aXZlID0gdHJ1ZTtcbiAgICBjb25zdCBpbWFnZSA9IG5ldyBJbWFnZSgpO1xuICAgIGltYWdlLm9ubG9hZCA9ICgpID0+IHtcbiAgICAgIGlmIChhY3RpdmUpIHNldEltYWdlcyhidWlsZERpZmZlcmVuY2VJbWFnZXMoaW1hZ2UpKTtcbiAgICB9O1xuICAgIGltYWdlLnNyYyA9IHplcm1hdHRJbWFnZTtcbiAgICByZXR1cm4gKCkgPT4geyBhY3RpdmUgPSBmYWxzZTsgfTtcbiAgfSwgW10pO1xuICByZXR1cm4gaW1hZ2VzO1xufVxuXG5mdW5jdGlvbiBTdGVwSGVhZGVyKHsgbnVtYmVyLCBjaGlsZHJlbiB9OiB7IG51bWJlcjogc3RyaW5nOyBjaGlsZHJlbjogUmVhY3ROb2RlIH0pIHtcbiAgcmV0dXJuIChcbiAgICA8aGVhZGVyIGNsYXNzTmFtZT1cImNrLXNlY29uZF9fc3RlcC1oZWFkZXJcIj5cbiAgICAgIDxUeXBvZ3JhcGh5IGFzPVwic3BhblwiIHZhcmlhbnQ9XCJoM1wiIHRvbmU9XCJsaWdodFwiIGNsYXNzTmFtZT1cImNrLXNlY29uZF9fc3RlcC1udW1iZXJcIj57bnVtYmVyfTwvVHlwb2dyYXBoeT5cbiAgICAgIDxUeXBvZ3JhcGh5IGFzPVwiaDJcIiB2YXJpYW50PVwiaDNcIiB0b25lPVwiYWNjZW50XCI+e2NoaWxkcmVufTwvVHlwb2dyYXBoeT5cbiAgICA8L2hlYWRlcj5cbiAgKTtcbn1cblxuZnVuY3Rpb24gU2lnbmFsKHsgdmFsdWVzLCB0b25lID0gJycgfTogeyB2YWx1ZXM6IHN0cmluZ1tdOyB0b25lPzogc3RyaW5nIH0pIHtcbiAgcmV0dXJuIChcbiAgICA8ZGl2IGNsYXNzTmFtZT17YGNrLXNlY29uZF9fc2lnbmFsICR7dG9uZX1gfSByb2xlPVwiaW1nXCIgYXJpYS1sYWJlbD17dmFsdWVzLmpvaW4oJ++8jCcpfT5cbiAgICAgIHt2YWx1ZXMubWFwKCh2YWx1ZSwgaW5kZXgpID0+IDxUeXBvZ3JhcGh5IGFzPVwic3BhblwiIHZhcmlhbnQ9XCJib2R5U21hbGxcIiB0b25lPVwiYWNjZW50XCIga2V5PXtgJHt2YWx1ZX0tJHtpbmRleH1gfT57dmFsdWV9PC9UeXBvZ3JhcGh5Pil9XG4gICAgPC9kaXY+XG4gICk7XG59XG5cbmZ1bmN0aW9uIERpZmZlcmVuY2VJbWFnZSh7IHNyYywgYWx0LCBjbGFzc05hbWUgPSAnJyB9OiB7IHNyYz86IHN0cmluZzsgYWx0OiBzdHJpbmc7IGNsYXNzTmFtZT86IHN0cmluZyB9KSB7XG4gIHJldHVybiBzcmNcbiAgICA/IDxpbWcgY2xhc3NOYW1lPXtgY2stc2Vjb25kX19pbWFnZSAke2NsYXNzTmFtZX1gfSBzcmM9e3NyY30gYWx0PXthbHR9IC8+XG4gICAgOiA8ZGl2IGNsYXNzTmFtZT17YGNrLXNlY29uZF9faW1hZ2UtbG9hZGluZyAke2NsYXNzTmFtZX1gfSByb2xlPVwiaW1nXCIgYXJpYS1sYWJlbD17YCR7YWx0feato+WcqOiuoeeul2B9IC8+O1xufVxuXG5mdW5jdGlvbiBEaWZmZXJlbmNlRm9ybXVsYSh7IG9yZGVyIH06IHsgb3JkZXI6IDEgfCAyIH0pIHtcbiAgY29uc3QgaW5wdXQgPSBvcmRlciA9PT0gMSA/ICdJJyA6ICdEXnsoMSl9JztcbiAgcmV0dXJuIChcbiAgICA8TWF0aEZvcm11bGFCbG9jayBhcmlhTGFiZWw9e2Ake29yZGVyID09PSAxID8gJ+S4gOmYticgOiAn5LqM6Zi2J33lt67liIblhazlvI9gfSBjbGFzc05hbWU9XCJjay1zZWNvbmRfX2Zvcm11bGFcIj5cbiAgICAgIDxNYXRoRm9ybXVsYVRlcm0gbGF0ZXg9e2BEXnsoJHtvcmRlcn0pfWB9IHRvb2x0aXA9e2BEIOeahOS4iuaghyAke29yZGVyfe+8muesrCAke29yZGVyfSDmrKHlt67liIbnmoTnu5PmnpzjgIJgfSBhcmlhTGFiZWw9e2DnrKwgJHtvcmRlcn0g5qyh5beu5YiG55qE57uT5p6cYH0gLz5cbiAgICAgIDxNYXRoRm9ybXVsYVN0YXRpYyBsYXRleD1cIj1cIiAvPlxuICAgICAgPE1hdGhGb3JtdWxhVGVybSBsYXRleD17aW5wdXR9IHRvb2x0aXA9e29yZGVyID09PSAxID8gJ0nvvJrovpPlhaXnmoTngbDluqblm77lg4/jgIInIDogJ0Qg55qE5LiK5qCHIDHvvJrlt7Lnu4/orqHnrpflh7rnmoTkuIDpmLblt67liIbjgIInfSBhcmlhTGFiZWw9e29yZGVyID09PSAxID8gJ+i+k+WFpeeBsOW6puWbvuWDjycgOiAn5LiA6Zi25beu5YiG57uT5p6cJ30gLz5cbiAgICAgIDxNYXRoRm9ybXVsYVRlcm0gbGF0ZXg9XCIqXCIgdG9vbHRpcD1cIuWwhuebuOmCu+S9jee9ruS4juW3ruWIhuaguOWvueW6lOebuOS5mOW5tuaxguWSjOOAglwiIGFyaWFMYWJlbD1cIuW6lOeUqOW3ruWIhuaguFwiIC8+XG4gICAgICA8TWF0aEZvcm11bGFTdGF0aWMgbGF0ZXg9XCJbXCIgLz5cbiAgICAgIDxNYXRoRm9ybXVsYVRlcm0gbGF0ZXg9XCItMVwiIHRvb2x0aXA9XCLiiJIx77ya5YeP5Y675b2T5YmN5YOP57Sg5YC844CCXCIgYXJpYUxhYmVsPVwi6LSf5LiA77yM5YeP5Y675b2T5YmN5YOP57Sg5YC8XCIgLz5cbiAgICAgIDxNYXRoRm9ybXVsYVRlcm0gbGF0ZXg9XCIxXCIgdG9vbHRpcD1cIjHvvJrliqDkuIrlj7Pkvqfnm7jpgrvlg4/ntKDlgLzjgIJcIiBhcmlhTGFiZWw9XCLmraPkuIDvvIzliqDkuIrlj7Pkvqfnm7jpgrvlg4/ntKDlgLxcIiBjbGFzc05hbWU9XCJjay1zZWNvbmRfX2tlcm5lbC1uZXh0XCIgLz5cbiAgICAgIDxNYXRoRm9ybXVsYVN0YXRpYyBsYXRleD1cIl1cIiAvPlxuICAgIDwvTWF0aEZvcm11bGFCbG9jaz5cbiAgKTtcbn1cblxuZXhwb3J0IGZ1bmN0aW9uIFNlY29uZERpZmZlcmVuY2VQYWdlKCkge1xuICBjb25zdCBpbWFnZXMgPSB1c2VEaWZmZXJlbmNlSW1hZ2VzKCk7XG4gIHJldHVybiAoXG4gICAgPENvbnRlbnRCbG9jayBoZWFkaW5nTGV2ZWw9ezF9IGNsYXNzTmFtZT1cImNrLXNlY29uZFwiIHRpdGxlPVwi5LqM6Zi25beu5YiG77ya5Y+Y5YyW5aaC5L2V57un57ut5Y+Y5YyWXCIgc3VidGl0bGU9XCLkuIDpmLblt67liIbmj4/ov7DlsYDpg6jlj5jljJbvvIzkuozpmLblt67liIbov5vkuIDmraXmj4/ov7Dlj5jljJbnjofmmK/lkKblj5HnlJ/nqoHlj5jjgIJcIj5cbiAgICAgIDxkaXYgY2xhc3NOYW1lPVwiY2stc2Vjb25kX19sYXlvdXRcIj5cbiAgICAgICAgPGFydGljbGUgY2xhc3NOYW1lPVwiY2stc2Vjb25kX19wYW5lbCBjay1zZWNvbmRfX3BhbmVsLS1pbnB1dFwiPlxuICAgICAgICAgIDxTdGVwSGVhZGVyIG51bWJlcj1cIjFcIj7ljp/lm74gPE1hdGhGb3JtdWxhU3RhdGljIGxhdGV4PVwiSVwiIC8+PC9TdGVwSGVhZGVyPlxuICAgICAgICAgIDxEaWZmZXJlbmNlSW1hZ2Ugc3JjPXtpbWFnZXM/LmlucHV0fSBhbHQ9XCLph4flsJTpqaznibnlsbHpl7Tlu7rnrZHnmoTngbDluqbljp/lm75cIiBjbGFzc05hbWU9XCJjay1zZWNvbmRfX2ltYWdlLS1pbnB1dFwiIC8+XG4gICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJjay1zZWNvbmRfX2V4cGxhbmF0aW9uXCI+PFR5cG9ncmFwaHkgdmFyaWFudD1cImJvZHlcIiB0b25lPVwiYWNjZW50XCI+5YOP57Sg5YC85pys6LqrPC9UeXBvZ3JhcGh5PjxUeXBvZ3JhcGh5IHZhcmlhbnQ9XCJib2R5XCIgdG9uZT1cImFjY2VudFwiPuS4jeebtOaOpeihqOekuuWPmOWMljwvVHlwb2dyYXBoeT48L2Rpdj5cbiAgICAgICAgPC9hcnRpY2xlPlxuICAgICAgICA8VHlwb2dyYXBoeSBhcz1cInNwYW5cIiB2YXJpYW50PVwiaDFcIiB0b25lPVwiYWNjZW50XCIgY2xhc3NOYW1lPVwiY2stc2Vjb25kX19hcnJvd1wiIGFyaWEtaGlkZGVuPVwidHJ1ZVwiPuKGkjwvVHlwb2dyYXBoeT5cbiAgICAgICAgPGFydGljbGUgY2xhc3NOYW1lPVwiY2stc2Vjb25kX19wYW5lbCBjay1zZWNvbmRfX3BhbmVsLS1kaWZmZXJlbmNlXCI+XG4gICAgICAgICAgPFN0ZXBIZWFkZXIgbnVtYmVyPVwiMlwiPuS4gOmYtuW3ruWIhjwvU3RlcEhlYWRlcj5cbiAgICAgICAgICA8RGlmZmVyZW5jZUZvcm11bGEgb3JkZXI9ezF9IC8+XG4gICAgICAgICAgPERpZmZlcmVuY2VJbWFnZSBzcmM9e2ltYWdlcz8uZmlyc3R9IGFsdD1cIumHh+WwlOmprOeJueW7uuetkeWxgOmDqOeahOS4gOmYtuW3ruWIhuWbvlwiIGNsYXNzTmFtZT1cImNrLXNlY29uZF9faW1hZ2UtLWZpcnN0XCIgLz5cbiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImNrLXNlY29uZF9fZXhwbGFuYXRpb25cIj48VHlwb2dyYXBoeSB2YXJpYW50PVwiYm9keVwiIHRvbmU9XCJhY2NlbnRcIj7mr5TovoPnm7jpgrvlg4/ntKDvvIzmj4/ov7Dlj5jljJblvLrlvLHvvJs8YnIgLz7luLjnqoHlh7rovrnnvJjjgII8L1R5cG9ncmFwaHk+PC9kaXY+XG4gICAgICAgIDwvYXJ0aWNsZT5cbiAgICAgICAgPFR5cG9ncmFwaHkgYXM9XCJzcGFuXCIgdmFyaWFudD1cImgxXCIgdG9uZT1cImFjY2VudFwiIGNsYXNzTmFtZT1cImNrLXNlY29uZF9fYXJyb3dcIiBhcmlhLWhpZGRlbj1cInRydWVcIj7ihpI8L1R5cG9ncmFwaHk+XG4gICAgICAgIDxhcnRpY2xlIGNsYXNzTmFtZT1cImNrLXNlY29uZF9fcGFuZWwgY2stc2Vjb25kX19wYW5lbC0tZGlmZmVyZW5jZVwiPlxuICAgICAgICAgIDxTdGVwSGVhZGVyIG51bWJlcj1cIjNcIj7kuozpmLblt67liIY8L1N0ZXBIZWFkZXI+XG4gICAgICAgICAgPERpZmZlcmVuY2VGb3JtdWxhIG9yZGVyPXsyfSAvPlxuICAgICAgICAgIDxEaWZmZXJlbmNlSW1hZ2Ugc3JjPXtpbWFnZXM/LnNlY29uZH0gYWx0PVwi6YeH5bCU6ams54m55bu6562R5bGA6YOo55qE5LqM6Zi25beu5YiG5Zu+XCIgY2xhc3NOYW1lPVwiY2stc2Vjb25kX19pbWFnZS0tc2Vjb25kXCIgLz5cbiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImNrLXNlY29uZF9fZXhwbGFuYXRpb25cIj48VHlwb2dyYXBoeSB2YXJpYW50PVwiYm9keVwiIHRvbmU9XCJhY2NlbnRcIj7lho3mrKHmsYLlt67vvIzop4Llr5/lj5jljJbnjofnqoHlj5jvvJs8YnIgLz7lr7nlsJbplJDovrnnvJjmm7TmlY/mhJ/jgII8L1R5cG9ncmFwaHk+PC9kaXY+XG4gICAgICAgIDwvYXJ0aWNsZT5cbiAgICAgIDwvZGl2PlxuICAgICAgPHNlY3Rpb24gY2xhc3NOYW1lPVwiY2stc2Vjb25kX19leGFtcGxlXCIgYXJpYS1sYWJlbD1cIuS4gOe7tOS/oeWPt+eahOS4pOasoeW3ruWIhuekuuS+i1wiPlxuICAgICAgICA8VHlwb2dyYXBoeSB2YXJpYW50PVwiaDNcIiB0b25lPVwibGlnaHRcIiBjbGFzc05hbWU9XCJjay1zZWNvbmRfX2V4YW1wbGUtYmFkZ2VcIj7kuIDnu7TnpLrkvos8L1R5cG9ncmFwaHk+XG4gICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiY2stc2Vjb25kX19leGFtcGxlLXNpZ25hbHNcIj5cbiAgICAgICAgICA8ZGl2PjxUeXBvZ3JhcGh5IHZhcmlhbnQ9XCJib2R5U21hbGxcIiB0b25lPVwiYWNjZW50XCI+5Y6f5aeL5L+h5Y+3IDxNYXRoRm9ybXVsYVN0YXRpYyBsYXRleD1cImYoeClcIiAvPu+8mjwvVHlwb2dyYXBoeT48U2lnbmFsIHZhbHVlcz17WycyJywgJzInLCAnMicsICc4JywgJzgnLCAnOCddfSAvPjwvZGl2PlxuICAgICAgICAgIDxkaXY+PFR5cG9ncmFwaHkgdmFyaWFudD1cImJvZHlTbWFsbFwiIHRvbmU9XCJhY2NlbnRcIj7kuIDpmLblt67liIYgPE1hdGhGb3JtdWxhU3RhdGljIGxhdGV4PVwiRF57KDEpfVwiIC8+77yaPC9UeXBvZ3JhcGh5PjxTaWduYWwgdmFsdWVzPXtbJzAnLCAnMCcsICcrNicsICcwJywgJzAnXX0gdG9uZT1cImlzLWZpcnN0XCIgLz48L2Rpdj5cbiAgICAgICAgICA8ZGl2PjxUeXBvZ3JhcGh5IHZhcmlhbnQ9XCJib2R5U21hbGxcIiB0b25lPVwiYWNjZW50XCI+5LqM6Zi25beu5YiGIDxNYXRoRm9ybXVsYVN0YXRpYyBsYXRleD1cIkReeygyKX1cIiAvPu+8mjwvVHlwb2dyYXBoeT48U2lnbmFsIHZhbHVlcz17WycwJywgJys2JywgJ+KIkjYnLCAnMCddfSB0b25lPVwiaXMtc2Vjb25kXCIgLz48L2Rpdj5cbiAgICAgICAgPC9kaXY+XG4gICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiY2stc2Vjb25kX19leGFtcGxlLXRha2Vhd2F5XCI+PFR5cG9ncmFwaHkgdmFyaWFudD1cImJvZHlcIiB0b25lPVwiYWNjZW50XCI+5LiA6Zi25beu5YiG5om+5ZOq6YeMPHN0cm9uZz7lvIDlp4vlj5g8L3N0cm9uZz7vvIw8L1R5cG9ncmFwaHk+PFR5cG9ncmFwaHkgdmFyaWFudD1cImJvZHlcIiB0b25lPVwiYWNjZW50XCI+5LqM6Zi25beu5YiG55yL5Y+Y5YyW5Zyo5ZOq6YeMPHN0cm9uZz7nqoHnhLblj5HnlJ88L3N0cm9uZz7jgII8L1R5cG9ncmFwaHk+PC9kaXY+XG4gICAgICA8L3NlY3Rpb24+XG4gICAgICA8Zm9vdGVyIGNsYXNzTmFtZT1cImNrLXNlY29uZF9fc3VtbWFyeVwiPlxuICAgICAgICA8VHlwb2dyYXBoeSBhcz1cInNwYW5cIiB2YXJpYW50PVwiaDNcIiB0b25lPVwiYWNjZW50XCI+5oC757uT77yaPC9UeXBvZ3JhcGh5PlxuICAgICAgICA8VHlwb2dyYXBoeSB2YXJpYW50PVwiYm9keVwiPuS4gOmYtuW3ruWIhueci+WxgOmDqOWPmOWMlu+8jOS6jOmYtuW3ruWIhueci+WPmOWMlueOh+WmguS9leWPmOWMluOAguWJjeiAheW8uuiwg+KAnOacieayoeacieWPmOWMluKAne+8jOWQjuiAheW8uuiwg+KAnOWPmOWMluaYr+WQpueqgeWPmOKAneOAgjwvVHlwb2dyYXBoeT5cbiAgICAgIDwvZm9vdGVyPlxuICAgIDwvQ29udGVudEJsb2NrPlxuICApO1xufVxuIl0sImZpbGUiOiJDOi9Vc2Vycy9PY2Vhbi9Eb2N1bWVudHMvR2l0SHViL2ludHVpdGl2ZS1kZWVwLWxlYXJuaW5nL21vZHVsZXMvQ29udm9sdXRpb24tS2VybmVsLUludHJvL3BhZ2VzL1NlY29uZERpZmZlcmVuY2VQYWdlL1NlY29uZERpZmZlcmVuY2VQYWdlLnRzeCJ9

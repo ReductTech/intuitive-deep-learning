@@ -29,7 +29,7 @@ mimetypes.add_type("model/gltf+json", ".gltf")
 SCRIPT_DIR = Path(__file__).resolve().parent
 SKILL_DIR = SCRIPT_DIR.parent
 DEFAULT_MODULES_DIR = SKILL_DIR / "modules"
-DEFAULT_DATASET_DIR = SKILL_DIR / "dataset"
+DEFAULT_DATASET_DIR = SKILL_DIR / "assets" / "dataset"
 DEFAULT_HISTORY_DIR = SKILL_DIR / "history"
 TELEMETRY_PATH = "/__telemetry/events"
 TELEMETRY_BOOTSTRAP_PATH = "/__telemetry/bootstrap"

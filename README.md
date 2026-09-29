@@ -88,8 +88,7 @@ bash scripts/run-lesson-page.sh --stop
 
 ```text
 .
-├── assets/                 # README 与课程文档使用的静态图片
-├── dataset/                # 示例数据与数据集挂载配置
+├── assets/                 # 课程静态资源，数据集存放在 assets/dataset/
 ├── examples/               # 课程配套示例
 ├── modules/                # 互动课程模块与公共前端资源
 ├── references/             # 模块设计和维护参考资料

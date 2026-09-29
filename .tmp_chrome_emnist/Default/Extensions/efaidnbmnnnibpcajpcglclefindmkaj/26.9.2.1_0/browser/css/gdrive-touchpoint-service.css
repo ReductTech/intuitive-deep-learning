@@ -1,0 +1,18 @@
+/*************************************************************************
+* ADOBE CONFIDENTIAL
+* ___________________
+*
+*  Copyright 2015 Adobe Systems Incorporated
+*  All Rights Reserved.
+*
+* NOTICE:  All information contained herein is, and remains
+* the property of Adobe Systems Incorporated and its suppliers,
+* if any.  The intellectual and technical concepts contained
+* herein are proprietary to Adobe Systems Incorporated and its
+* suppliers and are protected by all applicable intellectual property laws,
+* including trade secret and or copyright laws.
+* Dissemination of this information or reproduction of this material
+* is strictly forbidden unless prior written permission is obtained
+* from Adobe Systems Incorporated.
+**************************************************************************/
+.acrobat-gdrive-touch-point{align-items:center;background-color:#b30c00;border-radius:4px;box-sizing:border-box;color:#fff;display:none;font-size:12px;font-weight:400;height:17.78px;justify-content:center;margin:3px 3px 3px 8px;text-decoration:none;width:18px}.acrobat-gdrive-touch-point-GoogleDriveListView{align-self:center;bottom:6px;left:-44px}.acrobat-gdrive-touch-point-GoogleDriveGridView{bottom:0;position:absolute;right:0}.acrobat-gdrive-touch-point-GoogleDriveGridView-pdfFileHost{bottom:10px;position:absolute;right:10px}.acrobat-gdrive-touch-point-GoogleDriveGridView-home{position:relative}.acrobat-gdrive-touch-point-GoogleDriveGridView-recent{bottom:8px;position:absolute;right:8px}.acrobat-gdrive-touch-point:hover{background-color:#930000}.acrobat-gdrive-touch-point:hover>.acrobat-gdrive-touch-point-tooltip{display:block}.acrobat-gdrive-touch-point-tooltip{background:#6d6d6d;border:4px solid transparent;border-bottom-color:#6d6d6d;border-radius:4px;color:#fff;display:none;font-family:AdobeClean-Regular,Source Sans Pro,"system-ui";font-size:12px;font-weight:500;line-height:18px;margin-left:-4px;padding:0 4px 0 5px;pointer-events:none;position:absolute;text-align:center;text-wrap:nowrap;width:fit-content}.acrobat-gdrive-touch-point-tooltip-arrow{border-bottom:7px solid #6d6d6d;border-left:4px solid transparent;border-right:4px solid transparent;left:40px;position:absolute;top:-10px}.acrobat-gdrive-icon{display:block;height:11.13px;margin:4px;vertical-align:middle!important;width:11.19px}.acrobat-gdrive-tooltip-hover,.acrobat-gdrive-touchpoint-hover,.acrobat-gdrive-touchpoint-visible{display:flex!important}

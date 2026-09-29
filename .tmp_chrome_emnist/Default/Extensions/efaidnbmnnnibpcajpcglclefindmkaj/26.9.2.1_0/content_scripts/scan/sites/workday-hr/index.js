@@ -1,0 +1,18 @@
+/*************************************************************************
+* ADOBE CONFIDENTIAL
+* ___________________
+*
+*  Copyright 2015 Adobe Systems Incorporated
+*  All Rights Reserved.
+*
+* NOTICE:  All information contained herein is, and remains
+* the property of Adobe Systems Incorporated and its suppliers,
+* if any.  The intellectual and technical concepts contained
+* herein are proprietary to Adobe Systems Incorporated and its
+* suppliers and are protected by all applicable intellectual property laws,
+* including trade secret and or copyright laws.
+* Dissemination of this information or reproduction of this material
+* is strictly forbidden unless prior written permission is obtained
+* from Adobe Systems Incorporated.
+**************************************************************************/
+"use strict";class WorkdayHRSite{config={disabled:!1,minExtensionVersion:null,minChromeVersion:null,minEdgeVersion:null,selector:'input[data-automation-id="uploadElement"]',guardSelector:'div[data-automation-id="dragDropTarget"]',uploadRowSelector:'div[data-automation-id="uploadRow"]',rowStyle:"display:block;margin-top:4px;",containerStyle:"display:inline-flex;vertical-align:middle;",themeStyles:{btn:"background: transparent;"}};constructor(){this.INJECTED_ATTR=magicScanCore.INJECTED_ATTR,this.inputButtonMap=new Map,this.domObserver=null}async run(){await magicScanCore.init()&&(this.config={...this.config,...magicScanCore.siteConfig??{}},!this.config.disabled&&magicScanCore.meetsMinVersions(this.config)&&(this.domObserver=magicScanCore.observeDOM(()=>this.scanAndInject()),this.scanAndInject()))}scanAndInject(){if(!document.querySelector(this.config.guardSelector))return void document.querySelectorAll(`${this.config.selector}[${this.INJECTED_ATTR}]`).forEach(t=>{this.inputButtonMap.has(t)&&(this.removeButton(t),t.removeAttribute(this.INJECTED_ATTR))});const t=document.querySelector(`${this.config.selector}:not([${this.INJECTED_ATTR}])`);t&&this.injectButton(t)}injectButton(t){if(this.inputButtonMap.has(t))return;const e=t.getBoundingClientRect();if(0===e.width&&0===e.height)return;const n=document.createElement("div");n.style.cssText=this.config.rowStyle,n.dataset.magicScanRow="1",t.insertAdjacentElement("afterend",n);const i=document.createElement("span");i.style.cssText=this.config.containerStyle,n.appendChild(i),magicScanCore.renderButton(i,{isDarkMode:!1,themeStyles:this.config.themeStyles,selector:this.config.selector,inputButtonMap:this.inputButtonMap,onFileClear:()=>this.watchForFileClear(t),onHide:()=>this.cleanup()}),this.inputButtonMap.set(t,i),t.setAttribute(this.INJECTED_ATTR,"true"),this.setupNativeFileSelectListener(t,()=>{this.removeButton(t),this.watchForFileClear(t)})}cleanup(){this.domObserver?.disconnect(),this.removeAllButtons()}removeButton(t){const e=this.inputButtonMap.get(t);e&&(e.parentElement?.remove(),this.inputButtonMap.delete(t))}removeAllButtons(){this.inputButtonMap.forEach((t,e)=>{e.removeAttribute(this.INJECTED_ATTR),t.parentElement?.remove()}),this.inputButtonMap.clear()}setupNativeFileSelectListener(t,e){const n=()=>{t.files.length&&(t.removeEventListener("change",n),this.inputButtonMap.has(t)&&e())};t.addEventListener("change",n)}watchForFileClear(t){let e=!!document.querySelector(this.config.uploadRowSelector);const n=new MutationObserver(()=>{const i=!!document.querySelector(this.config.uploadRowSelector);!i&&e&&(n.disconnect(),t.removeAttribute(this.INJECTED_ATTR),this.scanAndInject()),e=i});n.observe(document.body,{childList:!0,subtree:!0})}}const workdayHRSite=new WorkdayHRSite;workdayHRSite.run();

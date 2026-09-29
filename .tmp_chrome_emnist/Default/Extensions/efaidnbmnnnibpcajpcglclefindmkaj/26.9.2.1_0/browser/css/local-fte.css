@@ -1,0 +1,18 @@
+/*************************************************************************
+* ADOBE CONFIDENTIAL
+* ___________________
+*
+*  Copyright 2015 Adobe Systems Incorporated
+*  All Rights Reserved.
+*
+* NOTICE:  All information contained herein is, and remains
+* the property of Adobe Systems Incorporated and its suppliers,
+* if any.  The intellectual and technical concepts contained
+* herein are proprietary to Adobe Systems Incorporated and its
+* suppliers and are protected by all applicable intellectual property laws,
+* including trade secret and or copyright laws.
+* Dissemination of this information or reproduction of this material
+* is strictly forbidden unless prior written permission is obtained
+* from Adobe Systems Incorporated.
+**************************************************************************/
+@font-face{font-family:AdobeClean-Regular;src:url(fonts/AdobeClean-Regular.otf) format("opentype")}@font-face{font-family:AdobeClean-Bold;src:url(fonts/AdobeClean-Bold.otf) format("opentype")}.acrobat-only-local-fte{background:#fff;border-radius:4px;height:auto;left:50%;overflow:hidden;position:absolute;top:50%;transform:translate(-50%,-50%);width:576px}#local-file-animated-fte{background-size:cover;height:240px;margin-bottom:32px;margin-top:16px;width:512px}.transparent-background{background:#323639 0 0 no-repeat padding-box;height:100%;left:0;opacity:.8;position:absolute;top:0;width:100%}.local-fte-dialog{display:flex;flex-direction:column;margin:32px}.local-fte-dialog .title{color:#000;font-family:AdobeClean-Bold;font-size:18px}.local-fte-dialog .seperator{background-color:#eaeaea;height:1px;margin-bottom:16px;margin-top:12px;width:516px}.local-fte-dialog .description{color:#222;font-family:AdobeClean-Regular;font-size:14px}.local-fte-dialog .buttons{display:flex;height:auto;justify-content:space-between}.local-fte-dialog .dontShowAgain{display:flex;gap:5px;margin-bottom:8px;margin-top:8px}.local-fte-dialog .dontShowAgainText{color:#222;font-family:AdobeClean-Regular;font-size:14px}.local-fte-dialog .close-button{background-image:url(../images/s_crosslarge_18_n.svg);background-position:50%;background-repeat:no-repeat;height:28px;position:absolute;right:18px;top:18px;width:28px}.local-fte-dialog .close-button:hover{filter:brightness(30%)}

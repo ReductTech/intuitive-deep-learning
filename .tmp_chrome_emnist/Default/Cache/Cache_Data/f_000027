@@ -1,0 +1,354 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=2be87a0d"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+var _s = $RefreshSig$();
+import __vite__cjsImport3_react from "/node_modules/.vite/deps/react.js?v=2be87a0d"; const useState = __vite__cjsImport3_react["useState"];
+import { ContentBlock, MathFormulaStatic, Typography } from "/modules/shared/react/index.ts";
+import "/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.css";
+const KERNEL = [[1, -1], [1, -1]];
+const PATTERNS = [
+  { id: "left-bright", label: "左亮右暗", values: [[8, 2], [8, 2]] },
+  { id: "right-bright", label: "左暗右亮", values: [[2, 8], [2, 8]] },
+  { id: "equal", label: "左右相等", values: [[5, 5], [5, 5]] }
+];
+function Matrix({ values, kind, label }) {
+  return /* @__PURE__ */ jsxDEV("div", { className: `ck-weighted__matrix ck-weighted__matrix--${kind}`, role: "img", "aria-label": label, children: values.flatMap((row, rowIndex) => row.map((value, colIndex) => /* @__PURE__ */ jsxDEV("div", { className: `ck-weighted__cell ${kind === "input" ? value > 5 ? "is-bright" : value < 5 ? "is-dark" : "is-neutral" : value < 0 ? "is-negative" : "is-positive"}`, children: /* @__PURE__ */ jsxDEV(MathFormulaStatic, { latex: String(value) }, void 0, false, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+    lineNumber: 33,
+    columnNumber: 267
+  }, this) }, `${rowIndex}-${colIndex}`, false, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+    lineNumber: 33,
+    columnNumber: 69
+  }, this))) }, void 0, false, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+    lineNumber: 32,
+    columnNumber: 10
+  }, this);
+}
+_c = Matrix;
+export function WeightedKernelPage() {
+  _s();
+  const [patternId, setPatternId] = useState("left-bright");
+  const pattern = PATTERNS.find((item) => item.id === patternId) ?? PATTERNS[0];
+  const [[topLeft, topRight], [bottomLeft, bottomRight]] = pattern.values;
+  const output = topLeft - topRight + (bottomLeft - bottomRight);
+  const activeIndex = output < 0 ? 0 : output > 0 ? 2 : 1;
+  const interpretation = output < 0 ? "右边比左边更亮。" : output > 0 ? "左边比右边更亮。" : "左右亮度相同。";
+  const markerStyle = { left: `${50 + Math.max(-12, Math.min(12, output)) / 12 * 43}%` };
+  return /* @__PURE__ */ jsxDEV(ContentBlock, { headingLevel: 1, className: "ck-weighted", title: "权重决定局部响应", subtitle: "每个位置的输入按对应权重参与求和；符号、大小和排列共同决定输出。", children: /* @__PURE__ */ jsxDEV("div", { className: "ck-weighted__body", children: [
+    /* @__PURE__ */ jsxDEV("section", { className: "ck-weighted__concepts", "aria-label": "权重的三个作用", children: [
+      /* @__PURE__ */ jsxDEV("div", { className: "ck-weighted__concept", children: [
+        /* @__PURE__ */ jsxDEV("span", { className: "ck-weighted__concept-icon", "aria-hidden": "true", children: "±" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+          lineNumber: 49,
+          columnNumber: 47
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { children: [
+          /* @__PURE__ */ jsxDEV(Typography, { as: "h2", variant: "h3", tone: "accent", children: "符号" }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+            lineNumber: 49,
+            columnNumber: 123
+          }, this),
+          /* @__PURE__ */ jsxDEV(Typography, { variant: "bodySmall", tone: "muted", children: "w > 0 加入，w < 0 减去，w = 0 忽略" }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+            lineNumber: 49,
+            columnNumber: 185
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+          lineNumber: 49,
+          columnNumber: 118
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+        lineNumber: 49,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV("div", { className: "ck-weighted__concept", children: [
+        /* @__PURE__ */ jsxDEV("span", { className: "ck-weighted__concept-icon", "aria-hidden": "true", children: "▂▅▇" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+          lineNumber: 50,
+          columnNumber: 47
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { children: [
+          /* @__PURE__ */ jsxDEV(Typography, { as: "h2", variant: "h3", tone: "accent", children: "大小" }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+            lineNumber: 50,
+            columnNumber: 125
+          }, this),
+          /* @__PURE__ */ jsxDEV(Typography, { variant: "bodySmall", tone: "muted", children: "|w| 越大，影响越强" }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+            lineNumber: 50,
+            columnNumber: 187
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+          lineNumber: 50,
+          columnNumber: 120
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+        lineNumber: 50,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV("div", { className: "ck-weighted__concept", children: [
+        /* @__PURE__ */ jsxDEV("span", { className: "ck-weighted__concept-icon", "aria-hidden": "true", children: "▦" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+          lineNumber: 51,
+          columnNumber: 47
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { children: [
+          /* @__PURE__ */ jsxDEV(Typography, { as: "h2", variant: "h3", tone: "accent", children: "排列" }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+            lineNumber: 51,
+            columnNumber: 123
+          }, this),
+          /* @__PURE__ */ jsxDEV(Typography, { variant: "bodySmall", tone: "muted", children: "决定要比较哪种局部结构" }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+            lineNumber: 51,
+            columnNumber: 185
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+          lineNumber: 51,
+          columnNumber: 118
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+        lineNumber: 51,
+        columnNumber: 9
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+      lineNumber: 48,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV("div", { className: "ck-weighted__flow", children: [
+      /* @__PURE__ */ jsxDEV("section", { className: "ck-weighted__panel", "aria-label": "选择输入区域", children: [
+        /* @__PURE__ */ jsxDEV("header", { children: /* @__PURE__ */ jsxDEV(Typography, { as: "h2", variant: "h3", tone: "accent", children: [
+          "输入区域 ",
+          /* @__PURE__ */ jsxDEV(MathFormulaStatic, { latex: "x" }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+            lineNumber: 56,
+            columnNumber: 71
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+          lineNumber: 56,
+          columnNumber: 19
+        }, this) }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+          lineNumber: 56,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV(Matrix, { values: pattern.values, kind: "input", label: `输入区域：${pattern.label}` }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+          lineNumber: 57,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV(Typography, { variant: "body", tone: "accent", children: pattern.label }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+          lineNumber: 58,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { className: "ck-weighted__patterns", role: "group", "aria-label": "选择输入明暗模式", children: PATTERNS.map((item) => /* @__PURE__ */ jsxDEV("button", { type: "button", className: patternId === item.id ? "is-selected" : "", "aria-pressed": patternId === item.id, onClick: () => setPatternId(item.id), children: /* @__PURE__ */ jsxDEV(Typography, { as: "span", variant: "bodySmall", tone: "inherit", children: item.label }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+          lineNumber: 60,
+          columnNumber: 203
+        }, this) }, item.id, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+          lineNumber: 60,
+          columnNumber: 37
+        }, this)) }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+          lineNumber: 59,
+          columnNumber: 11
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+        lineNumber: 55,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV("span", { className: "ck-weighted__arrow", "aria-hidden": "true", children: "→" }, void 0, false, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+        lineNumber: 63,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV("section", { className: "ck-weighted__panel ck-weighted__panel--kernel", "aria-label": "卷积核及当前比较", children: [
+        /* @__PURE__ */ jsxDEV("header", { children: /* @__PURE__ */ jsxDEV(Typography, { as: "h2", variant: "h3", tone: "accent", children: [
+          "卷积核 ",
+          /* @__PURE__ */ jsxDEV(MathFormulaStatic, { latex: "w" }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+            lineNumber: 65,
+            columnNumber: 70
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+          lineNumber: 65,
+          columnNumber: 19
+        }, this) }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+          lineNumber: 65,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV(Matrix, { values: KERNEL, kind: "kernel", label: "卷积核：左列为正一，右列为负一" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+          lineNumber: 66,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { className: "ck-weighted__question", children: /* @__PURE__ */ jsxDEV(Typography, { variant: "body", tone: "accent", children: "这个核在比较：左边是否比右边更亮？" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+          lineNumber: 67,
+          columnNumber: 50
+        }, this) }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+          lineNumber: 67,
+          columnNumber: 11
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+        lineNumber: 64,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV("span", { className: "ck-weighted__arrow", "aria-hidden": "true", children: "→" }, void 0, false, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+        lineNumber: 69,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV("section", { className: "ck-weighted__panel ck-weighted__panel--response", "aria-label": "局部响应与符号含义", children: [
+        /* @__PURE__ */ jsxDEV("header", { children: /* @__PURE__ */ jsxDEV(Typography, { as: "h2", variant: "h3", tone: "accent", children: [
+          "局部响应 ",
+          /* @__PURE__ */ jsxDEV(MathFormulaStatic, { latex: "y" }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+            lineNumber: 71,
+            columnNumber: 71
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+          lineNumber: 71,
+          columnNumber: 19
+        }, this) }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+          lineNumber: 71,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { className: `ck-weighted__result ${output < 0 ? "is-negative" : output === 0 ? "is-zero" : ""}`, children: /* @__PURE__ */ jsxDEV(MathFormulaStatic, { latex: `y=${output > 0 ? "+" : ""}${output}` }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+          lineNumber: 72,
+          columnNumber: 112
+        }, this) }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+          lineNumber: 72,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { className: "ck-weighted__scale", "aria-label": `当前局部响应 ${output}`, children: [
+          /* @__PURE__ */ jsxDEV("div", { className: "ck-weighted__scale-bar", children: /* @__PURE__ */ jsxDEV("span", { className: `ck-weighted__marker ${output < 0 ? "is-negative" : output === 0 ? "is-zero" : ""}`, style: markerStyle, children: [
+            output > 0 ? "+" : "",
+            output
+          ] }, void 0, true, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+            lineNumber: 74,
+            columnNumber: 53
+          }, this) }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+            lineNumber: 74,
+            columnNumber: 13
+          }, this),
+          /* @__PURE__ */ jsxDEV("div", { className: "ck-weighted__scale-labels", children: ["右边更亮", "左右相同", "左边更亮"].map((label, index) => /* @__PURE__ */ jsxDEV("div", { className: activeIndex === index ? "is-active" : "", children: [
+            /* @__PURE__ */ jsxDEV(MathFormulaStatic, { latex: index === 0 ? "y<0" : index === 1 ? "y=0" : "y>0" }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+              lineNumber: 76,
+              columnNumber: 133
+            }, this),
+            /* @__PURE__ */ jsxDEV(Typography, { variant: "body", tone: "inherit", children: label }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+              lineNumber: 76,
+              columnNumber: 212
+            }, this)
+          ] }, label, true, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+            lineNumber: 76,
+            columnNumber: 63
+          }, this)) }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+            lineNumber: 75,
+            columnNumber: 13
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+          lineNumber: 73,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { className: "ck-weighted__reading", children: /* @__PURE__ */ jsxDEV(Typography, { variant: "body", tone: "accent", children: interpretation }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+          lineNumber: 79,
+          columnNumber: 49
+        }, this) }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+          lineNumber: 79,
+          columnNumber: 11
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+        lineNumber: 70,
+        columnNumber: 9
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+      lineNumber: 54,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV("footer", { className: "ck-weighted__summary", children: /* @__PURE__ */ jsxDEV(Typography, { variant: "h3", tone: "accent", children: "这个卷积核回答的问题：左边是否比右边更亮？" }, void 0, false, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+      lineNumber: 83,
+      columnNumber: 48
+    }, this) }, void 0, false, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+      lineNumber: 83,
+      columnNumber: 7
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+    lineNumber: 47,
+    columnNumber: 5
+  }, this) }, void 0, false, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx",
+    lineNumber: 46,
+    columnNumber: 10
+  }, this);
+}
+_s(WeightedKernelPage, "fl/xBb/YBxH7PeuuwJF8W8V7xHw=");
+_c2 = WeightedKernelPage;
+var _c, _c2;
+$RefreshReg$(_c, "Matrix");
+$RefreshReg$(_c2, "WeightedKernelPage");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/WeightedKernelPage/WeightedKernelPage.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,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QTtBQUFBLFdBMkJBO0FBQUEsSUFFQSx1QkFBQyxZQUFPLFdBQVUsd0JBQXVCLGlDQUFDLGNBQVcsU0FBUSxNQUFLLE1BQUssVUFBUyxxQ0FBdkM7QUFBQTtBQUFBO0FBQUE7QUFBQSxXQUE0RCxLQUFyRztBQUFBO0FBQUE7QUFBQTtBQUFBLFdBQWtIO0FBQUEsT0FwQ3BIO0FBQUE7QUFBQTtBQUFBO0FBQUEsU0FxQ0EsS0F0Q0s7QUFBQTtBQUFBO0FBQUE7QUFBQSxTQXVDUDtBQUNGO0FBQUNaLEdBakRlRCxvQkFBa0I7QUFBQSxNQUFsQkE7QUFBa0IsSUFBQUQsSUFBQXFCO0FBQUEsYUFBQXJCLElBQUE7QUFBQSxhQUFBcUIsS0FBQSIsIm5hbWVzIjpbInVzZVN0YXRlIiwiQ29udGVudEJsb2NrIiwiTWF0aEZvcm11bGFTdGF0aWMiLCJUeXBvZ3JhcGh5IiwiS0VSTkVMIiwiUEFUVEVSTlMiLCJpZCIsImxhYmVsIiwidmFsdWVzIiwiTWF0cml4Iiwia2luZCIsImZsYXRNYXAiLCJyb3ciLCJyb3dJbmRleCIsIm1hcCIsInZhbHVlIiwiY29sSW5kZXgiLCJTdHJpbmciLCJfYyIsIldlaWdodGVkS2VybmVsUGFnZSIsIl9zIiwicGF0dGVybklkIiwic2V0UGF0dGVybklkIiwicGF0dGVybiIsImZpbmQiLCJpdGVtIiwidG9wTGVmdCIsInRvcFJpZ2h0IiwiYm90dG9tTGVmdCIsImJvdHRvbVJpZ2h0Iiwib3V0cHV0IiwiYWN0aXZlSW5kZXgiLCJpbnRlcnByZXRhdGlvbiIsIm1hcmtlclN0eWxlIiwibGVmdCIsIk1hdGgiLCJtYXgiLCJtaW4iLCJpbmRleCIsIl9jMiJdLCJpZ25vcmVMaXN0IjpbXSwic291cmNlcyI6WyJXZWlnaHRlZEtlcm5lbFBhZ2UudHN4Il0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IHVzZVN0YXRlLCB0eXBlIENTU1Byb3BlcnRpZXMgfSBmcm9tICdyZWFjdCc7XG5pbXBvcnQgeyBDb250ZW50QmxvY2ssIE1hdGhGb3JtdWxhU3RhdGljLCBUeXBvZ3JhcGh5IH0gZnJvbSAnLi4vLi4vLi4vc2hhcmVkL3JlYWN0JztcbmltcG9ydCAnLi9XZWlnaHRlZEtlcm5lbFBhZ2UuY3NzJztcblxuY29uc3QgS0VSTkVMID0gW1sxLCAtMV0sIFsxLCAtMV1dO1xuY29uc3QgUEFUVEVSTlMgPSBbXG4gIHsgaWQ6ICdsZWZ0LWJyaWdodCcsIGxhYmVsOiAn5bem5Lqu5Y+z5pqXJywgdmFsdWVzOiBbWzgsIDJdLCBbOCwgMl1dIH0sXG4gIHsgaWQ6ICdyaWdodC1icmlnaHQnLCBsYWJlbDogJ+W3puaal+WPs+S6ricsIHZhbHVlczogW1syLCA4XSwgWzIsIDhdXSB9LFxuICB7IGlkOiAnZXF1YWwnLCBsYWJlbDogJ+W3puWPs+ebuOetiScsIHZhbHVlczogW1s1LCA1XSwgWzUsIDVdXSB9LFxuXSBhcyBjb25zdDtcblxuZnVuY3Rpb24gTWF0cml4KHsgdmFsdWVzLCBraW5kLCBsYWJlbCB9OiB7IHZhbHVlczogcmVhZG9ubHkgKHJlYWRvbmx5IG51bWJlcltdKVtdOyBraW5kOiAnaW5wdXQnIHwgJ2tlcm5lbCc7IGxhYmVsOiBzdHJpbmcgfSkge1xuICByZXR1cm4gPGRpdiBjbGFzc05hbWU9e2Bjay13ZWlnaHRlZF9fbWF0cml4IGNrLXdlaWdodGVkX19tYXRyaXgtLSR7a2luZH1gfSByb2xlPVwiaW1nXCIgYXJpYS1sYWJlbD17bGFiZWx9PlxuICAgIHt2YWx1ZXMuZmxhdE1hcCgocm93LCByb3dJbmRleCkgPT4gcm93Lm1hcCgodmFsdWUsIGNvbEluZGV4KSA9PiA8ZGl2IGtleT17YCR7cm93SW5kZXh9LSR7Y29sSW5kZXh9YH0gY2xhc3NOYW1lPXtgY2std2VpZ2h0ZWRfX2NlbGwgJHtraW5kID09PSAnaW5wdXQnID8gdmFsdWUgPiA1ID8gJ2lzLWJyaWdodCcgOiB2YWx1ZSA8IDUgPyAnaXMtZGFyaycgOiAnaXMtbmV1dHJhbCcgOiB2YWx1ZSA8IDAgPyAnaXMtbmVnYXRpdmUnIDogJ2lzLXBvc2l0aXZlJ31gfT48TWF0aEZvcm11bGFTdGF0aWMgbGF0ZXg9e1N0cmluZyh2YWx1ZSl9IC8+PC9kaXY+KSl9XG4gIDwvZGl2Pjtcbn1cblxuZXhwb3J0IGZ1bmN0aW9uIFdlaWdodGVkS2VybmVsUGFnZSgpIHtcbiAgY29uc3QgW3BhdHRlcm5JZCwgc2V0UGF0dGVybklkXSA9IHVzZVN0YXRlPCh0eXBlb2YgUEFUVEVSTlMpW251bWJlcl1bJ2lkJ10+KCdsZWZ0LWJyaWdodCcpO1xuICBjb25zdCBwYXR0ZXJuID0gUEFUVEVSTlMuZmluZCgoaXRlbSkgPT4gaXRlbS5pZCA9PT0gcGF0dGVybklkKSA/PyBQQVRURVJOU1swXTtcbiAgY29uc3QgW1t0b3BMZWZ0LCB0b3BSaWdodF0sIFtib3R0b21MZWZ0LCBib3R0b21SaWdodF1dID0gcGF0dGVybi52YWx1ZXM7XG4gIGNvbnN0IG91dHB1dCA9ICh0b3BMZWZ0IC0gdG9wUmlnaHQpICsgKGJvdHRvbUxlZnQgLSBib3R0b21SaWdodCk7XG4gIGNvbnN0IGFjdGl2ZUluZGV4ID0gb3V0cHV0IDwgMCA/IDAgOiBvdXRwdXQgPiAwID8gMiA6IDE7XG4gIGNvbnN0IGludGVycHJldGF0aW9uID0gb3V0cHV0IDwgMCA/ICflj7Povrnmr5Tlt6bovrnmm7Tkuq7jgIInIDogb3V0cHV0ID4gMCA/ICflt6bovrnmr5Tlj7Povrnmm7Tkuq7jgIInIDogJ+W3puWPs+S6ruW6puebuOWQjOOAgic7XG4gIGNvbnN0IG1hcmtlclN0eWxlID0geyBsZWZ0OiBgJHs1MCArIE1hdGgubWF4KC0xMiwgTWF0aC5taW4oMTIsIG91dHB1dCkpIC8gMTIgKiA0M30lYCB9IGFzIENTU1Byb3BlcnRpZXM7XG5cbiAgcmV0dXJuIDxDb250ZW50QmxvY2sgaGVhZGluZ0xldmVsPXsxfSBjbGFzc05hbWU9XCJjay13ZWlnaHRlZFwiIHRpdGxlPVwi5p2D6YeN5Yaz5a6a5bGA6YOo5ZON5bqUXCIgc3VidGl0bGU9XCLmr4/kuKrkvY3nva7nmoTovpPlhaXmjInlr7nlupTmnYPph43lj4LkuI7msYLlkozvvJvnrKblj7fjgIHlpKflsI/lkozmjpLliJflhbHlkIzlhrPlrprovpPlh7rjgIJcIj5cbiAgICA8ZGl2IGNsYXNzTmFtZT1cImNrLXdlaWdodGVkX19ib2R5XCI+XG4gICAgICA8c2VjdGlvbiBjbGFzc05hbWU9XCJjay13ZWlnaHRlZF9fY29uY2VwdHNcIiBhcmlhLWxhYmVsPVwi5p2D6YeN55qE5LiJ5Liq5L2c55SoXCI+XG4gICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiY2std2VpZ2h0ZWRfX2NvbmNlcHRcIj48c3BhbiBjbGFzc05hbWU9XCJjay13ZWlnaHRlZF9fY29uY2VwdC1pY29uXCIgYXJpYS1oaWRkZW49XCJ0cnVlXCI+wrE8L3NwYW4+PGRpdj48VHlwb2dyYXBoeSBhcz1cImgyXCIgdmFyaWFudD1cImgzXCIgdG9uZT1cImFjY2VudFwiPuespuWPtzwvVHlwb2dyYXBoeT48VHlwb2dyYXBoeSB2YXJpYW50PVwiYm9keVNtYWxsXCIgdG9uZT1cIm11dGVkXCI+dyAmZ3Q7IDAg5Yqg5YWl77yMdyAmbHQ7IDAg5YeP5Y6777yMdyA9IDAg5b+955WlPC9UeXBvZ3JhcGh5PjwvZGl2PjwvZGl2PlxuICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImNrLXdlaWdodGVkX19jb25jZXB0XCI+PHNwYW4gY2xhc3NOYW1lPVwiY2std2VpZ2h0ZWRfX2NvbmNlcHQtaWNvblwiIGFyaWEtaGlkZGVuPVwidHJ1ZVwiPuKWguKWheKWhzwvc3Bhbj48ZGl2PjxUeXBvZ3JhcGh5IGFzPVwiaDJcIiB2YXJpYW50PVwiaDNcIiB0b25lPVwiYWNjZW50XCI+5aSn5bCPPC9UeXBvZ3JhcGh5PjxUeXBvZ3JhcGh5IHZhcmlhbnQ9XCJib2R5U21hbGxcIiB0b25lPVwibXV0ZWRcIj58d3wg6LaK5aSn77yM5b2x5ZON6LaK5by6PC9UeXBvZ3JhcGh5PjwvZGl2PjwvZGl2PlxuICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImNrLXdlaWdodGVkX19jb25jZXB0XCI+PHNwYW4gY2xhc3NOYW1lPVwiY2std2VpZ2h0ZWRfX2NvbmNlcHQtaWNvblwiIGFyaWEtaGlkZGVuPVwidHJ1ZVwiPuKWpjwvc3Bhbj48ZGl2PjxUeXBvZ3JhcGh5IGFzPVwiaDJcIiB2YXJpYW50PVwiaDNcIiB0b25lPVwiYWNjZW50XCI+5o6S5YiXPC9UeXBvZ3JhcGh5PjxUeXBvZ3JhcGh5IHZhcmlhbnQ9XCJib2R5U21hbGxcIiB0b25lPVwibXV0ZWRcIj7lhrPlrpropoHmr5TovoPlk6rnp43lsYDpg6jnu5PmnoQ8L1R5cG9ncmFwaHk+PC9kaXY+PC9kaXY+XG4gICAgICA8L3NlY3Rpb24+XG5cbiAgICAgIDxkaXYgY2xhc3NOYW1lPVwiY2std2VpZ2h0ZWRfX2Zsb3dcIj5cbiAgICAgICAgPHNlY3Rpb24gY2xhc3NOYW1lPVwiY2std2VpZ2h0ZWRfX3BhbmVsXCIgYXJpYS1sYWJlbD1cIumAieaLqei+k+WFpeWMuuWfn1wiPlxuICAgICAgICAgIDxoZWFkZXI+PFR5cG9ncmFwaHkgYXM9XCJoMlwiIHZhcmlhbnQ9XCJoM1wiIHRvbmU9XCJhY2NlbnRcIj7ovpPlhaXljLrln58gPE1hdGhGb3JtdWxhU3RhdGljIGxhdGV4PVwieFwiIC8+PC9UeXBvZ3JhcGh5PjwvaGVhZGVyPlxuICAgICAgICAgIDxNYXRyaXggdmFsdWVzPXtwYXR0ZXJuLnZhbHVlc30ga2luZD1cImlucHV0XCIgbGFiZWw9e2DovpPlhaXljLrln5/vvJoke3BhdHRlcm4ubGFiZWx9YH0gLz5cbiAgICAgICAgICA8VHlwb2dyYXBoeSB2YXJpYW50PVwiYm9keVwiIHRvbmU9XCJhY2NlbnRcIj57cGF0dGVybi5sYWJlbH08L1R5cG9ncmFwaHk+XG4gICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJjay13ZWlnaHRlZF9fcGF0dGVybnNcIiByb2xlPVwiZ3JvdXBcIiBhcmlhLWxhYmVsPVwi6YCJ5oup6L6T5YWl5piO5pqX5qih5byPXCI+XG4gICAgICAgICAgICB7UEFUVEVSTlMubWFwKChpdGVtKSA9PiA8YnV0dG9uIGtleT17aXRlbS5pZH0gdHlwZT1cImJ1dHRvblwiIGNsYXNzTmFtZT17cGF0dGVybklkID09PSBpdGVtLmlkID8gJ2lzLXNlbGVjdGVkJyA6ICcnfSBhcmlhLXByZXNzZWQ9e3BhdHRlcm5JZCA9PT0gaXRlbS5pZH0gb25DbGljaz17KCkgPT4gc2V0UGF0dGVybklkKGl0ZW0uaWQpfT48VHlwb2dyYXBoeSBhcz1cInNwYW5cIiB2YXJpYW50PVwiYm9keVNtYWxsXCIgdG9uZT1cImluaGVyaXRcIj57aXRlbS5sYWJlbH08L1R5cG9ncmFwaHk+PC9idXR0b24+KX1cbiAgICAgICAgICA8L2Rpdj5cbiAgICAgICAgPC9zZWN0aW9uPlxuICAgICAgICA8c3BhbiBjbGFzc05hbWU9XCJjay13ZWlnaHRlZF9fYXJyb3dcIiBhcmlhLWhpZGRlbj1cInRydWVcIj7ihpI8L3NwYW4+XG4gICAgICAgIDxzZWN0aW9uIGNsYXNzTmFtZT1cImNrLXdlaWdodGVkX19wYW5lbCBjay13ZWlnaHRlZF9fcGFuZWwtLWtlcm5lbFwiIGFyaWEtbGFiZWw9XCLljbfnp6/moLjlj4rlvZPliY3mr5TovoNcIj5cbiAgICAgICAgICA8aGVhZGVyPjxUeXBvZ3JhcGh5IGFzPVwiaDJcIiB2YXJpYW50PVwiaDNcIiB0b25lPVwiYWNjZW50XCI+5Y2356ev5qC4IDxNYXRoRm9ybXVsYVN0YXRpYyBsYXRleD1cIndcIiAvPjwvVHlwb2dyYXBoeT48L2hlYWRlcj5cbiAgICAgICAgICA8TWF0cml4IHZhbHVlcz17S0VSTkVMfSBraW5kPVwia2VybmVsXCIgbGFiZWw9XCLljbfnp6/moLjvvJrlt6bliJfkuLrmraPkuIDvvIzlj7PliJfkuLrotJ/kuIBcIiAvPlxuICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiY2std2VpZ2h0ZWRfX3F1ZXN0aW9uXCI+PFR5cG9ncmFwaHkgdmFyaWFudD1cImJvZHlcIiB0b25lPVwiYWNjZW50XCI+6L+Z5Liq5qC45Zyo5q+U6L6D77ya5bem6L655piv5ZCm5q+U5Y+z6L655pu05Lqu77yfPC9UeXBvZ3JhcGh5PjwvZGl2PlxuICAgICAgICA8L3NlY3Rpb24+XG4gICAgICAgIDxzcGFuIGNsYXNzTmFtZT1cImNrLXdlaWdodGVkX19hcnJvd1wiIGFyaWEtaGlkZGVuPVwidHJ1ZVwiPuKGkjwvc3Bhbj5cbiAgICAgICAgPHNlY3Rpb24gY2xhc3NOYW1lPVwiY2std2VpZ2h0ZWRfX3BhbmVsIGNrLXdlaWdodGVkX19wYW5lbC0tcmVzcG9uc2VcIiBhcmlhLWxhYmVsPVwi5bGA6YOo5ZON5bqU5LiO56ym5Y+35ZCr5LmJXCI+XG4gICAgICAgICAgPGhlYWRlcj48VHlwb2dyYXBoeSBhcz1cImgyXCIgdmFyaWFudD1cImgzXCIgdG9uZT1cImFjY2VudFwiPuWxgOmDqOWTjeW6lCA8TWF0aEZvcm11bGFTdGF0aWMgbGF0ZXg9XCJ5XCIgLz48L1R5cG9ncmFwaHk+PC9oZWFkZXI+XG4gICAgICAgICAgPGRpdiBjbGFzc05hbWU9e2Bjay13ZWlnaHRlZF9fcmVzdWx0ICR7b3V0cHV0IDwgMCA/ICdpcy1uZWdhdGl2ZScgOiBvdXRwdXQgPT09IDAgPyAnaXMtemVybycgOiAnJ31gfT48TWF0aEZvcm11bGFTdGF0aWMgbGF0ZXg9e2B5PSR7b3V0cHV0ID4gMCA/ICcrJyA6ICcnfSR7b3V0cHV0fWB9IC8+PC9kaXY+XG4gICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJjay13ZWlnaHRlZF9fc2NhbGVcIiBhcmlhLWxhYmVsPXtg5b2T5YmN5bGA6YOo5ZON5bqUICR7b3V0cHV0fWB9PlxuICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJjay13ZWlnaHRlZF9fc2NhbGUtYmFyXCI+PHNwYW4gY2xhc3NOYW1lPXtgY2std2VpZ2h0ZWRfX21hcmtlciAke291dHB1dCA8IDAgPyAnaXMtbmVnYXRpdmUnIDogb3V0cHV0ID09PSAwID8gJ2lzLXplcm8nIDogJyd9YH0gc3R5bGU9e21hcmtlclN0eWxlfT57b3V0cHV0ID4gMCA/ICcrJyA6ICcnfXtvdXRwdXR9PC9zcGFuPjwvZGl2PlxuICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJjay13ZWlnaHRlZF9fc2NhbGUtbGFiZWxzXCI+XG4gICAgICAgICAgICAgIHtbJ+WPs+i+ueabtOS6ricsICflt6blj7Pnm7jlkIwnLCAn5bem6L655pu05LquJ10ubWFwKChsYWJlbCwgaW5kZXgpID0+IDxkaXYga2V5PXtsYWJlbH0gY2xhc3NOYW1lPXthY3RpdmVJbmRleCA9PT0gaW5kZXggPyAnaXMtYWN0aXZlJyA6ICcnfT48TWF0aEZvcm11bGFTdGF0aWMgbGF0ZXg9e2luZGV4ID09PSAwID8gJ3k8MCcgOiBpbmRleCA9PT0gMSA/ICd5PTAnIDogJ3k+MCd9IC8+PFR5cG9ncmFwaHkgdmFyaWFudD1cImJvZHlcIiB0b25lPVwiaW5oZXJpdFwiPntsYWJlbH08L1R5cG9ncmFwaHk+PC9kaXY+KX1cbiAgICAgICAgICAgIDwvZGl2PlxuICAgICAgICAgIDwvZGl2PlxuICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiY2std2VpZ2h0ZWRfX3JlYWRpbmdcIj48VHlwb2dyYXBoeSB2YXJpYW50PVwiYm9keVwiIHRvbmU9XCJhY2NlbnRcIj57aW50ZXJwcmV0YXRpb259PC9UeXBvZ3JhcGh5PjwvZGl2PlxuICAgICAgICA8L3NlY3Rpb24+XG4gICAgICA8L2Rpdj5cblxuICAgICAgPGZvb3RlciBjbGFzc05hbWU9XCJjay13ZWlnaHRlZF9fc3VtbWFyeVwiPjxUeXBvZ3JhcGh5IHZhcmlhbnQ9XCJoM1wiIHRvbmU9XCJhY2NlbnRcIj7ov5nkuKrljbfnp6/moLjlm57nrZTnmoTpl67popjvvJrlt6bovrnmmK/lkKbmr5Tlj7Povrnmm7Tkuq7vvJ88L1R5cG9ncmFwaHk+PC9mb290ZXI+XG4gICAgPC9kaXY+XG4gIDwvQ29udGVudEJsb2NrPjtcbn1cbiJdLCJmaWxlIjoiQzovVXNlcnMvT2NlYW4vRG9jdW1lbnRzL0dpdEh1Yi9pbnR1aXRpdmUtZGVlcC1sZWFybmluZy9tb2R1bGVzL0NvbnZvbHV0aW9uLUtlcm5lbC1JbnRyby9wYWdlcy9XZWlnaHRlZEtlcm5lbFBhZ2UvV2VpZ2h0ZWRLZXJuZWxQYWdlLnRzeCJ9

@@ -1,0 +1,359 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=2be87a0d"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+var _s = $RefreshSig$();
+import __vite__cjsImport3_react from "/node_modules/.vite/deps/react.js?v=2be87a0d"; const useState = __vite__cjsImport3_react["useState"];
+import { ContentBlock, ExplainPanelButton, moduleAssetUrl, RangeControl, Typography } from "/modules/shared/react/index.ts";
+import "/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.css";
+import {
+  effectiveInput,
+  formatScore,
+  normalizedWeight,
+  weightedContributions,
+  useLesson
+} from "/modules/Neuron-Guide/LessonContext.tsx";
+const teacherVideo = moduleAssetUrl("9acfbca1-b881-457e-add6-21e0b6b855a0", "teacher_male_10s_wb.mp4");
+const subscripts = ["₁", "₂", "₃"];
+export function ExtraInputsPage({ onComplete }) {
+  _s();
+  const { state, scenario, setValueDraft, commitValues } = useLesson();
+  const values = scenario.factors.map((factor, index) => state.values[index] ?? factor.suggestedValue);
+  const contributions = weightedContributions(scenario, values);
+  const output = contributions.reduce((sum, contribution) => sum + contribution, 0);
+  const [guidedIndex, setGuidedIndex] = useState(0);
+  const weightsLit = guidedIndex >= scenario.factors.length;
+  const advanceGuide = (index) => {
+    setGuidedIndex(
+      (current) => index === current ? Math.min(index + 1, scenario.factors.length) : current
+    );
+  };
+  const commitValue = () => {
+    commitValues();
+    onComplete();
+  };
+  return /* @__PURE__ */ jsxDEV(
+    ContentBlock,
+    {
+      headingLevel: 1,
+      className: "ngtw-multi-stage ngtw-three-factor-sum",
+      title: scenario.question,
+      subtitle: "每个因素先变成输入 x，再乘上对应的重要性 w，最后汇总成神经元的总输入。",
+      children: [
+        /* @__PURE__ */ jsxDEV("div", { className: "grid min-h-0 min-w-0 grid-cols-[minmax(0,1fr)_44px_minmax(116px,128px)_44px_minmax(170px,188px)] items-stretch gap-[10px]", children: [
+          /* @__PURE__ */ jsxDEV("section", { className: "grid min-h-0 min-w-0 grid-rows-[auto_repeat(3,minmax(0,1fr))] gap-[10px]", "aria-label": "三个影响因素", children: [
+            /* @__PURE__ */ jsxDEV("div", { className: "ngtw-three-factor-sum__column-labels grid grid-cols-[minmax(0,1fr)_210px_220px_88px] items-end gap-[18px] px-[14px] pb-[2px]", children: [
+              /* @__PURE__ */ jsxDEV(Typography, { variant: "bodySmall", tone: "muted", "aria-hidden": "true", children: "现实因素" }, void 0, false, {
+                fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx",
+                lineNumber: 69,
+                columnNumber: 13
+              }, this),
+              /* @__PURE__ */ jsxDEV(Typography, { variant: "bodySmall", tone: "accent", "aria-hidden": "true", children: "输入" }, void 0, false, {
+                fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx",
+                lineNumber: 70,
+                columnNumber: 13
+              }, this),
+              /* @__PURE__ */ jsxDEV("div", { className: "ngtw-three-factor-sum__weight-label flex min-w-0 items-center justify-center gap-[6px]", children: [
+                /* @__PURE__ */ jsxDEV(Typography, { variant: "bodySmall", tone: "muted", children: "权重（重要性）" }, void 0, false, {
+                  fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx",
+                  lineNumber: 72,
+                  columnNumber: 15
+                }, this),
+                /* @__PURE__ */ jsxDEV(ExplainPanelButton, { label: "查看权重（重要性）的说明", children: [
+                  /* @__PURE__ */ jsxDEV(Typography, { as: "strong", variant: "bodySmall", tone: "accent", children: "权重由 AI 建议" }, void 0, false, {
+                    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx",
+                    lineNumber: 74,
+                    columnNumber: 17
+                  }, this),
+                  /* @__PURE__ */ jsxDEV(Typography, { variant: "bodySmall", tone: "muted", children: "由 AI 根据经验给出，示例里固定不变，不开放修改；你只需要调节左边的输入 x。" }, void 0, false, {
+                    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx",
+                    lineNumber: 75,
+                    columnNumber: 17
+                  }, this)
+                ] }, void 0, true, {
+                  fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx",
+                  lineNumber: 73,
+                  columnNumber: 15
+                }, this)
+              ] }, void 0, true, {
+                fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx",
+                lineNumber: 71,
+                columnNumber: 13
+              }, this),
+              /* @__PURE__ */ jsxDEV(Typography, { variant: "bodySmall", tone: "muted", "aria-hidden": "true", children: "贡献" }, void 0, false, {
+                fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx",
+                lineNumber: 80,
+                columnNumber: 13
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx",
+              lineNumber: 68,
+              columnNumber: 11
+            }, this),
+            scenario.factors.map((factor, index) => {
+              const rawValue = values[index];
+              const input = effectiveInput(factor, rawValue);
+              const weight = normalizedWeight(factor.suggestedImportance);
+              const contribution = contributions[index];
+              const isUnlocked = index <= guidedIndex;
+              const isGuiding = index === guidedIndex;
+              return /* @__PURE__ */ jsxDEV("article", { className: "grid min-w-0 grid-cols-[minmax(0,1fr)_210px_220px_88px] items-center gap-[18px] rounded-lesson-md border border-[#e1e8f0] bg-lesson-card px-[14px] py-3 shadow-[0_7px_18px_rgba(44,70,105,.06)]", children: [
+                /* @__PURE__ */ jsxDEV("div", { className: "grid min-w-0 grid-cols-[48px_minmax(0,1fr)] items-center gap-[10px]", children: [
+                  /* @__PURE__ */ jsxDEV(Typography, { as: "span", variant: "h3", tone: "muted", wrap: "nowrap", className: "grid h-[44px] w-[44px] place-items-center rounded-lesson-sm bg-[#f1f5fa]", children: [
+                    "0",
+                    index + 1
+                  ] }, void 0, true, {
+                    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx",
+                    lineNumber: 94,
+                    columnNumber: 19
+                  }, this),
+                  /* @__PURE__ */ jsxDEV("div", { className: "grid min-w-0 gap-[2px]", children: /* @__PURE__ */ jsxDEV("div", { className: "ngtw-three-factor-sum__factor-title flex min-w-0 items-center gap-2", children: [
+                    /* @__PURE__ */ jsxDEV(Typography, { as: "h3", variant: "body", tone: "accent", children: factor.name }, void 0, false, {
+                      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx",
+                      lineNumber: 97,
+                      columnNumber: 23
+                    }, this),
+                    /* @__PURE__ */ jsxDEV(ExplainPanelButton, { label: `查看${factor.name}的说明`, children: [
+                      /* @__PURE__ */ jsxDEV(Typography, { as: "strong", variant: "bodySmall", tone: "accent", children: factor.valueQuestion }, void 0, false, {
+                        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx",
+                        lineNumber: 99,
+                        columnNumber: 25
+                      }, this),
+                      /* @__PURE__ */ jsxDEV(Typography, { variant: "bodySmall", tone: "muted", children: factor.explanation }, void 0, false, {
+                        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx",
+                        lineNumber: 100,
+                        columnNumber: 25
+                      }, this)
+                    ] }, void 0, true, {
+                      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx",
+                      lineNumber: 98,
+                      columnNumber: 23
+                    }, this)
+                  ] }, void 0, true, {
+                    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx",
+                    lineNumber: 96,
+                    columnNumber: 21
+                  }, this) }, void 0, false, {
+                    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx",
+                    lineNumber: 95,
+                    columnNumber: 19
+                  }, this)
+                ] }, void 0, true, {
+                  fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx",
+                  lineNumber: 93,
+                  columnNumber: 17
+                }, this),
+                /* @__PURE__ */ jsxDEV(
+                  RangeControl,
+                  {
+                    label: `输入 x${subscripts[index]}`,
+                    value: rawValue,
+                    min: 0,
+                    max: 10,
+                    step: 1,
+                    discrete: true,
+                    scale: ["0", "5 / 10", "10"],
+                    formatValue: () => formatScore(input),
+                    disabled: !isUnlocked,
+                    controlClassName: `ngtw-three-factor-sum__factor-control grid min-w-0 gap-[3px]${isUnlocked ? "" : " is-pending"}${isGuiding ? " is-guiding edu-attention-hint" : ""}`,
+                    "aria-label": `${factor.name}，当前评分 ${rawValue} / 10`,
+                    onPointerEnter: () => advanceGuide(index),
+                    onFocus: () => advanceGuide(index),
+                    onChange: (event) => {
+                      advanceGuide(index);
+                      setValueDraft(index, Number(event.currentTarget.value));
+                      commitValue();
+                    }
+                  },
+                  void 0,
+                  false,
+                  {
+                    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx",
+                    lineNumber: 106,
+                    columnNumber: 17
+                  },
+                  this
+                ),
+                /* @__PURE__ */ jsxDEV(
+                  RangeControl,
+                  {
+                    label: `w${subscripts[index]}`,
+                    value: weight,
+                    min: 0,
+                    max: 1,
+                    step: 0.1,
+                    discrete: true,
+                    scale: ["0", "0.5", "1"],
+                    digits: 1,
+                    disabled: true,
+                    style: { "--weight-ratio": String(weight) },
+                    controlClassName: `ngtw-three-factor-sum__weight-control${weightsLit ? " is-lit" : ""}`,
+                    "aria-label": `${factor.name}的权重 ${formatScore(weight)}`
+                  },
+                  void 0,
+                  false,
+                  {
+                    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx",
+                    lineNumber: 127,
+                    columnNumber: 17
+                  },
+                  this
+                ),
+                /* @__PURE__ */ jsxDEV("div", { className: "grid justify-items-end gap-px border-l border-[#e4ebf2] pl-3", "aria-label": `${factor.name}的加权贡献`, children: [
+                  /* @__PURE__ */ jsxDEV(Typography, { variant: "bodySmall", tone: "muted", children: "贡献" }, void 0, false, {
+                    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx",
+                    lineNumber: 143,
+                    columnNumber: 19
+                  }, this),
+                  /* @__PURE__ */ jsxDEV(Typography, { as: "strong", variant: "body", tone: "success", children: formatScore(contribution) }, void 0, false, {
+                    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx",
+                    lineNumber: 144,
+                    columnNumber: 19
+                  }, this)
+                ] }, void 0, true, {
+                  fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx",
+                  lineNumber: 142,
+                  columnNumber: 17
+                }, this)
+              ] }, `${factor.name}-${index}`, true, {
+                fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx",
+                lineNumber: 92,
+                columnNumber: 15
+              }, this);
+            })
+          ] }, void 0, true, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx",
+            lineNumber: 67,
+            columnNumber: 9
+          }, this),
+          /* @__PURE__ */ jsxDEV("div", { className: "grid min-w-0 place-items-center font-mono text-[34px] font-extrabold text-[#5a76a2]", "aria-hidden": "true", children: "→" }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx",
+            lineNumber: 151,
+            columnNumber: 9
+          }, this),
+          /* @__PURE__ */ jsxDEV("aside", { className: "grid min-h-0 min-w-0 content-center justify-items-center gap-2 p-4 text-center", "aria-label": "加权求和", children: [
+            /* @__PURE__ */ jsxDEV(Typography, { variant: "bodySmall", tone: "muted", children: "加权求和" }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx",
+              lineNumber: 154,
+              columnNumber: 11
+            }, this),
+            /* @__PURE__ */ jsxDEV("div", { className: "grid h-[76px] w-[76px] place-items-center rounded-full bg-[#e58b4e] font-[Georgia] text-[48px] font-bold text-white shadow-[0_10px_20px_rgba(196,105,48,.18)]", children: "Σ" }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx",
+              lineNumber: 155,
+              columnNumber: 11
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx",
+            lineNumber: 153,
+            columnNumber: 9
+          }, this),
+          /* @__PURE__ */ jsxDEV("div", { className: "grid min-w-0 place-items-center font-mono text-[34px] font-extrabold text-[#5a76a2]", "aria-hidden": "true", children: "→" }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx",
+            lineNumber: 158,
+            columnNumber: 9
+          }, this),
+          /* @__PURE__ */ jsxDEV("aside", { className: "grid min-h-0 min-w-0 content-center justify-items-center gap-2 p-4 text-center", "aria-label": "神经元的总输入", children: /* @__PURE__ */ jsxDEV("div", { className: "grid w-full gap-[5px] rounded-[10px] bg-[#fff0ec] px-[10px] py-[14px] text-center", children: [
+            /* @__PURE__ */ jsxDEV(Typography, { variant: "body", tone: "warning", children: "输出 y" }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx",
+              lineNumber: 162,
+              columnNumber: 13
+            }, this),
+            /* @__PURE__ */ jsxDEV(Typography, { as: "strong", variant: "h1", tone: "warning", children: [
+              "= ",
+              formatScore(output)
+            ] }, void 0, true, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx",
+              lineNumber: 163,
+              columnNumber: 13
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx",
+            lineNumber: 161,
+            columnNumber: 11
+          }, this) }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx",
+            lineNumber: 160,
+            columnNumber: 9
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx",
+          lineNumber: 66,
+          columnNumber: 7
+        }, this),
+        /* @__PURE__ */ jsxDEV("section", { className: "grid min-h-[124px] min-w-0 grid-cols-[180px_minmax(0,1fr)] items-stretch overflow-hidden rounded-[16px] border border-[#e1e1e1] bg-[#f9f9f9]", children: [
+          /* @__PURE__ */ jsxDEV("div", { className: "min-w-0 overflow-hidden bg-[#f9f9f9]", children: /* @__PURE__ */ jsxDEV("video", { className: "block h-full w-full object-cover object-[center_22%]", src: teacherVideo, autoPlay: true, loop: true, muted: true, playsInline: true, "aria-label": "教师提示视频" }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx",
+            lineNumber: 170,
+            columnNumber: 11
+          }, this) }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx",
+            lineNumber: 169,
+            columnNumber: 9
+          }, this),
+          /* @__PURE__ */ jsxDEV("div", { className: "grid min-w-0 content-center gap-[6px] px-[26px] py-4 [&_p]:w-full [&_p]:max-w-none [&_p]:[overflow-wrap:anywhere]", children: [
+            /* @__PURE__ */ jsxDEV(Typography, { as: "strong", variant: "h3", tone: "accent", children: "你发现了什么？" }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx",
+              lineNumber: 173,
+              columnNumber: 11
+            }, this),
+            /* @__PURE__ */ jsxDEV(Typography, { as: "p", variant: "body", tone: "muted", children: "每个因素都会贡献一部分“推动力”，权重越大，贡献越大。这里的总输入不一定限制在 0～1 之间，它表示所有因素加在一起的强度。" }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx",
+              lineNumber: 174,
+              columnNumber: 11
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx",
+            lineNumber: 172,
+            columnNumber: 9
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx",
+          lineNumber: 168,
+          columnNumber: 7
+        }, this)
+      ]
+    },
+    void 0,
+    true,
+    {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx",
+      lineNumber: 60,
+      columnNumber: 5
+    },
+    this
+  );
+}
+_s(ExtraInputsPage, "jfh0jdupeiScmINrclVBqji7ex8=", false, function() {
+  return [useLesson];
+});
+_c = ExtraInputsPage;
+var _c;
+$RefreshReg$(_c, "ExtraInputsPage");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJtYXBwaW5ncyI6IkFBaURZOzs7Ozs7Ozs7Ozs7Ozs7OztBQWpEWixTQUFTQSxnQkFBb0M7QUFDN0MsU0FBU0MsY0FBY0Msb0JBQW9CQyxnQkFBZ0JDLGNBQWNDLGtCQUFrQjtBQUMzRixPQUFPO0FBQ1A7QUFBQSxFQUNFQztBQUFBQSxFQUNBQztBQUFBQSxFQUNBQztBQUFBQSxFQUNBQztBQUFBQSxFQUNBQztBQUFBQSxPQUNLO0FBRVAsTUFBTUMsZUFBZVIsZUFBZSx3Q0FBd0MseUJBQXlCO0FBRXJHLE1BQU1TLGFBQWEsQ0FBQyxLQUFLLEtBQUssR0FBRztBQU0xQixnQkFBU0MsZ0JBQWdCLEVBQUVDLFdBQWlDLEdBQUc7QUFBQUMsS0FBQTtBQUNwRSxRQUFNLEVBQUVDLE9BQU9DLFVBQVVDLGVBQWVDLGFBQWEsSUFBSVQsVUFBVTtBQUNuRSxRQUFNVSxTQUFTSCxTQUFTSSxRQUFRQyxJQUFJLENBQUNDLFFBQVFDLFVBQVVSLE1BQU1JLE9BQU9JLEtBQUssS0FBS0QsT0FBT0UsY0FBYztBQUNuRyxRQUFNQyxnQkFBZ0JqQixzQkFBc0JRLFVBQVVHLE1BQU07QUFDNUQsUUFBTU8sU0FBU0QsY0FBY0UsT0FBTyxDQUFDQyxLQUFLQyxpQkFBaUJELE1BQU1DLGNBQWMsQ0FBQztBQUVoRixRQUFNLENBQUNDLGFBQWFDLGNBQWMsSUFBSWhDLFNBQVMsQ0FBQztBQUNoRCxRQUFNaUMsYUFBYUYsZUFBZWQsU0FBU0ksUUFBUWE7QUFFbkQsUUFBTUMsZUFBZUEsQ0FBQ1gsVUFBa0I7QUFDdENRO0FBQUFBLE1BQWUsQ0FBQ0ksWUFDZFosVUFBVVksVUFBVUMsS0FBS0MsSUFBSWQsUUFBUSxHQUFHUCxTQUFTSSxRQUFRYSxNQUFNLElBQUlFO0FBQUFBLElBQ3BFO0FBQUEsRUFDSDtBQUVBLFFBQU1HLGNBQWNBLE1BQU07QUFDeEJwQixpQkFBYTtBQUNiTCxlQUFXO0FBQUEsRUFDYjtBQUVBLFNBQ0U7QUFBQSxJQUFDO0FBQUE7QUFBQSxNQUNDLGNBQWM7QUFBQSxNQUNkLFdBQVU7QUFBQSxNQUNWLE9BQU9HLFNBQVN1QjtBQUFBQSxNQUNoQixVQUFTO0FBQUEsTUFFVDtBQUFBLCtCQUFDLFNBQUksV0FBVSw2SEFDYjtBQUFBLGlDQUFDLGFBQVEsV0FBVSw0RUFBMkUsY0FBVyxVQUN2RztBQUFBLG1DQUFDLFNBQUksV0FBVSxnSUFDYjtBQUFBLHFDQUFDLGNBQVcsU0FBUSxhQUFZLE1BQUssU0FBUSxlQUFZLFFBQU8sb0JBQWhFO0FBQUE7QUFBQTtBQUFBO0FBQUEscUJBQW9FO0FBQUEsY0FDcEUsdUJBQUMsY0FBVyxTQUFRLGFBQVksTUFBSyxVQUFTLGVBQVksUUFBTyxrQkFBakU7QUFBQTtBQUFBO0FBQUE7QUFBQSxxQkFBbUU7QUFBQSxjQUNuRSx1QkFBQyxTQUFJLFdBQVUsMEZBQ2I7QUFBQSx1Q0FBQyxjQUFXLFNBQVEsYUFBWSxNQUFLLFNBQVEsdUJBQTdDO0FBQUE7QUFBQTtBQUFBO0FBQUEsdUJBQW9EO0FBQUEsZ0JBQ3BELHVCQUFDLHNCQUFtQixPQUFNLGdCQUN4QjtBQUFBLHlDQUFDLGNBQVcsSUFBRyxVQUFTLFNBQVEsYUFBWSxNQUFLLFVBQVMseUJBQTFEO0FBQUE7QUFBQTtBQUFBO0FBQUEseUJBQW1FO0FBQUEsa0JBQ25FLHVCQUFDLGNBQVcsU0FBUSxhQUFZLE1BQUssU0FBTyx3REFBNUM7QUFBQTtBQUFBO0FBQUE7QUFBQSx5QkFFQTtBQUFBLHFCQUpGO0FBQUE7QUFBQTtBQUFBO0FBQUEsdUJBS0E7QUFBQSxtQkFQRjtBQUFBO0FBQUE7QUFBQTtBQUFBLHFCQVFBO0FBQUEsY0FDQSx1QkFBQyxjQUFXLFNBQVEsYUFBWSxNQUFLLFNBQVEsZUFBWSxRQUFPLGtCQUFoRTtBQUFBO0FBQUE7QUFBQTtBQUFBLHFCQUFrRTtBQUFBLGlCQVpwRTtBQUFBO0FBQUE7QUFBQTtBQUFBLG1CQWFBO0FBQUEsWUFFQ3ZCLFNBQVNJLFFBQVFDLElBQUksQ0FBQ0MsUUFBUUMsVUFBVTtBQUN2QyxvQkFBTWlCLFdBQVdyQixPQUFPSSxLQUFLO0FBQzdCLG9CQUFNa0IsUUFBUXBDLGVBQWVpQixRQUFRa0IsUUFBUTtBQUM3QyxvQkFBTUUsU0FBU25DLGlCQUFpQmUsT0FBT3FCLG1CQUFtQjtBQUMxRCxvQkFBTWQsZUFBZUosY0FBY0YsS0FBSztBQUN4QyxvQkFBTXFCLGFBQWFyQixTQUFTTztBQUM1QixvQkFBTWUsWUFBWXRCLFVBQVVPO0FBRTVCLHFCQUNFLHVCQUFDLGFBQVEsV0FBVSxtTUFDakI7QUFBQSx1Q0FBQyxTQUFJLFdBQVUsdUVBQ2I7QUFBQSx5Q0FBQyxjQUFXLElBQUcsUUFBTyxTQUFRLE1BQUssTUFBSyxTQUFRLE1BQUssVUFBUyxXQUFVLDRFQUEyRTtBQUFBO0FBQUEsb0JBQUVQLFFBQVE7QUFBQSx1QkFBN0o7QUFBQTtBQUFBO0FBQUE7QUFBQSx5QkFBK0o7QUFBQSxrQkFDL0osdUJBQUMsU0FBSSxXQUFVLDBCQUNiLGlDQUFDLFNBQUksV0FBVSx1RUFDYjtBQUFBLDJDQUFDLGNBQVcsSUFBRyxNQUFLLFNBQVEsUUFBTyxNQUFLLFVBQVVELGlCQUFPd0IsUUFBekQ7QUFBQTtBQUFBO0FBQUE7QUFBQSwyQkFBOEQ7QUFBQSxvQkFDOUQsdUJBQUMsc0JBQW1CLE9BQU8sS0FBS3hCLE9BQU93QixJQUFJLE9BQ3pDO0FBQUEsNkNBQUMsY0FBVyxJQUFHLFVBQVMsU0FBUSxhQUFZLE1BQUssVUFBVXhCLGlCQUFPeUIsaUJBQWxFO0FBQUE7QUFBQTtBQUFBO0FBQUEsNkJBQWdGO0FBQUEsc0JBQ2hGLHVCQUFDLGNBQVcsU0FBUSxhQUFZLE1BQUssU0FBU3pCLGlCQUFPMEIsZUFBckQ7QUFBQTtBQUFBO0FBQUE7QUFBQSw2QkFBaUU7QUFBQSx5QkFGbkU7QUFBQTtBQUFBO0FBQUE7QUFBQSwyQkFHQTtBQUFBLHVCQUxGO0FBQUE7QUFBQTtBQUFBO0FBQUEseUJBTUEsS0FQRjtBQUFBO0FBQUE7QUFBQTtBQUFBLHlCQVFBO0FBQUEscUJBVkY7QUFBQTtBQUFBO0FBQUE7QUFBQSx1QkFXQTtBQUFBLGdCQUVBO0FBQUEsa0JBQUM7QUFBQTtBQUFBLG9CQUNDLE9BQU8sT0FBT3JDLFdBQVdZLEtBQUssQ0FBQztBQUFBLG9CQUMvQixPQUFPaUI7QUFBQUEsb0JBQ1AsS0FBSztBQUFBLG9CQUNMLEtBQUs7QUFBQSxvQkFDTCxNQUFNO0FBQUEsb0JBQ047QUFBQSxvQkFDQSxPQUFPLENBQUMsS0FBSyxVQUFVLElBQUk7QUFBQSxvQkFDM0IsYUFBYSxNQUFNbEMsWUFBWW1DLEtBQUs7QUFBQSxvQkFDcEMsVUFBVSxDQUFDRztBQUFBQSxvQkFDWCxrQkFBa0IsK0RBQStEQSxhQUFhLEtBQUssYUFBYSxHQUFHQyxZQUFZLG1DQUFtQyxFQUFFO0FBQUEsb0JBQ3BLLGNBQVksR0FBR3ZCLE9BQU93QixJQUFJLFNBQVNOLFFBQVE7QUFBQSxvQkFDM0MsZ0JBQWdCLE1BQU1OLGFBQWFYLEtBQUs7QUFBQSxvQkFDeEMsU0FBUyxNQUFNVyxhQUFhWCxLQUFLO0FBQUEsb0JBQ2pDLFVBQVUsQ0FBQzBCLFVBQVU7QUFDbkJmLG1DQUFhWCxLQUFLO0FBQ2xCTixvQ0FBY00sT0FBTzJCLE9BQU9ELE1BQU1FLGNBQWNDLEtBQUssQ0FBQztBQUN0RGQsa0NBQVk7QUFBQSxvQkFDZDtBQUFBO0FBQUEsa0JBbEJGO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQSxnQkFrQkk7QUFBQSxnQkFHSjtBQUFBLGtCQUFDO0FBQUE7QUFBQSxvQkFDQyxPQUFPLElBQUkzQixXQUFXWSxLQUFLLENBQUM7QUFBQSxvQkFDNUIsT0FBT21CO0FBQUFBLG9CQUNQLEtBQUs7QUFBQSxvQkFDTCxLQUFLO0FBQUEsb0JBQ0wsTUFBTTtBQUFBLG9CQUNOO0FBQUEsb0JBQ0EsT0FBTyxDQUFDLEtBQUssT0FBTyxHQUFHO0FBQUEsb0JBQ3ZCLFFBQVE7QUFBQSxvQkFDUjtBQUFBLG9CQUNBLE9BQU8sRUFBRSxrQkFBa0JXLE9BQU9YLE1BQU0sRUFBRTtBQUFBLG9CQUMxQyxrQkFBa0Isd0NBQXdDVixhQUFhLFlBQVksRUFBRTtBQUFBLG9CQUNyRixjQUFZLEdBQUdWLE9BQU93QixJQUFJLE9BQU94QyxZQUFZb0MsTUFBTSxDQUFDO0FBQUE7QUFBQSxrQkFadEQ7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBLGdCQVl5RDtBQUFBLGdCQUd6RCx1QkFBQyxTQUFJLFdBQVUsZ0VBQStELGNBQVksR0FBR3BCLE9BQU93QixJQUFJLFNBQ3RHO0FBQUEseUNBQUMsY0FBVyxTQUFRLGFBQVksTUFBSyxTQUFRLGtCQUE3QztBQUFBO0FBQUE7QUFBQTtBQUFBLHlCQUErQztBQUFBLGtCQUMvQyx1QkFBQyxjQUFXLElBQUcsVUFBUyxTQUFRLFFBQU8sTUFBSyxXQUFXeEMsc0JBQVl1QixZQUFZLEtBQS9FO0FBQUE7QUFBQTtBQUFBO0FBQUEseUJBQWlGO0FBQUEscUJBRm5GO0FBQUE7QUFBQTtBQUFBO0FBQUEsdUJBR0E7QUFBQSxtQkFyRHdOLEdBQUdQLE9BQU93QixJQUFJLElBQUl2QixLQUFLLElBQWpQO0FBQUE7QUFBQTtBQUFBO0FBQUEscUJBc0RBO0FBQUEsWUFFSixDQUFDO0FBQUEsZUFqRkg7QUFBQTtBQUFBO0FBQUE7QUFBQSxpQkFrRkE7QUFBQSxVQUVBLHVCQUFDLFNBQUksV0FBVSx1RkFBc0YsZUFBWSxRQUFPLGlCQUF4SDtBQUFBO0FBQUE7QUFBQTtBQUFBLGlCQUF5SDtBQUFBLFVBRXpILHVCQUFDLFdBQU0sV0FBVSxrRkFBaUYsY0FBVyxRQUMzRztBQUFBLG1DQUFDLGNBQVcsU0FBUSxhQUFZLE1BQUssU0FBUSxvQkFBN0M7QUFBQTtBQUFBO0FBQUE7QUFBQSxtQkFBaUQ7QUFBQSxZQUNqRCx1QkFBQyxTQUFJLFdBQVUsaUtBQWdLLGlCQUEvSztBQUFBO0FBQUE7QUFBQTtBQUFBLG1CQUFnTDtBQUFBLGVBRmxMO0FBQUE7QUFBQTtBQUFBO0FBQUEsaUJBR0E7QUFBQSxVQUVBLHVCQUFDLFNBQUksV0FBVSx1RkFBc0YsZUFBWSxRQUFPLGlCQUF4SDtBQUFBO0FBQUE7QUFBQTtBQUFBLGlCQUF5SDtBQUFBLFVBRXpILHVCQUFDLFdBQU0sV0FBVSxrRkFBaUYsY0FBVyxXQUMzRyxpQ0FBQyxTQUFJLFdBQVUscUZBQ2I7QUFBQSxtQ0FBQyxjQUFXLFNBQVEsUUFBTyxNQUFLLFdBQVUsb0JBQTFDO0FBQUE7QUFBQTtBQUFBO0FBQUEsbUJBQThDO0FBQUEsWUFDOUMsdUJBQUMsY0FBVyxJQUFHLFVBQVMsU0FBUSxNQUFLLE1BQUssV0FBVTtBQUFBO0FBQUEsY0FBR2pCLFlBQVlvQixNQUFNO0FBQUEsaUJBQXpFO0FBQUE7QUFBQTtBQUFBO0FBQUEsbUJBQTJFO0FBQUEsZUFGN0U7QUFBQTtBQUFBO0FBQUE7QUFBQSxpQkFHQSxLQUpGO0FBQUE7QUFBQTtBQUFBO0FBQUEsaUJBS0E7QUFBQSxhQW5HRjtBQUFBO0FBQUE7QUFBQTtBQUFBLGVBb0dBO0FBQUEsUUFFQSx1QkFBQyxhQUFRLFdBQVUsZ0pBQ2pCO0FBQUEsaUNBQUMsU0FBSSxXQUFVLHdDQUNiLGlDQUFDLFdBQU0sV0FBVSx3REFBdUQsS0FBS2hCLGNBQWMsVUFBUSxNQUFDLE1BQUksTUFBQyxPQUFLLE1BQUMsYUFBVyxNQUFDLGNBQVcsWUFBdEk7QUFBQTtBQUFBO0FBQUE7QUFBQSxpQkFBOEksS0FEaEo7QUFBQTtBQUFBO0FBQUE7QUFBQSxpQkFFQTtBQUFBLFVBQ0EsdUJBQUMsU0FBSSxXQUFVLHFIQUNiO0FBQUEsbUNBQUMsY0FBVyxJQUFHLFVBQVMsU0FBUSxNQUFLLE1BQUssVUFBUyx1QkFBbkQ7QUFBQTtBQUFBO0FBQUE7QUFBQSxtQkFBMEQ7QUFBQSxZQUMxRCx1QkFBQyxjQUFXLElBQUcsS0FBSSxTQUFRLFFBQU8sTUFBSyxTQUFPLDhFQUE5QztBQUFBO0FBQUE7QUFBQTtBQUFBLG1CQUVBO0FBQUEsZUFKRjtBQUFBO0FBQUE7QUFBQTtBQUFBLGlCQUtBO0FBQUEsYUFURjtBQUFBO0FBQUE7QUFBQTtBQUFBLGVBVUE7QUFBQTtBQUFBO0FBQUEsSUF0SEY7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBLEVBdUhBO0FBRUo7QUFBQ0ksR0E5SWVGLGlCQUFlO0FBQUEsVUFDNEJILFNBQVM7QUFBQTtBQUFBLEtBRHBERztBQUFlLElBQUEwQztBQUFBLGFBQUFBLElBQUEiLCJuYW1lcyI6WyJ1c2VTdGF0ZSIsIkNvbnRlbnRCbG9jayIsIkV4cGxhaW5QYW5lbEJ1dHRvbiIsIm1vZHVsZUFzc2V0VXJsIiwiUmFuZ2VDb250cm9sIiwiVHlwb2dyYXBoeSIsImVmZmVjdGl2ZUlucHV0IiwiZm9ybWF0U2NvcmUiLCJub3JtYWxpemVkV2VpZ2h0Iiwid2VpZ2h0ZWRDb250cmlidXRpb25zIiwidXNlTGVzc29uIiwidGVhY2hlclZpZGVvIiwic3Vic2NyaXB0cyIsIkV4dHJhSW5wdXRzUGFnZSIsIm9uQ29tcGxldGUiLCJfcyIsInN0YXRlIiwic2NlbmFyaW8iLCJzZXRWYWx1ZURyYWZ0IiwiY29tbWl0VmFsdWVzIiwidmFsdWVzIiwiZmFjdG9ycyIsIm1hcCIsImZhY3RvciIsImluZGV4Iiwic3VnZ2VzdGVkVmFsdWUiLCJjb250cmlidXRpb25zIiwib3V0cHV0IiwicmVkdWNlIiwic3VtIiwiY29udHJpYnV0aW9uIiwiZ3VpZGVkSW5kZXgiLCJzZXRHdWlkZWRJbmRleCIsIndlaWdodHNMaXQiLCJsZW5ndGgiLCJhZHZhbmNlR3VpZGUiLCJjdXJyZW50IiwiTWF0aCIsIm1pbiIsImNvbW1pdFZhbHVlIiwicXVlc3Rpb24iLCJyYXdWYWx1ZSIsImlucHV0Iiwid2VpZ2h0Iiwic3VnZ2VzdGVkSW1wb3J0YW5jZSIsImlzVW5sb2NrZWQiLCJpc0d1aWRpbmciLCJuYW1lIiwidmFsdWVRdWVzdGlvbiIsImV4cGxhbmF0aW9uIiwiZXZlbnQiLCJOdW1iZXIiLCJjdXJyZW50VGFyZ2V0IiwidmFsdWUiLCJTdHJpbmciLCJfYyJdLCJpZ25vcmVMaXN0IjpbXSwic291cmNlcyI6WyJFeHRyYUlucHV0c1BhZ2UudHN4Il0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IHVzZVN0YXRlLCB0eXBlIENTU1Byb3BlcnRpZXMgfSBmcm9tICdyZWFjdCc7XG5pbXBvcnQgeyBDb250ZW50QmxvY2ssIEV4cGxhaW5QYW5lbEJ1dHRvbiwgbW9kdWxlQXNzZXRVcmwsIFJhbmdlQ29udHJvbCwgVHlwb2dyYXBoeSB9IGZyb20gJy4uLy4uLy4uL3NoYXJlZC9yZWFjdCc7XG5pbXBvcnQgXCIuL0V4dHJhSW5wdXRzUGFnZS5jc3NcIjtcclxuaW1wb3J0IHtcclxuICBlZmZlY3RpdmVJbnB1dCxcclxuICBmb3JtYXRTY29yZSxcclxuICBub3JtYWxpemVkV2VpZ2h0LFxyXG4gIHdlaWdodGVkQ29udHJpYnV0aW9ucyxcclxuICB1c2VMZXNzb24sXHJcbn0gZnJvbSAnLi4vLi4vTGVzc29uQ29udGV4dCc7XHJcblxuY29uc3QgdGVhY2hlclZpZGVvID0gbW9kdWxlQXNzZXRVcmwoJzlhY2ZiY2ExLWI4ODEtNDU3ZS1hZGQ2LTIxZTBiNmI4NTVhMCcsICd0ZWFjaGVyX21hbGVfMTBzX3diLm1wNCcpO1xuXHJcbmNvbnN0IHN1YnNjcmlwdHMgPSBbJ+KCgScsICfigoInLCAn4oKDJ10gYXMgY29uc3Q7XHJcblxyXG5leHBvcnQgaW50ZXJmYWNlIEV4dHJhSW5wdXRzUGFnZVByb3BzIHtcclxuICBvbkNvbXBsZXRlOiAoKSA9PiB2b2lkO1xyXG59XHJcblxyXG5leHBvcnQgZnVuY3Rpb24gRXh0cmFJbnB1dHNQYWdlKHsgb25Db21wbGV0ZSB9OiBFeHRyYUlucHV0c1BhZ2VQcm9wcykge1xyXG4gIGNvbnN0IHsgc3RhdGUsIHNjZW5hcmlvLCBzZXRWYWx1ZURyYWZ0LCBjb21taXRWYWx1ZXMgfSA9IHVzZUxlc3NvbigpO1xyXG4gIGNvbnN0IHZhbHVlcyA9IHNjZW5hcmlvLmZhY3RvcnMubWFwKChmYWN0b3IsIGluZGV4KSA9PiBzdGF0ZS52YWx1ZXNbaW5kZXhdID8/IGZhY3Rvci5zdWdnZXN0ZWRWYWx1ZSk7XHJcbiAgY29uc3QgY29udHJpYnV0aW9ucyA9IHdlaWdodGVkQ29udHJpYnV0aW9ucyhzY2VuYXJpbywgdmFsdWVzKTtcclxuICBjb25zdCBvdXRwdXQgPSBjb250cmlidXRpb25zLnJlZHVjZSgoc3VtLCBjb250cmlidXRpb24pID0+IHN1bSArIGNvbnRyaWJ1dGlvbiwgMCk7XHJcbiAgLy8g6YCQ5Liq5byV5a+877ya5YWI6LCD5a6MIHjigoHvvIzlho3ova7liLAgeOKCguOAgXjigoPvvJvkuInkuKrpg73norDov4fku6XlkI7mnYPph43liJfmiY3ngrnkuq7jgIJcclxuICBjb25zdCBbZ3VpZGVkSW5kZXgsIHNldEd1aWRlZEluZGV4XSA9IHVzZVN0YXRlKDApO1xuICBjb25zdCB3ZWlnaHRzTGl0ID0gZ3VpZGVkSW5kZXggPj0gc2NlbmFyaW8uZmFjdG9ycy5sZW5ndGg7XHJcblxyXG4gIGNvbnN0IGFkdmFuY2VHdWlkZSA9IChpbmRleDogbnVtYmVyKSA9PiB7XHJcbiAgICBzZXRHdWlkZWRJbmRleCgoY3VycmVudCkgPT4gKFxyXG4gICAgICBpbmRleCA9PT0gY3VycmVudCA/IE1hdGgubWluKGluZGV4ICsgMSwgc2NlbmFyaW8uZmFjdG9ycy5sZW5ndGgpIDogY3VycmVudFxyXG4gICAgKSk7XHJcbiAgfTtcclxuXHJcbiAgY29uc3QgY29tbWl0VmFsdWUgPSAoKSA9PiB7XHJcbiAgICBjb21taXRWYWx1ZXMoKTtcclxuICAgIG9uQ29tcGxldGUoKTtcclxuICB9O1xyXG5cclxuICByZXR1cm4gKFxyXG4gICAgPENvbnRlbnRCbG9ja1xyXG4gICAgICBoZWFkaW5nTGV2ZWw9ezF9XHJcbiAgICAgIGNsYXNzTmFtZT1cIm5ndHctbXVsdGktc3RhZ2Ugbmd0dy10aHJlZS1mYWN0b3Itc3VtXCJcclxuICAgICAgdGl0bGU9e3NjZW5hcmlvLnF1ZXN0aW9ufVxyXG4gICAgICBzdWJ0aXRsZT1cIuavj+S4quWboOe0oOWFiOWPmOaIkOi+k+WFpSB477yM5YaN5LmY5LiK5a+55bqU55qE6YeN6KaB5oCnIHfvvIzmnIDlkI7msYfmgLvmiJDnpZ7nu4/lhYPnmoTmgLvovpPlhaXjgIJcIlxyXG4gICAgPlxyXG4gICAgICA8ZGl2IGNsYXNzTmFtZT1cImdyaWQgbWluLWgtMCBtaW4tdy0wIGdyaWQtY29scy1bbWlubWF4KDAsMWZyKV80NHB4X21pbm1heCgxMTZweCwxMjhweClfNDRweF9taW5tYXgoMTcwcHgsMTg4cHgpXSBpdGVtcy1zdHJldGNoIGdhcC1bMTBweF1cIj5cbiAgICAgICAgPHNlY3Rpb24gY2xhc3NOYW1lPVwiZ3JpZCBtaW4taC0wIG1pbi13LTAgZ3JpZC1yb3dzLVthdXRvX3JlcGVhdCgzLG1pbm1heCgwLDFmcikpXSBnYXAtWzEwcHhdXCIgYXJpYS1sYWJlbD1cIuS4ieS4quW9seWTjeWboOe0oFwiPlxuICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwibmd0dy10aHJlZS1mYWN0b3Itc3VtX19jb2x1bW4tbGFiZWxzIGdyaWQgZ3JpZC1jb2xzLVttaW5tYXgoMCwxZnIpXzIxMHB4XzIyMHB4Xzg4cHhdIGl0ZW1zLWVuZCBnYXAtWzE4cHhdIHB4LVsxNHB4XSBwYi1bMnB4XVwiPlxuICAgICAgICAgICAgPFR5cG9ncmFwaHkgdmFyaWFudD1cImJvZHlTbWFsbFwiIHRvbmU9XCJtdXRlZFwiIGFyaWEtaGlkZGVuPVwidHJ1ZVwiPueOsOWunuWboOe0oDwvVHlwb2dyYXBoeT5cclxuICAgICAgICAgICAgPFR5cG9ncmFwaHkgdmFyaWFudD1cImJvZHlTbWFsbFwiIHRvbmU9XCJhY2NlbnRcIiBhcmlhLWhpZGRlbj1cInRydWVcIj7ovpPlhaU8L1R5cG9ncmFwaHk+XHJcbiAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwibmd0dy10aHJlZS1mYWN0b3Itc3VtX193ZWlnaHQtbGFiZWwgZmxleCBtaW4tdy0wIGl0ZW1zLWNlbnRlciBqdXN0aWZ5LWNlbnRlciBnYXAtWzZweF1cIj5cbiAgICAgICAgICAgICAgPFR5cG9ncmFwaHkgdmFyaWFudD1cImJvZHlTbWFsbFwiIHRvbmU9XCJtdXRlZFwiPuadg+mHje+8iOmHjeimgeaAp++8iTwvVHlwb2dyYXBoeT5cclxuICAgICAgICAgICAgICA8RXhwbGFpblBhbmVsQnV0dG9uIGxhYmVsPVwi5p+l55yL5p2D6YeN77yI6YeN6KaB5oCn77yJ55qE6K+05piOXCI+XG4gICAgICAgICAgICAgICAgPFR5cG9ncmFwaHkgYXM9XCJzdHJvbmdcIiB2YXJpYW50PVwiYm9keVNtYWxsXCIgdG9uZT1cImFjY2VudFwiPuadg+mHjeeUsSBBSSDlu7rorq48L1R5cG9ncmFwaHk+XG4gICAgICAgICAgICAgICAgPFR5cG9ncmFwaHkgdmFyaWFudD1cImJvZHlTbWFsbFwiIHRvbmU9XCJtdXRlZFwiPlxuICAgICAgICAgICAgICAgICAg55SxIEFJIOagueaNrue7j+mqjOe7meWHuu+8jOekuuS+i+mHjOWbuuWumuS4jeWPmO+8jOS4jeW8gOaUvuS/ruaUue+8m+S9oOWPqumcgOimgeiwg+iKguW3pui+ueeahOi+k+WFpSB444CCXG4gICAgICAgICAgICAgICAgPC9UeXBvZ3JhcGh5PlxuICAgICAgICAgICAgICA8L0V4cGxhaW5QYW5lbEJ1dHRvbj5cbiAgICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgICAgICA8VHlwb2dyYXBoeSB2YXJpYW50PVwiYm9keVNtYWxsXCIgdG9uZT1cIm11dGVkXCIgYXJpYS1oaWRkZW49XCJ0cnVlXCI+6LSh54yuPC9UeXBvZ3JhcGh5PlxyXG4gICAgICAgICAgPC9kaXY+XHJcblxyXG4gICAgICAgICAge3NjZW5hcmlvLmZhY3RvcnMubWFwKChmYWN0b3IsIGluZGV4KSA9PiB7XHJcbiAgICAgICAgICAgIGNvbnN0IHJhd1ZhbHVlID0gdmFsdWVzW2luZGV4XTtcclxuICAgICAgICAgICAgY29uc3QgaW5wdXQgPSBlZmZlY3RpdmVJbnB1dChmYWN0b3IsIHJhd1ZhbHVlKTtcclxuICAgICAgICAgICAgY29uc3Qgd2VpZ2h0ID0gbm9ybWFsaXplZFdlaWdodChmYWN0b3Iuc3VnZ2VzdGVkSW1wb3J0YW5jZSk7XHJcbiAgICAgICAgICAgIGNvbnN0IGNvbnRyaWJ1dGlvbiA9IGNvbnRyaWJ1dGlvbnNbaW5kZXhdO1xyXG4gICAgICAgICAgICBjb25zdCBpc1VubG9ja2VkID0gaW5kZXggPD0gZ3VpZGVkSW5kZXg7XHJcbiAgICAgICAgICAgIGNvbnN0IGlzR3VpZGluZyA9IGluZGV4ID09PSBndWlkZWRJbmRleDtcclxuXHJcbiAgICAgICAgICAgIHJldHVybiAoXHJcbiAgICAgICAgICAgICAgPGFydGljbGUgY2xhc3NOYW1lPVwiZ3JpZCBtaW4tdy0wIGdyaWQtY29scy1bbWlubWF4KDAsMWZyKV8yMTBweF8yMjBweF84OHB4XSBpdGVtcy1jZW50ZXIgZ2FwLVsxOHB4XSByb3VuZGVkLWxlc3Nvbi1tZCBib3JkZXIgYm9yZGVyLVsjZTFlOGYwXSBiZy1sZXNzb24tY2FyZCBweC1bMTRweF0gcHktMyBzaGFkb3ctWzBfN3B4XzE4cHhfcmdiYSg0NCw3MCwxMDUsLjA2KV1cIiBrZXk9e2Ake2ZhY3Rvci5uYW1lfS0ke2luZGV4fWB9PlxuICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZ3JpZCBtaW4tdy0wIGdyaWQtY29scy1bNDhweF9taW5tYXgoMCwxZnIpXSBpdGVtcy1jZW50ZXIgZ2FwLVsxMHB4XVwiPlxuICAgICAgICAgICAgICAgICAgPFR5cG9ncmFwaHkgYXM9XCJzcGFuXCIgdmFyaWFudD1cImgzXCIgdG9uZT1cIm11dGVkXCIgd3JhcD1cIm5vd3JhcFwiIGNsYXNzTmFtZT1cImdyaWQgaC1bNDRweF0gdy1bNDRweF0gcGxhY2UtaXRlbXMtY2VudGVyIHJvdW5kZWQtbGVzc29uLXNtIGJnLVsjZjFmNWZhXVwiPjB7aW5kZXggKyAxfTwvVHlwb2dyYXBoeT5cbiAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZ3JpZCBtaW4tdy0wIGdhcC1bMnB4XVwiPlxuICAgICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cIm5ndHctdGhyZWUtZmFjdG9yLXN1bV9fZmFjdG9yLXRpdGxlIGZsZXggbWluLXctMCBpdGVtcy1jZW50ZXIgZ2FwLTJcIj5cbiAgICAgICAgICAgICAgICAgICAgICA8VHlwb2dyYXBoeSBhcz1cImgzXCIgdmFyaWFudD1cImJvZHlcIiB0b25lPVwiYWNjZW50XCI+e2ZhY3Rvci5uYW1lfTwvVHlwb2dyYXBoeT5cclxuICAgICAgICAgICAgICAgICAgICAgIDxFeHBsYWluUGFuZWxCdXR0b24gbGFiZWw9e2Dmn6XnnIske2ZhY3Rvci5uYW1lfeeahOivtOaYjmB9PlxyXG4gICAgICAgICAgICAgICAgICAgICAgICA8VHlwb2dyYXBoeSBhcz1cInN0cm9uZ1wiIHZhcmlhbnQ9XCJib2R5U21hbGxcIiB0b25lPVwiYWNjZW50XCI+e2ZhY3Rvci52YWx1ZVF1ZXN0aW9ufTwvVHlwb2dyYXBoeT5cclxuICAgICAgICAgICAgICAgICAgICAgICAgPFR5cG9ncmFwaHkgdmFyaWFudD1cImJvZHlTbWFsbFwiIHRvbmU9XCJtdXRlZFwiPntmYWN0b3IuZXhwbGFuYXRpb259PC9UeXBvZ3JhcGh5PlxyXG4gICAgICAgICAgICAgICAgICAgICAgPC9FeHBsYWluUGFuZWxCdXR0b24+XHJcbiAgICAgICAgICAgICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgICAgICAgICAgPC9kaXY+XHJcblxyXG4gICAgICAgICAgICAgICAgPFJhbmdlQ29udHJvbFxyXG4gICAgICAgICAgICAgICAgICBsYWJlbD17YOi+k+WFpSB4JHtzdWJzY3JpcHRzW2luZGV4XX1gfVxyXG4gICAgICAgICAgICAgICAgICB2YWx1ZT17cmF3VmFsdWV9XHJcbiAgICAgICAgICAgICAgICAgIG1pbj17MH1cclxuICAgICAgICAgICAgICAgICAgbWF4PXsxMH1cclxuICAgICAgICAgICAgICAgICAgc3RlcD17MX1cclxuICAgICAgICAgICAgICAgICAgZGlzY3JldGVcclxuICAgICAgICAgICAgICAgICAgc2NhbGU9e1snMCcsICc1IC8gMTAnLCAnMTAnXX1cclxuICAgICAgICAgICAgICAgICAgZm9ybWF0VmFsdWU9eygpID0+IGZvcm1hdFNjb3JlKGlucHV0KX1cbiAgICAgICAgICAgICAgICAgIGRpc2FibGVkPXshaXNVbmxvY2tlZH1cbiAgICAgICAgICAgICAgICAgIGNvbnRyb2xDbGFzc05hbWU9e2BuZ3R3LXRocmVlLWZhY3Rvci1zdW1fX2ZhY3Rvci1jb250cm9sIGdyaWQgbWluLXctMCBnYXAtWzNweF0ke2lzVW5sb2NrZWQgPyAnJyA6ICcgaXMtcGVuZGluZyd9JHtpc0d1aWRpbmcgPyAnIGlzLWd1aWRpbmcgZWR1LWF0dGVudGlvbi1oaW50JyA6ICcnfWB9XG4gICAgICAgICAgICAgICAgICBhcmlhLWxhYmVsPXtgJHtmYWN0b3IubmFtZX3vvIzlvZPliY3or4TliIYgJHtyYXdWYWx1ZX0gLyAxMGB9XHJcbiAgICAgICAgICAgICAgICAgIG9uUG9pbnRlckVudGVyPXsoKSA9PiBhZHZhbmNlR3VpZGUoaW5kZXgpfVxyXG4gICAgICAgICAgICAgICAgICBvbkZvY3VzPXsoKSA9PiBhZHZhbmNlR3VpZGUoaW5kZXgpfVxyXG4gICAgICAgICAgICAgICAgICBvbkNoYW5nZT17KGV2ZW50KSA9PiB7XHJcbiAgICAgICAgICAgICAgICAgICAgYWR2YW5jZUd1aWRlKGluZGV4KTtcclxuICAgICAgICAgICAgICAgICAgICBzZXRWYWx1ZURyYWZ0KGluZGV4LCBOdW1iZXIoZXZlbnQuY3VycmVudFRhcmdldC52YWx1ZSkpO1xyXG4gICAgICAgICAgICAgICAgICAgIGNvbW1pdFZhbHVlKCk7XHJcbiAgICAgICAgICAgICAgICAgIH19XHJcbiAgICAgICAgICAgICAgICAvPlxyXG5cclxuICAgICAgICAgICAgICAgIDxSYW5nZUNvbnRyb2xcbiAgICAgICAgICAgICAgICAgIGxhYmVsPXtgdyR7c3Vic2NyaXB0c1tpbmRleF19YH1cbiAgICAgICAgICAgICAgICAgIHZhbHVlPXt3ZWlnaHR9XG4gICAgICAgICAgICAgICAgICBtaW49ezB9XG4gICAgICAgICAgICAgICAgICBtYXg9ezF9XG4gICAgICAgICAgICAgICAgICBzdGVwPXswLjF9XG4gICAgICAgICAgICAgICAgICBkaXNjcmV0ZVxuICAgICAgICAgICAgICAgICAgc2NhbGU9e1snMCcsICcwLjUnLCAnMSddfVxuICAgICAgICAgICAgICAgICAgZGlnaXRzPXsxfVxuICAgICAgICAgICAgICAgICAgZGlzYWJsZWRcbiAgICAgICAgICAgICAgICAgIHN0eWxlPXt7ICctLXdlaWdodC1yYXRpbyc6IFN0cmluZyh3ZWlnaHQpIH0gYXMgQ1NTUHJvcGVydGllc31cbiAgICAgICAgICAgICAgICAgIGNvbnRyb2xDbGFzc05hbWU9e2BuZ3R3LXRocmVlLWZhY3Rvci1zdW1fX3dlaWdodC1jb250cm9sJHt3ZWlnaHRzTGl0ID8gJyBpcy1saXQnIDogJyd9YH1cbiAgICAgICAgICAgICAgICAgIGFyaWEtbGFiZWw9e2Ake2ZhY3Rvci5uYW1lfeeahOadg+mHjSAke2Zvcm1hdFNjb3JlKHdlaWdodCl9YH1cbiAgICAgICAgICAgICAgICAvPlxuXHJcbiAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImdyaWQganVzdGlmeS1pdGVtcy1lbmQgZ2FwLXB4IGJvcmRlci1sIGJvcmRlci1bI2U0ZWJmMl0gcGwtM1wiIGFyaWEtbGFiZWw9e2Ake2ZhY3Rvci5uYW1lfeeahOWKoOadg+i0oeeMrmB9PlxuICAgICAgICAgICAgICAgICAgPFR5cG9ncmFwaHkgdmFyaWFudD1cImJvZHlTbWFsbFwiIHRvbmU9XCJtdXRlZFwiPui0oeeMrjwvVHlwb2dyYXBoeT5cclxuICAgICAgICAgICAgICAgICAgPFR5cG9ncmFwaHkgYXM9XCJzdHJvbmdcIiB2YXJpYW50PVwiYm9keVwiIHRvbmU9XCJzdWNjZXNzXCI+e2Zvcm1hdFNjb3JlKGNvbnRyaWJ1dGlvbil9PC9UeXBvZ3JhcGh5PlxyXG4gICAgICAgICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgICAgICAgPC9hcnRpY2xlPlxyXG4gICAgICAgICAgICApO1xyXG4gICAgICAgICAgfSl9XHJcbiAgICAgICAgPC9zZWN0aW9uPlxyXG5cclxuICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImdyaWQgbWluLXctMCBwbGFjZS1pdGVtcy1jZW50ZXIgZm9udC1tb25vIHRleHQtWzM0cHhdIGZvbnQtZXh0cmFib2xkIHRleHQtWyM1YTc2YTJdXCIgYXJpYS1oaWRkZW49XCJ0cnVlXCI+4oaSPC9kaXY+XG5cclxuICAgICAgICA8YXNpZGUgY2xhc3NOYW1lPVwiZ3JpZCBtaW4taC0wIG1pbi13LTAgY29udGVudC1jZW50ZXIganVzdGlmeS1pdGVtcy1jZW50ZXIgZ2FwLTIgcC00IHRleHQtY2VudGVyXCIgYXJpYS1sYWJlbD1cIuWKoOadg+axguWSjFwiPlxuICAgICAgICAgIDxUeXBvZ3JhcGh5IHZhcmlhbnQ9XCJib2R5U21hbGxcIiB0b25lPVwibXV0ZWRcIj7liqDmnYPmsYLlkow8L1R5cG9ncmFwaHk+XHJcbiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImdyaWQgaC1bNzZweF0gdy1bNzZweF0gcGxhY2UtaXRlbXMtY2VudGVyIHJvdW5kZWQtZnVsbCBiZy1bI2U1OGI0ZV0gZm9udC1bR2VvcmdpYV0gdGV4dC1bNDhweF0gZm9udC1ib2xkIHRleHQtd2hpdGUgc2hhZG93LVswXzEwcHhfMjBweF9yZ2JhKDE5NiwxMDUsNDgsLjE4KV1cIj7OozwvZGl2PlxuICAgICAgICA8L2FzaWRlPlxyXG5cclxuICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImdyaWQgbWluLXctMCBwbGFjZS1pdGVtcy1jZW50ZXIgZm9udC1tb25vIHRleHQtWzM0cHhdIGZvbnQtZXh0cmFib2xkIHRleHQtWyM1YTc2YTJdXCIgYXJpYS1oaWRkZW49XCJ0cnVlXCI+4oaSPC9kaXY+XG5cclxuICAgICAgICA8YXNpZGUgY2xhc3NOYW1lPVwiZ3JpZCBtaW4taC0wIG1pbi13LTAgY29udGVudC1jZW50ZXIganVzdGlmeS1pdGVtcy1jZW50ZXIgZ2FwLTIgcC00IHRleHQtY2VudGVyXCIgYXJpYS1sYWJlbD1cIuelnue7j+WFg+eahOaAu+i+k+WFpVwiPlxuICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZ3JpZCB3LWZ1bGwgZ2FwLVs1cHhdIHJvdW5kZWQtWzEwcHhdIGJnLVsjZmZmMGVjXSBweC1bMTBweF0gcHktWzE0cHhdIHRleHQtY2VudGVyXCI+XG4gICAgICAgICAgICA8VHlwb2dyYXBoeSB2YXJpYW50PVwiYm9keVwiIHRvbmU9XCJ3YXJuaW5nXCI+6L6T5Ye6IHk8L1R5cG9ncmFwaHk+XHJcbiAgICAgICAgICAgIDxUeXBvZ3JhcGh5IGFzPVwic3Ryb25nXCIgdmFyaWFudD1cImgxXCIgdG9uZT1cIndhcm5pbmdcIj49IHtmb3JtYXRTY29yZShvdXRwdXQpfTwvVHlwb2dyYXBoeT5cclxuICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgIDwvYXNpZGU+XHJcbiAgICAgIDwvZGl2PlxyXG5cclxuICAgICAgPHNlY3Rpb24gY2xhc3NOYW1lPVwiZ3JpZCBtaW4taC1bMTI0cHhdIG1pbi13LTAgZ3JpZC1jb2xzLVsxODBweF9taW5tYXgoMCwxZnIpXSBpdGVtcy1zdHJldGNoIG92ZXJmbG93LWhpZGRlbiByb3VuZGVkLVsxNnB4XSBib3JkZXIgYm9yZGVyLVsjZTFlMWUxXSBiZy1bI2Y5ZjlmOV1cIj5cbiAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJtaW4tdy0wIG92ZXJmbG93LWhpZGRlbiBiZy1bI2Y5ZjlmOV1cIj5cbiAgICAgICAgICA8dmlkZW8gY2xhc3NOYW1lPVwiYmxvY2sgaC1mdWxsIHctZnVsbCBvYmplY3QtY292ZXIgb2JqZWN0LVtjZW50ZXJfMjIlXVwiIHNyYz17dGVhY2hlclZpZGVvfSBhdXRvUGxheSBsb29wIG11dGVkIHBsYXlzSW5saW5lIGFyaWEtbGFiZWw9XCLmlZnluIjmj5DnpLrop4bpopFcIiAvPlxuICAgICAgICA8L2Rpdj5cclxuICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImdyaWQgbWluLXctMCBjb250ZW50LWNlbnRlciBnYXAtWzZweF0gcHgtWzI2cHhdIHB5LTQgWyZfcF06dy1mdWxsIFsmX3BdOm1heC13LW5vbmUgWyZfcF06W292ZXJmbG93LXdyYXA6YW55d2hlcmVdXCI+XG4gICAgICAgICAgPFR5cG9ncmFwaHkgYXM9XCJzdHJvbmdcIiB2YXJpYW50PVwiaDNcIiB0b25lPVwiYWNjZW50XCI+5L2g5Y+R546w5LqG5LuA5LmI77yfPC9UeXBvZ3JhcGh5PlxyXG4gICAgICAgICAgPFR5cG9ncmFwaHkgYXM9XCJwXCIgdmFyaWFudD1cImJvZHlcIiB0b25lPVwibXV0ZWRcIj5cbiAgICAgICAgICAgIOavj+S4quWboOe0oOmDveS8mui0oeeMruS4gOmDqOWIhuKAnOaOqOWKqOWKm+KAne+8jOadg+mHjei2iuWkp++8jOi0oeeMrui2iuWkp+OAgui/memHjOeahOaAu+i+k+WFpeS4jeS4gOWumumZkOWItuWcqCAw772eMSDkuYvpl7TvvIzlroPooajnpLrmiYDmnInlm6DntKDliqDlnKjkuIDotbfnmoTlvLrluqbjgIJcbiAgICAgICAgICA8L1R5cG9ncmFwaHk+XG4gICAgICAgIDwvZGl2PlxyXG4gICAgICA8L3NlY3Rpb24+XHJcbiAgICA8L0NvbnRlbnRCbG9jaz5cclxuICApO1xyXG59XHJcblxyXG5cclxuXHJcbiJdLCJmaWxlIjoiQzovVXNlcnMvT2NlYW4vRG9jdW1lbnRzL0dpdEh1Yi9pbnR1aXRpdmUtZGVlcC1sZWFybmluZy9tb2R1bGVzL05ldXJvbi1HdWlkZS9wYWdlcy9FeHRyYUlucHV0c1BhZ2UvRXh0cmFJbnB1dHNQYWdlLnRzeCJ9

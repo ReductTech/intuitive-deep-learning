@@ -1,0 +1,18 @@
+/*************************************************************************
+* ADOBE CONFIDENTIAL
+* ___________________
+*
+*  Copyright 2015 Adobe Systems Incorporated
+*  All Rights Reserved.
+*
+* NOTICE:  All information contained herein is, and remains
+* the property of Adobe Systems Incorporated and its suppliers,
+* if any.  The intellectual and technical concepts contained
+* herein are proprietary to Adobe Systems Incorporated and its
+* suppliers and are protected by all applicable intellectual property laws,
+* including trade secret and or copyright laws.
+* Dissemination of this information or reproduction of this material
+* is strictly forbidden unless prior written permission is obtained
+* from Adobe Systems Incorporated.
+**************************************************************************/
+body{font-family:adobe-clean,Helvetica Neue,Myriad Pro,sans-serif}.container{height:auto;margin:80px auto 0;width:680px}.header{border-bottom:1px solid #ccc;font-size:32px;font-weight:300;line-height:44px;min-height:54px;text-align:center}.footer,.header{width:100%}#message{background-color:#aeaeae;border-radius:2px;color:#454545;font-size:16px;font-weight:300;margin:5px 0;min-height:27px;opacity:1;overflow:auto;padding:8px 3%;transition:all .3s ease-out;width:94%}#message.hidden{height:0;min-height:0;opacity:0;overflow:hidden}#message.success{background-color:#a8e0ab;color:#0e4c11}#message.error{background-color:#e0abab;color:#4c1111}

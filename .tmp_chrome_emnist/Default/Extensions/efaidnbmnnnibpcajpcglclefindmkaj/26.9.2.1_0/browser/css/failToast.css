@@ -1,0 +1,18 @@
+/*************************************************************************
+* ADOBE CONFIDENTIAL
+* ___________________
+*
+*  Copyright 2015 Adobe Systems Incorporated
+*  All Rights Reserved.
+*
+* NOTICE:  All information contained herein is, and remains
+* the property of Adobe Systems Incorporated and its suppliers,
+* if any.  The intellectual and technical concepts contained
+* herein are proprietary to Adobe Systems Incorporated and its
+* suppliers and are protected by all applicable intellectual property laws,
+* including trade secret and or copyright laws.
+* Dissemination of this information or reproduction of this material
+* is strictly forbidden unless prior written permission is obtained
+* from Adobe Systems Incorporated.
+**************************************************************************/
+.toast{align-items:center;background-color:#b40000;display:flex;justify-content:center;margin:-8px;padding:10px 20px}.toastDescription{color:#fff;font-size:14px;margin-left:10px;margin-right:20px}.vl{border-left:1px solid #d3d3d3;height:30px;margin-left:10px;margin-right:10px}.closeToastButton{cursor:pointer;transition:opacity .2s ease}.closeToastButton:hover{opacity:.7}.failToastButton{background-color:transparent;border:1px solid #fff;border-radius:20px;color:#fff;cursor:pointer;display:none;font-size:14px;font-weight:500;margin-left:10px;margin-right:10px;min-width:75px;padding:6px 12px;text-align:center;transition:background-color .2s ease,color .2s ease}.failToastButton:hover{background-color:#fff;color:#b40000}.failToastButton .loading{pointer-events:none}.failToastButton .spinner{animation:spin 1s linear infinite;border:1px solid transparent;border-radius:50%;border-top-color:currentcolor;display:none;height:10px;width:10px}.failToastButton.loading .spinner{display:inline-block}.failToastButton.loading .button-text{display:none}@keyframes spin{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}

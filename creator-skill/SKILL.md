@@ -115,6 +115,8 @@ description: 规划、设计、实现和验收本仓库的 React 多形态教学
 
 1. **优先复用 Shared UI。** 开发新页面或组件前，先检查 `modules/shared/react/`。已有对应能力时必须直接复用，不重复实现按钮、输入框、滑杆、提示、问题、公式、渐进展示、课程流程、图表等通用组件。只有知识本身需要的特殊视觉或交互才在模块内新增组件。不得复制 Shared 组件另起一套近似实现，也不要为了单个页面修改 Shared 的公共行为。
 
+   **页面顶部必须使用 Shared `ContentBlock`。** 标准教学页的标题和副标题由 `ContentBlock` 的 `title`、`subtitle` 属性及其默认标题区渲染。参考图仅用于设计标题区以下的教学内容；不得复刻参考图顶部的页码、分隔线、标题排版或字体，也不得用页面专属 CSS 改写 `ContentBlock` 标题区。只有用户明确要求改动顶部时才能例外。
+
 2. **所有独立文字使用 `Typography`。** 页面标题、副标题、正文、说明、标签、提示等文字统一通过 Shared `Typography` 渲染，或使用内部已经封装 `Typography` 的 Shared 组件。模块 CSS 不得自行覆盖 Typography 的 `font-size`、`font-weight` 和 `line-height`。
 
 3. **遵循 Shared Theme。** 颜色、字体、圆角、边框、阴影和状态色优先使用 `modules/shared/react/` 已定义的 CSS Token，不在模块内重新建立基础视觉规范。模块 CSS 主要负责页面布局和课程专属视觉。
@@ -132,6 +134,25 @@ description: 规划、设计、实现和验收本仓库的 React 多形态教学
 9. **禁止查看git历史** 除非用户明确要求，否则严禁查看git历史。
 
 10. 如果没有明确要求，禁止修改shared下的任何内容。
+
+样式实现可选使用 Tailwind，也可以使用模块专属 CSS。
+
+### 简答题双入口模板
+
+同一张教学页在 Guide 和 PPT 中复用简答题时，直接使用 Shared `Question`，不要在页面里读取 URL、DOM 类名或手写 `isPpt` 判断。`SceneDeck` 已自动把简答题切到 PPT 揭示模式；普通 Guide 入口默认是提交模式。
+
+```tsx
+<Question
+  type="short"
+  title="为什么数像素也可以叫特征？"
+  referenceAnswer="像素数量是按固定规则测得、可在不同样本间比较的数值，因此能帮助区分类别。"
+/>
+```
+
+- `referenceAnswer` 是供课堂展示的事先核对过的参考答案。PPT 点击“揭示答案”后，答案直接出现在只读答题框内；此操作不提交学生回答，也不调用大模型。
+- Guide 保留可输入的答题框。点击提交后，组件自动把题目、参考答案和学生回答送到 `/short-answer/evaluate`，展示真实反馈。新题不需要手写 `taskId`，也不需要往题库登记 ID；服务按题目和参考答案生成稳定的 SHA-256 标识。运行时需启动 LangChain 服务及其模型代理。
+- 旧题库题目仍可传 `taskId`；特殊评阅逻辑可用 `review` 属性覆盖通用服务。没有可用的文字题目、参考答案、`taskId` 或 `review` 时，Guide 仅作本地提交，不会假称已由模型评阅。
+- 只有简答题使用这套双模式行为；单选、判断、多选和填空题保持原有作答方式。
 
 ## 模块架构与命名规范
 

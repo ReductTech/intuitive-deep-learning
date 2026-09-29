@@ -1,0 +1,18 @@
+/*************************************************************************
+* ADOBE CONFIDENTIAL
+* ___________________
+*
+*  Copyright 2015 Adobe Systems Incorporated
+*  All Rights Reserved.
+*
+* NOTICE:  All information contained herein is, and remains
+* the property of Adobe Systems Incorporated and its suppliers,
+* if any.  The intellectual and technical concepts contained
+* herein are proprietary to Adobe Systems Incorporated and its
+* suppliers and are protected by all applicable intellectual property laws,
+* including trade secret and or copyright laws.
+* Dissemination of this information or reproduction of this material
+* is strictly forbidden unless prior written permission is obtained
+* from Adobe Systems Incorporated.
+**************************************************************************/
+.acrobat-convert-to-pdf-touch-point-tooltip{background-color:#303030;border-radius:4px;box-sizing:border-box;color:#fff;font-family:Google Sans,sans-serif;font-size:12px;font-weight:400;line-height:16px;opacity:0;padding:4px 9px;pointer-events:none;position:absolute;text-align:center;text-wrap:auto;top:43px;width:187px}.acrobat-convert-to-pdf-touch-point:hover:not(:has(.acrobat-fte-tooltip-container))>.acrobat-convert-to-pdf-touch-point-tooltip{opacity:1}.acrobat-convert-to-pdf-touch-point:focus-visible:not(:has(.acrobat-fte-tooltip-container))>.acrobat-convert-to-pdf-touch-point-tooltip{opacity:1}.acrobat-convert-to-pdf-touch-point{align-items:center;background:#fafbfd;border:1px solid #717171;border-radius:100px;box-sizing:border-box;cursor:pointer;display:inline-flex;font-family:Google Sans,sans-serif;font-size:14px;font-weight:500;gap:8px;height:40px;justify-content:center;margin-right:8px;padding:8px 12px;pointer-events:all;position:relative;text-decoration:none}.acrobat-convert-to-pdf-touch-point>.acrobat-icon{flex-shrink:0;height:18px;vertical-align:middle!important;width:18px}.acrobat-convert-to-pdf-touch-point-text{align-items:center;color:#454746;display:none;font-size:14px;font-weight:500;line-height:20px}@media screen and (min-width:1280px){.acrobat-convert-to-pdf-touch-point-document,.acrobat-convert-to-pdf-touch-point-spreadsheets{padding:8px 16px}.acrobat-convert-to-pdf-touch-point-document .acrobat-convert-to-pdf-touch-point-text,.acrobat-convert-to-pdf-touch-point-spreadsheets .acrobat-convert-to-pdf-touch-point-text{display:flex}}@media screen and (min-width:1440px){.acrobat-convert-to-pdf-touch-point-presentation{padding:8px 16px}.acrobat-convert-to-pdf-touch-point-presentation .acrobat-convert-to-pdf-touch-point-text{display:flex}}.acrobat-convert-to-pdf-touch-point:active,.acrobat-convert-to-pdf-touch-point:focus,.acrobat-convert-to-pdf-touch-point:hover{background:#eee}.acrobat-convert-to-pdf-touch-point:focus-visible{outline:none}.acrobat-convert-to-pdf-touch-point:has(.acrobat-fte-tooltip-container:hover){background:#fafbfd!important}.acrobat-convert-to-pdf-touch-point.loading{background:#fafbfd;cursor:default}.acrobat-convert-to-pdf-touch-point.loading:focus-visible,.acrobat-convert-to-pdf-touch-point.loading:hover{background:#eee}.acrobat-convert-to-pdf-touch-point.loading>.acrobat-icon{display:none}.acrobat-convert-to-pdf-touch-point-loader{display:none;flex-shrink:0}.acrobat-convert-to-pdf-touch-point.loading>.acrobat-convert-to-pdf-touch-point-loader{align-items:flex-start;box-sizing:border-box;display:flex;height:18px;justify-content:center;padding-top:1px;width:18px}

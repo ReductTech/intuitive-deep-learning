@@ -1,0 +1,254 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/modules/Neuron-Guide/pages/WeightedSumPage/WeightedSumPage.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=2be87a0d"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/WeightedSumPage/WeightedSumPage.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+var _s = $RefreshSig$();
+import { ContentBlock, moduleAssetUrl, Typography } from "/modules/shared/react/index.ts";
+import "/modules/Neuron-Guide/pages/WeightedSumPage/WeightedSumPage.css";
+import { effectiveInput, useLesson } from "/modules/Neuron-Guide/LessonContext.tsx";
+const teacherVideo = moduleAssetUrl("9acfbca1-b881-457e-add6-21e0b6b855a0", "teacher_female_10s_wb.mp4");
+export function WeightedSumPage({ onComplete }) {
+  _s();
+  const {
+    state,
+    setValueDraft,
+    scenario
+  } = useLesson();
+  const factor = scenario.factors[0];
+  const rawValue = state.values[0] ?? factor.suggestedValue;
+  const normalizedValue = effectiveInput(factor, rawValue);
+  const isInverse = factor.valueTransform === "inverse";
+  return /* @__PURE__ */ jsxDEV(
+    ContentBlock,
+    {
+      headingLevel: 1,
+      className: "ngtw-analysis-stage ngtw-weighted-sum",
+      title: `把“${factor.name}”翻译成神经元的输入`,
+      subtitle: `神经元只能处理数值，所以我们先把“${factor.valueQuestion}”统一转换到 0 ～ 1。`,
+      children: /* @__PURE__ */ jsxDEV("div", { className: "grid min-h-0 min-w-0 grid-rows-[minmax(0,1fr)_auto] gap-[18px] bg-[#fbfdff] px-[26px] py-[6px]", "aria-label": "从现实回答到神经元输入", children: [
+        /* @__PURE__ */ jsxDEV("div", { className: "mt-[34px] grid min-w-0 grid-cols-[minmax(0,1.42fr)_minmax(48px,.18fr)_minmax(145px,.64fr)_minmax(48px,.18fr)_minmax(240px,1fr)] items-center gap-3 self-start", children: [
+          /* @__PURE__ */ jsxDEV("section", { className: "grid min-h-[300px] min-w-0 content-center gap-6 rounded-[14px] border border-[#d9e4f0] bg-white/85 px-8 pb-[22px] pt-6 shadow-[0_12px_28px_rgba(48,76,113,.08)]", "aria-label": "现实问题", children: [
+            /* @__PURE__ */ jsxDEV("div", { className: "grid min-w-0 gap-[7px]", children: [
+              /* @__PURE__ */ jsxDEV(Typography, { as: "strong", variant: "h3", tone: "accent", children: factor.valueQuestion }, void 0, false, {
+                fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/WeightedSumPage/WeightedSumPage.tsx",
+                lineNumber: 52,
+                columnNumber: 15
+              }, this),
+              /* @__PURE__ */ jsxDEV(Typography, { variant: "bodySmall", tone: "light", children: factor.explanation }, void 0, false, {
+                fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/WeightedSumPage/WeightedSumPage.tsx",
+                lineNumber: 53,
+                columnNumber: 15
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/WeightedSumPage/WeightedSumPage.tsx",
+              lineNumber: 51,
+              columnNumber: 13
+            }, this),
+            /* @__PURE__ */ jsxDEV("div", { className: "relative grid min-w-0 gap-[10px]", children: [
+              /* @__PURE__ */ jsxDEV(
+                "input",
+                {
+                  className: "ngtw-weighted-sum__range w-full cursor-ew-resize accent-[#3b5784]",
+                  type: "range",
+                  min: "0",
+                  max: "10",
+                  step: "1",
+                  value: rawValue,
+                  "aria-label": `${factor.name}，评分 0 到 10`,
+                  onChange: (event) => {
+                    setValueDraft(0, Number(event.currentTarget.value));
+                    onComplete();
+                  }
+                },
+                void 0,
+                false,
+                {
+                  fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/WeightedSumPage/WeightedSumPage.tsx",
+                  lineNumber: 56,
+                  columnNumber: 15
+                },
+                this
+              ),
+              /* @__PURE__ */ jsxDEV("div", { className: "grid min-w-0 grid-cols-2 [&_span:last-child]:text-right", children: [
+                /* @__PURE__ */ jsxDEV(Typography, { as: "span", variant: "bodySmall", tone: "muted", children: factor.minDesc }, void 0, false, {
+                  fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/WeightedSumPage/WeightedSumPage.tsx",
+                  lineNumber: 70,
+                  columnNumber: 17
+                }, this),
+                /* @__PURE__ */ jsxDEV(Typography, { as: "span", variant: "bodySmall", tone: "muted", children: factor.maxDesc }, void 0, false, {
+                  fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/WeightedSumPage/WeightedSumPage.tsx",
+                  lineNumber: 71,
+                  columnNumber: 17
+                }, this)
+              ] }, void 0, true, {
+                fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/WeightedSumPage/WeightedSumPage.tsx",
+                lineNumber: 69,
+                columnNumber: 15
+              }, this),
+              /* @__PURE__ */ jsxDEV("div", { className: "grid min-w-0 grid-cols-6 text-center font-mono text-[#8293aa] [&_span:first-child]:text-left [&_span:last-child]:text-right", "aria-hidden": "true", children: [0, 2, 4, 6, 8, 10].map((tick) => /* @__PURE__ */ jsxDEV("span", { children: tick }, tick, false, {
+                fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/WeightedSumPage/WeightedSumPage.tsx",
+                lineNumber: 74,
+                columnNumber: 52
+              }, this)) }, void 0, false, {
+                fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/WeightedSumPage/WeightedSumPage.tsx",
+                lineNumber: 73,
+                columnNumber: 15
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/WeightedSumPage/WeightedSumPage.tsx",
+              lineNumber: 55,
+              columnNumber: 13
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/WeightedSumPage/WeightedSumPage.tsx",
+            lineNumber: 50,
+            columnNumber: 11
+          }, this),
+          /* @__PURE__ */ jsxDEV("div", { className: "grid place-items-center font-mono text-[46px] font-extrabold text-[#5a76a2]", "aria-hidden": "true", children: /* @__PURE__ */ jsxDEV("span", { children: "→" }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/WeightedSumPage/WeightedSumPage.tsx",
+            lineNumber: 78,
+            columnNumber: 123
+          }, this) }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/WeightedSumPage/WeightedSumPage.tsx",
+            lineNumber: 78,
+            columnNumber: 11
+          }, this),
+          /* @__PURE__ */ jsxDEV("section", { className: "grid min-h-[188px] min-w-0 justify-items-center gap-4 rounded-[14px] border border-[#d9e4f0] bg-[#f5f9fe] px-4 py-6 text-center shadow-[0_12px_28px_rgba(48,76,113,.08)]", "aria-label": "统一到 0 到 1", children: [
+            /* @__PURE__ */ jsxDEV(Typography, { variant: "body", tone: "accent", children: "统一到 0 ～ 1" }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/WeightedSumPage/WeightedSumPage.tsx",
+              lineNumber: 80,
+              columnNumber: 13
+            }, this),
+            /* @__PURE__ */ jsxDEV("div", { className: "flex flex-wrap items-center justify-center gap-2 text-center font-mono text-[24px] font-extrabold text-[#385576]", children: isInverse ? "1 − (x₁ ÷ 10)" : "x₁ ÷ 10" }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/WeightedSumPage/WeightedSumPage.tsx",
+              lineNumber: 81,
+              columnNumber: 13
+            }, this),
+            isInverse && /* @__PURE__ */ jsxDEV(Typography, { as: "span", variant: "bodySmall", tone: "muted", className: "max-w-[180px] text-center", children: "这是反向计入：评分越高，代表对当前决定的支持越弱。" }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/WeightedSumPage/WeightedSumPage.tsx",
+              lineNumber: 85,
+              columnNumber: 13
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/WeightedSumPage/WeightedSumPage.tsx",
+            lineNumber: 79,
+            columnNumber: 11
+          }, this),
+          /* @__PURE__ */ jsxDEV("div", { className: "grid place-items-center font-mono text-[46px] font-extrabold text-[#5a76a2]", "aria-hidden": "true", children: /* @__PURE__ */ jsxDEV("span", { children: "→" }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/WeightedSumPage/WeightedSumPage.tsx",
+            lineNumber: 90,
+            columnNumber: 123
+          }, this) }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/WeightedSumPage/WeightedSumPage.tsx",
+            lineNumber: 90,
+            columnNumber: 11
+          }, this),
+          /* @__PURE__ */ jsxDEV("section", { className: "grid min-h-[246px] min-w-0 content-center gap-[18px] rounded-[14px] border border-[#d9e4f0] bg-white/85 px-7 py-6 shadow-[0_12px_28px_rgba(48,76,113,.08)]", "aria-label": "神经元的输入", children: [
+            /* @__PURE__ */ jsxDEV(Typography, { variant: "h3", tone: "accent", children: "神经元的输入" }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/WeightedSumPage/WeightedSumPage.tsx",
+              lineNumber: 92,
+              columnNumber: 13
+            }, this),
+            /* @__PURE__ */ jsxDEV("div", { className: "grid min-h-[86px] place-items-center rounded-[11px] bg-[#e2f2ee]", children: /* @__PURE__ */ jsxDEV(Typography, { as: "strong", variant: "h2", tone: "success", children: [
+              "x₁ = ",
+              normalizedValue.toFixed(2)
+            ] }, void 0, true, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/WeightedSumPage/WeightedSumPage.tsx",
+              lineNumber: 94,
+              columnNumber: 15
+            }, this) }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/WeightedSumPage/WeightedSumPage.tsx",
+              lineNumber: 93,
+              columnNumber: 13
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/WeightedSumPage/WeightedSumPage.tsx",
+            lineNumber: 91,
+            columnNumber: 11
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/WeightedSumPage/WeightedSumPage.tsx",
+          lineNumber: 49,
+          columnNumber: 9
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { className: "grid min-h-[128px] min-w-0 grid-cols-[196px_minmax(0,1fr)] items-stretch overflow-hidden rounded-lesson-lg border border-[#e1e1e1] bg-[#f9f9f9]", children: [
+          /* @__PURE__ */ jsxDEV("div", { className: "min-w-0 overflow-hidden bg-[#f9f9f9]", children: /* @__PURE__ */ jsxDEV("video", { className: "block h-full w-full object-cover object-[center_24%]", src: teacherVideo, autoPlay: true, loop: true, muted: true, playsInline: true, "aria-label": "教师提示视频" }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/WeightedSumPage/WeightedSumPage.tsx",
+            lineNumber: 100,
+            columnNumber: 65
+          }, this) }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/WeightedSumPage/WeightedSumPage.tsx",
+            lineNumber: 100,
+            columnNumber: 11
+          }, this),
+          /* @__PURE__ */ jsxDEV("div", { className: "grid min-w-0 content-center gap-2 px-[30px] py-[18px]", children: [
+            /* @__PURE__ */ jsxDEV(Typography, { as: "strong", variant: "h3", tone: "accent", children: "小提示" }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/WeightedSumPage/WeightedSumPage.tsx",
+              lineNumber: 102,
+              columnNumber: 13
+            }, this),
+            /* @__PURE__ */ jsxDEV(Typography, { as: "p", variant: "body", tone: "muted", children: "无论是 1～5 分、1～10 分，还是“非常低～非常高”，都可以通过简单的转换，变成 0～1 之间的数。这样不同的问题都可以用相同的数值尺度输入到神经元中。" }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/WeightedSumPage/WeightedSumPage.tsx",
+              lineNumber: 103,
+              columnNumber: 13
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/WeightedSumPage/WeightedSumPage.tsx",
+            lineNumber: 101,
+            columnNumber: 11
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/WeightedSumPage/WeightedSumPage.tsx",
+          lineNumber: 99,
+          columnNumber: 9
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/WeightedSumPage/WeightedSumPage.tsx",
+        lineNumber: 48,
+        columnNumber: 7
+      }, this)
+    },
+    void 0,
+    false,
+    {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/WeightedSumPage/WeightedSumPage.tsx",
+      lineNumber: 42,
+      columnNumber: 5
+    },
+    this
+  );
+}
+_s(WeightedSumPage, "ouhCiPXdA3BIZNyVF27fHQ5mAV8=", false, function() {
+  return [useLesson];
+});
+_c = WeightedSumPage;
+var _c;
+$RefreshReg$(_c, "WeightedSumPage");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/WeightedSumPage/WeightedSumPage.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/WeightedSumPage/WeightedSumPage.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,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QUFDLFNBQUksV0FBVSxtSkFDYjtBQUFBLGlDQUFDLFNBQUksV0FBVSx3Q0FBdUMsaUNBQUMsV0FBTSxXQUFVLHdEQUF1RCxLQUFLMUIsY0FBYyxVQUFRLE1BQUMsTUFBSSxNQUFDLE9BQUssTUFBQyxhQUFXLE1BQUMsY0FBVyxZQUF0STtBQUFBO0FBQUE7QUFBQTtBQUFBLGlCQUE4SSxLQUFwTTtBQUFBO0FBQUE7QUFBQTtBQUFBLGlCQUF1TTtBQUFBLFVBQ3ZNLHVCQUFDLFNBQUksV0FBVSx5REFDYjtBQUFBLG1DQUFDLGNBQVcsSUFBRyxVQUFTLFNBQVEsTUFBSyxNQUFLLFVBQVMsbUJBQW5EO0FBQUE7QUFBQTtBQUFBO0FBQUEsbUJBQXNEO0FBQUEsWUFDdEQsdUJBQUMsY0FBVyxJQUFHLEtBQUksU0FBUSxRQUFPLE1BQUssU0FBUSw4RkFBL0M7QUFBQTtBQUFBO0FBQUE7QUFBQSxtQkFBNkg7QUFBQSxlQUYvSDtBQUFBO0FBQUE7QUFBQTtBQUFBLGlCQUdBO0FBQUEsYUFMRjtBQUFBO0FBQUE7QUFBQTtBQUFBLGVBTUE7QUFBQSxXQXpERjtBQUFBO0FBQUE7QUFBQTtBQUFBLGFBMERBO0FBQUE7QUFBQSxJQWhFRjtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUEsRUFpRUE7QUFFSjtBQUFDRyxHQS9FZUYsaUJBQWU7QUFBQSxVQUt6QkYsU0FBUztBQUFBO0FBQUEsS0FMQ0U7QUFBZSxJQUFBMEI7QUFBQSxhQUFBQSxJQUFBIiwibmFtZXMiOlsiQ29udGVudEJsb2NrIiwibW9kdWxlQXNzZXRVcmwiLCJUeXBvZ3JhcGh5IiwiZWZmZWN0aXZlSW5wdXQiLCJ1c2VMZXNzb24iLCJ0ZWFjaGVyVmlkZW8iLCJXZWlnaHRlZFN1bVBhZ2UiLCJvbkNvbXBsZXRlIiwiX3MiLCJzdGF0ZSIsInNldFZhbHVlRHJhZnQiLCJzY2VuYXJpbyIsImZhY3RvciIsImZhY3RvcnMiLCJyYXdWYWx1ZSIsInZhbHVlcyIsInN1Z2dlc3RlZFZhbHVlIiwibm9ybWFsaXplZFZhbHVlIiwiaXNJbnZlcnNlIiwidmFsdWVUcmFuc2Zvcm0iLCJuYW1lIiwidmFsdWVRdWVzdGlvbiIsImV4cGxhbmF0aW9uIiwiZXZlbnQiLCJOdW1iZXIiLCJjdXJyZW50VGFyZ2V0IiwidmFsdWUiLCJtaW5EZXNjIiwibWF4RGVzYyIsIm1hcCIsInRpY2siLCJ0b0ZpeGVkIiwiX2MiXSwiaWdub3JlTGlzdCI6W10sInNvdXJjZXMiOlsiV2VpZ2h0ZWRTdW1QYWdlLnRzeCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBDb250ZW50QmxvY2ssIG1vZHVsZUFzc2V0VXJsLCBUeXBvZ3JhcGh5IH0gZnJvbSAnLi4vLi4vLi4vc2hhcmVkL3JlYWN0JztcbmltcG9ydCBcIi4vV2VpZ2h0ZWRTdW1QYWdlLmNzc1wiO1xuaW1wb3J0IHsgZWZmZWN0aXZlSW5wdXQsIHVzZUxlc3NvbiB9IGZyb20gJy4uLy4uL0xlc3NvbkNvbnRleHQnO1xuXG5jb25zdCB0ZWFjaGVyVmlkZW8gPSBtb2R1bGVBc3NldFVybCgnOWFjZmJjYTEtYjg4MS00NTdlLWFkZDYtMjFlMGI2Yjg1NWEwJywgJ3RlYWNoZXJfZmVtYWxlXzEwc193Yi5tcDQnKTtcblxuZXhwb3J0IGludGVyZmFjZSBXZWlnaHRlZFN1bVBhZ2VQcm9wcyB7XG4gIG9uQ29tcGxldGU6ICgpID0+IHZvaWQ7XG59XG5cbmV4cG9ydCBmdW5jdGlvbiBXZWlnaHRlZFN1bVBhZ2UoeyBvbkNvbXBsZXRlIH06IFdlaWdodGVkU3VtUGFnZVByb3BzKSB7XG4gIGNvbnN0IHtcbiAgICBzdGF0ZSxcbiAgICBzZXRWYWx1ZURyYWZ0LFxuICAgIHNjZW5hcmlvLFxuICB9ID0gdXNlTGVzc29uKCk7XG4gIGNvbnN0IGZhY3RvciA9IHNjZW5hcmlvLmZhY3RvcnNbMF07XG4gIGNvbnN0IHJhd1ZhbHVlID0gc3RhdGUudmFsdWVzWzBdID8/IGZhY3Rvci5zdWdnZXN0ZWRWYWx1ZTtcbiAgY29uc3Qgbm9ybWFsaXplZFZhbHVlID0gZWZmZWN0aXZlSW5wdXQoZmFjdG9yLCByYXdWYWx1ZSk7XG4gIGNvbnN0IGlzSW52ZXJzZSA9IGZhY3Rvci52YWx1ZVRyYW5zZm9ybSA9PT0gJ2ludmVyc2UnO1xuXG4gIHJldHVybiAoXG4gICAgPENvbnRlbnRCbG9ja1xuICAgICAgaGVhZGluZ0xldmVsPXsxfVxuICAgICAgY2xhc3NOYW1lPVwibmd0dy1hbmFseXNpcy1zdGFnZSBuZ3R3LXdlaWdodGVkLXN1bVwiXG4gICAgICB0aXRsZT17YOaKiuKAnCR7ZmFjdG9yLm5hbWV94oCd57+76K+R5oiQ56We57uP5YWD55qE6L6T5YWlYH1cbiAgICAgIHN1YnRpdGxlPXtg56We57uP5YWD5Y+q6IO95aSE55CG5pWw5YC877yM5omA5Lul5oiR5Lus5YWI5oqK4oCcJHtmYWN0b3IudmFsdWVRdWVzdGlvbn3igJ3nu5/kuIDovazmjaLliLAgMCDvvZ4gMeOAgmB9XG4gICAgPlxuICAgICAgPGRpdiBjbGFzc05hbWU9XCJncmlkIG1pbi1oLTAgbWluLXctMCBncmlkLXJvd3MtW21pbm1heCgwLDFmcilfYXV0b10gZ2FwLVsxOHB4XSBiZy1bI2ZiZmRmZl0gcHgtWzI2cHhdIHB5LVs2cHhdXCIgYXJpYS1sYWJlbD1cIuS7jueOsOWunuWbnuetlOWIsOelnue7j+WFg+i+k+WFpVwiPlxuICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cIm10LVszNHB4XSBncmlkIG1pbi13LTAgZ3JpZC1jb2xzLVttaW5tYXgoMCwxLjQyZnIpX21pbm1heCg0OHB4LC4xOGZyKV9taW5tYXgoMTQ1cHgsLjY0ZnIpX21pbm1heCg0OHB4LC4xOGZyKV9taW5tYXgoMjQwcHgsMWZyKV0gaXRlbXMtY2VudGVyIGdhcC0zIHNlbGYtc3RhcnRcIj5cbiAgICAgICAgICA8c2VjdGlvbiBjbGFzc05hbWU9XCJncmlkIG1pbi1oLVszMDBweF0gbWluLXctMCBjb250ZW50LWNlbnRlciBnYXAtNiByb3VuZGVkLVsxNHB4XSBib3JkZXIgYm9yZGVyLVsjZDllNGYwXSBiZy13aGl0ZS84NSBweC04IHBiLVsyMnB4XSBwdC02IHNoYWRvdy1bMF8xMnB4XzI4cHhfcmdiYSg0OCw3NiwxMTMsLjA4KV1cIiBhcmlhLWxhYmVsPVwi546w5a6e6Zeu6aKYXCI+XG4gICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImdyaWQgbWluLXctMCBnYXAtWzdweF1cIj5cbiAgICAgICAgICAgICAgPFR5cG9ncmFwaHkgYXM9XCJzdHJvbmdcIiB2YXJpYW50PVwiaDNcIiB0b25lPVwiYWNjZW50XCI+e2ZhY3Rvci52YWx1ZVF1ZXN0aW9ufTwvVHlwb2dyYXBoeT5cbiAgICAgICAgICAgICAgPFR5cG9ncmFwaHkgdmFyaWFudD1cImJvZHlTbWFsbFwiIHRvbmU9XCJsaWdodFwiPntmYWN0b3IuZXhwbGFuYXRpb259PC9UeXBvZ3JhcGh5PlxuICAgICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cInJlbGF0aXZlIGdyaWQgbWluLXctMCBnYXAtWzEwcHhdXCI+XG4gICAgICAgICAgICAgIDxpbnB1dFxuICAgICAgICAgICAgICAgIGNsYXNzTmFtZT1cIm5ndHctd2VpZ2h0ZWQtc3VtX19yYW5nZSB3LWZ1bGwgY3Vyc29yLWV3LXJlc2l6ZSBhY2NlbnQtWyMzYjU3ODRdXCJcbiAgICAgICAgICAgICAgICB0eXBlPVwicmFuZ2VcIlxuICAgICAgICAgICAgICAgIG1pbj1cIjBcIlxuICAgICAgICAgICAgICAgIG1heD1cIjEwXCJcbiAgICAgICAgICAgICAgICBzdGVwPVwiMVwiXG4gICAgICAgICAgICAgICAgdmFsdWU9e3Jhd1ZhbHVlfVxuICAgICAgICAgICAgICAgIGFyaWEtbGFiZWw9e2Ake2ZhY3Rvci5uYW1lfe+8jOivhOWIhiAwIOWIsCAxMGB9XG4gICAgICAgICAgICAgICAgb25DaGFuZ2U9eyhldmVudCkgPT4ge1xuICAgICAgICAgICAgICAgICAgc2V0VmFsdWVEcmFmdCgwLCBOdW1iZXIoZXZlbnQuY3VycmVudFRhcmdldC52YWx1ZSkpO1xuICAgICAgICAgICAgICAgICAgb25Db21wbGV0ZSgpO1xuICAgICAgICAgICAgICAgIH19XG4gICAgICAgICAgICAgIC8+XG4gICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZ3JpZCBtaW4tdy0wIGdyaWQtY29scy0yIFsmX3NwYW46bGFzdC1jaGlsZF06dGV4dC1yaWdodFwiPlxuICAgICAgICAgICAgICAgIDxUeXBvZ3JhcGh5IGFzPVwic3BhblwiIHZhcmlhbnQ9XCJib2R5U21hbGxcIiB0b25lPVwibXV0ZWRcIj57ZmFjdG9yLm1pbkRlc2N9PC9UeXBvZ3JhcGh5PlxuICAgICAgICAgICAgICAgIDxUeXBvZ3JhcGh5IGFzPVwic3BhblwiIHZhcmlhbnQ9XCJib2R5U21hbGxcIiB0b25lPVwibXV0ZWRcIj57ZmFjdG9yLm1heERlc2N9PC9UeXBvZ3JhcGh5PlxuICAgICAgICAgICAgICA8L2Rpdj5cbiAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJncmlkIG1pbi13LTAgZ3JpZC1jb2xzLTYgdGV4dC1jZW50ZXIgZm9udC1tb25vIHRleHQtWyM4MjkzYWFdIFsmX3NwYW46Zmlyc3QtY2hpbGRdOnRleHQtbGVmdCBbJl9zcGFuOmxhc3QtY2hpbGRdOnRleHQtcmlnaHRcIiBhcmlhLWhpZGRlbj1cInRydWVcIj5cbiAgICAgICAgICAgICAgICB7WzAsIDIsIDQsIDYsIDgsIDEwXS5tYXAoKHRpY2spID0+IDxzcGFuIGtleT17dGlja30+e3RpY2t9PC9zcGFuPil9XG4gICAgICAgICAgICAgIDwvZGl2PlxuICAgICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgPC9zZWN0aW9uPlxuICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZ3JpZCBwbGFjZS1pdGVtcy1jZW50ZXIgZm9udC1tb25vIHRleHQtWzQ2cHhdIGZvbnQtZXh0cmFib2xkIHRleHQtWyM1YTc2YTJdXCIgYXJpYS1oaWRkZW49XCJ0cnVlXCI+PHNwYW4+4oaSPC9zcGFuPjwvZGl2PlxuICAgICAgICAgIDxzZWN0aW9uIGNsYXNzTmFtZT1cImdyaWQgbWluLWgtWzE4OHB4XSBtaW4tdy0wIGp1c3RpZnktaXRlbXMtY2VudGVyIGdhcC00IHJvdW5kZWQtWzE0cHhdIGJvcmRlciBib3JkZXItWyNkOWU0ZjBdIGJnLVsjZjVmOWZlXSBweC00IHB5LTYgdGV4dC1jZW50ZXIgc2hhZG93LVswXzEycHhfMjhweF9yZ2JhKDQ4LDc2LDExMywuMDgpXVwiIGFyaWEtbGFiZWw9XCLnu5/kuIDliLAgMCDliLAgMVwiPlxuICAgICAgICAgICAgPFR5cG9ncmFwaHkgdmFyaWFudD1cImJvZHlcIiB0b25lPVwiYWNjZW50XCI+57uf5LiA5YiwIDAg772eIDE8L1R5cG9ncmFwaHk+XG4gICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImZsZXggZmxleC13cmFwIGl0ZW1zLWNlbnRlciBqdXN0aWZ5LWNlbnRlciBnYXAtMiB0ZXh0LWNlbnRlciBmb250LW1vbm8gdGV4dC1bMjRweF0gZm9udC1leHRyYWJvbGQgdGV4dC1bIzM4NTU3Nl1cIj5cbiAgICAgICAgICAgICAge2lzSW52ZXJzZSA/ICcxIOKIkiAoeOKCgSDDtyAxMCknIDogJ3jigoEgw7cgMTAnfVxuICAgICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgICB7aXNJbnZlcnNlICYmIChcbiAgICAgICAgICAgICAgPFR5cG9ncmFwaHkgYXM9XCJzcGFuXCIgdmFyaWFudD1cImJvZHlTbWFsbFwiIHRvbmU9XCJtdXRlZFwiIGNsYXNzTmFtZT1cIm1heC13LVsxODBweF0gdGV4dC1jZW50ZXJcIj5cbiAgICAgICAgICAgICAgICDov5nmmK/lj43lkJHorqHlhaXvvJror4TliIbotorpq5jvvIzku6Pooajlr7nlvZPliY3lhrPlrprnmoTmlK/mjIHotorlvLHjgIJcbiAgICAgICAgICAgICAgPC9UeXBvZ3JhcGh5PlxuICAgICAgICAgICAgKX1cbiAgICAgICAgICA8L3NlY3Rpb24+XG4gICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJncmlkIHBsYWNlLWl0ZW1zLWNlbnRlciBmb250LW1vbm8gdGV4dC1bNDZweF0gZm9udC1leHRyYWJvbGQgdGV4dC1bIzVhNzZhMl1cIiBhcmlhLWhpZGRlbj1cInRydWVcIj48c3Bhbj7ihpI8L3NwYW4+PC9kaXY+XG4gICAgICAgICAgPHNlY3Rpb24gY2xhc3NOYW1lPVwiZ3JpZCBtaW4taC1bMjQ2cHhdIG1pbi13LTAgY29udGVudC1jZW50ZXIgZ2FwLVsxOHB4XSByb3VuZGVkLVsxNHB4XSBib3JkZXIgYm9yZGVyLVsjZDllNGYwXSBiZy13aGl0ZS84NSBweC03IHB5LTYgc2hhZG93LVswXzEycHhfMjhweF9yZ2JhKDQ4LDc2LDExMywuMDgpXVwiIGFyaWEtbGFiZWw9XCLnpZ7nu4/lhYPnmoTovpPlhaVcIj5cbiAgICAgICAgICAgIDxUeXBvZ3JhcGh5IHZhcmlhbnQ9XCJoM1wiIHRvbmU9XCJhY2NlbnRcIj7npZ7nu4/lhYPnmoTovpPlhaU8L1R5cG9ncmFwaHk+XG4gICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImdyaWQgbWluLWgtWzg2cHhdIHBsYWNlLWl0ZW1zLWNlbnRlciByb3VuZGVkLVsxMXB4XSBiZy1bI2UyZjJlZV1cIj5cbiAgICAgICAgICAgICAgPFR5cG9ncmFwaHkgYXM9XCJzdHJvbmdcIiB2YXJpYW50PVwiaDJcIiB0b25lPVwic3VjY2Vzc1wiPnjigoEgPSB7bm9ybWFsaXplZFZhbHVlLnRvRml4ZWQoMil9PC9UeXBvZ3JhcGh5PlxuICAgICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgPC9zZWN0aW9uPlxuICAgICAgICA8L2Rpdj5cblxuICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImdyaWQgbWluLWgtWzEyOHB4XSBtaW4tdy0wIGdyaWQtY29scy1bMTk2cHhfbWlubWF4KDAsMWZyKV0gaXRlbXMtc3RyZXRjaCBvdmVyZmxvdy1oaWRkZW4gcm91bmRlZC1sZXNzb24tbGcgYm9yZGVyIGJvcmRlci1bI2UxZTFlMV0gYmctWyNmOWY5ZjldXCI+XG4gICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJtaW4tdy0wIG92ZXJmbG93LWhpZGRlbiBiZy1bI2Y5ZjlmOV1cIj48dmlkZW8gY2xhc3NOYW1lPVwiYmxvY2sgaC1mdWxsIHctZnVsbCBvYmplY3QtY292ZXIgb2JqZWN0LVtjZW50ZXJfMjQlXVwiIHNyYz17dGVhY2hlclZpZGVvfSBhdXRvUGxheSBsb29wIG11dGVkIHBsYXlzSW5saW5lIGFyaWEtbGFiZWw9XCLmlZnluIjmj5DnpLrop4bpopFcIiAvPjwvZGl2PlxuICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZ3JpZCBtaW4tdy0wIGNvbnRlbnQtY2VudGVyIGdhcC0yIHB4LVszMHB4XSBweS1bMThweF1cIj5cbiAgICAgICAgICAgIDxUeXBvZ3JhcGh5IGFzPVwic3Ryb25nXCIgdmFyaWFudD1cImgzXCIgdG9uZT1cImFjY2VudFwiPuWwj+aPkOekujwvVHlwb2dyYXBoeT5cbiAgICAgICAgICAgIDxUeXBvZ3JhcGh5IGFzPVwicFwiIHZhcmlhbnQ9XCJib2R5XCIgdG9uZT1cIm11dGVkXCI+5peg6K665pivIDHvvZ41IOWIhuOAgTHvvZ4xMCDliIbvvIzov5jmmK/igJzpnZ7luLjkvY7vvZ7pnZ7luLjpq5jigJ3vvIzpg73lj6/ku6XpgJrov4fnroDljZXnmoTovazmjaLvvIzlj5jmiJAgMO+9njEg5LmL6Ze055qE5pWw44CC6L+Z5qC35LiN5ZCM55qE6Zeu6aKY6YO95Y+v5Lul55So55u45ZCM55qE5pWw5YC85bC65bqm6L6T5YWl5Yiw56We57uP5YWD5Lit44CCPC9UeXBvZ3JhcGh5PlxuICAgICAgICAgIDwvZGl2PlxuICAgICAgICA8L2Rpdj5cbiAgICAgIDwvZGl2PlxuICAgIDwvQ29udGVudEJsb2NrPlxuICApO1xufVxuXG5cblxuXHJcblxyXG4iXSwiZmlsZSI6IkM6L1VzZXJzL09jZWFuL0RvY3VtZW50cy9HaXRIdWIvaW50dWl0aXZlLWRlZXAtbGVhcm5pbmcvbW9kdWxlcy9OZXVyb24tR3VpZGUvcGFnZXMvV2VpZ2h0ZWRTdW1QYWdlL1dlaWdodGVkU3VtUGFnZS50c3gifQ==

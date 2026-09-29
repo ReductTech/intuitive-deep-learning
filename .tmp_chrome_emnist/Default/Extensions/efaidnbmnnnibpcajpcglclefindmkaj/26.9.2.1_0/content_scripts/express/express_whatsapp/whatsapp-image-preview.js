@@ -1,0 +1,18 @@
+/*************************************************************************
+* ADOBE CONFIDENTIAL
+* ___________________
+*
+*  Copyright 2015 Adobe Systems Incorporated
+*  All Rights Reserved.
+*
+* NOTICE:  All information contained herein is, and remains
+* the property of Adobe Systems Incorporated and its suppliers,
+* if any.  The intellectual and technical concepts contained
+* herein are proprietary to Adobe Systems Incorporated and its
+* suppliers and are protected by all applicable intellectual property laws,
+* including trade secret and or copyright laws.
+* Dissemination of this information or reproduction of this material
+* is strictly forbidden unless prior written permission is obtained
+* from Adobe Systems Incorporated.
+**************************************************************************/
+import expressUtils from"../express-utils.js";import ExpressCTA from"../single-click-cta.js";export default class WhatsappImagePreview{previewEntryPointId="whatsapp-preview-adobe-express-entry-point";touchpoint="whatsappPreview";previewedImageClassname=["x6s0dn4 x78zum5 x5yr21d xl56j7k x6ikm8r x10wlt62 x1n2onr6 xh8yej3 xhtitgo _ao3e"];previewHeaderClassname=["x78zum5 x6s0dn4 x1afcbsf x1totv3y","x78zum5 x6s0dn4 x1afcbsf xhslqc4"];constructor(e){this.expressCTA=new ExpressCTA,this.previewImageClassName=e.selectors?.previewedImageClassname||this.previewedImageClassname,this.previewHeaderClassName=e.selectors?.previewHeaderClassname||this.previewHeaderClassname,this.setTouchpointClickedForFteState=()=>e.setTouchpointClickedForFteState("previewTouchpointUsed")}previewEntryPointClickHandler=e=>{if(!chrome?.runtime?.id)return void this.removePreviewEntryPoint(this.previewEntryPointId);const t=expressUtils.getElementsFromClassNames(document,this.previewImageClassName)[0];if(!t||"IMG"!==t.tagName)return void expressUtils.sendErrorLog("Error executing express in whatsapp preview","image element not found");const s=t.src;s?(expressUtils.removeContextualFte(),this.setTouchpointClickedForFteState(),expressUtils.launchExpress(s,this.touchpoint,e)):expressUtils.sendErrorLog("Error executing express in whatsapp preview","image URL not found")};addPreviewEntryPoint=async(e,t,s)=>{const i=await this.expressCTA.renderMenuButton(s,this.touchpoint);i.id=t;document.getElementById(t)||(e.insertBefore(i,e.firstChild),this.tooltip=this.expressCTA.attachTooltip("bottom"),chrome.runtime.sendMessage({main_op:"reRenderShowOneChild"}),expressUtils.sendAnalyticsEventOncePerDay("DCBrowserExt:Express:Whatsapp:PreviewEntryPoint:Shown"))};removePreviewEntryPoint=e=>{const t=document.getElementById(e);t&&t.remove()};cleanup=()=>{this.removePreviewEntryPoint(this.previewEntryPointId),this.tooltip?.tooltip?.remove(),this.tooltip=null,expressUtils.removeContextualFte()};removeTooltipIfFteRendered=()=>{document.getElementById("express-contextual-fte")&&this.tooltip&&(this.tooltip.tooltip.remove(),this.tooltip=null)};imagePreviewerObserverHandler=()=>{const e=expressUtils.getElementsFromClassNames(document,this.previewHeaderClassName)[0];if(!e)return void this.cleanup();this.removeTooltipIfFteRendered();const t=document.getElementById(this.previewEntryPointId),s=expressUtils.getElementsFromClassNames(document,this.previewImageClassName)[0];s&&"IMG"===s.tagName?t||(chrome?.runtime?.id?this.addPreviewEntryPoint(e,this.previewEntryPointId,this.previewEntryPointClickHandler):this.cleanup()):this.cleanup()}}

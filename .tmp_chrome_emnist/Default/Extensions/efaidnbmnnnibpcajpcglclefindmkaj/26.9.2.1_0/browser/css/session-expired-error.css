@@ -1,0 +1,18 @@
+/*************************************************************************
+* ADOBE CONFIDENTIAL
+* ___________________
+*
+*  Copyright 2015 Adobe Systems Incorporated
+*  All Rights Reserved.
+*
+* NOTICE:  All information contained herein is, and remains
+* the property of Adobe Systems Incorporated and its suppliers,
+* if any.  The intellectual and technical concepts contained
+* herein are proprietary to Adobe Systems Incorporated and its
+* suppliers and are protected by all applicable intellectual property laws,
+* including trade secret and or copyright laws.
+* Dissemination of this information or reproduction of this material
+* is strictly forbidden unless prior written permission is obtained
+* from Adobe Systems Incorporated.
+**************************************************************************/
+.error-container{align-items:center;background:#fff;display:flex;flex-direction:column;font-family:Adobe Clean,Arial,sans-serif;justify-content:center;min-height:100vh;text-align:center}#session-expired-icon{background-position:50%;background-repeat:no-repeat;background-size:cover;height:160px;width:160px}.error-content{align-items:center;display:flex;flex-direction:column;justify-content:center}.error-heading{color:#000;font-size:24px;font-weight:700;line-height:1.2;margin-bottom:8px}.error-description{color:#000;font-size:16px;font-weight:400;line-height:1.4;margin-top:0}.select-file-btn-container{align-items:center;background:#000;border:none;border-radius:16px;color:#fff;cursor:pointer;display:flex;gap:8px;height:32px;justify-content:center;margin-top:12px;min-width:72px;padding:12px}.select-file-btn-container:hover{background:#555}.file-icon{filter:brightness(0) invert(1);height:18px;width:18px}.select-file-btn{color:#fff;font-size:14px;font-weight:500;white-space:nowrap}

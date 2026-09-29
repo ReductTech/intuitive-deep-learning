@@ -1,0 +1,656 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=2be87a0d"; const Fragment = __vite__cjsImport0_react_jsxDevRuntime["Fragment"]; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+var _s = $RefreshSig$(), _s2 = $RefreshSig$(), _s3 = $RefreshSig$();
+import __vite__cjsImport3_react from "/node_modules/.vite/deps/react.js?v=2be87a0d"; const useCallback = __vite__cjsImport3_react["useCallback"]; const useRef = __vite__cjsImport3_react["useRef"]; const useState = __vite__cjsImport3_react["useState"];
+import "/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.css";
+import { ContentBlock, Question, Typography } from "/modules/shared/react/index.ts";
+import { formatScore, useLesson, weightedSum } from "/modules/Neuron-Guide/LessonContext.tsx";
+const RANGE_MIN = 0;
+const RANGE_MAX = 3;
+const RANGE_MIDPOINT = 1.5;
+const BOUNDARY_STEP = 0.05;
+function clamp(value, min, max) {
+  return Math.min(max, Math.max(min, value));
+}
+function snapBoundary(value, min, max) {
+  return Number(clamp(Math.round(value / BOUNDARY_STEP) * BOUNDARY_STEP, min, max).toFixed(2));
+}
+function axisPosition(value, min, max) {
+  return Math.min(100, Math.max(0, (value - min) / (max - min) * 100));
+}
+function ClassificationAxis({
+  min,
+  max,
+  boundary,
+  ticks,
+  leftLabel,
+  rightLabel,
+  markers = [],
+  boundaryLabel,
+  className = "",
+  negativeTone = "danger",
+  onBoundaryChange,
+  onBoundaryDragStart,
+  showBoundary = true,
+  pulsing = false,
+  note
+}) {
+  _s();
+  const axisRef = useRef(null);
+  const holdingRef = useRef(false);
+  const [holding, setHolding] = useState(false);
+  const boundaryPosition = axisPosition(boundary, min, max);
+  const draggable = Boolean(onBoundaryChange);
+  const style = { "--ngtw-boundary-position": `${boundaryPosition}%` };
+  const valueFromPointer = useCallback((clientX) => {
+    const rect = axisRef.current?.getBoundingClientRect();
+    if (!rect || !rect.width) return boundary;
+    return snapBoundary(min + clamp((clientX - rect.left) / rect.width, 0, 1) * (max - min), min, max);
+  }, [boundary, max, min]);
+  const commit = useCallback((value) => {
+    onBoundaryDragStart?.();
+    onBoundaryChange?.(value);
+  }, [onBoundaryChange, onBoundaryDragStart]);
+  const startDrag = (event) => {
+    if (!draggable) return;
+    event.preventDefault();
+    holdingRef.current = true;
+    setHolding(true);
+    event.currentTarget.setPointerCapture(event.pointerId);
+    commit(valueFromPointer(event.clientX));
+  };
+  const moveDrag = (event) => {
+    if (!draggable || !holdingRef.current) return;
+    event.preventDefault();
+    commit(valueFromPointer(event.clientX));
+  };
+  const endDrag = (event) => {
+    if (!holdingRef.current) return;
+    holdingRef.current = false;
+    setHolding(false);
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
+  };
+  const handleKeyDown = (event) => {
+    if (!draggable) return;
+    const deltas = { ArrowLeft: -BOUNDARY_STEP, ArrowDown: -BOUNDARY_STEP, ArrowRight: BOUNDARY_STEP, ArrowUp: BOUNDARY_STEP };
+    const delta = deltas[event.key];
+    if (delta !== void 0) {
+      event.preventDefault();
+      event.stopPropagation();
+      commit(snapBoundary(boundary + delta, min, max));
+      return;
+    }
+    if (event.key !== "Home" && event.key !== "End") return;
+    event.preventDefault();
+    event.stopPropagation();
+    commit(event.key === "Home" ? min : max);
+  };
+  const boundaryClassName = `ngtw-bias-axis__boundary${boundaryPosition <= 2 ? " is-at-start" : boundaryPosition >= 98 ? " is-at-end" : ""}${draggable ? " is-draggable" : ""}${holding ? " is-holding" : ""}${draggable && pulsing ? " is-pulsing" : ""}`;
+  const zoneLabelFits = (share) => share >= 18;
+  const boundaryBody = /* @__PURE__ */ jsxDEV(Fragment, { children: [
+    boundaryLabel && /* @__PURE__ */ jsxDEV(Typography, { as: "span", variant: "bodySmall", tone: "warning", wrap: "nowrap", children: boundaryLabel }, void 0, false, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+      lineNumber: 151,
+      columnNumber: 25
+    }, this),
+    /* @__PURE__ */ jsxDEV("i", {}, void 0, false, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+      lineNumber: 152,
+      columnNumber: 7
+    }, this),
+    draggable && /* @__PURE__ */ jsxDEV("span", { className: "ngtw-bias-axis__grip absolute bottom-[-2px] left-[50%] flex w-[22px] h-[22px] items-center justify-center gap-[3px] rounded-[50%] bg-[var(--ui-accent-alt)] ml-[-11px]", "aria-hidden": "true" }, void 0, false, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+      lineNumber: 153,
+      columnNumber: 21
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+    lineNumber: 150,
+    columnNumber: 3
+  }, this);
+  return /* @__PURE__ */ jsxDEV("div", { className: `ngtw-bias-axis relative w-full h-[174px] min-w-0 max-w-full ${className}`.trim(), style, ref: axisRef, children: [
+    /* @__PURE__ */ jsxDEV("div", { className: "ngtw-bias-axis__zones absolute top-[45px] right-0 left-0 grid min-w-0 grid-cols-[var(--ngtw-boundary-position)_minmax(0,_1fr)] rounded-[6px_6px_0_0] overflow-hidden", "aria-hidden": "true", children: [
+      /* @__PURE__ */ jsxDEV("span", { className: "ngtw-bias-axis__zone flex min-w-0 max-w-full justify-center overflow-hidden p-[12px_10px] text-center ngtw-bias-axis__zone--negative", children: leftLabel && zoneLabelFits(boundaryPosition) && /* @__PURE__ */ jsxDEV(Typography, { as: "span", variant: "bodySmall", tone: negativeTone, children: leftLabel }, void 0, false, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+        lineNumber: 161,
+        columnNumber: 60
+      }, this) }, void 0, false, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+        lineNumber: 160,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV("span", { className: "ngtw-bias-axis__zone flex min-w-0 max-w-full justify-center overflow-hidden p-[12px_10px] text-center ngtw-bias-axis__zone--positive", children: rightLabel && zoneLabelFits(100 - boundaryPosition) && /* @__PURE__ */ jsxDEV(Typography, { as: "span", variant: "bodySmall", tone: "success", children: rightLabel }, void 0, false, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+        lineNumber: 164,
+        columnNumber: 67
+      }, this) }, void 0, false, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+        lineNumber: 163,
+        columnNumber: 9
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+      lineNumber: 159,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV("div", { className: "ngtw-bias-axis__line absolute right-0 left-0 h-[3px] rounded-[2px] bg-[var(--ui-accent)]", "aria-hidden": "true" }, void 0, false, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+      lineNumber: 168,
+      columnNumber: 7
+    }, this),
+    note && /* @__PURE__ */ jsxDEV(Typography, { as: "span", variant: "bodySmall", tone: "muted", className: "ngtw-bias-axis__note", children: note }, void 0, false, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+      lineNumber: 169,
+      columnNumber: 16
+    }, this),
+    showBoundary && (draggable ? /* @__PURE__ */ jsxDEV(
+      "button",
+      {
+        type: "button",
+        className: boundaryClassName,
+        role: "slider",
+        "aria-label": "分类分界线",
+        "aria-valuemin": min,
+        "aria-valuemax": max,
+        "aria-valuenow": boundary,
+        "aria-valuetext": `分界点 ${formatScore(boundary)}`,
+        "data-ngtw-bias-handle": true,
+        onPointerDown: startDrag,
+        onPointerMove: moveDrag,
+        onPointerUp: endDrag,
+        onPointerCancel: endDrag,
+        onKeyDown: handleKeyDown,
+        children: boundaryBody
+      },
+      void 0,
+      false,
+      {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+        lineNumber: 171,
+        columnNumber: 7
+      },
+      this
+    ) : /* @__PURE__ */ jsxDEV("div", { className: boundaryClassName, "aria-hidden": "true", children: boundaryBody }, void 0, false, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+      lineNumber: 190,
+      columnNumber: 7
+    }, this)),
+    /* @__PURE__ */ jsxDEV("div", { className: "ngtw-bias-axis__ticks", "aria-hidden": "true", children: ticks.map(
+      (tick) => /* @__PURE__ */ jsxDEV(Typography, { as: "span", variant: "bodySmall", tone: "main", style: { left: `${axisPosition(tick, min, max)}%` }, children: tick }, tick, false, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+        lineNumber: 195,
+        columnNumber: 9
+      }, this)
+    ) }, void 0, false, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+      lineNumber: 193,
+      columnNumber: 7
+    }, this),
+    markers.map((marker) => {
+      const markerPosition = axisPosition(marker.value, min, max);
+      return /* @__PURE__ */ jsxDEV("div", { className: `ngtw-bias-axis__marker absolute flex min-w-0 max-w-full flex-col items-center gap-[6px] ngtw-bias-axis__marker--${marker.tone}`, style: { left: `${markerPosition}%` }, children: [
+        /* @__PURE__ */ jsxDEV(Typography, { as: "span", variant: "bodySmall", tone: marker.tone === "green" ? "success" : marker.tone === "red" ? "danger" : "main", wrap: "nowrap", children: marker.label }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+          lineNumber: 205,
+          columnNumber: 13
+        }, this),
+        /* @__PURE__ */ jsxDEV("i", { "aria-hidden": "true" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+          lineNumber: 208,
+          columnNumber: 13
+        }, this)
+      ] }, marker.label, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+        lineNumber: 204,
+        columnNumber: 11
+      }, this);
+    })
+  ] }, void 0, true, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+    lineNumber: 158,
+    columnNumber: 5
+  }, this);
+}
+_s(ClassificationAxis, "OaI79J9GGN22nHT6cD+JHRd+lpE=");
+_c = ClassificationAxis;
+function NaturalBoundaryFigure() {
+  return /* @__PURE__ */ jsxDEV("div", { className: "ngtw-bias-natural-figure", children: [
+    /* @__PURE__ */ jsxDEV("div", { className: "ngtw-bias-natural-figure__labels grid min-w-0 grid-cols-[repeat(2,_minmax(0,_1fr))] text-center", children: [
+      /* @__PURE__ */ jsxDEV(Typography, { as: "span", variant: "bodySmall", tone: "danger", children: "一类" }, void 0, false, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+        lineNumber: 220,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV(Typography, { as: "span", variant: "bodySmall", tone: "success", children: "另一类" }, void 0, false, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+        lineNumber: 221,
+        columnNumber: 9
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+      lineNumber: 219,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV(ClassificationAxis, { min: -1, max: 1, boundary: 0, ticks: [0], leftLabel: "负数", rightLabel: "非负数", boundaryLabel: "天然分界点" }, void 0, false, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+      lineNumber: 223,
+      columnNumber: 7
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+    lineNumber: 218,
+    columnNumber: 5
+  }, this);
+}
+_c2 = NaturalBoundaryFigure;
+export function BiasNaturalBoundaryPage() {
+  _s2();
+  const { scenario, state } = useLesson();
+  const values = scenario.factors.map((factor, index) => state.values[index] ?? factor.suggestedValue);
+  const outputY = weightedSum(scenario, values);
+  return /* @__PURE__ */ jsxDEV(
+    ContentBlock,
+    {
+      headingLevel: 1,
+      className: "ngtw-bias-page ngtw-bias-boundary-page",
+      title: "矩阵计算之后，如何形成分类判断？",
+      subtitle: "矩阵计算最终得到一个数值。神经元需要根据这个数值，将输入划分为两类。",
+      children: /* @__PURE__ */ jsxDEV("div", { className: "ngtw-bias-boundary-story grid w-full h-full min-w-0 min-h-0 max-w-full grid-cols-[minmax(0,_1fr)_72px_minmax(0,_1.08fr)] items-stretch", children: [
+        /* @__PURE__ */ jsxDEV("section", { className: "ngtw-bias-concept grid min-w-0 min-h-0 max-w-full grid-rows-[auto_minmax(0,_1fr)_auto] gap-[24px] p-[28px_30px_26px] ngtw-bias-concept--natural", children: [
+          /* @__PURE__ */ jsxDEV("header", { className: "ngtw-bias-concept__head grid min-w-0 max-w-full grid-cols-[54px_minmax(0,_1fr)] items-center gap-[16px]", children: [
+            /* @__PURE__ */ jsxDEV(Typography, { as: "span", variant: "h3", tone: "accent", className: "ngtw-bias-concept__number", children: "1" }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+              lineNumber: 243,
+              columnNumber: 13
+            }, this),
+            /* @__PURE__ */ jsxDEV("div", { children: [
+              /* @__PURE__ */ jsxDEV(Typography, { as: "h2", variant: "h3", tone: "main", children: "正负号可以承担分类" }, void 0, false, {
+                fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+                lineNumber: 245,
+                columnNumber: 15
+              }, this),
+              /* @__PURE__ */ jsxDEV(Typography, { variant: "bodySmall", tone: "muted", children: "0 左侧为负数，右侧为非负数" }, void 0, false, {
+                fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+                lineNumber: 246,
+                columnNumber: 15
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+              lineNumber: 244,
+              columnNumber: 13
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+            lineNumber: 242,
+            columnNumber: 11
+          }, this),
+          /* @__PURE__ */ jsxDEV(NaturalBoundaryFigure, {}, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+            lineNumber: 249,
+            columnNumber: 11
+          }, this),
+          /* @__PURE__ */ jsxDEV("div", { className: "ngtw-bias-concept__takeaway min-w-0 p-[14px_18px]", children: /* @__PURE__ */ jsxDEV(Typography, { variant: "body", tone: "accent", children: "当结果分布在 0 的两侧时，符号可以直接区分两类。" }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+            lineNumber: 251,
+            columnNumber: 13
+          }, this) }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+            lineNumber: 250,
+            columnNumber: 11
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+          lineNumber: 241,
+          columnNumber: 9
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { className: "ngtw-bias-boundary-story__turn grid min-w-0 grid-rows-[minmax(0,_1fr)_auto_minmax(0,_1fr)] place-items-center gap-[12px]", "aria-hidden": "true", children: [
+          /* @__PURE__ */ jsxDEV("span", {}, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+            lineNumber: 256,
+            columnNumber: 11
+          }, this),
+          /* @__PURE__ */ jsxDEV(Typography, { as: "span", variant: "bodySmall", tone: "warning", children: "问题在于" }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+            lineNumber: 257,
+            columnNumber: 11
+          }, this),
+          /* @__PURE__ */ jsxDEV("span", {}, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+            lineNumber: 258,
+            columnNumber: 11
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+          lineNumber: 255,
+          columnNumber: 9
+        }, this),
+        /* @__PURE__ */ jsxDEV("section", { className: "ngtw-bias-concept grid min-w-0 min-h-0 max-w-full grid-rows-[auto_minmax(0,_1fr)_auto] gap-[24px] p-[28px_30px_26px] ngtw-bias-concept--problem", children: [
+          /* @__PURE__ */ jsxDEV("header", { className: "ngtw-bias-concept__head grid min-w-0 max-w-full grid-cols-[54px_minmax(0,_1fr)] items-center gap-[16px]", children: [
+            /* @__PURE__ */ jsxDEV(Typography, { as: "span", variant: "h3", tone: "warning", className: "ngtw-bias-concept__number", children: "2" }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+              lineNumber: 263,
+              columnNumber: 13
+            }, this),
+            /* @__PURE__ */ jsxDEV("div", { children: [
+              /* @__PURE__ */ jsxDEV(Typography, { as: "h2", variant: "h3", tone: "main", children: "现在，所有结果都在 0 的右侧" }, void 0, false, {
+                fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+                lineNumber: 265,
+                columnNumber: 15
+              }, this),
+              /* @__PURE__ */ jsxDEV(Typography, { variant: "bodySmall", tone: "muted", children: "当前输入与权重均为 0–1，加权和 y 的取值范围为 0–3" }, void 0, false, {
+                fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+                lineNumber: 266,
+                columnNumber: 15
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+              lineNumber: 264,
+              columnNumber: 13
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+            lineNumber: 262,
+            columnNumber: 11
+          }, this),
+          /* @__PURE__ */ jsxDEV("div", { className: "ngtw-bias-range-figure relative pt-[28px]", children: [
+            /* @__PURE__ */ jsxDEV(Typography, { as: "span", variant: "bodySmall", tone: "warning", className: "ngtw-bias-range-figure__zero-note", children: "0 的左侧没有结果" }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+              lineNumber: 270,
+              columnNumber: 13
+            }, this),
+            /* @__PURE__ */ jsxDEV(
+              ClassificationAxis,
+              {
+                min: -0.75,
+                max: 3,
+                boundary: 0,
+                ticks: [0, 1, 2, 3],
+                leftLabel: "空",
+                rightLabel: "y 的全部可能范围：0–3",
+                boundaryLabel: "原来的分界点",
+                markers: [{ value: outputY, label: `当前 y = ${formatScore(outputY)}`, tone: "green" }]
+              },
+              void 0,
+              false,
+              {
+                fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+                lineNumber: 271,
+                columnNumber: 13
+              },
+              this
+            )
+          ] }, void 0, true, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+            lineNumber: 269,
+            columnNumber: 11
+          }, this),
+          /* @__PURE__ */ jsxDEV("div", { className: "ngtw-bias-concept__takeaway min-w-0 p-[14px_18px] ngtw-bias-concept__takeaway--problem", children: /* @__PURE__ */ jsxDEV(Typography, { variant: "body", tone: "main", children: "没有 bias 时，结果不会跨过 0，因而无法形成有效分类。" }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+            lineNumber: 283,
+            columnNumber: 13
+          }, this) }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+            lineNumber: 282,
+            columnNumber: 11
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+          lineNumber: 261,
+          columnNumber: 9
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+        lineNumber: 240,
+        columnNumber: 7
+      }, this)
+    },
+    void 0,
+    false,
+    {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+      lineNumber: 234,
+      columnNumber: 5
+    },
+    this
+  );
+}
+_s2(BiasNaturalBoundaryPage, "b52YqrWwbPDZryvDs9ExBH3XKz8=", false, function() {
+  return [useLesson];
+});
+_c3 = BiasNaturalBoundaryPage;
+export function BiasThresholdTheoryPage({ onComplete }) {
+  _s3();
+  const { scenario, state } = useLesson();
+  const values = scenario.factors.map((factor, index) => state.values[index] ?? factor.suggestedValue);
+  const outputY = weightedSum(scenario, values);
+  const [answeredCorrectly, setAnsweredCorrectly] = useState(false);
+  const [boundary, setBoundary] = useState(RANGE_MIDPOINT);
+  const [boundaryDragged, setBoundaryDragged] = useState(false);
+  const completedRef = useRef(false);
+  const atMidpoint = Math.abs(boundary - RANGE_MIDPOINT) < 0.01;
+  const aboveBoundary = outputY >= boundary;
+  const tendency = aboveBoundary ? scenario.positiveLabel : scenario.negativeLabel;
+  const negativeZone = `输出 0 · ${scenario.negativeLabel}`;
+  const positiveZone = `输出 1 · ${scenario.positiveLabel}`;
+  const handleCheck = (result) => {
+    if (!result.ok) return;
+    setAnsweredCorrectly(true);
+    if (!completedRef.current) {
+      completedRef.current = true;
+      onComplete?.();
+    }
+  };
+  return /* @__PURE__ */ jsxDEV(
+    ContentBlock,
+    {
+      headingLevel: 1,
+      className: "ngtw-bias-page ngtw-bias-choice-page",
+      title: "偏置如何调整分类阈值？",
+      subtitle: "当加权和的实际范围不跨过 0 时，需要先确定合适的分界点，再用偏置将它移动到 0。",
+      children: /* @__PURE__ */ jsxDEV("div", { className: "ngtw-bias-choice-layout grid w-full h-full min-w-0 min-h-0 max-w-full grid-cols-[minmax(0,_.6fr)_minmax(0,_1.4fr)] gap-[28px]", children: [
+        /* @__PURE__ */ jsxDEV("section", { className: "ngtw-bias-question-pane content-center p-[28px_30px]", children: /* @__PURE__ */ jsxDEV(
+          Question,
+          {
+            className: "ngtw-bias-midpoint-question bg-[transparent] p-0",
+            type: "choice",
+            typeLabel: "先预测",
+            textVariant: "body",
+            title: `加权和范围为 ${RANGE_MIN}–${RANGE_MAX}，分类边界应设置在哪里？`,
+            answer: "1.50",
+            persistenceKey: "neuron-guide:bias-midpoint-v1",
+            onCheck: handleCheck,
+            feedback: {
+              initial: "若希望两类区间的长度相同，分界点应落在范围中点。",
+              correct: "正好在 0–3 的中点，两侧区间各占 50%。",
+              wrong: "再看一次 0–3：哪一个位置能把整段平均分成两半？"
+            },
+            options: [
+              { key: "A", value: "0", label: "0", wrongFeedback: "0 仍在范围起点，左侧没有任何可能结果。" },
+              { key: "B", value: "1.00", label: "1.00", wrongFeedback: "1.00 会把范围分成 1 和 2 两段，并不相等。" },
+              { key: "C", value: "1.50", label: "1.50" },
+              { key: "D", value: "3.00", label: "3.00", wrongFeedback: "3.00 在范围终点，右侧没有任何可能结果。" }
+            ]
+          },
+          void 0,
+          false,
+          {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+            lineNumber: 325,
+            columnNumber: 11
+          },
+          this
+        ) }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+          lineNumber: 324,
+          columnNumber: 9
+        }, this),
+        /* @__PURE__ */ jsxDEV("section", { className: `ngtw-bias-answer-pane relative grid-rows-[auto_minmax(0,_1fr)_auto] gap-[16px] p-[26px_30px] overflow-hidden${answeredCorrectly ? " is-revealed" : ""}`, "aria-live": "polite", children: [
+          /* @__PURE__ */ jsxDEV("header", { className: "ngtw-bias-answer-pane__head grid min-w-0 grid-cols-[minmax(0,_1fr)] items-center pb-[14px]", children: /* @__PURE__ */ jsxDEV("div", { className: "ngtw-bias-answer-pane__rule grid min-w-0 gap-[4px]", children: [
+            /* @__PURE__ */ jsxDEV(Typography, { as: "span", variant: "bodySmall", tone: "success", children: "分类规则" }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+              lineNumber: 351,
+              columnNumber: 15
+            }, this),
+            /* @__PURE__ */ jsxDEV(Typography, { as: "h2", variant: "h3", tone: "main", children: "加权和越过分界点，判为「输出 1」" }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+              lineNumber: 352,
+              columnNumber: 15
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+            lineNumber: 350,
+            columnNumber: 13
+          }, this) }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+            lineNumber: 349,
+            columnNumber: 11
+          }, this),
+          /* @__PURE__ */ jsxDEV("div", { className: "ngtw-bias-answer-pane__visual grid min-w-0 min-h-0 max-w-full content-center gap-[12px]", children: [
+            /* @__PURE__ */ jsxDEV("div", { className: "ngtw-bias-axis-head flex min-w-0 items-baseline justify-between gap-[16px]", children: [
+              /* @__PURE__ */ jsxDEV(Typography, { as: "span", variant: "bodySmall", tone: "muted", children: "加权和 y 的全部可能范围：0–3" }, void 0, false, {
+                fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+                lineNumber: 358,
+                columnNumber: 15
+              }, this),
+              /* @__PURE__ */ jsxDEV(Typography, { as: "span", variant: "bodySmall", tone: answeredCorrectly ? atMidpoint ? "success" : "warning" : "muted", children: answeredCorrectly ? atMidpoint ? "分界点已在中点：两侧正好各占一半" : `把分界线拖到 0–3 的中点 ${formatScore(RANGE_MIDPOINT)}` : "选对答案后，这里的分界线就可以拖动" }, void 0, false, {
+                fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+                lineNumber: 359,
+                columnNumber: 15
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+              lineNumber: 357,
+              columnNumber: 13
+            }, this),
+            /* @__PURE__ */ jsxDEV(
+              ClassificationAxis,
+              {
+                min: RANGE_MIN,
+                max: RANGE_MAX,
+                boundary: answeredCorrectly ? boundary : RANGE_MIN,
+                ticks: [0, 1, 2, 3],
+                negativeTone: "accent",
+                leftLabel: answeredCorrectly ? negativeZone : "",
+                rightLabel: answeredCorrectly ? positiveZone : "",
+                boundaryLabel: answeredCorrectly ? `分界点 ${formatScore(boundary)}` : void 0,
+                markers: answeredCorrectly ? [{
+                  value: outputY,
+                  label: `y = ${formatScore(outputY)}`,
+                  tone: "neutral"
+                }] : [],
+                onBoundaryChange: answeredCorrectly ? setBoundary : void 0,
+                onBoundaryDragStart: () => setBoundaryDragged(true),
+                showBoundary: answeredCorrectly,
+                pulsing: !boundaryDragged,
+                note: answeredCorrectly ? void 0 : "分界线待解锁",
+                className: `ngtw-bias-axis--answer h-[216px]${answeredCorrectly ? "" : " ngtw-bias-axis--locked"}`
+              },
+              void 0,
+              false,
+              {
+                fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+                lineNumber: 367,
+                columnNumber: 13
+              },
+              this
+            )
+          ] }, void 0, true, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+            lineNumber: 356,
+            columnNumber: 11
+          }, this),
+          /* @__PURE__ */ jsxDEV("div", { className: "ngtw-bias-answer-pane__result grid min-w-0 min-h-0 max-w-full content-center pt-[14px]", children: answeredCorrectly ? /* @__PURE__ */ jsxDEV("div", { className: "ngtw-bias-answer-pane__decision flex min-w-0 max-w-full items-center justify-between gap-[18px]", children: [
+            /* @__PURE__ */ jsxDEV(Typography, { as: "strong", variant: "h3", tone: aboveBoundary ? "success" : "accent", children: `y = ${formatScore(outputY)} ${aboveBoundary ? "≥" : "<"} ${formatScore(boundary)}` }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+              lineNumber: 393,
+              columnNumber: 17
+            }, this),
+            /* @__PURE__ */ jsxDEV(Typography, { as: "strong", variant: "body", tone: "main", children: `倾向“${tendency}”` }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+              lineNumber: 396,
+              columnNumber: 17
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+            lineNumber: 392,
+            columnNumber: 13
+          }, this) : /* @__PURE__ */ jsxDEV("div", { className: "ngtw-bias-answer-pane__waiting grid min-w-0 justify-items-center gap-[9px] text-center", children: [
+            /* @__PURE__ */ jsxDEV("span", { "aria-hidden": "true", children: "?" }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+              lineNumber: 400,
+              columnNumber: 17
+            }, this),
+            /* @__PURE__ */ jsxDEV(Typography, { variant: "body", tone: "muted", children: "选择正确答案后，这里会显示可拖动的分界线。" }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+              lineNumber: 401,
+              columnNumber: 17
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+            lineNumber: 399,
+            columnNumber: 13
+          }, this) }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+            lineNumber: 390,
+            columnNumber: 11
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+          lineNumber: 348,
+          columnNumber: 9
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+        lineNumber: 323,
+        columnNumber: 7
+      }, this)
+    },
+    void 0,
+    false,
+    {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx",
+      lineNumber: 317,
+      columnNumber: 5
+    },
+    this
+  );
+}
+_s3(BiasThresholdTheoryPage, "LRTVuj/wkMYk9otRL6P67tSvFOw=", false, function() {
+  return [useLesson];
+});
+_c4 = BiasThresholdTheoryPage;
+var _c, _c2, _c3, _c4;
+$RefreshReg$(_c, "ClassificationAxis");
+$RefreshReg$(_c2, "NaturalBoundaryFigure");
+$RefreshReg$(_c3, "BiasNaturalBoundaryPage");
+$RefreshReg$(_c4, "BiasThresholdTheoryPage");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJtYXBwaW5ncyI6IkFBa0lJLG1CQUNvQixjQURwQjs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFsSUosU0FBU0EsYUFBYUMsUUFBUUMsZ0JBQXNIO0FBQ3BKLE9BQU87QUFDUCxTQUFTQyxjQUFjQyxVQUFVQyxrQkFBNEM7QUFDN0UsU0FBU0MsYUFBYUMsV0FBV0MsbUJBQW1CO0FBRXBELE1BQU1DLFlBQVk7QUFDbEIsTUFBTUMsWUFBWTtBQUVsQixNQUFNQyxpQkFBaUI7QUFFdkIsTUFBTUMsZ0JBQWdCO0FBOEJ0QixTQUFTQyxNQUFNQyxPQUFlQyxLQUFhQyxLQUFhO0FBQ3RELFNBQU9DLEtBQUtGLElBQUlDLEtBQUtDLEtBQUtELElBQUlELEtBQUtELEtBQUssQ0FBQztBQUMzQztBQUVBLFNBQVNJLGFBQWFKLE9BQWVDLEtBQWFDLEtBQWE7QUFDN0QsU0FBT0csT0FBT04sTUFBTUksS0FBS0csTUFBTU4sUUFBUUYsYUFBYSxJQUFJQSxlQUFlRyxLQUFLQyxHQUFHLEVBQUVLLFFBQVEsQ0FBQyxDQUFDO0FBQzdGO0FBRUEsU0FBU0MsYUFBYVIsT0FBZUMsS0FBYUMsS0FBYTtBQUM3RCxTQUFPQyxLQUFLRixJQUFJLEtBQUtFLEtBQUtELElBQUksSUFBS0YsUUFBUUMsUUFBUUMsTUFBTUQsT0FBUSxHQUFHLENBQUM7QUFDdkU7QUFFQSxTQUFTUSxtQkFBbUI7QUFBQSxFQUMxQlI7QUFBQUEsRUFDQUM7QUFBQUEsRUFDQVE7QUFBQUEsRUFDQUM7QUFBQUEsRUFDQUM7QUFBQUEsRUFDQUM7QUFBQUEsRUFDQUMsVUFBVTtBQUFBLEVBQ1ZDO0FBQUFBLEVBQ0FDLFlBQVk7QUFBQSxFQUNaQyxlQUFlO0FBQUEsRUFDZkM7QUFBQUEsRUFDQUM7QUFBQUEsRUFDQUMsZUFBZTtBQUFBLEVBQ2ZDLFVBQVU7QUFBQSxFQUNWQztBQUN1QixHQUFHO0FBQUFDLEtBQUE7QUFDMUIsUUFBTUMsVUFBVXJDLE9BQThCLElBQUk7QUFDbEQsUUFBTXNDLGFBQWF0QyxPQUFPLEtBQUs7QUFDL0IsUUFBTSxDQUFDdUMsU0FBU0MsVUFBVSxJQUFJdkMsU0FBUyxLQUFLO0FBQzVDLFFBQU13QyxtQkFBbUJwQixhQUFhRSxVQUFVVCxLQUFLQyxHQUFHO0FBQ3hELFFBQU0yQixZQUFZQyxRQUFRWixnQkFBZ0I7QUFDMUMsUUFBTWEsUUFBUSxFQUFFLDRCQUE0QixHQUFHSCxnQkFBZ0IsSUFBSTtBQUVuRSxRQUFNSSxtQkFBbUI5QyxZQUFZLENBQUMrQyxZQUFvQjtBQUN4RCxVQUFNQyxPQUFPVixRQUFRVyxTQUFTQyxzQkFBc0I7QUFDcEQsUUFBSSxDQUFDRixRQUFRLENBQUNBLEtBQUtHLE1BQU8sUUFBTzNCO0FBQ2pDLFdBQU9OLGFBQWFILE1BQU1GLE9BQU9rQyxVQUFVQyxLQUFLSSxRQUFRSixLQUFLRyxPQUFPLEdBQUcsQ0FBQyxLQUFLbkMsTUFBTUQsTUFBTUEsS0FBS0MsR0FBRztBQUFBLEVBQ25HLEdBQUcsQ0FBQ1EsVUFBVVIsS0FBS0QsR0FBRyxDQUFDO0FBRXZCLFFBQU1zQyxTQUFTckQsWUFBWSxDQUFDYyxVQUFrQjtBQUM1Q21CLDBCQUFzQjtBQUN0QkQsdUJBQW1CbEIsS0FBSztBQUFBLEVBQzFCLEdBQUcsQ0FBQ2tCLGtCQUFrQkMsbUJBQW1CLENBQUM7QUFFMUMsUUFBTXFCLFlBQVlBLENBQUNDLFVBQWdEO0FBQ2pFLFFBQUksQ0FBQ1osVUFBVztBQUNoQlksVUFBTUMsZUFBZTtBQUNyQmpCLGVBQVdVLFVBQVU7QUFDckJSLGVBQVcsSUFBSTtBQUNmYyxVQUFNRSxjQUFjQyxrQkFBa0JILE1BQU1JLFNBQVM7QUFDckROLFdBQU9QLGlCQUFpQlMsTUFBTVIsT0FBTyxDQUFDO0FBQUEsRUFDeEM7QUFFQSxRQUFNYSxXQUFXQSxDQUFDTCxVQUFnRDtBQUNoRSxRQUFJLENBQUNaLGFBQWEsQ0FBQ0osV0FBV1UsUUFBUztBQUN2Q00sVUFBTUMsZUFBZTtBQUNyQkgsV0FBT1AsaUJBQWlCUyxNQUFNUixPQUFPLENBQUM7QUFBQSxFQUN4QztBQUVBLFFBQU1jLFVBQVVBLENBQUNOLFVBQWdEO0FBQy9ELFFBQUksQ0FBQ2hCLFdBQVdVLFFBQVM7QUFDekJWLGVBQVdVLFVBQVU7QUFDckJSLGVBQVcsS0FBSztBQUNoQixRQUFJYyxNQUFNRSxjQUFjSyxrQkFBa0JQLE1BQU1JLFNBQVMsRUFBR0osT0FBTUUsY0FBY00sc0JBQXNCUixNQUFNSSxTQUFTO0FBQUEsRUFDdkg7QUFFQSxRQUFNSyxnQkFBZ0JBLENBQUNULFVBQWlEO0FBQ3RFLFFBQUksQ0FBQ1osVUFBVztBQUNoQixVQUFNc0IsU0FBaUMsRUFBRUMsV0FBVyxDQUFDdEQsZUFBZXVELFdBQVcsQ0FBQ3ZELGVBQWV3RCxZQUFZeEQsZUFBZXlELFNBQVN6RCxjQUFjO0FBQ2pKLFVBQU0wRCxRQUFRTCxPQUFPVixNQUFNZ0IsR0FBRztBQUM5QixRQUFJRCxVQUFVRSxRQUFXO0FBRXZCakIsWUFBTUMsZUFBZTtBQUNyQkQsWUFBTWtCLGdCQUFnQjtBQUN0QnBCLGFBQU9uQyxhQUFhTSxXQUFXOEMsT0FBT3ZELEtBQUtDLEdBQUcsQ0FBQztBQUMvQztBQUFBLElBQ0Y7QUFDQSxRQUFJdUMsTUFBTWdCLFFBQVEsVUFBVWhCLE1BQU1nQixRQUFRLE1BQU87QUFDakRoQixVQUFNQyxlQUFlO0FBQ3JCRCxVQUFNa0IsZ0JBQWdCO0FBQ3RCcEIsV0FBT0UsTUFBTWdCLFFBQVEsU0FBU3hELE1BQU1DLEdBQUc7QUFBQSxFQUN6QztBQUVBLFFBQU0wRCxvQkFBb0IsMkJBQTJCaEMsb0JBQW9CLElBQUksaUJBQWlCQSxvQkFBb0IsS0FBSyxlQUFlLEVBQUUsR0FBR0MsWUFBWSxrQkFBa0IsRUFBRSxHQUFHSCxVQUFVLGdCQUFnQixFQUFFLEdBQUdHLGFBQWFSLFVBQVUsZ0JBQWdCLEVBQUU7QUFFdFAsUUFBTXdDLGdCQUFnQkEsQ0FBQ0MsVUFBa0JBLFNBQVM7QUFDbEQsUUFBTUMsZUFDSixtQ0FDR2hEO0FBQUFBLHFCQUFpQix1QkFBQyxjQUFXLElBQUcsUUFBTyxTQUFRLGFBQVksTUFBSyxXQUFVLE1BQUssVUFBVUEsMkJBQXhFO0FBQUE7QUFBQTtBQUFBO0FBQUEsV0FBc0Y7QUFBQSxJQUN4Ryx1QkFBQyxTQUFEO0FBQUE7QUFBQTtBQUFBO0FBQUEsV0FBRTtBQUFBLElBQ0RjLGFBQWEsdUJBQUMsVUFBSyxXQUFVLDBLQUF5SyxlQUFZLFVBQXJNO0FBQUE7QUFBQTtBQUFBO0FBQUEsV0FBMk07QUFBQSxPQUgzTjtBQUFBO0FBQUE7QUFBQTtBQUFBLFNBSUE7QUFHRixTQUNFLHVCQUFDLFNBQUksV0FBVywrREFBK0RiLFNBQVMsR0FBR2dELEtBQUssR0FBRyxPQUFjLEtBQUt4QyxTQUNwSDtBQUFBLDJCQUFDLFNBQUksV0FBVSx3S0FBdUssZUFBWSxRQUNoTTtBQUFBLDZCQUFDLFVBQUssV0FBVSx3SUFDYlosdUJBQWFpRCxjQUFjakMsZ0JBQWdCLEtBQUssdUJBQUMsY0FBVyxJQUFHLFFBQU8sU0FBUSxhQUFZLE1BQU1YLGNBQWVMLHVCQUEvRDtBQUFBO0FBQUE7QUFBQTtBQUFBLGFBQXlFLEtBRDVIO0FBQUE7QUFBQTtBQUFBO0FBQUEsYUFFQTtBQUFBLE1BQ0EsdUJBQUMsVUFBSyxXQUFVLHdJQUNiQyx3QkFBY2dELGNBQWMsTUFBTWpDLGdCQUFnQixLQUFLLHVCQUFDLGNBQVcsSUFBRyxRQUFPLFNBQVEsYUFBWSxNQUFLLFdBQVdmLHdCQUExRDtBQUFBO0FBQUE7QUFBQTtBQUFBLGFBQXFFLEtBRC9IO0FBQUE7QUFBQTtBQUFBO0FBQUEsYUFFQTtBQUFBLFNBTkY7QUFBQTtBQUFBO0FBQUE7QUFBQSxXQU9BO0FBQUEsSUFFQSx1QkFBQyxTQUFJLFdBQVUsNEZBQTJGLGVBQVksVUFBdEg7QUFBQTtBQUFBO0FBQUE7QUFBQSxXQUE0SDtBQUFBLElBQzNIUyxRQUFRLHVCQUFDLGNBQVcsSUFBRyxRQUFPLFNBQVEsYUFBWSxNQUFLLFNBQVEsV0FBVSx3QkFBd0JBLGtCQUF6RjtBQUFBO0FBQUE7QUFBQTtBQUFBLFdBQThGO0FBQUEsSUFDdEdGLGlCQUFpQlMsWUFDaEI7QUFBQSxNQUFDO0FBQUE7QUFBQSxRQUNDLE1BQUs7QUFBQSxRQUNMLFdBQVcrQjtBQUFBQSxRQUNYLE1BQUs7QUFBQSxRQUNMLGNBQVc7QUFBQSxRQUNYLGlCQUFlM0Q7QUFBQUEsUUFDZixpQkFBZUM7QUFBQUEsUUFDZixpQkFBZVE7QUFBQUEsUUFDZixrQkFBZ0IsT0FBT2xCLFlBQVlrQixRQUFRLENBQUM7QUFBQSxRQUM1QztBQUFBLFFBQ0EsZUFBZThCO0FBQUFBLFFBQ2YsZUFBZU07QUFBQUEsUUFDZixhQUFhQztBQUFBQSxRQUNiLGlCQUFpQkE7QUFBQUEsUUFDakIsV0FBV0c7QUFBQUEsUUFFVmE7QUFBQUE7QUFBQUEsTUFoQkg7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBLElBaUJBLElBRUEsdUJBQUMsU0FBSSxXQUFXSCxtQkFBbUIsZUFBWSxRQUFRRywwQkFBdkQ7QUFBQTtBQUFBO0FBQUE7QUFBQSxXQUFvRTtBQUFBLElBR3RFLHVCQUFDLFNBQUksV0FBVSx5QkFBd0IsZUFBWSxRQUNoRHBELGdCQUFNc0Q7QUFBQUEsTUFBSSxDQUFDQyxTQUNWLHVCQUFDLGNBQVcsSUFBRyxRQUFPLFNBQVEsYUFBWSxNQUFLLFFBQWtCLE9BQU8sRUFBRTVCLE1BQU0sR0FBRzlCLGFBQWEwRCxNQUFNakUsS0FBS0MsR0FBRyxDQUFDLElBQUksR0FDaEhnRSxrQkFEd0RBLE1BQTNEO0FBQUE7QUFBQTtBQUFBO0FBQUEsYUFFQTtBQUFBLElBQ0QsS0FMSDtBQUFBO0FBQUE7QUFBQTtBQUFBLFdBTUE7QUFBQSxJQUVDcEQsUUFBUW1ELElBQUksQ0FBQ0UsV0FBVztBQUN2QixZQUFNQyxpQkFBaUI1RCxhQUFhMkQsT0FBT25FLE9BQU9DLEtBQUtDLEdBQUc7QUFDMUQsYUFDRSx1QkFBQyxTQUFJLFdBQVcsbUhBQW1IaUUsT0FBT0UsSUFBSSxJQUFJLE9BQU8sRUFBRS9CLE1BQU0sR0FBRzhCLGNBQWMsSUFBSSxHQUNwTDtBQUFBLCtCQUFDLGNBQVcsSUFBRyxRQUFPLFNBQVEsYUFBWSxNQUFNRCxPQUFPRSxTQUFTLFVBQVUsWUFBWUYsT0FBT0UsU0FBUyxRQUFRLFdBQVcsUUFBUSxNQUFLLFVBQ25JRixpQkFBT0csU0FEVjtBQUFBO0FBQUE7QUFBQTtBQUFBLGVBRUE7QUFBQSxRQUNBLHVCQUFDLE9BQUUsZUFBWSxVQUFmO0FBQUE7QUFBQTtBQUFBO0FBQUEsZUFBcUI7QUFBQSxXQUp1S0gsT0FBT0csT0FBck07QUFBQTtBQUFBO0FBQUE7QUFBQSxhQUtBO0FBQUEsSUFFSixDQUFDO0FBQUEsT0FyREg7QUFBQTtBQUFBO0FBQUE7QUFBQSxTQXNEQTtBQUVKO0FBQUMvQyxHQTlJUWQsb0JBQWtCO0FBQUEsS0FBbEJBO0FBZ0pULFNBQVM4RCx3QkFBd0I7QUFDL0IsU0FDRSx1QkFBQyxTQUFJLFdBQVUsNEJBQ2I7QUFBQSwyQkFBQyxTQUFJLFdBQVUsbUdBQ2I7QUFBQSw2QkFBQyxjQUFXLElBQUcsUUFBTyxTQUFRLGFBQVksTUFBSyxVQUFTLGtCQUF4RDtBQUFBO0FBQUE7QUFBQTtBQUFBLGFBQTBEO0FBQUEsTUFDMUQsdUJBQUMsY0FBVyxJQUFHLFFBQU8sU0FBUSxhQUFZLE1BQUssV0FBVSxtQkFBekQ7QUFBQTtBQUFBO0FBQUE7QUFBQSxhQUE0RDtBQUFBLFNBRjlEO0FBQUE7QUFBQTtBQUFBO0FBQUEsV0FHQTtBQUFBLElBQ0EsdUJBQUMsc0JBQW1CLEtBQUssSUFBSSxLQUFLLEdBQUcsVUFBVSxHQUFHLE9BQU8sQ0FBQyxDQUFDLEdBQUcsV0FBVSxNQUFLLFlBQVcsT0FBTSxlQUFjLFdBQTVHO0FBQUE7QUFBQTtBQUFBO0FBQUEsV0FBbUg7QUFBQSxPQUxySDtBQUFBO0FBQUE7QUFBQTtBQUFBLFNBTUE7QUFFSjtBQUFDQyxNQVZRRDtBQVlGLGdCQUFTRSwwQkFBMEI7QUFBQUMsTUFBQTtBQUN4QyxRQUFNLEVBQUVDLFVBQVVDLE1BQU0sSUFBSW5GLFVBQVU7QUFDdEMsUUFBTW9GLFNBQVNGLFNBQVNHLFFBQVFiLElBQUksQ0FBQ2MsUUFBUUMsVUFBVUosTUFBTUMsT0FBT0csS0FBSyxLQUFLRCxPQUFPRSxjQUFjO0FBQ25HLFFBQU1DLFVBQVV4RixZQUFZaUYsVUFBVUUsTUFBTTtBQUU1QyxTQUNFO0FBQUEsSUFBQztBQUFBO0FBQUEsTUFDQyxjQUFjO0FBQUEsTUFDZCxXQUFVO0FBQUEsTUFDVixPQUFNO0FBQUEsTUFDTixVQUFTO0FBQUEsTUFFVCxpQ0FBQyxTQUFJLFdBQVUsMElBQ2I7QUFBQSwrQkFBQyxhQUFRLFdBQVUsbUpBQ2pCO0FBQUEsaUNBQUMsWUFBTyxXQUFVLDJHQUNoQjtBQUFBLG1DQUFDLGNBQVcsSUFBRyxRQUFPLFNBQVEsTUFBSyxNQUFLLFVBQVMsV0FBVSw2QkFBNEIsaUJBQXZGO0FBQUE7QUFBQTtBQUFBO0FBQUEsbUJBQXdGO0FBQUEsWUFDeEYsdUJBQUMsU0FDQztBQUFBLHFDQUFDLGNBQVcsSUFBRyxNQUFLLFNBQVEsTUFBSyxNQUFLLFFBQU8seUJBQTdDO0FBQUE7QUFBQTtBQUFBO0FBQUEscUJBQXNEO0FBQUEsY0FDdEQsdUJBQUMsY0FBVyxTQUFRLGFBQVksTUFBSyxTQUFRLDhCQUE3QztBQUFBO0FBQUE7QUFBQTtBQUFBLHFCQUEyRDtBQUFBLGlCQUY3RDtBQUFBO0FBQUE7QUFBQTtBQUFBLG1CQUdBO0FBQUEsZUFMRjtBQUFBO0FBQUE7QUFBQTtBQUFBLGlCQU1BO0FBQUEsVUFDQSx1QkFBQywyQkFBRDtBQUFBO0FBQUE7QUFBQTtBQUFBLGlCQUFzQjtBQUFBLFVBQ3RCLHVCQUFDLFNBQUksV0FBVSxxREFDYixpQ0FBQyxjQUFXLFNBQVEsUUFBTyxNQUFLLFVBQVMseUNBQXpDO0FBQUE7QUFBQTtBQUFBO0FBQUEsaUJBQWtFLEtBRHBFO0FBQUE7QUFBQTtBQUFBO0FBQUEsaUJBRUE7QUFBQSxhQVhGO0FBQUE7QUFBQTtBQUFBO0FBQUEsZUFZQTtBQUFBLFFBRUEsdUJBQUMsU0FBSSxXQUFVLDRIQUEySCxlQUFZLFFBQ3BKO0FBQUEsaUNBQUMsWUFBRDtBQUFBO0FBQUE7QUFBQTtBQUFBLGlCQUFLO0FBQUEsVUFDTCx1QkFBQyxjQUFXLElBQUcsUUFBTyxTQUFRLGFBQVksTUFBSyxXQUFVLG9CQUF6RDtBQUFBO0FBQUE7QUFBQTtBQUFBLGlCQUE2RDtBQUFBLFVBQzdELHVCQUFDLFlBQUQ7QUFBQTtBQUFBO0FBQUE7QUFBQSxpQkFBSztBQUFBLGFBSFA7QUFBQTtBQUFBO0FBQUE7QUFBQSxlQUlBO0FBQUEsUUFFQSx1QkFBQyxhQUFRLFdBQVUsbUpBQ2pCO0FBQUEsaUNBQUMsWUFBTyxXQUFVLDJHQUNoQjtBQUFBLG1DQUFDLGNBQVcsSUFBRyxRQUFPLFNBQVEsTUFBSyxNQUFLLFdBQVUsV0FBVSw2QkFBNEIsaUJBQXhGO0FBQUE7QUFBQTtBQUFBO0FBQUEsbUJBQXlGO0FBQUEsWUFDekYsdUJBQUMsU0FDQztBQUFBLHFDQUFDLGNBQVcsSUFBRyxNQUFLLFNBQVEsTUFBSyxNQUFLLFFBQU8sK0JBQTdDO0FBQUE7QUFBQTtBQUFBO0FBQUEscUJBQTREO0FBQUEsY0FDNUQsdUJBQUMsY0FBVyxTQUFRLGFBQVksTUFBSyxTQUFRLDhDQUE3QztBQUFBO0FBQUE7QUFBQTtBQUFBLHFCQUEyRTtBQUFBLGlCQUY3RTtBQUFBO0FBQUE7QUFBQTtBQUFBLG1CQUdBO0FBQUEsZUFMRjtBQUFBO0FBQUE7QUFBQTtBQUFBLGlCQU1BO0FBQUEsVUFDQSx1QkFBQyxTQUFJLFdBQVUsNkNBQ2I7QUFBQSxtQ0FBQyxjQUFXLElBQUcsUUFBTyxTQUFRLGFBQVksTUFBSyxXQUFVLFdBQVUscUNBQW9DLHlCQUF2RztBQUFBO0FBQUE7QUFBQTtBQUFBLG1CQUFnSDtBQUFBLFlBQ2hIO0FBQUEsY0FBQztBQUFBO0FBQUEsZ0JBQ0MsS0FBSztBQUFBLGdCQUNMLEtBQUs7QUFBQSxnQkFDTCxVQUFVO0FBQUEsZ0JBQ1YsT0FBTyxDQUFDLEdBQUcsR0FBRyxHQUFHLENBQUM7QUFBQSxnQkFDbEIsV0FBVTtBQUFBLGdCQUNWLFlBQVc7QUFBQSxnQkFDWCxlQUFjO0FBQUEsZ0JBQ2QsU0FBUyxDQUFDLEVBQUU3RSxPQUFPa0YsU0FBU1osT0FBTyxVQUFVOUUsWUFBWTBGLE9BQU8sQ0FBQyxJQUFJYixNQUFNLFFBQVEsQ0FBQztBQUFBO0FBQUEsY0FSdEY7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBLFlBUXdGO0FBQUEsZUFWMUY7QUFBQTtBQUFBO0FBQUE7QUFBQSxpQkFZQTtBQUFBLFVBQ0EsdUJBQUMsU0FBSSxXQUFVLDBGQUNiLGlDQUFDLGNBQVcsU0FBUSxRQUFPLE1BQUssUUFBTSw4Q0FBdEM7QUFBQTtBQUFBO0FBQUE7QUFBQSxpQkFFQSxLQUhGO0FBQUE7QUFBQTtBQUFBO0FBQUEsaUJBSUE7QUFBQSxhQXpCRjtBQUFBO0FBQUE7QUFBQTtBQUFBLGVBMEJBO0FBQUEsV0EvQ0Y7QUFBQTtBQUFBO0FBQUE7QUFBQSxhQWdEQTtBQUFBO0FBQUEsSUF0REY7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBLEVBdURBO0FBRUo7QUFBQ0ssSUEvRGVELHlCQUF1QjtBQUFBLFVBQ1RoRixTQUFTO0FBQUE7QUFBQSxNQUR2QmdGO0FBaUVULGdCQUFTVSx3QkFBd0IsRUFBRUMsV0FBd0MsR0FBRztBQUFBQyxNQUFBO0FBQ25GLFFBQU0sRUFBRVYsVUFBVUMsTUFBTSxJQUFJbkYsVUFBVTtBQUN0QyxRQUFNb0YsU0FBU0YsU0FBU0csUUFBUWIsSUFBSSxDQUFDYyxRQUFRQyxVQUFVSixNQUFNQyxPQUFPRyxLQUFLLEtBQUtELE9BQU9FLGNBQWM7QUFDbkcsUUFBTUMsVUFBVXhGLFlBQVlpRixVQUFVRSxNQUFNO0FBQzVDLFFBQU0sQ0FBQ1MsbUJBQW1CQyxvQkFBb0IsSUFBSW5HLFNBQVMsS0FBSztBQUNoRSxRQUFNLENBQUNzQixVQUFVOEUsV0FBVyxJQUFJcEcsU0FBU1MsY0FBYztBQUN2RCxRQUFNLENBQUM0RixpQkFBaUJDLGtCQUFrQixJQUFJdEcsU0FBUyxLQUFLO0FBQzVELFFBQU11RyxlQUFleEcsT0FBTyxLQUFLO0FBQ2pDLFFBQU15RyxhQUFhekYsS0FBSzBGLElBQUluRixXQUFXYixjQUFjLElBQUk7QUFDekQsUUFBTWlHLGdCQUFnQlosV0FBV3hFO0FBQ2pDLFFBQU1xRixXQUFXRCxnQkFBZ0JuQixTQUFTcUIsZ0JBQWdCckIsU0FBU3NCO0FBQ25FLFFBQU1DLGVBQWUsVUFBVXZCLFNBQVNzQixhQUFhO0FBQ3JELFFBQU1FLGVBQWUsVUFBVXhCLFNBQVNxQixhQUFhO0FBRXJELFFBQU1JLGNBQWNBLENBQUNDLFdBQWdDO0FBQ25ELFFBQUksQ0FBQ0EsT0FBT0MsR0FBSTtBQUNoQmYseUJBQXFCLElBQUk7QUFDekIsUUFBSSxDQUFDSSxhQUFheEQsU0FBUztBQUN6QndELG1CQUFheEQsVUFBVTtBQUN2QmlELG1CQUFhO0FBQUEsSUFDZjtBQUFBLEVBQ0Y7QUFFQSxTQUNFO0FBQUEsSUFBQztBQUFBO0FBQUEsTUFDQyxjQUFjO0FBQUEsTUFDZCxXQUFVO0FBQUEsTUFDVixPQUFNO0FBQUEsTUFDTixVQUFTO0FBQUEsTUFFVCxpQ0FBQyxTQUFJLFdBQVUsaUlBQ2I7QUFBQSwrQkFBQyxhQUFRLFdBQVUsd0RBQ2pCO0FBQUEsVUFBQztBQUFBO0FBQUEsWUFDQyxXQUFVO0FBQUEsWUFDVixNQUFLO0FBQUEsWUFDTCxXQUFVO0FBQUEsWUFDVixhQUFZO0FBQUEsWUFDWixPQUFPLFVBQVV6RixTQUFTLElBQUlDLFNBQVM7QUFBQSxZQUN2QyxRQUFPO0FBQUEsWUFDUCxnQkFBZTtBQUFBLFlBQ2YsU0FBU3dHO0FBQUFBLFlBQ1QsVUFBVTtBQUFBLGNBQ1JHLFNBQVM7QUFBQSxjQUNUQyxTQUFTO0FBQUEsY0FDVEMsT0FBTztBQUFBLFlBQ1Q7QUFBQSxZQUNBLFNBQVM7QUFBQSxjQUNQLEVBQUVoRCxLQUFLLEtBQUt6RCxPQUFPLEtBQUtzRSxPQUFPLEtBQUtvQyxlQUFlLHVCQUF1QjtBQUFBLGNBQzFFLEVBQUVqRCxLQUFLLEtBQUt6RCxPQUFPLFFBQVFzRSxPQUFPLFFBQVFvQyxlQUFlLDZCQUE2QjtBQUFBLGNBQ3RGLEVBQUVqRCxLQUFLLEtBQUt6RCxPQUFPLFFBQVFzRSxPQUFPLE9BQU87QUFBQSxjQUN6QyxFQUFFYixLQUFLLEtBQUt6RCxPQUFPLFFBQVFzRSxPQUFPLFFBQVFvQyxlQUFlLHlCQUF5QjtBQUFBLFlBQUM7QUFBQTtBQUFBLFVBbEJ2RjtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUEsUUFtQkksS0FwQk47QUFBQTtBQUFBO0FBQUE7QUFBQSxlQXNCQTtBQUFBLFFBRUEsdUJBQUMsYUFBUSxXQUFXLCtHQUErR3BCLG9CQUFvQixpQkFBaUIsRUFBRSxJQUFJLGFBQVUsVUFDdEw7QUFBQSxpQ0FBQyxZQUFPLFdBQVUsOEZBQ2hCLGlDQUFDLFNBQUksV0FBVSxzREFDYjtBQUFBLG1DQUFDLGNBQVcsSUFBRyxRQUFPLFNBQVEsYUFBWSxNQUFLLFdBQVUsb0JBQXpEO0FBQUE7QUFBQTtBQUFBO0FBQUEsbUJBQTZEO0FBQUEsWUFDN0QsdUJBQUMsY0FBVyxJQUFHLE1BQUssU0FBUSxNQUFLLE1BQUssUUFBTyxpQ0FBN0M7QUFBQTtBQUFBO0FBQUE7QUFBQSxtQkFBOEQ7QUFBQSxlQUZoRTtBQUFBO0FBQUE7QUFBQTtBQUFBLGlCQUdBLEtBSkY7QUFBQTtBQUFBO0FBQUE7QUFBQSxpQkFLQTtBQUFBLFVBRUEsdUJBQUMsU0FBSSxXQUFVLDJGQUNiO0FBQUEsbUNBQUMsU0FBSSxXQUFVLDhFQUNiO0FBQUEscUNBQUMsY0FBVyxJQUFHLFFBQU8sU0FBUSxhQUFZLE1BQUssU0FBUSxpQ0FBdkQ7QUFBQTtBQUFBO0FBQUE7QUFBQSxxQkFBd0U7QUFBQSxjQUN4RSx1QkFBQyxjQUFXLElBQUcsUUFBTyxTQUFRLGFBQVksTUFBTUEsb0JBQXFCTSxhQUFhLFlBQVksWUFBYSxTQUN4R04sOEJBQ0dNLGFBQ0UscUJBQ0Esa0JBQWtCcEcsWUFBWUssY0FBYyxDQUFDLEtBQy9DLHVCQUxOO0FBQUE7QUFBQTtBQUFBO0FBQUEscUJBTUE7QUFBQSxpQkFSRjtBQUFBO0FBQUE7QUFBQTtBQUFBLG1CQVNBO0FBQUEsWUFDQTtBQUFBLGNBQUM7QUFBQTtBQUFBLGdCQUNDLEtBQUtGO0FBQUFBLGdCQUNMLEtBQUtDO0FBQUFBLGdCQUNMLFVBQVUwRixvQkFBb0I1RSxXQUFXZjtBQUFBQSxnQkFDekMsT0FBTyxDQUFDLEdBQUcsR0FBRyxHQUFHLENBQUM7QUFBQSxnQkFDbEIsY0FBYTtBQUFBLGdCQUNiLFdBQVcyRixvQkFBb0JZLGVBQWU7QUFBQSxnQkFDOUMsWUFBWVosb0JBQW9CYSxlQUFlO0FBQUEsZ0JBQy9DLGVBQWViLG9CQUFvQixPQUFPOUYsWUFBWWtCLFFBQVEsQ0FBQyxLQUFLZ0Q7QUFBQUEsZ0JBQ3BFLFNBQVM0QixvQkFBb0IsQ0FBQztBQUFBLGtCQUM1QnRGLE9BQU9rRjtBQUFBQSxrQkFDUFosT0FBTyxPQUFPOUUsWUFBWTBGLE9BQU8sQ0FBQztBQUFBLGtCQUNsQ2IsTUFBTTtBQUFBLGdCQUNSLENBQUMsSUFBSTtBQUFBLGdCQUNMLGtCQUFrQmlCLG9CQUFvQkUsY0FBYzlCO0FBQUFBLGdCQUNwRCxxQkFBcUIsTUFBTWdDLG1CQUFtQixJQUFJO0FBQUEsZ0JBQ2xELGNBQWNKO0FBQUFBLGdCQUNkLFNBQVMsQ0FBQ0c7QUFBQUEsZ0JBQ1YsTUFBTUgsb0JBQW9CNUIsU0FBWTtBQUFBLGdCQUN0QyxXQUFXLG1DQUFtQzRCLG9CQUFvQixLQUFLLHlCQUF5QjtBQUFBO0FBQUEsY0FuQmxHO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQSxZQW1CcUc7QUFBQSxlQTlCdkc7QUFBQTtBQUFBO0FBQUE7QUFBQSxpQkFnQ0E7QUFBQSxVQUVBLHVCQUFDLFNBQUksV0FBVSwwRkFDWkEsOEJBQ0MsdUJBQUMsU0FBSSxXQUFVLG1HQUNiO0FBQUEsbUNBQUMsY0FBVyxJQUFHLFVBQVMsU0FBUSxNQUFLLE1BQU1RLGdCQUFnQixZQUFZLFVBQ3BFLGlCQUFPdEcsWUFBWTBGLE9BQU8sQ0FBQyxJQUFJWSxnQkFBZ0IsTUFBTSxHQUFHLElBQUl0RyxZQUFZa0IsUUFBUSxDQUFDLE1BRHBGO0FBQUE7QUFBQTtBQUFBO0FBQUEsbUJBRUE7QUFBQSxZQUNBLHVCQUFDLGNBQVcsSUFBRyxVQUFTLFNBQVEsUUFBTyxNQUFLLFFBQVEsZ0JBQU1xRixRQUFRLE9BQWxFO0FBQUE7QUFBQTtBQUFBO0FBQUEsbUJBQXNFO0FBQUEsZUFKeEU7QUFBQTtBQUFBO0FBQUE7QUFBQSxpQkFLQSxJQUVBLHVCQUFDLFNBQUksV0FBVSwwRkFDYjtBQUFBLG1DQUFDLFVBQUssZUFBWSxRQUFPLGlCQUF6QjtBQUFBO0FBQUE7QUFBQTtBQUFBLG1CQUEwQjtBQUFBLFlBQzFCLHVCQUFDLGNBQVcsU0FBUSxRQUFPLE1BQUssU0FBUSxxQ0FBeEM7QUFBQTtBQUFBO0FBQUE7QUFBQSxtQkFBNkQ7QUFBQSxlQUYvRDtBQUFBO0FBQUE7QUFBQTtBQUFBLGlCQUdBLEtBWko7QUFBQTtBQUFBO0FBQUE7QUFBQSxpQkFjQTtBQUFBLGFBeERGO0FBQUE7QUFBQTtBQUFBO0FBQUEsZUF5REE7QUFBQSxXQWxGRjtBQUFBO0FBQUE7QUFBQTtBQUFBLGFBbUZBO0FBQUE7QUFBQSxJQXpGRjtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUEsRUEwRkE7QUFFSjtBQUFDVixJQXBIZUYseUJBQXVCO0FBQUEsVUFDVDFGLFNBQVM7QUFBQTtBQUFBLE1BRHZCMEY7QUFBdUIsSUFBQXdCLElBQUFuQyxLQUFBb0MsS0FBQUM7QUFBQSxhQUFBRixJQUFBO0FBQUEsYUFBQW5DLEtBQUE7QUFBQSxhQUFBb0MsS0FBQTtBQUFBLGFBQUFDLEtBQUEiLCJuYW1lcyI6WyJ1c2VDYWxsYmFjayIsInVzZVJlZiIsInVzZVN0YXRlIiwiQ29udGVudEJsb2NrIiwiUXVlc3Rpb24iLCJUeXBvZ3JhcGh5IiwiZm9ybWF0U2NvcmUiLCJ1c2VMZXNzb24iLCJ3ZWlnaHRlZFN1bSIsIlJBTkdFX01JTiIsIlJBTkdFX01BWCIsIlJBTkdFX01JRFBPSU5UIiwiQk9VTkRBUllfU1RFUCIsImNsYW1wIiwidmFsdWUiLCJtaW4iLCJtYXgiLCJNYXRoIiwic25hcEJvdW5kYXJ5IiwiTnVtYmVyIiwicm91bmQiLCJ0b0ZpeGVkIiwiYXhpc1Bvc2l0aW9uIiwiQ2xhc3NpZmljYXRpb25BeGlzIiwiYm91bmRhcnkiLCJ0aWNrcyIsImxlZnRMYWJlbCIsInJpZ2h0TGFiZWwiLCJtYXJrZXJzIiwiYm91bmRhcnlMYWJlbCIsImNsYXNzTmFtZSIsIm5lZ2F0aXZlVG9uZSIsIm9uQm91bmRhcnlDaGFuZ2UiLCJvbkJvdW5kYXJ5RHJhZ1N0YXJ0Iiwic2hvd0JvdW5kYXJ5IiwicHVsc2luZyIsIm5vdGUiLCJfcyIsImF4aXNSZWYiLCJob2xkaW5nUmVmIiwiaG9sZGluZyIsInNldEhvbGRpbmciLCJib3VuZGFyeVBvc2l0aW9uIiwiZHJhZ2dhYmxlIiwiQm9vbGVhbiIsInN0eWxlIiwidmFsdWVGcm9tUG9pbnRlciIsImNsaWVudFgiLCJyZWN0IiwiY3VycmVudCIsImdldEJvdW5kaW5nQ2xpZW50UmVjdCIsIndpZHRoIiwibGVmdCIsImNvbW1pdCIsInN0YXJ0RHJhZyIsImV2ZW50IiwicHJldmVudERlZmF1bHQiLCJjdXJyZW50VGFyZ2V0Iiwic2V0UG9pbnRlckNhcHR1cmUiLCJwb2ludGVySWQiLCJtb3ZlRHJhZyIsImVuZERyYWciLCJoYXNQb2ludGVyQ2FwdHVyZSIsInJlbGVhc2VQb2ludGVyQ2FwdHVyZSIsImhhbmRsZUtleURvd24iLCJkZWx0YXMiLCJBcnJvd0xlZnQiLCJBcnJvd0Rvd24iLCJBcnJvd1JpZ2h0IiwiQXJyb3dVcCIsImRlbHRhIiwia2V5IiwidW5kZWZpbmVkIiwic3RvcFByb3BhZ2F0aW9uIiwiYm91bmRhcnlDbGFzc05hbWUiLCJ6b25lTGFiZWxGaXRzIiwic2hhcmUiLCJib3VuZGFyeUJvZHkiLCJ0cmltIiwibWFwIiwidGljayIsIm1hcmtlciIsIm1hcmtlclBvc2l0aW9uIiwidG9uZSIsImxhYmVsIiwiTmF0dXJhbEJvdW5kYXJ5RmlndXJlIiwiX2MyIiwiQmlhc05hdHVyYWxCb3VuZGFyeVBhZ2UiLCJfczIiLCJzY2VuYXJpbyIsInN0YXRlIiwidmFsdWVzIiwiZmFjdG9ycyIsImZhY3RvciIsImluZGV4Iiwic3VnZ2VzdGVkVmFsdWUiLCJvdXRwdXRZIiwiQmlhc1RocmVzaG9sZFRoZW9yeVBhZ2UiLCJvbkNvbXBsZXRlIiwiX3MzIiwiYW5zd2VyZWRDb3JyZWN0bHkiLCJzZXRBbnN3ZXJlZENvcnJlY3RseSIsInNldEJvdW5kYXJ5IiwiYm91bmRhcnlEcmFnZ2VkIiwic2V0Qm91bmRhcnlEcmFnZ2VkIiwiY29tcGxldGVkUmVmIiwiYXRNaWRwb2ludCIsImFicyIsImFib3ZlQm91bmRhcnkiLCJ0ZW5kZW5jeSIsInBvc2l0aXZlTGFiZWwiLCJuZWdhdGl2ZUxhYmVsIiwibmVnYXRpdmVab25lIiwicG9zaXRpdmVab25lIiwiaGFuZGxlQ2hlY2siLCJyZXN1bHQiLCJvayIsImluaXRpYWwiLCJjb3JyZWN0Iiwid3JvbmciLCJ3cm9uZ0ZlZWRiYWNrIiwiX2MiLCJfYzMiLCJfYzQiXSwiaWdub3JlTGlzdCI6W10sInNvdXJjZXMiOlsiQmlhc1RocmVzaG9sZFRoZW9yeVBhZ2UudHN4Il0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IHVzZUNhbGxiYWNrLCB1c2VSZWYsIHVzZVN0YXRlLCB0eXBlIENTU1Byb3BlcnRpZXMsIHR5cGUgS2V5Ym9hcmRFdmVudCBhcyBSZWFjdEtleWJvYXJkRXZlbnQsIHR5cGUgUG9pbnRlckV2ZW50IGFzIFJlYWN0UG9pbnRlckV2ZW50IH0gZnJvbSAncmVhY3QnO1xuaW1wb3J0ICcuL0JpYXNUaHJlc2hvbGRUaGVvcnlQYWdlLmNzcyc7XG5pbXBvcnQgeyBDb250ZW50QmxvY2ssIFF1ZXN0aW9uLCBUeXBvZ3JhcGh5LCB0eXBlIFF1ZXN0aW9uQ2hlY2tSZXN1bHQgfSBmcm9tICcuLi8uLi8uLi9zaGFyZWQvcmVhY3QnO1xuaW1wb3J0IHsgZm9ybWF0U2NvcmUsIHVzZUxlc3Nvbiwgd2VpZ2h0ZWRTdW0gfSBmcm9tICcuLi8uLi9MZXNzb25Db250ZXh0JztcblxuY29uc3QgUkFOR0VfTUlOID0gMDtcbmNvbnN0IFJBTkdFX01BWCA9IDM7XG4vKiogMOKAkzMg55qE5Lit54K577yM5Lmf5piv6L+Z5LiA57G75YiG57G755qE5q2j56Gu562U5qGI44CCICovXG5jb25zdCBSQU5HRV9NSURQT0lOVCA9IDEuNTtcbi8qKiDliIbnlYzngrnlkLjpmYTnmoTliLvluqbjgIIgKi9cbmNvbnN0IEJPVU5EQVJZX1NURVAgPSAwLjA1O1xuXG5pbnRlcmZhY2UgQXhpc01hcmtlciB7XG4gIHZhbHVlOiBudW1iZXI7XG4gIGxhYmVsOiBzdHJpbmc7XG4gIHRvbmU6ICdncmVlbicgfCAncmVkJyB8ICduZXV0cmFsJztcbn1cblxuaW50ZXJmYWNlIENsYXNzaWZpY2F0aW9uQXhpc1Byb3BzIHtcbiAgbWluOiBudW1iZXI7XG4gIG1heDogbnVtYmVyO1xuICBib3VuZGFyeTogbnVtYmVyO1xuICB0aWNrczogbnVtYmVyW107XG4gIGxlZnRMYWJlbDogc3RyaW5nO1xuICByaWdodExhYmVsOiBzdHJpbmc7XG4gIG1hcmtlcnM/OiBBeGlzTWFya2VyW107XG4gIGJvdW5kYXJ5TGFiZWw/OiBzdHJpbmc7XG4gIGNsYXNzTmFtZT86IHN0cmluZztcbiAgLyoqIOWPjeS+p+WMuuWfn+eahOaWh+Wtl+iJsu+8mum7mOiupOeUqOWNsemZqeiJsu+8jOeUqCBhY2NlbnQg6KGo56S64oCc5Y+q5piv5Y+m5LiA57G777yM5LiN5piv6ZSZ6K+v4oCd44CCICovXG4gIG5lZ2F0aXZlVG9uZT86ICdkYW5nZXInIHwgJ2FjY2VudCc7XG4gIC8qKiDkvKDlhaXlkI7liIbnlYznur/lj6/mi5bliqjvvIzlj5blgLzojIPlm7TkuLogW21pbiwgbWF4XeOAgiAqL1xuICBvbkJvdW5kYXJ5Q2hhbmdlPzogKHZhbHVlOiBudW1iZXIpID0+IHZvaWQ7XG4gIG9uQm91bmRhcnlEcmFnU3RhcnQ/OiAoKSA9PiB2b2lkO1xuICBzaG93Qm91bmRhcnk/OiBib29sZWFuO1xuICAvKiog6aaW5qyh5ouW5Yqo5YmN55qE6L275o+Q56S644CCICovXG4gIHB1bHNpbmc/OiBib29sZWFuO1xuICAvKiog5YiG55WM57q/5LiN5Y+v55So5pe255qE5Y2g5L2N6K+05piO44CCICovXG4gIG5vdGU/OiBzdHJpbmc7XG59XG5cbmZ1bmN0aW9uIGNsYW1wKHZhbHVlOiBudW1iZXIsIG1pbjogbnVtYmVyLCBtYXg6IG51bWJlcikge1xuICByZXR1cm4gTWF0aC5taW4obWF4LCBNYXRoLm1heChtaW4sIHZhbHVlKSk7XG59XG5cbmZ1bmN0aW9uIHNuYXBCb3VuZGFyeSh2YWx1ZTogbnVtYmVyLCBtaW46IG51bWJlciwgbWF4OiBudW1iZXIpIHtcbiAgcmV0dXJuIE51bWJlcihjbGFtcChNYXRoLnJvdW5kKHZhbHVlIC8gQk9VTkRBUllfU1RFUCkgKiBCT1VOREFSWV9TVEVQLCBtaW4sIG1heCkudG9GaXhlZCgyKSk7XG59XG5cbmZ1bmN0aW9uIGF4aXNQb3NpdGlvbih2YWx1ZTogbnVtYmVyLCBtaW46IG51bWJlciwgbWF4OiBudW1iZXIpIHtcbiAgcmV0dXJuIE1hdGgubWluKDEwMCwgTWF0aC5tYXgoMCwgKCh2YWx1ZSAtIG1pbikgLyAobWF4IC0gbWluKSkgKiAxMDApKTtcbn1cblxuZnVuY3Rpb24gQ2xhc3NpZmljYXRpb25BeGlzKHtcbiAgbWluLFxuICBtYXgsXG4gIGJvdW5kYXJ5LFxuICB0aWNrcyxcbiAgbGVmdExhYmVsLFxuICByaWdodExhYmVsLFxuICBtYXJrZXJzID0gW10sXG4gIGJvdW5kYXJ5TGFiZWwsXG4gIGNsYXNzTmFtZSA9ICcnLFxuICBuZWdhdGl2ZVRvbmUgPSAnZGFuZ2VyJyxcbiAgb25Cb3VuZGFyeUNoYW5nZSxcbiAgb25Cb3VuZGFyeURyYWdTdGFydCxcbiAgc2hvd0JvdW5kYXJ5ID0gdHJ1ZSxcbiAgcHVsc2luZyA9IGZhbHNlLFxuICBub3RlLFxufTogQ2xhc3NpZmljYXRpb25BeGlzUHJvcHMpIHtcbiAgY29uc3QgYXhpc1JlZiA9IHVzZVJlZjxIVE1MRGl2RWxlbWVudCB8IG51bGw+KG51bGwpO1xuICBjb25zdCBob2xkaW5nUmVmID0gdXNlUmVmKGZhbHNlKTtcbiAgY29uc3QgW2hvbGRpbmcsIHNldEhvbGRpbmddID0gdXNlU3RhdGUoZmFsc2UpO1xuICBjb25zdCBib3VuZGFyeVBvc2l0aW9uID0gYXhpc1Bvc2l0aW9uKGJvdW5kYXJ5LCBtaW4sIG1heCk7XG4gIGNvbnN0IGRyYWdnYWJsZSA9IEJvb2xlYW4ob25Cb3VuZGFyeUNoYW5nZSk7XG4gIGNvbnN0IHN0eWxlID0geyAnLS1uZ3R3LWJvdW5kYXJ5LXBvc2l0aW9uJzogYCR7Ym91bmRhcnlQb3NpdGlvbn0lYCB9IGFzIENTU1Byb3BlcnRpZXM7XG5cbiAgY29uc3QgdmFsdWVGcm9tUG9pbnRlciA9IHVzZUNhbGxiYWNrKChjbGllbnRYOiBudW1iZXIpID0+IHtcbiAgICBjb25zdCByZWN0ID0gYXhpc1JlZi5jdXJyZW50Py5nZXRCb3VuZGluZ0NsaWVudFJlY3QoKTtcbiAgICBpZiAoIXJlY3QgfHwgIXJlY3Qud2lkdGgpIHJldHVybiBib3VuZGFyeTtcbiAgICByZXR1cm4gc25hcEJvdW5kYXJ5KG1pbiArIGNsYW1wKChjbGllbnRYIC0gcmVjdC5sZWZ0KSAvIHJlY3Qud2lkdGgsIDAsIDEpICogKG1heCAtIG1pbiksIG1pbiwgbWF4KTtcbiAgfSwgW2JvdW5kYXJ5LCBtYXgsIG1pbl0pO1xuXG4gIGNvbnN0IGNvbW1pdCA9IHVzZUNhbGxiYWNrKCh2YWx1ZTogbnVtYmVyKSA9PiB7XG4gICAgb25Cb3VuZGFyeURyYWdTdGFydD8uKCk7XG4gICAgb25Cb3VuZGFyeUNoYW5nZT8uKHZhbHVlKTtcbiAgfSwgW29uQm91bmRhcnlDaGFuZ2UsIG9uQm91bmRhcnlEcmFnU3RhcnRdKTtcblxuICBjb25zdCBzdGFydERyYWcgPSAoZXZlbnQ6IFJlYWN0UG9pbnRlckV2ZW50PEhUTUxCdXR0b25FbGVtZW50PikgPT4ge1xuICAgIGlmICghZHJhZ2dhYmxlKSByZXR1cm47XG4gICAgZXZlbnQucHJldmVudERlZmF1bHQoKTtcbiAgICBob2xkaW5nUmVmLmN1cnJlbnQgPSB0cnVlO1xuICAgIHNldEhvbGRpbmcodHJ1ZSk7XG4gICAgZXZlbnQuY3VycmVudFRhcmdldC5zZXRQb2ludGVyQ2FwdHVyZShldmVudC5wb2ludGVySWQpO1xuICAgIGNvbW1pdCh2YWx1ZUZyb21Qb2ludGVyKGV2ZW50LmNsaWVudFgpKTtcbiAgfTtcblxuICBjb25zdCBtb3ZlRHJhZyA9IChldmVudDogUmVhY3RQb2ludGVyRXZlbnQ8SFRNTEJ1dHRvbkVsZW1lbnQ+KSA9PiB7XG4gICAgaWYgKCFkcmFnZ2FibGUgfHwgIWhvbGRpbmdSZWYuY3VycmVudCkgcmV0dXJuO1xuICAgIGV2ZW50LnByZXZlbnREZWZhdWx0KCk7XG4gICAgY29tbWl0KHZhbHVlRnJvbVBvaW50ZXIoZXZlbnQuY2xpZW50WCkpO1xuICB9O1xuXG4gIGNvbnN0IGVuZERyYWcgPSAoZXZlbnQ6IFJlYWN0UG9pbnRlckV2ZW50PEhUTUxCdXR0b25FbGVtZW50PikgPT4ge1xuICAgIGlmICghaG9sZGluZ1JlZi5jdXJyZW50KSByZXR1cm47XG4gICAgaG9sZGluZ1JlZi5jdXJyZW50ID0gZmFsc2U7XG4gICAgc2V0SG9sZGluZyhmYWxzZSk7XG4gICAgaWYgKGV2ZW50LmN1cnJlbnRUYXJnZXQuaGFzUG9pbnRlckNhcHR1cmUoZXZlbnQucG9pbnRlcklkKSkgZXZlbnQuY3VycmVudFRhcmdldC5yZWxlYXNlUG9pbnRlckNhcHR1cmUoZXZlbnQucG9pbnRlcklkKTtcbiAgfTtcblxuICBjb25zdCBoYW5kbGVLZXlEb3duID0gKGV2ZW50OiBSZWFjdEtleWJvYXJkRXZlbnQ8SFRNTEJ1dHRvbkVsZW1lbnQ+KSA9PiB7XG4gICAgaWYgKCFkcmFnZ2FibGUpIHJldHVybjtcbiAgICBjb25zdCBkZWx0YXM6IFJlY29yZDxzdHJpbmcsIG51bWJlcj4gPSB7IEFycm93TGVmdDogLUJPVU5EQVJZX1NURVAsIEFycm93RG93bjogLUJPVU5EQVJZX1NURVAsIEFycm93UmlnaHQ6IEJPVU5EQVJZX1NURVAsIEFycm93VXA6IEJPVU5EQVJZX1NURVAgfTtcbiAgICBjb25zdCBkZWx0YSA9IGRlbHRhc1tldmVudC5rZXldO1xuICAgIGlmIChkZWx0YSAhPT0gdW5kZWZpbmVkKSB7XG4gICAgICAvLyDmlrnlkJHplK7lnKggUFBUIOmHjOeUqOS6jue/u+mhteOAgeWcqCBCbG9nIOmHjOeUqOS6juaOqOi/m+ivvueoi++8jOi/memHjOW/hemhu+WBnOatoue7p+e7reWGkuazoeOAglxuICAgICAgZXZlbnQucHJldmVudERlZmF1bHQoKTtcbiAgICAgIGV2ZW50LnN0b3BQcm9wYWdhdGlvbigpO1xuICAgICAgY29tbWl0KHNuYXBCb3VuZGFyeShib3VuZGFyeSArIGRlbHRhLCBtaW4sIG1heCkpO1xuICAgICAgcmV0dXJuO1xuICAgIH1cbiAgICBpZiAoZXZlbnQua2V5ICE9PSAnSG9tZScgJiYgZXZlbnQua2V5ICE9PSAnRW5kJykgcmV0dXJuO1xuICAgIGV2ZW50LnByZXZlbnREZWZhdWx0KCk7XG4gICAgZXZlbnQuc3RvcFByb3BhZ2F0aW9uKCk7XG4gICAgY29tbWl0KGV2ZW50LmtleSA9PT0gJ0hvbWUnID8gbWluIDogbWF4KTtcbiAgfTtcblxuICBjb25zdCBib3VuZGFyeUNsYXNzTmFtZSA9IGBuZ3R3LWJpYXMtYXhpc19fYm91bmRhcnkke2JvdW5kYXJ5UG9zaXRpb24gPD0gMiA/ICcgaXMtYXQtc3RhcnQnIDogYm91bmRhcnlQb3NpdGlvbiA+PSA5OCA/ICcgaXMtYXQtZW5kJyA6ICcnfSR7ZHJhZ2dhYmxlID8gJyBpcy1kcmFnZ2FibGUnIDogJyd9JHtob2xkaW5nID8gJyBpcy1ob2xkaW5nJyA6ICcnfSR7ZHJhZ2dhYmxlICYmIHB1bHNpbmcgPyAnIGlzLXB1bHNpbmcnIDogJyd9YDtcbiAgLy8g5Yy66Ze05aSq56qE5pe26JeP6LW35Yy65Z+f5qCH562+77yM6YG/5YWN5paH5a2X6KKr6KOB5oiQ5Y2K5oiq44CCXG4gIGNvbnN0IHpvbmVMYWJlbEZpdHMgPSAoc2hhcmU6IG51bWJlcikgPT4gc2hhcmUgPj0gMTg7XG4gIGNvbnN0IGJvdW5kYXJ5Qm9keSA9IChcbiAgICA8PlxuICAgICAge2JvdW5kYXJ5TGFiZWwgJiYgPFR5cG9ncmFwaHkgYXM9XCJzcGFuXCIgdmFyaWFudD1cImJvZHlTbWFsbFwiIHRvbmU9XCJ3YXJuaW5nXCIgd3JhcD1cIm5vd3JhcFwiPntib3VuZGFyeUxhYmVsfTwvVHlwb2dyYXBoeT59XG4gICAgICA8aSAvPlxuICAgICAge2RyYWdnYWJsZSAmJiA8c3BhbiBjbGFzc05hbWU9XCJuZ3R3LWJpYXMtYXhpc19fZ3JpcCBhYnNvbHV0ZSBib3R0b20tWy0ycHhdIGxlZnQtWzUwJV0gZmxleCB3LVsyMnB4XSBoLVsyMnB4XSBpdGVtcy1jZW50ZXIganVzdGlmeS1jZW50ZXIgZ2FwLVszcHhdIHJvdW5kZWQtWzUwJV0gYmctW3ZhcigtLXVpLWFjY2VudC1hbHQpXSBtbC1bLTExcHhdXCIgYXJpYS1oaWRkZW49XCJ0cnVlXCIgLz59XG4gICAgPC8+XG4gICk7XG5cbiAgcmV0dXJuIChcbiAgICA8ZGl2IGNsYXNzTmFtZT17YG5ndHctYmlhcy1heGlzIHJlbGF0aXZlIHctZnVsbCBoLVsxNzRweF0gbWluLXctMCBtYXgtdy1mdWxsICR7Y2xhc3NOYW1lfWAudHJpbSgpfSBzdHlsZT17c3R5bGV9IHJlZj17YXhpc1JlZn0+XG4gICAgICA8ZGl2IGNsYXNzTmFtZT1cIm5ndHctYmlhcy1heGlzX196b25lcyBhYnNvbHV0ZSB0b3AtWzQ1cHhdIHJpZ2h0LTAgbGVmdC0wIGdyaWQgbWluLXctMCBncmlkLWNvbHMtW3ZhcigtLW5ndHctYm91bmRhcnktcG9zaXRpb24pX21pbm1heCgwLF8xZnIpXSByb3VuZGVkLVs2cHhfNnB4XzBfMF0gb3ZlcmZsb3ctaGlkZGVuXCIgYXJpYS1oaWRkZW49XCJ0cnVlXCI+XG4gICAgICAgIDxzcGFuIGNsYXNzTmFtZT1cIm5ndHctYmlhcy1heGlzX196b25lIGZsZXggbWluLXctMCBtYXgtdy1mdWxsIGp1c3RpZnktY2VudGVyIG92ZXJmbG93LWhpZGRlbiBwLVsxMnB4XzEwcHhdIHRleHQtY2VudGVyIG5ndHctYmlhcy1heGlzX196b25lLS1uZWdhdGl2ZVwiPlxuICAgICAgICAgIHtsZWZ0TGFiZWwgJiYgem9uZUxhYmVsRml0cyhib3VuZGFyeVBvc2l0aW9uKSAmJiA8VHlwb2dyYXBoeSBhcz1cInNwYW5cIiB2YXJpYW50PVwiYm9keVNtYWxsXCIgdG9uZT17bmVnYXRpdmVUb25lfT57bGVmdExhYmVsfTwvVHlwb2dyYXBoeT59XG4gICAgICAgIDwvc3Bhbj5cbiAgICAgICAgPHNwYW4gY2xhc3NOYW1lPVwibmd0dy1iaWFzLWF4aXNfX3pvbmUgZmxleCBtaW4tdy0wIG1heC13LWZ1bGwganVzdGlmeS1jZW50ZXIgb3ZlcmZsb3ctaGlkZGVuIHAtWzEycHhfMTBweF0gdGV4dC1jZW50ZXIgbmd0dy1iaWFzLWF4aXNfX3pvbmUtLXBvc2l0aXZlXCI+XG4gICAgICAgICAge3JpZ2h0TGFiZWwgJiYgem9uZUxhYmVsRml0cygxMDAgLSBib3VuZGFyeVBvc2l0aW9uKSAmJiA8VHlwb2dyYXBoeSBhcz1cInNwYW5cIiB2YXJpYW50PVwiYm9keVNtYWxsXCIgdG9uZT1cInN1Y2Nlc3NcIj57cmlnaHRMYWJlbH08L1R5cG9ncmFwaHk+fVxuICAgICAgICA8L3NwYW4+XG4gICAgICA8L2Rpdj5cblxuICAgICAgPGRpdiBjbGFzc05hbWU9XCJuZ3R3LWJpYXMtYXhpc19fbGluZSBhYnNvbHV0ZSByaWdodC0wIGxlZnQtMCBoLVszcHhdIHJvdW5kZWQtWzJweF0gYmctW3ZhcigtLXVpLWFjY2VudCldXCIgYXJpYS1oaWRkZW49XCJ0cnVlXCIgLz5cbiAgICAgIHtub3RlICYmIDxUeXBvZ3JhcGh5IGFzPVwic3BhblwiIHZhcmlhbnQ9XCJib2R5U21hbGxcIiB0b25lPVwibXV0ZWRcIiBjbGFzc05hbWU9XCJuZ3R3LWJpYXMtYXhpc19fbm90ZVwiPntub3RlfTwvVHlwb2dyYXBoeT59XG4gICAgICB7c2hvd0JvdW5kYXJ5ICYmIChkcmFnZ2FibGUgPyAoXG4gICAgICAgIDxidXR0b25cbiAgICAgICAgICB0eXBlPVwiYnV0dG9uXCJcbiAgICAgICAgICBjbGFzc05hbWU9e2JvdW5kYXJ5Q2xhc3NOYW1lfVxuICAgICAgICAgIHJvbGU9XCJzbGlkZXJcIlxuICAgICAgICAgIGFyaWEtbGFiZWw9XCLliIbnsbvliIbnlYznur9cIlxuICAgICAgICAgIGFyaWEtdmFsdWVtaW49e21pbn1cbiAgICAgICAgICBhcmlhLXZhbHVlbWF4PXttYXh9XG4gICAgICAgICAgYXJpYS12YWx1ZW5vdz17Ym91bmRhcnl9XG4gICAgICAgICAgYXJpYS12YWx1ZXRleHQ9e2DliIbnlYzngrkgJHtmb3JtYXRTY29yZShib3VuZGFyeSl9YH1cbiAgICAgICAgICBkYXRhLW5ndHctYmlhcy1oYW5kbGVcbiAgICAgICAgICBvblBvaW50ZXJEb3duPXtzdGFydERyYWd9XG4gICAgICAgICAgb25Qb2ludGVyTW92ZT17bW92ZURyYWd9XG4gICAgICAgICAgb25Qb2ludGVyVXA9e2VuZERyYWd9XG4gICAgICAgICAgb25Qb2ludGVyQ2FuY2VsPXtlbmREcmFnfVxuICAgICAgICAgIG9uS2V5RG93bj17aGFuZGxlS2V5RG93bn1cbiAgICAgICAgPlxuICAgICAgICAgIHtib3VuZGFyeUJvZHl9XG4gICAgICAgIDwvYnV0dG9uPlxuICAgICAgKSA6IChcbiAgICAgICAgPGRpdiBjbGFzc05hbWU9e2JvdW5kYXJ5Q2xhc3NOYW1lfSBhcmlhLWhpZGRlbj1cInRydWVcIj57Ym91bmRhcnlCb2R5fTwvZGl2PlxuICAgICAgKSl9XG5cbiAgICAgIDxkaXYgY2xhc3NOYW1lPVwibmd0dy1iaWFzLWF4aXNfX3RpY2tzXCIgYXJpYS1oaWRkZW49XCJ0cnVlXCI+XG4gICAgICAgIHt0aWNrcy5tYXAoKHRpY2spID0+IChcbiAgICAgICAgICA8VHlwb2dyYXBoeSBhcz1cInNwYW5cIiB2YXJpYW50PVwiYm9keVNtYWxsXCIgdG9uZT1cIm1haW5cIiBrZXk9e3RpY2t9IHN0eWxlPXt7IGxlZnQ6IGAke2F4aXNQb3NpdGlvbih0aWNrLCBtaW4sIG1heCl9JWAgfX0+XG4gICAgICAgICAgICB7dGlja31cbiAgICAgICAgICA8L1R5cG9ncmFwaHk+XG4gICAgICAgICkpfVxuICAgICAgPC9kaXY+XG5cbiAgICAgIHttYXJrZXJzLm1hcCgobWFya2VyKSA9PiB7XG4gICAgICAgIGNvbnN0IG1hcmtlclBvc2l0aW9uID0gYXhpc1Bvc2l0aW9uKG1hcmtlci52YWx1ZSwgbWluLCBtYXgpO1xuICAgICAgICByZXR1cm4gKFxuICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPXtgbmd0dy1iaWFzLWF4aXNfX21hcmtlciBhYnNvbHV0ZSBmbGV4IG1pbi13LTAgbWF4LXctZnVsbCBmbGV4LWNvbCBpdGVtcy1jZW50ZXIgZ2FwLVs2cHhdIG5ndHctYmlhcy1heGlzX19tYXJrZXItLSR7bWFya2VyLnRvbmV9YH0gc3R5bGU9e3sgbGVmdDogYCR7bWFya2VyUG9zaXRpb259JWAgfX0ga2V5PXttYXJrZXIubGFiZWx9PlxuICAgICAgICAgICAgPFR5cG9ncmFwaHkgYXM9XCJzcGFuXCIgdmFyaWFudD1cImJvZHlTbWFsbFwiIHRvbmU9e21hcmtlci50b25lID09PSAnZ3JlZW4nID8gJ3N1Y2Nlc3MnIDogbWFya2VyLnRvbmUgPT09ICdyZWQnID8gJ2RhbmdlcicgOiAnbWFpbid9IHdyYXA9XCJub3dyYXBcIj5cbiAgICAgICAgICAgICAge21hcmtlci5sYWJlbH1cbiAgICAgICAgICAgIDwvVHlwb2dyYXBoeT5cbiAgICAgICAgICAgIDxpIGFyaWEtaGlkZGVuPVwidHJ1ZVwiIC8+XG4gICAgICAgICAgPC9kaXY+XG4gICAgICAgICk7XG4gICAgICB9KX1cbiAgICA8L2Rpdj5cbiAgKTtcbn1cblxuZnVuY3Rpb24gTmF0dXJhbEJvdW5kYXJ5RmlndXJlKCkge1xuICByZXR1cm4gKFxuICAgIDxkaXYgY2xhc3NOYW1lPVwibmd0dy1iaWFzLW5hdHVyYWwtZmlndXJlXCI+XG4gICAgICA8ZGl2IGNsYXNzTmFtZT1cIm5ndHctYmlhcy1uYXR1cmFsLWZpZ3VyZV9fbGFiZWxzIGdyaWQgbWluLXctMCBncmlkLWNvbHMtW3JlcGVhdCgyLF9taW5tYXgoMCxfMWZyKSldIHRleHQtY2VudGVyXCI+XG4gICAgICAgIDxUeXBvZ3JhcGh5IGFzPVwic3BhblwiIHZhcmlhbnQ9XCJib2R5U21hbGxcIiB0b25lPVwiZGFuZ2VyXCI+5LiA57G7PC9UeXBvZ3JhcGh5PlxuICAgICAgICA8VHlwb2dyYXBoeSBhcz1cInNwYW5cIiB2YXJpYW50PVwiYm9keVNtYWxsXCIgdG9uZT1cInN1Y2Nlc3NcIj7lj6bkuIDnsbs8L1R5cG9ncmFwaHk+XG4gICAgICA8L2Rpdj5cbiAgICAgIDxDbGFzc2lmaWNhdGlvbkF4aXMgbWluPXstMX0gbWF4PXsxfSBib3VuZGFyeT17MH0gdGlja3M9e1swXX0gbGVmdExhYmVsPVwi6LSf5pWwXCIgcmlnaHRMYWJlbD1cIumdnui0n+aVsFwiIGJvdW5kYXJ5TGFiZWw9XCLlpKnnhLbliIbnlYzngrlcIiAvPlxuICAgIDwvZGl2PlxuICApO1xufVxuXG5leHBvcnQgZnVuY3Rpb24gQmlhc05hdHVyYWxCb3VuZGFyeVBhZ2UoKSB7XG4gIGNvbnN0IHsgc2NlbmFyaW8sIHN0YXRlIH0gPSB1c2VMZXNzb24oKTtcbiAgY29uc3QgdmFsdWVzID0gc2NlbmFyaW8uZmFjdG9ycy5tYXAoKGZhY3RvciwgaW5kZXgpID0+IHN0YXRlLnZhbHVlc1tpbmRleF0gPz8gZmFjdG9yLnN1Z2dlc3RlZFZhbHVlKTtcbiAgY29uc3Qgb3V0cHV0WSA9IHdlaWdodGVkU3VtKHNjZW5hcmlvLCB2YWx1ZXMpO1xuXG4gIHJldHVybiAoXG4gICAgPENvbnRlbnRCbG9ja1xuICAgICAgaGVhZGluZ0xldmVsPXsxfVxuICAgICAgY2xhc3NOYW1lPVwibmd0dy1iaWFzLXBhZ2Ugbmd0dy1iaWFzLWJvdW5kYXJ5LXBhZ2VcIlxuICAgICAgdGl0bGU9XCLnn6npmLXorqHnrpfkuYvlkI7vvIzlpoLkvZXlvaLmiJDliIbnsbvliKTmlq3vvJ9cIlxuICAgICAgc3VidGl0bGU9XCLnn6npmLXorqHnrpfmnIDnu4jlvpfliLDkuIDkuKrmlbDlgLzjgILnpZ7nu4/lhYPpnIDopoHmoLnmja7ov5nkuKrmlbDlgLzvvIzlsIbovpPlhaXliJLliIbkuLrkuKTnsbvjgIJcIlxuICAgID5cbiAgICAgIDxkaXYgY2xhc3NOYW1lPVwibmd0dy1iaWFzLWJvdW5kYXJ5LXN0b3J5IGdyaWQgdy1mdWxsIGgtZnVsbCBtaW4tdy0wIG1pbi1oLTAgbWF4LXctZnVsbCBncmlkLWNvbHMtW21pbm1heCgwLF8xZnIpXzcycHhfbWlubWF4KDAsXzEuMDhmcildIGl0ZW1zLXN0cmV0Y2hcIj5cbiAgICAgICAgPHNlY3Rpb24gY2xhc3NOYW1lPVwibmd0dy1iaWFzLWNvbmNlcHQgZ3JpZCBtaW4tdy0wIG1pbi1oLTAgbWF4LXctZnVsbCBncmlkLXJvd3MtW2F1dG9fbWlubWF4KDAsXzFmcilfYXV0b10gZ2FwLVsyNHB4XSBwLVsyOHB4XzMwcHhfMjZweF0gbmd0dy1iaWFzLWNvbmNlcHQtLW5hdHVyYWxcIj5cbiAgICAgICAgICA8aGVhZGVyIGNsYXNzTmFtZT1cIm5ndHctYmlhcy1jb25jZXB0X19oZWFkIGdyaWQgbWluLXctMCBtYXgtdy1mdWxsIGdyaWQtY29scy1bNTRweF9taW5tYXgoMCxfMWZyKV0gaXRlbXMtY2VudGVyIGdhcC1bMTZweF1cIj5cbiAgICAgICAgICAgIDxUeXBvZ3JhcGh5IGFzPVwic3BhblwiIHZhcmlhbnQ9XCJoM1wiIHRvbmU9XCJhY2NlbnRcIiBjbGFzc05hbWU9XCJuZ3R3LWJpYXMtY29uY2VwdF9fbnVtYmVyXCI+MTwvVHlwb2dyYXBoeT5cbiAgICAgICAgICAgIDxkaXY+XG4gICAgICAgICAgICAgIDxUeXBvZ3JhcGh5IGFzPVwiaDJcIiB2YXJpYW50PVwiaDNcIiB0b25lPVwibWFpblwiPuato+i0n+WPt+WPr+S7peaJv+aLheWIhuexuzwvVHlwb2dyYXBoeT5cbiAgICAgICAgICAgICAgPFR5cG9ncmFwaHkgdmFyaWFudD1cImJvZHlTbWFsbFwiIHRvbmU9XCJtdXRlZFwiPjAg5bem5L6n5Li66LSf5pWw77yM5Y+z5L6n5Li66Z2e6LSf5pWwPC9UeXBvZ3JhcGh5PlxuICAgICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgPC9oZWFkZXI+XG4gICAgICAgICAgPE5hdHVyYWxCb3VuZGFyeUZpZ3VyZSAvPlxuICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwibmd0dy1iaWFzLWNvbmNlcHRfX3Rha2Vhd2F5IG1pbi13LTAgcC1bMTRweF8xOHB4XVwiPlxuICAgICAgICAgICAgPFR5cG9ncmFwaHkgdmFyaWFudD1cImJvZHlcIiB0b25lPVwiYWNjZW50XCI+5b2T57uT5p6c5YiG5biD5ZyoIDAg55qE5Lik5L6n5pe277yM56ym5Y+35Y+v5Lul55u05o6l5Yy65YiG5Lik57G744CCPC9UeXBvZ3JhcGh5PlxuICAgICAgICAgIDwvZGl2PlxuICAgICAgICA8L3NlY3Rpb24+XG5cbiAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJuZ3R3LWJpYXMtYm91bmRhcnktc3RvcnlfX3R1cm4gZ3JpZCBtaW4tdy0wIGdyaWQtcm93cy1bbWlubWF4KDAsXzFmcilfYXV0b19taW5tYXgoMCxfMWZyKV0gcGxhY2UtaXRlbXMtY2VudGVyIGdhcC1bMTJweF1cIiBhcmlhLWhpZGRlbj1cInRydWVcIj5cbiAgICAgICAgICA8c3BhbiAvPlxuICAgICAgICAgIDxUeXBvZ3JhcGh5IGFzPVwic3BhblwiIHZhcmlhbnQ9XCJib2R5U21hbGxcIiB0b25lPVwid2FybmluZ1wiPumXrumimOWcqOS6jjwvVHlwb2dyYXBoeT5cbiAgICAgICAgICA8c3BhbiAvPlxuICAgICAgICA8L2Rpdj5cblxuICAgICAgICA8c2VjdGlvbiBjbGFzc05hbWU9XCJuZ3R3LWJpYXMtY29uY2VwdCBncmlkIG1pbi13LTAgbWluLWgtMCBtYXgtdy1mdWxsIGdyaWQtcm93cy1bYXV0b19taW5tYXgoMCxfMWZyKV9hdXRvXSBnYXAtWzI0cHhdIHAtWzI4cHhfMzBweF8yNnB4XSBuZ3R3LWJpYXMtY29uY2VwdC0tcHJvYmxlbVwiPlxuICAgICAgICAgIDxoZWFkZXIgY2xhc3NOYW1lPVwibmd0dy1iaWFzLWNvbmNlcHRfX2hlYWQgZ3JpZCBtaW4tdy0wIG1heC13LWZ1bGwgZ3JpZC1jb2xzLVs1NHB4X21pbm1heCgwLF8xZnIpXSBpdGVtcy1jZW50ZXIgZ2FwLVsxNnB4XVwiPlxuICAgICAgICAgICAgPFR5cG9ncmFwaHkgYXM9XCJzcGFuXCIgdmFyaWFudD1cImgzXCIgdG9uZT1cIndhcm5pbmdcIiBjbGFzc05hbWU9XCJuZ3R3LWJpYXMtY29uY2VwdF9fbnVtYmVyXCI+MjwvVHlwb2dyYXBoeT5cbiAgICAgICAgICAgIDxkaXY+XG4gICAgICAgICAgICAgIDxUeXBvZ3JhcGh5IGFzPVwiaDJcIiB2YXJpYW50PVwiaDNcIiB0b25lPVwibWFpblwiPueOsOWcqO+8jOaJgOaciee7k+aenOmDveWcqCAwIOeahOWPs+S+pzwvVHlwb2dyYXBoeT5cbiAgICAgICAgICAgICAgPFR5cG9ncmFwaHkgdmFyaWFudD1cImJvZHlTbWFsbFwiIHRvbmU9XCJtdXRlZFwiPuW9k+WJjei+k+WFpeS4juadg+mHjeWdh+S4uiAw4oCTMe+8jOWKoOadg+WSjCB5IOeahOWPluWAvOiMg+WbtOS4uiAw4oCTMzwvVHlwb2dyYXBoeT5cbiAgICAgICAgICAgIDwvZGl2PlxuICAgICAgICAgIDwvaGVhZGVyPlxuICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwibmd0dy1iaWFzLXJhbmdlLWZpZ3VyZSByZWxhdGl2ZSBwdC1bMjhweF1cIj5cbiAgICAgICAgICAgIDxUeXBvZ3JhcGh5IGFzPVwic3BhblwiIHZhcmlhbnQ9XCJib2R5U21hbGxcIiB0b25lPVwid2FybmluZ1wiIGNsYXNzTmFtZT1cIm5ndHctYmlhcy1yYW5nZS1maWd1cmVfX3plcm8tbm90ZVwiPjAg55qE5bem5L6n5rKh5pyJ57uT5p6cPC9UeXBvZ3JhcGh5PlxuICAgICAgICAgICAgPENsYXNzaWZpY2F0aW9uQXhpc1xuICAgICAgICAgICAgICBtaW49ey0wLjc1fVxuICAgICAgICAgICAgICBtYXg9ezN9XG4gICAgICAgICAgICAgIGJvdW5kYXJ5PXswfVxuICAgICAgICAgICAgICB0aWNrcz17WzAsIDEsIDIsIDNdfVxuICAgICAgICAgICAgICBsZWZ0TGFiZWw9XCLnqbpcIlxuICAgICAgICAgICAgICByaWdodExhYmVsPVwieSDnmoTlhajpg6jlj6/og73ojIPlm7TvvJow4oCTM1wiXG4gICAgICAgICAgICAgIGJvdW5kYXJ5TGFiZWw9XCLljp/mnaXnmoTliIbnlYzngrlcIlxuICAgICAgICAgICAgICBtYXJrZXJzPXtbeyB2YWx1ZTogb3V0cHV0WSwgbGFiZWw6IGDlvZPliY0geSA9ICR7Zm9ybWF0U2NvcmUob3V0cHV0WSl9YCwgdG9uZTogJ2dyZWVuJyB9XX1cbiAgICAgICAgICAgIC8+XG4gICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJuZ3R3LWJpYXMtY29uY2VwdF9fdGFrZWF3YXkgbWluLXctMCBwLVsxNHB4XzE4cHhdIG5ndHctYmlhcy1jb25jZXB0X190YWtlYXdheS0tcHJvYmxlbVwiPlxuICAgICAgICAgICAgPFR5cG9ncmFwaHkgdmFyaWFudD1cImJvZHlcIiB0b25lPVwibWFpblwiPlxuICAgICAgICAgICAgICDmsqHmnIkgYmlhcyDml7bvvIznu5PmnpzkuI3kvJrot6jov4cgMO+8jOWboOiAjOaXoOazleW9ouaIkOacieaViOWIhuexu+OAglxuICAgICAgICAgICAgPC9UeXBvZ3JhcGh5PlxuICAgICAgICAgIDwvZGl2PlxuICAgICAgICA8L3NlY3Rpb24+XG4gICAgICA8L2Rpdj5cbiAgICA8L0NvbnRlbnRCbG9jaz5cbiAgKTtcbn1cblxuZXhwb3J0IGZ1bmN0aW9uIEJpYXNUaHJlc2hvbGRUaGVvcnlQYWdlKHsgb25Db21wbGV0ZSB9OiB7IG9uQ29tcGxldGU/OiAoKSA9PiB2b2lkIH0pIHtcbiAgY29uc3QgeyBzY2VuYXJpbywgc3RhdGUgfSA9IHVzZUxlc3NvbigpO1xuICBjb25zdCB2YWx1ZXMgPSBzY2VuYXJpby5mYWN0b3JzLm1hcCgoZmFjdG9yLCBpbmRleCkgPT4gc3RhdGUudmFsdWVzW2luZGV4XSA/PyBmYWN0b3Iuc3VnZ2VzdGVkVmFsdWUpO1xuICBjb25zdCBvdXRwdXRZID0gd2VpZ2h0ZWRTdW0oc2NlbmFyaW8sIHZhbHVlcyk7XG4gIGNvbnN0IFthbnN3ZXJlZENvcnJlY3RseSwgc2V0QW5zd2VyZWRDb3JyZWN0bHldID0gdXNlU3RhdGUoZmFsc2UpO1xuICBjb25zdCBbYm91bmRhcnksIHNldEJvdW5kYXJ5XSA9IHVzZVN0YXRlKFJBTkdFX01JRFBPSU5UKTtcbiAgY29uc3QgW2JvdW5kYXJ5RHJhZ2dlZCwgc2V0Qm91bmRhcnlEcmFnZ2VkXSA9IHVzZVN0YXRlKGZhbHNlKTtcbiAgY29uc3QgY29tcGxldGVkUmVmID0gdXNlUmVmKGZhbHNlKTtcbiAgY29uc3QgYXRNaWRwb2ludCA9IE1hdGguYWJzKGJvdW5kYXJ5IC0gUkFOR0VfTUlEUE9JTlQpIDwgMC4wMTtcbiAgY29uc3QgYWJvdmVCb3VuZGFyeSA9IG91dHB1dFkgPj0gYm91bmRhcnk7XG4gIGNvbnN0IHRlbmRlbmN5ID0gYWJvdmVCb3VuZGFyeSA/IHNjZW5hcmlvLnBvc2l0aXZlTGFiZWwgOiBzY2VuYXJpby5uZWdhdGl2ZUxhYmVsO1xuICBjb25zdCBuZWdhdGl2ZVpvbmUgPSBg6L6T5Ye6IDAgwrcgJHtzY2VuYXJpby5uZWdhdGl2ZUxhYmVsfWA7XG4gIGNvbnN0IHBvc2l0aXZlWm9uZSA9IGDovpPlh7ogMSDCtyAke3NjZW5hcmlvLnBvc2l0aXZlTGFiZWx9YDtcblxuICBjb25zdCBoYW5kbGVDaGVjayA9IChyZXN1bHQ6IFF1ZXN0aW9uQ2hlY2tSZXN1bHQpID0+IHtcbiAgICBpZiAoIXJlc3VsdC5vaykgcmV0dXJuO1xuICAgIHNldEFuc3dlcmVkQ29ycmVjdGx5KHRydWUpO1xuICAgIGlmICghY29tcGxldGVkUmVmLmN1cnJlbnQpIHtcbiAgICAgIGNvbXBsZXRlZFJlZi5jdXJyZW50ID0gdHJ1ZTtcbiAgICAgIG9uQ29tcGxldGU/LigpO1xuICAgIH1cbiAgfTtcblxuICByZXR1cm4gKFxuICAgIDxDb250ZW50QmxvY2tcbiAgICAgIGhlYWRpbmdMZXZlbD17MX1cbiAgICAgIGNsYXNzTmFtZT1cIm5ndHctYmlhcy1wYWdlIG5ndHctYmlhcy1jaG9pY2UtcGFnZVwiXG4gICAgICB0aXRsZT1cIuWBj+e9ruWmguS9leiwg+aVtOWIhuexu+mYiOWAvO+8n1wiXG4gICAgICBzdWJ0aXRsZT1cIuW9k+WKoOadg+WSjOeahOWunumZheiMg+WbtOS4jei3qOi/hyAwIOaXtu+8jOmcgOimgeWFiOehruWumuWQiOmAgueahOWIhueVjOeCue+8jOWGjeeUqOWBj+e9ruWwhuWug+enu+WKqOWIsCAw44CCXCJcbiAgICA+XG4gICAgICA8ZGl2IGNsYXNzTmFtZT1cIm5ndHctYmlhcy1jaG9pY2UtbGF5b3V0IGdyaWQgdy1mdWxsIGgtZnVsbCBtaW4tdy0wIG1pbi1oLTAgbWF4LXctZnVsbCBncmlkLWNvbHMtW21pbm1heCgwLF8uNmZyKV9taW5tYXgoMCxfMS40ZnIpXSBnYXAtWzI4cHhdXCI+XG4gICAgICAgIDxzZWN0aW9uIGNsYXNzTmFtZT1cIm5ndHctYmlhcy1xdWVzdGlvbi1wYW5lIGNvbnRlbnQtY2VudGVyIHAtWzI4cHhfMzBweF1cIj5cbiAgICAgICAgICA8UXVlc3Rpb25cbiAgICAgICAgICAgIGNsYXNzTmFtZT1cIm5ndHctYmlhcy1taWRwb2ludC1xdWVzdGlvbiBiZy1bdHJhbnNwYXJlbnRdIHAtMFwiXG4gICAgICAgICAgICB0eXBlPVwiY2hvaWNlXCJcbiAgICAgICAgICAgIHR5cGVMYWJlbD1cIuWFiOmihOa1i1wiXG4gICAgICAgICAgICB0ZXh0VmFyaWFudD1cImJvZHlcIlxuICAgICAgICAgICAgdGl0bGU9e2DliqDmnYPlkozojIPlm7TkuLogJHtSQU5HRV9NSU594oCTJHtSQU5HRV9NQVh977yM5YiG57G76L6555WM5bqU6K6+572u5Zyo5ZOq6YeM77yfYH1cbiAgICAgICAgICAgIGFuc3dlcj1cIjEuNTBcIlxuICAgICAgICAgICAgcGVyc2lzdGVuY2VLZXk9XCJuZXVyb24tZ3VpZGU6Ymlhcy1taWRwb2ludC12MVwiXG4gICAgICAgICAgICBvbkNoZWNrPXtoYW5kbGVDaGVja31cbiAgICAgICAgICAgIGZlZWRiYWNrPXt7XG4gICAgICAgICAgICAgIGluaXRpYWw6ICfoi6XluIzmnJvkuKTnsbvljLrpl7TnmoTplb/luqbnm7jlkIzvvIzliIbnlYzngrnlupTokL3lnKjojIPlm7TkuK3ngrnjgIInLFxuICAgICAgICAgICAgICBjb3JyZWN0OiAn5q2j5aW95ZyoIDDigJMzIOeahOS4reeCue+8jOS4pOS+p+WMuumXtOWQhOWNoCA1MCXjgIInLFxuICAgICAgICAgICAgICB3cm9uZzogJ+WGjeeci+S4gOasoSAw4oCTM++8muWTquS4gOS4quS9jee9ruiDveaKiuaVtOauteW5s+Wdh+WIhuaIkOS4pOWNiu+8nycsXG4gICAgICAgICAgICB9fVxuICAgICAgICAgICAgb3B0aW9ucz17W1xuICAgICAgICAgICAgICB7IGtleTogJ0EnLCB2YWx1ZTogJzAnLCBsYWJlbDogJzAnLCB3cm9uZ0ZlZWRiYWNrOiAnMCDku43lnKjojIPlm7TotbfngrnvvIzlt6bkvqfmsqHmnInku7vkvZXlj6/og73nu5PmnpzjgIInIH0sXG4gICAgICAgICAgICAgIHsga2V5OiAnQicsIHZhbHVlOiAnMS4wMCcsIGxhYmVsOiAnMS4wMCcsIHdyb25nRmVlZGJhY2s6ICcxLjAwIOS8muaKiuiMg+WbtOWIhuaIkCAxIOWSjCAyIOS4pOaute+8jOW5tuS4jeebuOetieOAgicgfSxcbiAgICAgICAgICAgICAgeyBrZXk6ICdDJywgdmFsdWU6ICcxLjUwJywgbGFiZWw6ICcxLjUwJyB9LFxuICAgICAgICAgICAgICB7IGtleTogJ0QnLCB2YWx1ZTogJzMuMDAnLCBsYWJlbDogJzMuMDAnLCB3cm9uZ0ZlZWRiYWNrOiAnMy4wMCDlnKjojIPlm7Tnu4jngrnvvIzlj7PkvqfmsqHmnInku7vkvZXlj6/og73nu5PmnpzjgIInIH0sXG4gICAgICAgICAgICBdfVxuICAgICAgICAgIC8+XG4gICAgICAgIDwvc2VjdGlvbj5cblxuICAgICAgICA8c2VjdGlvbiBjbGFzc05hbWU9e2BuZ3R3LWJpYXMtYW5zd2VyLXBhbmUgcmVsYXRpdmUgZ3JpZC1yb3dzLVthdXRvX21pbm1heCgwLF8xZnIpX2F1dG9dIGdhcC1bMTZweF0gcC1bMjZweF8zMHB4XSBvdmVyZmxvdy1oaWRkZW4ke2Fuc3dlcmVkQ29ycmVjdGx5ID8gJyBpcy1yZXZlYWxlZCcgOiAnJ31gfSBhcmlhLWxpdmU9XCJwb2xpdGVcIj5cbiAgICAgICAgICA8aGVhZGVyIGNsYXNzTmFtZT1cIm5ndHctYmlhcy1hbnN3ZXItcGFuZV9faGVhZCBncmlkIG1pbi13LTAgZ3JpZC1jb2xzLVttaW5tYXgoMCxfMWZyKV0gaXRlbXMtY2VudGVyIHBiLVsxNHB4XVwiPlxuICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJuZ3R3LWJpYXMtYW5zd2VyLXBhbmVfX3J1bGUgZ3JpZCBtaW4tdy0wIGdhcC1bNHB4XVwiPlxuICAgICAgICAgICAgICA8VHlwb2dyYXBoeSBhcz1cInNwYW5cIiB2YXJpYW50PVwiYm9keVNtYWxsXCIgdG9uZT1cInN1Y2Nlc3NcIj7liIbnsbvop4TliJk8L1R5cG9ncmFwaHk+XG4gICAgICAgICAgICAgIDxUeXBvZ3JhcGh5IGFzPVwiaDJcIiB2YXJpYW50PVwiaDNcIiB0b25lPVwibWFpblwiPuWKoOadg+WSjOi2iui/h+WIhueVjOeCue+8jOWIpOS4uuOAjOi+k+WHuiAx44CNPC9UeXBvZ3JhcGh5PlxuICAgICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgPC9oZWFkZXI+XG5cbiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cIm5ndHctYmlhcy1hbnN3ZXItcGFuZV9fdmlzdWFsIGdyaWQgbWluLXctMCBtaW4taC0wIG1heC13LWZ1bGwgY29udGVudC1jZW50ZXIgZ2FwLVsxMnB4XVwiPlxuICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJuZ3R3LWJpYXMtYXhpcy1oZWFkIGZsZXggbWluLXctMCBpdGVtcy1iYXNlbGluZSBqdXN0aWZ5LWJldHdlZW4gZ2FwLVsxNnB4XVwiPlxuICAgICAgICAgICAgICA8VHlwb2dyYXBoeSBhcz1cInNwYW5cIiB2YXJpYW50PVwiYm9keVNtYWxsXCIgdG9uZT1cIm11dGVkXCI+5Yqg5p2D5ZKMIHkg55qE5YWo6YOo5Y+v6IO96IyD5Zu077yaMOKAkzM8L1R5cG9ncmFwaHk+XG4gICAgICAgICAgICAgIDxUeXBvZ3JhcGh5IGFzPVwic3BhblwiIHZhcmlhbnQ9XCJib2R5U21hbGxcIiB0b25lPXthbnN3ZXJlZENvcnJlY3RseSA/IChhdE1pZHBvaW50ID8gJ3N1Y2Nlc3MnIDogJ3dhcm5pbmcnKSA6ICdtdXRlZCd9PlxuICAgICAgICAgICAgICAgIHthbnN3ZXJlZENvcnJlY3RseVxuICAgICAgICAgICAgICAgICAgPyBhdE1pZHBvaW50XG4gICAgICAgICAgICAgICAgICAgID8gJ+WIhueVjOeCueW3suWcqOS4reeCue+8muS4pOS+p+ato+WlveWQhOWNoOS4gOWNiidcbiAgICAgICAgICAgICAgICAgICAgOiBg5oqK5YiG55WM57q/5ouW5YiwIDDigJMzIOeahOS4reeCuSAke2Zvcm1hdFNjb3JlKFJBTkdFX01JRFBPSU5UKX1gXG4gICAgICAgICAgICAgICAgICA6ICfpgInlr7nnrZTmoYjlkI7vvIzov5nph4znmoTliIbnlYznur/lsLHlj6/ku6Xmi5bliqgnfVxuICAgICAgICAgICAgICA8L1R5cG9ncmFwaHk+XG4gICAgICAgICAgICA8L2Rpdj5cbiAgICAgICAgICAgIDxDbGFzc2lmaWNhdGlvbkF4aXNcbiAgICAgICAgICAgICAgbWluPXtSQU5HRV9NSU59XG4gICAgICAgICAgICAgIG1heD17UkFOR0VfTUFYfVxuICAgICAgICAgICAgICBib3VuZGFyeT17YW5zd2VyZWRDb3JyZWN0bHkgPyBib3VuZGFyeSA6IFJBTkdFX01JTn1cbiAgICAgICAgICAgICAgdGlja3M9e1swLCAxLCAyLCAzXX1cbiAgICAgICAgICAgICAgbmVnYXRpdmVUb25lPVwiYWNjZW50XCJcbiAgICAgICAgICAgICAgbGVmdExhYmVsPXthbnN3ZXJlZENvcnJlY3RseSA/IG5lZ2F0aXZlWm9uZSA6ICcnfVxuICAgICAgICAgICAgICByaWdodExhYmVsPXthbnN3ZXJlZENvcnJlY3RseSA/IHBvc2l0aXZlWm9uZSA6ICcnfVxuICAgICAgICAgICAgICBib3VuZGFyeUxhYmVsPXthbnN3ZXJlZENvcnJlY3RseSA/IGDliIbnlYzngrkgJHtmb3JtYXRTY29yZShib3VuZGFyeSl9YCA6IHVuZGVmaW5lZH1cbiAgICAgICAgICAgICAgbWFya2Vycz17YW5zd2VyZWRDb3JyZWN0bHkgPyBbe1xuICAgICAgICAgICAgICAgIHZhbHVlOiBvdXRwdXRZLFxuICAgICAgICAgICAgICAgIGxhYmVsOiBgeSA9ICR7Zm9ybWF0U2NvcmUob3V0cHV0WSl9YCxcbiAgICAgICAgICAgICAgICB0b25lOiAnbmV1dHJhbCcsXG4gICAgICAgICAgICAgIH1dIDogW119XG4gICAgICAgICAgICAgIG9uQm91bmRhcnlDaGFuZ2U9e2Fuc3dlcmVkQ29ycmVjdGx5ID8gc2V0Qm91bmRhcnkgOiB1bmRlZmluZWR9XG4gICAgICAgICAgICAgIG9uQm91bmRhcnlEcmFnU3RhcnQ9eygpID0+IHNldEJvdW5kYXJ5RHJhZ2dlZCh0cnVlKX1cbiAgICAgICAgICAgICAgc2hvd0JvdW5kYXJ5PXthbnN3ZXJlZENvcnJlY3RseX1cbiAgICAgICAgICAgICAgcHVsc2luZz17IWJvdW5kYXJ5RHJhZ2dlZH1cbiAgICAgICAgICAgICAgbm90ZT17YW5zd2VyZWRDb3JyZWN0bHkgPyB1bmRlZmluZWQgOiAn5YiG55WM57q/5b6F6Kej6ZSBJ31cbiAgICAgICAgICAgICAgY2xhc3NOYW1lPXtgbmd0dy1iaWFzLWF4aXMtLWFuc3dlciBoLVsyMTZweF0ke2Fuc3dlcmVkQ29ycmVjdGx5ID8gJycgOiAnIG5ndHctYmlhcy1heGlzLS1sb2NrZWQnfWB9XG4gICAgICAgICAgICAvPlxuICAgICAgICAgIDwvZGl2PlxuXG4gICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJuZ3R3LWJpYXMtYW5zd2VyLXBhbmVfX3Jlc3VsdCBncmlkIG1pbi13LTAgbWluLWgtMCBtYXgtdy1mdWxsIGNvbnRlbnQtY2VudGVyIHB0LVsxNHB4XVwiPlxuICAgICAgICAgICAge2Fuc3dlcmVkQ29ycmVjdGx5ID8gKFxuICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cIm5ndHctYmlhcy1hbnN3ZXItcGFuZV9fZGVjaXNpb24gZmxleCBtaW4tdy0wIG1heC13LWZ1bGwgaXRlbXMtY2VudGVyIGp1c3RpZnktYmV0d2VlbiBnYXAtWzE4cHhdXCI+XG4gICAgICAgICAgICAgICAgPFR5cG9ncmFwaHkgYXM9XCJzdHJvbmdcIiB2YXJpYW50PVwiaDNcIiB0b25lPXthYm92ZUJvdW5kYXJ5ID8gJ3N1Y2Nlc3MnIDogJ2FjY2VudCd9PlxuICAgICAgICAgICAgICAgICAge2B5ID0gJHtmb3JtYXRTY29yZShvdXRwdXRZKX0gJHthYm92ZUJvdW5kYXJ5ID8gJ+KJpScgOiAnPCd9ICR7Zm9ybWF0U2NvcmUoYm91bmRhcnkpfWB9XG4gICAgICAgICAgICAgICAgPC9UeXBvZ3JhcGh5PlxuICAgICAgICAgICAgICAgIDxUeXBvZ3JhcGh5IGFzPVwic3Ryb25nXCIgdmFyaWFudD1cImJvZHlcIiB0b25lPVwibWFpblwiPntg5YC+5ZCR4oCcJHt0ZW5kZW5jeX3igJ1gfTwvVHlwb2dyYXBoeT5cbiAgICAgICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgICApIDogKFxuICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cIm5ndHctYmlhcy1hbnN3ZXItcGFuZV9fd2FpdGluZyBncmlkIG1pbi13LTAganVzdGlmeS1pdGVtcy1jZW50ZXIgZ2FwLVs5cHhdIHRleHQtY2VudGVyXCI+XG4gICAgICAgICAgICAgICAgPHNwYW4gYXJpYS1oaWRkZW49XCJ0cnVlXCI+Pzwvc3Bhbj5cbiAgICAgICAgICAgICAgICA8VHlwb2dyYXBoeSB2YXJpYW50PVwiYm9keVwiIHRvbmU9XCJtdXRlZFwiPumAieaLqeato+ehruetlOahiOWQju+8jOi/memHjOS8muaYvuekuuWPr+aLluWKqOeahOWIhueVjOe6v+OAgjwvVHlwb2dyYXBoeT5cbiAgICAgICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgICApfVxuICAgICAgICAgIDwvZGl2PlxuICAgICAgICA8L3NlY3Rpb24+XG4gICAgICA8L2Rpdj5cbiAgICA8L0NvbnRlbnRCbG9jaz5cbiAgKTtcbn1cblxyXG4iXSwiZmlsZSI6IkM6L1VzZXJzL09jZWFuL0RvY3VtZW50cy9HaXRIdWIvaW50dWl0aXZlLWRlZXAtbGVhcm5pbmcvbW9kdWxlcy9OZXVyb24tR3VpZGUvcGFnZXMvQmlhc1RocmVzaG9sZFRoZW9yeVBhZ2UvQmlhc1RocmVzaG9sZFRoZW9yeVBhZ2UudHN4In0=

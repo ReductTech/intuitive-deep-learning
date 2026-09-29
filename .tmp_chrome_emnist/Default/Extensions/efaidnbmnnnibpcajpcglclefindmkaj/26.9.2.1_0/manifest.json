@@ -1,0 +1,284 @@
+{
+   "action": {
+      "default_icon": "browser/images/acrobat_dc_appicon_24.png",
+      "default_title": "__MSG_extensionMenuTitle__"
+   },
+   "background": {
+      "service_worker": "service-worker.js",
+      "type": "module"
+   },
+   "content_scripts": [ {
+      "js": [ "content_scripts/embeddedpdfs/embedded-pdf-touch-point-event-listener.js", "content_scripts/dom-utils.js", "browser/js/ch-settings.js", "content_scripts/content-util.js", "content_scripts/SidePanel/GenAIWebpageBlocklist.js", "content_scripts/embeddedpdfs/EmbeddedPDFTouchPointCoachMark.js", "content_scripts/express/express_whatsapp/whatsapp-express-fte.js", "content_scripts/express/google-image-preview/google-image-preview-express-fte.js", "content_scripts/express/gmail/gmail-express-fte.js", "content_scripts/express/gdrive/gdrive-express-fte.js", "content_scripts/express/express_chatgpt/chatgpt-express-fte.js", "content_scripts/express/gemini/gemini-express-fte.js", "content_scripts/express/google-ai-mode/google-ai-mode-express-fte.js", "content_scripts/express/pinterest/pinterest-express-fte.js", "content_scripts/express/browser-image-viewer/browser-image-viewer-express-fte.js", "content_scripts/outlook/outlook-fte.js", "content_scripts/linkedin/linkedin-fte.js", "content_scripts/gmail/GmailAcrobatFteCoachmark.js", "content_scripts/gmail/GmailPdfToolsFteCoachmark.js", "content_scripts/gdrive/GDriveAcrobatFteCoachmark.js", "content_scripts/gmail/fte/gmail-convert-to-pdf-fte.js", "content_scripts/gmail/fte/gmail-email-pdf-fte.js", "content_scripts/express/gmail/gmail-image-tools-dropdown-fte.js", "content_scripts/express/gdrive/gdrive-image-tools-dropdown-fte.js", "content_scripts/gmail/fte/gmail-convert-attachment-card-fte.js", "content_scripts/gdrive/fte/gdrive-convert-attachment-card-fte.js", "content_scripts/gdocs/google-docs-fte.js", "content_scripts/gemini/gemini-convert-to-pdf-fte.js", "content_scripts/chatgpt/chatgpt-convert-to-pdf-fte.js", "content_scripts/wikipedia/wikipedia-convert-to-pdf-fte.js", "content_scripts/msword/msword-convert-to-pdf-fte.js", "content_scripts/SidePanel/WebpageContentScorer.js", "content_scripts/SidePanel/GenAIWebpageEligibilityService.js", "content_scripts/SidePanel/SummaryBar/SummaryBarBootstrap.js", "content_scripts/addWebpage/KWEligibilityService.js", "content_scripts/SidePanel/AttributionManager.js", "content_scripts/SidePanel/Viewport.js", "content_scripts/content-script-utils.js", "content_scripts/SidePanel/WebpageSelectionManager.js", "content_scripts/ch-content-script.js", "content_scripts/SidePanel/WebpageSelectionAnalytics.js", "content_scripts/injectBannerIframe.js" ],
+      "matches": [ "file://*/*", "http://*/*", "https://*/*" ],
+      "run_at": "document_start"
+   }, {
+      "js": [ "content_scripts/prompts/ShowOneChild.js", "content_scripts/extract-webpage-html.js" ],
+      "matches": [ "file://*/*", "http://*/*", "https://*/*" ],
+      "run_at": "document_start"
+   }, {
+      "css": [ "browser/css/outlook-content-script.css", "browser/css/fte.css" ],
+      "js": [ "content_scripts/outlook/outlook-content-script.js" ],
+      "matches": [ "https://outlook.office365.com/*", "https://outlook.office.com/*", "https://outlook.live.com/*", "https://outlook.cloud.microsoft/*" ],
+      "run_at": "document_end"
+   }, {
+      "css": [ "browser/css/express-tooltip.css" ],
+      "js": [ "content_scripts/dom-utils.js", "content_scripts/content-script-idle.js", "content_scripts/upload-button-analytics.js" ],
+      "matches": [ "http://*/*", "https://*/*" ],
+      "run_at": "document_idle"
+   }, {
+      "js": [ "content_scripts/scan/magic-scan-core.js", "content_scripts/scan/sites/workday-hr/index.js" ],
+      "matches": [ "https://wd5.myworkday.com/*" ],
+      "run_at": "document_idle"
+   }, {
+      "js": [ "content_scripts/scan/magic-scan-core.js", "content_scripts/scan/sites/workday-jobs/index.js" ],
+      "matches": [ "https://*.myworkdayjobs.com/*" ],
+      "run_at": "document_idle"
+   }, {
+      "js": [ "content_scripts/scan/magic-scan-core.js", "content_scripts/scan/sites/notebooklm/index.js" ],
+      "matches": [ "https://notebooklm.google.com/*", "https://notebook.google.com/*" ],
+      "run_at": "document_idle"
+   }, {
+      "js": [ "content_scripts/scan/magic-scan-core.js", "content_scripts/scan/sites/concur/index.js" ],
+      "matches": [ "https://*.concursolutions.com/*" ],
+      "run_at": "document_idle"
+   }, {
+      "js": [ "content_scripts/scan/magic-scan-core.js", "content_scripts/scan/sites/cleartax/index.js" ],
+      "matches": [ "https://cleartax.in/*" ],
+      "run_at": "document_idle"
+   }, {
+      "js": [ "content_scripts/dom-utils.js", "content_scripts/ch-content-script-dend.js" ],
+      "matches": [ "file://*/*", "http://*/*", "https://*/*" ],
+      "run_at": "document_end"
+   }, {
+      "all_frames": true,
+      "css": [ "browser/css/embedded-pdf-touch-point.css", "browser/css/fte.css" ],
+      "js": [ "content_scripts/embeddedpdfs/embedded-pdf-touch-point.js" ],
+      "matches": [ "\u003Call_urls>" ],
+      "run_at": "document_end"
+   }, {
+      "css": [ "browser/css/gdrive-content-script.css", "browser/css/gdrive-touchpoint-service.css" ],
+      "js": [ "content_scripts/gdrive-content-script.js" ],
+      "matches": [ "https://drive.google.com/*" ],
+      "run_at": "document_start"
+   }, {
+      "js": [ "content_scripts/express/express_whatsapp/whatsapp-content-script.js" ],
+      "matches": [ "https://web.whatsapp.com/*" ],
+      "run_at": "document_idle"
+   }, {
+      "js": [ "content_scripts/gemini/gemini-document-start-content-script.js" ],
+      "matches": [ "https://gemini.google.com/*" ],
+      "run_at": "document_start"
+   }, {
+      "css": [ "browser/css/gemini-convert-to-pdf-touchpoint.css", "browser/css/fte.css" ],
+      "js": [ "content_scripts/gemini/gemini-document-end-content-script.js", "content_scripts/gemini/sanitize-html-styles.js" ],
+      "matches": [ "https://gemini.google.com/*" ],
+      "run_at": "document_idle"
+   }, {
+      "js": [ "content_scripts/express/express_chatgpt/chatgpt-content-script.js" ],
+      "matches": [ "https://chatgpt.com/*" ],
+      "run_at": "document_start"
+   }, {
+      "css": [ "browser/css/chatgpt-convert-to-pdf-touchpoint.css", "browser/css/chatgpt-response-convert-to-pdf-touchpoint.css", "browser/css/chatgpt-canvas-convert-to-pdf-touchpoint.css" ],
+      "js": [ "content_scripts/chatgpt/chatgpt-document-content-script.js", "content_scripts/chatgpt/chatgpt-sanitize-html-styles.js" ],
+      "matches": [ "https://chatgpt.com/*" ],
+      "run_at": "document_idle"
+   }, {
+      "all_frames": true,
+      "css": [ "browser/css/chatgpt-deep-research-convert-to-pdf.css", "browser/css/fte.css" ],
+      "js": [ "content_scripts/chatgpt/chatgpt-deep-research-convert-to-pdf.js", "content_scripts/chatgpt/chatgpt-deep-research-sanitize-html-styles.js" ],
+      "match_about_blank": true,
+      "matches": [ "https://connector-openai-deep-research.web-sandbox.oaiusercontent.com/*" ],
+      "run_at": "document_idle"
+   }, {
+      "js": [ "content_scripts/express/google-image-preview/google-image-preview-content-script.js", "content_scripts/express/google-ai-mode/google-ai-mode-content-script.js" ],
+      "matches": [ "https://www.google.com/*", "https://www.google.com.br/*", "https://www.google.it/*", "https://www.google.es/*", "https://www.google.fr/*", "https://www.google.co.jp/*", "https://www.google.de/*", "https://www.google.ca/*", "https://www.google.co.uk/*" ],
+      "run_at": "document_idle"
+   }, {
+      "js": [ "content_scripts/express/browser-image-viewer/browser-image-viewer-content-script.js" ],
+      "matches": [ "file://*/*", "http://*/*", "https://*/*" ],
+      "run_at": "document_idle"
+   }, {
+      "js": [ "content_scripts/gdrive-download-page-content-script.js" ],
+      "matches": [ "https://drive.usercontent.google.com/download*" ],
+      "run_at": "document_end"
+   }, {
+      "js": [ "content_scripts/gmail-document-start-content-script.js" ],
+      "matches": [ "https://mail.google.com/*" ],
+      "run_at": "document_start"
+   }, {
+      "css": [ "browser/css/gmail-content-script.css" ],
+      "js": [ "content_scripts/gmail-document-end-content-script.js" ],
+      "matches": [ "https://mail.google.com/*" ],
+      "run_at": "document_end"
+   }, {
+      "js": [ "content_scripts/acrobat-content-script.js" ],
+      "matches": [ "https://acrobat.adobe.com/*", "https://documentcloud.adobe.com/*" ],
+      "run_at": "document_end"
+   }, {
+      "all_frames": true,
+      "css": [ "browser/css/linkedin-content-script.css", "browser/css/fte.css" ],
+      "js": [ "content_scripts/linkedin/linkedin-content-script.js" ],
+      "matches": [ "https://media.licdn.com/*", "https://www.linkedin.com/*" ],
+      "run_at": "document_start"
+   }, {
+      "js": [ "content_scripts/extension-detection-handshake.js" ],
+      "matches": [ "https://dev.acrobat.adobe.com/*", "https://stage.acrobat.adobe.com/*", "https://acrobat.adobe.com/*", "https://documentcloud.adobe.com/*" ],
+      "run_at": "document_start"
+   }, {
+      "all_frames": true,
+      "js": [ "content_scripts/extension-detection-handshake.js" ],
+      "matches": [ "https://web.whatsapp.com/*", "https://webtp.whatsapp.net/*" ],
+      "run_at": "document_start"
+   }, {
+      "js": [ "content_scripts/whats-new-content-script.js" ],
+      "matches": [ "https://dev.acrobat.adobe.com/*", "https://stage.acrobat.adobe.com/*", "https://acrobat.adobe.com/*", "https://documentcloud.adobe.com/*" ],
+      "run_at": "document_start"
+   }, {
+      "js": [ "content_scripts/upsell-popup-escape.js" ],
+      "matches": [ "https://commerce.adobe.com/*", "https://commerce-stg.adobe.com/*", "https://auth.services.adobe.com/*", "https://auth-stg1.services.adobe.com/*" ],
+      "run_at": "document_end"
+   }, {
+      "css": [ "browser/css/google-docs-convert-to-pdf-touch-point.css" ],
+      "js": [ "content_scripts/content-script-messaging-gateway.js", "content_scripts/gdocs/google-docs-content-script.js" ],
+      "matches": [ "https://docs.google.com/*" ],
+      "run_at": "document_end"
+   }, {
+      "js": [ "content_scripts/msword/msoffice-download-url-sender.js" ],
+      "matches": [ "https://word.cloud.microsoft/*", "https://*.sharepoint.com/:w:/*", "https://*.sharepoint.com/*/Doc.aspx*", "https://onedrive.live.com/*" ],
+      "run_at": "document_end"
+   }, {
+      "all_frames": true,
+      "css": [ "browser/css/msword-convert-to-pdf-touch-point.css", "browser/css/fte.css" ],
+      "js": [ "content_scripts/msword/msword-content-script.js" ],
+      "matches": [ "https://word-edit.officeapps.live.com/*", "https://inc-word-edit.officeapps.live.com/*", "https://word-view.officeapps.live.com/*" ],
+      "run_at": "document_end"
+   }, {
+      "all_frames": true,
+      "js": [ "content_scripts/mspowerpoint-analytics.js" ],
+      "matches": [ "https://powerpoint.officeapps.live.com/*", "https://usc-powerpoint.officeapps.live.com/*" ],
+      "run_at": "document_end"
+   }, {
+      "js": [ "content_scripts/express/pinterest/pinterest-content-script.js" ],
+      "matches": [ "https://*.pinterest.com/*" ],
+      "run_at": "document_idle"
+   }, {
+      "js": [ "content_scripts/ims-response-detector.js" ],
+      "matches": [ "https://*.adobe.com/*" ],
+      "run_at": "document_start"
+   }, {
+      "js": [ "content_scripts/ims-page-hook.js" ],
+      "matches": [ "https://*.adobe.com/*" ],
+      "run_at": "document_start",
+      "world": "MAIN"
+   }, {
+      "css": [ "browser/css/wikipedia-convert-to-pdf-touchpoint.css", "browser/css/fte.css" ],
+      "js": [ "content_scripts/content-script-messaging-gateway.js", "content_scripts/wikipedia/wikipedia-convert-to-pdf-content-script.js", "content_scripts/wikipedia/wikipedia-sanitize-html-styles.js" ],
+      "matches": [ "https://*.wikipedia.org/*" ],
+      "run_at": "document_idle"
+   } ],
+   "content_security_policy": {
+      "extension_pages": "script-src 'self'; child-src 'self'; object-src 'self'; style-src 'self' 'unsafe-inline'; frame-src https://use.typekit.net https://assets.adobedtm.com https://*.adobecontent.io https://*.adobelogin.com https://local-test.acrobat.com:* https://local-test.acrobat.adobe.com:* https://*.acrobat.com https://*.adobe.com https://*.adobe.io"
+   },
+   "default_locale": "en",
+   "description": "__MSG_web2pdfExtnDescriptionChrome__",
+   "externally_connectable": {
+      "matches": [ "https://documentcloud.adobe.com/*", "https://acrobat.adobe.com/*", "https://dev.acrobat.adobe.com/*", "https://stage.acrobat.adobe.com/*" ]
+   },
+   "file_handlers": [ {
+      "accept": {
+         "application/pdf": [ ".pdf" ]
+      },
+      "action": "/resources/chromeOS/handler.html",
+      "launch_type": "multiple-clients",
+      "name": "Acrobat PDF Viewer"
+   } ],
+   "host_permissions": [ "\u003Call_urls>" ],
+   "icons": {
+      "128": "browser/images/acrobat_dc_appicon_128.png",
+      "16": "browser/images/acrobat_dc_appicon_16.png",
+      "48": "browser/images/acrobat_dc_appicon_48.png"
+   },
+   "incognito": "not_allowed",
+   "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCZBtDwJUnqCebbFbTP819W+x0Tk9Com3yrxaCi/D0t/1FPWBuOvyyiQtFr/FmloZu/2ml8LFYNGNE6gQSSIgGXZceAFCRxzj+EXSI37kNIPISrdKznCTdkA6oSKUpFEVOcoD959DQFqeNbliB9MV+ZrZST+DOVxApdMSJzsCczIwIDAQAB",
+   "manifest_version": 3,
+   "mime_types_handler": {
+      "application/pdf": {
+         "can_embed": false,
+         "handler_url": "viewer.html"
+      }
+   },
+   "minimum_chrome_version": "107.0",
+   "name": "__MSG_web2pdfExtnName__",
+   "optional_permissions": [ "history", "bookmarks" ],
+   "options_page": "browser/js/options.html",
+   "permissions": [ "contextMenus", "tabs", "downloads", "nativeMessaging", "webRequest", "webNavigation", "storage", "scripting", "alarms", "offscreen", "cookies", "sidePanel", "declarativeNetRequest", "fileSystem", "identity" ],
+   "storage": {
+      "managed_schema": "schema.json"
+   },
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "26.9.2.1",
+   "web_accessible_resources": [ {
+      "matches": [ "\u003Call_urls>" ],
+      "resources": [ "viewer.html", "browser/js/express.html", "extension-detection.html", "dist/MagicScan.js", "browser/images/acrobat_prodc_appicon_24.svg", "browser/images/SDC_GenAIGradientTrefoil_24_N.svg", "browser/images/SDC_AISummary_16_N.svg", "browser/images/SDC_DcLogo_Red_18_N.svg", "browser/css/fonts/AdobeClean-Regular.otf", "browser/css/fonts/AdobeClean-Bold.otf", "browser/images/dc_trefoil_red_32_n.svg", "browser/images/acrobat_dc_appicon_128.png", "browser/images/acrobat_dc_appicon_48.png", "browser/images/acrobat_dc_trefoil_24_white.svg", "browser/images/cross_10_n.svg", "browser/images/no_connection.svg", "browser/images/ExpressRemoveBackground.png", "browser/images/ExpressApplyEffects.png", "browser/images/ExpressCropImage.png", "browser/images/SDC_ShowMenu_18_N_24_D_ActiveState.svg", "browser/images/SDC_ShowMenu_18_N_24Canvas.svg", "browser/images/S_DragHandle_18_N.svg", "browser/images/fab-header-background.svg", "content_scripts/express/express-fte.js", "content_scripts/express/express-utils.js", "resources/SidePanel/sidePanelUtil.js", "resources/SidePanel/sidePanelUpsellSuccess.html", "common/local-storage.js", "libs/lottie-light-esm.js", "libs/readability.js", "resources/addWebpage/extractWebpageHTML.js", "common/sanitise-filename.js", "common/page-content-language-utils.js", "common/page-theme-utils.js", "content_scripts/utils/fte-utils.js", "content_scripts/utils/util.js", "browser/images/SDC_Close_22_N.svg", "browser/images/s_error_outline.svg", "dist/spectrumStyles.css", "dist/spectrum.css", "dist/spectrum.js", "dist/FloatingActionButton.js", "dist/FloatingActionButton.css", "dist/ToastManager.js", "dist/vendor.js", "dist/otherVendors.js", "dist/extensionShared.js" ]
+   }, {
+      "matches": [ "https://*.acrobat.adobe.com/*" ],
+      "resources": [ "browser/js/viewer/localFileSignInRedirection.html" ]
+   }, {
+      "matches": [ "https://*.adobe.com/*" ],
+      "resources": [ "signInHandler.html" ]
+   }, {
+      "matches": [ "https://mail.google.com/*" ],
+      "resources": [ "content_scripts/gmail/gmail-inject.js", "content_scripts/gmail/state.js", "content_scripts/gmail/util.js", "content_scripts/gmail/gmail-response-service.js", "content_scripts/gmail/native-viewer-touch-point-service.js", "content_scripts/gmail/native-viewer-pdf-tools-module.js", "content_scripts/gmail/message-view-touch-point-service.js", "content_scripts/gmail/list-view-touch-point-service.js", "content_scripts/gmail/default-viewership-service.js", "content_scripts/express/gmail/image-gmail-touchpoint-service.js", "content_scripts/express/gmail/express-gmail-message-view-touchpoint-service.js", "content_scripts/utils/direct-verb-touch-point-utils.js", "content_scripts/gmail/gmail-verb-native-viewer.js", "content_scripts/gmail/gmail-verb-list-view.js", "content_scripts/gmail/gmail-verb-message-view.js", "content_scripts/gmail/gmail-fte-service.js", "content_scripts/gmail/gmail-convert-attachment-card.js", "content_scripts/gmail/gmail-edit-pdf-attachment-card.js", "content_scripts/touchpoints/verb-execution-service.js", "content_scripts/touchpoints/touchpoint-base.js", "content_scripts/gmail/gmail-email-pdf-touchpoint-service.js", "content_scripts/gmail/gmail-dummy-target-test-service.js", "browser/images/acrobat_prodc_appicon_24.svg", "browser/images/acrobat_dc_20x20_dark.svg", "browser/images/s_pdftoword_20x20_dark.svg", "dist/PdfToolsDropdown.js", "dist/chrome_content_scripts_utils_fte-utils_js.js", "dist/ProgressCircle.js", "content_scripts/utils/toast-service.js", "resources/toast/toast.html" ]
+   }, {
+      "matches": [ "https://drive.google.com/*" ],
+      "resources": [ "content_scripts/gdrive/gdrive-inject.js", "content_scripts/gdrive/get-auth-user.js", "content_scripts/gdrive/state.js", "content_scripts/gdrive/util.js", "content_scripts/gdrive/touchpoint-service.js", "content_scripts/gdrive/gdrive-convert-attachment-card.js", "content_scripts/gdrive/gdrive-edit-pdf-attachment-card.js", "content_scripts/touchpoints/verb-execution-service.js", "content_scripts/touchpoints/touchpoint-base.js", "content_scripts/express/gdrive/image-gdrive-touchpoint-service.js", "content_scripts/gdrive/search-handler.js", "content_scripts/gdrive/default-viewership-service.js", "content_scripts/gdrive/api-parsing-util.js", "content_scripts/utils/toast-service.js", "content_scripts/utils/direct-verb-touch-point-utils.js", "dist/ProgressCircle.js", "resources/toast/toast.html" ]
+   }, {
+      "matches": [ "\u003Call_urls>" ],
+      "resources": [ "browser/images/express_edit.svg", "browser/images/express_remove_background.svg", "browser/images/express_apply_effects.svg", "browser/images/express_crop_image.svg", "browser/images/express_insert_objects.svg", "browser/images/express_remove_objects.svg", "browser/images/acrobat_prodc_appicon_24.svg", "browser/images/convert_img_to_pdf.svg", "content_scripts/express/image-tools-dropdown.js", "content_scripts/express/responsive-button-handler.js", "content_scripts/express/single-click-cta.js", "content_scripts/express/express-hover-cta.js", "content_scripts/express/express-cta-tooltip.js", "content_scripts/express/fte/express-contextual-fte.js", "content_scripts/express/express-precaching.js", "common/constant.js", "common/locale.js", "common/offscreen-document-path.js" ]
+   }, {
+      "matches": [ "https://gemini.google.com/*" ],
+      "resources": [ "content_scripts/gemini/state.js", "content_scripts/gemini/gemini-chat-touchpoint-service.js", "content_scripts/gemini/gemini-response-touchpoint-service.js", "content_scripts/express/gemini/gemini-express-touchpoint-service.js", "content_scripts/gemini/gemini-api-response-service.js", "content_scripts/gemini/gemini-inject.js", "content_scripts/gemini/gemini-convert-to-pdf-fte-service.js", "content_scripts/utils/toast-service.js", "resources/toast/toast.html" ]
+   }, {
+      "matches": [ "https://web.whatsapp.com/*" ],
+      "resources": [ "content_scripts/express/express_whatsapp/whatsapp-image-preview.js", "content_scripts/express/express_whatsapp/whatsapp-image-on-hover.js" ]
+   }, {
+      "matches": [ "https://outlook.office365.com/*", "https://outlook.office.com/*", "https://outlook.live.com/*", "https://outlook.cloud.microsoft/*" ],
+      "resources": [ "content_scripts/outlook/state.js", "browser/images/outlook-error-toast-icon.svg", "browser/images/outlook-error-toast-close.svg", "browser/images/cross_12_n.svg", "resources/outlook/error-toast.html", "content_scripts/outlook/outlook-error-toast-service.js", "content_scripts/outlook/outlook-fte-service.js", "content_scripts/outlook/attachment-touch-point.js", "content_scripts/outlook/list-view-touch-point-service.js", "content_scripts/outlook/message-view-touch-point-service.js", "content_scripts/touchpoints/touchpoint-tooltip-service.js", "content_scripts/outlook/default-viewership-service.js", "content_scripts/utils/toast-service.js", "resources/toast/toast.html" ]
+   }, {
+      "matches": [ "https://www.linkedin.com/*", "https://media.licdn.com/*" ],
+      "resources": [ "content_scripts/linkedin/state.js", "content_scripts/linkedin/linkedin-fte-service.js", "content_scripts/linkedin/linkedin-response-service.js", "content_scripts/linkedin/linkedin-inject.js" ]
+   }, {
+      "matches": [ "https://chatgpt.com/*" ],
+      "resources": [ "content_scripts/express/express_chatgpt/chatgpt-inject.js", "content_scripts/express/express_chatgpt/chatgpt-moderation.js", "content_scripts/chatgpt/state.js", "content_scripts/chatgpt/chatgpt-convert-to-pdf.js", "content_scripts/chatgpt/chatgpt-response-convert-to-pdf.js", "content_scripts/chatgpt/chatgpt-canvas-convert-to-pdf.js", "content_scripts/chatgpt/chatgpt-convert-to-pdf-fte-service.js", "content_scripts/chatgpt/chatgpt-longchat-conversion.js", "browser/images/acrobat_dc_20x20_dark.svg", "browser/images/acrobat_dc_export_pdf.svg", "dist/ProgressCircle.js", "content_scripts/utils/toast-service.js", "resources/toast/toast.html", "content_scripts/utils/popover-service.js", "resources/popover/popover.html" ]
+   }, {
+      "matches": [ "https://connector-openai-deep-research.web-sandbox.oaiusercontent.com/*" ],
+      "resources": [ "browser/images/acrobat_prodc_appicon_24.svg", "content_scripts/chatgpt/chatgpt-convert-to-pdf-fte-service.js", "browser/css/fte.css", "content_scripts/chatgpt/state.js" ]
+   }, {
+      "matches": [ "https://docs.google.com/*" ],
+      "resources": [ "content_scripts/gdocs/google-docs-fetch-interceptor.js", "content_scripts/utils/direct-verb-touch-point-utils.js", "dist/SheetsSettingModal.js", "dist/SheetsSettingModal.css", "dist/ProgressCircle.js", "browser/images/tick.svg", "browser/images/dropdown.svg", "browser/images/AllColumnsOnOnePage-Portrait_light.svg", "browser/images/AllColumnsOnOnePage-Landscape_light.svg", "browser/images/AllRowsOnOnePage-Portrait_light.svg", "browser/images/AllRowsOnOnePage-Landscape_light.svg", "browser/images/EverythingOnOnePage-Portrait_light.svg", "browser/images/EverythingOnOnePage-Landscape_light.svg", "content_scripts/utils/toast-service.js", "resources/toast/toast.html" ]
+   }, {
+      "matches": [ "https://*.wikipedia.org/*" ],
+      "resources": [ "content_scripts/wikipedia/wikipedia-touchpoint-service.js", "content_scripts/wikipedia/wikipedia-convert-to-pdf-fte-service.js", "content_scripts/utils/toast-service.js", "content_scripts/utils/direct-verb-touch-point-utils.js", "dist/ProgressCircle.js", "resources/toast/toast.html" ]
+   }, {
+      "matches": [ "https://word-edit.officeapps.live.com/*", "https://inc-word-edit.officeapps.live.com/*", "https://word-view.officeapps.live.com/*" ],
+      "resources": [ "content_scripts/utils/direct-verb-touch-point-utils.js", "content_scripts/msword/state.js", "content_scripts/msword/msword-converting-tooltip.js", "content_scripts/utils/toast-service.js", "resources/toast/toast.html", "dist/ProgressCircle.js", "content_scripts/msword/msword-convert-to-pdf-fte-service.js", "content_scripts/acrobat-touchpoint/touchpoint-cta.js", "content_scripts/acrobat-touchpoint/touchpoint-tooltip.js", "content_scripts/acrobat-touchpoint/touchpoint-fte.js", "resources/acrobat-touchpoint/touchpoint-cta.html", "resources/acrobat-touchpoint/touchpoint-fte.html" ]
+   }, {
+      "matches": [ "https://word.cloud.microsoft/*", "https://*.sharepoint.com/*", "https://onedrive.live.com/*" ],
+      "resources": [ "content_scripts/msword/msword-convert-to-pdf-fte-service.js", "content_scripts/msword/state.js", "content_scripts/acrobat-touchpoint/touchpoint-fte.js", "resources/acrobat-touchpoint/touchpoint-fte.html" ]
+   }, {
+      "matches": [ "https://commerce.adobe.com/*", "https://commerce-stg.adobe.com/*" ],
+      "resources": [ "content_scripts/utils/toast-service.js" ]
+   }, {
+      "matches": [ "https://www.google.com/*", "https://www.google.com.br/*", "https://www.google.com.hk/*", "https://www.google.com.tr/*", "https://www.google.com.tw/*", "https://www.google.com.ua/*", "https://www.google.ca/*", "https://www.google.co.jp/*", "https://www.google.co.kr/*", "https://www.google.co.uk/*", "https://www.google.cz/*", "https://www.google.de/*", "https://www.google.dk/*", "https://www.google.es/*", "https://www.google.fi/*", "https://www.google.fr/*", "https://www.google.hr/*", "https://www.google.hu/*", "https://www.google.it/*", "https://www.google.nl/*", "https://www.google.no/*", "https://www.google.pl/*", "https://www.google.pt/*", "https://www.google.ro/*", "https://www.google.ru/*", "https://www.google.se/*", "https://www.google.si/*", "https://www.google.sk/*", "https://www.bing.com/*" ],
+      "resources": [ "browser/js/searchWidget.html", "browser/js/searchWidgetSkeleton.html" ],
+      "use_dynamic_url": true
+   }, {
+      "matches": [ "\u003Call_urls>" ],
+      "resources": [ "browser/js/newAssistantPopup.html", "resources/chromeOS/handler.html", "resources/SidePanel/index.html", "resources/SidePanel/signInSuccess.html", "resources/express/imageToolsDropdown.html", "resources/express/expressSingleClickCTA.html", "resources/express/expressHoverCTA.html", "resources/express/expressContextualFTE.html", "browser/js/frameUI.html", "resources/addWebpage/index.html", "browser/js/check-cookies.html", "resources/toast/toast.html", "resources/popover/popover.html", "browser/js/lsCopy.html", "browser/js/download-banner.html", "browser/js/successToast.html", "browser/js/local-fte.html", "browser/js/local-file/local-file-blocking-page.html", "browser/js/local-file/local-file-prompt.html", "browser/js/failToast.html", "browser/js/viewer/error.html", "browser/js/viewer/sessionExpired.html" ],
+      "use_dynamic_url": true
+   }, {
+      "matches": [ "https://notebooklm.google.com/*", "https://notebook.google.com/*" ],
+      "resources": [ "content_scripts/scan/sites/notebooklm/scotty-drop-hook.js" ],
+      "use_dynamic_url": true
+   } ]
+}

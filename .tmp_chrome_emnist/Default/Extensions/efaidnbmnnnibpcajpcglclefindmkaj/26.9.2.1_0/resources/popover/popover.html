@@ -1,0 +1,125 @@
+<!--
+/*************************************************************************
+* ADOBE CONFIDENTIAL
+* ___________________
+*
+*  Copyright 2026 Adobe Systems Incorporated
+*  All Rights Reserved.
+*
+* NOTICE:  All information contained herein is, and remains
+* the property of Adobe Systems Incorporated and its suppliers,
+* if any.  The intellectual and technical concepts contained
+* herein are proprietary to Adobe Systems Incorporated and its
+* suppliers and may be covered by U.S. and Foreign Patents,
+* patents in process, and are protected by trade secret or copyright law.
+* Dissemination of this information or reproduction of this material
+* is strictly forbidden unless prior written permission is obtained
+* from Adobe Systems Incorporated.
+**************************************************************************/
+-->
+
+<style>
+    .acrobat-popover {
+        --popover-title-color: #1a1a1a;
+        --popover-desc-color: #555;
+        --popover-cancel-border: rgba(0, 0, 0, 0.2);
+        position: fixed;
+        z-index: 2147483647;
+        background: #fff;
+        border-radius: 12px;
+        padding: 14px;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.08);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 320px;
+        box-sizing: border-box;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    /* Top row: spinner + text */
+    .acrobat-popover-content {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .acrobat-popover-spinner {
+        flex-shrink: 0;
+        margin-top: 2px;
+    }
+
+    .acrobat-popover-body {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .acrobat-popover-title {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--popover-title-color);
+        margin: 0 0 5px;
+        line-height: 1.35;
+        min-height: 20px;
+    }
+
+    .acrobat-popover-desc {
+        font-size: 14px;
+        font-weight: 400;
+        color: var(--popover-desc-color);
+        margin: 0;
+        line-height: 1.5;
+        min-height: 40px;
+    }
+
+    /* Cancel always anchored to the bottom-right of the popover */
+    .acrobat-popover-cancel {
+        display: inline-flex;
+        align-items: center;
+        align-self: flex-end;
+        margin-top: auto;
+        padding: 4px 12px;
+        border: 2px solid var(--popover-cancel-border);
+        border-radius: 100px;
+        background: transparent;
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--popover-title-color);
+        cursor: pointer;
+        font-family: inherit;
+        line-height: 1.4;
+    }
+
+    .acrobat-popover-cancel:hover {
+        background: rgba(0, 0, 0, 0.06);
+    }
+
+    .acrobat-popover-cancel:focus-visible {
+        outline: 2px solid #0060df;
+        outline-offset: 2px;
+    }
+
+    html.dark .acrobat-popover {
+        --popover-title-color: #ffffff;
+        --popover-desc-color: #aaaaaa;
+        --popover-cancel-border: rgba(255, 255, 255, 0.2);
+        background: #000000;
+        box-shadow: 0 4px 24px rgba(255, 255, 255, 0.08), 0 1px 4px rgba(255, 255, 255, 0.04);
+    }
+
+    html.dark .acrobat-popover-cancel:hover {
+        background: rgba(255, 255, 255, 0.06);
+    }
+</style>
+
+<div class="acrobat-popover">
+    <div class="acrobat-popover-content">
+        <div class="acrobat-popover-spinner"></div>
+        <div class="acrobat-popover-body">
+            <p class="acrobat-popover-title"></p>
+            <p class="acrobat-popover-desc"></p>
+        </div>
+    </div>
+    <button class="acrobat-popover-cancel"></button>
+</div>

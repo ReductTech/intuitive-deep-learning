@@ -1,0 +1,18 @@
+/*************************************************************************
+* ADOBE CONFIDENTIAL
+* ___________________
+*
+*  Copyright 2015 Adobe Systems Incorporated
+*  All Rights Reserved.
+*
+* NOTICE:  All information contained herein is, and remains
+* the property of Adobe Systems Incorporated and its suppliers,
+* if any.  The intellectual and technical concepts contained
+* herein are proprietary to Adobe Systems Incorporated and its
+* suppliers and are protected by all applicable intellectual property laws,
+* including trade secret and or copyright laws.
+* Dissemination of this information or reproduction of this material
+* is strictly forbidden unless prior written permission is obtained
+* from Adobe Systems Incorporated.
+**************************************************************************/
+class MSWordConvertingTooltip{constructor({touchpoint:t,text:i,className:e}){this.touchpoint=t,this.mouseOver=!1,this.forced=!1,this.shouldHide=()=>!1,this.tooltip=document.createElement("div"),this.tooltip.className=e,this.tooltip.textContent=i,this.handleEnter=null,this.handleLeave=null}show(){document.contains(this.touchpoint)&&(document.body.appendChild(this.tooltip),this.setPosition(),this.tooltip.style.visibility="visible",window.addEventListener("scroll",this.hide,{passive:!0}),window.addEventListener("resize",this.setPosition,{passive:!0}),document.addEventListener("visibilitychange",this.handleVisibilityChange))}hide=()=>{this.tooltip.style.visibility="hidden",this.tooltip.remove(),window.removeEventListener("scroll",this.hide),window.removeEventListener("resize",this.setPosition),document.removeEventListener("visibilitychange",this.handleVisibilityChange)};repositionIfVisible=()=>{"visible"===this.tooltip.style.visibility&&this.setPosition()};handleVisibilityChange=()=>{"visible"===document.visibilityState&&this.setPosition()};setPosition=()=>{if(!document.contains(this.touchpoint))return void this.hide();const t=this.touchpoint.getBoundingClientRect(),i=this.tooltip.getBoundingClientRect().width,e=t.left+t.width/2,s=Math.min(Math.max(e-i/2,8),window.innerWidth-i-8),o=Math.min(Math.max(e-s,8),i-8);this.tooltip.style.top=`${t.bottom+window.scrollY}px`,this.tooltip.style.left=`${s+window.scrollX}px`,this.tooltip.style.setProperty("--acrobat-tooltip-arrow-left",`${o}px`)};showForced(){this.forced=!0,this.show()}endForced(){this.forced=!1,this.hide(),this.canShowOnHover()&&this.show()}canShowOnHover(){return this.mouseOver&&!this.forced&&!this.shouldHide()}refresh(){this.forced||(this.canShowOnHover()?this.show():this.hide())}attach(t=()=>!1,i=400){this.shouldHide=t,this.handleEnter=()=>{this.mouseOver=!0,this.forced||setTimeout(()=>{this.canShowOnHover()&&this.show()},i)},this.handleLeave=()=>{this.mouseOver=!1,this.forced||this.hide()},this.touchpoint.addEventListener("mouseenter",this.handleEnter),this.touchpoint.addEventListener("mouseleave",this.handleLeave),this.touchpoint.addEventListener("focusin",this.handleEnter),this.touchpoint.addEventListener("focusout",this.handleLeave)}detach(){this.handleEnter&&(this.touchpoint.removeEventListener("mouseenter",this.handleEnter),this.touchpoint.removeEventListener("mouseleave",this.handleLeave),this.touchpoint.removeEventListener("focusin",this.handleEnter),this.touchpoint.removeEventListener("focusout",this.handleLeave),this.handleEnter=null,this.handleLeave=null)}}export default MSWordConvertingTooltip;

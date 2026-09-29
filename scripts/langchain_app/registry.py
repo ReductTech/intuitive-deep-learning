@@ -28,7 +28,7 @@ ENDPOINTS = (
         generate_extra_decision_factors,
         "{decision, positive_label, negative_label, primary_factor_name, context?}",
     ),
-    Endpoint("/short-answer/evaluate", evaluate_short_answer, "{task_id, answer, ...context}"),
+    Endpoint("/short-answer/evaluate", evaluate_short_answer, "{question, reference_answer, answer} or {task_id, answer}"),
     Endpoint("/digit/features-feedback", partial(evaluate_short_answer, task_id="digit.feature_reflection"), "{answer}"),
     Endpoint("/digit/vector-order-feedback", partial(evaluate_short_answer, task_id="digit.vector_order"), "{answer, selected_order?}"),
     Endpoint("/digit/sequence-strategy-feedback", partial(evaluate_short_answer, task_id="digit.sequence_strategy"), "{answer, digits?}"),

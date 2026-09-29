@@ -25,7 +25,7 @@
 
 | 资源/接口 | 位置 | 迁移策略 |
 | --- | --- | --- |
-| 160 张 MNIST 图片 | `dataset/mnist/0..9/*.png` | Vite `import.meta.glob` 引用原资源，不复制、不伪造 |
+| 160 张 MNIST 图片 | `assets/dataset/mnist/0..9/*.png` | Vite `import.meta.glob` 引用原资源，不复制、不伪造 |
 | 九宫格算法 | `script.js` 的 `imageToPixels`、`computeNineGrid` | 模块私有 TypeScript 等价迁移 |
 | 双层 MLP | `script.js` 的 LCG、标准化、tanh、softmax、SGD | 模块私有 TypeScript 等价迁移 |
 | 顺序评语 | `http://127.0.0.1:59414/digit/vector-order-feedback` | 模块私有 service 保留 |

@@ -1,8 +1,11 @@
 import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from 'react';
 import { Feedback } from '../feedback/Feedback';
+import { Button } from '../controls/Button';
 import { emitTelemetry, getTelemetryState } from '../telemetry';
 import { Typography, type TypographyVariant } from '../typography/Typography';
 import { classNames } from '../utils';
+import { useQuestionMode } from './QuestionMode';
+import { reviewShortAnswer } from './reviewShortAnswer';
 
 export type QuestionType = 'choice' | 'multiple' | 'judgement' | 'fill' | 'short';
 
@@ -51,6 +54,10 @@ export interface QuestionProps {
   title: ReactNode;
   options?: QuestionOption[];
   answer?: string | string[];
+  /** PPT reveals this text; Guide uses it for automatic LLM review. For short questions, answer may also supply it. */
+  referenceAnswer?: string;
+  /** Optional legacy question-bank ID; new questions only need title and referenceAnswer. */
+  taskId?: string;
   multiple?: boolean;
   blanks?: Array<{ label?: ReactNode; placeholder?: string }>;
   rows?: number;
@@ -129,6 +136,8 @@ export function Question({
   title,
   options = [],
   answer,
+  referenceAnswer,
+  taskId,
   multiple = type === 'multiple',
   blanks = [],
   rows = 5,
@@ -143,6 +152,7 @@ export function Question({
   persistenceKey,
   showFeedback = true,
 }: QuestionProps) {
+  const questionMode = useQuestionMode();
   const generatedStateId = useId();
   const rootRef = useRef<HTMLElement | null>(null);
   const normalizedType: QuestionType = type === 'multiple' ? 'choice' : type;
@@ -150,11 +160,27 @@ export function Question({
   const [fields, setFields] = useState<string[]>(() => Array.from({ length: Math.max(1, blanks.length) }, () => ''));
   const [result, setResult] = useState<QuestionCheckResult | null>(null);
   const [isReviewing, setIsReviewing] = useState(false);
+  const [revealed, setRevealed] = useState(false);
 
   const expected = useMemo(() => answerList(answer), [answer]);
   const answerValues = normalizedType === 'choice' || normalizedType === 'judgement' ? selected : fields;
   const inlineBlanks = normalizedType === 'fill' ? inlineBlankCount(title) : 0;
-  const stateKey = `question:${persistenceKey || generatedStateId}`;
+  const pptShort = normalizedType === 'short' && questionMode === 'ppt';
+  const shortReference = referenceAnswer ?? (typeof answer === 'string' ? answer : '');
+  // The full canonical content makes new short-answer state keys stable and collision-free
+  // without asking authors to manage IDs. Explicit persistenceKey still takes precedence.
+  const automaticKey = normalizedType === 'short' && typeof title === 'string' && shortReference.trim()
+    ? `inline:${JSON.stringify([title, shortReference])}`
+    : generatedStateId;
+  const stateKey = `question:${persistenceKey || automaticKey}`;
+  const reviewAnswer = review ?? (normalizedType === 'short' && (taskId || (typeof title === 'string' && shortReference.trim()))
+    ? (answers: string[]) => reviewShortAnswer({
+      taskId,
+      question: typeof title === 'string' ? title : '',
+      referenceAnswer: shortReference,
+      answer: answers[0] ?? '',
+    })
+    : undefined);
 
   function emitAnswer(eventName: 'answer_select' | 'answer_submit' | 'answer_change' | 'question_state_restore', answers: string[], checked: QuestionCheckResult | null) {
     const selectedValues = normalizedType === 'choice' || normalizedType === 'judgement' ? answers : selected;
@@ -187,7 +213,7 @@ export function Question({
   }
 
   useEffect(() => {
-    if (!stateKey) return;
+    if (!stateKey || pptShort) return;
     let active = true;
     void getTelemetryState<PersistedQuestionState>(stateKey).then(async (entry) => {
       if (!active || !entry?.state) return;
@@ -215,10 +241,10 @@ export function Question({
       if (wasSubmitted && normalizedType === 'short') {
         const submittedResult: QuestionCheckResult = { ok: false, empty: restoredEmpty, answer: restoredAnswers, tone: 'hint' };
         onCheck?.(submittedResult);
-        if (!restoredEmpty && review) {
+        if (!restoredEmpty && reviewAnswer) {
           setIsReviewing(true);
           try {
-            const reviewed = await review(restoredAnswers);
+            const reviewed = await reviewAnswer(restoredAnswers);
             if (!active) return;
             const repairedResult: QuestionCheckResult = { ok: reviewed.ok, empty: false, answer: restoredAnswers, tone: reviewed.tone, message: reviewed.message };
             setResult(repairedResult);
@@ -252,16 +278,16 @@ export function Question({
       }
     });
     return () => { active = false; };
-  }, [stateKey]);
+  }, [stateKey, pptShort]);
 
   async function check(candidateAnswers: string[] = answerValues) {
     const normalizedAnswers = candidateAnswers.map(normalize);
     const empty = normalizedAnswers.every((value) => !value);
-    if (normalizedType === 'short' && review && !empty) {
+    if (normalizedType === 'short' && reviewAnswer && !empty) {
       setIsReviewing(true);
       setResult({ ok: false, answer: candidateAnswers, tone: 'hint', message: '正在分析你的回答，请稍候。' });
       try {
-        const reviewed = await review(candidateAnswers);
+        const reviewed = await reviewAnswer(candidateAnswers);
         const next: QuestionCheckResult = { ok: reviewed.ok, answer: candidateAnswers, tone: reviewed.tone, message: reviewed.message };
         setResult(next);
         onCheck?.(next);
@@ -313,6 +339,7 @@ export function Question({
   }
 
   async function submit() {
+    if (pptShort) { setRevealed(true); return; }
     const candidateAnswers = normalizedType === 'choice' || normalizedType === 'judgement' ? selected : fields;
     const checked = await check(candidateAnswers);
     emitAnswer('answer_submit', candidateAnswers, checked);
@@ -324,11 +351,12 @@ export function Question({
       ref={rootRef}
       data-question-type={normalizedType}
       data-submit-mode={instant ? 'instant' : 'manual'}
+      data-question-mode={normalizedType === 'short' ? pptShort ? 'ppt-reveal' : 'guide-submit' : undefined}
       data-state-key={stateKey}
       data-telemetry-manual
       onBlurCapture={(event) => {
         const target = event.target;
-        if (!(target instanceof Element) || !target.matches('[data-role="question-answer"]') || result) return;
+        if (pptShort || !(target instanceof Element) || !target.matches('[data-role="question-answer"]') || result) return;
         if (event.relatedTarget instanceof Element && event.relatedTarget.closest('.dl-question-submit')) return;
         emitAnswer('answer_change', answerValues, null);
       }}
@@ -337,7 +365,7 @@ export function Question({
         <Typography as="span" variant={textVariant} tone="accent" className="dl-question-type">{label ?? typeLabel(normalizedType, multiple)}</Typography>
         <div className="dl-question-title-row">
           <Typography as="strong" variant={textVariant} className="dl-question-stem">{normalizedType === 'fill' ? <FillTitle title={title} blanks={blanks.length ? blanks : [{ placeholder: '填写答案' }]} fields={fields} onChange={(index, value) => { setFields((current) => { const next = [...current]; next[index] = value; return next; }); setResult(null); }} /> : title}</Typography>
-          {!instant && <button className="edu-btn edu-btn--primary dl-question-submit" type="button" disabled={isReviewing} aria-busy={isReviewing} onClick={() => void submit()}><span>{isReviewing ? '正在分析' : submitText}</span></button>}
+          {!instant && <Button variant="primary" className="dl-question-submit" disabled={isReviewing || (pptShort && !shortReference.trim())} loading={isReviewing} onClick={() => void submit()}>{pptShort ? revealed ? '已揭示答案' : shortReference.trim() ? '揭示答案' : '未配置参考答案' : isReviewing ? '正在分析' : submitText}</Button>}
         </div>
       </header>
 
@@ -374,9 +402,13 @@ export function Question({
           <label className="dl-question-field">
             <textarea
               rows={rows}
-              value={fields[0] ?? ''}
+              value={pptShort ? revealed ? shortReference : '' : fields[0] ?? ''}
               data-role="question-answer"
+              aria-label={pptShort ? '参考答案' : '简答题回答'}
+              readOnly={pptShort}
+              placeholder={pptShort ? '点击“揭示答案”显示参考答案' : undefined}
               onChange={(event) => {
+                if (pptShort) return;
                 setFields([event.target.value]);
                 setResult(null);
               }}
@@ -385,7 +417,7 @@ export function Question({
         </div>
       )}
 
-      {showFeedback && <Feedback
+      {showFeedback && !pptShort && <Feedback
         status={result?.tone ?? 'info'}
         textVariant={textVariant}
         message={result?.message ?? feedback.initial}

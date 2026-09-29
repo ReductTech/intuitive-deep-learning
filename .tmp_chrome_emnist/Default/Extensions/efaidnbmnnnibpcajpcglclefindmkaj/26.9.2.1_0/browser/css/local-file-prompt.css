@@ -1,0 +1,18 @@
+/*************************************************************************
+* ADOBE CONFIDENTIAL
+* ___________________
+*
+*  Copyright 2015 Adobe Systems Incorporated
+*  All Rights Reserved.
+*
+* NOTICE:  All information contained herein is, and remains
+* the property of Adobe Systems Incorporated and its suppliers,
+* if any.  The intellectual and technical concepts contained
+* herein are proprietary to Adobe Systems Incorporated and its
+* suppliers and are protected by all applicable intellectual property laws,
+* including trade secret and or copyright laws.
+* Dissemination of this information or reproduction of this material
+* is strictly forbidden unless prior written permission is obtained
+* from Adobe Systems Incorporated.
+**************************************************************************/
+body{align-items:center;background:linear-gradient(180deg,#f1f3f4,#fff);display:flex;justify-content:center;margin:0;min-height:100vh}.main-card{background:#fff;border:1px solid #d5d5d5;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.15);flex-direction:column;margin:0 auto;padding:48px 40px 40px;top:64px;width:680px;z-index:1}.acrobat-icon-holder,.main-card{align-items:center;display:flex;position:absolute}.acrobat-icon-holder{background:#b30b00;border-radius:9px;box-shadow:0 2px 8px rgba(0,0,0,.08);height:48px;justify-content:center;left:50%;top:-24px;transform:translateX(-50%);width:48px;z-index:2}.acrobat-icon{height:30px;width:30px}.acrobat-icon:hover{cursor:pointer}#local-file-animated-fte{background:#ffe6e1 no-repeat 50%;background-size:contain;height:284px;margin-bottom:32px;width:601px}.headline{color:#000;font-size:28px;font-weight:700;margin-bottom:8px}.desc,.headline{font-family:Adobe Clean,Arial,sans-serif;text-align:center}.desc{color:#464646;font-size:16px;line-height:24px;margin-bottom:32px;width:601px}.action-btn{align-items:center;background:#000;border:none;border-radius:24px;color:#fff;cursor:pointer;display:flex;font-size:16px;font-weight:700;height:45px;justify-content:center;min-width:108px;padding:12px 32px}

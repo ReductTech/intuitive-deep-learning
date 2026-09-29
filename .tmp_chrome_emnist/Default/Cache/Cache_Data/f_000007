@@ -1,0 +1,337 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/app/routes.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=2be87a0d"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+import { ContentBlock, ModuleShell } from "/modules/shared/react/index.ts";
+import { SceneDeck } from "/modules/shared/react/presentation/index.ts";
+import { UiKitPage } from "/modules/shared/react/routing/UiKitPage.tsx";
+import { activeModules } from "/src/app/modules.tsx";
+import { AppLink } from "/src/app/Router.tsx";
+const pptModules = activeModules.filter((module) => module.pptDeck);
+const pptCatalog = pptModules.map((module) => module.pptDeck);
+function SceneDeckPage() {
+  if (!pptCatalog.length) return /* @__PURE__ */ jsxDEV("p", { children: "Page not found." }, void 0, false, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+    lineNumber: 30,
+    columnNumber: 34
+  }, this);
+  return /* @__PURE__ */ jsxDEV(
+    SceneDeck,
+    {
+      catalog: pptCatalog,
+      moduleId: (deckId) => deckId,
+      assetId: (deckId) => pptModules.find((module) => module.pptDeck?.id === deckId)?.assetId ?? deckId,
+      progressKey: (deckId) => deckId === "neuron-guide" ? "lesson-flow:neuron-guide-v1" : deckId === "convolution-kernel-intro" ? "lesson-flow:convolution-kernel-intro-guide-v1" : `lesson-flow:${deckId}`,
+      getNotes: (sceneId, deckId) => pptModules.find((module) => module.pptDeck?.id === deckId)?.getPptNotes?.(sceneId) ?? []
+    },
+    void 0,
+    false,
+    {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+      lineNumber: 31,
+      columnNumber: 10
+    },
+    this
+  );
+}
+_c = SceneDeckPage;
+function pageHref(module, page) {
+  return module.pptPath ? `${module.pptPath}?deck=${encodeURIComponent(module.id)}&slide=${encodeURIComponent(page.id)}` : module.path;
+}
+function HomePage() {
+  return /* @__PURE__ */ jsxDEV(ModuleShell, { title: "Intuitive Deep Learning", subtitle: "从真实问题出发，逐步建立可解释的数学模型。", shellClassName: "app-home-shell", children: [
+    /* @__PURE__ */ jsxDEV("section", { className: "app-course-directory", "aria-labelledby": "app-course-directory-title", children: [
+      /* @__PURE__ */ jsxDEV("header", { className: "app-course-directory__head", children: [
+        /* @__PURE__ */ jsxDEV("div", { children: [
+          /* @__PURE__ */ jsxDEV("span", { className: "app-course-directory__kicker", children: "COURSE DIRECTORY" }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+            lineNumber: 52,
+            columnNumber: 59
+          }, this),
+          /* @__PURE__ */ jsxDEV("h2", { id: "app-course-directory-title", children: "课程模块" }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+            lineNumber: 52,
+            columnNumber: 129
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+          lineNumber: 52,
+          columnNumber: 54
+        }, this),
+        /* @__PURE__ */ jsxDEV("p", { children: "选择一个课程，进入完整学习流程或 SceneDeck。" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+          lineNumber: 52,
+          columnNumber: 180
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+        lineNumber: 52,
+        columnNumber: 7
+      }, this),
+      /* @__PURE__ */ jsxDEV("div", { className: "app-course-accordion", children: activeModules.map((module, moduleIndex) => /* @__PURE__ */ jsxDEV("details", { className: "app-course-group", open: true, children: [
+        /* @__PURE__ */ jsxDEV("summary", { className: "app-course-group__summary", children: [
+          /* @__PURE__ */ jsxDEV("span", { className: "app-course-group__index", children: String(moduleIndex + 1).padStart(2, "0") }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+            lineNumber: 53,
+            columnNumber: 195
+          }, this),
+          /* @__PURE__ */ jsxDEV("span", { className: "app-course-group__copy", children: [
+            /* @__PURE__ */ jsxDEV("strong", { children: module.title }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+              lineNumber: 53,
+              columnNumber: 327
+            }, this),
+            /* @__PURE__ */ jsxDEV("span", { children: module.description }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+              lineNumber: 53,
+              columnNumber: 358
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+            lineNumber: 53,
+            columnNumber: 286
+          }, this),
+          /* @__PURE__ */ jsxDEV("span", { className: "app-course-group__count", children: [
+            module.pages.length,
+            " 页"
+          ] }, void 0, true, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+            lineNumber: 53,
+            columnNumber: 398
+          }, this),
+          /* @__PURE__ */ jsxDEV("span", { className: "app-course-group__chevron", "aria-hidden": "true" }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+            lineNumber: 53,
+            columnNumber: 470
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+          lineNumber: 53,
+          columnNumber: 148
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { className: "app-course-group__body", children: [
+          /* @__PURE__ */ jsxDEV(AppLink, { className: "app-course-launch", to: module.path, children: [
+            /* @__PURE__ */ jsxDEV("span", { className: "edu-badge", children: module.badge }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+              lineNumber: 53,
+              columnNumber: 641
+            }, this),
+            /* @__PURE__ */ jsxDEV("span", { children: [
+              /* @__PURE__ */ jsxDEV("strong", { children: "进入完整课程" }, void 0, false, {
+                fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+                lineNumber: 53,
+                columnNumber: 696
+              }, this),
+              /* @__PURE__ */ jsxDEV("small", { children: "按教学顺序连续学习全部内容" }, void 0, false, {
+                fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+                lineNumber: 53,
+                columnNumber: 719
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+              lineNumber: 53,
+              columnNumber: 690
+            }, this),
+            /* @__PURE__ */ jsxDEV("em", { children: "开始学习 →" }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+              lineNumber: 53,
+              columnNumber: 754
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+            lineNumber: 53,
+            columnNumber: 585
+          }, this),
+          module.pages.length > 0 && /* @__PURE__ */ jsxDEV("ol", { className: "app-course-lessons", children: module.pages.map((page, index) => /* @__PURE__ */ jsxDEV("li", { children: /* @__PURE__ */ jsxDEV("a", { className: "app-course-lesson", href: pageHref(module, page), children: [
+            /* @__PURE__ */ jsxDEV("span", { className: "app-course-lesson__number", children: String(index + 1).padStart(2, "0") }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+              lineNumber: 53,
+              columnNumber: 958
+            }, this),
+            /* @__PURE__ */ jsxDEV("span", { className: "app-course-lesson__copy", children: [
+              /* @__PURE__ */ jsxDEV("strong", { children: page.title }, void 0, false, {
+                fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+                lineNumber: 53,
+                columnNumber: 1087
+              }, this),
+              /* @__PURE__ */ jsxDEV("small", { children: page.goal ?? page.summary }, void 0, false, {
+                fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+                lineNumber: 53,
+                columnNumber: 1116
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+              lineNumber: 53,
+              columnNumber: 1045
+            }, this),
+            /* @__PURE__ */ jsxDEV("span", { className: "app-course-lesson__arrow", "aria-hidden": "true", children: "→" }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+              lineNumber: 53,
+              columnNumber: 1165
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+            lineNumber: 53,
+            columnNumber: 895
+          }, this) }, page.id, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+            lineNumber: 53,
+            columnNumber: 877
+          }, this)) }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+            lineNumber: 53,
+            columnNumber: 807
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+          lineNumber: 53,
+          columnNumber: 545
+        }, this)
+      ] }, module.id, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+        lineNumber: 53,
+        columnNumber: 89
+      }, this)) }, void 0, false, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+        lineNumber: 53,
+        columnNumber: 7
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+      lineNumber: 51,
+      columnNumber: 5
+    }, this),
+    /* @__PURE__ */ jsxDEV(ContentBlock, { className: "app-developer-tools", title: "开发工具", subtitle: "共享组件检查与 SceneDeck 演示入口。", children: /* @__PURE__ */ jsxDEV("div", { className: "app-developer-tools__grid", children: [
+      /* @__PURE__ */ jsxDEV(AppLink, { className: "app-ui-kit-card", to: "/shared/ui-kit", children: [
+        /* @__PURE__ */ jsxDEV("span", { className: "edu-badge", children: "设计系统" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+          lineNumber: 55,
+          columnNumber: 199
+        }, this),
+        /* @__PURE__ */ jsxDEV("strong", { children: "Shared UI Kit" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+          lineNumber: 55,
+          columnNumber: 238
+        }, this),
+        /* @__PURE__ */ jsxDEV("span", { children: "检查共享组件、流程控制和题型。" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+          lineNumber: 55,
+          columnNumber: 268
+        }, this),
+        /* @__PURE__ */ jsxDEV("em", { children: "打开 →" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+          lineNumber: 55,
+          columnNumber: 296
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+        lineNumber: 55,
+        columnNumber: 142
+      }, this),
+      /* @__PURE__ */ jsxDEV("a", { className: "app-ui-kit-card", href: "/scenedeck/", children: [
+        /* @__PURE__ */ jsxDEV("span", { className: "edu-badge", children: "SceneDeck" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+          lineNumber: 55,
+          columnNumber: 369
+        }, this),
+        /* @__PURE__ */ jsxDEV("strong", { children: "SceneDeck 播放器" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+          lineNumber: 55,
+          columnNumber: 413
+        }, this),
+        /* @__PURE__ */ jsxDEV("span", { children: "用固定 1600 × 900 场景播放课程。" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+          lineNumber: 55,
+          columnNumber: 443
+        }, this),
+        /* @__PURE__ */ jsxDEV("em", { children: "打开 →" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+          lineNumber: 55,
+          columnNumber: 478
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+        lineNumber: 55,
+        columnNumber: 319
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+      lineNumber: 55,
+      columnNumber: 99
+    }, this) }, void 0, false, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+      lineNumber: 55,
+      columnNumber: 5
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+    lineNumber: 50,
+    columnNumber: 10
+  }, this);
+}
+_c2 = HomePage;
+export const appRoutes = [
+  { path: "/", element: /* @__PURE__ */ jsxDEV(HomePage, {}, void 0, false, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+    lineNumber: 60,
+    columnNumber: 23
+  }, this) },
+  { path: "/shared/ui-kit", element: /* @__PURE__ */ jsxDEV(UiKitPage, {}, void 0, false, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+    lineNumber: 61,
+    columnNumber: 36
+  }, this) },
+  ...activeModules.flatMap(
+    (module) => [
+      { path: module.path, element: module.element }
+    ]
+  ),
+  ...pptCatalog.length ? [
+    { path: "/scenedeck/", element: /* @__PURE__ */ jsxDEV(SceneDeckPage, {}, void 0, false, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+      lineNumber: 66,
+      columnNumber: 33
+    }, this) },
+    { path: "/web_ppt/", element: /* @__PURE__ */ jsxDEV(SceneDeckPage, {}, void 0, false, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+      lineNumber: 67,
+      columnNumber: 31
+    }, this) },
+    { path: "/web_ppt/slide.html", element: /* @__PURE__ */ jsxDEV(SceneDeckPage, {}, void 0, false, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx",
+      lineNumber: 68,
+      columnNumber: 41
+    }, this) }
+  ] : []
+];
+var _c, _c2;
+$RefreshReg$(_c, "SceneDeckPage");
+$RefreshReg$(_c2, "HomePage");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/src/app/routes.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,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QUFBQTtBQUFBO0FBQUE7QUFBQSxXQUFjLEVBQUk7QUFBQSxFQUFDLElBQ3pEO0FBQUc7QUFDUCxJQUFBbkIsSUFBQWlCO0FBQUEsYUFBQWpCLElBQUE7QUFBQSxhQUFBaUIsS0FBQSIsIm5hbWVzIjpbIkNvbnRlbnRCbG9jayIsIk1vZHVsZVNoZWxsIiwiU2NlbmVEZWNrIiwiVWlLaXRQYWdlIiwiYWN0aXZlTW9kdWxlcyIsIkFwcExpbmsiLCJwcHRNb2R1bGVzIiwiZmlsdGVyIiwibW9kdWxlIiwicHB0RGVjayIsInBwdENhdGFsb2ciLCJtYXAiLCJTY2VuZURlY2tQYWdlIiwibGVuZ3RoIiwiZGVja0lkIiwiZmluZCIsImlkIiwiYXNzZXRJZCIsInNjZW5lSWQiLCJnZXRQcHROb3RlcyIsIl9jIiwicGFnZUhyZWYiLCJwYWdlIiwicHB0UGF0aCIsImVuY29kZVVSSUNvbXBvbmVudCIsInBhdGgiLCJIb21lUGFnZSIsIm1vZHVsZUluZGV4IiwiU3RyaW5nIiwicGFkU3RhcnQiLCJ0aXRsZSIsImRlc2NyaXB0aW9uIiwicGFnZXMiLCJiYWRnZSIsImluZGV4IiwiZ29hbCIsInN1bW1hcnkiLCJfYzIiLCJhcHBSb3V0ZXMiLCJlbGVtZW50IiwiZmxhdE1hcCJdLCJpZ25vcmVMaXN0IjpbXSwic291cmNlcyI6WyJyb3V0ZXMudHN4Il0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IENvbnRlbnRCbG9jaywgTW9kdWxlU2hlbGwgfSBmcm9tICcuLi8uLi9tb2R1bGVzL3NoYXJlZC9yZWFjdCc7XG5pbXBvcnQgeyBTY2VuZURlY2ssIHR5cGUgRGVja0RlZmluaXRpb24gfSBmcm9tICcuLi8uLi9tb2R1bGVzL3NoYXJlZC9yZWFjdC9wcmVzZW50YXRpb24nO1xuaW1wb3J0IHsgVWlLaXRQYWdlIH0gZnJvbSAnLi4vLi4vbW9kdWxlcy9zaGFyZWQvcmVhY3Qvcm91dGluZy9VaUtpdFBhZ2UnO1xuaW1wb3J0IHsgYWN0aXZlTW9kdWxlcywgdHlwZSBBY3RpdmVNb2R1bGUsIHR5cGUgTW9kdWxlUGFnZU91dGxpbmUgfSBmcm9tICcuL21vZHVsZXMnO1xuaW1wb3J0IHsgQXBwTGluaywgdHlwZSBBcHBSb3V0ZSB9IGZyb20gJy4vUm91dGVyJztcblxuY29uc3QgcHB0TW9kdWxlcyA9IGFjdGl2ZU1vZHVsZXMuZmlsdGVyKChtb2R1bGUpID0+IG1vZHVsZS5wcHREZWNrKTtcbmNvbnN0IHBwdENhdGFsb2cgPSBwcHRNb2R1bGVzLm1hcCgobW9kdWxlKSA9PiBtb2R1bGUucHB0RGVjaykgYXMgW0RlY2tEZWZpbml0aW9uLCAuLi5EZWNrRGVmaW5pdGlvbltdXTtcblxuZnVuY3Rpb24gU2NlbmVEZWNrUGFnZSgpIHtcbiAgaWYgKCFwcHRDYXRhbG9nLmxlbmd0aCkgcmV0dXJuIDxwPlBhZ2Ugbm90IGZvdW5kLjwvcD47XG4gIHJldHVybiA8U2NlbmVEZWNrXG4gICAgY2F0YWxvZz17cHB0Q2F0YWxvZ31cbiAgICBtb2R1bGVJZD17KGRlY2tJZCkgPT4gZGVja0lkfVxuICAgIGFzc2V0SWQ9eyhkZWNrSWQpID0+IHBwdE1vZHVsZXMuZmluZCgobW9kdWxlKSA9PiBtb2R1bGUucHB0RGVjaz8uaWQgPT09IGRlY2tJZCk/LmFzc2V0SWQgPz8gZGVja0lkfVxuICAgIHByb2dyZXNzS2V5PXsoZGVja0lkKSA9PiBkZWNrSWQgPT09ICduZXVyb24tZ3VpZGUnXG4gICAgICA/ICdsZXNzb24tZmxvdzpuZXVyb24tZ3VpZGUtdjEnXG4gICAgICA6IGRlY2tJZCA9PT0gJ2NvbnZvbHV0aW9uLWtlcm5lbC1pbnRybydcbiAgICAgICAgPyAnbGVzc29uLWZsb3c6Y29udm9sdXRpb24ta2VybmVsLWludHJvLWd1aWRlLXYxJ1xuICAgICAgICA6IGBsZXNzb24tZmxvdzoke2RlY2tJZH1gfVxuICAgIGdldE5vdGVzPXsoc2NlbmVJZCwgZGVja0lkKSA9PiBwcHRNb2R1bGVzLmZpbmQoKG1vZHVsZSkgPT4gbW9kdWxlLnBwdERlY2s/LmlkID09PSBkZWNrSWQpPy5nZXRQcHROb3Rlcz8uKHNjZW5lSWQpID8/IFtdfVxuICAvPjtcbn1cblxyXG4vKiog6aG16Z2i57Si5byV5Lit55qE5q+P5LiA6aG15a+55bqUIFBQVCDnmoTkuIDpobXvvJvmsqHmnIkgUFBUIOeahOaooeWdl+aMh+WQkeivvueoi+acrOi6q+OAgiAqL1xyXG5mdW5jdGlvbiBwYWdlSHJlZihtb2R1bGU6IEFjdGl2ZU1vZHVsZSwgcGFnZTogTW9kdWxlUGFnZU91dGxpbmUpIHtcbiAgcmV0dXJuIG1vZHVsZS5wcHRQYXRoID8gYCR7bW9kdWxlLnBwdFBhdGh9P2RlY2s9JHtlbmNvZGVVUklDb21wb25lbnQobW9kdWxlLmlkKX0mc2xpZGU9JHtlbmNvZGVVUklDb21wb25lbnQocGFnZS5pZCl9YCA6IG1vZHVsZS5wYXRoO1xufVxuXG5mdW5jdGlvbiBIb21lUGFnZSgpIHtcbiAgcmV0dXJuIDxNb2R1bGVTaGVsbCB0aXRsZT1cIkludHVpdGl2ZSBEZWVwIExlYXJuaW5nXCIgc3VidGl0bGU9XCLku47nnJ/lrp7pl67popjlh7rlj5HvvIzpgJDmraXlu7rnq4vlj6/op6Pph4rnmoTmlbDlrabmqKHlnovjgIJcIiBzaGVsbENsYXNzTmFtZT1cImFwcC1ob21lLXNoZWxsXCI+XG4gICAgPHNlY3Rpb24gY2xhc3NOYW1lPVwiYXBwLWNvdXJzZS1kaXJlY3RvcnlcIiBhcmlhLWxhYmVsbGVkYnk9XCJhcHAtY291cnNlLWRpcmVjdG9yeS10aXRsZVwiPlxuICAgICAgPGhlYWRlciBjbGFzc05hbWU9XCJhcHAtY291cnNlLWRpcmVjdG9yeV9faGVhZFwiPjxkaXY+PHNwYW4gY2xhc3NOYW1lPVwiYXBwLWNvdXJzZS1kaXJlY3RvcnlfX2tpY2tlclwiPkNPVVJTRSBESVJFQ1RPUlk8L3NwYW4+PGgyIGlkPVwiYXBwLWNvdXJzZS1kaXJlY3RvcnktdGl0bGVcIj7or77nqIvmqKHlnZc8L2gyPjwvZGl2PjxwPumAieaLqeS4gOS4quivvueoi++8jOi/m+WFpeWujOaVtOWtpuS5oOa1geeoi+aIliBTY2VuZURlY2vjgII8L3A+PC9oZWFkZXI+XG4gICAgICA8ZGl2IGNsYXNzTmFtZT1cImFwcC1jb3Vyc2UtYWNjb3JkaW9uXCI+e2FjdGl2ZU1vZHVsZXMubWFwKChtb2R1bGUsIG1vZHVsZUluZGV4KSA9PiA8ZGV0YWlscyBjbGFzc05hbWU9XCJhcHAtY291cnNlLWdyb3VwXCIga2V5PXttb2R1bGUuaWR9IG9wZW4+PHN1bW1hcnkgY2xhc3NOYW1lPVwiYXBwLWNvdXJzZS1ncm91cF9fc3VtbWFyeVwiPjxzcGFuIGNsYXNzTmFtZT1cImFwcC1jb3Vyc2UtZ3JvdXBfX2luZGV4XCI+e1N0cmluZyhtb2R1bGVJbmRleCArIDEpLnBhZFN0YXJ0KDIsICcwJyl9PC9zcGFuPjxzcGFuIGNsYXNzTmFtZT1cImFwcC1jb3Vyc2UtZ3JvdXBfX2NvcHlcIj48c3Ryb25nPnttb2R1bGUudGl0bGV9PC9zdHJvbmc+PHNwYW4+e21vZHVsZS5kZXNjcmlwdGlvbn08L3NwYW4+PC9zcGFuPjxzcGFuIGNsYXNzTmFtZT1cImFwcC1jb3Vyc2UtZ3JvdXBfX2NvdW50XCI+e21vZHVsZS5wYWdlcy5sZW5ndGh9IOmhtTwvc3Bhbj48c3BhbiBjbGFzc05hbWU9XCJhcHAtY291cnNlLWdyb3VwX19jaGV2cm9uXCIgYXJpYS1oaWRkZW49XCJ0cnVlXCIgLz48L3N1bW1hcnk+PGRpdiBjbGFzc05hbWU9XCJhcHAtY291cnNlLWdyb3VwX19ib2R5XCI+PEFwcExpbmsgY2xhc3NOYW1lPVwiYXBwLWNvdXJzZS1sYXVuY2hcIiB0bz17bW9kdWxlLnBhdGh9PjxzcGFuIGNsYXNzTmFtZT1cImVkdS1iYWRnZVwiPnttb2R1bGUuYmFkZ2V9PC9zcGFuPjxzcGFuPjxzdHJvbmc+6L+b5YWl5a6M5pW06K++56iLPC9zdHJvbmc+PHNtYWxsPuaMieaVmeWtpumhuuW6j+i/nue7reWtpuS5oOWFqOmDqOWGheWuuTwvc21hbGw+PC9zcGFuPjxlbT7lvIDlp4vlrabkuaAg4oaSPC9lbT48L0FwcExpbms+e21vZHVsZS5wYWdlcy5sZW5ndGggPiAwICYmIDxvbCBjbGFzc05hbWU9XCJhcHAtY291cnNlLWxlc3NvbnNcIj57bW9kdWxlLnBhZ2VzLm1hcCgocGFnZSwgaW5kZXgpID0+IDxsaSBrZXk9e3BhZ2UuaWR9PjxhIGNsYXNzTmFtZT1cImFwcC1jb3Vyc2UtbGVzc29uXCIgaHJlZj17cGFnZUhyZWYobW9kdWxlLCBwYWdlKX0+PHNwYW4gY2xhc3NOYW1lPVwiYXBwLWNvdXJzZS1sZXNzb25fX251bWJlclwiPntTdHJpbmcoaW5kZXggKyAxKS5wYWRTdGFydCgyLCAnMCcpfTwvc3Bhbj48c3BhbiBjbGFzc05hbWU9XCJhcHAtY291cnNlLWxlc3Nvbl9fY29weVwiPjxzdHJvbmc+e3BhZ2UudGl0bGV9PC9zdHJvbmc+PHNtYWxsPntwYWdlLmdvYWwgPz8gcGFnZS5zdW1tYXJ5fTwvc21hbGw+PC9zcGFuPjxzcGFuIGNsYXNzTmFtZT1cImFwcC1jb3Vyc2UtbGVzc29uX19hcnJvd1wiIGFyaWEtaGlkZGVuPVwidHJ1ZVwiPuKGkjwvc3Bhbj48L2E+PC9saT4pfTwvb2w+fTwvZGl2PjwvZGV0YWlscz4pfTwvZGl2PlxuICAgIDwvc2VjdGlvbj5cbiAgICA8Q29udGVudEJsb2NrIGNsYXNzTmFtZT1cImFwcC1kZXZlbG9wZXItdG9vbHNcIiB0aXRsZT1cIuW8gOWPkeW3peWFt1wiIHN1YnRpdGxlPVwi5YWx5Lqr57uE5Lu25qOA5p+l5LiOIFNjZW5lRGVjayDmvJTnpLrlhaXlj6PjgIJcIj48ZGl2IGNsYXNzTmFtZT1cImFwcC1kZXZlbG9wZXItdG9vbHNfX2dyaWRcIj48QXBwTGluayBjbGFzc05hbWU9XCJhcHAtdWkta2l0LWNhcmRcIiB0bz1cIi9zaGFyZWQvdWkta2l0XCI+PHNwYW4gY2xhc3NOYW1lPVwiZWR1LWJhZGdlXCI+6K6+6K6h57O757ufPC9zcGFuPjxzdHJvbmc+U2hhcmVkIFVJIEtpdDwvc3Ryb25nPjxzcGFuPuajgOafpeWFseS6q+e7hOS7tuOAgea1geeoi+aOp+WItuWSjOmimOWei+OAgjwvc3Bhbj48ZW0+5omT5byAIOKGkjwvZW0+PC9BcHBMaW5rPjxhIGNsYXNzTmFtZT1cImFwcC11aS1raXQtY2FyZFwiIGhyZWY9XCIvc2NlbmVkZWNrL1wiPjxzcGFuIGNsYXNzTmFtZT1cImVkdS1iYWRnZVwiPlNjZW5lRGVjazwvc3Bhbj48c3Ryb25nPlNjZW5lRGVjayDmkq3mlL7lmag8L3N0cm9uZz48c3Bhbj7nlKjlm7rlrpogMTYwMCDDlyA5MDAg5Zy65pmv5pKt5pS+6K++56iL44CCPC9zcGFuPjxlbT7miZPlvIAg4oaSPC9lbT48L2E+PC9kaXY+PC9Db250ZW50QmxvY2s+XG4gIDwvTW9kdWxlU2hlbGw+O1xufVxuXG5leHBvcnQgY29uc3QgYXBwUm91dGVzOiBBcHBSb3V0ZVtdID0gW1xuICB7IHBhdGg6ICcvJywgZWxlbWVudDogPEhvbWVQYWdlIC8+IH0sXG4gIHsgcGF0aDogJy9zaGFyZWQvdWkta2l0JywgZWxlbWVudDogPFVpS2l0UGFnZSAvPiB9LFxuICAuLi5hY3RpdmVNb2R1bGVzLmZsYXRNYXAoKG1vZHVsZSkgPT4gW1xuICAgIHsgcGF0aDogbW9kdWxlLnBhdGgsIGVsZW1lbnQ6IG1vZHVsZS5lbGVtZW50IH0sXG4gIF0pLFxuICAuLi4ocHB0Q2F0YWxvZy5sZW5ndGggPyBbXG4gICAgeyBwYXRoOiAnL3NjZW5lZGVjay8nLCBlbGVtZW50OiA8U2NlbmVEZWNrUGFnZSAvPiB9LFxuICAgIHsgcGF0aDogJy93ZWJfcHB0LycsIGVsZW1lbnQ6IDxTY2VuZURlY2tQYWdlIC8+IH0sXG4gICAgeyBwYXRoOiAnL3dlYl9wcHQvc2xpZGUuaHRtbCcsIGVsZW1lbnQ6IDxTY2VuZURlY2tQYWdlIC8+IH0sXG4gIF0gOiBbXSksXG5dO1xuXHJcbiJdLCJmaWxlIjoiQzovVXNlcnMvT2NlYW4vRG9jdW1lbnRzL0dpdEh1Yi9pbnR1aXRpdmUtZGVlcC1sZWFybmluZy9zcmMvYXBwL3JvdXRlcy50c3gifQ==

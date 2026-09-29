@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 from functools import lru_cache, partial
 from pathlib import Path
 from typing import Any, Literal
@@ -123,16 +124,37 @@ def evaluate_short_answer(
     *,
     task_id: str | None = None,
 ) -> dict[str, Any]:
-    resolved_task_id = task_id or require_text(payload, "task_id", "缺少简答题 task_id。")
     answer = require_text(payload, "answer", "请先填写简答题答案。")
-    task = load_question_bank().get(resolved_task_id)
-    if task is None:
-        raise ValueError(f"未知的简答题 task_id：{resolved_task_id}")
+    requested_id = task_id or payload.get("task_id")
+    if requested_id is not None:
+        if not isinstance(requested_id, str) or not requested_id.strip():
+            raise ValueError("简答题 task_id 无效。")
+        resolved_task_id = requested_id.strip()
+        task = load_question_bank().get(resolved_task_id)
+        if task is None:
+            raise ValueError(f"未知的简答题 task_id：{resolved_task_id}")
+    else:
+        question = require_text(payload, "question", "缺少简答题题目。")
+        raw_reference = payload.get("reference_answer")
+        if isinstance(raw_reference, str):
+            points = [raw_reference.strip()] if raw_reference.strip() else []
+        elif isinstance(raw_reference, list) and all(isinstance(point, str) and point.strip() for point in raw_reference):
+            points = [point.strip() for point in raw_reference]
+        else:
+            points = []
+        if not points:
+            raise ValueError("缺少简答题参考答案。")
+        notes = payload.get("notes")
+        if notes is not None and not isinstance(notes, str):
+            raise ValueError("简答题备注必须是文字。")
+        canonical = json.dumps([question, points], ensure_ascii=False, separators=(",", ":"))
+        resolved_task_id = "inline:" + hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+        task = {"id": resolved_task_id, "question": question, "answer": points, "notes": notes or ""}
 
     context_payload = {
         key: value
         for key, value in payload.items()
-        if key not in {"task_id", "answer", "temperature", "max_tokens", "maxTokens"}
+        if key not in {"task_id", "question", "reference_answer", "notes", "answer", "temperature", "max_tokens", "maxTokens"}
     }
     reference_answer = "\n".join(f"- {point}" for point in task["answer"])
     context = json.dumps(context_payload, ensure_ascii=False, indent=2) if context_payload else "无"

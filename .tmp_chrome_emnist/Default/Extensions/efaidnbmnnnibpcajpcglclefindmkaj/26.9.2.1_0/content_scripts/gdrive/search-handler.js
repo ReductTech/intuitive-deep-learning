@@ -1,0 +1,18 @@
+/*************************************************************************
+* ADOBE CONFIDENTIAL
+* ___________________
+*
+*  Copyright 2015 Adobe Systems Incorporated
+*  All Rights Reserved.
+*
+* NOTICE:  All information contained herein is, and remains
+* the property of Adobe Systems Incorporated and its suppliers,
+* if any.  The intellectual and technical concepts contained
+* herein are proprietary to Adobe Systems Incorporated and its
+* suppliers and are protected by all applicable intellectual property laws,
+* including trade secret and or copyright laws.
+* Dissemination of this information or reproduction of this material
+* is strictly forbidden unless prior written permission is obtained
+* from Adobe Systems Incorporated.
+**************************************************************************/
+import{buildClassSelectorString,isFileTypePdfInTitle}from"./util.js";import{sendErrorLog,buildAcrobatPromotionSource}from"../utils/util.js";import{isDefaultViewer,openPdfInNewTabForDV}from"./default-viewership-service.js";import state from"./state.js";const checkForSearchResultsTable=()=>{try{const e=state?.config?.selectors?.GoogleDriveSearchBar?.tableBody?.roleSelector,r=state?.config?.selectors?.GoogleDriveSearchBar?.tableBody?.classSelector.join(",");let t=document.getElementsByClassName(r);t=Array.from(t).filter(r=>r.matches(e)),t.forEach(e=>{addSearchTableBodyEventListener(e)})}catch(e){sendErrorLog("Error in GSuite","Error in search table body processing in GDrive")}},addSearchTableBodyEventListener=e=>{e&&!e.hasAttribute("search-table-body-listener-added")&&(e.setAttribute("search-table-body-listener-added","true"),e.addEventListener("click",r=>handleSearchTableClick(r,e),{signal:state?.eventControllerSignal,capture:!0}))},handleSearchTableClick=(e,r)=>{const t=state?.config?.selectors?.GoogleDriveSearchBar?.tableRow?.roleSelector,o=e.target.closest(t);o&&processPdfSearchClickEvent(e,r,o)},processPdfSearchClickEvent=(e,r,t)=>{const o=state?.config?.selectors?.GoogleDriveSearchBar?.tableRow?.iconSelector.join(",");if(!o)return;const i=t?.querySelector(o);i&&isDefaultViewer()&&processDVSearchClick(e,r,t)},processDVSearchClick=(e,r,t)=>{try{const o=getPdfRowsFromSearchTable(r).indexOf(t);if(isPdfIndexValid(o)){const r=state?.searchFileList[o];if(isValidPdfFile(t,r)){const t=buildAcrobatPromotionSource("gdrive_chrome","search");openPdfInNewTabForDV(e,r,t)}}}catch(e){sendErrorLog("Error in GSuite","Processing error in search for GDrive default viewership")}},getPdfRowsFromSearchTable=e=>{const r=state?.config?.selectors?.GoogleDriveSearchBar?.tableRow?.roleSelector,t=state?.config?.selectors?.GoogleDriveSearchBar?.tableRow?.iconSelector?.join(",");return t?Array.from(e.querySelectorAll(r)).filter(e=>e.querySelector(t)):[]},isPdfIndexValid=e=>{const r=e>=0&&e<state?.searchFileList?.length;return r||sendErrorLog("Error in GSuite","PDF index error in search for GDrive default viewership"),r},isValidPdfFile=(e,r)=>areFileDetailsValid(r)&&validatePdfFileMatch(e,r),areFileDetailsValid=e=>!(!e?.id||!e?.title)||(sendErrorLog("Error in GSuite","PDF details missing in search for GDrive default viewership"),!1),validatePdfFileMatch=(e,r)=>{const t=buildClassSelectorString(state?.config?.selectors?.GoogleDriveSearchBar?.tableRow?.fileTitle);if(!t)return!1;const o=e?.querySelector(t);if(!o)return!1;const i=o.textContent,s=i===r?.title;return s||sendErrorLog("Error in GSuite","PDF file name mismatch in search for GDrive default viewership"),s&&isFileTypePdfInTitle(i)};export{checkForSearchResultsTable};

@@ -1,0 +1,394 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/modules/shared/react/ending/CourseEndingPage.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=2be87a0d"; const Fragment = __vite__cjsImport0_react_jsxDevRuntime["Fragment"]; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+var _s = $RefreshSig$();
+import __vite__cjsImport3_react from "/node_modules/.vite/deps/react.js?v=2be87a0d"; const useEffect = __vite__cjsImport3_react["useEffect"]; const useRef = __vite__cjsImport3_react["useRef"]; const useState = __vite__cjsImport3_react["useState"];
+import { PageRating } from "/modules/shared/react/learning/PageRating.tsx";
+import { LessonDevelopers } from "/modules/shared/react/learning/LessonDevelopers.tsx";
+import { Typography } from "/modules/shared/react/typography/Typography.tsx";
+import { emitTelemetry } from "/modules/shared/react/telemetry.ts";
+import "/modules/shared/react/ending/CourseEndingPage.css";
+export function CourseEndingPage({
+  title,
+  summary,
+  topics,
+  resources = [],
+  developerIds = ["ssocean"],
+  backHref = "/",
+  backLabel = "返回课程目录",
+  pageKey,
+  resourceHeading = "延伸资源"
+}) {
+  _s();
+  const [activeResource, setActiveResource] = useState(null);
+  const [resourcePage, setResourcePage] = useState(0);
+  const [feedbackOpen, setFeedbackOpen] = useState(false);
+  const [feedbackSent, setFeedbackSent] = useState(false);
+  const videoDialogRef = useRef(null);
+  const feedbackDialogRef = useRef(null);
+  const pageCount = Math.max(1, Math.ceil(resources.length / 4));
+  const visibleResources = resources.slice(resourcePage * 4, resourcePage * 4 + 4);
+  useEffect(() => {
+    const dialog = videoDialogRef.current;
+    if (activeResource?.embedUrl && dialog && !dialog.open) dialog.showModal();
+    if ((!activeResource?.embedUrl || !activeResource) && dialog?.open) dialog.close();
+  }, [activeResource]);
+  useEffect(() => {
+    const dialog = feedbackDialogRef.current;
+    if (feedbackOpen && dialog && !dialog.open) dialog.showModal();
+    if (!feedbackOpen && dialog?.open) dialog.close();
+  }, [feedbackOpen]);
+  function submitFeedback(event) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const message = String(formData.get("feedback") ?? "").trim();
+    if (!message) return;
+    emitTelemetry("course_ending_feedback", feedbackDialogRef.current, {
+      page_key: pageKey,
+      feedback: message
+    });
+    setFeedbackSent(true);
+    setFeedbackOpen(false);
+  }
+  return /* @__PURE__ */ jsxDEV("main", { className: "edu-course-ending", "aria-labelledby": "course-ending-title", children: [
+    /* @__PURE__ */ jsxDEV("section", { className: "edu-course-ending-hero", children: [
+      /* @__PURE__ */ jsxDEV("div", { className: "edu-course-ending-hero-art", "aria-hidden": "true", children: [
+        /* @__PURE__ */ jsxDEV("i", {}, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+          lineNumber: 96,
+          columnNumber: 72
+        }, this),
+        /* @__PURE__ */ jsxDEV("i", {}, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+          lineNumber: 96,
+          columnNumber: 77
+        }, this),
+        /* @__PURE__ */ jsxDEV("i", {}, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+          lineNumber: 96,
+          columnNumber: 82
+        }, this),
+        /* @__PURE__ */ jsxDEV("i", {}, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+          lineNumber: 96,
+          columnNumber: 87
+        }, this),
+        /* @__PURE__ */ jsxDEV("span", {}, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+          lineNumber: 96,
+          columnNumber: 92
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+        lineNumber: 96,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV("nav", { className: "edu-course-ending-nav", "aria-label": "课程导航", children: /* @__PURE__ */ jsxDEV("a", { href: backHref, children: [
+        /* @__PURE__ */ jsxDEV("span", { "aria-hidden": "true", children: "←" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+          lineNumber: 98,
+          columnNumber: 30
+        }, this),
+        backLabel
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+        lineNumber: 98,
+        columnNumber: 11
+      }, this) }, void 0, false, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+        lineNumber: 97,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV("div", { className: "edu-course-ending-intro", children: [
+        /* @__PURE__ */ jsxDEV(Typography, { as: "h1", variant: "display", id: "course-ending-title", children: title }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+          lineNumber: 101,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV(Typography, { as: "p", variant: "body", tone: "muted", children: [
+          /* @__PURE__ */ jsxDEV("strong", { children: "课程总结：" }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+            lineNumber: 102,
+            columnNumber: 58
+          }, this),
+          summary
+        ] }, void 0, true, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+          lineNumber: 102,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("ul", { className: "edu-course-ending-topics", "aria-label": "本节知识点", children: topics.map((topic) => /* @__PURE__ */ jsxDEV("li", { children: topic }, topic, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+          lineNumber: 104,
+          columnNumber: 36
+        }, this)) }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+          lineNumber: 103,
+          columnNumber: 11
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+        lineNumber: 100,
+        columnNumber: 9
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+      lineNumber: 95,
+      columnNumber: 7
+    }, this),
+    resources.length > 0 && /* @__PURE__ */ jsxDEV("section", { className: "edu-course-ending-resources", "aria-labelledby": "course-ending-resources-title", children: [
+      /* @__PURE__ */ jsxDEV("header", { children: [
+        /* @__PURE__ */ jsxDEV("h2", { id: "course-ending-resources-title", children: resourceHeading }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+          lineNumber: 110,
+          columnNumber: 17
+        }, this),
+        pageCount > 1 && /* @__PURE__ */ jsxDEV("div", { className: "edu-course-ending-carousel", "aria-label": "资源分页", children: [
+          /* @__PURE__ */ jsxDEV("button", { type: "button", "aria-label": "上一组资源", disabled: resourcePage === 0, onClick: () => setResourcePage((page) => Math.max(0, page - 1)), children: "‹" }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+            lineNumber: 111,
+            columnNumber: 11
+          }, this),
+          /* @__PURE__ */ jsxDEV("span", { children: [
+            resourcePage + 1,
+            " / ",
+            pageCount
+          ] }, void 0, true, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+            lineNumber: 112,
+            columnNumber: 11
+          }, this),
+          /* @__PURE__ */ jsxDEV("button", { type: "button", "aria-label": "下一组资源", disabled: resourcePage >= pageCount - 1, onClick: () => setResourcePage((page) => Math.min(pageCount - 1, page + 1)), children: "›" }, void 0, false, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+            lineNumber: 113,
+            columnNumber: 11
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+          lineNumber: 110,
+          columnNumber: 96
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+        lineNumber: 110,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV("div", { className: "edu-course-ending-resource-grid", "data-count": visibleResources.length, children: visibleResources.map((resource, index) => {
+        const cardContent = /* @__PURE__ */ jsxDEV(Fragment, { children: [
+          /* @__PURE__ */ jsxDEV("span", { className: `edu-course-ending-thumb edu-course-ending-thumb--${(resourcePage * 4 + index) % 4}`, children: [
+            resource.thumbnail && /* @__PURE__ */ jsxDEV("img", { src: resource.thumbnail, alt: "", loading: "lazy" }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+              lineNumber: 119,
+              columnNumber: 40
+            }, this),
+            resource.duration && /* @__PURE__ */ jsxDEV("time", { children: resource.duration }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+              lineNumber: 120,
+              columnNumber: 39
+            }, this),
+            resource.embedUrl && /* @__PURE__ */ jsxDEV("span", { className: "edu-course-ending-play", "aria-hidden": "true", children: "▶" }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+              lineNumber: 121,
+              columnNumber: 39
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+            lineNumber: 118,
+            columnNumber: 15
+          }, this),
+          /* @__PURE__ */ jsxDEV("span", { className: "edu-course-ending-resource-copy", children: [
+            /* @__PURE__ */ jsxDEV("strong", { children: resource.title }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+              lineNumber: 123,
+              columnNumber: 65
+            }, this),
+            /* @__PURE__ */ jsxDEV("span", { children: resource.description }, void 0, false, {
+              fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+              lineNumber: 123,
+              columnNumber: 98
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+            lineNumber: 123,
+            columnNumber: 15
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+          lineNumber: 117,
+          columnNumber: 33
+        }, this);
+        return resource.embedUrl ? /* @__PURE__ */ jsxDEV("button", { className: "edu-course-ending-resource", type: "button", onClick: () => setActiveResource(resource), children: cardContent }, resource.title, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+          lineNumber: 126,
+          columnNumber: 13
+        }, this) : resource.href ? /* @__PURE__ */ jsxDEV("a", { className: "edu-course-ending-resource", href: resource.href, target: "_blank", rel: "noreferrer", children: cardContent }, resource.title, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+          lineNumber: 128,
+          columnNumber: 13
+        }, this) : /* @__PURE__ */ jsxDEV("article", { className: "edu-course-ending-resource", children: cardContent }, resource.title, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+          lineNumber: 129,
+          columnNumber: 13
+        }, this);
+      }) }, void 0, false, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+        lineNumber: 115,
+        columnNumber: 9
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+      lineNumber: 109,
+      columnNumber: 32
+    }, this),
+    /* @__PURE__ */ jsxDEV("footer", { className: "edu-course-ending-meta", children: [
+      /* @__PURE__ */ jsxDEV("div", { className: "edu-course-ending-developers", children: /* @__PURE__ */ jsxDEV(LessonDevelopers, { githubIds: developerIds }, void 0, false, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+        lineNumber: 135,
+        columnNumber: 55
+      }, this) }, void 0, false, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+        lineNumber: 135,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV("div", { className: "edu-course-ending-rating", children: /* @__PURE__ */ jsxDEV(PageRating, { pageKey }, void 0, false, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+        lineNumber: 136,
+        columnNumber: 51
+      }, this) }, void 0, false, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+        lineNumber: 136,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV("button", { className: "edu-course-ending-feedback", type: "button", onClick: () => {
+        setFeedbackSent(false);
+        setFeedbackOpen(true);
+      }, children: [
+        /* @__PURE__ */ jsxDEV("span", { "aria-hidden": "true", children: "✎" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+          lineNumber: 138,
+          columnNumber: 11
+        }, this),
+        feedbackSent ? "反馈已记录" : "反馈意见"
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+        lineNumber: 137,
+        columnNumber: 9
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+      lineNumber: 134,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV("dialog", { className: "edu-course-ending-dialog", ref: videoDialogRef, "aria-label": activeResource?.title ?? "视频播放", onClose: () => setActiveResource(null), onClick: (event) => {
+      if (event.target === videoDialogRef.current) videoDialogRef.current?.close();
+    }, children: [
+      /* @__PURE__ */ jsxDEV("header", { children: [
+        /* @__PURE__ */ jsxDEV("strong", { children: activeResource?.title }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+          lineNumber: 143,
+          columnNumber: 17
+        }, this),
+        /* @__PURE__ */ jsxDEV("button", { type: "button", "aria-label": "关闭视频", onClick: () => videoDialogRef.current?.close(), children: "×" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+          lineNumber: 143,
+          columnNumber: 57
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+        lineNumber: 143,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV("div", { className: "edu-course-ending-video", children: /* @__PURE__ */ jsxDEV("iframe", { src: activeResource?.embedUrl, title: activeResource?.title ?? "延伸视频", allow: "autoplay; fullscreen; picture-in-picture", referrerPolicy: "strict-origin-when-cross-origin", allowFullScreen: true }, activeResource?.embedUrl, false, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+        lineNumber: 144,
+        columnNumber: 50
+      }, this) }, void 0, false, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+        lineNumber: 144,
+        columnNumber: 9
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+      lineNumber: 142,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV("dialog", { className: "edu-course-ending-feedback-dialog", ref: feedbackDialogRef, "aria-labelledby": "course-ending-feedback-title", onClose: () => setFeedbackOpen(false), children: /* @__PURE__ */ jsxDEV("form", { onSubmit: submitFeedback, children: [
+      /* @__PURE__ */ jsxDEV("header", { children: [
+        /* @__PURE__ */ jsxDEV(Typography, { as: "h2", variant: "h2", id: "course-ending-feedback-title", children: "课程反馈" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+          lineNumber: 149,
+          columnNumber: 19
+        }, this),
+        /* @__PURE__ */ jsxDEV("button", { type: "button", "aria-label": "关闭反馈", onClick: () => feedbackDialogRef.current?.close(), children: "×" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+          lineNumber: 149,
+          columnNumber: 103
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+        lineNumber: 149,
+        columnNumber: 11
+      }, this),
+      /* @__PURE__ */ jsxDEV("label", { htmlFor: "course-ending-feedback-text", children: "你希望我们改进什么？" }, void 0, false, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+        lineNumber: 150,
+        columnNumber: 11
+      }, this),
+      /* @__PURE__ */ jsxDEV("textarea", { id: "course-ending-feedback-text", name: "feedback", rows: 4, maxLength: 1e3, required: true }, void 0, false, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+        lineNumber: 151,
+        columnNumber: 11
+      }, this),
+      /* @__PURE__ */ jsxDEV("button", { type: "submit", children: "提交反馈" }, void 0, false, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+        lineNumber: 152,
+        columnNumber: 11
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+      lineNumber: 148,
+      columnNumber: 9
+    }, this) }, void 0, false, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+      lineNumber: 147,
+      columnNumber: 7
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx",
+    lineNumber: 94,
+    columnNumber: 5
+  }, this);
+}
+_s(CourseEndingPage, "9BfePlT4om+klk66MJGPSN7m77Q=");
+_c = CourseEndingPage;
+var _c;
+$RefreshReg$(_c, "CourseEndingPage");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/shared/react/ending/CourseEndingPage.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,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UmF0aW5nIiwiTGVzc29uRGV2ZWxvcGVycyIsIlR5cG9ncmFwaHkiLCJlbWl0VGVsZW1ldHJ5IiwiQ291cnNlRW5kaW5nUGFnZSIsInRpdGxlIiwic3VtbWFyeSIsInRvcGljcyIsInJlc291cmNlcyIsImRldmVsb3BlcklkcyIsImJhY2tIcmVmIiwiYmFja0xhYmVsIiwicGFnZUtleSIsInJlc291cmNlSGVhZGluZyIsIl9zIiwiYWN0aXZlUmVzb3VyY2UiLCJzZXRBY3RpdmVSZXNvdXJjZSIsInJlc291cmNlUGFnZSIsInNldFJlc291cmNlUGFnZSIsImZlZWRiYWNrT3BlbiIsInNldEZlZWRiYWNrT3BlbiIsImZlZWRiYWNrU2VudCIsInNldEZlZWRiYWNrU2VudCIsInZpZGVvRGlhbG9nUmVmIiwiZmVlZGJhY2tEaWFsb2dSZWYiLCJwYWdlQ291bnQiLCJNYXRoIiwibWF4IiwiY2VpbCIsImxlbmd0aCIsInZpc2libGVSZXNvdXJjZXMiLCJzbGljZSIsImRpYWxvZyIsImN1cnJlbnQiLCJlbWJlZFVybCIsIm9wZW4iLCJzaG93TW9kYWwiLCJjbG9zZSIsInN1Ym1pdEZlZWRiYWNrIiwiZXZlbnQiLCJwcmV2ZW50RGVmYXVsdCIsImZvcm1EYXRhIiwiRm9ybURhdGEiLCJjdXJyZW50VGFyZ2V0IiwibWVzc2FnZSIsIlN0cmluZyIsImdldCIsInRyaW0iLCJwYWdlX2tleSIsImZlZWRiYWNrIiwibWFwIiwidG9waWMiLCJwYWdlIiwibWluIiwicmVzb3VyY2UiLCJpbmRleCIsImNhcmRDb250ZW50IiwidGh1bWJuYWlsIiwiZHVyYXRpb24iLCJkZXNjcmlwdGlvbiIsImhyZWYiLCJ0YXJnZXQiLCJfYyJdLCJpZ25vcmVMaXN0IjpbXSwic291cmNlcyI6WyJDb3Vyc2VFbmRpbmdQYWdlLnRzeCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyB1c2VFZmZlY3QsIHVzZVJlZiwgdXNlU3RhdGUsIHR5cGUgRm9ybUV2ZW50IH0gZnJvbSAncmVhY3QnO1xuaW1wb3J0IHsgUGFnZVJhdGluZyB9IGZyb20gJy4uL2xlYXJuaW5nL1BhZ2VSYXRpbmcnO1xuaW1wb3J0IHsgTGVzc29uRGV2ZWxvcGVycyB9IGZyb20gJy4uL2xlYXJuaW5nL0xlc3NvbkRldmVsb3BlcnMnO1xuaW1wb3J0IHsgVHlwb2dyYXBoeSB9IGZyb20gJy4uL3R5cG9ncmFwaHkvVHlwb2dyYXBoeSc7XG5pbXBvcnQgeyBlbWl0VGVsZW1ldHJ5IH0gZnJvbSAnLi4vdGVsZW1ldHJ5JztcbmltcG9ydCAnLi9Db3Vyc2VFbmRpbmdQYWdlLmNzcyc7XG5cbmV4cG9ydCBpbnRlcmZhY2UgQ291cnNlRW5kaW5nUmVzb3VyY2Uge1xuICB0aXRsZTogc3RyaW5nO1xuICBkZXNjcmlwdGlvbjogc3RyaW5nO1xuICBkdXJhdGlvbj86IHN0cmluZztcbiAgdGh1bWJuYWlsPzogc3RyaW5nO1xuICBlbWJlZFVybD86IHN0cmluZztcbiAgaHJlZj86IHN0cmluZztcbn1cblxuZXhwb3J0IGludGVyZmFjZSBDb3Vyc2VFbmRpbmdQYWdlUHJvcHMge1xuICB0aXRsZTogc3RyaW5nO1xuICBzdW1tYXJ5OiBzdHJpbmc7XG4gIHRvcGljczogcmVhZG9ubHkgc3RyaW5nW107XG4gIHJlc291cmNlcz86IHJlYWRvbmx5IENvdXJzZUVuZGluZ1Jlc291cmNlW107XG4gIGRldmVsb3Blcklkcz86IHJlYWRvbmx5IHN0cmluZ1tdO1xuICBiYWNrSHJlZj86IHN0cmluZztcbiAgYmFja0xhYmVsPzogc3RyaW5nO1xuICBwYWdlS2V5OiBzdHJpbmc7XG4gIHJlc291cmNlSGVhZGluZz86IHN0cmluZztcbn1cblxuZXhwb3J0IGZ1bmN0aW9uIENvdXJzZUVuZGluZ1BhZ2Uoe1xuICB0aXRsZSxcbiAgc3VtbWFyeSxcbiAgdG9waWNzLFxuICByZXNvdXJjZXMgPSBbXSxcbiAgZGV2ZWxvcGVySWRzID0gWydzc29jZWFuJ10sXG4gIGJhY2tIcmVmID0gJy8nLFxuICBiYWNrTGFiZWwgPSAn6L+U5Zue6K++56iL55uu5b2VJyxcbiAgcGFnZUtleSxcbiAgcmVzb3VyY2VIZWFkaW5nID0gJ+W7tuS8uOi1hOa6kCcsXG59OiBDb3Vyc2VFbmRpbmdQYWdlUHJvcHMpIHtcbiAgY29uc3QgW2FjdGl2ZVJlc291cmNlLCBzZXRBY3RpdmVSZXNvdXJjZV0gPSB1c2VTdGF0ZTxDb3Vyc2VFbmRpbmdSZXNvdXJjZSB8IG51bGw+KG51bGwpO1xuICBjb25zdCBbcmVzb3VyY2VQYWdlLCBzZXRSZXNvdXJjZVBhZ2VdID0gdXNlU3RhdGUoMCk7XG4gIGNvbnN0IFtmZWVkYmFja09wZW4sIHNldEZlZWRiYWNrT3Blbl0gPSB1c2VTdGF0ZShmYWxzZSk7XG4gIGNvbnN0IFtmZWVkYmFja1NlbnQsIHNldEZlZWRiYWNrU2VudF0gPSB1c2VTdGF0ZShmYWxzZSk7XG4gIGNvbnN0IHZpZGVvRGlhbG9nUmVmID0gdXNlUmVmPEhUTUxEaWFsb2dFbGVtZW50PihudWxsKTtcbiAgY29uc3QgZmVlZGJhY2tEaWFsb2dSZWYgPSB1c2VSZWY8SFRNTERpYWxvZ0VsZW1lbnQ+KG51bGwpO1xuICBjb25zdCBwYWdlQ291bnQgPSBNYXRoLm1heCgxLCBNYXRoLmNlaWwocmVzb3VyY2VzLmxlbmd0aCAvIDQpKTtcbiAgY29uc3QgdmlzaWJsZVJlc291cmNlcyA9IHJlc291cmNlcy5zbGljZShyZXNvdXJjZVBhZ2UgKiA0LCByZXNvdXJjZVBhZ2UgKiA0ICsgNCk7XG5cbiAgdXNlRWZmZWN0KCgpID0+IHtcbiAgICBjb25zdCBkaWFsb2cgPSB2aWRlb0RpYWxvZ1JlZi5jdXJyZW50O1xuICAgIGlmIChhY3RpdmVSZXNvdXJjZT8uZW1iZWRVcmwgJiYgZGlhbG9nICYmICFkaWFsb2cub3BlbikgZGlhbG9nLnNob3dNb2RhbCgpO1xuICAgIGlmICgoIWFjdGl2ZVJlc291cmNlPy5lbWJlZFVybCB8fCAhYWN0aXZlUmVzb3VyY2UpICYmIGRpYWxvZz8ub3BlbikgZGlhbG9nLmNsb3NlKCk7XG4gIH0sIFthY3RpdmVSZXNvdXJjZV0pO1xuXG4gIHVzZUVmZmVjdCgoKSA9PiB7XG4gICAgY29uc3QgZGlhbG9nID0gZmVlZGJhY2tEaWFsb2dSZWYuY3VycmVudDtcbiAgICBpZiAoZmVlZGJhY2tPcGVuICYmIGRpYWxvZyAmJiAhZGlhbG9nLm9wZW4pIGRpYWxvZy5zaG93TW9kYWwoKTtcbiAgICBpZiAoIWZlZWRiYWNrT3BlbiAmJiBkaWFsb2c/Lm9wZW4pIGRpYWxvZy5jbG9zZSgpO1xuICB9LCBbZmVlZGJhY2tPcGVuXSk7XG5cbiAgZnVuY3Rpb24gc3VibWl0RmVlZGJhY2soZXZlbnQ6IEZvcm1FdmVudDxIVE1MRm9ybUVsZW1lbnQ+KSB7XG4gICAgZXZlbnQucHJldmVudERlZmF1bHQoKTtcbiAgICBjb25zdCBmb3JtRGF0YSA9IG5ldyBGb3JtRGF0YShldmVudC5jdXJyZW50VGFyZ2V0KTtcbiAgICBjb25zdCBtZXNzYWdlID0gU3RyaW5nKGZvcm1EYXRhLmdldCgnZmVlZGJhY2snKSA/PyAnJykudHJpbSgpO1xuICAgIGlmICghbWVzc2FnZSkgcmV0dXJuO1xuICAgIGVtaXRUZWxlbWV0cnkoJ2NvdXJzZV9lbmRpbmdfZmVlZGJhY2snLCBmZWVkYmFja0RpYWxvZ1JlZi5jdXJyZW50LCB7XG4gICAgICBwYWdlX2tleTogcGFnZUtleSxcbiAgICAgIGZlZWRiYWNrOiBtZXNzYWdlLFxuICAgIH0pO1xuICAgIHNldEZlZWRiYWNrU2VudCh0cnVlKTtcbiAgICBzZXRGZWVkYmFja09wZW4oZmFsc2UpO1xuICB9XG5cbiAgcmV0dXJuIChcbiAgICA8bWFpbiBjbGFzc05hbWU9XCJlZHUtY291cnNlLWVuZGluZ1wiIGFyaWEtbGFiZWxsZWRieT1cImNvdXJzZS1lbmRpbmctdGl0bGVcIj5cbiAgICAgIDxzZWN0aW9uIGNsYXNzTmFtZT1cImVkdS1jb3Vyc2UtZW5kaW5nLWhlcm9cIj5cbiAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJlZHUtY291cnNlLWVuZGluZy1oZXJvLWFydFwiIGFyaWEtaGlkZGVuPVwidHJ1ZVwiPjxpIC8+PGkgLz48aSAvPjxpIC8+PHNwYW4gLz48L2Rpdj5cbiAgICAgICAgPG5hdiBjbGFzc05hbWU9XCJlZHUtY291cnNlLWVuZGluZy1uYXZcIiBhcmlhLWxhYmVsPVwi6K++56iL5a+86IiqXCI+XG4gICAgICAgICAgPGEgaHJlZj17YmFja0hyZWZ9PjxzcGFuIGFyaWEtaGlkZGVuPVwidHJ1ZVwiPuKGkDwvc3Bhbj57YmFja0xhYmVsfTwvYT5cbiAgICAgICAgPC9uYXY+XG4gICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZWR1LWNvdXJzZS1lbmRpbmctaW50cm9cIj5cbiAgICAgICAgICA8VHlwb2dyYXBoeSBhcz1cImgxXCIgdmFyaWFudD1cImRpc3BsYXlcIiBpZD1cImNvdXJzZS1lbmRpbmctdGl0bGVcIj57dGl0bGV9PC9UeXBvZ3JhcGh5PlxuICAgICAgICAgIDxUeXBvZ3JhcGh5IGFzPVwicFwiIHZhcmlhbnQ9XCJib2R5XCIgdG9uZT1cIm11dGVkXCI+PHN0cm9uZz7or77nqIvmgLvnu5PvvJo8L3N0cm9uZz57c3VtbWFyeX08L1R5cG9ncmFwaHk+XG4gICAgICAgICAgPHVsIGNsYXNzTmFtZT1cImVkdS1jb3Vyc2UtZW5kaW5nLXRvcGljc1wiIGFyaWEtbGFiZWw9XCLmnKzoioLnn6Xor4bngrlcIj5cbiAgICAgICAgICAgIHt0b3BpY3MubWFwKCh0b3BpYykgPT4gPGxpIGtleT17dG9waWN9Pnt0b3BpY308L2xpPil9XG4gICAgICAgICAgPC91bD5cbiAgICAgICAgPC9kaXY+XG4gICAgICA8L3NlY3Rpb24+XG5cbiAgICAgIHtyZXNvdXJjZXMubGVuZ3RoID4gMCAmJiA8c2VjdGlvbiBjbGFzc05hbWU9XCJlZHUtY291cnNlLWVuZGluZy1yZXNvdXJjZXNcIiBhcmlhLWxhYmVsbGVkYnk9XCJjb3Vyc2UtZW5kaW5nLXJlc291cmNlcy10aXRsZVwiPlxuICAgICAgICA8aGVhZGVyPjxoMiBpZD1cImNvdXJzZS1lbmRpbmctcmVzb3VyY2VzLXRpdGxlXCI+e3Jlc291cmNlSGVhZGluZ308L2gyPntwYWdlQ291bnQgPiAxICYmIDxkaXYgY2xhc3NOYW1lPVwiZWR1LWNvdXJzZS1lbmRpbmctY2Fyb3VzZWxcIiBhcmlhLWxhYmVsPVwi6LWE5rqQ5YiG6aG1XCI+XG4gICAgICAgICAgPGJ1dHRvbiB0eXBlPVwiYnV0dG9uXCIgYXJpYS1sYWJlbD1cIuS4iuS4gOe7hOi1hOa6kFwiIGRpc2FibGVkPXtyZXNvdXJjZVBhZ2UgPT09IDB9IG9uQ2xpY2s9eygpID0+IHNldFJlc291cmNlUGFnZSgocGFnZSkgPT4gTWF0aC5tYXgoMCwgcGFnZSAtIDEpKX0+4oC5PC9idXR0b24+XG4gICAgICAgICAgPHNwYW4+e3Jlc291cmNlUGFnZSArIDF9IC8ge3BhZ2VDb3VudH08L3NwYW4+XG4gICAgICAgICAgPGJ1dHRvbiB0eXBlPVwiYnV0dG9uXCIgYXJpYS1sYWJlbD1cIuS4i+S4gOe7hOi1hOa6kFwiIGRpc2FibGVkPXtyZXNvdXJjZVBhZ2UgPj0gcGFnZUNvdW50IC0gMX0gb25DbGljaz17KCkgPT4gc2V0UmVzb3VyY2VQYWdlKChwYWdlKSA9PiBNYXRoLm1pbihwYWdlQ291bnQgLSAxLCBwYWdlICsgMSkpfT7igLo8L2J1dHRvbj5cbiAgICAgICAgPC9kaXY+fTwvaGVhZGVyPlxuICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImVkdS1jb3Vyc2UtZW5kaW5nLXJlc291cmNlLWdyaWRcIiBkYXRhLWNvdW50PXt2aXNpYmxlUmVzb3VyY2VzLmxlbmd0aH0+XG4gICAgICAgICAge3Zpc2libGVSZXNvdXJjZXMubWFwKChyZXNvdXJjZSwgaW5kZXgpID0+IHtcbiAgICAgICAgICAgIGNvbnN0IGNhcmRDb250ZW50ID0gPD5cbiAgICAgICAgICAgICAgPHNwYW4gY2xhc3NOYW1lPXtgZWR1LWNvdXJzZS1lbmRpbmctdGh1bWIgZWR1LWNvdXJzZS1lbmRpbmctdGh1bWItLSR7KHJlc291cmNlUGFnZSAqIDQgKyBpbmRleCkgJSA0fWB9PlxuICAgICAgICAgICAgICAgIHtyZXNvdXJjZS50aHVtYm5haWwgJiYgPGltZyBzcmM9e3Jlc291cmNlLnRodW1ibmFpbH0gYWx0PVwiXCIgbG9hZGluZz1cImxhenlcIiAvPn1cbiAgICAgICAgICAgICAgICB7cmVzb3VyY2UuZHVyYXRpb24gJiYgPHRpbWU+e3Jlc291cmNlLmR1cmF0aW9ufTwvdGltZT59XG4gICAgICAgICAgICAgICAge3Jlc291cmNlLmVtYmVkVXJsICYmIDxzcGFuIGNsYXNzTmFtZT1cImVkdS1jb3Vyc2UtZW5kaW5nLXBsYXlcIiBhcmlhLWhpZGRlbj1cInRydWVcIj7ilrY8L3NwYW4+fVxuICAgICAgICAgICAgICA8L3NwYW4+XG4gICAgICAgICAgICAgIDxzcGFuIGNsYXNzTmFtZT1cImVkdS1jb3Vyc2UtZW5kaW5nLXJlc291cmNlLWNvcHlcIj48c3Ryb25nPntyZXNvdXJjZS50aXRsZX08L3N0cm9uZz48c3Bhbj57cmVzb3VyY2UuZGVzY3JpcHRpb259PC9zcGFuPjwvc3Bhbj5cbiAgICAgICAgICAgIDwvPjtcbiAgICAgICAgICAgIHJldHVybiByZXNvdXJjZS5lbWJlZFVybFxuICAgICAgICAgICAgICA/IDxidXR0b24gY2xhc3NOYW1lPVwiZWR1LWNvdXJzZS1lbmRpbmctcmVzb3VyY2VcIiB0eXBlPVwiYnV0dG9uXCIga2V5PXtyZXNvdXJjZS50aXRsZX0gb25DbGljaz17KCkgPT4gc2V0QWN0aXZlUmVzb3VyY2UocmVzb3VyY2UpfT57Y2FyZENvbnRlbnR9PC9idXR0b24+XG4gICAgICAgICAgICAgIDogcmVzb3VyY2UuaHJlZlxuICAgICAgICAgICAgICAgID8gPGEgY2xhc3NOYW1lPVwiZWR1LWNvdXJzZS1lbmRpbmctcmVzb3VyY2VcIiBocmVmPXtyZXNvdXJjZS5ocmVmfSBrZXk9e3Jlc291cmNlLnRpdGxlfSB0YXJnZXQ9XCJfYmxhbmtcIiByZWw9XCJub3JlZmVycmVyXCI+e2NhcmRDb250ZW50fTwvYT5cbiAgICAgICAgICAgICAgICA6IDxhcnRpY2xlIGNsYXNzTmFtZT1cImVkdS1jb3Vyc2UtZW5kaW5nLXJlc291cmNlXCIga2V5PXtyZXNvdXJjZS50aXRsZX0+e2NhcmRDb250ZW50fTwvYXJ0aWNsZT47XG4gICAgICAgICAgfSl9XG4gICAgICAgIDwvZGl2PlxuICAgICAgPC9zZWN0aW9uPn1cblxuICAgICAgPGZvb3RlciBjbGFzc05hbWU9XCJlZHUtY291cnNlLWVuZGluZy1tZXRhXCI+XG4gICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZWR1LWNvdXJzZS1lbmRpbmctZGV2ZWxvcGVyc1wiPjxMZXNzb25EZXZlbG9wZXJzIGdpdGh1Yklkcz17ZGV2ZWxvcGVySWRzfSAvPjwvZGl2PlxuICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImVkdS1jb3Vyc2UtZW5kaW5nLXJhdGluZ1wiPjxQYWdlUmF0aW5nIHBhZ2VLZXk9e3BhZ2VLZXl9IC8+PC9kaXY+XG4gICAgICAgIDxidXR0b24gY2xhc3NOYW1lPVwiZWR1LWNvdXJzZS1lbmRpbmctZmVlZGJhY2tcIiB0eXBlPVwiYnV0dG9uXCIgb25DbGljaz17KCkgPT4geyBzZXRGZWVkYmFja1NlbnQoZmFsc2UpOyBzZXRGZWVkYmFja09wZW4odHJ1ZSk7IH19PlxuICAgICAgICAgIDxzcGFuIGFyaWEtaGlkZGVuPVwidHJ1ZVwiPuKcjjwvc3Bhbj57ZmVlZGJhY2tTZW50ID8gJ+WPjemmiOW3suiusOW9lScgOiAn5Y+N6aaI5oSP6KeBJ31cbiAgICAgICAgPC9idXR0b24+XG4gICAgICA8L2Zvb3Rlcj5cblxuICAgICAgPGRpYWxvZyBjbGFzc05hbWU9XCJlZHUtY291cnNlLWVuZGluZy1kaWFsb2dcIiByZWY9e3ZpZGVvRGlhbG9nUmVmfSBhcmlhLWxhYmVsPXthY3RpdmVSZXNvdXJjZT8udGl0bGUgPz8gJ+inhumikeaSreaUvid9IG9uQ2xvc2U9eygpID0+IHNldEFjdGl2ZVJlc291cmNlKG51bGwpfSBvbkNsaWNrPXsoZXZlbnQpID0+IHsgaWYgKGV2ZW50LnRhcmdldCA9PT0gdmlkZW9EaWFsb2dSZWYuY3VycmVudCkgdmlkZW9EaWFsb2dSZWYuY3VycmVudD8uY2xvc2UoKTsgfX0+XG4gICAgICAgIDxoZWFkZXI+PHN0cm9uZz57YWN0aXZlUmVzb3VyY2U/LnRpdGxlfTwvc3Ryb25nPjxidXR0b24gdHlwZT1cImJ1dHRvblwiIGFyaWEtbGFiZWw9XCLlhbPpl63op4bpopFcIiBvbkNsaWNrPXsoKSA9PiB2aWRlb0RpYWxvZ1JlZi5jdXJyZW50Py5jbG9zZSgpfT7DlzwvYnV0dG9uPjwvaGVhZGVyPlxuICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImVkdS1jb3Vyc2UtZW5kaW5nLXZpZGVvXCI+PGlmcmFtZSBrZXk9e2FjdGl2ZVJlc291cmNlPy5lbWJlZFVybH0gc3JjPXthY3RpdmVSZXNvdXJjZT8uZW1iZWRVcmx9IHRpdGxlPXthY3RpdmVSZXNvdXJjZT8udGl0bGUgPz8gJ+W7tuS8uOinhumikSd9IGFsbG93PVwiYXV0b3BsYXk7IGZ1bGxzY3JlZW47IHBpY3R1cmUtaW4tcGljdHVyZVwiIHJlZmVycmVyUG9saWN5PVwic3RyaWN0LW9yaWdpbi13aGVuLWNyb3NzLW9yaWdpblwiIGFsbG93RnVsbFNjcmVlbiAvPjwvZGl2PlxuICAgICAgPC9kaWFsb2c+XG5cbiAgICAgIDxkaWFsb2cgY2xhc3NOYW1lPVwiZWR1LWNvdXJzZS1lbmRpbmctZmVlZGJhY2stZGlhbG9nXCIgcmVmPXtmZWVkYmFja0RpYWxvZ1JlZn0gYXJpYS1sYWJlbGxlZGJ5PVwiY291cnNlLWVuZGluZy1mZWVkYmFjay10aXRsZVwiIG9uQ2xvc2U9eygpID0+IHNldEZlZWRiYWNrT3BlbihmYWxzZSl9PlxuICAgICAgICA8Zm9ybSBvblN1Ym1pdD17c3VibWl0RmVlZGJhY2t9PlxuICAgICAgICAgIDxoZWFkZXI+PFR5cG9ncmFwaHkgYXM9XCJoMlwiIHZhcmlhbnQ9XCJoMlwiIGlkPVwiY291cnNlLWVuZGluZy1mZWVkYmFjay10aXRsZVwiPuivvueoi+WPjemmiDwvVHlwb2dyYXBoeT48YnV0dG9uIHR5cGU9XCJidXR0b25cIiBhcmlhLWxhYmVsPVwi5YWz6Zet5Y+N6aaIXCIgb25DbGljaz17KCkgPT4gZmVlZGJhY2tEaWFsb2dSZWYuY3VycmVudD8uY2xvc2UoKX0+w5c8L2J1dHRvbj48L2hlYWRlcj5cbiAgICAgICAgICA8bGFiZWwgaHRtbEZvcj1cImNvdXJzZS1lbmRpbmctZmVlZGJhY2stdGV4dFwiPuS9oOW4jOacm+aIkeS7rOaUuei/m+S7gOS5iO+8nzwvbGFiZWw+XG4gICAgICAgICAgPHRleHRhcmVhIGlkPVwiY291cnNlLWVuZGluZy1mZWVkYmFjay10ZXh0XCIgbmFtZT1cImZlZWRiYWNrXCIgcm93cz17NH0gbWF4TGVuZ3RoPXsxMDAwfSByZXF1aXJlZCAvPlxuICAgICAgICAgIDxidXR0b24gdHlwZT1cInN1Ym1pdFwiPuaPkOS6pOWPjemmiDwvYnV0dG9uPlxuICAgICAgICA8L2Zvcm0+XG4gICAgICA8L2RpYWxvZz5cbiAgICA8L21haW4+XG4gICk7XG59XG4iXSwiZmlsZSI6IkM6L1VzZXJzL09jZWFuL0RvY3VtZW50cy9HaXRIdWIvaW50dWl0aXZlLWRlZXAtbGVhcm5pbmcvbW9kdWxlcy9zaGFyZWQvcmVhY3QvZW5kaW5nL0NvdXJzZUVuZGluZ1BhZ2UudHN4In0=

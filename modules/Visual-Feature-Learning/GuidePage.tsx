@@ -3,8 +3,19 @@ import { ModuleShell } from '../shared/react';
 import '../shared/react/styles.css';
 import '../shared/react/ui-kit.css';
 import '../shared/react/presentation.css';
+import './tailwind.css';
 import { DigitRecognitionOpeningPage } from './pages/DigitRecognitionOpeningPage/DigitRecognitionOpeningPage';
+import { DigitDifferencesPage } from './pages/DigitDifferencesPage/DigitDifferencesPage';
+import { RawPixelVariationPage } from './pages/RawPixelVariationPage/RawPixelVariationPage';
+import { FeatureExtractionPage } from './pages/FeatureExtractionPage/FeatureExtractionPage';
+import { SimpleFeatureLimitsPage } from './pages/SimpleFeatureLimitsPage/SimpleFeatureLimitsPage';
+import { NineGridFeaturePage } from './pages/NineGridFeaturePage/NineGridFeaturePage';
+import { FeatureVectorPage } from './pages/FeatureVectorPage/FeatureVectorPage';
+import { ManualFeatureClassifierPage } from './pages/ManualFeatureClassifierPage/ManualFeatureClassifierPage';
+import { NineGridInformationLossPage } from './pages/NineGridInformationLossPage/NineGridInformationLossPage';
 import { FixedDigitPage } from './pages/FixedDigitPage/FixedDigitPage';
+import { TwoStageRecognitionPage } from './pages/TwoStageRecognitionPage/TwoStageRecognitionPage';
+import { SingleToSequencePage } from './pages/SingleToSequencePage/SingleToSequencePage';
 
 function LessonCanvas({ children }: { children: ReactNode }) {
   const frameRef = useRef<HTMLDivElement>(null);
@@ -32,6 +43,16 @@ export function GuidePage() {
     shellClassName="course-shell course-blog-shell"
   >
     <LessonCanvas><DigitRecognitionOpeningPage /></LessonCanvas>
+    <LessonCanvas><DigitDifferencesPage /></LessonCanvas>
+    <LessonCanvas><RawPixelVariationPage /></LessonCanvas>
+    <LessonCanvas><FeatureExtractionPage /></LessonCanvas>
+    <LessonCanvas><SimpleFeatureLimitsPage /></LessonCanvas>
+    <LessonCanvas><NineGridFeaturePage /></LessonCanvas>
+    <LessonCanvas><FeatureVectorPage /></LessonCanvas>
+    <LessonCanvas><ManualFeatureClassifierPage /></LessonCanvas>
+    <LessonCanvas><NineGridInformationLossPage /></LessonCanvas>
     <LessonCanvas><FixedDigitPage /></LessonCanvas>
+    <LessonCanvas><TwoStageRecognitionPage /></LessonCanvas>
+    <LessonCanvas><SingleToSequencePage /></LessonCanvas>
   </ModuleShell>;
 }

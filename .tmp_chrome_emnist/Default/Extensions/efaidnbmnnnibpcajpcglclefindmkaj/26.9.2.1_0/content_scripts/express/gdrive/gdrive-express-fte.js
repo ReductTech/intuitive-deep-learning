@@ -1,0 +1,18 @@
+/*************************************************************************
+* ADOBE CONFIDENTIAL
+* ___________________
+*
+*  Copyright 2015 Adobe Systems Incorporated
+*  All Rights Reserved.
+*
+* NOTICE:  All information contained herein is, and remains
+* the property of Adobe Systems Incorporated and its suppliers,
+* if any.  The intellectual and technical concepts contained
+* herein are proprietary to Adobe Systems Incorporated and its
+* suppliers and are protected by all applicable intellectual property laws,
+* including trade secret and or copyright laws.
+* Dissemination of this information or reproduction of this material
+* is strictly forbidden unless prior written permission is obtained
+* from Adobe Systems Incorporated.
+**************************************************************************/
+class GdriveExpressFte{id="GdriveExpressFte";timeout=2e3;maxFteCount=1;fteGapBetweenIterations=6048e5;gdriveExpressStateKey="express-gdrive-fte-state";gdriveExpressInitialState={previewTouchpointUsed:!1,fte:{shown:0,lastShown:null}};rendered=!1;constructor(){this.initPromise=this.init()}isEligible=async()=>{if(await this.initPromise,!this.config?.enableGdriveExpressFte)return!1;let e=await chrome.storage.local.get(this.gdriveExpressStateKey);e?.[this.gdriveExpressStateKey]?e=e[this.gdriveExpressStateKey]:(e=this.gdriveExpressInitialState,chrome.storage.local.set({[this.gdriveExpressStateKey]:e}));const{previewTouchpointUsed:t,fte:s}=e;if(t)return!1;if(s?.shown>=this.maxFteCount)return!1;if(s?.lastShown&&s?.lastShown+this.fteGapBetweenIterations>Date.now())return!1;return!!await this.getCtaElement()};render=async()=>{if(this.rendered)return;let e=await chrome.storage.local.get(this.gdriveExpressStateKey);if(e?.[this.gdriveExpressStateKey]?.previewTouchpointUsed)return;const t=e?.[this.gdriveExpressStateKey]?.fte?.lastShown;if(t&&t+ONE_DAY_IN_MILLISECONDS>Date.now())return;const s=await this.getCtaElement(),i=s?.getElementsByClassName("cc440d50ba-express-entrypoint-button")[0];if(i){this.rendered=!0;const e=e=>{"none"===getComputedStyle(i).display&&this.expressContextualFTE.remove();const t=e;t.style.position="relative",t.style.left=(s.offsetWidth-224)/2+"px"};this.expressContextualFTE=new this.expressContextualFteClass({touchpoint:"gdriveNativeViewer",ctaButtonElement:s,fteStrings:{fteTitle:this.config.fteStrings.title,fteDescription:this.config.fteStrings.description,fteCtaLabel:this.config.fteStrings.ctaLabel},updateFteStateCallback:this.updateGdriveExpressState,positionFteCallback:e,renderCallback:e=>{s.appendChild(e)}}),await this.expressContextualFTE.render()}};getCtaElement=async()=>{for(let e=0;e<10;e++){const e=document.getElementById("express-gdrive-native-viewer-entry-point");if(e)return e;await new Promise(e=>setTimeout(e,100))}return null};updateGdriveExpressState=async()=>{let e=await chrome.storage.local.get(this.gdriveExpressStateKey);e=e?.[this.gdriveExpressStateKey]?e[this.gdriveExpressStateKey]:this.gdriveExpressInitialState;let t={...this.gdriveExpressInitialState,...e};t.fte.shown+=1,t.fte.lastShown=Date.now(),chrome.storage.local.set({[this.gdriveExpressStateKey]:t})};loadContentScripts=async()=>{const e=chrome.runtime.getURL("content_scripts/express/fte/express-contextual-fte.js");return Promise.all([import(e)]).then(e=>{this.expressContextualFteClass=e[0].default})};init=async()=>{if("drive.google.com"!==window.location.hostname)return this.isEligible=async()=>!1,void(this.render=async()=>{});const e=await chrome.runtime.sendMessage({main_op:"gdrive-express-init"});this.config={...e,enableGdriveExpressFte:e?.enableGdriveExpressFte&&e?.enableGdriveNativeViewerExpressMenu},await this.loadContentScripts()}}

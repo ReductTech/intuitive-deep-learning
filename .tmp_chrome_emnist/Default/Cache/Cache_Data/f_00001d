@@ -1,0 +1,120 @@
+import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=2be87a0d"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import { BiologicalNeuronPage } from "/modules/Neuron-Guide/pages/BiologicalNeuronPage/BiologicalNeuronPage.tsx";
+import { ExtraInputsPage } from "/modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx";
+import { NematodeResponsePage } from "/modules/Neuron-Guide/pages/NematodeResponsePage/NematodeResponsePage.tsx";
+import { NeuronDecisionBridgePage } from "/modules/Neuron-Guide/pages/NeuronDecisionBridgePage/NeuronDecisionBridgePage.tsx";
+import { SignalDiscoveryPage } from "/modules/Neuron-Guide/pages/SignalDiscoveryPage/SignalDiscoveryPage.tsx";
+import { WeightedSumPage } from "/modules/Neuron-Guide/pages/WeightedSumPage/WeightedSumPage.tsx";
+import { WeightedContributionTheoryPage } from "/modules/Neuron-Guide/pages/WeightedContributionTheoryPage/WeightedContributionTheoryPage.tsx";
+import { BiasNaturalBoundaryPage, BiasThresholdTheoryPage } from "/modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx";
+import { NematodeXorPage } from "/modules/Neuron-Guide/pages/NematodeXorPage/NematodeXorPage.tsx";
+import { NeuronCompletionPage, NeuronLessonFooter } from "/modules/Neuron-Guide/pages/NeuronLessonFooter/NeuronLessonFooter.tsx";
+import { ShallowLinearPage } from "/modules/Neuron-Guide/pages/ShallowLinearPage/ShallowLinearPage.tsx";
+import { ReluIntroPage } from "/modules/Neuron-Guide/pages/ReluIntroPage/ReluIntroPage.tsx";
+import { ReluExplanationPage } from "/modules/Neuron-Guide/pages/ReluExplanationPage/ReluExplanationPage.tsx";
+import { ReluNetworkPage } from "/modules/Neuron-Guide/pages/ReluNetworkPage/ReluNetworkPage.tsx";
+import { ReluApproximationLabPage } from "/modules/Neuron-Guide/pages/ReluApproximationLabPage/ReluApproximationLabPage.tsx";
+import { ActivationCatalogPage } from "/modules/Neuron-Guide/pages/ActivationCatalogPage/ActivationCatalogPage.tsx";
+export const lessonContextOptions = {
+  moduleId: "neuron-guide",
+  stateKey: "activity:neuron-guide-core-v1",
+  events: {
+    decisionAnalyzed: "neuron_decision_analyzed",
+    importanceAccepted: "neuron_weight_suggestion_accepted",
+    inputValueChanged: "neuron_input_value_changed"
+  }
+};
+export const neuronCourse = [
+  { id: "nematode-response", title: "只有 302 个神经元，它为什么能完成这么多行为？", section: "神经系统", revealMode: "scroll", component: () => /* @__PURE__ */ jsxDEV(NematodeResponsePage, {}, void 0, false, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/course.tsx",
+    lineNumber: 43,
+    columnNumber: 120
+  }, this) },
+  { id: "biological-structure", title: "人工神经元，源自生物神经元", section: "生物学引入", revealMode: "scroll", component: () => /* @__PURE__ */ jsxDEV(BiologicalNeuronPage, {}, void 0, false, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/course.tsx",
+    lineNumber: 44,
+    columnNumber: 112
+  }, this) },
+  { id: "decision-bridge", title: "一个神经元，只做一次简单判断", section: "从简单响应到复杂决策", revealMode: "scroll", component: () => /* @__PURE__ */ jsxDEV(NeuronDecisionBridgePage, {}, void 0, false, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/course.tsx",
+    lineNumber: 45,
+    columnNumber: 113
+  }, this) },
+  { id: "signal-discovery", title: "让神经元帮你做一次判断", section: "输入信号", revealMode: "cue", component: (c) => /* @__PURE__ */ jsxDEV(SignalDiscoveryPage, { onComplete: c.complete }, void 0, false, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/course.tsx",
+    lineNumber: 46,
+    columnNumber: 103
+  }, this) },
+  { id: "weighted-sum", title: "把一个现实因素，翻译成神经元能处理的输入", section: "输入信号", revealMode: "cue", component: (c) => /* @__PURE__ */ jsxDEV(WeightedSumPage, { onComplete: c.complete }, void 0, false, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/course.tsx",
+    lineNumber: 47,
+    columnNumber: 108
+  }, this) },
+  { id: "extra-inputs", title: "从一个因素，到三个因素", section: "输入信号", revealMode: "cue", component: (c) => /* @__PURE__ */ jsxDEV(ExtraInputsPage, { onComplete: c.complete }, void 0, false, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/course.tsx",
+    lineNumber: 48,
+    columnNumber: 99
+  }, this) },
+  { id: "weighted-contribution", title: "从加权求和到矩阵表示", section: "矩阵形式", revealMode: "scroll", component: () => /* @__PURE__ */ jsxDEV(WeightedContributionTheoryPage, {}, void 0, false, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/course.tsx",
+    lineNumber: 49,
+    columnNumber: 109
+  }, this) },
+  { id: "bias-natural-boundary", title: "矩阵计算之后，如何形成分类判断？", section: "最终判断", revealMode: "scroll", component: () => /* @__PURE__ */ jsxDEV(BiasNaturalBoundaryPage, {}, void 0, false, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/course.tsx",
+    lineNumber: 50,
+    columnNumber: 115
+  }, this) },
+  { id: "bias-threshold", title: "偏置如何调整分类阈值？", section: "最终判断", revealMode: "cue", component: (c) => /* @__PURE__ */ jsxDEV(BiasThresholdTheoryPage, { onComplete: c.complete }, void 0, false, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/course.tsx",
+    lineNumber: 51,
+    columnNumber: 101
+  }, this) },
+  { id: "linear-shallow", title: "线性神经元的组合仍然是线性的", section: "线性网络", revealMode: "cue", component: (c) => /* @__PURE__ */ jsxDEV(ShallowLinearPage, { onComplete: c.complete }, void 0, false, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/course.tsx",
+    lineNumber: 52,
+    columnNumber: 104
+  }, this) },
+  { id: "nematode-xor", title: "线性分类的边界：秀丽隐杆线虫的双侧刺激", section: "从线性到非线性", revealMode: "cue", component: (c) => /* @__PURE__ */ jsxDEV(NematodeXorPage, { onComplete: c.complete }, void 0, false, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/course.tsx",
+    lineNumber: 53,
+    columnNumber: 110
+  }, this) },
+  { id: "relu-intro", title: "从线性计算到非线性响应", section: "激活函数", revealMode: "cue", component: (c) => /* @__PURE__ */ jsxDEV(ReluIntroPage, { onComplete: c.complete }, void 0, false, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/course.tsx",
+    lineNumber: 54,
+    columnNumber: 97
+  }, this) },
+  { id: "relu-explanation", title: "认识线性整流单元", section: "激活函数", revealMode: "scroll", advanceLabel: "继续：组合多个带有 ReLU 的神经元", component: () => /* @__PURE__ */ jsxDEV(ReluExplanationPage, {}, void 0, false, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/course.tsx",
+    lineNumber: 55,
+    columnNumber: 139
+  }, this) },
+  { id: "relu-network", title: "组合多个带有 ReLU 的神经元，曲线继续弯折", section: "激活函数", revealMode: "cue", component: (c) => /* @__PURE__ */ jsxDEV(ReluNetworkPage, { onComplete: c.complete }, void 0, false, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/course.tsx",
+    lineNumber: 56,
+    columnNumber: 111
+  }, this) },
+  { id: "relu-approximation", title: "足够多带有 ReLU 的神经元，就能逼近任意曲线", section: "激活函数", revealMode: "cue", component: (c) => /* @__PURE__ */ jsxDEV(ReluApproximationLabPage, { onComplete: c.complete }, void 0, false, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/course.tsx",
+    lineNumber: 57,
+    columnNumber: 118
+  }, this) },
+  { id: "activation-catalog", title: "认识这些被广泛使用的激活函数", section: "激活函数", revealMode: "scroll", component: () => /* @__PURE__ */ jsxDEV(ActivationCatalogPage, {}, void 0, false, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/course.tsx",
+    lineNumber: 58,
+    columnNumber: 110
+  }, this) },
+  { id: "ending", title: "你已经搭出了一个人工神经元", section: "课程结尾", revealMode: "scroll", component: () => /* @__PURE__ */ jsxDEV(NeuronCompletionPage, {}, void 0, false, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/course.tsx",
+    lineNumber: 59,
+    columnNumber: 97
+  }, this) },
+  { id: "resources", title: "推荐资源", section: "课程结尾", revealMode: "immediate", component: () => /* @__PURE__ */ jsxDEV(NeuronLessonFooter, {}, void 0, false, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Neuron-Guide/course.tsx",
+    lineNumber: 60,
+    columnNumber: 94
+  }, this) }
+];
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJtYXBwaW5ncyI6IkFBMEN5SDtBQXhDekgsU0FBU0EsNEJBQTRCO0FBQ3JDLFNBQVNDLHVCQUF1QjtBQUNoQyxTQUFTQyw0QkFBNEI7QUFDckMsU0FBU0MsZ0NBQWdDO0FBQ3pDLFNBQVNDLDJCQUEyQjtBQUNwQyxTQUFTQyx1QkFBdUI7QUFDaEMsU0FBU0Msc0NBQXNDO0FBQy9DLFNBQVNDLHlCQUF5QkMsK0JBQStCO0FBQ2pFLFNBQVNDLHVCQUF1QjtBQUNoQyxTQUFTQyxzQkFBc0JDLDBCQUEwQjtBQUN6RCxTQUFTQyx5QkFBeUI7QUFDbEMsU0FBU0MscUJBQXFCO0FBQzlCLFNBQVNDLDJCQUEyQjtBQUNwQyxTQUFTQyx1QkFBdUI7QUFDaEMsU0FBU0MsZ0NBQWdDO0FBQ3pDLFNBQVNDLDZCQUE2QjtBQWMvQixhQUFNQyx1QkFBdUI7QUFBQSxFQUNsQ0MsVUFBVTtBQUFBLEVBQ1ZDLFVBQVU7QUFBQSxFQUNWQyxRQUFRO0FBQUEsSUFDTkMsa0JBQWtCO0FBQUEsSUFDbEJDLG9CQUFvQjtBQUFBLElBQ3BCQyxtQkFBbUI7QUFBQSxFQUNyQjtBQUNGO0FBRU8sYUFBTUMsZUFBbUM7QUFBQSxFQUM5QyxFQUFFQyxJQUFJLHFCQUFxQkMsT0FBTyw2QkFBNkJDLFNBQVMsUUFBUUMsWUFBWSxVQUFVQyxXQUFXQSxNQUFNLHVCQUFDLDBCQUFEO0FBQUE7QUFBQTtBQUFBO0FBQUEsU0FBcUIsRUFBSTtBQUFBLEVBQ2hKLEVBQUVKLElBQUksd0JBQXdCQyxPQUFPLGlCQUFpQkMsU0FBUyxTQUFTQyxZQUFZLFVBQVVDLFdBQVdBLE1BQU0sdUJBQUMsMEJBQUQ7QUFBQTtBQUFBO0FBQUE7QUFBQSxTQUFxQixFQUFJO0FBQUEsRUFDeEksRUFBRUosSUFBSSxtQkFBbUJDLE9BQU8sa0JBQWtCQyxTQUFTLGNBQWNDLFlBQVksVUFBVUMsV0FBV0EsTUFBTSx1QkFBQyw4QkFBRDtBQUFBO0FBQUE7QUFBQTtBQUFBLFNBQXlCLEVBQUk7QUFBQSxFQUM3SSxFQUFFSixJQUFJLG9CQUFvQkMsT0FBTyxlQUFlQyxTQUFTLFFBQVFDLFlBQVksT0FBT0MsV0FBV0EsQ0FBQ0MsTUFBTSx1QkFBQyx1QkFBb0IsWUFBWUEsRUFBRUMsWUFBbkM7QUFBQTtBQUFBO0FBQUE7QUFBQSxTQUE0QyxFQUFJO0FBQUEsRUFDdEosRUFBRU4sSUFBSSxnQkFBZ0JDLE9BQU8sd0JBQXdCQyxTQUFTLFFBQVFDLFlBQVksT0FBT0MsV0FBV0EsQ0FBQ0MsTUFBTSx1QkFBQyxtQkFBZ0IsWUFBWUEsRUFBRUMsWUFBL0I7QUFBQTtBQUFBO0FBQUE7QUFBQSxTQUF3QyxFQUFJO0FBQUEsRUFDdkosRUFBRU4sSUFBSSxnQkFBZ0JDLE9BQU8sZUFBZUMsU0FBUyxRQUFRQyxZQUFZLE9BQU9DLFdBQVdBLENBQUNDLE1BQU0sdUJBQUMsbUJBQWdCLFlBQVlBLEVBQUVDLFlBQS9CO0FBQUE7QUFBQTtBQUFBO0FBQUEsU0FBd0MsRUFBSTtBQUFBLEVBQzlJLEVBQUVOLElBQUkseUJBQXlCQyxPQUFPLGNBQWNDLFNBQVMsUUFBUUMsWUFBWSxVQUFVQyxXQUFXQSxNQUFNLHVCQUFDLG9DQUFEO0FBQUE7QUFBQTtBQUFBO0FBQUEsU0FBK0IsRUFBSTtBQUFBLEVBQy9JLEVBQUVKLElBQUkseUJBQXlCQyxPQUFPLG9CQUFvQkMsU0FBUyxRQUFRQyxZQUFZLFVBQVVDLFdBQVdBLE1BQU0sdUJBQUMsNkJBQUQ7QUFBQTtBQUFBO0FBQUE7QUFBQSxTQUF3QixFQUFJO0FBQUEsRUFDOUksRUFBRUosSUFBSSxrQkFBa0JDLE9BQU8sZUFBZUMsU0FBUyxRQUFRQyxZQUFZLE9BQU9DLFdBQVdBLENBQUNDLE1BQU0sdUJBQUMsMkJBQXdCLFlBQVlBLEVBQUVDLFlBQXZDO0FBQUE7QUFBQTtBQUFBO0FBQUEsU0FBZ0QsRUFBSTtBQUFBLEVBQ3hKLEVBQUVOLElBQUksa0JBQWtCQyxPQUFPLGtCQUFrQkMsU0FBUyxRQUFRQyxZQUFZLE9BQU9DLFdBQVdBLENBQUNDLE1BQU0sdUJBQUMscUJBQWtCLFlBQVlBLEVBQUVDLFlBQWpDO0FBQUE7QUFBQTtBQUFBO0FBQUEsU0FBMEMsRUFBSTtBQUFBLEVBQ3JKLEVBQUVOLElBQUksZ0JBQWdCQyxPQUFPLHVCQUF1QkMsU0FBUyxXQUFXQyxZQUFZLE9BQU9DLFdBQVdBLENBQUNDLE1BQU0sdUJBQUMsbUJBQWdCLFlBQVlBLEVBQUVDLFlBQS9CO0FBQUE7QUFBQTtBQUFBO0FBQUEsU0FBd0MsRUFBSTtBQUFBLEVBQ3pKLEVBQUVOLElBQUksY0FBY0MsT0FBTyxlQUFlQyxTQUFTLFFBQVFDLFlBQVksT0FBT0MsV0FBV0EsQ0FBQ0MsTUFBTSx1QkFBQyxpQkFBYyxZQUFZQSxFQUFFQyxZQUE3QjtBQUFBO0FBQUE7QUFBQTtBQUFBLFNBQXNDLEVBQUk7QUFBQSxFQUMxSSxFQUFFTixJQUFJLG9CQUFvQkMsT0FBTyxZQUFZQyxTQUFTLFFBQVFDLFlBQVksVUFBVUksY0FBYyx1QkFBdUJILFdBQVdBLE1BQU0sdUJBQUMseUJBQUQ7QUFBQTtBQUFBO0FBQUE7QUFBQSxTQUFvQixFQUFJO0FBQUEsRUFDbEssRUFBRUosSUFBSSxnQkFBZ0JDLE9BQU8sMkJBQTJCQyxTQUFTLFFBQVFDLFlBQVksT0FBT0MsV0FBV0EsQ0FBQ0MsTUFBTSx1QkFBQyxtQkFBZ0IsWUFBWUEsRUFBRUMsWUFBL0I7QUFBQTtBQUFBO0FBQUE7QUFBQSxTQUF3QyxFQUFJO0FBQUEsRUFDMUosRUFBRU4sSUFBSSxzQkFBc0JDLE9BQU8sNEJBQTRCQyxTQUFTLFFBQVFDLFlBQVksT0FBT0MsV0FBV0EsQ0FBQ0MsTUFBTSx1QkFBQyw0QkFBeUIsWUFBWUEsRUFBRUMsWUFBeEM7QUFBQTtBQUFBO0FBQUE7QUFBQSxTQUFpRCxFQUFJO0FBQUEsRUFDMUssRUFBRU4sSUFBSSxzQkFBc0JDLE9BQU8sa0JBQWtCQyxTQUFTLFFBQVFDLFlBQVksVUFBVUMsV0FBV0EsTUFBTSx1QkFBQywyQkFBRDtBQUFBO0FBQUE7QUFBQTtBQUFBLFNBQXNCLEVBQUk7QUFBQSxFQUN2SSxFQUFFSixJQUFJLFVBQVVDLE9BQU8saUJBQWlCQyxTQUFTLFFBQVFDLFlBQVksVUFBVUMsV0FBV0EsTUFBTSx1QkFBQywwQkFBRDtBQUFBO0FBQUE7QUFBQTtBQUFBLFNBQXFCLEVBQUk7QUFBQSxFQUN6SCxFQUFFSixJQUFJLGFBQWFDLE9BQU8sUUFBUUMsU0FBUyxRQUFRQyxZQUFZLGFBQWFDLFdBQVdBLE1BQU0sdUJBQUMsd0JBQUQ7QUFBQTtBQUFBO0FBQUE7QUFBQSxTQUFtQixFQUFJO0FBQUMiLCJuYW1lcyI6WyJCaW9sb2dpY2FsTmV1cm9uUGFnZSIsIkV4dHJhSW5wdXRzUGFnZSIsIk5lbWF0b2RlUmVzcG9uc2VQYWdlIiwiTmV1cm9uRGVjaXNpb25CcmlkZ2VQYWdlIiwiU2lnbmFsRGlzY292ZXJ5UGFnZSIsIldlaWdodGVkU3VtUGFnZSIsIldlaWdodGVkQ29udHJpYnV0aW9uVGhlb3J5UGFnZSIsIkJpYXNOYXR1cmFsQm91bmRhcnlQYWdlIiwiQmlhc1RocmVzaG9sZFRoZW9yeVBhZ2UiLCJOZW1hdG9kZVhvclBhZ2UiLCJOZXVyb25Db21wbGV0aW9uUGFnZSIsIk5ldXJvbkxlc3NvbkZvb3RlciIsIlNoYWxsb3dMaW5lYXJQYWdlIiwiUmVsdUludHJvUGFnZSIsIlJlbHVFeHBsYW5hdGlvblBhZ2UiLCJSZWx1TmV0d29ya1BhZ2UiLCJSZWx1QXBwcm94aW1hdGlvbkxhYlBhZ2UiLCJBY3RpdmF0aW9uQ2F0YWxvZ1BhZ2UiLCJsZXNzb25Db250ZXh0T3B0aW9ucyIsIm1vZHVsZUlkIiwic3RhdGVLZXkiLCJldmVudHMiLCJkZWNpc2lvbkFuYWx5emVkIiwiaW1wb3J0YW5jZUFjY2VwdGVkIiwiaW5wdXRWYWx1ZUNoYW5nZWQiLCJuZXVyb25Db3Vyc2UiLCJpZCIsInRpdGxlIiwic2VjdGlvbiIsInJldmVhbE1vZGUiLCJjb21wb25lbnQiLCJjIiwiY29tcGxldGUiLCJhZHZhbmNlTGFiZWwiXSwiaWdub3JlTGlzdCI6W10sInNvdXJjZXMiOlsiY291cnNlLnRzeCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgdHlwZSB7IFJlYWN0Tm9kZSB9IGZyb20gJ3JlYWN0JztcbmltcG9ydCB0eXBlIHsgTGVzc29uRmxvd1JldmVhbE1vZGUsIExlc3NvblN0ZXBDb250ZXh0IH0gZnJvbSAnLi4vc2hhcmVkL3JlYWN0JztcbmltcG9ydCB7IEJpb2xvZ2ljYWxOZXVyb25QYWdlIH0gZnJvbSAnLi9wYWdlcy9CaW9sb2dpY2FsTmV1cm9uUGFnZS9CaW9sb2dpY2FsTmV1cm9uUGFnZSc7XG5pbXBvcnQgeyBFeHRyYUlucHV0c1BhZ2UgfSBmcm9tICcuL3BhZ2VzL0V4dHJhSW5wdXRzUGFnZS9FeHRyYUlucHV0c1BhZ2UnO1xuaW1wb3J0IHsgTmVtYXRvZGVSZXNwb25zZVBhZ2UgfSBmcm9tICcuL3BhZ2VzL05lbWF0b2RlUmVzcG9uc2VQYWdlL05lbWF0b2RlUmVzcG9uc2VQYWdlJztcbmltcG9ydCB7IE5ldXJvbkRlY2lzaW9uQnJpZGdlUGFnZSB9IGZyb20gJy4vcGFnZXMvTmV1cm9uRGVjaXNpb25CcmlkZ2VQYWdlL05ldXJvbkRlY2lzaW9uQnJpZGdlUGFnZSc7XG5pbXBvcnQgeyBTaWduYWxEaXNjb3ZlcnlQYWdlIH0gZnJvbSAnLi9wYWdlcy9TaWduYWxEaXNjb3ZlcnlQYWdlL1NpZ25hbERpc2NvdmVyeVBhZ2UnO1xuaW1wb3J0IHsgV2VpZ2h0ZWRTdW1QYWdlIH0gZnJvbSAnLi9wYWdlcy9XZWlnaHRlZFN1bVBhZ2UvV2VpZ2h0ZWRTdW1QYWdlJztcbmltcG9ydCB7IFdlaWdodGVkQ29udHJpYnV0aW9uVGhlb3J5UGFnZSB9IGZyb20gJy4vcGFnZXMvV2VpZ2h0ZWRDb250cmlidXRpb25UaGVvcnlQYWdlL1dlaWdodGVkQ29udHJpYnV0aW9uVGhlb3J5UGFnZSc7XG5pbXBvcnQgeyBCaWFzTmF0dXJhbEJvdW5kYXJ5UGFnZSwgQmlhc1RocmVzaG9sZFRoZW9yeVBhZ2UgfSBmcm9tICcuL3BhZ2VzL0JpYXNUaHJlc2hvbGRUaGVvcnlQYWdlL0JpYXNUaHJlc2hvbGRUaGVvcnlQYWdlJztcbmltcG9ydCB7IE5lbWF0b2RlWG9yUGFnZSB9IGZyb20gJy4vcGFnZXMvTmVtYXRvZGVYb3JQYWdlL05lbWF0b2RlWG9yUGFnZSc7XG5pbXBvcnQgeyBOZXVyb25Db21wbGV0aW9uUGFnZSwgTmV1cm9uTGVzc29uRm9vdGVyIH0gZnJvbSAnLi9wYWdlcy9OZXVyb25MZXNzb25Gb290ZXIvTmV1cm9uTGVzc29uRm9vdGVyJztcbmltcG9ydCB7IFNoYWxsb3dMaW5lYXJQYWdlIH0gZnJvbSAnLi9wYWdlcy9TaGFsbG93TGluZWFyUGFnZS9TaGFsbG93TGluZWFyUGFnZSc7XG5pbXBvcnQgeyBSZWx1SW50cm9QYWdlIH0gZnJvbSAnLi9wYWdlcy9SZWx1SW50cm9QYWdlL1JlbHVJbnRyb1BhZ2UnO1xuaW1wb3J0IHsgUmVsdUV4cGxhbmF0aW9uUGFnZSB9IGZyb20gJy4vcGFnZXMvUmVsdUV4cGxhbmF0aW9uUGFnZS9SZWx1RXhwbGFuYXRpb25QYWdlJztcbmltcG9ydCB7IFJlbHVOZXR3b3JrUGFnZSB9IGZyb20gJy4vcGFnZXMvUmVsdU5ldHdvcmtQYWdlL1JlbHVOZXR3b3JrUGFnZSc7XG5pbXBvcnQgeyBSZWx1QXBwcm94aW1hdGlvbkxhYlBhZ2UgfSBmcm9tICcuL3BhZ2VzL1JlbHVBcHByb3hpbWF0aW9uTGFiUGFnZS9SZWx1QXBwcm94aW1hdGlvbkxhYlBhZ2UnO1xuaW1wb3J0IHsgQWN0aXZhdGlvbkNhdGFsb2dQYWdlIH0gZnJvbSAnLi9wYWdlcy9BY3RpdmF0aW9uQ2F0YWxvZ1BhZ2UvQWN0aXZhdGlvbkNhdGFsb2dQYWdlJztcblxuZXhwb3J0IGludGVyZmFjZSBOZXVyb25Db3Vyc2VJdGVtIHtcbiAgaWQ6IHN0cmluZztcbiAgdGl0bGU6IHN0cmluZztcbiAgc2VjdGlvbjogc3RyaW5nO1xuICByZXZlYWxNb2RlOiBMZXNzb25GbG93UmV2ZWFsTW9kZTtcbiAgY29tcG9uZW50OiAoY29udGV4dDogTGVzc29uU3RlcENvbnRleHQpID0+IFJlYWN0Tm9kZTtcbiAgYWR2YW5jZUxhYmVsPzogc3RyaW5nO1xuICAvKiogT3B0aW9uYWwgcGVyLXN1cmZhY2UgdmlzaWJpbGl0eTsgb21pdHRlZCBtZWFucyB2aXNpYmxlIGV2ZXJ5d2hlcmUuICovXG4gIHNob3dJbkJsb2c/OiBib29sZWFuO1xuICBzaG93SW5QcHQ/OiBib29sZWFuO1xufVxuXG5leHBvcnQgY29uc3QgbGVzc29uQ29udGV4dE9wdGlvbnMgPSB7XG4gIG1vZHVsZUlkOiAnbmV1cm9uLWd1aWRlJyxcbiAgc3RhdGVLZXk6ICdhY3Rpdml0eTpuZXVyb24tZ3VpZGUtY29yZS12MScsXG4gIGV2ZW50czoge1xuICAgIGRlY2lzaW9uQW5hbHl6ZWQ6ICduZXVyb25fZGVjaXNpb25fYW5hbHl6ZWQnLFxuICAgIGltcG9ydGFuY2VBY2NlcHRlZDogJ25ldXJvbl93ZWlnaHRfc3VnZ2VzdGlvbl9hY2NlcHRlZCcsXG4gICAgaW5wdXRWYWx1ZUNoYW5nZWQ6ICduZXVyb25faW5wdXRfdmFsdWVfY2hhbmdlZCcsXG4gIH0sXG59IGFzIGNvbnN0O1xuXG5leHBvcnQgY29uc3QgbmV1cm9uQ291cnNlOiBOZXVyb25Db3Vyc2VJdGVtW10gPSBbXG4gIHsgaWQ6ICduZW1hdG9kZS1yZXNwb25zZScsIHRpdGxlOiAn5Y+q5pyJIDMwMiDkuKrnpZ7nu4/lhYPvvIzlroPkuLrku4DkuYjog73lrozmiJDov5nkuYjlpJrooYzkuLrvvJ8nLCBzZWN0aW9uOiAn56We57uP57O757ufJywgcmV2ZWFsTW9kZTogJ3Njcm9sbCcsIGNvbXBvbmVudDogKCkgPT4gPE5lbWF0b2RlUmVzcG9uc2VQYWdlIC8+IH0sXG4gIHsgaWQ6ICdiaW9sb2dpY2FsLXN0cnVjdHVyZScsIHRpdGxlOiAn5Lq65bel56We57uP5YWD77yM5rqQ6Ieq55Sf54mp56We57uP5YWDJywgc2VjdGlvbjogJ+eUn+eJqeWtpuW8leWFpScsIHJldmVhbE1vZGU6ICdzY3JvbGwnLCBjb21wb25lbnQ6ICgpID0+IDxCaW9sb2dpY2FsTmV1cm9uUGFnZSAvPiB9LFxuICB7IGlkOiAnZGVjaXNpb24tYnJpZGdlJywgdGl0bGU6ICfkuIDkuKrnpZ7nu4/lhYPvvIzlj6rlgZrkuIDmrKHnroDljZXliKTmlq0nLCBzZWN0aW9uOiAn5LuO566A5Y2V5ZON5bqU5Yiw5aSN5p2C5Yaz562WJywgcmV2ZWFsTW9kZTogJ3Njcm9sbCcsIGNvbXBvbmVudDogKCkgPT4gPE5ldXJvbkRlY2lzaW9uQnJpZGdlUGFnZSAvPiB9LFxuICB7IGlkOiAnc2lnbmFsLWRpc2NvdmVyeScsIHRpdGxlOiAn6K6p56We57uP5YWD5biu5L2g5YGa5LiA5qyh5Yik5patJywgc2VjdGlvbjogJ+i+k+WFpeS/oeWPtycsIHJldmVhbE1vZGU6ICdjdWUnLCBjb21wb25lbnQ6IChjKSA9PiA8U2lnbmFsRGlzY292ZXJ5UGFnZSBvbkNvbXBsZXRlPXtjLmNvbXBsZXRlfSAvPiB9LFxuICB7IGlkOiAnd2VpZ2h0ZWQtc3VtJywgdGl0bGU6ICfmiorkuIDkuKrnjrDlrp7lm6DntKDvvIznv7vor5HmiJDnpZ7nu4/lhYPog73lpITnkIbnmoTovpPlhaUnLCBzZWN0aW9uOiAn6L6T5YWl5L+h5Y+3JywgcmV2ZWFsTW9kZTogJ2N1ZScsIGNvbXBvbmVudDogKGMpID0+IDxXZWlnaHRlZFN1bVBhZ2Ugb25Db21wbGV0ZT17Yy5jb21wbGV0ZX0gLz4gfSxcbiAgeyBpZDogJ2V4dHJhLWlucHV0cycsIHRpdGxlOiAn5LuO5LiA5Liq5Zug57Sg77yM5Yiw5LiJ5Liq5Zug57SgJywgc2VjdGlvbjogJ+i+k+WFpeS/oeWPtycsIHJldmVhbE1vZGU6ICdjdWUnLCBjb21wb25lbnQ6IChjKSA9PiA8RXh0cmFJbnB1dHNQYWdlIG9uQ29tcGxldGU9e2MuY29tcGxldGV9IC8+IH0sXG4gIHsgaWQ6ICd3ZWlnaHRlZC1jb250cmlidXRpb24nLCB0aXRsZTogJ+S7juWKoOadg+axguWSjOWIsOefqemYteihqOekuicsIHNlY3Rpb246ICfnn6npmLXlvaLlvI8nLCByZXZlYWxNb2RlOiAnc2Nyb2xsJywgY29tcG9uZW50OiAoKSA9PiA8V2VpZ2h0ZWRDb250cmlidXRpb25UaGVvcnlQYWdlIC8+IH0sXG4gIHsgaWQ6ICdiaWFzLW5hdHVyYWwtYm91bmRhcnknLCB0aXRsZTogJ+efqemYteiuoeeul+S5i+WQju+8jOWmguS9leW9ouaIkOWIhuexu+WIpOaWre+8nycsIHNlY3Rpb246ICfmnIDnu4jliKTmlq0nLCByZXZlYWxNb2RlOiAnc2Nyb2xsJywgY29tcG9uZW50OiAoKSA9PiA8Qmlhc05hdHVyYWxCb3VuZGFyeVBhZ2UgLz4gfSxcbiAgeyBpZDogJ2JpYXMtdGhyZXNob2xkJywgdGl0bGU6ICflgY/nva7lpoLkvZXosIPmlbTliIbnsbvpmIjlgLzvvJ8nLCBzZWN0aW9uOiAn5pyA57uI5Yik5patJywgcmV2ZWFsTW9kZTogJ2N1ZScsIGNvbXBvbmVudDogKGMpID0+IDxCaWFzVGhyZXNob2xkVGhlb3J5UGFnZSBvbkNvbXBsZXRlPXtjLmNvbXBsZXRlfSAvPiB9LFxuICB7IGlkOiAnbGluZWFyLXNoYWxsb3cnLCB0aXRsZTogJ+e6v+aAp+elnue7j+WFg+eahOe7hOWQiOS7jeeEtuaYr+e6v+aAp+eahCcsIHNlY3Rpb246ICfnur/mgKfnvZHnu5wnLCByZXZlYWxNb2RlOiAnY3VlJywgY29tcG9uZW50OiAoYykgPT4gPFNoYWxsb3dMaW5lYXJQYWdlIG9uQ29tcGxldGU9e2MuY29tcGxldGV9IC8+IH0sXG4gIHsgaWQ6ICduZW1hdG9kZS14b3InLCB0aXRsZTogJ+e6v+aAp+WIhuexu+eahOi+ueeVjO+8muengOS4vemakOadhue6v+iZq+eahOWPjOS+p+WIuua/gCcsIHNlY3Rpb246ICfku47nur/mgKfliLDpnZ7nur/mgKcnLCByZXZlYWxNb2RlOiAnY3VlJywgY29tcG9uZW50OiAoYykgPT4gPE5lbWF0b2RlWG9yUGFnZSBvbkNvbXBsZXRlPXtjLmNvbXBsZXRlfSAvPiB9LFxuICB7IGlkOiAncmVsdS1pbnRybycsIHRpdGxlOiAn5LuO57q/5oCn6K6h566X5Yiw6Z2e57q/5oCn5ZON5bqUJywgc2VjdGlvbjogJ+a/gOa0u+WHveaVsCcsIHJldmVhbE1vZGU6ICdjdWUnLCBjb21wb25lbnQ6IChjKSA9PiA8UmVsdUludHJvUGFnZSBvbkNvbXBsZXRlPXtjLmNvbXBsZXRlfSAvPiB9LFxuICB7IGlkOiAncmVsdS1leHBsYW5hdGlvbicsIHRpdGxlOiAn6K6k6K+G57q/5oCn5pW05rWB5Y2V5YWDJywgc2VjdGlvbjogJ+a/gOa0u+WHveaVsCcsIHJldmVhbE1vZGU6ICdzY3JvbGwnLCBhZHZhbmNlTGFiZWw6ICfnu6fnu63vvJrnu4TlkIjlpJrkuKrluKbmnIkgUmVMVSDnmoTnpZ7nu4/lhYMnLCBjb21wb25lbnQ6ICgpID0+IDxSZWx1RXhwbGFuYXRpb25QYWdlIC8+IH0sXG4gIHsgaWQ6ICdyZWx1LW5ldHdvcmsnLCB0aXRsZTogJ+e7hOWQiOWkmuS4quW4puaciSBSZUxVIOeahOelnue7j+WFg++8jOabsue6v+e7p+e7reW8r+aKmCcsIHNlY3Rpb246ICfmv4DmtLvlh73mlbAnLCByZXZlYWxNb2RlOiAnY3VlJywgY29tcG9uZW50OiAoYykgPT4gPFJlbHVOZXR3b3JrUGFnZSBvbkNvbXBsZXRlPXtjLmNvbXBsZXRlfSAvPiB9LFxuICB7IGlkOiAncmVsdS1hcHByb3hpbWF0aW9uJywgdGl0bGU6ICfotrPlpJ/lpJrluKbmnIkgUmVMVSDnmoTnpZ7nu4/lhYPvvIzlsLHog73pgLzov5Hku7vmhI/mm7Lnur8nLCBzZWN0aW9uOiAn5r+A5rS75Ye95pWwJywgcmV2ZWFsTW9kZTogJ2N1ZScsIGNvbXBvbmVudDogKGMpID0+IDxSZWx1QXBwcm94aW1hdGlvbkxhYlBhZ2Ugb25Db21wbGV0ZT17Yy5jb21wbGV0ZX0gLz4gfSxcbiAgeyBpZDogJ2FjdGl2YXRpb24tY2F0YWxvZycsIHRpdGxlOiAn6K6k6K+G6L+Z5Lqb6KKr5bm/5rOb5L2/55So55qE5r+A5rS75Ye95pWwJywgc2VjdGlvbjogJ+a/gOa0u+WHveaVsCcsIHJldmVhbE1vZGU6ICdzY3JvbGwnLCBjb21wb25lbnQ6ICgpID0+IDxBY3RpdmF0aW9uQ2F0YWxvZ1BhZ2UgLz4gfSxcbiAgeyBpZDogJ2VuZGluZycsIHRpdGxlOiAn5L2g5bey57uP5pCt5Ye65LqG5LiA5Liq5Lq65bel56We57uP5YWDJywgc2VjdGlvbjogJ+ivvueoi+e7k+WwvicsIHJldmVhbE1vZGU6ICdzY3JvbGwnLCBjb21wb25lbnQ6ICgpID0+IDxOZXVyb25Db21wbGV0aW9uUGFnZSAvPiB9LFxuICB7IGlkOiAncmVzb3VyY2VzJywgdGl0bGU6ICfmjqjojZDotYTmupAnLCBzZWN0aW9uOiAn6K++56iL57uT5bC+JywgcmV2ZWFsTW9kZTogJ2ltbWVkaWF0ZScsIGNvbXBvbmVudDogKCkgPT4gPE5ldXJvbkxlc3NvbkZvb3RlciAvPiB9LFxuXTtcblxyXG5cclxuXHJcblxyXG5cclxuXHJcblxyXG4iXSwiZmlsZSI6IkM6L1VzZXJzL09jZWFuL0RvY3VtZW50cy9HaXRIdWIvaW50dWl0aXZlLWRlZXAtbGVhcm5pbmcvbW9kdWxlcy9OZXVyb24tR3VpZGUvY291cnNlLnRzeCJ9

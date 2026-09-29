@@ -11,7 +11,7 @@ import numpy as np
 os.environ.setdefault("KMP_DUPLICATE_LIB_OK", "TRUE")
 
 ROOT = Path(__file__).resolve().parents[1]
-DATASET_DIR = ROOT / "dataset"
+DATASET_DIR = ROOT / "assets" / "dataset"
 INSIGHTFACE_ROOT = DATASET_DIR / "insightface"
 INSIGHTFACE_MODEL_NAME = "buffalo_sc"
 INSIGHTFACE_DET_SIZE = (320, 320)
@@ -51,7 +51,7 @@ def l2_normalize(x: np.ndarray) -> np.ndarray:
 def get_face_embedding(app: Any, image_path: str | Path) -> np.ndarray:
     """
     Read an image, detect faces, and return the largest face's normalized embedding.
-    Model weights are downloaded to and loaded from dataset/insightface.
+    Model weights are downloaded to and loaded from assets/dataset/insightface.
     """
     image_path = Path(image_path)
     img = cv2.imread(str(image_path))

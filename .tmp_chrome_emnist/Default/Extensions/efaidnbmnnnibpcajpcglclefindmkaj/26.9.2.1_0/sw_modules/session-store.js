@@ -1,0 +1,18 @@
+/*************************************************************************
+* ADOBE CONFIDENTIAL
+* ___________________
+*
+*  Copyright 2015 Adobe Systems Incorporated
+*  All Rights Reserved.
+*
+* NOTICE:  All information contained herein is, and remains
+* the property of Adobe Systems Incorporated and its suppliers,
+* if any.  The intellectual and technical concepts contained
+* herein are proprietary to Adobe Systems Incorporated and its
+* suppliers and are protected by all applicable intellectual property laws,
+* including trade secret and or copyright laws.
+* Dissemination of this information or reproduction of this material
+* is strictly forbidden unless prior written permission is obtained
+* from Adobe Systems Incorporated.
+**************************************************************************/
+import{loggingApi as t}from"../common/loggingApi.js";export const SESSION_TYPES={HTML_TO_PDF:"html-to-pdf",OUTLOOK_PDF:"outlook-pdf",MSWORD_DOCUMENT:"msword-document",UPSELL:"upsell"};const e={[SESSION_TYPES.OUTLOOK_PDF]:{domains:["https://outlook.office365.com","https://outlook.office.com","https://outlook.live.com","https://outlook.cloud.microsoft"],ttlMs:3e5},[SESSION_TYPES.MSWORD_DOCUMENT]:{domains:["https://word.cloud.microsoft","https://[a-z0-9-]+\\.sharepoint\\.com","https://onedrive.live.com"],ttlMs:3e5},[SESSION_TYPES.HTML_TO_PDF]:{ttlMs:18e5,defaultData:{sourceTabUrl:null,frameId:null,targetSectionId:null}},[SESSION_TYPES.UPSELL]:{ttlMs:18e5,idFormat:"numeric"}},n=new Map;function o(){const t=Date.now();n.forEach((e,o)=>{t-e.createdAt>e.ttlMs&&n.delete(o)})}export function createSession({type:t,data:e,tabId:s,ttlMs:r=18e5,useOnce:i=!1,idFormat:u}={}){if(!t||"object"!=typeof e||null===e)return null;if(o(),n.size>=200){const t=n.keys().next().value;void 0!==t&&n.delete(t)}const a=function(t){if("numeric"===t){const[t,e]=crypto.getRandomValues(new Uint32Array(2));return String(t%2**21*2**32+e)}return crypto.randomUUID()}(u);return n.set(a,{type:t,data:{...e,...Number.isInteger(s)?{sourceTabId:s}:null},tabId:Number.isInteger(s)?s:null,createdAt:Date.now(),ttlMs:r,useOnce:i}),a}export function getSession(e,s){if(!e||!s)return null;o();const r=String(s),i=n.get(r);return i?i.type!==e?(t.warn({message:"Session not found in session-store",type:e,reason:"type-mismatch"}),null):(i.useOnce&&n.delete(r),i.data):(t.warn({message:"Session not found in session-store",type:e,reason:"missing-or-expired"}),null)}export function updateSession(t,e,o,s){if(!t||!e||"object"!=typeof o||null===o)return!1;const r=n.get(String(e));return!(!r||r.type!==t)&&((null===r.tabId||r.tabId===s)&&(r.data={...r.data,...o},!0))}export function deleteSessionsForTab(t){Number.isInteger(t)&&n.forEach((e,o)=>{e.tabId===t&&n.delete(o)})}export function createSessionFromMessage(t,n){const o=e[t?.type];if(!o)return null;const s=o.domains;if(s){const t=n?.url?new URL(n.url).origin:null;if(!(t&&(s.includes(t)||s.some(e=>new RegExp(`^${e}$`,"i").test(t)))))return null}const r={...o.defaultData||{},...t.data};return createSession({type:t.type,data:r,tabId:n?.id,ttlMs:o.ttlMs,useOnce:o.useOnce,idFormat:o.idFormat})}export function getSessionFromMessage(t){return Object.hasOwn(e,t?.type)?getSession(t.type,t.sessionId):null}export function updateSessionFromMessage(t,n){const o=e[t?.type];if(!o)return!1;const s=o.domains;if(s){const t=n?.url?new URL(n.url).origin:null;if(!t||!s.includes(t))return!1}return updateSession(t.type,t.sessionId,t.data||{},n?.id)}

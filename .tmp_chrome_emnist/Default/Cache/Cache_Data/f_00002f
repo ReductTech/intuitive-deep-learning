@@ -1,0 +1,220 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/modules/Convolution-Kernel-Intro/pages/StridePage/StridePage.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=2be87a0d"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/StridePage/StridePage.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+var _s = $RefreshSig$();
+import __vite__cjsImport3_react from "/node_modules/.vite/deps/react.js?v=2be87a0d"; const useEffect = __vite__cjsImport3_react["useEffect"]; const useState = __vite__cjsImport3_react["useState"];
+import { ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from "/modules/shared/react/index.ts";
+import "/modules/Convolution-Kernel-Intro/pages/StridePage/StridePage.css";
+const INPUT_SIZE = 7;
+const KERNEL_SIZE = 3;
+const STRIDES = [1, 2, 3];
+function InputGrid({ stride, step, outputSize }) {
+  const activeIndex = Math.min(step, outputSize * outputSize - 1);
+  const top = Math.floor(activeIndex / outputSize) * stride;
+  const left = activeIndex % outputSize * stride;
+  return /* @__PURE__ */ jsxDEV("div", { className: "ck-stride__input-grid", role: "img", "aria-label": `7 乘 7 输入网格，卷积窗口位于第 ${top + 1} 行、第 ${left + 1} 列`, children: [
+    Array.from({ length: INPUT_SIZE * INPUT_SIZE }, (_, index) => {
+      const row = Math.floor(index / INPUT_SIZE), col = index % INPUT_SIZE;
+      return /* @__PURE__ */ jsxDEV("span", { className: row >= top && row < top + KERNEL_SIZE && col >= left && col < left + KERNEL_SIZE ? "is-window" : "" }, index, false, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/StridePage/StridePage.tsx",
+        lineNumber: 36,
+        columnNumber: 14
+      }, this);
+    }),
+    /* @__PURE__ */ jsxDEV("div", { className: "ck-stride__window", style: { left: `${left / INPUT_SIZE * 100}%`, top: `${top / INPUT_SIZE * 100}%`, width: `${KERNEL_SIZE / INPUT_SIZE * 100}%`, height: `${KERNEL_SIZE / INPUT_SIZE * 100}%` } }, void 0, false, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/StridePage/StridePage.tsx",
+      lineNumber: 38,
+      columnNumber: 5
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/StridePage/StridePage.tsx",
+    lineNumber: 33,
+    columnNumber: 10
+  }, this);
+}
+_c = InputGrid;
+function OutputGrid({ size, step }) {
+  const total = size * size;
+  return /* @__PURE__ */ jsxDEV("div", { className: "ck-stride__output-grid", style: { "--output-size": size }, role: "img", "aria-label": `${size} 乘 ${size} 输出特征图，共 ${total} 个位置，已扫描 ${Math.min(step, total)} 个`, children: Array.from({ length: total }, (_, index) => /* @__PURE__ */ jsxDEV("span", { className: index === step && step < total ? "is-current" : index < step ? "is-complete" : "" }, index, false, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/StridePage/StridePage.tsx",
+    lineNumber: 45,
+    columnNumber: 50
+  }, this)) }, void 0, false, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/StridePage/StridePage.tsx",
+    lineNumber: 44,
+    columnNumber: 10
+  }, this);
+}
+_c2 = OutputGrid;
+export function StridePage() {
+  _s();
+  const [stride, setStride] = useState(2);
+  const [step, setStep] = useState(0);
+  const outputSize = Math.floor((INPUT_SIZE - KERNEL_SIZE) / stride) + 1;
+  const totalSteps = outputSize * outputSize;
+  useEffect(() => {
+    const interval = Math.min(650, Math.max(180, Math.round(16e3 / totalSteps)));
+    const timer = window.setInterval(() => setStep((current) => (current + 1) % (totalSteps + 1)), interval);
+    return () => window.clearInterval(timer);
+  }, [totalSteps]);
+  const chooseStride = (value) => {
+    setStride(value);
+    setStep(0);
+  };
+  return /* @__PURE__ */ jsxDEV(ContentBlock, { headingLevel: 1, className: "ck-stride", title: "卷积步长", subtitle: "固定 7 × 7 输入、3 × 3 卷积核与 Valid；步长决定相邻窗口的移动间隔。", children: /* @__PURE__ */ jsxDEV("div", { className: "ck-stride__workspace", children: [
+    /* @__PURE__ */ jsxDEV("section", { className: "ck-stride__picker", "aria-label": "选择卷积步长", children: [
+      /* @__PURE__ */ jsxDEV(Typography, { as: "h2", variant: "h3", tone: "accent", children: "步长 S" }, void 0, false, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/StridePage/StridePage.tsx",
+        lineNumber: 66,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV("div", { className: "ck-stride__choices", role: "group", "aria-label": "卷积步长", children: STRIDES.map((value) => /* @__PURE__ */ jsxDEV("button", { type: "button", className: stride === value ? "is-selected" : "", "aria-pressed": stride === value, onClick: () => chooseStride(value), children: /* @__PURE__ */ jsxDEV(Typography, { as: "span", variant: "h2", tone: "inherit", children: value }, void 0, false, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/StridePage/StridePage.tsx",
+        lineNumber: 68,
+        columnNumber: 187
+      }, this) }, value, false, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/StridePage/StridePage.tsx",
+        lineNumber: 68,
+        columnNumber: 35
+      }, this)) }, void 0, false, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/StridePage/StridePage.tsx",
+        lineNumber: 67,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV(Typography, { variant: "bodySmall", tone: "muted", children: "步长越大，输出位置越少。" }, void 0, false, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/StridePage/StridePage.tsx",
+        lineNumber: 70,
+        columnNumber: 9
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/StridePage/StridePage.tsx",
+      lineNumber: 65,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV("section", { className: "ck-stride__input-stage", "aria-label": "输入网格与当前卷积窗口", children: [
+      /* @__PURE__ */ jsxDEV(Typography, { as: "h2", variant: "h3", tone: "accent", children: "输入网格 7 × 7" }, void 0, false, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/StridePage/StridePage.tsx",
+        lineNumber: 73,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV(InputGrid, { stride, step, outputSize }, void 0, false, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/StridePage/StridePage.tsx",
+        lineNumber: 74,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV(Typography, { variant: "bodySmall", tone: "accent", children: [
+        "3 × 3 窗口每次移动 ",
+        stride,
+        " 格"
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/StridePage/StridePage.tsx",
+        lineNumber: 75,
+        columnNumber: 9
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/StridePage/StridePage.tsx",
+      lineNumber: 72,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV("div", { className: "ck-stride__right", children: [
+      /* @__PURE__ */ jsxDEV("section", { className: "ck-stride__output-stage", "aria-label": "输出特征图", children: [
+        /* @__PURE__ */ jsxDEV(Typography, { as: "h2", variant: "h3", tone: "accent", children: [
+          "输出特征图 ",
+          outputSize,
+          " × ",
+          outputSize
+        ] }, void 0, true, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/StridePage/StridePage.tsx",
+          lineNumber: 79,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV(OutputGrid, { size: outputSize, step }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/StridePage/StridePage.tsx",
+          lineNumber: 80,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV(Typography, { variant: "bodySmall", tone: "muted", children: "每放置一次窗口，生成一个输出位置。" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/StridePage/StridePage.tsx",
+          lineNumber: 81,
+          columnNumber: 11
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/StridePage/StridePage.tsx",
+        lineNumber: 78,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV("section", { className: "ck-stride__formula-panel", "aria-label": "输出尺寸计算", children: [
+        /* @__PURE__ */ jsxDEV(Typography, { as: "h2", variant: "h3", tone: "accent", children: "输出尺寸" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/StridePage/StridePage.tsx",
+          lineNumber: 84,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV(MathFormulaBlock, { ariaLabel: "不填充时，输出边长等于输入边长减卷积核边长，除以步长后向下取整再加一", children: /* @__PURE__ */ jsxDEV(MathFormulaStatic, { latex: String.raw`N_{\mathrm{out}}=\left\lfloor\frac{N_{\mathrm{in}}-K}{S}\right\rfloor+1` }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/StridePage/StridePage.tsx",
+          lineNumber: 85,
+          columnNumber: 76
+        }, this) }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/StridePage/StridePage.tsx",
+          lineNumber: 85,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV(Typography, { variant: "bodySmall", tone: "muted", children: "Valid：不填充 · 步长为 S" }, void 0, false, {
+          fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/StridePage/StridePage.tsx",
+          lineNumber: 86,
+          columnNumber: 11
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/StridePage/StridePage.tsx",
+        lineNumber: 83,
+        columnNumber: 9
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/StridePage/StridePage.tsx",
+      lineNumber: 77,
+      columnNumber: 7
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/StridePage/StridePage.tsx",
+    lineNumber: 64,
+    columnNumber: 5
+  }, this) }, void 0, false, {
+    fileName: "C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/StridePage/StridePage.tsx",
+    lineNumber: 63,
+    columnNumber: 10
+  }, this);
+}
+_s(StridePage, "+wNZeIe2wt6Bgo7+oghUJdY+WdQ=");
+_c3 = StridePage;
+var _c, _c2, _c3;
+$RefreshReg$(_c, "InputGrid");
+$RefreshReg$(_c2, "OutputGrid");
+$RefreshReg$(_c3, "StridePage");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/StridePage/StridePage.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/Ocean/Documents/GitHub/intuitive-deep-learning/modules/Convolution-Kernel-Intro/pages/StridePage/StridePage.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,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QUFBO0FBQUE7QUFBQTtBQUFBLGVBQThEO0FBQUEsV0FIaEU7QUFBQTtBQUFBO0FBQUE7QUFBQSxhQUlBO0FBQUEsU0FWRjtBQUFBO0FBQUE7QUFBQTtBQUFBLFdBV0E7QUFBQSxPQXhCRjtBQUFBO0FBQUE7QUFBQTtBQUFBLFNBeUJBLEtBMUJLO0FBQUE7QUFBQTtBQUFBO0FBQUEsU0EyQlA7QUFDRjtBQUFDaEIsR0ExQ2VELFlBQVU7QUFBQSxNQUFWQTtBQUFVLElBQUFMLElBQUFJLEtBQUFtQjtBQUFBLGFBQUF2QixJQUFBO0FBQUEsYUFBQUksS0FBQTtBQUFBLGFBQUFtQixLQUFBIiwibmFtZXMiOlsidXNlRWZmZWN0IiwidXNlU3RhdGUiLCJDb250ZW50QmxvY2siLCJNYXRoRm9ybXVsYUJsb2NrIiwiTWF0aEZvcm11bGFTdGF0aWMiLCJUeXBvZ3JhcGh5IiwiSU5QVVRfU0laRSIsIktFUk5FTF9TSVpFIiwiU1RSSURFUyIsIklucHV0R3JpZCIsInN0cmlkZSIsInN0ZXAiLCJvdXRwdXRTaXplIiwiYWN0aXZlSW5kZXgiLCJNYXRoIiwibWluIiwidG9wIiwiZmxvb3IiLCJsZWZ0IiwiQXJyYXkiLCJmcm9tIiwibGVuZ3RoIiwiXyIsImluZGV4Iiwicm93IiwiY29sIiwid2lkdGgiLCJoZWlnaHQiLCJfYyIsIk91dHB1dEdyaWQiLCJzaXplIiwidG90YWwiLCJfYzIiLCJTdHJpZGVQYWdlIiwiX3MiLCJzZXRTdHJpZGUiLCJzZXRTdGVwIiwidG90YWxTdGVwcyIsImludGVydmFsIiwibWF4Iiwicm91bmQiLCJ0aW1lciIsIndpbmRvdyIsInNldEludGVydmFsIiwiY3VycmVudCIsImNsZWFySW50ZXJ2YWwiLCJjaG9vc2VTdHJpZGUiLCJ2YWx1ZSIsIm1hcCIsIlN0cmluZyIsInJhdyIsIl9jMyJdLCJpZ25vcmVMaXN0IjpbXSwic291cmNlcyI6WyJTdHJpZGVQYWdlLnRzeCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyB1c2VFZmZlY3QsIHVzZVN0YXRlLCB0eXBlIENTU1Byb3BlcnRpZXMgfSBmcm9tICdyZWFjdCc7XG5pbXBvcnQgeyBDb250ZW50QmxvY2ssIE1hdGhGb3JtdWxhQmxvY2ssIE1hdGhGb3JtdWxhU3RhdGljLCBUeXBvZ3JhcGh5IH0gZnJvbSAnLi4vLi4vLi4vc2hhcmVkL3JlYWN0JztcbmltcG9ydCAnLi9TdHJpZGVQYWdlLmNzcyc7XG5cbmNvbnN0IElOUFVUX1NJWkUgPSA3O1xuY29uc3QgS0VSTkVMX1NJWkUgPSAzO1xuY29uc3QgU1RSSURFUyA9IFsxLCAyLCAzXSBhcyBjb25zdDtcbnR5cGUgU3RyaWRlID0gdHlwZW9mIFNUUklERVNbbnVtYmVyXTtcblxuZnVuY3Rpb24gSW5wdXRHcmlkKHsgc3RyaWRlLCBzdGVwLCBvdXRwdXRTaXplIH06IHsgc3RyaWRlOiBTdHJpZGU7IHN0ZXA6IG51bWJlcjsgb3V0cHV0U2l6ZTogbnVtYmVyIH0pIHtcbiAgY29uc3QgYWN0aXZlSW5kZXggPSBNYXRoLm1pbihzdGVwLCBvdXRwdXRTaXplICogb3V0cHV0U2l6ZSAtIDEpO1xuICBjb25zdCB0b3AgPSBNYXRoLmZsb29yKGFjdGl2ZUluZGV4IC8gb3V0cHV0U2l6ZSkgKiBzdHJpZGU7XG4gIGNvbnN0IGxlZnQgPSBhY3RpdmVJbmRleCAlIG91dHB1dFNpemUgKiBzdHJpZGU7XG4gIHJldHVybiA8ZGl2IGNsYXNzTmFtZT1cImNrLXN0cmlkZV9faW5wdXQtZ3JpZFwiIHJvbGU9XCJpbWdcIiBhcmlhLWxhYmVsPXtgNyDkuZggNyDovpPlhaXnvZHmoLzvvIzljbfnp6/nqpflj6PkvY3kuo7nrKwgJHt0b3AgKyAxfSDooYzjgIHnrKwgJHtsZWZ0ICsgMX0g5YiXYH0+XG4gICAge0FycmF5LmZyb20oeyBsZW5ndGg6IElOUFVUX1NJWkUgKiBJTlBVVF9TSVpFIH0sIChfLCBpbmRleCkgPT4ge1xuICAgICAgY29uc3Qgcm93ID0gTWF0aC5mbG9vcihpbmRleCAvIElOUFVUX1NJWkUpLCBjb2wgPSBpbmRleCAlIElOUFVUX1NJWkU7XG4gICAgICByZXR1cm4gPHNwYW4ga2V5PXtpbmRleH0gY2xhc3NOYW1lPXtyb3cgPj0gdG9wICYmIHJvdyA8IHRvcCArIEtFUk5FTF9TSVpFICYmIGNvbCA+PSBsZWZ0ICYmIGNvbCA8IGxlZnQgKyBLRVJORUxfU0laRSA/ICdpcy13aW5kb3cnIDogJyd9IC8+O1xuICAgIH0pfVxuICAgIDxkaXYgY2xhc3NOYW1lPVwiY2stc3RyaWRlX193aW5kb3dcIiBzdHlsZT17eyBsZWZ0OiBgJHtsZWZ0IC8gSU5QVVRfU0laRSAqIDEwMH0lYCwgdG9wOiBgJHt0b3AgLyBJTlBVVF9TSVpFICogMTAwfSVgLCB3aWR0aDogYCR7S0VSTkVMX1NJWkUgLyBJTlBVVF9TSVpFICogMTAwfSVgLCBoZWlnaHQ6IGAke0tFUk5FTF9TSVpFIC8gSU5QVVRfU0laRSAqIDEwMH0lYCB9fSAvPlxuICA8L2Rpdj47XG59XG5cbmZ1bmN0aW9uIE91dHB1dEdyaWQoeyBzaXplLCBzdGVwIH06IHsgc2l6ZTogbnVtYmVyOyBzdGVwOiBudW1iZXIgfSkge1xuICBjb25zdCB0b3RhbCA9IHNpemUgKiBzaXplO1xuICByZXR1cm4gPGRpdiBjbGFzc05hbWU9XCJjay1zdHJpZGVfX291dHB1dC1ncmlkXCIgc3R5bGU9e3sgJy0tb3V0cHV0LXNpemUnOiBzaXplIH0gYXMgQ1NTUHJvcGVydGllc30gcm9sZT1cImltZ1wiIGFyaWEtbGFiZWw9e2Ake3NpemV9IOS5mCAke3NpemV9IOi+k+WHuueJueW+geWbvu+8jOWFsSAke3RvdGFsfSDkuKrkvY3nva7vvIzlt7Lmiavmj48gJHtNYXRoLm1pbihzdGVwLCB0b3RhbCl9IOS4qmB9PlxuICAgIHtBcnJheS5mcm9tKHsgbGVuZ3RoOiB0b3RhbCB9LCAoXywgaW5kZXgpID0+IDxzcGFuIGtleT17aW5kZXh9IGNsYXNzTmFtZT17aW5kZXggPT09IHN0ZXAgJiYgc3RlcCA8IHRvdGFsID8gJ2lzLWN1cnJlbnQnIDogaW5kZXggPCBzdGVwID8gJ2lzLWNvbXBsZXRlJyA6ICcnfSAvPil9XG4gIDwvZGl2Pjtcbn1cblxuZXhwb3J0IGZ1bmN0aW9uIFN0cmlkZVBhZ2UoKSB7XG4gIGNvbnN0IFtzdHJpZGUsIHNldFN0cmlkZV0gPSB1c2VTdGF0ZTxTdHJpZGU+KDIpO1xuICBjb25zdCBbc3RlcCwgc2V0U3RlcF0gPSB1c2VTdGF0ZSgwKTtcbiAgY29uc3Qgb3V0cHV0U2l6ZSA9IE1hdGguZmxvb3IoKElOUFVUX1NJWkUgLSBLRVJORUxfU0laRSkgLyBzdHJpZGUpICsgMTtcbiAgY29uc3QgdG90YWxTdGVwcyA9IG91dHB1dFNpemUgKiBvdXRwdXRTaXplO1xuXG4gIHVzZUVmZmVjdCgoKSA9PiB7XG4gICAgY29uc3QgaW50ZXJ2YWwgPSBNYXRoLm1pbig2NTAsIE1hdGgubWF4KDE4MCwgTWF0aC5yb3VuZCgxNjAwMCAvIHRvdGFsU3RlcHMpKSk7XG4gICAgY29uc3QgdGltZXIgPSB3aW5kb3cuc2V0SW50ZXJ2YWwoKCkgPT4gc2V0U3RlcCgoY3VycmVudCkgPT4gKGN1cnJlbnQgKyAxKSAlICh0b3RhbFN0ZXBzICsgMSkpLCBpbnRlcnZhbCk7XG4gICAgcmV0dXJuICgpID0+IHdpbmRvdy5jbGVhckludGVydmFsKHRpbWVyKTtcbiAgfSwgW3RvdGFsU3RlcHNdKTtcblxuICBjb25zdCBjaG9vc2VTdHJpZGUgPSAodmFsdWU6IFN0cmlkZSkgPT4geyBzZXRTdHJpZGUodmFsdWUpOyBzZXRTdGVwKDApOyB9O1xuXG4gIHJldHVybiA8Q29udGVudEJsb2NrIGhlYWRpbmdMZXZlbD17MX0gY2xhc3NOYW1lPVwiY2stc3RyaWRlXCIgdGl0bGU9XCLljbfnp6/mraXplb9cIiBzdWJ0aXRsZT1cIuWbuuWumiA3IMOXIDcg6L6T5YWl44CBMyDDlyAzIOWNt+enr+aguOS4jiBWYWxpZO+8m+atpemVv+WGs+WumuebuOmCu+eql+WPo+eahOenu+WKqOmXtOmalOOAglwiPlxuICAgIDxkaXYgY2xhc3NOYW1lPVwiY2stc3RyaWRlX193b3Jrc3BhY2VcIj5cbiAgICAgIDxzZWN0aW9uIGNsYXNzTmFtZT1cImNrLXN0cmlkZV9fcGlja2VyXCIgYXJpYS1sYWJlbD1cIumAieaLqeWNt+enr+atpemVv1wiPlxuICAgICAgICA8VHlwb2dyYXBoeSBhcz1cImgyXCIgdmFyaWFudD1cImgzXCIgdG9uZT1cImFjY2VudFwiPuatpemVvyBTPC9UeXBvZ3JhcGh5PlxuICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImNrLXN0cmlkZV9fY2hvaWNlc1wiIHJvbGU9XCJncm91cFwiIGFyaWEtbGFiZWw9XCLljbfnp6/mraXplb9cIj5cbiAgICAgICAgICB7U1RSSURFUy5tYXAoKHZhbHVlKSA9PiA8YnV0dG9uIGtleT17dmFsdWV9IHR5cGU9XCJidXR0b25cIiBjbGFzc05hbWU9e3N0cmlkZSA9PT0gdmFsdWUgPyAnaXMtc2VsZWN0ZWQnIDogJyd9IGFyaWEtcHJlc3NlZD17c3RyaWRlID09PSB2YWx1ZX0gb25DbGljaz17KCkgPT4gY2hvb3NlU3RyaWRlKHZhbHVlKX0+PFR5cG9ncmFwaHkgYXM9XCJzcGFuXCIgdmFyaWFudD1cImgyXCIgdG9uZT1cImluaGVyaXRcIj57dmFsdWV9PC9UeXBvZ3JhcGh5PjwvYnV0dG9uPil9XG4gICAgICAgIDwvZGl2PlxuICAgICAgICA8VHlwb2dyYXBoeSB2YXJpYW50PVwiYm9keVNtYWxsXCIgdG9uZT1cIm11dGVkXCI+5q2l6ZW/6LaK5aSn77yM6L6T5Ye65L2N572u6LaK5bCR44CCPC9UeXBvZ3JhcGh5PlxuICAgICAgPC9zZWN0aW9uPlxuICAgICAgPHNlY3Rpb24gY2xhc3NOYW1lPVwiY2stc3RyaWRlX19pbnB1dC1zdGFnZVwiIGFyaWEtbGFiZWw9XCLovpPlhaXnvZHmoLzkuI7lvZPliY3ljbfnp6/nqpflj6NcIj5cbiAgICAgICAgPFR5cG9ncmFwaHkgYXM9XCJoMlwiIHZhcmlhbnQ9XCJoM1wiIHRvbmU9XCJhY2NlbnRcIj7ovpPlhaXnvZHmoLwgNyDDlyA3PC9UeXBvZ3JhcGh5PlxuICAgICAgICA8SW5wdXRHcmlkIHN0cmlkZT17c3RyaWRlfSBzdGVwPXtzdGVwfSBvdXRwdXRTaXplPXtvdXRwdXRTaXplfSAvPlxuICAgICAgICA8VHlwb2dyYXBoeSB2YXJpYW50PVwiYm9keVNtYWxsXCIgdG9uZT1cImFjY2VudFwiPjMgw5cgMyDnqpflj6Pmr4/mrKHnp7vliqgge3N0cmlkZX0g5qC8PC9UeXBvZ3JhcGh5PlxuICAgICAgPC9zZWN0aW9uPlxuICAgICAgPGRpdiBjbGFzc05hbWU9XCJjay1zdHJpZGVfX3JpZ2h0XCI+XG4gICAgICAgIDxzZWN0aW9uIGNsYXNzTmFtZT1cImNrLXN0cmlkZV9fb3V0cHV0LXN0YWdlXCIgYXJpYS1sYWJlbD1cIui+k+WHuueJueW+geWbvlwiPlxuICAgICAgICAgIDxUeXBvZ3JhcGh5IGFzPVwiaDJcIiB2YXJpYW50PVwiaDNcIiB0b25lPVwiYWNjZW50XCI+6L6T5Ye654m55b6B5Zu+IHtvdXRwdXRTaXplfSDDlyB7b3V0cHV0U2l6ZX08L1R5cG9ncmFwaHk+XG4gICAgICAgICAgPE91dHB1dEdyaWQgc2l6ZT17b3V0cHV0U2l6ZX0gc3RlcD17c3RlcH0gLz5cbiAgICAgICAgICA8VHlwb2dyYXBoeSB2YXJpYW50PVwiYm9keVNtYWxsXCIgdG9uZT1cIm11dGVkXCI+5q+P5pS+572u5LiA5qyh56qX5Y+j77yM55Sf5oiQ5LiA5Liq6L6T5Ye65L2N572u44CCPC9UeXBvZ3JhcGh5PlxuICAgICAgICA8L3NlY3Rpb24+XG4gICAgICAgIDxzZWN0aW9uIGNsYXNzTmFtZT1cImNrLXN0cmlkZV9fZm9ybXVsYS1wYW5lbFwiIGFyaWEtbGFiZWw9XCLovpPlh7rlsLrlr7jorqHnrpdcIj5cbiAgICAgICAgICA8VHlwb2dyYXBoeSBhcz1cImgyXCIgdmFyaWFudD1cImgzXCIgdG9uZT1cImFjY2VudFwiPui+k+WHuuWwuuWvuDwvVHlwb2dyYXBoeT5cbiAgICAgICAgICA8TWF0aEZvcm11bGFCbG9jayBhcmlhTGFiZWw9XCLkuI3loavlhYXml7bvvIzovpPlh7rovrnplb/nrYnkuo7ovpPlhaXovrnplb/lh4/ljbfnp6/moLjovrnplb/vvIzpmaTku6XmraXplb/lkI7lkJHkuIvlj5bmlbTlho3liqDkuIBcIj48TWF0aEZvcm11bGFTdGF0aWMgbGF0ZXg9e1N0cmluZy5yYXdgTl97XFxtYXRocm17b3V0fX09XFxsZWZ0XFxsZmxvb3JcXGZyYWN7Tl97XFxtYXRocm17aW59fS1LfXtTfVxccmlnaHRcXHJmbG9vcisxYH0gLz48L01hdGhGb3JtdWxhQmxvY2s+XG4gICAgICAgICAgPFR5cG9ncmFwaHkgdmFyaWFudD1cImJvZHlTbWFsbFwiIHRvbmU9XCJtdXRlZFwiPlZhbGlk77ya5LiN5aGr5YWFIMK3IOatpemVv+S4uiBTPC9UeXBvZ3JhcGh5PlxuICAgICAgICA8L3NlY3Rpb24+XG4gICAgICA8L2Rpdj5cbiAgICA8L2Rpdj5cbiAgPC9Db250ZW50QmxvY2s+O1xufVxuIl0sImZpbGUiOiJDOi9Vc2Vycy9PY2Vhbi9Eb2N1bWVudHMvR2l0SHViL2ludHVpdGl2ZS1kZWVwLWxlYXJuaW5nL21vZHVsZXMvQ29udm9sdXRpb24tS2VybmVsLUludHJvL3BhZ2VzL1N0cmlkZVBhZ2UvU3RyaWRlUGFnZS50c3gifQ==

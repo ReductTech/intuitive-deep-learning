@@ -3,6 +3,7 @@ import { Typography } from '../typography';
 import { moduleAssetUrl } from '../assets';
 import { emitTelemetry, getTelemetryState } from '../telemetry';
 import type { DeckDefinition, LessonContext, SceneDeckProps, SceneDefinition, SpeakerNote } from './types';
+import { QuestionModeProvider } from '../learning/QuestionMode';
 import '../styles.css';
 import '../presentation.css';
 import './SceneDeck.css';
@@ -335,7 +336,7 @@ function SceneDeckPlayer({ catalog, moduleId, assetId, progressKey, getNotes }: 
 function clamp(value: number, min: number, max: number) { return Math.min(max, Math.max(min, value)); }
 
 const SceneSurface = memo(function SceneSurface({ scene, complete, reset, isComplete }: { scene: SceneDefinition; complete: () => void; reset: () => void; isComplete: boolean }) {
-  return <div className="course-page-surface ppt-slide-surface">{scene.render({ complete, reset, isComplete })}</div>;
+  return <QuestionModeProvider mode="ppt"><div className="course-page-surface ppt-slide-surface">{scene.render({ complete, reset, isComplete })}</div></QuestionModeProvider>;
 });
 
 function PanelResizeHandle({ label, onDelta }: { label: string; onDelta: (delta: number) => void }) {

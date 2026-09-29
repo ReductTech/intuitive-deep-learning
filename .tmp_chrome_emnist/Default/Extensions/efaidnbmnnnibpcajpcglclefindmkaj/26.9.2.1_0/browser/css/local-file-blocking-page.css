@@ -1,0 +1,18 @@
+/*************************************************************************
+* ADOBE CONFIDENTIAL
+* ___________________
+*
+*  Copyright 2015 Adobe Systems Incorporated
+*  All Rights Reserved.
+*
+* NOTICE:  All information contained herein is, and remains
+* the property of Adobe Systems Incorporated and its suppliers,
+* if any.  The intellectual and technical concepts contained
+* herein are proprietary to Adobe Systems Incorporated and its
+* suppliers and are protected by all applicable intellectual property laws,
+* including trade secret and or copyright laws.
+* Dissemination of this information or reproduction of this material
+* is strictly forbidden unless prior written permission is obtained
+* from Adobe Systems Incorporated.
+**************************************************************************/
+body{background:#fff;justify-content:center;margin:0;min-height:100vh}.main-card,body{align-items:center;display:flex}.main-card{flex-direction:column;margin:0 auto;padding:48px 40px 40px;position:absolute;top:64px;width:500px;z-index:1}#local-file-animated-fte{background:#ffe6e1 no-repeat 50%;background-size:contain;height:236px;margin-bottom:32px;width:500px}.headline{align-items:center;display:flex;font-family:Adobe Clean,Arial,sans-serif;font-size:18px;font-style:normal;font-weight:700;line-height:23px;margin-bottom:16px;text-align:left;width:100%}.acrobat-icon{background:#b30b00;border-radius:5px;height:15px;margin-right:8px;padding:3.3px 3.3px 3.4px 3.5px;vertical-align:middle;width:15px}.desc{font-family:Adobe Clean,Arial,sans-serif;font-size:14px;font-style:normal;font-weight:400;line-height:21px;margin-bottom:24px;text-align:left;width:100%}.button-row{display:flex;gap:16px;justify-content:flex-end;width:100%}.action-btn{align-items:center;background:#000;border:none;border-radius:25px;color:#fff;display:flex;height:45px;justify-content:center;min-width:72px;padding:8px 22px;transition:background .2s}.action-btn,.action-btn.secondary{cursor:pointer;font-family:Adobe Clean,Arial,sans-serif;font-size:14px;font-style:normal;font-weight:700;line-height:normal}.action-btn.secondary{background:#fff;color:#222}.action-btn:hover{cursor:pointer}
