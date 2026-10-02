@@ -189,7 +189,7 @@ description: 规划、设计、实现和验收本仓库的 React 多形态教学
 
 ## 模块身份规则
 
-每个活跃模块必须在 `outlines.json` 中有独立的顶层 `moduleIdentity`，用于长期稳定标识模块并检测身份字段篡改。新建模块后运行 `python scripts/module_identity.py`：脚本只为缺少身份的模块签发 UUID 和签名；已有身份必须保持不变，禁止因标题、课程内容、页面顺序或普通文件修改而重新生成或修改身份。若身份验证失败，停止处理并报告，不得自动修复、覆盖或重签。需要验证时运行 `python scripts/module_identity.py --check`。
+每个活跃模块必须在 `outlines.json` 中有独立的顶层 `moduleIdentity`，用于长期稳定标识模块并检测身份字段篡改。新建模块后运行 `python -m idl_backend.contracts.identity`：脚本只为缺少身份的模块签发 UUID 和签名；已有身份必须保持不变，禁止因标题、课程内容、页面顺序或普通文件修改而重新生成或修改身份。若身份验证失败，停止处理并报告，不得自动修复、覆盖或重签。需要验证时运行 `python -m idl_backend.contracts.identity --check`。
 
 签名私钥保存在 Git 忽略的 `.private/module-identity-ed25519.pem` 中，必须保密并安全备份；禁止将私钥写入脚本或提交到仓库。脚本内固定的是公钥，禁止修改，否则已有签名将无法验证。该签名保护模块身份，不覆盖整个 `outlines.json` 的内容完整性。
 

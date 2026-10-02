@@ -59,7 +59,7 @@ export function SimpleFeatureLimitsPage() {
   return <ContentBlock
     className="vfl-simple-limit"
     headingLevel={1}
-    title="简单特征的局限性"
+    title="简单统计特征的局限"
     subtitle="不同类别的数字，其简单统计特征也可能相近。"
   >
     <div className="vfl-simple-limit__hero" aria-label="真实的 MNIST 数字 3 与数字 5">

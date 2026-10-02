@@ -4,13 +4,13 @@
 
 现有 CNN 与人脸识别课程主要使用：
 
-`React 模块 → scripts/http_service.py :59415 → gpu_service.py → Torch / 本地模型`
+`React 模块 → backend/src/idl_backend/local/http.py :28431 → idl_backend.vision → Torch / 本地模型`
 
 CNN 服务按职责拆分为三个入口文件：
 
-- `scripts/dataset_service.py`：数据集路径、IDX/PNG/NPY/NPZ 读取、缓存、固定卷积核和特征图准备。这里不启动 HTTP 服务，也不执行 Torch 训练。
-- `scripts/gpu_service.py`：固定卷积训练、可学习 CNN、InsightFace 相似度、人脸训练任务和进度状态。它复用 `dataset_service.py` 的数据契约。
-- `scripts/http_service.py`：`59415` 端口的 HTTP/CORS、健康检查、请求路由、异步 job 查询，以及 InsightFace 初始化。启动器通过它启动服务。
+- `scripts/idl_backend.datasets.digits`：数据集路径、IDX/PNG/NPY/NPZ 读取、缓存、固定卷积核和特征图准备。这里不启动 HTTP 服务，也不执行 Torch 训练。
+- `backend/src/idl_backend/contracts/tasks.py`：固定卷积训练、可学习 CNN、InsightFace 相似度、人脸训练任务和进度状态。它复用 `idl_backend.datasets.digits` 的数据契约。
+- `backend/src/idl_backend/local/http.py`：`28431` 端口的 HTTP/CORS、健康检查、请求路由、异步 job 查询，以及 InsightFace 初始化。启动器通过它启动服务。
 
 `scripts/lenet5_cnn_service.py` 仍保留为兼容转发层，旧命令和 legacy 页面可以继续引用；新代码和运行时配置应优先使用 `http_service.py`，不要把数据读取或模型计算重新塞回 HTTP 层。
 
@@ -26,7 +26,7 @@ CNN 服务按职责拆分为三个入口文件：
 ## React 侧
 
 - 模型计算封装在模块自己的 `services/` 中，不把大量请求逻辑散落在 page 或 block。
-- CNN、人脸等现有任务优先复用或扩展 `:59415` 的现有服务，不为每门课程重新建立一套模型服务。新增数据格式先放入 `dataset_service.py`，新增模型/训练逻辑放入 `gpu_service.py`，新增接口只在 `http_service.py` 注册。
+- CNN、人脸等现有任务优先复用或扩展 `:28431` 的现有服务，不为每门课程重新建立一套模型服务。新增数据格式先放入 `idl_backend.datasets.digits`，新增模型/训练逻辑放入 `idl_backend.vision`，新增接口只在 `http_service.py` 注册。
 - 页面只提交教学需要的参数，并使用服务返回的稳定业务结果，不直接处理 Torch 模型。
 - 训练或较长计算必须提供明确的等待和进度状态。
 - 长任务优先采用“提交任务 → 返回 job id → 查询进度 → 获取结果”的异步方式，不让页面等待一个长期阻塞请求。
@@ -57,7 +57,7 @@ CNN 服务按职责拆分为三个入口文件：
 
 设备选择属于 Python 计算服务内部实现，React 页面不判断 CUDA、MPS 或显卡型号，也不根据设备类型改变知识结论。
 
-当前 `gpu_service.py` 的部分训练路径虽然保留了 CUDA / MPS 自动检测代码，但随后强制使用 CPU；修改这些路径时应先确认当前课程是否真的需要 GPU，再决定是否恢复硬件加速。设备选择和 fallback 仍属于 `gpu_service.py` 内部实现，HTTP 层不得暴露硬件分支作为教学逻辑。
+当前 `idl_backend.vision` 的部分训练路径虽然保留了 CUDA / MPS 自动检测代码，但随后强制使用 CPU；修改这些路径时应先确认当前课程是否真的需要 GPU，再决定是否恢复硬件加速。设备选择和 fallback 仍属于 `idl_backend.vision` 内部实现，HTTP 层不得暴露硬件分支作为教学逻辑。
 
 ## 教学设计
 

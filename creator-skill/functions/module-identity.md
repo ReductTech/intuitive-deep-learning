@@ -8,10 +8,10 @@ Run these commands from the repository root.
 
 ```powershell
 # Add identities to modules that do not have one yet; validate existing identities.
-python scripts/module_identity.py
+python -m idl_backend.contracts.identity
 
 # Validate all module identities without writing files.
-python scripts/module_identity.py --check
+python -m idl_backend.contracts.identity --check
 ```
 
 The script scans `modules/*/outlines.json`. It adds a UUID v4 and Ed25519 signature only when `moduleIdentity` is absent. Existing identities are preserved exactly after validation. A malformed or invalid existing identity stops the run; the script never repairs or replaces it automatically. It validates every outline before writing any missing identity.

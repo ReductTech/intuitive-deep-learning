@@ -1,0 +1,49 @@
+.vfl-manual-page { box-sizing:border-box; width:1600px; height:900px; background:#fcfdff; }
+.vfl-manual-page * { box-sizing:border-box; }
+.vfl-manual-toolbar { display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr) minmax(0,1.05fr) minmax(0,1.35fr) minmax(0,.8fr); align-items:center; gap:18px; width:1480px; max-width:100%; height:88px; margin:20px auto 0; padding:14px 18px; border:1px solid #d6e5f8; border-radius:20px; background:#f7fbff; }
+.vfl-manual-toolbar>* { min-width:0; }
+.vfl-manual-toolbar .edu-btn { height:60px; border-radius:14px; }
+.vfl-manual-toolbar .edu-btn>span { display:flex; align-items:center; justify-content:center; gap:14px; }
+.vfl-manual-training-state,.vfl-manual-toolbar-metric { display:flex; align-items:center; justify-content:center; gap:16px; }
+.vfl-manual-toolbar-metric { border-left:1px solid #d2e0f2; }
+.vfl-manual-status-dot { width:20px; height:20px; border-radius:50%; background:#9bb0cc; flex-shrink:0; }
+.vfl-manual-play { width:26px; height:30px; background:currentColor; clip-path:polygon(0 0,100% 50%,0 100%); flex-shrink:0; }
+.vfl-manual-chart-icon { display:flex; align-items:flex-end; gap:4px; height:28px; flex-shrink:0; }
+.vfl-manual-chart-icon i { width:5px; height:12px; background:#7b92b3; }
+.vfl-manual-chart-icon i:nth-child(2) { height:20px; }
+.vfl-manual-chart-icon i:nth-child(3) { height:28px; }
+.vfl-manual-toolbar-metric svg { width:24px; height:28px; fill:none; stroke:#7b92b3; stroke-width:2.5; flex-shrink:0; }
+.vfl-manual-flow { position:relative; display:grid; grid-template-columns:minmax(0,500fr) minmax(0,470fr) minmax(0,410fr); gap:50px; height:548px; width:1480px; max-width:100%; margin:24px auto 0; }
+.vfl-manual-stage { min-width:0; padding:18px; border:1px solid #d5e5f8; border-radius:22px; background:white; }
+.vfl-manual-stage-heading { display:flex; align-items:center; gap:18px; height:62px; }
+.vfl-manual-stage-heading h2 { min-width:0; margin:0; white-space:nowrap; }
+.vfl-manual-stage-number { display:grid; place-items:center; width:60px; height:60px; flex-shrink:0; color:white; border-radius:50%; background:linear-gradient(135deg,#287bff,#225bd9); }
+.vfl-manual-classifier .vfl-manual-stage-number { background:linear-gradient(135deg,#ffb847,#fb7b17); }
+.vfl-manual-input-body { display:grid; grid-template-columns:minmax(0,252fr) 40px minmax(0,132fr); gap:10px; align-items:start; height:368px; margin-top:18px; }
+.vfl-manual-image-column,.vfl-manual-vector { min-width:0; text-align:center; }
+.vfl-manual-image-column p,.vfl-manual-vector p { white-space:nowrap; margin-bottom:16px; }
+.vfl-manual-image { position:relative; width:252px; height:252px; max-width:100%; margin-top:42px; border:2px solid #ee8a32; border-radius:8px; overflow:hidden; background:black; }
+.vfl-manual-image img { display:block; width:100%; height:100%; image-rendering:pixelated; }
+.vfl-manual-image-grid { position:absolute; inset:0; display:grid; grid-template-columns:9fr 9fr 10fr; grid-template-rows:9fr 9fr 10fr; pointer-events:none; }
+.vfl-manual-image-grid span { border:1px dashed #fca54d; }
+.vfl-manual-vector-values { display:grid; height:310px; grid-template-rows:repeat(9,minmax(0,1fr)); gap:4px; }
+.vfl-manual-vector-values>span { display:grid; min-height:0; place-items:center; border-radius:10px; background:#e8f2ff; }
+.vfl-manual-input-controls { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin-top:12px; }
+.vfl-manual-input-controls .edu-btn { min-width:0; height:56px; padding:0 8px; white-space:nowrap; border-radius:12px; }
+.vfl-manual-arrow { display:block; height:48px; background:linear-gradient(90deg,#e5f1ff,#65a1f3); clip-path:polygon(0 30%,60% 30%,60% 0,100% 50%,60% 100%,60% 70%,0 70%); }
+.vfl-manual-input-arrow { width:40px; margin-top:36px; }
+.vfl-manual-stage-arrow { position:absolute; z-index:2; top:245px; width:50px; pointer-events:none; }
+.vfl-manual-stage-arrow.first { left:500px; }
+.vfl-manual-stage-arrow.second { left:1020px; }
+.vfl-manual-network { display:flex; align-items:center; min-width:0; gap:14px; height:368px; margin-top:18px; }
+.vfl-manual-network-svg { display:block; height:360px; width:calc(100% - 66px); max-width:100%; min-width:0; overflow:visible; }
+.vfl-manual-network-values { display:grid; grid-template-rows:repeat(9,minmax(0,1fr)); gap:5px; height:323px; flex-shrink:0; width:52px; margin-top:3px; }
+.vfl-manual-network-values span { display:grid; min-height:0; place-items:center; background:#e8f2ff; border-radius:12px; }
+.vfl-manual-layers { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin-top:12px; }
+.vfl-manual-layers>span { display:grid; place-items:center; min-width:0; height:56px; border-radius:12px; background:#e8f2ff; white-space:nowrap; }
+.vfl-manual-layers>span:nth-child(2) { color:#b75d11; background:#fff3e5; }
+.vfl-manual-layers>span:nth-child(3) { color:#cc4652; background:#ffedef; }
+.vfl-manual-results { display:grid; grid-template-rows:repeat(10,minmax(0,1fr)); gap:4px; height:350px; margin-top:26px; }
+.vfl-manual-result { display:grid; grid-template-columns:24px minmax(0,1fr) 24px; align-items:center; gap:14px; min-width:0; }
+.vfl-manual-probability-track { height:22px; min-width:0; border-radius:6px; background:linear-gradient(90deg,#e5ecf5,#edf2f8); }
+.vfl-manual-result-hint { display:grid; place-items:center; height:56px; margin-top:24px; border-radius:12px; background:#edf5ff; }

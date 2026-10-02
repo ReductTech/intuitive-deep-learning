@@ -1,3 +1,11 @@
+import { FeatureStatisticsPage } from './pages/FeatureStatisticsPage/FeatureStatisticsPage';
+import { GradCamPage } from './pages/GradCamPage/GradCamPage';
+import { TripletLossPage } from './pages/TripletLossPage/TripletLossPage';
+import { OpenIdentityPage } from './pages/OpenIdentityPage/OpenIdentityPage';
+import { DisguiseVerificationPage } from './pages/DisguiseVerificationPage/DisguiseVerificationPage';
+import { TrainingFeatureTsnePage } from './pages/TrainingFeatureTsnePage/TrainingFeatureTsnePage';
+import { NetworkTrainingPage } from './pages/NetworkTrainingPage/NetworkTrainingPage';
+import { GlobalAveragePoolingPage } from './pages/GlobalAveragePoolingPage/GlobalAveragePoolingPage';
 import { SceneDeck, type DeckDefinition, type SpeakerNote } from '../shared/react/presentation';
 import '../shared/react/styles.css';
 import '../shared/react/ui-kit.css';
@@ -10,12 +18,16 @@ import { RawPixelVariationPage } from './pages/RawPixelVariationPage/RawPixelVar
 import { FeatureExtractionPage } from './pages/FeatureExtractionPage/FeatureExtractionPage';
 import { SimpleFeatureLimitsPage } from './pages/SimpleFeatureLimitsPage/SimpleFeatureLimitsPage';
 import { NineGridFeaturePage } from './pages/NineGridFeaturePage/NineGridFeaturePage';
-import { FeatureVectorPage } from './pages/FeatureVectorPage/FeatureVectorPage';
 import { ManualFeatureClassifierPage } from './pages/ManualFeatureClassifierPage/ManualFeatureClassifierPage';
 import { NineGridInformationLossPage } from './pages/NineGridInformationLossPage/NineGridInformationLossPage';
 import { FixedDigitPage } from './pages/FixedDigitPage/FixedDigitPage';
 import { TwoStageRecognitionPage } from './pages/TwoStageRecognitionPage/TwoStageRecognitionPage';
-import { SingleToSequencePage } from './pages/SingleToSequencePage/SingleToSequencePage';
+import { ConvolutionUnitPage } from './pages/ConvolutionUnitPage/ConvolutionUnitPage';
+import { HierarchicalFeaturesPage } from './pages/HierarchicalFeaturesPage/HierarchicalFeaturesPage';
+import { FeatureMapsToClassifierPage } from './pages/FeatureMapsToClassifierPage/FeatureMapsToClassifierPage';
+import { LearnableKernelPage } from './pages/LearnableKernelPage/LearnableKernelPage';
+import { PoolingPage } from './pages/PoolingPage/PoolingPage';
+import { ConvolutionBackpropPage } from './pages/ConvolutionBackpropPage/ConvolutionBackpropPage';
 
 const opening = outlines.pages.find((page) => page.id === 'digit-recognition-opening')!;
 const differences = outlines.pages.find((page) => page.id === 'digit-differences')!;
@@ -23,12 +35,16 @@ const rawPixelVariation = outlines.pages.find((page) => page.id === 'raw-pixel-v
 const featureExtraction = outlines.pages.find((page) => page.id === 'feature-extraction')!;
 const simpleFeatureLimits = outlines.pages.find((page) => page.id === 'manual-feature-capacity')!;
 const nineGridFeature = outlines.pages.find((page) => page.id === 'manual-nine-grid')!;
-const featureVector = outlines.pages.find((page) => page.id === 'manual-feature-vector')!;
 const manualFeatureClassifier = outlines.pages.find((page) => page.id === 'manual-feature-classifier')!;
 const nineGridInformationLoss = outlines.pages.find((page) => page.id === 'manual-feature-information-loss')!;
 const fixedDigit = outlines.pages.find((page) => page.id === 'fixed-digit-classification')!;
 const twoStageRecognition = outlines.pages.find((page) => page.id === 'two-stage-recognition')!;
-const singleToSequence = outlines.pages.find((page) => page.id === 'single-to-sequence')!;
+const convolutionUnit = outlines.pages.find((page) => page.id === 'convolution-network-unit')!;
+const hierarchicalFeatures = outlines.pages.find((page) => page.id === 'hierarchical-features')!;
+const featureMapsToClassifier = outlines.pages.find((page) => page.id === 'feature-maps-to-classifier')!;
+const learnableKernel = outlines.pages.find((page) => page.id === 'learnable-kernel')!;
+const pooling = outlines.pages.find((page) => page.id === 'pooling')!;
+const optimizeKernel = outlines.pages.find((page) => page.id === 'optimize-kernel')!;
 
 export const deck: DeckDefinition = {
   id: 'visual-feature-learning',
@@ -60,15 +76,15 @@ export const deck: DeckDefinition = {
     section: '特征的边界',
     render: () => <SimpleFeatureLimitsPage />,
   }, {
+    id: 'simple-feature-statistics',
+    title: '简单统计特征的分布',
+    section: '特征的边界',
+    render: () => <FeatureStatisticsPage />,
+  }, {
     id: nineGridFeature.id,
     title: nineGridFeature.title,
     section: '人工特征',
     render: () => <NineGridFeaturePage />,
-  }, {
-    id: featureVector.id,
-    title: featureVector.title,
-    section: '人工特征',
-    render: () => <FeatureVectorPage />,
   }, {
     id: manualFeatureClassifier.id,
     title: manualFeatureClassifier.title,
@@ -87,13 +103,73 @@ export const deck: DeckDefinition = {
   }, {
     id: twoStageRecognition.id,
     title: twoStageRecognition.title,
-    section: '两阶段结构',
+    section: '人工特征',
     render: () => <TwoStageRecognitionPage />,
   }, {
-    id: singleToSequence.id,
-    title: singleToSequence.title,
-    section: '数字序列',
-    render: () => <SingleToSequencePage />,
+    id: learnableKernel.id,
+    title: learnableKernel.title,
+    section: '可学习特征',
+    render: () => <LearnableKernelPage />,
+  }, {
+    id: optimizeKernel.id,
+    title: optimizeKernel.title,
+    section: '卷积网络',
+    render: () => <ConvolutionBackpropPage />,
+  }, {
+    id: pooling.id,
+    title: pooling.title,
+    section: '卷积网络',
+    render: () => <PoolingPage />,
+  }, {
+    id: convolutionUnit.id,
+    title: convolutionUnit.title,
+    section: '卷积网络',
+    render: () => <ConvolutionUnitPage />,
+  }, {
+    id: hierarchicalFeatures.id,
+    title: hierarchicalFeatures.title,
+    section: '卷积网络',
+    render: () => <HierarchicalFeaturesPage />,
+  }, {
+    id: featureMapsToClassifier.id,
+    title: featureMapsToClassifier.title,
+    section: '卷积网络',
+    render: () => <FeatureMapsToClassifierPage />,
+  }, {
+    id: "global-average-pooling",
+    title: "全局平均池化 GAP",
+    section: "卷积网络",
+    render: () => <GlobalAveragePoolingPage />,
+  }, {
+    id: "assemble-train-digit-network",
+    title: "组装并训练完整数字识别网络",
+    section: "卷积网络",
+    render: () => <NetworkTrainingPage />,
+  }, {
+    id: "training-feature-tsne",
+    title: "t-SNE：训练怎样改变特征分布？",
+    section: "卷积网络",
+    render: () => <TrainingFeatureTsnePage />,
+  }, {
+    id: "digits-to-faces",
+    title: "从有限类别到开放身份",
+    section: "人脸识别",
+    render: () => <OpenIdentityPage />,
+  }, {
+    id: "triplet-loss",
+    title: "三元组损失：让特征适合比较身份",
+    section: "人脸识别",
+    render: () => <TripletLossPage />,
+  }, {
+    id: "training-objective-gradcam",
+    title: "Grad-CAM：不同训练目标关注哪里？",
+    section: "人脸识别",
+    render: () => <GradCamPage />,
+  }, {
+    id: "disguise-verification",
+    title: "人脸识别游戏：雨花弄",
+    section: "人脸识别",
+    render: ({ complete, reset }) => <DisguiseVerificationPage onComplete={complete} onReset={reset} />,
   }],
 };
 

@@ -1,7 +1,7 @@
 import moduleOutline from '../outlines.json';
 
-const INTAKE_ENDPOINT = 'http://127.0.0.1:59414/decision/intake';
-const EXTRA_FACTORS_ENDPOINT = 'http://127.0.0.1:59414/decision/extra-factors';
+const INTAKE_ENDPOINT = `${(import.meta.env.VITE_LLM_SERVICE_URL || 'http://127.0.0.1:28432').replace(/\/$/, '')}/decision/intake`;
+const EXTRA_FACTORS_ENDPOINT = `${(import.meta.env.VITE_LLM_SERVICE_URL || 'http://127.0.0.1:28432').replace(/\/$/, '')}/decision/extra-factors`;
 
 /** 课程标识取自模块根目录的 outlines.json，云端按它分组每门课的缓存。 */
 const COURSE_ID = moduleOutline.id;

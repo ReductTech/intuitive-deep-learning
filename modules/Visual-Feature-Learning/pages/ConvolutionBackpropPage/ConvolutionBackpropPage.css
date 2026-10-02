@@ -1,0 +1,112 @@
+.course-shell .vfl-kernel-update-page {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  width: 1600px;
+  height: 900px;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  padding: 18px 30px 20px;
+}
+
+.course-shell .vfl-kernel-update-page > .edu-content-body {
+  display: grid;
+  grid-template-rows: 110px minmax(0, 1fr) 164px;
+  gap: 17px;
+  min-width: 0;
+  min-height: 0;
+}
+
+.course-shell .vfl-kernel-update-equation {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  justify-items: center;
+  gap: 3px;
+  min-width: 0;
+  min-height: 0;
+  border: 1px solid #cbdcf4;
+  border-radius: 13px;
+  background: #f3f8ff;
+  padding: 6px 15px 10px;
+}
+.course-shell .vfl-kernel-update-equation .math-formula-block {
+  width: 100%;
+  max-width: 100%;
+  min-height: 0;
+  border: 0;
+  background: transparent;
+  padding: 0;
+}
+.course-shell .vfl-kernel-update-equation .math-formula-static { font-size: 2.55rem; }
+.course-shell .vfl-kernel-update-equation > .ui-typography { margin: 0; }
+
+.course-shell .vfl-kernel-update-matrices {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 110px minmax(0, 1fr) 76px minmax(0, 1fr);
+  align-items: center;
+  gap: 11px;
+  min-width: 0;
+  min-height: 0;
+}
+.course-shell .vfl-kernel-update-matrices > * { min-width: 0; max-width: 100%; }
+.course-shell .vfl-kernel-update-column {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  justify-items: center;
+  gap: 18px;
+  min-width: 0;
+  min-height: 0;
+}
+.course-shell .vfl-kernel-update-column > .ui-typography { margin: 0; text-align: center; }
+.course-shell .vfl-kernel-update-operator { justify-self: center; white-space: nowrap; }
+.course-shell .vfl-kernel-update-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  gap: 5px;
+  width: min(100%, 352px);
+  max-width: 100%;
+  aspect-ratio: 1;
+}
+.course-shell .vfl-kernel-update-grid > div,
+.course-shell .vfl-kernel-update-grid > .edu-btn {
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 2px solid #cadbf0;
+  border-radius: 8px;
+  background: #edf5ff;
+  color: #173a70;
+  box-shadow: none;
+  transition: border-color .16s ease, background-color .16s ease, transform .16s ease;
+}
+.course-shell .vfl-kernel-update-grid > .edu-btn.is-positive { border-color: #f2c19e; background: #fff1e7; color: #c96a31; }
+.course-shell .vfl-kernel-update-grid > .edu-btn.is-negative { border-color: #b9d5f6; background: #eaf3ff; color: #2d70cc; }
+.course-shell .vfl-kernel-update-grid > .edu-btn:hover,
+.course-shell .vfl-kernel-update-grid > .edu-btn:focus-visible { transform: translateY(-2px); }
+.course-shell .vfl-kernel-update-grid > div.has-decreased { border-color: #adddc7; background: #ebf8f1; color: #218866; }
+.course-shell .vfl-kernel-update-grid > div.has-increased { border-color: #b9d5f6; background: #eaf3ff; color: #2d70cc; }
+.course-shell .vfl-kernel-update-grid > .is-linked { border-width: 4px; border-color: #ec7b42 !important; box-shadow: 0 0 0 3px rgba(236,123,66,.14); }
+.course-shell .vfl-kernel-update-grid .ui-typography { margin: 0; white-space: nowrap; }
+
+.course-shell .vfl-kernel-update-source {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 8px;
+  min-width: 0;
+  min-height: 0;
+  border: 1px solid #cbdcf4;
+  border-radius: 12px;
+  background: #edf4ff;
+  padding: 14px 20px;
+}
+.course-shell .vfl-kernel-update-source .ui-typography { margin: 0; min-width: 0; }
+.course-shell .vfl-kernel-update-source-head { display: flex; align-items: baseline; justify-content: center; gap: 25px; min-width: 0; }
+.course-shell .vfl-kernel-update-source-terms { display: flex; align-items: center; justify-content: center; gap: 10px; min-width: 0; }
+.course-shell .vfl-kernel-update-source-terms > div { display: flex; align-items: center; gap: 9px; border: 1px solid #cddff4; border-radius: 8px; background: #fff; padding: 4px 9px; white-space: nowrap; }
+.course-shell .vfl-kernel-update-source-terms > .ui-typography { margin-left: 10px; white-space: nowrap; }
+.course-shell .vfl-kernel-update-source-result { text-align: center; }

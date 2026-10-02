@@ -76,10 +76,10 @@ export function DigitDifferencesPage() {
   const comparison = comparisons[index];
   const select = (next: number) => setIndex((next + comparisons.length) % comparisons.length);
 
-  return <ContentBlock className="vfl-diff relative h-[900px] w-[1600px] overflow-hidden" headingLevel={1} title="数字之间有什么不同？" subtitle="观察笔画方向、转折与闭合关系，辨析不同数字的形态线索。">
+  return <ContentBlock className="vfl-diff relative h-[900px] w-[1600px] overflow-hidden" headingLevel={1} title="手写数字的形态差异" subtitle="观察笔画方向、转折与闭合关系，辨析不同数字的形态线索。">
 
     <div className="vfl-diff__question absolute grid place-items-center rounded-full">
-      <Typography as="h2" variant="display" tone="inherit">观察哪些笔画结构？</Typography>
+      <Typography as="h2" variant="display" tone="inherit">关键笔画结构</Typography>
     </div>
 
     <DigitCard digit={comparison.leftDigit} path={comparison.leftPath} side="left" />

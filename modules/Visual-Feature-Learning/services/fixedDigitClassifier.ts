@@ -16,7 +16,7 @@ export interface TrainResult {
   classifier: Classifier;
 }
 
-const SERVICE_URL = 'http://127.0.0.1:59415/lenet5/fixed-kernel-train';
+const SERVICE_URL = `${(import.meta.env.VITE_CNN_SERVICE_URL || 'http://127.0.0.1:28431').replace(/\/$/, '')}/lenet5/fixed-kernel-train`;
 
 export async function trainFixedDigitClassifier(kernels: KernelId[], image: number[][]): Promise<TrainResult> {
   const response = await fetch(SERVICE_URL, {

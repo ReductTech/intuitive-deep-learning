@@ -1,0 +1,42 @@
+.course-shell .vfl-unit-page { width:1600px; height:900px; padding:18px 30px 20px; display:grid; grid-template-rows:auto minmax(0,1fr); background:var(--ui-bg-card); }
+.vfl-unit-page > .edu-content-body { min-width:0; min-height:0; display:grid; grid-template-rows:minmax(0,1fr) auto; }
+.vfl-unit-scene { position:relative; width:1500px; max-width:100%; height:590px; align-self:center; justify-self:center; }
+.vfl-unit-links { position:absolute; inset:0; width:100%; height:100%; overflow:visible; color:var(--ui-border-strong); }
+.vfl-unit-links g { fill:none; stroke:currentColor; stroke-width:1.4; opacity:.48; }
+.vfl-unit-links path { marker-end:url(#vfl-unit-arrow); }
+.vfl-unit-links g.is-selected { color:var(--ui-accent-alt); stroke-width:2.2; opacity:1; }
+.vfl-unit-input { position:absolute; left:44px; top:258px; width:245px; }
+.vfl-unit-plane { position:relative; transform:matrix(.82,.40,0,1,0,0); transform-origin:center; border:3px solid var(--ui-border-strong); border-radius:2px; background:var(--ui-navy); box-shadow:8px 5px 0 var(--ui-border-strong),16px 22px 24px rgba(var(--ui-accent-rgb),.15); }
+.vfl-unit-input-plane { width:240px; height:240px; }
+.vfl-unit-plane canvas { display:block; width:100%; height:100%; max-width:100%; image-rendering:pixelated; }
+.vfl-unit-input-label { position:absolute; left:20px; top:293px; display:grid; gap:3px; }
+.vfl-unit-stage-label .ui-typography,.vfl-unit-input-label .ui-typography { margin:0; }
+.vfl-unit-stage-label .edu-formula-block,.vfl-unit-input-label .edu-formula-block { margin:0; }
+.vfl-unit-page .edu-formula-block { min-height:0; padding:0; border:0; background:transparent; }
+.vfl-unit-stage-label .math-formula,.vfl-unit-input-label .math-formula { transform:scale(.75); transform-origin:left center; }
+.vfl-unit-window { position:absolute; width:10.714%; height:10.714%; border:2px solid var(--ui-accent-alt); background:rgba(var(--ui-accent-alt-rgb),.15); pointer-events:none; }
+.vfl-unit-kernels { position:absolute; left:321px; top:130px; display:grid; gap:19px; }
+.course-shell .vfl-unit-kernel { width:96px; height:61px; min-height:0; padding:0; transform:matrix(.94,.22,0,1,0,0); border:1px solid var(--ui-border-strong); border-radius:2px; background:var(--ui-accent-soft); box-shadow:5px 4px 0 var(--ui-border-strong); color:var(--ui-accent); }
+.course-shell .vfl-unit-kernel.is-selected { background:rgba(var(--ui-accent-alt-rgb),.15); border-color:var(--ui-accent-alt); color:var(--ui-warning); }
+.vfl-unit-kernel .edu-formula-block { margin:0; padding:0; width:100%; }
+.vfl-unit-kernel > span { position:absolute; inset:0; display:block; }
+.vfl-unit-kernel .math-formula { position:absolute; left:50%; top:50%; width:max-content; transform:translate(-50%,-50%) scale(.43); }
+.vfl-unit-stage { position:absolute; width:295px; height:330px; transition:opacity .45s ease; }
+.vfl-unit-stage-0 { left:500px; top:150px; }
+.vfl-unit-stage-1 { left:860px; top:70px; }
+.vfl-unit-stage-2 { left:1220px; top:0; width:260px; }
+.vfl-unit-stage-label { position:absolute; left:30px; top:-48px; display:grid; gap:5px; }
+.vfl-unit-fan { position:absolute; left:0; top:165px; width:100%; height:250px; }
+.course-shell .vfl-unit-map { position:absolute; left:calc(var(--channel) * 34px); top:calc(var(--channel) * -23px); width:180px; height:180px; min-height:0; padding:0; z-index:calc(5 - var(--channel)); transition:border-color .2s,box-shadow .2s; }
+.course-shell .vfl-unit-map > span { display:block; width:100%; height:100%; }
+.course-shell .vfl-unit-map.is-selected { border-color:var(--ui-accent-alt); box-shadow:7px 5px 0 rgba(var(--ui-accent-alt-rgb),.6),16px 22px 24px rgba(var(--ui-accent-rgb),.15); }
+.course-shell .vfl-unit-stage-2 .vfl-unit-map { width:150px; height:150px; left:calc(var(--channel) * 30px); }
+.vfl-unit-stage.is-pending { opacity:.16; }
+.vfl-unit-loading { position:absolute; left:60px; top:240px; }
+.vfl-unit-channel-note { position:absolute; left:500px; bottom:4px; margin:0; }
+.vfl-unit-footer { display:grid; justify-items:center; gap:12px; padding-bottom:6px; }
+.vfl-unit-explanation { margin:0; }
+.vfl-unit-controls { display:flex; align-items:center; gap:14px; }
+.course-shell .vfl-unit-controls button { border-color:transparent; background:transparent; }
+.course-shell .vfl-unit-controls button:last-child { border-color:var(--ui-border); border-radius:var(--ui-radius-pill); margin-left:18px; }
+@media (prefers-reduced-motion:reduce) { .vfl-unit-stage,.vfl-unit-map { transition:none; } }

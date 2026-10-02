@@ -1,0 +1,1003 @@
+{
+  "schemaVersion": 1,
+  "model": "mobilenet_v3_small",
+  "weights": "IMAGENET1K_V1",
+  "weightsUrl": "https://download.pytorch.org/models/mobilenet_v3_small-047dcff4.pth",
+  "weightsSha256": "047dcff4addef86ea5bc2eff13c9614dc11f47ab1160d0a71a25e7db994f4e1f",
+  "versions": {
+    "torch": "2.14.1+cpu",
+    "torchvision": "0.29.1+cpu"
+  },
+  "preprocessing": {
+    "resizeShortEdge": 256,
+    "centerCrop": [
+      224,
+      224
+    ],
+    "interpolation": "bilinear",
+    "antialias": true,
+    "mean": [
+      0.485,
+      0.456,
+      0.406
+    ],
+    "std": [
+      0.229,
+      0.224,
+      0.225
+    ]
+  },
+  "channelSelection": "Top 2 by mean spatial variance over all 20 inputs; fixed across inputs",
+  "visualization": "Grayscale with fixed per-stage/per-channel 1st/99th percentile range across all inputs; clipped only for PNG display; NPZ preserves all float32 channels",
+  "interpretation": "ImageNet-pretrained responses, not a trained MNIST/CIFAR-10 classifier. Single channels are not guaranteed semantic detectors. Pyramid widths do not encode channel counts.",
+  "stages": {
+    "shallow": {
+      "layer": "features.0",
+      "shapeCHW": [
+        16,
+        112,
+        112
+      ],
+      "channels": [
+        15,
+        1
+      ],
+      "displayRanges": {
+        "15": [
+          -0.37445914566516875,
+          1.9861688613891602
+        ],
+        "1": [
+          0.901455819606781,
+          3.7866474413871765
+        ]
+      }
+    },
+    "middle": {
+      "layer": "features.3",
+      "shapeCHW": [
+        24,
+        28,
+        28
+      ],
+      "channels": [
+        18,
+        15
+      ],
+      "displayRanges": {
+        "18": [
+          -4.376962375640869,
+          2.549280428886403
+        ],
+        "15": [
+          -3.3135502004623416,
+          3.389487843513487
+        ]
+      }
+    },
+    "deep": {
+      "layer": "features.9",
+      "shapeCHW": [
+        96,
+        7,
+        7
+      ],
+      "channels": [
+        36,
+        31
+      ],
+      "displayRanges": {
+        "36": [
+          -1.9347348284721375,
+          1.4145010042190573
+        ],
+        "31": [
+          -1.27677680850029,
+          1.6965989685058613
+        ]
+      }
+    }
+  },
+  "samples": [
+    {
+      "id": "mnist-0-0",
+      "dataset": "mnist",
+      "label": "0",
+      "source": {
+        "asset": "mnist/0/60003.png",
+        "sha256": "d7e589381b51c3aee74517724f3d8e40cec0b5c810567703736f5ddb7ea2ca3d"
+      },
+      "input": "samples/mnist-0-0/input.png",
+      "modelInput": "samples/mnist-0-0/model-input.png",
+      "rawActivations": "samples/mnist-0-0/activations.npz",
+      "features": {
+        "shallow": [
+          {
+            "channel": 15,
+            "image": "samples/mnist-0-0/shallow/channel-015.png"
+          },
+          {
+            "channel": 1,
+            "image": "samples/mnist-0-0/shallow/channel-001.png"
+          }
+        ],
+        "middle": [
+          {
+            "channel": 18,
+            "image": "samples/mnist-0-0/middle/channel-018.png"
+          },
+          {
+            "channel": 15,
+            "image": "samples/mnist-0-0/middle/channel-015.png"
+          }
+        ],
+        "deep": [
+          {
+            "channel": 36,
+            "image": "samples/mnist-0-0/deep/channel-036.png"
+          },
+          {
+            "channel": 31,
+            "image": "samples/mnist-0-0/deep/channel-031.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mnist-1-0",
+      "dataset": "mnist",
+      "label": "1",
+      "source": {
+        "asset": "mnist/1/60002.png",
+        "sha256": "33bf13128fd13c23190fa297e80abc6e5bc3e4c7bb291fa1fd31894aeea185ae"
+      },
+      "input": "samples/mnist-1-0/input.png",
+      "modelInput": "samples/mnist-1-0/model-input.png",
+      "rawActivations": "samples/mnist-1-0/activations.npz",
+      "features": {
+        "shallow": [
+          {
+            "channel": 15,
+            "image": "samples/mnist-1-0/shallow/channel-015.png"
+          },
+          {
+            "channel": 1,
+            "image": "samples/mnist-1-0/shallow/channel-001.png"
+          }
+        ],
+        "middle": [
+          {
+            "channel": 18,
+            "image": "samples/mnist-1-0/middle/channel-018.png"
+          },
+          {
+            "channel": 15,
+            "image": "samples/mnist-1-0/middle/channel-015.png"
+          }
+        ],
+        "deep": [
+          {
+            "channel": 36,
+            "image": "samples/mnist-1-0/deep/channel-036.png"
+          },
+          {
+            "channel": 31,
+            "image": "samples/mnist-1-0/deep/channel-031.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mnist-2-0",
+      "dataset": "mnist",
+      "label": "2",
+      "source": {
+        "asset": "mnist/2/60001.png",
+        "sha256": "72363b408e0f318c0d2db8c663a49efff6358d2e770eb3201e298d9f7b5b0d48"
+      },
+      "input": "samples/mnist-2-0/input.png",
+      "modelInput": "samples/mnist-2-0/model-input.png",
+      "rawActivations": "samples/mnist-2-0/activations.npz",
+      "features": {
+        "shallow": [
+          {
+            "channel": 15,
+            "image": "samples/mnist-2-0/shallow/channel-015.png"
+          },
+          {
+            "channel": 1,
+            "image": "samples/mnist-2-0/shallow/channel-001.png"
+          }
+        ],
+        "middle": [
+          {
+            "channel": 18,
+            "image": "samples/mnist-2-0/middle/channel-018.png"
+          },
+          {
+            "channel": 15,
+            "image": "samples/mnist-2-0/middle/channel-015.png"
+          }
+        ],
+        "deep": [
+          {
+            "channel": 36,
+            "image": "samples/mnist-2-0/deep/channel-036.png"
+          },
+          {
+            "channel": 31,
+            "image": "samples/mnist-2-0/deep/channel-031.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mnist-3-0",
+      "dataset": "mnist",
+      "label": "3",
+      "source": {
+        "asset": "mnist/3/60018.png",
+        "sha256": "b64608b54865acecbe635c4ebf8e7efb60c83ff611d5a889fdd9ebe42b24eb30"
+      },
+      "input": "samples/mnist-3-0/input.png",
+      "modelInput": "samples/mnist-3-0/model-input.png",
+      "rawActivations": "samples/mnist-3-0/activations.npz",
+      "features": {
+        "shallow": [
+          {
+            "channel": 15,
+            "image": "samples/mnist-3-0/shallow/channel-015.png"
+          },
+          {
+            "channel": 1,
+            "image": "samples/mnist-3-0/shallow/channel-001.png"
+          }
+        ],
+        "middle": [
+          {
+            "channel": 18,
+            "image": "samples/mnist-3-0/middle/channel-018.png"
+          },
+          {
+            "channel": 15,
+            "image": "samples/mnist-3-0/middle/channel-015.png"
+          }
+        ],
+        "deep": [
+          {
+            "channel": 36,
+            "image": "samples/mnist-3-0/deep/channel-036.png"
+          },
+          {
+            "channel": 31,
+            "image": "samples/mnist-3-0/deep/channel-031.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mnist-4-0",
+      "dataset": "mnist",
+      "label": "4",
+      "source": {
+        "asset": "mnist/4/60004.png",
+        "sha256": "9c4ef669be5ea4172faca47eb7352f6da4dc750635a477bb4dec8c42b8e74a24"
+      },
+      "input": "samples/mnist-4-0/input.png",
+      "modelInput": "samples/mnist-4-0/model-input.png",
+      "rawActivations": "samples/mnist-4-0/activations.npz",
+      "features": {
+        "shallow": [
+          {
+            "channel": 15,
+            "image": "samples/mnist-4-0/shallow/channel-015.png"
+          },
+          {
+            "channel": 1,
+            "image": "samples/mnist-4-0/shallow/channel-001.png"
+          }
+        ],
+        "middle": [
+          {
+            "channel": 18,
+            "image": "samples/mnist-4-0/middle/channel-018.png"
+          },
+          {
+            "channel": 15,
+            "image": "samples/mnist-4-0/middle/channel-015.png"
+          }
+        ],
+        "deep": [
+          {
+            "channel": 36,
+            "image": "samples/mnist-4-0/deep/channel-036.png"
+          },
+          {
+            "channel": 31,
+            "image": "samples/mnist-4-0/deep/channel-031.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mnist-5-0",
+      "dataset": "mnist",
+      "label": "5",
+      "source": {
+        "asset": "mnist/5/60008.png",
+        "sha256": "1ee6fbc49ce07d63fa8830574c3505c456ee000168708a66b65020a83b32a0f9"
+      },
+      "input": "samples/mnist-5-0/input.png",
+      "modelInput": "samples/mnist-5-0/model-input.png",
+      "rawActivations": "samples/mnist-5-0/activations.npz",
+      "features": {
+        "shallow": [
+          {
+            "channel": 15,
+            "image": "samples/mnist-5-0/shallow/channel-015.png"
+          },
+          {
+            "channel": 1,
+            "image": "samples/mnist-5-0/shallow/channel-001.png"
+          }
+        ],
+        "middle": [
+          {
+            "channel": 18,
+            "image": "samples/mnist-5-0/middle/channel-018.png"
+          },
+          {
+            "channel": 15,
+            "image": "samples/mnist-5-0/middle/channel-015.png"
+          }
+        ],
+        "deep": [
+          {
+            "channel": 36,
+            "image": "samples/mnist-5-0/deep/channel-036.png"
+          },
+          {
+            "channel": 31,
+            "image": "samples/mnist-5-0/deep/channel-031.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mnist-6-0",
+      "dataset": "mnist",
+      "label": "6",
+      "source": {
+        "asset": "mnist/6/60011.png",
+        "sha256": "de821203aac9ecd8f9c551ae1999dd08b206828dc2a432838faafeae346bb1b0"
+      },
+      "input": "samples/mnist-6-0/input.png",
+      "modelInput": "samples/mnist-6-0/model-input.png",
+      "rawActivations": "samples/mnist-6-0/activations.npz",
+      "features": {
+        "shallow": [
+          {
+            "channel": 15,
+            "image": "samples/mnist-6-0/shallow/channel-015.png"
+          },
+          {
+            "channel": 1,
+            "image": "samples/mnist-6-0/shallow/channel-001.png"
+          }
+        ],
+        "middle": [
+          {
+            "channel": 18,
+            "image": "samples/mnist-6-0/middle/channel-018.png"
+          },
+          {
+            "channel": 15,
+            "image": "samples/mnist-6-0/middle/channel-015.png"
+          }
+        ],
+        "deep": [
+          {
+            "channel": 36,
+            "image": "samples/mnist-6-0/deep/channel-036.png"
+          },
+          {
+            "channel": 31,
+            "image": "samples/mnist-6-0/deep/channel-031.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mnist-7-0",
+      "dataset": "mnist",
+      "label": "7",
+      "source": {
+        "asset": "mnist/7/60000.png",
+        "sha256": "4765a6a3323bab81763ab13ad5f0370ddc653ba00dc3f817f1e7f7a0ae8f2d9d"
+      },
+      "input": "samples/mnist-7-0/input.png",
+      "modelInput": "samples/mnist-7-0/model-input.png",
+      "rawActivations": "samples/mnist-7-0/activations.npz",
+      "features": {
+        "shallow": [
+          {
+            "channel": 15,
+            "image": "samples/mnist-7-0/shallow/channel-015.png"
+          },
+          {
+            "channel": 1,
+            "image": "samples/mnist-7-0/shallow/channel-001.png"
+          }
+        ],
+        "middle": [
+          {
+            "channel": 18,
+            "image": "samples/mnist-7-0/middle/channel-018.png"
+          },
+          {
+            "channel": 15,
+            "image": "samples/mnist-7-0/middle/channel-015.png"
+          }
+        ],
+        "deep": [
+          {
+            "channel": 36,
+            "image": "samples/mnist-7-0/deep/channel-036.png"
+          },
+          {
+            "channel": 31,
+            "image": "samples/mnist-7-0/deep/channel-031.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mnist-8-0",
+      "dataset": "mnist",
+      "label": "8",
+      "source": {
+        "asset": "mnist/8/60061.png",
+        "sha256": "241d04dcc2a6cf5f1c8610dc8877e0c4e22e42f2572f8e43716b74c75becfb86"
+      },
+      "input": "samples/mnist-8-0/input.png",
+      "modelInput": "samples/mnist-8-0/model-input.png",
+      "rawActivations": "samples/mnist-8-0/activations.npz",
+      "features": {
+        "shallow": [
+          {
+            "channel": 15,
+            "image": "samples/mnist-8-0/shallow/channel-015.png"
+          },
+          {
+            "channel": 1,
+            "image": "samples/mnist-8-0/shallow/channel-001.png"
+          }
+        ],
+        "middle": [
+          {
+            "channel": 18,
+            "image": "samples/mnist-8-0/middle/channel-018.png"
+          },
+          {
+            "channel": 15,
+            "image": "samples/mnist-8-0/middle/channel-015.png"
+          }
+        ],
+        "deep": [
+          {
+            "channel": 36,
+            "image": "samples/mnist-8-0/deep/channel-036.png"
+          },
+          {
+            "channel": 31,
+            "image": "samples/mnist-8-0/deep/channel-031.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mnist-9-0",
+      "dataset": "mnist",
+      "label": "9",
+      "source": {
+        "asset": "mnist/9/60007.png",
+        "sha256": "958ece5dc38620a377090eb5a57fbae68b1cd2beee5e9eea3995cbfed694566c"
+      },
+      "input": "samples/mnist-9-0/input.png",
+      "modelInput": "samples/mnist-9-0/model-input.png",
+      "rawActivations": "samples/mnist-9-0/activations.npz",
+      "features": {
+        "shallow": [
+          {
+            "channel": 15,
+            "image": "samples/mnist-9-0/shallow/channel-015.png"
+          },
+          {
+            "channel": 1,
+            "image": "samples/mnist-9-0/shallow/channel-001.png"
+          }
+        ],
+        "middle": [
+          {
+            "channel": 18,
+            "image": "samples/mnist-9-0/middle/channel-018.png"
+          },
+          {
+            "channel": 15,
+            "image": "samples/mnist-9-0/middle/channel-015.png"
+          }
+        ],
+        "deep": [
+          {
+            "channel": 36,
+            "image": "samples/mnist-9-0/deep/channel-036.png"
+          },
+          {
+            "channel": 31,
+            "image": "samples/mnist-9-0/deep/channel-031.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "cifar10-airplane-0",
+      "dataset": "cifar10",
+      "label": "airplane",
+      "source": {
+        "url": "https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz",
+        "archiveMd5": "c58f30108f718f92721af3b95e74349a",
+        "split": "test",
+        "index": 3
+      },
+      "input": "samples/cifar10-airplane-0/input.png",
+      "modelInput": "samples/cifar10-airplane-0/model-input.png",
+      "rawActivations": "samples/cifar10-airplane-0/activations.npz",
+      "features": {
+        "shallow": [
+          {
+            "channel": 15,
+            "image": "samples/cifar10-airplane-0/shallow/channel-015.png"
+          },
+          {
+            "channel": 1,
+            "image": "samples/cifar10-airplane-0/shallow/channel-001.png"
+          }
+        ],
+        "middle": [
+          {
+            "channel": 18,
+            "image": "samples/cifar10-airplane-0/middle/channel-018.png"
+          },
+          {
+            "channel": 15,
+            "image": "samples/cifar10-airplane-0/middle/channel-015.png"
+          }
+        ],
+        "deep": [
+          {
+            "channel": 36,
+            "image": "samples/cifar10-airplane-0/deep/channel-036.png"
+          },
+          {
+            "channel": 31,
+            "image": "samples/cifar10-airplane-0/deep/channel-031.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "cifar10-automobile-0",
+      "dataset": "cifar10",
+      "label": "automobile",
+      "source": {
+        "url": "https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz",
+        "archiveMd5": "c58f30108f718f92721af3b95e74349a",
+        "split": "test",
+        "index": 6
+      },
+      "input": "samples/cifar10-automobile-0/input.png",
+      "modelInput": "samples/cifar10-automobile-0/model-input.png",
+      "rawActivations": "samples/cifar10-automobile-0/activations.npz",
+      "features": {
+        "shallow": [
+          {
+            "channel": 15,
+            "image": "samples/cifar10-automobile-0/shallow/channel-015.png"
+          },
+          {
+            "channel": 1,
+            "image": "samples/cifar10-automobile-0/shallow/channel-001.png"
+          }
+        ],
+        "middle": [
+          {
+            "channel": 18,
+            "image": "samples/cifar10-automobile-0/middle/channel-018.png"
+          },
+          {
+            "channel": 15,
+            "image": "samples/cifar10-automobile-0/middle/channel-015.png"
+          }
+        ],
+        "deep": [
+          {
+            "channel": 36,
+            "image": "samples/cifar10-automobile-0/deep/channel-036.png"
+          },
+          {
+            "channel": 31,
+            "image": "samples/cifar10-automobile-0/deep/channel-031.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "cifar10-bird-0",
+      "dataset": "cifar10",
+      "label": "bird",
+      "source": {
+        "url": "https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz",
+        "archiveMd5": "c58f30108f718f92721af3b95e74349a",
+        "split": "test",
+        "index": 25
+      },
+      "input": "samples/cifar10-bird-0/input.png",
+      "modelInput": "samples/cifar10-bird-0/model-input.png",
+      "rawActivations": "samples/cifar10-bird-0/activations.npz",
+      "features": {
+        "shallow": [
+          {
+            "channel": 15,
+            "image": "samples/cifar10-bird-0/shallow/channel-015.png"
+          },
+          {
+            "channel": 1,
+            "image": "samples/cifar10-bird-0/shallow/channel-001.png"
+          }
+        ],
+        "middle": [
+          {
+            "channel": 18,
+            "image": "samples/cifar10-bird-0/middle/channel-018.png"
+          },
+          {
+            "channel": 15,
+            "image": "samples/cifar10-bird-0/middle/channel-015.png"
+          }
+        ],
+        "deep": [
+          {
+            "channel": 36,
+            "image": "samples/cifar10-bird-0/deep/channel-036.png"
+          },
+          {
+            "channel": 31,
+            "image": "samples/cifar10-bird-0/deep/channel-031.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "cifar10-cat-0",
+      "dataset": "cifar10",
+      "label": "cat",
+      "source": {
+        "url": "https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz",
+        "archiveMd5": "c58f30108f718f92721af3b95e74349a",
+        "split": "test",
+        "index": 0
+      },
+      "input": "samples/cifar10-cat-0/input.png",
+      "modelInput": "samples/cifar10-cat-0/model-input.png",
+      "rawActivations": "samples/cifar10-cat-0/activations.npz",
+      "features": {
+        "shallow": [
+          {
+            "channel": 15,
+            "image": "samples/cifar10-cat-0/shallow/channel-015.png"
+          },
+          {
+            "channel": 1,
+            "image": "samples/cifar10-cat-0/shallow/channel-001.png"
+          }
+        ],
+        "middle": [
+          {
+            "channel": 18,
+            "image": "samples/cifar10-cat-0/middle/channel-018.png"
+          },
+          {
+            "channel": 15,
+            "image": "samples/cifar10-cat-0/middle/channel-015.png"
+          }
+        ],
+        "deep": [
+          {
+            "channel": 36,
+            "image": "samples/cifar10-cat-0/deep/channel-036.png"
+          },
+          {
+            "channel": 31,
+            "image": "samples/cifar10-cat-0/deep/channel-031.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "cifar10-deer-0",
+      "dataset": "cifar10",
+      "label": "deer",
+      "source": {
+        "url": "https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz",
+        "archiveMd5": "c58f30108f718f92721af3b95e74349a",
+        "split": "test",
+        "index": 22
+      },
+      "input": "samples/cifar10-deer-0/input.png",
+      "modelInput": "samples/cifar10-deer-0/model-input.png",
+      "rawActivations": "samples/cifar10-deer-0/activations.npz",
+      "features": {
+        "shallow": [
+          {
+            "channel": 15,
+            "image": "samples/cifar10-deer-0/shallow/channel-015.png"
+          },
+          {
+            "channel": 1,
+            "image": "samples/cifar10-deer-0/shallow/channel-001.png"
+          }
+        ],
+        "middle": [
+          {
+            "channel": 18,
+            "image": "samples/cifar10-deer-0/middle/channel-018.png"
+          },
+          {
+            "channel": 15,
+            "image": "samples/cifar10-deer-0/middle/channel-015.png"
+          }
+        ],
+        "deep": [
+          {
+            "channel": 36,
+            "image": "samples/cifar10-deer-0/deep/channel-036.png"
+          },
+          {
+            "channel": 31,
+            "image": "samples/cifar10-deer-0/deep/channel-031.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "cifar10-dog-0",
+      "dataset": "cifar10",
+      "label": "dog",
+      "source": {
+        "url": "https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz",
+        "archiveMd5": "c58f30108f718f92721af3b95e74349a",
+        "split": "test",
+        "index": 12
+      },
+      "input": "samples/cifar10-dog-0/input.png",
+      "modelInput": "samples/cifar10-dog-0/model-input.png",
+      "rawActivations": "samples/cifar10-dog-0/activations.npz",
+      "features": {
+        "shallow": [
+          {
+            "channel": 15,
+            "image": "samples/cifar10-dog-0/shallow/channel-015.png"
+          },
+          {
+            "channel": 1,
+            "image": "samples/cifar10-dog-0/shallow/channel-001.png"
+          }
+        ],
+        "middle": [
+          {
+            "channel": 18,
+            "image": "samples/cifar10-dog-0/middle/channel-018.png"
+          },
+          {
+            "channel": 15,
+            "image": "samples/cifar10-dog-0/middle/channel-015.png"
+          }
+        ],
+        "deep": [
+          {
+            "channel": 36,
+            "image": "samples/cifar10-dog-0/deep/channel-036.png"
+          },
+          {
+            "channel": 31,
+            "image": "samples/cifar10-dog-0/deep/channel-031.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "cifar10-frog-0",
+      "dataset": "cifar10",
+      "label": "frog",
+      "source": {
+        "url": "https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz",
+        "archiveMd5": "c58f30108f718f92721af3b95e74349a",
+        "split": "test",
+        "index": 4
+      },
+      "input": "samples/cifar10-frog-0/input.png",
+      "modelInput": "samples/cifar10-frog-0/model-input.png",
+      "rawActivations": "samples/cifar10-frog-0/activations.npz",
+      "features": {
+        "shallow": [
+          {
+            "channel": 15,
+            "image": "samples/cifar10-frog-0/shallow/channel-015.png"
+          },
+          {
+            "channel": 1,
+            "image": "samples/cifar10-frog-0/shallow/channel-001.png"
+          }
+        ],
+        "middle": [
+          {
+            "channel": 18,
+            "image": "samples/cifar10-frog-0/middle/channel-018.png"
+          },
+          {
+            "channel": 15,
+            "image": "samples/cifar10-frog-0/middle/channel-015.png"
+          }
+        ],
+        "deep": [
+          {
+            "channel": 36,
+            "image": "samples/cifar10-frog-0/deep/channel-036.png"
+          },
+          {
+            "channel": 31,
+            "image": "samples/cifar10-frog-0/deep/channel-031.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "cifar10-horse-0",
+      "dataset": "cifar10",
+      "label": "horse",
+      "source": {
+        "url": "https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz",
+        "archiveMd5": "c58f30108f718f92721af3b95e74349a",
+        "split": "test",
+        "index": 13
+      },
+      "input": "samples/cifar10-horse-0/input.png",
+      "modelInput": "samples/cifar10-horse-0/model-input.png",
+      "rawActivations": "samples/cifar10-horse-0/activations.npz",
+      "features": {
+        "shallow": [
+          {
+            "channel": 15,
+            "image": "samples/cifar10-horse-0/shallow/channel-015.png"
+          },
+          {
+            "channel": 1,
+            "image": "samples/cifar10-horse-0/shallow/channel-001.png"
+          }
+        ],
+        "middle": [
+          {
+            "channel": 18,
+            "image": "samples/cifar10-horse-0/middle/channel-018.png"
+          },
+          {
+            "channel": 15,
+            "image": "samples/cifar10-horse-0/middle/channel-015.png"
+          }
+        ],
+        "deep": [
+          {
+            "channel": 36,
+            "image": "samples/cifar10-horse-0/deep/channel-036.png"
+          },
+          {
+            "channel": 31,
+            "image": "samples/cifar10-horse-0/deep/channel-031.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "cifar10-ship-0",
+      "dataset": "cifar10",
+      "label": "ship",
+      "source": {
+        "url": "https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz",
+        "archiveMd5": "c58f30108f718f92721af3b95e74349a",
+        "split": "test",
+        "index": 1
+      },
+      "input": "samples/cifar10-ship-0/input.png",
+      "modelInput": "samples/cifar10-ship-0/model-input.png",
+      "rawActivations": "samples/cifar10-ship-0/activations.npz",
+      "features": {
+        "shallow": [
+          {
+            "channel": 15,
+            "image": "samples/cifar10-ship-0/shallow/channel-015.png"
+          },
+          {
+            "channel": 1,
+            "image": "samples/cifar10-ship-0/shallow/channel-001.png"
+          }
+        ],
+        "middle": [
+          {
+            "channel": 18,
+            "image": "samples/cifar10-ship-0/middle/channel-018.png"
+          },
+          {
+            "channel": 15,
+            "image": "samples/cifar10-ship-0/middle/channel-015.png"
+          }
+        ],
+        "deep": [
+          {
+            "channel": 36,
+            "image": "samples/cifar10-ship-0/deep/channel-036.png"
+          },
+          {
+            "channel": 31,
+            "image": "samples/cifar10-ship-0/deep/channel-031.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "cifar10-truck-0",
+      "dataset": "cifar10",
+      "label": "truck",
+      "source": {
+        "url": "https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz",
+        "archiveMd5": "c58f30108f718f92721af3b95e74349a",
+        "split": "test",
+        "index": 11
+      },
+      "input": "samples/cifar10-truck-0/input.png",
+      "modelInput": "samples/cifar10-truck-0/model-input.png",
+      "rawActivations": "samples/cifar10-truck-0/activations.npz",
+      "features": {
+        "shallow": [
+          {
+            "channel": 15,
+            "image": "samples/cifar10-truck-0/shallow/channel-015.png"
+          },
+          {
+            "channel": 1,
+            "image": "samples/cifar10-truck-0/shallow/channel-001.png"
+          }
+        ],
+        "middle": [
+          {
+            "channel": 18,
+            "image": "samples/cifar10-truck-0/middle/channel-018.png"
+          },
+          {
+            "channel": 15,
+            "image": "samples/cifar10-truck-0/middle/channel-015.png"
+          }
+        ],
+        "deep": [
+          {
+            "channel": 36,
+            "image": "samples/cifar10-truck-0/deep/channel-036.png"
+          },
+          {
+            "channel": 31,
+            "image": "samples/cifar10-truck-0/deep/channel-031.png"
+          }
+        ]
+      }
+    }
+  ]
+}

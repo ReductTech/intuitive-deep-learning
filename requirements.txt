@@ -1,16 +1,5 @@
-# First installation batch: all dependencies except PyTorch.
-# Install this file with the PyPI mirror specified in SKILL.md.
-
-# LangChain
+# Compatibility installation for existing full local environments.
+# New installations should select extras documented in backend/README.md.
+-e ./backend[vision,faces,assessment,projection,tools]
 uuid_utils
-langchain-core==1.4.1
-pydantic==2.12.4
-pydantic_core==2.41.5
-
-# Core dependencies
-cryptography>=44.0
-numpy
-opencv-python-headless
-insightface
-onnxruntime
-
+# Install torch and torchvision separately for the desired CPU/CUDA platform.

@@ -3,7 +3,7 @@ export interface DigitPrediction {
   confidence: number;
 }
 
-const SERVICE_URL = 'http://127.0.0.1:59415/emnist/predict-digits';
+const SERVICE_URL = `${(import.meta.env.VITE_CNN_SERVICE_URL || 'http://127.0.0.1:28431').replace(/\/$/, '')}/emnist/predict-digits`;
 
 export async function recognizeEmnistDigit(image: string): Promise<DigitPrediction> {
   let response: Response;

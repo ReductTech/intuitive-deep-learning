@@ -2,52 +2,73 @@
   "schemaVersion": 1,
   "name": "intuitive-deep-learning",
   "version": "1.0.0",
-  "description": "Standalone deep-learning interactive modules for Linux containers",
+  "description": "Native Windows development for interactive deep-learning courses",
   "runtime": {
     "type": "command",
     "workingDirectory": "."
   },
   "requirements": {
-    "commands": ["bash", "python3"],
-    "ports": [59411, 59413, 59414, 59415]
+    "commands": [
+      "powershell.exe",
+      "python"
+    ],
+    "ports": [
+      59411,
+      59413,
+      28431,
+      28432
+    ]
   },
   "lifecycle": {
     "bootstrap": {
-      "cmd": "bash",
-      "args": ["scripts/run-lesson-page.sh", "--init"],
-      "required": true,
-      "timeoutMs": 60000
+      "cmd": "powershell.exe",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "scripts/devstart.ps1"
+      ],
+      "timeoutMs": 120000,
+      "required": true
     },
     "validate": {
-      "cmd": "bash",
-      "args": ["scripts/run-lesson-page.sh", "--status"],
-      "required": true,
-      "timeoutMs": 10000
-    },
-    "beforeEachAction": {
-      "cmd": "bash",
-      "args": ["scripts/run-lesson-page.sh", "--init"],
-      "required": true,
-      "timeoutMs": 60000
+      "cmd": "powershell.exe",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "scripts/devstart.ps1",
+        "-Status"
+      ],
+      "timeoutMs": 10000,
+      "required": true
     },
     "stop": {
-      "cmd": "bash",
-      "args": ["scripts/run-lesson-page.sh", "--stop"],
-      "required": false,
-      "timeoutMs": 10000
+      "cmd": "powershell.exe",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "scripts/devstop.ps1"
+      ],
+      "timeoutMs": 30000,
+      "required": false
     }
   },
   "actions": {
     "preparePage": {
-      "cmd": "bash",
-      "args": ["scripts/run-lesson-page.sh", "--init"],
-      "timeoutMs": 60000,
-      "requiresReady": false
-    },
-    "openModule": {
-      "cmd": "bash",
-      "args": ["scripts/run-lesson-page.sh", "--open-module"],
-      "timeoutMs": 30000,
+      "cmd": "powershell.exe",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "scripts/devstart.ps1"
+      ],
+      "timeoutMs": 120000,
       "requiresReady": false
     }
   }

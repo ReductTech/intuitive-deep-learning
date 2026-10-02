@@ -4,7 +4,7 @@
 
 `React 模块 → LangChain Service :59414 → LLM Proxy :59413 → 上游模型`
 
-`scripts/langchain_service.py` 和 `scripts/llm_proxy_service.py` 只是入口，实际任务、结构化解析和代理逻辑位于 `scripts/langchain_app/`。
+`idl_backend serve --kind assessment` 和 `idl_backend.assessment.proxy.cli` 只是入口，实际任务、结构化解析和代理逻辑位于 `backend/src/idl_backend/assessment/`。
 
 本文件只指导大模型能力的设计与实现，不负责启动或检查后台服务。除非用户明确要求，不主动启动任何服务。
 
@@ -59,10 +59,10 @@
 
 现有能力无法表达需求时：
 
-1. 在 `scripts/langchain_app/tasks/` 中新增或扩展任务。
+1. 在 `backend/src/idl_backend/assessment/tasks/` 中新增或扩展任务。
 2. 明确输入字段、Prompt 和结构化输出 Schema。
 3. 优先使用 `run_structured(...)` 完成调用和解析。
-4. 在 `scripts/langchain_app/registry.py` 注册业务 Endpoint。
+4. 在 `backend/src/idl_backend/assessment/registry.py` 注册业务 Endpoint。
 5. React 通过模块自己的 `services/` 调用该 Endpoint。
 
 前端只使用稳定的结构化结果。结构化任务通常使用较低随机性，只有任务本身需要开放生成时才提高生成自由度。

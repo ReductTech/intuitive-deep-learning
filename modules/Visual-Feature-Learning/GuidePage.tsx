@@ -1,3 +1,11 @@
+import { FeatureStatisticsPage } from './pages/FeatureStatisticsPage/FeatureStatisticsPage';
+import { GradCamPage } from './pages/GradCamPage/GradCamPage';
+import { TripletLossPage } from './pages/TripletLossPage/TripletLossPage';
+import { OpenIdentityPage } from './pages/OpenIdentityPage/OpenIdentityPage';
+import { DisguiseVerificationPage } from './pages/DisguiseVerificationPage/DisguiseVerificationPage';
+import { TrainingFeatureTsnePage } from './pages/TrainingFeatureTsnePage/TrainingFeatureTsnePage';
+import { NetworkTrainingPage } from './pages/NetworkTrainingPage/NetworkTrainingPage';
+import { GlobalAveragePoolingPage } from './pages/GlobalAveragePoolingPage/GlobalAveragePoolingPage';
 import { useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import { ModuleShell } from '../shared/react';
 import '../shared/react/styles.css';
@@ -10,12 +18,16 @@ import { RawPixelVariationPage } from './pages/RawPixelVariationPage/RawPixelVar
 import { FeatureExtractionPage } from './pages/FeatureExtractionPage/FeatureExtractionPage';
 import { SimpleFeatureLimitsPage } from './pages/SimpleFeatureLimitsPage/SimpleFeatureLimitsPage';
 import { NineGridFeaturePage } from './pages/NineGridFeaturePage/NineGridFeaturePage';
-import { FeatureVectorPage } from './pages/FeatureVectorPage/FeatureVectorPage';
 import { ManualFeatureClassifierPage } from './pages/ManualFeatureClassifierPage/ManualFeatureClassifierPage';
 import { NineGridInformationLossPage } from './pages/NineGridInformationLossPage/NineGridInformationLossPage';
 import { FixedDigitPage } from './pages/FixedDigitPage/FixedDigitPage';
 import { TwoStageRecognitionPage } from './pages/TwoStageRecognitionPage/TwoStageRecognitionPage';
-import { SingleToSequencePage } from './pages/SingleToSequencePage/SingleToSequencePage';
+import { ConvolutionUnitPage } from './pages/ConvolutionUnitPage/ConvolutionUnitPage';
+import { HierarchicalFeaturesPage } from './pages/HierarchicalFeaturesPage/HierarchicalFeaturesPage';
+import { FeatureMapsToClassifierPage } from './pages/FeatureMapsToClassifierPage/FeatureMapsToClassifierPage';
+import { LearnableKernelPage } from './pages/LearnableKernelPage/LearnableKernelPage';
+import { PoolingPage } from './pages/PoolingPage/PoolingPage';
+import { ConvolutionBackpropPage } from './pages/ConvolutionBackpropPage/ConvolutionBackpropPage';
 
 function LessonCanvas({ children }: { children: ReactNode }) {
   const frameRef = useRef<HTMLDivElement>(null);
@@ -47,12 +59,24 @@ export function GuidePage() {
     <LessonCanvas><RawPixelVariationPage /></LessonCanvas>
     <LessonCanvas><FeatureExtractionPage /></LessonCanvas>
     <LessonCanvas><SimpleFeatureLimitsPage /></LessonCanvas>
+    <LessonCanvas><FeatureStatisticsPage /></LessonCanvas>
     <LessonCanvas><NineGridFeaturePage /></LessonCanvas>
-    <LessonCanvas><FeatureVectorPage /></LessonCanvas>
     <LessonCanvas><ManualFeatureClassifierPage /></LessonCanvas>
     <LessonCanvas><NineGridInformationLossPage /></LessonCanvas>
     <LessonCanvas><FixedDigitPage /></LessonCanvas>
     <LessonCanvas><TwoStageRecognitionPage /></LessonCanvas>
-    <LessonCanvas><SingleToSequencePage /></LessonCanvas>
+    <LessonCanvas><LearnableKernelPage /></LessonCanvas>
+    <LessonCanvas><ConvolutionBackpropPage /></LessonCanvas>
+    <LessonCanvas><PoolingPage /></LessonCanvas>
+    <LessonCanvas><ConvolutionUnitPage /></LessonCanvas>
+    <LessonCanvas><HierarchicalFeaturesPage /></LessonCanvas>
+    <LessonCanvas><FeatureMapsToClassifierPage /></LessonCanvas>
+    <LessonCanvas><GlobalAveragePoolingPage /></LessonCanvas>
+    <LessonCanvas><NetworkTrainingPage /></LessonCanvas>
+    <LessonCanvas><TrainingFeatureTsnePage /></LessonCanvas>
+    <LessonCanvas><OpenIdentityPage /></LessonCanvas>
+    <LessonCanvas><TripletLossPage /></LessonCanvas>
+    <LessonCanvas><GradCamPage /></LessonCanvas>
+    <LessonCanvas><DisguiseVerificationPage /></LessonCanvas>
   </ModuleShell>;
 }

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
-import { ContentBlock } from '../../../shared/react';
+import { Button, ContentBlock, ExplainPanelButton, MathFormulaBlock, MathFormulaStatic, Typography } from '../../../shared/react';
+import './NineGridFeaturePage.css';
 import { NINE_GRID_EDGES, NINE_GRID_IMAGE_URL, nineGridCounts, nineGridRegionCells, readNineGridPixels } from '../../services/nineGridDigit';
 
 export function NineGridFeaturePage() {
@@ -61,79 +62,75 @@ export function NineGridFeaturePage() {
   }
 
   return <ContentBlock
-    className="box-border h-[900px] w-[1600px] overflow-hidden bg-[#fcfdff]"
+    className="vfl-nine-grid-page"
     headingLevel={1}
-    title="人工设计数字特征"
-    subtitle="将 28 × 28 图像划分为 3 × 3 个区域，分别统计各区域的墨迹像素数。"
+    title="九宫格区域统计特征"
+    subtitle="将 28 × 28 图像划分为 3 × 3 个区域，用各区域的墨迹像素数描述空间分布。"
   >
-    <div className="mx-auto mt-[24px] grid h-[548px] w-[1430px] grid-cols-[550px_850px] gap-[30px]">
-      <section className="box-border h-full rounded-[24px] border border-[#d9e7f8] bg-[#f4f9ff] px-[26px] py-[19px]" aria-label="完整图像和九个区域">
-        <div className="flex h-[50px] items-center gap-[14px] text-[#153964]">
-          <span className="grid h-[42px] w-[42px] shrink-0 place-items-center rounded-full bg-[#235ca9] text-[27px] font-bold text-white">1</span>
-          <h2 className="m-0 text-[28px] font-bold">数字 2 的九宫格划分</h2>
+    <div className="vfl-nine-grid-main">
+      <section className="vfl-nine-grid-source vfl-nine-grid-card" aria-label="完整图像和九个区域">
+        <div className="vfl-nine-grid-source-heading">
+          <Typography as="h2" variant="h3" tone="accent">28 × 28 手写数字图像</Typography>
         </div>
-        <div className="relative mx-auto mt-[15px] h-[352px] w-[352px] overflow-hidden rounded-[12px] border-[5px] border-white bg-black shadow-[0_12px_28px_rgba(28,56,91,.14)]">
-          <img className="absolute inset-0 block h-full w-full [image-rendering:pixelated]" src={NINE_GRID_IMAGE_URL} alt="真实 MNIST 手写数字 2，划分为九个区域" />
-          <div className="absolute inset-0 grid grid-cols-[9fr_9fr_10fr] grid-rows-[9fr_9fr_10fr]" aria-label="按从左到右、从上到下编号的九个区域">
-            {Array.from({ length: 9 }, (_, index) => <div
-              key={index}
-              className={`relative border border-dashed border-[#ffb472] ${index === region ? 'z-10 bg-[#fb923c]/[.12] ring-[5px] ring-inset ring-[#ff6a2a]' : index < region ? 'bg-[#60a5fa]/[.08]' : ''}`}
-            >
-              <span className={`absolute left-[7px] top-[7px] grid h-[36px] w-[36px] place-items-center rounded-full text-[24px] font-bold shadow-sm ${index === region ? 'bg-[#ff6a2a] text-white' : 'bg-[#e9f3ff] text-[#143b72]'}`}>{index + 1}</span>
-              {counts && index < region && <span className="absolute bottom-[6px] right-[7px] rounded-[6px] bg-[#0d2d59]/90 px-[7px] py-[1px] text-[20px] font-bold text-white">{counts[index]}</span>}
+        <div className="vfl-nine-grid-image">
+          <img src={NINE_GRID_IMAGE_URL} alt="真实 MNIST 手写数字 2，划分为九个区域" />
+          <div className="vfl-nine-grid-regions" aria-label="按从左到右、从上到下编号的九个区域">
+            {Array.from({ length: 9 }, (_, index) => <div key={index} className={`vfl-nine-grid-region ${index === region ? 'is-current' : ''}`}>
+              <Typography as="span" variant="bodySmall" tone="inherit" className="vfl-nine-grid-region-number">{index + 1}</Typography>
+              {counts && index < region && <Typography as="span" variant="h3" tone="inherit" className="vfl-nine-grid-region-count">{counts[index]}</Typography>}
             </div>)}
           </div>
         </div>
-        <div className="mt-[22px] flex items-center justify-center gap-[5px]" aria-label="九格计数进度">
-          {Array.from({ length: 9 }, (_, index) => <div key={index} className={`grid h-[42px] min-w-[43px] place-items-center rounded-full px-[5px] text-[20px] font-bold ${index === region ? 'bg-[#ff6a2a] text-white' : index < region ? 'bg-[#dceaff] text-[#17457b]' : 'bg-white text-[#7e95b1]'}`}>
-            {counts && index < region ? counts[index] : index + 1}
-          </div>)}
-        </div>
       </section>
-
-      <section className="box-border h-full rounded-[24px] border border-[#d9e7f8] bg-[#f4f9ff] px-[24px] py-[19px]" aria-label="放大的当前区域">
-        <div className="flex h-[50px] items-center gap-[14px] text-[#153964]">
-          <span className="grid h-[42px] w-[42px] shrink-0 place-items-center rounded-full bg-[#235ca9] text-[27px] font-bold text-white">2</span>
-          <h2 className="m-0 text-[30px] font-bold">第 {shownRegion + 1} 区域：逐像素计数</h2>
+      <section className={`vfl-nine-grid-detail vfl-nine-grid-card ${quiz ? 'is-quiz' : ''}`} aria-label="放大的当前区域">
+        <div className="vfl-nine-grid-detail-heading">
+          <Typography as="span" variant="h2" tone="inherit" className="vfl-nine-grid-active-number">{shownRegion + 1}</Typography>
+          <Typography as="h2" variant="h2" tone="inherit">第 {shownRegion + 1} 区域 · 逐像素计数</Typography>
         </div>
-        <div className="mt-[16px] flex items-start gap-[20px]">
-          <div className="grid h-[420px] w-[420px] shrink-0 gap-[2px] rounded-[15px] border-[6px] border-[#ff6a2a] bg-[#9bb8d9] p-[2px] shadow-[0_12px_28px_rgba(28,56,91,.12)]" style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`, gridTemplateRows: `repeat(${rows}, minmax(0, 1fr))` }} role="img" aria-label={`第 ${shownRegion + 1} 格放大后的像素网格`}>
+        <div className="vfl-nine-grid-detail-body">
+          <div className="vfl-nine-grid-pixels" style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`, gridTemplateRows: `repeat(${rows}, minmax(0, 1fr))` }} role="group" aria-label={`第 ${shownRegion + 1} 格放大后的像素网格`}>
             {cells.map((cell, index) => {
               const lit = cell.ink && (quiz ? marked.has(index) : cell.rank < counted || finished);
-              const color = !cell.ink ? 'bg-white' : lit ? 'bg-[#fb6a29]' : 'bg-[#132944]';
-              return quiz && cell.ink ? <button
-                key={`${cell.x}-${cell.y}`}
-                type="button"
-                className={`${color} appearance-none border-0 p-0 cursor-pointer hover:brightness-125 focus-visible:outline-[3px] focus-visible:outline-offset-[-3px] focus-visible:outline-[#ffb763]`}
+              const className = `vfl-nine-grid-pixel ${cell.ink ? lit ? 'is-counted' : 'is-ink' : ''}`;
+              return quiz && cell.ink ? <button key={`${cell.x}-${cell.y}`} type="button" className={className}
                 aria-label={`第 ${cell.y - NINE_GRID_EDGES[1] + 1} 行第 ${cell.x - NINE_GRID_EDGES[1] + 1} 列墨迹${marked.has(index) ? '，已标记' : ''}`}
-                aria-pressed={marked.has(index)}
-                onClick={() => markCell(index)}
-              /> : <div key={`${cell.x}-${cell.y}`} className={color} aria-hidden="true" />;
+                aria-pressed={marked.has(index)} onClick={() => markCell(index)} /> : <div key={`${cell.x}-${cell.y}`} className={className} aria-hidden="true" />;
             })}
           </div>
-          <div className="flex h-[420px] min-w-0 flex-1 flex-col justify-center rounded-[18px] border border-[#dce7f5] bg-white px-[22px] text-[#173c70]">
-            {quiz ? <>
-              <div className="mb-[14px] inline-flex self-start rounded-full bg-[#fff0e8] px-[14px] py-[6px] text-[19px] font-bold text-[#cb5728]">交互计数</div>
-              <h3 className="m-0 text-[29px] font-bold">请统计第 5 区域</h3>
-              <p className="mb-[17px] mt-[12px] text-[21px] leading-[1.5]">依次点击深色墨迹像素；选中的像素标为橙色。全部选中后自动继续。</p>
-              <div role="status" className="rounded-[16px] bg-[#eef5ff] px-[14px] py-[17px] text-center">
-                <span className="block text-[19px] font-semibold">已计数</span>
-                <strong className="block text-[68px] font-extrabold leading-[1.1] text-[#e7672a]">{marked.size}</strong>
-                <span className="text-[19px] font-semibold">个墨迹像素</span>
-              </div>
-            </> : <>
-              <h3 className="m-0 text-[28px] font-bold">{finished ? '九个区域统计完成' : `正在统计第 ${shownRegion + 1} 区域`}</h3>
-              <div className="my-[14px] text-center text-[54px] font-extrabold leading-none text-[#e7672a]">{finished ? counts?.[8] : counted}<span className="ml-[7px] text-[23px] text-[#567399]">个</span></div>
-              <p className="m-0 text-[20px] leading-[1.45]">{finished ? '各区域的墨迹像素数均已记录。' : '橙色表示已计入的墨迹像素。'}</p>
-              {finished && <button type="button" onClick={replay} className="mt-[20px] h-[46px] rounded-[10px] border-2 border-[#235ca9] bg-white text-[20px] font-bold text-[#235ca9] hover:bg-[#eaf3ff]">重新播放</button>}
-            </>}
+          <div className={`vfl-nine-grid-counter ${quiz ? 'is-quiz' : ''}`} role="status" aria-live={quiz ? 'polite' : 'off'}>
+            <Typography variant="h3" tone="accent">{finished ? '统计完成' : quiz ? '请你来数' : '已计数'}</Typography>
+            <Typography as="strong" variant="display" tone="inherit" className="vfl-nine-grid-counter-value">{String(finished ? counts?.[8] ?? 0 : quiz ? marked.size : counted).padStart(2, '0')}</Typography>
+            <div className="vfl-nine-grid-counter-rule"/>
+            <Typography variant="bodySmall" tone="accent">{finished ? '九项区域计数，组成下方特征向量。' : quiz ? <>点击深色像素。<br/>点完自动继续。</> : '橙色表示已计数的墨迹像素。'}</Typography>
+            {finished && <Button onClick={replay}>重新播放</Button>}
           </div>
         </div>
       </section>
     </div>
-    <div className="mx-auto mt-[8px] flex h-[87px] w-[1430px] items-center justify-center gap-[18px] rounded-[18px] border border-[#d9e7f8] bg-[#ebf4ff] px-[25px] text-center text-[27px] font-bold text-[#173c70]">
-      <span className="text-[34px] text-[#eb6a2d]">✦</span>
-      <span>{finished && counts ? `区域 1–9 的统计结果：${counts.join('、')}；数值顺序对应图像中的空间位置。` : '逐区域统计得到九项特征，保留墨迹在图像中的粗略分布。'}</span>
+    <div className="vfl-nine-grid-footer">
+      <div className="vfl-nine-grid-vector">
+        <div className="vfl-nine-grid-vector-label">
+          <div><Typography as="span" variant="h3" tone="accent">九维特征向量</Typography><Typography variant="bodySmall" tone="accent">各区域墨迹像素数</Typography></div>
+          <ExplainPanelButton label="说明九维特征向量及排列顺序">
+            <Typography variant="bodySmall" tone="muted">每一维记录一个区域的前景像素数。</Typography>
+            <Typography variant="bodySmall" tone="muted">从左到右、从上到下只是常用约定。各维可以统一重新排列，但所有样本及训练、预测必须采用相同顺序，保证每一维对应同一区域。</Typography>
+          </ExplainPanelButton>
+        </div>
+        <span className="vfl-nine-grid-vector-arrow" aria-hidden="true" />
+        <MathFormulaBlock className="vfl-nine-grid-vector-formula" ariaLabel="按区域一至九依次填入统计结果的九维特征向量">
+          <MathFormulaStatic latex={'\\mathbf{x}=\\lbrack'} />
+          {Array.from({ length: 9 }, (_, index) => {
+            const complete = !!counts && (index < region || index === region && !quiz && counted >= counts[index]);
+            return <span key={index} className="vfl-nine-grid-vector-entry">
+              <span className={`vfl-nine-grid-vector-slot ${!complete && index === region ? 'is-pending' : ''}`} aria-label={`第 ${index + 1} 维：${complete ? counts![index] : '待统计'}`}>
+                <MathFormulaStatic latex={complete ? String(counts![index]) : '\\underline{\\phantom{00}}'} />
+              </span>
+              {index < 8 && <MathFormulaStatic latex="," />}
+            </span>;
+          })}
+          <MathFormulaStatic latex={'\\rbrack'} />
+        </MathFormulaBlock>
+      </div>
     </div>
   </ContentBlock>;
 }

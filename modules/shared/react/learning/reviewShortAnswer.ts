@@ -1,6 +1,6 @@
 import type { ShortAnswerReview } from './Question';
 
-const ENDPOINT = 'http://127.0.0.1:59414/short-answer/evaluate';
+const ENDPOINT = `${(import.meta.env.VITE_LLM_SERVICE_URL || 'http://127.0.0.1:28432').replace(/\/$/, '')}/short-answer/evaluate`;
 
 /** Sends an inline question by default; taskId keeps existing question-bank tasks compatible. */
 export async function reviewShortAnswer(input: { question: string; referenceAnswer: string; answer: string; taskId?: string }): Promise<ShortAnswerReview> {

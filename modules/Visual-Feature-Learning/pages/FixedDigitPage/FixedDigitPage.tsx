@@ -226,7 +226,7 @@ export function FixedDigitPage() {
     <div className="mx-auto mt-[13px] grid h-[506px] w-[1430px] max-w-full gap-[12px]" style={{ gridTemplateColumns: 'minmax(0, 1.32fr) minmax(0, 1fr) minmax(0, .92fr)' }}>
       <section className="flex min-h-0 min-w-0 max-w-full flex-col rounded-[19px] border border-[#d4e5f8] bg-white p-[15px]" aria-label="固定卷积特征提取">
         <div className="flex items-center gap-[12px]"><span className="grid h-[42px] w-[42px] shrink-0 place-items-center rounded-full bg-[#2c69bf] text-white"><Typography as="span" variant="body" tone="inherit">1</Typography></span><Typography as="h2" variant="body" tone="accent" className="m-0 font-bold">固定卷积特征提取</Typography></div>
-        <Typography as="p" variant="bodySmall" tone="muted" className="mb-0 mt-[2px]">卷积核由人设定，训练时数值不变。</Typography>
+        <Typography as="p" variant="bodySmall" tone="muted" className="mb-0 mt-[2px]">卷积核参数预先设定，训练时保持不变。</Typography>
         <div className="mt-[9px] grid grid-cols-3 gap-[6px]" role="group" aria-label="选择固定卷积核">
           {KERNELS.map((kernel) => <Button key={kernel.id} variant="default" onClick={() => toggleKernel(kernel.id)} aria-pressed={selected.includes(kernel.id)} className={`!min-w-0 !rounded-[10px] !px-[5px] !py-[4px] ${selected.includes(kernel.id) ? '!border-[#8cb4e5] !bg-[#e9f2ff] !text-[#1e4d84]' : '!border-[#d3e0ee] !bg-white !text-[#547091]'}`}><Typography as="span" variant="bodySmall" tone="inherit">{selected.includes(kernel.id) ? '✓ ' : ''}{kernel.name}</Typography></Button>)}
         </div>
@@ -278,7 +278,7 @@ export function FixedDigitPage() {
     <div className="mx-auto mt-[11px] flex h-[63px] w-[1430px] max-w-full items-center justify-center rounded-[15px] border border-[#d5e5f8] bg-[#edf5ff] px-[18px] text-center">
       {error
         ? <Typography as="p" variant="bodySmall" tone="danger" wrap="truncate" role="alert" title={error} className="m-0">{error}</Typography>
-        : <Typography as="p" variant="body" tone="accent" className="m-0">卷积核的数值由人固定；学习发生在后端分类器。</Typography>}
+        : <Typography as="p" variant="body" tone="accent" className="m-0">卷积核参数保持固定；训练仅更新后端分类器参数。</Typography>}
     </div>
   </ContentBlock>;
 }

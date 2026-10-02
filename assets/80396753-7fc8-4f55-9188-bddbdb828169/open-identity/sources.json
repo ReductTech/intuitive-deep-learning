@@ -1,0 +1,26 @@
+[
+  {
+    "file": "luxun-1930.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:LuXun1930.jpg",
+    "download_url": "https://upload.wikimedia.org/wikipedia/commons/4/48/LuXun1930.jpg",
+    "caption": "鲁迅，1930 年",
+    "license": "Public domain, as documented by source page",
+    "sha256": "8600a0d83c86c3f8a696ef8db2022a57f34ed45fab77b788cb5fb9d80b2b032f"
+  },
+  {
+    "file": "luxun-1933.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Lu_Xun_was_wearing_a_sweater.jpg",
+    "download_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/dc/Lu_Xun_was_wearing_a_sweater.jpg/500px-Lu_Xun_was_wearing_a_sweater.jpg",
+    "caption": "鲁迅，1933 年",
+    "license": "Public domain, as documented by source page",
+    "sha256": "56f723992ebfc8795a2b279a91e3592c31cade9f2cdc5894cfc6d5bf34fa2f4e"
+  },
+  {
+    "file": "guo-moruo.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Guo_Moruo.jpg",
+    "download_url": "https://upload.wikimedia.org/wikipedia/commons/2/26/Guo_Moruo.jpg",
+    "caption": "郭沫若，不晚于 1941 年",
+    "license": "Public domain, as documented by source page",
+    "sha256": "02d3d13a44d534b63faf4fbc8b9f3ebbdb7b40138a60efafe91335f20a7e0c93"
+  }
+]

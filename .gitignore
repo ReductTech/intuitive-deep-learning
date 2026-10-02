@@ -1,6 +1,7 @@
 *.pyc
 settings.json
 runtime_logs/
+/datasets/artifacts/
 history/
 __pycache__/
 *.zip

@@ -33,6 +33,9 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         input: {
           app: 'index.html',
+          visualFeatureGame: 'modules/Visual-Feature-Learning/game/index.html',
+          visualFeatureGameEditor: 'modules/Visual-Feature-Learning/game/level-editor.html',
+          visualFeatureGameDebug: 'modules/Visual-Feature-Learning/game/game-debug.html',
           webPpt: 'web_ppt/index.html',
           webPptSlide: 'web_ppt/slide.html',
         },

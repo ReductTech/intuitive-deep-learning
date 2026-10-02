@@ -94,7 +94,7 @@ export function NineGridInformationLossPage() {
   return <ContentBlock
     className="box-border h-[900px] w-[1600px] overflow-hidden bg-[#fcfdff]"
     headingLevel={1}
-    title="九宫格特征遗漏了什么？"
+    title="九宫格特征的信息损失"
     subtitle="区域内的墨迹数量不变，像素重新排列后，九项统计值仍然相同。"
   >
     <div className="mx-auto mt-[20px] grid h-[536px] w-[1430px] max-w-full gap-[16px]" style={{ gridTemplateColumns: 'minmax(0, 1fr) 160px minmax(0, 1fr)' }}>
@@ -102,13 +102,13 @@ export function NineGridInformationLossPage() {
       <div className="flex min-w-0 flex-col items-center justify-center gap-[18px]">
         <span aria-hidden="true" className="text-[#ee7131]"><svg viewBox="0 0 120 70" className="h-[70px] w-[120px] max-w-full"><path d="M4 26h68V6l44 29-44 29V44H4z" fill="currentColor" /></svg></span>
         <Typography as="p" variant="body" tone="warning" className="m-0 text-center font-bold">仅在各区域内重排</Typography>
-        <Button variant="default" onClick={() => setSeed((current) => current + 1)} className="!rounded-[11px]"><Typography as="span" variant="body" tone="inherit">再排一次</Typography></Button>
+        <Button variant="default" onClick={() => setSeed((current) => current + 1)} className="!rounded-[11px]"><Typography as="span" variant="body" tone="inherit">重新排列</Typography></Button>
       </div>
       <DigitPanel title="区域内重排后" imageUrl={comparison?.rearrangedUrl ?? NINE_GRID_IMAGE_URL} counts={comparison?.rearranged ?? null} caption="像素位置改变，九项计数不变" />
     </div>
     <div className="mx-auto mt-[15px] flex h-[93px] w-[1430px] max-w-full flex-col items-center justify-center rounded-[17px] border border-[#ffd1b7] bg-[#fff7f1] px-[22px] text-center">
-      <Typography as="p" variant="body" tone="warning" className="m-0 font-bold">{countsEqual ? '图像不同，九维向量却完全相同。' : '正在计算两张图像的九项统计值。'}</Typography>
-      <Typography as="p" variant="body" tone="muted" className="mb-0 mt-[3px]">区域计数保留了墨迹分布，却没有记录区域内部的笔画排列。</Typography>
+      <Typography as="p" variant="body" tone="warning" className="m-0 font-bold">{countsEqual ? '两张图像的像素排列不同，但九维特征向量相同。' : '正在计算两张图像的九项统计值。'}</Typography>
+      <Typography as="p" variant="body" tone="muted" className="mb-0 mt-[3px]">区域计数保留墨迹数量的空间分布，但不记录区域内部的笔画排列。</Typography>
     </div>
   </ContentBlock>;
 }

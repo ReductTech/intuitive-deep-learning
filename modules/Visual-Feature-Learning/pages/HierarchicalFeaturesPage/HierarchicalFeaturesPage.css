@@ -1,0 +1,44 @@
+.course-shell .vfl-hierarchy-page { width:1600px; height:900px; padding:18px 30px 20px; display:grid; grid-template-rows:auto minmax(0,1fr); background:var(--ui-bg-card); }
+.vfl-hierarchy-page > .edu-content-body { min-width:0; min-height:0; display:grid; grid-template-rows:minmax(0,1fr) 124px 44px 112px; gap:8px; }
+.vfl-hierarchy-page .ui-typography { margin:0; }
+.vfl-hierarchy-scene { position:relative; min-height:0; display:grid; grid-template-rows:repeat(3,minmax(0,1fr)); padding-left:72px; }
+.vfl-hierarchy-level { display:grid; grid-template-columns:minmax(0, .43fr) 220px minmax(0,.39fr); gap:28px; align-items:center; min-width:0; min-height:0; }
+.vfl-hierarchy-tier-area { height:100%; position:relative; min-width:0; display:grid; align-items:center; justify-items:center; }
+.vfl-hierarchy-tier { position:relative; z-index:1; height:112px; display:flex; flex-direction:column; justify-content:center; align-items:center; gap:2px; color:var(--ui-accent); }
+.vfl-hierarchy-tier::before { content:''; position:absolute; inset:0; z-index:-1; clip-path:polygon(17% 0,83% 0,100% 96%,97% 100%,3% 100%,0 96%); background:linear-gradient(130deg,var(--ui-accent-soft),var(--ui-border-strong)); }
+.vfl-hierarchy-deep .vfl-hierarchy-tier { width:240px; }
+.vfl-hierarchy-deep .vfl-hierarchy-tier::before { background:linear-gradient(135deg,rgba(var(--ui-accent-alt-rgb),.16),rgba(var(--ui-accent-alt-rgb),.42)); }
+.vfl-hierarchy-middle .vfl-hierarchy-tier { width:380px; }
+.vfl-hierarchy-shallow .vfl-hierarchy-tier { width:520px; max-width:100%; color:var(--ui-bg-card); }
+.vfl-hierarchy-shallow .vfl-hierarchy-tier::before { background:linear-gradient(135deg,var(--ui-accent),var(--ui-navy)); }
+.vfl-hierarchy-page .edu-formula-block { background:transparent; border:0; padding:0; margin:0; min-height:0; }
+.vfl-hierarchy-tier .edu-formula-block { color:inherit; }
+.vfl-hierarchy-tier .math-formula { color:inherit; transform:scale(.8); transform-origin:center; }
+.vfl-hierarchy-leader { position:absolute; top:50%; left:50%; right:-16px; border-top:1px solid var(--ui-border-strong); }
+.vfl-hierarchy-leader::after { content:''; position:absolute; right:-3px; top:-3px; width:5px; height:5px; border-radius:50%; background:var(--ui-accent); }
+.vfl-hierarchy-up { position:absolute; bottom:-18px; left:calc(50% - 12px); width:24px; height:28px; color:var(--ui-accent); font-size:30px; line-height:28px; z-index:2; }
+.vfl-hierarchy-depth { position:absolute; left:4px; top:35px; bottom:35px; width:48px; display:flex; flex-direction:column; align-items:center; gap:14px; }
+.vfl-hierarchy-depth > span { height:145px; width:4px; background:linear-gradient(to top,var(--ui-accent-soft),var(--ui-accent)); position:relative; }
+.vfl-hierarchy-depth > span::before { content:''; position:absolute; top:-12px; left:-9px; border-left:11px solid transparent; border-right:11px solid transparent; border-bottom:18px solid var(--ui-accent); }
+.vfl-hierarchy-depth .ui-typography { writing-mode:vertical-rl; letter-spacing:3px; }
+.vfl-hierarchy-responses { display:flex; gap:16px; min-width:0; }
+.vfl-hierarchy-responses figure { margin:0; width:102px; min-width:0; display:grid; gap:3px; text-align:center; }
+.vfl-hierarchy-responses img { display:block; width:102px; height:102px; max-width:100%; image-rendering:pixelated; border:1px solid var(--ui-border); background:var(--ui-bg-muted); }
+.vfl-hierarchy-description { min-width:0; display:grid; gap:5px; }
+.vfl-hierarchy-description > .ui-typography:first-child { margin-bottom:7px; }
+.vfl-hierarchy-input-row { display:grid; grid-template-columns:minmax(0,.36fr) minmax(0,.64fr); gap:28px; align-items:center; min-width:0; }
+.vfl-hierarchy-input { display:flex; justify-content:center; gap:18px; align-items:center; min-width:0; }
+.vfl-hierarchy-input > img { width:94px; height:94px; object-fit:contain; image-rendering:pixelated; }
+.vfl-hierarchy-input > div { display:grid; gap:1px; }
+.vfl-hierarchy-input .math-formula { transform:scale(.6); transform-origin:left center; }
+.vfl-hierarchy-input .edu-formula-block { height:24px; }
+.vfl-hierarchy-choices { min-width:0; display:grid; gap:10px; }
+.vfl-hierarchy-choices > div { display:grid; grid-template-columns:135px minmax(0,1fr); align-items:center; gap:8px; }
+.vfl-hierarchy-choices > div > .ui-typography { white-space:nowrap; }
+.vfl-hierarchy-choices > div > div { display:grid; grid-template-columns:repeat(10,minmax(0,1fr)); gap:6px; min-width:0; }
+.course-shell .vfl-hierarchy-choices .edu-btn { min-width:0; padding:5px 4px; min-height:36px; }
+.vfl-hierarchy-note { align-self:center; text-align:right; }
+.vfl-hierarchy-composition { display:grid; grid-template-columns:minmax(0,.36fr) minmax(0,.64fr); gap:28px; border-top:1px solid var(--ui-border-strong); padding-top:12px; min-width:0; align-items:center; }
+.vfl-hierarchy-composition > div { min-width:0; display:grid; gap:8px; }
+.vfl-hierarchy-composition > div:last-child { text-align:center; }
+.vfl-hierarchy-composition .edu-formula-block { justify-self:center; }

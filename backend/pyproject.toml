@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "idl-backend"
+version = "0.1.0"
+description = "Shared course computation and HTTP contracts for local and cloud runtimes"
+requires-python = ">=3.10"
+dependencies = ["cryptography>=44.0"]
+
+[project.optional-dependencies]
+vision = ["numpy", "Pillow"]
+faces = ["opencv-python-headless", "insightface", "onnxruntime"]
+assessment = ["langchain-core==1.4.1", "pydantic==2.12.4"]
+projection = ["scikit-learn", "threadpoolctl"]
+tools = ["playwright", "Pillow", "psutil"]
+dev = ["psutil"]
+test = ["pytest"]
+
+[project.scripts]
+idl-backend = "idl_backend.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"idl_backend.assessment" = ["data/*.json", "data/precomputed/*.json"]

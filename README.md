@@ -1,5 +1,7 @@
 # Intuitive Deep Learning
 
+服务重构后的 Windows 启动、目录职责和兼容说明见 [backend/README.md](backend/README.md)。
+
 > 用可视化、交互实验和小规模训练任务建立深度学习直觉。
 
 Intuitive Deep Learning 是一套可本地运行的深度学习互动课程。项目把抽象概念拆成可以操作的学习模块：从“为什么需要神经元”开始，逐步进入损失函数、梯度下降、激活函数、MLP、数字图像、卷积核、LeNet-5 和人脸识别等主题。
@@ -57,42 +59,20 @@ python3 -m pip install -r requirements.txt
 python3 -m pip install -r requirements-torch.txt
 ```
 
-## 快速开始
+## Windows 启动
 
-在仓库根目录启动课程地图：
-
-```bash
-bash scripts/run-lesson-page.sh --init
-```
-
-打开指定课程模块：
-
-```bash
-bash scripts/run-lesson-page.sh --open-module --module-id <module-id>
-```
-
-示例：
-
-```bash
-bash scripts/run-lesson-page.sh --open-module --module-id MLP_playground
-```
-
-查看服务状态或停止服务：
-
-```bash
-bash scripts/run-lesson-page.sh --status
-bash scripts/run-lesson-page.sh --stop
-```
+在仓库根目录、已激活的 Python 环境中，运行 `.\scripts\devstart.ps1` 启动全部本地后台服务；另一个终端运行 `npm run dev` 启动课件。状态与停止分别为 `.\scripts\devstart.ps1 -Status` 和 `.\scripts\devstop.ps1`。详情见 [scripts/README.md](scripts/README.md)。
 
 ## 项目结构
 
 ```text
 .
-├── assets/                 # 课程静态资源，数据集存放在 assets/dataset/
+├── datasets/               # 服务端数据、模型权重与训练产物，不上传 OSS
+├── assets/                 # 课程展示素材，上传 OSS；不包含完整数据集
 ├── examples/               # 课程配套示例
 ├── modules/                # 互动课程模块与公共前端资源
 ├── references/             # 模块设计和维护参考资料
-├── scripts/                # 课程启动、模块索引与运行时脚本
+├── scripts/                # 单一 Windows 入口与页面工具
 ├── requirements.txt        # 基础运行依赖
 └── requirements-torch.txt  # Torch 训练实验依赖
 ```
@@ -109,7 +89,7 @@ bash scripts/run-lesson-page.sh --stop
 npm install
 python -m pip install -r requirements-thumbnails.txt
 python -m playwright install chromium
-python scripts/generate_scenedeck_thumbnails.py --module convolution-kernel-intro
+python -m idl_backend.tools.content.generate_scenedeck_thumbnails --module convolution-kernel-intro
 ```
 
 `--module` 接受 `outlines.json` 中的模块 ID 或模块目录名；可加 `--slide <页面ID>` 只更新一页。程序自行启动临时 Vite 服务，逐页截取 1600 × 900 默认画面，再缩成 400 × 225 PNG，写入指定模块的 `assets/scenedeck-thumbnails/`。已有系统 Chrome 或 Edge 时，可以省略 Playwright 的 Chromium 安装步骤。生成的图片应随课件内容一起提交；未生成的页面在左栏显示章节占位，不会运行页面组件。
