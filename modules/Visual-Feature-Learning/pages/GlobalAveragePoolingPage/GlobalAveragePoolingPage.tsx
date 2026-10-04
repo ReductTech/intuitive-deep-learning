@@ -9,21 +9,55 @@ function Texture({values,size,channel}:{values:number[];size:number;channel:numb
   useEffect(()=>{const ctx=ref.current?.getContext('2d');if(!ctx)return;const p=ctx.createImageData(size,size),[baseline,range]=RANGES[channel],colors=[[21,20,72],[20,65,136],[20,158,189],[112,205,108],[255,218,67]];values.forEach((v,i)=>{const t=Math.max(0,Math.min(.9999,Math.abs(v-baseline)/Math.max(range,1e-9)))*4,k=Math.floor(t),f=t-k;p.data.set([...colors[k].map((a,j)=>Math.round(a+(colors[k+1][j]-a)*f)),255],i*4);});ctx.putImageData(p,0,0);},[values,size,channel]);
   return <canvas ref={ref} width={size} height={size}/>;
 }
-function Formula({latex}:{latex:string}){return <MathFormulaBlock><MathFormulaStatic latex={latex}/></MathFormulaBlock>;}
+const SIZES = [20, 24, 28, 32, 36, 40];
 export function GlobalAveragePoolingPage(){
-  const [size,setSize]=useState(32),[failed,setFailed]=useState(false);
+  const [size,setSize]=useState(28),[failed,setFailed]=useState(false);
   const scene=useRef<HTMLDivElement>(null),drag=useRef<{x:number;y:number;size:number;scale:number}|null>(null);
-  const sample=data.samples.find(s=>s.inputSize===size)!,count=sample.values.length,matched=count===16,cells=16,means=sample.values.map(v=>v.reduce((a,b)=>a+b,0)/v.length);
-  function change(v:number){setSize(Math.max(28,Math.min(40,Math.round(v/4)*4)));}
-  function start(e:PointerEvent<HTMLButtonElement>){e.currentTarget.setPointerCapture(e.pointerId);drag.current={x:e.clientX,y:e.clientY,size,scale:(scene.current?.getBoundingClientRect().width??1540)/1540};}
-  function move(e:PointerEvent<HTMLButtonElement>){const d=drag.current;if(d)change(d.size+((e.clientX-d.x)+(e.clientY-d.y))/2/d.scale/12);}
-  return <ContentBlock className="vfl-gap-page" headingLevel={1} title="全局平均池化 GAP" subtitle="每张特征图求一个平均值，再按通道组成向量；空间尺寸改变，向量长度保持不变。">
-    <div className="vfl-gap-body"><div ref={scene} className={`vfl-gap-scene ${matched?'is-matched':'is-mismatched'}`}>
-      <svg className="vfl-gap-links" viewBox="0 0 1540 500" aria-hidden="true"><defs><marker id="vfl-gap-arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0L7 4L0 8Z" fill="currentColor"/></marker></defs><path d="M290 270H345"/><path d="M637 270H720"/><path d="M1110 270H1180" className={matched?'':'vfl-gap-broken'}/></svg>
-      <div className="vfl-gap-input"><div className="vfl-gap-input-size"><Formula latex={`${size}\\times${size}`}/></div><div className="vfl-gap-image-zone"><div className="vfl-gap-image" style={{width:size*7,height:size*7}}><img src={moduleAssetUrl('80396753-7fc8-4f55-9188-bddbdb828169',`flatten-interface/${sample.input}`)} alt={`数字7，${size}×${size}输入`} onError={()=>setFailed(true)}/><Button className="vfl-gap-handle" role="slider" aria-label="拖动调整输入尺寸" aria-valuemin={28} aria-valuemax={40} aria-valuenow={size} aria-valuetext={`${size}×${size}`} onPointerDown={start} onPointerMove={move} onPointerUp={()=>{drag.current=null;}} onPointerCancel={()=>{drag.current=null;}} onKeyDown={e=>{if(['ArrowLeft','ArrowDown','ArrowRight','ArrowUp','Home','End'].includes(e.key)){e.preventDefault();e.stopPropagation();change(e.key==='Home'?28:e.key==='End'?40:size+(['ArrowLeft','ArrowDown'].includes(e.key)?-4:4));}}}><span aria-hidden="true"/></Button></div></div><Typography variant="bodySmall" tone="muted">拖动右下角，缩小图像</Typography></div>
-      <div className="vfl-gap-maps"><Typography variant="bodySmall" tone="accent">卷积后的特征图</Typography><div className="vfl-gap-stack" style={{'--map-side':`${sample.mapSize*18}px`} as CSSProperties}>{[...CHANNELS].reverse().map((channel,i)=><div key={channel} className="vfl-gap-plane" style={{'--depth':4-i} as CSSProperties}><Texture values={sample.values[channel]} size={sample.mapSize} channel={channel}/></div>)}</div><Formula latex={`${sample.mapSize}\\times${sample.mapSize}\\times16`}/><Typography variant="bodySmall" tone="muted">16 个通道，示出 5 个</Typography></div>
-      <div className="vfl-gap-vector"><Typography variant="h3" tone="accent">GAP：每张图 → 一个数</Typography><div className="vfl-gap-unroll"><Formula latex="g_c=\frac{1}{HW}\sum_{h,w}A_{h,w,c}"/><Typography variant="bodySmall" tone="muted">所有位置求平均，按通道排列</Typography></div><div className="vfl-gap-vector-length"><Formula latex={`${count}`}/><Typography variant="bodySmall" tone="muted">个数</Typography></div><div className="vfl-gap-cubes" style={{'--cube-count':cells} as CSSProperties} aria-label={`GAP向量共${count}个数，每个方块对应一个通道的平均值`}>{Array.from({length:cells},(_,i)=><span key={i} title={`通道 ${i+1}：${means[i].toFixed(3)}`}><Typography variant="bodySmall">{i+1}</Typography></span>)}</div><Typography className="vfl-gap-values" variant="bodySmall" tone="accent">通道 {CHANNELS[0]+1}：{means[CHANNELS[0]].toFixed(3)}（随尺寸变化）</Typography></div>
-      <div className="vfl-gap-classifier"><div className="vfl-gap-fixed"><Typography variant="h3" tone="accent">全连接层输入固定</Typography><Formula latex="16"/></div><div className="vfl-gap-network"><div className="vfl-gap-port"><Formula latex="16"/></div><svg viewBox="0 0 300 260" aria-label="固定接收16个数的全连接网络，节点仅示意"><g className="vfl-gap-wires">{[65,105,145,205].flatMap(a=>[45,100,155,220].map(b=><line key={`${a}-${b}`} x1="45" y1={a} x2="145" y2={b}/>))}{[45,100,155,220].flatMap(a=>[85,140,195].map(b=><line key={`${a}-${b}`} x1="145" y1={a} x2="248" y2={b}/>))}</g><rect className="vfl-gap-socket" x="23" y="43" width="44" height="182" rx="6"/>{[65,105,145,205].map(y=><circle key={`i${y}`} cx="45" cy={y} r="10"/>)}{[45,100,155,220].map(y=><circle key={`h${y}`} cx="145" cy={y} r="13"/>)}{[85,140,195].map(y=><circle key={`o${y}`} cx="248" cy={y} r="12"/>)}<path className="vfl-gap-ellipsis" d="M45 165v2m0 10v2m0 10v2M280 130v2m0 10v2m0 10v2"/></svg><div className="vfl-gap-fit"><Formula latex={`${count}${matched?'=':'\\ne'}16`}/></div></div></div>
-    </div><div className={`vfl-gap-cause ${matched?'is-matched':''}`} aria-live="polite"><Typography variant="h3" tone="accent">输入尺寸改变</Typography><span aria-hidden="true">→</span><Typography variant="h3" tone="accent">输出长度不变</Typography><span aria-hidden="true">→</span><Typography variant="h3" tone={matched?'success':'warning'}>长度匹配，始终可以接入</Typography></div><div className="vfl-gap-caption"><Typography variant="bodySmall" tone="muted">GAP 输出长度由通道数决定；长度相同，不代表平均值相同。</Typography><Button onClick={()=>change(32)}>恢复初始尺寸</Button></div><Typography className="vfl-gap-source" variant="bodySmall" tone={failed?'danger':'muted'}>{failed?'图像加载失败，请刷新重试。':'真实 MobileNet V3 特征响应与平均值；每个方块代表一个通道，网络节点为示意。'}</Typography></div>
+  const sample=data.samples.find(s=>s.inputSize===size) ?? data.samples[0];
+  const count=sample.values.length,matched=count===16;
+  function change(v:number){setSize(Math.max(20,Math.min(40,Math.round(v/4)*4)));}
+  function start(e:PointerEvent<HTMLButtonElement>){e.currentTarget.setPointerCapture(e.pointerId);drag.current={x:e.clientX,y:e.clientY,size,scale:(scene.current?.getBoundingClientRect().width??1480)/1480};}
+  function move(e:PointerEvent<HTMLButtonElement>){const d=drag.current;if(d)change(d.size+((e.clientX-d.x)+(e.clientY-d.y))/2/d.scale/9);}
+  return <ContentBlock className="vfl-gap-page" headingLevel={1} title="全局平均池化（GAP）" subtitle="Global Average Pooling · 输入大小可以改变，输出向量始终保持 16 维。">
+    <div className="vfl-gap-controls">
+      <Typography variant="body" tone="accent">调整输入尺寸</Typography>
+      <div className="vfl-gap-sizes" role="group" aria-label="选择输入尺寸">{SIZES.map(value=><Button key={value} active={size===value} aria-pressed={size===value} onClick={()=>change(value)}>{value} × {value}</Button>)}</div>
+    </div>
+    <div ref={scene} className={`vfl-gap-scene ${matched?'is-matched':'is-mismatched'}`}>
+      <section className="vfl-gap-stage vfl-gap-input">
+        <div className="vfl-gap-heading"><Typography as="h2" variant="h3" tone="accent">输入图像</Typography><Typography variant="bodySmall" tone="muted">{size} × {size}</Typography></div>
+        <div className="vfl-gap-visual vfl-gap-image-zone"><div className="vfl-gap-image" style={{width:size*4.5,height:size*4.5}}><img src={moduleAssetUrl('80396753-7fc8-4f55-9188-bddbdb828169',`flatten-interface/${sample.input}`)} alt={`数字7，${size}×${size}输入`} onError={()=>setFailed(true)}/><Button className="vfl-gap-handle" role="slider" aria-label="拖动放大或缩小输入图像" aria-valuemin={20} aria-valuemax={40} aria-valuenow={size} aria-valuetext={`${size}×${size}`} onPointerDown={start} onPointerMove={move} onPointerUp={()=>{drag.current=null;}} onPointerCancel={()=>{drag.current=null;}} onKeyDown={e=>{if(['ArrowLeft','ArrowDown','ArrowRight','ArrowUp','Home','End'].includes(e.key)){e.preventDefault();change(e.key==='Home'?20:e.key==='End'?40:size+(['ArrowLeft','ArrowDown'].includes(e.key)?-4:4));}}}><span aria-hidden="true"/></Button></div></div>
+      </section>
+      <span className="vfl-gap-arrow" aria-hidden="true">→</span>
+      <section className="vfl-gap-stage vfl-gap-maps">
+        <div className="vfl-gap-heading"><Typography as="h2" variant="h3" tone="accent">卷积特征图</Typography><Typography variant="bodySmall" tone="muted">{sample.mapSize} × {sample.mapSize} × 16</Typography></div>
+        <div className="vfl-gap-visual"><div className="vfl-gap-stack" style={{'--map-side':`${sample.mapSize*11}px`} as CSSProperties}>{[...CHANNELS].reverse().map((channel,i)=><div key={channel} className="vfl-gap-plane" style={{'--depth':4-i} as CSSProperties}><Texture values={sample.values[channel]} size={sample.mapSize} channel={channel}/></div>)}</div></div>
+
+      </section>
+      <span className="vfl-gap-arrow" aria-hidden="true">→</span>
+      <section className="vfl-gap-stage vfl-gap-vector">
+        <Typography as="h2" variant="h3" tone="accent">GAP：固定长度输出</Typography>
+        <div className="vfl-gap-shape">
+          <MathFormulaBlock className="vfl-gap-average-formula"><MathFormulaStatic latex={String.raw`g_c=\frac{1}{HW}\sum_{i=1}^{H}\sum_{j=1}^{W}X_c(i,j)`}/></MathFormulaBlock>
+          <MathFormulaBlock className="vfl-gap-shape-formula"><MathFormulaStatic latex={`${sample.mapSize} \\times ${sample.mapSize} \\times 16 \\;\\longrightarrow\\; 16`}/></MathFormulaBlock>
+        </div>
+        <div className="vfl-gap-output" data-dimension={count}>
+          <Typography variant="h2" tone="success">{count} 维输出向量</Typography>
+          <div className="vfl-gap-vector-cells" role="img" aria-label={`输出向量包含 ${count} 个分量，输入尺寸改变时长度不变`}>{sample.values.map((_,channel)=><span key={channel} className="vfl-gap-vector-cell"/>)}</div>
+          <Typography variant="body" tone="accent">输入怎么缩放，长度都是 16</Typography>
+        </div>
+        <Typography variant="bodySmall" tone="muted">每个通道求平均 → 每个通道输出 1 个数</Typography>
+      </section>
+      <span className={`vfl-gap-arrow ${matched?'':'is-blocked'}`} aria-hidden="true">{matched?'→':'⇥'}</span>
+      <section className="vfl-gap-stage vfl-gap-classifier">
+        <div className="vfl-gap-heading"><Typography as="h2" variant="h3" tone="accent">全连接分类器</Typography><Typography variant="bodySmall" tone="muted">固定接收 16 个数</Typography></div>
+        <div className="vfl-gap-visual"><svg viewBox="0 0 280 250" aria-label="全连接网络示意，固定输入长度16"><g className="vfl-gap-wires">{[25,60,95,155,190,225].flatMap(a=>[35,85,165,215].map(b=><line key={`${a}-${b}`} x1="30" y1={a} x2="140" y2={b}/>))}{[35,85,165,215].flatMap(a=>[45,85,165,205].map(b=><line key={`${a}-${b}`} x1="140" y1={a} x2="250" y2={b}/>))}</g><g className="vfl-gap-input-nodes">{[25,60,95,155,190,225].map(y=><circle key={y} cx="30" cy={y} r="8"/>)}</g><g className="vfl-gap-hidden-nodes">{[35,85,165,215].map(y=><circle key={y} cx="140" cy={y} r="11"/>)}</g><g className="vfl-gap-output-nodes">{[45,85,165,205].map(y=><circle key={y} cx="250" cy={y} r="10"/>)}</g><g className="vfl-gap-node-ellipsis" aria-hidden="true">{[30,140,250].map(x=><g key={x}><rect x={x-9} y="105" width="18" height="40" rx="5"/>{[117,125,133].map(y=><circle key={y} cx={x} cy={y} r="1.8"/>)}</g>)}</g></svg></div>
+      </section>
+    </div>
+    <div className="vfl-gap-conclusion is-matched" aria-live="polite">
+      <Typography variant="body" tone="success">{sample.mapSize} × {sample.mapSize} × 16 → 16 维向量</Typography>
+      <Typography variant="bodySmall" tone="accent">输入尺寸可变，分类器始终接收 16 维向量。</Typography>
+    </div>
+    {failed && <Typography variant="bodySmall" tone="danger">图像加载失败，请刷新重试。</Typography>}
   </ContentBlock>;
 }

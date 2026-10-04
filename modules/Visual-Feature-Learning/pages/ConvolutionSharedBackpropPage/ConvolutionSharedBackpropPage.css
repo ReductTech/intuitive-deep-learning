@@ -1,0 +1,84 @@
+.vfl-shared-page { display: flex; flex-direction: column; }
+.vfl-shared-body { flex: 1; min-height: 0; display: grid; grid-template-rows: 88px minmax(0, 1fr); gap: 18px; }
+.vfl-shared-page :where(section, div) { min-width: 0; max-width: 100%; }
+.vfl-shared-controls { display: flex; align-items: center; gap: 14px; padding: 12px 18px; border: 1px solid var(--ui-border); border-radius: var(--ui-radius-lg); background: var(--ui-bg-soft); }
+.vfl-shared-loss, .vfl-shared-actions { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+.vfl-shared-detail { flex: 1; display: flex; justify-content: center; }
+.vfl-shared-formula { width: auto; min-height: 0; border: 0; padding: 0; margin: 0; background: transparent; }
+.vfl-shared-formula math-field { font-size: 30px; color: inherit; }
+.vfl-shared-formula > .math-formula { flex-wrap: nowrap; column-gap: 4px; }
+.vfl-shared-detail math-field { font-size: 25px; }
+.vfl-shared-loss math-field { font-size: 38px; }
+.vfl-shared-loss .vfl-shared-previous math-field { font-size: 25px; }
+.vfl-shared-loss.is-improved { color: var(--ui-success); }
+.vfl-shared-page math-field::part(container), .vfl-shared-page math-field::part(content) { padding: 0; }
+.vfl-shared-scene { position: relative; min-height: 0; isolation: isolate; }
+.vfl-shared-object { position: absolute; top: 51%; transform: translate(-50%, -50%); display: grid; justify-items: center; gap: 14px; padding: 14px; border: 1px solid var(--ui-border); border-radius: var(--ui-radius-lg); background: var(--ui-bg-soft); transition: left 950ms cubic-bezier(.22,1,.36,1), top 950ms cubic-bezier(.22,1,.36,1), width 950ms cubic-bezier(.22,1,.36,1), transform 950ms cubic-bezier(.22,1,.36,1), opacity 450ms ease, visibility 0s 450ms; }
+.vfl-shared-input { left: 10%; width: 260px; }
+.vfl-shared-kernel { left: 30%; width: 200px; background: rgba(var(--ui-accent-alt-rgb), .05); z-index: 3; }
+.vfl-shared-features { left: 48%; width: 200px; }
+.vfl-shared-vector { left: 63%; width: 100px; padding: 10px; }
+.vfl-shared-output { left: 83%; width: 128px; }
+.vfl-shared-target { left: 96%; width: 104px; }
+.vfl-shared-matrix { min-height: 0; padding: 0; margin: 0; width: 100%; background: transparent; border: 0; }
+.vfl-shared-matrix > .math-formula { display: block; width: 100%; }
+.vfl-shared-grid { display: grid; grid-template-columns: repeat(var(--vfl-shared-columns), minmax(0,1fr)); gap: 6px; }
+.vfl-shared-cell { display: grid; place-items: center; aspect-ratio: 1; min-width: 0; padding: 0; border: 2px solid var(--ui-border); border-radius: var(--ui-radius-md); background: var(--ui-bg-card); position: relative; box-shadow: none; }
+.vfl-shared-cell::after { content: ''; position: absolute; inset: 0; }
+.vfl-shared-cell:hover, .vfl-shared-cell:focus-visible { transform: none; }
+.vfl-shared-cell math-field { font-size: 27px; }
+.vfl-shared-cell.is-selected { border-color: var(--ui-accent-alt); background: rgba(var(--ui-accent-alt-rgb), .1); }
+.vfl-shared-cell.is-pending { border-style: dashed; color: var(--ui-text-light); }
+.vfl-shared-cell.is-changed { color: var(--ui-success); background: rgba(var(--ui-success-rgb), .08); }
+.vfl-shared-cell .math-formula-static { animation: vfl-shared-number 400ms ease both; }
+.vfl-shared-scalar { height: 80px; display: grid; place-items: center; }
+.vfl-shared-scalar math-field { font-size: 42px; }
+.is-updated .vfl-shared-output .math-formula { color: var(--ui-success); }
+.vfl-shared-op { position: absolute; top: 51%; transform: translate(-50%,-50%); transition: opacity 400ms ease; }
+.vfl-shared-conv { left: 21%; }
+.vfl-shared-conv math-field { font-size: 44px; }
+.vfl-shared-arrow-a { left: 39%; }
+.vfl-shared-flatten { left: 57%; }
+.vfl-shared-compare { left: 89.7%; }
+.vfl-shared-fc { position: absolute; top: 51%; left: 73%; transform: translate(-50%,-50%); display: grid; justify-items: center; gap: 12px; transition: opacity 400ms ease; }
+.vfl-shared-reverse { position: absolute; top: 27%; left: 61%; width: 70%; transform: translate(-50%,-50%); display: flex; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 400ms 500ms; }
+.vfl-shared-comparison-summary { position: absolute; top: 11%; left: 61%; width: 70%; transform: translate(-50%,-50%); display: flex; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 400ms 500ms; }
+.vfl-shared-reverse math-field { font-size: 30px; }
+.vfl-shared-contributions { position: absolute; top: 55%; left: 61%; width: 70%; transform: translate(-50%,-50%); display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 38px; opacity: 0; visibility: hidden; transition: left 950ms cubic-bezier(.22,1,.36,1), top 950ms cubic-bezier(.22,1,.36,1), width 950ms cubic-bezier(.22,1,.36,1), opacity 400ms ease; }
+.vfl-shared-contribution-wrap { position: relative; }
+.vfl-shared-contribution { display: grid; justify-items: center; width: 100%; padding: 24px 8px; gap: 16px; border: 2px solid var(--ui-border); background: var(--ui-bg-card); border-radius: var(--ui-radius-lg); }
+.vfl-shared-contribution math-field { font-size: 46px; }
+.vfl-shared-contribution.is-selected { border-color: var(--ui-accent-alt); background: rgba(var(--ui-accent-alt-rgb), .08); }
+.vfl-shared-contribution.is-pending { border-style: dashed; }
+.vfl-shared-contribution:hover, .vfl-shared-contribution:focus-visible { transform: none; }
+.vfl-shared-plus { position: absolute; left: calc(100% + 19px); top: 50%; transform: translate(-50%,-50%); display: grid; place-items: center; }
+.vfl-shared-old { left: 44%; width: 250px; background: rgba(var(--ui-accent-alt-rgb), .05); }
+.vfl-shared-equals { left: 29%; }
+.vfl-shared-minus { left: 58%; }
+.vfl-shared-total-anchor { position: absolute; top: 24%; left: 81%; transform: translate(-50%,-50%); }
+.vfl-shared-total:hover, .vfl-shared-total:focus-visible, .vfl-shared-total:active { transform: none; }
+.vfl-shared-old, .vfl-shared-equals, .vfl-shared-minus, .vfl-shared-total-anchor { opacity: 0; visibility: hidden; pointer-events: none; }
+.vfl-shared-popup { position: absolute; left: 61%; top: 72%; width: 700px; transform: translateX(-50%); padding: 14px 20px; display: grid; justify-items: center; gap: 8px; border: 1px solid var(--ui-accent-alt); background: var(--ui-bg-card); border-radius: var(--ui-radius-lg); box-shadow: var(--ui-shadow-card); z-index: 6; pointer-events: none; animation: vfl-shared-number 250ms ease both; }
+.vfl-shared-popup math-field { font-size: 25px; }
+.vfl-shared-popup { pointer-events: auto; }
+.vfl-shared-popup.in-focus { top: 70%; left: 50%; width: 1000px; }
+.is-gradient .vfl-shared-kernel, .is-gradient .vfl-shared-features, .is-gradient .vfl-shared-vector, .is-gradient .vfl-shared-op, .is-gradient .vfl-shared-fc { opacity: 0; visibility: hidden; pointer-events: none; }
+.is-gradient .vfl-shared-output, .is-gradient .vfl-shared-target { top: 11%; opacity: 0; visibility: hidden; pointer-events: none; }
+.is-gradient .vfl-shared-reverse, .is-gradient .vfl-shared-contributions, .is-gradient .vfl-shared-comparison-summary { opacity: 1; visibility: visible; }
+.is-focus .vfl-shared-input, .is-focus .vfl-shared-features, .is-focus .vfl-shared-vector, .is-focus .vfl-shared-output, .is-focus .vfl-shared-target, .is-focus .vfl-shared-fc, .is-focus .vfl-shared-conv, .is-focus .vfl-shared-arrow-a, .is-focus .vfl-shared-flatten, .is-focus .vfl-shared-compare { opacity: 0; visibility: hidden; pointer-events: none; }
+.is-focus .vfl-shared-kernel { left: 13%; top: 44%; width: 250px; transform: translate(-50%,-50%) scale(1.05); }
+.is-focus .vfl-shared-old, .is-focus .vfl-shared-equals, .is-focus .vfl-shared-minus { top: 44%; }
+.is-focus .vfl-shared-old, .is-focus .vfl-shared-equals, .is-focus .vfl-shared-minus, .is-focus .vfl-shared-total-anchor { opacity: 1; visibility: visible; pointer-events: auto; transition-delay: 400ms; }
+.is-focus .vfl-shared-contributions { left: 81%; top: 44%; width: 33%; opacity: 1; visibility: visible; gap: 30px; }
+.is-focus .vfl-shared-contribution { padding: 20px 4px; gap: 0; }
+.is-focus .vfl-shared-contribution math-field { font-size: 30px; }
+.is-focus .vfl-shared-contribution .ui-typography { display: none; }
+.is-focus .vfl-shared-plus math-field { font-size: 23px; }
+.is-focus .vfl-shared-plus { left: calc(100% + 15px); }
+.is-playing.is-focus .vfl-shared-kernel .is-selected { box-shadow: 0 0 0 4px rgba(var(--ui-accent-alt-rgb), .1); }
+@keyframes vfl-shared-number { from { opacity: 0; } to { opacity: 1; } }
+.vfl-shared-parenthesis { position: absolute; top: 50%; transform: translateY(-50%); display: none; }
+.vfl-shared-parenthesis.open { right: calc(100% + 5px); }
+.vfl-shared-parenthesis.close { left: calc(100% + 5px); }
+.is-focus .vfl-shared-parenthesis { display: block; }
+.vfl-shared-parenthesis math-field { font-size: 52px; }

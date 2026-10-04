@@ -20,7 +20,7 @@ if not source.exists():
 image = Image.open(source).convert('RGB')
 records = []
 with torch.inference_mode():
-    for size in [28, 32, 36, 40]:
+    for size in [20, 24, 28, 32, 36, 40]:
         resized = image.resize((size, size), Image.Resampling.BILINEAR)
         resized.save(out / f'input-{size}.png')
         x = torch.from_numpy(np.array(resized).transpose(2,0,1).copy()).float()/255

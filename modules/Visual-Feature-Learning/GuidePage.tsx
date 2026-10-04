@@ -28,6 +28,7 @@ import { FeatureMapsToClassifierPage } from './pages/FeatureMapsToClassifierPage
 import { LearnableKernelPage } from './pages/LearnableKernelPage/LearnableKernelPage';
 import { PoolingPage } from './pages/PoolingPage/PoolingPage';
 import { ConvolutionBackpropPage } from './pages/ConvolutionBackpropPage/ConvolutionBackpropPage';
+import { ConvolutionSharedBackpropPage } from './pages/ConvolutionSharedBackpropPage/ConvolutionSharedBackpropPage';
 
 function LessonCanvas({ children }: { children: ReactNode }) {
   const frameRef = useRef<HTMLDivElement>(null);
@@ -67,6 +68,7 @@ export function GuidePage() {
     <LessonCanvas><TwoStageRecognitionPage /></LessonCanvas>
     <LessonCanvas><LearnableKernelPage /></LessonCanvas>
     <LessonCanvas><ConvolutionBackpropPage /></LessonCanvas>
+    <LessonCanvas><ConvolutionSharedBackpropPage /></LessonCanvas>
     <LessonCanvas><PoolingPage /></LessonCanvas>
     <LessonCanvas><ConvolutionUnitPage /></LessonCanvas>
     <LessonCanvas><HierarchicalFeaturesPage /></LessonCanvas>

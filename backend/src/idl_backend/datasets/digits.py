@@ -243,6 +243,18 @@ def load_fixed_kernel_features() -> dict[str, Any]:
         raise ValueError("Prepared train feature shape does not match kernel/grid metadata.")
     if val_features.shape[1:] != (len(kernel_ids), FEATURE_GRID_SIZE, FEATURE_GRID_SIZE):
         raise ValueError("Prepared val feature shape does not match kernel/grid metadata.")
+    if "corner" not in kernel_ids:
+        # Extend prepared features once, preserving the exact training/validation split.
+        corner_path = FIXED_FEATURE_PATH.with_name("fixed-corner-grid8-features.npz")
+        if not corner_path.exists():
+            def corner_maps(path):
+                images = read_idx_images(path)
+                return np.concatenate([sample_feature_maps(images[start:start + 512], fixed_kernel("corner")) for start in range(0, len(images), 512)])
+            np.savez_compressed(corner_path, train=corner_maps(FIXED_TRAIN_IMAGE_PATH), val=corner_maps(FIXED_VAL_IMAGE_PATH))
+        with np.load(corner_path, allow_pickle=False) as corner:
+            train_features = np.concatenate((train_features, corner["train"][:, None]), axis=1)
+            val_features = np.concatenate((val_features, corner["val"][:, None]), axis=1)
+        kernel_ids.append("corner")
     result = {
         "kernel_ids": kernel_ids,
         "kernel_index": {name: index for index, name in enumerate(kernel_ids)},
@@ -338,9 +350,7 @@ KERNEL_NAMES = {
     "edge": "边缘",
     "vertical": "竖边",
     "horizontal": "横边",
-    "diag_down": "斜边 /",
-    "diag_up": "斜边 \\",
-    "center": "中心墨迹",
+    "corner": "角点检测",
 }
 
 
@@ -349,12 +359,8 @@ def fixed_kernel(name: str) -> np.ndarray:
         return np.array([[-1, 0, 1], [-2, 0, 2], [-1, 0, 1]], dtype=np.float32)
     if name == "horizontal":
         return np.array([[-1, -2, -1], [0, 0, 0], [1, 2, 1]], dtype=np.float32)
-    if name == "diag_down":
-        return np.array([[0, 1, 2], [-1, 0, 1], [-2, -1, 0]], dtype=np.float32)
-    if name == "diag_up":
-        return np.array([[2, 1, 0], [1, 0, -1], [0, -1, -2]], dtype=np.float32)
-    if name == "center":
-        return np.array([[0, 1, 0], [1, 4, 1], [0, 1, 0]], dtype=np.float32) / 8.0
+    if name == "corner":
+        return np.array([[1, -2, 1], [-2, 4, -2], [1, -2, 1]], dtype=np.float32)
     return np.array([[-1, -1, -1], [-1, 8, -1], [-1, -1, -1]], dtype=np.float32)
 
 
@@ -371,7 +377,7 @@ def parse_kernel_names(payload: dict[str, Any]) -> list[str]:
     for name in names:
         if name not in result:
             result.append(name)
-    return result[:6]
+    return result[:4]
 
 
 def parse_custom_image(payload: dict[str, Any]) -> np.ndarray | None:

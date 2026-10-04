@@ -1,6 +1,6 @@
 export const DIGITS = [
   { value: 3, file: '3/60051.png' },
-  { value: 5, file: '5/60008.png' },
+  { value: 5, file: '5/60015.png' },
   { value: 8, file: '8/60110.png' },
   { value: 9, file: '9/60009.png' },
 ] as const;
@@ -37,7 +37,7 @@ export interface Prediction {
   response: number[];
 }
 
-const ORDER = [0, 1, 2, 3, 1, 0, 3, 2, 0, 2, 1, 3, 2, 3, 0, 1];
+const ORDER = [1, 0, 2, 3, 1, 0, 3, 2, 0, 2, 1, 3, 2, 3, 0, 1];
 const SHIFTS: [number, number][] = [
   [0, 0], [1, 0], [-1, 1], [0, -1],
   [1, 1], [-2, 0], [0, 2], [2, -1],
@@ -79,7 +79,8 @@ export function predict(model: KernelModel, pixels: number[]): Prediction {
         for (let kx = 0; kx < 3; kx++) patch.push(pixels[(y + ky) * IMAGE_SIZE + x + kx]);
       }
       patches.push(patch);
-      response.push(Math.max(0, patch.reduce((sum, value, i) => sum + value * model.kernel[i], 0)));
+      const raw = patch.reduce((sum, value, i) => sum + value * model.kernel[i], 0);
+      response.push(raw >= 0 ? raw : .05 * raw);
     }
   }
   const features: number[] = [];
@@ -87,7 +88,7 @@ export function predict(model: KernelModel, pixels: number[]): Prediction {
   for (let regionY = 0; regionY < POOL_SIZE; regionY++) {
     for (let regionX = 0; regionX < POOL_SIZE; regionX++) {
       let bestIndex = -1;
-      let bestValue = 0;
+      let bestValue = -Infinity;
       const startY = Math.floor(regionY * FEATURE_SIZE / POOL_SIZE);
       const endY = Math.floor((regionY + 1) * FEATURE_SIZE / POOL_SIZE);
       const startX = Math.floor(regionX * FEATURE_SIZE / POOL_SIZE);
@@ -153,15 +154,14 @@ export function trainOnLabel(model: KernelModel, pixels: number[], label: number
     const delta = output.probabilities.map((probability, c) => probability - Number(c === label));
     const kernelGrad = next.kernel.map((_, k) =>
       output.features.reduce((sum, feature, region) => {
-        if (feature <= 0) return sum;
         const featureGrad = delta.reduce((value, error, c) => value + error * next.head[c][region], 0);
-        return sum + featureGrad * output.activePatches[region][k];
+        return sum + featureGrad * (feature >= 0 ? 1 : .05) * output.activePatches[region][k];
       }, 0),
     );
     const head = next.head.map((row, c) => row.map((weight, region) =>
-      Math.max(-3, Math.min(3, weight - .18 * delta[c] * output.features[region]))));
-    const bias = next.bias.map((value, c) => value - .08 * delta[c]);
-    const kernel = next.kernel.map((weight, k) => Math.max(-3, Math.min(3, weight - .11 * kernelGrad[k])));
+      Math.max(-3, Math.min(3, weight - .03 * delta[c] * output.features[region]))));
+    const bias = next.bias.map((value, c) => value - .03 * delta[c]);
+    const kernel = next.kernel.map((weight, k) => Math.max(-3, Math.min(3, weight - .025 * kernelGrad[k])));
     next = { kernel, head, bias };
   }
   return next;
@@ -185,4 +185,11 @@ export function trainWithReplay(model: KernelModel, examples: LabeledDigit[]): K
     for (const example of balancedExamples) trainTranslations(example);
   }
   return next;
+}
+
+// Class activation contributions on the 6x6 pooled feature grid.
+// The linear head logit equals the sum of signed contributions plus its bias;
+// display only positive evidence for the currently predicted class.
+export function classActivationMap(model: KernelModel, output: Prediction): number[] {
+  return output.features.map((feature, region) => Math.max(0, model.head[output.label][region] * feature));
 }

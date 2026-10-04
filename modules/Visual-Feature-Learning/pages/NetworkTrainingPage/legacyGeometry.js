@@ -82,7 +82,7 @@ function setArchLayerUserData(group,index){group.traverse(child=>child.userData.
     var channels = Math.max(1, Number(shape.c) || 1);
     return {
       height: clamp((Number(shape.h) || IMAGE_HEIGHT) / IMAGE_HEIGHT * 0.68, 0.12, 0.68),
-      depth: clamp((Number(shape.w) || IMAGE_WIDTH) / IMAGE_WIDTH * 0.52, 0.10, 0.52),
+      depth: clamp((Number(shape.w) || IMAGE_WIDTH) / IMAGE_WIDTH * 0.68, 0.12, 0.68),
       thickness: clamp(0.035 + Math.log2(channels + 1) * 0.020, 0.055, 0.18),
       channels: channels,
     };
@@ -182,7 +182,7 @@ function setArchLayerUserData(group,index){group.traverse(child=>child.userData.
     cursor += kernelLength + activationGap;
     var activation = createActivationPlate3d(totalHeight, totalDepth);
     activation.position.x = cursor + activationThickness / 2;
-    group.add(activation);
+    // ReLU is displayed as its own feature stack in the scene.
     var pickHeight = Math.max(0.70, totalHeight) + 0.18;
     var pickDepth = Math.max(0.58, totalDepth) + 0.16;
     var pick = new THREE.Mesh(

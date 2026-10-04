@@ -75,6 +75,34 @@ def train_digit_network(payload: dict[str, Any], progress_callback=None, artifac
                           "frames": [{"epoch": 0, "points": project_digit_features(before)}],
                           "metadata": projection_metadata()}
         history = []
+        example = torch.from_numpy(vx[np.flatnonzero(vy == 7)[:1]]).to(device)
+        def training_snapshot(epoch):
+            # Small, measured checkpoints for the training animation. No guessed
+            # feature images or synthetic weight changes are sent to the UI.
+            with torch.inference_mode():
+                activation = example
+                offset, displays, conv_means = 0, [], []
+                for layer_index, spec in enumerate(architecture):
+                    activation = model.backbone[offset](activation)
+                    offset += 1
+                    raw_maps = None
+                    if spec["kind"] == "conv":
+                        convolution = model.backbone[offset-1]
+                        conv_means.append(convolution.weight.detach().mean((1,2,3)).cpu().tolist())
+                        raw_side = min(8, activation.shape[-1])
+                        raw = torch.nn.functional.adaptive_avg_pool2d(activation[:, :3], (raw_side, raw_side))[0].cpu()
+                        raw_maps = raw.reshape(len(raw), -1).tolist()
+                        activation = model.backbone[offset](activation)
+                        offset += 1
+                    side = min(8, activation.shape[-1])
+                    reduced = torch.nn.functional.adaptive_avg_pool2d(activation[:, :3], (side, side))[0].cpu()
+                    displays.append({"layer_index": layer_index, "side": side, "channels": activation.shape[1],
+                                     "maps": reduced.reshape(len(reduced), -1).tolist(), "raw_maps": raw_maps})
+                probabilities = model.classifier(model.gap(activation).flatten(1)).softmax(1)[0].cpu().tolist()
+                return {"epoch": epoch, "layers": displays, "conv_means": conv_means, "classifier_means": model.classifier.weight.detach().mean(1).cpu().tolist(), "probabilities": probabilities}
+        snapshot = training_snapshot(0)
+        if progress_callback:
+            progress_callback(0, "训练准备中", "网络已初始化，准备开始训练。", snapshot=snapshot)
         for epoch in range(1, epochs + 1):
             model.train()
             total_loss, correct, count = 0., 0, 0
@@ -97,17 +125,18 @@ def train_digit_network(payload: dict[str, Any], progress_callback=None, artifac
                 frame = {**history[-1], "points": project_digit_features(epoch_features, projection["frames"][-1]["points"])}
                 projection = {**projection, "frames": [*projection["frames"], frame]}
             if progress_callback:
-                progress_callback(round(epoch / epochs * 100), "训练中", f"第 {epoch} / {epochs} 轮：损失 {history[-1]['loss']:.3f}", history=list(history), projection=projection)
+                progress_callback(round(epoch / epochs * 100), "训练中", f"第 {epoch} / {epochs} 轮：损失 {history[-1]['loss']:.3f}", history=list(history), projection=projection, snapshot=training_snapshot(epoch))
         with torch.inference_mode():
             after = model.features(feature_input).cpu().numpy()
         stats = [layer.weight.detach().cpu().numpy().reshape(layer.out_channels, -1).mean(1).tolist() for layer in model.backbone if isinstance(layer, nn.Conv2d)]
+        final_snapshot = training_snapshot(epochs)
         session_id = artifact_id or uuid.uuid4().hex
         from idl_backend.config import artifact_directory
         out = artifact_directory() / session_id
         out.mkdir(parents=True, exist_ok=True)
         torch.save({"state_dict": model.cpu().state_dict(), "architecture": architecture}, out / "model.pt")
         np.savez_compressed(out / "features.npz", before=before, after=after, checkpoints=np.stack(feature_history), labels=vy[feature_indices], images=vx[feature_indices])
-        result = {"session_id": session_id, "epochs": epochs, "train_count": len(ty), "val_count": len(vy), "history": history, "train_accuracy": history[-1]["train_accuracy"], "val_accuracy": history[-1]["val_accuracy"], "conv_stats": stats, "architecture": architecture}
+        result = {"session_id": session_id, "epochs": epochs, "train_count": len(ty), "val_count": len(vy), "history": history, "train_accuracy": history[-1]["train_accuracy"], "val_accuracy": history[-1]["val_accuracy"], "conv_stats": stats, "architecture": architecture, "snapshot": final_snapshot}
         if projection is not None:
             result["projection"] = projection
             (out / "projection.json").write_text(json.dumps(projection, ensure_ascii=False), encoding="utf-8")

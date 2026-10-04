@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Button, ContentBlock, MathFormulaBlock, moduleAssetUrl, Typography } from '../../../shared/react';
-import { DIGITS, IMAGE_SIZE, initialModel, makeSample, predictWithLabeledResponses, trainWithReplay, type KernelModel, type LabeledDigit } from '../../services/learnableKernelDemo';
+import { DIGITS, IMAGE_SIZE, initialModel, makeSample, predict, trainOnLabel, classActivationMap, type KernelModel, type LabeledDigit } from '../../services/learnableKernelDemo';
 import './LearnableKernelPage.css';
 
 const ASSET_ID = '80396753-7fc8-4f55-9188-bddbdb828169';
-const RESPONSE_SIZE = IMAGE_SIZE - 2;
+const CAM_GRID_SIZE = 6;
 
 function kernelColor(weight: number) {
   const strength = Math.min(1, Math.abs(weight) / 1.4);
@@ -18,9 +18,11 @@ export function LearnableKernelPage() {
   const [loadingError, setLoadingError] = useState(false);
   const [model, setModel] = useState<KernelModel>(initialModel);
   const [sampleIndex, setSampleIndex] = useState(0);
-  const [recentCorrect, setRecentCorrect] = useState<boolean[]>([]);
   const [busy, setBusy] = useState(false);
-  const [feedback, setFeedback] = useState('');
+  const [labelError, setLabelError] = useState(false);
+  const [rejectedLabel, setRejectedLabel] = useState<number | null>(null);
+  const [rejectionAttempt, setRejectionAttempt] = useState(0);
+  
   const [lastUpdate, setLastUpdate] = useState<number | null>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -46,10 +48,19 @@ export function LearnableKernelPage() {
     return () => { active = false; if (timer.current) clearTimeout(timer.current); };
   }, []);
 
-  const sample = useMemo(() => images ? makeSample(images, sampleIndex) : null, [images, sampleIndex]);
-  const prediction = useMemo(() => sample ? predictWithLabeledResponses(model, sample.pixels, labeledExamples.current) : null, [model, sample]);
+  const sample = useMemo(() => {
+    if (!images) return null;
+    const original = makeSample(images, sampleIndex);
+    let seed = 731 + sampleIndex * 97;
+    const random = () => { seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0; return seed / 4294967296; };
+    const pixels = original.pixels.map(value => {
+      const speckle = random() < .065 ? .18 + random() * .27 : random() * .065;
+      return Math.min(1, value + speckle);
+    });
+    return { ...original, pixels };
+  }, [images, sampleIndex]);
+  const prediction = useMemo(() => sample ? predict(model, sample.pixels) : null, [model, sample]);
   const isCorrect = sample && prediction ? prediction.label === sample.label : false;
-  const recentHits = recentCorrect.filter(Boolean).length;
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -68,112 +79,113 @@ export function LearnableKernelPage() {
     context.putImageData(imageData, 0, 0);
   }, [sample]);
 
-  function chooseLabel(label: number) {
-    if (busy || !sample || !prediction || !images) return;
-    const examples = [...labeledExamples.current, { basePixels: images[sample.label], label }];
-    const updated = trainWithReplay(model, examples);
+  function learnStep(label: number) {
+    if (busy || !sample || !images) return;
+    if (label !== sample.label) {
+      setLabelError(true);
+      setRejectedLabel(label);
+      setRejectionAttempt(value => value + 1);
+      return;
+    }
+    setLabelError(false);
+    setRejectedLabel(null);
+    const examples = [...labeledExamples.current.filter(item => item.label !== label), { basePixels: sample.pixels, label }];
     labeledExamples.current = examples;
-    setRecentCorrect(previous => [...previous, prediction.label === sample.label].slice(-8));
-    setLastUpdate(Math.max(...updated.kernel.map((value, index) => Math.abs(value - model.kernel[index]))));
-    setModel(updated);
-    setFeedback(label === sample.label ? '卷积核参数已更新，随后显示下一张样本。' : '错误标签同样会影响训练结果。');
     setBusy(true);
-    timer.current = setTimeout(() => {
-      setSampleIndex(index => index + 1);
-      setBusy(false);
-      setFeedback('');
-      timer.current = null;
-    }, 1200);
+    let current = model;
+    let step = 0;
+    const advance = () => {
+      const previous = current;
+      for (const example of examples) current = trainOnLabel(current, example.basePixels, example.label);
+      setLastUpdate(Math.max(...current.kernel.map((value, index) => Math.abs(value - previous.kernel[index]))));
+      setModel(current);
+      step += 1;
+      if (step < 8) timer.current = setTimeout(advance, 140);
+      else {
+        timer.current = setTimeout(() => {
+          setSampleIndex(index => index + 1);
+          setLastUpdate(null);
+          setBusy(false);
+          timer.current = null;
+        }, 700);
+      }
+    };
+    advance();
   }
 
-  const responseMax = prediction ? Math.max(.001, ...prediction.response) : 1;
+
+  const cam = useMemo(() => prediction ? classActivationMap(model, prediction) : [], [model, prediction]);
+  // Fixed display scale allows comparison during learning without amplifying tiny noise.
+  const camScale = .5;
 
   return <ContentBlock
     className="vfl-learn-page"
     headingLevel={1}
     title="可学习卷积核"
-    subtitle="使用 3、5、8、9 各一张真实 MNIST 图像，考察标注对卷积核及预测结果的影响。"
+    subtitle="为含噪数字标注，观察网络关注哪些区域。"
   >
     <div className="vfl-learn-flow">
-      <section className="vfl-learn-panel" aria-label="真实 MNIST 输入与卷积响应">
-        <div className="vfl-learn-panel-head"><Typography as="h2" variant="h3" tone="accent">输入与响应</Typography></div>
+      <section className="vfl-learn-panel" aria-label="输入图像与网络关注区域">
+        <div className="vfl-learn-panel-head"><Typography as="h2" variant="h3" tone="accent">网络关注区域</Typography></div>
         <div className="vfl-learn-image-area">
-          <div className="vfl-learn-image-stack" role="img" aria-label={sample ? `MNIST 数字 ${DIGITS[sample.label].value} 与卷积响应热图叠加` : '正在读取 MNIST 样本'}>
+          <div className="vfl-learn-image-stack" role="img" aria-label={sample ? `MNIST 数字 ${DIGITS[sample.label].value} 与网络关注区域叠加` : '正在读取 MNIST 样本'}>
             <canvas ref={canvasRef} width={IMAGE_SIZE} height={IMAGE_SIZE} />
             {prediction && <div className="vfl-learn-response-grid" aria-hidden="true">
               {Array.from({ length: IMAGE_SIZE * IMAGE_SIZE }, (_, position) => {
                 const x = position % IMAGE_SIZE;
                 const y = Math.floor(position / IMAGE_SIZE);
-                const response = x > 0 && x < IMAGE_SIZE - 1 && y > 0 && y < IMAGE_SIZE - 1
-                  ? prediction.response[(y - 1) * RESPONSE_SIZE + x - 1] : 0;
-                const level = Math.sqrt(response / responseMax);
+                const row = Math.min(CAM_GRID_SIZE - 1, Math.floor(Math.max(0, y - 1) * CAM_GRID_SIZE / 26));
+                const col = Math.min(CAM_GRID_SIZE - 1, Math.floor(Math.max(0, x - 1) * CAM_GRID_SIZE / 26));
+                const evidence = x > 0 && x < 27 && y > 0 && y < 27 ? cam[row * CAM_GRID_SIZE + col] : 0;
+                const level = Math.sqrt(Math.min(1, evidence / camScale));
                 return <span key={position} style={{ backgroundColor: level < .12 ? 'transparent' : `rgba(255, 105, 24, ${(level * .72).toFixed(3)})` }} />;
               })}
             </div>}
           </div>
         </div>
-        <Typography as="p" variant="body" tone="muted" className="vfl-learn-panel-note">
-          {loadingError ? 'MNIST 图像加载失败' : sample ? `第 ${sampleIndex + 1} 张 · 仅平移原图` : '正在读取 MNIST 原图…'}
-        </Typography>
-        <Typography as="p" variant="body" tone="warning" className="vfl-learn-heat-note">橙色越亮，卷积响应越强</Typography>
+        {loadingError && <Typography variant="bodySmall" tone="danger">图像加载失败</Typography>}
+        <Typography as="p" variant="body" tone="warning" className="vfl-learn-heat-note">橙色：支持当前预测的区域</Typography>
       </section>
 
       <span className="vfl-learn-flow-arrow" aria-hidden="true">→</span>
 
       <section className="vfl-learn-panel vfl-learn-kernel-panel" aria-label="正在学习的卷积核">
-        <div className="vfl-learn-panel-head"><Typography as="h2" variant="h3" tone="accent">3 × 3 可学习卷积核</Typography></div>
+        <div className="vfl-learn-panel-head"><Typography as="h2" variant="h3" tone="accent">卷积核权重</Typography></div>
         <div className="vfl-learn-kernel-content">
-          <Typography as="p" variant="body" tone="muted">同一个卷积核扫描整张图像</Typography>
           <MathFormulaBlock className={`vfl-learn-kernel-formula ${busy ? 'is-updated' : ''}`} ariaLabel="当前三乘三卷积核的九个可训练权重">
             <div className="vfl-learn-weight-grid">
-              {model.kernel.map((weight, index) => <div key={index} style={{ backgroundColor: kernelColor(weight) }}>
+              {model.kernel.map((weight, index) => <div key={`${index}-${weight}`} style={{ backgroundColor: kernelColor(weight) }}>
                 <Typography as="span" variant="body" tone={weight >= 0 ? 'warning' : 'accent'}>{weight.toFixed(2)}</Typography>
               </div>)}
             </div>
           </MathFormulaBlock>
           <div className="vfl-learn-update">
-            <Typography as="p" variant="body" tone="muted">蓝色为负权重 · 橙色为正权重</Typography>
             <Typography as="p" variant="body" tone="accent">
-              {lastUpdate === null ? '等待第一次标注' : `${busy ? '本轮' : '上轮'}最大变化 ${lastUpdate.toFixed(3)}`}
+              {lastUpdate === null ? '等待学习' : `权重变化 ${lastUpdate < .001 ? lastUpdate.toExponential(1) : lastUpdate.toFixed(3)}`}
             </Typography>
           </div>
         </div>
-        <div className="vfl-learn-kernel-footer"><Typography as="p" variant="body" tone="warning">每次标注后重复训练已标注样本</Typography></div>
       </section>
 
       <span className="vfl-learn-flow-arrow" aria-hidden="true">→</span>
 
-      <section className="vfl-learn-panel" aria-label="预测与标注">
-        <div className="vfl-learn-panel-head"><Typography as="h2" variant="h3" tone="accent">预测与正确标签</Typography></div>
-        <div className="vfl-learn-prediction">
-          <Typography as="p" variant="body" tone="muted">
-            {busy ? '训练后预测：' : '当前预测：'}
-            <Typography as="strong" variant="h3" tone="accent">{prediction ? DIGITS[prediction.label].value : '—'}</Typography>
-            {prediction && <Typography as="span" variant="body" tone={isCorrect ? 'success' : 'danger'} className="vfl-learn-verdict">{isCorrect ? '✓ 正确' : '✕ 错误'}</Typography>}
-          </Typography>
-          <Typography as="p" variant="body" tone="muted">
-            {recentCorrect.length ? `近 ${recentCorrect.length} 张预测正确 ${recentHits} 张` : '标注后显示预测记录'}
-          </Typography>
+      <section className="vfl-learn-panel" aria-label="预测与真实值">
+        <div className="vfl-learn-panel-head"><Typography as="h2" variant="h3" tone="accent">预测与真实值</Typography></div>
+        <div className="vfl-learn-comparison" aria-live="polite">
+          <div><Typography variant="body" tone="muted">预测值</Typography><Typography variant="h1" tone={prediction ? (isCorrect ? 'success' : 'danger') : 'muted'}>{prediction ? DIGITS[prediction.label].value : '—'}</Typography></div>
+          <div><Typography variant="body" tone="muted">真实值</Typography><Typography variant="h1" tone="success">{sample ? DIGITS[sample.label].value : '—'}</Typography></div>
         </div>
-        <Typography as="p" variant="body" tone="accent" className="vfl-learn-choice-title">请选择当前图像的类别标签</Typography>
+        <Typography variant="bodySmall" tone={labelError ? "danger" : "accent"} className="vfl-learn-choice-title" role="status">{labelError ? "标签不符，请重新选择" : "标注这个数字"}</Typography>
         <div className="vfl-learn-choices">
-          {DIGITS.map((digit, index) => <Button
-            key={digit.value}
-            type="button"
-            variant="default"
-            disabled={busy || !images}
-            onClick={() => chooseLabel(index)}
-            className="vfl-learn-choice"
-            aria-label={`将当前数字标注为 ${digit.value}`}
-          ><Typography as="span" variant="h3" tone="inherit">{digit.value}</Typography></Button>)}
+          {DIGITS.map((digit, label) => <Button key={`${digit.value}-${rejectedLabel === label ? rejectionAttempt : 0}`} className={rejectedLabel === label ? "vfl-learn-label-rejected" : undefined} disabled={busy || !images} onClick={() => learnStep(label)} aria-label={`将当前数字标注为 ${digit.value}`}><Typography as="span" variant="h3" tone="inherit">{digit.value}</Typography></Button>)}
         </div>
-        <Typography as="p" variant="body" tone="muted" className="vfl-learn-feedback" role="status">{feedback || '预测依据与已标注样本的卷积响应比较。'}</Typography>
+
       </section>
     </div>
 
     <div className="vfl-learn-takeaway">
-      <Typography as="strong" variant="h3" tone="warning">过拟合实验</Typography>
-      <Typography as="p" variant="body" tone="accent">每类仅使用一张 MNIST 原图及其平移副本；本实验说明有限样本的拟合，不评价泛化性能。</Typography>
+      <Typography as="strong" variant="h3" tone="warning">标注 → 学习</Typography>
+      <Typography as="p" variant="body" tone="accent">观察：学习后，网络是否更关注数字笔画？</Typography>
     </div>
   </ContentBlock>;
 }

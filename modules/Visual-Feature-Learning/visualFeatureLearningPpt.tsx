@@ -28,6 +28,7 @@ import { FeatureMapsToClassifierPage } from './pages/FeatureMapsToClassifierPage
 import { LearnableKernelPage } from './pages/LearnableKernelPage/LearnableKernelPage';
 import { PoolingPage } from './pages/PoolingPage/PoolingPage';
 import { ConvolutionBackpropPage } from './pages/ConvolutionBackpropPage/ConvolutionBackpropPage';
+import { ConvolutionSharedBackpropPage } from './pages/ConvolutionSharedBackpropPage/ConvolutionSharedBackpropPage';
 
 const opening = outlines.pages.find((page) => page.id === 'digit-recognition-opening')!;
 const differences = outlines.pages.find((page) => page.id === 'digit-differences')!;
@@ -45,6 +46,7 @@ const featureMapsToClassifier = outlines.pages.find((page) => page.id === 'featu
 const learnableKernel = outlines.pages.find((page) => page.id === 'learnable-kernel')!;
 const pooling = outlines.pages.find((page) => page.id === 'pooling')!;
 const optimizeKernel = outlines.pages.find((page) => page.id === 'optimize-kernel')!;
+const sharedKernel = outlines.pages.find((page) => page.id === 'optimize-kernel-shared')!;
 
 export const deck: DeckDefinition = {
   id: 'visual-feature-learning',
@@ -116,6 +118,11 @@ export const deck: DeckDefinition = {
     section: '卷积网络',
     render: () => <ConvolutionBackpropPage />,
   }, {
+    id: sharedKernel.id,
+    title: sharedKernel.title,
+    section: '卷积网络',
+    render: () => <ConvolutionSharedBackpropPage />,
+  }, {
     id: pooling.id,
     title: pooling.title,
     section: '卷积网络',
@@ -142,7 +149,7 @@ export const deck: DeckDefinition = {
     render: () => <GlobalAveragePoolingPage />,
   }, {
     id: "assemble-train-digit-network",
-    title: "组装并训练完整数字识别网络",
+    title: "组装数字识别网络",
     section: "卷积网络",
     render: () => <NetworkTrainingPage />,
   }, {

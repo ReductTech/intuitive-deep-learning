@@ -2,7 +2,9 @@
 
 课程需要大模型能力时，沿用仓库现有架构：
 
-`React 模块 → LangChain Service :59414 → LLM Proxy :59413 → 上游模型`
+`React 模块 → 共用 Cloud API /api/ai（本地 :8000）→ assessment :28432 → LLM Proxy :59413 → 上游模型`
+
+本地 Vite 与云端都注入同一份 Cloud `frontend/cloud-runtime.js`，兼容转换既有本地服务 URL。缓存读取与写入统一使用 Cloud API 的 MySQL DAO。
 
 `idl_backend serve --kind assessment` 和 `idl_backend.assessment.proxy.cli` 只是入口，实际任务、结构化解析和代理逻辑位于 `backend/src/idl_backend/assessment/`。
 
@@ -18,7 +20,7 @@
 
 - 模型请求统一封装在模块自己的 `services/` 中，不在 page 或 block 中散落 `fetch`。
 - React 只调用 LangChain Service 的业务接口，不直接访问 LLM Proxy 或上游模型。
-- 请求必须带上 `X-Course-ID`（取模块 `outlines.json` 的 `id`），云端按它分组该课程的缓存。
+- 请求必须带上 `X-Course-ID`（取模块 `outlines.json` 的 `moduleIdentity.id`），云端按它分组该课程的缓存。
 - 浏览器和课程模块中不得保存 API Key、Base URL 或模型认证信息。
 - 页面只依赖稳定的结构化业务字段，不解析模型原始文本驱动核心逻辑。
 - 调用期间提供自然的等待状态，失败时提供可理解、可重试的反馈。

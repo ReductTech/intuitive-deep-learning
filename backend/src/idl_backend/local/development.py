@@ -16,6 +16,7 @@ SERVICES = {
     "proxy": (59413, "llm-proxy", "/health", ["-m", "idl_backend.assessment.proxy.cli", "--host", "127.0.0.1", "--port", "59413"]),
     "assessment": (28432, "assessment-service", "/healthz", ["-m", "idl_backend", "serve", "--kind", "assessment", "--dev"]),
     "vision": (28431, "vision-service", "/healthz", ["-m", "idl_backend", "serve", "--kind", "vision", "--dev"]),
+    "api": (8000, "cloud-api", "/readyz", ["-m", "uvicorn", "cloud_api.app:app", "--host", "127.0.0.1", "--port", "8000"]),
 }
 
 
@@ -72,6 +73,11 @@ def main():
     state_file = logs / "development.json"
     state = json.loads(state_file.read_text()) if state_file.exists() else {}
     selected = list(SERVICES) if args.kind == "all" else [args.kind]
+    # Validate cloud configuration before starting anything, without printing credentials.
+    common_environment = None
+    if args.action == "start" and args.kind in {"all", "api"}:
+        from idl_backend.local.cloud import cloud_environment
+        common_environment = cloud_environment(root)
     started = []
     try:
         for name in selected:
@@ -101,7 +107,7 @@ def main():
             if args.course and name in {"vision", "assessment"}:
                 arguments += ["--course", args.course]
             command = [sys.executable, *arguments]
-            environment = {**os.environ, "IDL_REPOSITORY_ROOT": str(root), "PYTHONUTF8": "1"}
+            environment = {**(common_environment or os.environ), "IDL_REPOSITORY_ROOT": str(root), "PYTHONUTF8": "1"}
             environment["PYTHONPATH"] = str(root / "backend/src") + os.pathsep + environment.get("PYTHONPATH", "")
             with (logs / (name + ".log")).open("w", encoding="utf-8") as output:
                 options = {"creationflags": subprocess.CREATE_NO_WINDOW | subprocess.CREATE_NEW_PROCESS_GROUP} if os.name == "nt" else {"start_new_session": True}

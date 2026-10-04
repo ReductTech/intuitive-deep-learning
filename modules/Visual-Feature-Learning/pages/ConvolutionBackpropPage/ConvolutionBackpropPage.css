@@ -1,112 +1,90 @@
-.course-shell .vfl-kernel-update-page {
-  display: grid;
-  grid-template-rows: auto minmax(0, 1fr);
-  width: 1600px;
-  height: 900px;
-  min-width: 0;
-  min-height: 0;
-  overflow: hidden;
-  padding: 18px 30px 20px;
-}
+.vfl-update-page { display: flex; flex-direction: column; }
+.vfl-update-body { flex: 1; min-height: 0; display: grid; grid-template-rows: 88px minmax(0, 1fr); gap: 18px; }
+.vfl-update-page :where(section, div) { min-width: 0; max-width: 100%; }
+.vfl-update-controls { display: flex; align-items: center; gap: 18px; padding: 12px 20px; border: 1px solid var(--ui-border); border-radius: var(--ui-radius-lg); background: var(--ui-bg-soft); }
+.vfl-update-loss { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
+.vfl-update-loss > .vfl-update-formula math-field { font-size: 40px; }
+.vfl-update-loss.is-improved > .vfl-update-formula { color: var(--ui-success); }
+.vfl-update-loss .vfl-update-loss__previous math-field { font-size: 26px; color: var(--ui-text-muted); }
+.vfl-update-detail { display: flex; flex: 1; justify-content: center; align-items: center; }
+.vfl-update-detail .vfl-update-formula math-field { font-size: 27px; }
+.vfl-update-controls__buttons { display: flex; gap: 12px; flex-shrink: 0; }
+.vfl-update-formula { margin: 0; padding: 0; min-height: 0; border: 0; background: transparent; width: auto; }
+.vfl-update-formula .math-formula, .vfl-update-formula math-field { font-size: 30px; }
+.vfl-update-formula > .math-formula { flex-wrap: nowrap; column-gap: 4px; }
+.vfl-update-page math-field::part(container), .vfl-update-page math-field::part(content) { padding: 0; }
+.vfl-update-scene { position: relative; min-height: 0; isolation: isolate; }
+.vfl-update-object { position: absolute; top: 54%; transform: translate(-50%, -50%); width: 300px; padding: 18px; display: grid; justify-items: center; gap: 14px; border: 1px solid var(--ui-border); border-radius: var(--ui-radius-lg); background: var(--ui-bg-card); transition: left 850ms cubic-bezier(.22, 1, .36, 1), top 850ms cubic-bezier(.22, 1, .36, 1), transform 850ms cubic-bezier(.22, 1, .36, 1), opacity 420ms ease, background-color 500ms ease, visibility 0s 450ms; }
+.vfl-update-input { left: 13%; background: var(--ui-bg-soft); }
+.vfl-update-kernel { left: 40%; background: rgba(var(--ui-accent-alt-rgb), .05); z-index: 3; }
+.vfl-update-output { left: 68%; width: 210px; background: var(--ui-bg-soft); }
+.vfl-update-target { left: 90%; width: 210px; }
+.vfl-update-kernel.is-updated { background: rgba(var(--ui-success-rgb), .07); }
+.vfl-update-matrix { width: 264px; min-height: 0; padding: 0; margin: 0; background: transparent; border: 0; }
+.vfl-update-matrix > .math-formula { display: block; width: 100%; }
+.vfl-update-matrix__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.vfl-update-cell { position: relative; display: grid; aspect-ratio: 1; min-width: 0; padding: 0; place-items: center; background: var(--ui-bg-card); border: 2px solid var(--ui-border); border-radius: var(--ui-radius-md); box-shadow: none; transition: background-color 350ms ease, border-color 250ms ease; }
+.vfl-update-cell::after { content: ''; position: absolute; inset: 0; z-index: 1; }
+.vfl-update-cell:hover, .vfl-update-cell:focus-visible { transform: none; }
+.vfl-update-cell math-field { font-size: 38px; }
+.vfl-update-cell.is-selected { border-color: var(--ui-accent-alt); background: rgba(var(--ui-accent-alt-rgb), .11); }
+.vfl-update-cell.is-pending { background: var(--ui-bg-muted); color: var(--ui-text-light); border-style: dashed; }
+.vfl-update-cell.is-changed { background: rgba(var(--ui-success-rgb), .1); color: var(--ui-success); }
+.vfl-update-cell.is-changed.is-selected { border-color: var(--ui-accent-alt); }
+.vfl-update-cell__value { display: grid; place-items: center; animation: vfl-update-number-in 420ms cubic-bezier(.22, 1, .36, 1); }
+.vfl-update-scalar { display: grid; place-items: center; height: 154px; width: 100%; }
+.vfl-update-scalar math-field { font-size: 64px; transition: color 500ms ease; }
+.is-updated .vfl-update-output .vfl-update-scalar { color: var(--ui-success); }
+.vfl-update-convolution { position: absolute; left: 26.5%; top: 54%; transform: translate(-50%, -50%); transition: opacity 300ms ease; }
+.vfl-update-convolution math-field { font-size: 50px; }
+.vfl-update-paths { position: absolute; inset: 0; width: 100%; height: 100%; color: var(--ui-accent); pointer-events: none; }
+.vfl-update-paths g > path { fill: none; stroke: currentColor; stroke-width: 2.2; }
+.vfl-update-paths g { transition: opacity 350ms ease; }
+.vfl-update-paths__reverse { opacity: 0; color: var(--ui-accent-alt); }
+.vfl-update-gradient { left: 79%; top: 73%; width: 250px; opacity: 0; visibility: hidden; pointer-events: none; background: rgba(var(--ui-accent-alt-rgb), .05); }
+.vfl-update-gradient .vfl-update-matrix { width: 212px; }
+.vfl-update-gradient .vfl-update-cell math-field { font-size: 32px; }
+.vfl-update-error { position: absolute; left: 79%; top: 36%; transform: translate(-50%, -50%); display: grid; justify-items: center; gap: 10px; opacity: 0; visibility: hidden; transition: opacity 450ms ease; color: var(--ui-accent-alt); }
+.vfl-update-error .vfl-update-formula:first-child { padding: 8px 14px; background: var(--ui-bg-card); border: 1px solid var(--ui-border); border-radius: var(--ui-radius-md); }
+.vfl-update-error math-field { font-size: 28px; }
+.vfl-update-original { left: 50%; opacity: 0; visibility: hidden; pointer-events: none; background: rgba(var(--ui-accent-alt-rgb), .05); }
+.vfl-update-equals, .vfl-update-subtract { position: absolute; top: 54%; transform: translate(-50%, -50%); opacity: 0; visibility: hidden; transition: opacity 350ms ease; }
+.vfl-update-equals { left: 32%; }
+.vfl-update-subtract { left: 68%; }
+.vfl-update-equals math-field, .vfl-update-subtract math-field { font-size: 42px; }
+.is-gradient .vfl-update-output, .is-gradient .vfl-update-target { top: 12%; }
+.is-gradient .vfl-update-output .vfl-update-scalar, .is-gradient .vfl-update-target .vfl-update-scalar { height: 54px; }
+.is-gradient .vfl-update-output .vfl-update-scalar math-field, .is-gradient .vfl-update-target .vfl-update-scalar math-field { font-size: 42px; }
+.is-gradient .vfl-update-paths__forward { opacity: 0; }
+.is-gradient .vfl-update-paths__reverse { opacity: 1; }
+.is-gradient .vfl-update-error, .is-gradient .vfl-update-gradient { opacity: 1; visibility: visible; transition-delay: 650ms; }
+.is-gradient .vfl-update-gradient { pointer-events: auto; }
+.is-focus .vfl-update-kernel { left: 14%; transform: translate(-50%, -50%) scale(1.08); }
+.is-focus .vfl-update-input, .is-focus .vfl-update-output, .is-focus .vfl-update-target, .is-focus .vfl-update-convolution, .is-focus .vfl-update-paths__forward { opacity: 0; visibility: hidden; pointer-events: none; }
+.is-focus .vfl-update-original, .is-focus .vfl-update-gradient, .is-focus .vfl-update-equals, .is-focus .vfl-update-subtract { opacity: 1; visibility: visible; pointer-events: auto; transition-delay: 420ms; }
+.is-focus .vfl-update-gradient { left: 86%; top: 54%; width: 300px; }
+.is-focus .vfl-update-gradient .vfl-update-matrix { width: 264px; }
+.is-focus .vfl-update-gradient .vfl-update-cell math-field { font-size: 38px; }
+.motion-return .vfl-update-input, .motion-return .vfl-update-output, .motion-return .vfl-update-target, .motion-return .vfl-update-convolution { animation: vfl-update-return 800ms both; }
+.vfl-update-transfer { position: absolute; left: var(--vfl-transfer-start); top: var(--vfl-transfer-y); z-index: 4; opacity: 0; pointer-events: none; padding: 5px 10px; border-radius: var(--ui-radius-sm); background: var(--ui-bg-card); color: var(--ui-success); }
+.vfl-update-transfer.is-travelling { animation: vfl-update-travel 530ms cubic-bezier(.4, 0, .2, 1) both; }
+.vfl-update-transfer math-field { font-size: 26px; }
+@keyframes vfl-update-number-in { from { opacity: 0; transform: translateY(9px) scale(.94); } to { opacity: 1; transform: none; } }
+@keyframes vfl-update-return { 0%, 35% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes vfl-update-travel { 0% { left: var(--vfl-transfer-start); opacity: 0; transform: translate(-50%, -50%) scale(.8); } 20% { opacity: 1; } 75% { opacity: 1; } 100% { left: var(--vfl-transfer-end); opacity: 0; transform: translate(-50%, -50%) scale(1); } }
+@media (prefers-reduced-motion: reduce) { .vfl-update-page *, .vfl-update-page *::before, .vfl-update-page *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; transition-delay: 0ms !important; } }
 
-.course-shell .vfl-kernel-update-page > .edu-content-body {
-  display: grid;
-  grid-template-rows: 110px minmax(0, 1fr) 164px;
-  gap: 17px;
-  min-width: 0;
-  min-height: 0;
-}
+.vfl-update-cell { color: var(--ui-accent); }
+.vfl-update-cell.is-selected { color: var(--ui-accent-alt); }
+.vfl-update-error { width: 430px; }
+.vfl-update-error .vfl-update-formula:first-child { width: 100%; display: grid; place-items: center; }
 
-.course-shell .vfl-kernel-update-equation {
-  display: grid;
-  grid-template-rows: minmax(0, 1fr) auto;
-  justify-items: center;
-  gap: 3px;
-  min-width: 0;
-  min-height: 0;
-  border: 1px solid #cbdcf4;
-  border-radius: 13px;
-  background: #f3f8ff;
-  padding: 6px 15px 10px;
-}
-.course-shell .vfl-kernel-update-equation .math-formula-block {
-  width: 100%;
-  max-width: 100%;
-  min-height: 0;
-  border: 0;
-  background: transparent;
-  padding: 0;
-}
-.course-shell .vfl-kernel-update-equation .math-formula-static { font-size: 2.55rem; }
-.course-shell .vfl-kernel-update-equation > .ui-typography { margin: 0; }
-
-.course-shell .vfl-kernel-update-matrices {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 110px minmax(0, 1fr) 76px minmax(0, 1fr);
-  align-items: center;
-  gap: 11px;
-  min-width: 0;
-  min-height: 0;
-}
-.course-shell .vfl-kernel-update-matrices > * { min-width: 0; max-width: 100%; }
-.course-shell .vfl-kernel-update-column {
-  display: grid;
-  grid-template-rows: auto minmax(0, 1fr);
-  justify-items: center;
-  gap: 18px;
-  min-width: 0;
-  min-height: 0;
-}
-.course-shell .vfl-kernel-update-column > .ui-typography { margin: 0; text-align: center; }
-.course-shell .vfl-kernel-update-operator { justify-self: center; white-space: nowrap; }
-.course-shell .vfl-kernel-update-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  grid-template-rows: repeat(3, minmax(0, 1fr));
-  gap: 5px;
-  width: min(100%, 352px);
-  max-width: 100%;
-  aspect-ratio: 1;
-}
-.course-shell .vfl-kernel-update-grid > div,
-.course-shell .vfl-kernel-update-grid > .edu-btn {
-  display: grid;
-  place-items: center;
-  min-width: 0;
-  min-height: 0;
-  margin: 0;
-  padding: 0;
-  border: 2px solid #cadbf0;
-  border-radius: 8px;
-  background: #edf5ff;
-  color: #173a70;
-  box-shadow: none;
-  transition: border-color .16s ease, background-color .16s ease, transform .16s ease;
-}
-.course-shell .vfl-kernel-update-grid > .edu-btn.is-positive { border-color: #f2c19e; background: #fff1e7; color: #c96a31; }
-.course-shell .vfl-kernel-update-grid > .edu-btn.is-negative { border-color: #b9d5f6; background: #eaf3ff; color: #2d70cc; }
-.course-shell .vfl-kernel-update-grid > .edu-btn:hover,
-.course-shell .vfl-kernel-update-grid > .edu-btn:focus-visible { transform: translateY(-2px); }
-.course-shell .vfl-kernel-update-grid > div.has-decreased { border-color: #adddc7; background: #ebf8f1; color: #218866; }
-.course-shell .vfl-kernel-update-grid > div.has-increased { border-color: #b9d5f6; background: #eaf3ff; color: #2d70cc; }
-.course-shell .vfl-kernel-update-grid > .is-linked { border-width: 4px; border-color: #ec7b42 !important; box-shadow: 0 0 0 3px rgba(236,123,66,.14); }
-.course-shell .vfl-kernel-update-grid .ui-typography { margin: 0; white-space: nowrap; }
-
-.course-shell .vfl-kernel-update-source {
-  display: grid;
-  align-content: center;
-  justify-items: center;
-  gap: 8px;
-  min-width: 0;
-  min-height: 0;
-  border: 1px solid #cbdcf4;
-  border-radius: 12px;
-  background: #edf4ff;
-  padding: 14px 20px;
-}
-.course-shell .vfl-kernel-update-source .ui-typography { margin: 0; min-width: 0; }
-.course-shell .vfl-kernel-update-source-head { display: flex; align-items: baseline; justify-content: center; gap: 25px; min-width: 0; }
-.course-shell .vfl-kernel-update-source-terms { display: flex; align-items: center; justify-content: center; gap: 10px; min-width: 0; }
-.course-shell .vfl-kernel-update-source-terms > div { display: flex; align-items: center; gap: 9px; border: 1px solid #cddff4; border-radius: 8px; background: #fff; padding: 4px 9px; white-space: nowrap; }
-.course-shell .vfl-kernel-update-source-terms > .ui-typography { margin-left: 10px; white-space: nowrap; }
-.course-shell .vfl-kernel-update-source-result { text-align: center; }
+.vfl-update-scalar { transition: height 850ms cubic-bezier(.22, 1, .36, 1); }
+.vfl-update-scalar math-field { transition: font-size 850ms cubic-bezier(.22, 1, .36, 1), color 500ms ease; }
+.vfl-update-loss.is-improved > .vfl-update-formula:not(.vfl-update-loss__previous) .math-formula,
+.is-updated .vfl-update-output .math-formula { color: var(--ui-success); }
+.vfl-update-loss .vfl-update-loss__previous .math-formula { color: var(--ui-text-muted); }
+.vfl-update-error .math-formula, .vfl-update-transfer .math-formula { color: var(--ui-accent-alt); }
+.motion-zoom .vfl-update-kernel { animation: vfl-update-camera 850ms cubic-bezier(.22, 1, .36, 1) both; }
+@keyframes vfl-update-camera { 0% { transform: translate(-50%, -50%) scale(1); } 50% { transform: translate(-50%, -50%) scale(1.22); } 100% { transform: translate(-50%, -50%) scale(1.08); } }
+.vfl-update-formula math-field { color: inherit; }

@@ -1,0 +1,52 @@
+.vfl-loss-page { box-sizing:border-box; width:1600px; height:900px; background:#fcfdff; }
+.vfl-loss-page * { box-sizing:border-box; }
+.vfl-loss-flow { display:grid; grid-template-columns:minmax(0,300fr) 36px minmax(0,190fr) 36px minmax(0,390fr) 36px minmax(0,360fr); grid-template-rows:minmax(0,1fr); align-items:center; width:1480px; max-width:100%; height:548px; margin:30px auto 0; padding:24px 16px; border:1px solid #d5e5f8; border-radius:24px; background:#fff; }
+.vfl-loss-stage { min-width:0; min-height:0; height:100%; padding:10px 16px; border:1px solid transparent; border-radius:16px; background:#fff; text-align:center; display:flex; flex-direction:column; align-items:center; }
+.vfl-loss-stage h2 { margin:0 0 18px; white-space:nowrap; }
+.vfl-loss-image { position:relative; width:250px; height:250px; flex-shrink:0; max-width:100%; margin:10px auto 16px; background:#000; border:2px solid #ee8a32; border-radius:8px; overflow:hidden; }
+.vfl-loss-image img { display:block; width:100%; height:100%; image-rendering:pixelated; }
+.vfl-loss-grid { position:absolute; inset:0; display:grid; grid-template-columns:9fr 9fr 10fr; grid-template-rows:9fr 9fr 10fr; pointer-events:none; }
+.vfl-loss-grid span { border:1px dashed #fca54d; }
+.vfl-loss-stage .edu-btn { width:100%; margin-top:auto; }
+.vfl-loss-stage p { margin:8px 0; }
+.vfl-loss-arrow { height:48px; background:linear-gradient(90deg,#e5f1ff,#65a1f3); clip-path:polygon(0 30%,60% 30%,60% 0,100% 50%,60% 100%,60% 70%,0 70%); }
+.vfl-loss-features { padding:2px 16px; }
+.vfl-loss-features h2 { white-space:normal; margin-bottom:8px; }
+.vfl-loss-vector { display:grid; grid-template-rows:repeat(9,minmax(0,1fr)); width:100%; height:384px; flex-shrink:0; gap:3px; }
+.vfl-loss-vector span { min-height:40px; margin:0; font-variant-numeric:tabular-nums; display:grid; place-items:center; background:#edf4ff; border-radius:8px; }
+.vfl-loss-features>p { margin-top:auto; }
+.vfl-loss-classifier .vfl-manual-network-svg { display:block; width:100%; height:300px; min-width:0; }
+.vfl-loss-layers { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; width:100%; margin-top:12px; }
+.vfl-loss-layers p { background:#edf5ff; border-radius:10px; padding:10px 0; margin:0; }
+.vfl-loss-layers p:nth-child(2) { background:#fff3e5; }
+.vfl-loss-probabilities { display:grid; grid-template-rows:repeat(10,minmax(0,1fr)); gap:6px; width:100%; height:310px; margin-top:6px; }
+.vfl-loss-probabilities>div { display:grid; grid-template-columns:22px minmax(0,1fr) 76px; gap:8px; align-items:center; font-variant-numeric:tabular-nums; }
+.vfl-loss-track { height:20px; background:#e8eef6; border-radius:6px; overflow:hidden; }
+.vfl-loss-track>span { display:block; height:100%; background:var(--ui-color-primary,#287bff); border-radius:inherit; transition:width 450ms ease-out; }
+.vfl-loss-output>p { width:100%; margin-top:auto; padding:12px 0; background:#edf5ff; border-radius:12px; }
+.vfl-loss-conclusion { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; width:1480px; max-width:100%; height:112px; margin:16px auto 0; padding:12px 24px; border:1px solid #ffd1b7; border-radius:18px; background:#fff7f1; text-align:center; }
+.vfl-loss-conclusion h2,.vfl-loss-conclusion p { margin:0; }
+
+/* One visible forward pass for each toggle; changing the flow key restarts it. */
+.vfl-loss-flow--animate>.vfl-loss-stage { animation:vfl-loss-stage-pulse 650ms ease-in-out both; }
+.vfl-loss-flow--animate>.vfl-loss-stage:nth-child(3) { animation-delay:350ms; }
+.vfl-loss-flow--animate>.vfl-loss-stage:nth-child(5) { animation-delay:700ms; }
+.vfl-loss-flow--animate>.vfl-loss-stage:nth-child(7) { animation-delay:1100ms; }
+.vfl-loss-flow--animate>.vfl-loss-arrow { animation:vfl-loss-signal 450ms ease-out both; }
+.vfl-loss-flow--animate>.vfl-loss-arrow:nth-child(2) { animation-delay:220ms; }
+.vfl-loss-flow--animate>.vfl-loss-arrow:nth-child(4) { animation-delay:580ms; }
+.vfl-loss-flow--animate>.vfl-loss-arrow:nth-child(6) { animation-delay:980ms; }
+.vfl-loss-flow--animate .vfl-loss-vector span { animation:vfl-loss-value-pulse 500ms ease-out 420ms both; }
+.vfl-loss-flow--animate .vfl-manual-network-svg line { animation:vfl-loss-wire-pulse 650ms ease-in-out 750ms both; }
+.vfl-loss-flow--animate .vfl-manual-network-svg circle { animation:vfl-loss-node-pulse 650ms ease-in-out 800ms both; }
+
+@keyframes vfl-loss-stage-pulse { 0%,100% { background:#fff; box-shadow:0 0 0 0 transparent; transform:translateY(0); } 45% { background:#edf5ff; box-shadow:0 0 0 3px #72a9f5,0 10px 24px #287bff20; transform:translateY(-5px); } }
+@keyframes vfl-loss-signal { 0%,100% { opacity:.55; transform:translateX(0); } 50% { opacity:1; transform:translateX(7px); background:#287bff; } }
+@keyframes vfl-loss-value-pulse { 0%,100% { background:#e8f2ff; } 50% { background:#b8d6ff; } }
+@keyframes vfl-loss-wire-pulse { 0%,100% { stroke:#a9bfdf; } 50% { stroke:#287bff; stroke-width:2; } }
+@keyframes vfl-loss-node-pulse { 50% { fill:#bdd9ff; } }
+
+@media (prefers-reduced-motion:reduce) { .vfl-loss-flow--animate *, .vfl-loss-flow--animate>.vfl-loss-stage { animation-duration:1ms; animation-delay:0ms; } }
+
+.vfl-loss-classifier { border-left-color:#e2ebf7; border-right-color:#e2ebf7; }
+.vfl-loss-output>p { min-height:58px; }

@@ -1,6 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Button, ContentBlock, Typography } from '../../../shared/react';
 import { NINE_GRID_EDGES, NINE_GRID_IMAGE_SIZE, NINE_GRID_IMAGE_URL, nineGridCounts, readNineGridPixels } from '../../services/nineGridDigit';
+import { ManualClassifierNetwork } from '../../components/ManualClassifierNetwork';
+import { getLatestManualClassifier, subscribeManualClassifier, predictManualDigit, trainManualClassifier, type ManualTrainingResult } from '../../services/manualFeatureClassifier';
+import './NineGridInformationLossPage.css';
 import { MNIST_INK_THRESHOLD } from '../../services/mnistFeatures';
 
 type Comparison = { original: number[]; rearranged: number[]; rearrangedUrl: string };
@@ -57,58 +60,84 @@ function rearrangeWithinRegions(image: HTMLImageElement, seed: number): Comparis
   };
 }
 
-function DigitPanel({ title, imageUrl, counts, caption }: { title: string; imageUrl: string; counts: number[] | null; caption: string }) {
-  return <section className="min-w-0 max-w-full rounded-[20px] border border-[#d4e5f8] bg-[#f7fbff] p-[20px] text-center" aria-label={title}>
-    <Typography as="h2" variant="body" tone="accent" className="m-0 font-bold">{title}</Typography>
-    <div className="relative mx-auto mt-[12px] h-[318px] w-[318px] max-w-full overflow-hidden rounded-[11px] border-[4px] border-white bg-black shadow-[0_0_0_1px_#b9cee9]">
-      <img src={imageUrl} alt={title} className="absolute inset-0 block h-full w-full max-w-full [image-rendering:pixelated]" />
-      <div className="pointer-events-none absolute inset-0 grid grid-cols-[9fr_9fr_10fr] grid-rows-[9fr_9fr_10fr]" aria-hidden="true">
-        {Array.from({ length: 9 }, (_, index) => <span key={index} className="relative border border-dashed border-[#ff9e52]">
-          <Typography as="span" variant="body" tone="inherit" className="absolute bottom-[4px] right-[4px] grid h-[37px] min-w-[37px] place-items-center rounded-[7px] bg-[#173c70] px-[4px] text-white">{counts?.[index] ?? '—'}</Typography>
-        </span>)}
-      </div>
-    </div>
-    <div className="mx-auto mt-[14px] flex h-[58px] w-[510px] max-w-full items-center justify-center rounded-[12px] border border-[#c9def8] bg-[#eaf3ff] px-[10px]">
-      <Typography as="output" variant="body" tone="accent" className="whitespace-nowrap font-bold">[{counts?.join(', ') ?? '—'}]</Typography>
-    </div>
-    <Typography as="p" variant="body" tone="muted" className="mb-0 mt-[9px]">{caption}</Typography>
-  </section>;
-}
-
 export function NineGridInformationLossPage() {
-  const [seed, setSeed] = useState(1);
+  const [seed, setSeed] = useState(0);
+  const [motion, setMotion] = useState(0);
+  const [outputReady, setOutputReady] = useState(false);
+  const sourceImage = useRef<HTMLImageElement | null>(null);
   const [comparison, setComparison] = useState<Comparison | null>(null);
-
+  const [model, setModel] = useState<ManualTrainingResult | null>(getLatestManualClassifier);
+  const [error, setError] = useState('');
+  useEffect(() => subscribeManualClassifier(setModel), []);
+  useEffect(() => {
+    const abort = new AbortController();
+    if (!model) trainManualClassifier(0, abort.signal, () => {}).then(({ result }) => {
+      if (!abort.signal.aborted) setModel(result);
+    }).catch(failure => { if (!abort.signal.aborted) setError(failure instanceof Error ? failure.message : '分类器加载失败'); });
+    return () => abort.abort();
+  }, [model]);
   useEffect(() => {
     let active = true;
     const image = new Image();
+    image.crossOrigin = 'anonymous';
     image.onload = () => {
-      if (active) setComparison(rearrangeWithinRegions(image, seed));
+      if (!active) return;
+      try { sourceImage.current = image; setComparison(rearrangeWithinRegions(image, 1)); }
+      catch { setError('无法读取图像，请检查图片跨域配置。'); }
     };
+    image.onerror = () => { if (active) setError('图像加载失败，请刷新重试。'); };
     image.src = NINE_GRID_IMAGE_URL;
-    return () => { active = false; image.onload = null; };
-  }, [seed]);
-
-  const countsEqual = comparison !== null && comparison.original.every((count, index) => count === comparison.rearranged[index]);
-
-  return <ContentBlock
-    className="box-border h-[900px] w-[1600px] overflow-hidden bg-[#fcfdff]"
-    headingLevel={1}
-    title="九宫格特征的信息损失"
-    subtitle="区域内的墨迹数量不变，像素重新排列后，九项统计值仍然相同。"
-  >
-    <div className="mx-auto mt-[20px] grid h-[536px] w-[1430px] max-w-full gap-[16px]" style={{ gridTemplateColumns: 'minmax(0, 1fr) 160px minmax(0, 1fr)' }}>
-      <DigitPanel title="原始图像" imageUrl={NINE_GRID_IMAGE_URL} counts={comparison?.original ?? null} caption="真实 MNIST 手写数字 2" />
-      <div className="flex min-w-0 flex-col items-center justify-center gap-[18px]">
-        <span aria-hidden="true" className="text-[#ee7131]"><svg viewBox="0 0 120 70" className="h-[70px] w-[120px] max-w-full"><path d="M4 26h68V6l44 29-44 29V44H4z" fill="currentColor" /></svg></span>
-        <Typography as="p" variant="body" tone="warning" className="m-0 text-center font-bold">仅在各区域内重排</Typography>
-        <Button variant="default" onClick={() => setSeed((current) => current + 1)} className="!rounded-[11px]"><Typography as="span" variant="body" tone="inherit">重新排列</Typography></Button>
-      </div>
-      <DigitPanel title="区域内重排后" imageUrl={comparison?.rearrangedUrl ?? NINE_GRID_IMAGE_URL} counts={comparison?.rearranged ?? null} caption="像素位置改变，九项计数不变" />
+    return () => { active = false; image.onload = null; image.onerror = null; };
+  }, []);
+  const switchImage = () => {
+    if (!sourceImage.current) return;
+    if (seed === 0) {
+      const randomSeed = Math.floor(Math.random() * 0x7ffffffe) + 1;
+      const next = rearrangeWithinRegions(sourceImage.current, randomSeed);
+      if (!next) return;
+      setComparison(next);
+      setSeed(randomSeed);
+    } else setSeed(0);
+    setOutputReady(false);
+    setMotion(current => current + 1);
+  };
+  const originalPrediction = useMemo(() => model && comparison ? predictManualDigit(comparison.original, model.classifier) : null, [model, comparison]);
+  const prediction = useMemo(() => model && comparison ? predictManualDigit(seed === 0 ? comparison.original : comparison.rearranged, model.classifier) : null, [model, comparison, seed]);
+  const same = prediction !== null && originalPrediction !== null && prediction.every((value, i) => value === originalPrediction[i]);
+  const counts = seed === 0 ? comparison?.original : comparison?.rearranged;
+  return <ContentBlock className="vfl-loss-page" headingLevel={1} title="九宫格特征的信息损失"
+    subtitle="分类器依据九项区域计数进行预测；区域内部的笔画排列未被保留。">
+    <div key={motion} className={`vfl-loss-flow${motion ? ' vfl-loss-flow--animate' : ''}`}>
+      <section className="vfl-loss-stage" aria-label="可切换的输入图像">
+        <Typography as="h2" variant="h3" tone="accent">输入图像</Typography>
+        <div className="vfl-loss-image">
+          <img src={seed === 0 ? NINE_GRID_IMAGE_URL : comparison?.rearrangedUrl ?? NINE_GRID_IMAGE_URL} alt={seed === 0 ? '原始 MNIST 数字 2' : '数字 2 的随机区域内像素重排'} />
+          <div className="vfl-loss-grid" aria-hidden="true">{Array.from({length:9},(_,i)=><span key={i}/>)}</div>
+        </div>
+        <Typography variant="body" tone="muted">{seed === 0 ? '原始数字 2' : '区域内像素重排'}</Typography>
+        <Button variant="primary" disabled={!comparison} onClick={switchImage}><Typography as="span" variant="body" tone="inherit">切换</Typography></Button>
+      </section>
+      <span className="vfl-loss-arrow" aria-hidden="true"/>
+      <section className="vfl-loss-stage vfl-loss-features" aria-label="保持相同的九维特征">
+        <Typography as="h2" variant="h3" tone="accent">九维特征</Typography>
+        <div className="vfl-loss-vector">{Array.from({length:9},(_,i)=><Typography as="span" variant="bodySmall" tone="accent" key={i}>{counts?.[i] ?? '—'}</Typography>)}</div>
+        <Typography variant="bodySmall" tone="warning">区域计数不变</Typography>
+      </section>
+      <span className="vfl-loss-arrow" aria-hidden="true"/>
+      <section className="vfl-loss-stage vfl-loss-classifier" aria-label="上一页的同一个全连接分类器">
+        <Typography as="h2" variant="h3" tone="accent">同一个分类器</Typography>
+        <ManualClassifierNetwork/>
+        <div className="vfl-loss-layers"><Typography variant="bodySmall" tone="accent">输入 9</Typography><Typography variant="bodySmall" tone="warning">隐藏 32</Typography><Typography variant="bodySmall" tone="accent">输出 10</Typography></div>
+        <Typography variant="bodySmall" tone="muted">权重保持不变</Typography>
+      </section>
+      <span className="vfl-loss-arrow" aria-hidden="true"/>
+      <section className={`vfl-loss-stage vfl-loss-output${outputReady ? ' vfl-loss-output--ready' : ''}`} aria-label="十类预测概率" onAnimationEnd={event => { if (event.target === event.currentTarget && event.animationName === 'vfl-loss-stage-pulse') setOutputReady(true); }}>
+        <Typography as="h2" variant="h3" tone="accent">Softmax 概率</Typography>
+        <div className="vfl-loss-probabilities">{Array.from({length:10},(_,digit)=><div key={digit}><Typography as="span" variant="bodySmall" tone="accent">{digit}</Typography><span className="vfl-loss-track"><span style={{width:`${(outputReady ? prediction?.[digit] ?? 0 : 0)*100}%`}}/></span><Typography as="span" variant="bodySmall" tone="muted">{outputReady && prediction ? `${(prediction[digit]*100).toFixed(1)}%` : '0.0%'}</Typography></div>)}</div>
+        <Typography variant="body" tone="accent">{outputReady && prediction ? `预测数字：${prediction.indexOf(Math.max(...prediction))}` : error ? '分类器暂不可用' : !model ? '正在加载分类器…' : outputReady ? '正在计算…' : '等待信号到达'}</Typography>
+      </section>
     </div>
-    <div className="mx-auto mt-[15px] flex h-[93px] w-[1430px] max-w-full flex-col items-center justify-center rounded-[17px] border border-[#ffd1b7] bg-[#fff7f1] px-[22px] text-center">
-      <Typography as="p" variant="body" tone="warning" className="m-0 font-bold">{countsEqual ? '两张图像的像素排列不同，但九维特征向量相同。' : '正在计算两张图像的九项统计值。'}</Typography>
-      <Typography as="p" variant="body" tone="muted" className="mb-0 mt-[3px]">区域计数保留墨迹数量的空间分布，但不记录区域内部的笔画排列。</Typography>
-    </div>
+    <div className="vfl-loss-conclusion" aria-live="polite"><Typography as="h2" variant="body" tone="accent">{motion === 0 ? '观察：区域内像素重排后，分类器能否区分两种图像？' : !outputReady ? '保持区域计数与网络权重不变，比较两种图像的预测结果。' : same ? '特征相同，预测相同：训练分类器无法恢复已丢失的笔画结构。' : '正在计算预测结果…'}</Typography><Typography variant="bodySmall" tone="muted">要描述笔画的局部结构，下一步将使用固定卷积核提取特征。</Typography></div>
+    {error && <Typography variant="bodySmall" tone="muted" role="alert">{error}</Typography>}
   </ContentBlock>;
 }

@@ -7,7 +7,7 @@
 npm run dev
 ```
 
-第一条启动视觉识别/训练、问答、模型代理和学习记录服务；第二条在另一个终端启动课件网页。API 端口为 28431 / 28432，日志在 `runtime_logs/`。
+第一条启动视觉识别/训练、问答、模型代理、学习记录和共用 Cloud API；第二条在另一个终端启动课件网页。网页通过 `/api` 代理到 8000，再调用 28431 / 28432，训练和 LLM 共用云端 MySQL 缓存。日志在 `runtime_logs/`。本地需要 Cloud 仓库及其依赖和缓存连接配置，详见 backend/README.md。
 
 ```powershell
 .\scripts\devstart.ps1 -Status

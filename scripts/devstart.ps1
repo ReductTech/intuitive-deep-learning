@@ -1,6 +1,6 @@
 param(
   [switch]$Status,
-  [ValidateSet('all','vision','assessment','proxy','records')][string]$Kind = 'all',
+  [ValidateSet('all','vision','assessment','proxy','records','api')][string]$Kind = 'all',
   [int]$Port = 0,
   [string]$Course = '',
   [ValidateSet('auto','cpu','cuda','mps')][string]$Device = 'auto'

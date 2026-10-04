@@ -4,7 +4,9 @@
 
 现有 CNN 与人脸识别课程主要使用：
 
-`React 模块 → backend/src/idl_backend/local/http.py :28431 → idl_backend.vision → Torch / 本地模型`
+`React 模块 → 共用 Cloud API /api/lab（本地 :8000）→ backend/src/idl_backend/local/http.py :28431 → idl_backend.vision → Torch / 本地模型`
+
+本地与云端注入同一份 Cloud `frontend/cloud-runtime.js`，既有本地服务 URL 自动转换为同源 API。缓存与任务完成交接统一复用 Cloud API；原生 28431 只作为计算接口和单独调试入口。
 
 CNN 服务按职责拆分为三个入口文件：
 

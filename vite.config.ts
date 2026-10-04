@@ -1,6 +1,31 @@
 import { defineConfig, loadEnv, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
+import fs from 'node:fs';
+import path from 'node:path';
+
+function cloudRuntime(root: string): Plugin {
+  const candidates = process.env.IDL_CLOUD_REPOSITORY
+    ? [process.env.IDL_CLOUD_REPOSITORY]
+    : [path.resolve(root, '../cloud-intuitive-deep-learning'), path.resolve(root, '..')];
+  const cloud = candidates.find(candidate => fs.existsSync(path.join(candidate, 'frontend/cloud-runtime.js')));
+  if (!cloud) throw new Error('找不到 Cloud 仓库，请设置 IDL_CLOUD_REPOSITORY；本地开发使用同一套 Cloud API。');
+  const runtime = path.join(cloud, 'frontend/cloud-runtime.js');
+  return {
+    name: 'shared-cloud-runtime',
+    apply: 'serve',
+    transformIndexHtml() {
+      return [{ tag: 'script', attrs: { src: '/__cloud-runtime.js' }, injectTo: 'head-prepend' }];
+    },
+    configureServer(server) {
+      server.middlewares.use('/__cloud-runtime.js', (_request, response) => {
+        response.setHeader('Content-Type', 'application/javascript');
+        response.setHeader('Cache-Control', 'no-store');
+        response.end(fs.readFileSync(runtime, 'utf8'));
+      });
+    },
+  };
+}
 
 function fixedLessonCanvas(): Plugin {
   return {
@@ -23,10 +48,10 @@ function fixedLessonCanvas(): Plugin {
   };
 }
 
-export default defineConfig(({ mode }) => {
+export default defineConfig(({ mode, command }) => {
   const assetBaseUrl = loadEnv(mode, '.', '').VITE_ASSET_BASE_URL?.trim();
   return {
-    plugins: [fixedLessonCanvas(), react(), tailwindcss()],
+    plugins: [fixedLessonCanvas(), react(), tailwindcss(), ...(command === 'serve' ? [cloudRuntime(__dirname)] : [])],
     publicDir: 'assets',
     build: {
       copyPublicDir: !assetBaseUrl,
@@ -47,6 +72,10 @@ export default defineConfig(({ mode }) => {
       port: 5173,
       strictPort: true,
       proxy: {
+        '/api': {
+          target: process.env.IDL_LOCAL_API_URL || 'http://127.0.0.1:8000',
+          changeOrigin: true,
+        },
         '/__telemetry': {
           target: 'http://127.0.0.1:59411',
           changeOrigin: true,

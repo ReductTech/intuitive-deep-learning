@@ -16,6 +16,7 @@ class TaskDefinition:
 
 
 VISION_TASKS = (
+    TaskDefinition("vision.digits.manual.train", "/visual-feature-learning/manual-feature-train", "vision.training.manual_features:train_manual_features", progress=True),
     TaskDefinition("vision.digits.fixed.preview", "/lenet5/fixed-kernel-preview", "vision.features.digits:preview_fixed_kernel"),
     TaskDefinition("vision.digits.fixed.train", "/lenet5/fixed-kernel-train", "vision.features.digits:train_fixed_kernel"),
     TaskDefinition("vision.digits.sequence", "/lenet5/sequence-sample", "vision.features.digits:build_sequence_sample"),

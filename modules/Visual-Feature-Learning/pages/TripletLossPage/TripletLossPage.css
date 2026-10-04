@@ -3,9 +3,9 @@
 .vfl-triplet-body{height:100%;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:20px;min-height:0}
 .vfl-triplet-body *{min-width:0;max-width:100%;box-sizing:border-box}
 .vfl-triplet-body .ui-typography{margin:0}
-.vfl-triplet-left{display:grid;grid-template-rows:minmax(0,1fr) 282px 40px;gap:16px;min-height:0}
+.vfl-triplet-left{display:grid;grid-template-rows:minmax(0,1fr) 282px;gap:16px;min-height:0}
 .vfl-triplet-samples{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;background:#f5f9ff;border:1px solid #dbe8f8;border-radius:var(--ui-radius-lg);padding:20px 18px;min-height:0}
-.vfl-triplet-sample{display:grid;grid-template-rows:46px minmax(0,1fr) 45px 36px;gap:10px;text-align:center;min-height:0}
+.vfl-triplet-sample{display:grid;grid-template-rows:46px minmax(0,1fr);gap:10px;text-align:center;min-height:0}
 .vfl-triplet-label{display:flex;align-items:center;justify-content:center;background:#e1eeff;color:var(--ui-accent);border-radius:var(--ui-radius-md)}
 .vfl-triplet-sample.sample-1 .vfl-triplet-label{background:#def6e8;color:#26764f}.vfl-triplet-sample.sample-2 .vfl-triplet-label{background:#ffebe8;color:#b64742}
 .vfl-triplet-portrait{background-image:var(--vfl-triplet-photo);background-size:cover;background-position:50% 15%;background-repeat:no-repeat;border-radius:var(--ui-radius-md);width:100%;height:100%;min-height:0}
@@ -17,13 +17,15 @@
 .vfl-triplet-term{display:inline-flex;border-radius:12px;padding:8px 4px;background:#dbf5e5;color:#26764f}.vfl-triplet-term.negative{background:#ffe1dc;color:#b64742}.vfl-triplet-term.margin{background:#fff0c7;color:#987019}
 .vfl-triplet-term-notes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;text-align:center}.vfl-triplet-term-notes>div:first-child,.vfl-triplet-plot-legend .positive{color:#26764f}.vfl-triplet-term-notes>div:nth-child(2),.vfl-triplet-plot-legend .negative{color:#b64742}.vfl-triplet-term-notes>div:nth-child(3){color:#987019}
 .vfl-triplet-numbers{display:flex;align-items:center;justify-content:space-between;border-top:1px solid #d6e3f5}
-.vfl-triplet-space{display:grid;grid-template-rows:80px minmax(0,1fr) 48px 48px 58px 90px;gap:8px;background:#f7faff;border:1px solid #dbe8f8;border-radius:var(--ui-radius-lg);padding:18px;min-height:0}
+.vfl-triplet-space{display:grid;grid-template-rows:80px minmax(0,1fr) 48px 48px 90px;gap:8px;background:#f7faff;border:1px solid #dbe8f8;border-radius:var(--ui-radius-lg);padding:18px;min-height:0}
 .vfl-triplet-space-title{text-align:center}.vfl-triplet-plot{position:relative;min-height:0;display:grid;grid-template-rows:minmax(0,1fr) 32px}.vfl-triplet-plot>svg{width:100%;height:100%;display:block;min-height:0}.vfl-triplet-point{width:72px;height:72px;border:4px solid #5598ec;border-radius:50%;padding:3px;background:white;box-shadow:0 3px 8px #203d6120}.vfl-triplet-point .vfl-triplet-portrait{border-radius:50%}.vfl-triplet-point.point-1{border-color:#40a779}.vfl-triplet-point.point-2{border-color:#ed746e}
 .vfl-triplet-plot-legend{display:flex;justify-content:center;gap:20px;align-items:center}.vfl-triplet-stage{display:flex;align-items:center;justify-content:center;background:#e7effb;border-radius:var(--ui-radius-md)}
 .vfl-triplet-controls{display:grid;grid-template-columns:minmax(0,1.2fr) repeat(2,minmax(0,1fr));gap:10px}.course-shell .vfl-triplet-controls .edu-btn{border-radius:var(--ui-radius-md);padding:5px 12px}
 .vfl-triplet-condition{text-align:center}.vfl-triplet-condition>.edu-formula-block{margin:0;min-height:0;height:48px;background:transparent;border:0;padding:0}.vfl-triplet-condition .math-formula{transform:scale(.77)}
-.phase-1 .vfl-triplet-term.positive{animation:vfl-triplet-green 1s ease-in-out infinite}.phase-2 .vfl-triplet-term.negative{animation:vfl-triplet-red 1s ease-in-out infinite}.phase-3 .vfl-triplet-term.margin,.phase-3 .vfl-triplet-margin-ring{animation:vfl-triplet-gold 1s ease-in-out infinite}
+.phase-1 .vfl-triplet-term.positive{animation:vfl-triplet-green 1s ease-in-out infinite}.phase-1 .vfl-triplet-term.negative{animation:vfl-triplet-red 1s ease-in-out infinite}.phase-3 .vfl-triplet-term.margin,.phase-3 .vfl-triplet-margin-ring{animation:vfl-triplet-gold 1s ease-in-out infinite}
 .vfl-triplet-body.is-paused .vfl-triplet-term,.vfl-triplet-body.is-paused .vfl-triplet-margin-ring{animation-play-state:paused}
 @keyframes vfl-triplet-green{50%{background:#9ae6b8;box-shadow:0 0 0 5px #40a77933}}
 @keyframes vfl-triplet-red{50%{background:#ffaaa0;box-shadow:0 0 0 5px #ed746e33}}
 @keyframes vfl-triplet-gold{50%{background:#ffe085;filter:drop-shadow(0 0 5px #dfa52b88)}}
+
+.vfl-triplet-portrait.photo-2 { background-size:cover; background-position:50% 22%; filter:grayscale(1) contrast(.94) blur(.25px); }

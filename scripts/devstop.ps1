@@ -1,5 +1,5 @@
 param(
-  [ValidateSet('all','vision','assessment','proxy','records')][string]$Kind = 'all'
+  [ValidateSet('all','vision','assessment','proxy','records','api')][string]$Kind = 'all'
 )
 $ErrorActionPreference = 'Stop'
 $repoRoot = Split-Path -Parent $PSScriptRoot

@@ -1,152 +1,31 @@
-.course-shell .vfl-pooling-page {
-  display: grid;
-  grid-template-rows: auto minmax(0, 1fr);
-  width: 1600px;
-  height: 900px;
-  min-width: 0;
-  min-height: 0;
-  overflow: hidden;
-  padding: 18px 30px 20px;
-}
-.course-shell .vfl-pooling-page > .edu-content-body {
-  display: grid;
-  grid-template-rows: minmax(0, 1fr) auto;
-  gap: 18px;
-  min-width: 0;
-  min-height: 0;
-}
-.course-shell .vfl-pooling-workspace {
-  display: grid;
-  grid-template-columns: minmax(0, 1.05fr) 46px minmax(0, .94fr) 46px minmax(0, .84fr);
-  gap: 14px;
-  min-width: 0;
-  min-height: 0;
-}
-.course-shell .vfl-pooling-workspace > * { min-width: 0; max-width: 100%; min-height: 0; }
-.course-shell .vfl-pooling-stage,
-.course-shell .vfl-pooling-operation {
-  display: grid;
-  justify-items: center;
-  min-width: 0;
-  min-height: 0;
-  border: 1px solid #cbdcf4;
-  border-radius: 13px;
-  background: #fff;
-  padding: 18px 18px 16px;
-}
-.course-shell .vfl-pooling-stage { grid-template-rows: auto minmax(0, 1fr) auto; gap: 12px; }
-.course-shell .vfl-pooling-operation { grid-template-rows: auto auto auto minmax(0, 1fr) auto; gap: 16px; }
-.course-shell .vfl-pooling-stage > .ui-typography,
-.course-shell .vfl-pooling-operation > .ui-typography { margin: 0; text-align: center; }
-.course-shell .vfl-pooling-arrow { display: grid; place-items: center; color: #718aaa; font-size: 54px; }
-.course-shell .vfl-pooling-input-grid {
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  grid-template-rows: repeat(4, minmax(0, 1fr));
-  align-self: center;
-  width: min(100%, 390px);
-  max-width: 100%;
-  aspect-ratio: 1;
-  overflow: hidden;
-  border: 2px solid #8ea5c7;
-  border-radius: 7px;
-  background: #adc0db;
-}
-.course-shell .vfl-pooling-input-cell {
-  display: grid;
-  place-items: center;
-  min-width: 0;
-  min-height: 0;
-  border-right: 1px solid #aabdd8;
-  border-bottom: 1px solid #aabdd8;
-  background: #f5f8fd;
-  color: #173b70;
-  transition: background-color .2s ease, color .2s ease;
-}
-.course-shell .vfl-pooling-input-cell.is-window { background: #dceaff; }
-.course-shell .vfl-pooling-input-cell.is-strongest { background: #78a9ef; color: #fff; }
-.course-shell .vfl-pooling-window {
-  position: absolute;
-  z-index: 1;
-  width: 50%;
-  height: 50%;
-  border: 4px solid #397cf2;
-  border-radius: 5px;
-  box-shadow: 0 0 0 2px rgba(255,255,255,.76) inset, 0 7px 18px rgba(36,95,188,.18);
-  pointer-events: none;
-  transition: top .25s ease, left .25s ease;
-}
-.course-shell .vfl-pooling-modes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; width: 100%; min-width: 0; }
-.course-shell .vfl-pooling-modes .edu-btn { min-width: 0; max-width: 100%; min-height: 66px; }
-.course-shell .vfl-pooling-setting {
-  width: 100%;
-  max-width: 100%;
-  min-height: 68px;
-  border: 1px solid #d6e3f3;
-  background: #f5f8fd;
-  padding: 6px;
-}
-.course-shell .vfl-pooling-calculation {
-  display: grid;
-  grid-template-rows: auto minmax(0, 1fr);
-  align-items: center;
-  justify-items: center;
-  gap: 10px;
-  width: 100%;
-  min-width: 0;
-  min-height: 0;
-}
-.course-shell .vfl-pooling-calculation > .ui-typography { margin: 0; }
-.course-shell .vfl-pooling-formula {
-  width: 100%;
-  max-width: 100%;
-  min-height: 146px;
-  border: 1px solid #bed4f0;
-  background: #edf4ff;
-  padding: 12px;
-}
-.course-shell .vfl-pooling-formula .math-formula-static { font-size: 2rem; }
-.course-shell .vfl-pooling-setting .math-formula-static { font-size: 1.55rem; }
-.course-shell .vfl-pooling-output-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-template-rows: repeat(2, minmax(0, 1fr));
-  align-self: center;
-  gap: 2px;
-  width: min(100%, 330px);
-  max-width: 100%;
-  aspect-ratio: 1;
-  border: 2px solid #8299bb;
-  border-radius: 7px;
-  background: #a6bad7;
-  overflow: hidden;
-}
-.course-shell .vfl-pooling-output-cell.edu-btn {
-  display: grid;
-  place-items: center;
-  min-width: 0;
-  min-height: 0;
-  max-width: 100%;
-  border: 0;
-  border-radius: 0;
-  background: #f4f7fc;
-  color: #173b70;
-  box-shadow: none;
-}
-.course-shell .vfl-pooling-output-cell.edu-btn.is-active { background: #397cf2; color: #fff; }
-.course-shell .vfl-pooling-output-cell.edu-btn:hover { background: #d3e4fc; }
-.course-shell .vfl-pooling-output-cell.edu-btn.is-active:hover { background: #397cf2; }
-.course-shell .vfl-pooling-takeaway {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  align-items: center;
-  gap: 18px;
-  min-width: 0;
-  min-height: 98px;
-  border: 1px solid #cbdcf4;
-  border-radius: 11px;
-  background: #edf4ff;
-  padding: 16px 22px;
-}
-.course-shell .vfl-pooling-takeaway > .ui-typography { min-width: 0; margin: 0; }
+.vfl-pooling-page { width:1600px; height:900px; box-sizing:border-box; background:#fcfdff; }
+.vfl-pooling-page * { box-sizing:border-box; min-width:0; }
+.vfl-pooling-page .ui-typography { margin:0; }
+.vfl-pooling-workspace { display:grid; grid-template-columns:minmax(0,430fr) 46px minmax(0,560fr) 46px minmax(0,370fr); align-items:center; gap:16px; width:1480px; height:496px; margin:30px auto 0; }
+.vfl-pooling-stage { display:flex; flex-direction:column; align-items:center; justify-content:space-between; height:100%; padding:12px 0; gap:12px; }
+.vfl-pooling-stage-title { display:flex; align-items:center; justify-content:center; gap:16px; width:100%; }
+.vfl-pooling-stage-title .math-formula-block { min-height:0; margin:0; padding:4px 12px; border:0; background:#edf4ff; border-radius:10px; }
+.vfl-pooling-input-grid { position:relative; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); grid-template-rows:repeat(4,minmax(0,1fr)); width:368px; height:368px; max-width:100%; border:1px solid #a6bbd9; border-radius:10px; }
+.vfl-pooling-input-cell { display:grid; place-items:center; border:1px solid #d3def0; background:#f5f8fd; color:#243d65; transition:background .2s,color .2s; }
+.vfl-pooling-input-cell.is-window { background:#e0edff; }
+.vfl-pooling-input-cell.is-strongest { background:#74a5eb; color:#fff; }
+.vfl-pooling-window { position:absolute; width:50%; height:50%; border:4px solid #337bfa; border-radius:6px; pointer-events:none; transition:left .25s,top .25s; }
+.vfl-pooling-arrow { display:grid; place-items:center; color:#80a5d6; font-size:54px; }
+.vfl-pooling-operation { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:20px; padding:24px; height:100%; border:1px solid #d5e3f8; border-radius:22px; background:#fff; }
+.vfl-pooling-modes { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; width:100%; }
+.vfl-pooling-modes .edu-btn { min-height:64px; padding:10px 6px; border-radius:32px; white-space:nowrap; }
+.vfl-pooling-setting { width:100%; min-height:0; padding:10px; border:0; background:#f3f7fe; }
+.vfl-pooling-calculation { display:grid; place-items:center; width:100%; flex:1; min-height:0; }
+.vfl-pooling-formula { width:100%; min-height:144px; display:grid; place-items:center; padding:10px; border:0; background:#eaf3ff; border-radius:16px; }
+.vfl-pooling-instruction { text-align:center; }
+.vfl-pooling-output-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); grid-template-rows:repeat(2,minmax(0,1fr)); width:300px; height:300px; max-width:100%; border:1px solid #a6bbd9; border-radius:10px; }
+.vfl-pooling-output-cell.edu-btn { display:grid; place-items:center; min-height:0; padding:0; border:1px solid #ccd9ed; border-radius:0; background:#f5f8fd; color:#243d65; box-shadow:none; }
+.vfl-pooling-output-cell.edu-btn.is-active { background:#337bfa; color:#fff; }
+.vfl-pooling-output-cell:first-child { border-top-left-radius:9px; }
+.vfl-pooling-output-cell:nth-child(2) { border-top-right-radius:9px; }
+.vfl-pooling-output-cell:nth-child(3) { border-bottom-left-radius:9px; }
+.vfl-pooling-output-cell:last-child { border-bottom-right-radius:9px; }
+.vfl-pooling-takeaway { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); align-items:center; width:1480px; height:144px; margin:22px auto 0; padding:16px 24px; gap:10px; background:#eff5ff; border:1px solid #d5e3f8; border-radius:20px; text-align:center; }
+.vfl-pooling-takeaway>div { display:flex; align-items:center; justify-content:center; gap:18px; }
+.vfl-pooling-takeaway>div+div { border-left:1px solid #cfddf2; }
+.vfl-pooling-takeaway>p { grid-column:1/-1; padding-top:10px; border-top:1px solid #cfddf2; }

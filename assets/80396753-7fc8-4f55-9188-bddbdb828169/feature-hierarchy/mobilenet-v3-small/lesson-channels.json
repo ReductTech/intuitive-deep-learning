@@ -1,0 +1,684 @@
+{
+  "samples": {
+    "mnist-0-0": {
+      "shallow": [
+        {
+          "channel": 15,
+          "image": "samples/mnist-0-0/shallow/lesson-channel-015.png"
+        },
+        {
+          "channel": 1,
+          "image": "samples/mnist-0-0/shallow/lesson-channel-001.png"
+        },
+        {
+          "channel": 5,
+          "image": "samples/mnist-0-0/shallow/lesson-channel-005.png"
+        },
+        {
+          "channel": 11,
+          "image": "samples/mnist-0-0/shallow/lesson-channel-011.png"
+        },
+        {
+          "channel": 4,
+          "image": "samples/mnist-0-0/shallow/lesson-channel-004.png"
+        }
+      ],
+      "middle": [
+        {
+          "channel": 15,
+          "image": "samples/mnist-0-0/middle/lesson-channel-015.png"
+        },
+        {
+          "channel": 18,
+          "image": "samples/mnist-0-0/middle/lesson-channel-018.png"
+        },
+        {
+          "channel": 0,
+          "image": "samples/mnist-0-0/middle/lesson-channel-000.png"
+        },
+        {
+          "channel": 20,
+          "image": "samples/mnist-0-0/middle/lesson-channel-020.png"
+        },
+        {
+          "channel": 8,
+          "image": "samples/mnist-0-0/middle/lesson-channel-008.png"
+        }
+      ],
+      "deep": [
+        {
+          "channel": 77,
+          "image": "samples/mnist-0-0/deep/lesson-channel-077.png"
+        },
+        {
+          "channel": 31,
+          "image": "samples/mnist-0-0/deep/lesson-channel-031.png"
+        },
+        {
+          "channel": 30,
+          "image": "samples/mnist-0-0/deep/lesson-channel-030.png"
+        },
+        {
+          "channel": 12,
+          "image": "samples/mnist-0-0/deep/lesson-channel-012.png"
+        },
+        {
+          "channel": 2,
+          "image": "samples/mnist-0-0/deep/lesson-channel-002.png"
+        }
+      ]
+    },
+    "mnist-1-0": {
+      "shallow": [
+        {
+          "channel": 15,
+          "image": "samples/mnist-1-0/shallow/lesson-channel-015.png"
+        },
+        {
+          "channel": 1,
+          "image": "samples/mnist-1-0/shallow/lesson-channel-001.png"
+        },
+        {
+          "channel": 5,
+          "image": "samples/mnist-1-0/shallow/lesson-channel-005.png"
+        },
+        {
+          "channel": 11,
+          "image": "samples/mnist-1-0/shallow/lesson-channel-011.png"
+        },
+        {
+          "channel": 4,
+          "image": "samples/mnist-1-0/shallow/lesson-channel-004.png"
+        }
+      ],
+      "middle": [
+        {
+          "channel": 15,
+          "image": "samples/mnist-1-0/middle/lesson-channel-015.png"
+        },
+        {
+          "channel": 18,
+          "image": "samples/mnist-1-0/middle/lesson-channel-018.png"
+        },
+        {
+          "channel": 0,
+          "image": "samples/mnist-1-0/middle/lesson-channel-000.png"
+        },
+        {
+          "channel": 20,
+          "image": "samples/mnist-1-0/middle/lesson-channel-020.png"
+        },
+        {
+          "channel": 8,
+          "image": "samples/mnist-1-0/middle/lesson-channel-008.png"
+        }
+      ],
+      "deep": [
+        {
+          "channel": 77,
+          "image": "samples/mnist-1-0/deep/lesson-channel-077.png"
+        },
+        {
+          "channel": 31,
+          "image": "samples/mnist-1-0/deep/lesson-channel-031.png"
+        },
+        {
+          "channel": 30,
+          "image": "samples/mnist-1-0/deep/lesson-channel-030.png"
+        },
+        {
+          "channel": 12,
+          "image": "samples/mnist-1-0/deep/lesson-channel-012.png"
+        },
+        {
+          "channel": 2,
+          "image": "samples/mnist-1-0/deep/lesson-channel-002.png"
+        }
+      ]
+    },
+    "mnist-2-0": {
+      "shallow": [
+        {
+          "channel": 15,
+          "image": "samples/mnist-2-0/shallow/lesson-channel-015.png"
+        },
+        {
+          "channel": 1,
+          "image": "samples/mnist-2-0/shallow/lesson-channel-001.png"
+        },
+        {
+          "channel": 5,
+          "image": "samples/mnist-2-0/shallow/lesson-channel-005.png"
+        },
+        {
+          "channel": 11,
+          "image": "samples/mnist-2-0/shallow/lesson-channel-011.png"
+        },
+        {
+          "channel": 4,
+          "image": "samples/mnist-2-0/shallow/lesson-channel-004.png"
+        }
+      ],
+      "middle": [
+        {
+          "channel": 15,
+          "image": "samples/mnist-2-0/middle/lesson-channel-015.png"
+        },
+        {
+          "channel": 18,
+          "image": "samples/mnist-2-0/middle/lesson-channel-018.png"
+        },
+        {
+          "channel": 0,
+          "image": "samples/mnist-2-0/middle/lesson-channel-000.png"
+        },
+        {
+          "channel": 20,
+          "image": "samples/mnist-2-0/middle/lesson-channel-020.png"
+        },
+        {
+          "channel": 8,
+          "image": "samples/mnist-2-0/middle/lesson-channel-008.png"
+        }
+      ],
+      "deep": [
+        {
+          "channel": 77,
+          "image": "samples/mnist-2-0/deep/lesson-channel-077.png"
+        },
+        {
+          "channel": 31,
+          "image": "samples/mnist-2-0/deep/lesson-channel-031.png"
+        },
+        {
+          "channel": 30,
+          "image": "samples/mnist-2-0/deep/lesson-channel-030.png"
+        },
+        {
+          "channel": 12,
+          "image": "samples/mnist-2-0/deep/lesson-channel-012.png"
+        },
+        {
+          "channel": 2,
+          "image": "samples/mnist-2-0/deep/lesson-channel-002.png"
+        }
+      ]
+    },
+    "mnist-3-0": {
+      "shallow": [
+        {
+          "channel": 15,
+          "image": "samples/mnist-3-0/shallow/lesson-channel-015.png"
+        },
+        {
+          "channel": 1,
+          "image": "samples/mnist-3-0/shallow/lesson-channel-001.png"
+        },
+        {
+          "channel": 5,
+          "image": "samples/mnist-3-0/shallow/lesson-channel-005.png"
+        },
+        {
+          "channel": 11,
+          "image": "samples/mnist-3-0/shallow/lesson-channel-011.png"
+        },
+        {
+          "channel": 4,
+          "image": "samples/mnist-3-0/shallow/lesson-channel-004.png"
+        }
+      ],
+      "middle": [
+        {
+          "channel": 15,
+          "image": "samples/mnist-3-0/middle/lesson-channel-015.png"
+        },
+        {
+          "channel": 18,
+          "image": "samples/mnist-3-0/middle/lesson-channel-018.png"
+        },
+        {
+          "channel": 0,
+          "image": "samples/mnist-3-0/middle/lesson-channel-000.png"
+        },
+        {
+          "channel": 20,
+          "image": "samples/mnist-3-0/middle/lesson-channel-020.png"
+        },
+        {
+          "channel": 8,
+          "image": "samples/mnist-3-0/middle/lesson-channel-008.png"
+        }
+      ],
+      "deep": [
+        {
+          "channel": 77,
+          "image": "samples/mnist-3-0/deep/lesson-channel-077.png"
+        },
+        {
+          "channel": 31,
+          "image": "samples/mnist-3-0/deep/lesson-channel-031.png"
+        },
+        {
+          "channel": 30,
+          "image": "samples/mnist-3-0/deep/lesson-channel-030.png"
+        },
+        {
+          "channel": 12,
+          "image": "samples/mnist-3-0/deep/lesson-channel-012.png"
+        },
+        {
+          "channel": 2,
+          "image": "samples/mnist-3-0/deep/lesson-channel-002.png"
+        }
+      ]
+    },
+    "mnist-4-0": {
+      "shallow": [
+        {
+          "channel": 15,
+          "image": "samples/mnist-4-0/shallow/lesson-channel-015.png"
+        },
+        {
+          "channel": 1,
+          "image": "samples/mnist-4-0/shallow/lesson-channel-001.png"
+        },
+        {
+          "channel": 5,
+          "image": "samples/mnist-4-0/shallow/lesson-channel-005.png"
+        },
+        {
+          "channel": 11,
+          "image": "samples/mnist-4-0/shallow/lesson-channel-011.png"
+        },
+        {
+          "channel": 4,
+          "image": "samples/mnist-4-0/shallow/lesson-channel-004.png"
+        }
+      ],
+      "middle": [
+        {
+          "channel": 15,
+          "image": "samples/mnist-4-0/middle/lesson-channel-015.png"
+        },
+        {
+          "channel": 18,
+          "image": "samples/mnist-4-0/middle/lesson-channel-018.png"
+        },
+        {
+          "channel": 0,
+          "image": "samples/mnist-4-0/middle/lesson-channel-000.png"
+        },
+        {
+          "channel": 20,
+          "image": "samples/mnist-4-0/middle/lesson-channel-020.png"
+        },
+        {
+          "channel": 8,
+          "image": "samples/mnist-4-0/middle/lesson-channel-008.png"
+        }
+      ],
+      "deep": [
+        {
+          "channel": 77,
+          "image": "samples/mnist-4-0/deep/lesson-channel-077.png"
+        },
+        {
+          "channel": 31,
+          "image": "samples/mnist-4-0/deep/lesson-channel-031.png"
+        },
+        {
+          "channel": 30,
+          "image": "samples/mnist-4-0/deep/lesson-channel-030.png"
+        },
+        {
+          "channel": 12,
+          "image": "samples/mnist-4-0/deep/lesson-channel-012.png"
+        },
+        {
+          "channel": 2,
+          "image": "samples/mnist-4-0/deep/lesson-channel-002.png"
+        }
+      ]
+    },
+    "mnist-5-0": {
+      "shallow": [
+        {
+          "channel": 15,
+          "image": "samples/mnist-5-0/shallow/lesson-channel-015.png"
+        },
+        {
+          "channel": 1,
+          "image": "samples/mnist-5-0/shallow/lesson-channel-001.png"
+        },
+        {
+          "channel": 5,
+          "image": "samples/mnist-5-0/shallow/lesson-channel-005.png"
+        },
+        {
+          "channel": 11,
+          "image": "samples/mnist-5-0/shallow/lesson-channel-011.png"
+        },
+        {
+          "channel": 4,
+          "image": "samples/mnist-5-0/shallow/lesson-channel-004.png"
+        }
+      ],
+      "middle": [
+        {
+          "channel": 15,
+          "image": "samples/mnist-5-0/middle/lesson-channel-015.png"
+        },
+        {
+          "channel": 18,
+          "image": "samples/mnist-5-0/middle/lesson-channel-018.png"
+        },
+        {
+          "channel": 0,
+          "image": "samples/mnist-5-0/middle/lesson-channel-000.png"
+        },
+        {
+          "channel": 20,
+          "image": "samples/mnist-5-0/middle/lesson-channel-020.png"
+        },
+        {
+          "channel": 8,
+          "image": "samples/mnist-5-0/middle/lesson-channel-008.png"
+        }
+      ],
+      "deep": [
+        {
+          "channel": 77,
+          "image": "samples/mnist-5-0/deep/lesson-channel-077.png"
+        },
+        {
+          "channel": 31,
+          "image": "samples/mnist-5-0/deep/lesson-channel-031.png"
+        },
+        {
+          "channel": 30,
+          "image": "samples/mnist-5-0/deep/lesson-channel-030.png"
+        },
+        {
+          "channel": 12,
+          "image": "samples/mnist-5-0/deep/lesson-channel-012.png"
+        },
+        {
+          "channel": 2,
+          "image": "samples/mnist-5-0/deep/lesson-channel-002.png"
+        }
+      ]
+    },
+    "mnist-6-0": {
+      "shallow": [
+        {
+          "channel": 15,
+          "image": "samples/mnist-6-0/shallow/lesson-channel-015.png"
+        },
+        {
+          "channel": 1,
+          "image": "samples/mnist-6-0/shallow/lesson-channel-001.png"
+        },
+        {
+          "channel": 5,
+          "image": "samples/mnist-6-0/shallow/lesson-channel-005.png"
+        },
+        {
+          "channel": 11,
+          "image": "samples/mnist-6-0/shallow/lesson-channel-011.png"
+        },
+        {
+          "channel": 4,
+          "image": "samples/mnist-6-0/shallow/lesson-channel-004.png"
+        }
+      ],
+      "middle": [
+        {
+          "channel": 15,
+          "image": "samples/mnist-6-0/middle/lesson-channel-015.png"
+        },
+        {
+          "channel": 18,
+          "image": "samples/mnist-6-0/middle/lesson-channel-018.png"
+        },
+        {
+          "channel": 0,
+          "image": "samples/mnist-6-0/middle/lesson-channel-000.png"
+        },
+        {
+          "channel": 20,
+          "image": "samples/mnist-6-0/middle/lesson-channel-020.png"
+        },
+        {
+          "channel": 8,
+          "image": "samples/mnist-6-0/middle/lesson-channel-008.png"
+        }
+      ],
+      "deep": [
+        {
+          "channel": 77,
+          "image": "samples/mnist-6-0/deep/lesson-channel-077.png"
+        },
+        {
+          "channel": 31,
+          "image": "samples/mnist-6-0/deep/lesson-channel-031.png"
+        },
+        {
+          "channel": 30,
+          "image": "samples/mnist-6-0/deep/lesson-channel-030.png"
+        },
+        {
+          "channel": 12,
+          "image": "samples/mnist-6-0/deep/lesson-channel-012.png"
+        },
+        {
+          "channel": 2,
+          "image": "samples/mnist-6-0/deep/lesson-channel-002.png"
+        }
+      ]
+    },
+    "mnist-7-0": {
+      "shallow": [
+        {
+          "channel": 15,
+          "image": "samples/mnist-7-0/shallow/lesson-channel-015.png"
+        },
+        {
+          "channel": 1,
+          "image": "samples/mnist-7-0/shallow/lesson-channel-001.png"
+        },
+        {
+          "channel": 5,
+          "image": "samples/mnist-7-0/shallow/lesson-channel-005.png"
+        },
+        {
+          "channel": 11,
+          "image": "samples/mnist-7-0/shallow/lesson-channel-011.png"
+        },
+        {
+          "channel": 4,
+          "image": "samples/mnist-7-0/shallow/lesson-channel-004.png"
+        }
+      ],
+      "middle": [
+        {
+          "channel": 15,
+          "image": "samples/mnist-7-0/middle/lesson-channel-015.png"
+        },
+        {
+          "channel": 18,
+          "image": "samples/mnist-7-0/middle/lesson-channel-018.png"
+        },
+        {
+          "channel": 0,
+          "image": "samples/mnist-7-0/middle/lesson-channel-000.png"
+        },
+        {
+          "channel": 20,
+          "image": "samples/mnist-7-0/middle/lesson-channel-020.png"
+        },
+        {
+          "channel": 8,
+          "image": "samples/mnist-7-0/middle/lesson-channel-008.png"
+        }
+      ],
+      "deep": [
+        {
+          "channel": 77,
+          "image": "samples/mnist-7-0/deep/lesson-channel-077.png"
+        },
+        {
+          "channel": 31,
+          "image": "samples/mnist-7-0/deep/lesson-channel-031.png"
+        },
+        {
+          "channel": 30,
+          "image": "samples/mnist-7-0/deep/lesson-channel-030.png"
+        },
+        {
+          "channel": 12,
+          "image": "samples/mnist-7-0/deep/lesson-channel-012.png"
+        },
+        {
+          "channel": 2,
+          "image": "samples/mnist-7-0/deep/lesson-channel-002.png"
+        }
+      ]
+    },
+    "mnist-8-0": {
+      "shallow": [
+        {
+          "channel": 15,
+          "image": "samples/mnist-8-0/shallow/lesson-channel-015.png"
+        },
+        {
+          "channel": 1,
+          "image": "samples/mnist-8-0/shallow/lesson-channel-001.png"
+        },
+        {
+          "channel": 5,
+          "image": "samples/mnist-8-0/shallow/lesson-channel-005.png"
+        },
+        {
+          "channel": 11,
+          "image": "samples/mnist-8-0/shallow/lesson-channel-011.png"
+        },
+        {
+          "channel": 4,
+          "image": "samples/mnist-8-0/shallow/lesson-channel-004.png"
+        }
+      ],
+      "middle": [
+        {
+          "channel": 15,
+          "image": "samples/mnist-8-0/middle/lesson-channel-015.png"
+        },
+        {
+          "channel": 18,
+          "image": "samples/mnist-8-0/middle/lesson-channel-018.png"
+        },
+        {
+          "channel": 0,
+          "image": "samples/mnist-8-0/middle/lesson-channel-000.png"
+        },
+        {
+          "channel": 20,
+          "image": "samples/mnist-8-0/middle/lesson-channel-020.png"
+        },
+        {
+          "channel": 8,
+          "image": "samples/mnist-8-0/middle/lesson-channel-008.png"
+        }
+      ],
+      "deep": [
+        {
+          "channel": 77,
+          "image": "samples/mnist-8-0/deep/lesson-channel-077.png"
+        },
+        {
+          "channel": 31,
+          "image": "samples/mnist-8-0/deep/lesson-channel-031.png"
+        },
+        {
+          "channel": 30,
+          "image": "samples/mnist-8-0/deep/lesson-channel-030.png"
+        },
+        {
+          "channel": 12,
+          "image": "samples/mnist-8-0/deep/lesson-channel-012.png"
+        },
+        {
+          "channel": 2,
+          "image": "samples/mnist-8-0/deep/lesson-channel-002.png"
+        }
+      ]
+    },
+    "mnist-9-0": {
+      "shallow": [
+        {
+          "channel": 15,
+          "image": "samples/mnist-9-0/shallow/lesson-channel-015.png"
+        },
+        {
+          "channel": 1,
+          "image": "samples/mnist-9-0/shallow/lesson-channel-001.png"
+        },
+        {
+          "channel": 5,
+          "image": "samples/mnist-9-0/shallow/lesson-channel-005.png"
+        },
+        {
+          "channel": 11,
+          "image": "samples/mnist-9-0/shallow/lesson-channel-011.png"
+        },
+        {
+          "channel": 4,
+          "image": "samples/mnist-9-0/shallow/lesson-channel-004.png"
+        }
+      ],
+      "middle": [
+        {
+          "channel": 15,
+          "image": "samples/mnist-9-0/middle/lesson-channel-015.png"
+        },
+        {
+          "channel": 18,
+          "image": "samples/mnist-9-0/middle/lesson-channel-018.png"
+        },
+        {
+          "channel": 0,
+          "image": "samples/mnist-9-0/middle/lesson-channel-000.png"
+        },
+        {
+          "channel": 20,
+          "image": "samples/mnist-9-0/middle/lesson-channel-020.png"
+        },
+        {
+          "channel": 8,
+          "image": "samples/mnist-9-0/middle/lesson-channel-008.png"
+        }
+      ],
+      "deep": [
+        {
+          "channel": 77,
+          "image": "samples/mnist-9-0/deep/lesson-channel-077.png"
+        },
+        {
+          "channel": 31,
+          "image": "samples/mnist-9-0/deep/lesson-channel-031.png"
+        },
+        {
+          "channel": 30,
+          "image": "samples/mnist-9-0/deep/lesson-channel-030.png"
+        },
+        {
+          "channel": 12,
+          "image": "samples/mnist-9-0/deep/lesson-channel-012.png"
+        },
+        {
+          "channel": 2,
+          "image": "samples/mnist-9-0/deep/lesson-channel-002.png"
+        }
+      ]
+    }
+  }
+}

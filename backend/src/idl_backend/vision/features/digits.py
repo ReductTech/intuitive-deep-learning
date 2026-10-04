@@ -86,7 +86,9 @@ def preview_fixed_kernel(payload: dict[str, Any]) -> dict[str, Any]:
 
 def train_fixed_kernel(payload: dict[str, Any]) -> dict[str, Any]:
     started = time.time()
-    kernel_names = parse_kernel_names(payload)
+    from idl_backend.contracts.fixed_kernel import fixed_kernel_request
+    request = fixed_kernel_request({"kernels": payload.get("kernels", parse_kernel_names(payload)), "seed": payload.get("seed", 0)})
+    kernel_names = request["kernels"]
     custom_image = parse_custom_image(payload)
 
     train_labels, val_images, val_labels, manifest = load_fixed_kernel_training_assets()
@@ -99,6 +101,14 @@ def train_fixed_kernel(payload: dict[str, Any]) -> dict[str, Any]:
         raise ValueError("Prepared feature file is missing kernels: " + ", ".join(missing_kernels))
     if train_feature_maps.shape[0] != len(train_labels) or val_feature_maps.shape[0] != len(val_labels):
         raise ValueError("Prepared fixed-kernel feature counts do not match labels.")
+    # Keep the prepared disjoint splits, but train only the ten digit classes.
+    train_mask = (train_labels >= 0) & (train_labels < 10)
+    val_mask = (val_labels >= 0) & (val_labels < 10)
+    train_labels = train_labels[train_mask]
+    train_feature_maps = train_feature_maps[train_mask]
+    val_labels = val_labels[val_mask]
+    val_images = val_images[val_mask]
+    val_feature_maps = val_feature_maps[val_mask]
     source_count = int(manifest.get("digit_train_source_count", 0)) + int(manifest.get("digit_val_source_count", 0))
 
     kernels = {name: fixed_kernel(name) for name in kernel_names}
@@ -117,7 +127,7 @@ def train_fixed_kernel(payload: dict[str, Any]) -> dict[str, Any]:
         val_feature_parts.append(val_pooled_by_kernel[name].reshape(len(val_images), -1))
     train_features = np.concatenate(train_feature_parts, axis=1)
     val_features = np.concatenate(val_feature_parts, axis=1)
-    model = train_classifier(train_features, train_labels, val_features, val_labels)
+    model = train_classifier(train_features, train_labels, val_features, val_labels, class_count=10, seed=request["seed"], epochs=10)
 
     val_feature_parts_for_samples = [
         val_pooled_by_kernel[name].reshape(len(val_images), -1)
@@ -170,9 +180,8 @@ def train_fixed_kernel(payload: dict[str, Any]) -> dict[str, Any]:
             "features": source_label(FIXED_FEATURE_PATH),
             "count": int(len(train_labels) + len(val_images)),
             "source_count": source_count,
-            "reject_label": REJECT_LABEL,
-            "class_count": CLASS_COUNT,
-            "split": "prepared fixed11 train, unaugmented validation",
+                        "class_count": 10,
+            "split": "prepared digit-only train, unaugmented validation",
             "manifest": source_label(FIXED_MANIFEST_PATH),
             "manifest_version": manifest.get("version"),
             "val_augmented": bool(manifest.get("val_augmented")),
@@ -188,6 +197,8 @@ def train_fixed_kernel(payload: dict[str, Any]) -> dict[str, Any]:
             }
             for name in kernel_names
         ],
+        "seed": request["seed"],
+        "epochs": model["epochs"],
         "train_count": int(model["train_count"]),
         "val_count": int(model["val_count"]),
         "train_accuracy": float(model["train_accuracy"]),
@@ -199,9 +210,8 @@ def train_fixed_kernel(payload: dict[str, Any]) -> dict[str, Any]:
             "mean": np.round(model["mean"][0], 6).tolist(),
             "std": np.round(model["std"][0], 6).tolist(),
             "kernels": kernel_names,
-            "class_count": CLASS_COUNT,
-            "reject_label": REJECT_LABEL,
-        },
+            "class_count": 10,
+                    },
         "samples": samples,
         "durationMs": int((time.time() - started) * 1000),
     }
