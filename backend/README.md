@@ -16,6 +16,8 @@ python -m pip install -e './backend[vision,projection,assessment,dev]'
 
 `devstart.ps1 -Status` 查看状态，`devstop.ps1` 停止本入口创建的进程；`-Kind vision` 只启动视觉服务。可用 `-Port` 或 `-Course <UUID>` 调试单个服务。模型代理沿用已有模型配置，缺少配置时接口会说明服务不可用。
 
+启动脚本会检查所需依赖，并显示选用的 Python 路径；当前 `python` 缺少依赖时，会尝试 PATH 中的其他 Python 和用户目录的 Anaconda/Miniconda。用 `-Python C:\path\to\python.exe` 或环境变量 `IDL_PYTHON` 可以固定解释器；显式指定的环境缺少依赖时会直接报错，不会切换环境。
+
 不需要 Docker。本地必须有同级 Cloud 仓库（或设置 `IDL_CLOUD_REPOSITORY`），首次安装 `python -m pip install -r ../cloud-intuitive-deep-learning/backend/requirements.txt`。启动器复用 Cloud API 源码，从环境、Cloud `.env.local`、`infra/.env.cloud.production` 按优先级读取 MySQL 和服务 token；不会导入生产 FRP 地址，凭据只在服务端使用。
 
 `npm run dev` 自动注入 Cloud 的同一份 `frontend/cloud-runtime.js`，将视觉、训练和 LLM 请求转换为同源 `/api/lab`、`/api/ai`，再代理至 8000。缓存查询、计算任务交接和 `idl_cache` 写入都走同一个 Cloud API。学习记录继续使用本地 59411；本地默认关闭 Cloud PostgreSQL 遥测，生产默认开启。缺少共用缓存配置时启动报错，不静默绕过缓存。

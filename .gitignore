@@ -2,6 +2,8 @@
 settings.json
 runtime_logs/
 /datasets/artifacts/
+/datasets/mnist-original/
+/work/digit-tsne-oss/
 history/
 __pycache__/
 *.zip

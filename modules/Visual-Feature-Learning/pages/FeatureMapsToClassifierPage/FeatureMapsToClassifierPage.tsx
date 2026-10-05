@@ -1,3 +1,4 @@
+import { AtlasImage } from '../../components/AtlasImage';
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from 'react';
 import { Button, ContentBlock, Typography, moduleAssetUrl } from '../../../shared/react';
 import data from '../../../../assets/80396753-7fc8-4f55-9188-bddbdb828169/flatten-interface/responses.json';
@@ -27,7 +28,7 @@ export function FeatureMapsToClassifierPage(){
     <div ref={scene} className={`vfl-flatten-scene ${matched?'is-matched':'is-mismatched'}`}>
       <section className="vfl-flatten-stage vfl-flatten-input">
         <div className="vfl-flatten-heading"><Typography as="h2" variant="h3" tone="accent">输入图像</Typography><Typography variant="bodySmall" tone="muted">{size} × {size}</Typography></div>
-        <div className="vfl-flatten-visual vfl-flatten-image-zone"><div className="vfl-flatten-image" style={{width:size*5.5,height:size*5.5}}><img src={moduleAssetUrl('80396753-7fc8-4f55-9188-bddbdb828169',`flatten-interface/${sample.input}`)} alt={`数字7，${size}×${size}输入`} onError={()=>setFailed(true)}/><Button className="vfl-flatten-handle" role="slider" aria-label="拖动放大或缩小输入图像" aria-valuemin={20} aria-valuemax={40} aria-valuenow={size} aria-valuetext={`${size}×${size}`} onPointerDown={start} onPointerMove={move} onPointerUp={()=>{drag.current=null;}} onPointerCancel={()=>{drag.current=null;}} onKeyDown={e=>{if(['ArrowLeft','ArrowDown','ArrowRight','ArrowUp','Home','End'].includes(e.key)){e.preventDefault();change(e.key==='Home'?20:e.key==='End'?40:size+(['ArrowLeft','ArrowDown'].includes(e.key)?-4:4));}}}><span aria-hidden="true"/></Button></div></div>
+        <div className="vfl-flatten-visual vfl-flatten-image-zone"><div className="vfl-flatten-image" style={{width:size*5.5,height:size*5.5}}><AtlasImage src={moduleAssetUrl('80396753-7fc8-4f55-9188-bddbdb828169',`flatten-interface/${sample.input}`)} alt={`数字7，${size}×${size}输入`} onError={()=>setFailed(true)}/><Button className="vfl-flatten-handle" role="slider" aria-label="拖动放大或缩小输入图像" aria-valuemin={20} aria-valuemax={40} aria-valuenow={size} aria-valuetext={`${size}×${size}`} onPointerDown={start} onPointerMove={move} onPointerUp={()=>{drag.current=null;}} onPointerCancel={()=>{drag.current=null;}} onKeyDown={e=>{if(['ArrowLeft','ArrowDown','ArrowRight','ArrowUp','Home','End'].includes(e.key)){e.preventDefault();change(e.key==='Home'?20:e.key==='End'?40:size+(['ArrowLeft','ArrowDown'].includes(e.key)?-4:4));}}}><span aria-hidden="true"/></Button></div></div>
         <Typography className="vfl-flatten-stage-note" variant="bodySmall" tone="muted">拖动调整尺寸</Typography>
       </section>
       <span className="vfl-flatten-arrow" aria-hidden="true">→</span>

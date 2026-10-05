@@ -55,7 +55,7 @@ export function PoolingPage() {
           }))}
           <div className="vfl-pooling-window" aria-hidden="true" style={{ left: `${left * 25}%`, top: `${top * 25}%` }} />
         </div>
-        <Typography as="p" variant="body" tone="muted">蓝框内：参与汇聚的四个数值</Typography>
+        <Typography as="p" variant="body" tone="muted">当前窗口</Typography>
       </section>
 
       <div className="vfl-pooling-arrow" aria-hidden="true">→</div>
@@ -65,11 +65,10 @@ export function PoolingPage() {
           <Button variant={mode === 'max' ? 'primary' : 'default'} active={mode === 'max'} aria-pressed={mode === 'max'} onClick={() => chooseMode('max')}><Typography as="span" variant="body" tone="inherit">最大池化</Typography></Button>
           <Button variant={mode === 'average' ? 'primary' : 'default'} active={mode === 'average'} aria-pressed={mode === 'average'} onClick={() => chooseMode('average')}><Typography as="span" variant="body" tone="inherit">平均池化</Typography></Button>
         </div>
-        <MathFormulaBlock className="vfl-pooling-setting" ariaLabel="池化窗口二乘二，步长二"><MathFormulaStatic latex="K=2\times2,\quad S=2" /></MathFormulaBlock>
+        <MathFormulaBlock className="vfl-pooling-setting" ariaLabel="池化窗口二乘二，步长二"><MathFormulaStatic latex={String.raw`K=2\times2,\quad S=2`} /></MathFormulaBlock>
         <div className="vfl-pooling-calculation">
           <MathFormulaBlock className="vfl-pooling-formula" ariaLabel={`${mode === 'max' ? '取最大值' : '取平均值'}，得到 ${result}`}><MathFormulaStatic latex={formula} /></MathFormulaBlock>
         </div>
-        <Typography as="p" variant="body" tone="accent" className="vfl-pooling-instruction">点击输出格，查看对应窗口</Typography>
       </section>
 
       <div className="vfl-pooling-arrow" aria-hidden="true">→</div>
@@ -87,13 +86,11 @@ export function PoolingPage() {
             className="vfl-pooling-output-cell"
           ><Typography as="span" variant="h2" tone="inherit">{pooledValue(index, mode)}</Typography></Button>)}
         </div>
-        <Typography as="p" variant="body" tone="muted">四个窗口 → 四个汇总值</Typography>
+        <Typography as="p" variant="body" tone="muted">点击输出格查看对应窗口</Typography>
       </section>
     </div>
 
     <div className="vfl-pooling-takeaway">
-      <div><Typography variant="body" tone="accent">最大池化</Typography><Typography variant="body" tone="muted">保留最强响应</Typography></div>
-      <div><Typography variant="body" tone="accent">平均池化</Typography><Typography variant="body" tone="muted">保留局部平均水平</Typography></div>
       <Typography variant="h3" tone="accent">池化汇聚已有响应，不学习新的权重。</Typography>
     </div>
   </ContentBlock>;

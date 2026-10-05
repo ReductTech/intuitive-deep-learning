@@ -1,5 +1,5 @@
 import { useState, type CSSProperties } from 'react';
-import { Button, ContentBlock, moduleAssetUrl, Typography } from '../../../shared/react';
+import { ContentBlock, ExplainPanelButton, moduleAssetUrl, Typography } from '../../../shared/react';
 import statistics from './statistics.json';
 import './FeatureStatisticsPage.css';
 
@@ -55,19 +55,14 @@ function FeatureIllustration({ feature }: { feature: 'width' | 'height' | 'ink' 
 
 export function FeatureStatisticsPage() {
   const [active, setActive] = useState<number | null>(null);
-  const selected = active === null ? null : statistics.classes[active].features;
-  const range = (feature: Feature) => {
-    const values = selected![feature];
-    const decimals = feature === 'centerX' || feature === 'centerY' ? 1 : 0;
-    return values.min.toFixed(decimals) + '–' + values.max.toFixed(decimals);
-  };
   return <ContentBlock className="vfl-stats"  headingLevel={1} title="简单统计特征的分布" subtitle="当前素材集中，不同类别的数字在简单统计特征上存在明显重叠。">
+    <div className="vfl-stats__conclusion">
+      <Typography as="p" variant="h2" tone="accent">仅凭单项简单统计特征，难以完全区分数字类别。</Typography>
+      <ExplainPanelButton label="查看结论的适用范围"><Typography variant="bodySmall">图中展示当前样本集在单项统计特征上的取值范围重叠。范围重叠不能直接判定多个特征联合使用时的分类能力，分类效果仍需要在验证集上评估。</Typography></ExplainPanelButton>
+    </div>
     <div className="vfl-stats__toolbar">
-      <Typography as="p" variant="bodySmall" tone="muted">实测 {statistics.total} 张 · 每类 16 张 · 墨迹阈值 128</Typography>
-      <div className="vfl-stats__classes" aria-label="突出数字类别">
-        {statistics.classes.map((row) => <Button key={row.digit} className="vfl-stats__class" active={active === row.digit} style={{ '--vfl-stat-color': COLORS[row.digit] } as CSSProperties} aria-label={'突出数字 ' + row.digit} onMouseEnter={() => setActive(row.digit)} onMouseLeave={() => setActive(null)} onFocus={() => setActive(row.digit)} onBlur={() => setActive(null)} onClick={() => setActive(row.digit)}><Typography as="span" variant="bodySmall" tone="inherit">{row.digit}</Typography></Button>)}
-      </div>
-      <Typography as="p" variant="bodySmall" tone="muted">色带：最小—最大值 · 小点：中位数</Typography>
+      <Typography as="p" variant="bodySmall" tone="muted">色带：最小值—最大值；小点：中位数。</Typography>
+      <Typography as="p" variant="bodySmall" tone="muted">数字表示类别；引线对应中位数，标签位置不表示数值。</Typography>
     </div>
     <div className="vfl-stats__rows">
       {([{ key: 'width', label: '墨迹宽度', unit: '像素', ticks: [0, 6, 12, 18, 24] }, { key: 'height', label: '墨迹高度', unit: '像素', ticks: [12, 14, 16, 18, 20, 22] }, { key: 'ink', label: '前景像素数', unit: '个', ticks: [0, 60, 120, 180, 240] }] as const).map((row) => <section className="vfl-stats__row" key={row.key}>
@@ -81,7 +76,6 @@ export function FeatureStatisticsPage() {
         </div>
       </section>
     </div>
-    <div className="vfl-stats__conclusion"><Typography as="p" variant={active === null ? 'h3' : 'bodySmall'} tone="accent">{active === null ? '各类统计范围相互重叠，仅凭这些特征难以区分数字类别。' : '数字 ' + active + '｜宽度 ' + range('width') + '｜高度 ' + range('height') + '｜前景像素 ' + range('ink') + '｜重心 x：' + range('centerX') + '，y：' + range('centerY')}</Typography></div>
   </ContentBlock>;
 }
 

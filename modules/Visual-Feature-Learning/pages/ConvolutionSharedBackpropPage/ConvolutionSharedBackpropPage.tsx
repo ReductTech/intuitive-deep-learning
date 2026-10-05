@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type CSSProperties } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
 import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from '../../../shared/react';
 import { KernelFormula } from '../../components/KernelFormula';
 import './ConvolutionSharedBackpropPage.css';
@@ -47,6 +47,35 @@ export function ConvolutionSharedBackpropPage() {
   const [hover, setHover] = useState<Hover>(null);
   const [previousLoss, setPreviousLoss] = useState<number | null>(null);
   const [round, setRound] = useState(0);
+  const sceneRef = useRef<HTMLDivElement>(null);
+  const [connections, setConnections] = useState<{ width: number; height: number; x: number; y: number; sources: { x: number; y: number }[] } | null>(null);
+  useLayoutEffect(() => {
+    const scene = sceneRef.current;
+    if (!scene || stage === 'gradient' || stage === 'focus') return;
+    const vector = scene.querySelector('.vfl-shared-vector');
+    const output = scene.querySelector('.vfl-shared-output');
+    if (!vector || !output) return;
+    const measure = () => {
+      const bounds = scene.getBoundingClientRect();
+      if (!bounds.width || !bounds.height) return;
+      const sx = scene.clientWidth / bounds.width;
+      const sy = scene.clientHeight / bounds.height;
+      const target = output.getBoundingClientRect();
+      const sources = Array.from(vector.querySelectorAll('.vfl-shared-cell')).map(element => {
+        const rect = element.getBoundingClientRect();
+        return { x: (rect.right - bounds.left) * sx, y: (rect.top + rect.height / 2 - bounds.top) * sy };
+      });
+      setConnections({ width: scene.clientWidth, height: scene.clientHeight, x: (target.left - bounds.left) * sx, y: (target.top + target.height / 2 - bounds.top) * sy, sources });
+    };
+    const observer = new ResizeObserver(measure);
+    [scene, vector, output].forEach(element => observer.observe(element));
+    // Follow the objects while they move back from the gradient view.
+    let frame = 0;
+    const until = performance.now() + 1050;
+    const follow = () => { measure(); if (performance.now() < until) frame = requestAnimationFrame(follow); };
+    follow();
+    return () => { observer.disconnect(); cancelAnimationFrame(frame); };
+  }, [stage]);
   const run = useRef(0);
   const locked = useRef(false);
   const popupHideTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -136,19 +165,25 @@ export function ConvolutionSharedBackpropPage() {
   const buttonLabel = busy ? focus ? '正在汇总更新' : backward ? '正在计算梯度' : '重新计算输出' : backward ? '查看更新' : focus ? '应用更新' : stage === 'updated' ? '再次计算梯度' : '计算梯度';
   return <ContentBlock className="vfl-shared-page" bodyClassName="vfl-shared-body" title="多个窗口，怎样更新同一个卷积核？" subtitle="四个窗口贡献梯度，全连接权重固定，只更新卷积核。">
     <div className="vfl-shared-controls">
-      <div className={`vfl-shared-loss ${stage === 'updated' ? 'is-improved' : ''}`}><Typography variant="body" tone="muted">loss</Typography><Formula latex={fmt(loss)} />{previousLoss !== null && stage === 'updated' && <Formula className="vfl-shared-previous" latex={String.raw`\leftarrow${fmt(previousLoss)}`} />}</div>
+      <div className={`vfl-shared-loss ${stage === 'updated' ? 'is-improved' : ''}`}><Typography variant="body" tone="muted">平方误差损失</Typography><Formula latex={fmt(loss)} />{previousLoss !== null && stage === 'updated' && <Formula className="vfl-shared-previous" latex={String.raw`\leftarrow${fmt(previousLoss)}`} />}</div>
       <div className="vfl-shared-detail" aria-live="polite"><Formula latex={detail} /></div>
       <div className="vfl-shared-actions"><Button variant="primary" disabled={busy || Math.abs(y - 1) < 0.005} onClick={() => { void advance(); }}><Typography as="span" variant="body" tone="inherit">{buttonLabel}</Typography></Button><Button onClick={reset}><Typography as="span" variant="body" tone="inherit">重置</Typography></Button></div>
     </div>
-    <div className={`vfl-shared-scene is-${stage} ${busy ? 'is-playing' : ''}`} data-stage={stage} data-round={round} aria-busy={busy}>
+    <div ref={sceneRef} className={`vfl-shared-scene is-${stage} ${busy ? 'is-playing' : ''}`} data-stage={stage} data-round={round} aria-busy={busy}>
       <section className="vfl-shared-object vfl-shared-input"><Typography variant="body" tone="accent">输入图像</Typography><Grid values={X} columns={3} label="输入图像" highlighted={selectedWindow === null ? [] : WINDOWS[selectedWindow]} /></section>
       <div className="vfl-shared-op vfl-shared-conv"><Formula latex={String.raw`\ast`} /></div>
       <section className={`vfl-shared-object vfl-shared-kernel ${stage === 'updated' ? 'is-changed' : ''}`}><Typography variant="body" tone="accent">{focus || stage === 'updated' ? '新卷积核' : '卷积核'}</Typography><Grid values={focus ? next : weights} label="卷积核" visible={focus ? updatedCount : 4} highlighted={cell === null ? [] : [cell]} onSelect={traceCell} changed={focus || stage === 'updated'} /></section>
       <div className="vfl-shared-op vfl-shared-arrow-a"><Formula latex={String.raw`\longrightarrow`} /></div>
       <section className="vfl-shared-object vfl-shared-features"><Typography variant="body" tone="accent">特征图</Typography><Grid values={outputs} label="特征图" highlighted={selectedWindow === null ? [] : [selectedWindow]} onSelect={traceWindow} changed={stage === 'updated'} /></section>
       <div className="vfl-shared-op vfl-shared-flatten"><Formula latex={String.raw`\longrightarrow`} /></div>
-      <section className="vfl-shared-object vfl-shared-vector"><Typography variant="body" tone="accent">展开</Typography><Grid values={outputs} columns={1} label="四项向量" highlighted={selectedWindow === null ? [] : [selectedWindow]} onSelect={traceWindow} changed={stage === 'updated'} /></section>
-      <div className="vfl-shared-fc"><Typography variant="body" tone="muted">固定权重</Typography><Formula latex={String.raw`a_{ij}=0.50`} /><Formula latex={String.raw`\sum\longrightarrow`} /></div>
+      <section className="vfl-shared-object vfl-shared-vector"><Grid values={outputs} columns={1} label="四项向量" highlighted={selectedWindow === null ? [] : [selectedWindow]} onSelect={traceWindow} changed={stage === 'updated'} /><Typography variant="body" tone="accent">展开</Typography></section>
+      <div className="vfl-shared-fc"><Typography variant="bodySmall" tone="muted">固定权重</Typography></div>
+      {connections && <div className="vfl-shared-connections" aria-label="四个特征值分别乘固定权重 0.50，相加得到输出">
+        <svg viewBox={`0 0 ${connections.width} ${connections.height}`} preserveAspectRatio="none" aria-hidden="true">
+          {connections.sources.map((source, i) => <line key={i} x1={source.x} y1={source.y} x2={connections.x} y2={connections.y} className={selectedWindow === i ? 'is-selected' : ''} />)}
+        </svg>
+        {connections.sources.map((source, i) => <MathFormulaBlock key={i} appearance="plain" className={`vfl-shared-edge-weight${selectedWindow === i ? ' is-selected' : ''}`} style={{ left: source.x + (connections.x - source.x) * 0.35, top: source.y + (connections.y - source.y) * 0.35 }} ariaLabel={`第 ${i + 1} 项的固定权重 0.50`}><MathFormulaStatic latex="0.50" /></MathFormulaBlock>)}
+      </div>}
       <section className="vfl-shared-object vfl-shared-output"><Typography variant="body" tone="accent">输出 y</Typography><Formula className="vfl-shared-scalar" latex={fmt(y)} /></section>
       <div className="vfl-shared-op vfl-shared-compare"><Formula latex={String.raw`\leftrightarrow`} /></div>
       <section className="vfl-shared-object vfl-shared-target"><Typography variant="body" tone="accent">GT</Typography><Formula className="vfl-shared-scalar" latex="1.00" /></section>

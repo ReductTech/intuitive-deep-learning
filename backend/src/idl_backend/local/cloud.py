@@ -23,11 +23,20 @@ def cloud_environment(root=None):
     # Read credentials server-side only; never import production network topology.
     production = dotenv_values(cloud / "infra/.env.cloud.production")
     local = dotenv_values(cloud / ".env.local")
+    records = dotenv_values(cloud / "infra/.env.cloud")
     allowed = ("MYSQL_URL_REMOTE", "GPU_GATEWAY_API_TOKEN", "LLM_GATEWAY_API_TOKEN",
                "IDL_DATA_REVISION", "IDL_MODEL_REVISION", "IDL_VISION_CACHE_VERSION")
     for name in allowed:
         if not environment.get(name):
             value = local.get(name) or production.get(name)
+            if value:
+                environment[name] = value
+    # The private-record publisher writes its server credentials to this ignored
+    # runtime file. Read only OSS settings, never its production gateway topology.
+    for name in ("OSS_ACCESS_KEY_ID", "OSS_ACCESS_KEY_SECRET", "IDL_RECORDS_OSS_BUCKET",
+                 "IDL_RECORDS_OSS_REGION", "IDL_RECORDS_OSS_ENDPOINT"):
+        if not environment.get(name):
+            value = local.get(name) or records.get(name) or production.get(name)
             if value:
                 environment[name] = value
     if not environment.get("MYSQL_URL_REMOTE"):

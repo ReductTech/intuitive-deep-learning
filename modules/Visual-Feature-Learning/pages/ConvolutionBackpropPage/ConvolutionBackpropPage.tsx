@@ -129,7 +129,7 @@ export function ConvolutionBackpropPage() {
   return <ContentBlock className="vfl-update-page" bodyClassName="vfl-update-body" title="损失怎样更新卷积核？" subtitle="一个窗口，算出梯度，再更新卷积核。">
     <div className="vfl-update-controls" aria-live="polite">
       <div className={`vfl-update-loss ${stage === 'updated' ? 'is-improved' : ''}`}>
-        <Typography variant="body" tone="muted">loss</Typography>
+        <Typography variant="body" tone="muted">平方误差损失</Typography>
         <Formula latex={f(loss)} />
         {stage === 'updated' && previousLoss !== null && <Formula className="vfl-update-loss__previous" latex={String.raw`\leftarrow${f(previousLoss)}`} />}
       </div>

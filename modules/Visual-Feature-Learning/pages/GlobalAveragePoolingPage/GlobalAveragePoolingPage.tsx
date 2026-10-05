@@ -1,8 +1,8 @@
+import { AtlasImage } from '../../components/AtlasImage';
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from 'react';
 import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography, moduleAssetUrl } from '../../../shared/react';
 import data from '../../../../assets/80396753-7fc8-4f55-9188-bddbdb828169/flatten-interface/responses.json';
 import './GlobalAveragePoolingPage.css';
-const CHANNELS = Array.from({length:16},(_,c)=>({c,score:data.samples.reduce((sum,s)=>{const v=s.values[c],mean=v.reduce((a,b)=>a+b,0)/v.length;return sum+v.reduce((a,b)=>a+(b-mean)**2,0)/v.length;},0)})).sort((a,b)=>b.score-a.score).slice(0,5).map(item=>item.c);
 const RANGES = Array.from({length:16},(_,c)=>{const v=data.samples.flatMap(s=>s.values[c]).sort((a,b)=>a-b),baseline=v[Math.floor(v.length/2)];return [baseline,Math.max(...v.map(n=>Math.abs(n-baseline)))];});
 function Texture({values,size,channel}:{values:number[];size:number;channel:number}){
   const ref=useRef<HTMLCanvasElement>(null);
@@ -15,6 +15,7 @@ export function GlobalAveragePoolingPage(){
   const scene=useRef<HTMLDivElement>(null),drag=useRef<{x:number;y:number;size:number;scale:number}|null>(null);
   const sample=data.samples.find(s=>s.inputSize===size) ?? data.samples[0];
   const count=sample.values.length,matched=count===16;
+  const averages=sample.values.map(values=>values.reduce((sum,value)=>sum+value,0)/values.length);
   function change(v:number){setSize(Math.max(20,Math.min(40,Math.round(v/4)*4)));}
   function start(e:PointerEvent<HTMLButtonElement>){e.currentTarget.setPointerCapture(e.pointerId);drag.current={x:e.clientX,y:e.clientY,size,scale:(scene.current?.getBoundingClientRect().width??1480)/1480};}
   function move(e:PointerEvent<HTMLButtonElement>){const d=drag.current;if(d)change(d.size+((e.clientX-d.x)+(e.clientY-d.y))/2/d.scale/9);}
@@ -26,12 +27,12 @@ export function GlobalAveragePoolingPage(){
     <div ref={scene} className={`vfl-gap-scene ${matched?'is-matched':'is-mismatched'}`}>
       <section className="vfl-gap-stage vfl-gap-input">
         <div className="vfl-gap-heading"><Typography as="h2" variant="h3" tone="accent">输入图像</Typography><Typography variant="bodySmall" tone="muted">{size} × {size}</Typography></div>
-        <div className="vfl-gap-visual vfl-gap-image-zone"><div className="vfl-gap-image" style={{width:size*4.5,height:size*4.5}}><img src={moduleAssetUrl('80396753-7fc8-4f55-9188-bddbdb828169',`flatten-interface/${sample.input}`)} alt={`数字7，${size}×${size}输入`} onError={()=>setFailed(true)}/><Button className="vfl-gap-handle" role="slider" aria-label="拖动放大或缩小输入图像" aria-valuemin={20} aria-valuemax={40} aria-valuenow={size} aria-valuetext={`${size}×${size}`} onPointerDown={start} onPointerMove={move} onPointerUp={()=>{drag.current=null;}} onPointerCancel={()=>{drag.current=null;}} onKeyDown={e=>{if(['ArrowLeft','ArrowDown','ArrowRight','ArrowUp','Home','End'].includes(e.key)){e.preventDefault();change(e.key==='Home'?20:e.key==='End'?40:size+(['ArrowLeft','ArrowDown'].includes(e.key)?-4:4));}}}><span aria-hidden="true"/></Button></div></div>
+        <div className="vfl-gap-visual vfl-gap-image-zone"><div className="vfl-gap-image" style={{width:size*4.5,height:size*4.5}}><AtlasImage src={moduleAssetUrl('80396753-7fc8-4f55-9188-bddbdb828169',`flatten-interface/${sample.input}`)} alt={`数字7，${size}×${size}输入`} onError={()=>setFailed(true)}/><Button className="vfl-gap-handle" role="slider" aria-label="拖动放大或缩小输入图像" aria-valuemin={20} aria-valuemax={40} aria-valuenow={size} aria-valuetext={`${size}×${size}`} onPointerDown={start} onPointerMove={move} onPointerUp={()=>{drag.current=null;}} onPointerCancel={()=>{drag.current=null;}} onKeyDown={e=>{if(['ArrowLeft','ArrowDown','ArrowRight','ArrowUp','Home','End'].includes(e.key)){e.preventDefault();change(e.key==='Home'?20:e.key==='End'?40:size+(['ArrowLeft','ArrowDown'].includes(e.key)?-4:4));}}}><span aria-hidden="true"/></Button></div></div>
       </section>
       <span className="vfl-gap-arrow" aria-hidden="true">→</span>
       <section className="vfl-gap-stage vfl-gap-maps">
         <div className="vfl-gap-heading"><Typography as="h2" variant="h3" tone="accent">卷积特征图</Typography><Typography variant="bodySmall" tone="muted">{sample.mapSize} × {sample.mapSize} × 16</Typography></div>
-        <div className="vfl-gap-visual"><div className="vfl-gap-stack" style={{'--map-side':`${sample.mapSize*11}px`} as CSSProperties}>{[...CHANNELS].reverse().map((channel,i)=><div key={channel} className="vfl-gap-plane" style={{'--depth':4-i} as CSSProperties}><Texture values={sample.values[channel]} size={sample.mapSize} channel={channel}/></div>)}</div></div>
+        <div className="vfl-gap-visual"><div className="vfl-gap-stack" role="img" aria-label={`${count} 个通道的卷积特征图`} style={{'--map-side':`${sample.mapSize*11}px`,'--last-depth':count-1} as CSSProperties}>{Array.from({length:count},(_,i)=>count-1-i).map(channel=><div key={channel} className="vfl-gap-plane" style={{'--depth':channel} as CSSProperties}><Texture values={sample.values[channel]} size={sample.mapSize} channel={channel}/></div>)}</div></div>
 
       </section>
       <span className="vfl-gap-arrow" aria-hidden="true">→</span>
@@ -39,11 +40,10 @@ export function GlobalAveragePoolingPage(){
         <Typography as="h2" variant="h3" tone="accent">GAP：固定长度输出</Typography>
         <div className="vfl-gap-shape">
           <MathFormulaBlock className="vfl-gap-average-formula"><MathFormulaStatic latex={String.raw`g_c=\frac{1}{HW}\sum_{i=1}^{H}\sum_{j=1}^{W}X_c(i,j)`}/></MathFormulaBlock>
-          <MathFormulaBlock className="vfl-gap-shape-formula"><MathFormulaStatic latex={`${sample.mapSize} \\times ${sample.mapSize} \\times 16 \\;\\longrightarrow\\; 16`}/></MathFormulaBlock>
         </div>
         <div className="vfl-gap-output" data-dimension={count}>
           <Typography variant="h2" tone="success">{count} 维输出向量</Typography>
-          <div className="vfl-gap-vector-cells" role="img" aria-label={`输出向量包含 ${count} 个分量，输入尺寸改变时长度不变`}>{sample.values.map((_,channel)=><span key={channel} className="vfl-gap-vector-cell"/>)}</div>
+          <div className="vfl-gap-vector-cells" role="group" aria-label={`输出向量包含 ${count} 个通道平均值，按行排列`}>{averages.map((value,channel)=><div key={channel} className="vfl-gap-vector-cell" title={`通道 ${channel+1} 的平均值：${value}`}><Typography variant="bodySmall" tone="success">{value.toFixed(2)}</Typography></div>)}</div>
           <Typography variant="body" tone="accent">输入怎么缩放，长度都是 16</Typography>
         </div>
         <Typography variant="bodySmall" tone="muted">每个通道求平均 → 每个通道输出 1 个数</Typography>

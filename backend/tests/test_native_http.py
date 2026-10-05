@@ -25,12 +25,7 @@ def test_manual_native_service_implements_cloud_job_protocol(server):
     payload = {"course_uuid": UUID, "endpoint": "/lenet5/fixed-kernel-preview", "payload": {"image": [[0] * 28 for _ in range(28)]}}
     payload["cache_context"] = {"course_scope": "official/visual-feature-learning", "endpoint": payload["endpoint"], "request_data": payload["payload"]}
     created = request_json(server, "test-token", "POST", "/v1/jobs", payload)
-    deadline = time.time() + 25
-    while time.time() < deadline:
-        record = request_json(server, "test-token", "GET", "/v1/jobs/" + created["id"])
-        if record["status"] in {"complete", "error"}:
-            break
-        time.sleep(0.1)
+    record = request_json(server, "test-token", "GET", "/v1/jobs/" + created["id"] + "/wait?timeout=25", timeout=30)
     assert record["status"] == "complete", record
     assert record["result"]["result"]["dataset"]["images"] == "custom-canvas"
     outbox = request_json(server, "test-token", "GET", "/v1/completions")
@@ -46,6 +41,13 @@ def test_auth_and_unknown_course_rejected(server):
     with pytest.raises(ServiceError) as error:
         request_json(server, "test-token", "POST", "/v1/jobs", {"course_uuid": "not-registered", "endpoint": "/lenet5/fixed-kernel-preview"})
     assert error.value.status == 422
+
+
+def test_wait_rejects_unknown_jobs_and_invalid_timeout(server):
+    for suffix, status in [("/wait", 404), ("/wait?timeout=nan", 422), ("/wait?timeout=0", 422)]:
+        with pytest.raises(ServiceError) as error:
+            request_json(server, "test-token", "GET", "/v1/jobs/unknown" + suffix)
+        assert error.value.status == status
 
 
 def test_dev_mode_is_explicit_and_loopback_only():

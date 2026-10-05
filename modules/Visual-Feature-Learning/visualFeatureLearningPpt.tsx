@@ -112,6 +112,7 @@ export const deck: DeckDefinition = {
     title: learnableKernel.title,
     section: '可学习特征',
     render: () => <LearnableKernelPage />,
+
   }, {
     id: optimizeKernel.id,
     title: optimizeKernel.title,
@@ -159,7 +160,7 @@ export const deck: DeckDefinition = {
     render: () => <TrainingFeatureTsnePage />,
   }, {
     id: "digits-to-faces",
-    title: "从有限类别到开放身份",
+    title: "开放集身份识别与人脸验证",
     section: "人脸识别",
     render: () => <OpenIdentityPage />,
   }, {

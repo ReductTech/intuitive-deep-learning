@@ -63,7 +63,7 @@ function rearrangeWithinRegions(image: HTMLImageElement, seed: number): Comparis
 export function NineGridInformationLossPage() {
   const [seed, setSeed] = useState(0);
   const [motion, setMotion] = useState(0);
-  const [outputReady, setOutputReady] = useState(false);
+  const [outputReady, setOutputReady] = useState(true);
   const sourceImage = useRef<HTMLImageElement | null>(null);
   const [comparison, setComparison] = useState<Comparison | null>(null);
   const [model, setModel] = useState<ManualTrainingResult | null>(getLatestManualClassifier);
@@ -133,7 +133,7 @@ export function NineGridInformationLossPage() {
       <span className="vfl-loss-arrow" aria-hidden="true"/>
       <section className={`vfl-loss-stage vfl-loss-output${outputReady ? ' vfl-loss-output--ready' : ''}`} aria-label="十类预测概率" onAnimationEnd={event => { if (event.target === event.currentTarget && event.animationName === 'vfl-loss-stage-pulse') setOutputReady(true); }}>
         <Typography as="h2" variant="h3" tone="accent">Softmax 概率</Typography>
-        <div className="vfl-loss-probabilities">{Array.from({length:10},(_,digit)=><div key={digit}><Typography as="span" variant="bodySmall" tone="accent">{digit}</Typography><span className="vfl-loss-track"><span style={{width:`${(outputReady ? prediction?.[digit] ?? 0 : 0)*100}%`}}/></span><Typography as="span" variant="bodySmall" tone="muted">{outputReady && prediction ? `${(prediction[digit]*100).toFixed(1)}%` : '0.0%'}</Typography></div>)}</div>
+        <div className="vfl-loss-probabilities">{Array.from({length:10},(_,digit)=><div key={digit}><Typography as="span" variant="bodySmall" tone="accent">{digit}</Typography><span className="vfl-loss-track"><span style={{width:`${(outputReady ? prediction?.[digit] ?? 0 : 0)*100}%`}}/></span><Typography as="span" variant="bodySmall" tone="muted">{outputReady && prediction ? `${(prediction[digit]*100).toFixed(1)}%` : '—'}</Typography></div>)}</div>
         <Typography variant="body" tone="accent">{outputReady && prediction ? `预测数字：${prediction.indexOf(Math.max(...prediction))}` : error ? '分类器暂不可用' : !model ? '正在加载分类器…' : outputReady ? '正在计算…' : '等待信号到达'}</Typography>
       </section>
     </div>

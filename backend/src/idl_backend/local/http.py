@@ -78,6 +78,23 @@ def create_server(host="127.0.0.1", port=28431, *, kind="vision", course_uuid=No
                 self.wfile.write(body)
                 return
             legacy = path in {"/lenet5/fixed-kernel-train-status", "/face-recog/lenet-train-status", "/visual-feature-learning/digit-train-status", "/visual-feature-learning/manual-feature-train-status"}
+            if path.startswith("/v1/jobs/") and path.endswith("/wait"):
+                task_id = path.removeprefix("/v1/jobs/").removesuffix("/wait")
+                try:
+                    timeout = float((parse_qs(parsed.query).get("timeout") or ["1800"])[0])
+                    if not 0 < timeout <= 3600:
+                        raise ValueError("Timeout must be between 0 and 3600 seconds.")
+                except ValueError as exc:
+                    self.send_json(422, {"detail": str(exc)})
+                    return
+                record = jobs.wait(task_id, timeout)
+                if record is None:
+                    self.send_json(404, {"detail": "Task not found or expired."})
+                elif record["status"] not in {"complete", "error", "cancelled"}:
+                    self.send_json(504, {"detail": "Task is still queued or running."})
+                else:
+                    self.send_json(200, record)
+                return
             task_id = (parse_qs(parsed.query).get("job_id") or [""])[0] if legacy else path.removeprefix("/v1/jobs/")
             record = jobs.get(task_id) if legacy or path.startswith("/v1/jobs/") else None
             if record is None:

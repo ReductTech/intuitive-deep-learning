@@ -14,7 +14,7 @@
 .vfl-flatten-arrow { color:#83a6d5; font-size:40px; text-align:center; }
 .vfl-flatten-arrow.is-blocked { color:var(--ui-warning); }
 .vfl-flatten-image { position:relative; border:2px solid #aec4e2; border-radius:9px; box-shadow:0 8px 20px #18386014; transition:width .16s,height .16s; max-width:100%; }
-.vfl-flatten-image img { display:block; width:100%; height:100%; border-radius:7px; image-rendering:pixelated; }
+.vfl-flatten-image :is(img, .vfl-atlas-image) { display:block; width:100%; height:100%; border-radius:7px; image-rendering:pixelated; }
 .course-shell .vfl-flatten-handle { position:absolute; right:-10px; bottom:-10px; width:24px; height:24px; min-height:0; padding:5px; border:2px solid #527aae; border-radius:5px; background:white; cursor:nwse-resize; touch-action:none; }
 .vfl-flatten-handle span { display:block; width:10px; height:10px; border-right:2px solid #527aae; border-bottom:2px solid #527aae; }
 .vfl-flatten-stack { position:relative; width:218px; height:222px; }

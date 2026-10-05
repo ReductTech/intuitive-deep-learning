@@ -17,7 +17,7 @@
 .vfl-shared-input { left: 10%; width: 260px; }
 .vfl-shared-kernel { left: 30%; width: 200px; background: rgba(var(--ui-accent-alt-rgb), .05); z-index: 3; }
 .vfl-shared-features { left: 48%; width: 200px; }
-.vfl-shared-vector { left: 63%; width: 100px; padding: 10px; }
+.vfl-shared-vector { left: 63%; width: 100px; padding: 10px; border: 0; background: transparent; }
 .vfl-shared-output { left: 83%; width: 128px; }
 .vfl-shared-target { left: 96%; width: 104px; }
 .vfl-shared-matrix { min-height: 0; padding: 0; margin: 0; width: 100%; background: transparent; border: 0; }
@@ -30,6 +30,8 @@
 .vfl-shared-cell.is-selected { border-color: var(--ui-accent-alt); background: rgba(var(--ui-accent-alt-rgb), .1); }
 .vfl-shared-cell.is-pending { border-style: dashed; color: var(--ui-text-light); }
 .vfl-shared-cell.is-changed { color: var(--ui-success); background: rgba(var(--ui-success-rgb), .08); }
+.vfl-shared-vector .vfl-shared-cell { border: 0; background: transparent; border-radius: 0; }
+.vfl-shared-vector .vfl-shared-cell.is-selected { color: var(--ui-accent-alt); }
 .vfl-shared-cell .math-formula-static { animation: vfl-shared-number 400ms ease both; }
 .vfl-shared-scalar { height: 80px; display: grid; place-items: center; }
 .vfl-shared-scalar math-field { font-size: 42px; }
@@ -40,7 +42,15 @@
 .vfl-shared-arrow-a { left: 39%; }
 .vfl-shared-flatten { left: 57%; }
 .vfl-shared-compare { left: 89.7%; }
-.vfl-shared-fc { position: absolute; top: 51%; left: 73%; transform: translate(-50%,-50%); display: grid; justify-items: center; gap: 12px; transition: opacity 400ms ease; }
+.vfl-shared-fc { position: absolute; top: 21%; left: 73%; transform: translate(-50%,-50%); transition: opacity 400ms ease; }
+.vfl-shared-connections { position: absolute; inset: 0; pointer-events: none; }
+.vfl-shared-connections > svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.vfl-shared-connections line { stroke: var(--ui-accent); stroke-width: 2; opacity: .6; }
+.vfl-shared-connections line.is-selected { stroke: var(--ui-accent-alt); stroke-width: 3; opacity: 1; }
+.vfl-shared-edge-weight { position: absolute; transform: translate(-50%,-50%); width: auto; min-height: 0; padding: 2px 5px; margin: 0; border: 0; background: var(--ui-bg-card); color: var(--ui-accent); }
+.vfl-shared-edge-weight.is-selected { color: var(--ui-accent-alt); }
+.vfl-shared-edge-weight math-field { font-size: 23px; }
+.is-gradient .vfl-shared-connections, .is-focus .vfl-shared-connections { display: none; }
 .vfl-shared-reverse { position: absolute; top: 27%; left: 61%; width: 70%; transform: translate(-50%,-50%); display: flex; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 400ms 500ms; }
 .vfl-shared-comparison-summary { position: absolute; top: 11%; left: 61%; width: 70%; transform: translate(-50%,-50%); display: flex; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 400ms 500ms; }
 .vfl-shared-reverse math-field { font-size: 30px; }

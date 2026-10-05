@@ -4,20 +4,19 @@
 .vfl-pooling-workspace { display:grid; grid-template-columns:minmax(0,430fr) 46px minmax(0,560fr) 46px minmax(0,370fr); align-items:center; gap:16px; width:1480px; height:496px; margin:30px auto 0; }
 .vfl-pooling-stage { display:flex; flex-direction:column; align-items:center; justify-content:space-between; height:100%; padding:12px 0; gap:12px; }
 .vfl-pooling-stage-title { display:flex; align-items:center; justify-content:center; gap:16px; width:100%; }
-.vfl-pooling-stage-title .math-formula-block { min-height:0; margin:0; padding:4px 12px; border:0; background:#edf4ff; border-radius:10px; }
+.vfl-pooling-stage-title .math-formula-block { min-height:0; margin:0; padding:4px 12px; border:0; background:transparent; }
 .vfl-pooling-input-grid { position:relative; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); grid-template-rows:repeat(4,minmax(0,1fr)); width:368px; height:368px; max-width:100%; border:1px solid #a6bbd9; border-radius:10px; }
 .vfl-pooling-input-cell { display:grid; place-items:center; border:1px solid #d3def0; background:#f5f8fd; color:#243d65; transition:background .2s,color .2s; }
 .vfl-pooling-input-cell.is-window { background:#e0edff; }
 .vfl-pooling-input-cell.is-strongest { background:#74a5eb; color:#fff; }
 .vfl-pooling-window { position:absolute; width:50%; height:50%; border:4px solid #337bfa; border-radius:6px; pointer-events:none; transition:left .25s,top .25s; }
 .vfl-pooling-arrow { display:grid; place-items:center; color:#80a5d6; font-size:54px; }
-.vfl-pooling-operation { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:20px; padding:24px; height:100%; border:1px solid #d5e3f8; border-radius:22px; background:#fff; }
+.vfl-pooling-operation { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:20px; padding:24px; height:100%; border:0; background:transparent; }
 .vfl-pooling-modes { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; width:100%; }
 .vfl-pooling-modes .edu-btn { min-height:64px; padding:10px 6px; border-radius:32px; white-space:nowrap; }
-.vfl-pooling-setting { width:100%; min-height:0; padding:10px; border:0; background:#f3f7fe; }
+.vfl-pooling-setting { width:100%; min-height:0; padding:10px; border:0; background:transparent; }
 .vfl-pooling-calculation { display:grid; place-items:center; width:100%; flex:1; min-height:0; }
 .vfl-pooling-formula { width:100%; min-height:144px; display:grid; place-items:center; padding:10px; border:0; background:#eaf3ff; border-radius:16px; }
-.vfl-pooling-instruction { text-align:center; }
 .vfl-pooling-output-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); grid-template-rows:repeat(2,minmax(0,1fr)); width:300px; height:300px; max-width:100%; border:1px solid #a6bbd9; border-radius:10px; }
 .vfl-pooling-output-cell.edu-btn { display:grid; place-items:center; min-height:0; padding:0; border:1px solid #ccd9ed; border-radius:0; background:#f5f8fd; color:#243d65; box-shadow:none; }
 .vfl-pooling-output-cell.edu-btn.is-active { background:#337bfa; color:#fff; }
@@ -25,7 +24,8 @@
 .vfl-pooling-output-cell:nth-child(2) { border-top-right-radius:9px; }
 .vfl-pooling-output-cell:nth-child(3) { border-bottom-left-radius:9px; }
 .vfl-pooling-output-cell:last-child { border-bottom-right-radius:9px; }
-.vfl-pooling-takeaway { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); align-items:center; width:1480px; height:144px; margin:22px auto 0; padding:16px 24px; gap:10px; background:#eff5ff; border:1px solid #d5e3f8; border-radius:20px; text-align:center; }
-.vfl-pooling-takeaway>div { display:flex; align-items:center; justify-content:center; gap:18px; }
-.vfl-pooling-takeaway>div+div { border-left:1px solid #cfddf2; }
-.vfl-pooling-takeaway>p { grid-column:1/-1; padding-top:10px; border-top:1px solid #cfddf2; }
+.vfl-pooling-takeaway { display:grid; place-items:center; width:1480px; max-width:100%; min-height:80px; margin:22px auto 0; padding:16px 24px; background:var(--ui-bg-soft); border-radius:var(--ui-radius-lg); text-align:center; }
+
+.vfl-pooling-stage-title > .ui-typography { white-space:nowrap; flex-shrink:0; }
+.vfl-pooling-stage-title .math-formula-block { flex:0 0 auto; }
+.vfl-pooling-stage-title .math-formula-block { width:auto; }

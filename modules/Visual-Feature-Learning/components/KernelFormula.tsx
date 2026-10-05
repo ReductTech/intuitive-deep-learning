@@ -14,7 +14,7 @@ function explanation(term: string, windowed: boolean): string {
   if (term === '\\eta') return 'η：学习率，控制每次沿梯度调整权重的幅度。';
   if (term === '\\ast') return '卷积运算：窗口与卷积核的对应位置相乘，再将结果相加。';
   if (term === '\\mathrm{GT}') return 'GT：真实目标，本例固定为 1.00。';
-  if (term === 'L') return 'L：损失，用于衡量预测输出与真实目标的差距。';
+  if (term === 'L') return 'L：平方误差损失，本例取预测输出与真实目标之差的平方，再乘以二分之一。';
   if (term === 'y') return windowed ? 'y：四个特征值经过固定全连接权重加权求和得到的预测输出。' : 'y：输入窗口与卷积核计算得到的预测输出。';
   if (term === 'K_{\\mathrm{new}}') return '更新后的卷积核；由原权重减去学习率乘总梯度得到。';
   if (term === 'K') return 'K：卷积核权重矩阵；同一个卷积核用于每个窗口。';

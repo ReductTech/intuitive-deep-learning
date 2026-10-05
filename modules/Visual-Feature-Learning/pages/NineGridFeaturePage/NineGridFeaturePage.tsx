@@ -3,6 +3,8 @@ import { Button, ContentBlock, ExplainPanelButton, MathFormulaBlock, MathFormula
 import './NineGridFeaturePage.css';
 import { NINE_GRID_EDGES, NINE_GRID_IMAGE_URL, nineGridCounts, nineGridRegionCells, readNineGridPixels } from '../../services/nineGridDigit';
 
+const QUIZ_REGION = 3;
+
 export function NineGridFeaturePage() {
   const [pixels, setPixels] = useState<boolean[] | null>(null);
   const [region, setRegion] = useState(0);
@@ -26,7 +28,7 @@ export function NineGridFeaturePage() {
   const cells = useMemo(() => pixels ? nineGridRegionCells(pixels, shownRegion) : [], [pixels, shownRegion]);
   const cols = NINE_GRID_EDGES[shownRegion % 3 + 1] - NINE_GRID_EDGES[shownRegion % 3];
   const rows = NINE_GRID_EDGES[Math.floor(shownRegion / 3) + 1] - NINE_GRID_EDGES[Math.floor(shownRegion / 3)];
-  const quiz = region === 4 && !solved;
+  const quiz = region === QUIZ_REGION && !solved;
   const finished = region === 9;
 
   useEffect(() => {
@@ -48,9 +50,9 @@ export function NineGridFeaturePage() {
     const next = new Set(marked);
     next.add(index);
     setMarked(next);
-    if (next.size === counts[4]) {
+    if (next.size === counts[QUIZ_REGION]) {
       setSolved(true);
-      setCounted(counts[4]);
+      setCounted(counts[QUIZ_REGION]);
     }
   }
 
@@ -93,7 +95,7 @@ export function NineGridFeaturePage() {
               const lit = cell.ink && (quiz ? marked.has(index) : cell.rank < counted || finished);
               const className = `vfl-nine-grid-pixel ${cell.ink ? lit ? 'is-counted' : 'is-ink' : ''}`;
               return quiz && cell.ink ? <button key={`${cell.x}-${cell.y}`} type="button" className={className}
-                aria-label={`第 ${cell.y - NINE_GRID_EDGES[1] + 1} 行第 ${cell.x - NINE_GRID_EDGES[1] + 1} 列墨迹${marked.has(index) ? '，已标记' : ''}`}
+                aria-label={`第 ${cell.y - NINE_GRID_EDGES[Math.floor(shownRegion / 3)] + 1} 行第 ${cell.x - NINE_GRID_EDGES[shownRegion % 3] + 1} 列墨迹${marked.has(index) ? '，已标记' : ''}`}
                 aria-pressed={marked.has(index)} onClick={() => markCell(index)} /> : <div key={`${cell.x}-${cell.y}`} className={className} aria-hidden="true" />;
             })}
           </div>
