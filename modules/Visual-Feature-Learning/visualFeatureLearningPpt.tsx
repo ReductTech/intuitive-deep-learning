@@ -48,6 +48,15 @@ const pooling = outlines.pages.find((page) => page.id === 'pooling')!;
 const optimizeKernel = outlines.pages.find((page) => page.id === 'optimize-kernel')!;
 const sharedKernel = outlines.pages.find((page) => page.id === 'optimize-kernel-shared')!;
 
+const featureStatistics = outlines.pages.find((page) => page.id === 'simple-feature-statistics')!;
+const globalAveragePooling = outlines.pages.find((page) => page.id === 'global-average-pooling')!;
+const networkTraining = outlines.pages.find((page) => page.id === 'assemble-train-digit-network')!;
+const trainingFeatureTsne = outlines.pages.find((page) => page.id === 'training-feature-tsne')!;
+const openIdentity = outlines.pages.find((page) => page.id === 'digits-to-faces')!;
+const tripletLoss = outlines.pages.find((page) => page.id === 'triplet-loss')!;
+const gradCam = outlines.pages.find((page) => page.id === 'training-objective-gradcam')!;
+const disguiseVerification = outlines.pages.find((page) => page.id === 'disguise-verification')!;
+
 export const deck: DeckDefinition = {
   id: 'visual-feature-learning',
   title: '视觉特征学习',
@@ -78,8 +87,8 @@ export const deck: DeckDefinition = {
     section: '特征的边界',
     render: () => <SimpleFeatureLimitsPage />,
   }, {
-    id: 'simple-feature-statistics',
-    title: '简单统计特征的分布',
+    id: featureStatistics.id,
+    title: featureStatistics.title,
     section: '特征的边界',
     render: () => <FeatureStatisticsPage />,
   }, {
@@ -144,38 +153,38 @@ export const deck: DeckDefinition = {
     section: '卷积网络',
     render: () => <FeatureMapsToClassifierPage />,
   }, {
-    id: "global-average-pooling",
-    title: "全局平均池化 GAP",
+    id: globalAveragePooling.id,
+    title: globalAveragePooling.title,
     section: "卷积网络",
     render: () => <GlobalAveragePoolingPage />,
   }, {
-    id: "assemble-train-digit-network",
-    title: "组装数字识别网络",
+    id: networkTraining.id,
+    title: networkTraining.title,
     section: "卷积网络",
     render: () => <NetworkTrainingPage />,
   }, {
-    id: "training-feature-tsne",
-    title: "t-SNE：训练怎样改变特征分布？",
+    id: trainingFeatureTsne.id,
+    title: trainingFeatureTsne.title,
     section: "卷积网络",
     render: () => <TrainingFeatureTsnePage />,
   }, {
-    id: "digits-to-faces",
-    title: "开放集身份识别与人脸验证",
+    id: openIdentity.id,
+    title: openIdentity.title,
     section: "人脸识别",
     render: () => <OpenIdentityPage />,
   }, {
-    id: "triplet-loss",
-    title: "三元组损失：让特征适合比较身份",
+    id: tripletLoss.id,
+    title: tripletLoss.title,
     section: "人脸识别",
     render: () => <TripletLossPage />,
   }, {
-    id: "training-objective-gradcam",
-    title: "Grad-CAM：不同训练目标关注哪里？",
+    id: gradCam.id,
+    title: gradCam.title,
     section: "人脸识别",
     render: () => <GradCamPage />,
   }, {
-    id: "disguise-verification",
-    title: "人脸识别游戏：雨花弄",
+    id: disguiseVerification.id,
+    title: disguiseVerification.title,
     section: "人脸识别",
     render: ({ complete, reset }) => <DisguiseVerificationPage onComplete={complete} onReset={reset} />,
   }],

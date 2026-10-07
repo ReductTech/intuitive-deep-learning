@@ -171,18 +171,37 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--module", required=True, help="PPT module ID or directory name")
     parser.add_argument("--slide", help="Regenerate only one slide ID")
+    parser.add_argument("--digit-tsne-record", type=Path, help="Local full-MNIST playback record for capturing the t-SNE slide without a Cloud API")
     parser.add_argument("--settle-ms", type=int, default=2000, help="Wait after fonts and images load (default: 2000)")
     args = parser.parse_args()
     if args.settle_ms < 0:
         parser.error("--settle-ms must be non-negative")
     try:
         _, deck_id, asset_id = resolve_module(args.module)
+        playback_record = None
+        if args.digit_tsne_record:
+            from idl_backend.contracts.digit_tsne import COURSE_ID, EPOCHS, SEED, VERSION
+            if asset_id != COURSE_ID:
+                raise ValueError("--digit-tsne-record only applies to visual-feature-learning.")
+            playback_record = json.loads(args.digit_tsne_record.read_text(encoding="utf-8"))
+            recording = playback_record.get("recording", {})
+            expected = {"epochs": EPOCHS, "seed": SEED, "version": VERSION, "train_count": 60000, "val_count": 10000}
+            if any(recording.get(key) != value for key, value in expected.items()) or len(playback_record.get("frames", [])) != EPOCHS + 1:
+                raise ValueError("Expected a complete, current full-MNIST playback record.")
         output_dir = ROOT / "assets" / asset_id / "scenedeck-thumbnails"
         with vite_server() as base_url, sync_playwright() as playwright:
             browser = launch_browser(playwright)
             try:
                 context = browser.new_context(viewport={"width": SLIDE_SIZE[0], "height": SLIDE_SIZE[1]}, device_scale_factor=1, reduced_motion="reduce")
                 context.add_init_script("try { localStorage.clear(); sessionStorage.clear(); } catch { /* opaque origin */ }")
+                if playback_record is not None:
+                    def serve_playback(route):
+                        request = route.request.post_data_json
+                        if any(request.get(key) != playback_record["recording"].get(key) for key in ("learning_rate", "batch_size")):
+                            route.fulfill(status=400, json={"ok": False, "detail": "Local playback parameters do not match."})
+                            return
+                        route.fulfill(json={"ok": True, "result": playback_record})
+                    context.route(f"**/api/courses/{asset_id}/records/digit-tsne", serve_playback)
                 try:
                     ids = scene_ids(context, base_url, deck_id)
                     if args.slide:

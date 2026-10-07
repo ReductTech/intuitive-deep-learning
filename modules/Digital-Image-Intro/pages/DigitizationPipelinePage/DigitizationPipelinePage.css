@@ -1,0 +1,41 @@
+.di-map { display:grid; grid-template-rows:auto minmax(0,1fr); background:radial-gradient(ellipse at 25% 48%,#fff6e844,transparent 40%),linear-gradient(135deg,#fff,#f2f8ff); }
+.di-map > .edu-content-body { min-height:0; }
+.di-map :is(div,figure,figcaption,footer,button,canvas,img,svg) { min-width:0; max-width:100%; }
+.di-map p,.di-map h2 { margin:0; }
+.di-map__body { height:100%; display:grid; grid-template-rows:minmax(0,1fr) auto; gap:28px; min-height:0; }
+.di-map__flow { position:relative; display:grid; grid-template-columns:minmax(0,.95fr) minmax(0,.82fr) minmax(0,.72fr) minmax(0,1.48fr); gap:26px; align-items:start; min-height:0; }
+.di-map__step { margin:0; display:grid; grid-template-rows:350px auto; gap:22px; align-self:start; }
+.di-map__connections { position:absolute; inset:0; z-index:3; pointer-events:none; }
+.di-map__visual { position:relative; min-height:0; }
+.di-map__photo { width:280px; justify-self:center; }
+.di-map__photo img { display:block; width:100%; height:100%; object-fit:fill; border-radius:16px; box-shadow:0 12px 30px #b27f4433; }
+.di-map__crop { position:absolute; border:2px solid white; box-shadow:0 0 0 1px #478bc3; }
+.di-map__flow-arrow { position:absolute; left:100%; width:26px; top:calc(50% - 20px); text-align:center; color:#7393b6; }
+.di-map__step figcaption { display:grid; justify-items:center; text-align:center; gap:8px; }
+.di-map__world figcaption { background:#ffffffce; padding:8px; border-radius:12px; }
+.di-map__zoom { display:grid; align-items:center; }
+.di-map__pixel-frame { position:relative; width:100%; aspect-ratio:1; border:3px solid white; border-radius:3px; box-shadow:0 0 0 2px #bdd9f4,0 8px 24px #487aad24; }
+.di-map__pixel-frame canvas { display:block; width:100%; height:100%; image-rendering:pixelated; }
+.di-map__grid-lines { position:absolute; inset:0; background:linear-gradient(90deg,#ffffff55 1px,transparent 1px),linear-gradient(#ffffff55 1px,transparent 1px); background-size:5% 5%; pointer-events:none; }
+.di-map__pixel-picker { position:absolute; inset:0; width:100%; height:100%; padding:0; border:0; background:transparent; cursor:crosshair; }
+.di-map__pixel-picker i { position:absolute; width:5%; height:5%; border:3px solid white; box-shadow:0 0 0 1px #1c4164; pointer-events:none; }
+.di-map__pixel-picker:focus-visible { outline:3px solid #3479c6; outline-offset:5px; }
+.di-map__rgb-panel { display:flex; align-items:center; justify-content:center; gap:12px; padding:16px 12px; border-radius:20px; background:#e9f2fa; }
+.di-map__swatch { width:54px; aspect-ratio:1; flex-shrink:0; border:3px solid white; box-shadow:0 0 0 1px #ceddec; }
+.di-map__rgb-list { display:grid; gap:16px; flex:1; }
+.di-map__channel { display:grid; grid-template-columns:minmax(0,.7fr) minmax(0,1fr); border:1px solid var(--channel); border-radius:5px; background:#fff; }
+.di-map__channel > span { display:grid; place-items:center; padding:5px 2px; }
+.di-map__channel > span:first-child { background:var(--channel); color:white; }
+.di-map__channel--R { --channel:#ed4a54; }
+.di-map__channel--G { --channel:#2da867; }
+.di-map__channel--B { --channel:#367ffe; }
+.di-map__table-panel { display:grid; align-content:center; gap:16px; padding:16px 12px; border-radius:20px; background:#e7f0f9; }
+.di-map__matrix { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); border:1px solid #c7d8e9; border-radius:9px; background:#ffffff66; }
+.di-map__matrix > :is(button,div) { display:grid; place-items:center; height:62px; border:0; border-right:1px solid #d1dfed; border-bottom:1px solid #d1dfed; background:transparent; padding:2px; }
+.di-map__matrix button { cursor:pointer; }
+.di-map__matrix button.is-selected { outline:2px solid #2b6fba; outline-offset:-2px; border-radius:5px; background:#fff; }
+.di-map__matrix button:focus-visible { outline:3px solid #dd9f39; outline-offset:-3px; }
+.di-map__coordinates { text-align:center; }
+.di-map__takeaway { display:grid; grid-template-columns:minmax(0,.09fr) minmax(0,1fr); align-items:center; gap:22px; padding:18px 34px; background:linear-gradient(110deg,#e5f1ff,#dcecff); border-radius:22px; }
+.di-map__takeaway > div { display:grid; gap:8px; }
+.di-map__bulb { width:78px; height:96px; filter:drop-shadow(0 0 10px #fff); }
