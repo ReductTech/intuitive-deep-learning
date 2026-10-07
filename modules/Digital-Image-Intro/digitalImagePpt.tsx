@@ -1,3 +1,4 @@
+import { IntensityTransformsPage } from './pages/IntensityTransformsPage/IntensityTransformsPage';
 import { PointOperationsPage } from './pages/PointOperationsPage/PointOperationsPage';
 import { ColorSpacePage } from './pages/ColorSpacePage/ColorSpacePage';
 import { ImageMemoryPage } from './pages/ImageMemoryPage/ImageMemoryPage';
@@ -19,7 +20,8 @@ export const deck: DeckDefinition = {
     { id: outline.pages[4].id, title: outline.pages[4].title, section: '数字化', render: () => <PixelTypesPage /> },
     { id: outline.pages[5].id, title: outline.pages[5].title, section: '数字化', render: () => <ImageMemoryPage /> },
     { id: outline.pages[6].id, title: outline.pages[6].title, section: '数字化', render: () => <ColorSpacePage /> },
-    { id: outline.pages[7].id, title: outline.pages[7].title, section: '像素值操作', render: () => <PointOperationsPage /> }],
+    { id: outline.pages[7].id, title: outline.pages[7].title, section: '像素值操作', render: () => <PointOperationsPage /> },
+    { id: outline.pages[8].id, title: outline.pages[8].title, section: '像素值操作', render: () => <IntensityTransformsPage /> }],
 };
 export const getPptNotes = (sceneId: string) => (outline.pages.find(page => page.id === sceneId)?.snippet
   ? [{ text: outline.pages.find(page => page.id === sceneId)!.snippet, selectors: [] }]

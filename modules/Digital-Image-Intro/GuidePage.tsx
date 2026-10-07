@@ -1,3 +1,4 @@
+import { IntensityTransformsPage } from './pages/IntensityTransformsPage/IntensityTransformsPage';
 import { PointOperationsPage } from './pages/PointOperationsPage/PointOperationsPage';
 import { ColorSpacePage } from './pages/ColorSpacePage/ColorSpacePage';
 import { ImageMemoryPage } from './pages/ImageMemoryPage/ImageMemoryPage';
@@ -47,6 +48,9 @@ export function GuidePage() {
     </div>
     <div className="lesson-canvas-frame" style={{ height: scale * 900 }}>
       <div className="course-page-surface course-shell" style={{ transform: `scale(${scale})` }}><PointOperationsPage /></div>
+    </div>
+    <div className="lesson-canvas-frame" style={{ height: scale * 900 }}>
+      <div className="course-page-surface course-shell" style={{ transform: `scale(${scale})` }}><IntensityTransformsPage /></div>
     </div>
   </ModuleShell>;
 }
