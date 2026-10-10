@@ -1,0 +1,171 @@
+.course-shell .vg-generation-page {
+  width: 100%;
+  background:
+    radial-gradient(circle at 78% 18%, rgba(var(--ui-success-rgb), .08), transparent 28%),
+    radial-gradient(circle at 18% 18%, rgba(var(--ui-accent-rgb), .07), transparent 30%),
+    var(--ui-bg-card);
+}
+
+.course-shell .vg-generation-page .edu-content-head {
+  margin-bottom: 14px;
+}
+
+.course-shell .vg-generation-page .edu-content-body {
+  min-width: 0;
+  min-height: 0;
+  gap: 14px;
+}
+
+.course-shell .vg-generation-page__visual {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  aspect-ratio: 2120 / 840;
+  border: 1px solid color-mix(in srgb, var(--ui-border) 78%, white);
+  border-radius: var(--ui-radius-lg);
+  background: #fff;
+  box-shadow: var(--ui-shadow-soft);
+}
+
+.course-shell .vg-generation-page__source {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  object-fit: fill;
+}
+
+.course-shell .vg-generation-page__result-stage {
+  position: absolute;
+  top: var(--stage-top);
+  left: var(--stage-left);
+  width: var(--stage-width);
+  height: var(--stage-height);
+  overflow: hidden;
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(var(--ui-success-rgb), .08), transparent 34%),
+    #f0f8f4;
+}
+
+.course-shell .vg-generation-page__result {
+  position: absolute;
+  top: var(--result-top);
+  left: var(--result-left);
+  width: var(--result-width);
+  height: var(--result-height);
+  overflow: hidden;
+}
+
+.course-shell .vg-generation-page__result img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.course-shell .vg-generation-page__insight {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 28px;
+  border: 1px solid rgba(var(--ui-accent-rgb), .15);
+  border-radius: var(--ui-radius-md);
+  background: var(--ui-bg-soft);
+  padding: 12px 18px 10px;
+}
+
+.course-shell .vg-generation-page__mapping {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 4px 16px;
+}
+
+.course-shell .vg-generation-page__mapping--generation {
+  border-left: 1px solid var(--ui-border);
+  padding-left: 28px;
+}
+
+.course-shell .vg-generation-page__mapping > .ui-typography:last-child {
+  grid-column: 1 / -1;
+}
+
+.course-shell .vg-generation-page__direction {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+}
+
+.course-shell .vg-generation-page__endpoint {
+  display: block;
+  min-width: 0;
+  border: 1px solid var(--ui-border);
+  border-radius: 999px;
+  background: #fff;
+  padding: 6px 12px;
+  text-align: center;
+}
+
+.course-shell .vg-generation-page__endpoint--understanding {
+  border-color: rgba(var(--ui-accent-rgb), .28);
+  background: rgba(var(--ui-accent-rgb), .07);
+}
+
+.course-shell .vg-generation-page__endpoint--generation {
+  border-color: rgba(var(--ui-success-rgb), .3);
+  background: rgba(var(--ui-success-rgb), .08);
+}
+
+.course-shell .vg-generation-page__arrow {
+  color: var(--ui-text-muted);
+  font-size: 26px;
+  line-height: 1;
+}
+
+.course-shell .vg-generation-page__conclusion {
+  grid-column: 1 / -1;
+  border-top: 1px solid var(--ui-border);
+  padding-top: 8px;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .course-shell .vg-generation-page__insight {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .course-shell .vg-generation-page__mapping--generation {
+    border-top: 1px solid var(--ui-border);
+    border-left: 0;
+    padding-top: 10px;
+    padding-left: 0;
+  }
+
+  .course-shell .vg-generation-page__conclusion {
+    grid-column: 1;
+  }
+}
+
+.course-page-surface .vg-generation-page {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  grid-template-rows: auto minmax(0, 1fr);
+}
+
+.course-page-surface .vg-generation-page .edu-content-body {
+  grid-template-rows: minmax(0, 1fr) auto;
+}
+
+.course-page-surface .vg-generation-page__visual {
+  width: 100%;
+  height: auto;
+  max-height: 100%;
+}

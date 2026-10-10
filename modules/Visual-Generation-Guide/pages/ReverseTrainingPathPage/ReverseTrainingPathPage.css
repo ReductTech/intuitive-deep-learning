@@ -1,0 +1,228 @@
+.course-page-surface .vg-reverse-training {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  grid-template-rows: auto minmax(0, 1fr);
+  background: #fff;
+  padding: 25px 42px 22px;
+}
+
+.course-page-surface .vg-reverse-training .edu-content-head { margin-bottom: 10px; }
+.course-page-surface .vg-reverse-training .edu-content-title { color: #263650; }
+.course-page-surface .vg-reverse-training .edu-content-subtitle { margin-top: 4px; color: #3468ce; }
+
+.course-page-surface .vg-reverse-training__body {
+  min-width: 0;
+  min-height: 0;
+  grid-template-rows: minmax(0, 1fr) 63px 59px;
+  gap: 9px;
+}
+
+.course-page-surface .vg-reverse-training__main {
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  max-width: 100%;
+  grid-template-columns: minmax(0, 1.26fr) minmax(0, .8fr) minmax(0, 1.06fr);
+  gap: 15px;
+}
+
+.course-page-surface .vg-reverse-training__main > section { min-width: 0; min-height: 0; max-width: 100%; }
+
+.course-page-surface .vg-reverse-training__path {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 8px;
+}
+
+.course-page-surface .vg-reverse-training__diagram {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  max-width: 100%;
+  height: 100%;
+}
+
+.course-page-surface .vg-reverse-training__arrows {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+}
+
+.course-page-surface .vg-reverse-training__image {
+  position: absolute;
+  display: grid;
+  min-width: 0;
+  max-width: 100%;
+  justify-items: center;
+  gap: 5px;
+  margin: 0;
+}
+
+.course-page-surface .vg-reverse-training__image figcaption { text-align: center; white-space: nowrap; }
+.course-page-surface .vg-reverse-training__image img { display: block; width: 118px; height: 118px; max-width: 100%; object-fit: cover; border: 2px solid #b6c9de; }
+.course-page-surface .vg-reverse-training__image--left { top: 2%; left: 6%; }
+.course-page-surface .vg-reverse-training__image--right { top: 2%; right: 10%; }
+.course-page-surface .vg-reverse-training__image--original { top: 65%; right: 8%; }
+.course-page-surface .vg-reverse-training__image--original img { width: 82px; height: 82px; }
+
+.course-page-surface .vg-reverse-training__node {
+  position: absolute;
+  display: grid;
+  width: 56px;
+  height: 56px;
+  place-items: center;
+  border: 2px solid #263650;
+  border-radius: 50%;
+  background: #fff;
+  color: #263650;
+  font-family: Georgia, serif;
+  font-size: 24px;
+  font-style: italic;
+}
+
+.course-page-surface .vg-reverse-training__node--previous { top: 46%; left: 15.5%; }
+.course-page-surface .vg-reverse-training__node--current { top: 46%; left: 69.5%; }
+
+.course-page-surface .vg-reverse-training__forward-label,
+.course-page-surface .vg-reverse-training__teacher-label,
+.course-page-surface .vg-reverse-training__student-label {
+  position: absolute;
+  left: 21%;
+  width: 51%;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.course-page-surface .vg-reverse-training__forward-label { top: 38%; }
+.course-page-surface .vg-reverse-training__teacher-label { top: 55%; animation: vg-reverse-in .3s ease-out both; }
+.course-page-surface .vg-reverse-training__student-label { top: 75%; animation: vg-reverse-in .3s ease-out both; }
+
+.course-page-surface .vg-reverse-training__loss {
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  grid-template-columns: 105px minmax(0, 1fr);
+  align-items: center;
+  border: 1px solid #edc489;
+  border-radius: 12px;
+  background: #fff9ef;
+  padding: 5px 12px;
+  animation: vg-reverse-in .3s ease-out both;
+}
+
+.course-page-surface .vg-reverse-training__loss > span:last-child { grid-column: 2; }
+
+.course-page-surface .vg-reverse-training__formula {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  max-width: 100%;
+  height: 58px;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+
+.course-page-surface .vg-reverse-training__formula .math-formula { min-width: 0; max-width: 100%; justify-content: flex-start; white-space: nowrap; }
+.course-page-surface .vg-reverse-training__loss .math-formula { font-size: 22px; }
+
+.course-page-surface .vg-reverse-training__teacher-panel,
+.course-page-surface .vg-reverse-training__match-panel { display: grid; min-width: 0; min-height: 0; align-items: start; }
+
+.course-page-surface .vg-reverse-training__teacher-card {
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  gap: 12px;
+  border: 2px solid #e66b28;
+  border-radius: 14px;
+  background: #fffaf6;
+  padding: 18px 17px;
+  animation: vg-reverse-in .35s ease-out both;
+}
+
+.course-page-surface .vg-reverse-training__teacher-card h2,
+.course-page-surface .vg-reverse-training__teacher-card p { margin: 0; }
+.course-page-surface .vg-reverse-training__teacher-card .math-formula { font-size: 24px; }
+
+.course-page-surface .vg-reverse-training__teacher-inputs {
+  display: grid;
+  min-width: 0;
+  gap: 5px;
+  border-top: 1px solid #f0cfb9;
+  padding-top: 10px;
+}
+
+.course-page-surface .vg-reverse-training__match-card {
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  gap: 8px;
+  border: 2px solid #2e78cc;
+  border-radius: 14px;
+  background: #f7fbff;
+  padding: 17px 16px;
+  animation: vg-reverse-in .35s ease-out both;
+}
+
+.course-page-surface .vg-reverse-training__match-card h2,
+.course-page-surface .vg-reverse-training__match-card p { margin: 0; }
+.course-page-surface .vg-reverse-training__match-legend { display: flex; min-width: 0; max-width: 100%; justify-content: space-between; gap: 10px; }
+.course-page-surface .vg-reverse-training__match-plot { display: block; width: 100%; max-width: 100%; height: 183px; }
+.course-page-surface .vg-reverse-training__match-plot text { font-family: Georgia, serif; font-size: 18px; font-style: italic; }
+.course-page-surface .vg-reverse-training__mean-control { display: grid; min-width: 0; gap: 2px; }
+.course-page-surface .vg-reverse-training__mean-control input { width: 100%; min-width: 0; max-width: 100%; accent-color: #2472cd; cursor: pointer; }
+
+.course-page-surface .vg-reverse-training__summary {
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  max-width: 100%;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: center;
+  gap: 10px;
+  border-top: 2px solid #dce5f0;
+  border-bottom: 2px solid #dce5f0;
+  animation: vg-reverse-in .3s ease-out both;
+}
+
+.course-page-surface .vg-reverse-training__summary.is-hidden { visibility: hidden; animation: none; }
+.course-page-surface .vg-reverse-training__summary > span { min-width: 0; text-align: center; }
+.course-page-surface .vg-reverse-training__summary > span + span { border-left: 1px solid #d5e0ed; }
+
+.course-page-surface .vg-reverse-training__footer {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.course-page-surface .vg-reverse-training__actions { display: flex; min-width: 0; max-width: 100%; flex: 0 0 auto; gap: 8px; }
+.course-page-surface .vg-reverse-training__actions .edu-btn { min-width: 112px; }
+
+@keyframes vg-reverse-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .course-page-surface .vg-reverse-training__teacher-label,
+  .course-page-surface .vg-reverse-training__student-label,
+  .course-page-surface .vg-reverse-training__loss,
+  .course-page-surface .vg-reverse-training__teacher-card,
+  .course-page-surface .vg-reverse-training__match-card,
+  .course-page-surface .vg-reverse-training__summary { animation: none; }
+}

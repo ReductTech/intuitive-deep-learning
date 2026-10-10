@@ -1,0 +1,141 @@
+@font-face { font-family: 'Diffusion Reference Mono'; src: url('../../assets/diffusion-playground/jetbrains-mono.woff2') format('woff2'); font-style: normal; font-weight: 100 800; font-display: swap; }
+.vg-replica {
+  --ui-font-sans: 'Diffusion Reference Mono', 'Consolas', monospace;
+  --ui-type-body-small-size: 10px;
+  --ui-type-body-small-weight: 400;
+  --ui-type-body-small-line-height: 1.5;
+  --ui-type-body-size: 14px;
+  --ui-type-body-weight: 400;
+  --ui-type-body-line-height: 1.428571;
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 24px; align-items: start; width: 100%; height: 100%;
+  padding: 28px 32px; background: #fff; color: #09090b;
+}
+.vg-replica *, .vg-replica *::before, .vg-replica *::after { box-sizing: border-box; min-width: 0; max-width: 100%; }
+.vg-replica__panel { border: 1px solid #e4e4e7; border-radius: 6px; background: #fff; }
+.vg-replica__panel > header { --ui-type-body-small-size: 12px; --ui-type-body-small-line-height: 1.333333; padding: 8px 16px; border-bottom: 1px solid #e4e4e7; }
+.vg-replica__panel-body { display: flex; flex-direction: column; gap: 16px; padding: 16px; }
+.vg-replica .ui-typography { color: inherit; }
+.vg-replica__label { color: #71717a !important; letter-spacing: .04em; }
+.vg-replica__metrics { display: grid; gap: 8px; }
+.vg-replica__metrics--two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.vg-replica__metrics--four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.vg-replica__metric { --ui-type-body-small-size: 9px; border: 1px solid #e4e4e7; border-radius: 4px; padding: 8px 12px; }
+.vg-replica__metric .vg-replica__label { text-transform: uppercase; }
+.vg-replica__value { font-variant-numeric: tabular-nums; }
+.vg-replica__metric.is-accent .vg-replica__value { color: #2845d6; }
+.vg-replica__metric.is-hot .vg-replica__value { color: #ea580c; }
+.vg-replica__forward-images { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; align-items: start; }
+.vg-replica__pixels { display: flex; flex-direction: column; gap: 6px; margin: 0; }
+.vg-replica__pixels figcaption { display: flex; justify-content: space-between; gap: 8px; }
+.vg-replica__pixels figcaption .vg-replica__label { text-transform: uppercase; white-space: nowrap; }
+.vg-replica__pixels figcaption .vg-replica__sub { text-transform: none; letter-spacing: 0; overflow: hidden; text-overflow: ellipsis; color: #09090b !important; }
+.vg-replica__pixels canvas { display: block; width: 100%; height: auto; aspect-ratio: 1; border: 1px solid #e4e4e7; border-radius: 4px; background: #fafafa; }
+.vg-replica__histogram { display: grid; gap: 7px; border: 1px solid #e4e4e7; border-radius: 4px; padding: 12px; background: #fafafa; }
+.vg-replica__hist-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.vg-replica__hist-head .vg-replica__label:first-child { text-transform: uppercase; }
+.vg-replica__hist-head .vg-replica__sub { text-align: right; }
+.vg-replica__histogram svg { width: 100%; height: auto; aspect-ratio: 1.92; }
+.vg-replica__axis { display: flex; justify-content: space-between; }
+.vg-replica__legend { display: flex; gap: 12px; }
+.vg-replica__legend .vg-replica__label { display: flex; align-items: center; gap: 6px; }
+.vg-replica__legend i { display: block; flex: 0 0 10px; width: 10px; height: 10px; border-radius: 2px; background: #2845d6; }
+.vg-replica__legend i.is-gray { background: #71717a; opacity: .3; }
+.vg-replica__playback, .vg-replica__presets, .vg-replica__uploads { display: flex; gap: 8px; align-items: center; }
+.vg-replica__playback input { flex: 1; }
+.vg-replica__button { --ui-type-body-small-size: 12px; --ui-type-body-small-line-height: 1.333333; border: 1px solid #e4e4e7; padding: 4px 10px; border-radius: 4px; background: #fff; color: #71717a; cursor: pointer; white-space: nowrap; }
+.vg-replica__button:hover { background: #fafafa; }
+.vg-replica__button.is-accent { border-color: #2845d6; color: #2845d6; }
+.vg-replica__button:disabled { cursor: default; opacity: .4; }
+.vg-replica__button:focus-visible, .vg-replica input:focus-visible { outline: 2px solid #2845d6; outline-offset: 3px; }
+.vg-replica input[type=range] { display: block; width: 100%; height: 20px; margin: 0; accent-color: #2845d6; cursor: pointer; }
+.vg-replica__sliders { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.vg-replica__sliders label { display: grid; gap: 6px; }
+.vg-replica__sliders .vg-replica__label { text-transform: uppercase; }
+.vg-replica__prediction-row, .vg-replica__target-row { display: grid; gap: 8px; }
+.vg-replica__prediction-row > .vg-replica__label, .vg-replica__target-row > .vg-replica__label { text-transform: uppercase; }
+.vg-replica__four-images { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.vg-replica__three-images { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.vg-replica__three-images .vg-replica__pixels { align-items: center; }
+.vg-replica__three-images figcaption { width: 100%; }
+.vg-replica__three-images canvas { width: min(100%, 274px); }
+/* Independent formula experiments with live coefficient and pixel values. */
+.vg-replica.vg-formula-lab {
+  --ui-type-body-small-size: 12px;
+  --ui-type-body-size: 18px;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  gap: 32px; padding: 26px 36px;
+}
+.vg-formula-lab .vg-replica__panel > header { --ui-type-body-size: 20px; }
+.vg-formula-lab .vg-replica__metric { --ui-type-body-small-size: 11px; }
+.vg-formula-lab .vg-replica__button { --ui-type-body-small-size: 14px; }
+.vg-formula-lab.is-forward .vg-replica__metrics--two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.vg-formula-lab.is-forward .vg-replica__panel > header { --ui-font-sans: 'Microsoft YaHei', sans-serif; padding: 12px 16px; }
+.vg-replica__alpha-symbol { display: inline-block; font-size: 32px; color: #263650; text-transform: none; letter-spacing: 0; }
+.vg-formula-lab.is-forward .vg-replica__metric { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.vg-formula-lab.is-forward .vg-replica__forward-images { align-items: center; }
+.vg-formula-lab.is-forward .vg-replica__pixels { align-items: center; }
+.vg-formula-lab.is-forward .vg-replica__pixels figcaption { width: min(100%, 360px); }
+.vg-formula-lab.is-forward .vg-replica__canvas-wrap { width: min(100%, 360px); }
+.vg-formula-lab.is-reverse .vg-replica__three-images .vg-replica__canvas-wrap { width: min(100%, 180px); }
+.vg-replica__canvas-wrap { position: relative; width: 100%; }
+.vg-replica__canvas-wrap.is-pickable { cursor: crosshair; }
+.vg-replica__probe { position: absolute; width: 12px; height: 12px; border: 2px solid white; box-shadow: 0 0 0 2px #24945d; border-radius: 50%; transform: translate(-50%, -50%); pointer-events: none; }
+.vg-formula-lab__rail {
+  --ui-font-sans: 'Microsoft YaHei', sans-serif;
+  --ui-type-body-small-size: 14px;
+  --ui-type-body-small-line-height: 1.5;
+  --ui-type-body-size: 18px;
+  --ui-type-body-line-height: 1.5;
+  display: grid; align-content: start; gap: 12px;
+  min-height: 0; padding: 8px 0;
+}
+.vg-formula-lab__equation { min-width: 0; max-width: 100%; padding: 4px 0; }
+.vg-formula-lab__equation .math-formula { font-size: 26px; max-width: 100%; }
+.vg-formula-lab__variables { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 16px; }
+.vg-formula-lab__variable { display: grid; gap: 4px; padding-bottom: 7px; border-bottom: 1px solid #e4e4e7; }
+.vg-formula-lab__value { font-family: 'Diffusion Reference Mono', monospace; font-variant-numeric: tabular-nums; }
+.vg-formula-lab .is-signal { color: #2675c8; }
+.vg-formula-lab .is-noise { color: #d28a39; }
+.vg-formula-lab .is-output { color: #24945d; }
+.vg-formula-lab__amplitudes { display: grid; gap: 8px; }
+.vg-formula-lab__amplitudes > div { display: grid; grid-template-columns: 80px minmax(0, 1fr); align-items: center; gap: 12px; }
+.vg-formula-lab__amplitudes progress { width: 100%; height: 12px; accent-color: #2675c8; }
+.vg-formula-lab__amplitudes .is-noise progress { accent-color: #d28a39; }
+.vg-formula-lab__pixel { display: grid; gap: 10px; padding: 14px 16px; background: #f8fafc; border: 1px solid #e4e4e7; border-radius: 6px; }
+.vg-formula-lab__probe-controls { display: flex; align-items: center; gap: 8px; }
+.vg-formula-lab__probe-controls > :first-child { flex: 1; }
+.vg-formula-lab__substitution { font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.vg-replica.vg-formula-lab.is-forward { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); }
+.vg-formula-lab.is-forward .vg-formula-lab__equation .math-formula { font-size: 44px; }
+.vg-formula-lab.is-forward .vg-formula-lab__rail { --ui-type-body-line-height: 1.3; gap: 16px; }
+.vg-formula-lab.is-forward .vg-formula-lab__variable { --ui-type-body-small-size: 20px; --ui-type-body-size: 30px; }
+.vg-formula-lab.is-forward .vg-formula-lab__substitution { --ui-type-body-size: 24px; white-space: nowrap; overflow-wrap: normal; }
+.vg-formula-lab.is-forward .vg-formula-lab__pixel { gap: 12px; padding: 16px; }
+.vg-formula-lab__variable-label { display: flex; align-items: center; gap: 12px; }
+.vg-formula-lab__variable-label .math-formula { font-size: 32px; line-height: 1.5; font-weight: 400; }
+.vg-formula-lab__schedule-row { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 20px; }
+.vg-formula-lab__coefficients { display: grid; align-content: center; gap: 20px; }
+.vg-alpha-schedule { --ui-type-body-small-size: 14px; display: grid; gap: 2px; margin-top: 6px; }
+.vg-alpha-schedule svg { display: block; width: 100%; height: auto; cursor: crosshair; }
+.vg-alpha-schedule__plot { position: relative; }
+.vg-alpha-schedule__tick { position: absolute; left: 0; transform: translateY(-50%); color: #71717a; pointer-events: none; }
+.vg-alpha-schedule__scale { display: flex; justify-content: space-between; padding-left: 8.75%; padding-right: 3.75%; color: #71717a; }
+.vg-formula-lab.is-forward .vg-replica__forward { --ui-font-sans: 'Microsoft YaHei', sans-serif; --ui-type-body-small-size: 18px; --ui-type-body-size: 22px; }
+.vg-formula-lab.is-forward .vg-replica__metric, .vg-formula-lab.is-forward .vg-replica__button { --ui-type-body-small-size: 18px; }
+.vg-replica__pick-hint { --ui-type-body-size: 26px; }
+.vg-formula-lab.is-forward .vg-replica__legend { flex-wrap: wrap; gap: 8px; }
+.vg-formula-lab.is-forward .vg-replica__label { text-transform: none; letter-spacing: 0; }
+.vg-replica.vg-formula-lab.is-reverse { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); }
+.vg-formula-lab.is-reverse .vg-replica__reverse { --ui-font-sans: 'Microsoft YaHei', sans-serif; --ui-type-body-small-size: 18px; --ui-type-body-size: 22px; }
+.vg-formula-lab.is-reverse .vg-replica__panel > header { padding: 12px 16px; }
+.vg-formula-lab.is-reverse .vg-replica__metric { --ui-type-body-small-size: 16px; }
+.vg-formula-lab.is-reverse .vg-replica__button { --ui-type-body-small-size: 18px; }
+.vg-formula-lab.is-reverse .vg-replica__label { text-transform: none; letter-spacing: 0; }
+.vg-formula-lab.is-reverse .vg-replica__pixels { --ui-type-body-small-size: 16px; }
+.vg-formula-lab.is-reverse .vg-formula-lab__rail { --ui-type-body-line-height: 1.3; gap: 12px; }
+.vg-formula-lab.is-reverse .vg-formula-lab__equation .math-formula { font-size: 34px; }
+.vg-formula-lab.is-reverse .vg-formula-lab__variable { --ui-type-body-small-size: 18px; --ui-type-body-size: 28px; }
+.vg-formula-lab.is-reverse .vg-formula-lab__variable-label .math-formula { font-size: 28px; }
+.vg-formula-lab.is-reverse .vg-formula-lab__pixel .vg-formula-lab__equation .math-formula { font-size: 28px; }
+.vg-formula-lab.is-reverse .vg-formula-lab__substitution { --ui-type-body-size: 22px; white-space: nowrap; overflow-wrap: normal; }

@@ -1,0 +1,44 @@
+.course-page-surface .vg-gan-game { height: 100%; width: 100%; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; gap: 20px; padding: 32px 44px 20px; background: #fff; }
+.course-page-surface .vg-gan-game, .course-page-surface .vg-gan-game * { box-sizing: border-box; }
+.course-page-surface .vg-gan-game__heading { display: grid; gap: 10px; }
+.course-page-surface .vg-gan-game__main { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 44px; min-height: 0; }
+.course-page-surface .vg-gan-game__main > *, .course-page-surface .vg-gan-game__side > *, .course-page-surface .vg-gan-game__plot > * { min-width: 0; min-height: 0; max-width: 100%; }
+.course-page-surface .vg-gan-game__plot { display: grid; grid-template-rows: auto minmax(0, 1fr); gap: 12px; }
+.course-page-surface .vg-gan-game__plot-top, .course-page-surface .vg-gan-game__legend, .course-page-surface .vg-gan-game__datasets { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-width: 0; max-width: 100%; }
+.course-page-surface .vg-gan-game__legend .ui-typography { display: flex; gap: 10px; align-items: center; }
+.course-page-surface .vg-gan-game__real { width: 16px; height: 16px; border: 3px solid #087f8c; border-radius: 50%; flex: 0 0 auto; }
+.course-page-surface .vg-gan-game__fake { width: 13px; height: 13px; background: #e88227; transform: rotate(45deg); flex: 0 0 auto; }
+.course-page-surface .vg-gan-game__datasets [aria-pressed="true"] { background: #eaf2fc; border-color: #819ab8; }
+.course-page-surface .vg-gan-game__map { display: grid; place-items: center; container-type: size; min-width: 0; min-height: 0; }
+.course-page-surface .vg-gan-game__figure { display: grid; gap: 8px; width: min(100cqw, calc(100cqh - 140px)); min-width: 0; max-width: 100%; }
+.course-page-surface .vg-gan-game__map canvas { display: block; width: 100%; height: auto; aspect-ratio: 1; max-width: 100%; border: 1px solid #dce5ef; border-radius: 16px; cursor: crosshair; }
+.course-page-surface .vg-gan-game__map-caption { display: grid; gap: 2px; text-align: center; min-width: 0; max-width: 100%; }
+.course-page-surface .vg-gan-game__color-key { display: flex; align-items: center; justify-content: center; gap: 24px; min-width: 0; max-width: 100%; }
+.course-page-surface .vg-gan-game__color-key .ui-typography { display: flex; align-items: center; gap: 8px; }
+.course-page-surface .vg-gan-game__color-key i { width: 24px; height: 14px; border-radius: 4px; border: 1px solid #cbd5e1; }
+.course-page-surface .vg-gan-game__color-key .is-fake { background: #bba1d9; }
+.course-page-surface .vg-gan-game__color-key .is-unsure { background: #f8f8f8; }
+.course-page-surface .vg-gan-game__color-key .is-real { background: #82c8ac; }
+.course-page-surface .vg-gan-game__side { display: grid; grid-template-rows: auto auto minmax(0, 1fr) auto; gap: 12px; }
+.course-page-surface .vg-gan-game__flow { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 16px; }
+.course-page-surface .vg-gan-game__flow > div { min-width: 0; max-width: 100%; padding: 8px 16px; background: #f4f7fa; border: 2px solid transparent; border-radius: 12px; }
+.course-page-surface .vg-gan-game__flow > .is-updating { border-color: #438574; background: #edf8f1; }
+.course-page-surface .vg-gan-game__loss-chart { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 20px; min-width: 0; max-width: 100%; border-bottom: 1px solid #dce5ef; padding-bottom: 8px; }
+.course-page-surface .vg-gan-game__single-loss { display: grid; gap: 4px; min-width: 0; max-width: 100%; }
+.course-page-surface .vg-gan-game__loss-legend { display: flex; justify-content: space-between; align-items: center; gap: 12px; min-width: 0; max-width: 100%; }
+.course-page-surface .vg-gan-game__loss-legend .ui-typography { display: flex; align-items: center; gap: 8px; }
+.course-page-surface .vg-gan-game__loss-legend i { width: 22px; height: 3px; flex: 0 0 auto; }
+.course-page-surface .vg-gan-game__d-line { background: #e25c72; }
+.course-page-surface .vg-gan-game__g-line { background: #3678cc; }
+.course-page-surface .vg-gan-game__loss-plot { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 6px; height: 120px; min-width: 0; max-width: 100%; }
+.course-page-surface .vg-gan-game__loss-plot svg { display: block; width: 100%; height: 100%; min-width: 0; max-width: 100%; }
+.course-page-surface .vg-gan-game__y-axis { position: relative; min-width: 0; max-width: 100%; }
+.course-page-surface .vg-gan-game__y-axis > :first-child { position: absolute; top: 3.33%; transform: translateY(-50%); }
+.course-page-surface .vg-gan-game__y-axis > :last-child { position: absolute; bottom: 3.33%; transform: translateY(50%); }
+.course-page-surface .vg-gan-game__x-axis { grid-column: 1 / -1; display: flex; justify-content: space-between; gap: 12px; margin-left: 70px; min-width: 0; max-width: 100%; }
+.course-page-surface .vg-gan-game__task { display: grid; align-content: start; gap: 8px; }
+.course-page-surface .vg-gan-game__task h2 { color: #183e64; }
+.course-page-surface .vg-gan-game__answers { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.course-page-surface .vg-gan-game__controls { display: grid; gap: 10px; }
+.course-page-surface .vg-gan-game__controls > div { display: flex; gap: 10px; flex-wrap: wrap; }
+.course-page-surface .vg-gan-game__footer { display: flex; align-items: center; justify-content: flex-end; gap: 20px; min-width: 0; max-width: 100%; }

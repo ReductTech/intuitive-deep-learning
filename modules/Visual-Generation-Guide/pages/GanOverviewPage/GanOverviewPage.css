@@ -1,0 +1,32 @@
+.course-page-surface .vg-gan {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) 70px;
+  width: 100%; height: 100%; min-width: 0; min-height: 0; max-width: 100%;
+  background: #fff;
+}
+.course-page-surface .vg-gan__body { display: grid; place-items: center; min-width: 0; min-height: 0; max-width: 100%; }
+.course-page-surface .vg-gan__canvas { position: relative; height: 100%; aspect-ratio: 1672 / 941; min-width: 0; min-height: 0; max-width: 100%; }
+.course-page-surface .vg-gan__diagram { width: 100%; height: 100%; min-width: 0; min-height: 0; max-width: 100%; }
+.course-page-surface .vg-gan__diagram > svg { display: block; width: 100%; height: 100%; min-width: 0; min-height: 0; max-width: 100%; }
+.course-page-surface .vg-gan__diagram [data-hidden="true"] { visibility: hidden; opacity: 0; pointer-events: none; }
+.course-page-surface .vg-gan__diagram [data-current="true"][data-hidden="false"] { animation: vg-gan-reveal .4s ease-out both; }
+.course-page-surface .vg-gan__footer { display: flex; min-width: 0; min-height: 0; max-width: 100%; align-items: center; justify-content: flex-end; gap: 24px; margin: 0 32px; padding: 10px 0; }
+.course-page-surface .vg-gan__explanation { position: absolute; left: 4%; top: 69%; width: 34%; display: grid; min-width: 0; max-width: 100%; gap: 12px; }
+.course-page-surface .vg-gan__actions { display: flex; flex: 0 0 auto; min-width: 0; max-width: 100%; gap: 8px; }
+@keyframes vg-gan-reveal { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .course-page-surface .vg-gan__diagram [data-current="true"][data-hidden="false"] { animation: none; }
+}
+
+.course-page-surface .vg-gan-overview__summary {
+  position: absolute;
+  left: 4%;
+  top: 3.3%;
+  width: 92%;
+  height: 11.3%;
+  display: grid;
+  align-items: center;
+  min-width: 0;
+  max-width: 100%;
+}
+.course-page-surface .vg-gan-overview__summary p { margin: 0; }

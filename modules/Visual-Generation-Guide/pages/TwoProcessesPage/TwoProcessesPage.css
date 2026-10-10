@@ -1,0 +1,260 @@
+.course-page-surface .vg-process-page {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  grid-template-rows: auto minmax(0, 1fr);
+  background: radial-gradient(circle at 96% 5%, rgba(45, 116, 193, .08), transparent 29%), #fff;
+}
+
+.course-page-surface .vg-process-page__body {
+  min-width: 0;
+  min-height: 0;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 12px;
+}
+
+.course-shell .vg-process-page__stage {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+
+.course-shell .vg-process-page__lane {
+  display: grid;
+  min-width: 0;
+  max-width: 100%;
+  height: 232px;
+  flex: 0 0 auto;
+  grid-template-columns: minmax(0, 238px) minmax(0, 1fr);
+  align-items: center;
+  gap: 16px;
+  border: 1px solid rgba(39, 103, 177, .17);
+  border-radius: 22px;
+  background: linear-gradient(102deg, rgba(38, 107, 187, .085), rgba(38, 107, 187, .015) 40%, rgba(255, 255, 255, .88));
+  padding: 14px 26px;
+  overflow: hidden;
+}
+
+.course-shell .vg-process-page__lane--reverse {
+  border-color: rgba(39, 139, 103, .22);
+  background: linear-gradient(102deg, rgba(34, 147, 108, .085), rgba(34, 147, 108, .018) 40%, rgba(255, 255, 255, .9));
+  animation: vg-process-lane-in 460ms cubic-bezier(.2, .76, .2, 1) both;
+}
+
+.course-shell .vg-process-page__lane-intro {
+  display: grid;
+  min-width: 0;
+  align-content: center;
+  justify-items: start;
+  gap: 8px;
+}
+
+.course-shell .vg-process-page__eyebrow {
+  letter-spacing: .05em;
+}
+
+.course-shell .vg-process-page__direction {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+  border-radius: 999px;
+  background: rgba(30, 98, 177, .1);
+  color: #194f8c;
+  padding: 6px 13px;
+  letter-spacing: .02em;
+}
+
+.course-shell .vg-process-page__lane--reverse .vg-process-page__direction {
+  background: rgba(22, 134, 93, .11);
+  color: #16734f;
+}
+
+.course-shell .vg-process-page__direction span {
+  color: inherit;
+}
+
+.course-shell .vg-process-page__track {
+  display: grid;
+  min-width: 0;
+  max-width: 100%;
+  height: 100%;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: center;
+}
+
+.course-shell .vg-process-page__node-slot {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  max-width: 100%;
+  height: 100%;
+  place-items: center;
+}
+
+.course-shell .vg-process-page__node {
+  display: grid;
+  width: 162px;
+  min-width: 0;
+  max-width: 100%;
+  justify-items: center;
+  gap: 5px;
+  margin: 0;
+  animation: vg-process-node-in 620ms cubic-bezier(.15, .8, .22, 1) both;
+}
+
+.course-shell .vg-process-page__photo {
+  width: 132px;
+  height: 138px;
+  max-width: 100%;
+  border: 4px solid #fff;
+  border-radius: 17px;
+  background: #e7edf4;
+  box-shadow: 0 12px 28px rgba(24, 63, 105, .18), 0 0 0 1px rgba(42, 80, 119, .18);
+  overflow: hidden;
+}
+
+.course-shell .vg-process-page__photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  object-fit: cover;
+}
+
+.course-shell .vg-process-page__node figcaption {
+  display: grid;
+  justify-items: center;
+  white-space: nowrap;
+}
+
+.course-shell .vg-process-page__node.is-current .vg-process-page__photo {
+  box-shadow: 0 14px 30px rgba(24, 63, 105, .2), 0 0 0 3px rgba(32, 108, 194, .45);
+}
+
+.course-shell .vg-process-page__lane--reverse .vg-process-page__node.is-current .vg-process-page__photo {
+  box-shadow: 0 14px 30px rgba(24, 63, 105, .2), 0 0 0 3px rgba(29, 145, 99, .48);
+}
+
+.course-shell .vg-process-page__connector {
+  position: absolute;
+  z-index: 2;
+  top: 53px;
+  right: -43px;
+  display: grid;
+  width: 86px;
+  max-width: 100%;
+  justify-items: center;
+  gap: 3px;
+  color: #1e64b1;
+  text-align: center;
+  animation: vg-process-arrow-in 420ms ease both;
+}
+
+.course-shell .vg-process-page__connector--reverse {
+  color: #17835c;
+}
+
+.course-shell .vg-process-page__connector b {
+  font-size: 34px;
+  font-weight: 400;
+  line-height: .9;
+}
+
+.course-shell .vg-process-page__connector .ui-typography {
+  border-radius: 999px;
+  background: #fff;
+  padding: 0 8px;
+  box-shadow: 0 1px 8px rgba(31, 63, 94, .09);
+  white-space: nowrap;
+}
+
+.course-shell .vg-process-page__bridge {
+  display: flex;
+  min-width: 0;
+  max-width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  animation: vg-process-node-in 420ms ease both;
+}
+
+.course-shell .vg-process-page__bridge-line {
+  width: min(23%, 230px);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(41, 96, 151, .35));
+}
+
+.course-shell .vg-process-page__bridge-line:last-child {
+  transform: rotate(180deg);
+}
+
+.course-shell .vg-process-page__footer {
+  display: flex;
+  min-width: 0;
+  max-width: 100%;
+  min-height: 96px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+  border: 1px solid rgba(225, 169, 63, .35);
+  border-radius: 18px;
+  background: linear-gradient(92deg, rgba(255, 246, 224, .96), rgba(255, 251, 241, .98));
+  padding: 15px 25px;
+}
+
+.course-shell .vg-process-page__footer.is-complete {
+  border-color: rgba(42, 151, 111, .32);
+  background: linear-gradient(92deg, rgba(238, 250, 244, .98), #fff);
+}
+
+.course-shell .vg-process-page__narration {
+  display: grid;
+  min-width: 0;
+  gap: 3px;
+}
+
+.course-shell .vg-process-page__chapter {
+  letter-spacing: .05em;
+}
+
+.course-shell .vg-process-page__actions {
+  display: flex;
+  min-width: 0;
+  flex: 0 0 auto;
+  align-items: center;
+}
+
+.course-shell .vg-process-page__actions .edu-btn {
+  min-width: 166px;
+}
+
+@keyframes vg-process-node-in {
+  from { opacity: 0; transform: translateY(10px) scale(.94); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes vg-process-arrow-in {
+  from { opacity: 0; transform: translateX(-14px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes vg-process-lane-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .course-shell .vg-process-page__node,
+  .course-shell .vg-process-page__connector,
+  .course-shell .vg-process-page__lane--reverse,
+  .course-shell .vg-process-page__bridge {
+    animation: none;
+  }
+}

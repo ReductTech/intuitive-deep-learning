@@ -1,0 +1,76 @@
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train { display: grid; grid-template-rows: auto minmax(0, 1fr); box-sizing: border-box; width: 100%; height: 100%; min-width: 0; min-height: 0; max-width: 100%; background: #fff; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__body { display: grid; grid-template-rows: minmax(0, 1fr) 254px 48px; gap: 16px; min-width: 0; min-height: 0; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train[data-mode="cycle"] .vg-gan-train__body { grid-template-rows: minmax(0, 1fr) 180px 48px; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__reveal { min-width: 0; min-height: 0; max-width: 100%; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__reveal[data-visible="false"] { visibility: hidden; pointer-events: none; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__visual { display: grid; grid-template-rows: minmax(0, 1fr) 48px; min-width: 0; min-height: 0; gap: 8px; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__diagram { position: relative; min-width: 0; min-height: 0; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__wires, :is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__cycle-wires { position: absolute; inset: 0; width: 100%; height: 100%; max-width: 100%; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__diagram > .vg-gan-train__reveal { position: absolute; width: 12%; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__sample { margin: 0; display: grid; gap: 6px; justify-items: center; min-width: 0; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__sample img { width: 108px; height: 108px; max-width: 100%; object-fit: cover; border-radius: 8px; border: 1px solid #d7e2ed; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__sample figcaption { white-space: nowrap; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__network { display: grid; justify-items: center; gap: 4px; min-width: 0; max-width: 100%; padding: 10px 6px; border: 1px solid #d7e2ed; border-radius: 6px; background: #f8fbfd; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__network h2, :is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__network p { margin: 0; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__network svg { width: 120px; height: 88px; max-width: 100%; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__network[data-updating="true"] { box-shadow: 0 0 0 3px rgba(86, 124, 162, .09); }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__network.is-g { background: #f1faf4; border-color: #b0d8bf; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__network.is-d { background: #fff4f4; border-color: #e8bcc0; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__noise { left: 0; top: 22%; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__g { left: 20%; top: 13%; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__fake { left: 40%; top: 22%; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__d { left: 64%; top: 13%; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__diagram.is-d .vg-gan-train__noise, :is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__diagram.is-d .vg-gan-train__fake { top: 45%; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__diagram.is-d .vg-gan-train__g { top: 38%; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__real { left: 40%; top: 0; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__real-target { left: 85%; top: 10%; width: 15% !important; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__fake-target { left: 85%; top: 31%; width: 15% !important; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__diagram.is-d .vg-gan-train__fake-target { top: 57%; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__real-target p, :is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__fake-target p { margin: 0; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__feedback-label { left: 40%; top: 84%; width: 42% !important; text-align: center; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__diagram.is-g .vg-gan-train__feedback-label { left: 40%; top: 78%; width: 24% !important; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__loss-layout { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr); gap: 32px; padding: 16px 0 0; border-top: 1px solid #d7e2ed; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__loss, :is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__notation { display: grid; align-content: start; gap: 8px; min-width: 0; min-height: 0; max-width: 100%; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__loss h2, :is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__loss p, :is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__notation p { margin: 0; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__notation { padding: 8px 20px; border-left: 1px solid #d7e2ed; gap: 16px; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__equation { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; min-width: 0; max-width: 100%; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__equation math-field { font-size: 28px; max-width: 100%; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__footer { display: flex; justify-content: flex-end; align-items: center; gap: 20px; min-width: 0; max-width: 100%; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__footer p { margin: 0; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__cycle { position: relative; min-width: 0; min-height: 0; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__cycle-d, :is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__cycle-g { position: absolute; top: 0; width: 44%; height: 78%; padding: 10px 22px; box-sizing: border-box; display: grid; align-content: start; gap: 10px; border: 1px solid #d7e2ed; border-radius: 8px; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__cycle-d { left: 0; background: #fff8f8; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__cycle-g { right: 0; background: #f4fbf6; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__cycle h2, :is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__cycle p { margin: 0; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__cycle-networks { display: grid; grid-template-columns: minmax(0, 1fr) 32px minmax(0, 1fr); align-items: center; gap: 18px; min-width: 0; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__cycle-networks .vg-gan-train__network svg { height: 66px; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__cycle[data-focus="d"] .vg-gan-train__cycle-d { border-color: #d95a64; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__cycle[data-focus="g"] .vg-gan-train__cycle-g { border-color: #359361; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__cycle-next { position: absolute; left: 44%; top: 15%; width: 12%; text-align: center; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__cycle-repeat { position: absolute; left: 28%; top: 91%; width: 44%; text-align: center; background: #fff; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__cycle-intro { position: absolute; inset: 20% 15%; text-align: center; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__cycle-summary { display: grid; gap: 14px; align-content: center; border-top: 1px solid #d7e2ed; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__cycle-summary h2, :is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__cycle-summary p { margin: 0; }
+
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__narration { display: flex; align-items: center; min-width: 0; border-left: 3px solid #87aaca; padding: 0 16px; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__narration p { margin: 0; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train[data-mode="cycle"] .vg-gan-train__footer { justify-content: flex-end; }
+
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train[data-mode="d"] .vg-gan-train__loss-layout { grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr); }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__sample-note { margin: 0; text-align: center; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__diagram.is-d .vg-gan-train__real { width: 20%; left: 36%; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__diagram.is-d .vg-gan-train__real .vg-gan-train__sample-note { position: absolute; right: calc(50% + 66px); top: 42px; width: 280px; text-align: right; white-space: nowrap; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__diagram .vg-gan-train__noise .vg-gan-train__sample-note { position: absolute; top: calc(100% + 6px); left: 0; width: 260px; text-align: left; white-space: nowrap; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__diagram .vg-gan-train__noise .vg-gan-train__sample { position: relative; }
+
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train[data-mode="d"] .vg-gan-train__visual { grid-template-rows: minmax(0, 1fr); }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__diagram.is-d .vg-gan-train__feedback-label { left: 54%; top: 80%; width: 15% !important; text-align: left; }
+
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__loss-goal { display: flex; align-items: center; min-width: 0; min-height: 0; padding: 8px 20px; border-left: 1px solid #d7e2ed; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__loss-goal p { margin: 0; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train[data-mode="g"] .vg-gan-train__loss-layout { grid-template-columns: minmax(0, 1fr); }
+
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train[data-mode="g"] .vg-gan-train__loss-layout.is-inline { grid-template-columns: 320px minmax(0, 1fr) minmax(0, 1fr); align-items: center; padding-block: 16px; }
+
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__cycle-summary { grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); align-items: center; column-gap: 48px; }
+:is(.course-page-surface, .ppt-slide-surface) .vg-gan-train__cycle-goals { display: grid; gap: 18px; min-width: 0; padding-left: 32px; border-left: 1px solid #d7e2ed; }
