@@ -1,0 +1,32 @@
+{
+  "id": "gradient-descent",
+  "title": "梯度下降、优化器与反向传播",
+  "description": "当前已实现第 1 页：禁区撤离。通过搜寻战利品、裂隙闪现战斗和防守撤离，先体验风险与局部反馈，再追问怎样找到更安全的方向。完整课程大纲暂缓。",
+  "path": "/modules/gradient-descent",
+  "badge": "神经网络基础 · 优化与训练",
+  "moduleType": "teaching",
+  "difficulty": "intermediate",
+  "audience": "undergraduate",
+  "entry": "GuidePage.tsx",
+  "ppt": {
+    "entry": "GradientDescentPpt.tsx",
+    "path": "/scenedeck/",
+    "player": false
+  },
+  "pages": [
+    {
+      "id": "evacuation",
+      "title": "禁区撤离",
+      "goal": "在有风险的未知环境中，通过尝试和反馈找到可撤离的位置。",
+      "summary": "虚构的废弃工业区撤离小游戏。Three.js三维微缩地图呈现森林、河流、桥梁、废墟与停机坪。默认不显示辐射热力图，扫描器与局部方向探针由探索获得。",
+      "interaction": "拖拽进行裂隙闪现，不显示精确落点；撞断树木、撞杀守卫；F 搜索容器，Q 或右键震荡清除弹幕，E 消耗以太扫描四秒。带有核心后 R 呼叫直升机，防守停机坪八秒撤离。三分钟风暴、防护和以太共同形成行动压力，死亡遗失战利品。支持键盘、音效和重玩。",
+      "next": "如果看不到完整的辐射分布，怎样找到更安全的方向？",
+      "snippet": "你被困在一片废弃工业区。瞬移装置能帮你离开，但每次落点都可能更危险。先设法找到装备和撤离点。地图、辐射数值与事件均为虚构模拟。撤离后再追问：看不见全局时，怎样利用附近的信息寻找更安全的方向？本页不提前介绍优化术语或公式。"
+    }
+  ],
+  "moduleIdentity": {
+    "version": 1,
+    "id": "56a1d5b2-a439-4ee3-8f63-fd63ac09c741",
+    "signature": "UzOV9U1t8FD7IsnJBsaDS43MfjgOYbFVonyJpQsOGRcAHDNFdoarEDgAxsiy4FNyq3d3k+Elpc7qk1Tzi3kKBA=="
+  }
+}

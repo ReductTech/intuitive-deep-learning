@@ -1,0 +1,22 @@
+from playwright.sync_api import sync_playwright
+import json
+with sync_playwright() as p:
+ browser=p.chromium.launch(headless=True,channel='chrome')
+ page=browser.new_page(viewport={'width':1600,'height':1000},device_scale_factor=1)
+ page.goto('http://localhost:5173/scenedeck/?deck=digital-image-intro&slide=video-frames')
+ page.wait_for_selector('.di-video__body[data-ready="true"]',timeout=60000)
+ print('decoded:',page.locator('.di-video__body').get_attribute('data-ready'))
+ print('surface:',page.locator('.ng-ppt-slide-surface').count())
+ page.locator('.di-video').screenshot(path='work/video-check/default.png')
+ page.get_by_role('button',name='下一帧',exact=True).click()
+ page.wait_for_selector('.di-video__body[data-frame="1"]')
+ print('next frame:',page.locator('.di-video__body').get_attribute('data-frame'))
+ page.get_by_role('button',name='播放',exact=True).click()
+ page.wait_for_function("Number(document.querySelector('.di-video__body').dataset.frame) >= 24",timeout=5000)
+ page.get_by_role('button',name='暂停',exact=True).click()
+ print('paused:',page.locator('.di-video__body').get_attribute('data-frame'))
+ page.get_by_role('button',name='跳到第 120 帧',exact=True).click()
+ page.wait_for_selector('.di-video__body[data-frame="120"]')
+ page.locator('.di-video').screenshot(path='work/video-check/last-frame.png')
+ print('bounds:',page.evaluate('''() => {const s=document.querySelector('.ng-ppt-slide-surface') || document.querySelector('.di-video'); const b=s.getBoundingClientRect(); return {surface:{width:b.width,height:b.height},outside:[...document.querySelectorAll('.di-video *')].filter(e=>{const r=e.getBoundingClientRect();return r.width && r.height && (r.left<b.left-1||r.top<b.top-1||r.right>b.right+1||r.bottom>b.bottom+1)}).map(e=>e.className)}}'''))
+ browser.close()

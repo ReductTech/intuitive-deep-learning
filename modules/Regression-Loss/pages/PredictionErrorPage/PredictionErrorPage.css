@@ -1,0 +1,33 @@
+.rl-error-page { display: grid; grid-template-rows: auto minmax(0,1fr); }
+.rl-error-page > .edu-content-body { min-height: 0; }
+.rl-error-layout { display: grid; grid-template-columns: minmax(0,1.65fr) minmax(0,1fr); grid-template-rows: minmax(0,1fr) auto; gap: 20px; min-height: 0; }
+.rl-error-layout > * { min-width: 0; min-height: 0; }
+.rl-error-plot { position: relative; border: 1px solid #e4edf6; border-radius: var(--ui-radius-lg); background: linear-gradient(145deg,#fff,#f8fbff); }
+.rl-error-chart { width: 100%; height: 100%; min-height: 0; }
+.rl-error-arrow { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.rl-error-gap { position: absolute; transform: translateY(-50%); pointer-events: none; display: grid; gap: 0; padding: 8px 14px; background: rgba(232,242,253,.96); border-radius: var(--ui-radius-lg); }
+.rl-error-input { position: absolute; left: 14%; bottom: 2%; }
+.rl-error-notes { display: grid; grid-template-rows: auto auto auto; gap: 14px; align-content: center; }
+.rl-error-card { display: grid; gap: 8px; padding: 12px 18px; border: 1px solid #d8e7fa; border-radius: var(--ui-radius-lg); background: linear-gradient(135deg,#eef6ff,#e2edfc); }
+.rl-error-definition .math-formula-block { padding: 5px 12px; border-radius: var(--ui-radius-lg); background: rgba(255,255,255,.75); }
+.rl-error-card .math-formula { justify-content: center; }
+.rl-error-card math-field { font-size: 44px; }
+.rl-error-sample { background: linear-gradient(135deg,#fffaf3,#fff3e6); border-color: #f3e7d6; }
+.rl-error-values { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 0; padding: 8px 10px; border-radius: var(--ui-radius-md); background: rgba(255,255,255,.92); text-align: center; }
+.rl-error-values > div { display: grid; gap: 3px; }
+.rl-error-values > div + div { border-left: 1px solid #dae3ee; }
+.rl-error-observed { color: #d76f10; }
+.rl-error-predicted { color: #078793; }
+.rl-error-result { padding: 4px 12px; border-radius: var(--ui-radius-md); background: #e7f1fd; text-align: center; }
+.rl-error-direction { display: grid; grid-template-columns: minmax(0,1fr) 115px; gap: 10px; align-items: center; }
+.rl-error-direction > div:first-child { display: grid; gap: 6px; }
+.rl-error-direction .edu-btn { justify-self: start; padding: 5px 10px; }
+.rl-error-mini { position: relative; height: 120px; border-radius: var(--ui-radius-lg); background: rgba(255,255,255,.6); }
+.rl-error-mini svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.rl-error-mini .math-formula-static { position: absolute; top: 25px; right: 3px; }
+.rl-error-mini math-field { font-size: 25px; }
+.rl-error-takeaway { grid-column: 1 / -1; display: flex; gap: 20px; align-items: center; padding: 10px 28px; border-radius: var(--ui-radius-lg); background: linear-gradient(100deg,#eaf4ff,#d5e6ff); }
+.rl-error-bulb { flex: 0 0 48px; width: 48px; height: 48px; }
+
+.rl-error-term-note {margin-left:auto;display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.rl-error-term-note .explain-panel {top:auto;bottom:calc(100% + 14px);left:auto;right:0;transform:none;width:440px;}

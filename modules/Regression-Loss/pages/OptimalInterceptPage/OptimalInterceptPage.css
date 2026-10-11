@@ -1,0 +1,32 @@
+.rl-intercept-page { display:grid; grid-template-rows:auto minmax(0,1fr); }
+.rl-intercept-page > .edu-content-body { min-height:0; }
+.rl-intercept-layout { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,.08fr) minmax(0,1fr); grid-template-rows:auto minmax(0,1fr) auto; gap:14px; height:100%; min-height:0; }
+.rl-intercept-layout > * { min-width:0; min-height:0; max-width:100%; }
+.rl-intercept-control { grid-column:1/-1; display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; gap:24px; padding:12px 22px; background:#f2f7ff; border:1px solid #dfeaf7; border-radius:var(--ui-radius-lg); }
+.rl-intercept-control .edu-control { min-width:0; }
+.rl-intercept-visual { display:grid; grid-template-rows:auto minmax(0,1fr); gap:8px; padding:16px 12px 8px; background:#fff; border:1px solid #dfeaf7; border-radius:var(--ui-radius-lg); }
+.rl-intercept-plot-intro { display:flex; align-items:center; justify-content:space-between; gap:8px; padding:0 8px; }
+.rl-intercept-plot-intro > * { min-width:0; }
+.rl-intercept-link { display:grid; align-content:center; justify-items:center; gap:8px; text-align:center; }
+.rl-intercept-coordinate { position:relative; min-height:0; height:100%; width:100%; }
+.rl-intercept-chart,.rl-intercept-prediction-chart { width:100%; height:100%; min-height:0; }
+.rl-intercept-point-wrap { position:absolute; z-index:4; transform:translate(-50%,-50%); }
+.rl-intercept-point.edu-btn { width:29px; height:29px; min-height:29px; padding:0; border:3px solid #fff; border-radius:50%; background:#ed8a34; color:transparent; box-shadow:0 0 0 6px #ed8a341a; touch-action:none; cursor:grab; }
+.rl-intercept-point.is-minimum.edu-btn { background:#009eaa; box-shadow:0 0 0 6px #009eaa1a; }
+.rl-intercept-derivation { grid-column:1/-1; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.1fr) minmax(0,.9fr); padding:16px 20px; background:#f5f9ff; border:1px solid #dfeaf7; border-radius:var(--ui-radius-lg); }
+.rl-intercept-step { display:grid; gap:16px; align-content:start; min-width:0; min-height:0; padding:0 16px; }
+.rl-intercept-step + .rl-intercept-step { border-left:1px solid #dce8f6; }
+.rl-intercept-heading { display:flex; align-items:center; gap:12px; }
+.rl-intercept-number { display:flex; align-items:center; justify-content:center; flex:0 0 40px; width:40px; height:40px; border-radius:50%; background:#367de8; color:#fff; }
+.rl-intercept-result .rl-intercept-number { background:#009eaa; }
+.rl-intercept-step .math-formula { font-size:28px; justify-content:center; gap:3px; }
+.rl-intercept-result { gap:8px; }
+.rl-intercept-stationary .math-formula { font-size:25px; }
+.rl-intercept-answer { padding:6px 10px; background:#e4f6f3; border-radius:var(--ui-radius-md); }
+.rl-intercept-answer .math-formula { font-size:32px; color:#00959f; }
+.rl-intercept-b-label { background:#e4f6f3; border-radius:var(--ui-radius-md); padding:3px 9px; }
+.rl-intercept-b-label .math-formula { font-size:23px; }
+
+
+.rl-intercept-number > * { margin:0; padding:0; text-align:center; }
+

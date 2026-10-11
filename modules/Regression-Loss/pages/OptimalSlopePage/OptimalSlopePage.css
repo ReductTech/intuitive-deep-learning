@@ -1,0 +1,5 @@
+.rl-slope-derivation { grid-template-columns:minmax(0,1.05fr) minmax(0,1fr) minmax(0,1fr); }
+.rl-slope-derivation .rl-intercept-step { gap:12px; }
+.rl-slope-derivation .math-formula { font-size:25px; gap:2px; }
+.rl-slope-substitution .math-formula { font-size:24px; color:#00959f; }
+.rl-slope-derivation .rl-intercept-answer .math-formula { font-size:29px; }

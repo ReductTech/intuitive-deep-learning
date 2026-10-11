@@ -1,0 +1,51 @@
+.rl-estimate-page.edu-content-block { display: grid; grid-template-rows: auto minmax(0,1fr); background: linear-gradient(rgba(247,250,252,.64),rgba(247,250,252,.64)),var(--rl-est-background) center/cover; }
+.rl-estimate-page > .edu-content-body { min-height: 0; }
+.rl-estimate-layout { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,.9fr); gap: 60px; min-height: 0; }
+.rl-estimate-layout > * { min-width: 0; min-height: 0; }
+.rl-estimate-plot { position: relative; min-height: 0; border: 1px solid rgba(130,155,175,.28); border-radius: var(--ui-radius-lg); background: rgba(255,252,246,.88); }
+.rl-estimate-chart { width: 100%; height: 100%; min-height: 0; }
+.rl-estimate-handle { position: absolute; left: 94%; width: 40px; height: 40px; padding: 0; transform: translate(-50%,-50%); border: 5px solid #168c97; border-radius: 50%; background: #fffdf6; box-shadow: 0 0 0 7px rgba(22,140,151,.12); touch-action: none; cursor: move; }
+.rl-estimate-handle span { position: absolute; left: -1px; top: -2px; color: #168c97; font-size: 24px; line-height: 30px; }
+.rl-estimate-handle:focus-visible { outline: 3px solid #27446e; outline-offset: 8px; }
+.rl-estimate-water-label { position: absolute; top: 18.1667%; left: 2%; transform: translateY(-50%); color: #b26005; }
+.rl-estimate-reasoning { display: grid; grid-template-rows: auto minmax(0,1fr) auto; gap: 26px; padding: 15px 12px 8px 0; }
+.rl-estimate-instruction,.rl-estimate-estimation,.rl-estimate-question { display: grid; gap: 12px; }
+.rl-estimate-estimation { align-content: center; justify-items: start; }
+.rl-estimate-value { display: grid; gap: 4px; margin: 12px 0; }
+.rl-estimate-footer { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+
+
+.rl-estimate-reasoning {grid-template-rows:auto auto minmax(0,1fr);gap:22px;padding:16px 0;}
+.rl-estimate-estimation {padding:24px 26px;border:1px solid rgba(130,155,175,.25);border-radius:var(--ui-radius-lg);background:rgba(255,252,246,.88);}
+.rl-estimate-value {margin:6px 0;}
+.rl-estimate-question {align-content:center;gap:18px;padding:24px 26px;border-radius:var(--ui-radius-lg);background:rgba(230,239,250,.9);}
+
+.rl-estimate-content {display:grid;grid-template-rows:minmax(0,1fr);min-height:0;}
+.rl-estimate-content--loss {grid-template-rows:auto minmax(0,1fr);gap:18px;}
+.rl-estimate-loss-strip {display:grid;grid-template-columns:1fr 1fr .8fr;gap:28px;align-items:center;padding:12px 24px;border-radius:var(--ui-radius-lg);background:rgba(234,243,255,.95);}
+.rl-estimate-loss-strip > div {display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.rl-estimate-content--loss .rl-estimate-reasoning {gap:14px;padding:4px 0;}
+.rl-estimate-content--loss .rl-estimate-estimation,.rl-estimate-content--loss .rl-estimate-question {padding:16px 22px;gap:10px;}
+
+.rl-estimate-game {align-content:start;gap:8px;}
+.rl-estimate-game .edu-btn {justify-self:start;}
+.rl-estimate-stars {display:flex;align-items:center;gap:8px;}
+.rl-estimate-game-values {display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.rl-estimate-game-values > div {display:grid;gap:2px;}
+.rl-estimate-content--loss .rl-estimate-game {padding:14px 20px;gap:7px;}
+
+/* Challenge layout has its own hierarchy; the introductory estimate page is unchanged. */
+.rl-estimate-challenge-page .rl-estimate-content--loss {gap:18px;}
+.rl-estimate-challenge-page .rl-estimate-loss-strip {grid-template-columns:1fr 1fr;gap:20px;padding:0;background:none;}
+.rl-estimate-challenge-page .rl-estimate-loss-strip > div {display:grid;grid-template-columns:1fr auto;align-items:center;gap:18px;padding:14px 26px;border:1px solid #bbd1ee;border-radius:var(--ui-radius-lg);background:linear-gradient(120deg,#edf5ff,#dceaff);}
+.rl-estimate-challenge-page .rl-estimate-loss-strip > div:nth-child(2) {background:linear-gradient(120deg,#eaf8f6,#d5eee9);border-color:#acd7cf;}
+.rl-estimate-challenge-page .rl-estimate-layout {grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:26px;}
+.rl-estimate-challenge-page .rl-estimate-reasoning {grid-template-rows:auto minmax(0,1fr);gap:14px;padding:0;}
+.rl-estimate-challenge-page .rl-estimate-instruction {display:none;}
+.rl-estimate-challenge-page .rl-estimate-estimation {padding:14px 22px;gap:4px;}
+.rl-estimate-challenge-page .rl-estimate-estimation > .ui-typography {justify-self:start;}
+.rl-estimate-challenge-page .rl-estimate-value {margin:0;}
+.rl-estimate-challenge-page .rl-estimate-game {padding:16px 22px;gap:9px;align-content:space-between;}
+.rl-estimate-challenge-page .rl-estimate-game .edu-btn {padding:5px 12px;}
+.rl-estimate-challenge-page .rl-estimate-game-values {gap:18px;}
+.rl-estimate-challenge-page .rl-estimate-stars {gap:6px;}

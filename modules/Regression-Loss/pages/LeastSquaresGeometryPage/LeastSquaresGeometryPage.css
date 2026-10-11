@@ -1,0 +1,20 @@
+.rl-geometry-page { display:grid; grid-template-rows:auto minmax(0,1fr); }
+.rl-geometry-page > .edu-content-body { min-height:0; }
+.rl-geometry-layout { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,.32fr) minmax(0,1fr); grid-template-rows:minmax(0,1fr) auto; gap:16px; height:100%; min-height:0; }
+.rl-geometry-layout > * { min-width:0; max-width:100%; min-height:0; }
+.rl-geometry-panel { display:grid; grid-template-rows:auto auto minmax(0,1fr) auto; gap:12px; padding:20px; border:1px solid #d8e8fa; border-radius:var(--ui-radius-lg); background:linear-gradient(#f2f8ff,#fff 32%); }
+.rl-geometry-probability { border-color:#d5eeeb; background:linear-gradient(#effbf8,#fff 32%); }
+.rl-geometry-heading { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.rl-geometry-heading > * { min-width:0; }
+.rl-geometry-space,.rl-geometry-chart { width:100%; height:100%; min-width:0; min-height:0; }
+.rl-geometry-space { touch-action:none; }
+.rl-geometry-bridge { align-self:center; display:grid; justify-items:center; gap:26px; text-align:center; padding:25px 10px; background:#eff6ff; border-radius:var(--ui-radius-lg); }
+.rl-geometry-bridge .math-formula { font-size:22px; gap:2px; }
+.rl-geometry-readout { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px 18px; background:#e5f5f4; border-radius:var(--ui-radius-md); }
+.rl-geometry-readout > * { min-width:0; }
+.rl-geometry-footer { grid-column:1/-1; display:grid; justify-items:center; gap:12px; padding:17px 20px; border-radius:var(--ui-radius-lg); background:#edf5ff; }
+.rl-geometry-footer .math-formula { font-size:27px; gap:4px; }
+.rl-geometry-space-wrap { display:grid; grid-template-rows:auto minmax(0,1fr) auto; min-width:0; min-height:0; gap:6px; }
+.rl-geometry-space-tools { display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+.rl-geometry-space-tools .edu-btn { padding:5px 10px; min-height:32px; }
+.rl-geometry-point-legend { text-align:center; }

@@ -1,0 +1,92 @@
+export type Point = { x: number; z: number };
+export type Phase = 'briefing' | 'playing' | 'rescuing' | 'won' | 'lost';
+export type PickupId = 'scanner' | 'compass' | 'medicine';
+export const WORLD_WIDTH = 180;
+export const WORLD_DEPTH = 140;
+export const EXIT: Point = { x: 30, z: -20.4 };
+export const START: Point = { x: -18, z: 13 };
+export const MAX_JUMP = 7;
+export const PICKUPS: { id: PickupId; point: Point; label: string; color: string }[] = [
+  { id: 'scanner', point: { x: -11, z: 10.5 }, label: '扫描器', color: '#ffbd65' },
+  { id: 'compass', point: { x: 21, z: -7.5 }, label: '方向探针', color: '#8de4e1' },
+  { id: 'medicine', point: { x: -10.5, z: -3 }, label: '急救补给', color: '#b8ef9d' },
+];
+export const distance = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.z - b.z);
+const riverSamples = [[-36, 1], [-27, 3], [-20.5, 5], [-12, 11], [-6.8, 11], [0, 8], [9, 11], [19.9, 13.7], [28, 10], [36, 25]];
+export const BRIDGES = [{ x: 5, z: -20.5 }, { x: 11, z: -6.8 }, { x: 13.7, z: 19.9 }];
+export function riverX(z: number) {
+  for (let i = 1; i < riverSamples.length; i++) {
+    const [a,x]=riverSamples[i-1],[b,y]=riverSamples[i];
+    if(z<=b){const t=Math.max(0,(z-a)/(b-a)),[pz,px]=riverSamples[Math.max(0,i-2)],[nz,nx]=riverSamples[Math.min(riverSamples.length-1,i+1)];const m0=(y-px)/(b-pz),m1=(nx-x)/(nz-a),t2=t*t,t3=t2*t;return (2*t3-3*t2+1)*x+(t3-2*t2+t)*m0*(b-a)+(-2*t3+3*t2)*y+(t3-t2)*m1*(b-a);}
+  }
+  return 25;
+}
+export function landHeight(x: number, z: number) {
+  const hills = .34 + .25 * Math.sin(x * .12 + z * .06) + .18 * Math.cos(z * .21 - x * .08)
+    + 1.5 * Math.exp(-((x + 4) ** 2 / 140 + (z + 24) ** 2 / 65))
+    + 1.9 * Math.exp(-((x - 35) ** 2 / 100 + (z - 24) ** 2 / 110))
+    + 1.4 * Math.exp(-((x + 10) ** 2 / 80 + (z - 25) ** 2 / 85));
+  const bank = Math.abs(x - riverX(z));
+  return bank < 3.15 ? -.65 : hills * Math.min(1, (bank - 3.15) / 1.4);
+}
+export function terrainHeight(x: number, z: number) {
+  return BRIDGES.some(b => Math.abs(z - b.z) < 1.2 && Math.abs(x - b.x) < 6.8) ? .55 : landHeight(x, z);
+}
+
+/** A smooth, fixed simulated field. Rendering, meter, scanner and probe use this same function. */
+export function radiation(p: Point): number {
+  const q = .42 + .00085 * (p.x - EXIT.x) ** 2 + .0018 * (p.z - EXIT.z) ** 2;
+  const plant = 3.2 * Math.exp(-((p.x + 30) ** 2 / 170 + (p.z + 1) ** 2 / 120));
+  const ruin = 2.4 * Math.exp(-((p.x - 35) ** 2 / 80 + (p.z - 7) ** 2 / 120));
+  return q + plant + ruin;
+}
+export function descentDirection(p: Point): Point {
+  const d = .01;
+  const x = -(radiation({ x: p.x + d, z: p.z }) - radiation({ x: p.x - d, z: p.z })) / (2 * d);
+  const z = -(radiation({ x: p.x, z: p.z + d }) - radiation({ x: p.x, z: p.z - d })) / (2 * d);
+  const length = Math.hypot(x, z);
+  return length < 1e-6 ? { x: 0, z: 0 } : { x: x / length, z: z / length };
+}
+export function landingProblem(p: Point): string | null {
+  if (p.x < -86 || p.x > 86 || p.z < -66 || p.z > 66) return '目标超出行动区域';
+  if (Math.abs(p.x - riverX(p.z)) < 3.1 && !BRIDGES.some(b => Math.abs(p.z - b.z) < 1.2 && Math.abs(p.x - b.x) < 7)) return '水面无法落脚，寻找桥梁或河岸';
+  if (p.x > -45 && p.x < -23 && p.z > -5 && p.z < 7) return '厂区建筑阻挡了落点';
+  if (p.x > 31 && p.x < 45 && p.z > 2 && p.z < 13) return '废墟阻挡了落点';
+  return null;
+}
+export function aimFromPull(origin: Point, pointer: Point): Point {
+  const dx = origin.x - pointer.x, dz = origin.z - pointer.z;
+  const length = Math.hypot(dx, dz);
+  const ratio = length > MAX_JUMP ? MAX_JUMP / length : 1;
+  return { x: origin.x + dx * ratio, z: origin.z + dz * ratio };
+}
+export interface Move { from: Point; to: Point; before: number; after: number; damage: number }
+export interface GameState { phase: Phase; position: Point; health: number; moves: Move[]; collected: PickupId[]; scan: boolean; message: string; run: number; discoveredExit: boolean }
+export function newGame(run = 0): GameState {
+  return { phase: 'briefing', position: { ...START }, health: 100, moves: [], collected: [], scan: false, message: '东北方向传来微弱信号。先寻找附近的补给。', run, discoveredExit: false };
+}
+export const canRescue = (state: GameState) => state.phase === 'playing' && distance(state.position, EXIT) < 2.15 && radiation(state.position) < 1.4;
+export function movePlayer(state: GameState, to: Point): GameState {
+  if (state.phase !== 'playing') return state;
+  const problem = landingProblem(to);
+  if (problem) return { ...state, message: problem };
+  if (distance(state.position, to) > MAX_JUMP + .01 || distance(state.position, to) < .25) return state;
+  const before = radiation(state.position), after = radiation(to);
+  const damage = Math.max(1.2, after * 2.6);
+  const found = PICKUPS.filter(p => !state.collected.includes(p.id) && distance(p.point, to) < 1.65);
+  const collected = [...state.collected, ...found.map(p => p.id)];
+  const health = Math.max(0, Math.min(100, state.health - damage + (found.some(p => p.id === 'medicine') ? 28 : 0)));
+  const message = found.some(p => p.id === 'scanner') ? '扫描器已取得。按 E 或点击扫描，查看辐射分布。'
+    : found.some(p => p.id === 'compass') ? '方向探针已取得。箭头指向附近辐射下降最快的方向。'
+    : found.some(p => p.id === 'medicine') ? '急救补给已使用，恢复 28 点防护。'
+    : after > before + .25 ? '这里更危险。留意探测器，再调整下一次落点。'
+    : after < before - .25 ? '辐射下降了。继续寻找安全的落点。' : '辐射变化不大，试试换一个方向。';
+  const discoveredExit = state.discoveredExit || distance(to, EXIT) < 17;
+  const result: GameState = { ...state, position: { ...to }, health, moves: [...state.moves, { from: state.position, to: { ...to }, before, after, damage }], collected, phase: health <= 0 ? 'lost' : 'playing', message, discoveredExit };
+  if (discoveredExit && !state.discoveredExit) result.message = '接收到救援信标！撤离点就在附近，继续靠近。';
+  if (canRescue(result)) result.message = '已进入撤离区。按 R 或点击呼叫救援。';
+  return result;
+}
+export const RECORD_KEY = 'gradient-descent:evacuation-record:v1';
+export function saveRun(state: GameState) {
+  try { localStorage.setItem(RECORD_KEY, JSON.stringify({ position: state.position, moves: state.moves, collected: state.collected, health: state.health, completed: state.phase === 'won' })); } catch { /* Gameplay works without browser storage. */ }

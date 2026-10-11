@@ -1,0 +1,16 @@
+.di-histogram { display:grid; grid-template-rows:auto minmax(0,1fr); background:linear-gradient(135deg,#fff,#f3f9ff); }
+.di-histogram > .edu-content-body { min-height:0; }
+.di-histogram :is(div,footer,button,canvas,svg) { min-width:0; max-width:100%; }
+.di-histogram p,.di-histogram h2 { margin:0; }
+.di-histogram__body { height:100%; min-height:0; display:grid; grid-template-rows:47px minmax(0,1fr) 49px 62px; gap:8px; }
+.di-histogram__headings { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:10%; padding:0 20px; }
+.di-histogram__headings > h2:last-child { padding-left:50px; }
+.di-histogram__stage { position:relative; min-height:0; }
+.di-histogram__stage > canvas,.di-histogram__stage > svg { position:absolute; inset:0; width:100%; height:100%; }
+.di-histogram__stage > canvas { pointer-events:none; }
+.di-histogram__controls { display:flex; gap:14px; align-items:center; }
+.di-histogram button { border:1px solid #c7daf3; background:#fff; color:#24477b; border-radius:9px; padding:3px 20px; cursor:pointer; }
+.di-histogram button.di-histogram__convert { background:#207cf8; border-color:#207cf8; color:white; }
+.di-histogram button:disabled { opacity:.5; cursor:wait; }
+.di-histogram button:focus-visible { outline:3px solid #397dc5; outline-offset:2px; }
+.di-histogram__takeaway { display:flex; align-items:center; justify-content:center; padding:6px 20px; background:#e7f2ff; border-radius:13px; }
