@@ -1,0 +1,67 @@
+.course-page-surface .vg-inference {
+  display: grid;
+  width: 100%; height: 100%; min-width: 0; min-height: 0;
+  grid-template-rows: auto minmax(0, 1fr);
+  padding: 26px 42px 22px;
+  background: #fff;
+}
+.course-page-surface .vg-inference .edu-content-head { margin-bottom: 9px; }
+.course-page-surface .vg-inference .edu-content-title { color: #263650; }
+.course-page-surface .vg-inference .edu-content-subtitle { margin-top: 4px; color: #3468ce; }
+.course-page-surface .vg-inference__body { display: grid; min-width: 0; min-height: 0; grid-template-rows: minmax(0, 1fr) 55px; gap: 8px; }
+.course-page-surface .vg-inference__content { display: grid; min-width: 0; min-height: 0; max-width: 100%; grid-template-rows: minmax(0, 1fr); }
+.course-page-surface .vg-inference__content.is-focused { grid-template-rows: 214px minmax(0, 1fr); gap: 12px; }
+.course-page-surface .vg-inference__chain { display: grid; min-width: 0; min-height: 0; max-width: 100%; grid-template-rows: auto minmax(0, 1fr) auto; align-content: center; border: 1px solid #dfe6ed; border-radius: 16px; background: #fbfdff; padding: 18px 25px; }
+.course-page-surface .is-focused .vg-inference__chain { grid-template-rows: auto minmax(0, 1fr); padding: 10px 23px; }
+.course-page-surface .vg-inference__chain-heading { display: flex; min-width: 0; max-width: 100%; justify-content: space-between; align-items: center; gap: 12px; border-bottom: 2px solid #3d9968; padding-bottom: 7px; }
+.course-page-surface .vg-inference__frames { display: grid; min-width: 0; min-height: 0; max-width: 100%; grid-template-columns: repeat(4, minmax(0, 1fr)); align-items: center; gap: 5px; }
+.course-page-surface .vg-inference__frame-slot { display: flex; min-width: 0; min-height: 0; max-width: 100%; align-items: center; justify-content: center; gap: 9px; }
+.course-page-surface .vg-inference__frame { display: grid; min-width: 0; max-width: 100%; width: 208px; justify-items: center; margin: 0; gap: 8px; opacity: 0; }
+.course-page-surface .vg-inference__frame.is-visible { opacity: 1; animation: vg-inference-in .45s ease both; }
+.course-page-surface .vg-inference__frame img { display: block; width: 192px; height: 192px; max-width: 100%; object-fit: cover; border: 3px solid #aac4dc; border-radius: 11px; box-shadow: 0 8px 21px #365b7730; }
+.course-page-surface .vg-inference__frame figcaption { display: flex; width: 100%; justify-content: center; gap: 8px; white-space: nowrap; }
+.course-page-surface .vg-inference__frame.is-selected img { border-color: #dc655a; }
+.course-page-surface .vg-inference__denoiser { display: grid; min-width: 0; width: 73px; max-width: 100%; justify-items: center; color: #2571c5; white-space: nowrap; }
+.course-page-surface .vg-inference__denoiser > span:first-child { font-family: Georgia, serif; font-size: 46px; line-height: 1; }
+.course-page-surface .vg-inference__chain-note { text-align: center; margin: 0 0 12px; }
+.course-page-surface .is-focused .vg-inference__frame { width: 112px; gap: 3px; }
+.course-page-surface .is-focused .vg-inference__frames { align-items: end; padding-bottom: 8px; }
+.course-page-surface .is-focused .vg-inference__frame img { width: 84px; height: 84px; border-width: 2px; box-shadow: none; }
+.course-page-surface .is-focused .vg-inference__frame figcaption { flex-direction: column; align-items: center; gap: 0; }
+.course-page-surface .is-focused .vg-inference__frame figcaption span:last-child { display: none; }
+.course-page-surface .is-focused .vg-inference__denoiser { width: 45px; }
+.course-page-surface .is-focused .vg-inference__denoiser > span:first-child { font-size: 30px; }
+.course-page-surface .vg-inference__detail { display: grid; min-width: 0; min-height: 0; max-width: 100%; grid-template-columns: minmax(0, .94fr) minmax(0, 1.06fr); gap: 17px; }
+.course-page-surface .vg-inference__detail > section { min-width: 0; min-height: 0; max-width: 100%; border: 1px solid #dfe6ed; border-radius: 14px; background: #fff; padding: 14px 18px; }
+.course-page-surface .vg-inference__geometry { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; }
+.course-page-surface .vg-inference__section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.course-page-surface .vg-inference__section-head h2, .course-page-surface .vg-inference__math h2 { margin: 0; }
+.course-page-surface .vg-inference__geometry svg { display: block; width: 100%; height: 100%; max-width: 100%; min-height: 0; }
+.course-page-surface .vg-inference__svg-label { fill: #263650; font: 21px Georgia,serif; }
+.course-page-surface .vg-inference__svg-small { fill: #63738b; font: 19px Georgia,serif; }
+.course-page-surface .vg-inference__svg-current { fill: #da5245; font: italic 26px Georgia,serif; }
+.course-page-surface .vg-inference__svg-previous { fill: #24945d; font: italic 26px Georgia,serif; }
+.course-page-surface .vg-inference__svg-forward { fill: #c64f44; font: 19px Georgia,serif; }
+.course-page-surface .vg-inference__svg-reverse { fill: #2675c8; font: 19px Georgia,serif; }
+.course-page-surface .vg-inference__svg-reveal { animation: vg-inference-in .42s ease both; }
+.course-page-surface .vg-inference__geometry-legend { display: flex; min-width: 0; max-width: 100%; justify-content: center; gap: 22px; }
+.course-page-surface .vg-inference__math { display: flex; flex-direction: column; gap: 4px; }
+.course-page-surface .vg-inference__overview { display: grid; min-width: 0; max-width: 100%; border-bottom: 1px solid #dce3ec; padding-bottom: 4px; }
+.course-page-surface .vg-inference__math-row { display: grid; min-width: 0; max-width: 100%; border-bottom: 1px solid #e5e9ef; padding: 2px 0 2px 10px; animation: vg-inference-in .35s ease both; }
+.course-page-surface .vg-inference__math-row.is-current { border-left: 3px solid #da5245; }
+.course-page-surface .vg-inference__math-row.is-previous { border-left: 3px solid #24945d; }
+.course-page-surface .vg-inference__math-result { display: grid; min-width: 0; max-width: 100%; gap: 1px; border: 1px solid #aad7bc; border-radius: 10px; background: #f3fbf6; padding: 5px 10px; animation: vg-inference-in .35s ease both; }
+.course-page-surface .vg-inference__math-result p { margin: 0; }
+.course-page-surface .vg-inference__formula { display: flex; min-width: 0; min-height: 0; max-width: 100%; min-height: 44px; align-items: center; justify-content: flex-start; margin: 0; border: 0; box-shadow: none; background: transparent; padding: 0; }
+.course-page-surface .vg-inference__formula .math-formula { min-width: 0; max-width: 100%; justify-content: flex-start; white-space: nowrap; font-size: 23px; }
+.course-page-surface .vg-inference__formula-lines { display: grid; min-width: 0; max-width: 100%; }
+.course-page-surface .vg-inference__formula-lines .vg-inference__formula { min-height: 42px; }
+.course-page-surface .vg-inference__overview .math-formula { font-size: 19px; }
+.course-page-surface .vg-inference__math-row.is-current .math-formula { color: #b7453d; }
+.course-page-surface .vg-inference__math-row.is-previous .math-formula { color: #237a50; font-size: 19px; }
+.course-page-surface .vg-inference__math-row.is-scaled .math-formula { font-size: 18px; }
+.course-page-surface .vg-inference__math-result .math-formula { font-size: 19px; }
+.course-page-surface .vg-inference__math-prompt { display: grid; flex: 1; place-items: center; border: 1px dashed #b7cde4; border-radius: 10px; padding: 15px; }
+.course-page-surface .vg-inference__footer { display: flex; min-width: 0; align-items: center; justify-content: space-between; gap: 15px; border-top: 1px solid #e6e9ee; }
+.course-page-surface .vg-inference__actions { display: flex; gap: 9px; }
+@keyframes vg-inference-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
