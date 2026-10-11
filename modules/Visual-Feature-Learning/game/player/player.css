@@ -1,0 +1,150 @@
+.face-act3-start {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 18px;
+  overflow: hidden;
+  background: #071017;
+  color: #fff4df;
+  isolation: isolate;
+}
+
+.face-act3-start::after {
+  position: absolute;
+  inset: 16px;
+  z-index: 2;
+  border: 1px solid rgba(229, 190, 116, 0.34);
+  box-shadow: inset 0 0 0 1px rgba(5, 4, 3, 0.72);
+  content: '';
+  pointer-events: none;
+}
+
+.face-act3-start-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 0;
+  width: 1112px;
+  height: 834px;
+  max-width: none;
+  max-height: none;
+  object-fit: none;
+  object-position: center;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+.face-act3-light {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  image-rendering: auto !important;
+  pointer-events: none;
+}
+
+.face-act3-start-fade {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  background: #000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1100ms ease-in;
+}
+
+.face-act3-start-fade.is-visible {
+  opacity: 1;
+}
+
+.face-act3-start-action {
+  position: absolute;
+  top: 59%;
+  left: 58%;
+  z-index: 3;
+  display: grid;
+  justify-items: center;
+  gap: 16px;
+  transform: translate(-50%, -50%);
+}
+
+.face-act3-start-button {
+  display: grid;
+  width: 148px;
+  height: 66px;
+  place-items: center;
+  border: 1px solid rgba(255, 224, 166, 0.72);
+  border-radius: 12px;
+  background: rgba(44, 25, 17, 0.48);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+  transition: transform 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
+}
+
+.face-act3-start-button:hover {
+  background: rgba(101, 49, 31, 0.62);
+  box-shadow: 0 15px 36px rgba(0, 0, 0, 0.38), inset 0 0 0 1px rgba(255, 238, 199, 0.12);
+  transform: translateY(-2px);
+}
+
+.face-act3-start-button:focus-visible {
+  outline: 3px solid #fff4df;
+  outline-offset: 5px;
+}
+
+.face-act3-play-icon {
+  width: 0;
+  height: 0;
+  margin-left: 7px;
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+  border-left: 24px solid #fff4df;
+}
+
+.face-act3-start-action > strong {
+  font: 900 36px STKaiti, KaiTi, Microsoft YaHei, serif;
+  letter-spacing: 0;
+  text-align: center;
+  text-shadow: 0 3px 12px rgba(0, 0, 0, 0.78);
+}
+
+.face-act3-fiction-notice {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  z-index: 3;
+  width: min(88%, 760px);
+  margin: 0;
+  color: rgba(255, 239, 211, 0.78);
+  font: 500 15px/1.5 Microsoft YaHei, sans-serif;
+  letter-spacing: 0;
+  text-align: center;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.95);
+  transform: translateX(-50%);
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  .face-act3-start-fade {
+    transition-duration: 250ms;
+  }
+}
+
+.face-act3-game canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  image-rendering: auto;
+}
+
+
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#050403;--ui-radius-sm:8px}
+#faceAct3{position:absolute;width:1448px;height:1086px;transform-origin:top left}
+.face-act3-game{position:relative;width:100%;height:100%;overflow:hidden}
+.face-act3-start-video{width:100%;height:100%;object-fit:cover}

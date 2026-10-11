@@ -219,7 +219,7 @@ export function ShallowLinearPage({ onComplete }: ShallowLinearPageProps) {
     <ContentBlock
       ref={rootRef}
       headingLevel={1}
-      className="ng-activation-network-lab ng-shallow-linear"
+      className="ngtw-activation-network-lab ngtw-shallow-linear"
       title="线性神经元的组合仍然是线性的"
       subtitle="把多个线性神经元并行连接，观察它们的输出如何汇合成一个函数。"
       data-telemetry-manual
@@ -231,14 +231,14 @@ export function ShallowLinearPage({ onComplete }: ShallowLinearPageProps) {
         </NoticeStrip>
       ) : (
         <>
-          <div className="ng-shallow-toolbar">
-            <div className="ng-shallow-toolbar__context">
+          <div className="ngtw-shallow-toolbar flex min-w-0 items-center justify-between gap-[12px] min-h-[56px] p-[4px_8px_4px_12px]">
+            <div className="ngtw-shallow-toolbar__context flex min-w-0 max-w-full items-center gap-[6px]">
               <Typography as="span" variant="body" tone="muted">当前结构：</Typography>
               <Typography as="strong" variant="body" tone="accent">{count} 个线性神经元</Typography>
               <Typography as="span" variant="body" tone="muted">汇合为</Typography>
               <Typography as="strong" variant="body" tone="success">1 个输出</Typography>
             </div>
-            <div className="ng-activation-actions" aria-label="调整网络结构">
+            <div className="ngtw-activation-actions flex flex-wrap gap-[8px]" aria-label="调整网络结构">
               <Button variant="primary" disabled={!hydrated || !model || count >= 3} onClick={addNeuron}>
                 添加
               </Button>
@@ -251,9 +251,9 @@ export function ShallowLinearPage({ onComplete }: ShallowLinearPageProps) {
             </div>
           </div>
 
-          <div className="ng-activation-network-stage">
-            <section className="ng-activation-network-panel ng-shallow-panel ng-shallow-panel--network" aria-label="网络结构">
-              <div className="ng-activation-visual-box ng-activation-visual-box--model">
+          <div className="ngtw-activation-network-stage grid grid-cols-[minmax(0,_.95fr)_minmax(0,_1.05fr)] items-stretch gap-[14px]">
+            <section className="ngtw-activation-network-panel relative flex min-w-0 min-h-[560px] flex-col bg-[#fff] p-[14px] ngtw-shallow-panel ngtw-shallow-panel--network" aria-label="网络结构">
+              <div className="ngtw-activation-visual-box relative min-h-[430px] overflow-hidden ngtw-activation-visual-box--model">
                 <NetworkCanvas
                   layers={canvas.layers}
                   connections={canvas.connections}
@@ -267,14 +267,14 @@ export function ShallowLinearPage({ onComplete }: ShallowLinearPageProps) {
               </div>
             </section>
 
-            <section className="ng-activation-network-panel ng-shallow-panel ng-shallow-panel--plot" aria-label="函数形状">
-              <div className="ng-activation-visual-box">
+            <section className="ngtw-activation-network-panel relative flex min-w-0 min-h-[560px] flex-col bg-[#fff] p-[14px] ngtw-shallow-panel ngtw-shallow-panel--plot" aria-label="函数形状">
+              <div className="ngtw-activation-visual-box relative min-h-[430px] overflow-hidden">
                 <ShallowOutputPlot model={model} activeSeriesId={activeSeriesId} />
               </div>
             </section>
           </div>
 
-          <div className="ng-shallow-conclusion">
+          <div className="ngtw-shallow-conclusion flex min-w-0 items-center gap-[12px] p-[10px_14px]">
             <Typography as="strong" variant="subtitle" tone="success">结论</Typography>
             <Typography variant="body" tone="main">多个线性函数的加权和，仍然可以合并成一个线性函数。</Typography>
           </div>
@@ -283,3 +283,4 @@ export function ShallowLinearPage({ onComplete }: ShallowLinearPageProps) {
     </ContentBlock>
   );
 }
+

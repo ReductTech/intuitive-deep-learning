@@ -91,7 +91,7 @@
 | --- | --- | --- | --- |
 | 页面外壳 | `ModuleShell` | 仅模块级 class | 与现有 React 教学框架一致 |
 | 教学顺序 | `LessonFlow`、`ScrollCue` | 各步骤内容和完成条件 | 通用流程负责揭示与幂等完成，课程只提供顺序 |
-| 标准内容 | `ContentBlock`、`LessonStage`、`Callout`、`NoticeStrip` | 场景和关卡文案配置 | 避免按章节创建无意义的 shared 组件 |
+| 标准内容 | `ContentBlock`、原生内容容器、`Callout`、`NoticeStrip` | 场景和关卡文案配置 | 避免按章节创建无意义的 shared 组件 |
 | 输入与按钮 | `TextInput`、`Button` | 真实 API 请求与状态机 | shared 负责视觉，模块负责业务 |
 | 实验控制 | `Select`、`RangeControl`、`Switch`、`Button` | preset、网络结构、训练规则 | UI Kit 已覆盖标准控件 |
 | 指标 | `ValueTile` 或现有 shared 排版 | epoch/loss/accuracy 数据 | 不重复造通用指标卡 |

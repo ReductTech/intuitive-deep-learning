@@ -1,5 +1,7 @@
 # Intuitive Deep Learning
 
+服务重构后的 Windows 启动、目录职责和兼容说明见 [backend/README.md](backend/README.md)。
+
 > 用可视化、交互实验和小规模训练任务建立深度学习直觉。
 
 Intuitive Deep Learning 是一套可本地运行的深度学习互动课程。项目把抽象概念拆成可以操作的学习模块：从“为什么需要神经元”开始，逐步进入损失函数、梯度下降、激活函数、MLP、数字图像、卷积核、LeNet-5 和人脸识别等主题。
@@ -18,14 +20,14 @@ Intuitive Deep Learning 是一套可本地运行的深度学习互动课程。�
 
 ## 课程路线
 
-课程共包含 4 个章节、11 个正式互动模块。推荐按章节顺序学习，也可以从 `CourseMap` 课程地图直接跳转到感兴趣的主题。
+课程共包含 4 个章节、10 个正式互动模块。推荐按章节顺序学习，也可以从 `CourseMap` 课程地图直接跳转到感兴趣的主题。
 
 | 章节 | 学习重点 | 互动模块 |
 | --- | --- | --- |
 | 第一章：神经网络入门 | 神经元、损失函数、梯度下降 | `Neuron-Guide`、`Loss-Guide`、`Gradient-Descent-Module` |
 | 第二章：MLP 与分类输出 | 激活函数、非线性分类、分类损失 | `Activation-Func-Module`、`MLP_playground`、`Loss-Guide-2` |
 | 第三章：数字图像与人工特征 | RGB 矩阵、手写数字、人工特征分类 | `Digital-Image-Module`、`Manual-Feature-Classification` |
-| 第四章：卷积网络与人脸识别 | 卷积核、LeNet-5、固定特征与端到端训练 | `Convolution-Kernel-Intro`、`LeNet5-CNN-Lab`、`Face-Recog-Lab` |
+| 第四章：卷积网络与人脸识别 | 卷积、LeNet-5、固定特征与端到端训练 | `LeNet5-CNN-Lab`、`Face-Recog-Lab` |
 
 ## 模块一览
 
@@ -40,7 +42,6 @@ Intuitive Deep Learning 是一套可本地运行的深度学习互动课程。�
 | `Loss-Guide-2` | 天气预测的两种输出 | 区分 Sigmoid + BCE 与 Softmax + Cross Entropy |
 | `Digital-Image-Module` | 数字图像如何变成 RGB 矩阵 | 理解像素、RGB 通道和图像矩阵表示 |
 | `Manual-Feature-Classification` | 人工特征的分类 | 用九宫格亮像素特征完成手写数字分类实验 |
-| `Convolution-Kernel-Intro` | 卷积核入门：从五子棋棋形开始 | 从局部模式扫描理解卷积核和特征图 |
 | `LeNet5-CNN-Lab` | 从人工卷积核到 LeNet-5 | 比较固定卷积核与可学习卷积核 |
 | `Face-Recog-Lab` | 人脸识别：固定卷积核到参数全训 | 对比冻结特征提取器与小型 CNN 端到端训练 |
 
@@ -58,43 +59,20 @@ python3 -m pip install -r requirements.txt
 python3 -m pip install -r requirements-torch.txt
 ```
 
-## 快速开始
+## Windows 启动
 
-在仓库根目录启动课程地图：
-
-```bash
-bash scripts/run-lesson-page.sh --init
-```
-
-打开指定课程模块：
-
-```bash
-bash scripts/run-lesson-page.sh --open-module --module-id <module-id>
-```
-
-示例：
-
-```bash
-bash scripts/run-lesson-page.sh --open-module --module-id MLP_playground
-```
-
-查看服务状态或停止服务：
-
-```bash
-bash scripts/run-lesson-page.sh --status
-bash scripts/run-lesson-page.sh --stop
-```
+在仓库根目录、已激活的 Python 环境中，运行 `.\scripts\devstart.ps1` 启动全部本地后台服务；另一个终端运行 `npm run dev` 启动课件。状态与停止分别为 `.\scripts\devstart.ps1 -Status` 和 `.\scripts\devstop.ps1`。详情见 [scripts/README.md](scripts/README.md)。
 
 ## 项目结构
 
 ```text
 .
-├── assets/                 # README 与课程文档使用的静态图片
-├── dataset/                # 示例数据与数据集挂载配置
+├── datasets/               # 服务端数据、模型权重与训练产物，不上传 OSS
+├── assets/                 # 课程展示素材，上传 OSS；不包含完整数据集
 ├── examples/               # 课程配套示例
 ├── modules/                # 互动课程模块与公共前端资源
 ├── references/             # 模块设计和维护参考资料
-├── scripts/                # 课程启动、模块索引与运行时脚本
+├── scripts/                # 单一 Windows 入口与页面工具
 ├── requirements.txt        # 基础运行依赖
 └── requirements-torch.txt  # Torch 训练实验依赖
 ```
@@ -102,6 +80,19 @@ bash scripts/run-lesson-page.sh --stop
 `history/` 和 `runtime_logs/` 用于本地运行记录，不应作为课程内容手工修改。
 
 ## 开发与校验
+
+### SceneDeck 缩略图
+
+左栏使用各模块 `assets/scenedeck-thumbnails/` 中的静态图片，不再同时运行所有幻灯片组件。修改课件页面后，可按模块重新生成默认画面的缩略图：
+
+```bash
+npm install
+python -m pip install -r requirements-thumbnails.txt
+python -m playwright install chromium
+python -m idl_backend.tools.content.generate_scenedeck_thumbnails --module convolution-kernel-intro
+```
+
+`--module` 接受 `outlines.json` 中的模块 ID 或模块目录名；可加 `--slide <页面ID>` 只更新一页。程序自行启动临时 Vite 服务，逐页截取 1600 × 900 默认画面，再缩成 400 × 225 PNG，写入指定模块的 `assets/scenedeck-thumbnails/`。已有系统 Chrome 或 Edge 时，可以省略 Playwright 的 Chromium 安装步骤。生成的图片应随课件内容一起提交；未生成的页面在左栏显示章节占位，不会运行页面组件。
 
 模块规范见 [modules/README.md](modules/README.md)。新增或修改模块元数据后，重新生成并校验模块索引：
 

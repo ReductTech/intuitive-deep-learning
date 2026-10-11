@@ -1,0 +1,18 @@
+/* 所有课件页面使用 utilities；不引入 Preflight，以保护 Shared UI。 */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities) source(none);
+@source "./pages";
+
+@theme inline {
+  --color-lesson-card: var(--ui-bg-card);
+  --color-lesson-muted: var(--ui-bg-muted);
+  --color-lesson-soft: var(--ui-bg-soft);
+  --color-lesson-accent: var(--ui-accent);
+  --color-lesson-border: var(--ui-border);
+  --color-lesson-success: var(--ui-success);
+  --radius-lesson-sm: var(--ui-radius-sm);
+  --radius-lesson-md: var(--ui-radius-md);
+  --radius-lesson-lg: var(--ui-radius-lg);
+}
+

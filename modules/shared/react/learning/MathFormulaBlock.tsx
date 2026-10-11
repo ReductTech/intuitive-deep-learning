@@ -21,14 +21,18 @@ export interface MathFormulaTermProps extends Omit<HTMLAttributes<HTMLSpanElemen
   tooltip: ReactNode;
   ariaLabel?: string;
   tone?: 'default' | 'warm';
+  tooltipVariant?: 'bodySmall' | 'body';
+  tooltipPlacement?: 'bottom' | 'top';
 }
 
 export interface MathFormulaBlockProps extends HTMLAttributes<HTMLDivElement> {
   ariaLabel?: string;
   children: ReactNode;
+  /** Keep formula semantics and explanations without the surrounding panel. */
+  appearance?: 'panel' | 'plain';
 }
 
-export function MathFormulaTerm({ latex, tooltip, ariaLabel, tone = 'default', className, ...props }: MathFormulaTermProps) {
+export function MathFormulaTerm({ latex, tooltip, ariaLabel, tone = 'default', tooltipVariant = 'bodySmall', tooltipPlacement = 'bottom', className, ...props }: MathFormulaTermProps) {
   const tooltipText = typeof tooltip === 'string' ? tooltip : String(tooltip ?? '');
   const fieldRef = useRef<MathFieldElement | null>(null);
 
@@ -50,7 +54,7 @@ export function MathFormulaTerm({ latex, tooltip, ariaLabel, tone = 'default', c
   return (
     <span
       {...props}
-      className={classNames('math-formula-term', tone === 'warm' && 'math-formula-term--warm', className)}
+      className={classNames('math-formula-term', tone === 'warm' && 'math-formula-term--warm', tooltipVariant === 'body' && 'math-formula-term--tooltip-body', tooltipPlacement === 'top' && 'math-formula-term--tooltip-top', className)}
       tabIndex={props.tabIndex ?? 0}
       data-tooltip={tooltipText}
       aria-label={ariaLabel ?? tooltipText}
@@ -89,9 +93,9 @@ export function MathFormulaStatic({ latex, className, ...props }: { latex: strin
   );
 }
 
-export function MathFormulaBlock({ ariaLabel, children, className, ...props }: MathFormulaBlockProps) {
+export function MathFormulaBlock({ ariaLabel, children, appearance = 'panel', className, ...props }: MathFormulaBlockProps) {
   return (
-    <div className={classNames('edu-formula-block', 'math-formula-block', className)} {...props}>
+    <div className={classNames(appearance === 'panel' && 'edu-formula-block', 'math-formula-block', appearance === 'plain' && 'math-formula-block--plain', className)} {...props}>
       <div className="math-formula" aria-label={ariaLabel}>{children}</div>
     </div>
   );

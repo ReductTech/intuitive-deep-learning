@@ -1,7 +1,6 @@
 (function () {
   'use strict';
 
-  var GRADIENT_FEEDBACK_ENDPOINT = 'http://127.0.0.1:59414/gradient/oscillation-feedback';
   var EXACT_LOSS_THRESHOLD = 0.005;
   var CLOSE_LOSS_THRESHOLD = 0.5;
 
@@ -795,26 +794,16 @@
 
   async function submitOscillationAnswer(answer) {
     var submit = oscillationQuestion.submit;
-    if (!answer) return;
-    submit.disabled = true;
-    submit.textContent = '正在分析...';
-    setButtonLoading(submit, true);
-    oscillationQuestion.streamFeedback('正在分析你的回答，请稍候。', 'hint');
-    try {
-      var response = await fetch(GRADIENT_FEEDBACK_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ answer: answer })
-      });
-      var data = await response.json().catch(function () { return {}; });
-      var result = window.DLModuleUI.requireServiceResult(response, data);
-      var feedback = window.DLModuleUI.shortAnswerFeedback(result);
-      oscillationQuestion.streamFeedback(feedback.message, feedback.tone);
-      showTryLearningRateAction();
-    } catch (error) {
-      oscillationQuestion.streamFeedback(window.DLModuleUI.friendlyErrorMessage(error), 'wrong');
-      showTryLearningRateAction();
-    } finally {
+    if (submit) {
+      submit.disabled = true;
+      submit.textContent = '已记录';
+    }
+    oscillationQuestion.streamFeedback(
+      answer ? '已记录你的优化思路，可以继续调整学习率。' : '已跳过回答，可以继续调整学习率。',
+      'hint'
+    );
+    showTryLearningRateAction();
+    if (submit) {
       setButtonLoading(submit, false);
       if (!submit.hidden) {
         submit.disabled = false;
@@ -918,7 +907,7 @@
     submitText: '提交回答',
     validator: function () { return { ok: true, tone: 'hint', message: '正在分析你的回答...' }; },
     onCheck: function (result) {
-      if (!result.empty) submitOscillationAnswer(result.answer[0].trim());
+      submitOscillationAnswer(String((result.answer || [])[0] || '').trim());
     }
   });
 

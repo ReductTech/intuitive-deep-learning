@@ -19,7 +19,7 @@
   "config": {
     "serviceUrl": "http://127.0.0.1:59415/face-recog/fixed-kernel-train",
     "lenetServiceUrl": "http://127.0.0.1:59415/face-recog/lenet-train",
-    "dataset": "dataset/lfw-50-balanced/lfw_50_balanced_images.npy",
+    "dataset": "assets/dataset/lfw-50-balanced/lfw_50_balanced_images.npy",
     "split": "40 train + 10 validation per identity",
     "kernels": ["edge", "vertical", "horizontal", "diag_down", "diag_up", "center"],
     "lenetInput": "3x62x47",

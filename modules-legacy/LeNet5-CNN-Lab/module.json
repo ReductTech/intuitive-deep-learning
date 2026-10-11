@@ -17,7 +17,7 @@
   "rootClass": "lenet",
   "config": {
     "serviceUrl": "http://127.0.0.1:59415/lenet5/fixed-kernel-train",
-    "dataset": "dataset/t10k-images.idx3-ubyte",
+    "dataset": "assets/dataset/t10k-images.idx3-ubyte",
     "split": "9:1",
     "kernels": ["edge", "vertical", "horizontal", "diag_down", "diag_up", "center"]
   },

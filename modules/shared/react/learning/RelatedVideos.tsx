@@ -1,4 +1,4 @@
-import { useId, useRef, useState, type HTMLAttributes, type WheelEvent } from 'react';
+import { useEffect, useId, useRef, useState, type HTMLAttributes, type WheelEvent } from 'react';
 import { Typography } from '../typography/Typography';
 import { classNames } from '../utils';
 
@@ -6,6 +6,9 @@ const VIDEOS_PER_PAGE = 4;
 
 export interface RelatedVideo {
   title: string;
+  description?: string;
+  duration?: string;
+  thumbnail?: string;
   embed?: string;
 }
 
@@ -39,10 +42,18 @@ export function RelatedVideos({
   const [page, setPage] = useState(0);
   const ignoreVideoTriggerUntil = useRef(0);
   const ignoreWheelUntil = useRef(0);
+  const dialogRef = useRef<HTMLDialogElement>(null);
   const activeVideo = activeIndex === null ? undefined : videos[activeIndex];
   const pageCount = Math.ceil(videos.length / VIDEOS_PER_PAGE);
   const pageStart = page * VIDEOS_PER_PAGE;
   const visibleVideos = videos.slice(pageStart, pageStart + VIDEOS_PER_PAGE);
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+    if (activeVideo && !dialog.open) dialog.showModal();
+    if (!activeVideo && dialog.open) dialog.close();
+  }, [activeVideo]);
 
   const changePage = (nextPage: number) => {
     const safePage = Math.max(0, Math.min(nextPage, pageCount - 1));
@@ -77,41 +88,16 @@ export function RelatedVideos({
       <div className="dl-video-strip" aria-label={ariaLabel} onWheel={handleWheel}>
         {visibleVideos.map((video, offset) => {
           const index = pageStart + offset;
-          return <article className={classNames('dl-video-card', video.embed && 'has-embed', activeIndex === index && 'is-active')} key={`${video.title}-${index}`}>
-            {video.embed ? (
-              <div className="dl-video-embed" dangerouslySetInnerHTML={{ __html: prepareEmbed(video.embed) }} />
-            ) : (
-              <div className="dl-video-placeholder"><span>暂无视频嵌入</span></div>
-            )}
-            {video.embed && (
-              <button
-                className="dl-video-trigger"
-                type="button"
-                aria-controls={viewerId}
-                aria-expanded={activeIndex === index}
-                aria-label={`在页面中播放：${video.title}`}
-                onClick={() => {
-                  if (Date.now() >= ignoreVideoTriggerUntil.current) setActiveIndex(index);
-                }}
-              >
-                <span className="dl-video-play" aria-hidden="true">▶</span>
-              </button>
-            )}
-            <Typography as="strong" variant="bodySmall" tone="accent">{video.title}</Typography>
+          return <article className={classNames('dl-video-card', activeIndex === index && 'is-active')} key={`${video.title}-${index}`}>
+            <div className="dl-video-card-media">{video.thumbnail ? <img src={video.thumbnail} alt="" loading="lazy" /> : <span aria-hidden="true">▶</span>}{video.duration && <time>{video.duration}</time>}{video.embed && <button className="dl-video-trigger" type="button" aria-controls={viewerId} aria-expanded={activeIndex === index} aria-label={`播放：${video.title}`} onClick={() => { if (Date.now() >= ignoreVideoTriggerUntil.current) setActiveIndex(index); }}><span className="dl-video-play" aria-hidden="true">▶</span></button>}</div>
+            <div className="dl-video-card-copy"><Typography as="strong" variant="body" tone="accent">{video.title}</Typography>{video.description && <Typography variant="bodySmall" tone="muted">{video.description}</Typography>}{video.duration && <Typography as="span" variant="bodySmall" tone="muted">◷ {video.duration}</Typography>}</div>
           </article>;
         })}
       </div>
-      <div className="dl-video-viewer" id={viewerId} hidden={!activeVideo}>
-        <div className="dl-video-viewer-head">
-          <Typography as="strong" variant="bodySmall" tone="accent">{activeVideo?.title}</Typography>
-          <button className="dl-video-viewer-close" type="button" aria-label="关闭放大播放" onClick={() => setActiveIndex(null)}>
-            ×
-          </button>
-        </div>
-        <div className="dl-video-viewer-media">
-          {activeVideo?.embed && <div className="dl-video-embed" dangerouslySetInnerHTML={{ __html: prepareEmbed(activeVideo.embed) }} />}
-        </div>
-      </div>
+      <dialog className="dl-video-viewer" id={viewerId} ref={dialogRef} onClose={() => setActiveIndex(null)} onClick={(event) => { if (event.target === dialogRef.current) dialogRef.current?.close(); }}>
+        <div className="dl-video-viewer-head"><Typography as="strong" variant="body" tone="accent">{activeVideo?.title}</Typography><button className="dl-video-viewer-close" type="button" aria-label="关闭视频" onClick={() => dialogRef.current?.close()}>×</button></div>
+        <div className="dl-video-viewer-media">{activeVideo?.embed && <div className="dl-video-embed" dangerouslySetInnerHTML={{ __html: prepareEmbed(activeVideo.embed) }} />}</div>
+      </dialog>
     </section>
   );
 }

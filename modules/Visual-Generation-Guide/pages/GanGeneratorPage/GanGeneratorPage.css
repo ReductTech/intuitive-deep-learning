@@ -1,0 +1,38 @@
+.course-page-surface .vg-gan-generator .vg-gan__diagram [aria-label="每一层都在把抽象特征变得更具体。"] {
+  display: none;
+}
+.course-page-surface .vg-gan-generator .vg-gan__diagram [aria-label="结构逐渐形成"],
+.course-page-surface .vg-gan-generator .vg-gan__diagram [aria-label="纹理逐渐丰富"] {
+  display: none;
+}
+.course-page-surface .vg-gan-generator__detail {
+  position: absolute;
+  left: 2%;
+  top: 73%;
+  width: 54%;
+  min-width: 0;
+  max-width: 100%;
+  display: grid;
+  gap: 10px;
+  padding: 16px 20px;
+  box-sizing: border-box;
+  border-left: 3px solid var(--ui-accent);
+}
+.course-page-surface .vg-gan-generator__detail p { margin: 0; }
+.course-page-surface .vg-gan-generator__caption {
+  position: absolute;
+  top: 64%;
+  min-width: 0;
+  max-width: 100%;
+  margin: 0;
+  text-align: center;
+}
+.course-page-surface .vg-gan-generator__feature-note {
+  position: absolute;
+  left: 62.6%;
+  top: 88%;
+  width: 35%;
+  min-width: 0;
+  max-width: 100%;
+  margin: 0;
+}

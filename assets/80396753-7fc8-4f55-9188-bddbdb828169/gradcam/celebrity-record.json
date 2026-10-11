@@ -1,0 +1,143 @@
+{
+  "samples": [
+    {
+      "id": "celebrity-jackie",
+      "name": "成龙",
+      "input": "input.png",
+      "reference": "reference.png",
+      "classification": {
+        "score": 11.445588111877441,
+        "heat": "classification-heat.png",
+        "hasPositiveSupport": true,
+        "channels": [
+          {
+            "index": 27,
+            "alpha": -0.0019764534663408995,
+            "image": "classification-channel-26.png"
+          },
+          {
+            "index": 2,
+            "alpha": -0.0016232498455792665,
+            "image": "classification-channel-1.png"
+          },
+          {
+            "index": 35,
+            "alpha": -0.001450751326046884,
+            "image": "classification-channel-34.png"
+          }
+        ]
+      },
+      "triplet": {
+        "score": 0.7378531098365784,
+        "heat": "triplet-heat.png",
+        "hasPositiveSupport": true,
+        "channels": [
+          {
+            "index": 47,
+            "alpha": -1.763052205205895e-05,
+            "image": "triplet-channel-46.png"
+          },
+          {
+            "index": 14,
+            "alpha": 1.3923532605986111e-05,
+            "image": "triplet-channel-13.png"
+          },
+          {
+            "index": 21,
+            "alpha": 1.3575356206274591e-05,
+            "image": "triplet-channel-20.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "celebrity-avril",
+      "name": "艾薇儿",
+      "input": "input.png",
+      "reference": "reference.png",
+      "classification": {
+        "score": 9.999951362609863,
+        "heat": "classification-heat.png",
+        "hasPositiveSupport": true,
+        "channels": [
+          {
+            "index": 20,
+            "alpha": 0.0007193813798949122,
+            "image": "classification-channel-19.png"
+          },
+          {
+            "index": 33,
+            "alpha": 0.0007025842787697911,
+            "image": "classification-channel-32.png"
+          },
+          {
+            "index": 7,
+            "alpha": 0.0006796908564865589,
+            "image": "classification-channel-6.png"
+          }
+        ]
+      },
+      "triplet": {
+        "score": 0.718140721321106,
+        "heat": "triplet-heat.png",
+        "hasPositiveSupport": true,
+        "channels": [
+          {
+            "index": 36,
+            "alpha": 3.5343698982615024e-05,
+            "image": "triplet-channel-35.png"
+          },
+          {
+            "index": 22,
+            "alpha": 3.107769225607626e-05,
+            "image": "triplet-channel-21.png"
+          },
+          {
+            "index": 31,
+            "alpha": -3.069599188165739e-05,
+            "image": "triplet-channel-30.png"
+          }
+        ]
+      }
+    }
+  ],
+  "sources": [
+    {
+      "file": "jackie-1.jpg",
+      "author": "Toms Norde / State Chancellery of Latvia",
+      "license": "CC BY-SA 2.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Jackie_Chan_in_2012.jpg"
+    },
+    {
+      "file": "jackie-2.jpg",
+      "author": "Firdaus Latif",
+      "license": "CC BY-SA 2.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Jackie_Chan_in_Kuala_Lumpur_2012.jpg"
+    },
+    {
+      "file": "avril-1.jpg",
+      "author": "Glenn Francis / Pacific Pro Digital",
+      "license": "CC BY-SA 4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Avril_Lavigne_2013_(cropped).jpg"
+    },
+    {
+      "file": "avril-2.jpg",
+      "author": "Freaktheclown; derivative Keraunoscopia",
+      "license": "CC BY-SA 3.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Avril_Lavigne,_Today_Show,_2013.jpg"
+    }
+  ],
+  "seed": 205023,
+  "classificationEpochs": 10,
+  "tripletEpochs": 10,
+  "originalPhotographs": 4,
+  "augmentedTrainingImages": 256,
+  "initialization": "LFW teaching classifier backbone; new two-identity classification head; then triplet-only fine-tuning",
+  "targetLayer": "last convolution; 48 channels; 16 x 16",
+  "classificationTarget": "specified identity pre-softmax logit",
+  "tripletTarget": "cosine similarity to the other photograph of the same identity; reference branch detached",
+  "limitations": "Both displayed photographs participate in this four-photo teaching fit. No held-out validation or generalization claim. Maps independently normalized. The original LFW heatmaps are not reused.",
+  "references": [
+    "https://arxiv.org/abs/1610.02391"
+  ]
+}

@@ -1,0 +1,373 @@
+.course-shell .vg-conditional-page {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(var(--ui-accent-rgb), .07), transparent 27%),
+    radial-gradient(circle at 86% 76%, rgba(var(--ui-success-rgb), .06), transparent 25%),
+    var(--ui-bg-card);
+}
+
+.course-shell .vg-conditional-page .edu-content-head {
+  margin-bottom: 12px;
+}
+
+.course-shell .vg-conditional-page__body {
+  min-width: 0;
+  min-height: 0;
+  gap: 12px;
+}
+
+.course-shell .vg-conditional-page__controls {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.35fr) minmax(220px, .72fr);
+  align-items: center;
+  gap: 18px;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius-md);
+  background: rgba(255, 255, 255, .92);
+  padding: 10px 14px;
+  box-shadow: var(--ui-shadow-soft);
+}
+
+.course-shell .vg-conditional-page__control-copy,
+.course-shell .vg-conditional-page__formula {
+  display: grid;
+  min-width: 0;
+  gap: 1px;
+}
+
+.course-shell .vg-conditional-page__condition-buttons {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+}
+
+.course-shell .vg-conditional-page__condition-button {
+  flex: 1 1 0;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.course-shell .vg-conditional-page__formula {
+  justify-items: end;
+  border-left: 1px solid var(--ui-border);
+  padding-left: 18px;
+}
+
+.course-shell .vg-conditional-page__distribution {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius-lg);
+  background:
+    linear-gradient(rgba(var(--ui-accent-rgb), .022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--ui-accent-rgb), .022) 1px, transparent 1px),
+    radial-gradient(circle at 50% 52%, rgba(var(--ui-success-rgb), .06), transparent 44%),
+    rgba(255, 255, 255, .96);
+  background-size: 38px 38px, 38px 38px, auto, auto;
+  box-shadow: var(--ui-shadow-soft);
+}
+
+.course-shell .vg-conditional-page__distribution-head {
+  position: absolute;
+  z-index: 12;
+  top: 13px;
+  right: 16px;
+  left: 16px;
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.course-shell .vg-conditional-page__distribution-head > div {
+  display: grid;
+  min-width: 0;
+  gap: 1px;
+}
+
+.course-shell .vg-conditional-page__resample {
+  flex-shrink: 0;
+}
+
+.course-shell .vg-conditional-page__distribution-svg {
+  position: absolute;
+  z-index: 1;
+  inset: 34px 60px 2px;
+  width: calc(100% - 120px);
+  height: calc(100% - 36px);
+  max-width: 100%;
+  overflow: visible;
+}
+
+.course-shell .vg-conditional-page__source-shape {
+  fill: rgba(var(--ui-accent-rgb), .025);
+  stroke-width: 3;
+  stroke-dasharray: 12 11;
+  vector-effect: non-scaling-stroke;
+}
+
+.course-shell .vg-conditional-page__source-shape.is-grass {
+  stroke: rgba(68, 151, 112, .58);
+}
+
+.course-shell .vg-conditional-page__source-shape.is-small {
+  stroke: rgba(69, 119, 222, .56);
+}
+
+.course-shell .vg-conditional-page__source-shape.is-fluffy {
+  stroke: rgba(226, 137, 55, .6);
+}
+
+.course-shell .vg-conditional-page__shape-layer {
+  animation: vg-conditional-shape-in 420ms cubic-bezier(.2, .75, .25, 1) both;
+  transform-origin: center;
+}
+
+.course-shell .vg-conditional-page__shape {
+  fill: url(#vg-conditional-fill);
+  stroke: #39785b;
+  stroke-width: 4;
+  vector-effect: non-scaling-stroke;
+  filter: drop-shadow(0 18px 22px rgba(45, 103, 76, .16));
+}
+
+.course-shell .vg-conditional-page__distribution.is-combined .vg-conditional-page__shape {
+  stroke: #23895c;
+  stroke-width: 5;
+}
+
+.course-shell .vg-conditional-page__contour {
+  fill: none;
+  stroke: rgba(42, 112, 78, .48);
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+.course-shell .vg-conditional-page__contour--inner {
+  stroke: rgba(42, 112, 78, .66);
+  stroke-dasharray: 8 8;
+}
+
+.course-shell .vg-conditional-page__density-dots circle {
+  fill: rgba(24, 96, 63, .42);
+  animation: vg-conditional-dot 2.8s ease-in-out infinite alternate;
+}
+
+.course-shell .vg-conditional-page__density-dots circle:nth-child(3n) {
+  animation-delay: -.9s;
+}
+
+.course-shell .vg-conditional-page__density-dots circle:nth-child(4n) {
+  animation-delay: -1.7s;
+}
+
+.course-shell .vg-conditional-page__distribution-label {
+  position: absolute;
+  z-index: 6;
+  top: 52%;
+  left: 50%;
+  display: grid;
+  min-width: 0;
+  justify-items: center;
+  gap: 0;
+  color: #21583d;
+  text-align: center;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.course-shell .vg-conditional-page__distribution-label .ui-typography:last-child {
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .78);
+  padding: 4px 9px;
+  backdrop-filter: blur(4px);
+}
+
+.course-shell .vg-conditional-page__sample-orbit {
+  position: absolute;
+  z-index: 8;
+  inset: 0;
+  pointer-events: none;
+}
+
+.course-shell .vg-conditional-page__sample {
+  position: absolute;
+  width: 142px;
+  height: 150px;
+  margin: 0;
+  overflow: hidden;
+  border: 4px solid rgba(255, 255, 255, .98);
+  border-radius: var(--ui-radius-md);
+  background: #fff;
+  box-shadow: 0 13px 30px rgba(31, 50, 79, .22);
+  animation: vg-conditional-sample-in 380ms ease-out both;
+}
+
+.course-shell .vg-conditional-page__sample::after {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(36, 91, 64, .24);
+  border-radius: calc(var(--ui-radius-md) - 3px);
+  content: '';
+}
+
+.course-shell .vg-conditional-page__sample--1 {
+  top: 8%;
+  left: 20%;
+}
+
+.course-shell .vg-conditional-page__sample--2 {
+  top: 34%;
+  right: 8%;
+  animation-delay: 60ms;
+}
+
+.course-shell .vg-conditional-page__sample--3 {
+  bottom: 4%;
+  left: 13%;
+  animation-delay: 120ms;
+}
+
+.course-shell .vg-conditional-page__sample img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  object-fit: cover;
+}
+
+.course-shell .vg-conditional-page__sample figcaption {
+  position: absolute;
+  z-index: 2;
+  right: 7px;
+  bottom: 7px;
+  border-radius: 999px;
+  color: #fff;
+  background: rgba(15, 42, 29, .76);
+  padding: 3px 8px;
+  backdrop-filter: blur(5px);
+}
+
+.course-shell .vg-conditional-page__overlap-note {
+  position: absolute;
+  z-index: 9;
+  right: 18px;
+  bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(var(--ui-success-rgb), .22);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .9);
+  padding: 6px 10px;
+}
+
+.course-shell .vg-conditional-page__overlap-line {
+  width: 22px;
+  flex: 0 0 22px;
+  border-top: 3px solid var(--ui-success);
+}
+
+.course-shell .vg-conditional-page__overlap-note .ui-typography {
+  width: max-content;
+  white-space: nowrap;
+}
+
+.course-shell .vg-conditional-page__insight {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 20px;
+  min-height: 82px;
+  border: 1px solid rgba(var(--ui-accent-rgb), .18);
+  border-radius: var(--ui-radius-md);
+  background: var(--ui-bg-soft);
+  padding: 10px 16px;
+}
+
+.course-shell .vg-conditional-page__insight.is-complete {
+  border-color: rgba(var(--ui-success-rgb), .34);
+  background: rgba(var(--ui-success-rgb), .065);
+}
+
+.course-shell .vg-conditional-page__insight > div:first-child {
+  display: grid;
+  min-width: 0;
+  gap: 2px;
+}
+
+.course-shell .vg-conditional-page__progress {
+  display: flex;
+  flex-shrink: 0;
+  gap: 9px;
+}
+
+.course-shell .vg-conditional-page__progress .ui-typography {
+  border: 1px solid var(--ui-border);
+  border-radius: 999px;
+  background: #fff;
+  padding: 6px 10px;
+}
+
+.course-page-surface .vg-conditional-page {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  grid-template-rows: auto minmax(0, 1fr);
+}
+
+.course-page-surface .vg-conditional-page__body {
+  grid-template-rows: auto minmax(0, 1fr) auto;
+}
+
+@keyframes vg-conditional-shape-in {
+  from { opacity: .25; transform: scale(.92) rotate(-1.5deg); }
+  to { opacity: 1; transform: scale(1) rotate(0); }
+}
+
+@keyframes vg-conditional-sample-in {
+  from { opacity: 0; transform: translateY(10px) scale(.94); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes vg-conditional-dot {
+  from { opacity: .28; }
+  to { opacity: .85; }
+}
+
+@media (max-width: 900px) {
+  .course-shell .vg-conditional-page__controls {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .course-shell .vg-conditional-page__formula {
+    justify-items: start;
+    border-top: 1px solid var(--ui-border);
+    border-left: 0;
+    padding-top: 8px;
+    padding-left: 0;
+  }
+
+  .course-shell .vg-conditional-page__sample {
+    width: 104px;
+    height: 110px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .course-shell .vg-conditional-page__shape-layer,
+  .course-shell .vg-conditional-page__sample,
+  .course-shell .vg-conditional-page__density-dots circle {
+    animation: none;
+  }
+}

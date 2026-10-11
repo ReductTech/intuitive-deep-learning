@@ -1,7 +1,9 @@
-import { ContentBlock, Typography } from '../../../shared/react';
-import appleImage from '../../assets/newton-apple-tree.jpg';
-import galtonImage from '../../assets/galton.jpg';
+import { ContentBlock, moduleAssetUrl, Typography } from '../../../shared/react';
 import './UncertaintyOpeningPage.css';
+
+const moduleAssetId = 'a805d0a5-9d46-42ef-9989-e11aeb79e49e';
+const appleImage = moduleAssetUrl(moduleAssetId, 'newton-apple-tree.jpg');
+const galtonImage = moduleAssetUrl(moduleAssetId, 'galton.jpg');
 
 const childHeights = [42, 51, 58, 48, 66, 55, 72, 61, 78];
 

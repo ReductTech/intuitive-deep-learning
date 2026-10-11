@@ -43,7 +43,7 @@
 
 | 能力 | 直接复用 shared | 模块私有保留 / 验收重点 |
 | --- | --- | --- |
-| 页面和流程 | `ModuleShell`、`LessonFlow`、`LessonStage`/内容容器 | 三幕的双栏布局、响应式尺寸和旧页面重要视觉 |
+| 页面和流程 | `ModuleShell`、`LessonFlow`、原生内容容器 | 三幕的双栏布局、响应式尺寸和旧页面重要视觉 |
 | 标准教学交互 | `Question`、`Button`、`Feedback`/`Callout`、`NoticeStrip`、`ValueTile`、`AttentionHint` | 核选择、手写板、特征图 deck、扫描动画、场景和排名 |
 | 状态 | shared Telemetry API | 模块私有 typed persistence adapter；恢复去重与级联一致性 |
 | 课程结尾 | `LessonFooter` / `RelatedVideos` | UI Kit 标题与说明、原四个视频、课程目录和下一课配置 |

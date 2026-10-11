@@ -18,5 +18,6 @@ export const getPptNotes = notesForScene;
 const catalog: [DeckDefinition, ...DeckDefinition[]] = [deck];
 
 export function NeuronPpt() {
-  return <SceneDeck catalog={catalog} moduleId="neuron-guide" progressKey="lesson-flow:neuron-guide-expanded-v6" getNotes={notesForScene} />;
+  return <SceneDeck catalog={catalog} moduleId="neuron-guide" assetId="9acfbca1-b881-457e-add6-21e0b6b855a0" progressKey="lesson-flow:neuron-guide-v1" getNotes={notesForScene} />;
 }
+

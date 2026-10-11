@@ -1,4 +1,4 @@
-.course-page-surface .ng-matrix-representation {
+.course-page-surface .ngtw-matrix-representation {
   display: grid;
   width: 100%;
   height: 100%;
@@ -7,8 +7,8 @@
   overflow: hidden;
 }
 
-.ng-matrix-representation > .edu-content-head { max-width: 1100px; margin-bottom: 8px; }
-.ng-matrix-representation > .edu-content-body {
+.ngtw-matrix-representation > .edu-content-head { max-width: 1100px; margin-bottom: 8px; }
+.ngtw-matrix-representation > .edu-content-body {
   display: grid;
   min-width: 0;
   min-height: 0;
@@ -17,8 +17,8 @@
   align-content: stretch;
 }
 
-.ng-matrix-representation__expanded,
-.ng-matrix-representation__compact {
+.ngtw-matrix-representation__expanded,
+.ngtw-matrix-representation__compact {
   display: grid;
   min-width: 0;
   grid-template-columns: minmax(210px, .35fr) minmax(0, 1fr);
@@ -30,10 +30,8 @@
   background: linear-gradient(90deg, #fffaf6, #f8fbff);
   padding: 12px 18px;
 }
-
-.ng-matrix-representation__section-copy { display: grid; min-width: 0; align-content: center; gap: 3px; }
-.ng-matrix-representation__expanded .edu-formula-block,
-.ng-matrix-representation__compact .edu-formula-block {
+.ngtw-matrix-representation__expanded .edu-formula-block,
+.ngtw-matrix-representation__compact .edu-formula-block {
   width: 100%;
   min-width: 0;
   min-height: 92px;
@@ -42,89 +40,65 @@
   padding: 12px 16px;
 }
 
-.ng-matrix-representation__formula-line,
-.ng-matrix-representation__formula-detail,
-.ng-matrix-representation__compact-formula,
-.ng-matrix-representation__compact-detail { min-width: 0; overflow-wrap: anywhere; }
+.ngtw-matrix-representation__formula-line,
+.ngtw-matrix-representation__formula-detail,
+.ngtw-matrix-representation__compact-formula,
+.ngtw-matrix-representation__compact-detail { min-width: 0; overflow-wrap: anywhere; }
 
-.ng-matrix-representation__formula-line,
-.ng-matrix-representation__compact-formula {
+.ngtw-matrix-representation__formula-line,
+.ngtw-matrix-representation__compact-formula {
   color: #263f68;
   font-family: var(--ui-font-mono);
 }
 
-.ng-matrix-representation__formula-detail,
-.ng-matrix-representation__compact-detail {
+.ngtw-matrix-representation__formula-detail,
+.ngtw-matrix-representation__compact-detail {
   margin-top: 4px;
   color: #73849d;
   font-family: var(--ui-font-mono);
 }
 
-.ng-matrix-representation__down-arrow { display: grid; place-items: center; color: #8ea4c4; font-family: var(--ui-font-mono); font-size: 30px; font-weight: 800; }
-.ng-matrix-representation__bridge-label { justify-self: center; border-radius: 999px; background: #edf4fd; padding: 5px 25px; text-align: center; }
+.ngtw-matrix-representation__down-arrow { color: #8ea4c4; font-family: var(--ui-font-mono); font-size: 30px; font-weight: 800; }
 
-.ng-matrix-representation__vectors {
-  display: grid;
-  min-width: 0;
-  min-height: 0;
-  grid-template-columns: minmax(0, 1fr) 42px minmax(0, 1fr);
-  align-items: stretch;
-  gap: 12px;
-}
-
-.ng-matrix-representation__vector-card {
-  display: grid;
-  min-width: 0;
-  grid-template-columns: minmax(120px, .7fr) minmax(0, 1.3fr);
-  align-items: center;
-  gap: 12px;
+.ngtw-matrix-representation__vector-card {
   border: 1px solid #e6d5c8;
   border-left: 4px solid #e37d38;
-  border-radius: 12px;
-  background: #fffdfb;
-  padding: 12px 16px;
 }
 
-.ng-matrix-representation__vector-card--inputs { border-color: #d8e3f0; border-left-color: #6e9fe2; background: #fbfdff; }
-.ng-matrix-representation__card-copy { display: grid; min-width: 0; align-content: center; gap: 3px; }
-.ng-matrix-representation__vector-card .edu-formula-block { min-height: 114px; border: 0; background: transparent; padding: 6px; }
-.ng-matrix-representation__vector-equation { display: flex; min-width: 0; align-items: center; justify-content: center; gap: 8px; color: #263f68; font-family: var(--ui-font-mono); font-size: var(--ui-type-formula-size); font-weight: var(--ui-type-formula-weight); line-height: var(--ui-type-formula-line-height); }
+.ngtw-matrix-representation__vector-card--inputs { border-color: #d8e3f0; border-left-color: #6e9fe2; }
+.ngtw-matrix-representation__vector-card .edu-formula-block { min-height: 114px; border: 0; background: transparent; padding: 6px; }
+.ngtw-matrix-representation__vector-equation { color: #263f68; font-family: var(--ui-font-mono); font-size: var(--ui-type-formula-size); font-weight: var(--ui-type-formula-weight); line-height: var(--ui-type-formula-line-height); }
 
-.ng-matrix-representation__bracket-vector {
-  position: relative;
+.ngtw-matrix-representation__bracket-vector {
   display: inline-grid;
-  min-width: 92px;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 15px;
-  text-align: center;
 }
 
-.ng-matrix-representation__bracket-vector--row { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-.ng-matrix-representation__bracket-vector--column { grid-template-rows: repeat(3, minmax(0, 1fr)); }
+.ngtw-matrix-representation__bracket-vector--row { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.ngtw-matrix-representation__bracket-vector--column { grid-template-rows: repeat(3, minmax(0, 1fr)); }
 
-.ng-matrix-representation__bracket-vector::before,
-.ng-matrix-representation__bracket-vector::after { position: absolute; inset-block: 0; width: 7px; border-block: 2px solid currentColor; content: ''; }
-.ng-matrix-representation__bracket-vector::before { left: 0; border-left: 2px solid currentColor; }
-.ng-matrix-representation__bracket-vector::after { right: 0; border-right: 2px solid currentColor; }
-.ng-matrix-representation__bracket-vector--warm { color: #d87732; }
-.ng-matrix-representation__bracket-vector--blue { color: #426b9e; }
+.ngtw-matrix-representation__bracket-vector::before,
+.ngtw-matrix-representation__bracket-vector::after { position: absolute; inset-block: 0; width: 7px; border-block: 2px solid currentColor; content: ''; }
+.ngtw-matrix-representation__bracket-vector::before { left: 0; border-left: 2px solid currentColor; }
+.ngtw-matrix-representation__bracket-vector::after { right: 0; border-right: 2px solid currentColor; }
+.ngtw-matrix-representation__bracket-vector--warm { color: #d87732; }
+.ngtw-matrix-representation__bracket-vector--blue { color: #426b9e; }
 
-.ng-matrix-representation__multiply { display: grid; place-items: center; color: #8ca0c1; font-family: var(--ui-font-mono); font-size: 42px; font-weight: 800; }
-.ng-matrix-representation__compact { border-color: #d5e8d9; border-left-color: #4e9a68; background: linear-gradient(90deg, #f8fdf9, #fff); }
-.ng-matrix-representation__compact .edu-formula-block { background: #f5fbf7; }
-.ng-matrix-representation__key-point { display: flex; min-width: 0; align-items: baseline; justify-content: center; gap: 8px; border: 1px solid #eedfc9; border-radius: 10px; background: #fffaf0; padding: 7px 14px; }
+.ngtw-matrix-representation__multiply { color: #8ca0c1; font-family: var(--ui-font-mono); font-size: 42px; font-weight: 800; }
+.ngtw-matrix-representation__compact { border-color: #d5e8d9; border-left-color: #4e9a68; background: linear-gradient(90deg, #f8fdf9, #fff); }
+.ngtw-matrix-representation__compact .edu-formula-block { background: #f5fbf7; }
+.ngtw-matrix-representation__key-point { border: 1px solid #eedfc9; }
 
 @media (max-width: 980px) {
-  .ng-matrix-representation__vectors { grid-template-columns: minmax(0, 1fr); }
-  .ng-matrix-representation__multiply { height: 30px; transform: rotate(90deg); }
+  .ngtw-matrix-representation__vectors { grid-template-columns: minmax(0, 1fr); }
+  .ngtw-matrix-representation__multiply { height: 30px; transform: rotate(90deg); }
 }
 
 @media (max-width: 720px) {
-  .course-page-surface .ng-matrix-representation { height: auto; min-height: 100%; overflow: visible; }
-  .ng-matrix-representation > .edu-content-body { grid-template-rows: auto; overflow: visible; }
-  .ng-matrix-representation__expanded,
-  .ng-matrix-representation__compact,
-  .ng-matrix-representation__vector-card { grid-template-columns: minmax(0, 1fr); }
-  .ng-matrix-representation__key-point { align-items: flex-start; flex-direction: column; gap: 2px; }
+  .course-page-surface .ngtw-matrix-representation { height: auto; min-height: 100%; overflow: visible; }
+  .ngtw-matrix-representation > .edu-content-body { grid-template-rows: auto; overflow: visible; }
+  .ngtw-matrix-representation__expanded,
+  .ngtw-matrix-representation__compact,
+  .ngtw-matrix-representation__vector-card { grid-template-columns: minmax(0, 1fr); }
+  .ngtw-matrix-representation__key-point { align-items: flex-start; flex-direction: column; gap: 2px; }
 }
+

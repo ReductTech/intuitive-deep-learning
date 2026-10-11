@@ -1,0 +1,15 @@
+.course-page-surface .vg-gan-discriminator .vg-gan__explanation {
+  left: 24%;
+  top: 70%;
+  width: 33%;
+  gap: 8px;
+}
+.course-page-surface .vg-gan-discriminator__model-label {
+  position: absolute;
+  left: 23%;
+  top: 19.8%;
+  min-width: 0;
+  max-width: 100%;
+  padding: 0 8px;
+  background: #fff;
+}

@@ -19,7 +19,7 @@
   "description": "通过 MNIST 二值图像的九宫格像素计数建立人工特征思维，再把 160 张样本统计成分布图，最后用双层 MLP 观察人工特征在训练集和真实手写输入上的差异。",
   "rootClass": "hdf",
   "config": {
-    "dataset": "dataset/mnist",
+    "dataset": "assets/dataset/mnist",
     "sampleCount": 160,
     "grid": "3x3",
     "pixelThreshold": 0

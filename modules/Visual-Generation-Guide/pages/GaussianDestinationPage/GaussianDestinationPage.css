@@ -1,0 +1,206 @@
+.course-page-surface .vg-gaussian-page {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  grid-template-rows: auto minmax(0, 1fr);
+  background: #fff;
+  padding: 25px 42px 22px;
+}
+
+.course-page-surface .vg-gaussian-page .edu-content-head { margin-bottom: 11px; }
+.course-page-surface .vg-gaussian-page .edu-content-title { color: #263650; }
+.course-page-surface .vg-gaussian-page .edu-content-subtitle { margin-top: 4px; color: #3468ce; }
+
+.course-page-surface .vg-gaussian-page__body {
+  min-width: 0;
+  min-height: 0;
+  grid-template-rows: 224px 67px minmax(0, 1fr) 70px;
+  gap: 11px;
+}
+
+.course-page-surface .vg-gaussian-page__theory {
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  border: 1.5px solid #acc9f2;
+  border-radius: 11px;
+  background: #f3f7fe;
+  padding: 8px 24px;
+}
+
+.course-page-surface .vg-gaussian-page__theory-row {
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  grid-template-columns: 155px minmax(0, 600px) minmax(0, 1fr);
+  align-items: center;
+  gap: 18px;
+  border-bottom: 1px solid #d4e0f1;
+}
+
+.course-page-surface .vg-gaussian-page__theory-row:last-child { border-bottom: 0; }
+.course-page-surface .vg-gaussian-page__theory-row > p { margin: 0; }
+.course-page-surface .vg-gaussian-page__theory-row:nth-child(2) > p { grid-column: 2 / 4; }
+
+.course-page-surface .vg-gaussian-page__formula {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  max-width: 100%;
+  height: 62px;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+
+.course-page-surface .vg-gaussian-page__formula .math-formula {
+  min-width: 0;
+  max-width: 100%;
+  justify-content: flex-start;
+  white-space: nowrap;
+}
+
+.course-page-surface .vg-gaussian-page__section-head {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  max-width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.course-page-surface .vg-gaussian-page__section-head > div:first-child { min-width: 0; }
+.course-page-surface .vg-gaussian-page__section-head h2,
+.course-page-surface .vg-gaussian-page__section-head p { margin: 0; }
+
+.course-page-surface .vg-gaussian-page__choices {
+  display: flex;
+  min-width: 0;
+  max-width: 100%;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 7px;
+}
+
+.course-page-surface .vg-gaussian-page__choices .edu-btn { min-width: 84px; }
+
+.course-page-surface .vg-gaussian-page__sequence {
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  max-width: 100%;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  align-items: start;
+  border-bottom: 2px solid #dce5f0;
+}
+
+.course-page-surface .vg-gaussian-page__slot {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  max-width: 100%;
+  justify-items: center;
+}
+
+.course-page-surface .vg-gaussian-page__snapshot {
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  justify-items: center;
+  align-content: start;
+  gap: 4px;
+  animation: vg-gaussian-appear .4s ease-out both;
+}
+
+.course-page-surface .vg-gaussian-page__snapshot > span,
+.course-page-surface .vg-gaussian-page__snapshot > strong { text-align: center; }
+
+.course-page-surface .vg-gaussian-page__plot {
+  display: block;
+  width: 100%;
+  max-width: 264px;
+  height: auto;
+  margin: 6px 0 0;
+  overflow: visible;
+}
+
+.course-page-surface .vg-gaussian-page__curve {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+  animation: vg-gaussian-draw .7s ease-out both;
+}
+
+.course-page-surface .vg-gaussian-page__arrow {
+  position: absolute;
+  z-index: 2;
+  top: 120px;
+  right: -14px;
+  color: #8ca3c4;
+  font-size: 32px;
+  line-height: 1;
+}
+
+.course-page-surface .vg-gaussian-page__footer {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.course-page-surface .vg-gaussian-page__time-control {
+  display: flex;
+  min-width: 0;
+  max-width: 100%;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: 18px;
+}
+
+.course-page-surface .vg-gaussian-page__time-control > label,
+.course-page-surface .vg-gaussian-page__time-control > span { flex: 0 0 auto; }
+
+.course-page-surface .vg-gaussian-page__time-control input {
+  width: min(100%, 560px);
+  min-width: 0;
+  max-width: 100%;
+  accent-color: #3468ce;
+  cursor: pointer;
+}
+
+.course-page-surface .vg-gaussian-page__actions {
+  display: flex;
+  min-width: 0;
+  max-width: 100%;
+  flex: 0 0 auto;
+  gap: 8px;
+}
+
+.course-page-surface .vg-gaussian-page__actions .edu-btn { min-width: 113px; }
+
+@keyframes vg-gaussian-appear {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes vg-gaussian-draw {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .course-page-surface .vg-gaussian-page__snapshot,
+  .course-page-surface .vg-gaussian-page__curve { animation: none; }
+}

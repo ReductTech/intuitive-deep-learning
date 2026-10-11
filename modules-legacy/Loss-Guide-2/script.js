@@ -67,9 +67,6 @@
   var sigmoidQuestionApi = null;
   var ceNegativeQuestionApi = null;
   var pairQuestionApis = {};
-  var SIGMOID_FEEDBACK_ENDPOINT = 'http://127.0.0.1:59414/loss/sigmoid-transform-feedback';
-  var CE_SIGN_FEEDBACK_ENDPOINT = 'http://127.0.0.1:59414/loss/cross-entropy-sign-feedback';
-  var LOSS_DESIGN_ENDPOINT = 'http://127.0.0.1:59414/loss/probability-design';
 
   function $(id) {
     return document.getElementById(id);
@@ -608,60 +605,23 @@
     setSigmoidQuestionFeedback(feedback.tone, feedback.message);
   }
 
-  async function postJsonWithTimeout(url, payload, timeoutMs) {
-    var controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
-    var timeoutId = window.setTimeout(function () {
-      if (controller) controller.abort();
-    }, timeoutMs || 12000);
-    try {
-      var response = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-        signal: controller ? controller.signal : undefined,
-      });
-      var data = await response.json().catch(function () { return {}; });
-      return { response: response, data: data };
-    }
-    catch (error) {
-      if (error && error.name === 'AbortError') {
-        throw window.DLModuleUI.createUserFacingError('分析超时，请稍后再试。', 'AI_REQUEST_TIMEOUT');
-      }
-      throw error;
-    }
-    finally {
-      window.clearTimeout(timeoutId);
-    }
-  }
-
   async function submitSigmoidGuess(answer) {
     var input = sigmoidQuestionApi && sigmoidQuestionApi.root.querySelector('[data-role="question-answer"]');
     var button = sigmoidQuestionApi && sigmoidQuestionApi.submit;
-    if (!input || !button || !answer) return;
+    if (!input || !button) return;
     button.disabled = true;
     input.disabled = true;
     button.classList.add('is-loading');
     button.setAttribute('aria-busy', 'true');
     button.textContent = '判断中';
     setSigmoidQuestionFeedback('', '正在分析你的猜想，请稍候。');
-    try {
-      var result = await postJsonWithTimeout(SIGMOID_FEEDBACK_ENDPOINT, { answer: answer }, 12000);
-      var response = result.response;
-      var data = result.data;
-      renderSigmoidQuestionFeedback(window.DLModuleUI.requireServiceResult(response, data));
-      button.classList.remove('is-loading');
-      button.removeAttribute('aria-busy');
-      button.textContent = '已提交';
-      revealSigmoid();
-    }
-    catch (error) {
-      input.disabled = false;
-      button.disabled = false;
-      button.classList.remove('is-loading');
-      button.removeAttribute('aria-busy');
-      button.textContent = '提交';
-      setSigmoidQuestionFeedback('wrong', window.DLModuleUI.friendlyErrorMessage(error));
-    }
+    revealSigmoid();
+    setSigmoidQuestionFeedback('hint', answer ? '已记录你的转换思路，可以继续观察 Sigmoid 曲线。' : '已跳过猜想，可以继续观察 Sigmoid 曲线。');
+    input.disabled = false;
+    button.disabled = false;
+    button.classList.remove('is-loading');
+    button.removeAttribute('aria-busy');
+    button.textContent = '提交';
   }
 
   function mountSigmoidQuestion() {
@@ -676,8 +636,8 @@
         sample: '正在分析你的转换思路，请稍候。',
       },
       onCheck: function (result) {
-        if (!result || result.empty || !result.answer[0]) return;
-        submitSigmoidGuess(String(result.answer[0]).trim());
+        if (!result) return;
+        submitSigmoidGuess(String((result.answer || [])[0] || '').trim());
       },
     });
     var input = sigmoidQuestionApi.root.querySelector('[data-role="question-answer"]');
@@ -811,31 +771,25 @@
 
   async function generateLossCurve() {
     var answer = $('lossIdeaInput').value.trim();
-    if (!answer) { $('lossDesignFeedback').textContent = '先写下一个想法或公式。'; return; }
     var button = $('generateLossCurve');
     button.disabled = true;
     button.textContent = '正在生成曲线…';
     $('lossDesignFeedback').className = 'edu-status wp-feedback';
     $('lossDesignFeedback').textContent = '正在把你的想法转换成可绘制的公式。';
-    try {
-      var response = await fetch(LOSS_DESIGN_ENDPOINT, {
-        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ answer: answer }),
-      });
-      var data = await response.json().catch(function () { return {}; });
-      renderLossDesign(window.DLModuleUI.requireServiceResult(response, data));
-    }
-    catch (error) {
-      $('lossDesignFeedback').className = 'edu-status wp-feedback is-danger';
-      window.DLModuleUI.streamText(
-        $('lossDesignFeedback'),
-        window.DLModuleUI.friendlyErrorMessage(error),
-        { interval: 24 }
-      );
-    }
-    finally {
-      button.disabled = false;
-      button.textContent = '查看损失曲线';
-    }
+    renderLossDesign({
+      family: 'negative_log',
+      scale: 1,
+      power: 2,
+      is_negative_log: true,
+      is_meaningful: true,
+      formula: '-log(p)',
+      derivative: '-1/p',
+      explanation: answer
+        ? '已记录你的想法。当前先展示标准负对数损失曲线，继续观察概率与损失的关系。'
+        : '已跳过输入。当前先展示标准负对数损失曲线，继续观察概率与损失的关系。'
+    });
+    button.disabled = false;
+    button.textContent = '查看损失曲线';
   }
 
   function probabilityBar(item, probability) {
@@ -962,35 +916,23 @@
   async function submitCeNegativeAnswer(answer) {
     var input = ceNegativeQuestionApi && ceNegativeQuestionApi.root.querySelector('[data-role="question-answer"]');
     var button = ceNegativeQuestionApi && ceNegativeQuestionApi.submit;
-    if (!input || !button || !answer || state.ceNegativeSolved) return;
+    if (!input || !button || state.ceNegativeSolved) return;
 
     input.disabled = true;
     button.disabled = true;
     button.classList.add('is-loading');
     button.setAttribute('aria-busy', 'true');
     button.textContent = '判断中';
-    ceNegativeQuestionApi.streamFeedback('正在分析你的解释，请稍候。', 'hint');
+    ceNegativeQuestionApi.streamFeedback(
+      answer ? '已记录你的解释，可以继续选择输出层。' : '已跳过解释，可以继续选择输出层。',
+      'hint'
+    );
     unlockAct5AfterCeQuestion();
-
-    try {
-      var result = await postJsonWithTimeout(CE_SIGN_FEEDBACK_ENDPOINT, { answer: answer }, 30000);
-      var response = result.response;
-      var data = result.data;
-      var resultFeedback = window.DLModuleUI.shortAnswerFeedback(
-        window.DLModuleUI.requireServiceResult(response, data),
-        '请同时说明 log(p) 的正负和最小化损失时概率应变化的方向。'
-      );
-      ceNegativeQuestionApi.streamFeedback(resultFeedback.message, resultFeedback.tone);
-      button.classList.remove('is-loading');
-      button.removeAttribute('aria-busy');
-      button.textContent = '已提交';
-    }
-    catch (error) {
-      button.classList.remove('is-loading');
-      button.removeAttribute('aria-busy');
-      button.textContent = '已提交';
-      ceNegativeQuestionApi.streamFeedback(window.DLModuleUI.friendlyErrorMessage(error), 'wrong');
-    }
+    input.disabled = false;
+    button.disabled = false;
+    button.classList.remove('is-loading');
+    button.removeAttribute('aria-busy');
+    button.textContent = '提交解释';
   }
 
   function unlockAct5AfterCeQuestion() {
@@ -1015,8 +957,8 @@
         sample: '正在分析你的解释，请稍候。',
       },
       onCheck: function (result) {
-        if (!result || result.empty || !result.answer[0]) return;
-        submitCeNegativeAnswer(String(result.answer[0]).trim());
+        if (!result) return;
+        submitCeNegativeAnswer(String((result.answer || [])[0] || '').trim());
       },
     });
   }

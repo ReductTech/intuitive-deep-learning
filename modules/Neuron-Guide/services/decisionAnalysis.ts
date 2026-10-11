@@ -1,5 +1,15 @@
-const INTAKE_ENDPOINT = 'http://127.0.0.1:59414/decision/intake';
-const EXTRA_FACTORS_ENDPOINT = 'http://127.0.0.1:59414/decision/extra-factors';
+import moduleOutline from '../outlines.json';
+
+const INTAKE_ENDPOINT = `${(import.meta.env.VITE_LLM_SERVICE_URL || 'http://127.0.0.1:28432').replace(/\/$/, '')}/decision/intake`;
+const EXTRA_FACTORS_ENDPOINT = `${(import.meta.env.VITE_LLM_SERVICE_URL || 'http://127.0.0.1:28432').replace(/\/$/, '')}/decision/extra-factors`;
+
+/** 课程标识取自模块根目录的 outlines.json，云端按它分组每门课的缓存。 */
+const COURSE_ID = moduleOutline.id;
+
+const REQUEST_HEADERS = {
+  'Content-Type': 'application/json',
+  'X-Course-ID': COURSE_ID,
+};
 
 export interface DecisionAnalysisFactor {
   name: string;
@@ -77,7 +87,7 @@ async function post(endpoint: string, payload: Record<string, unknown>): Promise
   try {
     response = await fetch(endpoint, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: REQUEST_HEADERS,
       body: JSON.stringify(payload),
     });
   } catch {
@@ -119,3 +129,4 @@ export async function analyzeDecision(decision: string): Promise<DecisionAnalysi
     factors: [primaryFactor, normalizeFactor(extras[0]), normalizeFactor(extras[1])],
   };
 }
+

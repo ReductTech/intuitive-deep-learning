@@ -1,8 +1,10 @@
-import { ContentBlock, Typography } from '../../../shared/react';
+import { ContentBlock, moduleAssetUrl, Typography } from '../../../shared/react';
 import "./NematodeResponsePage.css";
 import type { CSSProperties } from 'react';
-import nematodeVideo from '../../assets/video.mp4';
-import nematodeVideoPoster from '../../assets/video-poster.png';
+
+const moduleAssetId = '9acfbca1-b881-457e-add6-21e0b6b855a0';
+const nematodeVideo = moduleAssetUrl(moduleAssetId, 'video.mp4');
+const nematodeVideoPoster = moduleAssetUrl(moduleAssetId, 'video-poster.png');
 
 const abilities = [
   { name: '触碰', detail: '触觉神经元感受到身体接触，再通过神经回路触发后退或转向。', group: '感知' },
@@ -20,7 +22,7 @@ export function NematodeResponsePage() {
   return (
     <ContentBlock
       headingLevel={1}
-      className="ng-nematode-opening-v2 ng-nematode-intro"
+      className="ngtw-nematode-opening-v2 ngtw-nematode-intro"
       title="只有 302 个神经元，它为什么能完成这么多行为？"
       subtitle={(
         <>
@@ -30,8 +32,8 @@ export function NematodeResponsePage() {
       )}
     >
 
-      <div className="ng-nematode-intro__scene">
-        <figure className="ng-nematode-opening-v2__micrograph ng-nematode-intro__video">
+      <div className="ngtw-nematode-intro__scene grid min-h-0 grid-cols-[minmax(0,_.82fr)_minmax(0,_1.18fr)] items-stretch gap-[42px]">
+        <figure className="ngtw-nematode-opening-v2__micrograph relative min-h-[330px] m-0 overflow-hidden bg-[#20262e] ngtw-nematode-intro__video min-h-0 h-full rounded-[8px]">
           <video
             src={nematodeVideo}
             poster={nematodeVideoPoster}
@@ -42,20 +44,20 @@ export function NematodeResponsePage() {
             preload="auto"
             aria-label="显微镜下活动的秀丽隐杆线虫"
           />
-          <div className="ng-nematode-opening-v2__specimen">
+          <div className="ngtw-nematode-opening-v2__specimen absolute left-[24px] bottom-[22px] grid gap-[2px]">
             <Typography variant="body" tone="inherit">显微镜下的活动影像</Typography>
             <Typography as="strong" variant="h3" tone="inherit">成年秀丽隐杆线虫</Typography>
           </div>
         </figure>
 
-        <div className="ng-nematode-intro__story">
-          <section className="ng-nematode-intro__connectome" aria-labelledby="ng-nematode-connectome">
-            <div className="ng-nematode-intro__year">
+        <div className="ngtw-nematode-intro__story grid min-w-0 grid-rows-[auto_minmax(0,_1fr)] content-stretch gap-[16px]">
+          <section className="ngtw-nematode-intro__connectome grid min-w-0 grid-cols-[120px_minmax(0,_1fr)] grid-rows-[minmax(0,_1fr)_auto] items-center gap-[8px_22px] p-[20px_22px_14px]" aria-labelledby="ngtw-nematode-connectome">
+            <div className="ngtw-nematode-intro__year content-center justify-items-center pr-[20px]">
               <Typography variant="body" tone="warning">截至</Typography>
               <Typography as="strong" variant="h2" tone="warning">2019</Typography>
             </div>
             <div>
-              <Typography id="ng-nematode-connectome" as="h3" variant="h3" tone="accent">
+              <Typography id="ngtw-nematode-connectome" as="h3" variant="h3" tone="accent">
                 唯一完成全神经系统连接组测定的动物
               </Typography>
               <Typography variant="body" tone="muted">
@@ -67,25 +69,25 @@ export function NematodeResponsePage() {
             </Typography>
           </section>
 
-          <section className="ng-nematode-intro__abilities" aria-label="秀丽隐杆线虫的能力">
-            <div className="ng-nematode-intro__ability-head">
+          <section className="ngtw-nematode-intro__abilities grid grid-rows-[auto_minmax(0,_1fr)] gap-[12px] min-h-[238px] p-[14px_16px_16px]" aria-label="秀丽隐杆线虫的能力">
+            <div className="ngtw-nematode-intro__ability-head flex items-end justify-between gap-[16px]">
               <div>
                 <Typography as="h3" variant="h3" tone="accent">302 个神经元支持的能力</Typography>
                 <Typography variant="body" tone="muted">悬浮或聚焦泡泡，暂停漂浮并查看机制。</Typography>
               </div>
             </div>
-            <div className="ng-nematode-intro__bubble-field">
+            <div className="ngtw-nematode-intro__bubble-field relative min-w-0 min-h-[162px]">
               {abilities.map((ability, index) => (
                 <button
-                  className="ng-nematode-intro__bubble"
+                  className="ngtw-nematode-intro__bubble absolute grid w-[92px] h-[92px] place-items-center rounded-[50%] bg-[#fff] p-[10px]"
                   data-group={ability.group}
-                  style={{ '--ng-bubble-index': index } as CSSProperties}
+                  style={{ '--ngtw-bubble-index': index } as CSSProperties}
                   type="button"
                   key={ability.name}
                   aria-label={`${ability.name}：${ability.detail}`}
                 >
                   <Typography as="strong" variant="body" tone="inherit">{ability.name}</Typography>
-                  <Typography as="span" variant="body" tone="inherit" className="ng-nematode-intro__bubble-detail">{ability.detail}</Typography>
+                  <Typography as="span" variant="body" tone="inherit" className="ngtw-nematode-intro__bubble-detail">{ability.detail}</Typography>
                 </button>
               ))}
             </div>
@@ -96,3 +98,4 @@ export function NematodeResponsePage() {
     </ContentBlock>
   );
 }
+

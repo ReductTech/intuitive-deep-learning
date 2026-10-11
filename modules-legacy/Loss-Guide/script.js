@@ -1,6 +1,5 @@
 (function(){'use strict';
 
-  var LOSS_FEEDBACK_ENDPOINT='http://127.0.0.1:59414/loss/compare-feedback';
   var nlGT=7,nlPred=1.6,nlSolved=false,nlCueDismissed=false;
   var calcView={zoom:1,panX:0,panY:0,dragging:false,moved:false,lastX:0,lastY:0};
   var l1GradientQuestion=null,l2GradientQuestion=null,gradientQuestion=null;
@@ -154,28 +153,14 @@
 
     async function reviewComparison(result){
       var answer=String(result.answer[0]||'').trim();
-      if(result.empty||!answer||!compareQuestion) return;
+      if(!compareQuestion) return;
       setButtonBusy(compareQuestion.submit,true);
-      compareQuestion.streamFeedback('正在分析你的回答，请稍候。','hint');
-
-      function finishReview(){
-        setButtonBusy(compareQuestion.submit,false);
-        revealGradientLesson();
-      }
-
-      try{
-        var response=await fetch(LOSS_FEEDBACK_ENDPOINT,{
-          method:'POST',
-          headers:{'Content-Type':'application/json'},
-          body:JSON.stringify({answer:answer})
-        });
-        var data=await response.json().catch(function(){return {};});
-        var review=window.DLModuleUI.requireServiceResult(response,data);
-        var feedback=window.DLModuleUI.shortAnswerFeedback(review,'请再比较一下绝对值惩罚和平方惩罚。');
-        compareQuestion.streamFeedback(feedback.message,feedback.tone,{onComplete:finishReview});
-      }catch(error){
-        compareQuestion.streamFeedback(window.DLModuleUI.friendlyErrorMessage(error),'wrong',{onComplete:finishReview});
-      }
+      compareQuestion.streamFeedback(
+        answer ? '已记录你的比较，可以继续学习梯度下降。' : '已跳过回答，可以继续学习梯度下降。',
+        'hint'
+      );
+      setButtonBusy(compareQuestion.submit,false);
+      revealGradientLesson();
     }
 
     function mountComparisonQuestion(){

@@ -92,7 +92,7 @@ RAF 和动画 class。用户上传的图片不离开本机；为刷新恢复而�
 | --- | --- | --- | --- |
 | 页面外壳 | `ModuleShell` | 模块 class 和原文案 | 否 |
 | 教学步骤 | `LessonFlow`、`ScrollCue` | 三个真实完成条件 | 否 |
-| 标准内容区 | `LessonStage`、`Callout`、`NoticeStrip` | 课程文案和局部网格 | 否 |
+| 标准内容区 | 原生内容容器、`Callout`、`NoticeStrip` | 课程文案和局部网格 | 否 |
 | 观察简答题 | `Question` | 59414 review service、失败后继续规则 | 否 |
 | RGB 控件 | `RangeControl`、`ValueTile`、`NoticeStrip` | 阈值、颜色换算和去重提交 | 否 |
 | 放大镜 | shared 按钮视觉 | 私有 Observation Canvas 和 RGB 子像素绘制 | 否 |

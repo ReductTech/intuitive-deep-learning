@@ -1,0 +1,127 @@
+{
+  "seed": 205023,
+  "dataset": "lfw-50-balanced",
+  "trainingSamples": 480,
+  "validationSamples": 120,
+  "classificationEpochs": 60,
+  "tripletEpochs": 20,
+  "tripletMargin": 0.3,
+  "architecture": "Conv16-ReLU-Pool-Conv32-ReLU-Pool-Conv48-ReLU-AdaptivePool4x3-Flatten-Linear64-ReLU-Linear32",
+  "targetLayer": "last (48 channels, 15 x 11)",
+  "classificationValidationAccuracy": 0.6583333611488342,
+  "tripletInitialization": "classification checkpoint; then triplet-only fine-tuning",
+  "classificationTarget": "specified identity pre-softmax logit",
+  "tripletTarget": "cosine similarity to a fixed other photograph of the same identity; reference branch detached",
+  "samples": [
+    {
+      "id": "sample-1",
+      "name": "Colin Powell",
+      "inputIndex": 90,
+      "referenceIndex": 91,
+      "input": "input.png",
+      "reference": "reference.png",
+      "classification": {
+        "score": 10.773309707641602,
+        "channels": [
+          {
+            "index": 30,
+            "alpha": 0.005155219696462154,
+            "image": "classification-channel-30.png"
+          },
+          {
+            "index": 4,
+            "alpha": 0.0043537369929254055,
+            "image": "classification-channel-4.png"
+          },
+          {
+            "index": 46,
+            "alpha": 0.003999193664640188,
+            "image": "classification-channel-46.png"
+          }
+        ],
+        "heat": "classification-heat.png",
+        "overlay": "classification-overlay.png"
+      },
+      "triplet": {
+        "score": 0.762151837348938,
+        "channels": [
+          {
+            "index": 26,
+            "alpha": 0.00014960953558329493,
+            "image": "triplet-channel-26.png"
+          },
+          {
+            "index": 20,
+            "alpha": 0.00014001801901031286,
+            "image": "triplet-channel-20.png"
+          },
+          {
+            "index": 1,
+            "alpha": 0.00012965327186975628,
+            "image": "triplet-channel-1.png"
+          }
+        ],
+        "heat": "triplet-heat.png",
+        "overlay": "triplet-overlay.png"
+      }
+    },
+    {
+      "id": "sample-3",
+      "name": "George W Bush",
+      "inputIndex": 190,
+      "referenceIndex": 191,
+      "input": "input.png",
+      "reference": "reference.png",
+      "classification": {
+        "score": 10.137115478515625,
+        "channels": [
+          {
+            "index": 20,
+            "alpha": 0.00283422926440835,
+            "image": "classification-channel-20.png"
+          },
+          {
+            "index": 39,
+            "alpha": 0.0010776023846119642,
+            "image": "classification-channel-39.png"
+          },
+          {
+            "index": 18,
+            "alpha": 0.001070357277058065,
+            "image": "classification-channel-18.png"
+          }
+        ],
+        "heat": "classification-heat.png",
+        "overlay": "classification-overlay.png"
+      },
+      "triplet": {
+        "score": 0.5347323417663574,
+        "channels": [
+          {
+            "index": 13,
+            "alpha": 0.0002497262030374259,
+            "image": "triplet-channel-13.png"
+          },
+          {
+            "index": 20,
+            "alpha": 0.00015911457012407482,
+            "image": "triplet-channel-20.png"
+          },
+          {
+            "index": 5,
+            "alpha": 0.0001568986481288448,
+            "image": "triplet-channel-5.png"
+          }
+        ],
+        "heat": "triplet-heat.png",
+        "overlay": "triplet-overlay.png"
+      }
+    }
+  ],
+  "sourceManifestSha256": "71dab1c21b65ff7313f33df616e99fe05c67693fb3883b491f5fc9fdaa603222",
+  "references": [
+    "https://arxiv.org/abs/1610.02391",
+    "https://arxiv.org/abs/1709.01507"
+  ],
+  "limitations": "Small teaching models; outputs do not establish which training objective yields better identity verification. Grad-CAM maps are normalized independently."
+}

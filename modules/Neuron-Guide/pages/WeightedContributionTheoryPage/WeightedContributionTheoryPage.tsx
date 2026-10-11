@@ -21,7 +21,7 @@ function VectorBracket({
   tooltips: string[];
 }) {
   return (
-    <span className={`ng-matrix-representation__bracket-vector ng-matrix-representation__bracket-vector--${tone} ng-matrix-representation__bracket-vector--${direction}`}>
+    <span className={`ngtw-matrix-representation__bracket-vector relative min-w-[92px] items-center gap-[8px] p-[12px_15px] text-center ngtw-matrix-representation__bracket-vector--${tone} ngtw-matrix-representation__bracket-vector--${direction}`}>
       {values.map((value, index) => (
         <FormulaVariable key={`${value}-${index}`} tooltip={tooltips[index]}>{value}</FormulaVariable>
       ))}
@@ -39,17 +39,17 @@ export function WeightedContributionTheoryPage() {
   return (
     <ContentBlock
       headingLevel={1}
-      className="ng-lecture-stage ng-matrix-representation"
+      className="ngtw-lecture-stage ngtw-matrix-representation"
       title="从加权求和到矩阵表示"
       subtitle="刚才那一长串乘法没有变，只是换了一种更紧凑的写法。"
     >
-      <section className="ng-matrix-representation__expanded">
-        <div className="ng-matrix-representation__section-copy">
+      <section className="ngtw-matrix-representation__expanded">
+        <div className="ngtw-matrix-representation__section-copy grid min-w-0 content-center gap-[3px]">
           <Typography variant="body" tone="warning">上一页的写法</Typography>
           <Typography as="h3" variant="h3" tone="accent">三个输入分别加权，再相加</Typography>
         </div>
         <FormulaBlock ariaLabel="三个输入的加权和以及当前数值">
-          <div className="ng-matrix-representation__formula-line">
+          <div className="ngtw-matrix-representation__formula-line">
             <FormulaVariable tooltip="y：三个输入经过加权后相加得到的总输入。">y</FormulaVariable>
             {' = '}
             {subscripts.map((subscript, index) => (
@@ -61,7 +61,7 @@ export function WeightedContributionTheoryPage() {
               </span>
             ))}
           </div>
-          <div className="ng-matrix-representation__formula-detail">
+          <div className="ngtw-matrix-representation__formula-detail">
             {'= '}
             {weights.map((weight, index) => (
               <span key={index}>
@@ -77,19 +77,19 @@ export function WeightedContributionTheoryPage() {
         </FormulaBlock>
       </section>
 
-      <div className="ng-matrix-representation__down-arrow" aria-hidden="true">↓</div>
-      <div className="ng-matrix-representation__bridge-label">
+      <div className="ngtw-matrix-representation__down-arrow grid place-items-center" aria-hidden="true">↓</div>
+      <div className="ngtw-matrix-representation__bridge-label justify-self-center rounded-[999px] bg-[#edf4fd] p-[5px_25px] text-center">
         <Typography as="strong" variant="body" tone="accent">把权重放在一起，把输入放在一起</Typography>
       </div>
 
-      <section className="ng-matrix-representation__vectors" aria-label="权重向量和输入向量">
-        <article className="ng-matrix-representation__vector-card ng-matrix-representation__vector-card--weights">
-          <div className="ng-matrix-representation__card-copy">
+      <section className="ngtw-matrix-representation__vectors grid min-w-0 min-h-0 grid-cols-[minmax(0,_1fr)_42px_minmax(0,_1fr)] items-stretch gap-[12px]" aria-label="权重向量和输入向量">
+        <article className="ngtw-matrix-representation__vector-card grid min-w-0 grid-cols-[minmax(120px,_.7fr)_minmax(0,_1.3fr)] items-center gap-[12px] rounded-[12px] bg-[#fffdfb] p-[12px_16px] ngtw-matrix-representation__vector-card--weights">
+          <div className="ngtw-matrix-representation__card-copy grid min-w-0 content-center gap-[3px]">
             <Typography variant="body" tone="warning">权重</Typography>
             <Typography variant="bodySmall" tone="muted">把三个权重排成一个行向量。</Typography>
           </div>
           <FormulaBlock ariaLabel="权重行向量 W 转置">
-            <div className="ng-matrix-representation__vector-equation">
+            <div className="ngtw-matrix-representation__vector-equation flex min-w-0 items-center justify-center gap-[8px]">
               <FormulaVariable tooltip="Wᵀ：由三个输入权重组成的行向量。">Wᵀ</FormulaVariable>
               {' = '}
               <VectorBracket
@@ -102,15 +102,15 @@ export function WeightedContributionTheoryPage() {
           </FormulaBlock>
         </article>
 
-        <div className="ng-matrix-representation__multiply" aria-hidden="true">×</div>
+        <div className="ngtw-matrix-representation__multiply grid place-items-center" aria-hidden="true">×</div>
 
-        <article className="ng-matrix-representation__vector-card ng-matrix-representation__vector-card--inputs">
-          <div className="ng-matrix-representation__card-copy">
+        <article className="ngtw-matrix-representation__vector-card grid min-w-0 grid-cols-[minmax(120px,_.7fr)_minmax(0,_1.3fr)] items-center gap-[12px] rounded-[12px] bg-[#fffdfb] p-[12px_16px] ngtw-matrix-representation__vector-card--inputs bg-[#fbfdff]">
+          <div className="ngtw-matrix-representation__card-copy grid min-w-0 content-center gap-[3px]">
             <Typography variant="body" tone="accent">输入</Typography>
             <Typography variant="bodySmall" tone="muted">把三个输入排成一个列向量。</Typography>
           </div>
           <FormulaBlock ariaLabel="输入列向量 X">
-            <div className="ng-matrix-representation__vector-equation">
+            <div className="ngtw-matrix-representation__vector-equation flex min-w-0 items-center justify-center gap-[8px]">
               <FormulaVariable tooltip="X：由三个输入组成的列向量。">X</FormulaVariable>
               {' = '}
               <VectorBracket
@@ -124,13 +124,13 @@ export function WeightedContributionTheoryPage() {
         </article>
       </section>
 
-      <section className="ng-matrix-representation__compact">
-        <div className="ng-matrix-representation__section-copy">
+      <section className="ngtw-matrix-representation__compact">
+        <div className="ngtw-matrix-representation__section-copy grid min-w-0 content-center gap-[3px]">
           <Typography variant="body" tone="success">合并写法</Typography>
           <Typography as="h3" variant="h3" tone="accent">一次矩阵乘法</Typography>
         </div>
         <FormulaBlock ariaLabel="权重转置乘以输入向量得到神经元总输入">
-          <div className="ng-matrix-representation__compact-formula">
+          <div className="ngtw-matrix-representation__compact-formula">
             <FormulaVariable tooltip="y：神经元接收到的总输入。">y</FormulaVariable>
             {' = '}
             <FormulaVariable tooltip="Wᵀ：权重组成的行向量。">Wᵀ</FormulaVariable>
@@ -139,7 +139,7 @@ export function WeightedContributionTheoryPage() {
             {' = '}
             <FormulaVariable tooltip={`当前矩阵乘法的结果，为 ${formatScore(total)}。`}>{formatScore(total)}</FormulaVariable>
           </div>
-          <div className="ng-matrix-representation__compact-detail">
+          <div className="ngtw-matrix-representation__compact-detail">
             {'= '}
             <FormulaVariable tooltip="WᵀX：把对应位置的权重和输入相乘，再把结果相加。">
               {weights.map((weight, index) => `${formatScore(weight)} × ${formatScore(values[index])}`).join(' + ')}
@@ -150,10 +150,11 @@ export function WeightedContributionTheoryPage() {
         </FormulaBlock>
       </section>
 
-      <aside className="ng-matrix-representation__key-point">
+      <aside className="ngtw-matrix-representation__key-point flex min-w-0 items-baseline justify-center gap-[8px] rounded-[10px] bg-[#fffaf0] p-[7px_14px]">
         <Typography as="strong" variant="body" tone="warning">理解重点：</Typography>
         <Typography as="span" variant="bodySmall" tone="muted">矩阵写法没有发明新的计算，只是把同样的加权过程写得更紧凑。</Typography>
       </aside>
     </ContentBlock>
   );
 }
+

@@ -1,0 +1,16 @@
+{
+  "generator": "built-in image_gen",
+  "assets": [
+    {
+      "path": "assets/10da7e16-ff24-449a-9978-b74b99524e47/images/alpine-lake-source.png",
+      "role": "input photograph; not an image of bead art",
+      "prompt": "Use case: photo-realistic. Asset type: source photograph for a browser-based image-to-beads educational demo. Generate a single beautiful crisp portrait-oriented travel photograph, 3:4 aspect ratio, edge-to-edge image only. Austrian alpine lakeside village reminiscent of Hallstatt: one prominent slim dark church spire with white church facade centered slightly left, cream houses and dark roofs along lake shore, emerald forest on right, blue alpine mountains behind, rich blue sky with white soft clouds, lake reflection in lower quarter. Clear recognizable silhouettes and broad blue green cream areas that remain identifiable when sampled to 16 by 22 dots. Sunny natural midday lighting, realistic architectural and water details, premium landscape photography. No frames, no tables, no bead art, no beads, no pixelation, no lettering, no logos, no watermark. This must be a continuous-tone source photo, not a finished teaching slide."
+    },
+    {
+      "path": "assets/10da7e16-ff24-449a-9978-b74b99524e47/images/craft-studio-background.png",
+      "role": "empty studio environment; no boards, no beads",
+      "prompt": "Use case: photo-realistic. Asset type: background plate for an interactive H5 teaching slide. Generate a 16:9 wide premium craft-studio photograph, empty light oak tabletop in bottom 55 percent, softly blurred bright airy interior and tall wooden window mullions on right behind table, warm late afternoon light from right, soft dappled highlights on oak tabletop, a very softly defocused green plant at far left edge, partial blurred picture frame at extreme right edge only. Upper left half is airy almost-white pale blue neutral negative space for large blue typography. Camera at tabletop height looking almost straight-on, horizon table/backwall at 45 percent height. Entire central table and front tabletop must be EMPTY, with room to overlay four portrait standing boards in browser code. Beautiful understated photorealism, believable fine wood grain, uncluttered. No boards, no easels, no printed photos, no beads, no bead mosaics, no text, no books, no instruments, no people, no UI. Do not generate the interactive objects, just the environment background."
+    }
+  ],
+  "processing": "H5 Canvas region-average sampling, shared median-cut palette, weighted RGB nearest-color matching, procedural bead rendering."
+}

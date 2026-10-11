@@ -68,14 +68,14 @@ interface PositionedNode extends NetworkNodeRef {
 }
 
 type DiagramStyle = CSSProperties & {
-  '--ng-network-height'?: string;
-  '--ng-network-font-scale'?: number;
+  '--ngtw-network-height'?: string;
+  '--ngtw-network-font-scale'?: number;
 };
 
 type PositionedStyle = CSSProperties & {
-  '--ng-network-x'?: string;
-  '--ng-network-y'?: string;
-  '--ng-network-node-color'?: string;
+  '--ngtw-network-x'?: string;
+  '--ngtw-network-y'?: string;
+  '--ngtw-network-node-color'?: string;
 };
 
 const TONE_COLORS: Readonly<Record<NetworkNodeTone, string>> = Object.freeze({
@@ -182,23 +182,23 @@ export function NetworkCanvas({
     const next = positionedNodes[nextIndex];
     if (!next) return;
     publishActiveNode({ layer: next.layer, index: next.index });
-    document.getElementById(`ng-network-node-${descriptionId}-${next.layer}-${next.index}`)?.focus();
+    document.getElementById(`ngtw-network-node-${descriptionId}-${next.layer}-${next.index}`)?.focus();
   };
 
   const diagramStyle: DiagramStyle = {
-    '--ng-network-height': `${height}px`,
-    '--ng-network-font-scale': fontScale,
+    '--ngtw-network-height': `${height}px`,
+    '--ngtw-network-font-scale': fontScale,
   };
 
   return (
     <figure
-      className={['ng-network-figure', className].filter(Boolean).join(' ')}
+      className={['ngtw-network-figure relative w-full max-w-full h-full min-w-0 m-0', className].filter(Boolean).join(' ')}
       style={diagramStyle}
       aria-label={ariaLabel}
       onPointerLeave={() => publishActiveNode(null)}
     >
-      <div className="ng-network-diagram">
-        <svg className="ng-network-links" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+      <div className="ngtw-network-diagram relative w-full max-w-full h-full min-w-0 overflow-hidden rounded-[inherit]">
+        <svg className="ngtw-network-links absolute inset-0 w-full h-full overflow-visible" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
           {connections.map((connection, index) => {
             const from = positionedNodes.find(
               (node) => node.layer === connection.fromLayer && node.index === connection.fromIndex,
@@ -234,7 +234,7 @@ export function NetworkCanvas({
             as="div"
             variant="bodySmall"
             tone="muted"
-            className="ng-network-layer-title"
+            className="ngtw-network-layer-title"
             style={{ left: `${layerPosition(index, layers.length)}%` }}
           >
             {layer.title}
@@ -245,15 +245,15 @@ export function NetworkCanvas({
           const color = nodeColor(position.node, position.layer, layers.length);
           const isSelected = sameNode(position, selectedNode ?? null);
           const positionedStyle: PositionedStyle = {
-            '--ng-network-x': `${position.x}%`,
-            '--ng-network-y': `${position.y}%`,
-            '--ng-network-node-color': color,
+            '--ngtw-network-x': `${position.x}%`,
+            '--ngtw-network-y': `${position.y}%`,
+            '--ngtw-network-node-color': color,
           };
           return (
             <div
-              id={`ng-network-node-${descriptionId}-${position.layer}-${position.index}`}
+              id={`ngtw-network-node-${descriptionId}-${position.layer}-${position.index}`}
               key={`${position.layer}-${position.index}`}
-              className={`ng-network-node${isSelected ? ' is-selected' : ''}`}
+              className={`ngtw-network-node absolute grid w-[150px] min-w-0 max-w-full justify-items-center gap-[8px]${isSelected ? ' is-selected' : ''}`}
               style={positionedStyle}
               role="button"
               tabIndex={0}
@@ -264,11 +264,11 @@ export function NetworkCanvas({
               onClick={() => publishActiveNode({ layer: position.layer, index: position.index })}
               onKeyDown={(event) => handleNodeKeyDown(event, positionIndex)}
             >
-              <span className="ng-network-node__circle">
+              <span className="ngtw-network-node__circle grid place-items-center rounded-[50%] bg-[var(--ngtw-network-node-color)]">
                 <Typography as="span" variant="body" tone="inherit">{position.node.label}</Typography>
               </span>
               {position.node.caption ? (
-                <Typography as="code" variant="bodySmall" tone="inherit" className="ng-network-node__caption">
+                <Typography as="code" variant="bodySmall" tone="inherit" className="ngtw-network-node__caption">
                   {position.node.caption}
                 </Typography>
               ) : null}
@@ -277,21 +277,21 @@ export function NetworkCanvas({
         })}
 
         {caption ? (
-          <Typography as="figcaption" variant="bodySmall" tone="muted" className="ng-network-caption">
+          <Typography as="figcaption" variant="bodySmall" tone="muted" className="ngtw-network-caption">
             {caption}
           </Typography>
         ) : null}
 
-        <Typography id={descriptionId} variant="bodySmall" tone="muted" className="ng-network-summary">
+        <Typography id={descriptionId} variant="bodySmall" tone="muted" className="ngtw-network-summary">
           {textSummary}
         </Typography>
 
         {showInspector ? (
           <aside
             id={inspectorId}
-            className={`ng-network-inspector${selectedDetails && selectedPosition ? ' is-visible' : ''}`}
+            className={`ngtw-network-inspector absolute top-[58px] right-[16px] bottom-auto left-[16px] hidden w-auto max-w-[none] overflow-hidden gap-[7px] bg-[rgba(255,_255,_255,_.98)] p-[11px_13px]${selectedDetails && selectedPosition ? ' is-visible' : ''}`}
             style={selectedPosition ? {
-              '--ng-network-inspector-color': nodeColor(selectedPosition.node, selectedPosition.layer, layers.length),
+              '--ngtw-network-inspector-color': nodeColor(selectedPosition.node, selectedPosition.layer, layers.length),
             } as CSSProperties : undefined}
             aria-live="polite"
           >
@@ -314,3 +314,4 @@ export function NetworkCanvas({
     </figure>
   );
 }
+

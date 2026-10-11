@@ -5,7 +5,6 @@
   var PREVIEW_URL = 'http://127.0.0.1:59415/face-recog/fixed-kernel-preview';
   var LENET_URL = 'http://127.0.0.1:59415/face-recog/lenet-train';
   var LENET_STATUS_URL = 'http://127.0.0.1:59415/face-recog/lenet-train-status';
-  var FACE_VERIFICATION_FEEDBACK_URL = 'http://127.0.0.1:59414/face/verification-feedback';
   var DEMO_FACE_IMAGE_URLS = [
     'http://127.0.0.1:59415/face-recog/demo-image',
     '../../dataset/face_demo.png',
@@ -3801,16 +3800,6 @@
     submit.textContent = busy ? '正在分析...' : '提交回答';
   }
 
-  async function requestFaceVerificationFeedback(answer) {
-    var response = await fetch(FACE_VERIFICATION_FEEDBACK_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ answer: answer }),
-    });
-    var data = await response.json().catch(function () { return {}; });
-    return window.DLModuleUI.requireServiceResult(response, data);
-  }
-
   function hasCoreFaceVerificationAnswer(answer) {
     var mentionsFeature = /(特征向量|特征表示|embedding|嵌入)/i.test(answer);
     var mentionsComparison = /(相似度|余弦|距离|匹配|cosine)/i.test(answer);
@@ -3819,27 +3808,15 @@
 
   async function checkFaceVerificationAnswer(result, question) {
     var answer = result && Array.isArray(result.answer) ? String(result.answer[0] || '').trim() : '';
-    if (!answer) {
-      state.quizResults.quizFaceVerification = false;
-      return;
-    }
+    state.quizResults.quizFaceVerification = true;
     setQuizSubmitBusy(question, true);
-    setQuizFeedback(question, 'hint', '正在分析你的回答，请稍候。');
-    try {
-      var resultFeedback = window.DLModuleUI.shortAnswerFeedback(await requestFaceVerificationFeedback(answer));
-      state.quizResults.quizFaceVerification = resultFeedback.level === 'correct';
-      setQuizFeedback(question, resultFeedback.tone, resultFeedback.message);
-    } catch (error) {
-      state.quizResults.quizFaceVerification = false;
-      setQuizFeedback(
-        question,
-        'wrong',
-        window.DLModuleUI.friendlyErrorMessage(error)
-      );
-    } finally {
-      setQuizSubmitBusy(question, false);
-      window.setTimeout(revealThirdAct, 620);
-    }
+    setQuizFeedback(
+      question,
+      'hint',
+      answer ? '已记录你的理解，可以继续进入下一部分。' : '已跳过回答，可以继续进入下一部分。'
+    );
+    setQuizSubmitBusy(question, false);
+    window.setTimeout(revealThirdAct, 620);
   }
 
   function renderFaceQuiz() {

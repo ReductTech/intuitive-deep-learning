@@ -1,0 +1,54 @@
+{
+  "id": "memory-test",
+  "title": "Memory Test · 埋点联调模块",
+  "description": "用选择、简答、按钮、滑块、视频和评分验证宿主技能记忆接口。",
+  "path": "/modules/memory-test",
+  "badge": "接口联调",
+  "moduleType": "teaching",
+  "difficulty": "introductory",
+  "audience": "general",
+  "entry": "GuidePage.tsx",
+  "pages": [
+    {
+      "id": "choice-and-button",
+      "title": "选择与按钮",
+      "goal": "验证选择题、简答题和按钮操作是否写入技能记忆。",
+      "summary": "完成两个题目和按钮操作，并观察桥接返回结果。",
+      "interaction": "选择题、简答题、按钮。",
+      "next": "再测试连续数值和开关。",
+      "snippet": ""
+    },
+    {
+      "id": "slider-and-toggle",
+      "title": "滑块与开关",
+      "goal": "验证连续输入、开关、选择题和简答题。",
+      "summary": "调整滑块与开关后完成两个题目。",
+      "interaction": "滑块、开关、选择题、简答题。",
+      "next": "最后测试组合操作与导航。",
+      "snippet": ""
+    },
+    {
+      "id": "actions-and-review",
+      "title": "组合操作",
+      "goal": "验证多次操作和页面切换后的写入与查询。",
+      "summary": "尝试重置、切换和题目提交。",
+      "interaction": "按钮、选择题、简答题。",
+      "next": "在结束页测试视频与评分。",
+      "snippet": ""
+    },
+    {
+      "id": "ending",
+      "title": "结束与反馈",
+      "goal": "验证视频播放和星级评分。",
+      "summary": "播放测试视频并评分，读取技能记忆核对。",
+      "interaction": "视频、星级评分、查询。",
+      "next": "返回课程目录。",
+      "snippet": ""
+    }
+  ],
+  "moduleIdentity": {
+    "version": 1,
+    "id": "f1751a2d-ea22-4f92-9fa4-32b506c011de",
+    "signature": "8BAtVWOFiFWGcAHt36GxVa5+Pfk9ZqJVYj7U6DUsg9c4+IGroxxPfyMyBCs2nCjzs4nOcK9GiYXNxNP+m4hfCA=="
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "mode": "built-in imagegen",
+  "assets": [
+    {
+      "name": "fox-source.png",
+      "prompt": "Create a beautiful high-end photographic image, portrait 3:4 composition, for an interactive photo-to-pixel-bead teaching exhibit. Subject: a red fox sitting in a snowy pine forest, full fluffy body, triangular ears, orange fur and large white tail tip, looking toward camera. Rich vivid natural colors, crisp recognizable silhouette, clear large-scale color regions, cinematic warm daylight, realistic photographic detail. Subject fits safely within center 80% with breathing room. No humans, no people, no text, no frames, no beads, no collage. Single photograph only."
+    },
+    {
+      "name": "car-source.png",
+      "prompt": "Create a beautiful high-end photographic image, portrait 3:4 composition, for an interactive photo-to-pixel-bead teaching exhibit. Subject: a glossy cherry red vintage sports coupe parked on a sunlit coastal road, front three-quarter view, entire car centered, turquoise sea and pale cliffs behind, no logos. Rich vivid natural colors, crisp recognizable silhouette, clear large-scale color regions, cinematic warm daylight, realistic photographic detail. Subject fits safely within center 80% with breathing room. No humans, no people, no text, no frames, no beads, no collage. Single photograph only."
+    },
+    {
+      "name": "coast-source.png",
+      "prompt": "Create a beautiful high-end photographic image, portrait 3:4 composition, for an interactive photo-to-pixel-bead teaching exhibit. Subject: a sunlit white lighthouse on a grassy rocky headland above turquoise ocean, strong simple composition with lighthouse centered, blue sky and puffy clouds. Rich vivid natural colors, crisp recognizable silhouette, clear large-scale color regions, cinematic warm daylight, realistic photographic detail. Subject fits safely within center 80% with breathing room. No humans, no people, no text, no frames, no beads, no collage. Single photograph only."
+    }
+  ]
+}

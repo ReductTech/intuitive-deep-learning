@@ -1,0 +1,39 @@
+.vfl-hierarchy-page{width:1600px;height:900px;box-sizing:border-box;display:grid;grid-template-rows:auto minmax(0,1fr)}
+.vfl-hierarchy-page *,.vfl-hierarchy-page *::before,.vfl-hierarchy-page *::after{box-sizing:border-box}
+.vfl-hierarchy-page .ui-typography{margin:0}
+.vfl-hierarchy-page .edu-content-body{position:relative;min-width:0;min-height:0;display:grid;grid-template-rows:minmax(0,1fr)}
+.vfl-hierarchy-scene{position:relative;width:1480px;max-width:100%;height:100%;min-height:0;margin:0 auto;display:grid;grid-template-columns:minmax(0,.45fr) minmax(0,.55fr);gap:36px}
+.vfl-hierarchy-scene :where(div,section){min-width:0;max-width:100%}
+.vfl-hierarchy-connections{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2}
+.vfl-hierarchy-connections>path{fill:none;stroke-width:2.5;stroke-linejoin:round}
+.vfl-hierarchy-shallow-link{stroke:#4099e5}.vfl-hierarchy-middle-link{stroke:#9970d4}.vfl-hierarchy-deep-link{stroke:#ef9647}
+.vfl-hierarchy-network{position:relative;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:60px;min-height:0}
+.vfl-hierarchy-pipeline{display:grid;grid-template-columns:86px 142px 120px 98px;gap:36px;align-items:center;justify-content:center;width:100%}
+.vfl-hierarchy-source,.vfl-hierarchy-stage{position:relative;display:grid;grid-template-rows:190px 40px;align-items:center;justify-items:center;gap:8px;min-height:0}
+.vfl-hierarchy-stage.vfl-hierarchy-shallow::before{content:'➜';position:absolute;left:-29px;top:78px;color:#87bced;font-size:28px}
+.vfl-hierarchy-source :is(img, .vfl-atlas-image){width:74px;height:74px;object-fit:contain;image-rendering:pixelated;background:var(--ui-navy);border:8px solid #edf3fa;border-radius:12px}
+.vfl-hierarchy-source>.ui-typography,.vfl-hierarchy-stage>.ui-typography{white-space:nowrap}
+.vfl-hierarchy-cube{width:100%;height:var(--cube-height);max-width:100%;color:var(--level-color);filter:drop-shadow(0 10px 12px #80a7d326)}
+.vfl-hierarchy-shallow{--level-color:#368bce;--level-bg:#e6f3ff;--cube-height:190px}
+.vfl-hierarchy-middle{--level-color:#9066cc;--level-bg:#f0e9fd;--cube-height:154px}
+.vfl-hierarchy-deep{--level-color:#e79243;--level-bg:#fff0e5;--cube-height:116px}
+.vfl-hierarchy-input{display:flex;align-items:center;justify-content:center;gap:14px;white-space:nowrap}
+.vfl-hierarchy-levels{position:relative;display:grid;grid-template-rows:repeat(3,minmax(0,1fr));gap:28px;min-height:0;padding:30px 68px 34px 0}
+.vfl-hierarchy-level{isolation:isolate;position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);align-items:center;gap:16px;min-height:0;padding:16px 24px;color:var(--level-color);border:0;background:transparent;justify-self:center}
+.vfl-hierarchy-level::before{content:'';position:absolute;inset:-14px -18px;z-index:-1;border:6px solid color-mix(in srgb,var(--level-color) 18%,transparent);background:linear-gradient(110deg,white,var(--level-bg));box-shadow:0 8px 20px color-mix(in srgb,var(--level-color) 12%,transparent);border-radius:16px;transform:perspective(520px) rotateX(10deg)}
+.vfl-hierarchy-level.vfl-hierarchy-deep{width:78%}.vfl-hierarchy-level.vfl-hierarchy-middle{width:89%}.vfl-hierarchy-level.vfl-hierarchy-shallow{width:100%}
+.vfl-hierarchy-level-heading{display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+.vfl-hierarchy-level-heading>div{display:grid;gap:8px}
+.vfl-hierarchy-level-heading .ui-typography--h3{padding:4px 14px;border-radius:var(--ui-radius-pill);color:white;background:var(--level-color);white-space:nowrap}
+.vfl-hierarchy-description{text-align:left}
+.vfl-hierarchy-responses{width:100%;min-height:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;align-items:center;justify-items:center}
+.vfl-hierarchy-responses :is(img, .vfl-atlas-image){width:110px;max-width:100%;max-height:100%;aspect-ratio:1;object-fit:contain;image-rendering:pixelated;border:1px solid var(--ui-border);border-radius:var(--ui-radius-sm);background:var(--ui-navy)}
+.vfl-hierarchy-error{position:absolute;bottom:0;right:0}
+
+.vfl-hierarchy-abstraction{position:absolute;right:0;top:40px;bottom:34px;width:42px;display:flex;align-items:center;justify-content:center}.vfl-hierarchy-abstraction svg{position:absolute;inset:0;width:100%;height:100%;opacity:.6}.vfl-hierarchy-abstraction .ui-typography{position:relative;writing-mode:vertical-rl;background:#eaf1ff;padding:14px 6px;border-radius:var(--ui-radius-pill)}
+
+.vfl-hierarchy-pipeline{transform:translateY(-28px)}
+.vfl-hierarchy-output-link{position:absolute;right:-40px;top:83px;width:40px;height:24px;color:var(--level-color);overflow:visible}
+.vfl-hierarchy-input{position:absolute;bottom:24px;left:0;right:0}
+
+.vfl-hierarchy-stage > .ui-typography { color:var(--level-color); }

@@ -4,8 +4,6 @@
   var SERVICE_URL = 'http://127.0.0.1:59415/lenet5/fixed-kernel-train';
   var PREVIEW_URL = 'http://127.0.0.1:59415/lenet5/fixed-kernel-preview';
   var SEQUENCE_URL = 'http://127.0.0.1:59415/lenet5/sequence-sample';
-  var SEQUENCE_FEEDBACK_URL = 'http://127.0.0.1:59414/digit/sequence-strategy-feedback';
-  var DETECTION_FEEDBACK_URL = 'http://127.0.0.1:59414/digit/detection-strategy-feedback';
   var IMAGE_SIZE = 28;
   var FEATURE_GRID_SIZE = 8;
   var FEATURE_RESPONSE_SIZE = IMAGE_SIZE - 2;
@@ -1875,38 +1873,23 @@
     answer = String(answer || '').trim();
     var question = state.sequenceQuestion;
     var button = question && question.submit;
-    if (!answer) return;
-    if (question) question.streamFeedback('正在分析你的思路，请稍候。', 'hint');
+    if (question) question.streamFeedback(answer ? '已记录你的思路，可以开始序列识别。' : '已跳过思路，可以开始序列识别。', 'hint');
     if (button) {
       button.disabled = true;
       button.classList.add('is-loading');
       button.setAttribute('aria-busy', 'true');
     }
-    try {
-      var response = await fetch(SEQUENCE_FEEDBACK_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ answer: answer, digits: cleanSequenceInput() }),
-      });
-      var data = await response.json().catch(function () { return {}; });
-      var result = window.DLModuleUI.requireServiceResult(response, data);
-      var feedback = window.DLModuleUI.shortAnswerFeedback(result);
-      if (question) question.streamFeedback(feedback.message, feedback.tone);
-      state.sequenceIdeaSubmitted = true;
-      state.sequenceCompleted = false;
-      state.sequenceFrames = [];
-      setSequenceResult('', false);
-      setSequenceScanStatus('思路已提交，点击开始序列识别');
-      renderSequenceFrames([]);
-      updateProgressiveDisclosure();
-    } catch (error) {
-      if (question) question.streamFeedback(window.DLModuleUI.friendlyErrorMessage(error), 'wrong');
-    } finally {
-      if (button) {
-        button.disabled = false;
-        button.classList.remove('is-loading');
-        button.setAttribute('aria-busy', 'false');
-      }
+    state.sequenceIdeaSubmitted = true;
+    state.sequenceCompleted = false;
+    state.sequenceFrames = [];
+    setSequenceResult('', false);
+    setSequenceScanStatus('思路已提交，点击开始序列识别');
+    renderSequenceFrames([]);
+    updateProgressiveDisclosure();
+    if (button) {
+      button.disabled = false;
+      button.classList.remove('is-loading');
+      button.setAttribute('aria-busy', 'false');
     }
   }
 
@@ -2219,35 +2202,20 @@
     answer = String(answer || '').trim();
     var question = state.detectionQuestion;
     var button = question && question.submit;
-    if (!answer) return;
-    if (question) question.streamFeedback('正在分析你的思路，请稍候。', 'hint');
+    if (question) question.streamFeedback(answer ? '已记录你的思路，可以开始检测位置。' : '已跳过思路，可以开始检测位置。', 'hint');
     if (button) {
       button.disabled = true;
       button.classList.add('is-loading');
       button.setAttribute('aria-busy', 'true');
     }
-    try {
-      var response = await fetch(DETECTION_FEEDBACK_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ answer: answer }),
-      });
-      var data = await response.json().catch(function () { return {}; });
-      var result = window.DLModuleUI.requireServiceResult(response, data);
-      var feedback = window.DLModuleUI.shortAnswerFeedback(result);
-      if (question) question.streamFeedback(feedback.message, feedback.tone);
-      state.detectionIdeaSubmitted = true;
-      $('detectionStatus').textContent = '思路已提交，可以开始检测位置。';
-      renderDetectionRanking([]);
-      updateProgressiveDisclosure();
-    } catch (error) {
-      if (question) question.streamFeedback(window.DLModuleUI.friendlyErrorMessage(error), 'wrong');
-    } finally {
-      if (button) {
-        button.disabled = false;
-        button.classList.remove('is-loading');
-        button.setAttribute('aria-busy', 'false');
-      }
+    state.detectionIdeaSubmitted = true;
+    $('detectionStatus').textContent = '思路已提交，可以开始检测位置。';
+    renderDetectionRanking([]);
+    updateProgressiveDisclosure();
+    if (button) {
+      button.disabled = false;
+      button.classList.remove('is-loading');
+      button.setAttribute('aria-busy', 'false');
     }
   }
 
@@ -2317,7 +2285,7 @@
         hintButton: true,
         validator: function () { return { ok: true, tone: 'hint', message: '正在提交你的思路。' }; },
         onCheck: function (result) {
-          if (!result.empty) submitSequenceIdea((result.answer || [])[0]);
+          submitSequenceIdea((result.answer || [])[0]);
         }
       });
       state.detectionQuestion = window.DLModuleUI.mountQuestion('#detectionIdeaForm', {
@@ -2329,7 +2297,7 @@
         validator: function () { return { ok: true, tone: 'hint', message: '正在提交你的思路。' }; },
         onCheck: function (result) {
           demoteIdeaSubmitButton(state.detectionQuestion);
-          if (!result.empty) submitDetectionIdea((result.answer || [])[0]);
+          submitDetectionIdea((result.answer || [])[0]);
         }
       });
       window.DLModuleUI.bindInputHints(document);

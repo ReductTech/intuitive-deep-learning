@@ -1,0 +1,257 @@
+{
+  "samples": [
+    {
+      "id": "pretrained-jackie",
+      "name": "成龙",
+      "input": "input.png",
+      "reference": "reference.png",
+      "landmarks": [
+        70.46978759765625,
+        37.201873779296875,
+        316.8594665527344,
+        418.9212646484375,
+        157.3451385498047,
+        198.75926208496094,
+        310.1728210449219,
+        199.89434814453125,
+        231.85227966308594,
+        290.71966552734375,
+        164.00311279296875,
+        339.556396484375,
+        301.1114196777344,
+        340.2492370605469,
+        0.9135265350341797
+      ],
+      "classification": {
+        "score": 6.1941142082214355,
+        "heat": "classification-heat.png",
+        "hasPositiveSupport": true,
+        "channels": [
+          {
+            "index": 142,
+            "alpha": 0.0202645156532526,
+            "image": "classification-channel-141.png"
+          },
+          {
+            "index": 450,
+            "alpha": 0.014532793313264847,
+            "image": "classification-channel-449.png"
+          },
+          {
+            "index": 310,
+            "alpha": 0.013529956340789795,
+            "image": "classification-channel-309.png"
+          }
+        ],
+        "activationShape": [
+          1,
+          576,
+          7,
+          7
+        ],
+        "targetLayer": "features.12",
+        "classIndex": 834,
+        "className": "suit",
+        "classProbability": 0.10308297723531723
+      },
+      "recognition": {
+        "score": 0.543219804763794,
+        "heat": "recognition-heat.png",
+        "hasPositiveSupport": true,
+        "channels": [
+          {
+            "index": 2,
+            "alpha": 0.0006414729286916554,
+            "image": "recognition-channel-1.png"
+          },
+          {
+            "index": 947,
+            "alpha": 0.0005721297347918153,
+            "image": "recognition-channel-946.png"
+          },
+          {
+            "index": 48,
+            "alpha": 0.0003378346737008542,
+            "image": "recognition-channel-47.png"
+          }
+        ],
+        "activationShape": [
+          1,
+          1024,
+          7,
+          7
+        ],
+        "targetLayer": "conv_13_relu",
+        "occlusionAudit": {
+          "baseline": 0.543219804763794,
+          "scoreDrops": {
+            "forehead": -0.002066493034362793,
+            "eyes": 0.2134675681591034,
+            "nose_cheeks": 0.09720444679260254,
+            "mouth": 0.08165034651756287,
+            "left_hair": 0.005796074867248535,
+            "right_hair": 0.07230615615844727
+          },
+          "method": "Replace each fixed aligned-image region by its mean RGB; separate diagnostic only; no changes to CAM pixels"
+        }
+      },
+      "onnxMaxAbsoluteError": 1.6689300537109375e-06,
+      "opencvMaxAbsoluteError": 2.4080276489257812e-05
+    },
+    {
+      "id": "pretrained-avril",
+      "name": "艾薇儿",
+      "input": "input.png",
+      "reference": "reference.png",
+      "landmarks": [
+        75.63088989257812,
+        64.90386962890625,
+        278.92364501953125,
+        418.42974853515625,
+        148.4187774658203,
+        252.37908935546875,
+        288.3797607421875,
+        228.49032592773438,
+        235.07662963867188,
+        323.96551513671875,
+        181.48255920410156,
+        387.7601623535156,
+        305.57598876953125,
+        367.16290283203125,
+        0.9405481219291687
+      ],
+      "classification": {
+        "score": 7.354729652404785,
+        "heat": "classification-heat.png",
+        "hasPositiveSupport": true,
+        "channels": [
+          {
+            "index": 372,
+            "alpha": 0.015748370438814163,
+            "image": "classification-channel-371.png"
+          },
+          {
+            "index": 447,
+            "alpha": 0.013415752910077572,
+            "image": "classification-channel-446.png"
+          },
+          {
+            "index": 381,
+            "alpha": 0.013007312081754208,
+            "image": "classification-channel-380.png"
+          }
+        ],
+        "activationShape": [
+          1,
+          576,
+          7,
+          7
+        ],
+        "targetLayer": "features.12",
+        "classIndex": 903,
+        "className": "wig",
+        "classProbability": 0.20333434641361237
+      },
+      "recognition": {
+        "score": 0.7453965544700623,
+        "heat": "recognition-heat.png",
+        "hasPositiveSupport": true,
+        "channels": [
+          {
+            "index": 256,
+            "alpha": 0.0003073482948821038,
+            "image": "recognition-channel-255.png"
+          },
+          {
+            "index": 429,
+            "alpha": 0.00023751772823743522,
+            "image": "recognition-channel-428.png"
+          },
+          {
+            "index": 2,
+            "alpha": 0.00022399592853616923,
+            "image": "recognition-channel-1.png"
+          }
+        ],
+        "activationShape": [
+          1,
+          1024,
+          7,
+          7
+        ],
+        "targetLayer": "conv_13_relu",
+        "occlusionAudit": {
+          "baseline": 0.7453965544700623,
+          "scoreDrops": {
+            "forehead": 0.13085472583770752,
+            "eyes": 0.19272446632385254,
+            "nose_cheeks": 0.08855897188186646,
+            "mouth": 0.05704307556152344,
+            "left_hair": 0.009173750877380371,
+            "right_hair": 0.02015477418899536
+          },
+          "method": "Replace each fixed aligned-image region by its mean RGB; separate diagnostic only; no changes to CAM pixels"
+        }
+      },
+      "onnxMaxAbsoluteError": 2.1457672119140625e-06,
+      "opencvMaxAbsoluteError": 1.3709068298339844e-05
+    }
+  ],
+  "sources": [
+    {
+      "file": "jackie-1.jpg",
+      "author": "Toms Norde / State Chancellery of Latvia",
+      "license": "CC BY-SA 2.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Jackie_Chan_in_2012.jpg"
+    },
+    {
+      "file": "jackie-2.jpg",
+      "author": "Firdaus Latif",
+      "license": "CC BY-SA 2.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Jackie_Chan_in_Kuala_Lumpur_2012.jpg"
+    },
+    {
+      "file": "avril-1.jpg",
+      "author": "Glenn Francis / Pacific Pro Digital",
+      "license": "CC BY-SA 4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Avril_Lavigne_2013_(cropped).jpg"
+    },
+    {
+      "file": "avril-2.jpg",
+      "author": "Freaktheclown; derivative Keraunoscopia",
+      "license": "CC BY-SA 3.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Avril_Lavigne,_Today_Show,_2013.jpg"
+    }
+  ],
+  "method": "Grad-CAM for both complete frozen pretrained networks; no training or fine-tuning",
+  "models": {
+    "classification": {
+      "name": "MobileNetV3-Small",
+      "weights": "IMAGENET1K_V1",
+      "source": "https://download.pytorch.org/models/mobilenet_v3_small-047dcff4.pth",
+      "sha256": "047dcff4addef86ea5bc2eff13c9614dc11f47ab1160d0a71a25e7db994f4e1f",
+      "task": "ImageNet-1K image classification",
+      "target": "top predicted class pre-softmax logit",
+      "preprocessing": "same aligned RGB face resized to 224; official ImageNet normalization; no additional center crop"
+    },
+    "recognition": {
+      "name": "MobileFaceNet / SFace",
+      "source": "https://media.githubusercontent.com/media/opencv/opencv_zoo/main/models/face_recognition_sface/face_recognition_sface_2021dec.onnx",
+      "sha256": "0ba9fbfa01b5270c96627c4ef784da859931e02f04419c829e83484087c34e79",
+      "task": "face recognition with SFace pretrained weights",
+      "target": "cosine similarity with a detached embedding of the other real photo of this identity",
+      "camLayer": "conv_13_relu, preceding the final 1024-channel expansion; same layer for both samples",
+      "preprocessing": "YuNet five-landmark alignment; RGB 112x112 pixels; normalization is inside the official ONNX graph"
+    }
+  },
+  "networkModules": {
+    "classification": "MobileNetV3(\n  (features): Sequential(\n    (0): Conv2dNormActivation(\n      (0): Conv2d(3, 16, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)\n      (1): BatchNorm2d(16, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)\n      (2): Hardswish()\n    )\n    (1): InvertedResidual(\n      (block): Sequential(\n        (0): Conv2dNormActivation(\n          (0): Conv2d(16, 16, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), groups=16, bias=False)\n          (1): BatchNorm2d(16, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)\n          (2): ReLU(inplace=True)\n        )\n        (1): SqueezeExcitation(\n          (avgpool): AdaptiveAvgPool2d(output_size=1)\n          (fc1): Conv2d(16, 8, kernel_size=(1, 1), stride=(1, 1))\n          (fc2): Conv2d(8, 16, kernel_size=(1, 1), stride=(1, 1))\n          (activation): ReLU()\n          (scale_activation): Hardsigmoid()\n        )\n        (2): Conv2dNormActivation(\n          (0): Conv2d(16, 16, kernel_size=(1, 1), stride=(1, 1), bias=False)\n          (1): BatchNorm2d(16, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)\n        )\n      )\n    )\n    (2): InvertedResidual(\n      (block): Sequential(\n        (0): Conv2dNormActivation(\n          (0): Conv2d(16, 72, kernel_size=(1, 1), stride=(1, 1), bias=False)\n          (1): BatchNorm2d(72, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)\n          (2): ReLU(inplace=True)\n        )\n        (1): Conv2dNormActivation(\n          (0): Conv2d(72, 72, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), groups=72, bias=False)\n          (1): BatchNorm2d(72, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)\n          (2): ReLU(inplace=True)\n        )\n        (2): Conv2dNormActivation(\n          (0): Conv2d(72, 24, kernel_size=(1, 1), stride=(1, 1), bias=False)\n          (1): BatchNorm2d(24, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)\n        )\n      )\n    )\n    (3): InvertedResidual(\n      (block): Sequential(\n        (0): Conv2dNormActivation(\n          (0): Conv2d(24, 88, kernel_size=(1, 1), stride=(1, 1), bias=False)\n          (1): BatchNorm2d(88, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)\n          (2): ReLU(inplace=True)\n        )\n        (1): Conv2dNormActivation(\n          (0): Conv2d(88, 88, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=88, bias=False)\n          (1): BatchNorm2d(88, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)\n          (2): ReLU(inplace=True)\n        )\n        (2): Conv2dNormActivation(\n          (0): Conv2d(88, 24, kernel_size=(1, 1), stride=(1, 1), bias=False)\n          (1): BatchNorm2d(24, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)\n        )\n      )\n    )\n    (4): InvertedResidual(\n      (block): Sequential(\n        (0): Conv2dNormActivation(\n          (0): Conv2d(24, 96, kernel_size=(1, 1), stride=(1, 1), bias=False)\n          (1): BatchNorm2d(96, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)\n          (2): Hardswish()\n        )\n        (1): Conv2dNormActivation(\n          (0): Conv2d(96, 96, kernel_size=(5, 5), stride=(2, 2), padding=(2, 2), groups=96, bias=False)\n          (1): BatchNorm2d(96, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)\n          (2): Hardswish()\n        )\n        (2): SqueezeExcitation(\n          (avgpool): AdaptiveAvgPool2d(output_size=1)\n          (fc1): Conv2d(96, 24, kernel_size=(1, 1), stride=(1, 1))\n          (fc2): Conv2d(24, 96, kernel_size=(1, 1), stride=(1, 1))\n          (activation): ReLU()\n          (scale_activation): Hardsigmoid()\n        )\n        (3): Conv2dNormActivation(\n          (0): Conv2d(96, 40, kernel_size=(1, 1), stride=(1, 1), bias=False)\n          (1): BatchNorm2d(40, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)\n        )\n      )\n    )\n    (5): InvertedResidual(\n      (block): Sequential(\n        (0): Conv2dNormActivation(\n          (0): Conv2d(40, 240, kernel_size=(1, 1), stride=(1, 1), bias=False)\n          (1): BatchNorm2d(240, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)\n          (2): Hardswish()\n        )\n        (1): Conv2dNormActivation(\n          (0): Conv2d(240, 240, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), groups=240, bias=False)\n          (1): BatchNorm2d(240, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)\n          (2): Hardswish()\n        )\n        (2): SqueezeExcitation(\n          (avgpool): AdaptiveAvgPool2d(output_size=1)\n          (fc1): Conv2d(240, 64, kernel_size=(1, 1), stride=(1, 1))\n          (fc2): Conv2d(64, 240, kernel_size=(1, 1), stride=(1, 1))\n          (activation): ReLU()\n          (scale_activation): Hardsigmoid()\n        )\n        (3): Conv2dNormActivation(\n          (0): Conv2d(240, 40, kernel_size=(1, 1), stride=(1, 1), bias=False)\n          (1): BatchNorm2d(40, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)\n        )\n      )\n    )\n    (6): InvertedResidual(\n      (block): Sequential(\n        (0): Conv2dNormActivation(\n          (0): Conv2d(40, 240, kernel_size=(1, 1), stride=(1, 1), bias=False)\n          (1): BatchNorm2d(240, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)\n          (2): Hardswish()\n        )\n        (1): Conv2dNormActivation(\n          (0): Conv2d(240, 240, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), groups=240, bias=False)\n          (1): BatchNorm2d(240, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)\n          (2): Hardswish()\n        )\n        (2): SqueezeExcitation(\n          (avgpool): AdaptiveAvgPool2d(output_size=1)\n          (fc1): Conv2d(240, 64, kernel_size=(1, 1), stride=(1, 1))\n          (fc2): Conv2d(64, 240, kernel_size=(1, 1), stride=(1, 1))\n          (activation): ReLU()\n          (scale_activation): Hardsigmoid()\n        )\n        (3): Conv2dNormActivation(\n          (0): Conv2d(240, 40, kernel_size=(1, 1), stride=(1, 1), bias=False)\n          (1): BatchNorm2d(40, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)\n        )\n      )\n    )\n    (7): InvertedResidual(\n      (block): Sequential(\n        (0): Conv2dNormActivation(\n          (0): Conv2d(40, 120, kernel_size=(1, 1), stride=(1, 1), bias=False)\n          (1): BatchNorm2d(120, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)\n          (2): Hardswish()\n        )\n        (1): Conv2dNormActivation(\n          (0): Conv2d(120, 120, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), groups=120, bias=False)\n          (1): BatchNorm2d(120, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)\n          (2): Hardswish()\n        )\n        (2): SqueezeExcitation(\n          (avgpool): AdaptiveAvgPool2d(output_size=1)\n          (fc1): Conv2d(120, 32, kernel_size=(1, 1), stride=(1, 1))\n          (fc2): Conv2d(32, 120, kernel_size=(1, 1), stride=(1, 1))\n          (activation): ReLU()\n          (scale_activation): Hardsigmoid()\n        )\n        (3): Conv2dNormActivation(\n          (0): Conv2d(120, 48, kernel_size=(1, 1), stride=(1, 1), bias=False)\n          (1): BatchNorm2d(48, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)\n        )\n      )\n    )\n    (8): InvertedResidual(\n      (block): Sequential(\n        (0): Conv2dNormActivation(\n          (0): Conv2d(48, 144, kernel_size=(1, 1), stride=(1, 1), bias=False)\n          (1): BatchNorm2d(144, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)\n          (2): Hardswish()\n        )\n        (1): Conv2dNormActivation(\n          (0): Conv2d(144, 144, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), groups=144, bias=False)\n          (1): BatchNorm2d(144, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)\n          (2): Hardswish()\n        )\n        (2): SqueezeExcitation(\n          (avgpool): AdaptiveAvgPool2d(output_size=1)\n          (fc1): Conv2d(144, 40, kernel_size=(1, 1), stride=(1, 1))\n          (fc2): Conv2d(40, 144, kernel_size=(1, 1), stride=(1, 1))\n          (activation): ReLU()\n          (scale_activation): Hardsigmoid()\n        )\n        (3): Conv2dNormActivation(\n          (0): Conv2d(144, 48, kernel_size=(1, 1), stride=(1, 1), bias=False)\n          (1): BatchNorm2d(48, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)\n        )\n      )\n    )\n    (9): InvertedResidual(\n      (block): Sequential(\n        (0): Conv2dNormActivation(\n          (0): Conv2d(48, 288, kernel_size=(1, 1), stride=(1, 1), bias=False)\n          (1): BatchNorm2d(288, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)\n          (2): Hardswish()\n        )\n        (1): Conv2dNormActivation(\n          (0): Conv2d(288, 288, kernel_size=(5, 5), stride=(2, 2), padding=(2, 2), groups=288, bias=False)\n          (1): BatchNorm2d(288, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)\n          (2): Hardswish()\n        )\n        (2): SqueezeExcitation(\n          (avgpool): AdaptiveAvgPool2d(output_size=1)\n          (fc1): Conv2d(288, 72, kernel_size=(1, 1), stride=(1, 1))\n          (fc2): Conv2d(72, 288, kernel_size=(1, 1), stride=(1, 1))\n          (activation): ReLU()\n          (scale_activation): Hardsigmoid()\n        )\n        (3): Conv2dNormActivation(\n          (0): Conv2d(288, 96, kernel_size=(1, 1), stride=(1, 1), bias=False)\n          (1): BatchNorm2d(96, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)\n        )\n      )\n    )\n    (10): InvertedResidual(\n      (block): Sequential(\n        (0): Conv2dNormActivation(\n          (0): Conv2d(96, 576, kernel_size=(1, 1), stride=(1, 1), bias=False)\n          (1): BatchNorm2d(576, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)\n          (2): Hardswish()\n        )\n        (1): Conv2dNormActivation(\n          (0): Conv2d(576, 576, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), groups=576, bias=False)\n          (1): BatchNorm2d(576, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)\n          (2): Hardswish()\n        )\n        (2): SqueezeExcitation(\n          (avgpool): AdaptiveAvgPool2d(output_size=1)\n          (fc1): Conv2d(576, 144, kernel_size=(1, 1), stride=(1, 1))\n          (fc2): Conv2d(144, 576, kernel_size=(1, 1), stride=(1, 1))\n          (activation): ReLU()\n          (scale_activation): Hardsigmoid()\n        )\n        (3): Conv2dNormActivation(\n          (0): Conv2d(576, 96, kernel_size=(1, 1), stride=(1, 1), bias=False)\n          (1): BatchNorm2d(96, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)\n        )\n      )\n    )\n    (11): InvertedResidual(\n      (block): Sequential(\n        (0): Conv2dNormActivation(\n          (0): Conv2d(96, 576, kernel_size=(1, 1), stride=(1, 1), bias=False)\n          (1): BatchNorm2d(576, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)\n          (2): Hardswish()\n        )\n        (1): Conv2dNormActivation(\n          (0): Conv2d(576, 576, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), groups=576, bias=False)\n          (1): BatchNorm2d(576, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)\n          (2): Hardswish()\n        )\n        (2): SqueezeExcitation(\n          (avgpool): AdaptiveAvgPool2d(output_size=1)\n          (fc1): Conv2d(576, 144, kernel_size=(1, 1), stride=(1, 1))\n          (fc2): Conv2d(144, 576, kernel_size=(1, 1), stride=(1, 1))\n          (activation): ReLU()\n          (scale_activation): Hardsigmoid()\n        )\n        (3): Conv2dNormActivation(\n          (0): Conv2d(576, 96, kernel_size=(1, 1), stride=(1, 1), bias=False)\n          (1): BatchNorm2d(96, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)\n        )\n      )\n    )\n    (12): Conv2dNormActivation(\n      (0): Conv2d(96, 576, kernel_size=(1, 1), stride=(1, 1), bias=False)\n      (1): BatchNorm2d(576, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)\n      (2): Hardswish()\n    )\n  )\n  (avgpool): AdaptiveAvgPool2d(output_size=1)\n  (classifier): Sequential(\n    (0): Linear(in_features=576, out_features=1024, bias=True)\n    (1): Hardswish()\n    (2): Dropout(p=0.2, inplace=True)\n    (3): Linear(in_features=1024, out_features=1000, bias=True)\n  )\n)",
+    "recognition": "GraphModule(\n  (initializers): Module()\n  (_minusscalar0): OnnxBinaryMathOperation()\n  (_mulscalar0): OnnxBinaryMathOperation()\n  (conv_1_conv2d): Conv2d(3, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)\n  (conv_1_batchnorm): BatchNorm2d(32, eps=0.0010000000474974513, momentum=0.10000002384185791, affine=True, track_running_stats=True)\n  (conv_1_relu): OnnxPReLU()\n  (conv_2_dw_conv2d): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=32, bias=False)\n  (conv_2_dw_batchnorm): BatchNorm2d(32, eps=0.0010000000474974513, momentum=0.10000002384185791, affine=True, track_running_stats=True)\n  (conv_2_dw_relu): OnnxPReLU()\n  (conv_2_conv2d): Conv2d(32, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)\n  (conv_2_batchnorm): BatchNorm2d(64, eps=0.0010000000474974513, momentum=0.10000002384185791, affine=True, track_running_stats=True)\n  (conv_2_relu): OnnxPReLU()\n  (conv_3_dw_conv2d): Conv2d(64, 64, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), groups=64, bias=False)\n  (conv_3_dw_batchnorm): BatchNorm2d(64, eps=0.0010000000474974513, momentum=0.10000002384185791, affine=True, track_running_stats=True)\n  (conv_3_dw_relu): OnnxPReLU()\n  (conv_3_conv2d): Conv2d(64, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)\n  (conv_3_batchnorm): BatchNorm2d(128, eps=0.0010000000474974513, momentum=0.10000002384185791, affine=True, track_running_stats=True)\n  (conv_3_relu): OnnxPReLU()\n  (conv_4_dw_conv2d): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=128, bias=False)\n  (conv_4_dw_batchnorm): BatchNorm2d(128, eps=0.0010000000474974513, momentum=0.10000002384185791, affine=True, track_running_stats=True)\n  (conv_4_dw_relu): OnnxPReLU()\n  (conv_4_conv2d): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)\n  (conv_4_batchnorm): BatchNorm2d(128, eps=0.0010000000474974513, momentum=0.10000002384185791, affine=True, track_running_stats=True)\n  (conv_4_relu): OnnxPReLU()\n  (conv_5_dw_conv2d): Conv2d(128, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), groups=128, bias=False)\n  (conv_5_dw_batchnorm): BatchNorm2d(128, eps=0.0010000000474974513, momentum=0.10000002384185791, affine=True, track_running_stats=True)\n  (conv_5_dw_relu): OnnxPReLU()\n  (conv_5_conv2d): Conv2d(128, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)\n  (conv_5_batchnorm): BatchNorm2d(256, eps=0.0010000000474974513, momentum=0.10000002384185791, affine=True, track_running_stats=True)\n  (conv_5_relu): OnnxPReLU()\n  (conv_6_dw_conv2d): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=256, bias=False)\n  (conv_6_dw_batchnorm): BatchNorm2d(256, eps=0.0010000000474974513, momentum=0.10000002384185791, affine=True, track_running_stats=True)\n  (conv_6_dw_relu): OnnxPReLU()\n  (conv_6_conv2d): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)\n  (conv_6_batchnorm): BatchNorm2d(256, eps=0.0010000000474974513, momentum=0.10000002384185791, affine=True, track_running_stats=True)\n  (conv_6_relu): OnnxPReLU()\n  (conv_7_dw_conv2d): Conv2d(256, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), groups=256, bias=False)\n  (conv_7_dw_batchnorm): BatchNorm2d(256, eps=0.0010000000474974513, momentum=0.10000002384185791, affine=True, track_running_stats=True)\n  (conv_7_dw_relu): OnnxPReLU()\n  (conv_7_conv2d): Conv2d(256, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)\n  (conv_7_batchnorm): BatchNorm2d(512, eps=0.0010000000474974513, momentum=0.10000002384185791, affine=True, track_running_stats=True)\n  (conv_7_relu): OnnxPReLU()\n  (conv_8_dw_conv2d): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=512, bias=False)\n  (conv_8_dw_batchnorm): BatchNorm2d(512, eps=0.0010000000474974513, momentum=0.10000002384185791, affine=True, track_running_stats=True)\n  (conv_8_dw_relu): OnnxPReLU()\n  (conv_8_conv2d): Conv2d(512, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)\n  (conv_8_batchnorm): BatchNorm2d(512, eps=0.0010000000474974513, momentum=0.10000002384185791, affine=True, track_running_stats=True)\n  (conv_8_relu): OnnxPReLU()\n  (conv_9_dw_conv2d): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=512, bias=False)\n  (conv_9_dw_batchnorm): BatchNorm2d(512, eps=0.0010000000474974513, momentum=0.10000002384185791, affine=True, track_running_stats=True)\n  (conv_9_dw_relu): OnnxPReLU()\n  (conv_9_conv2d): Conv2d(512, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)\n  (conv_9_batchnorm): BatchNorm2d(512, eps=0.0010000000474974513, momentum=0.10000002384185791, affine=True, track_running_stats=True)\n  (conv_9_relu): OnnxPReLU()\n  (conv_10_dw_conv2d): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=512, bias=False)\n  (conv_10_dw_batchnorm): BatchNorm2d(512, eps=0.0010000000474974513, momentum=0.10000002384185791, affine=True, track_running_stats=True)\n  (conv_10_dw_relu): OnnxPReLU()\n  (conv_10_conv2d): Conv2d(512, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)\n  (conv_10_batchnorm): BatchNorm2d(512, eps=0.0010000000474974513, momentum=0.10000002384185791, affine=True, track_running_stats=True)\n  (conv_10_relu): OnnxPReLU()\n  (conv_11_dw_conv2d): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=512, bias=False)\n  (conv_11_dw_batchnorm): BatchNorm2d(512, eps=0.0010000000474974513, momentum=0.10000002384185791, affine=True, track_running_stats=True)\n  (conv_11_dw_relu): OnnxPReLU()\n  (conv_11_conv2d): Conv2d(512, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)\n  (conv_11_batchnorm): BatchNorm2d(512, eps=0.0010000000474974513, momentum=0.10000002384185791, affine=True, track_running_stats=True)\n  (conv_11_relu): OnnxPReLU()\n  (conv_12_dw_conv2d): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=512, bias=False)\n  (conv_12_dw_batchnorm): BatchNorm2d(512, eps=0.0010000000474974513, momentum=0.10000002384185791, affine=True, track_running_stats=True)\n  (conv_12_dw_relu): OnnxPReLU()\n  (conv_12_conv2d): Conv2d(512, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)\n  (conv_12_batchnorm): BatchNorm2d(512, eps=0.0010000000474974513, momentum=0.10000002384185791, affine=True, track_running_stats=True)\n  (conv_12_relu): OnnxPReLU()\n  (conv_13_dw_conv2d): Conv2d(512, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), groups=512, bias=False)\n  (conv_13_dw_batchnorm): BatchNorm2d(512, eps=0.0010000000474974513, momentum=0.10000002384185791, affine=True, track_running_stats=True)\n  (conv_13_dw_relu): OnnxPReLU()\n  (conv_13_conv2d): Conv2d(512, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)\n  (conv_13_batchnorm): BatchNorm2d(1024, eps=0.0010000000474974513, momentum=0.10000002384185791, affine=True, track_running_stats=True)\n  (conv_13_relu): OnnxPReLU()\n  (conv_14_dw_conv2d): Conv2d(1024, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=1024, bias=False)\n  (conv_14_dw_batchnorm): BatchNorm2d(1024, eps=0.0010000000474974513, momentum=0.10000002384185791, affine=True, track_running_stats=True)\n  (conv_14_dw_relu): OnnxPReLU()\n  (conv_14_conv2d): Conv2d(1024, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)\n  (conv_14_batchnorm): BatchNorm2d(1024, eps=0.0010000000474974513, momentum=0.10000002384185791, affine=True, track_running_stats=True)\n  (conv_14_relu): OnnxPReLU()\n  (bn1): BatchNorm2d(1024, eps=1.9999999494757503e-05, momentum=0.10000002384185791, affine=True, track_running_stats=True)\n  (dropout5): Dropout(p=0.4000000059604645, inplace=False)\n  (flatten_254): Flatten(start_dim=1, end_dim=-1)\n  (pre_fc1): Linear(in_features=50176, out_features=128, bias=True)\n  (fc1): BatchNorm1d(128, eps=1.9999999494757503e-05, momentum=0.10000002384185791, affine=True, track_running_stats=True)\n)\n\n\n\ndef forward(self, input_1):\n    initializers_onnx_initializer_0 = self.initializers.onnx_initializer_0\n    _minusscalar0 = self._minusscalar0(input_1, initializers_onnx_initializer_0);  input_1 = initializers_onnx_initializer_0 = None\n    initializers_onnx_initializer_1 = self.initializers.onnx_initializer_1\n    _mulscalar0 = self._mulscalar0(_minusscalar0, initializers_onnx_initializer_1);  _minusscalar0 = initializers_onnx_initializer_1 = None\n    conv_1_conv2d = self.conv_1_conv2d(_mulscalar0);  _mulscalar0 = None\n    conv_1_batchnorm = self.conv_1_batchnorm(conv_1_conv2d);  conv_1_conv2d = None\n    initializers_onnx_initializer_2 = self.initializers.onnx_initializer_2\n    conv_1_relu = self.conv_1_relu(conv_1_batchnorm, initializers_onnx_initializer_2);  conv_1_batchnorm = initializers_onnx_initializer_2 = None\n    conv_2_dw_conv2d = self.conv_2_dw_conv2d(conv_1_relu);  conv_1_relu = None\n    conv_2_dw_batchnorm = self.conv_2_dw_batchnorm(conv_2_dw_conv2d);  conv_2_dw_conv2d = None\n    initializers_onnx_initializer_3 = self.initializers.onnx_initializer_3\n    conv_2_dw_relu = self.conv_2_dw_relu(conv_2_dw_batchnorm, initializers_onnx_initializer_3);  conv_2_dw_batchnorm = initializers_onnx_initializer_3 = None\n    conv_2_conv2d = self.conv_2_conv2d(conv_2_dw_relu);  conv_2_dw_relu = None\n    conv_2_batchnorm = self.conv_2_batchnorm(conv_2_conv2d);  conv_2_conv2d = None\n    initializers_onnx_initializer_4 = self.initializers.onnx_initializer_4\n    conv_2_relu = self.conv_2_relu(conv_2_batchnorm, initializers_onnx_initializer_4);  conv_2_batchnorm = initializers_onnx_initializer_4 = None\n    conv_3_dw_conv2d = self.conv_3_dw_conv2d(conv_2_relu);  conv_2_relu = None\n    conv_3_dw_batchnorm = self.conv_3_dw_batchnorm(conv_3_dw_conv2d);  conv_3_dw_conv2d = None\n    initializers_onnx_initializer_5 = self.initializers.onnx_initializer_5\n    conv_3_dw_relu = self.conv_3_dw_relu(conv_3_dw_batchnorm, initializers_onnx_initializer_5);  conv_3_dw_batchnorm = initializers_onnx_initializer_5 = None\n    conv_3_conv2d = self.conv_3_conv2d(conv_3_dw_relu);  conv_3_dw_relu = None\n    conv_3_batchnorm = self.conv_3_batchnorm(conv_3_conv2d);  conv_3_conv2d = None\n    initializers_onnx_initializer_6 = self.initializers.onnx_initializer_6\n    conv_3_relu = self.conv_3_relu(conv_3_batchnorm, initializers_onnx_initializer_6);  conv_3_batchnorm = initializers_onnx_initializer_6 = None\n    conv_4_dw_conv2d = self.conv_4_dw_conv2d(conv_3_relu);  conv_3_relu = None\n    conv_4_dw_batchnorm = self.conv_4_dw_batchnorm(conv_4_dw_conv2d);  conv_4_dw_conv2d = None\n    initializers_onnx_initializer_7 = self.initializers.onnx_initializer_7\n    conv_4_dw_relu = self.conv_4_dw_relu(conv_4_dw_batchnorm, initializers_onnx_initializer_7);  conv_4_dw_batchnorm = initializers_onnx_initializer_7 = None\n    conv_4_conv2d = self.conv_4_conv2d(conv_4_dw_relu);  conv_4_dw_relu = None\n    conv_4_batchnorm = self.conv_4_batchnorm(conv_4_conv2d);  conv_4_conv2d = None\n    initializers_onnx_initializer_8 = self.initializers.onnx_initializer_8\n    conv_4_relu = self.conv_4_relu(conv_4_batchnorm, initializers_onnx_initializer_8);  conv_4_batchnorm = initializers_onnx_initializer_8 = None\n    conv_5_dw_conv2d = self.conv_5_dw_conv2d(conv_4_relu);  conv_4_relu = None\n    conv_5_dw_batchnorm = self.conv_5_dw_batchnorm(conv_5_dw_conv2d);  conv_5_dw_conv2d = None\n    initializers_onnx_initializer_9 = self.initializers.onnx_initializer_9\n    conv_5_dw_relu = self.conv_5_dw_relu(conv_5_dw_batchnorm, initializers_onnx_initializer_9);  conv_5_dw_batchnorm = initializers_onnx_initializer_9 = None\n    conv_5_conv2d = self.conv_5_conv2d(conv_5_dw_relu);  conv_5_dw_relu = None\n    conv_5_batchnorm = self.conv_5_batchnorm(conv_5_conv2d);  conv_5_conv2d = None\n    initializers_onnx_initializer_10 = self.initializers.onnx_initializer_10\n    conv_5_relu = self.conv_5_relu(conv_5_batchnorm, initializers_onnx_initializer_10);  conv_5_batchnorm = initializers_onnx_initializer_10 = None\n    conv_6_dw_conv2d = self.conv_6_dw_conv2d(conv_5_relu);  conv_5_relu = None\n    conv_6_dw_batchnorm = self.conv_6_dw_batchnorm(conv_6_dw_conv2d);  conv_6_dw_conv2d = None\n    initializers_onnx_initializer_11 = self.initializers.onnx_initializer_11\n    conv_6_dw_relu = self.conv_6_dw_relu(conv_6_dw_batchnorm, initializers_onnx_initializer_11);  conv_6_dw_batchnorm = initializers_onnx_initializer_11 = None\n    conv_6_conv2d = self.conv_6_conv2d(conv_6_dw_relu);  conv_6_dw_relu = None\n    conv_6_batchnorm = self.conv_6_batchnorm(conv_6_conv2d);  conv_6_conv2d = None\n    initializers_onnx_initializer_12 = self.initializers.onnx_initializer_12\n    conv_6_relu = self.conv_6_relu(conv_6_batchnorm, initializers_onnx_initializer_12);  conv_6_batchnorm = initializers_onnx_initializer_12 = None\n    conv_7_dw_conv2d = self.conv_7_dw_conv2d(conv_6_relu);  conv_6_relu = None\n    conv_7_dw_batchnorm = self.conv_7_dw_batchnorm(conv_7_dw_conv2d);  conv_7_dw_conv2d = None\n    initializers_onnx_initializer_13 = self.initializers.onnx_initializer_13\n    conv_7_dw_relu = self.conv_7_dw_relu(conv_7_dw_batchnorm, initializers_onnx_initializer_13);  conv_7_dw_batchnorm = initializers_onnx_initializer_13 = None\n    conv_7_conv2d = self.conv_7_conv2d(conv_7_dw_relu);  conv_7_dw_relu = None\n    conv_7_batchnorm = self.conv_7_batchnorm(conv_7_conv2d);  conv_7_conv2d = None\n    initializers_onnx_initializer_14 = self.initializers.onnx_initializer_14\n    conv_7_relu = self.conv_7_relu(conv_7_batchnorm, initializers_onnx_initializer_14);  conv_7_batchnorm = initializers_onnx_initializer_14 = None\n    conv_8_dw_conv2d = self.conv_8_dw_conv2d(conv_7_relu);  conv_7_relu = None\n    conv_8_dw_batchnorm = self.conv_8_dw_batchnorm(conv_8_dw_conv2d);  conv_8_dw_conv2d = None\n    initializers_onnx_initializer_15 = self.initializers.onnx_initializer_15\n    conv_8_dw_relu = self.conv_8_dw_relu(conv_8_dw_batchnorm, initializers_onnx_initializer_15);  conv_8_dw_batchnorm = initializers_onnx_initializer_15 = None\n    conv_8_conv2d = self.conv_8_conv2d(conv_8_dw_relu);  conv_8_dw_relu = None\n    conv_8_batchnorm = self.conv_8_batchnorm(conv_8_conv2d);  conv_8_conv2d = None\n    initializers_onnx_initializer_16 = self.initializers.onnx_initializer_16\n    conv_8_relu = self.conv_8_relu(conv_8_batchnorm, initializers_onnx_initializer_16);  conv_8_batchnorm = initializers_onnx_initializer_16 = None\n    conv_9_dw_conv2d = self.conv_9_dw_conv2d(conv_8_relu);  conv_8_relu = None\n    conv_9_dw_batchnorm = self.conv_9_dw_batchnorm(conv_9_dw_conv2d);  conv_9_dw_conv2d = None\n    initializers_onnx_initializer_17 = self.initializers.onnx_initializer_17\n    conv_9_dw_relu = self.conv_9_dw_relu(conv_9_dw_batchnorm, initializers_onnx_initializer_17);  conv_9_dw_batchnorm = initializers_onnx_initializer_17 = None\n    conv_9_conv2d = self.conv_9_conv2d(conv_9_dw_relu);  conv_9_dw_relu = None\n    conv_9_batchnorm = self.conv_9_batchnorm(conv_9_conv2d);  conv_9_conv2d = None\n    initializers_onnx_initializer_18 = self.initializers.onnx_initializer_18\n    conv_9_relu = self.conv_9_relu(conv_9_batchnorm, initializers_onnx_initializer_18);  conv_9_batchnorm = initializers_onnx_initializer_18 = None\n    conv_10_dw_conv2d = self.conv_10_dw_conv2d(conv_9_relu);  conv_9_relu = None\n    conv_10_dw_batchnorm = self.conv_10_dw_batchnorm(conv_10_dw_conv2d);  conv_10_dw_conv2d = None\n    initializers_onnx_initializer_19 = self.initializers.onnx_initializer_19\n    conv_10_dw_relu = self.conv_10_dw_relu(conv_10_dw_batchnorm, initializers_onnx_initializer_19);  conv_10_dw_batchnorm = initializers_onnx_initializer_19 = None\n    conv_10_conv2d = self.conv_10_conv2d(conv_10_dw_relu);  conv_10_dw_relu = None\n    conv_10_batchnorm = self.conv_10_batchnorm(conv_10_conv2d);  conv_10_conv2d = None\n    initializers_onnx_initializer_20 = self.initializers.onnx_initializer_20\n    conv_10_relu = self.conv_10_relu(conv_10_batchnorm, initializers_onnx_initializer_20);  conv_10_batchnorm = initializers_onnx_initializer_20 = None\n    conv_11_dw_conv2d = self.conv_11_dw_conv2d(conv_10_relu);  conv_10_relu = None\n    conv_11_dw_batchnorm = self.conv_11_dw_batchnorm(conv_11_dw_conv2d);  conv_11_dw_conv2d = None\n    initializers_onnx_initializer_21 = self.initializers.onnx_initializer_21\n    conv_11_dw_relu = self.conv_11_dw_relu(conv_11_dw_batchnorm, initializers_onnx_initializer_21);  conv_11_dw_batchnorm = initializers_onnx_initializer_21 = None\n    conv_11_conv2d = self.conv_11_conv2d(conv_11_dw_relu);  conv_11_dw_relu = None\n    conv_11_batchnorm = self.conv_11_batchnorm(conv_11_conv2d);  conv_11_conv2d = None\n    initializers_onnx_initializer_22 = self.initializers.onnx_initializer_22\n    conv_11_relu = self.conv_11_relu(conv_11_batchnorm, initializers_onnx_initializer_22);  conv_11_batchnorm = initializers_onnx_initializer_22 = None\n    conv_12_dw_conv2d = self.conv_12_dw_conv2d(conv_11_relu);  conv_11_relu = None\n    conv_12_dw_batchnorm = self.conv_12_dw_batchnorm(conv_12_dw_conv2d);  conv_12_dw_conv2d = None\n    initializers_onnx_initializer_23 = self.initializers.onnx_initializer_23\n    conv_12_dw_relu = self.conv_12_dw_relu(conv_12_dw_batchnorm, initializers_onnx_initializer_23);  conv_12_dw_batchnorm = initializers_onnx_initializer_23 = None\n    conv_12_conv2d = self.conv_12_conv2d(conv_12_dw_relu);  conv_12_dw_relu = None\n    conv_12_batchnorm = self.conv_12_batchnorm(conv_12_conv2d);  conv_12_conv2d = None\n    initializers_onnx_initializer_24 = self.initializers.onnx_initializer_24\n    conv_12_relu = self.conv_12_relu(conv_12_batchnorm, initializers_onnx_initializer_24);  conv_12_batchnorm = initializers_onnx_initializer_24 = None\n    conv_13_dw_conv2d = self.conv_13_dw_conv2d(conv_12_relu);  conv_12_relu = None\n    conv_13_dw_batchnorm = self.conv_13_dw_batchnorm(conv_13_dw_conv2d);  conv_13_dw_conv2d = None\n    initializers_onnx_initializer_25 = self.initializers.onnx_initializer_25\n    conv_13_dw_relu = self.conv_13_dw_relu(conv_13_dw_batchnorm, initializers_onnx_initializer_25);  conv_13_dw_batchnorm = initializers_onnx_initializer_25 = None\n    conv_13_conv2d = self.conv_13_conv2d(conv_13_dw_relu);  conv_13_dw_relu = None\n    conv_13_batchnorm = self.conv_13_batchnorm(conv_13_conv2d);  conv_13_conv2d = None\n    initializers_onnx_initializer_26 = self.initializers.onnx_initializer_26\n    conv_13_relu = self.conv_13_relu(conv_13_batchnorm, initializers_onnx_initializer_26);  conv_13_batchnorm = initializers_onnx_initializer_26 = None\n    conv_14_dw_conv2d = self.conv_14_dw_conv2d(conv_13_relu);  conv_13_relu = None\n    conv_14_dw_batchnorm = self.conv_14_dw_batchnorm(conv_14_dw_conv2d);  conv_14_dw_conv2d = None\n    initializers_onnx_initializer_27 = self.initializers.onnx_initializer_27\n    conv_14_dw_relu = self.conv_14_dw_relu(conv_14_dw_batchnorm, initializers_onnx_initializer_27);  conv_14_dw_batchnorm = initializers_onnx_initializer_27 = None\n    conv_14_conv2d = self.conv_14_conv2d(conv_14_dw_relu);  conv_14_dw_relu = None\n    conv_14_batchnorm = self.conv_14_batchnorm(conv_14_conv2d);  conv_14_conv2d = None\n    initializers_onnx_initializer_28 = self.initializers.onnx_initializer_28\n    conv_14_relu = self.conv_14_relu(conv_14_batchnorm, initializers_onnx_initializer_28);  conv_14_batchnorm = initializers_onnx_initializer_28 = None\n    bn1 = self.bn1(conv_14_relu);  conv_14_relu = None\n    dropout5 = self.dropout5(bn1);  bn1 = None\n    flatten_254 = self.flatten_254(dropout5);  dropout5 = None\n    pre_fc1 = self.pre_fc1(flatten_254);  flatten_254 = None\n    fc1 = self.fc1(pre_fc1);  pre_fc1 = None\n    return fc1\n    \n# To see more debug info, please use `graph_module.print_readable()`"
+  },
+  "limitations": "Different pretrained architectures, training data and target scores: illustrates different task evidence, not a controlled comparison of training losses. No claim that ImageNet recognizes celebrity identity. Maps independently normalized.",
+  "references": [
+    "https://arxiv.org/abs/1610.02391",
+    "https://docs.pytorch.org/vision/stable/models/generated/torchvision.models.mobilenet_v3_small.html",
+    "https://github.com/opencv/opencv_zoo/tree/main/models/face_recognition_sface"
+  ]
+}

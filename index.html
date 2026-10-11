@@ -7,6 +7,14 @@
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      if (location.pathname === '/modules/memory-test') {
+        window.__DL_TELEMETRY__ = {
+          emit: function () {},
+          getModuleState: function () { return Promise.resolve({ ok: true, module_id: 'memory-test', completed: false, states: {} }); }
+        };
+      }
+    </script>
     <script src="/modules/shared/telemetry.js"></script>
     <script type="module" src="/src/main.tsx"></script>
   </body>

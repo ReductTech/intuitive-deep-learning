@@ -1,5 +1,9 @@
 # Convolution-Kernel-Intro 迁移冻结
 
+> **迁移状态（已完成）**：React 版落在 modules/Convolution-Kernel-Intro/（按用户要求沿用原目录名，未加 -React 后缀），
+> 共 9 页，对应本文档的三幕结构：gomoku-play / gomoku-explain / binary-board / window-scan / kernel-design /
+> mnist-input / mnist-scan / mnist-readout / resources。本目录保持归档，只补齐了缺失的 shared CSS 与脚本引用（index.html），运行逻辑未改。
+
 > 迁移目标：`Convolution-Kernel-Intro-React`。本文件只记录迁移前事实与复用关系，不改变旧模块运行逻辑。正式课程链路已核实为 `Manual-Feature-Classification(-React) → Convolution-Kernel-Intro(-React) → LeNet5-CNN-Lab`。
 
 ## 页面与步骤表
@@ -33,7 +37,7 @@
 | 五子棋私有算法 | `script.js:4-61,335-521`：15×15、四方向判胜、本地模式评分 AI | 等价移入模块私有 TypeScript；不抽入 shared，不以假棋局替代 |
 | 五子棋评语 API | `POST http://127.0.0.1:59414/kernel/gomoku-win-feedback`；body `{answer,board_size,winner,win_direction,win_line,ground_truth}`；后端注册于 `scripts/langchain_app/registry.py` | 模块私有 service 保留真实接口与错误；shared `Question` 负责标准题目与反馈 |
 | 0/1 棋盘及 5×5 算子 | `script.js:857-1130` | 私有 TypeScript 等价迁移；保留补零、方向变换、点积、全局最大判断与悬浮预览 |
-| MNIST 图片 | 脚本每类列出 5 张，共 50 张；文件位于 `dataset/mnist/0..9/*.png` | Vite URL 复用原资源，不复制、不生成假数据；随机换图避免连续相同 |
+| MNIST 图片 | 脚本每类列出 5 张，共 50 张；文件位于 `assets/dataset/mnist/0..9/*.png` | Vite URL 复用原资源，不复制、不生成假数据；随机换图避免连续相同 |
 | MNIST 卷积 | 用户 5×5 核、预设 3×3 竖线/横线/边缘核、自定义 3×3/5×5 | 私有模型和 Canvas/格子可视化保留；该能力不属于通用 Plotly 图表 |
 | 推荐视频 | `BV1VV411478E`、`BV1Vd4y1e7pj`、`BV16N411y7cV` | 交给 shared `LessonFooter` / `RelatedVideos` 排版 |
 | 导航链路 | 返回 CourseMap；下一课旧入口为 `LeNet5-CNN-Lab` | 上一课验收后改为 React 路由；本课下一课暂保留旧 LeNet-5 地址，待其迁移后再切换 |
@@ -42,7 +46,7 @@
 
 | 能力 | 直接复用 shared | 模块私有保留 |
 | --- | --- | --- |
-| 页面外壳和标准内容 | `ModuleShell`、`LessonStage`、`ContentBlock` | 游戏、算子与 MNIST 的双栏和响应式细节 |
+| 页面外壳和标准内容 | `ModuleShell`、原生内容容器、`ContentBlock` | 游戏、算子与 MNIST 的双栏和响应式细节 |
 | 教学流程 | `LessonFlow`、现有 Scroll Cue | `game → operator → mnist` 内部状态机 |
 | 标准控件和反馈 | `Button`、`Question`、`Callout`、`NoticeStrip`、`ValueTile`、`ExplainPanelButton` | 五子棋画布、拖动扫描、可编辑核、计算弹层、特征图点击与核预览 |
 | 状态存储 | shared Telemetry API | 模块私有 typed `usePersistedActivity` 与恢复去重 |

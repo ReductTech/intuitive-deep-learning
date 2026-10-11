@@ -17,7 +17,7 @@ import {
   type ShallowNeuron,
 } from '../ActivationCatalogPage/ActivationCatalogPage';
 
-const STATE_KEY = 'activity:neuron-guide-relu-ng-network-v1';
+const STATE_KEY = 'activity:neuron-guide-relu-network-v1';
 
 interface ReluNetworkSnapshot {
   count: number;
@@ -171,7 +171,7 @@ export function ReluNetworkPage({ onComplete }: ReluNetworkPageProps) {
     <ContentBlock
       ref={rootRef}
       headingLevel={1}
-      className="ng-activation-network-lab ng-relu-network"
+      className="ngtw-activation-network-lab ngtw-relu-network"
       title="组合多个带有 ReLU 的神经元，曲线继续弯折"
       subtitle="每个神经元有自己的 w 和 b，会在不同的 x 位置由抑制切换为激活；再加一个神经元，曲线就多一个折点。"
       data-telemetry-manual
@@ -181,14 +181,14 @@ export function ReluNetworkPage({ onComplete }: ReluNetworkPageProps) {
         <NoticeStrip tone="blue"><Typography variant="body" tone="inherit">正在恢复神经元数量…</Typography></NoticeStrip>
       ) : (
         <>
-          <div className="ng-relu-toolbar">
-            <div className="ng-relu-toolbar__context">
+          <div className="ngtw-relu-toolbar flex min-w-0 max-w-full items-center justify-between gap-[12px] min-h-[56px] p-[4px_8px_4px_12px]">
+            <div className="ngtw-relu-toolbar__context flex min-w-0 max-w-full items-center gap-[6px]">
               <Typography as="span" variant="body" tone="muted">当前结构：</Typography>
               <Typography as="strong" variant="body" tone="accent">{count} 个 ReLU 神经元</Typography>
               <Typography as="span" variant="body" tone="muted">汇合为</Typography>
               <Typography as="strong" variant="body" tone="success">1 个输出</Typography>
             </div>
-            <div className="ng-activation-actions" aria-label="调整网络结构">
+            <div className="ngtw-activation-actions flex flex-wrap gap-[8px]" aria-label="调整网络结构">
               <Button variant="primary" disabled={!hydrated || count >= MAX_RELU_NEURON_COUNT} onClick={() => changeCount(count + 1, 'add')}>
                 添加神经元
               </Button>
@@ -199,13 +199,13 @@ export function ReluNetworkPage({ onComplete }: ReluNetworkPageProps) {
             </div>
           </div>
 
-          <div className="ng-activation-network-stage">
-            <section className="ng-activation-network-panel ng-relu-panel ng-relu-panel--network" aria-label="网络结构">
-              <header className="ng-activation-panel-head">
+          <div className="ngtw-activation-network-stage grid grid-cols-[minmax(0,_.95fr)_minmax(0,_1.05fr)] items-stretch gap-[14px]">
+            <section className="ngtw-activation-network-panel relative flex min-w-0 min-h-[560px] flex-col bg-[#fff] p-[14px] ngtw-relu-panel ngtw-relu-panel--network" aria-label="网络结构">
+              <header className="ngtw-activation-panel-head flex items-baseline justify-between gap-[12px] mb-[10px]">
                 <Typography as="h3" variant="subtitle" tone="main">把多个 ReLU 神经元组合起来</Typography>
                 <Typography as="span" variant="bodySmall" tone="muted">hᵢ = ReLU(wᵢx + bᵢ)</Typography>
               </header>
-              <div className="ng-activation-visual-box ng-activation-visual-box--model">
+              <div className="ngtw-activation-visual-box relative min-h-[430px] overflow-hidden ngtw-activation-visual-box--model">
                 <NetworkCanvas
                   layers={canvas.layers}
                   connections={canvas.connections}
@@ -217,18 +217,18 @@ export function ReluNetworkPage({ onComplete }: ReluNetworkPageProps) {
               </div>
             </section>
 
-            <section className="ng-activation-network-panel ng-relu-panel ng-relu-panel--plot" aria-label="输出曲线">
-              <header className="ng-activation-panel-head">
+            <section className="ngtw-activation-network-panel relative flex min-w-0 min-h-[560px] flex-col bg-[#fff] p-[14px] ngtw-relu-panel ngtw-relu-panel--plot" aria-label="输出曲线">
+              <header className="ngtw-activation-panel-head flex items-baseline justify-between gap-[12px] mb-[10px]">
                 <Typography as="h3" variant="subtitle" tone="main">从一个折点到多个折点</Typography>
                 <Typography as="span" variant="bodySmall" tone="muted">虚线对应每个神经元的响应起点</Typography>
               </header>
-              <div className="ng-activation-visual-box">
+              <div className="ngtw-activation-visual-box relative min-h-[430px] overflow-hidden">
                 <ReluNetworkPlot count={count} neurons={state.neurons} />
               </div>
             </section>
           </div>
 
-          <div className="ng-relu-conclusion">
+          <div className="ngtw-relu-conclusion flex min-w-0 max-w-full items-center gap-[12px] p-[10px_14px]">
             <Typography as="strong" variant="subtitle" tone="success">结论</Typography>
             <Typography variant="body" tone="main">每个 ReLU 神经元贡献一个折点，折点越多，输出越接近任意曲线。</Typography>
           </div>
@@ -237,3 +237,4 @@ export function ReluNetworkPage({ onComplete }: ReluNetworkPageProps) {
     </ContentBlock>
   );
 }
+

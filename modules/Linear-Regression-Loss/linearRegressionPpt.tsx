@@ -20,5 +20,5 @@ export const deck: DeckDefinition = {
 const catalog: [DeckDefinition, ...DeckDefinition[]] = [deck];
 
 export function LinearRegressionPpt() {
-  return <SceneDeck catalog={catalog} moduleId="linear-regression-loss" progressKey="lesson-flow:linear-regression-loss" />;
+  return <SceneDeck catalog={catalog} moduleId="linear-regression-loss" assetId="a805d0a5-9d46-42ef-9989-e11aeb79e49e" progressKey="lesson-flow:linear-regression-loss" />;
 }

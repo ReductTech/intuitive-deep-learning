@@ -1,0 +1,31 @@
+{
+  "images/cat-portrait.jpg": {
+    "title": "Cat portrait",
+    "author": "Roy Tanck",
+    "source": "https://commons.wikimedia.org/wiki/File:Cat_portrait_(17236370444).jpg",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "usage": "真实照片用作自然场景的视觉参考和采样示意输入；模拟响应由图像区域平均值生成，不是实际传感器测量。"
+  },
+  "assets/digital-image-cat-scene.png": {
+    "title": "暖光桌面猫咪场景",
+    "source": "Built-in ImageGen",
+    "reference": "User-provided page design reference, 2026-10-06",
+    "prompt": "Use case: photorealistic-natural. Input image is a REFERENCE for the left-hand photographic scene ONLY, not an edit target for UI. Generate one new clean photographic asset matching the left photo's subject and mood: a fluffy brown tabby kitten with white chest and paws sitting on a sunlit wooden desk, facing slightly right, eyes looking up; warm window daylight from the right; blurred green potted plant, cream desk lamp in the upper left, subtle white mug at the far left, cozy room. Portrait 4:5 composition, kitten full head and front paws visible, eyes near the upper middle. The fur and eye should have warm amber, brown, black and green color details suitable for pixel magnification. Natural photographic realism. Deliver ONLY the photograph filling the image, no page, no text, no grid, no arrows, no diagrams, no UI, no white borders. Preserve rich original photo detail; all educational overlays will be added in code.",
+    "usage": "第二页场景图与像素采样的共同输入；像素网格、RGB 数值和数字表由浏览器实时生成。"
+  },
+  "assets/digital-image-cat-cutout.png": {
+    "title": "猫咪透明前景",
+    "source": "Built-in ImageGen",
+    "reference": "assets/digital-image-cat-scene.png",
+    "prompt": "Remove the entire background leaving only the kitten on genuine transparency; preserve pose, colors, paws, ears and whiskers. No checkerboard or text.",
+    "usage": "第五页四种像素表示共用的前景，浏览器保留透明边缘并把接近完全不透明的主体 Alpha 归为 255；前三列合成到固定浅色背景，RGBA 保留透明通道并允许调整整体不透明度。"
+  },
+  "assets/color-space-macaw.png": {
+    "title": "蓝黄金刚鹦鹉",
+    "source": "Built-in ImageGen",
+    "prompt": "Natural close-up blue-and-yellow macaw on a branch against blurred green tropical foliage; rich blue, yellow and green, landscape 4:3, no text or UI.",
+    "usage": "颜色空间页同一原图的实时通道转换与调节输入",
+    "colorConversionReference": "https://docs.opencv.org/4.13.0/de/d25/imgproc_color_conversions.html"
+  }
+}

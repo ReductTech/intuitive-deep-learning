@@ -2,3 +2,4 @@
 # Install with the PyTorch CPU index specified in SKILL.md.
 torch
 torchvision
+tqdm

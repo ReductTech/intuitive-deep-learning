@@ -1167,7 +1167,7 @@
       return !normalizeAnswer(value);
     });
 
-    if (empty) {
+    if (empty && type !== 'short') {
       setQuestionFeedback(root, 'hint', (options.feedback && options.feedback.empty) || '先完成作答，再检查答案。');
       return { ok: false, empty: true, answer: answer };
     }

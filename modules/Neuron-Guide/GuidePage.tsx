@@ -3,6 +3,7 @@ import { LessonFlow, ModuleShell, Typography, type LessonFlowStep } from '../sha
 import '../shared/react/styles.css';
 import '../shared/react/ui-kit.css';
 import '../shared/react/presentation.css';
+import './tailwind.css';
 import { LessonProvider } from './LessonContext';
 import { lessonContextOptions, neuronCourse } from './course';
 
@@ -109,6 +110,7 @@ export function GuidePage() {
     </LessonProvider>
   );
 }
+
 
 
 

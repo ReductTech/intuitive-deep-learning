@@ -12,7 +12,12 @@ function SceneDeckPage() {
   return <SceneDeck
     catalog={pptCatalog}
     moduleId={(deckId) => deckId}
-    progressKey={(deckId) => pptModules.find((module) => module.pptDeck?.id === deckId)?.id === 'neuron-guide' ? 'lesson-flow:neuron-guide-expanded-v6' : `lesson-flow:${deckId}`}
+    assetId={(deckId) => pptModules.find((module) => module.pptDeck?.id === deckId)?.assetId ?? deckId}
+    progressKey={(deckId) => deckId === 'neuron-guide'
+      ? 'lesson-flow:neuron-guide-v1'
+      : deckId === 'convolution-kernel-intro'
+        ? 'lesson-flow:convolution-kernel-intro-guide-v1'
+        : `lesson-flow:${deckId}`}
     getNotes={(sceneId, deckId) => pptModules.find((module) => module.pptDeck?.id === deckId)?.getPptNotes?.(sceneId) ?? []}
   />;
 }

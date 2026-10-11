@@ -1,4 +1,4 @@
-.ng-relu-approximation-lab {
+.ngtw-relu-approximation-lab {
   position: relative;
   min-width: 0;
   max-width: 100%;
@@ -8,62 +8,38 @@
   padding: clamp(16px, 2.4vw, 22px);
 }
 
-.ng-relu-approximation-lab > .edu-content-head { margin-bottom: 16px; }
+.ngtw-relu-approximation-lab > .edu-content-head { margin-bottom: 16px; }
 
-.ng-relu-approximation-lab > div:last-child {
+.ngtw-relu-approximation-lab > div:last-child {
   display: grid;
   min-width: 0;
   max-width: 100%;
   gap: 14px;
 }
 
-.ng-relu-drawing-panel {
-  display: grid;
-  min-width: 0;
-  max-width: 100%;
-  grid-template-rows: auto minmax(0, 1fr);
-  gap: 10px;
+.ngtw-relu-drawing-panel {
   border: 1px solid var(--ui-border);
   border-radius: var(--ui-radius-md);
-  background: #fff;
-  padding: 12px;
 }
 
-.ng-relu-drawing-toolbar {
-  display: grid;
-  min-width: 0;
-  max-width: 100%;
-  align-items: center;
-  grid-template-columns: auto minmax(360px, 1fr) minmax(210px, auto) auto;
-  gap: 16px;
-  min-height: 54px;
+.ngtw-relu-drawing-toolbar {
   border-radius: var(--ui-radius-sm);
-  background: var(--ui-surface-soft);
-  padding: 6px 10px;
 }
 
-.ng-relu-drawing-panel__legend {
-  position: absolute;
+.ngtw-relu-drawing-panel__legend {
   z-index: 2;
-  top: 14px;
-  right: 16px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
   border: 1px solid rgba(39, 68, 110, .14);
   border-radius: var(--ui-radius-sm);
-  background: rgba(251, 253, 255, .92);
-  padding: 6px 10px;
   pointer-events: none;
 }
 
-.ng-relu-drawing-panel__legend > * {
+.ngtw-relu-drawing-panel__legend > * {
   position: relative;
   padding-left: 26px;
   white-space: nowrap;
 }
 
-.ng-relu-drawing-panel__legend > *::before {
+.ngtw-relu-drawing-panel__legend > *::before {
   position: absolute;
   top: 50%;
   left: 0;
@@ -73,56 +49,46 @@
   content: '';
 }
 
-.ng-relu-drawing-toolbar > * {
+.ngtw-relu-drawing-toolbar > * {
   min-width: 0;
   max-width: 100%;
 }
 
-.ng-relu-drawing-toolbar .edu-control {
+.ngtw-relu-drawing-toolbar .edu-control {
   display: grid;
   grid-template-columns: auto minmax(180px, 1fr);
   align-items: center;
   gap: 10px;
 }
 
-.ng-relu-drawing-toolbar .edu-control-head {
+.ngtw-relu-drawing-toolbar .edu-control-head {
   gap: 8px;
   white-space: nowrap;
 }
 
-.ng-relu-drawing-toolbar .ng-activation-actions {
+.ngtw-relu-drawing-toolbar .ngtw-activation-actions {
   flex-wrap: nowrap;
   justify-content: flex-end;
   white-space: nowrap;
 }
 
-.ng-relu-drawing-toolbar__status {
+.ngtw-relu-drawing-toolbar__status {
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.ng-relu-drawing-board {
-  position: relative;
-  min-width: 0;
-  width: 100%;
+.ngtw-relu-drawing-board {
   height: clamp(360px, 54vh, 530px);
-  max-width: 100%;
-  overflow: hidden;
   border: 1px solid var(--ui-border);
   border-radius: var(--ui-radius-sm);
-  background: #fbfdff;
 }
 
-.ng-relu-drawing-board__svg {
-  display: block;
-  width: 100%;
-  height: 100%;
-  max-width: 100%;
+.ngtw-relu-drawing-board__svg {
   touch-action: none;
   cursor: crosshair;
 }
 
-.ng-relu-drawing-board__prompt {
+.ngtw-relu-drawing-board__prompt {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -134,19 +100,19 @@
   text-align: center;
 }
 
-.ng-relu-drawing-board__grid line {
+.ngtw-relu-drawing-board__grid line {
   stroke: var(--ui-border);
   stroke-width: 1;
   vector-effect: non-scaling-stroke;
 }
 
-.ng-relu-drawing-board__grid line.is-axis {
+.ngtw-relu-drawing-board__grid line.is-axis {
   stroke: var(--ui-text-muted);
   stroke-width: 1.5;
 }
 
-.ng-relu-drawing-board__target,
-.ng-relu-drawing-board__prediction {
+.ngtw-relu-drawing-board__target,
+.ngtw-relu-drawing-board__prediction {
   fill: none;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -154,49 +120,50 @@
   pointer-events: none;
 }
 
-.ng-relu-drawing-board__target {
+.ngtw-relu-drawing-board__target {
   stroke: var(--ui-accent);
   stroke-width: 4;
   stroke-dasharray: 9 7;
 }
 
-.ng-relu-drawing-board__prediction {
+.ngtw-relu-drawing-board__prediction {
   stroke: var(--ui-accent-alt);
   stroke-width: 4;
 }
 
 /* The blog/PPT surface is a fixed 1600 × 900 canvas. Let the drawing area
    absorb the available height instead of using the browser viewport height. */
-.course-page-surface .ng-relu-approximation-lab {
+.course-page-surface .ngtw-relu-approximation-lab {
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
 }
 
-.course-page-surface .ng-relu-approximation-lab > .edu-content-head {
+.course-page-surface .ngtw-relu-approximation-lab > .edu-content-head {
   min-width: 0;
   margin-bottom: 12px;
 }
 
-.course-page-surface .ng-relu-approximation-lab > .edu-content-body {
+.course-page-surface .ngtw-relu-approximation-lab > .edu-content-body {
   min-width: 0;
   min-height: 0;
   grid-template-rows: minmax(0, 1fr);
   gap: 0;
 }
 
-.course-page-surface .ng-relu-drawing-panel {
+.course-page-surface .ngtw-relu-drawing-panel {
   min-height: 0;
   grid-template-rows: auto minmax(0, 1fr);
   overflow: hidden;
   padding: 10px;
 }
 
-.course-page-surface .ng-relu-drawing-board {
+.course-page-surface .ngtw-relu-drawing-board {
   height: auto;
   min-height: 0;
 }
 
 @media (max-width: 980px) {
-  .ng-relu-drawing-toolbar { grid-template-columns: minmax(0, 1fr); }
+  .ngtw-relu-drawing-toolbar { grid-template-columns: minmax(0, 1fr); }
 }
+
 

@@ -50,18 +50,18 @@ export function SignalDiscoveryPage({ onComplete }: SignalDiscoveryPageProps) {
   return (
     <ContentBlock
       headingLevel={1}
-      className="ng-opening-stage edu-stage--featured ng-decision-discovery"
+      className="ngtw-opening-stage ngtw-decision-discovery"
       title="让神经元帮你做一次判断"
       subtitle="输入一个正在权衡的问题，看看哪些因素正在共同推动你的决定。"
     >
-      <form className="ng-decision-composer" onSubmit={submit}>
-        <div className="ng-decision-composer__main">
+      <form className="ngtw-decision-composer grid gap-[18px] p-[22px_24px]" onSubmit={submit}>
+        <div className="ngtw-decision-composer__main grid gap-[9px]">
           <Typography variant="body" tone="warning">给出一个需要权衡的决定</Typography>
-          <div className="ng-decision-composer__action">
-            <div className={`ng-input-row${decision ? ' is-confirmed' : ''}`}>
-              <Typography className="ng-input-prefix" variant="body" tone="light">是否要</Typography>
+          <div className="ngtw-decision-composer__action grid grid-cols-[minmax(0,_1fr)_auto] items-stretch gap-[12px]">
+            <div className={`ngtw-input-row grid grid-cols-[auto_minmax(0,_1fr)] items-center rounded-[8px] bg-[#f9fbfd] overflow-hidden${decision ? ' is-confirmed' : ''}`}>
+              <Typography className="ngtw-input-prefix" variant="body" tone="light">是否要</Typography>
               <TextInput
-                controlClassName="ng-decision-input-control"
+                controlClassName="ngtw-decision-input-control contents"
                 value={decision}
                 autoComplete="off"
                 placeholder="例如：换工作、开始存钱、搬去新的城市"
@@ -75,43 +75,43 @@ export function SignalDiscoveryPage({ onComplete }: SignalDiscoveryPageProps) {
           </div>
         </div>
 
-        <div className="ng-decision-composer__presets">
+        <div className="ngtw-decision-composer__presets grid gap-[10px] pt-[15px]">
           <DecisionMarquee selected={decision} onSelect={selectDecision} />
         </div>
 
         {error && (
-          <NoticeStrip className="ng-opening-status" tone="red" lead={<Typography as="span" variant="body" tone="inherit">分析暂时无法完成：</Typography>}>
+          <NoticeStrip className="ngtw-opening-status m-0" tone="red" lead={<Typography as="span" variant="body" tone="inherit">分析暂时无法完成：</Typography>}>
             <Typography as="span" variant="body" tone="inherit">{error}</Typography>
           </NoticeStrip>
         )}
       </form>
 
-      <section className="ng-decision-result" aria-live="polite">
-          <div className={`ng-decision-result__factors${resultVisible && state.analysis && !loading ? '' : ' is-empty'}`}>
+      <section className="ngtw-decision-result relative grid gap-0 bg-[transparent] p-[18px_0_0]" aria-live="polite">
+          <div className={`ngtw-decision-result__factors grid grid-cols-[repeat(3,_minmax(0,_1fr))] gap-[16px]${resultVisible && state.analysis && !loading ? '' : ' is-empty'}`}>
             {(!resultVisible || !state.analysis || loading) && [0, 1, 2].map((index) => (
               <article
-                className={`ng-decision-result__placeholder${loading ? ' is-loading' : ''}`}
+                className={`ngtw-decision-result__placeholder${loading ? ' is-loading' : ''}`}
                 key={index}
                 aria-hidden={!loading}
               >
-                <Typography as="code" variant="body" tone="muted" className="ng-decision-result__placeholder-index">0{index + 1}</Typography>
+                <Typography as="code" variant="body" tone="muted" className="ngtw-decision-result__placeholder-index">0{index + 1}</Typography>
                 {(!loading || index !== 1) && (
-                  <div className="ng-decision-result__unknown">
-                    <Typography className="ng-decision-result__question" variant="h1" tone="muted">?</Typography>
+                  <div className="ngtw-decision-result__unknown grid w-[62px] h-[62px] place-items-center self-center rounded-[50%] bg-[rgba(255,255,255,.82)]">
+                    <Typography className="ngtw-decision-result__question" variant="h1" tone="muted">?</Typography>
                   </div>
                 )}
                 {loading && index === 1 && (
-                  <div className="ng-decision-result__loading">
+                  <div className="ngtw-decision-result__loading inline-flex items-center gap-[10px]">
                     <i aria-hidden="true" />
                     <Typography variant="body" tone="muted">分析中…</Typography>
                   </div>
                 )}
-                <div className="ng-decision-result__skeleton" aria-hidden="true"><i /><i /><i /></div>
+                <div className="ngtw-decision-result__skeleton grid w-full gap-[7px]" aria-hidden="true"><i /><i /><i /></div>
               </article>
             ))}
             {resultVisible && state.analysis && !loading && state.analysis.factors.map((factor, index) => (
               <article key={`${factor.name}-${index}`}>
-                <div className="ng-decision-result__factor-head">
+                <div className="ngtw-decision-result__factor-head flex items-baseline gap-[10px]">
                   <Typography as="code" variant="body" tone="warning">0{index + 1}</Typography>
                   <Typography as="h4" variant="h3" tone="accent">{factor.name}</Typography>
                 </div>
@@ -128,10 +128,10 @@ const choiceRows = candidateData.rows;
 
 export function DecisionMarquee({ selected, onSelect }: { selected: string; onSelect: (value: string) => void }) {
   const renderGroup = (choices: string[], rowIndex: number, duplicate: boolean) => (
-    <div className="ng-choice-group" aria-hidden={duplicate || undefined}>
+    <div className="ngtw-choice-group flex gap-[10px] pr-[10px]" aria-hidden={duplicate || undefined}>
       {choices.map((choice, index) => (
         <button
-          className={`ng-choice-chip${selected === choice ? ' is-selected' : ''}`}
+          className={`ngtw-choice-chip min-h-[42px] rounded-[7px] bg-[#fff] p-[8px_17px]${selected === choice ? ' is-selected' : ''}`}
           data-tone={(rowIndex + index) % 4}
           key={`${choice}-${duplicate ? 'duplicate' : 'main'}`}
           type="button"
@@ -146,10 +146,10 @@ export function DecisionMarquee({ selected, onSelect }: { selected: string; onSe
   );
 
   return (
-    <div className="ng-decision-stream" aria-label="常见决定示例">
+    <div className="ngtw-decision-stream relative grid content-center gap-[10px] min-h-[220px] p-[18px_0] overflow-hidden rounded-[8px]" aria-label="常见决定示例">
       {choiceRows.map((choices, rowIndex) => (
-        <div className={`ng-marquee-row ${rowIndex % 2 === 0 ? 'ng-marquee-row--right' : 'ng-marquee-row--left'}`} key={rowIndex}>
-          <div className="ng-marquee-track" style={{ animationDuration: `${92 + rowIndex * 7}s` }}>
+        <div className={`ngtw-marquee-row flex w-full overflow-hidden ${rowIndex % 2 === 0 ? 'ngtw-marquee-row--right' : 'ngtw-marquee-row--left'}`} key={rowIndex}>
+          <div className="ngtw-marquee-track flex" style={{ animationDuration: `${92 + rowIndex * 7}s` }}>
             {renderGroup(choices, rowIndex, false)}
             {renderGroup(choices, rowIndex, true)}
           </div>
@@ -158,3 +158,4 @@ export function DecisionMarquee({ selected, onSelect }: { selected: string; onSe
     </div>
   );
 }
+
