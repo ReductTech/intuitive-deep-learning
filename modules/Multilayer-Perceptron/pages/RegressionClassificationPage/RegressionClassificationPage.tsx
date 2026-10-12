@@ -4,7 +4,7 @@ import { ContentBlock, MathFormulaBlock, MathFormulaTerm, Typography, moduleAsse
 import passengers from './titanic-passengers.json';
 import './RegressionClassificationPage.css';
 
-const ship = moduleAssetUrl('adde4a27-235d-4c03-a3cf-734ccf08b38d', 'titanic/atlantic-liner.png');
+const ship = moduleAssetUrl('95728790-5709-43e1-ada6-99687813ab3b', 'titanic/atlantic-liner.png');
 const classes = ['一等舱', '二等舱', '三等舱'];
 const exampleProbability = .92;
 const outputValue = exampleProbability.toFixed(2);

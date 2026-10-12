@@ -1,8 +1,3 @@
-import { TitanicTrainingPage } from './pages/TitanicTrainingPage/TitanicTrainingPage';
-import { ProbabilityMappingPage } from './pages/ProbabilityMappingPage/ProbabilityMappingPage';
-import { ProbabilityLogOddsPage } from './pages/ProbabilityLogOddsPage/ProbabilityLogOddsPage';
-import { SigmoidPage } from './pages/SigmoidPage/SigmoidPage';
-import { RegressionClassificationPage } from './pages/RegressionClassificationPage/RegressionClassificationPage';
 import { LossGrowthPage } from './pages/LossGrowthPage/LossGrowthPage';
 import { LeastSquaresGeometryPage } from './pages/LeastSquaresGeometryPage/LeastSquaresGeometryPage';
 import { MatrixModelPage } from './pages/MatrixModelPage/MatrixModelPage';
@@ -20,7 +15,7 @@ import { CaoChongPage } from './pages/CaoChongPage/CaoChongPage';
 import { LinearRegressionPage } from './pages/LinearRegressionPage/LinearRegressionPage';
 import { EstimateWeightPage } from './pages/EstimateWeightPage/EstimateWeightPage';
 export const deck: DeckDefinition = {
-  id: 'regression-loss', title: '回归与损失：模型怎样变准', subtitle: '从称象到回归 · 当前展示 22 页',
+  id: 'regression-loss', title: '回归与损失：模型怎样变准', subtitle: '从称象到回归 · 当前展示 17 页',
   scenes: [
     { id: '01', title: '曹冲称象', section: '从称象到回归', render: () => <CaoChongPage /> },
     { id: '02', title: '估计象重', section: '从称象到回归', render: () => <EstimateWeightPage /> },
@@ -37,13 +32,8 @@ export const deck: DeckDefinition = {
     { id: '13', title: '再求最优斜率', section: '最小二乘', render: () => <OptimalSlopePage /> },
     { id: '14', title: '得到最优直线', section: '最小二乘', render: () => <OptimalLinePage /> },
     { id: '15', title: '从两个参数到矩阵形式', section: '最小二乘', render: () => <MatrixModelPage /> },
-    { id: '16', title: '从数值预测到类别预测', section: '从回归到分类', render: () => <RegressionClassificationPage /> },
-    { id: '17', title: '从线性分数到类别概率', section: '从回归到分类', render: () => <ProbabilityMappingPage /> },
-    { id: '18', title: '从概率到线性分数', section: '逻辑回归', render: () => <ProbabilityLogOddsPage /> },
-    { id: '19', title: '逻辑回归的概率预测与类别判定', section: '逻辑回归', render: () => <SigmoidPage /> },
-    { id: '20', title: '逻辑回归的参数估计', section: '逻辑回归', render: () => <TitanicTrainingPage /> },
-    { id: '21', title: '最小二乘的几何意义', section: '最小二乘', render: () => <LeastSquaresGeometryPage /> },
-    { id: '22', title: '离开最优解，损失怎样变化？', section: '最小二乘', render: () => <LossGrowthPage /> },
+    { id: '16', title: '最小二乘的几何意义', section: '最小二乘', render: () => <LeastSquaresGeometryPage /> },
+    { id: '17', title: '离开最优解，损失怎样变化？', section: '最小二乘', render: () => <LossGrowthPage /> },
   ],
 };
 const catalog: [DeckDefinition, ...DeckDefinition[]] = [deck];

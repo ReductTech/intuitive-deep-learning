@@ -1,6 +1,6 @@
 # 回归与损失：模型怎样变准
 
-21-page course available in Guide and PPT. Page 18, “从概率到线性分数”, uses three panels to explain probability, odds and log-odds before stating the linear model assumption. Page 19 derives Sigmoid and retains its draggable curve and optional classification view. “最小二乘的几何意义” has moved from page 16 to page 20, directly after the probability prediction page; its content and styling are unchanged. Existing signed module identity is preserved.
+17-page course available in Guide and PPT. The Titanic and logistic regression pages (former 16–20) have moved to the independent Multilayer-Perceptron module. The former final pages 21 and 22 remain here as pages 16 and 17, with their contents unchanged. Existing signed module identity is preserved.
 
 - Guide: `/modules/regression-loss`
 - PPT: `/scenedeck/?deck=regression-loss&slide=01`
@@ -16,7 +16,7 @@ The floating notebook uses Shared ECharts and displays shared calibration observ
 
 Images are teaching illustrations from the built-in ImageGen tool. Prompts and simulation provenance are in `asset-sources.json`. Asset files live under the signed UUID in repository-root `assets/`. No Shared files are modified.
 
-## 21 页教学大纲
+## 教学大纲与历史制作记录
 
 `outlines.json` 按本次调整后的五部分组织，每页包含教学目标、核心内容、交互、衔接与讲解稿。
 
@@ -75,12 +75,7 @@ Images are teaching illustrations from the built-in ImageGen tool. Prompts and s
 
 前三次单块投放的观测改为延迟到下一次投石点击：先读取当前船体实际下沉深度，再启动下一次投放。等待越久，瞬态衰减越充分。第三块在首次点击五块连投时记录。五块连投的独立随机模拟采样逻辑保持不变。
 
-## 第17—21页的教学顺序
 
-依次引入二分类标签与正类概率、线性拟合0/1标签的局限、概率映射的要求、固定倍数假设与对数几率线性模型、概率预测及阈值判定。第17页不提前展示Sigmoid；第18页不提供阈值滑杆；第19页只保留有界、单调、平滑三个性质；第20页完整显示推导并以同一概率联动所有读数；第21页以一张曲线连接概率预测和类别判定。标题与正文使用正式书面表述。
+## 模块拆分（2026-10-12）
 
-第17页改为泰坦尼克号乘客场景，对照票价回归和存活分类。展示公开Titanic数据PassengerId 1、2的已知记录，票价仅在显示时舍入。场景插图为生成的教学插图。第18页仍为构造样本，横轴标为标准化票价（教学示例）；后续以存活为1类，未存活为0类。资料与生成来源见asset-sources.json。
-
-第17页当前版本：完整891条Titanic训练记录支持纵向滚动，保留全部12个原始字段及缺失值。示例0.92（92%）用于说明概率语义，不对应实际训练结果。泰坦尼克号插图淡化后覆盖页面背景，取消票价回归对照卡。
-
-当前第18页“线性回归用于分类的局限”已删除。Guide、PPT与大纲同步移除，原第19—22页依次前移为第18—21页，课程现为21页。第17页后直接进入“从线性分数到类别概率”。
+当前共17页：前15页保留，最后两页为“最小二乘的几何意义”和“离开最优解，损失怎样变化？”。泰坦尼克号与逻辑回归5页已迁到Multilayer-Perceptron，连同其数据、图片和资源来源。新课程：`/modules/multilayer-perceptron`。

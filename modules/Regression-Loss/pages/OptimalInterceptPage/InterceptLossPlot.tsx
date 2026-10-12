@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState, type PointerEvent } 
 import { Button, PlotlyChart, type PlotlyGraph } from '../../../shared/react';
 
 type Axis = { _offset: number; l2p: (v: number) => number; p2l: (v: number) => number; range: number[] };
-type Host = HTMLDivElement & { _fullLayout?: { xaxis: Axis; yaxis: Axis } };
+type Host = HTMLDivElement & { data?: unknown[]; _fullLayout?: { xaxis: Axis; yaxis: Axis } };
 export function InterceptLossPlot({ n, optimum, minimum, b, onChange, slope = false }: { slope?: boolean; n: number; optimum: number; minimum: number; b: number; onChange: (v: number) => void }) {
   const hostRef = useRef<Host | null>(null);
   const bRef = useRef(b); bRef.current = b;
@@ -29,6 +29,8 @@ export function InterceptLossPlot({ n, optimum, minimum, b, onChange, slope = fa
     yaxis: { title: { text: '平方误差总和 S（cm²）', font: { size: 20 } }, range: [Math.max(0, minimum - n * 3), minimum + n * 38], gridcolor: '#e3edf8', zeroline: false, showline: true },
   }), [n, optimum, minimum, slope]);
   const updateTangent = useCallback((host: Host) => {
+    // Shared PlotlyChart purges the old graph before rebuilding for new observations.
+    if (!host.data || host.data.length < 3 || !host._fullLayout) return;
     const value = bRef.current, derivative = 2 * n * (value - optimum);
     const width = Math.min(1.5, Math.abs(derivative) > 100 ? .8 : 1.5);
     void window.Plotly?.restyle?.(host, { x: [[value - width, value + width]], y: [[square(value) - derivative * width, square(value) + derivative * width]] }, [2]);

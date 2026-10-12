@@ -1,8 +1,3 @@
-import { TitanicTrainingPage } from './pages/TitanicTrainingPage/TitanicTrainingPage';
-import { ProbabilityMappingPage } from './pages/ProbabilityMappingPage/ProbabilityMappingPage';
-import { ProbabilityLogOddsPage } from './pages/ProbabilityLogOddsPage/ProbabilityLogOddsPage';
-import { SigmoidPage } from './pages/SigmoidPage/SigmoidPage';
-import { RegressionClassificationPage } from './pages/RegressionClassificationPage/RegressionClassificationPage';
 import { LossGrowthPage } from './pages/LossGrowthPage/LossGrowthPage';
 import { LeastSquaresGeometryPage } from './pages/LeastSquaresGeometryPage/LeastSquaresGeometryPage';
 import { MatrixModelPage } from './pages/MatrixModelPage/MatrixModelPage';
@@ -51,11 +46,6 @@ export function GuidePage() {
     <div className="lesson-canvas-frame" style={{ height: 900 * scale, marginTop: 24 }}><div className="course-page-surface course-shell" style={{ transform: `scale(${scale})` }}><OptimalSlopePage /></div></div>
     <div className="lesson-canvas-frame" style={{ height: 900 * scale, marginTop: 24 }}><div className="course-page-surface course-shell" style={{ transform: `scale(${scale})` }}><OptimalLinePage /></div></div>
     <div className="lesson-canvas-frame" style={{ height: 900 * scale, marginTop: 24 }}><div className="course-page-surface course-shell" style={{ transform: `scale(${scale})` }}><MatrixModelPage /></div></div>
-    <div className="lesson-canvas-frame" style={{ height: 900 * scale, marginTop: 24 }}><div className="course-page-surface course-shell" style={{ transform: `scale(${scale})` }}><RegressionClassificationPage /></div></div>
-    <div className="lesson-canvas-frame" style={{ height: 900 * scale, marginTop: 24 }}><div className="course-page-surface course-shell" style={{ transform: `scale(${scale})` }}><ProbabilityMappingPage /></div></div>
-    <div className="lesson-canvas-frame" style={{ height: 900 * scale, marginTop: 24 }}><div className="course-page-surface course-shell" style={{ transform: `scale(${scale})` }}><ProbabilityLogOddsPage /></div></div>
-    <div className="lesson-canvas-frame" style={{ height: 900 * scale, marginTop: 24 }}><div className="course-page-surface course-shell" style={{ transform: `scale(${scale})` }}><SigmoidPage /></div></div>
-    <div className="lesson-canvas-frame" style={{ height: 900 * scale, marginTop: 24 }}><div className="course-page-surface course-shell" style={{ transform: `scale(${scale})` }}><TitanicTrainingPage /></div></div>
     <div className="lesson-canvas-frame" style={{ height: 900 * scale, marginTop: 24 }}><div className="course-page-surface course-shell" style={{ transform: `scale(${scale})` }}><LeastSquaresGeometryPage /></div></div>
     <div className="lesson-canvas-frame" style={{ height: 900 * scale, marginTop: 24 }}><div className="course-page-surface course-shell" style={{ transform: `scale(${scale})` }}><LossGrowthPage /></div></div>
   </ModuleShell>;

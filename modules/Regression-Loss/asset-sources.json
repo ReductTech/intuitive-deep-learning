@@ -70,18 +70,6 @@
       "source": "OpenAI built-in ImageGen",
       "role": "Subtle full-slide historical riverside background for pages 02 and 03",
       "prompt": "Photorealistic low-contrast ancient Chinese riverside, misty mountains and distant buildings; small elephant on far right shore; straight-wall flat-bottom barge with stones at bottom-right; broad pale open sky and water for chart and text overlays; no people, labels, UI or watermark."
-    },
-    {
-      "path": "titanic/atlantic-liner.png",
-      "source": "OpenAI built-in ImageGen",
-      "role": "Page 17 Titanic scene illustration",
-      "prompt": "Panoramic editorial illustration of intact four-funnel RMS Titanic on calm Atlantic at twilight; navy and cream palette, no text, no disaster imagery.",
-      "illustration": true
-    },
-    {
-      "path": "titanic/train.csv",
-      "source": "https://raw.githubusercontent.com/datasciencedojo/datasets/master/titanic.csv",
-      "role": "Complete public Titanic labeled training dataset mirror, 891 records and 12 columns"
     }
   ],
   "simulation": "Page 01 first measures elephant depth 44 cm, retaining unknown weight. Only six stones of 250 kg are available (1500 kg), producing ideal physical depth 24 cm. Observations share the small measurement offsets used on pages 02–04. No extra stone can be added after six; weight is inferred on page 02. The shortage and values are invented teaching modifications, not historical claims.",
@@ -91,31 +79,5 @@
     "title": "三国志·魏书·武文世王公传（曹冲称象节选）",
     "url": "https://m.gushiwen.cn/shiwenv_31b814913b16.aspx",
     "note": "Original describes using a boat waterline and weighed replacement goods; limited stones and prism hull are explicitly instructional modifications."
-  },
-  "titanicData": {
-    "source": "https://raw.githubusercontent.com/datasciencedojo/datasets/master/titanic.csv",
-    "usage": "Page 17 includes all 891 labeled training records, retains all 12 columns in JSON and source CSV. Core fields shown in a vertically scrollable table; other fields in name hover text. Missing ages remain null. 0.92/92% is an illustrative output, not a trained passenger prediction.",
-    "records": [
-      {
-        "PassengerId": 1,
-        "Sex": "male",
-        "Age": 22,
-        "Pclass": 3,
-        "Fare": 7.25,
-        "Survived": 0
-      },
-      {
-        "PassengerId": 2,
-        "Sex": "female",
-        "Age": 38,
-        "Pclass": 1,
-        "Fare": 71.2833,
-        "Survived": 1
-      }
-    ],
-    "kaggle": "https://www.kaggle.com/competitions/titanic/data",
-    "recordCount": 891,
-    "survivedCount": 342,
-    "localSource": "titanic/train.csv"
   }
 }

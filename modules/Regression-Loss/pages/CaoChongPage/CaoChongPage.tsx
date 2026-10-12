@@ -17,6 +17,14 @@ export function CaoChongPage() {
   const [weights,setWeights] = useState(createStoneWeights);
   const [flying,setFlying] = useState<number[]>([]);
   const [records, setRecords] = useState<Observation[]>([]);
+  const recordsRef = useRef<Observation[]>([]);
+  const appendRecord = (observation: Observation) => {
+    const next = [...recordsRef.current, observation].sort((a, b) => a.mass - b.mass);
+    recordsRef.current = next;
+    setRecords(next);
+    // Notify other pages outside a React state updater, which must stay pure.
+    saveRecordedData(next);
+  };
   const [phase, setPhase] = useState<Phase>('idle');
   const [storyPhase, setStoryPhase] = useState<StoryPhase>('before-elephant');
   const [targetRecorded, setTargetRecorded] = useState(false);
@@ -130,6 +138,7 @@ export function CaoChongPage() {
     if (locked.current) return;
     locked.current = true;
     motion.current = {start:performance.now(),from:visibleDepth.current,target:TARGET_DEPTH_CM,frequency:5.4,mode:'elephant'};
+    recordsRef.current = [];
     saveRecordedData([]);
     setRecords([]);
     setStoryPhase('loading-elephant'); setPhase('settling');
@@ -146,7 +155,7 @@ export function CaoChongPage() {
     if (pending) {
       const observed = {mass:pending.mass,depth:Math.round(visibleDepth.current*10)/10};
       pendingSingleMeasurement.current = null;
-      setRecords(previous=>{const next=[...previous,observed].sort((a,b)=>a.mass-b.mass);saveRecordedData(next);return next;});
+      appendRecord(observed);
     }
     locked.current = true;
     const start = countRef.current;
@@ -184,7 +193,7 @@ export function CaoChongPage() {
       ) + .18*Math.sin(sampleTime*2.1) + .08*Math.sin(sampleTime*3.7);
       const recordedDepth = Math.round(Math.max(0,singleStoneDepth)*10)/10;
       later(()=>{
-        setRecords(previous=>{const next=[...previous,{mass:loadedMass,depth:recordedDepth}].sort((a,b)=>a.mass-b.mass);saveRecordedData(next);return next;});
+        appendRecord({mass:loadedMass,depth:recordedDepth});
         pendingMeasurements -= 1;
         if(pendingMeasurements===0){setPhase('idle');locked.current=false;}
       },sampleTime*1000);
@@ -197,6 +206,7 @@ export function CaoChongPage() {
     pendingSingleMeasurement.current = null;
     countRef.current = 0;
     locked.current = false;
+    recordsRef.current = [];
     saveRecordedData([]);
     setWeights(createStoneWeights()); setFlying([]); setCount(0); setRecords([]); setPhase('idle'); setStoryPhase('before-elephant'); setTargetRecorded(false);
   };

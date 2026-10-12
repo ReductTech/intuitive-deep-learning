@@ -33,6 +33,8 @@ export function LossSurfacePlot({ model, offset, onChange }: { model: Model; off
     },
   }), []);
   const updateMarker = useCallback((host: HTMLDivElement, p: Point) => {
+    const graph = host as HTMLDivElement & { data?: PlotlyTrace[] };
+    if (!graph.data || graph.data.length < 5) return;
     void window.Plotly?.restyle?.(host, { x: [[p.u]], y: [[p.v]], z: [[model.loss + increment(p)]] }, [4]);
   }, [model, increment]);
   const ready = useCallback((graph: PlotlyGraph, host: HTMLDivElement) => {

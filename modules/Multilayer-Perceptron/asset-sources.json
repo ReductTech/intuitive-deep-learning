@@ -1,0 +1,43 @@
+{
+  "assets": [
+    {
+      "path": "titanic/atlantic-liner.png",
+      "source": "OpenAI built-in ImageGen",
+      "role": "第1页泰坦尼克号场景背景插图",
+      "prompt": "Panoramic editorial illustration of intact four-funnel RMS Titanic on calm Atlantic at twilight; navy and cream palette, no text, no disaster imagery.",
+      "illustration": true
+    },
+    {
+      "path": "titanic/train.csv",
+      "source": "https://raw.githubusercontent.com/datasciencedojo/datasets/master/titanic.csv",
+      "role": "Complete public Titanic labeled training dataset mirror, 891 records and 12 columns"
+    }
+  ],
+  "titanicData": {
+    "source": "https://raw.githubusercontent.com/datasciencedojo/datasets/master/titanic.csv",
+    "usage": "第1页展示完整891条带标签记录；第5页使用714条年龄非缺失记录进行全批量梯度下降与交互推理。",
+    "records": [
+      {
+        "PassengerId": 1,
+        "Sex": "male",
+        "Age": 22,
+        "Pclass": 3,
+        "Fare": 7.25,
+        "Survived": 0
+      },
+      {
+        "PassengerId": 2,
+        "Sex": "female",
+        "Age": 38,
+        "Pclass": 1,
+        "Fare": 71.2833,
+        "Survived": 1
+      }
+    ],
+    "kaggle": "https://www.kaggle.com/competitions/titanic/data",
+    "recordCount": 891,
+    "survivedCount": 342,
+    "localSource": "titanic/train.csv"
+  },
+  "moduleIdentity": "95728790-5709-43e1-ada6-99687813ab3b"
+}
