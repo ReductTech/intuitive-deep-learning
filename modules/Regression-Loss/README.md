@@ -1,6 +1,6 @@
 # 回归与损失：模型怎样变准
 
-17-page course available in Guide and PPT. The Titanic and logistic regression pages (former 16–20) have moved to the independent Multilayer-Perceptron module. The former final pages 21 and 22 remain here as pages 16 and 17, with their contents unchanged. Existing signed module identity is preserved.
+18-page course available in Guide and PPT. The Titanic and logistic regression pages (former 16–20) have moved to the independent Multilayer-Perceptron module. The former final pages 21 and 22 remain here as pages 16 and 17, with their contents unchanged. Existing signed module identity is preserved.
 
 - Guide: `/modules/regression-loss`
 - PPT: `/scenedeck/?deck=regression-loss&slide=01`
@@ -86,8 +86,14 @@ Images are teaching illustrations from the built-in ImageGen tool. Prompts and s
 
 第16页优化：删除右侧重复散点图及橙色高亮曲线。观测点提供直接点击和键盘选择入口；选中点与右侧深色虚线贡献曲线联动，其他贡献淡化。总似然曲线保持蓝色粗线，选择观测不会改变总似然。已逐一验证13个观测点的映射。
 
-## 第17页：MSE 关于参数是凸的
+## 第17页：解析求解的全局最优保证
 
-替换原参数扰动页，采用无数值刻度的二次MSE凸性示意。左侧以SVG渐变网格、底面等高线和剖开近端展示红色最低点；上下拖动调整倾斜、滚轮缩放。图形不按实验参数的原始尺度绘制。右侧对齐参考图的粗体编号条和灯泡结论区。保留1/n，并按当前记录判断碗形或非唯一的槽形；Guide、PPT和大纲同步。
+无约束可微凸问题：给出凸函数连线定义、一阶下界，以及梯度为零时目标值全局不更低的推论。保留碗状曲面、局部与全局关系和严格凸唯一性；明确凸性不保证解析解存在。线性回归MSE为凸二次目标，可解正规方程。
 
-第16页信息精简：移除单点密度卡、当前似然数字、重复图例及定位按钮；右栏标题和底部结论明确“所有贡献相乘，寻找乘积最大的参数”。保留直接选点和调线联动。
+## 第18页：非凸问题中的驻点
+
+函数采样生成可旋转、缩放的真实三维非凸曲面，替换原地形图片。点击标记或分类按钮选择全局极小、局部极小和鞍点；“换一组曲面”随机选择12组预计算函数之一，不涉及梯度下降。右侧保留g(u,v)=u²−v²示意。
+
+17、18页共享模块内的三维正交投影绘制器，包含深度排序、曲面网格、底面等高线及复位视角。17页使用归一化参数坐标下的凸性示意，不是实验数据的数值MSE图。
+
+非凸数据位于`pages/LossLandscape/landscapes.json`。运行`python modules/Regression-Loss/pages/LossLandscape/generate_catalog.py`可重建并校验：完整求解四次函数的两个三次驻点方程，用Hessian特征值分类，再比较所有极小值。函数具有强制性，因此最低的极小值是整个参数空间中的全局最优；每组含1个全局极小、3个其他局部极小、4个鞍点及1个极大点。曲面展示前8个点，数值细节不显示在教学页上。

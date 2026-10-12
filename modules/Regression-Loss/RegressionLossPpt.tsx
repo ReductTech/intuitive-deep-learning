@@ -1,3 +1,4 @@
+import { OptimizationIntroPage } from './pages/OptimizationIntroPage/OptimizationIntroPage';
 import { ConvexMsePage } from './pages/ConvexMsePage/ConvexMsePage';
 import { LeastSquaresGeometryPage } from './pages/LeastSquaresGeometryPage/LeastSquaresGeometryPage';
 import { MatrixModelPage } from './pages/MatrixModelPage/MatrixModelPage';
@@ -15,7 +16,7 @@ import { CaoChongPage } from './pages/CaoChongPage/CaoChongPage';
 import { LinearRegressionPage } from './pages/LinearRegressionPage/LinearRegressionPage';
 import { EstimateWeightPage } from './pages/EstimateWeightPage/EstimateWeightPage';
 export const deck: DeckDefinition = {
-  id: 'regression-loss', title: '回归与损失：模型怎样变准', subtitle: '从称象到回归 · 当前展示 17 页',
+  id: 'regression-loss', title: '回归与损失：模型怎样变准', subtitle: '从称象到回归 · 当前展示 18 页',
   scenes: [
     { id: '01', title: '曹冲称象', section: '从称象到回归', render: () => <CaoChongPage /> },
     { id: '02', title: '估计象重', section: '从称象到回归', render: () => <EstimateWeightPage /> },
@@ -33,7 +34,8 @@ export const deck: DeckDefinition = {
     { id: '14', title: '得到最优直线', section: '最小二乘', render: () => <OptimalLinePage /> },
     { id: '15', title: '从两个参数到矩阵形式', section: '最小二乘', render: () => <MatrixModelPage /> },
     { id: '16', title: '为什么最小二乘合理？', section: '最小二乘', render: () => <LeastSquaresGeometryPage /> },
-    { id: '17', title: 'MSE 关于参数是凸的', section: '最小二乘', render: () => <ConvexMsePage /> },
+    { id: '17', title: '解析求解：何时能保证全局最优？', section: '最小二乘', render: () => <ConvexMsePage /> },
+    { id: '18', title: '非凸问题：求导为零还不够', section: '优化基础', render: () => <OptimizationIntroPage /> },
   ],
 };
 const catalog: [DeckDefinition, ...DeckDefinition[]] = [deck];

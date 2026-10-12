@@ -1,0 +1,17 @@
+.rl-optimization-page { display:grid; grid-template-rows:auto minmax(0,1fr); }
+.rl-optimization-page > .edu-content-body { min-height:0; grid-template-rows:minmax(0,1fr); }
+.rl-optimization-layout { display:grid; grid-template-columns:minmax(0,1.95fr) minmax(0,1fr); grid-template-rows:minmax(0,1fr) auto; column-gap:20px; row-gap:16px; height:100%; min-height:0; }
+.rl-optimization-layout > * { min-width:0; min-height:0; max-width:100%; }
+.rl-optimization-scene { display:flex;flex-direction:column;min-height:0;padding:12px 14px;background:linear-gradient(145deg,#f4f9ff,#f7fbff);border-radius:var(--ui-radius-lg); }
+.rl-landscape-change {display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 12px 0;border-top:1px solid var(--ui-grid);}
+.rl-optimization-explanation { display:grid; grid-template-rows:minmax(0,1fr) auto; gap:18px; padding:12px 0 18px 8px; }
+.rl-optimization-footer { grid-column:1/-1; padding:18px 20px; border-radius:var(--ui-radius-lg); background:var(--ui-bg-soft); }
+
+.rl-nonconvex-explanation { grid-template-rows:auto auto minmax(0,1fr) auto auto; gap:12px; padding:22px 0 18px 8px; }
+.rl-nonconvex-explanation > .math-formula-block .math-formula { font-size:33px; }
+.rl-nonconvex-cases { display:grid; grid-template-rows:repeat(2,minmax(0,1fr)); }
+.rl-nonconvex-cases > div { display:grid; align-content:center; gap:6px; border-bottom:1px solid var(--ui-grid); padding:6px 0; }
+.rl-nonconvex-saddle { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); align-items:center; gap:8px; padding:12px 2px; background:var(--ui-bg-soft); border-radius:var(--ui-radius-lg); }
+.rl-nonconvex-saddle > svg { width:100%; height:150px; }
+.rl-nonconvex-saddle > div { display:grid; gap:10px; min-width:0; }
+.rl-nonconvex-saddle .math-formula { font-size:22px; }

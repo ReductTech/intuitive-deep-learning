@@ -9,12 +9,17 @@
 .rl-convex-labels { display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:24px; padding:0 18px; }
 .rl-convex-labels > div { display:flex; align-items:center; justify-content:center; gap:10px; padding:10px 12px; min-width:0; background:#e7f1ff; border-radius:var(--ui-radius-md); }
 .rl-convex-labels .math-formula { font-size:26px; }
-.rl-convex-explanation { display:grid; grid-template-rows:auto auto minmax(0,1fr) auto; gap:16px; padding:30px 22px 18px; background:linear-gradient(150deg,rgba(var(--ui-accent-alt-rgb),.035),var(--ui-bg-card)); border-radius:var(--ui-radius-lg); }
+.rl-convex-explanation { display:grid; grid-template-rows:auto auto auto minmax(0,1fr) auto; gap:12px; padding:22px 22px 18px; background:linear-gradient(150deg,rgba(var(--ui-accent-alt-rgb),.035),var(--ui-bg-card)); border-radius:var(--ui-radius-lg); }
 .rl-convex-formula .math-formula { font-size:29px; }
-.rl-convex-properties { display:grid; grid-template-rows:repeat(4,minmax(0,1fr)); gap:12px; }
+.rl-convex-properties { display:grid; grid-template-rows:repeat(3,minmax(0,1fr)); gap:12px; }
 .rl-convex-property { display:flex; align-items:center; gap:18px; padding:12px 16px; border-radius:var(--ui-radius-lg); background:#edf5ff; }
 .rl-convex-property > * { min-width:0; }
 .rl-convex-number { display:grid; place-items:center; flex:0 0 52px; height:52px; border-radius:var(--ui-radius-pill); background:#d6e7ff; }
 .rl-convex-conclusion { display:flex; align-items:center; gap:18px; padding:18px; border-radius:var(--ui-radius-lg); background:#e7f1ff; }
 .rl-convex-conclusion > span { flex:0 0 58px; }
 .rl-convex-conclusion > .ui-typography { min-width:0; }
+
+.rl-convex-definition { display:grid; justify-items:center; gap:3px; }
+.rl-convex-definition .math-formula { font-size:25px; }
+.rl-convex-proof { display:grid; gap:5px; padding:12px 6px; border-block:1px solid var(--ui-grid); }
+.rl-convex-proof .math-formula { font-size:24px; }

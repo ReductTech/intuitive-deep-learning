@@ -70,6 +70,13 @@
       "source": "OpenAI built-in ImageGen",
       "role": "Subtle full-slide historical riverside background for pages 02 and 03",
       "prompt": "Photorealistic low-contrast ancient Chinese riverside, misty mountains and distant buildings; small elephant on far right shore; straight-wall flat-bottom barge with stones at bottom-right; broad pale open sky and water for chart and text overlays; no people, labels, UI or watermark."
+    },
+    {
+      "path": "optimization/optimization-terrain.png",
+      "source": "OpenAI built-in ImageGen",
+      "role": "Illustrative nonconvex loss terrain with shallow local valley, deeper global valley, and feasible parameter plane for page 18. No computed or measured loss values.",
+      "prompt": "Transparent 3:2 textbook terrain, pale yellow ridges and blue smooth meshed valleys, shallow local valley on left and deeper global valley on right, pale-blue feasible plane with dashed boundary and contour rings, no text, axes, markers or UI.",
+      "generatedImage": "exec-65f53423-86be-45f7-87f9-efd60f2ddc70.png"
     }
   ],
   "simulation": "Page 01 first measures elephant depth 44 cm, retaining unknown weight. Only six stones of 250 kg are available (1500 kg), producing ideal physical depth 24 cm. Observations share the small measurement offsets used on pages 02–04. No extra stone can be added after six; weight is inferred on page 02. The shortage and values are invented teaching modifications, not historical claims.",

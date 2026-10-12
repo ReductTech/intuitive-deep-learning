@@ -1,3 +1,4 @@
+import { OptimizationIntroPage } from './pages/OptimizationIntroPage/OptimizationIntroPage';
 import { ConvexMsePage } from './pages/ConvexMsePage/ConvexMsePage';
 import { LeastSquaresGeometryPage } from './pages/LeastSquaresGeometryPage/LeastSquaresGeometryPage';
 import { MatrixModelPage } from './pages/MatrixModelPage/MatrixModelPage';
@@ -48,6 +49,7 @@ export function GuidePage() {
     <div className="lesson-canvas-frame" style={{ height: 900 * scale, marginTop: 24 }}><div className="course-page-surface course-shell" style={{ transform: `scale(${scale})` }}><MatrixModelPage /></div></div>
     <div className="lesson-canvas-frame" style={{ height: 900 * scale, marginTop: 24 }}><div className="course-page-surface course-shell" style={{ transform: `scale(${scale})` }}><LeastSquaresGeometryPage /></div></div>
     <div className="lesson-canvas-frame" style={{ height: 900 * scale, marginTop: 24 }}><div className="course-page-surface course-shell" style={{ transform: `scale(${scale})` }}><ConvexMsePage /></div></div>
+    <div className="lesson-canvas-frame" style={{ height: 900 * scale, marginTop: 24 }}><div className="course-page-surface course-shell" style={{ transform: `scale(${scale})` }}><OptimizationIntroPage /></div></div>
   </ModuleShell>;
 }
 
