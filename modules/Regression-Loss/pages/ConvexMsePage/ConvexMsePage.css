@@ -1,0 +1,20 @@
+.rl-convex-page { display:grid; grid-template-rows:auto minmax(0,1fr); }
+.rl-convex-page > .edu-content-body { min-height:0; grid-template-rows:minmax(0,1fr); }
+.rl-convex-layout { display:grid; grid-template-columns:minmax(0,1.08fr) minmax(0,1fr); gap:22px; height:100%; min-height:0; }
+.rl-convex-layout > *, .rl-convex-explanation > *, .rl-convex-visual > * { min-width:0; min-height:0; max-width:100%; }
+.rl-convex-visual { display:grid; grid-template-rows:minmax(0,1fr) auto; gap:4px; padding:4px 20px 22px; background:linear-gradient(145deg,rgba(var(--ui-accent-rgb),.025),#f4faff); border-radius:var(--ui-radius-lg); }
+.rl-convex-diagram { width:100%; height:100%; min-height:0; touch-action:none; cursor:grab; }
+.rl-convex-diagram:active { cursor:grabbing; }
+.rl-convex-diagram .math-formula { font-size:36px; }
+.rl-convex-labels { display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:24px; padding:0 18px; }
+.rl-convex-labels > div { display:flex; align-items:center; justify-content:center; gap:10px; padding:10px 12px; min-width:0; background:#e7f1ff; border-radius:var(--ui-radius-md); }
+.rl-convex-labels .math-formula { font-size:26px; }
+.rl-convex-explanation { display:grid; grid-template-rows:auto auto minmax(0,1fr) auto; gap:16px; padding:30px 22px 18px; background:linear-gradient(150deg,rgba(var(--ui-accent-alt-rgb),.035),var(--ui-bg-card)); border-radius:var(--ui-radius-lg); }
+.rl-convex-formula .math-formula { font-size:29px; }
+.rl-convex-properties { display:grid; grid-template-rows:repeat(4,minmax(0,1fr)); gap:12px; }
+.rl-convex-property { display:flex; align-items:center; gap:18px; padding:12px 16px; border-radius:var(--ui-radius-lg); background:#edf5ff; }
+.rl-convex-property > * { min-width:0; }
+.rl-convex-number { display:grid; place-items:center; flex:0 0 52px; height:52px; border-radius:var(--ui-radius-pill); background:#d6e7ff; }
+.rl-convex-conclusion { display:flex; align-items:center; gap:18px; padding:18px; border-radius:var(--ui-radius-lg); background:#e7f1ff; }
+.rl-convex-conclusion > span { flex:0 0 58px; }
+.rl-convex-conclusion > .ui-typography { min-width:0; }

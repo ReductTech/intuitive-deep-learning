@@ -1,74 +1,96 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, PlotlyChart, Typography, type PlotlyGraph, type PlotlyTrace } from '../../../shared/react';
+import { useMemo, useRef, useState, type PointerEvent } from 'react';
+import { Button, ContentBlock, EChartsChart, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, Typography } from '../../../shared/react';
 import { useRecordedData } from '../../regressionData';
 import './LeastSquaresGeometryPage.css';
 
-type Offset = { u: number; v: number };
-const config = { scrollZoom: true, displayModeBar: true, displaylogo: false, modeBarButtonsToRemove: ['toImage'] };
-const clamp = (x: number) => Math.max(-3, Math.min(3, x));
-function GeometryPlot({ height, offset, onChange }: { height: number; offset: Offset; onChange: (p: Offset) => void }) {
-  const host = useRef<HTMLDivElement | null>(null);
-  const current = useRef(offset); current.current = offset;
-  const hovered = useRef(false);
-  const [moveMode, setMoveMode] = useState(true);
-  const camera = useRef({ x: .85, y: -1.1, z: .8 });
-  const drag = useRef<{ x: number; y: number; start: Offset } | null>(null);
-  const traces = useMemo<PlotlyTrace[]>(() => [
-    { type: 'surface', x: [-3.5, 3.5], y: [-3.5, 3.5], z: [[0, 0], [0, 0]], colorscale: [[0, '#cfe5ff'], [1, '#cfe5ff']], opacity: .45, showscale: false, hovertemplate: '列空间 Col(X)<br>所有可行的预测向量都在这个平面内<br>点选平面可移动候选预测<extra></extra>', contours: { x: { show: true, start: -3, end: 3, size: 1, color: '#a6caff' }, y: { show: true, start: -3, end: 3, size: 1, color: '#a6caff' } } },
-    { type: 'scatter3d', mode: 'lines', x: [0, 0], y: [0, 0], z: [0, height], line: { color: '#00a393', width: 6, dash: 'dash' }, hovertemplate: '最优残差 y−Xθ*<br>垂直于整个列空间，长度最短<extra></extra>' },
-    { type: 'scatter3d', mode: 'markers+text', x: [0], y: [0], z: [height], text: ['观测 y（固定）'], textposition: 'top center', marker: { size: 9, color: '#f68a32' }, hovertemplate: '固定观测向量 y<br>代表第一页全部观测，不是单条石重—深度记录<extra></extra>' },
-    { type: 'scatter3d', mode: 'markers+text', x: [0], y: [0], z: [0], text: [''], textposition: 'bottom center', marker: { size: 8, color: '#00a393' }, hovertemplate: '正交投影 Xθ*<br>所有可行预测中，与固定观测最近的点<br>Xᵀ(y−Xθ*) = 0<extra></extra>' },
-    { type: 'scatter3d', mode: 'lines', x: [0, 1.7], y: [0, .6], z: [height, 0], line: { color: '#367de8', width: 5, dash: 'dash' }, hovertemplate: '当前残差 y−Xθ<br>连线长度平方就是平方误差总和<extra></extra>' },
-    { type: 'scatter3d', mode: 'markers+text', x: [1.7], y: [.6], z: [0], text: [''], textposition: 'bottom center', marker: { size: 9, color: '#367de8' }, hovertemplate: '当前预测 Xθ<br>直接拖动蓝点，可在列空间内移动<br>空白处拖动旋转；滚轮缩放；工具栏切换平移<extra></extra>' },
-  ], [height]);
-  const layout = useMemo(() => ({ margin: { l: 0, r: 0, t: 10, b: 0 }, paper_bgcolor: 'rgba(0,0,0,0)', showlegend: false, uirevision: 'geometry-camera', font: { family: 'Microsoft YaHei', size: 16, color: '#27446e' }, scene: { dragmode: 'orbit', camera: { eye: { x: .85, y: -1.1, z: .8 }, projection: { type: 'orthographic' } }, aspectmode: 'manual', aspectratio: { x: 1.25, y: 1.25, z: 1 }, xaxis: { range: [-3.6, 3.6], visible: false }, yaxis: { range: [-3.6, 3.6], visible: false }, zaxis: { range: [-.3, Math.max(4, height * 1.25)], visible: false } } }), [height]);
-  const update = useCallback((p: Offset) => { if (!host.current) return; void window.Plotly?.restyle?.(host.current, { x: [[0, p.u]], y: [[0, p.v]] }, [4]); void window.Plotly?.restyle?.(host.current, { x: [[p.u]], y: [[p.v]] }, [5]); }, []);
-  const ready = useCallback((graph: PlotlyGraph, element: HTMLDivElement) => {
-    host.current = element; update(current.current);
-    graph.on?.('plotly_hover', e => { hovered.current = (e.points as { curveNumber: number }[] | undefined)?.[0]?.curveNumber === 5; });
-    graph.on?.('plotly_unhover', () => { hovered.current = false; });
-    graph.on?.('plotly_relayout', e => { const c = e['scene.camera'] as { eye?: typeof camera.current } | undefined; if (c?.eye) camera.current = c.eye; });
-    graph.on?.('plotly_click', e => { if (drag.current) return; const p = (e.points as { curveNumber: number; x: number; y: number }[] | undefined)?.[0]; if (p?.curveNumber === 0) onChange({ u: clamp(p.x), v: clamp(p.y) }); });
-  }, [onChange, update]);
-  useEffect(() => { update(offset); }, [offset, update]);
-  return <div className="rl-geometry-space-wrap"><div className="rl-geometry-space-tools"><Button onClick={() => setMoveMode(true)} variant={moveMode ? 'primary' : undefined}>移动预测</Button><Button onClick={() => setMoveMode(false)} variant={!moveMode ? 'primary' : undefined}>旋转视图</Button><Button onClick={() => { camera.current = { x:.85,y:-1.1,z:.8 }; if(host.current) void window.Plotly?.relayout?.(host.current, { 'scene.camera': {eye:camera.current,projection:{type:'orthographic'}} }); }}>重置视角</Button></div><div className="rl-geometry-space" onPointerDownCapture={e => {
-    if (!moveMode && !hovered.current) return; e.stopPropagation(); e.preventDefault(); drag.current = { x: e.clientX, y: e.clientY, start: current.current }; e.currentTarget.setPointerCapture(e.pointerId);
-  }} onPointerMoveCapture={e => {
-    const d = drag.current; if (!d) return; e.stopPropagation(); const eye = camera.current; const len = Math.hypot(eye.x, eye.y) || 1; const rect = e.currentTarget.getBoundingClientRect(); const scale = 6 / Math.max(200, rect.width); const dx = (e.clientX - d.x) * scale, dy = (e.clientY - d.y) * scale; const elevation = Math.max(.3, Math.abs(eye.z) / (Math.hypot(len, eye.z) || 1)); onChange({ u: clamp(d.start.u - eye.y / len * dx + eye.x / len * dy / elevation), v: clamp(d.start.v + eye.x / len * dx + eye.y / len * dy / elevation) });
-  }} onPointerUpCapture={e => { if (drag.current) { e.stopPropagation(); drag.current = null; e.currentTarget.releasePointerCapture(e.pointerId); } }} onPointerCancel={() => { drag.current = null; }}><PlotlyChart data={traces} layout={layout} config={config} minHeight={0} onGraphReady={ready} className="rl-geometry-chart" aria-label="三维列空间：移动预测模式拖动改变蓝点，旋转模式拖动旋转，滚轮缩放" /></div><div className="rl-geometry-point-legend"><Typography variant="bodySmall" tone="muted">橙：观测　绿：最优预测　蓝：当前预测</Typography></div></div>;
-}
-function GaussianPlot({ radius, onChange }: { radius: number; onChange: (r: number) => void }) {
-  const host = useRef<HTMLDivElement | null>(null);
-  const value = useRef(radius); value.current = radius;
-  const density = (x: number, mean = 0) => Math.exp(-((x - mean) ** 2) / 2) / Math.sqrt(2 * Math.PI);
-  const traces = useMemo<PlotlyTrace[]>(() => { const xs = Array.from({ length: 241 }, (_, i) => -4 + i / 20); return [
-    { type: 'scatter', mode: 'lines', x: xs, y: xs.map(x => density(x)), name: '最优预测', line: { color: '#00a393', width: 4 }, fill: 'tozeroy', fillcolor: 'rgba(0,163,147,.08)', hovertemplate: '最优预测的高斯截面<br>坐标 %{x:.1f}<br>密度 %{y:.3f}<extra></extra>' },
-    { type: 'scatter', mode: 'lines', x: xs, y: xs.map(x => density(x, 1.8)), name: '当前预测', line: { color: '#367de8', width: 4 }, fill: 'tozeroy', fillcolor: 'rgba(54,125,232,.08)', hovertemplate: '当前预测的高斯截面<br>点击图中位置改变候选偏移<extra></extra>' },
-    { type: 'scatter', mode: 'markers', x: [0, 0], y: [density(0), density(0, 1.8)], showlegend: false, marker: { color: ['#00a393', '#367de8'], size: 13 }, hovertemplate: '固定观测处的密度 %{y:.3f}<br>绿色为最优；蓝色为当前<extra></extra>' },
-    { type: 'scatter', mode: 'markers+text', x: [0], y: [.46], showlegend: false, text: ['观测（固定）'], textposition: 'top center', marker: { color: '#f68a32', size: 11 }, hovertemplate: '观测沿候选偏移方向的坐标固定为0<extra></extra>' },
-  ]; }, []);
-  const layout = useMemo(() => ({ margin: { l: 58, r: 15, t: 34, b: 65 }, paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)', dragmode: 'pan', showlegend: true, legend: { orientation: 'h', x: .1, y: 1.14 }, font: { family: 'Microsoft YaHei', size: 16, color: '#27446e' }, xaxis: { title: { text: '沿候选偏移方向的标准化坐标', font: { size: 17 } }, range: [-3.5, 6], zeroline: false, showgrid: false }, yaxis: { title: { text: '条件概率密度', font: { size: 17 } }, range: [0, .52], zeroline: false, gridcolor: '#e5eef8' }, shapes: [{ type: 'line', x0: 0, x1: 0, y0: 0, y1: .46, line: { color: '#f68a32', dash: 'dot', width: 2 } }] }), []);
-  const update = useCallback((r: number) => { if (!host.current) return; const xs = Array.from({ length: 241 }, (_, i) => -4 + i / 20); void window.Plotly?.restyle?.(host.current, { y: [xs.map(x => density(x, r))] }, [1]); void window.Plotly?.restyle?.(host.current, { y: [[density(0), density(0, r)]] }, [2]); }, []);
-  const ready = useCallback((graph: PlotlyGraph, element: HTMLDivElement) => { host.current = element; update(value.current); graph.on?.('plotly_click', e => { const p = (e.points as { x: number }[] | undefined)?.[0]; if (typeof p?.x === 'number') onChange(Math.max(0, Math.min(4.2, p.x))); }); }, [onChange, update]);
-  useEffect(() => { update(radius); }, [radius, update]);
-  return <PlotlyChart data={traces} layout={layout} config={config} minHeight={0} onGraphReady={ready} className="rl-geometry-chart" aria-label="可平移缩放的高斯截面：点击曲线改变候选预测，两图同步" />;
-}
+const sigma = 2;
+const blue = '#367de8', selectedBlue = '#27446e', teal = '#009eaa';
+const clamp = (value: number, min: number, max: number) => Math.max(min, Math.min(max, value));
+function Formula({ latex }: { latex: string }) { return <MathFormulaBlock appearance="plain"><MathFormulaStatic latex={latex} /></MathFormulaBlock>; }
+function Step({ number, title }: { number: number; title: string }) { return <div className="rl-likelihood-heading"><span className="rl-likelihood-number"><Typography variant="h3" tone="accent">{number}</Typography></span><Typography variant="h3" tone="accent">{title}</Typography></div>; }
 export function LeastSquaresGeometryPage() {
   const data = useRecordedData();
-  const [offset, setOffset] = useState<Offset>({ u: 1.7, v: .6 });
-  const sigma = 2;
-  const minimum = useMemo(() => { const n = data.length; const mx = n ? data.reduce((s,p) => s+p.mass,0)/n : 0; const my = n ? data.reduce((s,p) => s+p.depth,0)/n : 0; const xx = data.reduce((s,p) => s+(p.mass-mx)**2,0); const w = xx ? data.reduce((s,p) => s+(p.mass-mx)*(p.depth-my),0)/xx : 0; const b = my-w*mx; return { xx, s: data.reduce((s,p) => s+(p.depth-w*p.mass-b)**2,0) }; }, [data]);
-  const radius = Math.hypot(offset.u, offset.v);
-  const squaredError = minimum.s + sigma ** 2 * radius ** 2;
-  const likelihood = Math.exp(-(radius ** 2) / 2);
-  const changeRadius = useCallback((r: number) => setOffset(p => { const d = Math.hypot(p.u,p.v); return d > .001 ? { u:p.u*r/d, v:p.v*r/d } : { u:r,v:0 }; }), []);
-  if (!data.length || !minimum.xx) return <ContentBlock title="请先完成称象记录" subtitle="本页使用第一页实际记录计算平方误差与似然。" />;
-  return <ContentBlock headingLevel={1} title="最小二乘的几何意义" subtitle="平方距离最小，与高斯似然最大，指向同一个预测。" className="rl-geometry-page"><div className="rl-geometry-layout">
-    <section className="rl-geometry-panel"><div className="rl-geometry-heading"><Typography variant="h3" tone="accent">① 几何视角：离观测最近</Typography><Button explain="这是n维观测空间的三维示意。平面是X的二维列空间；图上每个点代表全部记录组成的向量。平面内两轴采用正交标准化坐标，垂直方向代表最优残差。">ⓘ</Button></div><Typography variant="bodySmall" tone="muted">拖动移动蓝点 · 切换模式旋转 · 滚轮缩放</Typography><GeometryPlot height={Math.sqrt(minimum.s)/sigma} offset={offset} onChange={setOffset} /><div className="rl-geometry-readout"><div><Typography variant="bodySmall" tone="muted">平方误差总和 S</Typography><Typography variant="h2" tone="accent">{squaredError.toFixed(1)}</Typography></div><Button variant="primary" onClick={() => setOffset({u:0,v:0})}>回到正交投影</Button></div></section>
-    <aside className="rl-geometry-bridge"><Typography variant="h3" tone="accent">同一个残差<br/>两种理解</Typography><Typography variant="h2" tone="accent">→</Typography><MathFormulaBlock appearance="plain"><MathFormulaTerm latex="\mathbf r=\mathbf y-X\theta" tooltip="一整组观测减去一整组预测。左侧连线表示它的长度；右侧密度的变化反映同一个偏差。" /></MathFormulaBlock><Typography variant="bodySmall" tone="muted">距离越小<br/>高斯模型下<br/>似然越大</Typography></aside>
-    <section className="rl-geometry-panel rl-geometry-probability"><div className="rl-geometry-heading"><Typography variant="h3" tone="accent">② 概率视角：观测更可能</Typography><Button explain="假设各条噪声独立、同方差且服从高斯分布，σ固定为2。右图展示沿候选偏移方向的条件高斯截面；其余方向的共同因子已约去。截面在观测处的密度比，等于全部记录的联合似然比。连续观测比较概率密度，不是某一个数值的事件概率。">ⓘ</Button></div><Typography variant="bodySmall" tone="muted">高斯似然截面 · 点击曲线可同步改变候选</Typography><GaussianPlot radius={radius} onChange={changeRadius} /><div className="rl-geometry-readout"><div><Typography variant="bodySmall" tone="muted">相对似然（最优 = 1）</Typography><Typography variant="h2" tone="accent">{likelihood.toFixed(1)}</Typography></div><Button explain="相对似然 = exp[−(S−S*)/(2σ²)]。蓝点到投影越远，平方误差越大，观测处蓝色密度越低；回到投影时两条曲线重合。">为什么同步？</Button></div></section>
-    <div className="rl-geometry-footer"><Typography variant="body" tone="accent">独立、同方差高斯噪声下：距离最小 ⇔ 似然最大</Typography><MathFormulaBlock appearance="plain"><MathFormulaTerm latex="X^\top(\mathbf y-X\theta^*)=\mathbf0" tooltip="最优残差与X的每一列正交，因此与整个列空间正交，这就是正规方程。" tooltipPlacement="top" /><MathFormulaStatic latex="\qquad" /><MathFormulaTerm latex="\frac{p(\mathbf y\mid\theta)}{p(\mathbf y\mid\theta^*)}=\exp\!\left[-\frac{S(\theta)-S(\theta^*)}{2\sigma^2}\right]" tooltip="固定σ时，平方误差增大，联合高斯似然必然减小；最小二乘与最大似然得到相同参数。" tooltipPlacement="top" /></MathFormulaBlock></div>
-  </div></ContentBlock>;
+  const plot = useRef<HTMLDivElement>(null);
+  const [offset, setOffset] = useState(.8);
+  const [sampleIndex, setSampleIndex] = useState(4);
+  const model = useMemo(() => {
+    const n = data.length || 1;
+    const mx = data.reduce((s,p)=>s+p.mass,0)/n, my = data.reduce((s,p)=>s+p.depth,0)/n;
+    const xx = data.reduce((s,p)=>s+(p.mass-mx)**2,0);
+    const w = xx ? data.reduce((s,p)=>s+(p.mass-mx)*(p.depth-my),0)/xx : .016;
+    const b = my-w*mx;
+    const sumX2 = data.reduce((s,p)=>s+p.mass**2,0);
+    const width = sumX2 > 0 ? sigma/Math.sqrt(sumX2)*1000 : 1;
+    const lo = w*1000-4*width, hi=w*1000+4*width;
+    const ymin = Math.min(-4,b+lo/1000*1600,...data.map(p=>p.depth-2));
+    const ymax = Math.max(40,b+hi/1000*1600,...data.map(p=>p.depth+2));
+    const minimum = data.reduce((s,p)=>s+(p.depth-w*p.mass-b)**2,0);
+    return { w, b, lo, hi, width, ymin, ymax, minimum, sumX2 };
+  }, [data]);
+  // A fixed-b slice through the full maximum makes the parameter axis unambiguous.
+  const scaledW = clamp(model.w*1000+offset*model.width,model.lo,model.hi);
+  const w = scaledW/1000, b=model.b;
+  const selected = Math.min(sampleIndex,Math.max(0,data.length-1));
+  const sample = data[selected] ?? {mass:0,depth:0};
+  const relative = Math.exp(-.5*((scaledW-model.w*1000)/model.width)**2);
+  const changeW = (value: number) => setOffset((clamp(value,model.lo,model.hi)-model.w*1000)/model.width);
+  const yPercent = (y: number) => 18+(model.ymax-y)/(model.ymax-model.ymin)*52;
+  const singleChart = useMemo(() => ({
+    animation:false, grid:{left:'16%',right:'6%',top:'18%',bottom:'30%'},
+    tooltip:{trigger:'item'},
+    xAxis:{type:'value',min:0,max:1600,interval:500,name:'累计石重（千克）',nameLocation:'middle',nameGap:28,nameTextStyle:{fontSize:21,color:'#27446e'},axisLabel:{fontSize:18,showMaxLabel:false,hideOverlap:true},splitLine:{show:false}},
+    yAxis:{type:'value',min:model.ymin,max:model.ymax,splitNumber:3,name:'下沉深度（厘米）',nameTextStyle:{fontSize:21,color:'#27446e',align:'left'},axisLabel:{fontSize:18},splitLine:{show:false}},
+    series:[
+      {type:'line',symbol:'none',data:[[0,b],[1600,w*1600+b]],lineStyle:{color:blue,width:3.5},silent:true},
+      {type:'line',symbol:'none',connectNulls:false,data:[sample].flatMap(p=>[[p.mass,p.depth],[p.mass,w*p.mass+b],[null,null]]),lineStyle:{color:selectedBlue,width:2.5,type:'dashed'},silent:true},
+      {type:'scatter',data:data.map((p,i)=>({value:[p.mass,p.depth],itemStyle:{color:i===selected?selectedBlue:blue}})),symbolSize:14,tooltip:{formatter:(item:{value:number[]})=>`${item.value[0]} 千克 · ${item.value[1].toFixed(1)} 厘米`}},
+      {type:'scatter',data:[[sample.mass,sample.depth]],symbolSize:30,itemStyle:{color:'rgba(39,68,110,.15)'},silent:true},
+    ],
+  }),[data,selected,w,model]);
+  const likelihoodChart = useMemo(() => {
+    const xs=Array.from({length:401},(_,i)=>model.lo+(model.hi-model.lo)*i/400);
+    const joint = (slope: number) => Math.exp(-model.sumX2*(slope/1000-model.w)**2/(2*sigma*sigma));
+    return { animation:false, grid:{left:70,right:26,top:34,bottom:66},
+      tooltip:{trigger:'item'},
+      xAxis:{type:'value',min:model.lo,max:model.hi,splitNumber:4,name:'斜率 1000w（截距 b 固定）',nameLocation:'middle',nameGap:38,nameTextStyle:{fontSize:20,color:'#27446e'},axisLabel:{fontSize:18,formatter:(v:number)=>v.toFixed(1),showMinLabel:false,showMaxLabel:false,hideOverlap:true},splitLine:{show:false}},
+      yAxis:{type:'value',min:0,max:1.16,name:'相对似然',nameTextStyle:{fontSize:20,color:'#27446e'},axisLabel:{fontSize:17},splitLine:{show:false}},
+      series:[
+        ...data.map((p,i)=>({name:`第${i+1}条观测的贡献`,type:'line',symbol:'none',data:xs.map(x=>[x,Math.exp(-((p.depth-x/1000*p.mass-model.b)**2)/(2*sigma*sigma))]),lineStyle:{color:i===selected?selectedBlue:'#a9cfff',width:i===selected?3:1.1,opacity:i===selected?1:.35,type:i===selected?'dashed':'solid'},z:i===selected?3:1,silent:true})),
+        {name:'整组观测的总似然',type:'line',symbol:'none',data:xs.map(x=>[x,joint(x)]),lineStyle:{color:blue,width:4.5},z:4,areaStyle:{color:'rgba(54,125,232,.08)'},silent:true,
+          markLine:{symbol:'none',silent:true,lineStyle:{color:teal,type:'dashed'},label:{show:false},data:[{xAxis:model.w*1000}]}},
+        {name:'最大似然',type:'scatter',data:[[model.w*1000,1]],symbolSize:16,itemStyle:{color:teal,borderColor:'#fff',borderWidth:2},label:{show:true,position:'top',formatter:'最大似然',fontSize:22,color:teal},silent:true},
+      ] };
+  }, [data,model,selected]);
+  // Keep the curves fixed while moving only the current candidate marker.
+  const currentChart = useMemo(()=>({...likelihoodChart,series:[...likelihoodChart.series,
+    {name:'当前参数',type:'line',symbol:'none',data:[[scaledW,0],[scaledW,relative]],lineStyle:{color:selectedBlue,width:1.3,type:'dashed'},silent:true},
+    {name:'当前总似然',type:'scatter',data:[[scaledW,relative]],symbolSize:14,itemStyle:{color:selectedBlue,borderWidth:2,borderColor:'#fff'},silent:true},
+  ]}),[likelihoodChart,scaledW,relative]);
+  const move = (event: PointerEvent<HTMLButtonElement>) => {
+    if(!event.currentTarget.hasPointerCapture(event.pointerId)) return;
+    const rect=plot.current?.getBoundingClientRect();if(!rect)return;
+    const y=model.ymax-((event.clientY-rect.top)/rect.height-.18)/.52*(model.ymax-model.ymin);
+    changeW((y-b)/1600*1000);
+  };
+  if(!data.length) return <ContentBlock title="请先完成称象记录" subtitle="本页使用第一页的实验记录，比较单点贡献与整组似然。" />;
+  return <ContentBlock headingLevel={1} title="为什么最小二乘合理？" subtitle="每个观测点都有一个贡献，最优直线由整组观测的联合似然决定。" className="rl-likelihood-page">
+    <div className="rl-likelihood-layout">
+      <section className="rl-likelihood-single">
+        <Step number={1} title="先看单个误差" />
+        <div className="rl-likelihood-line-plot" ref={plot}>
+          <EChartsChart option={singleChart} minHeight={0} className="rl-likelihood-chart" aria-label="一个观测点的残差示范：拖动端点调整候选直线" />
+          {data.map((point,index)=><Button key={index} className="rl-likelihood-observation" aria-label={`选择第${index+1}条观测`} aria-pressed={index===selected} style={{left:`${16+point.mass/1600*78}%`,top:`${yPercent(point.depth)}%`}} onClick={()=>setSampleIndex(index)}> </Button>)}
+          <div className="rl-likelihood-error-label" style={{left:`${16+sample.mass/1600*78+2}%`,top:`${yPercent((sample.depth+w*sample.mass+b)/2)}%`}}><Formula latex="e_i" /></div>
+          <Button className="rl-likelihood-handle" aria-label="拖动调整斜率" style={{left:'94%',top:`${yPercent(w*1600+b)}%`}} onPointerDown={e=>e.currentTarget.setPointerCapture(e.pointerId)} onPointerMove={move} onPointerUp={e=>{if(e.currentTarget.hasPointerCapture(e.pointerId))e.currentTarget.releasePointerCapture(e.pointerId);}} onKeyDown={e=>{if(e.key==='ArrowUp'||e.key==='ArrowDown'){e.preventDefault();changeW(scaledW+(e.key==='ArrowUp'?1:-1)*model.width*.1);}}}> </Button>
+        </div>
+        <div className="rl-likelihood-single-caption"><Typography variant="bodySmall" tone="muted">点击观测点，查看它在右侧的贡献。</Typography></div>
+      </section>
+      <section className="rl-likelihood-all" data-relative-likelihood={relative} data-count={data.length} data-selected-index={selected}>
+        <Step number={2} title="所有点的贡献相乘" />
+        <div className="rl-likelihood-curve-wrap"><EChartsChart option={currentChart} minHeight={0} className="rl-likelihood-chart" aria-label="参数轴上的单点贡献曲线与全部观测的联合似然曲线" /><div className="rl-likelihood-curve-label"><MathFormulaBlock appearance="plain"><MathFormulaTerm latex="L(w,b)=\prod_i p(e_i)" tooltip="全部观测独立时，密度贡献相乘形成联合似然。图中单点曲线与总似然各按自身峰值归一化，便于比较位置；不要按显示高度直接相乘。截距固定在最小二乘截距，仅改变斜率；因此下方曲线是参数空间的一维截面。" /></MathFormulaBlock></div></div>
+      </section>
+      <div className="rl-likelihood-footer"><Typography variant="h3" tone="accent" align="center">让所有点的贡献相乘，寻找使乘积最大的参数。</Typography><Formula latex="\textstyle\text{独立同方差高斯噪声、方差固定：}\quad \max L(w,b)\ \Longleftrightarrow\ \min\sum_i(y_i-\hat y_i)^2" /></div>
+    </div>
+  </ContentBlock>;
 }
-
 

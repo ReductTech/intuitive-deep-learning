@@ -1,4 +1,4 @@
-import { LossGrowthPage } from './pages/LossGrowthPage/LossGrowthPage';
+import { ConvexMsePage } from './pages/ConvexMsePage/ConvexMsePage';
 import { LeastSquaresGeometryPage } from './pages/LeastSquaresGeometryPage/LeastSquaresGeometryPage';
 import { MatrixModelPage } from './pages/MatrixModelPage/MatrixModelPage';
 import { OptimalLinePage } from './pages/OptimalLinePage/OptimalLinePage';
@@ -32,8 +32,8 @@ export const deck: DeckDefinition = {
     { id: '13', title: '再求最优斜率', section: '最小二乘', render: () => <OptimalSlopePage /> },
     { id: '14', title: '得到最优直线', section: '最小二乘', render: () => <OptimalLinePage /> },
     { id: '15', title: '从两个参数到矩阵形式', section: '最小二乘', render: () => <MatrixModelPage /> },
-    { id: '16', title: '最小二乘的几何意义', section: '最小二乘', render: () => <LeastSquaresGeometryPage /> },
-    { id: '17', title: '离开最优解，损失怎样变化？', section: '最小二乘', render: () => <LossGrowthPage /> },
+    { id: '16', title: '为什么最小二乘合理？', section: '最小二乘', render: () => <LeastSquaresGeometryPage /> },
+    { id: '17', title: 'MSE 关于参数是凸的', section: '最小二乘', render: () => <ConvexMsePage /> },
   ],
 };
 const catalog: [DeckDefinition, ...DeckDefinition[]] = [deck];

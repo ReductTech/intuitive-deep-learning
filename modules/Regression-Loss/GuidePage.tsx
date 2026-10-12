@@ -1,4 +1,4 @@
-import { LossGrowthPage } from './pages/LossGrowthPage/LossGrowthPage';
+import { ConvexMsePage } from './pages/ConvexMsePage/ConvexMsePage';
 import { LeastSquaresGeometryPage } from './pages/LeastSquaresGeometryPage/LeastSquaresGeometryPage';
 import { MatrixModelPage } from './pages/MatrixModelPage/MatrixModelPage';
 import { OptimalLinePage } from './pages/OptimalLinePage/OptimalLinePage';
@@ -47,7 +47,7 @@ export function GuidePage() {
     <div className="lesson-canvas-frame" style={{ height: 900 * scale, marginTop: 24 }}><div className="course-page-surface course-shell" style={{ transform: `scale(${scale})` }}><OptimalLinePage /></div></div>
     <div className="lesson-canvas-frame" style={{ height: 900 * scale, marginTop: 24 }}><div className="course-page-surface course-shell" style={{ transform: `scale(${scale})` }}><MatrixModelPage /></div></div>
     <div className="lesson-canvas-frame" style={{ height: 900 * scale, marginTop: 24 }}><div className="course-page-surface course-shell" style={{ transform: `scale(${scale})` }}><LeastSquaresGeometryPage /></div></div>
-    <div className="lesson-canvas-frame" style={{ height: 900 * scale, marginTop: 24 }}><div className="course-page-surface course-shell" style={{ transform: `scale(${scale})` }}><LossGrowthPage /></div></div>
+    <div className="lesson-canvas-frame" style={{ height: 900 * scale, marginTop: 24 }}><div className="course-page-surface course-shell" style={{ transform: `scale(${scale})` }}><ConvexMsePage /></div></div>
   </ModuleShell>;
 }
 
