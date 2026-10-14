@@ -80,7 +80,15 @@ Images are teaching illustrations from the built-in ImageGen tool. Prompts and s
 
 当前共17页：前15页保留，最后两页为“最小二乘的几何意义”和“离开最优解，损失怎样变化？”。泰坦尼克号与逻辑回归5页已迁到Multilayer-Perceptron，连同其数据、图片和资源来源。新课程：`/modules/multilayer-perceptron`。
 
-## 第16页：为什么最小二乘合理？
+## SceneDeck 智能讲稿
+
+前5页的23段讲稿保存在`speakerNotes.ts`，每段包含正文和对应页面区域的CSS选择器。`RegressionLossPpt.tsx`通过`getNotes`接入Shared SceneDeck，同时导出`getPptNotes`供统一课件路由调用，与Neuron Guide的接入方式一致。
+
+点击SceneDeck工具栏的“智能讲稿”（快捷键N），可逐段切换并聚焦对应区域；朗读复用浏览器语音能力。第6页起暂未添加分段讲稿。
+
+## 第16页：概率视角下的最小二乘
+
+左右图均使用UI Kit提供的Shared PlotlyChart，采用共享坐标图的轴线、网格与配色；右侧支持平移、滚轮缩放和双击复位。选点高亮与候选直线端点拖动继续保留。
 
 采用参考图的两栏结构：左侧单点残差与密度贡献，右侧全部残差及单点贡献/总似然曲线。截距固定为当前数据的最小二乘截距，σ固定为2厘米，下图是斜率参数的一维截面；单点贡献和总似然各按自身峰值归一化。拖动端点仅移动当前位置，曲线与轴范围保持固定。更换示范点不改变联合似然；回到最大似然时相对总似然为1。总似然使用所有观测，不相加单点贡献。已验证13条记录、默认和拖动状态的画布边界与解析数值。
 

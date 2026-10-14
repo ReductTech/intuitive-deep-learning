@@ -1,5 +1,5 @@
 import { useMemo, useRef, useState, type PointerEvent } from 'react';
-import { Button, ContentBlock, EChartsChart, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, Typography } from '../../../shared/react';
+import { Button, ContentBlock, PlotlyChart, type PlotlyTrace, type PlotlyLayout, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, Typography } from '../../../shared/react';
 import { useRecordedData } from '../../regressionData';
 import './LeastSquaresGeometryPage.css';
 
@@ -35,37 +35,36 @@ export function LeastSquaresGeometryPage() {
   const relative = Math.exp(-.5*((scaledW-model.w*1000)/model.width)**2);
   const changeW = (value: number) => setOffset((clamp(value,model.lo,model.hi)-model.w*1000)/model.width);
   const yPercent = (y: number) => 18+(model.ymax-y)/(model.ymax-model.ymin)*52;
-  const singleChart = useMemo(() => ({
-    animation:false, grid:{left:'16%',right:'6%',top:'18%',bottom:'30%'},
-    tooltip:{trigger:'item'},
-    xAxis:{type:'value',min:0,max:1600,interval:500,name:'累计石重（千克）',nameLocation:'middle',nameGap:28,nameTextStyle:{fontSize:21,color:'#27446e'},axisLabel:{fontSize:18,showMaxLabel:false,hideOverlap:true},splitLine:{show:false}},
-    yAxis:{type:'value',min:model.ymin,max:model.ymax,splitNumber:3,name:'下沉深度（厘米）',nameTextStyle:{fontSize:21,color:'#27446e',align:'left'},axisLabel:{fontSize:18},splitLine:{show:false}},
-    series:[
-      {type:'line',symbol:'none',data:[[0,b],[1600,w*1600+b]],lineStyle:{color:blue,width:3.5},silent:true},
-      {type:'line',symbol:'none',connectNulls:false,data:[sample].flatMap(p=>[[p.mass,p.depth],[p.mass,w*p.mass+b],[null,null]]),lineStyle:{color:selectedBlue,width:2.5,type:'dashed'},silent:true},
-      {type:'scatter',data:data.map((p,i)=>({value:[p.mass,p.depth],itemStyle:{color:i===selected?selectedBlue:blue}})),symbolSize:14,tooltip:{formatter:(item:{value:number[]})=>`${item.value[0]} 千克 · ${item.value[1].toFixed(1)} 厘米`}},
-      {type:'scatter',data:[[sample.mass,sample.depth]],symbolSize:30,itemStyle:{color:'rgba(39,68,110,.15)'},silent:true},
-    ],
-  }),[data,selected,w,model]);
-  const likelihoodChart = useMemo(() => {
-    const xs=Array.from({length:401},(_,i)=>model.lo+(model.hi-model.lo)*i/400);
-    const joint = (slope: number) => Math.exp(-model.sumX2*(slope/1000-model.w)**2/(2*sigma*sigma));
-    return { animation:false, grid:{left:70,right:26,top:34,bottom:66},
-      tooltip:{trigger:'item'},
-      xAxis:{type:'value',min:model.lo,max:model.hi,splitNumber:4,name:'斜率 1000w（截距 b 固定）',nameLocation:'middle',nameGap:38,nameTextStyle:{fontSize:20,color:'#27446e'},axisLabel:{fontSize:18,formatter:(v:number)=>v.toFixed(1),showMinLabel:false,showMaxLabel:false,hideOverlap:true},splitLine:{show:false}},
-      yAxis:{type:'value',min:0,max:1.16,name:'相对似然',nameTextStyle:{fontSize:20,color:'#27446e'},axisLabel:{fontSize:17},splitLine:{show:false}},
-      series:[
-        ...data.map((p,i)=>({name:`第${i+1}条观测的贡献`,type:'line',symbol:'none',data:xs.map(x=>[x,Math.exp(-((p.depth-x/1000*p.mass-model.b)**2)/(2*sigma*sigma))]),lineStyle:{color:i===selected?selectedBlue:'#a9cfff',width:i===selected?3:1.1,opacity:i===selected?1:.35,type:i===selected?'dashed':'solid'},z:i===selected?3:1,silent:true})),
-        {name:'整组观测的总似然',type:'line',symbol:'none',data:xs.map(x=>[x,joint(x)]),lineStyle:{color:blue,width:4.5},z:4,areaStyle:{color:'rgba(54,125,232,.08)'},silent:true,
-          markLine:{symbol:'none',silent:true,lineStyle:{color:teal,type:'dashed'},label:{show:false},data:[{xAxis:model.w*1000}]}},
-        {name:'最大似然',type:'scatter',data:[[model.w*1000,1]],symbolSize:16,itemStyle:{color:teal,borderColor:'#fff',borderWidth:2},label:{show:true,position:'top',formatter:'最大似然',fontSize:22,color:teal},silent:true},
-      ] };
-  }, [data,model,selected]);
-  // Keep the curves fixed while moving only the current candidate marker.
-  const currentChart = useMemo(()=>({...likelihoodChart,series:[...likelihoodChart.series,
-    {name:'当前参数',type:'line',symbol:'none',data:[[scaledW,0],[scaledW,relative]],lineStyle:{color:selectedBlue,width:1.3,type:'dashed'},silent:true},
-    {name:'当前总似然',type:'scatter',data:[[scaledW,relative]],symbolSize:14,itemStyle:{color:selectedBlue,borderWidth:2,borderColor:'#fff'},silent:true},
-  ]}),[likelihoodChart,scaledW,relative]);
+  // Use the UI Kit's shared Plotly host and coordinate-chart visual conventions.
+  const singleData = useMemo<PlotlyTrace[]>(()=>[
+    {type:'scatter',mode:'lines',x:[0,1600],y:[b,w*1600+b],line:{color:blue,width:3.5},hoverinfo:'skip'},
+    {type:'scatter',mode:'lines',x:[sample.mass,sample.mass],y:[sample.depth,w*sample.mass+b],line:{color:selectedBlue,width:2.5,dash:'dash'},hoverinfo:'skip'},
+    {type:'scatter',mode:'markers',x:data.map(p=>p.mass),y:data.map(p=>p.depth),marker:{size:14,color:data.map((_,i)=>i===selected?selectedBlue:blue)},hovertemplate:'%{x:.0f} 千克 · %{y:.1f} 厘米<extra></extra>'},
+    {type:'scatter',mode:'markers',x:[sample.mass],y:[sample.depth],marker:{size:30,color:'rgba(39,68,110,.15)'},hoverinfo:'skip'},
+  ],[data,selected,sample,w,b]);
+  const singleLayout=useMemo<PlotlyLayout>(()=>({
+    paper_bgcolor:'#fbfdff',plot_bgcolor:'#fbfdff',margin:{l:0,r:0,t:0,b:0},showlegend:false,
+    font:{family:'Inter, Segoe UI, sans-serif',color:selectedBlue,size:18},dragmode:false,
+    xaxis:{domain:[.16,.94],range:[0,1600],fixedrange:true,title:{text:'累计石重（千克）',font:{size:21}},tickvals:[0,500,1000,1500],showgrid:true,gridcolor:'#e5edf7',zerolinecolor:'#68778f',linecolor:'#9fb0c8'},
+    yaxis:{domain:[.3,.82],range:[model.ymin,model.ymax],fixedrange:true,title:{text:'下沉深度（厘米）',font:{size:21},standoff:8},showgrid:true,gridcolor:'#e5edf7',zerolinecolor:'#68778f',linecolor:'#9fb0c8'},
+  }),[model.ymin,model.ymax]);
+  const likelihoodData=useMemo<PlotlyTrace[]>(()=>{
+    const xs=Array.from({length:601},(_,i)=>model.lo+(model.hi-model.lo)*i/600);
+    return [
+      ...data.map((p,i)=>({type:'scatter',mode:'lines',name:`第${i+1}条观测的贡献`,x:xs,y:xs.map(x=>Math.exp(-((p.depth-x/1000*p.mass-model.b)**2)/(2*sigma*sigma))),line:{color:i===selected?selectedBlue:'#a9cfff',width:i===selected?3:1.1,dash:i===selected?'dash':'solid'},opacity:i===selected?1:.35,hoverinfo:'skip'})),
+      {type:'scatter',mode:'lines',name:'联合似然',x:xs,y:xs.map(x=>Math.exp(-model.sumX2*(x/1000-model.w)**2/(2*sigma*sigma))),line:{color:blue,width:4.5},fill:'tozeroy',fillcolor:'rgba(54,125,232,.08)',hoverinfo:'skip'},
+      {type:'scatter',mode:'lines',x:[model.w*1000,model.w*1000],y:[0,1],line:{color:teal,width:1.2,dash:'dash'},hoverinfo:'skip'},
+      {type:'scatter',mode:'lines',x:[scaledW,scaledW],y:[0,relative],line:{color:selectedBlue,width:1.3,dash:'dash'},hoverinfo:'skip'},
+      {type:'scatter',mode:'markers',x:[scaledW],y:[relative],marker:{size:14,color:selectedBlue,line:{width:2,color:'#fff'}},hoverinfo:'skip'},
+      {type:'scatter',mode:'markers+text',x:[model.w*1000],y:[1],text:['最大似然'],textposition:'top center',textfont:{size:22,color:teal},marker:{size:16,color:teal,line:{width:2,color:'#fff'}},hoverinfo:'skip'},
+    ];
+  },[data,model,selected,scaledW,relative]);
+  const likelihoodLayout=useMemo<PlotlyLayout>(()=>({
+    paper_bgcolor:'#fbfdff',plot_bgcolor:'#fbfdff',margin:{l:76,r:28,t:68,b:70},showlegend:false,dragmode:'pan',
+    font:{family:'Inter, Segoe UI, sans-serif',color:selectedBlue,size:18},
+    xaxis:{range:[model.lo,model.hi],title:{text:'斜率 1000w（截距 b 固定）',font:{size:20}},tickformat:'.1f',gridcolor:'#dfe6f1',zerolinecolor:'#68778f',linecolor:'#9fb0c8'},
+    yaxis:{range:[0,1.16],title:{text:'相对似然',font:{size:20}},dtick:.2,gridcolor:'#dfe6f1',zerolinecolor:'#68778f',linecolor:'#9fb0c8'},
+  }),[model.lo,model.hi]);
   const move = (event: PointerEvent<HTMLButtonElement>) => {
     if(!event.currentTarget.hasPointerCapture(event.pointerId)) return;
     const rect=plot.current?.getBoundingClientRect();if(!rect)return;
@@ -73,23 +72,23 @@ export function LeastSquaresGeometryPage() {
     changeW((y-b)/1600*1000);
   };
   if(!data.length) return <ContentBlock title="请先完成称象记录" subtitle="本页使用第一页的实验记录，比较单点贡献与整组似然。" />;
-  return <ContentBlock headingLevel={1} title="为什么最小二乘合理？" subtitle="每个观测点都有一个贡献，最优直线由整组观测的联合似然决定。" className="rl-likelihood-page">
+  return <ContentBlock headingLevel={1} title="概率视角下的最小二乘" subtitle="在独立同方差高斯噪声、方差固定的假设下，最小二乘等价于最大似然估计。" className="rl-likelihood-page">
     <div className="rl-likelihood-layout">
       <section className="rl-likelihood-single">
-        <Step number={1} title="先看单个误差" />
+        <Step number={1} title="一个点，一份贡献" />
         <div className="rl-likelihood-line-plot" ref={plot}>
-          <EChartsChart option={singleChart} minHeight={0} className="rl-likelihood-chart" aria-label="一个观测点的残差示范：拖动端点调整候选直线" />
+          <PlotlyChart data={singleData} layout={singleLayout} minHeight={0} className="rl-likelihood-chart" aria-label="一个观测点的残差示范：拖动端点调整候选直线" />
           {data.map((point,index)=><Button key={index} className="rl-likelihood-observation" aria-label={`选择第${index+1}条观测`} aria-pressed={index===selected} style={{left:`${16+point.mass/1600*78}%`,top:`${yPercent(point.depth)}%`}} onClick={()=>setSampleIndex(index)}> </Button>)}
           <div className="rl-likelihood-error-label" style={{left:`${16+sample.mass/1600*78+2}%`,top:`${yPercent((sample.depth+w*sample.mass+b)/2)}%`}}><Formula latex="e_i" /></div>
           <Button className="rl-likelihood-handle" aria-label="拖动调整斜率" style={{left:'94%',top:`${yPercent(w*1600+b)}%`}} onPointerDown={e=>e.currentTarget.setPointerCapture(e.pointerId)} onPointerMove={move} onPointerUp={e=>{if(e.currentTarget.hasPointerCapture(e.pointerId))e.currentTarget.releasePointerCapture(e.pointerId);}} onKeyDown={e=>{if(e.key==='ArrowUp'||e.key==='ArrowDown'){e.preventDefault();changeW(scaledW+(e.key==='ArrowUp'?1:-1)*model.width*.1);}}}> </Button>
         </div>
-        <div className="rl-likelihood-single-caption"><Typography variant="bodySmall" tone="muted">点击观测点，查看它在右侧的贡献。</Typography></div>
+        <div className="rl-likelihood-single-caption"><Typography variant="bodySmall" tone="muted">点击一个点，高亮它的贡献曲线。</Typography></div>
       </section>
       <section className="rl-likelihood-all" data-relative-likelihood={relative} data-count={data.length} data-selected-index={selected}>
-        <Step number={2} title="所有点的贡献相乘" />
-        <div className="rl-likelihood-curve-wrap"><EChartsChart option={currentChart} minHeight={0} className="rl-likelihood-chart" aria-label="参数轴上的单点贡献曲线与全部观测的联合似然曲线" /><div className="rl-likelihood-curve-label"><MathFormulaBlock appearance="plain"><MathFormulaTerm latex="L(w,b)=\prod_i p(e_i)" tooltip="全部观测独立时，密度贡献相乘形成联合似然。图中单点曲线与总似然各按自身峰值归一化，便于比较位置；不要按显示高度直接相乘。截距固定在最小二乘截距，仅改变斜率；因此下方曲线是参数空间的一维截面。" /></MathFormulaBlock></div></div>
+        <Step number={2} title="贡献连乘，寻找最大值" />
+        <div className="rl-likelihood-curve-wrap"><PlotlyChart data={likelihoodData} layout={likelihoodLayout} minHeight={0} className="rl-likelihood-chart" aria-label="参数轴上的单点贡献曲线与全部观测的联合似然曲线" /><div className="rl-likelihood-curve-label"><MathFormulaBlock appearance="plain"><MathFormulaTerm latex="L(w,b)=\prod_i p(e_i)" tooltip="全部观测独立时，密度贡献相乘形成联合似然。图中单点曲线与总似然各按自身峰值归一化，便于比较位置；不要按显示高度直接相乘。截距固定在最小二乘截距，仅改变斜率；因此下方曲线是参数空间的一维截面。" /></MathFormulaBlock></div></div>
       </section>
-      <div className="rl-likelihood-footer"><Typography variant="h3" tone="accent" align="center">让所有点的贡献相乘，寻找使乘积最大的参数。</Typography><Formula latex="\textstyle\text{独立同方差高斯噪声、方差固定：}\quad \max L(w,b)\ \Longleftrightarrow\ \min\sum_i(y_i-\hat y_i)^2" /></div>
+      <div className="rl-likelihood-footer"><Typography variant="h3" tone="accent" align="center">高斯噪声假设下，最小二乘就是最大似然估计。</Typography><Formula latex="\textstyle\text{独立同方差高斯噪声、方差固定：}\quad \max L(w,b)\ \Longleftrightarrow\ \min\sum_i(y_i-\hat y_i)^2" /></div>
     </div>
   </ContentBlock>;
 }

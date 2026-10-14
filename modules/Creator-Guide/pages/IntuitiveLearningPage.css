@@ -1,0 +1,17 @@
+.cg-intuitive-page { position:relative; width:1600px; height:900px; flex:none; color:#0b2555; background:radial-gradient(circle at 0 0,#eaf5ff,transparent 230px),radial-gradient(circle at 100% 0,#eef7ff,transparent 190px),#fcfdff;  --ui-type-display-size:62px; --ui-type-display-line-height:1.2; --ui-type-subtitle-size:27px; --ui-type-subtitle-line-height:1.5; --ui-type-h2-size:32px; --ui-type-h3-size:32px; --ui-type-body-small-size:24px; --ui-type-body-small-line-height:1.5; --ui-type-body-size:28px; --ui-type-body-line-height:1.5; user-select:text; }
+.cg-intuitive-page *, .cg-intuitive-page .ui-typography { box-sizing:border-box; user-select:text; -webkit-user-select:text; }
+.cg-intuitive-header { position:absolute; top:20px; left:55px; width:1490px; text-align:center; }
+.cg-intuitive-header .ui-typography--subtitle { margin-top:13px; }
+.cg-intuitive-example-space { position:absolute; left:32px; top:154px; width:1105px; height:657px; border-radius:29px; background:linear-gradient(120deg,#fff6e8,#fffbf4); }
+.cg-intuitive-right { position:absolute; left:1150px; top:154px; width:418px; height:657px; padding:31px 19px 17px; border-radius:29px; background:linear-gradient(120deg,#edf7ff,#e6f3ff); }
+.cg-intuitive-right-title { white-space:nowrap; --ui-type-h2-size:30px; text-align:center; }
+.cg-intuitive-right-title::after { content:""; display:block; margin:16px auto 0; width:190px; height:1px; background:#9fbedb; }
+.cg-intuitive-benefits { display:grid; gap:23px; margin-top:27px; }
+.cg-intuitive-benefit { min-width:0; display:flex; align-items:center; gap:21px; min-height:155px; padding:19px 12px; border-radius:23px; background:#ffffffad; }
+.cg-intuitive-icon { flex:none; display:grid; place-items:center; width:90px; height:90px; border-radius:50%; background:linear-gradient(135deg,#deefff,#e8f4ff); color:#073b88; }
+.cg-intuitive-icon svg { width:60px; height:60px; }
+.cg-intuitive-benefit .ui-typography--h3 { --ui-type-h3-size:31px; }
+.cg-intuitive-benefit .ui-typography--bodySmall { margin-top:7px; --ui-type-body-small-size:22px; white-space:nowrap; }
+.cg-intuitive-conclusion { position:absolute; top:822px; left:32px; width:1536px; height:66px; border-radius:34px; background:#eaf4ff; display:flex; align-items:center; gap:28px; padding:8px 55px; }
+.cg-intuitive-conclusion > svg { flex:none; width:55px; height:55px; }
+.cg-intuitive-conclusion .ui-typography { border-left:1px solid #77a5d3; padding-left:33px; white-space:nowrap; }

@@ -12,6 +12,7 @@ import { MaePage } from './pages/MaePage/MaePage';
 import { PredictionErrorPage } from './pages/PredictionErrorPage/PredictionErrorPage';
 import { ResidualCancellationPage } from './pages/ResidualCancellationPage/ResidualCancellationPage';
 import { SceneDeck, type DeckDefinition } from '../shared/react/presentation';
+import { notesForScene } from './speakerNotes';
 import { CaoChongPage } from './pages/CaoChongPage/CaoChongPage';
 import { LinearRegressionPage } from './pages/LinearRegressionPage/LinearRegressionPage';
 import { EstimateWeightPage } from './pages/EstimateWeightPage/EstimateWeightPage';
@@ -33,14 +34,15 @@ export const deck: DeckDefinition = {
     { id: '13', title: '再求最优斜率', section: '最小二乘', render: () => <OptimalSlopePage /> },
     { id: '14', title: '得到最优直线', section: '最小二乘', render: () => <OptimalLinePage /> },
     { id: '15', title: '从两个参数到矩阵形式', section: '最小二乘', render: () => <MatrixModelPage /> },
-    { id: '16', title: '为什么最小二乘合理？', section: '最小二乘', render: () => <LeastSquaresGeometryPage /> },
+    { id: '16', title: '概率视角下的最小二乘', section: '最小二乘', render: () => <LeastSquaresGeometryPage /> },
     { id: '17', title: '解析求解：何时能保证全局最优？', section: '最小二乘', render: () => <ConvexMsePage /> },
     { id: '18', title: '非凸问题：求导为零还不够', section: '优化基础', render: () => <OptimizationIntroPage /> },
   ],
 };
 const catalog: [DeckDefinition, ...DeckDefinition[]] = [deck];
+export const getPptNotes = notesForScene;
 export function RegressionLossPpt() {
-  return <SceneDeck catalog={catalog} moduleId="regression-loss" assetId="adde4a27-235d-4c03-a3cf-734ccf08b38d" progressKey="lesson-flow:regression-loss" />;
+  return <SceneDeck catalog={catalog} moduleId="regression-loss" assetId="adde4a27-235d-4c03-a3cf-734ccf08b38d" progressKey="lesson-flow:regression-loss" getNotes={notesForScene} />;
 }
 
 
