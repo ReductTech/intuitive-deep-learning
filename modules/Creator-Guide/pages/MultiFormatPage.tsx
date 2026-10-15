@@ -1,39 +1,185 @@
-import { useState, type CSSProperties } from 'react';
-import { Button, Typography, moduleAssetUrl } from '../../shared/react';
-import outline from '../outlines.json';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { Button, ContentBlock, Typography } from '../../shared/react';
+import biological from '../assets/multi-format/biological-structure.png';
+import combination from '../assets/multi-format/decision-bridge.png';
+import weights from '../assets/multi-format/weighted-contribution.png';
+import activation from '../assets/multi-format/activation-catalog.png';
 import './MultiFormatPage.css';
 
-function FormatIcon({ kind }: { kind: 'file' | 'screen' | 'person' | 'video' | 'layers' | 'bars' }) {
+const lessons = [
+  { title: '从生物到人工神经元', image: biological, steps: [
+    { title: '接收输入', text: '树突接收信号，对应人工神经元的多个输入。', box: [2, 18, 23, 68] },
+    { title: '整合信号', text: '突触对应权重；细胞体的整合启发了加权求和与阈值判断。', box: [26, 18, 48, 68] },
+    { title: '产生输出', text: '神经信号经轴突传递，对应模型输出。这是结构启发，并非完整的生物模拟。', box: [75, 18, 23, 68] },
+  ] },
+  { title: '组合带来复杂性', image: combination, steps: [
+    { title: '三个输入', text: '食物、危险与饥饿各有两种状态，先从具体情境观察输入。', box: [3, 17, 23, 66] },
+    { title: '形成判断', text: '神经元把三个输入的组合转成是否立即觅食的判断。', box: [33, 34, 31, 40] },
+    { title: '组合增长', text: '三个二值输入已有八种组合；输入增加，可能的组合数迅速增长。', box: [66, 12, 32, 76] },
+  ] },
+  { title: '权重与矩阵表达', image: weights, steps: [
+    { title: '逐项加权', text: '分别把每个输入与对应的权重相乘，再把贡献相加。', box: [2, 15, 96, 23] },
+    { title: '整理对象', text: '将权重放在一行、输入放在一列，对应关系保持不变。', box: [2, 43, 96, 25] },
+    { title: '合并表达', text: '矩阵乘法是同一组加权求和计算的紧凑表达。', box: [2, 73, 96, 16] },
+  ] },
+  { title: '认识激活函数', image: activation, steps: [
+    { title: 'Leaky ReLU', text: '负区间保留一条较小斜率的线，正区间保持线性。', box: [2, 16, 30, 72] },
+    { title: 'GELU', text: '曲线在零附近平滑变化，观察它怎样改变负输入的贡献。', box: [35, 16, 30, 72] },
+    { title: 'Sigmoid', text: '输出压缩到零与一之间，曲线两端逐渐饱和。', box: [68, 16, 30, 72] },
+  ] },
+];
+function FormatStyleIcon({ kind }: { kind: 'code' | 'screen' | 'person' | 'play' | 'devices' | 'book' | 'light' | 'video' }) {
   const paths = {
-    file: 'M7 2h14l7 7v21H7ZM21 2v8h7M12 16h11M12 22h11',
-    screen: 'M2 4h28v20H2ZM16 24v6M10 30h12M9 18l4-5 4 3 6-8',
-    person: 'M16 2a6 6 0 1 0 0 12 6 6 0 0 0 0-12M5 30v-5a11 11 0 0 1 22 0v5Z',
-    video: 'M3 7h19v18H3ZM22 12l8-5v18l-8-5',
-    layers: 'M2 9 16 2 30 9 16 16ZM2 17l14 7 14-7M2 25l14 7 14-7',
-    bars: 'M3 22h6v10H3ZM13 13h6v19h-6ZM23 2h6v30h-6Z',
+    code: 'm12 9-8 7 8 7m8-14 8 7-8 7m-2-19-4 24',
+    screen: 'M3 5h26v18H3ZM16 23v7M10 30l6-7 6 7M12 13l4-3 4 3-4 3Z',
+    person: 'M16 2a6 6 0 1 0 0 12 6 6 0 0 0 0-12ZM4 29v-4a12 12 0 0 1 24 0v4Z',
+    play: 'M16 2a14 14 0 1 0 0 28 14 14 0 0 0 0-28ZM12 9l11 7-11 7Z',
+    devices: 'M2 4h23v17H2ZM8 27h12M14 21v6M23 14h8v16h-8Z',
+    book: 'M16 14a5 5 0 1 0 0-10 5 5 0 0 0 0 10ZM2 19q7-5 14 0 7-5 14 0v11q-7-5-14 0-7-5-14 0ZM16 19v11',
+    light: 'M11 24c0-5-6-5-6-12a11 11 0 0 1 22 0c0 7-6 7-6 12ZM12 28h8M14 31h4M16 1V-2M0 12h-3M32 12h3',
+    video: 'M2 6h20v20H2ZM22 12l9-5v18l-9-5',
   };
-  return <svg viewBox="0 0 34 34" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d={paths[kind]}/></svg>;
+  return <svg viewBox="-4 -4 40 40" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d={paths[kind]} /></svg>;
 }
-function SharedLesson({ weight = 600, small = false }: { weight?: number; small?: boolean }) {
-  return <div className={`cg-format-lesson ${small?'cg-format-lesson-small':''}`} data-lesson="weighing-elephant"><Typography variant="h3" tone="inherit" className="cg-format-lesson-title">曹冲称象</Typography><Typography variant="bodySmall" tone="inherit" className="cg-format-lesson-subtitle">用熟悉的故事，理解测量与推理。</Typography>
-    <svg className="cg-format-boat" viewBox="0 0 320 135" aria-hidden="true" style={{ transform: `translateY(${weight/120}px)` }}><defs><linearGradient id="cg-format-wood" x2="0" y2="1"><stop stopColor="#bd8f57"/><stop offset="1" stopColor="#563622"/></linearGradient></defs><ellipse cx="151" cy="118" rx="145" ry="8" fill="#e4f4ff55"/><path d="M8 51 44 20h244l23 37-22 51H31Z" fill="url(#cg-format-wood)" stroke="#5b3e26" strokeWidth="3"/><path d="M15 54h290M30 79h264M41 102h247M45 21v31M97 21v31M149 21v31M201 21v31M253 21v31" stroke="#e0b07b" strokeWidth="3"/><path d="M28 52h266v39H28Z" fill="#704825"/><path d="M40 52v40M96 52v40M152 52v40M208 52v40M264 52v40" stroke="#b78a55" strokeWidth="6"/>{Array.from({length:Math.min(7,Math.ceil(weight/200))},(_,i)=><path key={i} d={`M${60+i*29} 48l-4-12 9-10 14 3 7 12-7 8Z`} fill="#a8a69a" stroke="#706c60" strokeWidth="1.5"/>)}</svg>
-    <div className="cg-format-chart"><Typography variant="bodySmall" tone="inherit">投石称重</Typography><svg viewBox="0 0 100 65" aria-hidden="true"><path d="M12 5v49h80" stroke="#adc5db" fill="none"/><path d="M12 54 82 9" fill="none" stroke="#437ea9" strokeWidth="1.5"/>{[0,1,2,3].map(i=><circle key={i} cx={21+i*17} cy={48-i*11} r="2.4" fill="#2378cf"/>)}<circle cx={12+Math.min(75,weight/20)} cy={54-Math.min(48,weight/32)} r="3" fill="#ed983a"/></svg><Typography variant="bodySmall" tone="inherit">重量增加，船身下沉</Typography></div>
-  </div>;
+function MiniWindow({ children }: { children: ReactNode }) {
+  return <div className="cg-format-window"><div className="cg-format-mini">{children}</div></div>;
+}
+function ReadingPreview({ visible }: { visible: boolean }) {
+  const canvas = useRef<HTMLCanvasElement>(null);
+  const position = useRef(0);
+  const images = useRef<HTMLImageElement[]>([]);
+  const [ready, setReady] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const [current, setCurrent] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const maxPosition = 4 * 474 - 24 - 480;
+  function draw() {
+    const el = canvas.current, ctx = el?.getContext('2d');
+    if (!ctx || !el) return;
+    ctx.fillStyle = '#eef3fb'; ctx.fillRect(0, 0, 800, 480);
+    images.current.forEach((image, index) => { if (image.complete && image.naturalWidth) ctx.drawImage(image, 0, index * 474 - position.current, 800, 450); });
+    el.dataset.position = String(Math.round(position.current));
+    setCurrent(Math.min(3, Math.floor((position.current + 170) / 474)));
+  }
+  useEffect(() => {
+    let cancelled = false;
+    Promise.all(lessons.map(lesson => new Promise<HTMLImageElement>(resolve => { const img = new Image(); img.onload = () => resolve(img); img.onerror = () => resolve(img); img.src = lesson.image; }))).then(loaded => { if (!cancelled) { images.current = loaded; setReady(true); } });
+    return () => { cancelled = true; };
+  }, []);
+  useEffect(() => { if (ready) draw(); }, [ready]);
+  useEffect(() => {
+    const el = canvas.current;
+    if (!el) return;
+    const wheel = (event: WheelEvent) => {
+      event.preventDefault(); event.stopPropagation();
+      const delta = event.deltaY * (event.deltaMode === 1 ? 24 : event.deltaMode === 2 ? 480 : 1);
+      position.current = Math.max(0, Math.min(maxPosition, position.current + delta)); draw();
+    };
+    el.addEventListener('wheel', wheel, { passive: false });
+    return () => el.removeEventListener('wheel', wheel);
+  }, [ready]);
+  useEffect(() => {
+    if (!ready || !hovered || !visible || paused || reduced) return;
+    let frame = 0, previous = 0, endWait = 0;
+    const tick = (time: number) => {
+      if (previous) {
+        const elapsed = Math.min(time - previous, 80);
+        if (position.current >= maxPosition) { endWait += elapsed; if (endWait > 1600) { position.current = 0; endWait = 0; } }
+        else position.current += elapsed * .065;
+        position.current = Math.min(maxPosition, position.current); draw();
+      }
+      previous = time; frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [ready, hovered, visible, paused, reduced]);
+  return <MiniWindow>
+    <div className="cg-format-mini-top"><Typography variant="bodySmall" tone="accent">自主阅读 · 神经元课程</Typography><Typography variant="bodySmall" tone="muted">{current + 1} / 4</Typography></div>
+    <canvas ref={canvas} width={800} height={480} className="cg-format-reader" aria-label="连续阅读预览，可用滚轮或上下方向键浏览" tabIndex={0} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} onFocus={() => setHovered(true)} onBlur={() => setHovered(false)} onKeyDown={event => {
+      if (!['ArrowDown', 'ArrowUp', 'Home', 'End', ' '].includes(event.key)) return;
+      event.preventDefault(); event.stopPropagation();
+      if (event.key === ' ') setPaused(value => !value);
+      else { position.current = event.key === 'Home' ? 0 : event.key === 'End' ? maxPosition : Math.max(0, Math.min(maxPosition, position.current + (event.key === 'ArrowDown' ? 200 : -200))); draw(); }
+    }} />
+    <div className="cg-format-reader-bottom"><Typography variant="bodySmall" tone="muted">{hovered && !paused && !reduced ? '正在自动浏览 · 滚轮调整进度' : '移入自动浏览 · 滚轮上下阅读'}</Typography><Button active={paused} onClick={() => setPaused(value => !value)} aria-label={paused ? '继续自动浏览' : '暂停自动浏览'}><Typography as="span" variant="bodySmall" tone="inherit">{paused ? '继续' : '暂停'}</Typography></Button></div>
+  </MiniWindow>;
 }
 export function MultiFormatPage() {
-  const [weight,setWeight]=useState(600);
-  const style={'--cg-format-art':`url("${moduleAssetUrl(outline.moduleIdentity.id,'images/weighing-elephant.png')}")`} as CSSProperties;
-  return <article className="cg-format-page cg-creator-typography" style={style} aria-labelledby="cg-format-title">
-    <header className="cg-format-header"><Typography as="h1" id="cg-format-title" variant="display" tone="inherit">一种<span>全新</span>的课件形态</Typography><Typography variant="subtitle" tone="inherit">同一份内容，同时服务教学展示、自学交互与智能讲稿 —— 我们称它为<span>“一鱼两吃”</span></Typography></header>
-    <svg className="cg-format-links" viewBox="0 0 1600 900" aria-hidden="true"><defs><linearGradient id="cg-format-link-blue"><stop stopColor="#79aaff"/><stop offset="1" stopColor="#d4e5ff"/></linearGradient></defs><path d="M620 229Q318 225 298 285" stroke="url(#cg-format-link-blue)"/><path d="M800 276v23" stroke="#95c0ff"/><path d="M980 229Q1240 230 1300 285" stroke="#dabc91"/><path d="m287 279 10 12 11-10M790 291l10 10 10-10M1286 283l14 9 5-16" stroke="#89aff0"/></svg>
-    <div className="cg-format-source"><span className="cg-format-source-icon"><FormatIcon kind="file"/></span><div><Typography variant="h2" tone="inherit">同一份内容</Typography><Typography variant="bodySmall" tone="inherit">HTML-based 交互课件</Typography></div></div>
-    <Typography variant="bodySmall" tone="inherit" className="cg-format-once">一次设计<br/>多种应用场景</Typography>
-    <section className="cg-format-card cg-format-teaching"><header><span className="cg-format-mode-icon"><FormatIcon kind="screen"/></span><div><Typography as="h2" variant="h3" tone="inherit">教学展示模式</Typography><Typography variant="bodySmall" tone="inherit">面向课堂的组织化展示</Typography></div></header><div className="cg-format-teaching-preview"><div className="cg-format-preview-top"><Typography variant="bodySmall" tone="inherit">教学课件</Typography><Typography variant="bodySmall" tone="inherit">5 / 16</Typography></div><div className="cg-format-teaching-body"><div className="cg-format-slide-list">{[1,2,3,4].map(i=><div key={i}><Typography variant="bodySmall" tone="inherit">{i}</Typography><div className="cg-format-mini-scene"/></div>)}</div><SharedLesson/></div></div><div className="cg-format-checks"><Typography variant="bodySmall" tone="inherit">✓ 完整的教学流程与页面结构</Typography><Typography variant="bodySmall" tone="inherit">✓ 支持教师灵活讲授与课堂互动</Typography></div></section>
-    <section className="cg-format-card cg-format-self"><header><span className="cg-format-mode-icon"><FormatIcon kind="person"/></span><div><Typography as="h2" variant="h3" tone="inherit">自学交互模式</Typography><Typography variant="bodySmall" tone="inherit">面向学习者的个性化探索</Typography></div></header><SharedLesson weight={weight}/><div className="cg-format-stone-controls"><Typography variant="bodySmall" tone="inherit">选择石块，观察船身变化</Typography><div>{[100,300,500].map(value=><Button key={value} onClick={()=>setWeight(w=>Math.min(1400,w+value))} aria-label={`放入${value}千克石块`}><Typography as="span" variant="bodySmall" tone="inherit">{value} 千克</Typography></Button>)}<Button onClick={()=>setWeight(0)}><Typography as="span" variant="bodySmall" tone="inherit">清空</Typography></Button></div><Typography variant="bodySmall" tone="inherit">已放入 <strong>{weight} 千克</strong>（交互示意）</Typography></div></section>
-    <section className="cg-format-card cg-format-script"><header><span className="cg-format-mode-icon"><FormatIcon kind="video"/></span><div><Typography as="h2" variant="h3" tone="inherit">智能讲稿模式</Typography><Typography variant="bodySmall" tone="inherit">内容再生产与传播 · 视频扩展方向</Typography></div></header><div className="cg-format-script-preview"><div className="cg-format-script-list"><Typography variant="bodySmall" tone="inherit">智能讲稿</Typography>{['课程导入','探索过程','得出结论'].map((title,i)=><div key={title}><Typography variant="bodySmall" tone="inherit">{i+1}　{title}</Typography><Typography variant="bodySmall" tone="inherit">{['用故事引出问题','解释操作与反馈','整理规律与方法'][i]}</Typography></div>)}</div><div className="cg-format-video-preview"><SharedLesson small/><div className="cg-format-video-bar"><Typography variant="bodySmall" tone="inherit">▶　00:32 / 02:00</Typography><Typography variant="bodySmall" tone="inherit">⚙</Typography></div><div className="cg-format-timeline">{[1,2,3,4].map(i=><div key={i} className="cg-format-mini-scene"/>)}</div><svg viewBox="0 0 280 36" className="cg-format-wave" aria-hidden="true">{Array.from({length:85},(_,i)=><path key={i} d={`M${i*3.3} ${18-(3+(Math.sin(i*1.7)+1)*5)}v${6+(Math.sin(i*1.7)+1)*10}`} stroke="#3b89f6"/>)}</svg><Typography variant="bodySmall" tone="inherit" className="cg-format-export">讲稿 → 配音与录制 → 视频</Typography></div></div></section>
-    <section className="cg-format-traditional"><span><FormatIcon kind="file"/></span><div><Typography as="h2" variant="h3" tone="inherit">传统 PPT</Typography><Typography variant="bodySmall" tone="inherit">× 主要服务讲课</Typography><Typography variant="bodySmall" tone="inherit">× 自学与交互能力有限</Typography></div></section>
-    <section className="cg-format-advantages"><Typography as="h2" variant="h3" tone="inherit">相比传统 PPT 的优势</Typography><div>{[
-      ['layers','一次设计，多端复用','同一内容，适配课堂、自学与视频等场景。'],['person','既能讲课，也能自学','教师组织讲授，学生自主探索。'],['bars','交互更强，理解更深','通过操作与即时反馈，让抽象知识更直观。'],['video','更容易扩展为多种形态','可继续制作讲解视频、微课与在线课程。'],
-    ].map(([icon,title,detail])=><div className="cg-format-advantage" key={title}><span><FormatIcon kind={icon as 'layers'|'person'|'bars'|'video'}/></span><div><Typography variant="bodySmall" tone="inherit" className="cg-format-advantage-title">{title}</Typography><Typography variant="bodySmall" tone="inherit">{detail}</Typography></div></div>)}</div></section>
-  </article>;
+  const root = useRef<HTMLElement>(null);
+  const [selected, setSelected] = useState(0), [step, setStep] = useState(0);
+  const [explaining, setExplaining] = useState(false), [playing, setPlaying] = useState(false), [visible, setVisible] = useState(false);
+  const lesson = lessons[selected], explanation = lesson.steps[step];
+  const speechSupported = 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
+  const utterance = useRef<SpeechSynthesisUtterance | null>(null);
+  const [paused, setPaused] = useState(false);
+  const [speechError, setSpeechError] = useState('');
+  function stopNarration() {
+    if (utterance.current) { utterance.current = null; window.speechSynthesis.cancel(); }
+    setPlaying(false); setPaused(false);
+  }
+  function narrate(lessonIndex: number, stepIndex: number, continuous: boolean) {
+    stopNarration();
+    setSelected(lessonIndex); setStep(stepIndex); setExplaining(true); setSpeechError('');
+    if (!speechSupported) return;
+    const item = lessons[lessonIndex].steps[stepIndex];
+    const next = new SpeechSynthesisUtterance(item.text);
+    next.lang = 'zh-CN'; next.rate = 1;
+    const voices = window.speechSynthesis.getVoices();
+    const voice = voices.find(item => /^zh[-_]CN/i.test(item.lang)) ?? voices.find(item => /^zh/i.test(item.lang));
+    if (voice) next.voice = voice;
+    utterance.current = next;
+    next.onend = () => {
+      if (utterance.current !== next) return;
+      utterance.current = null;
+      if (continuous && stepIndex < lessons[lessonIndex].steps.length - 1) narrate(lessonIndex, stepIndex + 1, true);
+      else setPlaying(false);
+    };
+    next.onerror = () => {
+      if (utterance.current !== next) return;
+      utterance.current = null; setPlaying(false); setPaused(false);
+      setSpeechError('语音播放失败，请再次点击播放。');
+    };
+    window.speechSynthesis.cancel();
+    setPlaying(true);
+    window.speechSynthesis.resume();
+    window.speechSynthesis.speak(next);
+  }
+  function toggleNarration() {
+    if (playing) { window.speechSynthesis.pause(); setPlaying(false); setPaused(true); }
+    else if (paused && utterance.current) { window.speechSynthesis.resume(); setPlaying(true); setPaused(false); }
+    else narrate(selected, step, true);
+  }
+  useEffect(() => {
+    if (!visible) stopNarration();
+    return () => { if (utterance.current) { utterance.current = null; window.speechSynthesis.cancel(); } };
+  }, [visible]);
+  useEffect(() => {
+    const el = root.current; if (!el) return;
+    let intersecting = false;
+    const update = () => setVisible(intersecting && document.visibilityState === 'visible');
+    const observer = new IntersectionObserver(([entry]) => { intersecting = entry.isIntersecting; update(); });
+    observer.observe(el); document.addEventListener('visibilitychange', update);
+    return () => { observer.disconnect(); document.removeEventListener('visibilitychange', update); };
+  }, []);
+  function select(index: number) { stopNarration(); setSelected(index); setStep(0); setExplaining(false); setSpeechError(''); }
+  return <ContentBlock ref={root} className="cg-format-page cg-creator-typography" headingLevel={1} title="一种全新的课件形态" bodyClassName="cg-format-body" onKeyDown={event => { if (event.key === ' ' && event.target instanceof Element && event.target.closest('button')) event.stopPropagation(); }}>
+    <div className="cg-format-source-row"><svg className="cg-format-source-links" viewBox="0 0 1536 112" aria-hidden="true"><path d="M768 52C500 35 305 39 248 112M768 52v60M768 52c268-17 463-13 520 60" /></svg><div className="cg-format-source"><span className="cg-format-source-icon"><FormatStyleIcon kind="code" /></span><div><Typography variant="h3" tone="accent">同一份内容</Typography><Typography variant="bodySmall" tone="muted">HTML-based 交互课件</Typography></div></div><Typography variant="bodySmall" tone="warning">一次设计，多种应用场景</Typography></div>
+    <div className="cg-format-columns">
+      <section className="cg-format-card cg-format-teaching"><header><span className="cg-format-mode-icon"><FormatStyleIcon kind="screen" /></span><div><Typography as="h2" variant="h3" tone="accent">教学展示模式</Typography><Typography variant="bodySmall" tone="muted">面向课堂的组织化展示</Typography></div></header>
+        <MiniWindow><div className="cg-format-mini-top"><Typography variant="bodySmall" tone="accent">教学课件 · 神经元课程</Typography><Typography variant="bodySmall" tone="muted">{selected + 1} / 4</Typography></div>
+          <div className="cg-format-teaching-preview"><nav className="cg-format-slide-list" aria-label="选择预览课件">{lessons.map((item, index) => <Button key={item.title} active={selected === index} onClick={() => select(index)} aria-label={`展示第${index + 1}页：${item.title}`} aria-pressed={selected === index}><img src={item.image} alt={item.title} /></Button>)}</nav><div className="cg-format-main-preview"><img src={lesson.image} alt={lesson.title} /><Typography variant="bodySmall" tone="accent">{lesson.title}</Typography></div></div>
+          <div className="cg-format-mini-footer"><Button onClick={() => select((selected + 3) % 4)} aria-label="预览上一页"><Typography as="span" variant="bodySmall" tone="inherit">上一页</Typography></Button><Typography variant="bodySmall" tone="muted">点选缩略图，切换课堂页面</Typography><Button onClick={() => select((selected + 1) % 4)} aria-label="预览下一页"><Typography as="span" variant="bodySmall" tone="inherit">下一页</Typography></Button></div>
+        </MiniWindow>
+      </section>
+      <section className="cg-format-card cg-format-self"><header><span className="cg-format-mode-icon"><FormatStyleIcon kind="person" /></span><div><Typography as="h2" variant="h3" tone="success">自学交互模式</Typography><Typography variant="bodySmall" tone="muted">面向学习者的连续探索</Typography></div></header><ReadingPreview visible={visible} /></section>
+      <section className="cg-format-card cg-format-script"><header><span className="cg-format-mode-icon"><FormatStyleIcon kind="play" /></span><div><Typography as="h2" variant="h3" tone="warning">智能讲稿模式</Typography><Typography variant="bodySmall" tone="muted">讲解与画面对应 · 视频扩展方向</Typography></div></header>
+        <MiniWindow><div className="cg-format-mini-top"><Typography variant="bodySmall" tone="accent">{lesson.title}</Typography><Button active={playing} onClick={toggleNarration} disabled={!speechSupported} aria-label={!speechSupported ? '当前浏览器不支持语音播放' : playing ? '暂停语音讲解' : paused ? '继续语音讲解' : '播放语音讲解'}><Typography as="span" variant="bodySmall" tone="inherit">{!speechSupported ? '不支持语音' : playing ? '暂停' : paused ? '继续' : '播放讲解'}</Typography></Button></div>
+          <div className="cg-format-script-preview"><nav aria-label="讲稿步骤" className="cg-format-script-list">{lesson.steps.map((item, index) => <Button key={item.title} active={explaining && step === index} onClick={() => narrate(selected, index, false)} aria-label={`讲解：${item.title}`}><Typography as="span" variant="bodySmall" tone="inherit">{index + 1}　{item.title}</Typography></Button>)}</nav><div className="cg-format-annotated"><img src={lesson.image} alt={lesson.title} />{lesson.steps.map((item, index) => <Button key={item.title} className="cg-format-hotspot" active={explaining && step === index} style={{ left: `${item.box[0]}%`, top: `${item.box[1]}%`, width: `${item.box[2]}%`, height: `${item.box[3]}%` }} aria-label={`高亮并讲解：${item.title}`} onClick={() => narrate(selected, index, false)}><span aria-hidden="true" /></Button>)}</div></div>
+          <div className="cg-format-explanation" aria-live="polite">{explaining ? <><Typography variant="bodySmall" tone="warning">{step + 1} / 3 · {explanation.title}</Typography><Typography variant="bodySmall" tone="main">{speechError || explanation.text}</Typography></> : <Typography variant="bodySmall" tone="muted">点击图中区域或讲稿步骤，播放对应语音讲解。</Typography>}</div>
+        </MiniWindow>
+      </section>
+    </div>
+    <div className="cg-format-bottom"><section className="cg-format-traditional"><Typography as="h2" variant="h3" tone="muted">传统 PPT</Typography><Typography variant="bodySmall" tone="muted">主要服务课堂讲授</Typography></section><section className="cg-format-advantages"><Typography as="h2" variant="h3" tone="accent">相比传统 PPT 的优势</Typography><div>{(['一次设计，多端复用', '既能讲课，也能自学', '操作与反馈帮助理解', '讲稿可用于视频制作']).map((text, index) => <div className={`cg-format-benefit cg-format-benefit-${index}`} key={text}><span className="cg-format-benefit-icon"><FormatStyleIcon kind={(['devices', 'book', 'light', 'video'] as const)[index]} /></span><Typography variant="bodySmall" tone="main">{text}</Typography></div>)}</div></section></div>
+  </ContentBlock>;
 }

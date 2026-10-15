@@ -11,8 +11,32 @@
 .cg-human-mask .ui-typography{display:grid;place-items:center;--ui-type-body-small-size:19px;--ui-type-body-small-weight:600;border-radius:3px;}.cg-human-mask .is-allowed{background:#dceaff;color:#274e89;}.cg-human-mask .is-blocked{background:#f0f2f5;color:#96a2b4;}
 .cg-human-mask.is-plain{width:118px;height:92px;border-color:#293c57;gap:1px;padding:3px;}.cg-human-mask.is-plain .ui-typography{background:none;color:#293c57;--ui-type-body-small-size:17px;--ui-type-body-small-weight:500;}
 .cg-human-quality{position:absolute;left:70px;top:775px;width:433px;height:53px;display:flex;align-items:center;justify-content:space-around;}.cg-human-quality .ui-typography{--ui-type-body-small-size:18px;--ui-type-body-small-weight:700;}
-.cg-human-thought{position:absolute;text-align:center;}.cg-human-thought-matrix{left:733px;top:336px;width:170px;display:flex;flex-direction:column;align-items:center;gap:9px;}.cg-human-thought-matrix>.ui-typography{--ui-type-body-small-size:18px;--ui-type-body-small-weight:600;}
-.cg-human-thought-row{left:583px;top:441px;width:146px;--ui-type-body-size:21px;--ui-type-body-weight:600;}.cg-human-thought-why{left:907px;top:439px;width:125px;--ui-type-body-size:19px;--ui-type-body-weight:600;}
+.cg-human-thought{position:absolute;text-align:center;}.cg-human-thought-matrix{left:733px;top:336px;width:170px;display:flex;flex-direction:column;align-items:center;gap:9px;}
+.cg-human-thought-row{left:583px;top:441px;width:146px;--ui-type-body-size:21px;--ui-type-body-weight:600;}.cg-human-thought-why{left:907px;top:439px;width:125px;--ui-type-body-weight:600;}
 .cg-human-teacher-thought{position:absolute;text-align:center;display:flex;flex-direction:column;align-items:center;gap:5px;}.cg-human-teacher-thought>.ui-typography--bodySmall{--ui-type-body-small-size:16px;--ui-type-body-small-weight:600;}.cg-human-teacher-thought>.ui-typography--h2{--ui-type-h2-size:30px;}
 .cg-human-teacher-start{left:1117px;top:329px;width:154px;}.cg-human-teacher-start>span{color:#f4b443;}.cg-human-teacher-steps{left:1290px;top:352px;width:158px;}.cg-human-teacher-steps>span{color:#558dec;}.cg-human-teacher-interaction{left:1452px;top:411px;width:115px;}.cg-human-teacher-interaction>span{color:#946ae6;}
 .cg-human-arrows{position:absolute;inset:0;width:1600px;height:900px;pointer-events:none;}
+
+/* Align each numbered heading and its copy on the same column axis. */
+.cg-human-stage { display: grid; grid-template-columns: 55px minmax(0, 1fr); column-gap: 16px; row-gap: 4px; }
+.cg-human-stage-ai { left: 49px; width: 466px; }
+.cg-human-stage-learner { left: 581px; width: 437px; }
+.cg-human-stage-human { left: 1080px; width: 472px; }
+.cg-human-stage-heading { display: contents; }
+.cg-human-stage-heading > span { grid-column: 1; grid-row: 1; }
+.cg-human-stage-heading > h2 { grid-column: 2; grid-row: 1; align-self: center; }
+.cg-human-stage > .ui-typography--body { grid-column: 2; grid-row: 2; padding-left: 0; margin: 0; }
+/* Center copy inside the illustrated bubbles, including icon and matrix height. */
+.cg-human-robot-speech { left: 199px; top: 316px; width: 202px; height: 72px; display: flex; align-items: center; justify-content: center; }
+.cg-human-thought-row { left: 588px; top: 431px; width: 144px; height: 82px; display: flex; align-items: center; justify-content: center; }
+.cg-human-thought-why { left: 902px; top: 431px; width: 132px; height: 82px; display: flex; align-items: center; justify-content: center; }
+.cg-human-thought-matrix { left: 733px; top: 326px; width: 170px; height: 144px; justify-content: center; gap: 6px; }
+.cg-human-mask.is-plain { width: 104px; height: 78px; }
+.cg-human-teacher-thought { height: 92px; justify-content: center; gap: 6px; }
+.cg-human-teacher-start { left: 1117px; top: 328px; width: 154px; }
+.cg-human-teacher-steps { left: 1290px; top: 344px; width: 158px; }
+.cg-human-teacher-interaction { left: 1448px; top: 398px; width: 122px; }
+.cg-human-teacher-thought > span { display: flex; height: 32px; align-items: center; justify-content: center; }
+.cg-human-teacher-thought > p { width: 100%; margin: 0; }
+.cg-human-quality { left: 64px; top: 744px; width: 448px; height: 86px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: center; gap: 8px; }
+.cg-human-quality > .ui-typography { text-align: center; white-space: nowrap; }

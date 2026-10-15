@@ -1,45 +1,11 @@
-.cg-pro-page { position: relative; width: 1600px; height: 900px; flex: none; color: #0b2555; background: radial-gradient(circle at 0 0,#e9f5ff,transparent 240px),#fcfdff;  --ui-type-display-size:62px; --ui-type-display-line-height:1.2; --ui-type-h1-size:45px; --ui-type-h2-size:36px; --ui-type-h3-size:29px; --ui-type-subtitle-size:27px; --ui-type-body-size:27px; --ui-type-body-small-size:22px; --ui-type-body-small-line-height:1.4; --ui-type-formula-size:29px; user-select:text; }
-.cg-pro-page *, .cg-pro-page .ui-typography { box-sizing:border-box; user-select:text; -webkit-user-select:text; }
-.cg-pro-header { position:absolute; top:22px; left:55px; width:1490px; text-align:center; }
-.cg-pro-header .ui-typography--subtitle { margin-top:13px; }
-.cg-pro-example { position:absolute; left:32px; top:156px; width:990px; height:646px; border-radius:29px; background:#fff7e9; padding:25px 40px; }
-.cg-pro-example-head { display:flex; align-items:center; gap:24px; color:#522c0a; }
-.cg-pro-example-pill { background:linear-gradient(120deg,#f9e7c6,#edcf94); border-radius:28px; padding:10px 25px; }
-.cg-pro-primary { position:absolute; top:124px; left:40px; right:30px; display:grid; grid-template-columns:minmax(0,1.72fr) minmax(0,1fr); gap:30px; }
-.cg-pro-topic { min-width:0; }
-.cg-pro-topic-title { white-space:nowrap; --ui-type-body-small-weight:700; }
-.cg-pro-topic-title::before { content:""; display:inline-block; width:11px; height:11px; border-radius:50%; background:#bb8a39; margin-right:12px; }
-.cg-pro-formula { background:#f9ecd77a; border-radius:16px; min-width:0; min-height:88px; display:flex; align-items:center; justify-content:center; margin-top:8px; padding:4px; }
-.cg-pro-page .math-formula-block { min-width:0; max-width:100%; }
-.cg-pro-page .math-formula { color:#08285e; max-width:100%; }
-.cg-pro-page math-field { pointer-events:auto; --selection-background-color:#abd3ff80; --caret-color:transparent; }
-.cg-pro-detail { margin-top:8px; padding:0 7px; --ui-type-body-small-size:20px; color:#31547e; }
-.cg-pro-schrodinger { --ui-type-formula-size:31px; }
-.cg-pro-secondary { position:absolute; top:337px; left:40px; right:30px; display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,1.1fr) minmax(0,1fr) minmax(0,1.2fr); gap:18px; }
-.cg-pro-secondary .cg-pro-topic-title { --ui-type-body-small-size:21px; }
-.cg-pro-secondary .cg-pro-formula { min-height:91px; --ui-type-formula-size:26px; }
-.cg-pro-secondary .cg-pro-detail { --ui-type-body-small-size:17px; }
-.cg-pro-normalization .cg-pro-formula { --ui-type-formula-size:20px; }
-.cg-pro-boundary .cg-pro-formula { --ui-type-formula-size:18px; }
-.cg-pro-quantum .cg-pro-formula { --ui-type-formula-size:18px; }
-.cg-pro-flow { position:absolute; top:533px; left:40px; right:40px; display:flex; justify-content:space-between; align-items:center; gap:12px; }
-.cg-pro-flow-pair { display:flex; align-items:center; gap:18px; min-width:0; flex:1; }
-.cg-pro-flow-pair:last-child { flex:.85; }
-.cg-pro-flow-box { min-width:0; flex:1; height:86px; border:1px solid #d9b775; border-radius:15px; display:flex; flex-direction:column; align-items:center; justify-content:center; background:#fff4df70; --ui-type-formula-size:25px; }
-.cg-pro-flow-box .ui-typography { --ui-type-body-small-size:21px; --ui-type-body-small-weight:700; }
-.cg-pro-flow-arrow { color:#764309; --ui-type-h3-size:35px; }
-.cg-pro-right { position:absolute; top:156px; left:1036px; width:532px; height:650px; border-radius:29px; background:#e8f3ff; padding:33px 31px 17px; }
-.cg-pro-right-title { --ui-type-h2-size:36px; text-align:center; white-space:nowrap; }
-.cg-pro-advantages { display:grid; gap:24px; margin:38px 24px 25px; }
-.cg-pro-advantage { display:flex; align-items:center; gap:29px; min-width:0; }
-.cg-pro-advantage > svg { width:60px; height:60px; flex:none; }
-.cg-pro-advantage .ui-typography--bodySmall { --ui-type-body-small-size:23px; margin-top:4px; white-space:nowrap; }
-.cg-pro-limits { background:#ffffff87; border-radius:23px; padding:14px 22px; }
-.cg-pro-limits .ui-typography--h2 { margin-bottom:12px; --ui-type-h2-size:35px; }
-.cg-pro-limit { display:flex; align-items:center; gap:25px; margin-top:15px; }
-.cg-pro-limit > svg { width:43px; height:43px; flex:none; }
-.cg-pro-limit .ui-typography { --ui-type-body-small-size:22px; white-space:nowrap; }
-.cg-pro-conclusion { position:absolute; left:28px; top:817px; width:1544px; height:68px; border-radius:22px; background:#eaf4ff; display:flex; align-items:center; gap:31px; padding:8px 75px; }
-.cg-pro-conclusion > svg { width:55px; height:55px; flex:none; }
-.cg-pro-conclusion .ui-typography { border-left:1px solid #79a7d6; padding-left:32px; white-space:nowrap; }
-.cg-pro-conclusion .ui-typography span { color:#075ee0; }
+.cg-pro-page .cg-wormhole-example { display: flex; flex-direction: column; gap: 16px; }
+.cg-pro-metric { display: grid; gap: 12px; background: var(--ui-accent-soft); padding: 20px 24px; border-radius: var(--ui-radius-lg); }
+.cg-pro-metric .math-formula-block { align-self: center; }
+.cg-pro-topics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.cg-pro-topics > div { display: flex; flex-direction: column; justify-content: space-between; gap: 12px; padding: 18px 12px; background: var(--ui-accent-soft); border-radius: var(--ui-radius-lg); text-align: center; }
+.cg-pro-topics .math-formula-block { min-height: 92px; display: grid; place-items: center; }
+.cg-pro-flow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; margin-top: auto; }
+.cg-pro-flow-step { position: relative; padding: 12px 6px; border: 1px solid var(--ui-border-strong); border-radius: var(--ui-radius-md); background: var(--ui-bg-card); text-align: center; }
+.cg-pro-flow-step svg { position: absolute; width: 26px; height: 26px; right: -30px; top: calc(50% - 13px); color: var(--ui-text-muted); }
+.cg-pro-model-note { text-align: center; }
+

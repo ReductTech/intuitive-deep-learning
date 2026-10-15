@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import fs from 'node:fs';
 import path from 'node:path';
+import { creatorSkillDocuments } from './modules/Creator-Guide/skillDocumentsPlugin';
 
 function cloudRuntime(root: string): Plugin {
   const candidates = process.env.IDL_CLOUD_REPOSITORY
@@ -51,7 +52,7 @@ function fixedLessonCanvas(): Plugin {
 export default defineConfig(({ mode, command }) => {
   const assetBaseUrl = loadEnv(mode, '.', '').VITE_ASSET_BASE_URL?.trim();
   return {
-    plugins: [fixedLessonCanvas(), react(), tailwindcss(), ...(command === 'serve' ? [cloudRuntime(__dirname)] : [])],
+    plugins: [fixedLessonCanvas(), creatorSkillDocuments(), react(), tailwindcss(), ...(command === 'serve' ? [cloudRuntime(__dirname)] : [])],
     publicDir: 'assets',
     build: {
       copyPublicDir: !assetBaseUrl,
