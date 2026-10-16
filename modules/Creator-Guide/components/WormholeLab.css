@@ -15,6 +15,12 @@
 .cg-wormhole-controls > * { flex: none; }
 .cg-wormhole-controls .edu-control { gap: 6px; }
 .cg-wormhole-controls .edu-control-head { gap: 6px; }
+.cg-wormhole-energy-control { position: relative; min-width: 0; max-width: 100%; }
+.cg-wormhole-energy-help { position: absolute; top: 0; right: 54px; z-index: 6; }
+.cg-wormhole-energy-help .explain-panel-trigger { width: 28px; height: 28px; }
+.cg-wormhole-energy-help .explain-panel { left: auto; right: -54px; transform: none; width: 600px; max-width: 600px; display: grid; gap: 10px; }
+.cg-wormhole-energy-help .explain-panel[hidden] { display: none; }
+.cg-wormhole-energy-help .explain-panel::before { left: auto; right: 62px; }
 .cg-wormhole-result { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--ui-border); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 
 .cg-wormhole-times { flex: none; height: 106px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: minmax(0, 1fr); gap: 12px; }

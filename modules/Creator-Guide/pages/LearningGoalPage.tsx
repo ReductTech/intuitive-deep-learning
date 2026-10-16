@@ -56,7 +56,7 @@ export function LearningGoalPage() {
   const left = { x: 800 - 290 * Math.cos(radians), y: 580 - 290 * Math.sin(radians) - 90 };
   const right = { x: 800 + 290 * Math.cos(radians), y: 580 + 290 * Math.sin(radians) - 90 };
   return <article ref={root} className="cg-goal-page" data-state={angle === 12 ? 'understanding' : started ? 'moving' : 'knowledge'} data-angle={angle} aria-labelledby="cg-goal-title">
-    <header className="cg-goal-header"><Typography as="h1" id="cg-goal-title" variant="display" tone="inherit">AI 参与甚至主导科研，学习目标或将改变</Typography><Typography variant="subtitle" tone="inherit">过去，我们需要花几年时间积累知识。未来，更重要的是快速理解和应用新知识的能力。</Typography></header>
+    <header className="cg-goal-header"><Typography as="h1" id="cg-goal-title" variant="display" tone="inherit">AI 时代，学习的重点或从积累知识转向理解与应用</Typography><Typography variant="subtitle" tone="inherit">过去，我们需要花几年时间积累知识。未来，更重要的是快速理解和应用新知识的能力。</Typography></header>
     <section className="cg-goal-side cg-goal-old" aria-labelledby="cg-goal-old-title"><Typography as="h2" id="cg-goal-old-title" variant="h2" tone="inherit" className="cg-goal-pill">工业时代</Typography><div className="cg-goal-cards"><GoalCard icon="book" text="学习多年"/><GoalCard icon="cap" text="掌握专业知识"/><GoalCard icon="gear" text="稳定应用"/></div></section>
     <section className="cg-goal-side cg-goal-new" aria-labelledby="cg-goal-new-title"><Typography as="h2" id="cg-goal-new-title" variant="h2" tone="inherit" className="cg-goal-pill">AI时代</Typography><div className="cg-goal-cards"><GoalCard icon="light" text="遇到新问题"/><GoalCard icon="search" text="快速理解"/><GoalCard icon="rocket" text="快速应用"/><GoalCard icon="refresh" text="持续迭代"/></div></section>
     <svg className="cg-goal-connections" viewBox="0 0 1600 900" aria-hidden="true">
