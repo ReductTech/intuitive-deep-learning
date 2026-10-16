@@ -1,15 +1,18 @@
+import moduleAssetOutline from '../../outlines.json';
+import { moduleAssetUrl } from '../../../shared/react/assets';
 import { useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
 import { Button, ContentBlock, RangeControl, Typography } from '../../../shared/react';
-import bird from '../../assets/training-objective/bird.png';
-import car from '../../assets/training-objective/car.png';
-import cat from '../../assets/training-objective/cat.png';
-import city from '../../assets/training-objective/city.png';
-import dog from '../../assets/training-objective/dog.png';
-import mountain from '../../assets/training-objective/mountain.png';
-import room from '../../assets/training-objective/room.png';
-import sunset from '../../assets/training-objective/sunset.png';
-import waterfall from '../../assets/training-objective/waterfall.png';
 import './TrainingObjectivePage.css';
+
+const bird = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/training-objective/bird.png');
+const car = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/training-objective/car.png');
+const cat = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/training-objective/cat.png');
+const city = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/training-objective/city.png');
+const dog = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/training-objective/dog.png');
+const mountain = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/training-objective/mountain.png');
+const room = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/training-objective/room.png');
+const sunset = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/training-objective/sunset.png');
+const waterfall = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/training-objective/waterfall.png');
 
 const realImages = [
   { src: mountain, alt: '山脉图片', x: 18, y: 29 },

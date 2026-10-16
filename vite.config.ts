@@ -49,10 +49,29 @@ function fixedLessonCanvas(): Plugin {
   };
 }
 
+/** Course images must stay on the configured asset host, not in the app bundle. */
+function externalCourseImages(): Plugin {
+  const image = /\.(?:png|jpe?g|webp|gif|svg|avif|bmp|ico)(?:\?|$)/i;
+  return {
+    name: 'external-course-images',
+    apply: 'build',
+    generateBundle(_options, bundle) {
+      const imported = [...this.getModuleIds()].filter(id => {
+        const normalized = id.replaceAll('\\', '/');
+        return /\/(?:modules|src)\//.test(normalized) && !normalized.includes('/node_modules/') && image.test(normalized);
+      });
+      const emitted = Object.values(bundle).filter(item => item.type === 'asset' && image.test(item.fileName));
+      if (imported.length || emitted.length) {
+        this.error(`课程图片必须使用 moduleAssetUrl，禁止打包进前端：\n${[...imported, ...emitted.map(item => item.fileName)].join('\n')}`);
+      }
+    },
+  };
+}
+
 export default defineConfig(({ mode, command }) => {
   const assetBaseUrl = loadEnv(mode, '.', '').VITE_ASSET_BASE_URL?.trim();
   return {
-    plugins: [fixedLessonCanvas(), creatorSkillDocuments(), react(), tailwindcss(), ...(command === 'serve' ? [cloudRuntime(__dirname)] : [])],
+    plugins: [fixedLessonCanvas(), creatorSkillDocuments(), externalCourseImages(), react(), tailwindcss(), ...(command === 'serve' ? [cloudRuntime(__dirname)] : [])],
     publicDir: 'assets',
     build: {
       copyPublicDir: !assetBaseUrl,

@@ -1,15 +1,17 @@
+import moduleAssetOutline from '../../outlines.json';
+import { moduleAssetUrl } from '../../../shared/react/assets';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { ContentBlock, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, Typography } from '../../../shared/react';
 import { analyzeHistogram } from './otsuModel';
 import './OtsuThresholdPage.css';
 const SAMPLES=[
-  {id:'coins',title:'硬币',url:new URL('../../assets/binarization-metal-tokens.png',import.meta.url).href},
-  {id:'parts',title:'零件',url:new URL('../../assets/otsu-mechanical-parts.png',import.meta.url).href},
-  {id:'document',title:'文档',url:new URL('../../assets/otsu-document.png',import.meta.url).href},
-  {id:'cat',title:'猫咪',url:new URL('../../assets/digital-image-cat-scene.png',import.meta.url).href},
+  {id:'coins',title:'硬币',url:moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/binarization-metal-tokens.png')},
+  {id:'parts',title:'零件',url:moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/otsu-mechanical-parts.png')},
+  {id:'document',title:'文档',url:moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/otsu-document.png')},
+  {id:'cat',title:'猫咪',url:moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/digital-image-cat-scene.png')},
 ];
 function histogramOf(pixels:Uint8Array|undefined){const h=Array<number>(256).fill(0);pixels?.forEach(v=>h[v]++);return h;}
-function loadGray(url:string):Promise<Uint8Array>{return new Promise((resolve,reject)=>{const image=new Image();image.onload=()=>{const c=document.createElement('canvas');c.width=SIZE;c.height=SIZE;const ctx=c.getContext('2d')!;ctx.drawImage(image,0,0,SIZE,SIZE);const rgba=ctx.getImageData(0,0,SIZE,SIZE).data;resolve(Uint8Array.from({length:SIZE*SIZE},(_,i)=>Math.round(.299*rgba[i*4]+.587*rgba[i*4+1]+.114*rgba[i*4+2])));};image.onerror=reject;image.src=url;});}
+function loadGray(url:string):Promise<Uint8Array>{return new Promise((resolve,reject)=>{const image=new Image(); image.crossOrigin = 'anonymous';image.onload=()=>{const c=document.createElement('canvas');c.width=SIZE;c.height=SIZE;const ctx=c.getContext('2d')!;ctx.drawImage(image,0,0,SIZE,SIZE);const rgba=ctx.getImageData(0,0,SIZE,SIZE).data;resolve(Uint8Array.from({length:SIZE*SIZE},(_,i)=>Math.round(.299*rgba[i*4]+.587*rgba[i*4+1]+.114*rgba[i*4+2])));};image.onerror=reject;image.src=url;});}
 const SIZE=500,HIST={x:48,y:34,width:504,height:226},SCORE=HIST;
 function paint(canvas:HTMLCanvasElement|null,pixels:Uint8Array){if(!canvas)return;const ctx=canvas.getContext('2d')!,image=ctx.createImageData(SIZE,SIZE);for(let i=0;i<pixels.length;i++){const v=pixels[i],j=i*4;image.data[j]=v;image.data[j+1]=v;image.data[j+2]=v;image.data[j+3]=255;}ctx.putImageData(image,0,0);}
 export function OtsuThresholdPage(){

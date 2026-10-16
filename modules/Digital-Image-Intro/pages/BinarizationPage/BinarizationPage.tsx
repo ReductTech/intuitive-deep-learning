@@ -1,7 +1,9 @@
+import moduleAssetOutline from '../../outlines.json';
+import { moduleAssetUrl } from '../../../shared/react/assets';
 import { useEffect, useMemo, useRef, useState, type PointerEvent } from 'react';
 import { ContentBlock, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, Typography } from '../../../shared/react';
 import './BinarizationPage.css';
-const photo = new URL('../../assets/binarization-metal-tokens.png', import.meta.url).href;
+const photo = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/binarization-metal-tokens.png');
 const SIZE=500, GRAPH={x:58,y:38,width:390,height:218};
 function paint(canvas:HTMLCanvasElement|null, pixels:Uint8Array) {
   if(!canvas)return;const ctx=canvas.getContext('2d')!, image=ctx.createImageData(SIZE,SIZE);
@@ -10,7 +12,7 @@ function paint(canvas:HTMLCanvasElement|null, pixels:Uint8Array) {
 export function BinarizationPage() {
   const [source,setSource]=useState<Uint8Array>(), [failed,setFailed]=useState(false), [threshold,setThreshold]=useState(128), [inverted,setInverted]=useState(false);
   const original=useRef<HTMLCanvasElement>(null), result=useRef<HTMLCanvasElement>(null);
-  useEffect(()=>{let active=true;const image=new Image();image.onload=()=>{if(!active)return;const c=document.createElement('canvas');c.width=SIZE;c.height=SIZE;const ctx=c.getContext('2d')!;ctx.drawImage(image,0,0,SIZE,SIZE);const rgba=ctx.getImageData(0,0,SIZE,SIZE).data;setSource(Uint8Array.from({length:SIZE*SIZE},(_,i)=>Math.round(.299*rgba[i*4]+.587*rgba[i*4+1]+.114*rgba[i*4+2])));};image.onerror=()=>{if(active)setFailed(true);};image.src=photo;return()=>{active=false;};},[]);
+  useEffect(()=>{let active=true;const image=new Image(); image.crossOrigin = 'anonymous';image.onload=()=>{if(!active)return;const c=document.createElement('canvas');c.width=SIZE;c.height=SIZE;const ctx=c.getContext('2d')!;ctx.drawImage(image,0,0,SIZE,SIZE);const rgba=ctx.getImageData(0,0,SIZE,SIZE).data;setSource(Uint8Array.from({length:SIZE*SIZE},(_,i)=>Math.round(.299*rgba[i*4]+.587*rgba[i*4+1]+.114*rgba[i*4+2])));};image.onerror=()=>{if(active)setFailed(true);};image.src=photo;return()=>{active=false;};},[]);
   const histogram=useMemo(()=>{const counts=Array<number>(256).fill(0);source?.forEach(v=>counts[v]++);return counts;},[source]);
   // Equality belongs to the upper class, consistently in pixels, counts and formula.
   const binary=useMemo(()=>source?.map(v=>(v<threshold)!==inverted?0:255),[source,threshold,inverted]);

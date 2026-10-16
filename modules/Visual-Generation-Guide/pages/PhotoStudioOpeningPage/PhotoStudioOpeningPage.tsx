@@ -1,9 +1,12 @@
-import { useState } from 'react';
+import moduleAssetOutline from '../../outlines.json';
+import { moduleAssetUrl } from '../../../shared/react/assets';
+import { useState, type CSSProperties } from 'react';
 import { Typography } from '../../../shared/react';
-import catOne from '../../assets/photo-studio-opening/cat-photo-01.png';
-import catTwo from '../../assets/photo-studio-opening/cat-photo-02.png';
-import catThree from '../../assets/photo-studio-opening/cat-photo-03.png';
 import './PhotoStudioOpeningPage.css';
+
+const catOne = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/photo-studio-opening/cat-photo-01.png');
+const catTwo = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/photo-studio-opening/cat-photo-02.png');
+const catThree = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/photo-studio-opening/cat-photo-03.png');
 
 const photos = [
   { src: catOne, alt: '戴红围巾的橘猫坐在木窗边，面向镜头。' },
@@ -25,7 +28,7 @@ export function PhotoStudioOpeningPage({ onComplete }: { onComplete?: () => void
     if (next === photos.length) onComplete?.();
   };
 
-  return <section className="vg-photo-studio" aria-label="没有相机的摄影师" data-photo-count={visibleCount}>
+  return <section className="vg-photo-studio" aria-label="没有相机的摄影师" data-photo-count={visibleCount} style={{ '--vg-studio-background': `url("${moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/photo-studio-opening/studio-background.png')}")` } as CSSProperties}>
     <header className="vg-photo-studio__head">
       <div>
         <Typography as="h1" variant="display" tone="inherit">没有相机的摄影师</Typography>

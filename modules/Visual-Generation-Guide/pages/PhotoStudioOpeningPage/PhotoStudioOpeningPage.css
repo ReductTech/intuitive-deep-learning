@@ -11,7 +11,7 @@
   gap: 36px;
   padding: 64px 66px 36px;
   color: #142b44;
-  background: #f4e9d7 url('../../assets/photo-studio-opening/studio-background.png') center / cover no-repeat;
+  background: #f4e9d7 var(--vg-studio-background) center / cover no-repeat;
 }
 
 .vg-photo-studio *, .vg-photo-studio *::before, .vg-photo-studio *::after { box-sizing: border-box; }

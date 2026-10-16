@@ -1,12 +1,14 @@
+import moduleAssetOutline from '../../outlines.json';
+import { moduleAssetUrl } from '../../../shared/react/assets';
 import { useEffect, useMemo, useRef, useState, type RefObject, type PointerEvent } from 'react';
 import { ContentBlock, Typography } from '../../../shared/react';
 import { calculate, clip, HEIGHT, makeRegionMask, regions, WIDTH, type Operation } from './arithmeticModel';
 import './ImageArithmeticPage.css';
-const background = new URL('../../assets/arithmetic-table-background.png', import.meta.url).href;
-const catPhoto = new URL('../../assets/digital-image-cat-cutout.png', import.meta.url).href;
+const background = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/arithmetic-table-background.png');
+const catPhoto = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/digital-image-cat-cutout.png');
 const operations: [Operation, string][] = [['add', '加'], ['subtract', '减'], ['multiply', '乘'], ['divide', '除']];
 function load(url: string): Promise<HTMLImageElement> {
-  return new Promise((resolve, reject) => { const image = new Image(); image.onload = () => resolve(image); image.onerror = reject; image.src = url; });
+  return new Promise((resolve, reject) => { const image = new Image(); image.crossOrigin = 'anonymous'; image.onload = () => resolve(image); image.onerror = reject; image.src = url; });
 }
 function grayscale(ctx: CanvasRenderingContext2D): Uint8Array {
   const data = ctx.getImageData(0, 0, WIDTH, HEIGHT).data;

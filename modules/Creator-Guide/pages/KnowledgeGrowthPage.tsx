@@ -1,10 +1,13 @@
+import moduleAssetOutline from '../outlines.json';
+import { moduleAssetUrl } from '../../shared/react/assets';
 import { useEffect, useId, useRef, useState, type RefObject } from 'react';
 import { Button, ContentBlock, Typography } from '../../shared/react';
-import mountainStages from '../assets/knowledge-mountain-stages.png';
-import eraPortraits from '../assets/knowledge-era-portraits.png';
 import { KnowledgeDiagramViewport, type DiagramView } from './KnowledgeDiagramViewport';
 import './KnowledgeGrowthPage.css';
 import { fieldDirections, frontierRadius, growingRadius } from './knowledgeGrowthModel';
+
+const mountainStages = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/knowledge-mountain-stages.png');
+const eraPortraits = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/knowledge-era-portraits.png');
 
 const eras = [
   { name: '亚里士多德时期', message: '有限积累，覆盖较宽的知识范围。', peak: [540, 320] },

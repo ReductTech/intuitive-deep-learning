@@ -1,9 +1,11 @@
+import moduleAssetOutline from '../../outlines.json';
+import { moduleAssetUrl } from '../../../shared/react/assets';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { ContentBlock, Typography } from '../../../shared/react';
 import './DigitizationPipelinePage.css';
 
 const SIDE = 20;
-const photo = new URL('../../assets/digital-image-cat-scene.png', import.meta.url).href;
+const photo = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/digital-image-cat-scene.png');
 type RGB = [number, number, number];
 const tuple = (rgb: RGB) => `[${rgb.join(',')}]`;
 
@@ -44,7 +46,7 @@ export function DigitizationPipelinePage() {
   }, [selected, pixels, crop]);
   useEffect(() => {
     let active = true;
-    const image = new Image();
+    const image = new Image(); image.crossOrigin = 'anonymous';
     image.onload = () => {
       if (!active) return;
       const source = document.createElement('canvas'); source.width = source.height = SIDE;

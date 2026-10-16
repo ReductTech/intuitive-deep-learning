@@ -23,7 +23,7 @@ export function ColorImageBlurPage() {
   const [phase, setPhase] = useState(3), [playing, setPlaying] = useState(false), [error, setError] = useState(false);
   useEffect(() => {
     let cancelled = false;
-    const image = new Image();
+    const image = new Image(); image.crossOrigin = 'anonymous';
     image.onload = () => {
       if (cancelled) return;
       const canvas = document.createElement('canvas'); canvas.width = N; canvas.height = N;

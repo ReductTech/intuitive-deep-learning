@@ -1,9 +1,11 @@
+import moduleAssetOutline from '../../outlines.json';
+import { moduleAssetUrl } from '../../../shared/react/assets';
 import { useEffect, useRef, useState } from 'react';
 import { ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from '../../../shared/react';
 import { applyMask, defaults, HEIGHT, WIDTH, type Operation } from './maskModel';
 import './MasksRoiPage.css';
-const background = new URL('../../assets/roi-fruit-background.png', import.meta.url).href;
-const applePhoto = new URL('../../assets/roi-apple-cutout.png', import.meta.url).href;
+const background = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/roi-fruit-background.png');
+const applePhoto = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/roi-apple-cutout.png');
 const modes: [Operation, string][] = [['brightness', '亮度'], ['contrast', '对比度'], ['gamma', 'Gamma'], ['threshold', '阈值']];
 const settings: Record<Operation, { label: string; min: number; max: number; step: number }> = {
   brightness: { label: '亮度调整', min: -100, max: 100, step: 1 },
@@ -12,7 +14,7 @@ const settings: Record<Operation, { label: string; min: number; max: number; ste
   threshold: { label: '阈值调整', min: 0, max: 255, step: 1 },
 };
 type Source = { pixels: Uint8ClampedArray; mask: Uint8Array; roi: { x: number; y: number; width: number; height: number } };
-const load = (url: string) => new Promise<HTMLImageElement>((resolve, reject) => { const image = new Image(); image.onload = () => resolve(image); image.onerror = reject; image.src = url; });
+const load = (url: string) => new Promise<HTMLImageElement>((resolve, reject) => { const image = new Image(); image.crossOrigin = 'anonymous'; image.onload = () => resolve(image); image.onerror = reject; image.src = url; });
 function paint(canvas: HTMLCanvasElement | null, pixels: Uint8ClampedArray) {
   if (!canvas) return;
   const ctx = canvas.getContext('2d')!, image = ctx.createImageData(WIDTH, HEIGHT); image.data.set(pixels); ctx.putImageData(image, 0, 0);

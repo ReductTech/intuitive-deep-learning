@@ -1,7 +1,9 @@
+import moduleAssetOutline from '../../outlines.json';
+import { moduleAssetUrl } from '../../../shared/react/assets';
 import { useEffect, useRef, useState } from 'react';
 import { ContentBlock, Typography } from '../../../shared/react';
 import './ImageHistogramsPage.css';
-const photo = new URL('../../assets/digital-image-cat-scene.png', import.meta.url).href;
+const photo = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/digital-image-cat-scene.png');
 const COLS = 80, ROWS = 64, TOTAL = COLS * ROWS;
 const STAGE_W = 1500, STAGE_H = 590;
 const IMAGE = { x: 20, y: 40, width: 600, height: 480 };
@@ -18,7 +20,7 @@ export function ImageHistogramsPage() {
   const [phase, setPhase] = useState<Phase>('idle'), [progress, setProgress] = useState({ sent: 0, arrived: 0 }), [counts, setCounts] = useState<number[]>(Array(256).fill(0));
   const canvas = useRef<HTMLCanvasElement>(null), engine = useRef<Engine>(fresh());
   useEffect(() => {
-    let active = true; const image = new Image();
+    let active = true; const image = new Image(); image.crossOrigin = 'anonymous';
     image.onload = () => {
       if (!active) return;
       const small = document.createElement('canvas'); small.width = COLS; small.height = ROWS;

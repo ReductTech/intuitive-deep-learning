@@ -1,10 +1,13 @@
+import moduleAssetOutline from '../../outlines.json';
+import { moduleAssetUrl } from '../../../shared/react/assets';
 import { useLecturePlayback } from '../../components/LecturePlayback';
 import { useEffect, useRef, useState } from 'react';
 import { ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from '../../../shared/react';
-import x0 from '../../assets/forward-derivation/x0.png';
-import x1 from '../../assets/forward-derivation/x1.png';
-import x2 from '../../assets/forward-derivation/x2.png';
 import './ReverseTrainingPathPage.css';
+
+const x0 = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/forward-derivation/x0.png');
+const x1 = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/forward-derivation/x1.png');
+const x2 = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/forward-derivation/x2.png');
 
 const stages = [
   '先用前向加噪，得到一对相邻的带噪图像。',

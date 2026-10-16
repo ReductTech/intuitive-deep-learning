@@ -1,11 +1,14 @@
+import moduleAssetOutline from '../../outlines.json';
+import { moduleAssetUrl } from '../../../shared/react/assets';
 import { useLecturePlayback } from '../../components/LecturePlayback';
 import { useEffect, useRef } from 'react';
 import { ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from '../../../shared/react';
-import x0 from '../../assets/forward-derivation/x0.png';
-import x1 from '../../assets/forward-derivation/x1.png';
-import xt from '../../assets/forward-derivation/xt.png';
-import noise from '../../assets/two-processes/xt.jpg';
 import './ReverseInferencePage.css';
+
+const x0 = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/forward-derivation/x0.png');
+const x1 = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/forward-derivation/x1.png');
+const xt = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/forward-derivation/xt.png');
+const noise = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/two-processes/xt.jpg');
 
 const steps = [
   '生成从第 T 步的纯噪声开始。',

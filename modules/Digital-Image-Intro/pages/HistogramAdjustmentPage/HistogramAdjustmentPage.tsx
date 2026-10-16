@@ -1,8 +1,10 @@
+import moduleAssetOutline from '../../outlines.json';
+import { moduleAssetUrl } from '../../../shared/react/assets';
 import { useEffect, useMemo, useRef, useState, type PointerEvent } from 'react';
 import { ContentBlock, Typography } from '../../../shared/react';
 import { clamp, curveValue, histogram, presetPoints, type Point, type Preset } from './curveModel';
 import './HistogramAdjustmentPage.css';
-const photo = new URL('../../assets/digital-image-cat-scene.png', import.meta.url).href;
+const photo = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/digital-image-cat-scene.png');
 const WIDTH = 600, HEIGHT = 480;
 const GRAPH = { x: 110, y: 54, width: 532, height: 345 }, GW = 700, GH = 480;
 const presets: [Preset, string][] = [['shadows', '提亮暗部'], ['contrast', '增强对比'], ['highlights', '压暗亮部'], ['invert', '反相'], ['identity', '重置']];
@@ -17,7 +19,7 @@ export function HistogramAdjustmentPage() {
   const [selected, setSelected] = useState(2), [split, setSplit] = useState(50), [showResultHistogram, setShowResultHistogram] = useState(true);
   const before = useRef<HTMLCanvasElement>(null), after = useRef<HTMLCanvasElement>(null), compare = useRef<HTMLDivElement>(null), splitDragging = useRef(false);
   useEffect(() => {
-    let active = true; const image = new Image();
+    let active = true; const image = new Image(); image.crossOrigin = 'anonymous';
     image.onload = () => {
       if (!active) return;
       const canvas = document.createElement('canvas'); canvas.width = WIDTH; canvas.height = HEIGHT; const ctx = canvas.getContext('2d')!;

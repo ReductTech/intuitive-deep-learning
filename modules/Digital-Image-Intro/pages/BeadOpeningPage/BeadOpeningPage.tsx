@@ -49,7 +49,7 @@ export function BeadOpeningPage() {
     setSource(null);
     setPosition(null);
     setError('');
-    const image = new Image();
+    const image = new Image(); image.crossOrigin = 'anonymous';
     image.onload = () => {
       if (!active) return;
       try { setSource(photographCanvas(image)); } catch { setError('无法读取这张照片，请换一张。'); }

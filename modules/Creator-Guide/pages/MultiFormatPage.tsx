@@ -1,10 +1,13 @@
+import moduleAssetOutline from '../outlines.json';
+import { moduleAssetUrl } from '../../shared/react/assets';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { Button, ContentBlock, Typography } from '../../shared/react';
-import biological from '../assets/multi-format/biological-structure.png';
-import combination from '../assets/multi-format/decision-bridge.png';
-import weights from '../assets/multi-format/weighted-contribution.png';
-import activation from '../assets/multi-format/activation-catalog.png';
 import './MultiFormatPage.css';
+
+const biological = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/multi-format/biological-structure.png');
+const combination = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/multi-format/decision-bridge.png');
+const weights = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/multi-format/weighted-contribution.png');
+const activation = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/multi-format/activation-catalog.png');
 
 const lessons = [
   { title: '从生物到人工神经元', image: biological, steps: [

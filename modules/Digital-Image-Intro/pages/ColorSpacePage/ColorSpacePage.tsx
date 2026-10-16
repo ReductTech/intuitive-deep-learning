@@ -1,8 +1,10 @@
+import moduleAssetOutline from '../../outlines.json';
+import { moduleAssetUrl } from '../../../shared/react/assets';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { ContentBlock, Typography } from '../../../shared/react';
 import { adjust, defaults, fromRgb, toRgb, type Space, type Triple } from './colorModel';
 import './ColorSpacePage.css';
-const photo = new URL('../../assets/color-space-macaw.png', import.meta.url).href;
+const photo = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/color-space-macaw.png');
 const WIDTH = 720, HEIGHT = 540;
 const spaces: Space[] = ['RGB', 'HSV', 'YCbCr', 'Lab'];
 const labels: Record<Space, [string, string, string][]> = {
@@ -18,7 +20,7 @@ export function ColorSpacePage() {
  const [source, setSource] = useState<Uint8ClampedArray>(), [compare, setCompare] = useState(false), [failed, setFailed] = useState(false);
  const canvas = useRef<HTMLCanvasElement>(null);
  useEffect(() => {
-  let active = true; const image = new Image();
+  let active = true; const image = new Image(); image.crossOrigin = 'anonymous';
   image.onload = () => { if (!active) return; const c = document.createElement('canvas'); c.width = WIDTH; c.height = HEIGHT; const ctx = c.getContext('2d')!; ctx.drawImage(image, 0, 0, WIDTH, HEIGHT); setSource(ctx.getImageData(0, 0, WIDTH, HEIGHT).data); };
   image.onerror = () => { if (active) setFailed(true); }; image.src = photo;
   return () => { active = false; };

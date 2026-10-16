@@ -1,3 +1,5 @@
+import moduleAssetOutline from '../../outlines.json';
+import { moduleAssetUrl } from '../../../shared/react/assets';
 import {
   useRef,
   useState,
@@ -6,16 +8,17 @@ import {
   type PointerEvent as ReactPointerEvent,
 } from 'react';
 import { ContentBlock, Typography } from '../../../shared/react';
-import faceOne from '../../assets/distribution-modeling/face-1.png';
-import faceTwo from '../../assets/distribution-modeling/face-2.png';
-import faceThree from '../../assets/distribution-modeling/face-3.png';
-import faceFour from '../../assets/distribution-modeling/face-4.png';
-import faceFive from '../../assets/distribution-modeling/face-5.png';
-import faceSix from '../../assets/distribution-modeling/face-6.png';
-import anomalyThreeEyes from '../../assets/distribution-modeling/anomaly-three-eyes.png';
-import anomalyRandomFeatures from '../../assets/distribution-modeling/anomaly-random-features.png';
-import anomalyFaceCar from '../../assets/distribution-modeling/anomaly-face-car.png';
 import './DistributionViewPage.css';
+
+const faceOne = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/distribution-modeling/face-1.png');
+const faceTwo = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/distribution-modeling/face-2.png');
+const faceThree = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/distribution-modeling/face-3.png');
+const faceFour = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/distribution-modeling/face-4.png');
+const faceFive = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/distribution-modeling/face-5.png');
+const faceSix = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/distribution-modeling/face-6.png');
+const anomalyThreeEyes = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/distribution-modeling/anomaly-three-eyes.png');
+const anomalyRandomFeatures = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/distribution-modeling/anomaly-random-features.png');
+const anomalyFaceCar = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/distribution-modeling/anomaly-face-car.png');
 
 interface Point {
   x: number;

@@ -1,11 +1,14 @@
+import moduleAssetOutline from '../../outlines.json';
+import { moduleAssetUrl } from '../../../shared/react/assets';
 import { useLecturePlayback } from '../../components/LecturePlayback';
 import { useEffect, useRef } from 'react';
 import { ContentBlock, Typography } from '../../../shared/react';
-import x0 from '../../assets/two-processes/x0.jpg';
-import x1 from '../../assets/two-processes/x1.jpg';
-import xt from '../../assets/two-processes/xt.jpg';
-import xT from '../../assets/two-processes/xt.jpg';
 import './TwoProcessesPage.css';
+
+const x0 = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/two-processes/x0.jpg');
+const x1 = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/two-processes/x1.jpg');
+const xt = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/two-processes/xt.jpg');
+const xT = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/two-processes/xt.jpg');
 
 type Phase = 'ready' | 'forward' | 'forward-done' | 'reverse' | 'complete';
 

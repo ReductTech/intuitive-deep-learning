@@ -1,12 +1,15 @@
+import moduleAssetOutline from '../../outlines.json';
+import { moduleAssetUrl } from '../../../shared/react/assets';
 import { useMemo, useRef, useState } from 'react';
 import { Button, ContentBlock, Typography } from '../../../shared/react';
-import sampleOne from '../../assets/conditional-sampling/sample-1.png';
-import sampleTwo from '../../assets/conditional-sampling/sample-2.png';
-import sampleThree from '../../assets/conditional-sampling/sample-3.png';
-import sampleFour from '../../assets/conditional-sampling/sample-4.png';
-import sampleFive from '../../assets/conditional-sampling/sample-5.png';
-import sampleSix from '../../assets/conditional-sampling/sample-6.png';
 import './ConditionalSamplingPage.css';
+
+const sampleOne = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/conditional-sampling/sample-1.png');
+const sampleTwo = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/conditional-sampling/sample-2.png');
+const sampleThree = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/conditional-sampling/sample-3.png');
+const sampleFour = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/conditional-sampling/sample-4.png');
+const sampleFive = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/conditional-sampling/sample-5.png');
+const sampleSix = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/conditional-sampling/sample-6.png');
 
 type ConditionId = 'grass' | 'small' | 'fluffy';
 

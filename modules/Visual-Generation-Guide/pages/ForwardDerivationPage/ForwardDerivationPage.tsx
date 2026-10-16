@@ -1,11 +1,14 @@
+import moduleAssetOutline from '../../outlines.json';
+import { moduleAssetUrl } from '../../../shared/react/assets';
 import { useEffect, useRef, type ReactNode } from 'react';
 import { ContentBlock, MathFormulaStatic, Typography } from '../../../shared/react';
 import { useLecturePlayback } from '../../components/LecturePlayback';
-import x0 from '../../assets/forward-derivation/x0.png';
-import x1 from '../../assets/forward-derivation/x1.png';
-import x2 from '../../assets/forward-derivation/x2.png';
-import xt from '../../assets/forward-derivation/xt.png';
 import './ForwardDerivationPage.css';
+
+const x0 = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/forward-derivation/x0.png');
+const x1 = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/forward-derivation/x1.png');
+const x2 = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/forward-derivation/x2.png');
+const xt = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/forward-derivation/xt.png');
 
 type Mode = 'two-step' | 'merge' | 'direct';
 export interface ForwardDerivationPageProps { onComplete?: () => void; }

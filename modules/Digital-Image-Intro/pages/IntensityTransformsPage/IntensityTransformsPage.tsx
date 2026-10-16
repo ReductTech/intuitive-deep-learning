@@ -1,8 +1,10 @@
+import moduleAssetOutline from '../../outlines.json';
+import { moduleAssetUrl } from '../../../shared/react/assets';
 import { useEffect, useRef, useState } from 'react';
 import { ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from '../../../shared/react';
 import { initialParameters, transformGray, type Parameters, type Transform } from './intensityModel';
 import './IntensityTransformsPage.css';
-const photo = new URL('../../assets/digital-image-cat-scene.png', import.meta.url).href;
+const photo = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/digital-image-cat-scene.png');
 const WIDTH = 480, HEIGHT = 400;
 const modes: [Transform, string][] = [['linear', '线性变换'], ['log', '对数变换'], ['gamma', 'Gamma 变换']];
 const samples = [{ r: .1, name: '暗部', color: '#e34c42' }, { r: .5, name: '中间调', color: '#239a50' }, { r: .9, name: '亮部', color: '#8146cf' }];
@@ -28,7 +30,7 @@ export function IntensityTransformsPage() {
  const [source, setSource] = useState<Uint8ClampedArray>(), [failed, setFailed] = useState(false);
  const original = useRef<HTMLCanvasElement>(null), result = useRef<HTMLCanvasElement>(null);
  useEffect(() => {
-  let active = true; const image = new Image();
+  let active = true; const image = new Image(); image.crossOrigin = 'anonymous';
   image.onload = () => {
    if (!active) return;
    const canvas = document.createElement('canvas'); canvas.width = WIDTH; canvas.height = HEIGHT; const ctx = canvas.getContext('2d')!;
