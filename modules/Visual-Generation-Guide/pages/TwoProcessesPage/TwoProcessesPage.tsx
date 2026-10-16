@@ -4,7 +4,7 @@ import { ContentBlock, Typography } from '../../../shared/react';
 import x0 from '../../assets/two-processes/x0.jpg';
 import x1 from '../../assets/two-processes/x1.jpg';
 import xt from '../../assets/two-processes/xt.jpg';
-import xT from '../../assets/two-processes/xT.jpg';
+import xT from '../../assets/two-processes/xt.jpg';
 import './TwoProcessesPage.css';
 
 type Phase = 'ready' | 'forward' | 'forward-done' | 'reverse' | 'complete';
