@@ -1,0 +1,39 @@
+.vbrl-experience-panel { display: grid; grid-template-rows: 64px minmax(0, 1fr); min-height: 0; border: 1px solid #d9e7f6; border-radius: var(--ui-radius-lg); background: #fff; box-shadow: var(--ui-shadow-soft); }
+.vbrl-experience-panel :is(div, section, header, figure, button, table, p, svg, img) { min-width: 0; max-width: 100%; }
+.vbrl-experience-panel__head { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 6px 20px; border-radius: 17px 17px 0 0; background: #458fe3; color: white; }
+.vbrl-experience-panel__head .math-formula { color: inherit; }
+.vbrl-experience-panel__head .edu-btn { padding: 3px 12px; min-height: 0; }
+.vbrl-experience-panel__body { display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: 12px; padding: 16px; min-height: 0; }
+.vbrl-experience-panel__scene { display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr); align-items: start; gap: 18px; min-height: 0; }
+.vbrl-experience-map-column { display: grid; gap: 8px; align-content: start; }
+.vbrl-experience-map.vbrl-map { width: min(100%, var(--experience-map-height, 310px)); gap: 0; }
+.vbrl-experience-map .vbrl-map__frame { height: var(--experience-map-height, 310px); padding: 8px; border: 1px solid #d8e5f2; background: #f8fbff; border-radius: var(--ui-radius-lg); }
+.vbrl-experience-map .vbrl-map__board { height: 100%; aspect-ratio: auto; }
+.vbrl-experience-map .vbrl-map__cell img[alt="机器人"] { display: none; }
+.vbrl-experience-map .vbrl-map__cell img { width: 94%; height: 94%; }
+.vbrl-experience-map .vbrl-map__cell .vbrl-map__marker-art { width: 94%; height: 94%; }
+.vbrl-experience-map .vbrl-map__cell.is-selected { outline-color: #2875c5; }
+.vbrl-experience-map__overlay { position: absolute; inset: 0; pointer-events: none; z-index: 4; }
+.vbrl-experience-map__overlay > svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.vbrl-experience-map__overlay polyline { fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.vbrl-experience-map__robot { position: absolute; left: calc(var(--experience-col) * (100% + 8px) / 7); top: calc(var(--experience-row) * (100% + 8px) / 7); width: calc((100% - 48px) / 7); height: calc((100% - 48px) / 7); display: grid; place-items: center; transition: left .09s linear, top .09s linear; }
+.vbrl-experience-map__robot img { width: 85%; height: 85%; object-fit: contain; }
+.vbrl-experience-map__robot.is-arrived img { width: 60%; height: 60%; align-self: start; justify-self: start; }
+.vbrl-experience-map__robot.is-trapped img { width: 45%; height: 45%; align-self: start; justify-self: start; }
+.vbrl-experience-readout { min-height: 79px; }
+.vbrl-experience-results { display: grid; align-content: start; gap: 10px; }
+.vbrl-experience-policy-copy { white-space: pre-line; min-height: 79px; }
+.vbrl-experience-estimate { display: grid; gap: 0; padding: 8px 10px; border-radius: var(--ui-radius-md); background: #e7f2ff; }
+.vbrl-experience-estimate .math-formula-block { margin: 0; padding: 0; }
+.vbrl-experience-estimate .math-formula { color: #2476cc; }
+.vbrl-experience-distribution { display: grid; gap: 4px; }
+.vbrl-experience-plot { position: relative; height: 120px; margin: 0 14px; border-bottom: 2px solid #a9c9ec; display: grid; align-items: center; }
+.vbrl-experience-mean-line { position: absolute; top: 0; bottom: 0; border-left: 2px dashed #478fde; }
+.vbrl-experience-dot.edu-btn { position: absolute; display: block; width: 15px; height: 15px; min-height: 0; padding: 0; border: 1px solid white; border-radius: 50%; background: var(--ui-success); box-shadow: none; transform: translateX(-50%); }
+.vbrl-experience-dot.edu-btn.is-selected { box-shadow: 0 0 0 3px #2476cc44; }
+.vbrl-experience-dot.edu-btn:hover { transform: translateX(-50%); }
+.vbrl-experience-axis { position: relative; height: 40px; margin: 0 14px; }
+.vbrl-experience-axis > .ui-typography { position: absolute; transform: translateX(-50%); }
+.vbrl-experience-controls { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.vbrl-experience-controls .edu-btn { padding: 6px 12px; }
+@media (prefers-reduced-motion: reduce) { .vbrl-experience-map__robot { transition: none; } }
