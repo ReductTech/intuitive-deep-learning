@@ -159,7 +159,7 @@ export function DistributionViewPage({ onComplete }: DistributionViewPageProps) 
   return (
     <ContentBlock
       headingLevel={1}
-      className="vg-distribution-page"
+      className="vg-shared-page vg-distribution-page"
       title="什么样的图像，更可能出现在真实世界中？"
       subtitle="拖动候选图像点 x，观察它在当前人脸数据分布中的可能性如何变化。"
     >

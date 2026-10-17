@@ -4,6 +4,7 @@ import '../shared/react/styles.css';
 import '../shared/react/ui-kit.css';
 import '../shared/react/presentation.css';
 import { visualGenerationCourse } from './course';
+import './GuidePage.css';
 
 function BlogLessonCanvas({ children }: { children: ReactNode }) {
   const frameRef = useRef<HTMLDivElement>(null);
@@ -42,6 +43,7 @@ export function GuidePage() {
     return next;
   });
   return <ModuleShell
+    className="vg-blog"
     title="视觉生成：从噪声到图像"
     subtitle="从多种合理答案出发，先理解 GAN 的对抗生成，再认识 Diffusion 的加噪与去噪。"
     shellClassName="course-shell course-blog-shell"

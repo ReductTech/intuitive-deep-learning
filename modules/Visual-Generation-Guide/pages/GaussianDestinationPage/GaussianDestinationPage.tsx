@@ -98,7 +98,7 @@ export function GaussianDestinationPage({ onComplete }: GaussianDestinationPageP
     onComplete?.();
   }, [stage, onComplete]);
 
-  return <ContentBlock headingLevel={1} className="vg-gaussian-page" bodyClassName="vg-gaussian-page__body"
+  return <ContentBlock headingLevel={1} className="vg-shared-page vg-gaussian-page" bodyClassName="vg-gaussian-page__body"
     title="Diffusion 的前向加噪如何走向正态分布？"
     subtitle="从不同形状的数据分布出发，观察噪声如何抹平原有结构。">
     <section className="vg-gaussian-page__theory" aria-label="加噪目标与闭式公式">

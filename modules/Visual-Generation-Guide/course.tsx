@@ -18,6 +18,8 @@ import { GanAlternatingTrainingPage } from './pages/GanTrainingPage/GanAlternati
 import { GanPlaygroundPage } from './pages/GanPlaygroundPage/GanPlaygroundPage';
 import { DiffusionPlaygroundPage, ForwardDiffusionPlaygroundPage } from './pages/DiffusionPlaygroundPage/DiffusionPlaygroundPage';
 
+import './sharedPage.css';
+
 export interface VisualGenerationCourseItem {
   id: string;
   title: string;

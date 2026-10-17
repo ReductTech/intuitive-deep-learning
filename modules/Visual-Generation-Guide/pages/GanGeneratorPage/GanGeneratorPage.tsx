@@ -1,6 +1,6 @@
 import { useLecturePlayback } from '../../components/LecturePlayback';
 import { useEffect, useId, useMemo, useRef } from 'react';
-import { Typography } from '../../../shared/react';
+import { ContentBlock, Typography } from '../../../shared/react';
 import { useDiagramAsset } from '../../components/useDiagramAsset';
 import '../GanOverviewPage/GanOverviewPage.css';
 import './GanGeneratorPage.css';
@@ -53,7 +53,7 @@ export function GanGeneratorPage({ onComplete }: { onComplete?: () => void }) {
     onComplete?.();
   }, [onComplete, stage]);
 
-  return <section className="vg-gan vg-gan-generator" aria-label="GAN 生成器：从随机噪声到人脸" data-stage={stage}>
+  return <ContentBlock headingLevel={1} title="GAN 生成器：从随机噪声到人脸" subtitle="从简单的随机向量出发，逐层学习图像的结构与细节。" bodyClassName="vg-gan__layout" className="vg-shared-page vg-gan vg-gan-generator" aria-label="GAN 生成器：从随机噪声到人脸" data-stage={stage}>
     <div className="vg-gan__body">
       <div className="vg-gan__canvas">
         {diagramFailed ? <Typography role="alert" variant="bodySmall">图示加载失败，请刷新页面重试。</Typography> : <div className="vg-gan__diagram" dangerouslySetInnerHTML={{ __html: diagram }} />}
@@ -74,5 +74,5 @@ export function GanGeneratorPage({ onComplete }: { onComplete?: () => void }) {
         {controls}
       </div>
     </footer>
-  </section>;
+  </ContentBlock>;
 }

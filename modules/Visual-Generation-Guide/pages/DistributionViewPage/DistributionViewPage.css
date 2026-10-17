@@ -2,14 +2,7 @@
   width: 100%;
   min-width: 0;
   max-width: 100%;
-  background:
-    radial-gradient(circle at 25% 20%, rgba(var(--ui-accent-rgb), .07), transparent 28%),
-    radial-gradient(circle at 88% 22%, rgba(var(--ui-danger-rgb), .045), transparent 25%),
-    var(--ui-bg-card);
-}
 
-.course-shell .vg-distribution-page .edu-content-head {
-  margin-bottom: 14px;
 }
 
 .course-shell .vg-distribution-page .edu-content-body {
