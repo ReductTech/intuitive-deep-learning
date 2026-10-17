@@ -1,0 +1,49 @@
+.vbrl-action { display: grid; grid-template-columns: minmax(0, .4fr) minmax(0, .6fr); gap: 20px; height: 100%; min-height: 0; }
+.vbrl-action__discrete > .vbrl-teaching-panel__body { display: grid; grid-template-rows: minmax(0, 1fr) auto auto; gap: 10px; padding: 14px 16px; }
+.vbrl-action__choice-layout { display: grid; grid-template-columns: minmax(0, .7fr) minmax(0, .3fr); align-items: center; gap: 10px; min-height: 0; }
+.vbrl-action .vbrl-action__map { width: min(100%, 380px); }
+.vbrl-action__map .vbrl-map__frame { height: 380px; padding: 8px; }
+.vbrl-action__map .vbrl-map__board { height: 100%; aspect-ratio: auto; }
+.vbrl-action__map .vbrl-map__cell.is-selected { outline-color: #2875c5; }
+.vbrl-action__map .vbrl-map__cell img { width: 94%; height: 94%; }
+.vbrl-action__arrow { display: block; width: 36px; height: 36px; fill: #2c8df5; }
+.vbrl-action__compass { position: absolute; inset: 0; z-index: 4; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); grid-template-rows: repeat(7, minmax(0, 1fr)); gap: 8px; pointer-events: none; }
+.vbrl-action__map-direction.edu-btn { display: grid; place-items: center; min-height: 0; min-width: 0; padding: 2px; border: 1px solid transparent; border-radius: 7px; background: transparent; pointer-events: auto; }
+.vbrl-action__map-direction.edu-btn:is(:hover, .is-active) { transform: none; border-color: #64a8ed; background: rgba(213,235,255,.7); }
+.vbrl-action__map-direction > span { display: grid; place-items: center; width: 100%; height: 100%; }
+.vbrl-action__map-direction .vbrl-action__arrow { width: 100%; height: 100%; }
+.vbrl-action__directions { display: grid; gap: 8px; }
+.vbrl-action__direction.edu-btn { padding: 4px 8px; min-width: 0; border: 1px solid #d2e5f8; border-radius: 12px; background: #f1f7ff; }
+.vbrl-action__direction.edu-btn:is(:hover, .is-active) { transform: none; background: #e0efff; border-color: #6ba9e9; }
+.vbrl-action__direction.edu-btn > span { display: grid; grid-template-columns: 32px minmax(0, 1fr); align-items: center; gap: 6px; }
+.vbrl-action__direction-label { display: grid; justify-items: center; }
+.vbrl-action .math-formula-block { padding: 0; margin: 0; }
+.vbrl-action__direction .math-formula, .vbrl-action__mini-position .math-formula { font-size: var(--ui-type-body-small-size); }
+.vbrl-action__set { display: grid; place-items: center; padding: 10px; border-radius: 12px; background: #edf6ff; }
+.vbrl-action__transition > .vbrl-teaching-panel__body { display: grid; grid-template-rows: auto minmax(0, 1fr) auto auto; align-content: center; gap: 10px; padding: 14px 16px; }
+.vbrl-action__sequence { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr) minmax(0, .1fr)) minmax(0, 1fr); align-items: center; gap: 6px; }
+.vbrl-action__node { display: grid; align-content: center; justify-items: center; gap: 4px; min-height: 164px; padding: 8px 4px; border: 1px solid #d2e5f8; border-radius: 14px; background: #f0f7ff; }
+.vbrl-action__node > img { display: block; width: 60px; height: 54px; object-fit: contain; }
+.vbrl-action__node .vbrl-action__warehouse-art { width: 78px; height: 54px; border-radius: 8px; object-fit: cover; }
+.vbrl-action__node.is-result { background: #eef9f3; border-color: #b8e0c9; }
+.vbrl-action__node.is-blocked { background: #fff7ec; border-color: #e8ca97; }
+.vbrl-action__node .vbrl-action__selected-arrow { width: 44px; height: 44px; }
+.vbrl-action__link { justify-self: center; width: 100%; height: 24px; }
+.vbrl-action__examples { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; min-height: 0; align-items: stretch; }
+.vbrl-action__example.edu-btn { display: grid; padding: 10px 12px; min-height: 0; border: 1px solid #cfe8dc; border-radius: 14px; background: #f0faf5; text-align: left; }
+.vbrl-action__example.edu-btn > span { display: grid; gap: 8px; align-content: center; width: 100%; }
+.vbrl-action__example.edu-btn.is-collision { background: #fff8ee; border-color: #efdab9; }
+.vbrl-action__example.edu-btn:is(:hover, .is-active) { transform: none; background: #e8f7ef; border-color: #6db58d; box-shadow: inset 0 0 0 1px #6db58d; }
+.vbrl-action__example.edu-btn.is-collision:is(:hover, .is-active) { background: #fff3e1; border-color: #daa760; box-shadow: inset 0 0 0 1px #daa760; }
+.vbrl-action__example-body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: 12px; }
+.vbrl-action__mini-transition { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .25fr) minmax(0, 1fr); align-items: center; gap: 4px; }
+.vbrl-action__mini-position { display: grid; justify-items: center; align-content: center; gap: 4px; }
+.vbrl-action__mini-tile { display: grid; place-items: center; width: 58px; height: 58px; border: 1px solid #cce0f6; border-radius: 10px; background: #fff; }
+.vbrl-action__mini-tile img { display: block; width: 52px; height: 52px; object-fit: contain; }
+.vbrl-action__mini-link { width: 100%; height: 24px; }
+.vbrl-action__rule { padding: 8px 12px; border: 1px solid #d2e5f8; border-radius: 10px; background: #f0f7ff; }
+.vbrl-action__conclusion { padding: 6px 12px; border-radius: 10px; background: #edf6ff; }
+.vbrl-action__footer { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: center; }
+.vbrl-action__footer-item { display: flex; align-items: center; justify-content: center; gap: 16px; min-height: 52px; padding: 0 20px; }
+.vbrl-action__footer-item + .vbrl-action__footer-item { border-left: 1px solid #b9d7f3; }
+.vbrl-action__footer-item > img { display: block; width: 52px; height: 52px; object-fit: contain; flex: 0 0 auto; }

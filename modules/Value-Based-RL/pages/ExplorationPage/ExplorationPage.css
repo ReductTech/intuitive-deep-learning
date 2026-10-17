@@ -1,0 +1,46 @@
+.vbrl-exploration { display: grid; grid-template-columns: minmax(0, .32fr) minmax(0, .68fr); gap: 24px; height: 100%; min-height: 0; }
+.vbrl-exploration :is(section, div, figure, table, th, td, button, img, svg, math-field) { min-width: 0; max-width: 100%; }
+.vbrl-exploration .edu-btn:hover { transform: none; }
+.vbrl-exploration .math-formula-block { margin: 0; padding: 0; }
+.vbrl-exploration .math-formula { font-size: var(--ui-type-body-small-size); }
+.vbrl-exploration__warehouse { display: grid; grid-template-rows: 64px minmax(0, 1fr); min-height: 0; background: white; border: 1px solid #d9e7f6; border-radius: var(--ui-radius-lg); box-shadow: var(--ui-shadow-soft); }
+.vbrl-exploration__warehouse > .vbrl-teaching-heading { min-height: 0; }
+.vbrl-exploration__warehouse .vbrl-teaching-heading__aside { gap: 10px; }
+.vbrl-exploration__warehouse .vbrl-teaching-heading__aside .edu-btn { padding: 4px 10px; border-color: #ffffff70; background: #ffffff1f; color: white; white-space: nowrap; }
+.vbrl-exploration__map-body { display: grid; grid-template-rows: 400px minmax(0, 1fr); align-content: start; gap: 12px; padding: 14px; min-height: 0; }
+.vbrl-exploration .vbrl-exploration__map { width: min(100%, 400px); margin: 0; }
+.vbrl-exploration__map .vbrl-map__frame { height: 400px; padding: 8px; }
+.vbrl-exploration__map .vbrl-map__board { height: 100%; aspect-ratio: auto; }
+.vbrl-exploration__map .vbrl-map__cell.is-selected { outline-color: #2875c5; }
+.vbrl-exploration__map .vbrl-map__trails { opacity: .75; }
+.vbrl-exploration__metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; align-items: start; text-align: center; font-variant-numeric: tabular-nums; }
+.vbrl-exploration__metrics > div { display: grid; gap: 2px; }
+.vbrl-exploration__metrics > div + div { border-left: 1px solid #d9e7f6; }
+.vbrl-exploration__decision > .vbrl-teaching-panel__body { display: grid; grid-template-rows: 56px 84px 110px minmax(0, 1fr) 82px; gap: 10px; padding: 14px 18px; }
+.vbrl-exploration__modes { display: flex; align-items: center; gap: 12px; }
+.vbrl-exploration__modes > .ui-typography { margin-right: 8px; }
+.vbrl-exploration__modes .edu-btn { padding: 5px 18px; }
+.vbrl-exploration__decision .edu-control { min-width: 0; max-width: 100%; }
+.vbrl-exploration__allocation { display: grid; grid-template-rows: minmax(0, 1fr) 14px; gap: 8px; min-height: 0; }
+.vbrl-exploration__branch-labels { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.vbrl-exploration__branch { display: grid; grid-template-rows: 49px 39px; padding-inline: 12px; border-left: 3px solid #458fe3; background: linear-gradient(90deg, #f0f7ff, #f0f7ff00); }
+.vbrl-exploration__branch > div { display: grid; grid-template-columns: minmax(0, .65fr) minmax(0, 1.35fr); gap: 10px; align-items: center; }
+.vbrl-exploration__branch .math-formula-block { display: flex; justify-content: flex-end; }
+.vbrl-exploration__branch.is-explore { border-color: #efa04c; background: linear-gradient(90deg, #fff7ed, #fff7ed00); }
+.vbrl-exploration__branch.is-explore .math-formula { color: var(--ui-warning); }
+.vbrl-exploration__probability-bar { display: flex; height: 14px; border-radius: 6px; background: #edf6ff; overflow: hidden; }
+.vbrl-exploration__probability-bar > div { height: 100%; min-width: 0; transition: width .15s ease; }
+.vbrl-exploration__probability-bar > .is-exploit { background: #458fe3; }
+.vbrl-exploration__probability-bar > .is-explore { background: #efa04c; }
+.vbrl-exploration__actions { width: 100%; border-spacing: 0; table-layout: fixed; border: 1px solid #d4e3f4; border-radius: 10px; font-variant-numeric: tabular-nums; }
+.vbrl-exploration__actions th, .vbrl-exploration__actions td { padding: 0 4px; text-align: center; border-right: 1px solid #d4e3f4; border-bottom: 1px solid #d4e3f4; }
+.vbrl-exploration__actions tr > :last-child { border-right: 0; }
+.vbrl-exploration__actions tbody tr:last-child > * { border-bottom: 0; }
+.vbrl-exploration__actions thead { background: #edf6ff; }
+.vbrl-exploration__actions thead th > div { display: flex; align-items: center; justify-content: center; gap: 8px; }
+.vbrl-exploration__arrow { display: block; width: 22px; height: 22px; flex: 0 0 22px; fill: #2c8df5; }
+.vbrl-exploration__actions td.is-best { background: #eef9f3; box-shadow: inset 1px 0 #aed9c2, inset -1px 0 #aed9c2; }
+.vbrl-exploration__actions th.is-best .vbrl-exploration__arrow { fill: var(--ui-success); }
+.vbrl-exploration__notes { display: grid; grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 2px; align-items: center; }
+.vbrl-exploration__warehouse, .vbrl-exploration__decision { contain: size layout; }
+@media (prefers-reduced-motion: reduce) { .vbrl-exploration__probability-bar > div { transition: none; } }
