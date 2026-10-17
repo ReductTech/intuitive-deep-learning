@@ -7,10 +7,14 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "typecheck": "tsc --noEmit",
+    "test:edit-deck": "node --experimental-strip-types --test Edit-Deck/server.test.ts",
     "cache:decision": "node scripts/content/generate_decision_candidate_cache.mjs"
   },
   "dependencies": {
     "@icon-park/react": "^1.4.2",
+    "@langchain/core": "^1.2.18",
+    "@langchain/langgraph": "^1.5.0",
+    "esbuild-wasm": "^0.28.2",
     "react": "19.2.7",
     "react-dom": "19.2.7",
     "three": "^0.186.1"
@@ -22,6 +26,7 @@
     "@types/react-dom": "^19.1.6",
     "@types/three": "^0.186.0",
     "@vitejs/plugin-react": "^4.4.1",
+    "esbuild": "^0.28.2",
     "postcss": "^8.5.8",
     "tailwindcss": "^4.3.3",
     "typescript": "^5.8.3",

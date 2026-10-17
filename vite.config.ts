@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import fs from 'node:fs';
 import path from 'node:path';
+import { editDeckPlugin } from './Edit-Deck/server';
 import { creatorSkillDocuments } from './modules/Creator-Guide/skillDocumentsPlugin';
 
 function cloudRuntime(root: string): Plugin {
@@ -71,7 +72,7 @@ function externalCourseImages(): Plugin {
 export default defineConfig(({ mode, command }) => {
   const assetBaseUrl = loadEnv(mode, '.', '').VITE_ASSET_BASE_URL?.trim();
   return {
-    plugins: [fixedLessonCanvas(), creatorSkillDocuments(), externalCourseImages(), react(), tailwindcss(), ...(command === 'serve' ? [cloudRuntime(__dirname)] : [])],
+    plugins: [editDeckPlugin(), fixedLessonCanvas(), creatorSkillDocuments(), externalCourseImages(), react(), tailwindcss(), ...(command === 'serve' ? [cloudRuntime(__dirname)] : [])],
     publicDir: 'assets',
     build: {
       copyPublicDir: !assetBaseUrl,

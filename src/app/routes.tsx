@@ -1,8 +1,11 @@
+import { lazy, Suspense } from 'react';
 import { SceneDeck, type DeckDefinition } from '../../modules/shared/react/presentation';
 import { UiKitPage } from '../../modules/shared/react/routing/UiKitPage';
 import { activeModules } from './modules';
 import { type AppRoute } from './Router';
 import { HomePage } from './HomePage';
+
+const EditDeck = lazy(() => import('../../Edit-Deck/EditDeck').then(module => ({ default: module.EditDeck })));
 
 const pptModules = activeModules.filter((module) => module.pptDeck);
 const pptCatalog = pptModules.map((module) => module.pptDeck) as [DeckDefinition, ...DeckDefinition[]];
@@ -24,6 +27,7 @@ function SceneDeckPage() {
 
 export const appRoutes: AppRoute[] = [
   { path: '/', element: <HomePage /> },
+  { path: '/edit-deck', element: <Suspense fallback={<p>正在打开 Edit Deck…</p>}><EditDeck /></Suspense> },
   { path: '/shared/ui-kit', element: <UiKitPage /> },
   ...activeModules.flatMap((module) => [
     { path: module.path, element: module.element },

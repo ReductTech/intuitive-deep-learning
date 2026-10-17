@@ -16,5 +16,5 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["src", "modules", "vite.config.ts"]
+  "include": ["src", "modules", "Edit-Deck", "vite.config.ts"]
 }

@@ -35,4 +35,20 @@
 .cg-constraints-checks .ui-typography {--ui-type-body-small-size:20px;color:#455e88;white-space:nowrap;}
 .cg-constraints-check {display:grid;place-items:center;flex:none;width:25px;height:25px;border-radius:50%;background:currentColor;position:relative;color:inherit;}
 .cg-constraints-check::after {content:'✓';position:absolute;color:white;}
+.cg-constraints-group-heading {display:flex;align-items:center;justify-content:flex-start;gap:12px;}
+.cg-constraints-example-button.edu-btn {flex:none;min-height:30px;padding:3px 8px;border-radius:8px;border-color:color-mix(in srgb,currentColor 20%,transparent);background:#ffffffa8;color:inherit;cursor:help;}
+.cg-constraints-example-button:hover,.cg-constraints-example-button[aria-expanded="true"] {background:white;box-shadow:0 3px 10px #20345414;}
+.cg-constraints-preview {position:absolute;left:42px;width:960px;z-index:30;padding:22px;border:1px solid #cad8eb;border-radius:18px;background:#fff;box-shadow:0 20px 64px #10245138;animation:cg-constraints-preview-in .14s ease-out;}
+.cg-constraints-preview-heading {display:flex;align-items:center;justify-content:space-between;gap:14px;}
+.cg-constraints-preview-rule {margin-top:10px;}
+.cg-constraints-preview-labels,.cg-constraints-preview-captions {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;}
+.cg-constraints-preview-labels {margin:16px 0 8px;}
+.cg-constraints-preview-labels>* {padding:6px 12px;border-radius:7px;background:#fff6e9;}
+.cg-constraints-preview-labels>*:last-child {background:#eaf8f1;}
+.cg-constraints-preview-images {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;}
+.cg-constraints-preview-images img {display:block;width:100%;height:auto;aspect-ratio:16 / 9;object-fit:contain;background:#f7faff;border:1px solid #dae6f4;border-radius:10px;}
+.cg-constraints-ablation-note {margin-top:14px;padding-top:10px;border-top:1px solid #dae4f0;}
+.cg-constraints-preview-captions {margin-top:12px;}
+@keyframes cg-constraints-preview-in {from{opacity:0;}to{opacity:1;}}
+@media (prefers-reduced-motion:reduce){.cg-constraints-preview{animation:none;}}
 

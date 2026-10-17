@@ -19,3 +19,4 @@ setting.json
 
 # Temporary files and directories whose names start with .TMP (any casing)
 .[Tt][Mm][Pp]*
+/Creator-Showcase

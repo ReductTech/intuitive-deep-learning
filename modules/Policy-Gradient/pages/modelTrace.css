@@ -1,0 +1,7 @@
+.pg-tr-model .pg-tr-aligned-probs>.edu-btn{display:flex;justify-content:space-between;align-items:center;gap:5px;padding:2px 4px;min-height:0;height:100%;border:2px solid transparent;box-shadow:none;background:var(--ui-bg-soft);border-radius:8px;color:var(--ui-text-main)}
+.pg-tr-model .pg-tr-aligned-probs>.edu-btn.is-traced{border-color:var(--ui-accent-alt);background:rgba(var(--ui-accent-alt-rgb),.1)}
+.pg-tr-model .pg-tr-aligned-scores>div{border-radius:6px;padding:3px 0}
+.pg-tr-model .pg-tr-aligned-scores>.is-traced{background:rgba(var(--ui-accent-alt-rgb),.14);outline:1px solid var(--ui-accent-alt)}
+.pg-tr-model .pg-tr-neuron.is-output.is-traced{background:var(--ui-bg-card);border-color:var(--ui-accent-alt);box-shadow:0 0 0 3px rgba(var(--ui-accent-alt-rgb),.12)}
+
+.pg-tr-model .pg-tr-aligned-probs>.edu-btn>span{display:flex;align-items:center;justify-content:space-between;gap:4px;width:100%;min-width:0;max-width:100%}.pg-tr-model .pg-tr-aligned-softmax{white-space:nowrap}
