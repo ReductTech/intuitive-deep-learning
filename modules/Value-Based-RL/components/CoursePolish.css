@@ -1,0 +1,17 @@
+/* Course-owned composition, shared typography and controls keep their own metrics. */
+.vbrl-lesson { background: #f7fbff; }
+.vbrl-lesson .vbrl-page-footer { background: #edf6ff; border: 1px solid #cfe0f4; border-radius: var(--ui-radius-lg); }
+.vbrl-teaching-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 56px; padding: 4px 18px; background: #458fe3; color: white; border-radius: 17px 17px 0 0; min-width: 0; max-width: 100%; }
+.vbrl-teaching-heading > .ui-typography { color: inherit; }
+.vbrl-teaching-heading__aside { display: flex; align-items: center; gap: 16px; min-width: 0; max-width: 100%; }
+.vbrl-teaching-heading__aside > .ui-typography { display: flex; align-items: center; gap: 6px; color: white; white-space: nowrap; }
+.vbrl-lesson .vbrl-return-layout { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; height: 100%; min-height: 0; }
+.vbrl-lesson .vbrl-return-map-panel > .vbrl-teaching-panel__body { display: grid; align-content: center; justify-items: center; gap: 12px; }
+.vbrl-lesson .vbrl-return-calculation > .vbrl-teaching-panel__body { display: grid; align-content: center; gap: 16px; }
+.vbrl-lesson .vbrl-return-map-panel .vbrl-map { width: min(100%, 420px); }
+.vbrl-lesson .vbrl-return-map-panel .vbrl-map__frame { height: 420px; }
+.vbrl-lesson .vbrl-return-map-panel .vbrl-map__board { height: 100%; aspect-ratio: auto; }
+
+/* Interactions retain their data flow; large regions and headers provide the same visual hierarchy. */
+.vbrl-lesson :is(.vbrl-bellman__scene,.vbrl-qtable,.vbrl-single__scene,.vbrl-cycle__stage,.vbrl-epsilon__scene) { gap: 24px; align-items: stretch; }
+.vbrl-lesson :is(.vbrl-bellman__warehouse,.vbrl-bellman__explanation,.vbrl-qtable__warehouse,.vbrl-qtable__overview,.vbrl-single__region,.vbrl-cycle__warehouse,.vbrl-cycle__explanation,.vbrl-epsilon__charts,.vbrl-epsilon__route) { background: white; border: 1px solid #d9e7f6; border-radius: var(--ui-radius-lg); box-shadow: var(--ui-shadow-soft); min-height: 0; }

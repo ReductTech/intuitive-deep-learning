@@ -1,0 +1,40 @@
+.vbrl-cycle { display: grid; grid-template-rows: auto minmax(0, 1fr); gap: 20px; height: 100%; min-height: 0; }
+.vbrl-cycle .edu-btn:hover { transform: none; }
+.vbrl-cycle__toolbar { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.vbrl-cycle__stage { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.06fr); gap: 60px; align-items: center; min-height: 0; }
+.vbrl-cycle__warehouse { display: grid; justify-items: center; align-content: center; gap: 12px; min-height: 0; }
+.vbrl-cycle .vbrl-cycle__map { width: min(100%, 400px); }
+.vbrl-cycle__status { text-align: center; }
+.vbrl-cycle__explanation { display: grid; gap: 16px; align-content: center; min-height: 0; }
+.vbrl-cycle__experience { display: grid; gap: 8px; }
+.vbrl-cycle__calculation { display: grid; gap: 8px; padding: 8px 0; border-top: 1px solid var(--ui-border); border-bottom: 1px solid var(--ui-border); }
+.vbrl-cycle__table-section { display: grid; gap: 8px; }
+.vbrl-cycle__q-table { width: 100%; border-collapse: separate; border-spacing: 4px; table-layout: fixed; }
+.vbrl-cycle__q-table th, .vbrl-cycle__q-table td { text-align: center; padding: 5px 2px; border-radius: var(--ui-radius-sm); }
+.vbrl-cycle__q-table tbody td { background: var(--ui-bg-muted); }
+.vbrl-cycle__q-table .is-selected { background: color-mix(in srgb, var(--ui-accent-alt) 9%, white); }
+.vbrl-cycle__q-table tbody .is-updated { background: color-mix(in srgb, var(--ui-accent-alt) 14%, white); box-shadow: inset 0 0 0 2px var(--ui-accent-alt); }
+.vbrl-cycle__map .vbrl-map__trails { opacity: .65; }
+.vbrl-cycle__map .vbrl-map__cell:has(.vbrl-map__marker) { background: color-mix(in srgb, var(--ui-danger) 13%, white); }
+
+.vbrl-lesson.vbrl-cycle-page .vbrl-cycle { gap: 18px; }
+.vbrl-lesson.vbrl-cycle-page .vbrl-cycle__stage { grid-template-columns: minmax(0, .32fr) minmax(0, .68fr); }
+.vbrl-lesson.vbrl-cycle-page .vbrl-cycle__warehouse { grid-template-rows: 56px minmax(0, 1fr); align-content: start; gap: 0; }
+.vbrl-lesson.vbrl-cycle-page .vbrl-cycle__warehouse > .vbrl-teaching-heading { width: 100%; }
+.vbrl-lesson.vbrl-cycle-page .vbrl-cycle__map { width: min(100%, 400px); align-self: start; justify-self: start; margin: 8px 0 0 14px; }
+.vbrl-cycle__map .vbrl-map__frame { height: 400px; padding: 8px; }
+.vbrl-cycle__map .vbrl-map__board { height: 100%; aspect-ratio: auto; }
+.vbrl-cycle__map :is(.vbrl-map__policy, .vbrl-map__update-arrow) { top: 0; height: 100%; }
+.vbrl-cycle__map .vbrl-map__cell:has(img[alt="机器人"]) :is(.vbrl-map__policy, .vbrl-map__update-arrow) { top: 46%; height: 54%; }
+.vbrl-cycle__map-area { display: grid; align-content: start; gap: 8px; width: 100%; justify-self: stretch; min-width: 0; max-width: 100%; min-height: 0; }
+.vbrl-cycle__value-inspector { display: flex; align-items: center; justify-content: center; gap: 12px; width: min(400px, calc(100% - 28px)); min-height: 48px; margin-left: 14px; border-radius: 10px; background: #edf6ff; }
+.vbrl-cycle__map .vbrl-map__cell.is-selected { background: color-mix(in srgb, var(--vbrl-value-color, var(--ui-accent)) calc(var(--vbrl-value-alpha, 0) * 100%), #fbfdff); outline-color: #2875c5; }
+.vbrl-cycle__map .vbrl-map__cell.is-selected.is-updated { outline-color: var(--ui-accent-alt); }
+.vbrl-cycle__map .vbrl-map__cell.is-selected.is-goal { background: #e3f4e9; }
+.vbrl-cycle__map .vbrl-map__cell.is-selected:has(.vbrl-map__marker) { background: #fce7e9; }
+.vbrl-lesson.vbrl-cycle-page .vbrl-cycle__explanation { align-content: start; gap: 10px; padding-bottom: 10px; }
+.vbrl-lesson.vbrl-cycle-page .vbrl-cycle__explanation > :not(.vbrl-teaching-heading) { margin-inline: 18px; width: calc(100% - 36px); }
+.vbrl-lesson.vbrl-cycle-page .vbrl-cycle__calculation .math-formula-block { margin: 0; padding: 0; }
+.vbrl-lesson.vbrl-cycle-page .vbrl-cycle__calculation { padding-block: 6px; gap: 4px; }
+.vbrl-lesson.vbrl-cycle-page .vbrl-cycle__q-table th, .vbrl-lesson.vbrl-cycle-page .vbrl-cycle__q-table td { padding: 2px; }
+.vbrl-cycle__footer { display: grid; grid-template-columns: minmax(0, .46fr) minmax(0, .54fr); gap: 24px; align-items: center; }

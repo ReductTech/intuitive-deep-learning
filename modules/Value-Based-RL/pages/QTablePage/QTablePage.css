@@ -1,0 +1,74 @@
+.vbrl-qtable { display: grid; grid-template-columns: minmax(0, .43fr) minmax(0, .57fr); gap: 24px; height: 100%; min-height: 0; }
+.vbrl-qtable :is(section, div, figure, table, th, td, button, svg, img, math-field) { min-width: 0; max-width: 100%; }
+.vbrl-qtable .edu-btn:hover { transform: none; }
+.vbrl-qtable .math-formula-block { padding: 0; margin: 0; }
+.vbrl-qtable__warehouse > .vbrl-teaching-panel__body { display: grid; grid-template-rows: minmax(0, 1fr) 48px 40px; gap: 10px; padding: 14px; }
+.vbrl-qtable__scene { display: grid; grid-template-columns: minmax(0, .66fr) minmax(0, .34fr); align-items: center; gap: 14px; min-height: 0; }
+.vbrl-qtable .vbrl-qtable__map { width: min(100%, 400px); }
+.vbrl-qtable__map .vbrl-map__frame { height: 400px; padding: 8px; }
+.vbrl-qtable__map .vbrl-map__board { height: 100%; aspect-ratio: auto; }
+.vbrl-qtable__map .vbrl-map__cell:hover { transform: none; }
+.vbrl-qtable__map .vbrl-map__cell.is-selected { outline-color: #2875c5; }
+.vbrl-qtable__map .vbrl-map__cell img[alt="机器人"] { width: 68%; height: 68%; top: 0; left: 16%; }
+.vbrl-qtable__map .vbrl-map__cell:is(.is-goal, :has(.vbrl-map__marker)) img[alt="机器人"] { display: none; }
+.vbrl-qtable__map .vbrl-map__update-arrow { height: 58%; top: 42%; }
+.vbrl-qtable__map .vbrl-map__update-arrow path { stroke-width: 6; }
+.vbrl-qtable__actions { display: grid; grid-template-rows: repeat(4, minmax(0, 1fr)); gap: 10px; height: 400px; }
+.vbrl-qtable__direction.edu-btn { min-height: 0; padding: 3px 10px; border-radius: 12px; border-color: #d2e5f8; background: color-mix(in srgb, var(--vbrl-q-color) calc(var(--vbrl-q-alpha) * 100%), #f7fbff); }
+.vbrl-qtable__direction.edu-btn > span { display: grid; grid-template-columns: 32px minmax(0, 1fr); align-items: center; gap: 10px; width: 100%; }
+.vbrl-qtable__arrow { display: block; width: 28px; height: 28px; flex: 0 0 auto; fill: #2c8df5; }
+.vbrl-qtable__action-value { display: grid; gap: 2px; justify-items: start; }
+.vbrl-qtable__action-label { display: flex; align-items: center; gap: 8px; }
+.vbrl-qtable__action-value .math-formula { font-size: var(--ui-type-body-small-size); color: var(--vbrl-q-color); }
+.vbrl-qtable__direction.is-best { border-color: #73c79e; }
+.vbrl-qtable__direction.is-best .vbrl-qtable__arrow { fill: var(--ui-success); }
+.vbrl-qtable__direction.edu-btn.is-active { border-color: var(--ui-accent-alt); box-shadow: inset 0 0 0 1px var(--ui-accent-alt); }
+.vbrl-qtable__direction:disabled { opacity: .55; }
+.vbrl-qtable__state { display: flex; justify-content: center; align-items: center; gap: 12px; border-radius: 10px; background: #edf6ff; }
+.vbrl-qtable__state .math-formula { font-size: var(--ui-type-body-size); }
+.vbrl-qtable__overview { display: grid; grid-template-rows: 64px minmax(0, 1fr); }
+.vbrl-qtable__overview .vbrl-teaching-heading, .vbrl-qtable__full .vbrl-teaching-heading { min-height: 0; }
+.vbrl-qtable .vbrl-teaching-heading__aside .edu-btn { padding: 4px 12px; border-color: #ffffff70; color: white; background: #ffffff1f; white-space: nowrap; }
+.vbrl-qtable__lesson { display: grid; grid-template-rows: minmax(0, 1fr) 58px 100px 58px; gap: 12px; padding: 16px 18px; min-height: 0; }
+.vbrl-qtable__table { width: 100%; border-spacing: 0; table-layout: fixed; font-variant-numeric: tabular-nums; border: 1px solid #d4e3f4; border-radius: 10px; }
+.vbrl-qtable__table th, .vbrl-qtable__table td { padding: 0; text-align: center; width: 19%; border-right: 1px solid #d4e3f4; border-bottom: 1px solid #d4e3f4; }
+.vbrl-qtable__table tr > :first-child { width: 24%; }
+.vbrl-qtable__table tr > :last-child { border-right: 0; }
+.vbrl-qtable__table thead { background: #edf6ff; }
+.vbrl-qtable__table thead th:first-child { border-radius: 9px 0 0; }
+.vbrl-qtable__table thead th:last-child { border-radius: 0 9px 0 0; }
+.vbrl-qtable__table .edu-btn { display: block; width: 100%; max-width: 100%; min-width: 0; padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; transform: none; }
+.vbrl-qtable__table .edu-btn > span { display: grid; place-items: center; min-width: 0; max-width: 100%; }
+.vbrl-qtable__table .vbrl-qtable__column-button { height: 40px; }
+.vbrl-qtable__table :is(.vbrl-qtable__state-button, .vbrl-qtable__value-button) { min-height: 38px; }
+.vbrl-qtable__table td { background: color-mix(in srgb, var(--vbrl-q-color, var(--ui-success)) calc(var(--vbrl-q-alpha, 0) * 100%), white); }
+.vbrl-qtable__table thead .is-action-selected { background: #d7eaff; }
+.vbrl-qtable__table .is-state-selected > :is(th, td) { box-shadow: inset 0 2px #84b5e9, inset 0 -2px #84b5e9; }
+.vbrl-qtable__table .is-state-selected > th { background: #e1efff; box-shadow: inset 4px 0 #458fe3, inset 0 2px #84b5e9, inset 0 -2px #84b5e9; }
+.vbrl-qtable__table .is-state-selected > .is-best { background: color-mix(in srgb, var(--vbrl-q-color) calc(var(--vbrl-q-alpha) * 100%), #eef9f3); box-shadow: inset 0 0 0 2px #73c79e; }
+.vbrl-qtable__table .is-state-selected > .is-q-selected { outline: 2px solid var(--ui-accent-alt); outline-offset: -3px; }
+.vbrl-qtable__table .edu-btn:hover { background: #d9eaff55; }
+.vbrl-qtable__table .edu-btn:focus-visible { position: relative; z-index: 1; outline: 2px solid var(--ui-accent-alt); outline-offset: -3px; }
+.vbrl-qtable__table .is-terminal > :is(th, td) { background: #f4f6f9; }
+.vbrl-qtable__table tfoot td { height: 28px; background: white; border-bottom: 0; }
+.vbrl-qtable__reading { display: grid; grid-template-columns: minmax(0, 1fr) 22px minmax(0, 1fr) 22px minmax(0, 1.1fr); align-items: center; gap: 8px; }
+.vbrl-qtable__reading > div, .vbrl-qtable__greedy.edu-btn > span { display: flex; align-items: center; justify-content: center; gap: 8px; }
+.vbrl-qtable__step { display: grid; place-items: center; width: 30px; height: 30px; flex: 0 0 30px; border-radius: 50%; background: #458fe3; color: white; }
+.vbrl-qtable__reading > .vbrl-qtable__arrow { width: 22px; height: 22px; }
+.vbrl-qtable__greedy.edu-btn { height: 100%; min-height: 0; padding: 4px 8px; border-radius: 10px; background: #edf6ff; border-color: #bfd9f4; }
+.vbrl-qtable__decision { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); align-items: center; gap: 16px; padding: 8px 12px; border-radius: 10px; background: #edf6ff; }
+.vbrl-qtable__decision > .ui-typography { padding-left: 16px; border-left: 1px solid #cfe0f4; }
+.vbrl-qtable__decision .math-formula { font-size: var(--ui-type-body-small-size); }
+.vbrl-qtable__initial { display: flex; align-items: center; gap: 12px; padding: 8px 14px; border: 1px solid #f2d4ab; border-radius: 10px; background: #fff8ef; }
+.vbrl-qtable__initial-mark { display: grid; place-items: center; width: 30px; height: 30px; flex: 0 0 30px; border-radius: 50%; background: #ef943d; color: white; }
+.vbrl-qtable__footer { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); align-items: center; gap: 24px; min-width: 0; max-width: 100%; }
+.vbrl-qtable__footer > .ui-typography + .ui-typography { border-left: 1px solid #bdd8f1; padding-left: 24px; }
+.vbrl-qtable.is-all { grid-template-columns: minmax(0, 1fr); }
+.vbrl-qtable__full { display: grid; grid-template-rows: 64px minmax(0, 1fr); min-height: 0; background: white; border: 1px solid #d9e7f6; border-radius: var(--ui-radius-lg); box-shadow: var(--ui-shadow-soft); }
+.vbrl-qtable__tables { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); align-items: start; gap: 18px; padding: 10px 16px; min-height: 0; }
+.vbrl-qtable__table.is-complete th, .vbrl-qtable__table.is-complete td { width: 20.5%; }
+.vbrl-qtable__table.is-complete tr > :first-child { width: 18%; }
+.vbrl-qtable__table.is-complete :is(.vbrl-qtable__state-button, .vbrl-qtable__value-button) { min-height: 0; }
+.vbrl-qtable__table.is-complete .vbrl-qtable__column-button { height: 36px; }
+/* Definite PPT tracks avoid repeatedly measuring nested grids and formula contents. */
+.vbrl-qtable__warehouse, .vbrl-qtable__overview, .vbrl-qtable__lesson, .vbrl-qtable__full, .vbrl-qtable__tables { contain: size layout; }
