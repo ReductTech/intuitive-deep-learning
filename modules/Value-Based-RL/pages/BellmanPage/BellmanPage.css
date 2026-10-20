@@ -1,0 +1,33 @@
+.vbrl-bellman-theory { display: grid; grid-template-columns: minmax(0, .32fr) minmax(0, .68fr); gap: 22px; height: 100%; min-height: 0; }
+.vbrl-bellman-theory :is(div, section, p, span, img, svg, math-field) { min-width: 0; max-width: 100%; }
+.vbrl-bellman-theory .math-formula-block { margin: 0; padding: 0; }
+.vbrl-bellman-theory .math-formula { font-size: var(--ui-type-body-small-size); }
+.vbrl-bellman-theory__return > .vbrl-teaching-panel__body { display: grid; align-content: center; gap: 18px; padding: 18px 16px; }
+.vbrl-bellman-theory__return > .vbrl-teaching-panel__body > .ui-typography { text-align: center; }
+.vbrl-bellman-theory__expanded, .vbrl-bellman-theory__decomposed { display: grid; align-items: center; min-height: 94px; padding: 14px 10px; border-radius: 12px; background: #f0f7ff; }
+.vbrl-bellman-theory__expanded .math-formula { font-size: var(--ui-type-body-small-size); }
+.vbrl-bellman-theory__decomposed { background: #e6f2ff; }
+.vbrl-bellman-theory__decomposed .math-formula { font-size: var(--ui-type-body-size); }
+.vbrl-bellman-theory__extract { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.vbrl-bellman-theory__arrow { display: block; width: 24px; height: 24px; flex: 0 0 24px; fill: #2c8df5; }
+.vbrl-bellman-theory__arrow.is-down { width: 30px; height: 30px; }
+.vbrl-bellman-theory__terms { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 14px; }
+.vbrl-bellman-theory__terms > div { display: grid; grid-template-rows: 46px minmax(0, 1fr); align-content: start; gap: 4px; padding-top: 8px; border-top: 3px solid #458fe3; text-align: center; }
+.vbrl-bellman-theory__terms > div:last-child { border-color: #58b88c; }
+.vbrl-bellman-theory__terms > div:last-child .math-formula { color: var(--ui-success); }
+.vbrl-bellman-theory__right { display: grid; grid-template-rows: minmax(0, .65fr) minmax(0, .35fr); gap: 18px; min-height: 0; }
+.vbrl-bellman-theory__optimal > .vbrl-teaching-panel__body { display: grid; grid-template-rows: 70px minmax(0, 1fr) minmax(0, 1fr); gap: 10px; padding: 14px 16px; }
+.vbrl-bellman-theory__flow { display: grid; grid-template-columns: minmax(0, .9fr) 24px minmax(0, .65fr) 24px minmax(0, 1.1fr) 24px minmax(0, 1.6fr); align-items: center; gap: 6px; }
+.vbrl-bellman-theory__flow > div { display: flex; align-items: center; justify-content: center; gap: 6px; height: 100%; min-height: 0; padding: 4px 6px; border: 1px solid #d5e6f8; border-radius: 10px; background: #f0f7ff; }
+.vbrl-bellman-theory__flow img { width: 44px; height: 44px; object-fit: contain; flex-shrink: 0; }
+.vbrl-bellman-theory__relation, .vbrl-bellman-theory__deterministic { display: grid; grid-template-rows: auto minmax(0, 1fr); align-items: center; min-height: 0; gap: 2px; padding: 4px 12px; background: #f0f7ff; border-radius: 10px; }
+.vbrl-bellman-theory__deterministic { background: #eef9f3; }
+.vbrl-bellman-theory__update > .vbrl-teaching-panel__body { display: grid; grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 8px; padding: 10px 14px; }
+.vbrl-bellman-theory__target { display: grid; grid-template-columns: minmax(0, .6fr) minmax(0, 2.5fr) minmax(0, 1.4fr); align-items: center; gap: 10px; padding: 2px 10px; border-radius: 8px; background: #eef9f3; }
+.vbrl-bellman-theory__writeback { display: grid; grid-template-columns: minmax(0, .6fr) minmax(0, 3.9fr); align-items: center; gap: 10px; padding: 2px 10px; border-radius: 8px; background: #fff8ef; }
+.vbrl-bellman-theory__footer { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); align-items: center; gap: 24px; min-width: 0; max-width: 100%; }
+.vbrl-bellman-theory__footer > div { display: flex; align-items: center; justify-content: center; gap: 12px; padding-left: 24px; border-left: 1px solid #bdd8f1; min-width: 0; max-width: 100%; }
+.vbrl-bellman-theory__footer .math-formula-block { margin: 0; padding: 0; }
+.vbrl-bellman-theory__footer .math-formula { font-size: var(--ui-type-body-small-size); }
+/* All regions fill definite PPT tracks; isolate formula-driven intrinsic sizing. */
+.vbrl-bellman-theory__return, .vbrl-bellman-theory__right, .vbrl-bellman-theory__optimal, .vbrl-bellman-theory__update { contain: size layout; }

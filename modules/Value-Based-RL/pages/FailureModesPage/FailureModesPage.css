@@ -1,0 +1,32 @@
+.vbrl-reward-page .vbrl-page-footer { min-height: 56px; padding: 6px 20px; }
+.vbrl-reward { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 24px; height: 100%; min-height: 0; }
+.vbrl-reward :is(div,section,figure,button,p,span,svg,img) { min-width: 0; max-width: 100%; }
+.vbrl-reward .edu-btn:hover { transform: none; }
+.vbrl-reward-example { min-height: 0; }
+.vbrl-reward-example > .vbrl-teaching-panel { height: 100%; }
+.vbrl-reward-example .vbrl-teaching-panel__body { display: grid; grid-template-rows: 400px 43px minmax(0,1fr); gap: 8px; padding: 14px 14px 10px; }
+.vbrl-reward__scene { display: grid; grid-template-columns: minmax(0,.57fr) minmax(0,.43fr); gap: 18px; height: 400px; min-height: 0; align-items: start; }
+.vbrl-reward .vbrl-reward__map { width: min(100%,400px); margin: 0; }
+.vbrl-reward__map .vbrl-map__frame { height: 400px; padding: 8px; }
+.vbrl-reward__map .vbrl-map__board { height: 100%; aspect-ratio: auto; }
+.vbrl-reward__map .vbrl-map__cell img[alt="机器人"] { display: none; }
+.vbrl-reward__map .vbrl-map__cell .vbrl-map__marker-art { width: 88%; height: 88%; right: auto; bottom: auto; }
+.vbrl-reward__map-overlay { position: absolute; inset: 0; z-index: 4; pointer-events: none; }
+.vbrl-reward__policy-grid { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(7,minmax(0,1fr)); grid-template-rows: repeat(7,minmax(0,1fr)); gap: 8px; place-items: center; }
+.vbrl-reward__policy-arrow { width: 20px; height: 20px; opacity: .4; }
+.vbrl-reward__policy-arrow.is-travelled { opacity: 1; }
+.vbrl-reward__policy-arrow path { fill: none; stroke: var(--reward-color); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+.vbrl-reward__robot { position: absolute; left: calc(var(--reward-col) * (100% + 8px) / 7); top: calc(var(--reward-row) * (100% + 8px) / 7); width: calc((100% - 48px) / 7); height: calc((100% - 48px) / 7); display: grid; place-items: center; transition: left .26s linear,top .26s linear; z-index: 2; }
+.vbrl-reward-example[data-cursor="0"] .vbrl-reward__robot,.vbrl-reward-example[data-playing="false"] .vbrl-reward__robot { transition: none; }
+.vbrl-reward__robot img { width: 85%; height: 85%; object-fit: contain; }
+.vbrl-reward__robot.is-small img { width: 58%; height: 58%; align-self: start; justify-self: start; }
+.vbrl-reward__details { display: grid; grid-template-rows: 140px 108px minmax(0,1fr); gap: 12px; height: 400px; min-height: 0; font-variant-numeric: tabular-nums; }
+.vbrl-reward__rule { padding: 0 8px; background: #f6faff; border-radius: var(--ui-radius-sm); }
+.vbrl-reward__score { border-top: 1px solid #d9e7f6; padding: 4px 8px 0; }
+.vbrl-reward__live { padding: 0 8px; align-self: center; }
+.vbrl-reward__controls,.vbrl-reward__variants,.vbrl-reward__playback { display: flex; align-items: center; gap: 8px; }
+.vbrl-reward__controls { justify-content: space-between; gap: 12px; }
+.vbrl-reward__controls .edu-btn { padding: 1px 12px; white-space: nowrap; }
+.vbrl-reward__variants .edu-btn.is-active { border-color: var(--reward-color); background: color-mix(in srgb,var(--reward-color) 10%,white); color: var(--reward-color); }
+.vbrl-reward__explanation { align-self: center; padding-top: 4px; border-top: 1px solid #d9e7f6; white-space: pre-line; }
+@media (prefers-reduced-motion: reduce) { .vbrl-reward__robot { transition: none; } }

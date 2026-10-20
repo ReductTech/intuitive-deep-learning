@@ -5,12 +5,9 @@
   min-width: 0;
   min-height: 0;
   grid-template-rows: auto minmax(0, 1fr);
-  background: #fff;
-  padding: 25px 42px 22px;
-}
 
-.course-page-surface .vg-reverse-training .edu-content-head { margin-bottom: 10px; }
-.course-page-surface .vg-reverse-training .edu-content-title { color: #263650; }
+
+}
 .course-page-surface .vg-reverse-training .edu-content-subtitle { margin-top: 4px; color: #3468ce; }
 
 .course-page-surface .vg-reverse-training__body {

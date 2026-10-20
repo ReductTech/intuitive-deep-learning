@@ -100,7 +100,7 @@ function ForwardLesson({ mode, onComplete }: ForwardDerivationPageProps & { mode
   const { stage, controls } = useLecturePlayback(lesson.count, 1000);
   const completed = useRef(false);
   useEffect(() => { if (stage === lesson.count - 1 && !completed.current) { completed.current = true; onComplete?.(); } }, [stage, lesson.count, onComplete]);
-  return <ContentBlock headingLevel={1} title={lesson.title} subtitle={lesson.subtitle} className="vg-forward-page" bodyClassName="vg-forward-page__body" data-mode={mode} data-stage={stage}>
+  return <ContentBlock headingLevel={1} title={lesson.title} subtitle={lesson.subtitle} className="vg-shared-page vg-forward-page" bodyClassName="vg-forward-page__body" data-mode={mode} data-stage={stage}>
     <Timeline mode={mode} stage={stage} />
     <LessonBody mode={mode} stage={stage} />
     <footer className="vg-forward-page__footer">{controls}</footer>

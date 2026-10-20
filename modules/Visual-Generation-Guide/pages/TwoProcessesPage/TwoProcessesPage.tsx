@@ -64,7 +64,7 @@ export function TwoProcessesPage({ onComplete }: TwoProcessesPageProps) {
   return (
     <ContentBlock
       headingLevel={1}
-      className="vg-process-page"
+      className="vg-shared-page vg-process-page"
       bodyClassName="vg-process-page__body"
       title="Diffusion 的核心：先加噪，再学会逆转"
       subtitle="同一张人脸，两条相反的路径。先观察图像怎样变成噪声，再看噪声怎样变成图像。"

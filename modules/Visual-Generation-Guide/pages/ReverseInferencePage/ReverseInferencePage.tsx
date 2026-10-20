@@ -63,7 +63,7 @@ export function ReverseInferencePage({ onComplete }: ReverseInferencePageProps) 
 
   const focused = step >= 4;
 
-  return <ContentBlock headingLevel={1} className="vg-inference" bodyClassName="vg-inference__body"
+  return <ContentBlock headingLevel={1} className="vg-shared-page vg-inference" bodyClassName="vg-inference__body"
     title="图像生成：反向去噪怎样一步步发生？" subtitle={steps[step]}>
     <div className={`vg-inference__content${focused ? ' is-focused' : ''}`}>
       <section className="vg-inference__chain" aria-label="从纯噪声到图像的反向生成链">

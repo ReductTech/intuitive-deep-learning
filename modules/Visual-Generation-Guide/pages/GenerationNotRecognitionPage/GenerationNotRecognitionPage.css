@@ -1,13 +1,6 @@
 .course-shell .vg-generation-page {
   width: 100%;
-  background:
-    radial-gradient(circle at 78% 18%, rgba(var(--ui-success-rgb), .08), transparent 28%),
-    radial-gradient(circle at 18% 18%, rgba(var(--ui-accent-rgb), .07), transparent 30%),
-    var(--ui-bg-card);
-}
 
-.course-shell .vg-generation-page .edu-content-head {
-  margin-bottom: 14px;
 }
 
 .course-shell .vg-generation-page .edu-content-body {
@@ -128,13 +121,6 @@
   line-height: 1;
 }
 
-.course-shell .vg-generation-page__conclusion {
-  grid-column: 1 / -1;
-  border-top: 1px solid var(--ui-border);
-  padding-top: 8px;
-  text-align: center;
-}
-
 @media (max-width: 900px) {
   .course-shell .vg-generation-page__insight {
     grid-template-columns: minmax(0, 1fr);
@@ -145,10 +131,6 @@
     border-left: 0;
     padding-top: 10px;
     padding-left: 0;
-  }
-
-  .course-shell .vg-generation-page__conclusion {
-    grid-column: 1;
   }
 }
 

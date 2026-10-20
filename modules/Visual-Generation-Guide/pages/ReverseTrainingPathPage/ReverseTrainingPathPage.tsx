@@ -52,7 +52,7 @@ export function ReverseTrainingPathPage({ onComplete }: ReverseTrainingPathPageP
     onComplete?.();
   }, [stage, onComplete]);
 
-  return <ContentBlock headingLevel={1} className="vg-reverse-training" bodyClassName="vg-reverse-training__body"
+  return <ContentBlock headingLevel={1} className="vg-shared-page vg-reverse-training" bodyClassName="vg-reverse-training__body"
     title="前向加噪，如何为反向去噪提供训练路径？" subtitle={stages[stage]}>
     <div className="vg-reverse-training__main">
       <section className="vg-reverse-training__path" aria-label="前向加噪和反向训练路径">

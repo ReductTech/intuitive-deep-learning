@@ -60,24 +60,20 @@ const distributionShapes: Record<string, DistributionShape> = {
   },
 };
 
-const samples = [
-  { src: sampleOne, alt: '草地上奔跑的小型长毛犬' },
-  { src: sampleTwo, alt: '尘土中奔跑的长毛犬' },
-  { src: sampleThree, alt: '城市中奔跑的小型犬' },
-  { src: sampleFour, alt: '旷野中奔跑的长毛犬' },
-  { src: sampleFive, alt: '草地上奔跑的白色小型犬' },
-  { src: sampleSix, alt: '草地上奔跑的灰色犬' },
-] as const;
+interface SampleDefinition {
+  src: string;
+  alt: string;
+  conditions: readonly ConditionId[];
+}
 
-const sampleGroups: Record<string, number[]> = {
-  all: [0, 1, 2, 3, 4, 5],
-  grass: [0, 4, 5, 1],
-  small: [0, 2, 4, 5],
-  fluffy: [1, 3, 0, 5],
-  'grass+small': [0, 4, 5, 2],
-  'fluffy+grass': [0, 5, 1, 3],
-  'fluffy+small': [0, 3, 4, 1],
-};
+const samples: readonly SampleDefinition[] = [
+  { src: sampleOne, alt: '草地上奔跑的小型长毛犬', conditions: ['grass', 'small', 'fluffy'] },
+  { src: sampleTwo, alt: '尘土中奔跑的长毛犬', conditions: ['fluffy'] },
+  { src: sampleThree, alt: '城市中奔跑的小型犬', conditions: ['small'] },
+  { src: sampleFour, alt: '旷野中奔跑的长毛犬', conditions: ['fluffy'] },
+  { src: sampleFive, alt: '草地上奔跑的白色小型长毛犬', conditions: ['grass', 'small', 'fluffy'] },
+  { src: sampleSix, alt: '草地上奔跑的灰色犬', conditions: ['grass'] },
+];
 
 const densityDots = [
   [248, 204, 5], [312, 164, 4], [374, 234, 6], [438, 158, 4], [492, 268, 5],
@@ -104,9 +100,13 @@ export function ConditionalSamplingPage({ onComplete }: ConditionalSamplingPageP
   const activeDefinitions = conditions.filter((condition) => selected.includes(condition.id));
   const activeKey = selectionKey(selected);
   const activeShape = distributionShapes[activeKey] ?? distributionShapes.all;
-  const samplePool = sampleGroups[activeKey] ?? sampleGroups.all;
+  // A combined condition is an intersection: every displayed image must match all tags.
+  const samplePool = useMemo(
+    () => samples.flatMap((sample, index) => selected.every((condition) => sample.conditions.includes(condition)) ? [index] : []),
+    [selected],
+  );
   const visibleSampleIndexes = useMemo(
-    () => Array.from({ length: 3 }, (_, index) => samplePool[(sampleOffset + index) % samplePool.length]),
+    () => Array.from({ length: Math.min(3, samplePool.length) }, (_, index) => samplePool[(sampleOffset + index) % samplePool.length]),
     [sampleOffset, samplePool],
   );
   const selectedLabels = activeDefinitions.map((condition) => condition.label);
@@ -142,7 +142,7 @@ export function ConditionalSamplingPage({ onComplete }: ConditionalSamplingPageP
   return (
     <ContentBlock
       headingLevel={1}
-      className="vg-conditional-page"
+      className="vg-shared-page vg-conditional-page"
       bodyClassName="vg-conditional-page__body"
       title="条件如何改变生成结果的概率分布？"
       subtitle="切换条件，直接观察像素分布的形状如何改变；图像只是从这个分布中取出的样本。"

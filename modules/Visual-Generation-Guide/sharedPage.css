@@ -1,0 +1,37 @@
+/* Page composition only. Frame, header, typography and controls come from shared. */
+.course-page-surface > .edu-content-block.vg-shared-page {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 0;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+}
+
+.vg-shared-page > .edu-content-body,
+.vg-shared-page > .edu-content-head {
+  min-width: 0;
+  min-height: 0;
+  max-width: 100%;
+}
+
+.vg-gan__layout,
+.vg-photo-studio__body,
+.vg-gan-game__body {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  min-width: 0;
+  min-height: 0;
+}
+
+.course-page-surface .vg-gan__canvas {
+  width: auto;
+  max-height: 100%;
+}
+
+.course-page-surface .vg-gan__footer {
+  margin: 0;
+  padding: 0;
+}

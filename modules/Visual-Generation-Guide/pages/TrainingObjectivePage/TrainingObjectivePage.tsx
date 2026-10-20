@@ -150,7 +150,7 @@ export function TrainingObjectivePage({ onComplete }: TrainingObjectivePageProps
   return (
     <ContentBlock
       headingLevel={1}
-      className="vg-training-page"
+      className="vg-shared-page vg-training-page"
       bodyClassName="vg-training-page__body"
       title="生成模型到底在训练什么？"
       subtitle="用有限训练图片，估计近乎无限的真实世界图像分布。"

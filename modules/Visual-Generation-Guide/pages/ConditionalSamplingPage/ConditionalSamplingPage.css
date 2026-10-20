@@ -2,14 +2,7 @@
   width: 100%;
   min-width: 0;
   max-width: 100%;
-  background:
-    radial-gradient(circle at 18% 12%, rgba(var(--ui-accent-rgb), .07), transparent 27%),
-    radial-gradient(circle at 86% 76%, rgba(var(--ui-success-rgb), .06), transparent 25%),
-    var(--ui-bg-card);
-}
 
-.course-shell .vg-conditional-page .edu-content-head {
-  margin-bottom: 12px;
 }
 
 .course-shell .vg-conditional-page__body {
