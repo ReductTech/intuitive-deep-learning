@@ -1,0 +1,23 @@
+.cg-constraints-visual-options [aria-pressed="true"] {background:#eaf3ff;border-color:#7398ee;color:#123ecb;}
+
+.cg-route-simulation {padding-top:20px;color:#213b61;--cg-route-accent:#d95b1b;--ui-type-h3-size:36px;--ui-type-h3-line-height:1.2;--ui-type-body-size:28px;--ui-type-body-line-height:1.25;--ui-type-body-small-size:24px;--ui-type-body-small-line-height:1.25;}
+.cg-route-accent {color:var(--cg-route-accent);}
+.cg-route-task {margin:0 0 16px;}
+.cg-route-row {display:grid;grid-template-columns:minmax(0,130px) minmax(0,1fr) minmax(0,155px);gap:18px;align-items:center;min-height:150px;padding:10px 0;}
+.cg-route-row.is-routed {background:#fff3e7;border-radius:16px;margin-top:12px;}
+.cg-route-row-label {white-space:nowrap;}
+.cg-route-row.is-routed>.cg-route-row-label {color:var(--cg-route-accent);}
+.cg-route-documents {display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;align-items:center;}
+.cg-route-document-item {display:flex;align-items:center;flex-direction:column;gap:8px;color:#8392aa;}
+.cg-route-document-item.is-needed {color:var(--cg-route-accent);}
+.cg-route-document-item>.ui-typography {--ui-type-body-size:26px;white-space:nowrap;}
+.cg-route-document {display:block;width:62px;height:72px;flex:none;}
+.cg-route-document.is-ghost {opacity:.38;stroke-dasharray:3 4;}
+.cg-route-skipped {grid-column:2 / -1;display:flex;flex-direction:column;align-items:center;gap:10px;}
+.cg-route-ghosts {display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;justify-items:center;width:100%;border-bottom:2px solid #d2d9e4;padding-bottom:8px;color:#9ba8bb;}
+.cg-route-skipped>.ui-typography {--ui-type-body-size:26px;}
+.cg-route-amount {display:flex;flex-direction:column;align-items:center;gap:2px;}
+.cg-route-amount>.ui-typography--display {--ui-type-display-size:54px;--ui-type-display-line-height:1.1;}
+.cg-route-result {display:flex;align-items:center;justify-content:space-between;gap:18px;margin-top:18px;border-top:1px solid #dbe3ef;padding-top:18px;}
+.cg-route-result>.ui-typography--h2 {--ui-type-h2-size:46px;--ui-type-h2-line-height:1.2;white-space:nowrap;}
+.cg-route-note {margin-top:10px;}
