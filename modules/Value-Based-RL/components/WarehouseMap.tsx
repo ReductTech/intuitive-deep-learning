@@ -1,9 +1,11 @@
+import { valueBasedRlAssetUrl } from '../assetUrls';
 import { useId, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import { Button, Typography } from '../../shared/react';
-import robotArt from '../assets/cover-v2/robot.png';
-import targetArt from '../assets/delivery-target.svg';
 import { BLOCKED, GOAL, GRID, START, keyOf, type Position } from '../model';
 import './WarehouseMap.css';
+
+const robotArt = valueBasedRlAssetUrl('cover-v2/robot.png');
+const targetArt = valueBasedRlAssetUrl('delivery-target.svg');
 
 export interface MapTrail { points: readonly Position[]; color?: string; dashed?: boolean; }
 export function WarehouseMap({ robot = START, goal = GOAL, blocked = BLOCKED, trails = [], selected, onSelect, values, caption, markers = {}, className = '', policy, update, overlay, coordinates = false, goalArt = targetArt, dangerArt, showValueLabels = true }: {

@@ -1,3 +1,4 @@
+import { valueBasedRlAssetUrl } from '../../assetUrls';
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import { Button, Typography } from '../../../shared/react';
 import { LessonPage } from '../../components/LessonPrimitives';
@@ -6,11 +7,12 @@ import { WarehouseMap } from '../../components/WarehouseMap';
 import { GOAL, START, keyOf } from '../../model';
 import { DANGER } from './failureSimulation';
 import examples from './rewardExamples.json';
-import robotArt from '../../assets/cover-v2/robot.png';
-import receivingEmpty from '../../assets/cover-v2/receiving-station-empty.png';
-import receivingLoaded from '../../assets/cover-v2/receiving-station-loaded.png';
-import pitArt from '../../assets/cover-v2/maintenance-pit.png';
 import './FailureModesPage.css';
+
+const robotArt = valueBasedRlAssetUrl('cover-v2/robot.png');
+const receivingEmpty = valueBasedRlAssetUrl('cover-v2/receiving-station-empty.png');
+const receivingLoaded = valueBasedRlAssetUrl('cover-v2/receiving-station-loaded.png');
+const pitArt = valueBasedRlAssetUrl('cover-v2/maintenance-pit.png');
 
 type CaseId = 'movement' | 'danger';
 type Variant = 'problem' | 'improved';

@@ -1,11 +1,13 @@
+import { valueBasedRlAssetUrl } from '../../assetUrls';
 import { useId, useLayoutEffect, useRef, useState } from 'react';
 import { WarehouseMap } from '../../components/WarehouseMap';
 import { keyOf } from '../../model';
 import { type DqnEvaluation } from '../../dqnSimulation';
 import { TRAP } from '../QLearningLoopPage/qLearningSimulation';
-import emptyStation from '../../assets/cover-v2/receiving-station-empty.png';
-import loadedStation from '../../assets/cover-v2/receiving-station-loaded.png';
-import pitArt from '../../assets/cover-v2/maintenance-pit.png';
+
+const emptyStation = valueBasedRlAssetUrl('cover-v2/receiving-station-empty.png');
+const loadedStation = valueBasedRlAssetUrl('cover-v2/receiving-station-loaded.png');
+const pitArt = valueBasedRlAssetUrl('cover-v2/maintenance-pit.png');
 
 export function DqnValidationMap({ result, index, before }: { result: DqnEvaluation; index: number; before: DqnEvaluation }) {
   const id = useId().replace(/:/g, ''), color = result.outcome === 'delivered' ? 'var(--ui-success)' : 'var(--ui-accent-alt)';

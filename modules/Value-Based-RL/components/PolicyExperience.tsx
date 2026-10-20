@@ -1,15 +1,17 @@
+import { valueBasedRlAssetUrl } from '../assetUrls';
 import { useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
 import { Button, Typography } from '../../shared/react';
 import { WarehouseMap } from './WarehouseMap';
 import { Formula } from './LessonPrimitives';
 import { GOAL, START, keyOf, returnOf, ACTIONS } from '../model';
-import robotArt from '../assets/cover-v2/robot.png';
-import emptyStationArt from '../assets/cover-v2/receiving-station-empty.png';
-import loadedStationArt from '../assets/cover-v2/receiving-station-loaded.png';
-import pitArt from '../assets/cover-v2/maintenance-pit.png';
 import { TRAP } from '../pages/QLearningLoopPage/qLearningSimulation';
 import { EVALUATION_GAMMA, experienceMean, type DeliveryExperience } from './policyEvaluation';
 import './PolicyExperience.css';
+
+const robotArt = valueBasedRlAssetUrl('cover-v2/robot.png');
+const emptyStationArt = valueBasedRlAssetUrl('cover-v2/receiving-station-empty.png');
+const loadedStationArt = valueBasedRlAssetUrl('cover-v2/receiving-station-loaded.png');
+const pitArt = valueBasedRlAssetUrl('cover-v2/maintenance-pit.png');
 
 export const displayReturn = (value: number) => (value > 0 ? '+' : '') + value.toFixed(2);
 

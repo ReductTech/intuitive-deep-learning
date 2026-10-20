@@ -1,14 +1,16 @@
+import { valueBasedRlAssetUrl } from '../../assetUrls';
 import { useState, type CSSProperties } from 'react';
 import { Button, Typography } from '../../../shared/react';
 import { LessonPage, Formula } from '../../components/LessonPrimitives';
 import { WarehouseMap } from '../../components/WarehouseMap';
 import { TeachingHeading, TeachingPanel } from '../../components/TeachingPanel';
-import emptyStationArt from '../../assets/cover-v2/receiving-station-empty.png';
-import pitArt from '../../assets/cover-v2/maintenance-pit.png';
 import { ACTIONS, BLOCKED, GOAL, GRID, keyOf, type Position } from '../../model';
 import { TRAP } from '../QLearningLoopPage/qLearningSimulation';
 import snapshot from './qTableSnapshot.json';
 import './QTablePage.css';
+
+const emptyStationArt = valueBasedRlAssetUrl('cover-v2/receiving-station-empty.png');
+const pitArt = valueBasedRlAssetUrl('cover-v2/maintenance-pit.png');
 
 const isTerminal = (position: Position) => [keyOf(GOAL), keyOf(TRAP)].includes(keyOf(position));
 const coordinates = (position: Position) => `(${position.row + 1},${position.col + 1})`;

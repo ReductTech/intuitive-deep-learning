@@ -1,3 +1,4 @@
+import { valueBasedRlAssetUrl } from '../../assetUrls';
 import { useMemo, useState } from 'react';
 import { Button, RangeControl, Typography } from '../../../shared/react';
 import { LessonPage, Formula } from '../../components/LessonPrimitives';
@@ -5,11 +6,12 @@ import { TeachingHeading, TeachingPanel } from '../../components/TeachingPanel';
 import { WarehouseMap } from '../../components/WarehouseMap';
 import { ACTIONS, keyOf, START } from '../../model';
 import { TRAP } from '../QLearningLoopPage/qLearningSimulation';
-import emptyStationArt from '../../assets/cover-v2/receiving-station-empty.png';
-import loadedStationArt from '../../assets/cover-v2/receiving-station-loaded.png';
-import pitArt from '../../assets/cover-v2/maintenance-pit.png';
 import { actionProbabilities, createExplorationQ, evaluateExploration, SNAPSHOT_UPDATES, TRIALS } from './explorationSimulation';
 import './ExplorationPage.css';
+
+const emptyStationArt = valueBasedRlAssetUrl('cover-v2/receiving-station-empty.png');
+const loadedStationArt = valueBasedRlAssetUrl('cover-v2/receiving-station-loaded.png');
+const pitArt = valueBasedRlAssetUrl('cover-v2/maintenance-pit.png');
 
 type Mode = 'greedy' | 'random' | 'mixed';
 const MODES = [{ id: 'greedy', label: '只利用' }, { id: 'random', label: '只探索' }, { id: 'mixed', label: 'ε-greedy' }] as const;

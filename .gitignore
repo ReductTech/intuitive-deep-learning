@@ -20,3 +20,6 @@ setting.json
 # Temporary files and directories whose names start with .TMP (any casing)
 .[Tt][Mm][Pp]*
 /Creator-Showcase
+
+# Generated public copy; originals live in modules/Value-Based-RL/assets.
+/assets/value-based-rl/

@@ -1,17 +1,19 @@
+import { valueBasedRlAssetUrl } from '../../assetUrls';
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react';
 import { Refresh } from '@icon-park/react';
 import { Button, ContentBlock, Typography } from '../../../shared/react';
 import { WarehouseMap } from '../../components/WarehouseMap';
 import { GOAL, START, keyOf, type Position } from '../../model';
 import { TRAP, warehouseStep } from '../QLearningLoopPage/qLearningSimulation';
-import robotIcon from '../../assets/cover-v2/robot.png';
-import warehouseScene from '../../assets/cover-v2/warehouse.png';
-import heroRobot from '../../assets/cover-v2/robot.png';
-import directionKeycap from '../../assets/cover-v2/direction-keycap.png';
-import receivingStationEmpty from '../../assets/cover-v2/receiving-station-empty.png';
-import receivingStationLoaded from '../../assets/cover-v2/receiving-station-loaded.png';
-import maintenancePit from '../../assets/cover-v2/maintenance-pit.png';
 import './DeliveryTaskPage.css';
+
+const robotIcon = valueBasedRlAssetUrl('cover-v2/robot.png');
+const warehouseScene = valueBasedRlAssetUrl('cover-v2/warehouse.png');
+const heroRobot = valueBasedRlAssetUrl('cover-v2/robot.png');
+const directionKeycap = valueBasedRlAssetUrl('cover-v2/direction-keycap.png');
+const receivingStationEmpty = valueBasedRlAssetUrl('cover-v2/receiving-station-empty.png');
+const receivingStationLoaded = valueBasedRlAssetUrl('cover-v2/receiving-station-loaded.png');
+const maintenancePit = valueBasedRlAssetUrl('cover-v2/maintenance-pit.png');
 
 const COLLISION_PENALTY = 10;
 type Direction = 'up' | 'down' | 'left' | 'right';

@@ -1,3 +1,4 @@
+import { valueBasedRlAssetUrl } from '../../assetUrls';
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { Button, Typography } from '../../../shared/react';
 import { LessonPage, Formula } from '../../components/LessonPrimitives';
@@ -7,12 +8,13 @@ import { WarehouseMap } from '../../components/WarehouseMap';
 import { ACTIONS, GOAL, GRID, START, keyOf, type Position } from '../../model';
 import { dqnForward } from '../../dqnSimulation';
 import { TRAP, warehouseStep } from '../QLearningLoopPage/qLearningSimulation';
-import robotArt from '../../assets/cover-v2/robot.png';
-import receivingEmpty from '../../assets/cover-v2/receiving-station-empty.png';
-import receivingLoaded from '../../assets/cover-v2/receiving-station-loaded.png';
-import pitArt from '../../assets/cover-v2/maintenance-pit.png';
 import fitted from './qTableFittedNetwork.json';
 import './DqnArchitecturePage.css';
+
+const robotArt = valueBasedRlAssetUrl('cover-v2/robot.png');
+const receivingEmpty = valueBasedRlAssetUrl('cover-v2/receiving-station-empty.png');
+const receivingLoaded = valueBasedRlAssetUrl('cover-v2/receiving-station-loaded.png');
+const pitArt = valueBasedRlAssetUrl('cover-v2/maintenance-pit.png');
 
 type Phase = 'input' | 'encoding' | 'network' | 'values' | 'moved';
 type Prediction = ReturnType<typeof dqnForward>;

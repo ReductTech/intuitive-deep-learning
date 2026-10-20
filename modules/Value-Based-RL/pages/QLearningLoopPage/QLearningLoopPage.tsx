@@ -1,17 +1,19 @@
+import { valueBasedRlAssetUrl } from '../../assetUrls';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Button, Typography } from '../../../shared/react';
 import { LessonPage, Formula } from '../../components/LessonPrimitives';
 import { WarehouseMap } from '../../components/WarehouseMap';
 import { TeachingHeading } from '../../components/TeachingPanel';
 import { ACTIONS, GOAL, START, keyOf, type Position } from '../../model';
-import emptyStationArt from '../../assets/cover-v2/receiving-station-empty.png';
-import loadedStationArt from '../../assets/cover-v2/receiving-station-loaded.png';
-import pitArt from '../../assets/cover-v2/maintenance-pit.png';
 import {
   ALPHA, GAMMA, TRAP, advanceSimulation, createSimulation, mapEstimates,
   traceGreedyPolicy, type LearningUpdate,
 } from './qLearningSimulation';
 import './QLearningLoopPage.css';
+
+const emptyStationArt = valueBasedRlAssetUrl('cover-v2/receiving-station-empty.png');
+const loadedStationArt = valueBasedRlAssetUrl('cover-v2/receiving-station-loaded.png');
+const pitArt = valueBasedRlAssetUrl('cover-v2/maintenance-pit.png');
 
 const cellLabel = (position: { row: number; col: number }) => `格 ${position.row + 1},${position.col + 1}`;
 const number = (value: number) => value.toFixed(2);

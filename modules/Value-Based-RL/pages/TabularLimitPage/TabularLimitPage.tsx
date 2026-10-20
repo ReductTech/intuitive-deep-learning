@@ -1,3 +1,4 @@
+import { valueBasedRlAssetUrl } from '../../assetUrls';
 import { useState } from 'react';
 import { Button, Typography } from '../../../shared/react';
 import { LessonPage, Formula } from '../../components/LessonPrimitives';
@@ -5,12 +6,13 @@ import { TeachingPanel } from '../../components/TeachingPanel';
 import { WarehouseMap } from '../../components/WarehouseMap';
 import { BLOCKED, GRID, START, keyOf } from '../../model';
 import { TRAP } from '../QLearningLoopPage/qLearningSimulation';
-import emptyStationArt from '../../assets/cover-v2/receiving-station-empty.png';
-import pitArt from '../../assets/cover-v2/maintenance-pit.png';
-import directionKeycap from '../../assets/cover-v2/direction-keycap.png';
-import expandedWarehouse from '../../assets/tabular-limit/expanded-warehouse.png';
-import qTableGrowth from '../../assets/tabular-limit/q-table-growth.png';
 import './TabularLimitPage.css';
+
+const emptyStationArt = valueBasedRlAssetUrl('cover-v2/receiving-station-empty.png');
+const pitArt = valueBasedRlAssetUrl('cover-v2/maintenance-pit.png');
+const directionKeycap = valueBasedRlAssetUrl('cover-v2/direction-keycap.png');
+const expandedWarehouse = valueBasedRlAssetUrl('tabular-limit/expanded-warehouse.png');
+const qTableGrowth = valueBasedRlAssetUrl('tabular-limit/q-table-growth.png');
 
 const VARIABLES = [
   { name: '朝向', count: 4, latex: '4' },

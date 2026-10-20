@@ -1,3 +1,4 @@
+import { valueBasedRlAssetUrl } from '../../assetUrls';
 import { useState } from 'react';
 import { Typography } from '../../../shared/react';
 import { LessonPage } from '../../components/LessonPrimitives';
@@ -5,10 +6,11 @@ import { TeachingPanel } from '../../components/TeachingPanel';
 import { WarehouseMap } from '../../components/WarehouseMap';
 import { GOAL, START, keyOf, type Position } from '../../model';
 import { TRAP } from '../QLearningLoopPage/qLearningSimulation';
-import robotArt from '../../assets/cover-v2/robot.png';
-import receivingStation from '../../assets/cover-v2/receiving-station-empty.png';
-import maintenancePit from '../../assets/cover-v2/maintenance-pit.png';
 import './StateDesignPage.css';
+
+const robotArt = valueBasedRlAssetUrl('cover-v2/robot.png');
+const receivingStation = valueBasedRlAssetUrl('cover-v2/receiving-station-empty.png');
+const maintenancePit = valueBasedRlAssetUrl('cover-v2/maintenance-pit.png');
 
 const comparison = [
   { label: '含义', state: '环境的真实情况', observation: '机器人收到的信息' },

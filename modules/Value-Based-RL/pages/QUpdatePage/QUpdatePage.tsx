@@ -1,17 +1,19 @@
+import { valueBasedRlAssetUrl } from '../../assetUrls';
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { Button, Typography } from '../../../shared/react';
 import { LessonPage, Formula } from '../../components/LessonPrimitives';
 import { WarehouseMap } from '../../components/WarehouseMap';
-import robotArt from '../../assets/cover-v2/robot.png';
-import emptyStationArt from '../../assets/cover-v2/receiving-station-empty.png';
-import loadedStationArt from '../../assets/cover-v2/receiving-station-loaded.png';
-import pitArt from '../../assets/cover-v2/maintenance-pit.png';
 import { ACTIONS, START, keyOf, type Position } from '../../model';
 import {
   ALPHA, GAMMA, TRAP, INITIAL_ACTION, INITIAL_POSITION,
   createQUpdateLab, isTerminal, observeStep, type SingleQUpdate,
 } from './qUpdateSimulation';
 import './QUpdatePage.css';
+
+const robotArt = valueBasedRlAssetUrl('cover-v2/robot.png');
+const emptyStationArt = valueBasedRlAssetUrl('cover-v2/receiving-station-empty.png');
+const loadedStationArt = valueBasedRlAssetUrl('cover-v2/receiving-station-loaded.png');
+const pitArt = valueBasedRlAssetUrl('cover-v2/maintenance-pit.png');
 
 type Phase = 'ready' | 'moving' | 'experience' | 'to-target' | 'target' | 'to-table' | 'done';
 type Flight = { id: number; kind: 'experience' | 'target'; style: CSSProperties };

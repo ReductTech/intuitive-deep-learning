@@ -1,3 +1,4 @@
+import { valueBasedRlAssetUrl } from '../../assetUrls';
 import { useState, type CSSProperties } from 'react';
 import { Button, Typography } from '../../../shared/react';
 import { LessonPage, Formula } from '../../components/LessonPrimitives';
@@ -5,14 +6,15 @@ import { TeachingPanel } from '../../components/TeachingPanel';
 import { WarehouseMap } from '../../components/WarehouseMap';
 import { ACTIONS, DELTAS, START, keyOf, type Position } from '../../model';
 import { TRAP, warehouseStep } from '../QLearningLoopPage/qLearningSimulation';
-import robotArt from '../../assets/cover-v2/robot.png';
-import receivingStation from '../../assets/cover-v2/receiving-station-empty.png';
-import maintenancePit from '../../assets/cover-v2/maintenance-pit.png';
-import warehouseScene from '../../assets/cover-v2/warehouse.png';
-import stateSpaceIcon from '../../assets/action-footer/state-space.png';
-import actionSpaceIcon from '../../assets/action-footer/action-space.png';
-import policyIcon from '../../assets/action-footer/policy.png';
 import './ActionSpacePage.css';
+
+const robotArt = valueBasedRlAssetUrl('cover-v2/robot.png');
+const receivingStation = valueBasedRlAssetUrl('cover-v2/receiving-station-empty.png');
+const maintenancePit = valueBasedRlAssetUrl('cover-v2/maintenance-pit.png');
+const warehouseScene = valueBasedRlAssetUrl('cover-v2/warehouse.png');
+const stateSpaceIcon = valueBasedRlAssetUrl('action-footer/state-space.png');
+const actionSpaceIcon = valueBasedRlAssetUrl('action-footer/action-space.png');
+const policyIcon = valueBasedRlAssetUrl('action-footer/policy.png');
 
 const CASES = [
   { id: 'move', from: START, title: '前方空地，成功移动', explanation: '选择向右后，到达新的位置。' },

@@ -1,13 +1,15 @@
+import { valueBasedRlAssetUrl } from '../../assetUrls';
 import { type CSSProperties } from 'react';
 import { WarehouseMap } from '../../components/WarehouseMap';
-import robotArt from '../../assets/cover-v2/robot.png';
-import emptyStation from '../../assets/cover-v2/receiving-station-empty.png';
-import loadedStation from '../../assets/cover-v2/receiving-station-loaded.png';
-import pitArt from '../../assets/cover-v2/maintenance-pit.png';
 import { GOAL, keyOf, type Position } from '../../model';
 import { TRAP } from '../QLearningLoopPage/qLearningSimulation';
 import { type ReplayExperience } from './replaySimulation';
 import './ReplayExperienceMap.css';
+
+const robotArt = valueBasedRlAssetUrl('cover-v2/robot.png');
+const emptyStation = valueBasedRlAssetUrl('cover-v2/receiving-station-empty.png');
+const loadedStation = valueBasedRlAssetUrl('cover-v2/receiving-station-loaded.png');
+const pitArt = valueBasedRlAssetUrl('cover-v2/maintenance-pit.png');
 
 export function ReplayExperienceMap({ position, experience, atEnd, robotKey }: {
   position: Position; experience: ReplayExperience | null; atEnd: boolean; robotKey: string;

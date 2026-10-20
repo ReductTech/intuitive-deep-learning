@@ -1,18 +1,20 @@
+import { valueBasedRlAssetUrl } from '../../assetUrls';
 import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
 import { Button, Typography } from '../../../shared/react';
 import { LessonPage } from '../../components/LessonPrimitives';
 import { WarehouseMap } from '../../components/WarehouseMap';
 import { TeachingHeading } from '../../components/TeachingPanel';
-import robotArt from '../../assets/cover-v2/robot.png';
-import emptyStationArt from '../../assets/cover-v2/receiving-station-empty.png';
-import loadedStationArt from '../../assets/cover-v2/receiving-station-loaded.png';
-import pitArt from '../../assets/cover-v2/maintenance-pit.png';
 import { GOAL, START, keyOf } from '../../model';
 import { TRAP } from '../QLearningLoopPage/qLearningSimulation';
 import { ScheduleCurve, ReturnCurve, CurveLegend } from './ScheduleCharts';
 import { DEFAULT_SCHEDULE, SCHEDULE_EPISODES, SCHEDULE_PRESETS, createScheduleTraining, advanceScheduleTraining,
   sameSchedule, trainSchedule, type EpsilonSchedule, type ScheduleRun, type ScheduleTrace } from './epsilonSimulation';
 import './EpsilonSchedulePage.css';
+
+const robotArt = valueBasedRlAssetUrl('cover-v2/robot.png');
+const emptyStationArt = valueBasedRlAssetUrl('cover-v2/receiving-station-empty.png');
+const loadedStationArt = valueBasedRlAssetUrl('cover-v2/receiving-station-loaded.png');
+const pitArt = valueBasedRlAssetUrl('cover-v2/maintenance-pit.png');
 
 const signed = (value: number) => (value > 0 ? '+' : '') + value.toFixed(2);
 const outcomes = { delivered: '送达', trap: '陷阱', limit: '截断' };

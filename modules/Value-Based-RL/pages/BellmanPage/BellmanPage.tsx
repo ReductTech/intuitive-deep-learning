@@ -1,8 +1,10 @@
+import { valueBasedRlAssetUrl } from '../../assetUrls';
 import { Typography } from '../../../shared/react';
 import { LessonPage, Formula } from '../../components/LessonPrimitives';
 import { TeachingPanel } from '../../components/TeachingPanel';
-import robotArt from '../../assets/cover-v2/robot.png';
 import './BellmanPage.css';
+
+const robotArt = valueBasedRlAssetUrl('cover-v2/robot.png');
 
 function FlowArrow({ down = false }: { down?: boolean }) {
   return <svg className={'vbrl-bellman-theory__arrow' + (down ? ' is-down' : '')} viewBox="0 0 24 24" aria-hidden="true">
