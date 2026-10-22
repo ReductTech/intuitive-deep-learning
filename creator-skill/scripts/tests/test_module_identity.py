@@ -3,7 +3,12 @@ import uuid
 
 import pytest
 
-from idl_backend.contracts import identity
+import importlib.util
+from pathlib import Path
+
+_spec = importlib.util.spec_from_file_location("authoring_identity", Path(__file__).resolve().parents[1] / "module/module_identity.py")
+identity = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(identity)
 from idl_backend.contracts.courses import load_courses
 
 MODULE_ID = "2e5c4732-a40a-4d20-b954-a61507aabc75"

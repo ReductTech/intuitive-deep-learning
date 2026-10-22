@@ -24,10 +24,8 @@
     {
       "id": "01",
       "title": "页面标题",
-      "goal": "学生应能回答的问题或完成的任务",
+      "goal": "当前页所要实现的效果",
       "summary": "本页主要内容",
-      "interaction": "无，或核心交互",
-      "next": "如何引出下一页",
       "snippet": "本页演讲稿"
     }
   ]
@@ -45,3 +43,7 @@
 - `badge`、`moduleType`、`difficulty`、`audience` 等可选分类字段参照 `src/app/modules.tsx` 的实际类型填写，不猜测枚举值。
 
 大纲阶段可先保存待讨论的结构，不把尚未存在的实现当作已完成模块。正式交付时核对入口存在、页序一致、UUID 有效。课程页数按教学需要决定，不为满足固定数量合并或拆分页面。
+
+## 初始化入口
+
+已有确认大纲、并获工程骨架制作授权时，可运行 `python creator-skill/scripts/tools.py module.init --directory <模块目录名> --outline <已确认大纲 JSON> --dry-run` 核对计划，去掉 `--dry-run` 创建。工具复用 Shared 与 SceneDeck，只生成空内容骨架，不替代逐页设计，不覆盖既有模块。

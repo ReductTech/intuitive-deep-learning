@@ -12,20 +12,24 @@
 4. 有交互或动效时至少检查默认状态和一个操作后的状态；修改影响等待、失败、重试或重置时检查对应分支。
 5. 涉及双入口时确认 Guide 与 PPT 页序和核心内容一致，简答题呈现方式正确，资源可加载。
 
+画布边界工具已迁入 `creator-skill/scripts/checks/validate_ppt_bounds.mjs`，用 `--url`、可选 `--slides id1,id2` 和 `--surface <选择器>` 指定当前页面；需已有浏览器远程调试会话，默认端口 9223，可用 `--port` 改写。脚本不启动浏览器或课程服务，自动关闭自己创建的检查标签页；仅检查当前渲染状态，不代替截图与交互验证。
+
 优先使用仓库现有的截图、页面检查和自动化工具。调用前确认实际入口、运行环境和依赖，不把旧报告或设计图当作当前截图。尚未运行的检查不能写成“通过”。
 
 ## 工程检查
 
+先运行 `python creator-skill/scripts/tools.py check.module --module <模块名或 UUID>`。省略 `--module` 检查全部模块；UUID 和模块 slug 的重复始终全局检查。工具只读，检查元数据、入口文件、页 ID、模块内误放的 assets、字面量 UUID/资源路径与明显 legacy 依赖；`atlasCropUrl` 中的图集虚拟文件名会核对索引及实际图集文件；其他动态资源表达式、类型、视觉和交互仍需单独验证。
+
 - 对 TS/TSX 改动运行 `npm run typecheck`；新模块注册、打包或资源发布相关改动通常还需 `npm run build`。用户明确不需要 build 时执行类型检查及相关渲染检查，说明范围。
 - 计算或状态逻辑变化运行能验证实际行为的相关测试，不为低影响文字或样式修改编写机械对应实现的测试。
-- 修改身份时运行 `python -m idl_backend.contracts.identity --check`，前提是后端包可用。检查资源的 UUID、`moduleAssetUrl`、SceneDeck `assetId` 对应。
+- 修改身份时运行 `python creator-skill/scripts/tools.py module.identity --check`。检查资源的 UUID、`moduleAssetUrl`、SceneDeck `assetId` 对应。
 - 检查未使用 CSS、重复播放器、跨模块选择器、未授权 Shared 修改和 legacy 运行时依赖。
 
 完成多个页面时逐页检查，用户已授权连续制作也不省略验证。局部修改无需重验无关课程。
 
 ## 仅修改 skill 或其他文档
 
-检查 frontmatter、相对链接、任务入口、命令与代码路径，以及规则是否冲突。按新建课程、下一页设计、局部修复、忠实转换和连续制作等代表性请求核对行为。
+运行 `python creator-skill/scripts/tools.py check.skill creator-skill`，检查 frontmatter、占位符与本地链接；再核对任务入口、命令与代码路径，以及规则是否冲突。按新建课程、下一页设计、局部修复、忠实转换和连续制作等代表性请求核对行为。
 
 文档改名或移动时检查调用方与文档展示插件；不因纯文档修改启动模型、GPU 或课程服务。区分静态规则核对与真实 Agent 行为试用，未做独立试用时不声称完成了行为评估。
 

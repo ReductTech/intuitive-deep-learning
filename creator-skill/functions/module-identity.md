@@ -10,19 +10,19 @@ ID 使用标准小写 UUID v4，共创者可本地生成，不需要签发、密
 
 ## 生成与检查
 
-已安装后端包时，从仓库根目录运行：
+从仓库根目录直接运行，无需安装后端包：
 
 ```powershell
 # 检查已有 ID，为缺失模块生成 UUID，并移除旧 signature 字段。
-python -m idl_backend.contracts.identity
+python creator-skill/scripts/tools.py module.identity
 
 # 只检查格式、重复和缺失，不写文件。
-python -m idl_backend.contracts.identity --check
+python creator-skill/scripts/tools.py module.identity --check
 ```
 
 脚本扫描全部 `modules/*/outlines.json`，先检查所有已有身份，再写入。格式错误或重复时停止，不自动替换已有 UUID；`--check` 对缺失、格式错误或重复返回非零。后端课程加载也拒绝这些情况。旧 `signature` 读取时忽略，生成命令会移除，已有 UUID 保持不变。
 
-命令需要可导入的 `idl_backend`；环境尚未安装时按 `backend/README.md` 配置，不把依赖缺失误报为身份无效。该命令会补齐所有缺失身份，不只是当前模块，运行前了解其写入范围。
+脚本自动定位仓库并使用后端契约源码；需要 Python 3.10 及以上，不需要密钥或第三方包。该命令会补齐所有缺失身份，不只是当前模块，运行前了解其写入范围。
 
 ## 稳定性
 
