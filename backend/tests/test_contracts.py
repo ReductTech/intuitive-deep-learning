@@ -38,24 +38,16 @@ def test_address_configuration_overrides_os_default(monkeypatch):
     assert service_address("vision", platform="win32") == "http://mapped-host:28431"
 
 
-def test_registered_signed_uuid_and_legacy_cache_identity():
+def test_registered_uuid_and_legacy_cache_identity():
     course = load_courses()["80396753-7fc8-4f55-9188-bddbdb828169"]
     assert course.legacy_cache_scope == "official/visual-feature-learning"
 
 
-def test_duplicate_signed_identity_is_rejected(tmp_path, monkeypatch):
-    import base64
-    from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
-    from cryptography.hazmat.primitives import serialization
-    from idl_backend.contracts import courses
-    key = Ed25519PrivateKey.generate()
-    monkeypatch.setattr(courses, "PUBLIC_KEY", base64.b64encode(key.public_key().public_bytes(serialization.Encoding.Raw, serialization.PublicFormat.Raw)).decode())
+def test_duplicate_identity_is_rejected(tmp_path):
     for directory in ["CourseA", "CourseB"]:
         target = tmp_path / directory
         target.mkdir()
-        identity = {"version": 1, "modulePath": "/modules/" + directory.lower(), "id": "80396753-7fc8-4f55-9188-bddbdb828169"}
-        signature = key.sign(json.dumps(identity, ensure_ascii=True, sort_keys=True, separators=(",", ":")).encode("ascii"))
-        document = {"id": directory.lower(), "path": identity["modulePath"], "moduleIdentity": {"version": 1, "id": identity["id"], "signature": base64.b64encode(signature).decode()}}
+        document = {"id": directory.lower(), "path": "/modules/" + directory.lower(), "moduleIdentity": {"version": 1, "id": "80396753-7fc8-4f55-9188-bddbdb828169"}}
         (target / "outlines.json").write_text(json.dumps(document), encoding="utf-8")
     with pytest.raises(ValueError, match="Duplicate"):
         load_courses(tmp_path)

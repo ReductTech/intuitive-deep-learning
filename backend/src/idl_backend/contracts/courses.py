@@ -1,16 +1,14 @@
 """Registered outline identities, not arbitrary import paths or image names."""
 from __future__ import annotations
 
-import base64
 from dataclasses import dataclass
 import json
 import os
 from pathlib import Path
-import uuid
 
 from idl_backend.config import repository_root
 
-PUBLIC_KEY = "RnQrJrMVuaFZu6SDHXXrzaGVnQtJc6qK6/XkOHMWPh4="
+from idl_backend.contracts.identity import IdentityError, register_identity
 
 
 @dataclass(frozen=True)
@@ -25,25 +23,16 @@ class Course:
 
 
 def load_courses(modules: Path | None = None) -> dict[str, Course]:
-    from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PublicKey
-    key = Ed25519PublicKey.from_public_bytes(base64.b64decode(PUBLIC_KEY))
+    seen: dict[str, Path] = {}
     result = {}
     modules = modules or Path(os.environ.get("IDL_MODULES_DIR", str(repository_root() / "modules")))
     for path in sorted(modules.glob("*/outlines.json")):
         document = json.loads(path.read_text(encoding="utf-8-sig"))
-        identity = document.get("moduleIdentity")
-        if not identity:
-            continue
-        course_uuid = identity["id"]
-        parsed = uuid.UUID(course_uuid)
-        if str(parsed) != course_uuid or parsed.version != 4 or identity.get("version") != 1:
-            raise ValueError(f"Invalid course identity: {path}")
+        if not isinstance(document, dict) or "moduleIdentity" not in document:
+            raise IdentityError(f"Missing moduleIdentity: {path}")
+        course_uuid = register_identity(document["moduleIdentity"], path, seen)
         module_path = document["path"]
         if module_path != "/modules/" + path.parent.name.lower():
             raise ValueError(f"Course path does not match its directory: {path}")
-        payload = json.dumps({"version": 1, "modulePath": module_path, "id": course_uuid}, ensure_ascii=True, sort_keys=True, separators=(",", ":")).encode("ascii")
-        key.verify(base64.b64decode(identity["signature"], validate=True), payload)
-        if course_uuid in result:
-            raise ValueError(f"Duplicate course UUID: {course_uuid}")
         result[course_uuid] = Course(course_uuid, document.get("id") or path.parent.name.lower(), module_path)
     return result

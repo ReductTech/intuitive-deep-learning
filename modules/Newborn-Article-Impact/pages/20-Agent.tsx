@@ -1,0 +1,8 @@
+import {useState} from 'react';
+import {Brain,ChartLine,Bookshelf} from '@icon-park/react';
+import {Button,Typography} from '../../shared/react';
+import {RefinedStage} from '../components/RefinedStage';
+import {imageUrl} from '../components/Stage';
+import './AgentPage.css';
+const cards=[['s20-1.png','高效视频超分辨率研究'],['s20-2.png','视觉状态空间模型研究'],['s20-3.png','医学影像分割研究']];
+export function Page(){const [selected,setSelected]=useState(2);return <RefinedStage title="减论 Agent：发现与整理学术文献" subtitle="监测 arXiv 新论文，整理成图文结合的学术卡片" className="naipag-page"><div className="naipag-layout"><div className="naipag-columns"><section className="naipag-cards"><div className="naipag-fan">{cards.map(([name,title],i)=><Button key={name} className={'naipag-card naipag-card--'+i} style={{zIndex:selected===i?4:i+1}} onClick={()=>setSelected(i)} aria-label={'查看卡片：'+title} aria-pressed={selected===i}><img src={imageUrl(name)} alt={title+'的原报告学术卡片'}/></Button>)}</div><Typography variant="bodySmall" tone="accent" aria-live="polite">{cards[selected][1]}</Typography></section><div className="naipag-benefits">{[[Brain,'综合多个维度','发现值得进一步阅读的论文。'],[Bookshelf,'减少重复浏览','用图文卡片快速定位研究内容。'],[ChartLine,'积累表达方法','学习论文的配色、作图与呈现方式。']].map(([Icon,title,body],i)=>{const Glyph=Icon as typeof Brain;return <section key={i}><div className="naipag-icon"><Glyph size={76} theme="outline" fill="currentColor"/></div><div><Typography variant="h3" tone="accent">{String(title)}</Typography><Typography variant="body">{String(body)}</Typography></div></section>})}</div></div><Typography variant="bodySmall" tone="muted">卡片是筛选入口；理解结论仍需阅读原论文。</Typography></div></RefinedStage>}

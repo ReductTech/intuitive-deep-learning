@@ -6,6 +6,7 @@ import type { IncomingMessage } from 'node:http';
 import type { Plugin } from 'vite';
 import { build } from 'esbuild';
 import type { InterfaceConfig, EndpointConfig, Project } from './types';
+import { createSourceTextEditor } from './sourceText.ts';
 
 export const configPath = process.env.EDIT_DECK_CONFIG || path.join(os.homedir(), '.edit-deck', 'interfaces.json');
 const draftPath = path.join(path.dirname(configPath), 'projects');
@@ -67,11 +68,16 @@ async function provider(item: EndpointConfig, suffix: string, payload: unknown, 
   return providerJson(response, suffix.startsWith('images/') ? '生图接口' : 'LLM 接口');
 }
 export function editDeckPlugin(): Plugin {
+  const sourceText = createSourceTextEditor(process.cwd());
+  let development = false;
   const virtual = 'virtual:edit-deck-react-runtime';
   let runtime: Promise<string> | undefined;
   let saving = Promise.resolve();
   return {
     name: 'edit-deck-local-workspace',
+    enforce: 'pre',
+    configResolved(config) { development = config.command === 'serve'; },
+    transform(source, id) { return development ? sourceText.transform(source, id) : null; },
     resolveId(id) { if (id === virtual) return '\0' + virtual; },
     async load(id) {
       if (id !== '\0' + virtual) return;
@@ -98,6 +104,10 @@ export function editDeckPlugin(): Plugin {
         response.on('close', () => { if (!response.writableEnded) controller.abort(); });
         let config: InterfaceConfig | undefined;
         try {
+          if (route === '/source-text' && request.method === 'POST') {
+            const input = await body(request);
+            return send(await sourceText.save(input.id, input.text));
+          }
           config = await readConfig();
           if (route === '/config' && request.method === 'GET') return send(publicConfig(config));
           if (route === '/config' && request.method === 'PUT') {

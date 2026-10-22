@@ -1,0 +1,4 @@
+.naipv2-cover-grid{height:100%;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:48px;align-items:center;}
+.naipv2-cover-copy{display:grid;gap:42px;}
+.naipv2-cover-copy>div{display:grid;gap:14px;}
+.naipv2-cover-grid>svg{width:100%;height:100%;max-height:520px;}

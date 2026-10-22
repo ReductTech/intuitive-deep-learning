@@ -70,13 +70,6 @@ function externalCourseImages(): Plugin {
 }
 
 export default defineConfig(({ mode, command }) => {
-  // Keep the module's original assets together, with a generated public/OSS copy.
-  // This also prepares files for local preview when no external asset host is set.
-  fs.cpSync(
-    path.resolve(__dirname, 'modules/Value-Based-RL/assets'),
-    path.resolve(__dirname, 'assets/value-based-rl'),
-    { recursive: true },
-  );
   const assetBaseUrl = loadEnv(mode, '.', '').VITE_ASSET_BASE_URL?.trim();
   return {
     plugins: [editDeckPlugin(), fixedLessonCanvas(), creatorSkillDocuments(), externalCourseImages(), react(), tailwindcss(), ...(command === 'serve' ? [cloudRuntime(__dirname)] : [])],

@@ -4,9 +4,9 @@ These rules are mandatory for every AI or human editing React PPT modules in thi
 
 ## Active and legacy module boundary
 
-- `modules/` is the only active module tree. Application code under `src/`, `web_ppt/`, and active modules may depend only on code and assets inside `modules/` (plus normal project dependencies).
+- `modules/` is the only active module tree. Application code under `src/`, `web_ppt/`, and active modules may depend only on code inside `modules/`, module assets in the repository-level `assets/<moduleIdentity.id>/` directory, and normal project dependencies.
 - `modules-legacy/` is archival and may be removed at any time. Never import, fetch, link, or load runtime code or assets from it in an active module.
-- Every active React module must own its module-specific assets inside its directory. Shared runtime code and genuinely shared assets belong in `modules/shared/`.
+- Every active React module must store its module-specific static assets in the repository-level `assets/<moduleIdentity.id>/` directory, using its stable UUID and `moduleAssetUrl` for runtime references. Do not store module-specific assets inside the module directory. Shared runtime code and genuinely shared assets belong in `modules/shared/`.
 - Do not register a module in the active application unless its implementation exists under `modules/`.
 
 ## PPT containment

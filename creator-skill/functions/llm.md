@@ -1,78 +1,51 @@
-# 大模型调用
+# 大模型调用与简答题
 
-课程需要大模型能力时，沿用仓库现有架构：
+用于开放回答评价、教学情境生成和自然语言结构化。确定性计算、状态变化、规则与动画留在本地；模型结果应直接服务当前知识对象，避免独立聊天窗口和长段生成文字。
 
-`React 模块 → 共用 Cloud API /api/ai（本地 :8000）→ assessment :28432 → LLM Proxy :59413 → 上游模型`
+## 普通简答题：直接使用 Shared Question
 
-本地 Vite 与云端都注入同一份 Cloud `frontend/cloud-runtime.js`，兼容转换既有本地服务 URL。缓存读取与写入统一使用 Cloud API 的 MySQL DAO。
+```tsx
+<Question
+  type="short"
+  title="为什么数像素也可以叫特征？"
+  referenceAnswer="像素数量是按固定规则测得、可在不同样本间比较的数值，因此能帮助区分类别。"
+/>
+```
 
-`idl_backend serve --kind assessment` 和 `idl_backend.assessment.proxy.cli` 只是入口，实际任务、结构化解析和代理逻辑位于 `backend/src/idl_backend/assessment/`。
+- PPT：SceneDeck 自动切换到揭示模式，点击后在只读答题框显示已核对的参考答案，不提交学生回答、不调用模型。
+- Guide：保留可输入答题框，提交后由 Shared 发送题目、参考答案与学生回答到 `/short-answer/evaluate`，呈现真实反馈。
+- 新题不需要 `taskId`，不需要题库登记，也不要求创建 `assessment.json`。服务根据题目和参考答案生成稳定 SHA-256 标识。
+- 旧题可继续使用 `taskId`；特殊评价可用 `review` 覆盖。没有可用的文字题目与参考答案、旧 `taskId` 或 `review` 时仅作本地提交，不声称完成模型评阅。
+- 不在页面里手写 URL、DOM 类名或 `isPpt` 判断双入口。其他题型不套用这套简答题行为。
 
-本文件只指导大模型能力的设计与实现，不负责启动或检查后台服务。除非用户明确要求，不主动启动任何服务。
+以 `modules/shared/react/learning/Question.tsx`、`reviewShortAnswer.ts` 和 `backend/src/idl_backend/assessment/tasks/short_answer.py` 为当前实现依据。
 
-## 使用原则
+## 评价契约
 
-只在确实需要语义理解或生成时调用大模型，例如开放回答评价、教学情境生成、因素或案例生成、自然语言结构化等。
+普通简答题评价接口接受：
 
-确定性的计算、规则判断、状态变化和动画应留在本地，不为了增加“AI 感”调用大模型。
+```json
+{"question":"题目","reference_answer":"参考答案","answer":"学生回答"}
+```
 
-## React 侧
+直接调用业务接口时 `reference_answer` 也可为非空要点数组，`notes` 可提供判定备注；Shared Question 的 `referenceAnswer` 使用字符串。旧接口兼容 `{task_id, answer}`。
 
-- 模型请求统一封装在模块自己的 `services/` 中，不在 page 或 block 中散落 `fetch`。
-- React 只调用 LangChain Service 的业务接口，不直接访问 LLM Proxy 或上游模型。
-- 请求必须带上 `X-Course-ID`（取模块 `outlines.json` 的 `moduleIdentity.id`），云端按它分组该课程的缓存。
-- 浏览器和课程模块中不得保存 API Key、Base URL 或模型认证信息。
-- 页面只依赖稳定的结构化业务字段，不解析模型原始文本驱动核心逻辑。
-- 调用期间提供自然的等待状态，失败时提供可理解、可重试的反馈。
-- `modules-legacy/` 只能作为参考，active 模块不得依赖其中的运行时代码。
+当前结果分为 `correct`、`close`、`incorrect`，对应正确、接近正确、错误。按语义判断，不匹配关键词或要求逐字复述。主要思路完整且无冲突为正确；无明显错误但不足以确认主要思路为接近正确；明确事实、逻辑或方向错误为错误。反馈应忠实指出说对、缺失或冲突之处。
 
-## 开放回答评价
+不在页面重写 Prompt、解析或评分规则，不把三级评价改成两级；新增特殊业务规则先检查现有任务能否表达。
 
-需要大模型根据参考答案评价学习者输入时，在模块根目录建立统一的 `assessment.json`，供该模块下不同 pages 共享使用，不再维护集中式全局题库。
+## 服务与前端边界
 
-标准结构：
+沿用现有链路：`React → 共用 Cloud API /api/ai → assessment → LLM Proxy → 上游模型`。本地与云端使用同一份 Cloud `frontend/cloud-runtime.js` 做既有 URL 的同源转换和课程上下文注入。实际配置与启动方式查 `backend/README.md`，不要在课程中硬编码一套服务配置。
 
-~~~json
-{
-  "assessments": [
-    {
-      "id": "...",
-      "question": "...",
-      "reference_answer": ["...", "..."],
-      "grading_notes": "..."
-    }
-  ]
-}
-~~~
+- 自定义请求封装在模块自己的 `services/`，复用现有业务接口；Shared Question 已有能力直接使用。
+- 请求带 `X-Course-ID`，值为当前模块 UUID；检查共用 runtime 的自动注入，绕过它调用时沿用同一契约。
+- 浏览器和课程模块不保存 API Key、上游地址或模型认证信息，不直接调用 Proxy 或上游模型。
+- 页面只使用结构化业务字段，提供等待、失败与重试反馈，不伪造成功或模型结果。
+- 服务运行是实际评阅的前提；本说明不要求自动启动服务。未获相关授权时不启动后台服务或训练。
 
-字段说明：
+## 新增语义任务
 
-- `id`：稳定的评价任务标识，使用“小写英文 + 点号”命名，例如 `loss.l1_l2_comparison`。
-- `question`：展示给学习者的问题。
-- `reference_answer`：列出该题可接受的核心答案要点。学习者只要表达出其中一个或部分正确要点，且没有明显错误或与参考答案冲突，即判为 `correct`；不要求覆盖全部要点，也不要求措辞一致。
-- `grading_notes`：补充该题的判定边界，例如允许哪些近似表达、哪些遗漏仍可判正确，以及哪些错误必须判为 `incorrect`。
-评价仅分两档：
-- `correct`：回答与 `reference_answer` 的核心含义一致，即使表达不完整也算正确。
-- `incorrect`：回答核心结论错误、方向相反、明显事实错误，或完全没有体现任何参考答案中的正确含义。
+先检查 `backend/src/idl_backend/assessment/registry.py` 与 `contracts/tasks.py` 中已有接口。确需扩展时，在 `assessment/tasks/` 定义输入、Prompt 和输出 Schema，优先复用 `run_structured(...)`；在 assessment registry 注册处理器，并同步 contracts 中的 endpoint 目录。前端仅消费稳定结构化结果。
 
-不要为每一道简答题分别实现 Prompt、评分逻辑或解析代码。通用评价规则和结构化输出统一由 LangChain Service 负责。
-
-## 新的大模型任务
-
-现有能力无法表达需求时：
-
-1. 在 `backend/src/idl_backend/assessment/tasks/` 中新增或扩展任务。
-2. 明确输入字段、Prompt 和结构化输出 Schema。
-3. 优先使用 `run_structured(...)` 完成调用和解析。
-4. 在 `backend/src/idl_backend/assessment/registry.py` 注册业务 Endpoint。
-5. React 通过模块自己的 `services/` 调用该 Endpoint。
-
-前端只使用稳定的结构化结果。结构化任务通常使用较低随机性，只有任务本身需要开放生成时才提高生成自由度。
-
-## 设计要求
-
-大模型应作为教学流程中的语义能力，而不是独立聊天窗口。
-
-模型结果应尽量直接作用于当前知识对象，例如根据学生回答生成反馈、根据输入改变案例、补充变量或调整后续解释。
-
-避免“输入一句话 → AI 输出一大段文字”。生成内容应尽量短、结构化、可操作，并继续参与后续教学交互。
+只在任务需要开放生成时提高随机性。保持输出简短、可操作，并参与后续教学交互。

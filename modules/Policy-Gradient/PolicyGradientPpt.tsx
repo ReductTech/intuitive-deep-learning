@@ -3,4 +3,4 @@ import { course } from './course';
 import outline from './outlines.json';
 export const deck: DeckDefinition = { id:'policy-gradient',title:outline.title,subtitle:`从走迷宫到策略学习 · ${course.length} 页`,scenes:course.map(({id,title,section,component:Component})=>({id,title,section,render:()=> <Component/>})) };
 export function getPptNotes(id: string): SpeakerNote[] { const page=outline.pages.find(p=>p.id===id);return page?[{text:page.snippet,selectors:['.pg-main']}]:[]; }
-export function PolicyGradientPpt() { return <SceneDeck catalog={[deck]} moduleId="policy-gradient" assetId="policy-gradient" progressKey="policy-gradient-reinforce-v4" getNotes={getPptNotes}/>; }
+export function PolicyGradientPpt() { return <SceneDeck catalog={[deck]} moduleId="policy-gradient" assetId="9831b46b-af10-4cb3-b9dc-94e0cee25143" progressKey="policy-gradient-reinforce-v4" getNotes={getPptNotes}/>; }

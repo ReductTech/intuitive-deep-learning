@@ -1,75 +1,37 @@
-# 显卡与本地模型计算
+# 模型计算与 GPU
 
-课程需要 CNN、视觉模型、Embedding、训练或其他较重的模型计算时，不在 React 页面中直接执行，而是通过仓库现有的 Python 计算服务完成。
+用于训练、神经网络推理、Embedding 或较重的视觉计算。普通数学、简单卷积可视化和能实时完成的规则判断保留在前端，不为了“用了 GPU”搬到后端。
 
-现有 CNN 与人脸识别课程主要使用：
+## 沿用实际架构
 
-`React 模块 → 共用 Cloud API /api/lab（本地 :8000）→ backend/src/idl_backend/local/http.py :28431 → idl_backend.vision → Torch / 本地模型`
+`React → 共用 Cloud API /api/lab → Python 计算服务 → idl_backend.vision → Torch / 本地模型`
 
-本地与云端注入同一份 Cloud `frontend/cloud-runtime.js`，既有本地服务 URL 自动转换为同源 API。缓存与任务完成交接统一复用 Cloud API；原生 28431 只作为计算接口和单独调试入口。
+本地与云端通过共用 Cloud `frontend/cloud-runtime.js` 转换既有服务 URL，并复用现有缓存和任务交接。入口与安装说明以 `backend/README.md` 为准，不依赖已经移除的 scripts 转发层。
 
-CNN 服务按职责拆分为三个入口文件：
+按以下职责寻找实现：
 
-- `scripts/idl_backend.datasets.digits`：数据集路径、IDX/PNG/NPY/NPZ 读取、缓存、固定卷积核和特征图准备。这里不启动 HTTP 服务，也不执行 Torch 训练。
-- `backend/src/idl_backend/contracts/tasks.py`：固定卷积训练、可学习 CNN、InsightFace 相似度、人脸训练任务和进度状态。它复用 `idl_backend.datasets.digits` 的数据契约。
-- `backend/src/idl_backend/local/http.py`：`28431` 端口的 HTTP/CORS、健康检查、请求路由、异步 job 查询，以及 InsightFace 初始化。启动器通过它启动服务。
+| 职责 | 仓库路径 |
+|---|---|
+| 数据读取与数据契约 | `backend/src/idl_backend/datasets/` |
+| 任务注册、接口标识与惰性分发 | `backend/src/idl_backend/contracts/tasks.py` |
+| HTTP 接入与请求处理 | `backend/src/idl_backend/local/http.py` |
+| 特征、训练、推理 | `backend/src/idl_backend/vision/features/`、`training/`、`inference/` |
+| 设备策略 | `backend/src/idl_backend/vision/device.py` |
 
-`scripts/lenet5_cnn_service.py` 仍保留为兼容转发层，旧命令和 legacy 页面可以继续引用；新代码和运行时配置应优先使用 `http_service.py`，不要把数据读取或模型计算重新塞回 HTTP 层。
+不要把模型实现或数据读取堆回 HTTP 层，不为每门课再建立一套计算服务。自定义前端请求封装在模块 `services/`，页面只提交教学参数、读取稳定业务结果。
 
-本文件只指导计算能力的设计与接入方式，不负责启动、检查或验证后台服务。除非用户明确要求，不主动启动任何训练或 GPU 服务。
+## 计算规模与交互
 
-## 使用原则
+- 使用足以展示教学现象的小模型、小数据和有界训练；限制 epoch、batch、层数和通道数等输入。
+- 不允许用户参数任意构造可能耗尽内存或显存的网络。
+- 较长任务采用提交 → job ID → 查询进度 → 获取结果，复用现有异步契约。
+- 等待、失败、重试和重置行为应清楚；缓存命中直接展示实际结果，不模拟训练进度。
+- 能复用预计算或缓存时不重复昂贵计算，模拟教学过程不能冒充真实训练。
 
-- 只有模型训练、神经网络推理、Embedding 或明显受益于硬件加速的计算才使用该服务。
-- 普通数学计算、简单卷积演示、前端能够实时完成的可视化和规则判断留在浏览器中。
-- 不为了展示“用了 GPU”而把简单计算搬到后端。
-- 教学任务优先使用小模型、小数据和有界计算，使等待时间与课程节奏相匹配。
+## 设备与运行
 
-## React 侧
+设备选择在 Python 内部完成，React 不判断显卡型号或用设备差异改变知识结论。复用 `select_device`，尊重 `IDL_DEVICE` 等现有配置；当前 auto 策略选择可用 CUDA，否则 CPU，MPS 需明确选择且设备可用。不要把理想化设备优先级写成已经实现的能力。
 
-- 模型计算封装在模块自己的 `services/` 中，不把大量请求逻辑散落在 page 或 block。
-- CNN、人脸等现有任务优先复用或扩展 `:28431` 的现有服务，不为每门课程重新建立一套模型服务。新增数据格式先放入 `idl_backend.datasets.digits`，新增模型/训练逻辑放入 `idl_backend.vision`，新增接口只在 `http_service.py` 注册。
-- 页面只提交教学需要的参数，并使用服务返回的稳定业务结果，不直接处理 Torch 模型。
-- 训练或较长计算必须提供明确的等待和进度状态。
-- 长任务优先采用“提交任务 → 返回 job id → 查询进度 → 获取结果”的异步方式，不让页面等待一个长期阻塞请求。
-- 服务失败时允许重试或回到可继续学习的状态，不伪造训练结果。
+设计时保证没有 GPU 也能完成核心学习流程，必要时减小任务或使用已标明的预计算结果。缺少环境依赖时说明实际限制，不伪造计算结果。
 
-## 计算规模
-
-课程中的模型计算必须保持可控。
-
-现有 CNN 服务会限制训练和网络规模，例如限制 epoch 数、网络层数、卷积通道数、卷积核和步幅范围，并使用有限 batch size。
-
-新增教学任务应延续这一原则：
-
-- 不接受无限制的 epoch、batch size、通道数或网络深度。
-- 不允许用户输入直接构造可能耗尽显存或内存的网络。
-- 训练规模只需足够展示当前教学现象，不追求生产级模型性能。
-- 能复用预计算结果、缓存或固定数据时，不重复进行昂贵计算。
-
-## 设备选择
-
-模型代码不应假设机器一定具有 NVIDIA GPU。
-
-需要硬件加速时，优先采用：
-
-`CUDA → MPS → CPU`
-
-并保证 CPU fallback 仍能完成课程核心流程。
-
-设备选择属于 Python 计算服务内部实现，React 页面不判断 CUDA、MPS 或显卡型号，也不根据设备类型改变知识结论。
-
-当前 `idl_backend.vision` 的部分训练路径虽然保留了 CUDA / MPS 自动检测代码，但随后强制使用 CPU；修改这些路径时应先确认当前课程是否真的需要 GPU，再决定是否恢复硬件加速。设备选择和 fallback 仍属于 `idl_backend.vision` 内部实现，HTTP 层不得暴露硬件分支作为教学逻辑。
-
-## 教学设计
-
-显卡只是计算基础设施，不应成为课程交互本身。
-
-学生点击“训练”时，页面应关注：
-
-- 模型正在发生什么变化
-- 当前训练到了哪里
-- 指标如何变化
-- 参数或结构改变带来了什么结果
-
-而不是展示 CUDA 调用、显存占用或后端实现细节，除非这些内容本身就是当前课程要教授的知识。
+本说明用于接入设计，不要求自动启动服务、训练或下载大模型。只有任务已有相关授权时才执行；学生页面关注模型、指标和参数变化，不展示后端设备细节，除非它本身就是教学目标。

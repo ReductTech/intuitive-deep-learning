@@ -96,6 +96,7 @@ export function HomePage() {
       <a href="/" className="sd-library-brand" aria-label="SceneDeck 首页"><span className="sd-library-logo"><Icon name="book" /></span><span>SceneDeck<span className="sd-library-brand-dot">.</span></span></a>
       <nav aria-label="主导航"><button className={tab === 'courses' ? 'is-active' : ''} onClick={() => setTab('courses')}>探索课程</button><button className={tab === 'saved' ? 'is-active' : ''} onClick={() => setTab('saved')}>我的收藏<span>{saved.length || ''}</span></button></nav>
       <span className="sd-library-topnote"><span />让知识可以被探索</span>
+      <a className="sd-library-create" href="/edit-deck">✧ 创作课件</a>
     </header>
     <aside className="sd-library-sidebar" aria-label="课程分类">
       <p className="sd-library-nav-label">课程图书馆</p>

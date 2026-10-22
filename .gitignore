@@ -21,5 +21,5 @@ setting.json
 .[Tt][Mm][Pp]*
 /Creator-Showcase
 
-# Generated public copy; originals live in modules/Value-Based-RL/assets.
+# Obsolete generated asset copy; active assets use UUID directories.
 /assets/value-based-rl/

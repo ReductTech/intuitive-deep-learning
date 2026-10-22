@@ -4,7 +4,6 @@ function Resolve-DevelopmentPython {
   $required = @('psutil')
   if (-not $ManagementOnly) {
     $required += 'dotenv'
-    if ($Kind -in @('all','assessment','vision','api')) { $required += 'cryptography' }
     if ($Kind -in @('all','assessment')) { $required += @('langchain_core','pydantic') }
     if ($Kind -in @('all','vision')) { $required += @('torch','numpy','PIL') }
     if ($Kind -in @('all','api')) { $required += @('fastapi','uvicorn','sqlalchemy','mysql.connector','psycopg','psycopg_pool','oss2') }

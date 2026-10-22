@@ -4,6 +4,7 @@ import { UiKitPage } from '../../modules/shared/react/routing/UiKitPage';
 import { activeModules } from './modules';
 import { type AppRoute } from './Router';
 import { HomePage } from './HomePage';
+import { CreatorWorkspace } from '../creator/CreatorWorkspace';
 
 const EditDeck = lazy(() => import('../../Edit-Deck/EditDeck').then(module => ({ default: module.EditDeck })));
 
@@ -12,6 +13,7 @@ const pptCatalog = pptModules.map((module) => module.pptDeck) as [DeckDefinition
 
 function SceneDeckPage() {
   if (!pptCatalog.length) return <p>Page not found.</p>;
+  if (new URLSearchParams(window.location.search).get('scenedeckCapture') !== '1') return <CreatorWorkspace />;
   return <SceneDeck
     catalog={pptCatalog}
     moduleId={(deckId) => deckId}
@@ -27,7 +29,8 @@ function SceneDeckPage() {
 
 export const appRoutes: AppRoute[] = [
   { path: '/', element: <HomePage /> },
-  { path: '/edit-deck', element: <Suspense fallback={<p>正在打开 Edit Deck…</p>}><EditDeck /></Suspense> },
+  { path: '/edit-deck/legacy', element: <Suspense fallback={<p>正在打开 Edit Deck…</p>}><EditDeck /></Suspense> },
+  { path: '/edit-deck', element: <CreatorWorkspace /> },
   { path: '/shared/ui-kit', element: <UiKitPage /> },
   ...activeModules.flatMap((module) => [
     { path: module.path, element: module.element },

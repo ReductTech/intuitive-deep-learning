@@ -22,7 +22,7 @@ python -m pip install -e './backend[vision,projection,assessment,dev]'
 
 `npm run dev` 自动注入 Cloud 的同一份 `frontend/cloud-runtime.js`，将视觉、训练和 LLM 请求转换为同源 `/api/lab`、`/api/ai`，再代理至 8000。缓存查询、计算任务交接和 `idl_cache` 写入都走同一个 Cloud API。学习记录继续使用本地 59411；本地默认关闭 Cloud PostgreSQL 遥测，生产默认开启。缺少共用缓存配置时启动报错，不静默绕过缓存。
 
-独立启动某个 API 也可使用 `python -m idl_backend serve --kind vision --dev`。课程身份工具为 `python -m idl_backend.contracts.identity --check`。原 scripts 下的 Python 转发入口已删除。
+独立启动某个 API 也可使用 `python -m idl_backend serve --kind vision --dev`。课程 UUID 无需签发或密钥。运行 `python -m idl_backend.contracts.identity` 可生成缺失 UUID 并移除旧签名；`python -m idl_backend.contracts.identity --check` 只检查格式、重复和缺失，不写文件。原 scripts 下的 Python 转发入口已删除。
 
 ## 目录与职责
 

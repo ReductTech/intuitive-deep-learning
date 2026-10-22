@@ -20,6 +20,7 @@
 .sd-library-topbar nav button span {font-size:11px;margin-left:7px;color:var(--sd-blue);}
 .sd-library-topnote {margin-left:auto;color:#8b95a5;font-size:12px;display:flex;align-items:center;gap:8px;}
 .sd-library-topnote>span {width:6px;height:6px;border-radius:50%;background:#58ac93;}
+.sd-library-create {text-decoration:none;background:#2f6bff;color:white;border-radius:8px;padding:10px 16px;font-size:13px;white-space:nowrap;}
 .sd-library-sidebar {position:fixed;top:78px;bottom:0;left:0;width:218px;background:#fff;border-right:1px solid var(--sd-line);padding:35px 18px 20px;display:flex;flex-direction:column;overflow-y:auto;}
 .sd-library-nav-label {margin:0 15px 20px;font-size:11px;letter-spacing:1.4px;color:#a1a9b6;}
 .sd-library-topics {display:grid;gap:7px;}

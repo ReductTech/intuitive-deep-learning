@@ -113,7 +113,7 @@ actorCritic.ts 按 DRL.pdf §7.5 的Q型方法实现，非A2C：
 - `docs/review/references/`：实际查看过的成品课件参考截图。
 - `scripts/link-assets.mjs`：为本模块创建或核对公共资源入口。
 
-按本次用户要求，素材原件集中在模块内。仓库 `assets/policy-gradient` 是指向本模块 `assets` 的相对目录链接，没有第二份待维护原件。Vite 构建会沿链接将素材复制到 dist；场景图、狐狸和缩略图仍使用 Shared `moduleAssetUrl`。初次检出时可从仓库根目录运行 `node modules/Policy-Gradient/scripts/link-assets.mjs`。这一存储位置是用户明确要求对 creator-skill 根目录资源规则的例外。
+素材原件统一位于仓库根目录 `assets/<moduleIdentity.id>/`，不再使用模块内素材目录或目录链接。场景图、狐狸和缩略图通过 Shared `moduleAssetUrl` 与同一 UUID 引用。可从仓库根目录运行 `node modules/Policy-Gradient/scripts/link-assets.mjs` 检查资源目录是否存在。
 
 ### 已处理的规范问题
 
@@ -125,9 +125,9 @@ actorCritic.ts 按 DRL.pdf §7.5 的Q型方法实现，非A2C：
 - 活跃代码不依赖 modules-legacy 或其他课程实现；播放器继续复用 Shared SceneDeck。
 - Guide与PPT共用course和相同页面组件；固定1600×900，只由外层等比缩放。
 
-### 尚未完成的规范项
+### 模块身份与资源
 
-`outlines.json` 缺少签名模块身份。官方验证工具确认其他7个模块身份有效，本模块缺失。官方签发工具无法运行到签发阶段，因为当前环境没有 `.private/module-identity-ed25519.pem`。没有生成替代私钥，没有伪造UUID或签名。需恢复原签发私钥后，再使用仓库工具补齐身份，并同步资源入口和 assetId 至签名UUID。
+模块使用 `outlines.json.moduleIdentity.id` 中的稳定 UUID；无需签发、密钥或验签。静态资源存放在仓库根目录 `assets/<UUID>/`，运行时资源引用和 SceneDeck `assetId` 使用同一 UUID。
 
 ### 从成品课件借鉴的设计
 

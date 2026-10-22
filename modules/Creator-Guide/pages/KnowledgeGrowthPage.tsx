@@ -223,7 +223,7 @@ export function KnowledgeGrowthPage() {
   const journey = useLearningJourney(active, replay, container);
   return <article ref={container} className="cg-knowledge-page cg-creator-typography" aria-label="知识增长与有限的个人积累" data-era={active} data-progress={position.toFixed(3)} data-learning-step={journey.step} data-learning-depth={journey.depth.toFixed(3)} data-learning-complete={journey.done}>
     <ContentBlock className="cg-k-content" headingLevel={1}
-      title="我们会不会穷尽一生，也抵达不了知识前沿？">
+      title={"我们会不会穷尽一生，也抵达不了知识前沿？"}>
       <section className="cg-k-scene" aria-label="随时代同步变化的山景与知识圆">
         <GrowthMountain position={position} climb={journey.climb} />
         <GrowthCircle position={position} foundation={journey.foundation} depth={journey.depth} />

@@ -13,6 +13,6 @@ PPT: `/scenedeck/?deck=gradient-descent&slide=evacuation`
 
 地形、落点检测、扫描图、辐射表与方向探针共享 `model.ts` 的模拟场。自然素材采用按空间分区的 InstancedMesh；遮罩枝叶保留真实材质，实体建筑使用接触环境遮蔽；阴影限频更新以兼顾移动守卫、倒树和性能。
 
-自然模型：[Quaternius Stylized Nature MegaKit Standard](https://quaternius.com/packs/stylizednaturemegakit.html)，CC0 1.0。工业模型：[Kenney City Kit Industrial](https://kenney.nl/assets/city-kit-industrial)，CC0 1.0。模型、依赖纹理、许可及来源记录位于模块签名 UUID 对应的 `assets/` 目录。冷却塔、废墟、管道钢架、地形、水面、桥梁与直升机在模块内建模。
+自然模型：[Quaternius Stylized Nature MegaKit Standard](https://quaternius.com/packs/stylizednaturemegakit.html)，CC0 1.0。工业模型：[Kenney City Kit Industrial](https://kenney.nl/assets/city-kit-industrial)，CC0 1.0。模型、依赖纹理、许可及来源记录位于模块稳定 UUID 对应的 `assets/` 目录。冷却塔、废墟、管道钢架、地形、水面、桥梁与直升机在模块内建模。
 
 用户已明确允许本页跳过 ContentBlock 和大纲确认；其余课程页尚未实现。

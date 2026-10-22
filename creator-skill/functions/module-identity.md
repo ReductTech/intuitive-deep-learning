@@ -1,25 +1,31 @@
-# Module Identity
+# 模块身份
 
-Active course modules receive a stable, signed identity in the top-level `moduleIdentity` field of `outlines.json`. The identity is separate from page-level `id` fields.
+每个活跃模块在 `outlines.json` 中有顶层 `moduleIdentity`，与页面 `id` 分开：
 
-## Commands
+```json
+{"moduleIdentity": {"version": 1, "id": "2e5c4732-a40a-4d20-b954-a61507aabc75"}}
+```
 
-Run these commands from the repository root.
+ID 使用标准小写 UUID v4，共创者可本地生成，不需要签发、密钥或验签。上例只展示格式，不复制为新课程的 ID。
+
+## 生成与检查
+
+已安装后端包时，从仓库根目录运行：
 
 ```powershell
-# Add identities to modules that do not have one yet; validate existing identities.
+# 检查已有 ID，为缺失模块生成 UUID，并移除旧 signature 字段。
 python -m idl_backend.contracts.identity
 
-# Validate all module identities without writing files.
+# 只检查格式、重复和缺失，不写文件。
 python -m idl_backend.contracts.identity --check
 ```
 
-The script scans `modules/*/outlines.json`. It adds a UUID v4 and Ed25519 signature only when `moduleIdentity` is absent. Existing identities are preserved exactly after validation. A malformed or invalid existing identity stops the run; the script never repairs or replaces it automatically. It validates every outline before writing any missing identity.
+脚本扫描全部 `modules/*/outlines.json`，先检查所有已有身份，再写入。格式错误或重复时停止，不自动替换已有 UUID；`--check` 对缺失、格式错误或重复返回非零。后端课程加载也拒绝这些情况。旧 `signature` 读取时忽略，生成命令会移除，已有 UUID 保持不变。
 
-The signature covers the module URL path and UUID, not the rest of the outline. Course titles, descriptions, and page content can change without changing the identity. Changing the UUID, signature, or signed module path makes validation fail. This is an identity-integrity check, not a signature over all course content.
+命令需要可导入的 `idl_backend`；环境尚未安装时按 `backend/README.md` 配置，不把依赖缺失误报为身份无效。该命令会补齐所有缺失身份，不只是当前模块，运行前了解其写入范围。
 
-## Signing Key
+## 稳定性
 
-The script contains the fixed public verification key. Do not edit it: doing so invalidates verification for identities already issued. The corresponding Ed25519 private signing key is stored at `.private/module-identity-ed25519.pem`, which is ignored by Git. Keep that private key secret and backed up securely. Losing it does not prevent verification of existing identities, but prevents issuing identities for new modules. Do not put the private key in the script or commit it to the repository.
+修改标题、正文、页序或目录名不改变 UUID。路由 `path` 仍须匹配模块目录，这是路由约束，与 UUID 无签名绑定。
 
-The script requires the `cryptography` Python package, declared in `requirements.txt`.
+复制成独立新课程时，删除复制来的 `moduleIdentity` 再生成新 UUID；相应静态资源放 `assets/<新 UUID>/`，同步运行时引用和 SceneDeck `assetId`，不要沿用源课程身份。

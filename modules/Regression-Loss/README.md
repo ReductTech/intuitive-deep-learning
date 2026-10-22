@@ -14,7 +14,7 @@ The boat and four alternating stone variants are transparent generated assets. R
 
 The floating notebook uses Shared ECharts and displays shared calibration observations with small measurement offsets, plus the known 44 cm horizontal reference, without a fitted line. Its central area is devoted to a large chart, with 28 px axis titles and 22 px tick labels. Duplicate numeric readings and operating instructions are removed; the shortage and estimation question appear over the water beside the stone control. Shared Typography and Button provide semantic text and controls. The video's original bytes are copied into the signed module asset directory without transcoding.
 
-Images are teaching illustrations from the built-in ImageGen tool. Prompts and simulation provenance are in `asset-sources.json`. Asset files live under the signed UUID in repository-root `assets/`. No Shared files are modified.
+Images are teaching illustrations from the built-in ImageGen tool. Prompts and simulation provenance are in `asset-sources.json`. Asset files live under the stable UUID in repository-root `assets/`. No Shared files are modified.
 
 ## 教学大纲与历史制作记录
 
