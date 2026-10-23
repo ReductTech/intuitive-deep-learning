@@ -11,7 +11,7 @@ function ServiceIcon({ model = false }: { model?: boolean }) {
 export function UIKitCatalog(){
   const [answer,setAnswer]=useState('');const [dataset,setDataset]=useState('mnist');const [grid,setGrid]=useState(true);const [filter,setFilter]=useState(false);const [activation,setActivation]=useState('relu');const [boundary,setBoundary]=useState(true);const [rate,setRate]=useState(.5);const radioName=useId();
   const style=Object.fromEntries(defaultTheme.colors.map(c=>[c.token,c.value])) as CSSProperties;
-  return <ContentBlock className="cg-kit-page cg-creator-typography" style={style} headingLevel={1} title="工程脚手架：从教学页面到后端服务" subtitle="组件、页面模板与计算服务，让课件不必从零开始。" bodyClassName="cg-kit-columns">
+  return <ContentBlock className="cg-kit-page cg-creator-typography" style={style} headingLevel={1} title="实现支持：组件与工具支撑课件制作" subtitle="提供可复用的控件、页面模板与计算能力，落实具体的教学设计。" bodyClassName="cg-kit-columns">
     <div className="cg-kit-column cg-kit-column-left">
       <section className="cg-kit-panel cg-kit-tones"><div className="cg-kit-panel-title"><Typography as="h2" variant="h2">语义颜色 · Tone</Typography><Typography variant="bodySmall" tone="muted">用颜色角色表达含义，主题调整时统一更新。</Typography></div><div className="cg-kit-tone-grid">{tones.map(([tone,label,description])=><div key={tone}><Typography variant="h3" tone={tone}>{label}</Typography><Typography variant="bodySmall" tone="muted">{tone} · {description}</Typography></div>)}</div></section>
       <section className="cg-kit-panel cg-kit-controls"><div className="cg-kit-panel-title"><Typography as="h2" variant="h2">参数与选项控件</Typography><Typography variant="bodySmall" tone="muted">按数据类型选控件，下面的示例可以直接操作。</Typography></div><div className="cg-kit-demo-grid">
