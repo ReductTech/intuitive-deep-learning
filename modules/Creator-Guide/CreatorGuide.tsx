@@ -1,3 +1,4 @@
+import { NativeStudyPreview } from './components/NativeStudyPreview';
 import './CreatorTypography.css';
 import { TitlePage } from './pages/TitlePage';
 import { useLayoutEffect, useRef, useState, type ReactNode } from 'react';
@@ -35,5 +36,6 @@ function GuideCanvas({ children, id }: { children: ReactNode; id: string }) {
   return <div ref={ref} id={id} className="cg-guide-frame" style={{ height: 900 * scale }}><div className="cg-guide-surface" style={{ transform: `scale(${scale})` }}>{children}</div></div>;
 }
 export function CreatorGuide() {
+  if (new URLSearchParams(window.location.search).get('studyPreview') === 'convolution') return <NativeStudyPreview/>;
   return <main className="cg-guide"><GuideCanvas id="creator-guide-title"><TitlePage /></GuideCanvas><GuideCanvas id="learning-goals"><LearningGoalPage /></GuideCanvas><GuideCanvas id="education-paths"><EducationPathsPage /></GuideCanvas><GuideCanvas id="popular-science"><PopularSciencePage /></GuideCanvas><GuideCanvas id="professional-education"><ProfessionalEducationPage /></GuideCanvas><GuideCanvas id="intuitive-learning"><IntuitiveLearningPage /></GuideCanvas><GuideCanvas id="frontend-journey"><FrontendJourneyPage /></GuideCanvas><GuideCanvas id="skill-overview"><SkillOverviewPage /></GuideCanvas><GuideCanvas id="skill-constraints"><SkillConstraintsPage /></GuideCanvas><GuideCanvas id="ui-kit"><UIKitPage /></GuideCanvas><GuideCanvas id="multi-format"><MultiFormatPage /></GuideCanvas><GuideCanvas id="human-collaboration"><HumanCollaborationPage /></GuideCanvas><GuideCanvas id="presentation-comparison"><PresentationComparisonPage /></GuideCanvas><GuideCanvas id="creation-workflow"><CreationWorkflowPage /></GuideCanvas><GuideCanvas id="optional-interaction"><OptionalInteractionPage /></GuideCanvas><GuideCanvas id="progressive-disclosure"><ProgressiveDisclosurePage /></GuideCanvas><GuideCanvas id="discovery-learning"><DiscoveryLearningPage /></GuideCanvas></main>;
 }

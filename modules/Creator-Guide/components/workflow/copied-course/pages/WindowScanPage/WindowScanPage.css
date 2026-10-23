@@ -1,0 +1,766 @@
+/* 第 04 页 · 拖窗口扫棋盘：左边是带数字小框的棋盘，右边是「输入 ⊛ 算子」与激活值。 */
+
+.cg-copy-course-shell .cg-copy-ck-window-scan {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  row-gap: 0;
+  min-height: 720px;
+  overflow: hidden;
+  padding: 26px 34px 24px;
+}
+
+
+.cg-copy-course-shell .cg-copy-ck-window-scan > .edu-content-body {
+  display: grid;
+  min-height: 0;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 54%) minmax(0, 1fr);
+  gap: 26px;
+  min-width: 0;
+  min-height: 0;
+}
+
+/* 左栏：整盘棋子，上面浮着一个可以拖的橙色小框，底下一条图例。 */
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__board-slot {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  place-items: center;
+  gap: 14px;
+  min-width: 0;
+  min-height: 0;
+}
+
+/*
+ * 15 列 15 行写死在这里（跟 BOARD_SIZE 同一个数）。
+ * 按行高定尺寸，格子才是正方形，小框才落得准。
+ */
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__board {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(15, minmax(0, 1fr));
+  grid-template-rows: repeat(15, minmax(0, 1fr));
+  gap: 1px;
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  aspect-ratio: 1 / 1;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid var(--ui-grid);
+  border-radius: 10px;
+  background: var(--ui-grid);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__board:active { cursor: grabbing; }
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__cell {
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  background: #fff;
+  font-variant-numeric: tabular-nums;
+}
+
+/* 底色按到棋形中心的距离分五层：最外一圈最淡，往里每层都更深一点。 */
+.cg-copy-course-shell .cg-copy-ck-window-scan__cell--ring-4 { background: rgba(39, 68, 110, .05); }
+.cg-copy-course-shell .cg-copy-ck-window-scan__cell--ring-3 { background: rgba(39, 68, 110, .10); }
+.cg-copy-course-shell .cg-copy-ck-window-scan__cell--ring-2 { background: rgba(39, 68, 110, .15); }
+.cg-copy-course-shell .cg-copy-ck-window-scan__cell--ring-1 { background: rgba(39, 68, 110, .20); }
+.cg-copy-course-shell .cg-copy-ck-window-scan__cell--ring-0 { background: rgba(39, 68, 110, .25); }
+
+/* 1 = 赢方的子，-1 = 对手的子。 */
+.cg-copy-course-shell .cg-copy-ck-window-scan__cell--one { background: var(--ui-accent-alt); color: #fff; }
+.cg-copy-course-shell .cg-copy-ck-window-scan__cell--minus { background: var(--ui-accent); color: #fff; }
+
+/* 橙框 = 算子上那 5 个 1 盯着的位置；压到棋子就被绿色盖掉。 */
+.cg-copy-course-shell .cg-copy-ck-window-scan__cell--eye { box-shadow: none; }
+.cg-copy-course-shell .cg-copy-ck-window-scan__cell--hit { background: var(--ui-success); color: #fff; box-shadow: none; }
+.cg-copy-course-shell .cg-copy-ck-window-scan__cell:not(.cg-copy-ck-window-scan__cell--one):not(.cg-copy-ck-window-scan__cell--minus) { background: #d5deec; }
+.cg-copy-course-shell .cg-copy-ck-window-scan__cell--mask-zero { background: transparent !important; color: transparent; }
+.cg-copy-course-shell .cg-copy-ck-window-scan__cell--mask-zero .ui-typography { display: none; }
+.cg-copy-course-shell .cg-copy-ck-window-scan__cell--eye:not(.cg-copy-ck-window-scan__cell--one):not(.cg-copy-ck-window-scan__cell--minus) { background: transparent !important; }
+.cg-copy-course-shell .cg-copy-ck-window-scan__cell--eye { box-shadow: inset 0 0 0 2px var(--ui-accent-alt); }
+
+/* 橙色小框与把手只做标记，指针事件穿过去落在格子上，拖起来才跟手。 */
+.cg-copy-course-shell .cg-copy-ck-window-scan__window {
+  position: absolute;
+  box-sizing: border-box;
+  border: 3px solid var(--ui-accent-alt);
+  border-radius: 8px;
+  background: transparent;
+  pointer-events: none;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__grip {
+  position: absolute;
+  top: -11px;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 22px;
+  border-radius: 999px;
+  background: var(--ui-accent-alt);
+  box-shadow: 0 2px 8px rgba(33, 50, 74, .3);
+  padding: 0 11px;
+  transform: translateX(-50%);
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__grip i {
+  display: block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #fff;
+}
+
+/* 小框贴到棋盘上边时，把手缩回框内。 */
+.cg-copy-course-shell .cg-copy-ck-window-scan__window.is-clamped-top .cg-copy-ck-window-scan__grip { top: 4px; }
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__key {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 26px;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+  list-style: none;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__key-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__key-chip {
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
+  background: var(--ui-border-strong);
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__key-chip--one { background: var(--ui-accent-alt); }
+.cg-copy-course-shell .cg-copy-ck-window-scan__key-chip--minus { background: var(--ui-accent); }
+.cg-copy-course-shell .cg-copy-ck-window-scan__key-chip--hit { background: var(--ui-success); }
+
+/* 右栏：上排「输入 ⊛ 算子」，下排激活值与提示。 */
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__panel {
+  display: grid;
+  align-content: center;
+  gap: 22px;
+  min-width: 0;
+  min-height: 0;
+  border-left: 1px solid var(--ui-border);
+  padding-left: 24px;
+}
+
+/*
+ * 两行三列：第一行是两个标题和中间的空位，第二行是两个方块和中间的符号。
+ * 这样符号正好落在两块方块的中间高度上。
+ */
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__compare {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  justify-items: center;
+  column-gap: 16px;
+  row-gap: 12px;
+  min-width: 0;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__operator { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: #edf3fb; color: var(--ui-accent); }
+.cg-copy-course-shell .cg-copy-ck-window-scan__operator.is-unknown { color: var(--ui-accent-alt); animation: cg-copy-ck-window-operator-sway 1.8s ease-in-out infinite; }
+.cg-copy-course-shell .cg-copy-ck-window-scan__operator.is-ready { background: #e8f1ff; }
+@keyframes cg-copy-ck-window-operator-sway { 0%, 100% { transform: rotate(-8deg) translateX(-2px); } 50% { transform: rotate(8deg) translateX(2px); } }
+
+/*
+ * 方块由每个格子自己撑成正方形，容器不再靠 aspect-ratio 定高。
+ * 这样行高只会被格子本身决定，不会出现算出来不够高、数字被切掉的情况。
+ */
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 2px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  border: 1px solid var(--ui-grid);
+  border-radius: 10px;
+  background: var(--ui-grid);
+  padding: 2px;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__grid-cell {
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #fff;
+  font-variant-numeric: tabular-nums;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__grid-cell--one { background: var(--ui-accent-alt); color: #fff; }
+.cg-copy-course-shell .cg-copy-ck-window-scan__grid-cell--minus { background: var(--ui-accent); color: #fff; }
+.cg-copy-course-shell .cg-copy-ck-window-scan__grid-cell--eye { box-shadow: none; }
+.cg-copy-course-shell .cg-copy-ck-window-scan__grid-cell--hit { background: var(--ui-success); color: #fff; box-shadow: none; }
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__result {
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  min-width: 0;
+  border-top: 1px solid rgba(39, 68, 110, .15);
+  padding-top: 18px;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__result-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__match-meter { display: flex; align-items: end; gap: 6px; min-height: 46px; }
+.cg-copy-course-shell .cg-copy-ck-window-scan__match-meter span { display: grid; place-items: center; width: 34px; height: 18px; border-radius: 4px; background: #e6ecf5; color: #8290a5; font-size: 12px; transition: height 120ms ease, background 120ms ease; }
+.cg-copy-course-shell .cg-copy-ck-window-scan__match-meter span:nth-child(2) { height: 24px; }
+.cg-copy-course-shell .cg-copy-ck-window-scan__match-meter span:nth-child(3) { height: 30px; }
+.cg-copy-course-shell .cg-copy-ck-window-scan__match-meter span:nth-child(4) { height: 36px; }
+.cg-copy-course-shell .cg-copy-ck-window-scan__match-meter span:nth-child(5) { height: 42px; }
+.cg-copy-course-shell .cg-copy-ck-window-scan__match-meter span.is-filled { background: var(--ui-accent-alt); color: #fff; }
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__multiply {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 3px;
+  margin: 10px 0;
+  min-width: 0;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__multiply-cell {
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  border: 1px solid var(--ui-border);
+  border-radius: 6px;
+  background: var(--ui-bg-muted);
+  padding: 4px 2px;
+  font-variant-numeric: tabular-nums;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__multiply-cell.is-active {
+  border-color: rgba(240, 126, 71, .55);
+  background: rgba(240, 126, 71, .07);
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__multiply-cell > .ui-typography {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  text-align: center;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__sum-line {
+  display: flex;
+  justify-content: center;
+  min-width: 0;
+  margin-top: 8px;
+  border-top: 1px solid var(--ui-border);
+  padding-top: 8px;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__readout {
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  border: 1px solid rgba(240, 126, 71, .38);
+  border-radius: 8px;
+  background: rgba(240, 126, 71, .07);
+  padding: 12px 18px;
+  text-align: center;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__readout.is-found {
+  border-color: rgba(34, 141, 92, .34);
+  background: rgba(34, 141, 92, .07);
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__result-card {
+  align-content: start;
+  justify-items: stretch;
+  gap: 12px;
+  border: 1px solid var(--ui-border);
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 10px 24px rgba(39,68,110,.08);
+  padding: 18px 20px;
+  text-align: left;
+}
+.cg-copy-course-shell .cg-copy-ck-window-scan__result-card h3 { margin: 0; }
+.cg-copy-course-shell .cg-copy-ck-window-scan__score-row { display: grid; grid-template-columns: auto auto auto minmax(0, 1fr); align-items: center; gap: 10px; min-width: 0; }
+.cg-copy-course-shell .cg-copy-ck-window-scan__score-row strong { font-size: 44px; line-height: 1; }
+.cg-copy-course-shell .cg-copy-ck-window-scan__progress { height: 14px; overflow: hidden; border-radius: 999px; background: #e8edf5; }
+.cg-copy-course-shell .cg-copy-ck-window-scan__progress span { display: block; height: 100%; border-radius: inherit; background: var(--ui-accent-alt); transition: width .2s ease; }
+.cg-copy-course-shell .cg-copy-ck-window-scan__result-tip { margin-top: 2px; }
+
+/* 1600 × 900 固定画布：Blog / Guide 与 SceneDeck 共用同一套构图。 */
+
+.course-page-surface .cg-copy-ck-window-scan {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  padding: 26px 34px 24px;
+}
+
+@media (max-width: 820px) {
+  .cg-copy-course-shell .cg-copy-ck-window-scan { min-height: auto; padding: 22px; }
+  .cg-copy-course-shell .cg-copy-ck-window-scan__layout { grid-template-columns: minmax(0, 1fr); }
+  .cg-copy-course-shell .cg-copy-ck-window-scan__board { width: 100%; height: auto; }
+  .cg-copy-course-shell .cg-copy-ck-window-scan__panel {
+    border-left: 0;
+    padding-left: 0;
+  }
+}
+
+/* Slide fit and visual rhythm overrides. */
+.cg-copy-course-shell .cg-copy-ck-window-scan { gap: 12px; min-height: 0; padding: 20px 30px 18px; }
+.cg-copy-course-shell .cg-copy-ck-window-scan__layout { grid-template-columns: minmax(0, 53%) minmax(0, 47%); gap: 22px; }
+.cg-copy-course-shell .cg-copy-ck-window-scan__panel { align-content: start; gap: 12px; padding: 18px 0 0 24px; }
+.cg-copy-course-shell .cg-copy-ck-window-scan__readout { padding: 10px 14px; }
+.cg-copy-course-shell .cg-copy-ck-window-scan__readout .ui-typography { line-height: 1.35; }
+.cg-copy-course-shell .cg-copy-ck-window-scan__compare { column-gap: 10px; row-gap: 8px; }
+.cg-copy-course-shell .cg-copy-ck-window-scan__result-card { padding: 14px 16px; }
+.course-page-surface .cg-copy-ck-window-scan { padding: 20px 30px 18px; }
+
+/* 第 03 页的阅读顺序：棋盘窗口 → 输入与卷积核 → 激活值。 */
+.cg-copy-course-shell .cg-copy-ck-window-scan__layout {
+  grid-template-columns: minmax(0, 47%) minmax(0, 53%);
+  gap: 30px;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__panel {
+  align-content: center;
+  gap: 20px;
+  border-left: 1px solid rgba(39, 68, 110, .15);
+  padding: 4px 0 4px 30px;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__board {
+  border-color: rgba(39, 68, 110, .14);
+  background: #edf2f8;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .72), 0 12px 24px rgba(33, 50, 74, .08);
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__cell:not(.cg-copy-ck-window-scan__cell--one):not(.cg-copy-ck-window-scan__cell--minus) {
+  background: rgba(255, 255, 255, .22);
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__cell--eye:not(.cg-copy-ck-window-scan__cell--one):not(.cg-copy-ck-window-scan__cell--minus) {
+  background: rgba(240, 126, 71, .10) !important;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__compare {
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  column-gap: clamp(14px, 2vw, 28px);
+  row-gap: 0;
+  align-items: center;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__operand {
+  display: grid;
+  width: min(100%, 246px);
+  min-width: 0;
+  justify-items: center;
+  gap: 9px;
+  border: 1px solid rgba(39, 68, 110, .16);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, .72);
+  padding: 12px;
+  box-shadow: 0 8px 18px rgba(33, 50, 74, .06);
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__operand > .ui-typography {
+  color: var(--ui-accent);
+  font-weight: 750;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__operand > .cg-copy-ck-window-scan__grid {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__operator {
+  align-self: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(39, 68, 110, .16);
+  background: #f4f7fc;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__operator.is-unknown { animation: none; color: var(--ui-accent); }
+.cg-copy-course-shell .cg-copy-ck-window-scan__operator.is-ready { background: #f4f7fc; }
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__activation-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__activation-label > .ui-typography { white-space: nowrap; }
+.cg-copy-course-shell .cg-copy-ck-window-scan__activation-label .explain-panel-wrap { flex: 0 0 auto; }
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__result-card {
+  align-content: start;
+  gap: 10px;
+  border: 0;
+  border-top: 1px solid rgba(39, 68, 110, .16);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 18px 0 0;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__result-heading {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  min-width: 0;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__result-heading .math-formula-static {
+  color: var(--ui-accent);
+  font-family: var(--ui-font-mono);
+  font-size: var(--ui-type-body-size);
+  font-weight: 700;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__score-row {
+  grid-template-columns: auto auto minmax(0, 1fr);
+  gap: 14px;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__score-row strong {
+  font-size: 52px;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__progress {
+  height: 12px;
+  border-radius: 6px;
+  background: #e5ebf3;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__progress span {
+  background: var(--ui-success);
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__result-caption {
+  max-width: 100%;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__result-tip {
+  margin-top: 2px;
+}
+
+@media (max-width: 820px) {
+  .cg-copy-course-shell .cg-copy-ck-window-scan__panel { border-left: 0; padding: 0; }
+}
+
+@media (max-width: 560px) {
+  .cg-copy-course-shell .cg-copy-ck-window-scan__compare {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .cg-copy-course-shell .cg-copy-ck-window-scan__operand {
+    width: min(100%, 280px);
+  }
+
+  .cg-copy-course-shell .cg-copy-ck-window-scan__operator {
+    transform: rotate(90deg);
+  }
+}
+
+/* Reference composition: a framed board beside two quiet teaching panels. */
+.cg-copy-course-shell .cg-copy-ck-window-scan {
+  gap: 8px;
+  padding: 10px 28px;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__layout {
+  grid-template-columns: minmax(0, .94fr) minmax(0, 1.06fr);
+  gap: 28px;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__board-slot {
+  position: relative;
+  align-content: stretch;
+  justify-items: center;
+  gap: 8px;
+  border: 1px solid rgba(39, 68, 110, .12);
+  border-radius: 22px;
+  background: rgba(247, 250, 255, .9);
+  box-shadow: 0 12px 30px rgba(39, 68, 110, .08);
+  padding: 10px 12px 8px;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__board {
+  width: min(100%, 650px);
+  height: auto;
+  align-self: center;
+  border-color: rgba(39, 68, 110, .1);
+  border-radius: 12px;
+  background: #dbe4f2;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .7), 0 8px 18px rgba(39, 68, 110, .08);
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__window-label {
+  position: absolute;
+  top: 34px;
+  left: 50%;
+  z-index: 5;
+  border-radius: 999px;
+  background: var(--ui-accent-alt);
+  color: #fff;
+  padding: 7px 20px;
+  font-weight: 800;
+  transform: translateX(-50%);
+  box-shadow: 0 5px 12px rgba(240, 126, 71, .22);
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__key {
+  width: 100%;
+  justify-content: space-around;
+  gap: 10px 22px;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__panel {
+  box-sizing: border-box;
+  height: 100%;
+  align-content: stretch;
+  grid-template-rows: minmax(0, 1.18fr) minmax(0, .72fr) auto;
+  gap: 22px;
+  border: 1px solid rgba(39, 68, 110, .12);
+  border-radius: 22px;
+  background: rgba(247, 250, 255, .72);
+  box-shadow: 0 12px 30px rgba(39, 68, 110, .06);
+  padding: 20px;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__compare {
+  grid-template-columns: minmax(0, 1fr) minmax(78px, .32fr) minmax(0, 1fr);
+  gap: 18px;
+  min-height: 0;
+  border: 1px solid rgba(39, 68, 110, .12);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, .95);
+  box-shadow: 0 12px 30px rgba(39, 68, 110, .08);
+  padding: 18px 24px 18px;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__operand {
+  width: 100%;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__operand-heading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-width: 0;
+  margin-bottom: 2px;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__operand-heading > div {
+  display: grid;
+  gap: 1px;
+  min-width: 0;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__operand-heading .ui-typography {
+  white-space: nowrap;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__operand-icon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 12px;
+  background: #e7efff;
+  color: #5b8de8;
+  font-size: 25px;
+  font-weight: 900;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__operand > .cg-copy-ck-window-scan__grid {
+  width: min(100%, 236px);
+  border-radius: 8px;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__operator-wrap {
+  position: relative;
+  display: flex;
+  min-height: 100%;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+  min-width: 0;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__operator {
+  width: 60px;
+  height: 60px;
+  border: 2px solid #b9d1fb;
+  border-radius: 50%;
+  background: #eaf2ff;
+  color: #173b7a;
+  font-size: 32px;
+  box-shadow: 0 5px 12px rgba(91, 141, 232, .12);
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__operator-note {
+  position: absolute;
+  top: calc(50% + 38px);
+  left: 50%;
+  width: 126px;
+  text-align: center;
+  transform: translateX(-50%);
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__result-card {
+  min-height: 0;
+  gap: 16px;
+  border: 1px solid rgba(39, 68, 110, .12);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, .95);
+  box-shadow: 0 12px 30px rgba(39, 68, 110, .08);
+  padding: 18px 18px 16px;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__result-heading {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  min-width: 0;
+  padding-bottom: 2px;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__result-heading .ui-typography {
+  color: var(--ui-accent);
+  font-weight: 800;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__score-row {
+  grid-template-columns: minmax(0, 1fr) minmax(0, .96fr);
+  gap: 20px;
+  min-height: 0;
+  align-items: stretch;
+  padding: 0;
+}
+
+/* KernelDesignPage 仍带有旧的同名规则；限定到本页，避免得分区被挤成四列。 */
+.cg-copy-course-shell .cg-copy-ck-window-scan .cg-copy-ck-window-scan__score-row {
+  grid-template-columns: minmax(0, 160px) minmax(0, 1fr);
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__activation-box {
+  display: flex;
+  min-width: 0;
+  min-height: 92px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-radius: 16px;
+  background: #edf4ff;
+  padding: 8px 12px;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__activation-label {
+  gap: 10px;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__activation-label > .ui-typography {
+  color: var(--ui-accent);
+  font-weight: 800;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__score-row > .ui-typography {
+  color: var(--ui-accent);
+  font-size: 54px;
+  font-weight: 900;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__result-caption {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  min-height: 92px;
+  border-radius: 14px;
+  background: #fff7e9;
+  color: var(--ui-accent);
+  padding: 13px 16px;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__result-caption svg { flex: 0 0 auto; }
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__instruction {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 16px;
+  border: 1px solid #c8dcfa;
+  border-radius: 16px;
+  background: #f6faff;
+  color: var(--ui-accent);
+  padding: 12px 22px;
+}
+
+.cg-copy-course-shell .cg-copy-ck-window-scan__instruction-icon {
+  display: grid;
+  width: 46px;
+  height: 46px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+  background: #e6efff;
+}
+
+@media (max-width: 820px) {
+  .cg-copy-course-shell .cg-copy-ck-window-scan__layout { grid-template-columns: minmax(0, 1fr); }
+  .cg-copy-course-shell .cg-copy-ck-window-scan__board-slot { min-height: 520px; }
+  .cg-copy-course-shell .cg-copy-ck-window-scan__compare { grid-template-columns: minmax(0, 1fr) minmax(64px, .28fr) minmax(0, 1fr); }
+}
+
+@media (max-width: 560px) {
+  .cg-copy-course-shell .cg-copy-ck-window-scan__compare { grid-template-columns: minmax(0, 1fr); }
+  .cg-copy-course-shell .cg-copy-ck-window-scan__operator-wrap { order: 2; }
+  .cg-copy-course-shell .cg-copy-ck-window-scan__operator { transform: none; }
+  .cg-copy-course-shell .cg-copy-ck-window-scan__operand:last-child { order: 3; }
+  .cg-copy-course-shell .cg-copy-ck-window-scan__score-row { grid-template-columns: minmax(0, 1fr); }
+}

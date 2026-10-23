@@ -1,6 +1,6 @@
 import moduleAssetOutline from '../outlines.json';
 import { moduleAssetUrl } from '../../shared/react/assets';
-import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode, type MouseEvent } from 'react';
 import { Button, ContentBlock, Typography } from '../../shared/react';
 import './MultiFormatPage.css';
 
@@ -43,16 +43,29 @@ function FormatStyleIcon({ kind }: { kind: 'code' | 'screen' | 'person' | 'play'
 function MiniWindow({ children }: { children: ReactNode }) {
   return <div className="cg-format-window"><div className="cg-format-mini">{children}</div></div>;
 }
-function ReadingPreview() {
+function ReadingPreview({ onClose }: { onClose: () => void }) {
   return <MiniWindow>
-    <div className="cg-format-native-reader"><iframe src={`${import.meta.env.BASE_URL}modules/convolution-kernel-intro`} title="卷积入门原生自学流程，可手动操作与滚动" loading="lazy"/></div>
+    <div className="cg-format-native-reader"><iframe src={`${import.meta.env.BASE_URL}modules/creator-guide?studyPreview=convolution`} title="卷积入门原生自学流程，可手动操作与滚动" loading="lazy" onLoad={event => { event.currentTarget.contentDocument?.addEventListener('keydown', key => { if (key.key === 'Escape') { key.stopPropagation(); onClose(); } }); }}/></div>
   </MiniWindow>;
 }
 export function MultiFormatPage() {
   const root = useRef<HTMLElement>(null);
+  const [expanded, setExpanded] = useState<'teaching' | 'self' | 'script' | null>(null);
+  useEffect(() => {
+    if (!expanded) return;
+    const close = (event: KeyboardEvent) => { if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); setExpanded(null); } };
+    document.addEventListener('keydown', close, true);
+    return () => document.removeEventListener('keydown', close, true);
+  }, [expanded]);
+  function expandCard(mode: 'teaching' | 'self' | 'script', event: MouseEvent<HTMLElement>) {
+    if (!expanded && !(event.target instanceof Element && event.target.closest('button,a,input,textarea,select,iframe'))) setExpanded(mode);
+  }
+  function expandButton(mode: 'teaching' | 'self' | 'script', title: string) {
+    return <Button className="cg-format-expand" aria-label={`${expanded === mode ? '收起' : '放大'}${title}`} aria-expanded={expanded === mode} onClick={() => setExpanded(value => value === mode ? null : mode)}><Typography as="span" variant="bodySmall" tone="inherit">{expanded === mode ? '收起' : '⤢'}</Typography></Button>;
+  }
   const [selected, setSelected] = useState(0), [step, setStep] = useState(0);
   const [explaining, setExplaining] = useState(false), [playing, setPlaying] = useState(false), [visible, setVisible] = useState(false);
-  const lesson = lessons[selected], explanation = lesson.steps[step];
+  const lesson = lessons[selected];
   const speechSupported = 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
   const utterance = useRef<SpeechSynthesisUtterance | null>(null);
   const [paused, setPaused] = useState(false);
@@ -108,18 +121,18 @@ export function MultiFormatPage() {
   function select(index: number) { stopNarration(); setSelected(index); setStep(0); setExplaining(false); setSpeechError(''); }
   return <ContentBlock ref={root} className="cg-format-page cg-creator-typography" headingLevel={1} title="一种全新的课件形态" bodyClassName="cg-format-body" onKeyDown={event => { if (event.key === ' ' && event.target instanceof Element && event.target.closest('button')) event.stopPropagation(); }}>
     <div className="cg-format-source-row"><svg className="cg-format-source-links" viewBox="0 0 1536 112" aria-hidden="true"><path d="M768 52C500 35 305 39 248 112M768 52v60M768 52c268-17 463-13 520 60" /></svg><div className="cg-format-source"><span className="cg-format-source-icon"><FormatStyleIcon kind="code" /></span><div><Typography variant="h3" tone="accent">同一份内容</Typography><Typography variant="bodySmall" tone="muted">HTML-based 交互课件</Typography></div></div><Typography variant="bodySmall" tone="warning">一次设计，多种应用场景</Typography></div>
-    <div className="cg-format-columns">
-      <section className="cg-format-card cg-format-teaching"><header><span className="cg-format-mode-icon"><FormatStyleIcon kind="screen" /></span><div><Typography as="h2" variant="h3" tone="accent">教学展示模式</Typography><Typography variant="bodySmall" tone="muted">面向课堂的组织化展示</Typography></div></header>
+    <div className={`cg-format-columns${expanded ? ' has-expanded' : ''}`}>
+      {expanded && <button type="button" className="cg-format-backdrop" aria-label="关闭放大预览" onClick={() => setExpanded(null)}/>}
+      <section className={`cg-format-card cg-format-teaching${expanded === 'teaching' ? ' cg-format-expanded' : ''}`} onClick={event => expandCard('teaching', event)}><header><span className="cg-format-mode-icon"><FormatStyleIcon kind="screen" /></span><div><Typography as="h2" variant="h3" tone="accent">教学展示模式</Typography><Typography variant="bodySmall" tone="muted">面向课堂的组织化展示</Typography></div>{expandButton('teaching', '教学展示模式')}</header>
         <MiniWindow><div className="cg-format-mini-top"><Typography variant="bodySmall" tone="accent">教学课件 · 卷积入门</Typography><Typography variant="bodySmall" tone="muted">{selected + 1} / 4</Typography></div>
           <div className="cg-format-teaching-preview"><nav className="cg-format-slide-list" aria-label="选择预览课件">{lessons.map((item, index) => <Button key={item.title} active={selected === index} onClick={() => select(index)} aria-label={`展示第${index + 1}页：${item.title}`} aria-pressed={selected === index}><img src={item.image} alt={item.title} /></Button>)}</nav><div className="cg-format-main-preview"><img src={lesson.image} alt={lesson.title} /><Typography variant="bodySmall" tone="accent">{lesson.title}</Typography></div></div>
           <div className="cg-format-mini-footer"><Button onClick={() => select((selected + 3) % 4)} aria-label="预览上一页"><Typography as="span" variant="bodySmall" tone="inherit">上一页</Typography></Button><Typography variant="bodySmall" tone="muted">点选缩略图，切换课堂页面</Typography><Button onClick={() => select((selected + 1) % 4)} aria-label="预览下一页"><Typography as="span" variant="bodySmall" tone="inherit">下一页</Typography></Button></div>
         </MiniWindow>
       </section>
-      <section className="cg-format-card cg-format-self"><header><span className="cg-format-mode-icon"><FormatStyleIcon kind="person" /></span><div><Typography as="h2" variant="h3" tone="success">自学交互模式</Typography><Typography variant="bodySmall" tone="muted">完成当前体验，逐步解锁后续内容</Typography></div></header><ReadingPreview /></section>
-      <section className="cg-format-card cg-format-script"><header><span className="cg-format-mode-icon"><FormatStyleIcon kind="play" /></span><div><Typography as="h2" variant="h3" tone="warning">智能讲稿模式</Typography><Typography variant="bodySmall" tone="muted">讲解与画面对应 · 视频扩展方向</Typography></div></header>
-        <MiniWindow><div className="cg-format-mini-top"><Typography variant="bodySmall" tone="accent">{lesson.title}</Typography><Button active={playing} onClick={toggleNarration} disabled={!speechSupported} aria-label={!speechSupported ? '当前浏览器不支持语音播放' : playing ? '暂停语音讲解' : paused ? '继续语音讲解' : '播放语音讲解'}><Typography as="span" variant="bodySmall" tone="inherit">{!speechSupported ? '不支持语音' : playing ? '暂停' : paused ? '继续' : '播放讲解'}</Typography></Button></div>
-          <div className="cg-format-script-preview"><nav aria-label="讲稿步骤" className="cg-format-script-list">{lesson.steps.map((item, index) => <Button key={item.title} active={explaining && step === index} onClick={() => narrate(selected, index, false)} aria-label={`讲解：${item.title}`}><Typography as="span" variant="bodySmall" tone="inherit">{index + 1}　{item.title}</Typography></Button>)}</nav><div className="cg-format-annotated"><img src={lesson.image} alt={lesson.title} />{lesson.steps.map((item, index) => <Button key={item.title} className="cg-format-hotspot" active={explaining && step === index} style={{ left: `${item.box[0]}%`, top: `${item.box[1]}%`, width: `${item.box[2]}%`, height: `${item.box[3]}%` }} aria-label={`高亮并讲解：${item.title}`} onClick={() => narrate(selected, index, false)}><span aria-hidden="true" /></Button>)}</div></div>
-          <div className="cg-format-explanation" aria-live="polite">{explaining ? <><Typography variant="bodySmall" tone="warning">{step + 1} / 3 · {explanation.title}</Typography><Typography variant="bodySmall" tone="main">{speechError || explanation.text}</Typography></> : <Typography variant="bodySmall" tone="muted">点击图中区域或讲稿步骤，播放对应语音讲解。</Typography>}</div>
+      <section className={`cg-format-card cg-format-self${expanded === 'self' ? ' cg-format-expanded' : ''}`} onClick={event => expandCard('self', event)}><header><span className="cg-format-mode-icon"><FormatStyleIcon kind="person" /></span><div><Typography as="h2" variant="h3" tone="success">自学交互模式</Typography><Typography variant="bodySmall" tone="muted">完成当前体验，逐步解锁后续内容</Typography></div>{expandButton('self', '自学交互模式')}</header><ReadingPreview onClose={() => setExpanded(null)} /></section>
+      <section className={`cg-format-card cg-format-script${expanded === 'script' ? ' cg-format-expanded' : ''}`} onClick={event => expandCard('script', event)}><header><span className="cg-format-mode-icon"><FormatStyleIcon kind="play" /></span><div><Typography as="h2" variant="h3" tone="warning">智能讲稿模式</Typography><Typography variant="bodySmall" tone="muted">讲解与画面对应 · 视频扩展方向</Typography></div>{expandButton('script', '智能讲稿模式')}</header>
+        <MiniWindow><div className="cg-format-mini-top"><Typography variant="bodySmall" tone="accent">{lesson.title}</Typography><Button active={playing} onClick={toggleNarration} disabled={!speechSupported} aria-label={!speechSupported ? '当前浏览器不支持语音播放' : playing ? '暂停语音讲解' : paused ? '继续语音讲解' : '播放语音讲解'}><Typography as="span" variant="bodySmall" tone="inherit">{!speechSupported ? '不支持语音' : speechError ? '重试讲解' : playing ? '暂停' : paused ? '继续' : '播放讲解'}</Typography></Button></div>
+          <div className="cg-format-script-preview"><div className="cg-format-annotated"><img src={lesson.image} alt={lesson.title}/>{explaining && <span className="cg-format-narration-highlight" style={{ left: `${lesson.steps[step].box[0]}%`, top: `${lesson.steps[step].box[1]}%`, width: `${lesson.steps[step].box[2]}%`, height: `${lesson.steps[step].box[3]}%` }} aria-hidden="true"/>}</div></div>
         </MiniWindow>
       </section>
     </div>

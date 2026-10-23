@@ -50,7 +50,7 @@ export function SkillConstraintsPage(){
       if (event.key !== ' ') { event.preventDefault(); selectSkill(event.key === 'Home' ? 0 : event.key === 'End' ? 4 : active + (event.key === 'ArrowLeft' ? -1 : 1)); }
     }
   }}>
-    <header><Typography as="h1" id="cg-constraints-title" variant="display" tone="inherit">Creator Skill：五类技能协同创作</Typography><Typography variant="bodySmall" tone="inherit">平台默认协同工作，让创作者专注知识内容与教学设计。</Typography></header>
+    <header><Typography as="h1" id="cg-constraints-title" variant="display" tone="inherit">支撑课件创作的五项基础能力</Typography><Typography variant="bodySmall" tone="inherit">平台默认协同运行，无需逐项掌握，让创作者专注于知识内容与教学设计。</Typography></header>
     <section className="cg-constraints-detail" aria-label="当前技能说明" style={{ '--skill-color': selected.color, '--skill-background': selected.background } as CSSProperties}>
       <div className="cg-constraints-detail-icon"><ConstraintIcon kind={selected.icon}/></div>
       <div className="cg-constraints-detail-copy"><Typography as="h2" variant="h2" tone="inherit">{selected.title}</Typography><Typography variant="bodySmall" tone="muted">{selected.description}</Typography></div>

@@ -4,7 +4,7 @@ import outline from '../outlines.json';
 import './PresentationComparisonPage.css';
 
 const simplePrompt = '给我做一页 PPT，讲讲卷积里的权重共享。';
-const designPrompt = '做一页权重共享 PPT，左右对比。\n窗口一起滑动：左边每到新位置换颜色，\n右边保持不变，表示复用同一套权重。';
+const designPrompt = '做一页权重共享 PPT，左右对比。窗口一起滑动：左边每到新位置换颜色，右边保持不变，表示复用同一套权重。';
 type Phase = 'simple-ready' | 'simple-loading' | 'simple-preview' | 'simple-filing' | 'detail-typing' | 'detail-ready' | 'detail-loading' | 'detail-reveal' | 'done';
 type Demo = { phase: Phase; elapsed: number; count: number };
 const initial: Demo = { phase: 'simple-ready', elapsed: 0, count: 0 };
@@ -96,7 +96,7 @@ export function PresentationComparisonPage() {
   };
 
   return <article className={`cg-case-page cg-creator-typography${running ? '' : ' cg-case-paused'}`} ref={root} aria-labelledby="cg-case-title" data-demo-phase={phase} data-generated-count={count}>
-    <header><Typography as="h1" variant="display" tone="inherit" id="cg-case-title">人的价值：设计更容易理解的学习过程</Typography><Typography variant="bodySmall" tone="muted">同样讲权重共享，区别在于怎样让人看懂。</Typography></header>
+    <header><Typography as="h1" variant="display" tone="inherit" id="cg-case-title">把专业理解，变成具体的讲解设计</Typography><Typography variant="bodySmall" tone="muted">用权重共享的例子，看看人的设计如何影响 AI 的呈现。</Typography></header>
     {count === 5 && <Typography as="h2" variant="h3" tone="inherit" className="cg-case-heading cg-case-heading-left">AI 自行生成的图示</Typography>}
     {phase === 'done' && <Typography as="h2" variant="h3" tone="inherit" className="cg-case-heading cg-case-heading-right">融入人的教学设计</Typography>}
     {phase === 'simple-ready' && <div className="cg-case-opening">

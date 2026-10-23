@@ -1,0 +1,127 @@
+{
+  "errors": [],
+  "bad": [],
+  "oldAssets": [],
+  "bounds": [
+    {
+      "page": 1,
+      "id": "gomoku-play",
+      "overflow": []
+    },
+    {
+      "page": 2,
+      "id": "board-as-numbers",
+      "overflow": []
+    },
+    {
+      "page": 3,
+      "id": "window-scan",
+      "overflow": []
+    },
+    {
+      "page": 4,
+      "id": "kernel-design",
+      "overflow": []
+    },
+    {
+      "page": 5,
+      "id": "kernel-basics",
+      "overflow": []
+    },
+    {
+      "page": 6,
+      "id": "correlation-convolution",
+      "overflow": []
+    },
+    {
+      "page": 7,
+      "id": "weighted-kernel",
+      "overflow": []
+    },
+    {
+      "page": 8,
+      "id": "gradient",
+      "overflow": []
+    },
+    {
+      "page": 9,
+      "id": "second-difference",
+      "overflow": []
+    },
+    {
+      "page": 10,
+      "id": "sobel-construction",
+      "overflow": []
+    },
+    {
+      "page": 11,
+      "id": "laplacian-construction",
+      "overflow": []
+    },
+    {
+      "page": 12,
+      "id": "common-kernels",
+      "overflow": []
+    },
+    {
+      "page": 13,
+      "id": "sparse-connectivity",
+      "overflow": []
+    },
+    {
+      "page": 14,
+      "id": "weight-sharing",
+      "overflow": []
+    },
+    {
+      "page": 15,
+      "id": "translation-equivariance",
+      "overflow": []
+    },
+    {
+      "page": 16,
+      "id": "receptive-field",
+      "overflow": []
+    },
+    {
+      "page": 17,
+      "id": "kernel-size",
+      "overflow": []
+    },
+    {
+      "page": 18,
+      "id": "stride",
+      "overflow": []
+    },
+    {
+      "page": 19,
+      "id": "padding",
+      "overflow": []
+    },
+    {
+      "page": 20,
+      "id": "rgb-convolution",
+      "overflow": []
+    },
+    {
+      "page": 21,
+      "id": "multi-kernel",
+      "overflow": []
+    },
+    {
+      "page": 22,
+      "id": "dilated-convolution",
+      "overflow": []
+    },
+    {
+      "page": 23,
+      "id": "deformable-convolution",
+      "overflow": []
+    },
+    {
+      "page": 24,
+      "id": "course-ending",
+      "overflow": []
+    }
+  ]
+}

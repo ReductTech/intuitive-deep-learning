@@ -15,7 +15,7 @@
 .cg-case-loading { position: absolute; left: 665px; top: 385px; width: 270px; height: 140px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; z-index: 32; }
 .cg-case-spinner { width: 45px; height: 45px; border: 4px solid #d5e5fb; border-top-color: #287dea; border-radius: 50%; animation: cg-case-spin .5s linear infinite; }
 .cg-case-composer { position: absolute; left: 60px; top: 760px; width: 1490px; height: 118px; display: flex; align-items: center; justify-content: space-between; gap: 30px; padding: 10px 24px 10px 32px; border: 1.5px solid #9fc6ff; border-radius: 19px; background: #ffffffeb; }
-.cg-case-input-copy { flex: 1; }.cg-case-input-copy p { white-space: pre-line; }
+.cg-case-input-copy { flex: 1; }.cg-case-input-copy p { white-space: normal; }
 .cg-case-action { flex: none; width: 170px; display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
 .cg-case-start { min-width: 116px; min-height: 53px; background: #1673f9; border-color: #1673f9; color: #fff; border-radius: 14px; }
 .cg-case-caret { display: inline-block; height: 23px; width: 2px; margin-left: 3px; vertical-align: middle; background: #287dea; animation: cg-case-blink .8s steps(2,start) infinite; }

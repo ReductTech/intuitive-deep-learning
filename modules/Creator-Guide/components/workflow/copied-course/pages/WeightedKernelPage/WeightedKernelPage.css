@@ -1,0 +1,48 @@
+.cg-copy-course-shell .cg-copy-ck-weighted { display:grid; grid-template-rows:auto minmax(0,1fr); row-gap:0; width:100%; height:100%; min-width:0; min-height:0; overflow:hidden; padding:18px 28px 16px; }
+.cg-copy-course-shell .cg-copy-ck-weighted > .edu-content-body { display:grid; grid-template-rows:minmax(0,1fr); min-width:0; min-height:0; }
+.cg-copy-course-shell .cg-copy-ck-weighted__body { display:grid; grid-template-rows:112px minmax(0,1fr) 64px; gap:12px; min-width:0; min-height:0; }
+.cg-copy-course-shell .cg-copy-ck-weighted__concepts { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; min-width:0; min-height:0; }
+.cg-copy-course-shell .cg-copy-ck-weighted__concept { display:grid; grid-template-columns:72px minmax(0,1fr); align-items:center; gap:14px; min-width:0; border:1px solid #cbdcf5; border-radius:12px; background:#f5f9ff; padding:10px 14px; }
+.cg-copy-course-shell .cg-copy-ck-weighted__concept > div { display:grid; gap:3px; min-width:0; }
+.cg-copy-course-shell .cg-copy-ck-weighted__concept h2 { margin:0; }
+.cg-copy-course-shell .cg-copy-ck-weighted__concept-icon { display:grid; width:68px; height:68px; place-items:center; border-radius:50%; background:#dfecff; color:#2874db; font-size:30px; font-weight:800; }
+.cg-copy-course-shell .cg-copy-ck-weighted__concept:nth-child(2) .cg-copy-ck-weighted__concept-icon { overflow:hidden; font-size:17px; letter-spacing:-2px; }
+.cg-copy-course-shell .cg-copy-ck-weighted__flow { display:grid; grid-template-columns:minmax(0,1fr) 28px minmax(0,1fr) 28px minmax(0,1fr); gap:8px; min-width:0; min-height:0; }
+.cg-copy-course-shell .cg-copy-ck-weighted__panel { display:grid; grid-template-rows:auto minmax(0,1fr) auto auto; justify-items:center; align-items:center; gap:9px; min-width:0; min-height:0; overflow:hidden; border:1px solid #cbdcf5; border-radius:12px; background:#fff; padding:11px 12px; }
+.cg-copy-course-shell .cg-copy-ck-weighted__panel > header { display:flex; align-items:center; justify-content:center; justify-self:stretch; min-width:0; min-height:53px; border-radius:9px; background:#edf4ff; padding:5px 8px; text-align:center; }
+.cg-copy-course-shell .cg-copy-ck-weighted__panel > header h2 { min-width:0; margin:0; }
+.cg-copy-course-shell .cg-copy-ck-weighted__number { display:grid; width:44px; height:44px; flex:none; place-items:center; border-radius:50%; background:#3485e8; }
+.cg-copy-course-shell .cg-copy-ck-weighted__arrow { display:grid; align-self:center; place-items:center; min-width:0; color:#4d91e8; font-size:58px; font-weight:700; line-height:1; }
+.cg-copy-course-shell .cg-copy-ck-weighted__matrix { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); width:min(100%,235px); max-height:100%; aspect-ratio:1; border:1px solid #506d9b; background:#506d9b; }
+.cg-copy-course-shell .cg-copy-ck-weighted__cell { display:grid; min-width:0; min-height:0; place-items:center; border:1px solid #657fa7; background:#f8fbff; }
+.cg-copy-course-shell .cg-copy-ck-weighted__cell.is-bright { background:#f8fbff; }
+.cg-copy-course-shell .cg-copy-ck-weighted__cell.is-dark { background:#4c5665; }
+.cg-copy-course-shell .cg-copy-ck-weighted__cell.is-dark .math-formula-static { color:#fff; }
+.cg-copy-course-shell .cg-copy-ck-weighted__cell.is-neutral { background:#b7c0ce; }
+.cg-copy-course-shell .cg-copy-ck-weighted__cell.is-positive .math-formula-static { color:#1d6ee0; }
+.cg-copy-course-shell .cg-copy-ck-weighted__cell.is-negative .math-formula-static { color:#d83844; }
+.cg-copy-course-shell .cg-copy-ck-weighted__matrix .math-formula-static { font-size:3.1rem; }
+.cg-copy-course-shell .cg-copy-ck-weighted__patterns { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:6px; width:100%; min-width:0; }
+.cg-copy-course-shell .cg-copy-ck-weighted__patterns button { display:grid; min-width:0; min-height:50px; place-items:center; border:1px solid #cbdcf5; border-radius:9px; background:#f7faff; color:#274572; cursor:pointer; }
+.cg-copy-course-shell .cg-copy-ck-weighted__patterns button.is-selected { border-color:#2878e9; background:#2c7fe9; color:#fff; box-shadow:0 5px 11px rgba(42,118,220,.18); }
+.cg-copy-course-shell .cg-copy-ck-weighted__patterns button:focus-visible { outline:3px solid #89b8f8; outline-offset:2px; }
+.cg-copy-course-shell .cg-copy-ck-weighted__question,.cg-copy-course-shell .cg-copy-ck-weighted__reading { display:grid; width:100%; min-width:0; place-items:center; border-radius:9px; background:#e9f3ff; padding:8px 10px; text-align:center; }
+.cg-copy-course-shell .cg-copy-ck-weighted__panel--kernel { grid-template-rows:auto minmax(0,1fr) auto; }
+.cg-copy-course-shell .cg-copy-ck-weighted__panel--response { grid-template-rows:auto 125px minmax(0,1fr) auto; }
+.cg-copy-course-shell .cg-copy-ck-weighted__result { display:grid; align-self:stretch; width:100%; min-width:0; min-height:0; place-items:center; border-radius:10px; background:#e9f3ff; }
+.cg-copy-course-shell .cg-copy-ck-weighted__result .math-formula-static { max-width:100%; color:#164fa6; font-size:3.8rem; }
+.cg-copy-course-shell .cg-copy-ck-weighted__result.is-negative .math-formula-static { color:#bb3445; }
+.cg-copy-course-shell .cg-copy-ck-weighted__result.is-zero .math-formula-static { color:#586b87; }
+.cg-copy-course-shell .cg-copy-ck-weighted__scale { display:grid; gap:8px; width:100%; min-width:0; padding-top:29px; }
+.cg-copy-course-shell .cg-copy-ck-weighted__scale-bar { position:relative; height:19px; border-radius:20px; background:linear-gradient(to right,#f5b7be 0%,#f5b7be 33%,#e7ebf0 33%,#e7ebf0 67%,#acd0ff 67%,#acd0ff 100%); }
+.cg-copy-course-shell .cg-copy-ck-weighted__marker { position:absolute; bottom:calc(100% + 4px); transform:translateX(-50%); border-radius:7px; background:#2076e7; color:#fff; padding:3px 8px; font-weight:700; white-space:nowrap; }
+.cg-copy-course-shell .cg-copy-ck-weighted__marker::after { content:""; position:absolute; top:100%; left:50%; transform:translateX(-50%); border:5px solid transparent; border-top-color:#2076e7; }
+.cg-copy-course-shell .cg-copy-ck-weighted__marker.is-negative { background:#d64b5c; }
+.cg-copy-course-shell .cg-copy-ck-weighted__marker.is-negative::after { border-top-color:#d64b5c; }
+.cg-copy-course-shell .cg-copy-ck-weighted__marker.is-zero { background:#6e8098; }
+.cg-copy-course-shell .cg-copy-ck-weighted__marker.is-zero::after { border-top-color:#6e8098; }
+.cg-copy-course-shell .cg-copy-ck-weighted__scale-labels { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:3px; text-align:center; }
+.cg-copy-course-shell .cg-copy-ck-weighted__scale-labels > div { display:grid; justify-items:center; gap:2px; min-width:0; color:#6d7f9a; }
+.cg-copy-course-shell .cg-copy-ck-weighted__scale-labels .math-formula-static { font-size:1.4rem; }
+.cg-copy-course-shell .cg-copy-ck-weighted__scale-labels > div.is-active { color:#176de0; }
+.cg-copy-course-shell .cg-copy-ck-weighted__summary { display:grid; place-items:center; min-width:0; border:1px solid #cbdcf5; border-radius:11px; background:#e9f3ff; padding:7px 14px; text-align:center; }
