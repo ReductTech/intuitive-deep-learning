@@ -4,6 +4,10 @@ import threading
 import time
 
 
+class DeferredTask(Exception):
+    """Wait for an active dependency without consuming an execution attempt."""
+
+
 class Worker:
     def __init__(self, store, handlers, clock=time.time):
         self.store,self.handlers,self.clock=store,handlers,clock
@@ -15,6 +19,8 @@ class Worker:
         if not task:return False
         try:
             result=self.handlers[task["kind"]](task,lambda state:self.store.checkpoint(task["id"],task["lease_token"],self.clock(),state))
+        except DeferredTask:
+            self.store.finish(task["id"],task["lease_token"],self.clock(),error="WAITING_FOR_RELATED_TASKS",deferred=True)
         except Exception:
             # Do not store external error strings, which can contain credentials.
             self.store.finish(task["id"],task["lease_token"],self.clock(),error="HANDLER_FAILED")

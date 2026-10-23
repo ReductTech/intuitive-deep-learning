@@ -8,6 +8,7 @@ from .storage import Store
 from .workers import Worker
 from .workflow import Workflow
 from .collaboration import Collaboration
+from .governance import Governance
 
 
 @dataclass
@@ -46,5 +47,6 @@ def create_application(settings, clock=time.time):
         return {"size":len(data)}
     workflow=Workflow(store,bucket,settings.source_root,clock)
     workflow.collaboration=Collaboration(workflow)
-    worker=Worker(store,{"file.verify":verify_file,"revision.build":workflow.build},clock)
+    workflow.governance=Governance(workflow)
+    worker=Worker(store,{"governance.remove":workflow.governance.run,"file.verify":verify_file,"revision.build":workflow.build},clock)
     return Application(settings,store,bucket,identity,Courses(store,clock),worker,clock,workflow)

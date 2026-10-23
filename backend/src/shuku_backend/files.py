@@ -40,3 +40,10 @@ class Bucket:
         if sha256(content).hexdigest()!=digest:
             raise ValueError("Stored object checksum mismatch")
         return content
+
+    def remove(self,digest):
+        """Caller must hold the exclusive reference lock and verify no live references."""
+        path=self.path(digest)
+        path.unlink(missing_ok=True)
+        try:path.parent.rmdir()
+        except OSError:pass  # Other objects may still share the hash prefix directory.

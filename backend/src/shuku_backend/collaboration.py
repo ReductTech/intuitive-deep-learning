@@ -23,24 +23,26 @@ class Collaboration:
 
     def releases(self,cid):
         with self.store.transaction() as db:
-            return [course_view(r) for r in db.execute("SELECT r.id,r.version,r.revision_id,r.created_at,r.id=c.current_release AS current FROM shuku_business.releases r JOIN shuku_business.courses c ON c.id=r.course_id WHERE c.id=%s AND c.status='published' ORDER BY r.created_at DESC,r.id",(identifier(cid),)).fetchall()]
+            return [course_view(r) for r in db.execute("SELECT r.id,r.version,r.revision_id,r.created_at,r.id=c.current_release AS current FROM shuku_business.releases r JOIN shuku_business.courses c ON c.id=r.course_id WHERE c.id=%s AND c.status='published' AND NOT c.deleting ORDER BY r.created_at DESC,r.id",(identifier(cid),)).fetchall()]
 
     def create(self,uid,cid,data):
         require(set(data)<= {'base_release_id'},400,'INVALID_INPUT','共创请求格式不正确。')
         with self.store.transaction() as db:
             self.store.user_in(db,uid)
-            course=db.execute("SELECT * FROM shuku_business.courses WHERE id=%s AND status='published' FOR UPDATE",(identifier(cid),)).fetchone()
+            course=db.execute("SELECT * FROM shuku_business.courses WHERE id=%s AND status='published' AND NOT deleting FOR UPDATE",(identifier(cid),)).fetchone()
             require(course,404,'NOT_FOUND','课程尚未公开。')
             base=identifier(data['base_release_id']) if data.get('base_release_id') else str(course['current_release'])
             release=db.execute('SELECT * FROM shuku_business.releases WHERE id=%s AND course_id=%s',(base,cid)).fetchone()
             require(release,404,'NOT_FOUND','正式版本不存在。')
-            old=db.execute('SELECT id FROM shuku_business.workspaces WHERE target_course_id=%s AND owner_id=%s AND base_release_id=%s',(cid,uid,base)).fetchone()
-            if old:return {'id':str(old['id'])}
+            old=db.execute('SELECT id FROM shuku_business.workspaces WHERE target_course_id=%s AND owner_id=%s AND base_release_id=%s AND deleted_at IS NULL',(cid,uid,base)).fetchone()
+            if old:
+                require(not db.execute('SELECT deleting FROM shuku_business.courses WHERE id=%s',(old['id'],)).fetchone()['deleting'],409,'WORKSPACE_REMOVING','本次工作区正在删除，请稍后重新创建。')
+                return {'id':str(old['id'])}
             revision=db.execute('SELECT * FROM shuku_business.revisions WHERE id=%s',(release['revision_id'],)).fetchone()
             project=teaching(json.loads(self.bucket.read(revision['files']['project.json']['sha256'])))
             wid=str(uuid4());project['id']=wid
             db.execute("INSERT INTO shuku_business.courses(id,owner_id,module_id,title,description,category,created_at) VALUES (%s,%s,%s,%s,%s,%s,%s)",(wid,uid,course['module_id'],project['title'],course['description'],course['category'],self.clock()))
-            db.execute('INSERT INTO shuku_business.workspaces VALUES (%s,%s,%s,%s,%s)',(wid,cid,uid,base,self.clock()))
+            db.execute('INSERT INTO shuku_business.workspaces(id,target_course_id,owner_id,base_release_id,created_at) VALUES (%s,%s,%s,%s,%s)',(wid,cid,uid,base,self.clock()))
             self.flow.save_in(db,uid,wid,{'project':project,'expected_revision':None})
             self.flow.audit(db,uid,'workspace.create',wid)
             return {'id':wid}
@@ -48,7 +50,7 @@ class Collaboration:
     def workspaces(self,uid):
         with self.store.transaction() as db:
             self.store.user_in(db,uid)
-            return [course_view(r) for r in db.execute("SELECT w.id,w.target_course_id,c.title,r.version AS base_version,k.id AS contribution_id,k.status,k.score,k.note FROM shuku_business.workspaces w JOIN shuku_business.courses c ON c.id=w.target_course_id JOIN shuku_business.releases r ON r.id=w.base_release_id LEFT JOIN LATERAL (SELECT * FROM shuku_business.contributions WHERE workspace_id=w.id ORDER BY created_at DESC,id DESC LIMIT 1) k ON true WHERE w.owner_id=%s ORDER BY w.created_at DESC LIMIT 100",(uid,)).fetchall()]
+            return [course_view(r) for r in db.execute("SELECT w.id,w.target_course_id,c.title,r.version AS base_version,k.id AS contribution_id,k.status,k.score,k.note FROM shuku_business.workspaces w JOIN shuku_business.courses c ON c.id=w.target_course_id JOIN shuku_business.releases r ON r.id=w.base_release_id LEFT JOIN LATERAL (SELECT * FROM shuku_business.contributions WHERE workspace_id=w.id ORDER BY created_at DESC,id DESC LIMIT 1) k ON true WHERE w.owner_id=%s AND w.deleted_at IS NULL AND NOT c.deleting AND NOT EXISTS(SELECT 1 FROM shuku_business.courses p WHERE p.id=w.id AND p.deleting) ORDER BY w.created_at DESC LIMIT 100",(uid,)).fetchall()]
 
     def can_preview(self,db,uid,revision):
         # Managers receive only submitted revisions, never unrelated personal drafts.
@@ -86,7 +88,7 @@ class Collaboration:
             if existing:
                 require(existing['status'] in ('pending','approved','merging','merged') and existing['summary']==data['summary'].strip(),409,'NEW_REVISION_REQUIRED','请保存新修订后重新提交。')
                 return course_view(existing)
-            target=db.execute("SELECT * FROM shuku_business.courses WHERE id=%s AND status='published' FOR UPDATE",(w['target_course_id'],)).fetchone()
+            target=db.execute("SELECT * FROM shuku_business.courses WHERE id=%s AND status='published' AND NOT deleting FOR UPDATE",(w['target_course_id'],)).fetchone()
             require(target,409,'TARGET_UNAVAILABLE','课程当前不可共创。')
             base=db.execute('SELECT revision_id FROM shuku_business.releases WHERE id=%s',(w['base_release_id'],)).fetchone()
             diff=self.difference(db,base['revision_id'],rid)
@@ -97,20 +99,22 @@ class Collaboration:
     def listing(self,uid):
         with self.store.transaction() as db:
             self.store.user_in(db,uid)
-            rows=db.execute("SELECT k.*,c.title,w.owner_id,u.display_name AS author FROM shuku_business.contributions k JOIN shuku_business.workspaces w ON w.id=k.workspace_id JOIN shuku_business.courses c ON c.id=k.target_course_id JOIN shuku_business.users u ON u.id=w.owner_id WHERE k.status IN ('pending','approved','merging') AND w.owner_id<>%s AND (c.owner_id=%s OR %s OR EXISTS(SELECT 1 FROM shuku_business.course_managers m WHERE m.course_id=c.id AND m.user_id=%s)) ORDER BY k.created_at LIMIT 100",(uid,uid,self.store.user_in(db,uid)['role']=='admin',uid)).fetchall()
+            rows=db.execute("SELECT k.*,c.title,w.owner_id,u.display_name AS author FROM shuku_business.contributions k JOIN shuku_business.workspaces w ON w.id=k.workspace_id JOIN shuku_business.courses c ON c.id=k.target_course_id JOIN shuku_business.users u ON u.id=w.owner_id WHERE k.status IN ('pending','approved','merging') AND NOT c.deleting AND w.deleted_at IS NULL AND (k.status='merging' OR NOT EXISTS(SELECT 1 FROM shuku_business.courses p WHERE p.id=w.id AND p.deleting)) AND w.owner_id<>%s AND (c.owner_id=%s OR %s OR EXISTS(SELECT 1 FROM shuku_business.course_managers m WHERE m.course_id=c.id AND m.user_id=%s)) ORDER BY k.created_at LIMIT 100",(uid,uid,self.store.user_in(db,uid)['role']=='admin',uid)).fetchall()
             return [course_view(r) for r in rows]
 
     def record(self,db,uid,kid):
-        row=db.execute('SELECT k.*,w.owner_id,w.base_release_id,c.head_revision,c.title FROM shuku_business.contributions k JOIN shuku_business.workspaces w ON w.id=k.workspace_id JOIN shuku_business.courses c ON c.id=w.id WHERE k.id=%s',(identifier(kid),)).fetchone()
+        row=db.execute('SELECT k.*,w.owner_id,w.base_release_id,c.head_revision,c.title,c.deleting AS workspace_deleting,EXISTS(SELECT 1 FROM shuku_business.courses t WHERE t.id=k.target_course_id AND t.deleting) AS target_deleting FROM shuku_business.contributions k JOIN shuku_business.workspaces w ON w.id=k.workspace_id JOIN shuku_business.courses c ON c.id=w.id WHERE k.id=%s',(identifier(kid),)).fetchone()
         require(row and (str(row['owner_id'])==uid or self.manages(db,uid,row['target_course_id'])),404,'NOT_FOUND','共创建议不存在。')
         return row
 
     def detail(self,uid,kid):
         with self.store.transaction() as db:
             row=self.record(db,uid,kid)
+            require(not row['target_deleting'] and (not row['workspace_deleting'] or row['status']=='merging'),404,'NOT_FOUND','课程或工作区正在删除。')
+            require(row['revision_id'],404,'NOT_FOUND','私有工作区已删除，贡献记录仍保留。')
             base=db.execute('SELECT revision_id,version FROM shuku_business.releases WHERE id=%s',(row['base_release_id'],)).fetchone()
             task=db.execute('SELECT status,error_code FROM shuku_business.tasks WHERE idempotency_key=%s',('build:'+str(row['merged_revision']),)).fetchone() if row['merged_revision'] else None
-            return {**course_view(row),'can_manage':str(row['owner_id'])!=uid and self.manages(db,uid,row['target_course_id']),'merge_task':task,'base_version':base['version'],'diff':self.difference(db,base['revision_id'],row['revision_id']),'preview_url':'/api/shuku/revisions/'+str(row['revision_id'])+'/files/index.html'}
+            return {**course_view(row),'can_manage':str(row['owner_id'])!=uid and self.manages(db,uid,row['target_course_id']),'merge_task':task,'base_version':base['version'],'diff':{'pages':[],'settings':{}} if row['workspace_deleting'] else self.difference(db,base['revision_id'],row['revision_id']),'preview_url':'' if row['workspace_deleting'] else '/api/shuku/revisions/'+str(row['revision_id'])+'/files/index.html'}
 
     def decide(self,uid,kid,data):
         require(set(data)<= {'decision','revision_id','score','note'} and data.get('decision') in ('approved','rejected'),400,'INVALID_INPUT','审核结果格式不正确。')
@@ -123,6 +127,7 @@ class Collaboration:
             row=self.record(db,uid,kid)
             require(str(row['owner_id'])!=uid,403,'SELF_REVIEW','不能审核或评分自己的贡献。')
             require(self.manages(db,uid,row['target_course_id']),403,'FORBIDDEN','没有课程审核权限。')
+            require(not row['workspace_deleting'] and not row['target_deleting'],409,'RESOURCE_REMOVED','课程或工作区正在删除。')
             require(row['status']=='pending' and str(row['revision_id'])==data.get('revision_id') and row['revision_id']==row['head_revision'],409,'REVIEW_CHANGED','共创内容已变化，请重新查看。')
             revision=db.execute('SELECT artifact_hash FROM shuku_business.revisions WHERE id=%s',(row['revision_id'],)).fetchone()
             require(revision['artifact_hash']==row['artifact_hash'],409,'REVIEW_CHANGED','课程产物已变化。')
@@ -139,15 +144,17 @@ class Collaboration:
             require(str(row['owner_id'])!=uid,403,'SELF_MERGE','不能合并自己的贡献。')
             require(self.manages(db,uid,row['target_course_id']),403,'FORBIDDEN','没有合并权限。')
             require(str(row['revision_id'])==data.get('revision_id'),409,'REVIEW_CHANGED','合并修订不匹配。')
+            require(not row['target_deleting'],409,'RESOURCE_REMOVED','官方课程正在删除。')
             if row['status'] in ('merging','merged'):
                 if row['status']=='merging':
                     # An explicit repeated merge retries a terminal failed build, never creates a new revision.
                     db.execute("UPDATE shuku_business.tasks SET status='queued',attempts=0,error_code=NULL,available_at=%s WHERE idempotency_key=%s AND status='failed'",(self.clock(),'build:'+str(row['merged_revision'])))
                 return {'status':row['status'],'revision_id':str(row['merged_revision'])}
+            require(not row['workspace_deleting'],409,'RESOURCE_REMOVED','工作区正在删除。')
             require(row['status']=='approved' and row['head_revision']==row['revision_id'],409,'APPROVAL_REQUIRED','请先审核最新修订。')
             target=db.execute('SELECT * FROM shuku_business.courses WHERE id=%s FOR UPDATE',(row['target_course_id'],)).fetchone()
             base=db.execute('SELECT revision_id FROM shuku_business.releases WHERE id=%s',(row['base_release_id'],)).fetchone()
-            require(target['status']=='published' and target['current_release']==row['base_release_id'] and target['head_revision']==row['target_head'] and row['target_head']==base['revision_id'],409,'BASE_CHANGED','官方内容已变化，请保留当前工作区，并基于最新正式版本重新共创。')
+            require(not target['deleting'] and target['status']=='published' and target['current_release']==row['base_release_id'] and target['head_revision']==row['target_head'] and row['target_head']==base['revision_id'],409,'BASE_CHANGED','官方内容已变化，请保留当前工作区，并基于最新正式版本重新共创。')
             source=db.execute('SELECT * FROM shuku_business.revisions WHERE id=%s',(row['revision_id'],)).fetchone()
             require(source['state']=='ready' and source['artifact_hash']==row['artifact_hash'],409,'REVIEW_CHANGED','课程产物已变化。')
             # Verify all approved objects, then create an independent official revision.
