@@ -1,5 +1,5 @@
 import {CoCreateButton} from '../shuku/Collaboration';
-import { SessionControl } from '../shuku/SessionControl';
+import { SiteHeader } from '../shuku/SiteHeader';
 import { api } from '../shuku/client';
 import '../shuku/shuku.css';
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
@@ -71,7 +71,7 @@ export function HomePage() {
   const [topic, setTopic] = useState('全部课程');
   const [query, setQuery] = useState('');
   const [level, setLevel] = useState('全部');
-  const [tab, setTab] = useState('courses');
+  const [tab, setTab] = useState(new URLSearchParams(location.search).get('view')==='saved'?'saved':'courses');
   const [sort, setSort] = useState('default');
   const [saved, setSaved] = useState<string[]>(() => readSaved<unknown[]>('scenedeck:saved-courses', []).filter((id): id is string => typeof id === 'string'));
   const [recent] = useState(() => readSaved<string>('scenedeck:recent-course', ''));
@@ -98,12 +98,7 @@ export function HomePage() {
   function reset() { setQuery(''); setTopic('全部课程'); setLevel('全部'); setTab('courses'); }
   return <div className="sd-library">
     <a className="sd-library-skip" href="#sd-library-main">跳到课程</a>
-    <header className="sd-library-topbar">
-      <a href="/" className="sd-library-brand" aria-label="SceneDeck 首页"><span className="sd-library-logo"><Icon name="book" /></span><span>SceneDeck<span className="sd-library-brand-dot">.</span></span></a>
-      <nav aria-label="主导航"><button className={tab === 'courses' ? 'is-active' : ''} onClick={() => setTab('courses')}>探索课程</button><button className={tab === 'saved' ? 'is-active' : ''} onClick={() => setTab('saved')}>我的收藏<span>{saved.length || ''}</span></button><a href="/my-courses">课程创作</a></nav>
-      <span className="sd-library-topnote"><span />让知识可以被探索</span>
-      <SessionControl />
-    </header>
+    <SiteHeader section={tab==='saved'?'saved':'courses'} savedCount={saved.length} onBrowse={value=>{setTab(value);const url=new URL(location.href);if(value==='saved')url.searchParams.set('view','saved');else url.searchParams.delete('view');history.replaceState(null,'',url);}}/>
     <aside className="sd-library-sidebar" aria-label="课程分类">
       <p className="sd-library-nav-label">课程图书馆</p>
       <div className="sd-library-topics">{topics.map(item => <button key={item.name} aria-pressed={topic === item.name} className={topic === item.name ? 'is-active' : ''} onClick={() => setTopic(item.name)}><Icon name={item.icon} /><span>{item.name}</span><small>{item.name === '全部课程' ? courses.length : courses.filter(module => info(module).topic === item.name).length}</small></button>)}</div>
