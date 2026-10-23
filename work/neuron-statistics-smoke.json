@@ -1,0 +1,912 @@
+{
+  "schemaVersion": 1,
+  "root": "C:\\Users\\Ocean\\Documents\\GitHub\\intuitive-deep-learning",
+  "modules": [
+    {
+      "directory": "Neuron-Guide",
+      "id": "neuron-guide",
+      "title": "认识人工神经元",
+      "configuredPages": 18,
+      "detectedPages": 18
+    }
+  ],
+  "pages": [
+    {
+      "module": "neuron-guide",
+      "directory": "Neuron-Guide",
+      "moduleTitle": "认识人工神经元",
+      "assetId": "9acfbca1-b881-457e-add6-21e0b6b855a0",
+      "page": 1,
+      "sceneId": "nematode-response",
+      "title": "只有 302 个神经元，它为什么能完成这么多行为？",
+      "words": 208,
+      "buttons": 1,
+      "links": 1,
+      "inputs": 0,
+      "images": 0,
+      "videos": 1,
+      "charts": 0,
+      "sources": [
+        "modules/Neuron-Guide/pages/NematodeResponsePage/NematodeResponsePage.tsx"
+      ],
+      "sourceMapped": true,
+      "wordMethod": "TSX静态近似",
+      "thumbnail": "assets/9acfbca1-b881-457e-add6-21e0b6b855a0/scenedeck-thumbnails/nematode-response.png",
+      "thumbnailSize": [
+        400,
+        225
+      ],
+      "sampledSize": [
+        400,
+        225
+      ],
+      "otsuThreshold": 168,
+      "whitespace": 63.75,
+      "backgroundRatio": 63.75,
+      "backgroundIsBright": true,
+      "uniformImage": false,
+      "colors": 59,
+      "edgeDensity": 11.08,
+      "entropy": 6.05,
+      "brightness": 187.46,
+      "contrast": 68.92,
+      "saturatedArea": 34.1,
+      "palette": [
+        "#f8f8f8",
+        "#587878",
+        "#e8f8f8",
+        "#e8e8f8",
+        "#e8e8e8",
+        "#f8e8e8"
+      ]
+    },
+    {
+      "module": "neuron-guide",
+      "directory": "Neuron-Guide",
+      "moduleTitle": "认识人工神经元",
+      "assetId": "9acfbca1-b881-457e-add6-21e0b6b855a0",
+      "page": 2,
+      "sceneId": "biological-structure",
+      "title": "人工神经元，源自生物神经元",
+      "words": 98,
+      "buttons": 0,
+      "links": 0,
+      "inputs": 0,
+      "images": 1,
+      "videos": 0,
+      "charts": 0,
+      "sources": [
+        "modules/Neuron-Guide/pages/BiologicalNeuronPage/BiologicalNeuronPage.tsx"
+      ],
+      "sourceMapped": true,
+      "wordMethod": "TSX静态近似",
+      "thumbnail": "assets/9acfbca1-b881-457e-add6-21e0b6b855a0/scenedeck-thumbnails/biological-structure.png",
+      "thumbnailSize": [
+        400,
+        225
+      ],
+      "sampledSize": [
+        400,
+        225
+      ],
+      "otsuThreshold": 193,
+      "whitespace": 89.7,
+      "backgroundRatio": 89.7,
+      "backgroundIsBright": true,
+      "uniformImage": false,
+      "colors": 42,
+      "edgeDensity": 10.01,
+      "entropy": 4.937,
+      "brightness": 236.56,
+      "contrast": 36.29,
+      "saturatedArea": 7.98,
+      "palette": [
+        "#f8f8f8",
+        "#e8f8f8",
+        "#e8e8f8",
+        "#f8f8e8",
+        "#e8f8e8",
+        "#f8e8d8"
+      ]
+    },
+    {
+      "module": "neuron-guide",
+      "directory": "Neuron-Guide",
+      "moduleTitle": "认识人工神经元",
+      "assetId": "9acfbca1-b881-457e-add6-21e0b6b855a0",
+      "page": 3,
+      "sceneId": "decision-bridge",
+      "title": "一个神经元，只做一次简单判断",
+      "words": 134,
+      "buttons": 2,
+      "links": 0,
+      "inputs": 0,
+      "images": 0,
+      "videos": 0,
+      "charts": 1,
+      "sources": [
+        "modules/Neuron-Guide/pages/NeuronDecisionBridgePage/NeuronDecisionBridgePage.tsx"
+      ],
+      "sourceMapped": true,
+      "wordMethod": "TSX静态近似",
+      "thumbnail": "assets/9acfbca1-b881-457e-add6-21e0b6b855a0/scenedeck-thumbnails/decision-bridge.png",
+      "thumbnailSize": [
+        400,
+        225
+      ],
+      "sampledSize": [
+        400,
+        225
+      ],
+      "otsuThreshold": 187,
+      "whitespace": 92.99,
+      "backgroundRatio": 92.99,
+      "backgroundIsBright": true,
+      "uniformImage": false,
+      "colors": 34,
+      "edgeDensity": 9.12,
+      "entropy": 4.63,
+      "brightness": 240.09,
+      "contrast": 34.73,
+      "saturatedArea": 4.88,
+      "palette": [
+        "#f8f8f8",
+        "#e8f8f8",
+        "#e8e8e8",
+        "#e8e8f8",
+        "#f8e8e8",
+        "#687898"
+      ]
+    },
+    {
+      "module": "neuron-guide",
+      "directory": "Neuron-Guide",
+      "moduleTitle": "认识人工神经元",
+      "assetId": "9acfbca1-b881-457e-add6-21e0b6b855a0",
+      "page": 4,
+      "sceneId": "signal-discovery",
+      "title": "让神经元帮你做一次判断",
+      "words": 102,
+      "buttons": 2,
+      "links": 0,
+      "inputs": 0,
+      "images": 0,
+      "videos": 0,
+      "charts": 0,
+      "sources": [
+        "modules/Neuron-Guide/pages/SignalDiscoveryPage/SignalDiscoveryPage.tsx"
+      ],
+      "sourceMapped": true,
+      "wordMethod": "TSX静态近似",
+      "thumbnail": "assets/9acfbca1-b881-457e-add6-21e0b6b855a0/scenedeck-thumbnails/signal-discovery.png",
+      "thumbnailSize": [
+        400,
+        225
+      ],
+      "sampledSize": [
+        400,
+        225
+      ],
+      "otsuThreshold": 200,
+      "whitespace": 92.17,
+      "backgroundRatio": 92.17,
+      "backgroundIsBright": true,
+      "uniformImage": false,
+      "colors": 32,
+      "edgeDensity": 9.62,
+      "entropy": 4.826,
+      "brightness": 240.47,
+      "contrast": 28.87,
+      "saturatedArea": 3.35,
+      "palette": [
+        "#f8f8f8",
+        "#e8e8f8",
+        "#f8f8e8",
+        "#e8f8f8",
+        "#e8e8e8",
+        "#b8b8c8"
+      ]
+    },
+    {
+      "module": "neuron-guide",
+      "directory": "Neuron-Guide",
+      "moduleTitle": "认识人工神经元",
+      "assetId": "9acfbca1-b881-457e-add6-21e0b6b855a0",
+      "page": 5,
+      "sceneId": "weighted-sum",
+      "title": "把一个现实因素，翻译成神经元能处理的输入",
+      "words": 132,
+      "buttons": 0,
+      "links": 0,
+      "inputs": 1,
+      "images": 0,
+      "videos": 1,
+      "charts": 0,
+      "sources": [
+        "modules/Neuron-Guide/pages/WeightedSumPage/WeightedSumPage.tsx"
+      ],
+      "sourceMapped": true,
+      "wordMethod": "TSX静态近似",
+      "thumbnail": "assets/9acfbca1-b881-457e-add6-21e0b6b855a0/scenedeck-thumbnails/weighted-sum.png",
+      "thumbnailSize": [
+        400,
+        225
+      ],
+      "sampledSize": [
+        400,
+        225
+      ],
+      "otsuThreshold": 189,
+      "whitespace": 93.26,
+      "backgroundRatio": 93.26,
+      "backgroundIsBright": true,
+      "uniformImage": false,
+      "colors": 30,
+      "edgeDensity": 8.95,
+      "entropy": 3.766,
+      "brightness": 241.25,
+      "contrast": 34.04,
+      "saturatedArea": 4.44,
+      "palette": [
+        "#f8f8f8",
+        "#e8f8e8",
+        "#e8f8f8",
+        "#c8c8d8",
+        "#d8d8e8",
+        "#e8e8e8"
+      ]
+    },
+    {
+      "module": "neuron-guide",
+      "directory": "Neuron-Guide",
+      "moduleTitle": "认识人工神经元",
+      "assetId": "9acfbca1-b881-457e-add6-21e0b6b855a0",
+      "page": 6,
+      "sceneId": "extra-inputs",
+      "title": "从一个因素，到三个因素",
+      "words": 187,
+      "buttons": 0,
+      "links": 0,
+      "inputs": 2,
+      "images": 0,
+      "videos": 1,
+      "charts": 0,
+      "sources": [
+        "modules/Neuron-Guide/pages/ExtraInputsPage/ExtraInputsPage.tsx"
+      ],
+      "sourceMapped": true,
+      "wordMethod": "TSX静态近似",
+      "thumbnail": "assets/9acfbca1-b881-457e-add6-21e0b6b855a0/scenedeck-thumbnails/extra-inputs.png",
+      "thumbnailSize": [
+        400,
+        225
+      ],
+      "sampledSize": [
+        400,
+        225
+      ],
+      "otsuThreshold": 206,
+      "whitespace": 92.01,
+      "backgroundRatio": 92.01,
+      "backgroundIsBright": true,
+      "uniformImage": false,
+      "colors": 24,
+      "edgeDensity": 8.09,
+      "entropy": 3.048,
+      "brightness": 244.66,
+      "contrast": 27.8,
+      "saturatedArea": 3.17,
+      "palette": [
+        "#f8f8f8",
+        "#f8f8e8",
+        "#c8c8d8",
+        "#e8e8e8",
+        "#b8b8c8",
+        "#d8d8e8"
+      ]
+    },
+    {
+      "module": "neuron-guide",
+      "directory": "Neuron-Guide",
+      "moduleTitle": "认识人工神经元",
+      "assetId": "9acfbca1-b881-457e-add6-21e0b6b855a0",
+      "page": 7,
+      "sceneId": "weighted-contribution",
+      "title": "从加权求和到矩阵表示",
+      "words": 168,
+      "buttons": 0,
+      "links": 0,
+      "inputs": 0,
+      "images": 0,
+      "videos": 0,
+      "charts": 0,
+      "sources": [
+        "modules/Neuron-Guide/pages/WeightedContributionTheoryPage/WeightedContributionTheoryPage.tsx"
+      ],
+      "sourceMapped": true,
+      "wordMethod": "TSX静态近似",
+      "thumbnail": "assets/9acfbca1-b881-457e-add6-21e0b6b855a0/scenedeck-thumbnails/weighted-contribution.png",
+      "thumbnailSize": [
+        400,
+        225
+      ],
+      "sampledSize": [
+        400,
+        225
+      ],
+      "otsuThreshold": 198,
+      "whitespace": 93.32,
+      "backgroundRatio": 93.32,
+      "backgroundIsBright": true,
+      "uniformImage": false,
+      "colors": 30,
+      "edgeDensity": 8.45,
+      "entropy": 3.849,
+      "brightness": 243.76,
+      "contrast": 29.12,
+      "saturatedArea": 4.39,
+      "palette": [
+        "#f8f8f8",
+        "#f8f8e8",
+        "#e8f8f8",
+        "#687898",
+        "#e8e8e8",
+        "#98a8b8"
+      ]
+    },
+    {
+      "module": "neuron-guide",
+      "directory": "Neuron-Guide",
+      "moduleTitle": "认识人工神经元",
+      "assetId": "9acfbca1-b881-457e-add6-21e0b6b855a0",
+      "page": 8,
+      "sceneId": "bias-natural-boundary",
+      "title": "矩阵计算之后，如何形成分类判断？",
+      "words": 194,
+      "buttons": 2,
+      "links": 0,
+      "inputs": 0,
+      "images": 0,
+      "videos": 0,
+      "charts": 0,
+      "sources": [
+        "modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx"
+      ],
+      "sourceMapped": true,
+      "wordMethod": "TSX静态近似",
+      "thumbnail": "assets/9acfbca1-b881-457e-add6-21e0b6b855a0/scenedeck-thumbnails/bias-natural-boundary.png",
+      "thumbnailSize": [
+        400,
+        225
+      ],
+      "sampledSize": [
+        400,
+        225
+      ],
+      "otsuThreshold": 193,
+      "whitespace": 92.78,
+      "backgroundRatio": 92.78,
+      "backgroundIsBright": true,
+      "uniformImage": false,
+      "colors": 39,
+      "edgeDensity": 9.28,
+      "entropy": 4.343,
+      "brightness": 240.78,
+      "contrast": 32.23,
+      "saturatedArea": 4.38,
+      "palette": [
+        "#f8f8f8",
+        "#e8f8e8",
+        "#f8f8e8",
+        "#e8f8f8",
+        "#f8e8e8",
+        "#e8e8e8"
+      ]
+    },
+    {
+      "module": "neuron-guide",
+      "directory": "Neuron-Guide",
+      "moduleTitle": "认识人工神经元",
+      "assetId": "9acfbca1-b881-457e-add6-21e0b6b855a0",
+      "page": 9,
+      "sceneId": "bias-threshold",
+      "title": "偏置如何调整分类阈值？",
+      "words": 154,
+      "buttons": 1,
+      "links": 0,
+      "inputs": 1,
+      "images": 0,
+      "videos": 0,
+      "charts": 0,
+      "sources": [
+        "modules/Neuron-Guide/pages/BiasThresholdTheoryPage/BiasThresholdTheoryPage.tsx"
+      ],
+      "sourceMapped": true,
+      "wordMethod": "TSX静态近似",
+      "thumbnail": "assets/9acfbca1-b881-457e-add6-21e0b6b855a0/scenedeck-thumbnails/bias-threshold.png",
+      "thumbnailSize": [
+        400,
+        225
+      ],
+      "sampledSize": [
+        400,
+        225
+      ],
+      "otsuThreshold": 199,
+      "whitespace": 92.2,
+      "backgroundRatio": 92.2,
+      "backgroundIsBright": true,
+      "uniformImage": false,
+      "colors": 31,
+      "edgeDensity": 8.62,
+      "entropy": 4.001,
+      "brightness": 242.54,
+      "contrast": 30.49,
+      "saturatedArea": 3.29,
+      "palette": [
+        "#f8f8f8",
+        "#e8f8f8",
+        "#b8c8c8",
+        "#e8e8e8",
+        "#b8b8c8",
+        "#c8c8d8"
+      ]
+    },
+    {
+      "module": "neuron-guide",
+      "directory": "Neuron-Guide",
+      "moduleTitle": "认识人工神经元",
+      "assetId": "9acfbca1-b881-457e-add6-21e0b6b855a0",
+      "page": 10,
+      "sceneId": "linear-shallow",
+      "title": "线性神经元的组合仍然是线性的",
+      "words": 148,
+      "buttons": 4,
+      "links": 0,
+      "inputs": 0,
+      "images": 0,
+      "videos": 0,
+      "charts": 3,
+      "sources": [
+        "modules/Neuron-Guide/pages/ShallowLinearPage/ShallowLinearPage.tsx",
+        "modules/Neuron-Guide/pages/NetworkCanvas/NetworkCanvas.tsx",
+        "modules/Neuron-Guide/pages/ActivationCatalogPage/ActivationCatalogPage.tsx"
+      ],
+      "sourceMapped": true,
+      "wordMethod": "TSX静态近似",
+      "thumbnail": "assets/9acfbca1-b881-457e-add6-21e0b6b855a0/scenedeck-thumbnails/linear-shallow.png",
+      "thumbnailSize": [
+        400,
+        225
+      ],
+      "sampledSize": [
+        400,
+        225
+      ],
+      "otsuThreshold": 192,
+      "whitespace": 94.51,
+      "backgroundRatio": 94.51,
+      "backgroundIsBright": true,
+      "uniformImage": false,
+      "colors": 29,
+      "edgeDensity": 6.79,
+      "entropy": 4.153,
+      "brightness": 242.82,
+      "contrast": 28.73,
+      "saturatedArea": 3.19,
+      "palette": [
+        "#f8f8f8",
+        "#e8f8f8",
+        "#e8e8f8",
+        "#e8e8e8",
+        "#d8d8e8",
+        "#687898"
+      ]
+    },
+    {
+      "module": "neuron-guide",
+      "directory": "Neuron-Guide",
+      "moduleTitle": "认识人工神经元",
+      "assetId": "9acfbca1-b881-457e-add6-21e0b6b855a0",
+      "page": 11,
+      "sceneId": "nematode-xor",
+      "title": "线性分类的边界：秀丽隐杆线虫的双侧刺激",
+      "words": 296,
+      "buttons": 2,
+      "links": 0,
+      "inputs": 0,
+      "images": 1,
+      "videos": 0,
+      "charts": 2,
+      "sources": [
+        "modules/Neuron-Guide/pages/NematodeXorPage/NematodeXorPage.tsx"
+      ],
+      "sourceMapped": true,
+      "wordMethod": "TSX静态近似",
+      "thumbnail": "assets/9acfbca1-b881-457e-add6-21e0b6b855a0/scenedeck-thumbnails/nematode-xor.png",
+      "thumbnailSize": [
+        400,
+        225
+      ],
+      "sampledSize": [
+        400,
+        225
+      ],
+      "otsuThreshold": 199,
+      "whitespace": 90.24,
+      "backgroundRatio": 90.24,
+      "backgroundIsBright": true,
+      "uniformImage": false,
+      "colors": 35,
+      "edgeDensity": 11.32,
+      "entropy": 4.525,
+      "brightness": 238.69,
+      "contrast": 32.93,
+      "saturatedArea": 4.56,
+      "palette": [
+        "#f8f8f8",
+        "#e8f8f8",
+        "#f8f8e8",
+        "#e8e8e8",
+        "#e8f8e8",
+        "#f8e8e8"
+      ]
+    },
+    {
+      "module": "neuron-guide",
+      "directory": "Neuron-Guide",
+      "moduleTitle": "认识人工神经元",
+      "assetId": "9acfbca1-b881-457e-add6-21e0b6b855a0",
+      "page": 12,
+      "sceneId": "relu-intro",
+      "title": "从线性计算到非线性响应",
+      "words": 175,
+      "buttons": 0,
+      "links": 0,
+      "inputs": 1,
+      "images": 0,
+      "videos": 0,
+      "charts": 0,
+      "sources": [
+        "modules/Neuron-Guide/pages/ReluIntroPage/ReluIntroPage.tsx"
+      ],
+      "sourceMapped": true,
+      "wordMethod": "TSX静态近似",
+      "thumbnail": "assets/9acfbca1-b881-457e-add6-21e0b6b855a0/scenedeck-thumbnails/relu-intro.png",
+      "thumbnailSize": [
+        400,
+        225
+      ],
+      "sampledSize": [
+        400,
+        225
+      ],
+      "otsuThreshold": 198,
+      "whitespace": 93.03,
+      "backgroundRatio": 93.03,
+      "backgroundIsBright": true,
+      "uniformImage": false,
+      "colors": 24,
+      "edgeDensity": 6.95,
+      "entropy": 2.99,
+      "brightness": 243.57,
+      "contrast": 29.66,
+      "saturatedArea": 2.26,
+      "palette": [
+        "#f8f8f8",
+        "#8898a8",
+        "#e8e8f8",
+        "#d8d8e8",
+        "#c8d8d8",
+        "#e8e8e8"
+      ]
+    },
+    {
+      "module": "neuron-guide",
+      "directory": "Neuron-Guide",
+      "moduleTitle": "认识人工神经元",
+      "assetId": "9acfbca1-b881-457e-add6-21e0b6b855a0",
+      "page": 13,
+      "sceneId": "relu-explanation",
+      "title": "认识线性整流单元",
+      "words": 214,
+      "buttons": 1,
+      "links": 0,
+      "inputs": 0,
+      "images": 0,
+      "videos": 0,
+      "charts": 1,
+      "sources": [
+        "modules/Neuron-Guide/pages/ReluExplanationPage/ReluExplanationPage.tsx"
+      ],
+      "sourceMapped": true,
+      "wordMethod": "TSX静态近似",
+      "thumbnail": "assets/9acfbca1-b881-457e-add6-21e0b6b855a0/scenedeck-thumbnails/relu-explanation.png",
+      "thumbnailSize": [
+        400,
+        225
+      ],
+      "sampledSize": [
+        400,
+        225
+      ],
+      "otsuThreshold": 194,
+      "whitespace": 94.33,
+      "backgroundRatio": 94.33,
+      "backgroundIsBright": true,
+      "uniformImage": false,
+      "colors": 28,
+      "edgeDensity": 7.28,
+      "entropy": 3.143,
+      "brightness": 245.07,
+      "contrast": 29.44,
+      "saturatedArea": 3.16,
+      "palette": [
+        "#f8f8f8",
+        "#e8e8f8",
+        "#c8c8d8",
+        "#687898",
+        "#b8b8c8",
+        "#e8e8e8"
+      ]
+    },
+    {
+      "module": "neuron-guide",
+      "directory": "Neuron-Guide",
+      "moduleTitle": "认识人工神经元",
+      "assetId": "9acfbca1-b881-457e-add6-21e0b6b855a0",
+      "page": 14,
+      "sceneId": "relu-network",
+      "title": "组合多个带有 ReLU 的神经元，曲线继续弯折",
+      "words": 238,
+      "buttons": 4,
+      "links": 0,
+      "inputs": 0,
+      "images": 0,
+      "videos": 0,
+      "charts": 3,
+      "sources": [
+        "modules/Neuron-Guide/pages/ReluNetworkPage/ReluNetworkPage.tsx",
+        "modules/Neuron-Guide/pages/NetworkCanvas/NetworkCanvas.tsx",
+        "modules/Neuron-Guide/pages/ActivationCatalogPage/ActivationCatalogPage.tsx"
+      ],
+      "sourceMapped": true,
+      "wordMethod": "TSX静态近似",
+      "thumbnail": "assets/9acfbca1-b881-457e-add6-21e0b6b855a0/scenedeck-thumbnails/relu-network.png",
+      "thumbnailSize": [
+        400,
+        225
+      ],
+      "sampledSize": [
+        400,
+        225
+      ],
+      "otsuThreshold": 193,
+      "whitespace": 92.77,
+      "backgroundRatio": 92.77,
+      "backgroundIsBright": true,
+      "uniformImage": false,
+      "colors": 31,
+      "edgeDensity": 9.09,
+      "entropy": 4.269,
+      "brightness": 240.99,
+      "contrast": 32.45,
+      "saturatedArea": 3.67,
+      "palette": [
+        "#f8f8f8",
+        "#e8f8f8",
+        "#e8e8f8",
+        "#e8e8e8",
+        "#d8e8e8",
+        "#c8c8d8"
+      ]
+    },
+    {
+      "module": "neuron-guide",
+      "directory": "Neuron-Guide",
+      "moduleTitle": "认识人工神经元",
+      "assetId": "9acfbca1-b881-457e-add6-21e0b6b855a0",
+      "page": 15,
+      "sceneId": "relu-approximation",
+      "title": "足够多带有 ReLU 的神经元，就能逼近任意曲线",
+      "words": 115,
+      "buttons": 2,
+      "links": 0,
+      "inputs": 1,
+      "images": 0,
+      "videos": 0,
+      "charts": 1,
+      "sources": [
+        "modules/Neuron-Guide/pages/ReluApproximationLabPage/ReluApproximationLabPage.tsx"
+      ],
+      "sourceMapped": true,
+      "wordMethod": "TSX静态近似",
+      "thumbnail": "assets/9acfbca1-b881-457e-add6-21e0b6b855a0/scenedeck-thumbnails/relu-approximation.png",
+      "thumbnailSize": [
+        400,
+        225
+      ],
+      "sampledSize": [
+        400,
+        225
+      ],
+      "otsuThreshold": 189,
+      "whitespace": 95.71,
+      "backgroundRatio": 95.71,
+      "backgroundIsBright": true,
+      "uniformImage": false,
+      "colors": 25,
+      "edgeDensity": 5.75,
+      "entropy": 2.797,
+      "brightness": 246.14,
+      "contrast": 27.85,
+      "saturatedArea": 2.55,
+      "palette": [
+        "#f8f8f8",
+        "#d8d8e8",
+        "#e8e8e8",
+        "#687898",
+        "#c8c8d8",
+        "#b8b8c8"
+      ]
+    },
+    {
+      "module": "neuron-guide",
+      "directory": "Neuron-Guide",
+      "moduleTitle": "认识人工神经元",
+      "assetId": "9acfbca1-b881-457e-add6-21e0b6b855a0",
+      "page": 16,
+      "sceneId": "activation-catalog",
+      "title": "认识这些被广泛使用的激活函数",
+      "words": 218,
+      "buttons": 0,
+      "links": 0,
+      "inputs": 0,
+      "images": 0,
+      "videos": 0,
+      "charts": 2,
+      "sources": [
+        "modules/Neuron-Guide/pages/ActivationCatalogPage/ActivationCatalogPage.tsx"
+      ],
+      "sourceMapped": true,
+      "wordMethod": "TSX静态近似",
+      "thumbnail": "assets/9acfbca1-b881-457e-add6-21e0b6b855a0/scenedeck-thumbnails/activation-catalog.png",
+      "thumbnailSize": [
+        400,
+        225
+      ],
+      "sampledSize": [
+        400,
+        225
+      ],
+      "otsuThreshold": 201,
+      "whitespace": 92.25,
+      "backgroundRatio": 92.25,
+      "backgroundIsBright": true,
+      "uniformImage": false,
+      "colors": 31,
+      "edgeDensity": 10.19,
+      "entropy": 4.088,
+      "brightness": 242.4,
+      "contrast": 29.69,
+      "saturatedArea": 3.25,
+      "palette": [
+        "#f8f8f8",
+        "#e8e8f8",
+        "#c8c8d8",
+        "#d8d8e8",
+        "#e8e8e8",
+        "#b8b8c8"
+      ]
+    },
+    {
+      "module": "neuron-guide",
+      "directory": "Neuron-Guide",
+      "moduleTitle": "认识人工神经元",
+      "assetId": "9acfbca1-b881-457e-add6-21e0b6b855a0",
+      "page": 17,
+      "sceneId": "ending",
+      "title": "你已经搭出了一个人工神经元",
+      "words": 306,
+      "buttons": 0,
+      "links": 1,
+      "inputs": 0,
+      "images": 0,
+      "videos": 0,
+      "charts": 0,
+      "sources": [
+        "modules/Neuron-Guide/pages/NeuronLessonFooter/NeuronLessonFooter.tsx"
+      ],
+      "sourceMapped": true,
+      "wordMethod": "TSX静态近似",
+      "thumbnail": "assets/9acfbca1-b881-457e-add6-21e0b6b855a0/scenedeck-thumbnails/ending.png",
+      "thumbnailSize": [
+        400,
+        225
+      ],
+      "sampledSize": [
+        400,
+        225
+      ],
+      "otsuThreshold": 198,
+      "whitespace": 92.08,
+      "backgroundRatio": 92.08,
+      "backgroundIsBright": true,
+      "uniformImage": false,
+      "colors": 36,
+      "edgeDensity": 9.61,
+      "entropy": 3.781,
+      "brightness": 241.0,
+      "contrast": 30.69,
+      "saturatedArea": 3.75,
+      "palette": [
+        "#f8f8f8",
+        "#f8e8e8",
+        "#e8e8e8",
+        "#c8c8d8",
+        "#b8b8c8",
+        "#687898"
+      ]
+    },
+    {
+      "module": "neuron-guide",
+      "directory": "Neuron-Guide",
+      "moduleTitle": "认识人工神经元",
+      "assetId": "9acfbca1-b881-457e-add6-21e0b6b855a0",
+      "page": 18,
+      "sceneId": "resources",
+      "title": "推荐资源",
+      "words": 88,
+      "buttons": 0,
+      "links": 0,
+      "inputs": 0,
+      "images": 0,
+      "videos": 0,
+      "charts": 0,
+      "sources": [
+        "modules/Neuron-Guide/pages/NeuronLessonFooter/NeuronLessonFooter.tsx"
+      ],
+      "sourceMapped": true,
+      "wordMethod": "TSX静态近似",
+      "thumbnail": "assets/9acfbca1-b881-457e-add6-21e0b6b855a0/scenedeck-thumbnails/resources.png",
+      "thumbnailSize": [
+        400,
+        225
+      ],
+      "sampledSize": [
+        400,
+        225
+      ],
+      "otsuThreshold": 168,
+      "whitespace": 88.6,
+      "backgroundRatio": 88.6,
+      "backgroundIsBright": true,
+      "uniformImage": false,
+      "colors": 30,
+      "edgeDensity": 4.41,
+      "entropy": 3.558,
+      "brightness": 229.63,
+      "contrast": 55.89,
+      "saturatedArea": 6.63,
+      "palette": [
+        "#f8f8f8",
+        "#080818",
+        "#e8e8f8",
+        "#e8f8f8",
+        "#98a8b8",
+        "#a8a8b8"
+      ]
+    }
+  ],
+  "generatedAt": "2026-10-22T17:10:18.883210+00:00",
+  "missingThumbnails": [],
+  "imageErrors": [],
+  "unmatchedThumbnails": [],
+  "wordMethod": "static",
+  "colorQuantization": 16,
+  "majorColorMinArea": 0.001,
+  "thumbnailMaxSample": [
+    480,
+    270
+  ]
+}

@@ -8,14 +8,15 @@ import shutil
 import subprocess
 import sys
 from _common import ROOT,SCRIPTS
+SKILL = SCRIPTS.parent
 
 
 def catalog():
     document=json.loads((SCRIPTS/'catalog.json').read_text(encoding='utf-8'))
     ids=set()
     for tool in document['tools']:
-        target=(SCRIPTS/tool['path']).resolve()
-        if tool['id'] in ids or not target.is_relative_to(SCRIPTS.resolve()) or not target.is_file(): raise ValueError(f"Invalid tool catalog entry: {tool['id']}")
+        target=(SKILL/tool['path']).resolve()
+        if tool['id'] in ids or not target.is_relative_to(SKILL.resolve()) or not target.is_file(): raise ValueError(f"Invalid tool catalog entry: {tool['id']}")
         ids.add(tool['id'])
     return document['tools']
 
@@ -45,7 +46,7 @@ def main(argv=None):
     if describe:print(json.dumps(tool,ensure_ascii=False,indent=2));return 0
     executable=sys.executable if tool['runtime']=='python' else shutil.which('node')
     if not executable:print('Node.js is unavailable; run environment.doctor.',file=sys.stderr);return 2
-    command=[executable,str(SCRIPTS/tool['path']),*tool.get('arguments',[]),*argv[1:]]
+    command=[executable,str(SKILL/tool['path']),*tool.get('arguments',[]),*argv[1:]]
     try:return subprocess.run(command,cwd=ROOT,check=False).returncode
     except KeyboardInterrupt:return 130
     except OSError as exc:print(f'Could not run {key}: {exc}',file=sys.stderr);return 2

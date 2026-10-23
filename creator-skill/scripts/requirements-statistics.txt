@@ -1,0 +1,3 @@
+# Offline thumbnail statistics. Node + repository TypeScript are also required.
+numpy>=1.24
+Pillow>=10

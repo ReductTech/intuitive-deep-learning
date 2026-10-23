@@ -1,1 +1,1 @@
--r creator-skill/scripts/capture/requirements.txt
+-r creator-skill/scripts/requirements-capture.txt

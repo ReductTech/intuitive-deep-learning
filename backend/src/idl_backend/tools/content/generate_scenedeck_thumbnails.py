@@ -8,7 +8,7 @@ from pathlib import Path
 import sys
 from idl_backend.config import repository_root
 
-_script=repository_root()/"creator-skill/scripts/capture/capture_slides.py"
+_script=repository_root()/"creator-skill/scripts/capture_slides.py"
 _spec=importlib.util.spec_from_file_location("idl_authoring_capture",_script)
 _capture=importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(_capture)
@@ -33,6 +33,8 @@ def main():
     parser=argparse.ArgumentParser(add_help=False)
     parser.add_argument("--digit-tsne-record",type=Path)
     legacy,remaining=parser.parse_known_args()
+    if not any(arg == '--format' or arg.startswith('--format=') for arg in remaining):
+        remaining += ['--format','thumbnails']
     if '--help' in remaining:print('Backend-specific option: --digit-tsne-record <full-MNIST record.json>')
     setup=(lambda context,asset_id:configure_digit_playback(context,asset_id,legacy.digit_tsne_record)) if legacy.digit_tsne_record else None
     return _capture.main(remaining,context_setup=setup)
