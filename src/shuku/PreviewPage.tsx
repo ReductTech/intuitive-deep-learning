@@ -1,3 +1,4 @@
+import {ContributionReview} from './Collaboration';
 import { useEffect,useState } from 'react';
 import { api,type SavedRevision } from './client';
 import './shuku.css';
@@ -7,7 +8,8 @@ export function PreviewPage(){
  useEffect(()=>{api<SavedRevision>('/revisions/'+encodeURIComponent(id)).then(setRevision).catch(e=>setError(e.message));},[id]);
  return <div className="shuku-preview"><header><a href="/my-courses">我的课程</a><strong>{revision?.project.title||'课程预览'}</strong></header>{error?<p role="alert">{error}</p>:revision?.state==='ready'?<iframe title="已保存的课程预览" src={revision.preview_url}/>:<p>课程预览尚未准备完成，请返回编辑器查看状态。</p>}</div>;
 }
-export function ReviewPage(){
+export function ReviewPage(){return new URLSearchParams(location.search).has('contribution')?<ContributionReview/>:<CourseReview/>;}
+function CourseReview(){
  const params=new URLSearchParams(location.search),id=params.get('review')||'',rid=params.get('revision')||'';
  const [revision,setRevision]=useState<SavedRevision|null>(null),[note,setNote]=useState(''),[error,setError]=useState(''),[busy,setBusy]=useState(false);
  useEffect(()=>{api<SavedRevision>('/revisions/'+rid).then(setRevision).catch(e=>setError(e.message));},[rid]);

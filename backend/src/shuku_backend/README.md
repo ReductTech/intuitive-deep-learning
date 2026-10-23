@@ -41,6 +41,14 @@ python -m shuku_backend serve
 
 这是本地课程发布链路，不代表已创建 GitHub PR、Tag 或 Release。
 
+## 共创流程
+
+首页的后端已发布课程提供“我想共创”；默认使用最新正式版本，也可选择历史版本。本人工作区在“课程创作 → 我参与的共创”，编辑后保存、预览并提交说明。课程管理者在“待审核”查看教学内容差异、填写 0～10 整数质量分并通过或退回；通过后单独合并，再从“查看待发布课程”确认版本号发布。
+
+工作区固定基础版本，复制教学内容时排除原作者对话、设计参考图和撤销历史。修改使旧批准失效。合并复制已审核冻结产物，仅替换修订资源地址，不重新生成教学代码。官方基础或草稿有变化时返回 `BASE_CHANGED`，保留工作区并要求基于最新正式版重新共创，不覆盖已有修改。
+
+合并构建失败时旧正式版可用；详情显示失败后课程管理者可点击“重试合并”，复用同一任务及目标修订。贡献历史关联原作者、审核者、合并者、质量分和最终正式版本，成功合并才计入排名。静态内置模块尚未自动登记成后端课程；真实 GitHub 操作属于 T07。
+
 ## 接口
 
 统一前缀 `/api/shuku`；私有操作使用 HttpOnly Cookie 会话。
@@ -58,6 +66,14 @@ python -m shuku_backend serve
 | `GET /reviews` | 管理员读取待审核列表 |
 | `POST /reviews/{id}/decision` | `{revision_id, decision: approved或rejected, note}` |
 | `POST /courses/{id}/publish` | 发布 `{revision_id, version, note}`；相同内容重试返回已有版本 |
+| `GET /public/courses/{id}/releases` | 查询可选正式版本及当前版本标志 |
+| `POST /courses/{id}/workspaces` | `{base_release_id?}`，不传时用当前正式版；同人同基础重复请求沿用工作区 |
+| `GET /workspaces` | 本人的私有共创工作区 |
+| `POST /workspaces/{id}/submit` | `{revision_id, summary}`，提交最新就绪修订 |
+| `GET /contributions`、`GET /contributions/{id}` | 有管理权限的待处理建议；本人或管理者读取差异与状态 |
+| `POST /contributions/{id}/decision` | `{revision_id, decision, score?, note?}`，通过必须提供 0～10 整数分；退回必须提供原因 |
+| `POST /contributions/{id}/merge` | `{revision_id}`，返回持久处理状态；重复调用不会新增官方修订 |
+| `GET /courses/{id}/contributions` | 成功合并的贡献记录、正式版本归属及质量分排名 |
 | `GET /public/courses` | 匿名读取正式目录，仅返回当前已发布版本 |
 
 会话保存令牌哈希，12 小时过期，退出、停用及切换账号会影响后续访问。创建、审核和发布均以服务端身份和修订状态为准。

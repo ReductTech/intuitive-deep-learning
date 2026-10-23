@@ -36,7 +36,7 @@ class Workflow:
         user=self.store.user_in(db,uid)
         row=db.execute('SELECT * FROM shuku_business.courses WHERE id=%s FOR UPDATE',(identifier(cid),)).fetchone()
         require(row,404,'NOT_FOUND','课程不存在。')
-        require(str(row['owner_id'])==uid or user['role']=='admin',403,'FORBIDDEN','没有课程管理权限。')
+        require(str(row['owner_id'])==uid or user['role']=='admin' or db.execute('SELECT 1 FROM shuku_business.course_managers WHERE course_id=%s AND user_id=%s',(cid,uid)).fetchone(),403,'FORBIDDEN','没有课程管理权限。')
         return row,user
 
     def audit(self,db,uid,action,obj):
@@ -87,25 +87,35 @@ class Workflow:
     def save(self,uid,cid,data):
         require(isinstance(data,dict) and set(data)<= {'project','expected_revision'},400,'INVALID_INPUT','修订请求格式不正确。')
         with self.store.transaction() as db:
-            course,_=self.owner(db,uid,cid)
-            module=next((m for m in self.modules() if m['id']==str(course['module_id'])),None)
-            require(module,400,'UNKNOWN_MODULE','课程模块不存在。')
-            require(data.get('expected_revision')==(str(course['head_revision']) if course['head_revision'] else None),409,'REVISION_CONFLICT','课程已更新，请重新载入后保存。')
-            objects,digest=self.prepare(data.get('project'),module)
-            rid=str(uuid4());now=self.clock()
-            db.execute("INSERT INTO shuku_business.revisions VALUES (%s,%s,%s,%s,'building',%s,NULL,%s)",(rid,cid,uid,digest,Jsonb(objects),now))
-            db.execute("UPDATE shuku_business.reviews SET status='superseded' WHERE course_id=%s AND status IN ('pending','approved')",(cid,))
-            db.execute('UPDATE shuku_business.courses SET head_revision=%s WHERE id=%s',(rid,cid))
-            db.execute("INSERT INTO shuku_business.tasks(id,kind,resource_key,idempotency_key,request_hash,payload,available_at,created_at) VALUES (%s,'revision.build',%s,%s,%s,%s,%s,%s)",(uuid4(),'course:'+cid,'build:'+rid,digest,Jsonb({'revision_id':rid}),now,now))
-            self.audit(db,uid,'revision.save',rid)
+            return self.save_in(db,uid,cid,data)
+
+    def save_in(self,db,uid,cid,data):
+        course,_=self.owner(db,uid,cid)
+        require(not db.execute("SELECT 1 FROM shuku_business.contributions WHERE (workspace_id=%s OR target_course_id=%s) AND status='merging'",(cid,cid)).fetchone(),409,'MERGE_BUSY','共创正在合并，请稍后再保存。')
+        module=next((m for m in self.modules() if m['id']==str(course['module_id'])),None)
+        require(module,400,'UNKNOWN_MODULE','课程模块不存在。')
+        require(data.get('expected_revision')==(str(course['head_revision']) if course['head_revision'] else None),409,'REVISION_CONFLICT','课程已更新，请重新载入后保存。')
+        objects,digest=self.prepare(data.get('project'),module)
+        rid=str(uuid4());now=self.clock()
+        db.execute("INSERT INTO shuku_business.revisions VALUES (%s,%s,%s,%s,'building',%s,NULL,%s)",(rid,cid,uid,digest,Jsonb(objects),now))
+        db.execute("UPDATE shuku_business.reviews SET status='superseded' WHERE course_id=%s AND status IN ('pending','approved')",(cid,))
+        db.execute('UPDATE shuku_business.courses SET head_revision=%s WHERE id=%s',(rid,cid))
+        db.execute("INSERT INTO shuku_business.tasks(id,kind,resource_key,idempotency_key,request_hash,payload,available_at,created_at) VALUES (%s,'revision.build',%s,%s,%s,%s,%s,%s)",(uuid4(),'course:'+cid,'build:'+rid,digest,Jsonb({'revision_id':rid}),now,now))
+        db.execute("UPDATE shuku_business.contributions SET status='superseded' WHERE workspace_id=%s AND status IN ('pending','approved')",(cid,))
+        self.audit(db,uid,'revision.save',rid)
         return {'id':rid,'state':'building'}
+
 
     def allowed(self,db,rid,uid,public=True):
         row=db.execute("SELECT r.*,c.owner_id,c.status AS course_status,c.module_id,c.head_revision FROM shuku_business.revisions r JOIN shuku_business.courses c ON c.id=r.course_id WHERE r.id=%s",(identifier(rid),)).fetchone()
         require(row,404,'NOT_FOUND','修订不存在。')
         user=self.store.user_in(db,uid) if uid else None
         private=bool(user and (str(row['owner_id'])==uid or user['role']=='admin'))
+        if user and not private:
+            private=bool(db.execute('SELECT 1 FROM shuku_business.course_managers WHERE course_id=%s AND user_id=%s',(row['course_id'],uid)).fetchone())
         released=public and row['course_status']=='published' and db.execute('SELECT 1 FROM shuku_business.releases WHERE revision_id=%s',(rid,)).fetchone()
+        if not private and user and hasattr(self,'collaboration'):
+            private=self.collaboration.can_preview(db,uid,row)
         require(private or released,404,'NOT_FOUND','修订不存在或无权访问。')
         return row
 
@@ -113,11 +123,15 @@ class Workflow:
         with self.store.transaction() as db:
             row=self.allowed(db,rid,uid,public=False)
             project=json.loads(self.bucket.read(row['files']['project.json']['sha256']))
+            if str(row['owner_id'])!=uid and self.store.user_in(db,uid)['role']!='admin' and db.execute('SELECT 1 FROM shuku_business.workspaces WHERE id=%s',(row['course_id'],)).fetchone():
+                from .collaboration import teaching
+                project=teaching(project)
             project['designImages']={key:'data:'+row['files'][path]['mime']+';base64,'+base64.b64encode(self.bucket.read(row['files'][path]['sha256'])).decode() for key,path in project.get('designImages',{}).items()}
             review=db.execute('SELECT status,note FROM shuku_business.reviews WHERE revision_id=%s',(rid,)).fetchone()
             task=db.execute("SELECT status,error_code FROM shuku_business.tasks WHERE idempotency_key=%s",('build:'+rid,)).fetchone()
             state='failed' if row['state']=='building' and task and task['status']=='failed' else row['state']
-            return {'id':str(row['id']),'state':state,'project':project,'review':review,'preview_url':'/api/shuku/revisions/'+rid+'/files/index.html'}
+            contribution=db.execute('SELECT id,status,score,note FROM shuku_business.contributions WHERE revision_id=%s',(rid,)).fetchone()
+            return {'id':str(row['id']),'state':state,'project':project,'contribution':course_view(contribution) if contribution else None,'review':review,'preview_url':'/api/shuku/revisions/'+rid+'/files/index.html'}
 
     def file(self,uid,rid,path):
         with self.store.transaction() as db:
@@ -139,24 +153,27 @@ class Workflow:
         objects=dict(row['files']);project=json.loads(self.bucket.read(objects['project.json']['sha256']))
         checkpoint({'stage':'building','revision_id':rid})
         try:
-            with tempfile.TemporaryDirectory(prefix='shuku-build-') as folder:
-                folder=Path(folder);source=folder/'project.json';source.write_text(json.dumps(project));out=folder/'dist'
-                env=__import__('os').environ.copy();env['NODE_OPTIONS']='--max-old-space-size=256'
-                process=subprocess.Popen(['node',str(Path(self.root)/'scripts/build-shuku-preview.mjs'),'--project',str(source),'--module',module['directory'],'--revision',rid,'--outdir',str(out)],stdout=subprocess.PIPE,stderr=subprocess.PIPE,env=env)
-                started=time.monotonic()
-                while True:
-                    try:
-                        stdout,stderr=process.communicate(timeout=5);break
-                    except subprocess.TimeoutExpired:
-                        if time.monotonic()-started>90:
-                            process.kill();process.communicate();raise RuntimeError('Build timeout')
-                        checkpoint({'stage':'building','revision_id':rid})
-                if process.returncode:raise RuntimeError('Course artifact build failed')
-                for path in sorted(out.rglob('*')):
-                    if path.is_file():
-                        require(path.stat().st_size<=32*1024*1024,413,'ARTIFACT_LIMIT','课程资源过大。')
-                        relative=path.relative_to(out).as_posix()
-                        objects[relative]={**self.bucket.put(path.read_bytes()),'mime':mimetypes.guess_type(relative)[0] or 'application/octet-stream'}
+            frozen=self.collaboration.frozen_merge(rid,objects,checkpoint) if hasattr(self,'collaboration') else None
+            if frozen is not None:objects=frozen
+            else:
+                with tempfile.TemporaryDirectory(prefix='shuku-build-') as folder:
+                    folder=Path(folder);source=folder/'project.json';source.write_text(json.dumps(project));out=folder/'dist'
+                    env=__import__('os').environ.copy();env['NODE_OPTIONS']='--max-old-space-size=256'
+                    process=subprocess.Popen(['node',str(Path(self.root)/'scripts/build-shuku-preview.mjs'),'--project',str(source),'--module',module['directory'],'--revision',rid,'--outdir',str(out)],stdout=subprocess.PIPE,stderr=subprocess.PIPE,env=env)
+                    started=time.monotonic()
+                    while True:
+                        try:
+                            stdout,stderr=process.communicate(timeout=5);break
+                        except subprocess.TimeoutExpired:
+                            if time.monotonic()-started>90:
+                                process.kill();process.communicate();raise RuntimeError('Build timeout')
+                            checkpoint({'stage':'building','revision_id':rid})
+                    if process.returncode:raise RuntimeError('Course artifact build failed')
+                    for path in sorted(out.rglob('*')):
+                        if path.is_file():
+                            require(path.stat().st_size<=32*1024*1024,413,'ARTIFACT_LIMIT','课程资源过大。')
+                            relative=path.relative_to(out).as_posix()
+                            objects[relative]={**self.bucket.put(path.read_bytes()),'mime':mimetypes.guess_type(relative)[0] or 'application/octet-stream'}
             artifact_hash=hashlib.sha256(json.dumps(objects,sort_keys=True).encode()).hexdigest()
             checkpoint({'stage':'verified','revision_id':rid})
             with self.store.transaction() as db:
@@ -164,6 +181,7 @@ class Workflow:
                 lease=db.execute("SELECT id FROM shuku_business.tasks WHERE id=%s AND lease_token=%s AND lease_until>%s FOR UPDATE",(task['id'],task['lease_token'],self.clock())).fetchone()
                 require(lease,409,'STALE_LEASE','任务已被接管。')
                 db.execute("UPDATE shuku_business.revisions SET files=%s,artifact_hash=%s,state='ready' WHERE id=%s AND state='building'",(Jsonb(objects),artifact_hash,rid))
+                if hasattr(self,'collaboration'):self.collaboration.complete_merge(db,rid,artifact_hash)
         except Exception:
             # Retry retains the immutable source; final failure is projected by revision().
             raise
@@ -172,6 +190,7 @@ class Workflow:
     def submit(self,uid,cid,data):
         with self.store.transaction() as db:
             course,_=self.owner(db,uid,cid);rid=identifier(data.get('revision_id'))
+            require(not db.execute('SELECT 1 FROM shuku_business.workspaces WHERE id=%s',(cid,)).fetchone(),409,'USE_CONTRIBUTION','请提交共创建议。')
             require(str(course['head_revision'])==rid,409,'REVISION_CONFLICT','请提交当前最新修订。')
             revision=db.execute("SELECT * FROM shuku_business.revisions WHERE id=%s AND course_id=%s AND state='ready'",(rid,cid)).fetchone()
             require(revision,409,'NOT_READY','请等待课程预览准备完成。')
@@ -209,6 +228,7 @@ class Workflow:
         require(isinstance(note,str) and len(note)<=3000,400,'INVALID_INPUT','版本说明过长。')
         with self.store.transaction() as db:
             course,_=self.owner(db,uid,cid)
+            require(not db.execute('SELECT 1 FROM shuku_business.workspaces WHERE id=%s',(cid,)).fetchone(),409,'WORKSPACE_PRIVATE','共创工作区不能直接发布。')
             previous=db.execute('SELECT * FROM shuku_business.releases WHERE course_id=%s AND version=%s',(cid,version)).fetchone()
             if previous:
                 require(str(previous['revision_id'])==rid and previous['note']==note,409,'VERSION_EXISTS','该版本号已被使用。')

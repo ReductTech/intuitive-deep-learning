@@ -3,3 +3,7 @@
 .sd-library-topbar nav a{display:flex;align-items:center;text-decoration:none;color:#8892a2;font-weight:600;font-size:inherit}.sd-library-topbar nav a:hover{color:var(--sd-ink)}
 
 .shuku-preview>header a{color:var(--ui-accent);text-decoration:none}.cw-app .shuku-text-page button{font-size:20px;border:1px solid var(--ui-border);border-radius:12px;padding:12px 22px;background:white;color:var(--ui-accent)}
+
+.shuku-row-actions{display:flex;gap:12px;flex-wrap:wrap}.shuku-contribution details{margin:20px 0;padding:18px 22px;border:1px solid var(--ui-border);border-radius:12px;background:white}.shuku-contribution summary{cursor:pointer;font-weight:600}.shuku-diff-columns{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px}.shuku-diff-columns section{min-width:0;overflow-wrap:anywhere}.shuku-diff-columns p{white-space:pre-wrap}.shuku-diff-preview{width:100%;height:min(65dvh,600px);border:1px solid var(--ui-border);border-radius:12px}.shuku-contribution-form{margin:24px 0}.shuku-contribution-form>div{display:flex;gap:12px}.shuku-contribution-form input[type=number]{max-width:150px}.sd-library-card-actions button.shuku-secondary{font:inherit;border:1px solid var(--ui-border);background:white;cursor:pointer;color:var(--ui-accent);padding:10px 16px}@media(max-width:760px){.shuku-diff-columns{grid-template-columns:minmax(0,1fr)}.shuku-tabs{flex-wrap:wrap}.shuku-course-list article{flex-wrap:wrap}}
+
+.shuku-contribution{font-family:Inter,"Segoe UI","Microsoft YaHei",sans-serif;line-height:1.6}

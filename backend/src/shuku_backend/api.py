@@ -93,6 +93,9 @@ def handler_for(app):
                     return self.send_json(200,{"ok":True,"service":"shuku_backend"})
                 if self.command=="GET" and path=="/api/shuku/public/courses":
                     return self.send_json(200,{"courses":app.workflow.public_courses()})
+                releases=re.fullmatch(r"/api/shuku/public/courses/([^/]+)/releases",path)
+                if self.command=="GET" and releases:
+                    return self.send_json(200,{'releases':app.workflow.collaboration.releases(releases[1])})
                 file_route=re.fullmatch(r"/api/shuku/revisions/([^/]+)/files/(.+)",path)
                 if self.command=="GET" and file_route:
                     try:viewer=app.store.session_user(token_hash(token_from(self.headers.get("Cookie"))),app.clock())["id"]
@@ -118,6 +121,23 @@ def handler_for(app):
                 user=app.store.session_user(token_hash(raw_token),app.clock())
                 if self.command=="GET" and path=="/api/shuku/auth/me":
                     return self.send_json(200,{"user":user})
+                collaboration=app.workflow.collaboration
+                if self.command=="GET" and path=="/api/shuku/workspaces":
+                    return self.send_json(200,{'workspaces':collaboration.workspaces(user['id'])})
+                if self.command=="GET" and path=="/api/shuku/contributions":
+                    return self.send_json(200,{'contributions':collaboration.listing(user['id'])})
+                workspace=re.fullmatch(r"/api/shuku/workspaces/([^/]+)/submit",path)
+                if self.command=="POST" and workspace:
+                    return self.send_json(200,collaboration.submit(user['id'],workspace[1],self.body()))
+                contribution=re.fullmatch(r"/api/shuku/contributions/([^/]+)(?:/(decision|merge))?",path)
+                if contribution:
+                    if self.command=="GET" and not contribution[2]:return self.send_json(200,collaboration.detail(user['id'],contribution[1]))
+                    if self.command=="POST" and contribution[2]=='decision':return self.send_json(200,collaboration.decide(user['id'],contribution[1],self.body()))
+                    if self.command=="POST" and contribution[2]=='merge':return self.send_json(202,collaboration.merge(user['id'],contribution[1],self.body()))
+                co_course=re.fullmatch(r"/api/shuku/courses/([^/]+)/(workspaces|contributions)",path)
+                if co_course:
+                    if self.command=="POST" and co_course[2]=='workspaces':return self.send_json(201,collaboration.create(user['id'],co_course[1],self.body()))
+                    if self.command=="GET" and co_course[2]=='contributions':return self.send_json(200,collaboration.history(user['id'],co_course[1]))
                 if self.command=="GET" and path=="/api/shuku/modules":
                     return self.send_json(200,{"modules":[{k:v for k,v in m.items() if k not in ('directory','entry','pages')} for m in app.workflow.modules()]})
                 if self.command=="GET" and path=="/api/shuku/reviews":
