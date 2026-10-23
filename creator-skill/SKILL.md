@@ -33,7 +33,7 @@ description: 在当前仓库中规划、设计、实现、修改和评估 React 
 
 ## 工程约束
 
-- 使用 React，沿用当前仓库的技术栈和模块入口。
+- 使用 React，沿用当前仓库的技术栈和模块入口，默认复用 modules\shared 下的工程脚手架。
 - 页面使用 1600×900 固定画布，由外层等比例缩放。
 - 独立文字使用 Shared `Typography` 或已封装它的组件。
 - 模块大纲位于 `modules/<模块目录名>/outlines.json`。
@@ -46,9 +46,9 @@ description: 在当前仓库中规划、设计、实现、修改和评估 React 
 | 动作 | 资料 |
 |---|---|
 | 规划或修改大纲 | [大纲](references/design/course-outline.md) |
-| 分析原稿及转换范围 | [参考与转换](references/reference-conversion.md) |
-| 编写或修改 React 页面 | [工程实现](references/implementation.md) |
-| 创建或调整模块身份、资源 | [模块身份](references/module-identity.md)、[模块资源](references/module-assets.md) |
+| 分析原稿及转换范围 | [参考与转换](references/workflow/reference-adaptation.md) |
+| 编写或修改 React 页面 | [工程实现](references/engineering/implementation.md) |
+| 创建或调整模块身份、资源 | [模块身份](references/engineering/module-identity.md)、[模块资源](references/engineering/module-assets.md) |
 | 检查实现并交付 | [评估与验收](references/eval/evaluation.md) |
 
 ## 按问题选读

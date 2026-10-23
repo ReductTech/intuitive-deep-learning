@@ -9,4 +9,4 @@
 3. **从对应阶段继续**：沿用已有方向和授权，只补充本次需要的规划、设计或实现，不重新执行完整创作流程。
 4. **验证受影响内容**：检查相关页面、状态和入口；涉及页序或共用逻辑时，扩大到实际受影响范围。
 
-大纲修改见[大纲说明](../design/course-outline.md)，代码与布局修改见[工程实现](../implementation.md)，检查与复验见[评估说明](../eval/evaluation.md)。
+大纲修改见[大纲说明](../design/course-outline.md)，代码与布局修改见[工程实现](../engineering/implementation.md)，检查与复验见[评估说明](../eval/evaluation.md)。

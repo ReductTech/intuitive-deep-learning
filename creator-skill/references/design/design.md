@@ -24,4 +24,4 @@
 
 使用准确、清楚、自然的书面语言；标题直接提出问题、现象或结论。避免空泛口号、故作高深的术语和“这里先不讲什么”等元话语。用图和操作能说明的关系，不补成长段文字。
 
-构图遵守主入口的固定画布与 Shared 约束；组件与样式用法见[工程实现](../implementation.md)。需要判断视觉取舍时读[美学](aesthetics.md)，设计操作时读[交互设计](interaction-design.md)。
+构图遵守主入口的固定画布与 Shared 约束；组件与样式用法见[工程实现](../engineering/implementation.md)。需要判断视觉取舍时读[美学](aesthetics.md)，设计操作时读[交互设计](interaction-design.md)。

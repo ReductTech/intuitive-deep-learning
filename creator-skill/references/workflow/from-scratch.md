@@ -22,4 +22,4 @@
 6. **评估与修正**
    从内容、视觉、交互、工程实现及实际使用目的等维度检查结果，修复影响质量的问题并复验。
 
-大纲维护见[大纲说明](../design/course-outline.md)，构图方法见[设计学](../design/design.md)，实现与验收分别见[工程实现](../implementation.md)和[评估说明](../eval/evaluation.md)。教学任务再按需读取[教育学](../design/pedagogy.md)。
+大纲维护见[大纲说明](../design/course-outline.md)，构图方法见[设计学](../design/design.md)，实现与验收分别见[工程实现](../engineering/implementation.md)和[评估说明](../eval/evaluation.md)。教学任务再按需读取[教育学](../design/pedagogy.md)。

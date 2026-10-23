@@ -85,7 +85,7 @@ python creator-skill/scripts/tools.py analyze.pages
 python creator-skill/scripts/tools.py analyze.pages --module Neuron-Guide --output work/neuron-statistics.html
 ```
 
-离线扫描当前 PPT / course 的页面入口，不启动浏览器、不训练模型。近似统计每页可见文字、按钮、超链接、输入控件、图片、视频和图形声明；读取 UUID 目录下已有缩略图，计算大津二值化的亮像素留白率、主要颜色数、边缘密度、灰度熵等。缺图与未匹配当前页面的旧图单列，不用 0 填充视觉指标。默认生成 [HTML 统计报告](page-statistics.html)、同名 CSV 和 JSON 到 `references/`；报告嵌入缩略图和二值化预览，可以离线移动和打开。
+离线扫描当前 PPT / course 的页面入口，不启动浏览器、不训练模型。近似统计每页可见文字、按钮、超链接、输入控件、图片、视频和图形声明；读取 UUID 目录下已有缩略图，计算大津二值化的亮像素留白率、主要颜色数、边缘密度、灰度熵等。缺图与未匹配当前页面的旧图单列，不用 0 填充视觉指标。默认生成 HTML 统计报告 `page-statistics.html`、同名 CSV 和 JSON 到 `references/`；报告嵌入缩略图和二值化预览，可以离线移动和打开。
 
 留白率是亮部面积代理，深色背景与照片不等同于真实空白；控件数是源码声明数，循环不展开、条件分支可能多计。字数统一采用静态近似，与浏览器当前交互状态统计会有差异。使用时看报告中的口径说明，不把这些描述性指标直接当作质量分。可选 `--text-counts` 导入前次逐页文字 CSV；`--no-previews` 生成不嵌图的轻量报告。
 

@@ -17,7 +17,7 @@ Grid/Flex 布局子项使用 `min-width: 0` 和 `max-width: 100%`；列轨道优
 
 图片、SVG、Canvas、公式、媒体和交互组件使用 `max-width: 100%`，限制在父容器内。溢出应调整布局，不依赖裁切或 `overflow-x: auto`。样式可用模块 CSS 或已有 Tailwind 配置。
 
-完成布局修改后，按实际画布容器检查所有后代元素的边界框，不得越出画布。当前 SceneDeck 容器为 `.ppt-slide-surface`；检查方法见[评估与验收](eval/evaluation.md)。
+完成布局修改后，按实际画布容器检查所有后代元素的边界框，不得越出画布。当前 SceneDeck 容器为 `.ppt-slide-surface`；检查方法见[评估与验收](../eval/evaluation.md)。
 
 ## 活跃模块与依赖边界
 
