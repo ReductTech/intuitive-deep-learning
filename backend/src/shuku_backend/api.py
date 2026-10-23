@@ -121,6 +121,18 @@ def handler_for(app):
                 user=app.store.session_user(token_hash(raw_token),app.clock())
                 if self.command=="GET" and path=="/api/shuku/auth/me":
                     return self.send_json(200,{"user":user})
+                governance=app.workflow.governance
+                if self.command=="GET" and path=="/api/shuku/removals":
+                    return self.send_json(200,{'removals':governance.listing(user['id'])})
+                removal=re.fullmatch(r"/api/shuku/removals/([^/]+)/retry",path)
+                if self.command=="POST" and removal:
+                    return self.send_json(202,governance.retry(user['id'],removal[1],self.body()))
+                management=re.fullmatch(r"/api/shuku/(courses|workspaces)/([^/]+)/(visibility|remove)",path)
+                if self.command=="POST" and management:
+                    if management[3]=='visibility':
+                        require(management[1]=='courses',404,'NOT_FOUND','接口不存在。')
+                        return self.send_json(200,{'course':governance.visibility(user['id'],management[2],self.body())})
+                    return self.send_json(202,governance.request(user['id'],'course' if management[1]=='courses' else 'workspace',management[2],self.body()))
                 collaboration=app.workflow.collaboration
                 if self.command=="GET" and path=="/api/shuku/workspaces":
                     return self.send_json(200,{'workspaces':collaboration.workspaces(user['id'])})

@@ -9,6 +9,8 @@ from psycopg.rows import dict_row
 from psycopg.types.json import Jsonb
 from .errors import BusinessError, require
 
+FILE_REFERENCE_LOCK = 791034103
+
 DEMO_USERS = (
     ("c46c13b0-4c69-5e36-aa4a-4d57ffdb0f01", "linzhi", "林知", "learner"),
     ("c46c13b0-4c69-5e36-aa4a-4d57ffdb0f02", "xiaoman", "小满", "creator"),
@@ -101,14 +103,14 @@ class Store:
     def courses(self, uid):
         with self.transaction() as db:
             user=self.user_in(db,uid)
-            return [course_view(r) for r in db.execute("SELECT c.* FROM shuku_business.courses c WHERE NOT EXISTS(SELECT 1 FROM shuku_business.workspaces w WHERE w.id=c.id) AND (c.owner_id=%s OR %s OR EXISTS(SELECT 1 FROM shuku_business.course_managers m WHERE m.course_id=c.id AND m.user_id=%s)) ORDER BY c.created_at,c.id LIMIT 100",(uid,user["role"]=="admin",uid)).fetchall()]
+            return [course_view(r) for r in db.execute("SELECT c.* FROM shuku_business.courses c WHERE NOT c.deleting AND NOT EXISTS(SELECT 1 FROM shuku_business.workspaces w WHERE w.id=c.id) AND (c.owner_id=%s OR %s OR EXISTS(SELECT 1 FROM shuku_business.course_managers m WHERE m.course_id=c.id AND m.user_id=%s)) ORDER BY c.created_at,c.id LIMIT 100",(uid,user["role"]=="admin",uid)).fetchall()]
 
     def course(self, uid, cid):
         try: cid=str(UUID(cid))
         except ValueError:raise BusinessError(404,"NOT_FOUND","课程不存在。")
         with self.transaction() as db:
             user=self.user_in(db,uid)
-            row=db.execute("SELECT c.* FROM shuku_business.courses c WHERE c.id=%s AND (c.owner_id=%s OR %s OR EXISTS(SELECT 1 FROM shuku_business.course_managers m WHERE m.course_id=c.id AND m.user_id=%s))",(cid,uid,user["role"]=="admin",uid)).fetchone()
+            row=db.execute("SELECT c.* FROM shuku_business.courses c WHERE c.id=%s AND NOT c.deleting AND NOT EXISTS(SELECT 1 FROM shuku_business.workspaces w JOIN shuku_business.courses t ON t.id=w.target_course_id WHERE w.id=c.id AND t.deleting) AND (c.owner_id=%s OR %s OR EXISTS(SELECT 1 FROM shuku_business.course_managers m WHERE m.course_id=c.id AND m.user_id=%s))",(cid,uid,user["role"]=="admin",uid)).fetchone()
             require(row,404,"NOT_FOUND","课程不存在。")
             result=course_view(row)
             workspace=db.execute('SELECT target_course_id,base_release_id FROM shuku_business.workspaces WHERE id=%s',(cid,)).fetchone()
@@ -137,14 +139,14 @@ class Store:
                 if not lease:continue
                 return db.execute("UPDATE shuku_business.tasks SET status='running',attempts=attempts+1,lease_token=%s,lease_until=%s WHERE id=%s RETURNING *",(token,now+ttl,row["id"])).fetchone()
 
-    def finish(self, tid, token, now, *, result=None, error=None):
+    def finish(self, tid, token, now, *, result=None, error=None, deferred=False):
         with self.transaction() as db:
             row=db.execute("SELECT * FROM shuku_business.tasks WHERE id=%s FOR UPDATE",(tid,)).fetchone()
             require(row and row["status"]=="running" and str(row["lease_token"])==str(token) and row["lease_until"]>now,409,"STALE_LEASE","任务已被其他执行者接管。")
             lease=db.execute("SELECT resource_key FROM shuku_business.task_leases WHERE task_id=%s AND lease_token=%s AND expires_at>%s FOR UPDATE",(tid,token,now)).fetchone()
             require(lease,409,"STALE_LEASE","任务租约已失效。")
-            status="succeeded" if error is None else ("queued" if row["attempts"]<row["max_attempts"] else "failed")
-            db.execute("UPDATE shuku_business.tasks SET status=%s,result=%s,error_code=%s,available_at=%s,lease_until=NULL,lease_token=NULL WHERE id=%s",(status,Jsonb(result),error,now+min(60,2**row["attempts"]),tid))
+            status="queued" if deferred else "succeeded" if error is None else ("queued" if row["attempts"]<row["max_attempts"] else "failed")
+            db.execute("UPDATE shuku_business.tasks SET status=%s,result=%s,error_code=%s,available_at=%s,attempts=attempts-%s,lease_until=NULL,lease_token=NULL WHERE id=%s",(status,Jsonb(result),error,now+(2 if deferred else min(60,2**row["attempts"])),1 if deferred else 0,tid))
             db.execute("DELETE FROM shuku_business.task_leases WHERE task_id=%s AND lease_token=%s",(tid,token))
             return status
 

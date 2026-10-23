@@ -47,7 +47,7 @@ console.log('PASS: Demo authentication first, replaceable identity provider and 
 
 const progress = fs.readFileSync(path.join(__dirname, '术库后端迁移进度.md'), 'utf8');
 assert.ok(task.includes('](术库后端迁移进度.md)'), 'task must link actual progress');
-assert.ok(progress.includes('T02 部分完成') && progress.includes('T05 共创本地闭环已实现') && progress.includes('T06 未完成') && progress.includes('T03 基础交接已完成'), 'distinguish completed local publication from pending collaboration and governance');
+assert.ok(progress.includes('T02 部分完成') && progress.includes('T05 共创本地闭环已实现') && progress.includes('T06 部分完成') && progress.includes('T03 基础交接已完成'), 'distinguish completed local publication from pending collaboration and governance');
 assert.ok(fs.existsSync(path.join(root, 'backend/src/shuku_backend/migrations/001_foundation.sql')), 'foundation migration resource missing');
 console.log('PASS: implementation progress distinguishes verified foundation from pending business integration.');
 
@@ -63,3 +63,5 @@ assert.ok(fs.existsSync(path.join(root, 'backend/src/shuku_backend/migrations/00
 assert.ok(fs.existsSync(path.join(root, 'scripts/check-shuku-workflow.mjs')), 'browser workflow acceptance missing');
 
 assert.ok(fs.existsSync(path.join(root, 'backend/src/shuku_backend/migrations/003_collaboration.sql')), 'collaboration migration missing');
+
+assert.ok(fs.existsSync(path.join(root, 'backend/src/shuku_backend/migrations/004_governance.sql')), 'governance migration missing');

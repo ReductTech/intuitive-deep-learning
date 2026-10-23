@@ -11,7 +11,7 @@ import time
 from uuid import UUID,uuid4
 from psycopg.types.json import Jsonb
 from .errors import BusinessError,require
-from .storage import course_view
+from .storage import course_view,FILE_REFERENCE_LOCK
 
 
 def identifier(value):
@@ -35,7 +35,7 @@ class Workflow:
     def owner(self,db,uid,cid):
         user=self.store.user_in(db,uid)
         row=db.execute('SELECT * FROM shuku_business.courses WHERE id=%s FOR UPDATE',(identifier(cid),)).fetchone()
-        require(row,404,'NOT_FOUND','课程不存在。')
+        require(row and not row['deleting'] and not db.execute('SELECT 1 FROM shuku_business.workspaces w JOIN shuku_business.courses t ON t.id=w.target_course_id WHERE w.id=%s AND t.deleting',(cid,)).fetchone(),404,'NOT_FOUND','课程不存在或正在移除。')
         require(str(row['owner_id'])==uid or user['role']=='admin' or db.execute('SELECT 1 FROM shuku_business.course_managers WHERE course_id=%s AND user_id=%s',(cid,uid)).fetchone(),403,'FORBIDDEN','没有课程管理权限。')
         return row,user
 
@@ -90,6 +90,7 @@ class Workflow:
             return self.save_in(db,uid,cid,data)
 
     def save_in(self,db,uid,cid,data):
+        db.execute('SELECT pg_advisory_xact_lock_shared(%s)',(FILE_REFERENCE_LOCK,))
         course,_=self.owner(db,uid,cid)
         require(not db.execute("SELECT 1 FROM shuku_business.contributions WHERE (workspace_id=%s OR target_course_id=%s) AND status='merging'",(cid,cid)).fetchone(),409,'MERGE_BUSY','共创正在合并，请稍后再保存。')
         module=next((m for m in self.modules() if m['id']==str(course['module_id'])),None)
@@ -107,7 +108,7 @@ class Workflow:
 
 
     def allowed(self,db,rid,uid,public=True):
-        row=db.execute("SELECT r.*,c.owner_id,c.status AS course_status,c.module_id,c.head_revision FROM shuku_business.revisions r JOIN shuku_business.courses c ON c.id=r.course_id WHERE r.id=%s",(identifier(rid),)).fetchone()
+        row=db.execute("SELECT r.*,c.owner_id,c.status AS course_status,c.module_id,c.head_revision FROM shuku_business.revisions r JOIN shuku_business.courses c ON c.id=r.course_id WHERE r.id=%s AND NOT c.deleting AND NOT EXISTS(SELECT 1 FROM shuku_business.workspaces w JOIN shuku_business.courses t ON t.id=w.target_course_id WHERE w.id=c.id AND t.deleting)",(identifier(rid),)).fetchone()
         require(row,404,'NOT_FOUND','修订不存在。')
         user=self.store.user_in(db,uid) if uid else None
         private=bool(user and (str(row['owner_id'])==uid or user['role']=='admin'))
@@ -144,9 +145,15 @@ class Workflow:
         return content,obj['mime']
 
     def build(self,task,checkpoint):
+        with self.store.transaction() as guard:
+            guard.execute('SELECT pg_advisory_xact_lock_shared(%s)',(FILE_REFERENCE_LOCK,))
+            return self.build_guarded(task,checkpoint)
+
+    def build_guarded(self,task,checkpoint):
         rid=str(task['payload']['revision_id'])
         with self.store.transaction() as db:
             row=db.execute('SELECT * FROM shuku_business.revisions WHERE id=%s',(rid,)).fetchone()
+            require(row,404,'NOT_FOUND','课程修订已移除。')
             if row['state']=='ready':return {'revision_id':rid}
             course=db.execute('SELECT module_id FROM shuku_business.courses WHERE id=%s',(row['course_id'],)).fetchone()
         module=next(m for m in self.modules() if m['id']==str(course['module_id']))
@@ -177,6 +184,8 @@ class Workflow:
             artifact_hash=hashlib.sha256(json.dumps(objects,sort_keys=True).encode()).hexdigest()
             checkpoint({'stage':'verified','revision_id':rid})
             with self.store.transaction() as db:
+                current=db.execute('SELECT * FROM shuku_business.courses WHERE id=%s FOR UPDATE',(row['course_id'],)).fetchone()
+                require(current and not current['deleting'] and not db.execute('SELECT 1 FROM shuku_business.workspaces w JOIN shuku_business.courses t ON t.id=w.target_course_id WHERE w.id=%s AND t.deleting',(row['course_id'],)).fetchone(),409,'RESOURCE_REMOVED','课程正在移除。')
                 # Fence artifact writes with the same active task lease as completion.
                 lease=db.execute("SELECT id FROM shuku_business.tasks WHERE id=%s AND lease_token=%s AND lease_until>%s FOR UPDATE",(task['id'],task['lease_token'],self.clock())).fetchone()
                 require(lease,409,'STALE_LEASE','任务已被接管。')
@@ -205,7 +214,7 @@ class Workflow:
     def reviews(self,uid):
         with self.store.transaction() as db:
             user=self.store.user_in(db,uid);require(user['role']=='admin',403,'FORBIDDEN','需要管理员权限。')
-            return [course_view(r) for r in db.execute("SELECT r.*,c.title,c.owner_id FROM shuku_business.reviews r JOIN shuku_business.courses c ON c.id=r.course_id WHERE r.status='pending' ORDER BY r.created_at LIMIT 100").fetchall()]
+            return [course_view(r) for r in db.execute("SELECT r.*,c.title,c.owner_id FROM shuku_business.reviews r JOIN shuku_business.courses c ON c.id=r.course_id WHERE r.status='pending' AND NOT c.deleting ORDER BY r.created_at LIMIT 100").fetchall()]
 
     def decide(self,uid,review_id,data):
         require(data.get('decision') in ('approved','rejected') and isinstance(data.get('note',''),str) and len(data.get('note',''))<=2000,400,'INVALID_REVIEW','审核意见格式不正确。')
@@ -215,6 +224,7 @@ class Workflow:
             row=db.execute('SELECT * FROM shuku_business.reviews WHERE id=%s',(identifier(review_id),)).fetchone();require(row,404,'NOT_FOUND','审核记录不存在。')
             course=db.execute('SELECT * FROM shuku_business.courses WHERE id=%s FOR UPDATE',(row['course_id'],)).fetchone()
             row=db.execute('SELECT * FROM shuku_business.reviews WHERE id=%s FOR UPDATE',(review_id,)).fetchone()
+            require(not course['deleting'],409,'RESOURCE_REMOVED','课程正在移除。')
             require(str(course['owner_id'])!=uid,403,'SELF_REVIEW','不能审核自己的课程。')
             require(row['status']=='pending' and row['revision_id']==course['head_revision'] and str(row['revision_id'])==data.get('revision_id'),409,'REVIEW_CHANGED','审核内容已变化，请重新查看。')
             db.execute('UPDATE shuku_business.reviews SET status=%s,note=%s,reviewer_id=%s,decided_at=%s WHERE id=%s',(data['decision'],data.get('note',''),uid,self.clock(),review_id))
@@ -229,6 +239,7 @@ class Workflow:
         with self.store.transaction() as db:
             course,_=self.owner(db,uid,cid)
             require(not db.execute('SELECT 1 FROM shuku_business.workspaces WHERE id=%s',(cid,)).fetchone(),409,'WORKSPACE_PRIVATE','共创工作区不能直接发布。')
+            require(course['status']!='hidden',409,'COURSE_HIDDEN','课程已下架，请管理员恢复后再发布。')
             previous=db.execute('SELECT * FROM shuku_business.releases WHERE course_id=%s AND version=%s',(cid,version)).fetchone()
             if previous:
                 require(str(previous['revision_id'])==rid and previous['note']==note,409,'VERSION_EXISTS','该版本号已被使用。')
@@ -251,4 +262,4 @@ class Workflow:
 
     def public_courses(self):
         with self.store.transaction() as db:
-            return [course_view(row) for row in db.execute("SELECT c.id,c.title,c.description,c.category,c.module_id,r.version,r.revision_id FROM shuku_business.courses c JOIN shuku_business.releases r ON r.id=c.current_release WHERE c.status='published' ORDER BY r.created_at DESC LIMIT 100").fetchall()]
+            return [course_view(row) for row in db.execute("SELECT c.id,c.title,c.description,c.category,c.module_id,r.version,r.revision_id FROM shuku_business.courses c JOIN shuku_business.releases r ON r.id=c.current_release WHERE c.status='published' AND NOT c.deleting ORDER BY r.created_at DESC LIMIT 100").fetchall()]
