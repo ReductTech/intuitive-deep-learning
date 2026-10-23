@@ -1,3 +1,7 @@
+import {CoCreateButton} from '../shuku/Collaboration';
+import { SiteHeader } from '../shuku/SiteHeader';
+import { api } from '../shuku/client';
+import '../shuku/shuku.css';
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { moduleAssetUrl } from '../../modules/shared/react/assets';
 import { activeModules, type ActiveModule } from './modules';
@@ -62,10 +66,12 @@ function Cover({ module }: { module: ActiveModule }) {
 }
 
 export function HomePage() {
+  const [published,setPublished]=useState<{id:string;title:string;description:string;category:string;version:string;revision_id:string}[]>([]);
+  useEffect(()=>{api<{courses:typeof published}>('/public/courses').then(r=>setPublished(r.courses)).catch(()=>{});},[]);
   const [topic, setTopic] = useState('全部课程');
   const [query, setQuery] = useState('');
   const [level, setLevel] = useState('全部');
-  const [tab, setTab] = useState('courses');
+  const [tab, setTab] = useState(new URLSearchParams(location.search).get('view')==='saved'?'saved':'courses');
   const [sort, setSort] = useState('default');
   const [saved, setSaved] = useState<string[]>(() => readSaved<unknown[]>('scenedeck:saved-courses', []).filter((id): id is string => typeof id === 'string'));
   const [recent] = useState(() => readSaved<string>('scenedeck:recent-course', ''));
@@ -92,12 +98,7 @@ export function HomePage() {
   function reset() { setQuery(''); setTopic('全部课程'); setLevel('全部'); setTab('courses'); }
   return <div className="sd-library">
     <a className="sd-library-skip" href="#sd-library-main">跳到课程</a>
-    <header className="sd-library-topbar">
-      <a href="/" className="sd-library-brand" aria-label="SceneDeck 首页"><span className="sd-library-logo"><Icon name="book" /></span><span>SceneDeck<span className="sd-library-brand-dot">.</span></span></a>
-      <nav aria-label="主导航"><button className={tab === 'courses' ? 'is-active' : ''} onClick={() => setTab('courses')}>探索课程</button><button className={tab === 'saved' ? 'is-active' : ''} onClick={() => setTab('saved')}>我的收藏<span>{saved.length || ''}</span></button></nav>
-      <span className="sd-library-topnote"><span />让知识可以被探索</span>
-      <a className="sd-library-create" href="/edit-deck">✧ 创作课件</a>
-    </header>
+    <SiteHeader section={tab==='saved'?'saved':'courses'} savedCount={saved.length} onBrowse={value=>{setTab(value);const url=new URL(location.href);if(value==='saved')url.searchParams.set('view','saved');else url.searchParams.delete('view');history.replaceState(null,'',url);}}/>
     <aside className="sd-library-sidebar" aria-label="课程分类">
       <p className="sd-library-nav-label">课程图书馆</p>
       <div className="sd-library-topics">{topics.map(item => <button key={item.name} aria-pressed={topic === item.name} className={topic === item.name ? 'is-active' : ''} onClick={() => setTopic(item.name)}><Icon name={item.icon} /><span>{item.name}</span><small>{item.name === '全部课程' ? courses.length : courses.filter(module => info(module).topic === item.name).length}</small></button>)}</div>
@@ -108,7 +109,7 @@ export function HomePage() {
       {recentCourse && <button className="sd-library-recent" onClick={() => setPreview(recentCourse)}><Icon name="clock" /><span>最近浏览<strong>{info(recentCourse).title}</strong></span><span>继续浏览 <Icon name="arrow" /></span></button>}
       <div className="sd-library-search"><Icon name="search" /><input ref={searchRef} type="search" value={query} onChange={event => setQuery(event.target.value)} aria-label="搜索课程、知识点或页面" placeholder="想了解什么？搜索课程、知识点或页面…" />{query && <button aria-label="清空搜索" onClick={() => {setQuery(''); searchRef.current?.focus();}}><Icon name="close" /></button>}</div>
       <div className="sd-library-filterbar"><div className="sd-library-levels" aria-label="课程难度">{['全部', '入门', '进阶'].map(item => <button key={item} aria-pressed={level === item} className={level === item ? 'is-active' : ''} onClick={() => setLevel(item)}>{item}</button>)}</div><div className="sd-library-results"><span aria-live="polite">{filtered.length} 门课程</span><select aria-label="课程排序" value={sort} onChange={event => setSort(event.target.value)}><option value="default">推荐顺序</option><option value="pages">页数从少到多</option><option value="name">课程名称</option></select></div></div>
-      <div className="sd-library-grid">{filtered.map(module => {
+      <div className="sd-library-grid">{tab==='courses'&&published.filter(c=>(!query||[c.title,c.description].join(' ').includes(query))&&(topic==='全部课程'||c.category===topic)).map(c=><article className="sd-library-card" key={c.id}><div className="sd-library-cover" style={{background:'var(--ui-accent-soft)'}}><div className="sd-library-cover-fallback"><Icon name="book"/><span>{c.category||'课程'}</span></div></div><div className="sd-library-card-copy"><div className="sd-library-card-meta"><span>{c.category}</span><span>v{c.version}</span></div><h2>{c.title}</h2><p>{c.description}</p><div className="sd-library-card-actions"><a href={'/api/shuku/revisions/'+c.revision_id+'/files/index.html'}>开始学习 <Icon name="arrow"/></a><CoCreateButton courseId={c.id}/></div></div></article>)}{filtered.map(module => {
         const meta = info(module);
         return <article className="sd-library-card" key={module.id} aria-label={meta.title}>
           <button className="sd-library-cover-button" onClick={() => {remember(module); setPreview(module);}} aria-label={`浏览${meta.title}目录`}><Cover module={module} /><span className="sd-library-cover-overlay">浏览课程目录 <Icon name="arrow" /></span></button>

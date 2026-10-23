@@ -101,16 +101,19 @@ class Store:
     def courses(self, uid):
         with self.transaction() as db:
             user=self.user_in(db,uid)
-            return [course_view(r) for r in db.execute("SELECT c.* FROM shuku_business.courses c WHERE c.status='published' OR c.owner_id=%s OR %s OR EXISTS(SELECT 1 FROM shuku_business.course_managers m WHERE m.course_id=c.id AND m.user_id=%s) ORDER BY c.created_at,c.id LIMIT 100",(uid,user["role"]=="admin",uid)).fetchall()]
+            return [course_view(r) for r in db.execute("SELECT c.* FROM shuku_business.courses c WHERE NOT EXISTS(SELECT 1 FROM shuku_business.workspaces w WHERE w.id=c.id) AND (c.owner_id=%s OR %s OR EXISTS(SELECT 1 FROM shuku_business.course_managers m WHERE m.course_id=c.id AND m.user_id=%s)) ORDER BY c.created_at,c.id LIMIT 100",(uid,user["role"]=="admin",uid)).fetchall()]
 
     def course(self, uid, cid):
         try: cid=str(UUID(cid))
         except ValueError:raise BusinessError(404,"NOT_FOUND","课程不存在。")
         with self.transaction() as db:
             user=self.user_in(db,uid)
-            row=db.execute("SELECT c.* FROM shuku_business.courses c WHERE c.id=%s AND (c.status='published' OR c.owner_id=%s OR %s OR EXISTS(SELECT 1 FROM shuku_business.course_managers m WHERE m.course_id=c.id AND m.user_id=%s))",(cid,uid,user["role"]=="admin",uid)).fetchone()
+            row=db.execute("SELECT c.* FROM shuku_business.courses c WHERE c.id=%s AND (c.owner_id=%s OR %s OR EXISTS(SELECT 1 FROM shuku_business.course_managers m WHERE m.course_id=c.id AND m.user_id=%s))",(cid,uid,user["role"]=="admin",uid)).fetchone()
             require(row,404,"NOT_FOUND","课程不存在。")
-            return course_view(row)
+            result=course_view(row)
+            workspace=db.execute('SELECT target_course_id,base_release_id FROM shuku_business.workspaces WHERE id=%s',(cid,)).fetchone()
+            if workspace:result['workspace']=course_view(workspace)
+            return result
 
     def enqueue(self, kind, resource, key, payload, now):
         digest=sha256(json.dumps([kind,resource,payload],sort_keys=True,separators=(",",":")).encode()).hexdigest()

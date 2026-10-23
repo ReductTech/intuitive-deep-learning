@@ -1,68 +1,98 @@
 # 术库独立业务后端
 
-第一批实现：独立启动、显式建表及测试账号初始化、Demo 登录／退出、持久会话、私有课程草稿、文件桶和持久任务基础。原 `idl_backend` 保持不变。
+当前已打通：Demo 登录 → 创建私有课程 → 编辑器保存不可变修订 → 本人预览 → 退回／重提／通过 → 本地课程正式发布。原 `idl_backend` 保持不变。
 
-尚未接入前端页面、编辑器修订／产物交付、审核发布、GitHub、反馈及学习记录等完整链路。不能据此宣称整套迁移完成。
+支持现有模块的 React 页面和可编辑文字教学页。托管编辑不会改写共享 TSX；原编辑器的 AI 模拟生成不作为可发布产物。GitHub PR、共创评分、消息和减论 API 等仍待后续迁移。
 
-## 安装与启动
+## 安装与运行
 
 ```sh
+npm ci
 python -m pip install -e './backend[shuku,test]'
-```
-
-通过进程环境配置以下变量；不要把凭据写入版本库：
-
-| 配置 | 说明 |
-| --- | --- |
-| `SHUKU_DATABASE_URL` | 独立 PostgreSQL 数据库连接，使用 `shuku_business` schema；不要指向原 Demo 业务库 |
-| `SHUKU_BUCKET_DIR` | 新业务的文件桶绝对路径 |
-| `SHUKU_PUBLIC_ORIGIN` | 浏览器访问来源，含协议和端口、不带末尾斜杠；写请求必须携带匹配的 Origin |
-| `SHUKU_DEMO_PASSWORD` | 服务端配置的 Demo 共用密码，无内置默认值 |
-| `SHUKU_AUTH_PROVIDER` | 当前仅支持 `demo`；选择尚未实现的 `jianlun` 会拒绝启动 |
-| `SHUKU_HOST` / `SHUKU_PORT` | 默认 `127.0.0.1:8010`，不接管原计算服务 |
-
-依次显式执行：
-
-```sh
 python -m shuku_backend migrate
 python -m shuku_backend seed-demo
 python -m shuku_backend serve
 ```
 
-`migrate` 需要建表权限；`seed-demo` 准备固定 UUID 的测试账号：`linzhi`（学习者）、`xiaoman`（课程作者）、`admin`（平台管理员）。角色为新模块测试配置；不读取旧 Demo 数据。重复初始化不会重置已有角色，遇到冲突会失败。
+先配置进程环境，不将凭据写入版本库：
 
-正常服务启动只检查结构和文件桶，不自动建表、播种账号或回退 JSON。正式部署的迁移／运行账号分权及网关接入仍待交付；运行账号需只获所需业务表读写权限。HTTPS 来源会启用 Secure Cookie。
-
-## 已有接口
-
-| 方法与路径 | 行为 |
+| 配置 | 说明 |
 | --- | --- |
-| `GET /api/shuku/health` | 数据库结构就绪检查 |
-| `POST /api/shuku/auth/login` | JSON `{username,password}`，返回用户和 HttpOnly 会话 Cookie |
-| `GET /api/shuku/auth/me` | 当前账号、UUID 和角色 |
-| `POST /api/shuku/auth/logout` | JSON `{}`，撤销当前会话并清 Cookie |
-| `POST /api/shuku/courses` | 作者／管理员创建私有草稿；字段 `title`、`module_id`，可选 `description`、`category` |
-| `GET /api/shuku/courses` | 返回本人及获授权课程，首批最多 100 条，分页待补 |
-| `GET /api/shuku/courses/{id}` | 读取有权限的课程；他人私有课程返回 404 |
+| `SHUKU_DATABASE_URL` | 独立 PostgreSQL 连接；使用 `shuku_business` schema，不指向原 Demo 业务库 |
+| `SHUKU_BUCKET_DIR` | 文件桶绝对路径 |
+| `SHUKU_SOURCE_ROOT` | intuitive-deep-learning 仓库绝对路径，需包含模块、素材和已安装的 Node 依赖；修订构建需要此配置 |
+| `SHUKU_PUBLIC_ORIGIN` | 浏览器来源，如 `http://localhost:5173`，不带末尾斜杠；写请求必须匹配 Origin |
+| `SHUKU_DEMO_PASSWORD` | 测试账号共用密码，无内置默认值 |
+| `SHUKU_AUTH_PROVIDER` | 当前仅支持 `demo`，不自动降级身份验证 |
+| `SHUKU_HOST` / `SHUKU_PORT` | 默认 `127.0.0.1:8010` |
 
-会话有效期 12 小时，仅保存令牌哈希，重启后仍可使用；账号停用会拒绝后续访问。登录按连接对端地址限制失败次数；前置代理下真实客户端地址处理尚待部署适配，不能直接信任任意转发头。
+`migrate` 和 `seed-demo` 显式执行；正常启动只检查，不自动建表或初始化用户。测试账号为 `linzhi`（学习者）、`xiaoman`（作者）、`admin`（平台管理员），角色冲突会拒绝重置。正式部署账号分权和网关配置仍需上线验收。
 
-课程作者由服务端会话确定，不接受客户端传作者或角色。当前 API 只保存课程元数据，尚不能保存或发布可播放课程修订。
+前端现有 Vite 配置新增 `/api/shuku` 代理，目标可由 `SHUKU_API_URL` 覆盖，其他 Cloud／计算接口保持原配置。入口是首页“课程创作”或 `/my-courses`；开发启动仍遵循原项目的 Cloud 服务准备要求。
 
-## 任务与复用
+课程创作使用 SceneDeck 主站的共用顶栏；下拉菜单进入“我要创建课程”“我的课程”“共创待审核”“我参与的共创”子页面。子页面通过 URL 保留选择，创建表单直接显示在页面内；编辑器保留专注布局。
 
-`storage.Store` 提供幂等入队、资源租约、领取、检查点、续租和带令牌的完成提交；外部操作在事务之外执行。最多重试 3 次，过期执行者不能提交；最后一次执行中崩溃会进入明确失败状态。当前 Worker 只注册 `file.verify` 文件校验，尚无 PR／发布／删除任务处理器。
+## 操作流程
 
-`adapters.idl.IdlClient` 单向复用 `idl_backend.contracts.client.request_json` 和 `/v1/jobs` 契约；尚未暴露为面向用户的计算路由，也未与真实 Cloud 环境联调。
+1. 作者登录，填写名称、简介、类别，选择空白课件或现有模块作为起始内容。
+2. 在原编辑器中调整文字页、原页面属性、顺序和内容，点击“保存修订”。未保存的修改不会混入已保存预览。
+3. Worker 固定项目内容，构建独立 JS／CSS 和素材引用；成功后才开放受控预览。
+4. 作者提交审核；管理员通过“待审核”查看同一修订的真实预览，退回需填写意见。不能审核自己的课程。
+5. 作者修改并保存后重新提交；新修订使旧的待审核／批准失效。
+6. 当前修订审核通过后，填写递增版本号并发布。文件校验失败不改变正式版本；发布后进入首页目录，旧正式版本仍可通过固定地址访问。
+
+这是本地课程发布链路，不代表已创建 GitHub PR、Tag 或 Release。
+
+## 共创流程
+
+首页的后端已发布课程提供“我想共创”；默认使用最新正式版本，也可选择历史版本。本人工作区在“课程创作 → 我参与的共创”，编辑后保存、预览并提交说明。课程管理者在“待审核”查看教学内容差异、填写 0～10 整数质量分并通过或退回；通过后单独合并，再从“查看待发布课程”确认版本号发布。
+
+工作区固定基础版本，复制教学内容时排除原作者对话、设计参考图和撤销历史。修改使旧批准失效。合并复制已审核冻结产物，仅替换修订资源地址，不重新生成教学代码。官方基础或草稿有变化时返回 `BASE_CHANGED`，保留工作区并要求基于最新正式版重新共创，不覆盖已有修改。
+
+合并构建失败时旧正式版可用；详情显示失败后课程管理者可点击“重试合并”，复用同一任务及目标修订。贡献历史关联原作者、审核者、合并者、质量分和最终正式版本，成功合并才计入排名。静态内置模块尚未自动登记成后端课程；真实 GitHub 操作属于 T07。
+
+## 接口
+
+统一前缀 `/api/shuku`；私有操作使用 HttpOnly Cookie 会话。
+
+| 方法与相对路径 | 用途 |
+| --- | --- |
+| `GET /health` | 检查就绪状态 |
+| `POST /auth/login`、`GET /auth/me`、`POST /auth/logout` | 登录、当前身份、退出 |
+| `GET /modules` | 查询可用课程模块 |
+| `POST /courses`、`GET /courses`、`GET /courses/{id}` | 创建及管理本人／获授权课程 |
+| `POST /courses/{id}/revisions` | 提交 `{project, expected_revision}`，返回 202 和新修订 ID；并发修改返回 409 |
+| `GET /revisions/{id}` | 获取有权限的编辑内容、构建和审核状态 |
+| `GET /revisions/{id}/files/{path}` | 按权限读取固定产物；发布前仅作者／管理员可读，发布后才公开 |
+| `POST /courses/{id}/submit` | 提交 `{revision_id}` 审核 |
+| `GET /reviews` | 管理员读取待审核列表 |
+| `POST /reviews/{id}/decision` | `{revision_id, decision: approved或rejected, note}` |
+| `POST /courses/{id}/publish` | 发布 `{revision_id, version, note}`；相同内容重试返回已有版本 |
+| `GET /public/courses/{id}/releases` | 查询可选正式版本及当前版本标志 |
+| `POST /courses/{id}/workspaces` | `{base_release_id?}`，不传时用当前正式版；同人同基础重复请求沿用工作区 |
+| `GET /workspaces` | 本人的私有共创工作区 |
+| `POST /workspaces/{id}/submit` | `{revision_id, summary}`，提交最新就绪修订 |
+| `GET /contributions`、`GET /contributions/{id}` | 有管理权限的待处理建议；本人或管理者读取差异与状态 |
+| `POST /contributions/{id}/decision` | `{revision_id, decision, score?, note?}`，通过必须提供 0～10 整数分；退回必须提供原因 |
+| `POST /contributions/{id}/merge` | `{revision_id}`，返回持久处理状态；重复调用不会新增官方修订 |
+| `GET /courses/{id}/contributions` | 成功合并的贡献记录、正式版本归属及质量分排名 |
+| `GET /public/courses` | 匿名读取正式目录，仅返回当前已发布版本 |
+
+会话保存令牌哈希，12 小时过期，退出、停用及切换账号会影响后续访问。创建、审核和发布均以服务端身份和修订状态为准。
+
+正式产物只包含学习内容，创作对话、撤销历史和设计参考图保留在私有修订中，不随课程公开。
+
+数据库只保存关系、状态和对象清单；项目、图片及产物字节放在哈希文件桶。修订构建与文件校验走持久 Worker；GitHub 等任务处理器尚未接入。
 
 ## 验证
 
-只对单独准备的、名称以 `idl_shuku_test_` 开头的可丢弃数据库运行：
+数据库测试只使用可丢弃的 `idl_shuku_test_*` 数据库，并配置 `SHUKU_TEST_DATABASE_URL`；测试会清空其中本模块的业务表。
 
 ```sh
 PYTHONPATH=backend/src python -m pytest backend/tests/shuku_backend -q
+node scripts/check-shuku-workflow.mjs <Playwright模块路径>
 ```
 
-测试需先通过 `SHUKU_TEST_DATABASE_URL` 提供隔离库连接；会清空该测试库中本模块的业务表，绝不能用于真实业务库。未配置时数据库测试跳过，不能将跳过计为数据库验收通过。
+浏览器验收需独立本地环境，设置 `SHUKU_E2E_URL`、`SHUKU_E2E_PASSWORD`；可设置 `SHUKU_E2E_BROWSER_CHANNEL` 和截图目录 `SHUKU_E2E_ARTIFACT_DIR`。只接受本机地址，不对正式站点运行创建／发布测试。
 
-任务及证据见 [迁移进度](../../../docs/术库后端迁移进度.md)。
+当前范围和证据见 [迁移进度](../../../docs/术库后端迁移进度.md)。

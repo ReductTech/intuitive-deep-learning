@@ -93,6 +93,7 @@ export default defineConfig(({ mode, command }) => {
       port: 5173,
       strictPort: true,
       proxy: {
+        '/api/shuku': { target: process.env.SHUKU_API_URL || 'http://127.0.0.1:8010', changeOrigin: true },
         '/api': {
           target: process.env.IDL_LOCAL_API_URL || 'http://127.0.0.1:8000',
           changeOrigin: true,

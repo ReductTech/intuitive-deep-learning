@@ -4,6 +4,9 @@ import { UiKitPage } from '../../modules/shared/react/routing/UiKitPage';
 import { activeModules } from './modules';
 import { type AppRoute } from './Router';
 import { HomePage } from './HomePage';
+import { CourseHub } from '../shuku/CourseHub';
+import { ManagedEditor } from '../shuku/ManagedEditor';
+import { PreviewPage, ReviewPage } from '../shuku/PreviewPage';
 import { CreatorWorkspace } from '../creator/CreatorWorkspace';
 
 const EditDeck = lazy(() => import('../../Edit-Deck/EditDeck').then(module => ({ default: module.EditDeck })));
@@ -29,6 +32,11 @@ function SceneDeckPage() {
 
 export const appRoutes: AppRoute[] = [
   { path: '/', element: <HomePage /> },
+  { path: '/my-courses', element: <CourseHub /> },
+  { path: '/course-creation', element: <CourseHub /> },
+  { path: '/my-courses/editor', element: <ManagedEditor /> },
+  { path: '/my-courses/preview', element: <PreviewPage /> },
+  { path: '/my-courses/review', element: <ReviewPage /> },
   { path: '/edit-deck/legacy', element: <Suspense fallback={<p>正在打开 Edit Deck…</p>}><EditDeck /></Suspense> },
   { path: '/edit-deck', element: <CreatorWorkspace /> },
   { path: '/shared/ui-kit', element: <UiKitPage /> },

@@ -17,7 +17,11 @@
     "esbuild-wasm": "^0.28.2",
     "react": "19.2.7",
     "react-dom": "19.2.7",
-    "three": "^0.186.1"
+    "three": "^0.186.1",
+    "esbuild": "^0.28.2",
+    "tailwindcss": "^4.3.3",
+    "@tailwindcss/node": "^4.3.3",
+    "@tailwindcss/oxide": "^4.3.3"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.3",
@@ -26,9 +30,7 @@
     "@types/react-dom": "^19.1.6",
     "@types/three": "^0.186.0",
     "@vitejs/plugin-react": "^4.4.1",
-    "esbuild": "^0.28.2",
     "postcss": "^8.5.8",
-    "tailwindcss": "^4.3.3",
     "typescript": "^5.8.3",
     "vite": "^6.3.5"
   }

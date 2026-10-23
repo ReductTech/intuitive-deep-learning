@@ -47,6 +47,8 @@ def test_migrations_and_explicit_demo_seeding(store,tmp_path):
     with store.transaction() as db:
         assert db.execute("SELECT count(*) AS n FROM shuku_business.users").fetchone()["n"]==0
     app.close()
+    with pytest.raises(RuntimeError,match="runtime dependencies"):
+        create_application(replace(settings(tmp_path,store.database_url),source_root=tmp_path/"missing"))
     store.seed_demo();store.seed_demo()
     with store.transaction() as db:
         assert db.execute("SELECT count(*) AS n FROM shuku_business.users").fetchone()["n"]==3
@@ -61,5 +63,8 @@ def test_ready_does_not_migrate_or_ignore_checksum(store,tmp_path):
         with pytest.raises(RuntimeError):store.migrate()
     finally:
         from importlib.resources import files
-        digest=sha256(files('shuku_backend').joinpath('migrations/001_foundation.sql').read_bytes()).hexdigest()
-        with store.transaction() as db:db.execute("UPDATE shuku_business.schema_migrations SET checksum=%s",(digest,))
+        with store.transaction() as db:
+            for migration in files('shuku_backend').joinpath('migrations').iterdir():
+                if migration.name.endswith('.sql'):
+                    digest=sha256(migration.read_bytes()).hexdigest()
+                    db.execute("UPDATE shuku_business.schema_migrations SET checksum=%s WHERE version=%s",(digest,migration.name))
