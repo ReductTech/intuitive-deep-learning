@@ -1,0 +1,12 @@
+from pathlib import Path
+p=Path('modules/Creator-Guide/components/assembly/assemblyTimeline.ts');s=p.read_text(encoding='utf-8')
+s=s.replace('], 350, 700);', '], 500, 750);')
+s=s.replace('], 200, 1900);', '], 200, 1450);').replace('], 3350, 1300);', '], 2500, 1100);')
+s=s.replace("650, 1400, -15", "600, 1050, -15").replace("850, 1700, 0", "750, 1350, 0").replace("1500, 1550, 10", "1250, 1250, 10")
+s=s.replace("2300, 650", "1800, 550").replace("], 3350, 1450);", "], 2500, 1200);")
+s=s.replace('], 2550, 700);', '], 2050, 650);').replace('], 2050, 750);', '], 1600, 650);')
+s=s.replace("2800, 550", "2250, 450").replace("3200, 450", "2600, 400").replace("3450, 550", "2770, 450").replace("3930, 200", "3160, 200").replace('2780 + index * 23','2100 + index * 19').replace("], 3930, 230);", "], 3160, 230);")
+s=s.replace("const board = find('.cg-built-gomoku__board');", "animate(find('.cg-built-gomoku__actions'), [{ borderColor: 'transparent' }, { borderColor: 'rgba(64,112,177,.18)' }], 2600, 400);\n    const board = find('.cg-built-gomoku__board');")
+s=s.replace('reduced ? 500 : 5100', 'reduced ? 500 : 4100').replace('time < 1600 ? 0 : time < 2900', 'time < 1250 ? 0 : time < 2200')
+p.write_text(s,encoding='utf-8')
+p=Path('modules/Creator-Guide/components/assembly/AssemblyShowcase.css');s=p.read_text(encoding='utf-8');start=s.index('.cg-assembly-progress{');s=s[:start]+'.cg-assembly-progress{position:absolute;left:0;top:0;width:1px;height:1px;clip-path:inset(50%);overflow:hidden;white-space:nowrap;}\n';p.write_text(s,encoding='utf-8')

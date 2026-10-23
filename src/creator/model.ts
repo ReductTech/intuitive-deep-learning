@@ -3,12 +3,16 @@ import type { ActiveModule } from '../app/modules';
 export interface Revision { title: string; goal: string; summary: string; designed: boolean; ready: boolean; note: string; designImageId?: string; outline?: Record<string, unknown> }
 export interface CreatorPage extends Revision { id: string; nativeId?: string; revisions: Revision[]; messages: { role: 'user' | 'assistant'; text: string }[] }
 export interface CreatorProject { version: 1; id: string; courseId: string; title: string; duration: number; style: string; outlineConfirmed: boolean; pages: CreatorPage[] }
-// A design draft never invalidates a shipped React page. Also repair drafts saved by the old UI.
+// Reconcile saved native pages with the live deck; removed pages must not become mock slides.
 export function preserveExistingWebPages(project: CreatorProject, module?: ActiveModule): CreatorProject {
-  return { ...project, pages: project.pages.map(page => {
+  const sceneIds = module?.pptDeck && project.courseId === module.id
+    ? new Set(module.pptDeck.scenes.map(scene => scene.id)) : undefined;
+  const retained = project.pages.filter(page => !sceneIds || !page.nativeId || sceneIds.has(page.nativeId));
+  const pages = retained.map(page => {
     const outline = page.outline ?? module?.pages.find(item => item.id === (page.nativeId ?? page.id));
     return { ...page, ready: page.nativeId ? true : page.ready, outline: outline ? { ...outline, id: page.id } : undefined };
-  }) };
+  });
+  return { ...project, pages: pages.length || !module?.pptDeck ? pages : createProject(module).pages };
 }
 export function applyPageOutline(page: CreatorPage, outline: Record<string, unknown>): CreatorPage {
   return { ...page, title: String(outline.title ?? page.title), goal: String(outline.goal ?? ''), summary: String(outline.summary ?? ''), outline: { ...outline, id: page.id }, revisions: [...page.revisions, snapshot(page)] };

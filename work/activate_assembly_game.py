@@ -1,0 +1,2 @@
+from pathlib import Path
+p=Path('modules/Creator-Guide/components/assembly/AssemblyGomoku.tsx');s=p.read_text(encoding='utf-8');s=s.replace('  onComplete: () => void;','  onComplete: () => void;\n  active?: boolean;').replace('export function AssemblyGomoku({ onComplete }: AssemblyGomokuProps)', 'export function AssemblyGomoku({ onComplete, active = true }: AssemblyGomokuProps)').replace('    if (!advice) return undefined;', '    if (!active || !advice) return undefined;').replace('  }, [advice]);','  }, [active, advice]);');p.write_text(s,encoding='utf-8')

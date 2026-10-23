@@ -1,0 +1,5 @@
+const { chromium } = require('C:/Users/Ocean/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+(async()=>{
+const browser=await chromium.launch({channel:'msedge',headless:true});const context=await browser.newContext({viewport:{width:1600,height:900},deviceScaleFactor:1,recordVideo:{dir:'work/comparison-video',size:{width:1600,height:900}}});
+const page=await context.newPage();await page.goto('http://localhost:5173/scenedeck/?scenedeckCapture=1&deck=creator-guide&slide=presentation-comparison');await page.locator('.cg-case-page').waitFor();await page.waitForFunction(()=>document.querySelector('.cg-case-page').dataset.demoPhase==='done',{},{timeout:40000});await page.waitForTimeout(3000);const video=page.video();await context.close();await video.saveAs('C:/Users/Ocean/Documents/Codex/2026-10-23/c-users-ocean-documents-github-intuitive-3/outputs/comparison-animation.webm');await browser.close();console.log('Animation saved');
+})().catch(e=>{console.error(e);process.exit(1)});

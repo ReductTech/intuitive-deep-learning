@@ -90,3 +90,26 @@ test('outline properties hydrate old drafts and persist independently of the ori
   assert.equal(isProject({ ...hydrated, pages: [{ ...changed, outline: [] }] }, course.id), false);
 });
 
+
+test('deleted source slides disappear from saved projects without removing custom pages', () => {
+  const project = createProject(course);
+  const removed = { ...project.pages[0], id: 'removed', nativeId: 'removed', title: 'Deleted page' };
+  const custom = { ...project.pages[0], id: 'custom', nativeId: undefined, title: 'My new page', note: 'Keep my edits' };
+  const saved = { ...project, pages: [removed, project.pages[0], custom] };
+  const repaired = preserveExistingWebPages(saved, course);
+  assert.deepEqual(repaired.pages.map(page => page.id), ['first', 'custom']);
+  assert.equal(repaired.pages[1].note, 'Keep my edits');
+  assert.equal(saved.pages.length, 3);
+  assert.ok(isProject(repaired, course.id));
+  assert.deepEqual(preserveExistingWebPages(repaired, course), repaired);
+});
+
+test('an entirely stale saved deck returns to live pages while retaining project settings', () => {
+  const project = createProject(course);
+  const stale = { ...project, title: 'My title', pages: [{ ...project.pages[0], id: 'gone', nativeId: 'gone' }] };
+  const repaired = preserveExistingWebPages(stale, course);
+  assert.deepEqual(repaired.pages.map(page => page.id), ['first']);
+  assert.equal(repaired.title, 'My title');
+  assert.ok(isProject(repaired, course.id));
+  assert.equal(preserveExistingWebPages(stale).pages[0].id, 'gone');
+});

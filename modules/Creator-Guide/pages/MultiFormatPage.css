@@ -81,3 +81,6 @@
 .cg-format-benefit-1 .cg-format-benefit-icon { color: #4aa970; background: #eaf5ec; }
 .cg-format-benefit-2 .cg-format-benefit-icon { color: #cb7116; background: #fff0dc; }
 .cg-format-benefit-3 .cg-format-benefit-icon { color: #9860e8; background: #f1eaff; }
+
+.cg-format-native-reader { position: relative; width: 800px; height: 600px; overflow: hidden; border-radius: 14px; background: #f4f7fb; }
+.cg-format-native-reader iframe { display: block; width: 1600px; max-width: none; height: 1200px; border: 0; transform: scale(.5); transform-origin: top left; }
