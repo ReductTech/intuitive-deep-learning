@@ -35,3 +35,12 @@ for (const boundary of ['backend/src/shuku_backend/', 'idl_backend` 不导入', 
   assert.ok(task.includes(boundary), 'task guide omits boundary: ' + boundary);
 }
 console.log('PASS: 8 implementation tasks cover all 13 scopes, dependency boundaries and task document references.');
+
+for (const doc of [text, task]) {
+  assert.ok(doc.includes('第一阶段') && doc.includes('后续') && doc.includes('共用密码') && doc.includes('测试账号'), 'both guides must permit demo authentication before Jianlun integration');
+  assert.ok(!doc.includes('不迁移共用测试密码、测试账号') && !doc.includes('不迁移 Demo 测试用户'), 'remove superseded ban on demo login');
+}
+for (const behavior of ['登录会话', '退出', '失败次数限制', 'SHUKU_DEMO_PASSWORD', 'SHUKU_AUTH_PROVIDER=demo|jianlun', '不在接口故障时自动降级']) {
+  assert.ok(task.includes(behavior), 'phased authentication task omits: ' + behavior);
+}
+console.log('PASS: Demo authentication first, replaceable identity provider and later Jianlun integration.');
