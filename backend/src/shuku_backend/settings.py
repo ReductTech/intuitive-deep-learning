@@ -13,6 +13,7 @@ class Settings:
     auth_provider: str = "demo"
     host: str = "127.0.0.1"
     port: int = 8010
+    source_root: Path | None = None
 
     def __post_init__(self):
         if not self.database_url.startswith(("postgres://", "postgresql://")):
@@ -37,4 +38,5 @@ class Settings:
                    demo_password=os.environ.get("SHUKU_DEMO_PASSWORD", ""),
                    auth_provider=os.environ.get("SHUKU_AUTH_PROVIDER", "demo"),
                    host=os.environ.get("SHUKU_HOST", "127.0.0.1"),
-                   port=int(os.environ.get("SHUKU_PORT", "8010")))
+                   port=int(os.environ.get("SHUKU_PORT", "8010")),
+                   source_root=Path(os.environ["SHUKU_SOURCE_ROOT"]).resolve() if os.environ.get("SHUKU_SOURCE_ROOT") else None)
