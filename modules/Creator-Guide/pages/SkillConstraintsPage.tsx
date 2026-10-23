@@ -19,11 +19,10 @@ function ConstraintIcon({kind}:{kind:string}) {
 export function SkillConstraintsPage(){
   const [active, setActive] = useState(0);
   const [preview, setPreview] = useState<number | null>(null);
-  const [visualCategory, setVisualCategory] = useState(0);
   const previewId = useId();
   const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const cancelClose = () => clearTimeout(timer.current);
-  const showPreview = (index:number) => { cancelClose(); if (preview !== index) setVisualCategory(index === 4 ? 3 : 0); setPreview(index); };
+  const showPreview = (index:number) => { cancelClose(); setPreview(index); };
   const closePreview = () => { cancelClose(); timer.current = setTimeout(() => setPreview(null), 350); };
   useEffect(() => () => clearTimeout(timer.current), []);
   useEffect(() => {
@@ -76,9 +75,9 @@ export function SkillConstraintsPage(){
     </section>
     <Typography className="cg-constraints-hint" variant="bodySmall" tone="muted" align="center">点击技能切换 · 悬停按钮查看效果</Typography>
   {preview !== null && <aside id={previewId} className={`cg-constraints-preview${preview === 1 ? ' cg-route-preview' : preview === 2 ? ' cg-eval-preview' : preview === 3 ? ' cg-evolution-preview' : preview === 0 ? ' cg-visual-preview cg-design-preview' : ' cg-visual-preview cg-format-preview'}`} role="region" aria-label={`${groups[preview].title}消融示例`} onMouseEnter={cancelClose} onMouseLeave={closePreview} onFocusCapture={cancelClose} onBlurCapture={event => { if (!(event.relatedTarget instanceof Element) || !event.currentTarget.contains(event.relatedTarget)) closePreview(); }}>
-    <div className="cg-constraints-preview-heading"><Typography as="h2" variant="h3" tone="accent">{preview === 1 ? '路由技能：按需加载' : preview === 2 ? '评估技能：AI 评估如何改变课件' : preview === 3 ? '自进化：使用习惯能否留下来？' : `${groups[preview].title} · 效果对比`}</Typography>{(preview === 0 || preview === 4) && <div className="cg-constraints-visual-options" role="group" aria-label="选择对比维度">{(preview === 0 ? [0, 1] : [2, 3]).map(category => <Button key={category} aria-pressed={visualCategory === category} onClick={() => setVisualCategory(category)}><Typography as="span" variant="bodySmall" tone="inherit">{['教学','交互','视觉','版式'][category]}</Typography></Button>)}</div>}<Button className="cg-constraints-preview-close" aria-label="关闭技能示例" onClick={() => { cancelClose(); setPreview(null); }}>×</Button></div>
+    <div className="cg-constraints-preview-heading"><Typography as="h2" variant="h3" tone="accent">{preview === 1 ? '路由技能：按需加载' : preview === 2 ? '评估技能：AI 评估如何改变课件' : preview === 3 ? '自进化：使用习惯能否留下来？' : `${groups[preview].title} · 效果对比`}</Typography><Button className="cg-constraints-preview-close" aria-label="关闭技能示例" onClick={() => { cancelClose(); setPreview(null); }}>×</Button></div>
     {preview === 0 || preview === 4 ? <>
-      <WeightSharingAblation key={`${preview}-${visualCategory}`} category={visualCategory}/>
+      <WeightSharingAblation key={preview} category={preview === 4 ? 3 : 1}/>
     </> : <SkillAblationConcept key={preview} kind={preview === 1 ? 'route' : preview === 2 ? 'evaluation' : 'evolution'}/>}
   </aside>}
 </article>;}
