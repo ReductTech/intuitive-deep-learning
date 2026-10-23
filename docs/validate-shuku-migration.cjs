@@ -31,7 +31,7 @@ for (const match of task.matchAll(/\]\(([^)]+)\)/g)) {
 assert.deepEqual([...task.matchAll(/^\| (T\d{2}) /gm)].map(m => m[1]), Array.from({length: 8}, (_, i) => 'T' + String(i + 1).padStart(2, '0')), 'task sequence must be complete');
 const taskRows = [...task.matchAll(/^\| T\d{2} .*$/gm)].map(m => m[0]).join('\n');
 for (const scope of scopes) assert.ok(taskRows.includes(scope), 'implementation task omits scope: ' + scope);
-for (const boundary of ['backend/src/shuku_backend/', 'idl_backend` 不导入', '减论 UUID 全局唯一', '本次仅确定任务', '进程内任务', '不新增面向用户的 ZIP 上传入口', '数据库与文件成套备份恢复']) {
+for (const boundary of ['backend/src/shuku_backend/', 'idl_backend` 不导入', '减论 UUID 全局唯一', '任务状态：实施中', '进程内任务', '不新增面向用户的 ZIP 上传入口', '数据库与文件成套备份恢复']) {
   assert.ok(task.includes(boundary), 'task guide omits boundary: ' + boundary);
 }
 console.log('PASS: 8 implementation tasks cover all 13 scopes, dependency boundaries and task document references.');
@@ -44,3 +44,17 @@ for (const behavior of ['登录会话', '退出', '失败次数限制', 'SHUKU_D
   assert.ok(task.includes(behavior), 'phased authentication task omits: ' + behavior);
 }
 console.log('PASS: Demo authentication first, replaceable identity provider and later Jianlun integration.');
+
+const progress = fs.readFileSync(path.join(__dirname, '术库后端迁移进度.md'), 'utf8');
+assert.ok(task.includes('](术库后端迁移进度.md)'), 'task must link actual progress');
+assert.ok(progress.includes('T02 部分完成') && progress.includes('T03～T06 未完成'), 'do not report the full migration as complete');
+assert.ok(fs.existsSync(path.join(root, 'backend/src/shuku_backend/migrations/001_foundation.sql')), 'foundation migration resource missing');
+console.log('PASS: implementation progress distinguishes verified foundation from pending business integration.');
+
+for (const file of ['docs/术库后端迁移进度.md', 'backend/src/shuku_backend/README.md']) {
+  const full = path.join(root, file), value = fs.readFileSync(full, 'utf8');
+  for (const match of value.matchAll(/\]\(([^)]+)\)/g)) {
+    const target = path.resolve(path.dirname(full), match[1]);
+    assert.ok(target.startsWith(root + path.sep) && fs.existsSync(target), file + ': invalid local reference ' + match[1]);
+  }
+}

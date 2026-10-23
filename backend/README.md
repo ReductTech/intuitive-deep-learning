@@ -89,3 +89,7 @@ npm run typecheck
 `/lenet5/fixed-kernel-train` 使用预准备的 `datasets/mnist/lenet-fixed11-*` 数据与 grid8 特征，筛出 0–9 标签（排除拒识样本），固定训练 10 轮、十类输出的线性分类器。旧十一类结果读取时失效，新结果完成后覆盖同一缓存键。六种核可多选，后端按固定顺序去重排序，`seed` 为整数 0–4。每个非空组合最多五组 Cloud MySQL 缓存，无版本字段；共 63 个组合，最多 315 组。缓存键只包含 `kernels` 与 `seed`，不包含当前画布；返回分类器权重、标准化参数、训练记录与指标，预测在浏览器完成。
 
 Cloud API 强制异步，进度接口为 `/lenet5/fixed-kernel-train-status`，结果通过既有 completion drainer 入库。特征计算为 28×28 → 不补边的 3×3 卷积及 ReLU → 26×26 → 将响应划为 8×8 区域并取平均；不是一次卷积直接得到 8×8，也不是固定 3×3、步长 3 的池化。
+
+## 术库业务模块
+
+新增并列的 [shuku_backend](src/shuku_backend/README.md)，承接课程业务迁移，独立安装和启动，不修改原计算后端。当前能力与待完成项见 [迁移进度](../docs/术库后端迁移进度.md)。

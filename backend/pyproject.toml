@@ -17,6 +17,7 @@ projection = ["scikit-learn", "threadpoolctl"]
 tools = ["playwright", "Pillow", "psutil"]
 dev = ["psutil", "python-dotenv"]
 test = ["pytest"]
+shuku = ["psycopg[binary]>=3.2,<4"]
 
 [project.scripts]
 idl-backend = "idl_backend.cli:main"
@@ -26,3 +27,5 @@ where = ["src"]
 
 [tool.setuptools.package-data]
 "idl_backend.assessment" = ["data/*.json", "data/precomputed/*.json"]
+
+"shuku_backend" = ["migrations/*.sql"]
