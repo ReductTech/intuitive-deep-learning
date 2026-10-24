@@ -10,6 +10,7 @@ from .workflow import Workflow
 from .collaboration import Collaboration
 from .governance import Governance
 from .feedback import Feedback
+from .github_sync import GitHubSync
 
 
 @dataclass
@@ -27,6 +28,7 @@ class Application:
         return Server((self.settings.host,self.settings.port),handler_for(self))
 
     def close(self):
+        self.workflow.github.close()
         self.worker.close()
 
 
@@ -50,5 +52,6 @@ def create_application(settings, clock=time.time):
     workflow.collaboration=Collaboration(workflow)
     workflow.governance=Governance(workflow)
     workflow.feedback=Feedback(workflow)
-    worker=Worker(store,{"governance.remove":workflow.governance.run,"file.verify":verify_file,"revision.build":workflow.build},clock)
-    return Application(settings,store,bucket,identity,Courses(store,clock),worker,clock,workflow)
+    workflow.github=GitHubSync(workflow,settings.github_config())
+    worker=Worker(store,{"github.provision":workflow.github.provision,"github.sync":workflow.github.run,"governance.remove":workflow.governance.run,"file.verify":verify_file,"revision.build":workflow.build},clock)
+    return Application(settings,store,bucket,identity,Courses(store,clock,workflow.github),worker,clock,workflow)

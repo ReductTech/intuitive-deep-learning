@@ -17,7 +17,7 @@ projection = ["scikit-learn", "threadpoolctl"]
 tools = ["playwright", "Pillow", "psutil"]
 dev = ["psutil", "python-dotenv"]
 test = ["pytest"]
-shuku = ["psycopg[binary]>=3.2,<4"]
+shuku = ["psycopg[binary]>=3.2,<4", "cryptography>=43,<47"]
 
 [project.scripts]
 idl-backend = "idl_backend.cli:main"

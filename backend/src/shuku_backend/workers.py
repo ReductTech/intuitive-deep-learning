@@ -21,9 +21,13 @@ class Worker:
             result=self.handlers[task["kind"]](task,lambda state:self.store.checkpoint(task["id"],task["lease_token"],self.clock(),state))
         except DeferredTask:
             self.store.finish(task["id"],task["lease_token"],self.clock(),error="WAITING_FOR_RELATED_TASKS",deferred=True)
-        except Exception:
+        except Exception as error:
             # Do not store external error strings, which can contain credentials.
-            self.store.finish(task["id"],task["lease_token"],self.clock(),error="HANDLER_FAILED")
+            from .errors import BusinessError
+            from .adapters.github import GitHubError
+            import re
+            code=error.code if isinstance(error,BusinessError) and re.fullmatch(r'[A-Z0-9_]{1,64}',error.code) else 'GITHUB_HTTP_'+str(error.status) if isinstance(error,GitHubError) and type(error.status) is int else 'HANDLER_FAILED'
+            self.store.finish(task["id"],task["lease_token"],self.clock(),error=code)
         else:
             self.store.finish(task["id"],task["lease_token"],self.clock(),result=result)
         return True

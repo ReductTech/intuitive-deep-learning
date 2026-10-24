@@ -27,6 +27,7 @@ def main():
         signal.signal(signal.SIGINT,stop)
         try:
             app.worker.start()
+            app.workflow.github.start()
             print("shuku_backend ready",flush=True)
             server.serve_forever(poll_interval=0.25)
         finally:

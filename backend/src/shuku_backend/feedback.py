@@ -50,6 +50,7 @@ class Feedback:
             require(recipients,409,'NO_MANAGER','暂时没有可接收反馈的课程管理者。')
             self.notify(db,recipients,fid,'feedback.create:'+fid,'feedback_received','课程问题反馈 · '+course['title'],message)
             self.flow.audit(db,uid,'feedback.submit',fid)
+            self.flow.github.queue(db,course['id'],'issue',fid,{},uid)
             return {'id':fid}
 
     def record(self,db,uid,fid):

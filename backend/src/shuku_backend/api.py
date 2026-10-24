@@ -87,6 +87,12 @@ def handler_for(app):
             try:
                 url=urlsplit(self.path)
                 path=url.path
+                if self.command=='POST' and path=='/api/shuku/github/webhook':
+                    require(not self.headers.get('Transfer-Encoding') and self.headers.get('Content-Type','').split(';',1)[0]=='application/json',415,'JSON_REQUIRED','请使用 JSON 请求。')
+                    try:size=int(self.headers.get('Content-Length','0'))
+                    except ValueError:size=0
+                    require(0<size<=1024*1024,413,'BODY_LIMIT','Webhook 请求体过大或为空。')
+                    return self.send_json(202,app.workflow.github.webhook(self.headers,self.rfile.read(size)))
                 query=parse_qs(url.query,keep_blank_values=True)
                 require(not url.query or self.command=='GET' and path=='/api/shuku/messages' and set(query)=={'cursor'} and len(query['cursor'])==1 and query['cursor'][0],400,'INVALID_INPUT','该接口不接受这些查询参数。')
                 if self.command=="GET" and path=="/api/shuku/health":
@@ -126,6 +132,23 @@ def handler_for(app):
                 if self.command=="GET" and path=="/api/shuku/auth/me":
                     return self.send_json(200,{"user":user})
                 feedback=app.workflow.feedback
+                if self.command=='GET' and path=='/api/shuku/github/reviews':
+                    return self.send_json(200,{'courses':app.workflow.github.review_courses(user['id'])})
+                github=re.fullmatch(r'/api/shuku/courses/([^/]+)/github(?:/(bind|provision|retry|reconcile|external-decision))?',path)
+                if github:
+                    sync=app.workflow.github;cid=github[1]
+                    if self.command=='GET' and not github[2]:return self.send_json(200,sync.status(user['id'],cid))
+                    if self.command=='POST':
+                        body=self.body()
+                        if github[2]=='bind':return self.send_json(200,sync.bind(user['id'],cid,body))
+                        if github[2]=='provision':return self.send_json(202,sync.provision_request(user['id'],cid))
+                        if github[2]=='retry':return self.send_json(202,sync.retry(user['id'],cid,body.get('job_id')))
+                        if github[2]=='external-decision':return self.send_json(202,sync.external_decision(user['id'],cid,body))
+                        if github[2]=='reconcile':
+                            with app.store.transaction() as db:
+                                app.workflow.owner(db,user['id'],cid)
+                                jid=sync.queue(db,cid,'reconcile',str(__import__('uuid').uuid4()),{},user['id'])
+                            return self.send_json(202,{'job_id':jid})
                 if self.command=='GET' and path=='/api/shuku/messages':
                     return self.send_json(200,feedback.messages(user['id'],query.get('cursor',[None])[0]))
                 if self.command=='POST' and path=='/api/shuku/messages/read-all':

@@ -89,10 +89,12 @@ class Workflow:
         with self.store.transaction() as db:
             return self.save_in(db,uid,cid,data)
 
-    def save_in(self,db,uid,cid,data):
+    def save_in(self,db,uid,cid,data,remote_job_id=None):
         db.execute('SELECT pg_advisory_xact_lock_shared(%s)',(FILE_REFERENCE_LOCK,))
         course,_=self.owner(db,uid,cid)
         require(not db.execute("SELECT 1 FROM shuku_business.contributions WHERE (workspace_id=%s OR target_course_id=%s) AND status='merging'",(cid,cid)).fetchone(),409,'MERGE_BUSY','共创正在合并，请稍后再保存。')
+        require(not db.execute("SELECT 1 FROM shuku_business.github_jobs j JOIN shuku_business.tasks t ON t.id=j.task_id WHERE j.course_id=%s AND j.kind='release' AND t.status IN ('queued','running')",(cid,)).fetchone(),409,'RELEASE_BUSY','课程正在发布，请完成后再保存。')
+        require(not db.execute("SELECT 1 FROM shuku_business.github_jobs j JOIN shuku_business.tasks t ON t.id=j.task_id WHERE j.course_id=%s AND j.kind='external_merge' AND (%s::uuid IS NULL OR j.id<>%s::uuid) AND t.status IN ('queued','running')",(cid,remote_job_id,remote_job_id)).fetchone(),409,'MERGE_BUSY','外部共创正在合并，请完成后再保存。')
         module=next((m for m in self.modules() if m['id']==str(course['module_id'])),None)
         require(module,400,'UNKNOWN_MODULE','课程模块不存在。')
         require(data.get('expected_revision')==(str(course['head_revision']) if course['head_revision'] else None),409,'REVISION_CONFLICT','课程已更新，请重新载入后保存。')
@@ -252,6 +254,8 @@ class Workflow:
                 current=db.execute('SELECT version FROM shuku_business.releases WHERE id=%s',(course['current_release'],)).fetchone()
                 require(tuple(map(int,version.split('.')))>tuple(map(int,current['version'].split('.'))),409,'VERSION_ORDER','新版本号需高于当前版本。')
             # Verify every immutable referenced object before changing the live pointer.
+            remote=self.github.release_gate(db,uid,cid,rid,version,note)
+            if remote:return remote
             for obj in revision['files'].values():
                 require(len(self.bucket.read(obj['sha256']))==obj['size'],503,'FILE_CORRUPT','课程文件不完整，保留原正式版。')
             release=db.execute('INSERT INTO shuku_business.releases VALUES (%s,%s,%s,%s,%s,%s,%s) RETURNING *',(uuid4(),cid,rid,version,note,uid,self.clock())).fetchone()

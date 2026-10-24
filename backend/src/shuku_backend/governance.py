@@ -27,6 +27,8 @@ class Governance:
                 require(status!='published' or course['current_release'],409,'NO_RELEASE','课程没有可恢复的正式版本。')
                 db.execute('UPDATE shuku_business.courses SET status=%s,hidden_from=NULL WHERE id=%s',(status,cid))
             self.flow.audit(db,uid,'course.'+data['action'],cid)
+            effective=db.execute('SELECT status FROM shuku_business.courses WHERE id=%s',(cid,)).fetchone()['status']
+            self.flow.github.queue(db,cid,'visibility',str(uuid4()),{'private':effective!='published'},uid)
             return course_view(db.execute('SELECT * FROM shuku_business.courses WHERE id=%s',(cid,)).fetchone())
 
     def request(self,uid,kind,cid,data):
@@ -84,6 +86,7 @@ class Governance:
 
     def run(self,task,checkpoint):
         rid=task['payload']['removal_id'];checkpoint({'stage':'waiting-for-tasks'})
+        self.flow.github.remove(task,checkpoint)
         with self.store.transaction() as db:
             r=db.execute('SELECT * FROM shuku_business.removals WHERE id=%s FOR UPDATE',(rid,)).fetchone()
             if r['state']=='succeeded':return {'removal_id':rid}

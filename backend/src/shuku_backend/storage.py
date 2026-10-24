@@ -84,7 +84,7 @@ class Store:
         with self.transaction() as db:
             db.execute("DELETE FROM shuku_business.sessions WHERE token_hash=%s",(token_hash,))
 
-    def create_course(self, uid, data, now):
+    def create_course(self, uid, data, now, github=None):
         require(isinstance(data,dict),400,"INVALID_INPUT","课程信息格式不正确。")
         require(not set(data)-{"title","description","category","module_id"},400,"INVALID_INPUT","包含不支持的课程字段。")
         for key,limit in [("title",120),("description",3000),("category",80)]:
@@ -98,6 +98,7 @@ class Store:
             cid=str(uuid4())
             row=db.execute("INSERT INTO shuku_business.courses(id,owner_id,module_id,title,description,category,created_at) VALUES (%s,%s,%s,%s,%s,%s,%s) RETURNING *",(cid,uid,module_id,data["title"].strip(),data.get("description",""),data.get("category",""),now)).fetchone()
             db.execute("INSERT INTO shuku_business.audit(user_id,action,object_id,created_at) VALUES (%s,'course.create',%s,%s)",(uid,cid,now))
+            if github and github.client:github.provision_in(db,cid)
             return course_view(row)
 
     def courses(self, uid):

@@ -94,6 +94,7 @@ class Collaboration:
             diff=self.difference(db,base['revision_id'],rid)
             require(diff['pages'] or diff['settings'],409,'NO_CHANGES','尚未修改教学内容。')
             row=db.execute("INSERT INTO shuku_business.contributions(id,workspace_id,target_course_id,revision_id,target_head,artifact_hash,summary,status,created_at) VALUES (%s,%s,%s,%s,%s,%s,%s,'pending',%s) RETURNING *",(uuid4(),wid,w['target_course_id'],rid,target['head_revision'],revision['artifact_hash'],data['summary'].strip(),self.clock())).fetchone()
+            self.flow.github.queue(db,w['target_course_id'],'pull',rid,{'revision_id':rid},uid)
             self.flow.audit(db,uid,'contribution.submit',row['id']);return course_view(row)
 
     def listing(self,uid):
@@ -167,8 +168,9 @@ class Collaboration:
     def frozen_merge(self,rid,objects,checkpoint):
         """Reuse the exact approved runtime; only revision-specific resource URLs change."""
         with self.store.transaction() as db:
-            row=db.execute("SELECT k.revision_id,k.artifact_hash,r.files FROM shuku_business.contributions k JOIN shuku_business.revisions r ON r.id=k.revision_id WHERE k.merged_revision=%s AND k.status IN ('merging','merged')",(rid,)).fetchone()
+            row=db.execute("SELECT k.id,k.revision_id,k.artifact_hash,r.files FROM shuku_business.contributions k JOIN shuku_business.revisions r ON r.id=k.revision_id WHERE k.merged_revision=%s AND k.status IN ('merging','merged')",(rid,)).fetchone()
         if not row:return None
+        self.flow.github.ensure_merge(row['id'],checkpoint)
         result=dict(objects)
         old=('/api/shuku/revisions/'+str(row['revision_id'])+'/files/').encode()
         new=('/api/shuku/revisions/'+rid+'/files/').encode()
@@ -187,6 +189,7 @@ class Collaboration:
     def complete_merge(self,db,rid,digest):
         row=db.execute("SELECT * FROM shuku_business.contributions WHERE merged_revision=%s AND status='merging' FOR UPDATE",(rid,)).fetchone()
         if not row:return
+        db.execute('INSERT INTO shuku_business.github_revisions(revision_id,course_id,base_sha,branch,commit_sha,pr_number,merge_sha,release_id,release_version,release_note) SELECT %s,course_id,base_sha,branch,commit_sha,pr_number,merge_sha,NULL,NULL,NULL FROM shuku_business.github_revisions WHERE revision_id=%s ON CONFLICT DO NOTHING',(rid,row['revision_id']))
         course=db.execute('SELECT head_revision FROM shuku_business.courses WHERE id=%s FOR UPDATE',(row['target_course_id'],)).fetchone()
         require(str(course['head_revision'])==rid,409,'REVIEW_CHANGED','待发布修订已变化。')
         db.execute("INSERT INTO shuku_business.reviews(id,revision_id,course_id,status,artifact_hash,reviewer_id,note,created_at,decided_at) VALUES (%s,%s,%s,'approved',%s,%s,%s,%s,%s)",(uuid4(),rid,row['target_course_id'],digest,row['reviewer_id'],row['note'],self.clock(),self.clock()))
