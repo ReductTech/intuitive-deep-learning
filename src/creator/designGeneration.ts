@@ -1,5 +1,5 @@
-import { request } from '../../Edit-Deck/api';
-import type { PublicConfig } from '../../Edit-Deck/types';
+import { request } from '../../deprecated/Edit-Deck/api';
+import type { PublicConfig } from '../../deprecated/Edit-Deck/types';
 import type { CreatorPage, CreatorProject } from './model';
 import { readDesignImage, saveDesignImage } from './designImages';
 

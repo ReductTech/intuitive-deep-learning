@@ -1,4 +1,5 @@
-import { lazy, Suspense } from 'react';
+import {MessagesPage} from '../shuku/Messages';
+import {LearningPage} from '../shuku/LearningPage';
 import { SceneDeck, type DeckDefinition } from '../../modules/shared/react/presentation';
 import { UiKitPage } from '../../modules/shared/react/routing/UiKitPage';
 import { activeModules } from './modules';
@@ -9,7 +10,6 @@ import { ManagedEditor } from '../shuku/ManagedEditor';
 import { PreviewPage, ReviewPage } from '../shuku/PreviewPage';
 import { CreatorWorkspace } from '../creator/CreatorWorkspace';
 
-const EditDeck = lazy(() => import('../../Edit-Deck/EditDeck').then(module => ({ default: module.EditDeck })));
 
 const pptModules = activeModules.filter((module) => module.pptDeck);
 const pptCatalog = pptModules.map((module) => module.pptDeck) as [DeckDefinition, ...DeckDefinition[]];
@@ -32,12 +32,14 @@ function SceneDeckPage() {
 
 export const appRoutes: AppRoute[] = [
   { path: '/', element: <HomePage /> },
+  { path: '/messages', element: <MessagesPage /> },
+  { path: '/learn', element: <LearningPage /> },
   { path: '/my-courses', element: <CourseHub /> },
   { path: '/course-creation', element: <CourseHub /> },
   { path: '/my-courses/editor', element: <ManagedEditor /> },
   { path: '/my-courses/preview', element: <PreviewPage /> },
   { path: '/my-courses/review', element: <ReviewPage /> },
-  { path: '/edit-deck/legacy', element: <Suspense fallback={<p>正在打开 Edit Deck…</p>}><EditDeck /></Suspense> },
+  { path: '/edit-deck/legacy', element: <CreatorWorkspace /> },
   { path: '/edit-deck', element: <CreatorWorkspace /> },
   { path: '/shared/ui-kit', element: <UiKitPage /> },
   ...activeModules.flatMap((module) => [

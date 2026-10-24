@@ -2,7 +2,7 @@
 from hashlib import sha256
 from http.cookies import SimpleCookie, CookieError
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
-from urllib.parse import urlsplit, unquote
+from urllib.parse import urlsplit, unquote, parse_qs
 import json
 import re
 import threading
@@ -86,8 +86,9 @@ def handler_for(app):
         def dispatch(self):
             try:
                 url=urlsplit(self.path)
-                require(not url.query,400,"INVALID_INPUT","该接口不接受查询参数。")
                 path=url.path
+                query=parse_qs(url.query,keep_blank_values=True)
+                require(not url.query or self.command=='GET' and path=='/api/shuku/messages' and set(query)=={'cursor'} and len(query['cursor'])==1 and query['cursor'][0],400,'INVALID_INPUT','该接口不接受这些查询参数。')
                 if self.command=="GET" and path=="/api/shuku/health":
                     app.store.ready()
                     return self.send_json(200,{"ok":True,"service":"shuku_backend"})
@@ -96,6 +97,9 @@ def handler_for(app):
                 releases=re.fullmatch(r"/api/shuku/public/courses/([^/]+)/releases",path)
                 if self.command=="GET" and releases:
                     return self.send_json(200,{'releases':app.workflow.collaboration.releases(releases[1])})
+                learning=re.fullmatch(r"/api/shuku/public/revisions/([^/]+)",path)
+                if self.command=='GET' and learning:
+                    return self.send_json(200,app.workflow.feedback.learning(learning[1]))
                 file_route=re.fullmatch(r"/api/shuku/revisions/([^/]+)/files/(.+)",path)
                 if self.command=="GET" and file_route:
                     try:viewer=app.store.session_user(token_hash(token_from(self.headers.get("Cookie"))),app.clock())["id"]
@@ -121,6 +125,21 @@ def handler_for(app):
                 user=app.store.session_user(token_hash(raw_token),app.clock())
                 if self.command=="GET" and path=="/api/shuku/auth/me":
                     return self.send_json(200,{"user":user})
+                feedback=app.workflow.feedback
+                if self.command=='GET' and path=='/api/shuku/messages':
+                    return self.send_json(200,feedback.messages(user['id'],query.get('cursor',[None])[0]))
+                if self.command=='POST' and path=='/api/shuku/messages/read-all':
+                    return self.send_json(200,feedback.read_all(user['id'],self.body()))
+                message=re.fullmatch(r"/api/shuku/messages/([^/]+)/read",path)
+                if self.command=='POST' and message:
+                    return self.send_json(200,feedback.read(user['id'],message[1],self.body()))
+                report=re.fullmatch(r"/api/shuku/revisions/([^/]+)/feedback",path)
+                if self.command=='POST' and report:
+                    return self.send_json(201,feedback.submit(user['id'],report[1],self.body()))
+                report=re.fullmatch(r"/api/shuku/feedback/([^/]+)(?:/(status))?",path)
+                if report:
+                    if self.command=='GET' and not report[2]:return self.send_json(200,feedback.detail(user['id'],report[1]))
+                    if self.command=='POST' and report[2]:return self.send_json(200,feedback.update(user['id'],report[1],self.body()))
                 governance=app.workflow.governance
                 if self.command=="GET" and path=="/api/shuku/removals":
                     return self.send_json(200,{'removals':governance.listing(user['id'])})

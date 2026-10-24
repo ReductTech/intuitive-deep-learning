@@ -29,6 +29,7 @@ try{
  await page.setViewportSize({width:390,height:844});await page.getByRole('button',{name:'课程创作',exact:true}).click();await page.getByRole('link',{name:'我要创建课程',exact:true}).click();await page.getByRole('heading',{name:'我要创建课程',exact:true}).waitFor();
  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'mobile page overflows');
  const menu=page.getByRole('button',{name:'课程创作',exact:true});await menu.click();const box=await page.locator('#authoring-subpages').boundingBox();assert.ok(box&&box.x>=0&&box.x+box.width<=390,'mobile dropdown overflows');
+ await page.keyboard.press('Escape');await page.goto(base+'/messages');await page.getByRole('heading',{name:'我的消息',exact:true}).waitFor();assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'mobile inbox overflows');
  assert.deepEqual(errors,[]);console.log('PASS: shared header, child routes, refresh, inline creation, saved navigation, keyboard/outside dismissal and mobile layout.');
  if(process.env.SHUKU_E2E_ARTIFACT_DIR){await page.setViewportSize({width:1440,height:960});await page.screenshot({path:path.join(process.env.SHUKU_E2E_ARTIFACT_DIR,'authoring-child-navigation.png')});}
 }finally{await browser.close();}

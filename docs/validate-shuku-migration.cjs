@@ -65,3 +65,5 @@ assert.ok(fs.existsSync(path.join(root, 'scripts/check-shuku-workflow.mjs')), 'b
 assert.ok(fs.existsSync(path.join(root, 'backend/src/shuku_backend/migrations/003_collaboration.sql')), 'collaboration migration missing');
 
 assert.ok(fs.existsSync(path.join(root, 'backend/src/shuku_backend/migrations/004_governance.sql')), 'governance migration missing');
+
+assert.ok(fs.existsSync(path.join(root, 'backend/src/shuku_backend/migrations/005_feedback_messages.sql')), 'feedback/messages migration missing');

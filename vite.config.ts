@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import fs from 'node:fs';
 import path from 'node:path';
-import { editDeckPlugin } from './Edit-Deck/server';
+import { editDeckPlugin } from './deprecated/Edit-Deck/server';
 import { creatorSkillDocuments } from './modules/Creator-Guide/skillDocumentsPlugin';
 
 function cloudRuntime(root: string): Plugin {
@@ -82,8 +82,6 @@ export default defineConfig(({ mode, command }) => {
           visualFeatureGame: 'modules/Visual-Feature-Learning/game/index.html',
           visualFeatureGameEditor: 'modules/Visual-Feature-Learning/game/level-editor.html',
           visualFeatureGameDebug: 'modules/Visual-Feature-Learning/game/game-debug.html',
-          webPpt: 'web_ppt/index.html',
-          webPptSlide: 'web_ppt/slide.html',
         },
       },
     },

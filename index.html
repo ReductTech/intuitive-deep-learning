@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SceneDeck · 探索交互课程</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      if (location.pathname === '/modules/memory-test') {
+        window.__DL_TELEMETRY__ = {
+          emit: function () {},
+          getModuleState: function () { return Promise.resolve({ ok: true, module_id: 'memory-test', completed: false, states: {} }); }
+        };
+      }
+    </script>
+    <script src="/modules/shared/telemetry.js"></script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

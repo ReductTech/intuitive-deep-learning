@@ -1,5 +1,5 @@
 import { useEffect, type RefObject } from 'react';
-import { request } from '../../Edit-Deck/api';
+import { request } from '../../deprecated/Edit-Deck/api';
 
 export function useSourceTextEditing(root: RefObject<HTMLDivElement | null>, enabled: boolean, pageKey: string, onStatus: (message: string) => void) {
   useEffect(() => {
