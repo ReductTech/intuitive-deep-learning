@@ -8,7 +8,7 @@ from pathlib import Path
 import sys
 from idl_backend.config import repository_root
 
-_script=repository_root()/"creator-skill/scripts/capture_slides.py"
+_script=repository_root()/"creator-skill/scripts/media/capture_slides.py"
 _spec=importlib.util.spec_from_file_location("idl_authoring_capture",_script)
 _capture=importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(_capture)

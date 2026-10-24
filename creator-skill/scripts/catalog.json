@@ -4,29 +4,27 @@
     {
       "id": "module.identity",
       "category": "module",
-      "path": "scripts/module_identity.py",
+      "path": "scripts/module/module_identity.py",
       "runtime": "python",
       "description": "生成缺失 UUID 或检查已有身份",
       "effects": "默认写 outlines.json；--check 只读；扫描全部模块",
       "dependencies": [],
-      "arguments": [],
-      "usage": "[--check]"
+      "arguments": []
     },
     {
       "id": "module.init",
       "category": "module",
-      "path": "scripts/init_module.py",
+      "path": "scripts/module/init_module.py",
       "runtime": "python",
       "description": "确保模块目录内的 outlines.json 存在",
       "effects": "已有文件不读写；缺失时仅创建初始大纲；--dry-run 不写入；不生成 React 文件或资源目录",
       "dependencies": [],
-      "arguments": [],
-      "usage": "--directory <Name> [--title <title>] [--dry-run]"
+      "arguments": []
     },
     {
       "id": "capture.slides",
       "category": "capture",
-      "path": "scripts/capture_slides.py",
+      "path": "scripts/media/capture_slides.py",
       "runtime": "python",
       "description": "真实页面截图",
       "effects": "启动隔离的无头浏览器；未指定 --base-url 时启动并关闭临时 Vite；写图片；可选动作按用户指定执行",
@@ -37,13 +35,12 @@
       "arguments": [
         "--format",
         "screenshots"
-      ],
-      "usage": "--module <name> [--slide <id>] [--base-url <url>] [--actions <json> --state <name>] [--output <dir>]"
+      ]
     },
     {
       "id": "capture.thumbnails",
       "category": "capture",
-      "path": "scripts/capture_slides.py",
+      "path": "scripts/media/capture_slides.py",
       "runtime": "python",
       "description": "生成 SceneDeck 缩略图",
       "effects": "启动隔离的无头浏览器；未指定 --base-url 时启动并关闭临时 Vite；写图片；可选动作按用户指定执行",
@@ -54,13 +51,12 @@
       "arguments": [
         "--format",
         "thumbnails"
-      ],
-      "usage": "--module <name> [--slide <id>] [--base-url <url>] [--actions <json> --state <name>] [--output <dir>]"
+      ]
     },
     {
       "id": "capture.inspect",
       "category": "capture",
-      "path": "scripts/capture_slides.py",
+      "path": "scripts/media/capture_slides.py",
       "runtime": "python",
       "description": "读取实际 SceneDeck 页序",
       "effects": "浏览器读取页面；可启动临时 Vite；不写图片",
@@ -70,48 +66,44 @@
       ],
       "arguments": [
         "--inspect"
-      ],
-      "usage": "--module <name> [--base-url <url>]"
+      ]
     },
     {
       "id": "check.module",
       "category": "checks",
-      "path": "scripts/validate_module.py",
+      "path": "scripts/checks/validate_module.py",
       "runtime": "python",
       "description": "模块元数据、UUID、入口、资源引用检查",
       "effects": "只读；不编译 TS 或验证视觉",
       "dependencies": [],
-      "arguments": [],
-      "usage": "[--module <name|UUID>]"
+      "arguments": []
     },
     {
       "id": "check.skill",
       "category": "maintenance",
-      "path": "scripts/validate_skill.py",
+      "path": "scripts/checks/validate_skill.py",
       "runtime": "python",
       "description": "Skill 格式、占位符与本地引用检查",
       "effects": "只读",
       "dependencies": [
         "yaml"
       ],
-      "arguments": [],
-      "usage": "[skill-directory]"
+      "arguments": []
     },
     {
       "id": "check.bounds",
       "category": "checks",
-      "path": "scripts/validate_ppt_bounds.mjs",
+      "path": "scripts/checks/validate_ppt_bounds.mjs",
       "runtime": "node",
       "description": "已运行页面的画布边界检查",
       "effects": "连接已有 Chromium 调试端口；创建并关闭自己的标签页；不启动服务",
       "dependencies": [],
-      "arguments": [],
-      "usage": "--url <url> [--slides id1,id2] [--surface <selector>] [--port 9223]"
+      "arguments": []
     },
     {
       "id": "check.course",
       "category": "checks",
-      "path": "scripts/course_consistency.py",
+      "path": "scripts/checks/course_consistency.py",
       "runtime": "python",
       "description": "对照大纲、实际 Guide、PPT 页序和讲稿",
       "effects": "读取页面；隔离上下文临时解锁 Guide；可启动临时 Vite；仅 --save-snapshot 写文件",
@@ -119,72 +111,66 @@
         "playwright",
         "PIL"
       ],
-      "arguments": [],
-      "usage": "--module <name> [--base-url <Vite-url>] [--snapshot <json>] [--save-snapshot <json>]"
+      "arguments": []
     },
     {
       "id": "check.styles",
       "category": "checks",
-      "path": "scripts/analyze_module_styles.mjs",
+      "path": "scripts/checks/analyze_module_styles.mjs",
       "runtime": "node",
       "description": "模块页面样式共用情况分析",
       "effects": "启发式只读统计，不删除 CSS",
       "dependencies": [],
-      "arguments": [],
-      "usage": "[--module <directory>]"
+      "arguments": []
     },
     {
       "id": "assets.inspect",
       "category": "checks",
-      "path": "scripts/inspect_assets.py",
+      "path": "scripts/checks/inspect_assets.py",
       "runtime": "python",
       "description": "资源清单与可选重复文件分析",
       "effects": "只读；--duplicates 计算 SHA-256；不删除或迁移文件",
       "dependencies": [],
-      "arguments": [],
-      "usage": "--module <name|UUID> [--duplicates]"
+      "arguments": []
     },
     {
       "id": "assets.upload",
       "category": "assets",
-      "path": "scripts/upload-assets-oss.py",
+      "path": "scripts/media/upload-assets-oss.py",
       "runtime": "python",
       "description": "上传可视化资源到 OSS",
       "effects": "默认远端写入并跳过已存在对象；--overwrite 覆盖；--dry-run 不联系 OSS",
       "dependencies": [
         "oss2"
       ],
-      "arguments": [],
-      "usage": "[--module <UUID>] [--dry-run] [--overwrite] [--private-records] [--assets-dir <dir>]"
+      "arguments": []
     },
     {
       "id": "environment.doctor",
       "category": "environment",
-      "path": "scripts/doctor.py",
+      "path": "scripts/checks/doctor.py",
       "runtime": "python",
       "description": "检查工具依赖与浏览器候选",
       "effects": "只读；不导入模型、不安装包、不启动服务",
       "dependencies": [],
-      "arguments": [],
-      "usage": "[--group core|capture|media|upload|skill|all] [--tool <tool-id>] [--json]"
+      "arguments": []
     },
     {
       "id": "media.remove-green",
       "category": "media",
-      "path": "scripts/remove_green_screen.py",
+      "path": "scripts/media/remove_green_screen.py",
       "runtime": "python",
       "description": "FFmpeg 绿幕转透明视频",
       "effects": "写入或覆盖输入旁的 _alpha.webm 和 _alpha.mov",
       "dependencies": [
         "ffmpeg"
       ],
-      "arguments": [],
-      "usage": "<input-video>"
+      "arguments": []
     },
     {
       "id": "analyze.pages",
       "category": "analysis",
-      "path": "scripts/page_statistics.py",
+      "path": "scripts/analysis/page_statistics.py",
       "runtime": "python",
       "description": "离线统计每页文字、控件与缩略图视觉特征，生成 HTML 分布报告",
       "effects": "只读 modules/ 与已有缩略图；写 HTML、CSV、JSON；不启动浏览器、不访问网络",
@@ -193,8 +179,7 @@
         "PIL",
         "node"
       ],
-      "arguments": [],
-      "usage": "[--module <name>] [--output <report.html>] [--text-counts <csv>] [--no-previews]"
+      "arguments": []
     }
   ]
 }

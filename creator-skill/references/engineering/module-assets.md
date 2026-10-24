@@ -36,7 +36,7 @@ VITE_ASSET_BASE_URL=https://image.reduct.cn/cloud-IDL/assets
 
 ## OSS 上传
 
-命令从仓库根目录运行，工具实现位于 `creator-skill/scripts/upload-assets-oss.py`。
+命令从仓库根目录运行，工具实现位于 `creator-skill/scripts/media/upload-assets-oss.py`。
 
 ```powershell
 # 安装上传工具的依赖。

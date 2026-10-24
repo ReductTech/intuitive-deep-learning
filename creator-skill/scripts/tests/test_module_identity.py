@@ -6,7 +6,7 @@ import pytest
 import importlib.util
 from pathlib import Path
 
-_spec = importlib.util.spec_from_file_location("authoring_identity", Path(__file__).resolve().parent / "module_identity.py")
+_spec = importlib.util.spec_from_file_location("authoring_identity", Path(__file__).resolve().parents[1] / "module/module_identity.py")
 identity = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(identity)
 from idl_backend.contracts.courses import load_courses

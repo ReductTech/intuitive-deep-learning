@@ -1,6 +1,6 @@
 # 创作工具索引
 
-创作、评估、Skill 文档校验与环境诊断脚本全部平铺在 `creator-skill/scripts/`。首选统一入口，避免临时重写 UUID、截图、上传或检查代码。
+工具按用途分组存放在 `creator-skill/scripts/`，统一通过根目录的 `tools.py` 调用；工具 ID 与调用方式不随文件位置变化。
 
 ## 发现与调用
 
@@ -14,21 +14,23 @@ python creator-skill/scripts/tools.py describe capture.slides
 python creator-skill/scripts/tools.py capture.slides --help
 ```
 
-`catalog.json` 是唯一工具清单，列出每个工具的分类、相对 `creator-skill/` 的路径、依赖、参数和执行效果；命令返回原工具退出码，不拼接 shell 命令。仅查看清单和帮助不会训练、下载、调用模型或上传。
+`catalog.json` 是工具索引，维护分类、相对 `creator-skill/` 的路径、依赖、执行效果及别名的固定参数。完整参数定义只保留在脚本中，通过 `<工具 ID> --help` 查看。命令返回原工具退出码，不拼接 shell 命令。仅查看清单和帮助不会训练、下载、调用模型或上传。
+
+工具正常执行向 stdout 返回一份带 `status` 的 JSON，进度和诊断写入 stderr。退出码 `0` 表示成功或无需修改，`1` 表示检查已完成但未通过，`2` 表示参数、依赖或执行错误。开发与维护脚本时读取[脚本规范](engineering/scripts.md)。
 
 ## 分类
 
-| 分类 | 工具 ID | 脚本 |
+| 目录 | 工具 ID | 用途 |
 |---|---|---|
-| 身份与初始化 | `module.identity`、`module.init` | `module_identity.py`、`init_module.py` |
-| 截图与缩略图 | `capture.slides`、`capture.thumbnails`、`capture.inspect` | `capture_slides.py` |
-| 页面与模块评估 | `check.module`、`check.bounds`、`check.course`、`check.styles`、`assets.inspect` | `validate_module.py`、`validate_ppt_bounds.mjs`、`course_consistency.py`、`analyze_module_styles.mjs`、`inspect_assets.py` |
-| OSS 发布 | `assets.upload` | `upload-assets-oss.py` |
-| 媒体处理 | `media.remove-green` | `remove_green_screen.py` |
-| Skill 校验 | `check.skill` | `validate_skill.py` |
-| 环境诊断 | `environment.doctor` | `doctor.py` |
+| `module/` | `module.identity`、`module.init` | 模块身份与初始大纲 |
+| `checks/` | `check.module`、`check.bounds`、`check.course`、`check.styles`、`assets.inspect`、`check.skill`、`environment.doctor` | 模块、页面、资源、Skill 与环境检查 |
+| `media/` | `capture.slides`、`capture.thumbnails`、`capture.inspect`、`assets.upload`、`media.remove-green` | 截图、上传与视频处理 |
+| `analysis/` | `analyze.pages` | 源码和缩略图统计 |
+| `common/` | 内部辅助文件 | 路径、输出与命令行共用逻辑 |
+| `tests/` | 测试及测试辅助脚本 | 工具回归验证 |
+| `templates/` | 不登记为工具 | 新建 Python / Node 脚本的可复制模板，用法见[脚本规范](engineering/scripts.md) |
 
-分类只用于工具发现，不对应子目录。Rubric 由模型执行，规则见[评分说明](eval/rubric.md)，评估命令与验收流程见[评估脚本与验收](eval/evaluation.md)。
+清单中的分类用于工具发现，实际路径以清单为准。Rubric 由模型执行，规则见[评分说明](eval/rubric.md)，评估命令与验收流程见[评估脚本与验收](eval/evaluation.md)。
 
 Skill 仅收纳跨课程复用的创作工具。具体课程的模型训练、数据预计算、缓存生成与专用素材导出属于对应模块或后端，不登记到 Skill 工具目录。运行时计算服务继续由 `backend/src/idl_backend/` 实现，服务启停仍使用仓库 `scripts/devstart.ps1`、`devstop.ps1`，不复制一套服务管理逻辑。
 
@@ -99,11 +101,11 @@ Python 图像依赖见 `scripts/requirements-statistics.txt`；源码扫描复�
 
 ## 工具回归测试
 
-现有测试与辅助脚本也平铺在 `scripts/`。修改工具、路径或目录结构时，从仓库根目录执行：
+测试与测试辅助脚本位于 `scripts/tests/`。修改工具、路径或目录结构时，从仓库根目录执行：
 
 ```powershell
-python -m pytest creator-skill/scripts -q
-node --test creator-skill/scripts/ppt_bounds.test.mjs
+python -m pytest creator-skill/scripts/tests -q
+node --test creator-skill/scripts/tests/ppt_bounds.test.mjs
 ```
 
 测试环境需有 pytest；截图测试还需截图依赖和可用 Chromium，骨架类型检查复用仓库的 TypeScript。测试通过只证明工具覆盖的行为，不代表实际课程已经通过页面验收。

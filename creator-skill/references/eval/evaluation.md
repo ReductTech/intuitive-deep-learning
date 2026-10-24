@@ -1,6 +1,6 @@
 # 评估脚本与验收
 
-所有评估脚本平铺在 `scripts/`，本目录只保留评估说明与 [Rubric 评分规则](rubric.md)。可确定的要求优先运行脚本；教学表达、视觉与交互质量由模型读取真实截图并结合操作证据评分，脚本不会自动给出 Rubric 分数。
+评估脚本位于 `scripts/checks/`，截图工具位于 `scripts/media/`，本目录只保留评估说明与 [Rubric 评分规则](rubric.md)。可确定的要求优先运行脚本；教学表达、视觉与交互质量由模型读取真实截图并结合操作证据评分，脚本不会自动给出 Rubric 分数。
 
 ## 准备评估环境
 
@@ -53,7 +53,7 @@
 
 ## 脚本覆盖范围
 
-确定性检查实现均在 `scripts/`：`validate_module.py` 检查元数据、TSX 字面量资源路径及依赖；`validate_ppt_bounds.mjs` 检查画布边界；`course_consistency.py` 检查课程一致性；`analyze_module_styles.mjs` 分析样式；`inspect_assets.py` 检查资源与重复。
+确定性检查实现均在 `scripts/checks/`：`validate_module.py` 检查元数据、TSX 字面量资源路径及依赖；`validate_ppt_bounds.mjs` 检查画布边界；`course_consistency.py` 检查课程一致性；`analyze_module_styles.mjs` 分析样式；`inspect_assets.py` 检查资源与重复。
 
 TSX 类型检查复用仓库 `npm run typecheck`。脚本未实现的组件使用、布局和动态引用约束仍需检查代码或真实运行，不能声称全部已自动覆盖。
 
@@ -78,7 +78,7 @@ python creator-skill/scripts/tools.py check.bounds --url <页面地址> --slides
 
 ## 截图与评分证据
 
-复用 `scripts/capture_slides.py`，从仓库根目录执行：
+复用 `scripts/media/capture_slides.py`，从仓库根目录执行：
 
 ```bash
 python creator-skill/scripts/tools.py capture.slides --module <模块名> --slide <页ID> --base-url <Vite地址>

@@ -6,8 +6,8 @@ import uuid
 
 import pytest
 
-import init_module
-from init_module import ensure_outline
+from module import init_module
+from module.init_module import ensure_outline
 
 
 def test_existing_outline_is_not_opened_or_changed(tmp_path, monkeypatch):

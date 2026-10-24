@@ -9,12 +9,12 @@ from http.server import BaseHTTPRequestHandler,ThreadingHTTPServer
 import pytest
 
 from tools import catalog,main as tools_main
-from init_module import initialize
-from course_consistency import compare_course
-import capture_slides
-from inspect_assets import inspect_assets
+from module.init_module import initialize
+from checks.course_consistency import compare_course
+from media import capture_slides
+from checks.inspect_assets import inspect_assets
 
-ROOT=Path(__file__).resolve().parents[2]
+ROOT=Path(__file__).resolve().parents[3]
 OUTLINE={"title":"Example","pages":[{"id":"one","title":"First","snippet":"Notes"}]}
 
 
@@ -48,7 +48,7 @@ def test_initializer_dry_run_writes_nothing_and_actual_run_never_overwrites(tmp_
     with pytest.raises(ValueError,match='already exists'):initialize(tmp_path,'Example',OUTLINE)
     assert before=={p.name:p.read_bytes() for p in directory.iterdir()}
     # Reuse the actual module validator rather than duplicating expected file rules.
-    from validate_module import validate_modules
+    from checks.validate_module import validate_modules
     assert validate_modules(tmp_path)==[]
 
 
@@ -119,8 +119,8 @@ def test_real_capture_uses_existing_engine_for_default_and_click_states(tmp_path
                 assert capture_slides.main(command+['--format','thumbnails'])==0
                 with Image.open(folder/'one.png') as saved:
                     assert saved.size==(1600,900) and saved.getpixel((1000,500))==(255,0,0)
-                assert capture_slides.main(command+['--actions',str(actions)])==1
-                assert capture_slides.main(command+['--state','../escape'])==1
+                assert capture_slides.main(command+['--actions',str(actions)])==2
+                assert capture_slides.main(command+['--state','../escape'])==2
         except RuntimeError as exc:
             if 'No supported Chromium' in str(exc):pytest.skip(str(exc))
             raise
@@ -128,7 +128,7 @@ def test_real_capture_uses_existing_engine_for_default_and_click_states(tmp_path
 
 
 def test_generated_scaffold_typechecks_against_real_shared(tmp_path):
-    from init_module import plan_module
+    from module.init_module import plan_module
     _,files=plan_module(tmp_path,'Example',OUTLINE)
     result=subprocess.run(['node',str(Path(__file__).with_name('typecheck_scaffold.mjs'))],input=json.dumps(files),text=True,capture_output=True,cwd=ROOT,timeout=60)
     assert result.returncode==0,result.stdout+result.stderr

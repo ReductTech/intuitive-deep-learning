@@ -5,11 +5,11 @@ from types import SimpleNamespace
 
 import pytest
 
-from validate_module import validate_modules
-from validate_skill import validate_skill
+from checks.validate_module import validate_modules
+from checks.validate_skill import validate_skill
 
-TOOLS = Path(__file__).resolve().parent
-spec = importlib.util.spec_from_file_location("oss_uploader", TOOLS / "upload-assets-oss.py")
+TOOLS = Path(__file__).resolve().parents[1]
+spec = importlib.util.spec_from_file_location("oss_uploader", TOOLS / "media/upload-assets-oss.py")
 uploader = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(uploader)
 UUID = "2e5c4732-a40a-4d20-b954-a61507aabc75"

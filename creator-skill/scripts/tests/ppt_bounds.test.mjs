@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {spawnSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
 
-const script = fileURLToPath(new URL('./validate_ppt_bounds.mjs', import.meta.url));
+const script = fileURLToPath(new URL('../checks/validate_ppt_bounds.mjs', import.meta.url));
 // Mock the CDP transport. No browser, server or network is used by these tests.
 const mock = `
 import assert from 'node:assert/strict';

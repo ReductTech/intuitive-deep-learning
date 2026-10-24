@@ -7,6 +7,7 @@ import os
 import shutil
 import subprocess
 import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent / "common"))
 from _common import ROOT,SCRIPTS
 SKILL = SCRIPTS.parent
 
@@ -43,7 +44,7 @@ def main(argv=None):
     else:key=argv[0]
     tool=next((tool for tool in tools if tool['id']==key),None)
     if tool is None:print(f'Unknown tool: {key}; use list.',file=sys.stderr);return 2
-    if describe:print(json.dumps(tool,ensure_ascii=False,indent=2));return 0
+    if describe:print(json.dumps({**tool,'help':f'python creator-skill/scripts/tools.py {key} --help'},ensure_ascii=False,indent=2));return 0
     executable=sys.executable if tool['runtime']=='python' else shutil.which('node')
     if not executable:print('Node.js is unavailable; run environment.doctor.',file=sys.stderr);return 2
     command=[executable,str(SKILL/tool['path']),*tool.get('arguments',[]),*argv[1:]]

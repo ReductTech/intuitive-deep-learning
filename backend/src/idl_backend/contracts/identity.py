@@ -45,9 +45,9 @@ def main() -> None:
     """Compatibility command; keep one implementation of the authoring tool."""
     import runpy
     from idl_backend.config import repository_root
-    script = repository_root() / "creator-skill/scripts/module_identity.py"
+    script = repository_root() / "creator-skill/scripts/module/module_identity.py"
     if not script.is_file():
-        raise SystemExit("Authoring tool unavailable; run creator-skill/scripts/module_identity.py from a course checkout.")
+        raise SystemExit("Authoring tool unavailable; run creator-skill/scripts/module/module_identity.py from a course checkout.")
     runpy.run_path(str(script), run_name="__main__")
 
 

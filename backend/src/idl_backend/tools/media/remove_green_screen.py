@@ -8,7 +8,7 @@ for _root in _target.parents:
         break
 else:
     raise SystemExit("Course checkout with creator-skill/scripts is required.")
-_target = _root / "creator-skill/scripts/remove_green_screen.py"
+_target = _root / "creator-skill/scripts/media/remove_green_screen.py"
 sys.path.insert(0, str(_target.parent))
 if __name__ == "__main__":
     runpy.run_path(str(_target), run_name="__main__")

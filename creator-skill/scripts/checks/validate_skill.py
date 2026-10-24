@@ -1,27 +1,41 @@
 #!/usr/bin/env python3
-"""
-Quick validation script for skills - minimal version
+"""Check skill frontmatter, unfinished placeholders and local links.
+
+Reads: The selected skill directory.
+Writes: None. PyYAML is needed only when validation runs.
 """
 
-import sys as _sys
-from pathlib import Path as _Path
-_TOOL_ROOT = _Path(__file__).resolve().parents[2]
-_sys.path[:0] = [str(_TOOL_ROOT / "backend/src"), str(_TOOL_ROOT / "creator-skill/scripts"), str(_Path(__file__).resolve().parent)]
-
+import argparse
 import re
 import sys
 from pathlib import Path
 
-try:
-    import yaml
-except ImportError:
-    raise SystemExit("PyYAML is required: python -m pip install -r creator-skill/scripts/requirements.txt")
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "common"))
+from _common import SCRIPTS, emit_result, report_error
 
 MAX_SKILL_NAME_LENGTH = 64
 
 
-def validate_skill(skill_path):
-    """Basic validation of a skill"""
+def build_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "skill_directory",
+        type=Path,
+        nargs="?",
+        default=SCRIPTS.parent,
+        help="skill directory; default creator-skill next to this script",
+    )
+    return parser
+
+
+def validate_skill(skill_path: Path | str) -> tuple[bool, str]:
+    """Return whether the skill's metadata and local links are valid; never write files."""
+    try:
+        import yaml
+    except ImportError as exc:
+        raise RuntimeError(
+            "PyYAML is required: install creator-skill/scripts/requirements.txt"
+        ) from exc
     skill_path = Path(skill_path)
 
     skill_md = skill_path / "SKILL.md"
@@ -127,7 +141,9 @@ def validate_skill(skill_path):
             return False, "Skill instructions contain an unfinished TODO placeholder"
 
     for document in skill_path.rglob("*.md"):
-        for target in re.findall(r"\[[^\]]+\]\(([^)]+)\)", document.read_text(encoding="utf-8-sig")):
+        for target in re.findall(
+            r"\[[^\]]+\]\(([^)]+)\)", document.read_text(encoding="utf-8-sig")
+        ):
             if "://" in target or target.startswith("#"):
                 continue
             linked = document.parent / target.split("#", 1)[0]
@@ -136,11 +152,15 @@ def validate_skill(skill_path):
     return True, "Skill frontmatter, placeholders and local links are valid."
 
 
+def main(argv: list[str] | None = None) -> int:
+    args = build_parser().parse_args(argv)
+    try:
+        valid, message = validate_skill(args.skill_directory)
+        emit_result({"message": message}, status="passed" if valid else "failed")
+        return 0 if valid else 1
+    except (OSError, ValueError, RuntimeError) as exc:
+        return report_error(exc)
+
+
 if __name__ == "__main__":
-    import argparse
-    parser = argparse.ArgumentParser(description="Validate skill frontmatter, unfinished placeholders and local links.")
-    parser.add_argument("skill_directory", type=Path, nargs="?", default=Path(__file__).resolve().parents[1])
-    args = parser.parse_args()
-    valid, message = validate_skill(args.skill_directory)
-    print(message)
-    sys.exit(0 if valid else 1)
+    raise SystemExit(main())

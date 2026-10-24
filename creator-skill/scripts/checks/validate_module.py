@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-"""Read-only checks for course metadata, UUIDs, entries and literal asset references."""
+"""Check module metadata, entries, identities and literal asset references.
+
+Reads: Module outlines, source files and asset indexes.
+Writes: None. Does not compile TypeScript or verify rendered pages.
+"""
+
 from __future__ import annotations
 
-import sys as _sys
-from pathlib import Path as _Path
-_TOOL_ROOT = _Path(__file__).resolve().parents[2]
-_sys.path[:0] = [str(_TOOL_ROOT / "backend/src"), str(_TOOL_ROOT / "creator-skill/scripts"), str(_Path(__file__).resolve().parent)]
 
 import argparse
 import json
@@ -13,7 +14,24 @@ from pathlib import Path
 import re
 import sys
 
-from module_identity import ROOT, IdentityError, register_identity
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "common"))
+from _common import emit_result, report_error
+from module.module_identity import ROOT, IdentityError, register_identity
+
+
+def build_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--repository",
+        type=Path,
+        default=ROOT,
+        help="repository root; default this checkout",
+    )
+    parser.add_argument(
+        "--module",
+        help="directory name, module slug or UUID; identity uniqueness is always checked globally",
+    )
+    return parser
 
 
 def contained_file(base: Path, relative: str) -> bool:
@@ -39,8 +57,13 @@ def validate_modules(repository: Path, requested: str | None = None) -> list[str
             loaded.append((path, document, module_id))
         except (OSError, UnicodeError, ValueError) as exc:
             errors.append(f"{path}: {exc}")
-    selected = [item for item in loaded if requested is None or requested.lower() in
-                {item[0].parent.name.lower(), str(item[1].get("id", "")).lower(), item[2]}]
+    selected = [
+        item
+        for item in loaded
+        if requested is None
+        or requested.lower()
+        in {item[0].parent.name.lower(), str(item[1].get("id", "")).lower(), item[2]}
+    ]
     if requested and not selected:
         errors.append(f"Unknown module: {requested}")
     slugs: dict[str, Path] = {}
@@ -66,9 +89,15 @@ def validate_modules(repository: Path, requested: str | None = None) -> list[str
             else:
                 entries.append(ppt.get("entry"))
         for entry in entries:
-            if (not isinstance(entry, str) or Path(entry).name != entry
-                    or not entry.endswith(".tsx") or not contained_file(directory, entry)):
-                errors.append(f"{label}: entry must name an existing root TSX file: {entry!r}")
+            if (
+                not isinstance(entry, str)
+                or Path(entry).name != entry
+                or not entry.endswith(".tsx")
+                or not contained_file(directory, entry)
+            ):
+                errors.append(
+                    f"{label}: entry must name an existing root TSX file: {entry!r}"
+                )
         pages = doc.get("pages")
         if not isinstance(pages, list) or not pages:
             errors.append(f"{label}: pages must be a nonempty array")
@@ -94,43 +123,66 @@ def validate_modules(repository: Path, requested: str | None = None) -> list[str
             if source.suffix not in {".ts", ".tsx", ".css"}:
                 continue
             text = source.read_text(encoding="utf-8-sig")
-            if re.search(r"(?:from\s*|import\s*\(|fetch\s*\()\s*['\"][^'\"]*modules-legacy", text):
+            if re.search(
+                r"(?:from\s*|import\s*\(|fetch\s*\()\s*['\"][^'\"]*modules-legacy", text
+            ):
                 errors.append(f"{source}: legacy runtime dependency")
-            for asset_id in re.findall(r'assetId=[\"\']([^\"\']+)[\"\']', text):
+            for asset_id in re.findall(r"assetId=[\"\']([^\"\']+)[\"\']", text):
                 if asset_id != module_id:
-                    errors.append(f"{source}: assetId must be {module_id}, got {asset_id}")
-            for match in re.finditer(r"moduleAssetUrl\(\s*['\"]([^'\"]+)['\"]\s*,\s*['\"]([^'\"]+)['\"]", text):
+                    errors.append(
+                        f"{source}: assetId must be {module_id}, got {asset_id}"
+                    )
+            for match in re.finditer(
+                r"moduleAssetUrl\(\s*['\"]([^'\"]+)['\"]\s*,\s*['\"]([^'\"]+)['\"]",
+                text,
+            ):
                 asset_id, relative = match.groups()
                 if asset_id != module_id:
-                    errors.append(f"{source}: moduleAssetUrl UUID must be {module_id}, got {asset_id}")
+                    errors.append(
+                        f"{source}: moduleAssetUrl UUID must be {module_id}, got {asset_id}"
+                    )
                 elif not contained_file(repository / "assets" / module_id, relative):
                     # Atlas consumers use virtual image names; validate the referenced sheet instead.
                     mapped = False
                     asset_root = repository / "assets" / module_id
-                    if re.search(r"atlasCropUrl\(\s*$", text[max(0, match.start() - 40):match.start()]):
+                    if re.search(
+                        r"atlasCropUrl\(\s*$",
+                        text[max(0, match.start() - 40) : match.start()],
+                    ):
                         index_path = asset_root / "image-atlases/index.json"
                         if index_path.is_file():
-                            index = json.loads(index_path.read_text(encoding="utf-8-sig"))
-                            region = index.get(relative) if isinstance(index, dict) else None
-                            mapped = isinstance(region, dict) and isinstance(region.get("sheet"), str) and contained_file(asset_root, region["sheet"])
+                            index = json.loads(
+                                index_path.read_text(encoding="utf-8-sig")
+                            )
+                            region = (
+                                index.get(relative) if isinstance(index, dict) else None
+                            )
+                            mapped = (
+                                isinstance(region, dict)
+                                and isinstance(region.get("sheet"), str)
+                                and contained_file(asset_root, region["sheet"])
+                            )
                     if not mapped:
-                        errors.append(f"{source}: missing or escaping asset: {relative}")
+                        errors.append(
+                            f"{source}: missing or escaping asset: {relative}"
+                        )
     return errors
 
 
-def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--repository", type=Path, default=ROOT)
-    parser.add_argument("--module", help="directory name, module slug or UUID; identity uniqueness is always checked globally")
-    args = parser.parse_args()
+def main(argv: list[str] | None = None) -> int:
+    parser = build_parser()
+    args = parser.parse_args(argv)
     try:
         errors = validate_modules(args.repository.resolve(), args.module)
     except (OSError, UnicodeError) as exc:
-        print(f"Cannot complete validation: {exc}", file=sys.stderr)
-        return 2
-    for error in errors:
-        print(f"[error] {error}")
-    print(f"Module checks: {len(errors)} error(s). Dynamic resource expressions and rendering require separate checks.")
+        return report_error(exc)
+    emit_result(
+        {
+            "errors": errors,
+            "limitations": "Dynamic resource expressions and rendering require separate checks.",
+        },
+        status="failed" if errors else "passed",
+    )
     return 1 if errors else 0
 
 
