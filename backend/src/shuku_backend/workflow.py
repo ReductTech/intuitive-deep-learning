@@ -32,6 +32,10 @@ class Workflow:
                 result.append({'id':data['moduleIdentity']['id'],'alias':data.get('id',path.parent.name),'title':data['title'],'directory':str(path.parent),'entry':data['ppt']['entry'],'pages':[p['id'] for p in data.get('pages',[])]})
         return result
 
+    def module_context(self,module_id):
+        return next((m for m in self.modules() if m['id']==str(module_id)),
+                    {'id':str(module_id),'alias':'custom-'+str(module_id),'pages':[],'directory':None})
+
     def owner(self,db,uid,cid):
         user=self.store.user_in(db,uid)
         row=db.execute('SELECT * FROM shuku_business.courses WHERE id=%s FOR UPDATE',(identifier(cid),)).fetchone()
@@ -58,11 +62,13 @@ class Workflow:
             require(all(isinstance(item,dict) and all(isinstance(item.get(k),str) for k in ('title','goal','summary','note')) and isinstance(item.get('ready'),bool) and isinstance(item.get('designed'),bool) for item in page.get('revisions',[])),400,'INVALID_PROJECT','页面历史格式不正确。')
             require(all(isinstance(item,dict) and item.get('role') in ('user','assistant') and isinstance(item.get('text'),str) for item in page.get('messages',[])),400,'INVALID_PROJECT','对话记录格式不正确。')
             native=page.get('nativeId')
-            require(native in module['pages'] if native else page.get('format')=='text',400,'UNSUPPORTED_PAGE','请使用原课程页面或文字教学页，模拟网页不能发布。')
+            require(native in module['pages'] if native else page.get('format') in ('text','react'),400,'UNSUPPORTED_PAGE','请使用原课程页面或文字教学页，模拟网页不能发布，请保存文字页或 React 源码。')
+        from .source import validate_source
+        source_files=validate_source(project)
         value=json.loads(json.dumps(project))
         images=value.pop('designImages',{})
         require(isinstance(images,dict) and len(images)<=200,400,'INVALID_PROJECT','设计图数据格式不正确。')
-        objects={}
+        objects={'sources/'+name:{**self.bucket.put(text.encode()),'mime':'text/plain'} for name,text in source_files.items()}
         image_map={}
         for key,data in images.items():
             require(re.fullmatch(r'[A-Za-z0-9_-]{1,80}',key) and isinstance(data,str),400,'INVALID_IMAGE','设计图格式不正确。')
@@ -95,8 +101,7 @@ class Workflow:
         require(not db.execute("SELECT 1 FROM shuku_business.contributions WHERE (workspace_id=%s OR target_course_id=%s) AND status='merging'",(cid,cid)).fetchone(),409,'MERGE_BUSY','共创正在合并，请稍后再保存。')
         require(not db.execute("SELECT 1 FROM shuku_business.github_jobs j JOIN shuku_business.tasks t ON t.id=j.task_id WHERE j.course_id=%s AND j.kind='release' AND t.status IN ('queued','running')",(cid,)).fetchone(),409,'RELEASE_BUSY','课程正在发布，请完成后再保存。')
         require(not db.execute("SELECT 1 FROM shuku_business.github_jobs j JOIN shuku_business.tasks t ON t.id=j.task_id WHERE j.course_id=%s AND j.kind='external_merge' AND (%s::uuid IS NULL OR j.id<>%s::uuid) AND t.status IN ('queued','running')",(cid,remote_job_id,remote_job_id)).fetchone(),409,'MERGE_BUSY','外部共创正在合并，请完成后再保存。')
-        module=next((m for m in self.modules() if m['id']==str(course['module_id'])),None)
-        require(module,400,'UNKNOWN_MODULE','课程模块不存在。')
+        module=self.module_context(course['module_id'])
         require(data.get('expected_revision')==(str(course['head_revision']) if course['head_revision'] else None),409,'REVISION_CONFLICT','课程已更新，请重新载入后保存。')
         objects,digest=self.prepare(data.get('project'),module)
         rid=str(uuid4());now=self.clock()
@@ -131,10 +136,10 @@ class Workflow:
                 project=teaching(project)
             project['designImages']={key:'data:'+row['files'][path]['mime']+';base64,'+base64.b64encode(self.bucket.read(row['files'][path]['sha256'])).decode() for key,path in project.get('designImages',{}).items()}
             review=db.execute('SELECT status,note FROM shuku_business.reviews WHERE revision_id=%s',(rid,)).fetchone()
-            task=db.execute("SELECT status,error_code FROM shuku_business.tasks WHERE idempotency_key=%s",('build:'+rid,)).fetchone()
+            task=db.execute("SELECT status,error_code,checkpoint FROM shuku_business.tasks WHERE idempotency_key=%s",('build:'+rid,)).fetchone()
             state='failed' if row['state']=='building' and task and task['status']=='failed' else row['state']
             contribution=db.execute('SELECT id,status,score,note FROM shuku_business.contributions WHERE revision_id=%s',(rid,)).fetchone()
-            return {'id':str(row['id']),'state':state,'project':project,'contribution':course_view(contribution) if contribution else None,'review':review,'preview_url':'/api/shuku/revisions/'+rid+'/files/index.html'}
+            return {'id':str(row['id']),'state':state,'project':project,'build_error':(task.get('checkpoint') or {}).get('build_error','') if task else '', 'contribution':course_view(contribution) if contribution else None,'review':review,'preview_url':'/api/shuku/revisions/'+rid+'/files/index.html'}
 
     def file(self,uid,rid,path):
         with self.store.transaction() as db:
@@ -145,6 +150,11 @@ class Workflow:
         content=self.bucket.read(obj['sha256'])
         require(len(content)==obj['size'],503,'FILE_CORRUPT','课程文件校验失败。')
         return content,obj['mime']
+
+    def sandboxed(self,uid,rid):
+        with self.store.transaction() as db:
+            row=self.allowed(db,rid,uid)
+            return bool(json.loads(self.bucket.read(row['files']['project.json']['sha256'])).get('source'))
 
     def build(self,task,checkpoint):
         with self.store.transaction() as guard:
@@ -158,7 +168,7 @@ class Workflow:
             require(row,404,'NOT_FOUND','课程修订已移除。')
             if row['state']=='ready':return {'revision_id':rid}
             course=db.execute('SELECT module_id FROM shuku_business.courses WHERE id=%s',(row['course_id'],)).fetchone()
-        module=next(m for m in self.modules() if m['id']==str(course['module_id']))
+        module=self.module_context(course['module_id'])
         objects=dict(row['files']);project=json.loads(self.bucket.read(objects['project.json']['sha256']))
         checkpoint({'stage':'building','revision_id':rid})
         try:
@@ -168,7 +178,7 @@ class Workflow:
                 with tempfile.TemporaryDirectory(prefix='shuku-build-') as folder:
                     folder=Path(folder);source=folder/'project.json';source.write_text(json.dumps(project));out=folder/'dist'
                     env=__import__('os').environ.copy();env['NODE_OPTIONS']='--max-old-space-size=256'
-                    process=subprocess.Popen(['node',str(Path(self.root)/'scripts/build-shuku-preview.mjs'),'--project',str(source),'--module',module['directory'],'--revision',rid,'--outdir',str(out)],stdout=subprocess.PIPE,stderr=subprocess.PIPE,env=env)
+                    process=subprocess.Popen(['node',str(Path(self.root)/'scripts/build-shuku-preview.mjs'),'--project',str(source),'--module',module['directory'] or '','--revision',rid,'--outdir',str(out)],stdout=subprocess.PIPE,stderr=subprocess.PIPE,env=env)
                     started=time.monotonic()
                     while True:
                         try:
@@ -177,7 +187,9 @@ class Workflow:
                             if time.monotonic()-started>90:
                                 process.kill();process.communicate();raise RuntimeError('Build timeout')
                             checkpoint({'stage':'building','revision_id':rid})
-                    if process.returncode:raise RuntimeError('Course artifact build failed')
+                    if process.returncode:
+                        checkpoint({'stage':'build-failed','revision_id':rid,'build_error':'源码构建失败，请检查入口、语法和依赖。'+stderr.decode(errors='replace')[-1600:]})
+                        raise BusinessError(422,'SOURCE_BUILD_FAILED','课程源码构建失败。')
                     for path in sorted(out.rglob('*')):
                         if path.is_file():
                             require(path.stat().st_size<=32*1024*1024,413,'ARTIFACT_LIMIT','课程资源过大。')

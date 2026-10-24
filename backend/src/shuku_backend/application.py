@@ -41,7 +41,7 @@ def create_application(settings, clock=time.time):
         from pathlib import Path
         from shutil import which
         root=Path(settings.source_root)
-        required=[root/'scripts/build-shuku-preview.mjs',root/'node_modules/esbuild/package.json',root/'node_modules/@tailwindcss/node/package.json',root/'node_modules/@tailwindcss/oxide/package.json']
+        required=[root/'scripts/build-shuku-preview.mjs',root/'scripts/shuku-source-plugin.mjs',root/'node_modules/esbuild/package.json',root/'node_modules/@tailwindcss/node/package.json',root/'node_modules/@tailwindcss/oxide/package.json']
         if not which('node') or not all(path.is_file() for path in required):
             raise RuntimeError("Configure SHUKU_SOURCE_ROOT and install Node runtime dependencies before serving")
     identity=DemoIdentity(store,settings.demo_password)

@@ -7,6 +7,7 @@ import json
 import re
 import threading
 from .errors import BusinessError, require
+from .source import SANDBOX_CSP
 
 COOKIE="shuku_session"
 
@@ -114,12 +115,13 @@ def handler_for(app):
                     try:viewer=app.store.session_user(token_hash(token_from(self.headers.get("Cookie"))),app.clock())["id"]
                     except BusinessError:viewer=None
                     content,mime=app.workflow.file(viewer,file_route[1],unquote(file_route[2]))
+                    sandboxed=unquote(file_route[2])=='index.html' and app.workflow.sandboxed(viewer,file_route[1])
                     self.send_response(200)
                     self.send_header("Content-Type",mime)
                     self.send_header("Content-Length",str(len(content)))
                     self.send_header("Cache-Control","private, no-store")
                     self.send_header("X-Content-Type-Options","nosniff")
-                    self.send_header("Content-Security-Policy","default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'self'")
+                    self.send_header("Content-Security-Policy",SANDBOX_CSP if sandboxed else "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'self'")
                     self.end_headers();self.wfile.write(content);return
                 raw_token=token_from(self.headers.get("Cookie"))
                 if self.command=="POST" and path=="/api/shuku/auth/login":

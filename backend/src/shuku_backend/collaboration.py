@@ -9,7 +9,8 @@ from .workflow import identifier
 def teaching(project):
     """Copy teaching material without author chats, image references or undo history."""
     value={k:project[k] for k in ('version','id','courseId','title','duration','style','outlineConfirmed')}
-    value['pages']=[{**{k:p[k] for k in ('id','nativeId','format','title','goal','summary','ready','designed') if k in p},'note':'','revisions':[],'messages':[]} for p in project['pages']]
+    if project.get('source'):value['source']=json.loads(json.dumps(project['source']))
+    value['pages']=[{**{k:p[k] for k in ('id','nativeId','format','sourceEntry','title','goal','summary','ready','designed') if k in p},'note':'','revisions':[],'messages':[]} for p in project['pages']]
     return value
 
 
@@ -64,7 +65,7 @@ class Collaboration:
     def difference(self,db,base,rid):
         before=self.project(db,base);after=self.project(db,rid)
         a={p['id']:p for p in before['pages']};b={p['id']:p for p in after['pages']}
-        fields=('title','goal','summary','nativeId','format')
+        fields=('title','goal','summary','nativeId','format','sourceEntry')
         changes=[]
         for pid in dict.fromkeys([*a,*b]):
             old=a.get(pid);new=b.get(pid)
@@ -72,7 +73,10 @@ class Collaboration:
                 changes.append({'page_id':pid,'kind':'added' if old is None else 'removed' if new is None else 'modified','before':{k:old.get(k) for k in fields} if old else None,'after':{k:new.get(k) for k in fields} if new else None})
         settings={k:{'before':before.get(k),'after':after.get(k)} for k in ('title','duration','style') if before.get(k)!=after.get(k)}
         if list(a)!=list(b):settings['page_order']={'before':list(a),'after':list(b)}
-        return {'pages':changes,'settings':settings}
+        result={'pages':changes,'settings':settings}
+        a_files=before.get('source',{}).get('files',{});b_files=after.get('source',{}).get('files',{})
+        if a_files or b_files:result['source_files']=[{'path':name,'kind':'added' if name not in a_files else 'removed' if name not in b_files else 'modified'} for name in sorted(set(a_files)|set(b_files)) if a_files.get(name)!=b_files.get(name)]
+        return result
 
     def submit(self,uid,wid,data):
         require(set(data)<= {'revision_id','summary'} and isinstance(data.get('summary'),str) and 0<len(data['summary'].strip())<=2000,400,'INVALID_INPUT','请填写简短的修改说明。')
