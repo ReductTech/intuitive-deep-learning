@@ -6,6 +6,7 @@ const browser=await chromium.launch({channel:'chrome',headless:true});
 try{
  const page=await browser.newPage({viewport:{width:1440,height:1000}});page.setDefaultTimeout(60000);
  await page.goto(base+'/');await page.getByText('Demo 体验登录',{exact:true}).click();await page.getByLabel('Demo 密码',{exact:true}).fill(password);await page.getByRole('button',{name:'进入 Demo',exact:true}).click();await page.getByRole('link',{name:'术库首页',exact:true}).waitFor();
+ await page.getByText('让知识在共创中进化',{exact:true}).waitFor();assert.equal(await page.locator('.sd-library-mode-note p').innerText(),'分享一种理解，\n一起完善一门课程。');assert.equal(await page.getByText('同一份知识，两种体验',{exact:true}).count(),0);
  assert.equal(await page.locator('.sd-library-heading').count(),0);
  for(const text of ['EXPLORE · INTERACT · UNDERSTAND','下一次理解，从这里开始','从真实问题出发，在交互中建立直觉。'])assert.ok(!(await page.locator('main').innerText()).includes(text));
  await page.locator('.sd-library-search input').waitFor();assert.ok(await page.locator('.sd-library-card').count()>0);const box=await page.locator('.sd-library-search').boundingBox();assert.ok(box.y<300,'No empty hero area left above browsing');
