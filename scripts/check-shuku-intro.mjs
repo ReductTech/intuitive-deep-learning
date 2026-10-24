@@ -32,14 +32,24 @@ try{
    await slide.getByRole('heading',{name:'自动质量评分',exact:true}).waitFor();
    await slide.getByText('供审核人参考',{exact:true}).waitFor();
    assert.equal(await slide.locator('.cg-shuku-score-result strong').innerText(),'82');
-   const scoring=await slide.locator('.cg-shuku-auto-score').boundingBox(),opinion=await slide.locator('.cg-shuku-review-comment').boundingBox(),returned=await slide.locator('.cg-shuku-return').boundingBox();
+   const scoring=await slide.locator('.cg-shuku-auto-score').boundingBox(),opinion=await slide.locator('.cg-shuku-review-comment').boundingBox();
    assert.ok(scoring.x+scoring.width<=opinion.x,'Scoring precedes reviewer opinion');
-   assert.ok(returned.y>=scoring.y+scoring.height-15,'Return path starts after scoring');
+   await slide.getByText('结合自动评分',{exact:false}).waitFor();
+   await slide.getByText('与个人体验审核',{exact:false}).waitFor();
+   assert.equal(await slide.locator('.cg-shuku-approved-arrow').innerText(),'通过\n→');
+   assert.equal(await slide.locator('.cg-shuku-reject-label').innerText(),'未通过\n退回修改');
+   assert.equal(await slide.locator('.cg-shuku-rescore-label').innerText(),'重新提交\n再次自动评分');
+   assert.equal(await slide.locator('.cg-shuku-reject-path').getAttribute('d'),'M360 257V313');
+   assert.equal(await slide.locator('.cg-shuku-rescore-path').getAttribute('d'),'M218 370H121V260');
+   assert.match(await slide.locator('.cg-shuku-review-loop').getAttribute('aria-label'),/重新提交后再次自动评分/);
    assert.equal(await slide.locator('.cg-shuku-conclusion').innerText(),'审核帮助发现问题、补充说明，自动质量评分提供参考，让改进更稳妥地进入正式课程。');
    const panels=slide.locator('.cg-shuku-review-panel'),principles=slide.locator('.cg-shuku-principles>section');
    for(let i=0;i<3;i++){
     const color=el=>{const s=getComputedStyle(el);return [s.backgroundColor,s.borderTopColor,s.getPropertyValue('--tone')];};
     assert.deepEqual(await panels.nth(i).evaluate(color),await principles.nth(i).evaluate(color),'Corresponding review panels must share their palette');
+    const upper=await panels.nth(i).boundingBox(),lower=await principles.nth(i).boundingBox();
+    assert.ok(Math.abs(upper.x-lower.x)<1&&Math.abs(upper.width-lower.width)<1,'Corresponding panels align horizontally and have equal widths');
+    assert.ok(await principles.nth(i).evaluate(el=>[...el.querySelectorAll('h2,p')].every(child=>child.scrollWidth<=child.clientWidth)),'Principle text fits its aligned column');
    }
    const heading=slide.getByRole('heading',{name:'对共创想法进行质量审核',exact:true});
    assert.ok(await heading.evaluate(el=>el.scrollWidth<=el.clientWidth),'Quality review title fits its card');
