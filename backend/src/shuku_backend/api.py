@@ -124,6 +124,21 @@ def handler_for(app):
                     self.send_header("Content-Security-Policy",SANDBOX_CSP if sandboxed else "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'self'")
                     self.end_headers();self.wfile.write(content);return
                 raw_token=token_from(self.headers.get("Cookie"))
+                if self.command=='POST' and path=='/api/shuku/auth/sms-code':
+                    from .adapters.jianlun import phone_number
+                    body=self.body(4096)
+                    require(set(body)=={'phone'},400,'INVALID_INPUT','请仅填写手机号。')
+                    return self.send_json(200,app.phone_identity.send_code(phone_number(body['phone']),self.client_address[0],app.clock()))
+                if self.command=='POST' and path=='/api/shuku/auth/phone-login':
+                    from .adapters.jianlun import phone_number
+                    body=self.body(4096);method=body.get('method')
+                    require(method in ('sms','password'),400,'INVALID_INPUT','请选择验证码登录或密码登录。')
+                    key='code' if method=='sms' else 'password'
+                    require(set(body)=={'method','phone',key},400,'INVALID_INPUT','登录字段不正确。')
+                    phone=phone_number(body['phone']);credential=body[key]
+                    require(isinstance(credential,str) and (bool(re.fullmatch(r'[0-9]{4,8}',credential)) if method=='sms' else 0<len(credential)<=256),400,'INVALID_INPUT','请检查验证码或密码。')
+                    user,token=app.phone_identity.login_phone(method,phone,credential,self.client_address[0],token_hash(raw_token),app.clock())
+                    return self.send_json(200,{'user':user},self.cookie(token))
                 if self.command=="POST" and path=="/api/shuku/auth/login":
                     body=self.body()
                     require(not set(body)-{"username","password"},400,"INVALID_INPUT","不支持额外登录字段。")

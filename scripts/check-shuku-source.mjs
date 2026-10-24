@@ -11,7 +11,7 @@ try{
  const context=await browser.newContext(),page=await context.newPage();page.setDefaultTimeout(60000);
  const title='React T03 '+Date.now();
  const api=async(path,data,client=context)=>{const response=await client.request.fetch(base+'/api/shuku'+path,{method:data===undefined?'GET':'POST',headers:{Origin:base,'Content-Type':'application/json'},...(data===undefined?{}:{data})});const text=await response.text();assert.ok(response.ok(),path+' HTTP '+response.status()+': '+text);return JSON.parse(text);};
- await page.goto(base+'/my-courses?tab=create');await page.getByLabel('密码',{exact:true}).fill(password);await page.getByRole('button',{name:'登录',exact:true}).click();
+ await page.goto(base+'/my-courses?tab=create');await page.getByText('Demo 体验登录',{exact:true}).click();await page.getByLabel('Demo 密码',{exact:true}).fill(password);await page.getByRole('button',{name:'进入 Demo',exact:true}).click();
  await page.getByLabel('课程名称',{exact:true}).fill(title);await page.getByLabel('起始内容',{exact:true}).selectOption('react');await page.getByRole('button',{name:'开始创建',exact:true}).click();
  await page.getByLabel('源码编辑',{exact:true}).waitFor();
  const cid=new URL(page.url()).searchParams.get('course');assert.ok(cid);

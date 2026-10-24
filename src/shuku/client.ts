@@ -7,5 +7,5 @@ let sessionGeneration=0;
 export async function api<T>(path:string, body?:unknown,headers:Record<string,string>={}):Promise<T> {
   const generation=sessionGeneration;
   const response=await fetch('/api/shuku'+path,{method:body===undefined?'GET':'POST',credentials:'same-origin',headers:{...(body===undefined?{}:{'Content-Type':'application/json'}),...headers},...(body===undefined?{}:{body:JSON.stringify(body)})});
-  const data=await response.json();if(!response.ok){if(response.status===401&&generation===sessionGeneration&&!['/auth/login','/auth/me'].includes(path))window.dispatchEvent(new Event('shuku-session-required'));throw new ApiError(data.error||'操作未完成，请重试。',response.status);}if(path==='/auth/login'||path==='/auth/logout')sessionGeneration++;return data as T;
+  const data=await response.json();if(!response.ok){if(response.status===401&&generation===sessionGeneration&&!['/auth/login','/auth/phone-login','/auth/me'].includes(path))window.dispatchEvent(new Event('shuku-session-required'));throw new ApiError(data.error||'操作未完成，请重试。',response.status);}if(path==='/auth/login'||path==='/auth/phone-login'||path==='/auth/logout')sessionGeneration++;return data as T;
 }

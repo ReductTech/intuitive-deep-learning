@@ -1,6 +1,6 @@
 import {Fragment,useEffect,useRef,useState,type ReactNode} from 'react';
 import {api,ApiError,type User} from './client';
-import './LoginGate.css';
+import {PhoneLogin} from './PhoneLogin';
 
 export function LoginGate({children}:{children:ReactNode}){
  const [user,setUser]=useState<User|null>(null),[checking,setChecking]=useState(true),[unavailable,setUnavailable]=useState(false),[error,setError]=useState(''),[busy,setBusy]=useState(false);
@@ -21,12 +21,12 @@ export function LoginGate({children}:{children:ReactNode}){
   window.addEventListener('shuku-session-required',expired);window.addEventListener('focus',focus);document.addEventListener('visibilitychange',focus);
   return()=>{generation.current++;clearInterval(timer);window.removeEventListener('shuku-session-required',expired);window.removeEventListener('focus',focus);document.removeEventListener('visibilitychange',focus);};
  },[]);
- async function login(form:HTMLFormElement){
+ async function login(path:string,body:unknown){
   const request=++generation.current;loggingIn.current=true;setBusy(true);setError('');
-  try{const result=await api<{user:User}>('/auth/login',Object.fromEntries(new FormData(form)));if(request===generation.current){setUser(result.user);setUnavailable(false);}}
+  try{const result=await api<{user:User}>(path,body);if(request===generation.current){setUser(result.user);setUnavailable(false);}}
   catch(e){if(request===generation.current)setError((e as Error).message||'登录未成功，请重试。');}
   finally{loggingIn.current=false;setBusy(false);}
  }
  if(!checking&&user)return <Fragment key={user.id}>{children}</Fragment>;
- return <main className="shuku-login-page"><section aria-labelledby="site-login-title"><div className="shuku-login-brand">SceneDeck<span>.</span></div><h1 id="site-login-title">登录术库</h1>{checking?<p role="status">正在验证登录状态…</p>:unavailable?<><p role="alert">{error}</p><button onClick={()=>void check(true)}>重新验证</button></>:<form onSubmit={e=>{e.preventDefault();void login(e.currentTarget);}}><label>账号<select name="username" autoComplete="username"><option value="xiaoman">小满 · 课程作者</option><option value="linzhi">林知 · 学习者</option><option value="admin">管理员</option></select></label><label>密码<input name="password" type="password" autoComplete="current-password" required autoFocus maxLength={256}/></label>{error&&<p role="alert">{error}</p>}<button disabled={busy}>{busy?'正在登录…':'登录'}</button></form>}</section></main>;
+ return <PhoneLogin checking={checking} unavailable={unavailable} error={error} busy={busy} onRetry={()=>void check(true)} onClearError={()=>setError('')} onDemo={form=>void login('/auth/login',Object.fromEntries(new FormData(form)))} onPhone={(method,phone,credential)=>void login('/auth/phone-login',{method,phone,...(method==='sms'?{code:credential}:{password:credential})})}/>;
 }
