@@ -24,6 +24,7 @@ try{
   assert.equal(await slide.locator('img').count(),0,'Product pages must contain real text and vector geometry');
   const overflow=await slide.evaluate(root=>{const box=root.getBoundingClientRect();return [...root.querySelectorAll('*')].filter(el=>{const r=el.getBoundingClientRect();return r.width>0&&r.height>0&&(r.left<box.left-1||r.right>box.right+1||r.top<box.top-1||r.bottom>box.bottom+1);}).map(el=>el.className?.baseVal??el.className).slice(0,15);});
   assert.deepEqual(overflow,[],id+' exceeds the 1600 × 900 canvas');
+  if(id==='shuku-participation'){assert.match(await slide.getByRole('heading',{level:1}).innerText(), /每个人都可以参与到课程的进化/);assert.doesNotMatch(await slide.innerText(), /每个人都可以找到参与的位置/);}
   if(id==='shuku-review'){await slide.getByText('审核通过后，仍需合并并发布。',{exact:false}).waitFor();await slide.getByText('学习者可继续旧版，或主动切换新版。',{exact:false}).waitFor();}
   if(id==='shuku-growth'){
    assert.equal(await slide.locator('.cg-shuku-loop-node').count(),6);
