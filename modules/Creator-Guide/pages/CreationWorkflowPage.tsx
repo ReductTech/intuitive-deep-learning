@@ -70,11 +70,11 @@ export function CreationWorkflowPage() {
   const replay = () => {
     setRunning(false); setRunId(value => value + 1); setCompleted(0); setMessages([]); setPage(0); setBrowsing(false);
   };
-  return <GomokuLessonProvider key={runId}><article className="cg-workflow-page cg-creator-typography" aria-label="SceneDeck课件创作流程模拟" onKeyDown={event => {
+  return <GomokuLessonProvider key={runId}><article className="cg-workflow-page cg-creator-typography" aria-label="术库课件创作流程模拟" onKeyDown={event => {
     if (event.target instanceof Element && event.target.closest('button,input,textarea,svg,canvas,summary,.cg-sim-native') && ['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End',' '].includes(event.key)) event.stopPropagation();
   }}>
     <header className="cg-sim-toolbar">
-      <div className="cg-sim-brand"><span><Glyph kind="spark"/></span><Typography as="strong" variant="h3" tone="inherit">SceneDeck</Typography></div>
+      <div className="cg-sim-brand"><span><Glyph kind="spark"/></span><Typography as="strong" variant="h3" tone="inherit">术库</Typography></div>
       <Typography variant="bodySmall" tone="muted">{revised ? '从五子棋到卷积核' : ready ? '卷积核入门' : '新建课件'}</Typography>
       <div className="cg-sim-toolbar-right"><Typography variant="bodySmall" tone="muted">模拟演示</Typography><Button aria-label="重新体验" onClick={replay}><Glyph kind="replay"/></Button></div>
     </header>

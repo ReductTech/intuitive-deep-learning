@@ -28,4 +28,4 @@ python creator-skill/scripts/tools.py module.identity --check
 
 修改标题、正文、页序或目录名不改变 UUID。路由 `path` 仍须匹配模块目录，这是独立的路由约束。
 
-复制成独立新课程时，删除复制来的 `moduleIdentity` 再生成新 UUID；相应静态资源放 `assets/<新 UUID>/`，同步运行时引用和 SceneDeck `assetId`，不要沿用源课程身份。
+复制成独立新课程时，删除复制来的 `moduleIdentity` 再生成新 UUID；相应静态资源放 `assets/<新 UUID>/`，同步运行时引用和 术库 `assetId`，不要沿用源课程身份。

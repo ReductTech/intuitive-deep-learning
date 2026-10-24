@@ -42,7 +42,7 @@
       "category": "capture",
       "path": "scripts/media/capture_slides.py",
       "runtime": "python",
-      "description": "生成 SceneDeck 缩略图",
+      "description": "生成术库缩略图",
       "effects": "启动隔离的无头浏览器；未指定 --base-url 时启动并关闭临时 Vite；写图片；可选动作按用户指定执行",
       "dependencies": [
         "playwright",
@@ -58,7 +58,7 @@
       "category": "capture",
       "path": "scripts/media/capture_slides.py",
       "runtime": "python",
-      "description": "读取实际 SceneDeck 页序",
+      "description": "读取实际术库页序",
       "effects": "浏览器读取页面；可启动临时 Vite；不写图片",
       "dependencies": [
         "playwright",

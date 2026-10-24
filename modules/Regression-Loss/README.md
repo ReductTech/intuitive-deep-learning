@@ -80,11 +80,11 @@ Images are teaching illustrations from the built-in ImageGen tool. Prompts and s
 
 当前共17页：前15页保留，最后两页为“最小二乘的几何意义”和“离开最优解，损失怎样变化？”。泰坦尼克号与逻辑回归5页已迁到Multilayer-Perceptron，连同其数据、图片和资源来源。新课程：`/modules/multilayer-perceptron`。
 
-## SceneDeck 智能讲稿
+## 术库 智能讲稿
 
-前5页的23段讲稿保存在`speakerNotes.ts`，每段包含正文和对应页面区域的CSS选择器。`RegressionLossPpt.tsx`通过`getNotes`接入Shared SceneDeck，同时导出`getPptNotes`供统一课件路由调用，与Neuron Guide的接入方式一致。
+前5页的23段讲稿保存在`speakerNotes.ts`，每段包含正文和对应页面区域的CSS选择器。`RegressionLossPpt.tsx`通过`getNotes`接入共享课程播放器，同时导出`getPptNotes`供统一课件路由调用，与Neuron Guide的接入方式一致。
 
-点击SceneDeck工具栏的“智能讲稿”（快捷键N），可逐段切换并聚焦对应区域；朗读复用浏览器语音能力。第6页起暂未添加分段讲稿。
+点击术库工具栏的“智能讲稿”（快捷键N），可逐段切换并聚焦对应区域；朗读复用浏览器语音能力。第6页起暂未添加分段讲稿。
 
 ## 第16页：概率视角下的最小二乘
 

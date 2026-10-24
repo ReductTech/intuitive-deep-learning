@@ -1,6 +1,6 @@
 # 模块资源
 
-课程专属图片、视频、字体、图标、3D 模型、外部数据文件和 SceneDeck 缩略图放仓库根目录 `assets/<moduleIdentity.id>/`。`moduleIdentity.id` 来自当前模块的 `outlines.json`；代码内定义的课程数据随模块实现保存。
+课程专属图片、视频、字体、图标、3D 模型、外部数据文件和 术库 缩略图放仓库根目录 `assets/<moduleIdentity.id>/`。`moduleIdentity.id` 来自当前模块的 `outlines.json`；代码内定义的课程数据随模块实现保存。
 
 ## 引用
 
@@ -15,7 +15,7 @@ const imageUrl = moduleAssetUrl(moduleIdentity.id, 'images/example.png');
 
 深层页面按文件位置调整 import。第二个参数是相对于 UUID 目录的路径；图片、视频、模型及 Canvas/WebGL 资源均通过此方法引用。CSS 背景图由组件生成 URL，再传入 CSS 自定义属性。
 
-SceneDeck 缩略图与软评估共用 `scenedeck-thumbnails/<scene-id>.png` 的 1600×900 原图；播放器缩小显示，评估直接读图，不另存一份。操作状态放 `scenedeck-thumbnails/<scene-id>/<状态>.png`。播放器 `assetId` 使用同一 UUID。
+术库 缩略图与软评估共用 `scenedeck-thumbnails/<scene-id>.png` 的 1600×900 原图；播放器缩小显示，评估直接读图，不另存一份。操作状态放 `scenedeck-thumbnails/<scene-id>/<状态>.png`。播放器 `assetId` 使用同一 UUID。
 
 ## 本地与 CDN
 

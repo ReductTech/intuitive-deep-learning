@@ -212,7 +212,7 @@ function SceneDeckPlayer({ catalog, moduleId, assetId, progressKey, getNotes }: 
 
   useEffect(() => {
     document.body.classList.add('ppt-body');
-    document.title = 'SceneDeck · ' + (sceneIndex + 1) + '. ' + scene.title;
+    document.title = '术库 · ' + (sceneIndex + 1) + '. ' + scene.title;
     return () => document.body.classList.remove('ppt-body');
   }, [scene.title, sceneIndex]);
 
@@ -225,12 +225,12 @@ function SceneDeckPlayer({ catalog, moduleId, assetId, progressKey, getNotes }: 
   }, []);
 
   return <div ref={appRef} className="scenedeck-app" data-ppt-react-slide data-scene-deck>
-    <header className="scenedeck-toolbar" aria-label="SceneDeck 工具栏">
+    <header className="scenedeck-toolbar" aria-label="术库工具栏">
       <div className="scenedeck-toolbar__leading">
         <div className="scenedeck-brand">
           <span className="scenedeck-brand__mark" aria-hidden="true"><Icon name="sparkle" /></span>
           <span className="scenedeck-brand__copy">
-            <Typography as="strong" variant="bodySmall" tone="inherit">SceneDeck</Typography>
+            <Typography as="strong" variant="bodySmall" tone="inherit">术库</Typography>
             <Typography as="span" variant="bodySmall" tone="muted">课程播放器</Typography>
           </span>
         </div>
