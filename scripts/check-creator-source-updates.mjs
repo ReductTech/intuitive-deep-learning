@@ -24,13 +24,14 @@ if(process.argv[3]){
  const browser=await chromium.launch({channel:'chrome',headless:true});
  try{
   const page=await browser.newPage();page.setDefaultTimeout(60000);
-  await page.goto('http://localhost:5173/scenedeck/?deck=creator-guide');
+  const base=process.env.SHUKU_SLIDES_URL||'http://localhost:5175',password=process.env.SHUKU_E2E_PASSWORD;assert.ok(password,'Set SHUKU_E2E_PASSWORD for browser checks');const auth=await page.request.post(base+'/api/shuku/auth/login',{headers:{Origin:base},data:{username:'xiaoman',password}});assert.equal(auth.status(),200);
+  await page.goto(base+'/scenedeck/?deck=creator-guide');
   await page.waitForFunction(()=>localStorage.getItem('scenedeck:creator:v1:creator-guide'));
   await page.evaluate(()=>{const key='scenedeck:creator:v1:creator-guide',p=JSON.parse(localStorage.getItem(key));p.pages=p.pages.filter(p=>!p.id.startsWith('shuku-'));delete p.sourceSceneIds;p.pages[0].note='retained test note';localStorage.setItem(key,JSON.stringify(p));});
   await page.reload();
   await page.waitForFunction(()=>JSON.parse(localStorage.getItem('scenedeck:creator:v1:creator-guide')).pages.length===21);
-  for(const id of ids){await page.goto('http://localhost:5173/scenedeck/?deck=creator-guide&slide='+id);await page.locator('.cg-shuku-page').waitFor();}
+  for(const id of ids){await page.goto(base+'/scenedeck/?deck=creator-guide&slide='+id);await page.locator('.cg-shuku-page').waitFor();}
   assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('scenedeck:creator:v1:creator-guide')).pages[0].note),'retained test note');
-  console.log('PASS normal SceneDeck entry: saved 17-page project receives and renders all four new pages.');
+  console.log('PASS authenticated SceneDeck entry: saved 17-page project receives and renders all four new pages.');
  }finally{await browser.close();}
 }

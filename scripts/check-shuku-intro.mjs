@@ -11,7 +11,8 @@ const thumbnails=process.env.SHUKU_SLIDES_THUMBNAILS;if(thumbnails)await fs.mkdi
 const ids=['shuku-why','shuku-participation','shuku-review','shuku-growth'];
 const browser=await chromium.launch({headless:true,channel:process.env.SHUKU_E2E_BROWSER_CHANNEL||'chrome'});
 try{
- const page=await browser.newPage({viewport:{width:1600,height:900},reducedMotion:'reduce'});page.setDefaultTimeout(60000);page.setDefaultNavigationTimeout(90000);
+ const page=await browser.newPage({viewport:{width:1600,height:900},reducedMotion:'reduce'});
+ const password=process.env.SHUKU_E2E_PASSWORD;assert.ok(password,'Set SHUKU_E2E_PASSWORD for login-first course checks');const auth=await page.request.post(base+'/api/shuku/auth/login',{headers:{Origin:base},data:{username:'xiaoman',password}});assert.equal(auth.status(),200);page.setDefaultTimeout(60000);page.setDefaultNavigationTimeout(90000);
  const errors=[];page.on('pageerror',error=>errors.push(error.message));
  for(const id of ids){
   await page.goto(base+'/scenedeck/?deck=creator-guide&slide='+id+'&scenedeckCapture=1',{waitUntil:'domcontentloaded'});
