@@ -29,6 +29,13 @@ try{
   if(id==='shuku-review'){
    await slide.getByRole('heading',{name:'3. 接受并正式发布',exact:true}).waitFor();
    await slide.getByRole('heading',{name:'对共创想法进行质量审核',exact:true}).waitFor();
+   await slide.getByRole('heading',{name:'自动质量评分',exact:true}).waitFor();
+   await slide.getByText('供审核人参考',{exact:true}).waitFor();
+   assert.equal(await slide.locator('.cg-shuku-score-result strong').innerText(),'82');
+   const scoring=await slide.locator('.cg-shuku-auto-score').boundingBox(),opinion=await slide.locator('.cg-shuku-review-comment').boundingBox(),returned=await slide.locator('.cg-shuku-return').boundingBox();
+   assert.ok(scoring.x+scoring.width<=opinion.x,'Scoring precedes reviewer opinion');
+   assert.ok(returned.y>=scoring.y+scoring.height-15,'Return path starts after scoring');
+   assert.equal(await slide.locator('.cg-shuku-conclusion').innerText(),'审核帮助发现问题、补充说明，自动质量评分提供参考，让改进更稳妥地进入正式课程。');
    const panels=slide.locator('.cg-shuku-review-panel'),principles=slide.locator('.cg-shuku-principles>section');
    for(let i=0;i<3;i++){
     const color=el=>{const s=getComputedStyle(el);return [s.backgroundColor,s.borderTopColor,s.getPropertyValue('--tone')];};
