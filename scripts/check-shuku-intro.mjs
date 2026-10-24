@@ -19,6 +19,8 @@ try{
   assert.equal(await page.locator('[data-scene-id]').getAttribute('data-scene-id'),id);
   const all=JSON.parse(await page.locator('[data-scene-ids]').getAttribute('data-scene-ids'));assert.equal(all.length,21);assert.deepEqual(all.slice(-5),['discovery-learning',...ids]);
   assert.equal(await slide.getByRole('heading',{level:1}).count(),1);
+  assert.equal(await slide.locator('.cg-shuku-eyebrow > span').count(),1,'Header contains only the section label');
+  assert.doesNotMatch(await slide.locator('.cg-shuku-heading').innerText(), /0[1-4]\s*\/\s*04/);
   assert.equal(await slide.locator('img').count(),0,'Product pages must contain real text and vector geometry');
   const overflow=await slide.evaluate(root=>{const box=root.getBoundingClientRect();return [...root.querySelectorAll('*')].filter(el=>{const r=el.getBoundingClientRect();return r.width>0&&r.height>0&&(r.left<box.left-1||r.right>box.right+1||r.top<box.top-1||r.bottom>box.bottom+1);}).map(el=>el.className?.baseVal??el.className).slice(0,15);});
   assert.deepEqual(overflow,[],id+' exceeds the 1600 × 900 canvas');
