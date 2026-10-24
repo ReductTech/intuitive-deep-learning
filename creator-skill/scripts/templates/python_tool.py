@@ -35,6 +35,7 @@ def run_task(args: argparse.Namespace) -> dict:
         RuntimeError: 依赖缺失或执行失败。
     """
     # 替换此函数主体；可选依赖在实际使用时导入，进度写入 sys.stderr。
+    # 有中间产物时添加 --module，复用 resolve_module / scratchpad_path 校验输出。
     raise NotImplementedError(
         "Implement run_task() before registering or using this tool."
     )

@@ -46,7 +46,7 @@ Python 离线工具直接运行公共包：
 ```powershell
 python -m idl_backend.tools.models.train_emnist_mobilenet_v3 --help
 python -m idl_backend.tools.content.generate_scenedeck_thumbnails --help
-python -m idl_backend.tools.media.remove_green_screen input.mp4
+python -m idl_backend.tools.media.remove_green_screen input.mp4 --module <模块目录名>
 ```
 
 新增任务只在 `contracts/tasks.py` 注册；新增课程使用 `outlines.json.moduleIdentity.id`，不用目录名作为身份。

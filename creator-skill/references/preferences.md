@@ -13,7 +13,7 @@
 - 协作习惯：重设计先看交互设计图，确认后再改代码；局部修改保留已认可的其他页面。
 - 文档习惯：不额外生成无用途的 Brief、Visual Plan、评分表或流程报告。
 
-通用方法分别见[教育学](design/pedagogy.md)、[设计学](design/design.md)、[交互设计](design/interaction-design.md)与[美学](design/aesthetics.md)，本文件不再重复维护。
+通用方法统一见[页面设计指导](design/design.md)，本文件不再重复维护。
 
 ## 推测用户可能喜欢
 

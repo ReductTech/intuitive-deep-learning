@@ -143,6 +143,7 @@ def test_media_execution_preserves_encoding_options_and_reports_files(
 
     source = tmp_path / "input.mp4"
     source.write_bytes(b"fixture")
+    monkeypatch.setattr(media, "resolve_module", lambda _: (tmp_path, {}))
     calls = []
     monkeypatch.setattr(media.shutil, "which", lambda _: "ffmpeg")
     monkeypatch.setattr(
@@ -150,12 +151,12 @@ def test_media_execution_preserves_encoding_options_and_reports_files(
         "run",
         lambda command, **kwargs: calls.append((command, kwargs)),
     )
-    assert media.main([str(source)]) == 0
+    assert media.main([str(source), "--module", "fixture"]) == 0
     result = json.loads(capsys.readouterr().out)
     assert result["status"] == "ok"
     assert result["files"] == [
-        str(source.with_name("input_alpha.webm")),
-        str(source.with_name("input_alpha.mov")),
+        str(tmp_path / "_scratchpad/media/input_alpha.webm"),
+        str(tmp_path / "_scratchpad/media/input_alpha.mov"),
     ]
     assert len(calls) == 2
     assert "libvpx-vp9" in calls[0][0] and "prores_ks" in calls[1][0]

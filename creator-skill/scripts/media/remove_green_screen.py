@@ -2,7 +2,8 @@
 """Remove a green screen and export transparent WebM and MOV files.
 
 Reads: The input video; FFmpeg must be available on PATH.
-Writes: Sibling <stem>_alpha.webm and <stem>_alpha.mov files, overwriting these outputs.
+Writes: <stem>_alpha.webm and <stem>_alpha.mov in the module's _scratchpad/media,
+overwriting these outputs. Promote accepted assets separately.
 """
 
 from __future__ import annotations
@@ -14,7 +15,7 @@ import subprocess
 import sys
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "common"))
-from _common import emit_result, report_error
+from _common import emit_result, report_error, resolve_module, scratchpad_path
 
 SIMILARITY = 0.36
 BLEND = 0.12
@@ -26,18 +27,27 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "input", type=Path, help="input video path, relative to the working directory"
     )
+    parser.add_argument(
+        "--module", required=True, help="target module directory, ID or UUID"
+    )
+    parser.add_argument(
+        "--output",
+        type=Path,
+        help="output directory inside the module's _scratchpad, relative to cwd; default _scratchpad/media",
+    )
     return parser
 
 
-def remove_green_screen(source: Path) -> dict:
+def remove_green_screen(source: Path, output: Path) -> dict:
     """Encode both alpha outputs; propagate FFmpeg failures to the CLI boundary."""
     if shutil.which("ffmpeg") is None:
         raise RuntimeError("FFmpeg was not found on PATH.")
     src = source.expanduser().resolve()
     if not src.is_file():
         raise ValueError(f"Input video does not exist: {src}")
-    out_webm = src.with_name(f"{src.stem}_alpha.webm")
-    out_mov = src.with_name(f"{src.stem}_alpha.mov")
+    output.mkdir(parents=True, exist_ok=True)
+    out_webm = output / f"{src.stem}_alpha.webm"
+    out_mov = output / f"{src.stem}_alpha.mov"
     # Chroma distance and despill retain soft edges and remove green reflections.
     vf = f"chromakey=0x00FF00:{SIMILARITY}:{BLEND},despill=green,format=rgba"
     webm_cmd = [
@@ -107,7 +117,14 @@ def remove_green_screen(source: Path) -> dict:
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     try:
-        emit_result(remove_green_screen(args.input))
+        directory, _ = resolve_module(args.module)
+        output = scratchpad_path(directory, args.output, default="media")
+        # Validate each file too: an existing symlink must not redirect the write.
+        for suffix in (".webm", ".mov"):
+            scratchpad_path(
+                directory, output / f"{args.input.stem}_alpha{suffix}", default=""
+            )
+        emit_result(remove_green_screen(args.input, output))
         return 0
     except (OSError, ValueError, RuntimeError, subprocess.SubprocessError) as exc:
         return report_error(exc)

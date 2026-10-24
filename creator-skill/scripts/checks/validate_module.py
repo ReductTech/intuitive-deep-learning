@@ -120,6 +120,8 @@ def validate_modules(repository: Path, requested: str | None = None) -> list[str
         if local_assets.is_dir() and any(p.is_file() for p in local_assets.rglob("*")):
             errors.append(f"{label}: move module-local assets to assets/{module_id}/")
         for source in directory.rglob("*"):
+            if "_scratchpad" in source.relative_to(directory).parts:
+                continue
             if source.suffix not in {".ts", ".tsx", ".css"}:
                 continue
             text = source.read_text(encoding="utf-8-sig")

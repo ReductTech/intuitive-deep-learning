@@ -12,6 +12,7 @@ settings.json
 upgrade.md
 runtime_logs/
 # Frontend dependencies and build output
+/modules/*/_scratchpad/
 node_modules/
 dist/
 *.tsbuildinfo

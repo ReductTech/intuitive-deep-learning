@@ -14,6 +14,7 @@ export function buildParser() {
 }
 function pageSources(directory) {
     return fs.readdirSync(directory, { withFileTypes: true }).flatMap(entry => {
+        if (entry.name === '_scratchpad') return [];
         const file = path.join(directory, entry.name);
         return entry.isDirectory() ? pageSources(file) : entry.name.endsWith('.tsx') ? [file] : [];
     });

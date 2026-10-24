@@ -2,7 +2,8 @@
 """Build an offline page statistics report.
 
 Reads: Module sources, existing thumbnails and optional text counts.
-Writes: HTML, CSV and JSON reports. Does not run course code or access the network.
+Writes: HTML, CSV and JSON reports in each module's _scratchpad/reports.
+Does not run course code or access the network.
 """
 
 from __future__ import annotations
@@ -20,7 +21,7 @@ import subprocess
 from datetime import datetime, timezone
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "common"))
-from _common import ROOT, emit_result, report_error
+from _common import ROOT, emit_result, report_error, resolve_module, scratchpad_path
 
 HTML_TEMPLATE = r"""<!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -45,7 +46,7 @@ HTML_TEMPLATE = r"""<!doctype html>
 <dt>图片、视频、图形 / 图表</dt><dd>统计显式 JSX 标签：img / Image、video / Video、Chart / Plot / Diagram / canvas / svg。循环和条件分支同样近似；CSS 背景图和自定义组件中的隐式媒体可能漏计，图形包含装饰 SVG，不能直接解释成独立知识图的数量。</dd>
 <dt>主要颜色数量</dt><dd>将缩略图 RGB 每通道量化为 16 档（最多 4096 色），只保留面积占比至少 0.1% 的色块数。该值减少抗锯齿噪声，但照片、纹理和渐变仍会增加色数，不等同于设计系统的主题色数量。</dd>
 <dt>视觉复杂度辅助指标</dt><dd>边缘密度 = 横纵相邻像素灰度差 &gt; 20 的像素对占比；灰度熵用于描述明暗变化，单位 bits；彩色区域指 HSV 饱和度至少 0.2 的像素面积。平均灰度、灰度标准差也写入 CSV。它们描述视觉特征，不是质量评分。</dd>
-<dt>复用命令</dt><dd><code>python creator-skill/scripts/tools.py analyze.pages</code><br><code>python creator-skill/scripts/analysis/page_statistics.py --module Neuron-Guide --output work/neuron-statistics.html</code></dd>
+<dt>复用命令</dt><dd><code>python creator-skill/scripts/tools.py analyze.pages</code><br><code>python creator-skill/scripts/tools.py analyze.pages --module Neuron-Guide</code></dd>
 </dl><details><summary id="coverage-summary"></summary><div id="coverage" class="source"></div></details></section>
 <p class="foot">本报告为离线批处理结果，可直接保存、移动和打开。没有外部脚本、网络请求或在线字体依赖。所有数值为内容分布参考，不据此自动判断页面好坏。</p>
 </main><script id="report-data" type="application/json">__REPORT_DATA__</script><script>
@@ -89,7 +90,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--output",
         type=Path,
-        help="HTML path; default creator-skill/references/page-statistics.html",
+        help="HTML path inside selected module's _scratchpad, relative to cwd; requires --module; default _scratchpad/reports/page-statistics.html",
     )
     parser.add_argument(
         "--text-counts", type=Path, help="Optional previous Chinese-header per-page CSV"
@@ -352,13 +353,10 @@ def report_html(data: dict) -> str:
     return HTML_TEMPLATE.replace("__REPORT_DATA__", payload)
 
 
-def write_report(args: argparse.Namespace) -> dict:
-    """Write the selected HTML/CSV/JSON report and return only its paths and counts."""
-    root = args.root.resolve()
-    output = (
-        args.output or root / "creator-skill/references/page-statistics.html"
-    ).resolve()
-    data = build_dataset(root, args.module, not args.no_previews, args.text_counts)
+def save_report(data: dict, directory: Path, output: Path) -> dict:
+    """Save a module report, validating all sibling files before any writes."""
+    for target in (output, output.with_suffix(".csv"), output.with_suffix(".json")):
+        scratchpad_path(directory, target, default="")
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(report_html(data), encoding="utf-8")
     csv_file = output.with_suffix(".csv")
@@ -383,6 +381,49 @@ def write_report(args: argparse.Namespace) -> dict:
         imageErrors=len(data["imageErrors"]),
         unmatched=len(data["unmatchedThumbnails"]),
     )
+
+
+def write_report(args: argparse.Namespace) -> dict:
+    """Write one report per selected module, keeping bulk analysis module-local."""
+    root = args.root.resolve()
+    if args.output and not args.module:
+        raise ValueError("--output requires --module so the report has a module owner")
+    if args.module:
+        directory, _ = resolve_module(args.module, root)
+        output = scratchpad_path(
+            directory, args.output, default="reports/page-statistics.html"
+        )
+        if output.suffix.lower() != ".html":
+            raise ValueError("Report --output must end in .html")
+        data = build_dataset(root, args.module, not args.no_previews, args.text_counts)
+        return save_report(data, directory, output)
+    # Scan once, then partition the results instead of placing a shared file in the Skill.
+    data = build_dataset(root, None, not args.no_previews, args.text_counts)
+    reports = []
+    for module in data["modules"]:
+        directory, _ = resolve_module(module["directory"], root)
+        subset = {**data, "modules": [module]}
+        subset["pages"] = [
+            p for p in data["pages"] if p["directory"] == module["directory"]
+        ]
+        ids = {p["module"] for p in subset["pages"]}
+        assets = {f"assets/{p['assetId']}/" for p in subset["pages"]}
+        subset["missingThumbnails"] = [
+            p
+            for p in data["missingThumbnails"]
+            if p.startswith(module["directory"] + "/")
+        ]
+        subset["imageErrors"] = [
+            e for e in data["imageErrors"] if e["page"].split("/", 1)[0] in ids
+        ]
+        subset["unmatchedThumbnails"] = [
+            p
+            for p in data["unmatchedThumbnails"]
+            if any(p.startswith(prefix) for prefix in assets)
+        ]
+        output = scratchpad_path(directory, default="reports/page-statistics.html")
+        reports.append(save_report(subset, directory, output))
+    return {"reports": reports, "modules": len(reports), "pages": len(data["pages"])}
 
 
 def main(argv: list[str] | None = None) -> int:

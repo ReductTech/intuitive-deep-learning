@@ -22,13 +22,17 @@ globalThis.fetch = async address => {
   return {ok:true};
 };
 globalThis.WebSocket = class {
+  inspections = 0;
   constructor() {queueMicrotask(()=>this.onopen());}
   send(raw) {
     const request = JSON.parse(raw);
     let result = {};
     if (request.method === 'Runtime.evaluate' && request.params.returnByValue) {
       assert(request.params.expression.includes(process.env.MOCK_SURFACE));
-      const value = process.env.MOCK_BOUNDS === 'missing' ? {error:'missing slide surface'} : {overflowCount:Number(process.env.MOCK_BOUNDS || 0)};
+      this.inspections++;
+      const mode = process.env.MOCK_BOUNDS;
+      const unavailable = mode === 'missing' || (mode === 'delayed' && this.inspections < 2);
+      const value = unavailable ? {ready:false,status:'unverified',error:'missing slide surface',text:{characters:null}} : {ready:true,status:mode === '1' ? 'failed' : 'passed',overflowCount:mode === '1' ? 1 : 0,text:{characters:10,maximum:null}};
       result = {result:{value}};
     }
     queueMicrotask(()=>this.onmessage({data:JSON.stringify({id:request.id,result})}));
@@ -37,13 +41,16 @@ globalThis.WebSocket = class {
 };
 process.on('exit',()=>assert(closed, 'the tool must close only its own inspection tab'));
 `;
-for (const [state, exitCode, surface] of [['0',0,'.test-slide'], ['1',1,'.test-slide'], ['missing',1,'.test-slide'], ['0',0,null]]) {
+for (const [state, exitCode, surface] of [['0',0,'.test-slide'], ['1',1,'.test-slide'], ['missing',2,'.test-slide'], ['0',0,null], ['delayed',0,'.test-slide']]) {
   test(`bounds command returns ${exitCode} for ${state} (${surface || "Shared default surface"})`,()=>{
     const result = spawnSync(process.execPath, [
       '--import', 'data:text/javascript,' + encodeURIComponent(mock), script,
       '--url','http://localhost:5173/scenedeck/?deck=demo', '--slides','one', ...(surface ? ['--surface',surface] : []),
+      '--timeout', state === 'missing' ? '1' : '1000',
     ], {encoding:'utf8',env:{...process.env, MOCK_BOUNDS:state,MOCK_SURFACE:surface || '.ppt-slide-surface'},timeout:8000});
     assert.equal(result.status, exitCode, result.stderr);
     assert(result.stdout.includes(state === 'missing' ? 'missing slide surface' : 'overflowCount'));
+    const report = JSON.parse(result.stdout);
+    assert.equal(report.slides[0].text.characters, state === 'missing' ? null : 10);
   });
 }

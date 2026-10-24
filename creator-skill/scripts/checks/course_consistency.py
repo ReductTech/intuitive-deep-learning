@@ -11,7 +11,7 @@ import json
 import sys
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "common"))
-from _common import ROOT, resolve_module, emit_result, report_error
+from _common import ROOT, resolve_module, emit_result, report_error, scratchpad_path
 from media.capture_slides import browser_session, capture_url
 
 
@@ -31,7 +31,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--save-snapshot",
         type=Path,
-        help="write the inspected snapshot to this path, relative to the working directory",
+        help="write snapshot inside the module's _scratchpad; path relative to cwd",
     )
     return parser
 
@@ -126,21 +126,33 @@ def main(argv: list[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
     try:
-        _, outline = resolve_module(args.module)
+        directory, outline = resolve_module(args.module)
+        saved = (
+            scratchpad_path(
+                directory, args.save_snapshot, default="snapshots/course.json"
+            )
+            if args.save_snapshot
+            else None
+        )
         if args.snapshot:
             snapshot = json.loads(args.snapshot.read_text(encoding="utf-8-sig"))
         else:
-            with browser_session(args.base_url, reset_storage=False) as (
+            with browser_session(
+                args.base_url,
+                reset_storage=False,
+                scratchpad=scratchpad_path(directory, default=""),
+            ) as (
                 context,
                 address,
             ):
                 snapshot = runtime_snapshot(context, address, outline)
         result = compare_course(outline, snapshot)
-        if args.save_snapshot:
-            args.save_snapshot.parent.mkdir(parents=True, exist_ok=True)
-            args.save_snapshot.write_text(
+        if saved:
+            saved.parent.mkdir(parents=True, exist_ok=True)
+            saved.write_text(
                 json.dumps(snapshot, ensure_ascii=False, indent=2), encoding="utf-8"
             )
+            result["snapshot"] = str(saved)
         emit_result(result, status="failed" if result["errors"] else "passed")
         return 1 if result["errors"] else 0
     except Exception as exc:

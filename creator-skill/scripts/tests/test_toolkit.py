@@ -85,7 +85,7 @@ def test_slide_ids_cannot_escape_output_directory():
 def test_real_capture_uses_existing_engine_for_default_and_click_states(tmp_path, monkeypatch):
     pytest.importorskip('playwright')
     from PIL import Image
-    html='''<html><style>html,body{margin:0}main{width:1600px;height:900px;background:rgb(255,0,0)}</style><main data-scene-deck-capture data-deck-id="fixture" data-scene-id="one" data-scene-ids='["one"]'><button onclick="this.parentNode.style.background='rgb(0,0,255)'">Change</button></main></html>'''
+    html='''<html><style>html,body{margin:0}main{width:1600px;height:900px;background:rgb(255,0,0)}</style><main class="ppt-slide-surface" data-scene-deck-capture data-deck-id="fixture" data-scene-id="one" data-scene-ids='["one"]'><button onclick="this.parentNode.style.background='rgb(0,0,255)'">Change</button></main></html>'''
     class Handler(BaseHTTPRequestHandler):
         def do_GET(self):
             self.send_response(200);self.send_header('Content-Type','text/html');self.end_headers();self.wfile.write(html.encode())
@@ -105,20 +105,24 @@ def test_real_capture_uses_existing_engine_for_default_and_click_states(tmp_path
                 from contextlib import nullcontext
                 monkeypatch.setattr(capture_slides, 'ROOT', tmp_path)
                 monkeypatch.setattr(capture_slides, 'resolve_module', lambda requested: (tmp_path, 'fixture', 'fixture-uuid'))
-                monkeypatch.setattr(capture_slides, 'browser_session', lambda url: nullcontext((context,address)))
+                monkeypatch.setattr(capture_slides, 'browser_session', lambda url, **kwargs: nullcontext((context,address)))
                 command=['--module','fixture','--slide','one','--settle-ms','0']
                 assert capture_slides.main(command)==0
                 actions=tmp_path/'actions.json'
                 actions.write_text(json.dumps({'one':[{'action':'click','selector':'button'}]}),encoding='utf-8')
                 assert capture_slides.main(command+['--actions',str(actions),'--state','changed'])==0
-                folder=tmp_path/'assets/fixture-uuid/scenedeck-thumbnails'
+                folder=tmp_path/'_scratchpad/screenshots'
                 with Image.open(folder/'one.png') as saved:
                     assert saved.size==(1600,900) and saved.getpixel((1000,500))==(255,0,0)
                 with Image.open(folder/'one/changed.png') as saved:
                     assert saved.size==(1600,900) and saved.getpixel((1000,500))==(0,0,255)
                 assert capture_slides.main(command+['--format','thumbnails'])==0
-                with Image.open(folder/'one.png') as saved:
+                official=tmp_path/'assets/fixture-uuid/scenedeck-thumbnails'
+                with Image.open(official/'one.png') as saved:
                     assert saved.size==(1600,900) and saved.getpixel((1000,500))==(255,0,0)
+                assert not (official/'one/changed.png').exists()
+                assert capture_slides.main(command+['--format','both'])==0
+                assert capture_slides.main(command+['--format','thumbnails','--state','changed'])==2
                 assert capture_slides.main(command+['--actions',str(actions)])==2
                 assert capture_slides.main(command+['--state','../escape'])==2
         except RuntimeError as exc:

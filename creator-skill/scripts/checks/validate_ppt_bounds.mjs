@@ -2,6 +2,7 @@
  * Reads: requested live slides. Writes: none; owns and closes only its inspection tabs.
  */
 import { emitResult, isMain, parseOptions, printHelp, reportError } from '../common/_cli.mjs';
+import {readFile} from 'node:fs/promises';
 export function buildParser() {
     return {
         help: { type: 'boolean', short: 'h', description: 'show help without contacting Chromium' },
@@ -9,6 +10,8 @@ export function buildParser() {
         slides: { type: 'string', description: 'comma-separated scene IDs; default currently selected slide' },
         surface: { type: 'string', default: '.ppt-slide-surface', description: 'actual slide container CSS selector' },
         port: { type: 'string', description: 'existing Chromium debugging port; default PPT_DEBUG_PORT or 9223' },
+        'max-chars': {type: 'string', description: 'explicit per-state character limit; omitted means count without a limit'},
+        timeout: {type: 'string', default: '15000', description: 'maximum readiness wait in milliseconds, 1..60000'},
     };
 }
 async function createTab(url, debugPort) {
@@ -17,10 +20,11 @@ async function createTab(url, debugPort) {
         throw new Error(`Cannot create browser tab: ${response.status}`);
     return response.json();
 }
-export async function auditSlide(id, { lessonUrl, debugPort, surfaceSelector }) {
+export async function auditSlide(id, { lessonUrl, debugPort, surfaceSelector, maxChars = null, timeout = 15000 }) {
     const url = new URL(lessonUrl);
     if (id !== null)
         url.searchParams.set('slide', id);
+    if (/\/scenedeck\/?$/.test(url.pathname)) url.searchParams.set('scenedeckCapture', '1');
     const tab = await createTab(url.toString(), debugPort);
     let socket;
     try {
@@ -58,45 +62,20 @@ export async function auditSlide(id, { lessonUrl, debugPort, surfaceSelector }) 
             deviceScaleFactor: 1,
             mobile: false,
         });
-        await new Promise((resolve) => setTimeout(resolve, 800));
-        await send('Runtime.evaluate', { expression: "document.fonts.ready", awaitPromise: true });
-        const expression = `(() => {
-    const surface = document.querySelector(${JSON.stringify(surfaceSelector)});
-    if (!surface) return { error: 'missing slide surface' };
-    const surfaceRect = surface.getBoundingClientRect();
-    const overflow = [];
-    for (const element of surface.querySelectorAll('*')) {
-      const rect = element.getBoundingClientRect();
-      if (rect.width === 0 && rect.height === 0) continue;
-      if (
-        rect.left < surfaceRect.left - 0.5 ||
-        rect.top < surfaceRect.top - 0.5 ||
-        rect.right > surfaceRect.right + 0.5 ||
-        rect.bottom > surfaceRect.bottom + 0.5
-      ) {
-        overflow.push({
-          tag: element.tagName,
-          className: String(element.className?.baseVal ?? element.className).slice(0, 80),
-          left: +(rect.left - surfaceRect.left).toFixed(1),
-          top: +(rect.top - surfaceRect.top).toFixed(1),
-          right: +(rect.right - surfaceRect.right).toFixed(1),
-          bottom: +(rect.bottom - surfaceRect.bottom).toFixed(1),
-        });
-      }
-    }
-    return {
-      viewport: { width: innerWidth, height: innerHeight },
-      surface: { width: surfaceRect.width, height: surfaceRect.height },
-      scroll: { width: surface.scrollWidth, height: surface.scrollHeight },
-      descendants: surface.querySelectorAll('*').length,
-      overflowCount: overflow.length,
-      overflow: overflow.slice(0, 12),
-    };
-  })()`;
-        const response = await send('Runtime.evaluate', { expression, returnByValue: true });
-        return response.result.result.value ?? {
-            error: response.result.exceptionDetails?.text ?? response.result.result.description ?? 'Evaluation failed',
-        };
+        const checker = await readFile(new URL('../common/_page_checks.js', import.meta.url), 'utf8');
+        const expression = `(${checker})(${JSON.stringify({surfaceSelector, expectedId: id ?? url.searchParams.get('slide'), maxChars})})`;
+        const deadline = Date.now() + timeout;
+        let result;
+        do {
+            const response = await send('Runtime.evaluate', {expression, returnByValue: true});
+            if (response.result.exceptionDetails) throw new Error(response.result.exceptionDetails.text || 'Page inspection failed');
+            result = response.result.result.value;
+            if (!result || typeof result.ready !== 'boolean') throw new Error('Page inspection returned no valid result');
+            if (result.ready || result.status === 'failed') return result;
+            if (Date.now() >= deadline) break;
+            await new Promise(resolve => setTimeout(resolve, 100));
+        } while (true);
+        return {...result, readinessTimedOut: true};
     }
     finally {
         socket?.close();
@@ -115,6 +94,8 @@ export async function main(argv = process.argv.slice(2)) {
             lessonUrl: args.url || process.env.PPT_LESSON_URL,
             debugPort: args.port || process.env.PPT_DEBUG_PORT || '9223',
             surfaceSelector: args.surface,
+            maxChars: args['max-chars'] === undefined ? null : Number(args['max-chars']),
+            timeout: Number(args.timeout),
         };
         if (!settings.lessonUrl)
             throw new Error('Provide --url or PPT_LESSON_URL; no course URL is assumed.');
@@ -122,15 +103,20 @@ export async function main(argv = process.argv.slice(2)) {
         if (!/^\d+$/.test(settings.debugPort) || Number(settings.debugPort) < 1 || Number(settings.debugPort) > 65535) {
             throw new Error('--port must be an integer from 1 to 65535.');
         }
+        if ((settings.maxChars !== null && (!/^\d+$/.test(args['max-chars']) || !Number.isSafeInteger(settings.maxChars))) ||
+            !/^\d+$/.test(args.timeout) || settings.timeout < 1 || settings.timeout > 60000) {
+            throw new Error('--max-chars must be a non-negative integer; --timeout must be 1..60000.');
+        }
         const ids = args.slides ? args.slides.split(',').filter(Boolean) : [null];
         if (!ids.length)
             throw new Error('--slides must contain at least one scene ID.');
         const slides = [];
         for (const id of ids)
             slides.push({ id, ...await auditSlide(id, settings) });
-        const failed = slides.some(slide => slide.error || slide.overflowCount > 0);
-        emitResult({ slides }, failed ? 'failed' : 'passed');
-        return failed ? 1 : 0;
+        const failed = slides.some(slide => slide.status === 'failed');
+        const unverified = slides.some(slide => slide.status === 'unverified' || slide.text?.status === 'unverified');
+        emitResult({slides}, unverified ? 'unverified' : failed ? 'failed' : 'passed');
+        return unverified ? 2 : failed ? 1 : 0;
     }
     catch (error) {
         return reportError(error);

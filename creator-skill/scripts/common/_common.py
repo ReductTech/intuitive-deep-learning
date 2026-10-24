@@ -42,6 +42,24 @@ def emit_result(result: dict, *, status: str = "ok") -> None:
     print(json.dumps(payload, ensure_ascii=False))
 
 
+def scratchpad_path(
+    directory: Path, requested: Path | None = None, *, default: str
+) -> Path:
+    """Resolve an intermediate output inside its module; reject escapes and symlinks out.
+
+    Explicit paths are relative to cwd, matching other tool path arguments.
+    This helper validates only; callers create directories after input validation.
+    """
+    module = directory.resolve()
+    scratchpad = (module / "_scratchpad").resolve()
+    target = (requested if requested is not None else scratchpad / default).resolve()
+    if not scratchpad.is_relative_to(module) or not target.is_relative_to(scratchpad):
+        raise ValueError(
+            f"Intermediate output must be inside {module / '_scratchpad'}: {target}"
+        )
+    return target
+
+
 def report_error(error: Exception) -> int:
     """Report an execution error on stderr and return the shared exit code 2."""
     message = str(error)

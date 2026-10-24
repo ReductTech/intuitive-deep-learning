@@ -17,13 +17,13 @@ Grid/Flex 布局子项使用 `min-width: 0` 和 `max-width: 100%`；列轨道优
 
 图片、SVG、Canvas、公式、媒体和交互组件使用 `max-width: 100%`，限制在父容器内。溢出应调整布局，不依赖裁切或 `overflow-x: auto`。样式可用模块 CSS 或已有 Tailwind 配置。
 
-完成布局修改后，按实际画布容器检查所有后代元素的边界框，不得越出画布。当前 SceneDeck 容器为 `.ppt-slide-surface`；检查方法见[评估与验收](../eval/evaluation.md)。
+完成布局修改后，检查画布外越界与容器内部溢出，并实际查看截图。有意内部视口需明确标记用途且自身不越出画布，不用裁切掩盖本应完整展示的内容。当前 SceneDeck 容器为 `.ppt-slide-surface`；检查方法见[基础检查与验收](../eval/checks.md)。
 
 ## 活跃模块与依赖边界
 
 - `modules/` 是唯一活跃模块目录。`src/`、`web_ppt/` 和活跃模块的运行时代码只依赖 `modules/` 内代码与正常项目依赖。
 - `modules-legacy/` 是可随时移除的归档，不从中导入、请求、链接或加载运行时代码和资源。
-- 模块专属静态资源的目录与引用方式统一见[模块资源](module-assets.md)；真正共用的运行时代码和资源放在 `modules/shared/`。
+- 模块 UUID、专属静态资源目录与引用方式统一见[模块身份与资源](module-assets.md)；真正共用的运行时代码和资源放在 `modules/shared/`。
 - 只有实现已存在于 `modules/` 的模块才可注册到活跃应用，入口文件必须实际存在。
 
 ## 模块组织

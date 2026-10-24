@@ -2,7 +2,8 @@
 """Capture real 1600x900 SceneDeck screenshots.
 
 Reads: The selected module and requested browser states.
-Writes: PNG files in the UUID thumbnail directory or --output; owns and closes its browser/Vite.
+Writes: Evaluation PNGs in the module's _scratchpad/screenshots; thumbnails in
+assets/<UUID>/scenedeck-thumbnails only when requested. Owns its browser/Vite.
 """
 
 from __future__ import annotations
@@ -25,7 +26,7 @@ from urllib.parse import urlencode
 from urllib.request import urlopen
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "common"))
-from _common import emit_result, report_error
+from _common import emit_result, report_error, scratchpad_path
 from idl_backend.config import repository_root
 
 ROOT = repository_root()
@@ -43,10 +44,20 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("--slide", help="one slide ID; default all slides")
     parser.add_argument(
+        "--max-chars",
+        type=int,
+        help="explicit per-state non-whitespace character limit; omitted means count only",
+    )
+    parser.add_argument(
+        "--surface",
+        default=".ppt-slide-surface",
+        help="slide surface CSS selector for geometry and text checks; default .ppt-slide-surface",
+    )
+    parser.add_argument(
         "--format",
         choices=["screenshots", "thumbnails", "both"],
         default="screenshots",
-        help="compatibility output mode; all modes save the same original PNG",
+        help="screenshots: module _scratchpad; thumbnails: official assets; both: write both (default screenshots)",
     )
     parser.add_argument(
         "--state",
@@ -56,7 +67,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--output",
         type=Path,
-        help="image directory; relative to cwd, default assets/<UUID>/scenedeck-thumbnails",
+        help="image directory relative to cwd, within module _scratchpad (screenshots/both) or official thumbnail directory (thumbnails)",
     )
     parser.add_argument(
         "--base-url", help="running Vite URL; omit to start and stop a temporary Vite"
@@ -123,7 +134,7 @@ def free_port() -> int:
 
 
 @contextmanager
-def vite_server():
+def vite_server(log_directory: Path | None = None):
     node = shutil.which("node")
     vite = ROOT / "node_modules" / "vite" / "bin" / "vite.js"
     if not node or not vite.is_file():
@@ -131,7 +142,9 @@ def vite_server():
             "Node/Vite is unavailable. Run npm install in the repository first."
         )
     port = free_port()
-    with tempfile.TemporaryFile(mode="w+t", encoding="utf-8") as log:
+    if log_directory:
+        log_directory.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryFile(mode="w+t", encoding="utf-8", dir=log_directory) as log:
         process = subprocess.Popen(
             [
                 node,
@@ -218,7 +231,15 @@ def scene_ids(context, base_url: str, deck_id: str) -> list[str]:
 
 
 def capture_slide(
-    context, base_url: str, deck_id: str, slide_id: str, settle_ms: int, actions=None
+    context,
+    base_url: str,
+    deck_id: str,
+    slide_id: str,
+    settle_ms: int,
+    actions=None,
+    inspection: dict | None = None,
+    max_chars: int | None = None,
+    surface: str = ".ppt-slide-surface",
 ) -> Image.Image:
     page, capture = open_capture(context, capture_url(base_url, deck_id, slide_id))
     try:
@@ -231,6 +252,8 @@ def capture_slide(
         }""")
         apply_actions(page, actions or [])
         page.wait_for_timeout(settle_ms)
+        if inspection is not None:
+            inspection.update(inspect_page(page, slide_id, max_chars, surface))
         screenshot = capture.screenshot(
             type="png", animations="disabled", timeout=30000
         )
@@ -242,6 +265,35 @@ def capture_slide(
             return image.convert("RGB").copy()
     finally:
         page.close()
+
+
+def inspect_page(
+    page,
+    slide_id: str,
+    max_chars: int | None = None,
+    surface: str = ".ppt-slide-surface",
+) -> dict:
+    """Inspect the current state with the same browser expression as check.bounds."""
+    checker = (
+        Path(__file__).resolve().parents[1] / "common/_page_checks.js"
+    ).read_text(encoding="utf-8")
+    options = {
+        "surfaceSelector": surface,
+        "expectedId": slide_id,
+        "maxChars": max_chars,
+    }
+    try:
+        page.wait_for_function(
+            f"options => {{ const result = ({checker})(options); return result.ready || result.status === 'failed'; }}",
+            arg=options,
+            timeout=15000,
+        )
+    except PlaywrightError:
+        # Return the observed missing/hidden/loading state, never a zero-word success.
+        result = page.evaluate(checker, options)
+        result["readinessTimedOut"] = True
+        return result
+    return page.evaluate(checker, options)
 
 
 def apply_actions(page, actions):
@@ -273,11 +325,13 @@ def safe_slide_id(value):
 
 
 @contextmanager
-def browser_session(base_url=None, reset_storage=True):
+def browser_session(base_url=None, reset_storage=True, scratchpad=None):
     """One isolated browser context; never touches the user's browser profile."""
     load_dependencies()
     with (
-        nullcontext(base_url.rstrip("/")) if base_url else vite_server() as address,
+        (
+            nullcontext(base_url.rstrip("/")) if base_url else vite_server(scratchpad)
+        ) as address,
         sync_playwright() as playwright,
     ):
         browser = launch_browser(playwright)
@@ -303,12 +357,34 @@ def capture_module(args: argparse.Namespace, context_setup=None) -> dict:
     """Capture the requested states, returning saved paths and any per-slide errors."""
     if args.settle_ms < 0:
         raise ValueError("--settle-ms must be non-negative")
+    if args.max_chars is not None and args.max_chars < 0:
+        raise ValueError("--max-chars must be non-negative")
     safe_slide_id(args.state)
     if args.actions and args.state == "default":
         raise ValueError(
             "Use --state <name> with --actions to preserve the default screenshot."
         )
-    _, deck_id, asset_id = resolve_module(args.module)
+    directory, deck_id, asset_id = resolve_module(args.module)
+    if args.format in {"thumbnails", "both"} and args.state != "default":
+        raise ValueError(
+            "Interactive states are evaluation screenshots; use --format screenshots"
+        )
+    thumbnail_root = (ROOT / "assets" / asset_id / "scenedeck-thumbnails").resolve()
+    destinations = []
+    if not args.inspect:
+        if args.format in {"screenshots", "both"}:
+            destinations.append(
+                scratchpad_path(directory, args.output, default="screenshots")
+            )
+        if args.format in {"thumbnails", "both"}:
+            thumbnail_output = (
+                args.output
+                if args.format == "thumbnails" and args.output
+                else thumbnail_root
+            ).resolve()
+            if not thumbnail_output.is_relative_to(thumbnail_root):
+                raise ValueError(f"Thumbnail output must be inside {thumbnail_root}")
+            destinations.append(thumbnail_output)
     actions = (
         json.loads(args.actions.read_text(encoding="utf-8-sig")) if args.actions else {}
     )
@@ -317,7 +393,9 @@ def capture_module(args: argparse.Namespace, context_setup=None) -> dict:
         for items in actions.values()
     ):
         raise ValueError("Actions must map slide IDs to arrays of action objects.")
-    with browser_session(args.base_url) as (context, base_url):
+    with browser_session(
+        args.base_url, scratchpad=scratchpad_path(directory, default="")
+    ) as (context, base_url):
         if context_setup is not None:
             context_setup(context, asset_id)
         ids = scene_ids(context, base_url, deck_id)
@@ -335,12 +413,10 @@ def capture_module(args: argparse.Namespace, context_setup=None) -> dict:
             raise ValueError(
                 "Actions include slides outside the requested capture range."
             )
-        screenshots = (
-            args.output or ROOT / "assets" / asset_id / "scenedeck-thumbnails"
-        ).resolve()
-        screenshots.mkdir(parents=True, exist_ok=True)
-        files, errors = [], []
+        files, errors, checks = [], [], []
         for slide_id in ids:
+            inspection = {"page": slide_id, "state": args.state}
+            checks.append(inspection)
             try:
                 image = capture_slide(
                     context,
@@ -349,21 +425,37 @@ def capture_module(args: argparse.Namespace, context_setup=None) -> dict:
                     slide_id,
                     args.settle_ms,
                     actions.get(slide_id),
+                    inspection,
+                    args.max_chars,
+                    args.surface,
                 )
-                target = (
-                    screenshots / f"{slide_id}.png"
-                    if args.state == "default"
-                    else screenshots / slide_id / f"{args.state}.png"
-                )
-                target.parent.mkdir(parents=True, exist_ok=True)
-                image.save(target, format="PNG", optimize=True)
-                files.append(str(target))
-                print(
-                    f"Captured {deck_id}/{slide_id}: {target}",
-                    file=sys.stderr,
-                    flush=True,
-                )
+                for screenshots in destinations:
+                    target = (
+                        screenshots / f"{slide_id}.png"
+                        if args.state == "default"
+                        else screenshots / slide_id / f"{args.state}.png"
+                    )
+                    if screenshots.is_relative_to(thumbnail_root):
+                        if not target.resolve().is_relative_to(thumbnail_root):
+                            raise ValueError(
+                                f"Thumbnail path escapes output directory: {target}"
+                            )
+                    else:
+                        target = scratchpad_path(directory, target, default="")
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    image.save(target, format="PNG", optimize=True)
+                    files.append(str(target))
+                    print(
+                        f"Captured {deck_id}/{slide_id}: {target}",
+                        file=sys.stderr,
+                        flush=True,
+                    )
             except Exception as exc:
+                inspection.update(
+                    status="unverified",
+                    text={"status": "unverified", "characters": None},
+                    error=str(exc),
+                )
                 errors.append({"slide": slide_id, "error": str(exc)})
                 print(f"FAILED {slide_id}: {exc}", file=sys.stderr)
         return {
@@ -372,6 +464,7 @@ def capture_module(args: argparse.Namespace, context_setup=None) -> dict:
             "state": args.state,
             "files": files,
             "errors": errors,
+            "checks": checks,
         }
 
 
@@ -379,9 +472,21 @@ def main(argv: list[str] | None = None, context_setup=None) -> int:
     args = build_parser().parse_args(argv)
     try:
         result = capture_module(args, context_setup)
-        failed = bool(result.get("errors"))
-        emit_result(result, status="error" if failed else "ok")
-        return 2 if failed else 0
+        failed = any(
+            check.get("status") == "failed" for check in result.get("checks", [])
+        )
+        unverified = any(
+            check.get("status") == "unverified"
+            or check.get("text", {}).get("status") == "unverified"
+            for check in result.get("checks", [])
+        )
+        status = (
+            "error"
+            if result.get("errors")
+            else "unverified" if unverified else "failed" if failed else "ok"
+        )
+        emit_result(result, status=status)
+        return 2 if status in {"error", "unverified"} else 1 if failed else 0
     except (
         RuntimeError,
         ValueError,

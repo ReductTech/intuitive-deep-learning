@@ -19,6 +19,7 @@ export function buildParser() {
  */
 export async function runTask(args) {
   // 替换此函数主体；可选依赖在实际使用时加载，进度使用 console.error。
+  // 有中间产物时添加 --module；写入前验证所有目标均在该模块的 _scratchpad 内。
   throw new Error('Implement runTask() before registering or using this tool.');
 }
 

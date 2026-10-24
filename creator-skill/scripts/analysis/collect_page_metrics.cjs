@@ -254,7 +254,9 @@ function collectMetrics(repository) {
         pages.push(...rows);
         modules.push({ directory: dir, id: outline.id || dir, title: outline.title, configuredPages: outline.pages?.length || 0, detectedPages: rows.length });
     }
-    return { schemaVersion: 1, root, modules, pages };
+    return { schemaVersion: 1, root, modules, pages,
+        textCountMethod: 'source-approximation',
+        textCountLimitations: 'Non-whitespace Unicode code points from statically extracted literals; hidden branches may be included, dynamic/media text may be missing. Not current rendered-state counts.' };
 }
 async function main(argv = process.argv.slice(2)) {
     const { emitResult, parseOptions, printHelp, reportError } = await import('../common/_cli.mjs');
