@@ -1,3 +1,4 @@
+import {ProfilePage} from '../shuku/Profile';
 import {BuiltinLearning} from '../shuku/BuiltinLearning';
 import {MessagesPage} from '../shuku/Messages';
 import {LearningPage} from '../shuku/LearningPage';
@@ -33,6 +34,7 @@ function SceneDeckPage() {
 
 export const appRoutes: AppRoute[] = [
   { path: '/', element: <HomePage /> },
+  { path: '/profile', element: <ProfilePage /> },
   { path: '/messages', element: <MessagesPage /> },
   { path: '/study', element: <BuiltinLearning /> },
   { path: '/learn', element: <LearningPage /> },

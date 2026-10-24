@@ -3,7 +3,7 @@ import type {User} from './client';
 import {SessionControl} from './SessionControl';
 import '../app/HomePage.css';
 import './shuku.css';
-type Section='courses'|'saved'|'history'|'authoring'|'messages';
+type Section='courses'|'saved'|'history'|'authoring'|'messages'|'profile';
 export function SiteHeader({section,savedCount=0,onBrowse,user}:{section:Section;savedCount?:number;user?:User|null;onBrowse?:(section:'courses'|'saved')=>void}){
  const [open,setOpen]=useState(false);
  const menu=useRef<HTMLDivElement>(null),trigger=useRef<HTMLButtonElement>(null);

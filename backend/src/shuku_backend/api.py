@@ -151,6 +151,11 @@ def handler_for(app):
                 user=app.store.session_user(token_hash(raw_token),app.clock())
                 if self.command=="GET" and path=="/api/shuku/auth/me":
                     return self.send_json(200,{"user":user})
+                if path=='/api/shuku/profile' and self.command in ('GET','POST'):
+                    if self.command=='GET':
+                        return self.send_json(200,app.store.profile(user['id']))
+                    require(self.headers.get('X-Shuku-Account')==user['id'],409,'ACCOUNT_CHANGED','登录账号已切换，请刷新页面后继续。')
+                    return self.send_json(200,app.store.save_profile(user['id'],self.body(),app.clock()))
                 if self.command=='POST' and path in ('/api/shuku/personal/study','/api/shuku/personal/favorites'):
                     require(self.headers.get('X-Shuku-Account') in (None,user['id']),409,'ACCOUNT_CHANGED','登录账号已切换，请刷新页面后继续。')
                 if self.command=='GET' and path=='/api/shuku/personal':
