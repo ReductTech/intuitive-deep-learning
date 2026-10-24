@@ -1,3 +1,4 @@
+import {ShukuWhyPage,ShukuParticipationPage,ShukuReviewPage,ShukuGrowthPage} from './pages/ShukuIntroPages';
 import './CreatorTypography.css';
 import { TitlePage } from './pages/TitlePage';
 import { SceneDeck, type DeckDefinition } from '../shared/react/presentation';
@@ -39,9 +40,13 @@ export const deck: DeckDefinition = {
     { id: 'optional-interaction', title: outline.pages[14].title, section: '教学设计示意', render: () => <OptionalInteractionPage /> },
     { id: 'progressive-disclosure', title: outline.pages[15].title, section: '教学设计示意', render: () => <ProgressiveDisclosurePage /> },
     { id: 'discovery-learning', title: outline.pages[16].title, section: '教学设计示意', render: () => <DiscoveryLearningPage /> },
+    { id: 'shuku-why', title: outline.pages[17].title, section: '术库 · 知识共创', render: () => <ShukuWhyPage /> },
+    { id: 'shuku-participation', title: outline.pages[18].title, section: '术库 · 知识共创', render: () => <ShukuParticipationPage /> },
+    { id: 'shuku-review', title: outline.pages[19].title, section: '术库 · 知识共创', render: () => <ShukuReviewPage /> },
+    { id: 'shuku-growth', title: outline.pages[20].title, section: '术库 · 知识共创', render: () => <ShukuGrowthPage /> },
   ],
 };
-export const getPptNotes = (sceneId: string) => [{ text: outline.pages.find(page => page.id === sceneId)?.snippet ?? '', selectors: [sceneId === 'creator-guide-title' ? '.cg-cover-page' : sceneId === 'learning-goals' ? '.cg-goal-page' : sceneId === 'education-paths' ? '.cg-education-page' : sceneId === 'popular-science' ? '.cg-pop-page' : sceneId === 'professional-education' ? '.cg-pro-page' : sceneId === 'intuitive-learning' ? '.cg-intuitive-page' : sceneId === 'multi-format' ? '.cg-format-page' : sceneId === 'discovery-learning' ? '.cg-discovery-page' : sceneId === 'progressive-disclosure' ? '.cg-disclosure-page' : sceneId === 'optional-interaction' ? '.cg-optional-page' : sceneId === 'creation-workflow' ? '.cg-workflow-page' : sceneId === 'human-collaboration' ? '.cg-human-page' : sceneId === 'presentation-comparison' ? '.cg-case-page' : sceneId === 'ui-kit' ? '.cg-kit-assembly-page' : sceneId === 'skill-overview' ? '.cg-overview-page' : sceneId === 'skill-constraints' ? '.cg-constraints-page' : sceneId === 'frontend-journey' ? '.cg-journey-page' : '.cg-cover-page'] }];
+export const getPptNotes = (sceneId: string) => [{ text: outline.pages.find(page => page.id === sceneId)?.snippet ?? '', selectors: [sceneId.startsWith('shuku-') ? '.cg-shuku-'+sceneId.slice(6) : sceneId === 'creator-guide-title' ? '.cg-cover-page' : sceneId === 'learning-goals' ? '.cg-goal-page' : sceneId === 'education-paths' ? '.cg-education-page' : sceneId === 'popular-science' ? '.cg-pop-page' : sceneId === 'professional-education' ? '.cg-pro-page' : sceneId === 'intuitive-learning' ? '.cg-intuitive-page' : sceneId === 'multi-format' ? '.cg-format-page' : sceneId === 'discovery-learning' ? '.cg-discovery-page' : sceneId === 'progressive-disclosure' ? '.cg-disclosure-page' : sceneId === 'optional-interaction' ? '.cg-optional-page' : sceneId === 'creation-workflow' ? '.cg-workflow-page' : sceneId === 'human-collaboration' ? '.cg-human-page' : sceneId === 'presentation-comparison' ? '.cg-case-page' : sceneId === 'ui-kit' ? '.cg-kit-assembly-page' : sceneId === 'skill-overview' ? '.cg-overview-page' : sceneId === 'skill-constraints' ? '.cg-constraints-page' : sceneId === 'frontend-journey' ? '.cg-journey-page' : '.cg-cover-page'] }];
 export function CreatorPpt() {
   return <SceneDeck catalog={[deck]} moduleId={outline.id} assetId={outline.moduleIdentity.id} progressKey="lesson-flow:creator-guide-v1" getNotes={getPptNotes}/>;
 }
