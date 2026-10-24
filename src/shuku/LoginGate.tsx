@@ -1,6 +1,7 @@
 import {Fragment,useEffect,useRef,useState,type ReactNode} from 'react';
 import {api,ApiError,type User} from './client';
 import {PhoneLogin} from './PhoneLogin';
+import './SessionGate.css';
 
 export function LoginGate({children}:{children:ReactNode}){
  const [user,setUser]=useState<User|null>(null),[checking,setChecking]=useState(true),[unavailable,setUnavailable]=useState(false),[error,setError]=useState(''),[busy,setBusy]=useState(false);
@@ -27,6 +28,7 @@ export function LoginGate({children}:{children:ReactNode}){
   catch(e){if(request===generation.current)setError((e as Error).message||'登录未成功，请重试。');}
   finally{loggingIn.current=false;setBusy(false);}
  }
- if(!checking&&user)return <Fragment key={user.id}>{children}</Fragment>;
+ if(user)return <Fragment key={user.id}>{children}</Fragment>;
+ if(checking||unavailable)return <main className="shuku-session-gate" aria-busy={checking}><section aria-label="登录状态">{checking?<p role="status">正在恢复登录状态…</p>:<><p role="alert">{error}</p><button onClick={()=>void check(true)}>重新验证</button></>}</section></main>;
  return <PhoneLogin checking={checking} unavailable={unavailable} error={error} busy={busy} onRetry={()=>void check(true)} onClearError={()=>setError('')} onDemo={form=>void login('/auth/login',Object.fromEntries(new FormData(form)))} onPhone={(method,phone,credential)=>void login('/auth/phone-login',{method,phone,...(method==='sms'?{code:credential}:{password:credential})})}/>;
 }
