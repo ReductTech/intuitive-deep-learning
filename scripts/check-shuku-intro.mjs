@@ -25,7 +25,18 @@ try{
   const overflow=await slide.evaluate(root=>{const box=root.getBoundingClientRect();return [...root.querySelectorAll('*')].filter(el=>{const r=el.getBoundingClientRect();return r.width>0&&r.height>0&&(r.left<box.left-1||r.right>box.right+1||r.top<box.top-1||r.bottom>box.bottom+1);}).map(el=>el.className?.baseVal??el.className).slice(0,15);});
   assert.deepEqual(overflow,[],id+' exceeds the 1600 × 900 canvas');
   if(id==='shuku-participation'){assert.match(await slide.getByRole('heading',{level:1}).innerText(), /每个人都可以参与到课程的进化/);assert.doesNotMatch(await slide.innerText(), /每个人都可以找到参与的位置/);}
-  if(id==='shuku-review'){await slide.getByText('审核通过后，仍需合并并发布。',{exact:false}).waitFor();await slide.getByText('学习者可继续旧版，或主动切换新版。',{exact:false}).waitFor();}
+  if(id==='shuku-review'){await slide.getByText('审核通过后，仍需接受并发布。',{exact:false}).waitFor();await slide.getByText('学习者可继续旧版，或主动切换新版。',{exact:false}).waitFor();}
+  if(id==='shuku-review'){
+   await slide.getByRole('heading',{name:'3. 接受并正式发布',exact:true}).waitFor();
+   await slide.getByRole('heading',{name:'对共创想法进行质量审核',exact:true}).waitFor();
+   const panels=slide.locator('.cg-shuku-review-panel'),principles=slide.locator('.cg-shuku-principles>section');
+   for(let i=0;i<3;i++){
+    const color=el=>{const s=getComputedStyle(el);return [s.backgroundColor,s.borderTopColor,s.getPropertyValue('--tone')];};
+    assert.deepEqual(await panels.nth(i).evaluate(color),await principles.nth(i).evaluate(color),'Corresponding review panels must share their palette');
+   }
+   const heading=slide.getByRole('heading',{name:'对共创想法进行质量审核',exact:true});
+   assert.ok(await heading.evaluate(el=>el.scrollWidth<=el.clientWidth),'Quality review title fits its card');
+  }
   if(id==='shuku-growth'){
    assert.equal(await slide.locator('.cg-shuku-loop-node').count(),6);
    for(const [version,note] of [['v1.0','新增贴近实际的案例'],['v1.1','补齐演示的适用条件'],['v1.2','优化互动演示与讲解']]){const button=slide.getByRole('button',{name:'查看示例版本 '+version,exact:true});await button.focus();await page.keyboard.press('Enter');assert.equal(await button.getAttribute('aria-pressed'),'true');assert.equal(await slide.locator('.cg-shuku-course .cg-shuku-version').textContent(),version);await slide.getByText(note,{exact:true}).waitFor();}
