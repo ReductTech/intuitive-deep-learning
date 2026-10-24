@@ -87,7 +87,7 @@ python creator-skill/scripts/tools.py module.init --directory the_module_name
 - `path` 使用 `/modules/` 加模块目录名的小写形式。
 - `entry` 指向模块根目录实际存在的 TSX 文件，组件按文件名命名导出；PPT 入口遵循相同规则。
 - `src/app/modules.tsx` 自动发现大纲与模块根目录入口。一般新增课程不需要修改全局路由。
-- PPT 入口导出 `deck`；按需导出 `getPptNotes`，通过共享 SceneDeck 播放。
+- PPT 入口导出 `deck`；按需导出 `getPptNotes`，通过共享 术库 播放。
 - 大纲阶段允许保存待讨论的结构，但不得将尚不存在的实现标记为已完成模块。
 - 正式交付前，核对入口文件存在、已实现页面的 Guide 与 PPT 页序和大纲对应，以及大纲与实际实现相符。大纲可以包含尚待实现的页面，不能因此声称这些页面已经可以播放。
 - 页面数量由教学需要决定，不为满足固定数量合并或拆分页面。

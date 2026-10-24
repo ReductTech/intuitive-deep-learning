@@ -38,7 +38,7 @@ class PersonalLearning:
         rid=str(release['revision_id'])
         return {'resource':key,'title':project['title'],'version':rid,'version_label':'v'+release['version'],
                 'course_id':cid,'revision_id':rid,'pages':[p['id'] for p in project['pages']],
-                'url':'/learn?revision='+rid,'available':True}
+                'sandboxed':bool(project.get('source')),'url':'/learn?revision='+rid,'available':True}
 
     def context(self,key,version):
         with self.store.transaction() as db:return self.resource(db,key,version)

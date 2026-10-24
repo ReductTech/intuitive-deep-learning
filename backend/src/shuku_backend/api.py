@@ -1,3 +1,4 @@
+from .admin import listing as admin_listing
 """Standalone same-origin HTTP API. No changes to idl_backend HTTP handlers."""
 from hashlib import sha256
 from http.cookies import SimpleCookie, CookieError
@@ -7,6 +8,7 @@ import json
 import re
 import threading
 from .errors import BusinessError, require
+from .source import SANDBOX_CSP
 
 COOKIE="shuku_session"
 
@@ -94,7 +96,9 @@ def handler_for(app):
                     require(0<size<=1024*1024,413,'BODY_LIMIT','Webhook 请求体过大或为空。')
                     return self.send_json(202,app.workflow.github.webhook(self.headers,self.rfile.read(size)))
                 query=parse_qs(url.query,keep_blank_values=True)
-                require(not url.query or self.command=='GET' and path in ('/api/shuku/messages','/api/shuku/personal') and set(query)=={'cursor'} and len(query['cursor'])==1 and query['cursor'][0],400,'INVALID_INPUT','该接口不接受这些查询参数。')
+                admin_path=re.fullmatch(r'/api/shuku/admin/(courses|contributions|reports|records)',path)
+                allowed_query=self.command=='GET' and ((path in ('/api/shuku/messages','/api/shuku/personal') and set(query)=={'cursor'} and len(query['cursor'])==1 and query['cursor'][0]) or (admin_path and set(query)=={'page'} and len(query['page'])==1))
+                require(not url.query or allowed_query,400,'INVALID_INPUT','该接口不接受这些查询参数。')
                 if self.command=="GET" and path=="/api/shuku/health":
                     app.store.ready()
                     return self.send_json(200,{"ok":True,"service":"shuku_backend"})
@@ -114,14 +118,30 @@ def handler_for(app):
                     try:viewer=app.store.session_user(token_hash(token_from(self.headers.get("Cookie"))),app.clock())["id"]
                     except BusinessError:viewer=None
                     content,mime=app.workflow.file(viewer,file_route[1],unquote(file_route[2]))
+                    sandboxed=unquote(file_route[2])=='index.html' and app.workflow.sandboxed(viewer,file_route[1])
                     self.send_response(200)
                     self.send_header("Content-Type",mime)
                     self.send_header("Content-Length",str(len(content)))
                     self.send_header("Cache-Control","private, no-store")
                     self.send_header("X-Content-Type-Options","nosniff")
-                    self.send_header("Content-Security-Policy","default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'self'")
+                    self.send_header("Content-Security-Policy",SANDBOX_CSP if sandboxed else "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'self'")
                     self.end_headers();self.wfile.write(content);return
                 raw_token=token_from(self.headers.get("Cookie"))
+                if self.command=='POST' and path=='/api/shuku/auth/sms-code':
+                    from .adapters.jianlun import phone_number
+                    body=self.body(4096)
+                    require(set(body)=={'phone'},400,'INVALID_INPUT','请仅填写手机号。')
+                    return self.send_json(200,app.phone_identity.send_code(phone_number(body['phone']),self.client_address[0],app.clock()))
+                if self.command=='POST' and path=='/api/shuku/auth/phone-login':
+                    from .adapters.jianlun import phone_number
+                    body=self.body(4096);method=body.get('method')
+                    require(method in ('sms','password'),400,'INVALID_INPUT','请选择验证码登录或密码登录。')
+                    key='code' if method=='sms' else 'password'
+                    require(set(body)=={'method','phone',key},400,'INVALID_INPUT','登录字段不正确。')
+                    phone=phone_number(body['phone']);credential=body[key]
+                    require(isinstance(credential,str) and (bool(re.fullmatch(r'[0-9]{4,8}',credential)) if method=='sms' else 0<len(credential)<=256),400,'INVALID_INPUT','请检查验证码或密码。')
+                    user,token=app.phone_identity.login_phone(method,phone,credential,self.client_address[0],token_hash(raw_token),app.clock())
+                    return self.send_json(200,{'user':user},self.cookie(token))
                 if self.command=="POST" and path=="/api/shuku/auth/login":
                     body=self.body()
                     require(not set(body)-{"username","password"},400,"INVALID_INPUT","不支持额外登录字段。")
@@ -132,8 +152,15 @@ def handler_for(app):
                     app.store.remove_session(token_hash(raw_token))
                     return self.send_json(200,{"message":"已退出登录"},self.cookie("",True))
                 user=app.store.session_user(token_hash(raw_token),app.clock())
+                if self.command=='GET' and admin_path:
+                    return self.send_json(200,admin_listing(app,user['id'],admin_path[1],query.get('page',['1'])[0]))
                 if self.command=="GET" and path=="/api/shuku/auth/me":
                     return self.send_json(200,{"user":user})
+                if path=='/api/shuku/profile' and self.command in ('GET','POST'):
+                    if self.command=='GET':
+                        return self.send_json(200,app.store.profile(user['id']))
+                    require(self.headers.get('X-Shuku-Account')==user['id'],409,'ACCOUNT_CHANGED','登录账号已切换，请刷新页面后继续。')
+                    return self.send_json(200,app.store.save_profile(user['id'],self.body(),app.clock()))
                 if self.command=='POST' and path in ('/api/shuku/personal/study','/api/shuku/personal/favorites'):
                     require(self.headers.get('X-Shuku-Account') in (None,user['id']),409,'ACCOUNT_CHANGED','登录账号已切换，请刷新页面后继续。')
                 if self.command=='GET' and path=='/api/shuku/personal':

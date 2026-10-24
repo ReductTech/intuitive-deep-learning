@@ -2,7 +2,7 @@
 
 独立的画布创作工作区：一句话 → 图片草稿 → React Web PPT → 点选元素修改。
 
-运行主项目的 `npm run dev`，打开 `http://localhost:5173/edit-deck`。本阶段通过本机 Vite 插件提供配置与模型转发，不依赖 Cloud API，也未接入 SceneDeck 课程目录。
+运行主项目的 `npm run dev`，打开 `http://localhost:5173/edit-deck`。本阶段通过本机 Vite 插件提供配置与模型转发，不依赖 Cloud API，也未接入 术库 课程目录。
 
 ## 本机接口文件
 
@@ -24,7 +24,7 @@ Base URL 为 OpenAI 兼容接口根地址；仅填写域名时自动补 `/v1`，
 - 空白页生成图片或导入参考图；图片可重新生成、调整并转为 Web PPT。
 - LangGraph JS 工作流运行于浏览器：生成 TSX → esbuild-wasm 编译 → 最多两次编译修复。
 - React/ReactDOM 随应用本地打包，无第三方 CDN。生成代码在 `sandbox="allow-scripts"` 的 iframe 中运行，不能读取编辑器的配置或本机文件。
-- 固定 1600 × 900 画布的尺寸和缩放逻辑与 SceneDeck 共用。
+- 固定 1600 × 900 画布的尺寸和缩放逻辑与 术库 共用。
 - Web PPT 支持真实 React 状态与交互，选择模式下点击 DOM 元素，将选择器、文本和 HTML 传给模型；Canvas 内部子对象暂不支持点选。
 - 草稿自动保存到 `~/.edit-deck/projects/current.json`；可导出/导入 `.editdeck.json`、本页自包含 HTML、TSX。新建项目先导出当前副本。
 - 图片草稿与 Web PPT 分别保留；重新生成图片不会自动覆盖已有 React 版本。

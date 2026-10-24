@@ -343,7 +343,7 @@ class GitHubSync:
         with self.store.transaction() as db:
             course,_=self.flow.owner(db,str(job['requested_by']),str(repo['course_id']))
             require((str(course['head_revision']) if course['head_revision'] else None)==data['target_head'],409,'REVISION_CONFLICT','官方待发布内容已变化。')
-            module=next(m for m in self.flow.modules() if m['id']==str(course['module_id']))
+            module=self.flow.module_context(course['module_id'])
         self.flow.prepare(project,module)  # Validate before the irreversible remote merge; never execute remote code.
         if not pr.get('merged'):
             require(pr['state']=='open' and pr['base']['sha']==row['base_sha'],409,'REMOTE_BASE_CHANGED','PR 基础提交已变化，请重新审核。')
@@ -367,13 +367,29 @@ class GitHubSync:
             trees.append({v['path']:v for v in tree['tree'] if v['path']=='courses' or v['path'].startswith('courses/')})
         before,after=trees
         changed={p for p in set(before)|set(after) if before.get(p,{}).get('sha')!=after.get(p,{}).get('sha') and (before.get(p,after.get(p)) or {}).get('type')!='tree'}
-        require(changed<={'courses/project.json'} and all(v.get('mode') not in ('120000','160000') for v in after.values()),409,'UNSUPPORTED_REMOTE_SOURCE','当前仅支持课程项目数据修改；React／运行文件修改需要托管源码构建支持。')
+        require(all(p=='courses/project.json' or p.startswith('courses/sources/') for p in changed) and all(v.get('mode') not in ('120000','160000') for v in after.values()),409,'UNSUPPORTED_REMOTE_SOURCE','外部 PR 只能修改课程项目和托管源码，不能替换运行产物。')
         obj=after.get('courses/project.json');require(obj and obj['type']=='blob',409,'PROJECT_REQUIRED','外部 PR 缺少 courses/project.json。')
         blob=call('GET','/git/blobs/'+obj['sha'])
         require(blob.get('encoding')=='base64' and blob.get('size',0)<=4*1024*1024,413,'PROJECT_LIMIT','课程项目数据过大。')
         content=base64.b64decode(blob['content'].replace('\n',''),validate=True)
         require(blob_sha(content)==obj['sha'],409,'BLOB_MISMATCH','外部课程数据校验失败。')
-        return teaching(json.loads(content))
+        project=teaching(json.loads(content))
+        sources={}
+        source_nodes=[(p[16:],v) for p,v in after.items() if p.startswith('courses/sources/') and v.get('type')=='blob']
+        require(len(source_nodes)<=200,413,'SOURCE_LIMIT','源码文件过多。')
+        total=0
+        for name,node in source_nodes:
+            require(node.get('size',0)<=1024*1024,413,'SOURCE_LIMIT','源码文件过大。')
+            blob=call('GET','/git/blobs/'+node['sha'])
+            require(blob.get('encoding')=='base64' and blob.get('size',0)<=1024*1024,413,'SOURCE_LIMIT','源码文件过大。')
+            data=base64.b64decode(blob['content'].replace('\n',''),validate=True);total+=len(data)
+            require(blob_sha(data)==node['sha'] and total<=4*1024*1024,409,'BLOB_MISMATCH','源码校验失败或超过大小限制。')
+            sources[name]=data.decode('utf-8')
+        if source_nodes:project['source']={'files':sources}
+        elif project.get('source'):require(not project['source'].get('files'),409,'SOURCE_REQUIRED','源码清单与仓库文件不一致。')
+        from .source import validate_source
+        validate_source(project)
+        return project
 
     def remove(self,task,checkpoint):
         with self.store.transaction() as db:

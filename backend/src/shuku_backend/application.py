@@ -12,6 +12,7 @@ from .governance import Governance
 from .feedback import Feedback
 from .github_sync import GitHubSync
 from .personal import PersonalLearning
+from .adapters.jianlun import ReservedJianlunIdentity
 
 
 @dataclass
@@ -24,6 +25,7 @@ class Application:
     worker: object
     clock: object
     workflow: object
+    phone_identity: object = None
 
     def server(self):
         return Server((self.settings.host,self.settings.port),handler_for(self))
@@ -41,7 +43,7 @@ def create_application(settings, clock=time.time):
         from pathlib import Path
         from shutil import which
         root=Path(settings.source_root)
-        required=[root/'scripts/build-shuku-preview.mjs',root/'node_modules/esbuild/package.json',root/'node_modules/@tailwindcss/node/package.json',root/'node_modules/@tailwindcss/oxide/package.json']
+        required=[root/'scripts/build-shuku-preview.mjs',root/'scripts/shuku-source-plugin.mjs',root/'node_modules/esbuild/package.json',root/'node_modules/@tailwindcss/node/package.json',root/'node_modules/@tailwindcss/oxide/package.json']
         if not which('node') or not all(path.is_file() for path in required):
             raise RuntimeError("Configure SHUKU_SOURCE_ROOT and install Node runtime dependencies before serving")
     identity=DemoIdentity(store,settings.demo_password)
@@ -56,4 +58,4 @@ def create_application(settings, clock=time.time):
     workflow.personal=PersonalLearning(workflow)
     workflow.github=GitHubSync(workflow,settings.github_config())
     worker=Worker(store,{"github.provision":workflow.github.provision,"github.sync":workflow.github.run,"governance.remove":workflow.governance.run,"file.verify":verify_file,"revision.build":workflow.build},clock)
-    return Application(settings,store,bucket,identity,Courses(store,clock,workflow.github),worker,clock,workflow)
+    return Application(settings,store,bucket,identity,Courses(store,clock,workflow.github),worker,clock,workflow,ReservedJianlunIdentity())

@@ -19,8 +19,8 @@ export function LearningPage(){
   let bridge=false,disposed=false,observer:MutationObserver|undefined,timer:ReturnType<typeof setTimeout>|undefined;
   const valid=(state:StudyPosition)=>state&&context.pages.includes(state.page_id)&&['guide','ppt'].includes(state.mode)&&Array.isArray(state.completed)&&state.completed.every(p=>context.pages.includes(p));
   const receive=(event:MessageEvent)=>{
-   if(event.origin!==location.origin||event.source!==frame.current?.contentWindow||event.data?.revision!==rid)return;
-   if(event.data.type==='shuku-study-ready'){bridge=true;event.source?.postMessage({type:'shuku-study-init',revision:rid,channel,state:initial},{targetOrigin:location.origin});}
+   if(event.origin!==(context.sandboxed?'null':location.origin)||event.source!==frame.current?.contentWindow||event.data?.revision!==rid)return;
+   if(event.data.type==='shuku-study-ready'){bridge=true;event.source?.postMessage({type:'shuku-study-init',revision:rid,channel,state:initial},{targetOrigin:context.sandboxed?'*':location.origin});}
    if(event.data.type==='shuku-study-position'&&event.data.channel===channel&&valid(event.data.state))study.progress(event.data.state);
   };
   window.addEventListener('message',receive);

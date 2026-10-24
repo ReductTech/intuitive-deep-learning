@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Capture real 1600x900 SceneDeck screenshots.
+"""Capture real 1600x900 术库 screenshots.
 
 Reads: The selected module and requested browser states.
 Writes: Evaluation PNGs in the module's _scratchpad/screenshots; thumbnails in
@@ -220,11 +220,11 @@ def scene_ids(context, base_url: str, deck_id: str) -> list[str]:
         actual_deck_id = capture.get_attribute("data-deck-id")
         if actual_deck_id != deck_id:
             raise RuntimeError(
-                f"Requested deck {deck_id}, but SceneDeck opened {actual_deck_id}."
+                f"Requested deck {deck_id}, but 术库 opened {actual_deck_id}."
             )
         ids = json.loads(capture.get_attribute("data-scene-ids") or "[]")
         if not ids or any(not isinstance(slide_id, str) for slide_id in ids):
-            raise RuntimeError("SceneDeck did not expose a valid slide list.")
+            raise RuntimeError("术库 did not expose a valid slide list.")
         return ids
     finally:
         page.close()
@@ -244,7 +244,7 @@ def capture_slide(
     page, capture = open_capture(context, capture_url(base_url, deck_id, slide_id))
     try:
         if capture.get_attribute("data-scene-id") != slide_id:
-            raise RuntimeError(f"SceneDeck could not open slide {slide_id}.")
+            raise RuntimeError(f"术库 could not open slide {slide_id}.")
         page.evaluate("""async () => {
             await document.fonts.ready;
             await Promise.all(Array.from(document.images, image => image.decode().catch(() => undefined)));

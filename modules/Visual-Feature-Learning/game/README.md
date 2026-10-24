@@ -33,7 +33,7 @@
 - 关卡编辑器：`/modules/Visual-Feature-Learning/game/level-editor.html`
 - 调试入口：`/modules/Visual-Feature-Learning/game/game-debug.html`
 
-课程入口为 Guide 最后一页和 SceneDeck 的 `disguise-verification`。三个 HTML 均加入 Vite 生产构建。游戏运行于独立 iframe，重新开始或离开页面会释放实例。
+课程入口为 Guide 最后一页和 术库 的 `disguise-verification`。三个 HTML 均加入 Vite 生产构建。游戏运行于独立 iframe，重新开始或离开页面会释放实例。
 
 编辑器保留七段剧情、角色轨道、坐标与路径、地图拖动缩放、网格吸附、前景/碰撞显示、预览时间轴、撤销/重做、JSON/JS 导入导出与草稿恢复。
 

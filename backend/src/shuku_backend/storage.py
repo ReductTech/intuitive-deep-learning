@@ -80,6 +80,27 @@ class Store:
             require(row,401,"LOGIN_REQUIRED","请先登录。")
             return self.user_in(db,row["user_id"])
 
+    def profile(self, uid):
+        with self.transaction() as db:
+            user=self.user_in(db,uid)
+            row=db.execute("SELECT bio,email,updated_at FROM shuku_business.profiles WHERE user_id=%s",(uid,)).fetchone()
+            return {"user":user,**(row or {"bio":"","email":"","updated_at":None})}
+
+    def save_profile(self, uid, data, now):
+        import re
+        require(isinstance(data,dict) and set(data)=={'display_name','bio','email'},400,'INVALID_INPUT','包含不支持的个人资料字段。')
+        for key,limit in [('display_name',60),('bio',500),('email',254)]:
+            require(isinstance(data[key],str) and len(data[key])<=limit,400,'INVALID_INPUT','个人资料格式或长度不正确。')
+        name=data['display_name'].strip();bio=data['bio'].strip();email=data['email'].strip()
+        require(name and not any(ord(c)<32 for c in name),400,'INVALID_INPUT','请填写有效的姓名。')
+        require(not email or re.fullmatch(r'[^\s@]+@[^\s@]+\.[^\s@]+',email),400,'INVALID_INPUT','请填写有效的联系邮箱。')
+        with self.transaction() as db:
+            self.user_in(db,uid)
+            db.execute("UPDATE shuku_business.users SET display_name=%s WHERE id=%s",(name,uid))
+            db.execute("INSERT INTO shuku_business.profiles(user_id,bio,email,updated_at) VALUES (%s,%s,%s,%s) ON CONFLICT(user_id) DO UPDATE SET bio=EXCLUDED.bio,email=EXCLUDED.email,updated_at=EXCLUDED.updated_at",(uid,bio,email,now))
+            db.execute("INSERT INTO shuku_business.audit(user_id,action,object_id,created_at) VALUES (%s,'profile.update',%s,%s)",(uid,uid,now))
+            return {"user":self.user_in(db,uid),"bio":bio,"email":email,"updated_at":now}
+
     def remove_session(self, token_hash):
         with self.transaction() as db:
             db.execute("DELETE FROM shuku_business.sessions WHERE token_hash=%s",(token_hash,))

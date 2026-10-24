@@ -1,0 +1,42 @@
+// Run against a disposable, seeded Shuku backend through a same-origin dev proxy.
+import assert from 'node:assert/strict';
+import {pathToFileURL} from 'node:url';
+const {chromium}=await import(pathToFileURL(process.argv[2]).href);
+const base=process.env.SHUKU_SOURCE_URL||'http://localhost:5176';
+assert.ok(['localhost','127.0.0.1'].includes(new URL(base).hostname));
+const password=process.env.SHUKU_SOURCE_TEST_PASSWORD;
+assert.ok(password,'Set SHUKU_SOURCE_TEST_PASSWORD for the disposable test accounts');
+const browser=await chromium.launch({channel:'chrome',headless:true});
+try{
+ const context=await browser.newContext(),page=await context.newPage();page.setDefaultTimeout(60000);
+ const title='React T03 '+Date.now();
+ const api=async(path,data,client=context)=>{const response=await client.request.fetch(base+'/api/shuku'+path,{method:data===undefined?'GET':'POST',headers:{Origin:base,'Content-Type':'application/json'},...(data===undefined?{}:{data})});const text=await response.text();assert.ok(response.ok(),path+' HTTP '+response.status()+': '+text);return JSON.parse(text);};
+ await page.goto(base+'/my-courses?tab=create');await page.getByText('Demo 体验登录',{exact:true}).click();await page.getByLabel('Demo 密码',{exact:true}).fill(password);await page.getByRole('button',{name:'进入 Demo',exact:true}).click();
+ await page.getByLabel('课程名称',{exact:true}).fill(title);await page.getByLabel('起始内容',{exact:true}).selectOption('react');await page.getByRole('button',{name:'开始创建',exact:true}).click();
+ await page.getByLabel('源码编辑',{exact:true}).waitFor();
+ const cid=new URL(page.url()).searchParams.get('course');assert.ok(cid);
+ const source=`import {useState} from 'react';import './lesson.css';import label from './label.json';export default function Lesson(){const [n,setN]=useState(0);return <section className="lesson"><h1>{label.title}</h1><button onClick={()=>setN(n+1)}>真实互动 {n}</button><button onClick={()=>{let safe=false;try{void parent.document.documentElement;safe=false}catch{safe=true}document.getElementById('isolation').textContent=safe?'已隔离':'未隔离'}}>检查隔离</button><span id="isolation"/></section>}`;
+ await page.getByLabel('源码编辑',{exact:true}).fill(source);
+ await page.getByLabel('新文件路径',{exact:true}).fill('label.json');await page.getByRole('button',{name:'添加文件',exact:true}).click();await page.getByLabel('源码编辑',{exact:true}).fill(JSON.stringify({title:'全新源码课程'}));
+ await page.getByRole('button',{name:'保存修订',exact:true}).click();
+ await page.getByRole('link',{name:'预览已保存版本',exact:true}).waitFor();
+ await page.waitForFunction(()=>document.querySelector('a[href*="preview?revision="]')?.getAttribute('aria-disabled')==='false');
+ const course=(await api('/courses/'+cid)).course,rid=course.head_revision;assert.ok(rid);
+ const frame=page.frameLocator('iframe[title="源码课程预览"]');await frame.getByRole('button',{name:'真实互动 0',exact:true}).click();await frame.getByRole('button',{name:'真实互动 1',exact:true}).waitFor();
+ await frame.getByRole('button',{name:'检查隔离',exact:true}).click();await frame.getByText('已隔离',{exact:true}).waitFor();
+ const htmlResponse=await context.request.get(base+'/api/shuku/revisions/'+rid+'/files/index.html');assert.match(htmlResponse.headers()['content-security-policy'],/sandbox allow-scripts/);
+ const revision=await api('/revisions/'+rid);assert.equal(revision.project.source.files['Lesson.tsx'],source);
+ const guest=await browser.newContext();assert.equal((await guest.request.get(base+'/api/shuku/revisions/'+rid+'/files/index.html')).status(),404);
+ await page.reload();await page.getByLabel('源码编辑',{exact:true}).waitFor();await page.getByRole('button',{name:'Lesson.tsx',exact:true}).click();assert.equal(await page.getByLabel('源码编辑',{exact:true}).inputValue(),source);
+ await page.getByRole('button',{name:'提交审核',exact:true}).click();
+ const admin=await browser.newContext();await api('/auth/login',{username:'admin',password},admin);const reviews=(await api('/reviews',undefined,admin)).reviews;const review=reviews.find(r=>r.revision_id===rid);assert.ok(review);await api('/reviews/'+review.id+'/decision',{decision:'approved',revision_id:rid,note:'真实源码交互核验'},admin);
+ await page.reload();await page.getByRole('button',{name:'发布课程',exact:true}).click();await page.getByLabel('版本号',{exact:true}).fill('1.0.0');await page.getByRole('button',{name:'确认发布',exact:true}).click();await page.getByRole('button',{name:'确认发布',exact:true}).waitFor({state:'hidden'});
+ assert.equal((await guest.request.get(base+'/api/shuku/revisions/'+rid+'/files/index.html')).status(),200);
+ await api('/auth/login',{username:'linzhi',password},guest);const learner=await guest.newPage();await learner.goto(base+'/learn?revision='+rid);const learning=learner.frameLocator('iframe');await learning.getByRole('button',{name:'真实互动 0',exact:true}).click();await learning.getByRole('button',{name:'真实互动 1',exact:true}).waitFor();await learning.getByRole('button',{name:'标记学完',exact:true}).click();
+ await learner.waitForFunction(async()=>{const data=await fetch('/api/shuku/personal').then(r=>r.json());return data.history?.some(r=>r.completed?.length>0);});
+ await page.getByRole('button',{name:'Lesson.tsx',exact:true}).click();await page.getByLabel('源码编辑',{exact:true}).fill('export default function Broken( {');await page.getByRole('button',{name:'保存修订',exact:true}).click();await page.locator('.shuku-source-error').filter({hasText:'源码构建失败'}).waitFor();
+ assert.equal((await api('/public/courses')).courses.find(c=>c.id===cid).revision_id,rid);
+ assert.equal((await guest.request.get(base+'/api/shuku/revisions/'+rid+'/files/index.html')).status(),200);
+ console.log('PASS: UI creation, multiple source files, real React interaction, reload, private isolation, sandbox, review, publish, account learning progress and invalid-source old-release protection.');
+ await guest.close();await admin.close();await context.close();
+}finally{await browser.close();}

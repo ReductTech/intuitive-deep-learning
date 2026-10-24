@@ -385,7 +385,7 @@
 .cg-copy-course-shell .cg-copy-ck-window-scan__progress span { display: block; height: 100%; border-radius: inherit; background: var(--ui-accent-alt); transition: width .2s ease; }
 .cg-copy-course-shell .cg-copy-ck-window-scan__result-tip { margin-top: 2px; }
 
-/* 1600 × 900 固定画布：Blog / Guide 与 SceneDeck 共用同一套构图。 */
+/* 1600 × 900 固定画布：Blog / Guide 与 术库 共用同一套构图。 */
 
 .course-page-surface .cg-copy-ck-window-scan {
   width: 100%;

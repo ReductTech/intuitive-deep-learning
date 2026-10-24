@@ -1,6 +1,6 @@
 # 策略梯度入门
 
-15 张固定 1600×900 教学页；Guide 与 SceneDeck 共用内容。
+15 张固定 1600×900 教学页；Guide 与 术库 共用内容。
 包含实际 REINFORCE 与 Q 型 Actor-Critic 训练。顺序参考用户提供的 DRL.pdf：7.4 REINFORCE → 7.5 Actor-Critic。
 
 ## 课程顺序
@@ -92,7 +92,7 @@ actorCritic.ts 按 DRL.pdf §7.5 的Q型方法实现，非A2C：
 
 ## Theory page versions
 
-课程在第15页Actor-Critic真实训练结束；版本对照页已从Guide与SceneDeck移除。训练前铺垫收为两页：第6页GradientAscentLesson说明优化方向，第7页LearningSignal说明回报加权与单局梯度估计；第8页直接进入REINFORCE采样。
+课程在第15页Actor-Critic真实训练结束；版本对照页已从Guide与术库移除。训练前铺垫收为两页：第6页GradientAscentLesson说明优化方向，第7页LearningSignal说明回报加权与单局梯度估计；第8页直接进入REINFORCE采样。
 
 ## 参数更新页精简
 
@@ -122,12 +122,12 @@ actorCritic.ts 按 DRL.pdf §7.5 的Q型方法实现，非A2C：
 - 移除328条仅对应已停用界面的样式规则；清理前快照保留在 versions。
 - 通用教学面板的背景、边线和强调色改用 Shared Theme Token。
 - 场景背景经组件的 CSS 自定义属性传入。
-- 活跃代码不依赖 modules-legacy 或其他课程实现；播放器继续复用 Shared SceneDeck。
+- 活跃代码不依赖 modules-legacy 或其他课程实现；播放器继续复用 共享课程播放器。
 - Guide与PPT共用course和相同页面组件；固定1600×900，只由外层等比缩放。
 
 ### 模块身份与资源
 
-模块使用 `outlines.json.moduleIdentity.id` 中的稳定 UUID；无需签发、密钥或验签。静态资源存放在仓库根目录 `assets/<UUID>/`，运行时资源引用和 SceneDeck `assetId` 使用同一 UUID。
+模块使用 `outlines.json.moduleIdentity.id` 中的稳定 UUID；无需签发、密钥或验签。静态资源存放在仓库根目录 `assets/<UUID>/`，运行时资源引用和 术库 `assetId` 使用同一 UUID。
 
 ### 从成品课件借鉴的设计
 

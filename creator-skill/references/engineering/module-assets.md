@@ -12,11 +12,11 @@
 
 从仓库根目录运行 `python creator-skill/scripts/tools.py module.identity --check` 只检查身份，不写文件；省略 `--check` 会扫描全部 `modules/*/outlines.json` 并补齐所有缺失身份，不只处理当前模块。工具先检查已有 UUID，遇到格式错误或重复时停止，不替换已有 UUID；后端加载也拒绝缺失或无效身份。命令无需安装后端包，依赖要求见工具帮助和[工具索引](../tools.md)。
 
-复制为独立新模块时，移除复制来的 `moduleIdentity` 再由工具生成新 UUID，将对应资源放入 `assets/<新 UUID>/`，同步运行时引用和 SceneDeck `assetId`，不沿用源模块身份。
+复制为独立新模块时，移除复制来的 `moduleIdentity` 再由工具生成新 UUID，将对应资源放入 `assets/<新 UUID>/`，同步运行时引用和 术库 `assetId`，不沿用源模块身份。
 
 ## 正式资源与中间产物
 
-课程专属图片、视频、字体、图标、3D 模型、外部数据文件和 SceneDeck 缩略图放仓库根目录 `assets/<moduleIdentity.id>/`。`moduleIdentity.id` 来自当前模块的 `outlines.json`；代码内定义的课程数据随模块实现保存。
+课程专属图片、视频、字体、图标、3D 模型、外部数据文件和 术库 缩略图放仓库根目录 `assets/<moduleIdentity.id>/`。`moduleIdentity.id` 来自当前模块的 `outlines.json`；代码内定义的课程数据随模块实现保存。
 
 原稿提取、设计图、试制素材、检查截图与报告属于中间产物，放在当前模块的 `_scratchpad/`，不上传到资源 CDN。确定用于正式页面的素材再放入 `assets/<UUID>/`，实现不得引用 `_scratchpad/` 中的文件。
 
@@ -33,7 +33,7 @@ const imageUrl = moduleAssetUrl(moduleIdentity.id, 'images/example.png');
 
 深层页面按文件位置调整 import。第二个参数是相对于 UUID 目录的路径；图片、视频、模型及 Canvas/WebGL 资源均通过此方法引用。CSS 背景图由组件生成 URL，再传入 CSS 自定义属性。
 
-正式 SceneDeck 缩略图为 `scenedeck-thumbnails/<scene-id>.png` 的 1600×900 原图，由 `capture.thumbnails` 生成，播放器缩小显示。播放器 `assetId` 使用同一 UUID。
+正式 术库 缩略图为 `scenedeck-thumbnails/<scene-id>.png` 的 1600×900 原图，由 `capture.thumbnails` 生成，播放器缩小显示。播放器 `assetId` 使用同一 UUID。
 
 已有正式缩略图对应当前实现时可直接用于检查，无需重复截图；交互状态截图保存在 `_scratchpad/`。
 

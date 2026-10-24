@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Compare outline order and notes against Guide and SceneDeck.
+"""Compare outline order and notes against Guide and 术库.
 
 Reads: The selected outline and runtime pages, or a saved snapshot.
 Writes: Only --save-snapshot writes a file; a temporary isolated browser/Vite may be used.

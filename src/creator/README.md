@@ -1,4 +1,4 @@
-# SceneDeck 创作原型
+# 术库 创作原型
 
 `/scenedeck/`、`/web_ppt/` 和 `/edit-deck` 共用创作工作区；首页提供“创作课件”入口。`?deck=<课程 ID>&slide=<页面 ID>` 可定位课程和页面。缩略图采集模式继续走原播放器，旧本机编辑器保留在 `/edit-deck/legacy`。
 

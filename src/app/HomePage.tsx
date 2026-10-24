@@ -75,7 +75,7 @@ export function HomePage() {
   const [preview, setPreview] = useState<ActiveModule | null>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
   const searchRef = useRef<HTMLInputElement>(null);
-  useEffect(() => { document.title = 'SceneDeck · 探索交互课程'; }, []);
+  useEffect(() => { document.title = '术库 · 探索交互课程'; }, []);
   useEffect(() => {
     if (preview) dialogRef.current?.showModal();
     else dialogRef.current?.close();
@@ -118,7 +118,7 @@ export function HomePage() {
         </article>;
       })}</div>
       {tab==='history'&&personal.authenticated&&!personal.data.history.length&&<p>还没有学习记录，<a href="/">选择一门课程开始学习</a>。</p>}{tab==='history'&&personal.data.next_cursor&&<button disabled={personal.busy} onClick={()=>void personal.more()}>更多学习记录</button>}{tab!=='history'&&!filtered.length&&!visiblePublished.length&&!unavailableFavorites.length && <div className="sd-library-empty"><Icon name={tab === 'saved' && !saved.length ? 'bookmark' : 'search'} /><h2>{tab === 'saved' && !saved.length ? '把感兴趣的课程收在这里' : '暂时没有找到相关课程'}</h2><p>{tab === 'saved' && !saved.length ? '点击课程卡片上的收藏图标，下次更容易找到。' : '试试其他关键词，或放宽分类与难度筛选。'}</p><button onClick={reset}>浏览全部课程 <Icon name="arrow" /></button></div>}
-      <footer className="sd-library-footer"><span>SceneDeck</span><p>不止于看见，更在于理解。</p><span>自主探索 · 课堂展示</span></footer>
+      <footer className="sd-library-footer"><span>术库</span><p>不止于看见，更在于理解。</p><span>自主探索 · 课堂展示</span></footer>
     </main>
     <dialog className="sd-library-dialog" ref={dialogRef} onCancel={() => setPreview(null)} onClick={event => {if (event.target === event.currentTarget) setPreview(null);}} aria-labelledby="sd-library-dialog-title">
       {preview && <><header><div><span className="sd-library-eyebrow">{info(preview).topic} · {preview.pages.length} 页</span><h2 id="sd-library-dialog-title">{info(preview).title}</h2><p>{info(preview).summary}</p></div><button className="sd-library-dialog-close" autoFocus aria-label="关闭课程目录" onClick={() => setPreview(null)}><Icon name="close" /></button></header><div className="sd-library-dialog-modes sd-library-card-actions"><a href={'/study?module='+encodeURIComponent(preview.id)+'&mode=guide'}><Icon name="book" />自学互动模式</a><a href={presentationHref(preview)}><Icon name="play" />教学展示模式</a></div><ol className="sd-library-directory">{preview.pages.map((page, index) => <li key={page.id}><span>{String(index + 1).padStart(2, '0')}</span><div><h3>{page.title}</h3><p>{page.goal ?? page.summary}</p></div><a href={presentationHref(preview, page.id)} aria-label={`教学展示：${page.title}`}><Icon name="arrow" /></a></li>)}</ol></>}

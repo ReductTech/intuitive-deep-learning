@@ -84,7 +84,7 @@ python creator-skill/scripts/tools.py capture.inspect --module Policy-Gradient
 
 仅有明确上限时传 `--max-chars <上限>`；未传时照常统计，`maximum` 和 `exceeded` 为 `null`。`text.characters: null` 表示未验证，不能记为零。JSON 的错误、警告、例外和覆盖限制分列；退出码 `1` 为发现违规，`2` 为执行错误或未验证，截图仍可用于定位问题。基础检查不生成 Rubric 分数或 HTML 报告。
 
-`check.bounds --url <页面地址> --slides <页ID>` 复用同一浏览器检查表达式，通过已有 Chromium 调试端口（默认 9223，`--port` 可改）新开检查标签页，结束后关闭；不启动浏览器或服务。按就绪条件轮询，`--timeout` 默认 15000 毫秒。SceneDeck URL 自动使用无播放器侧栏的捕获入口；其他页面须暴露真实 `data-scene-id`。支持同样的 `--surface` 和 `--max-chars`。此命令检查新开页面的默认状态；关键操作状态用 `capture.slides --actions ... --state ...`，不另建动作格式。
+`check.bounds --url <页面地址> --slides <页ID>` 复用同一浏览器检查表达式，通过已有 Chromium 调试端口（默认 9223，`--port` 可改）新开检查标签页，结束后关闭；不启动浏览器或服务。按就绪条件轮询，`--timeout` 默认 15000 毫秒。术库 URL 自动使用无播放器侧栏的捕获入口；其他页面须暴露真实 `data-scene-id`。支持同样的 `--surface` 和 `--max-chars`。此命令检查新开页面的默认状态；关键操作状态用 `capture.slides --actions ... --state ...`，不另建动作格式。
 
 
 ### 课程一致性

@@ -77,7 +77,7 @@ export function CreatorWorkspace({initialProject,managed}:{initialProject?:Creat
   function patchPage(patch: Partial<CreatorPage>) { commit({ ...project, pages: project.pages.map(item => item.id === page.id ? { ...item, ...patch } : item) }); }
   function select(id: string) { setActiveId(id); setView(project.pages.find(item => item.id === id)?.designImageId && !project.pages.find(item => item.id === id)?.ready ? 'design' : 'web'); setPrompt(''); setFeedback(''); setActionError(''); const url = new URL(location.href); url.searchParams.set('deck', module.pptDeck!.id); url.searchParams.set('slide', id); window.history.replaceState(null, '', url); }
   function step(delta: number) { select(project.pages[Math.max(0, Math.min(project.pages.length - 1, index + delta))].id); }
-  useEffect(() => { document.title = `SceneDeck · ${project.title}`; if(managed){managed.onChange(project);return;} setSaved('保存中…'); try { localStorage.setItem(key(project.courseId), JSON.stringify(project)); setSaved('已保存到此浏览器'); } catch { setSaved('保存失败，请导出项目备份'); } }, [project]);
+  useEffect(() => { document.title = `术库 · ${project.title}`; if(managed){managed.onChange(project);return;} setSaved('保存中…'); try { localStorage.setItem(key(project.courseId), JSON.stringify(project)); setSaved('已保存到此浏览器'); } catch { setSaved('保存失败，请导出项目备份'); } }, [project]);
   useEffect(() => { log.current?.scrollTo({ top: log.current.scrollHeight }); }, [page.messages, busy, chatOpen]);
   useEffect(() => {
     let active = true; setDesignImage(undefined); setImageError('');
@@ -216,7 +216,7 @@ export function CreatorWorkspace({initialProject,managed}:{initialProject?:Creat
   const hint = feedback || (showingImage ? '直接描述想改哪里；满意后制作成网页。' : page.ready ? '描述这一页想怎么改，或直接预览。' : '写下这一页的内容和要求，生成第一版设计。');
   return <div className={`cw-app cw-streamlined ${editing ? 'cw-editing' : 'cw-viewing'} ${mode === 'present' ? 'cw-presenting' : ''}`}>
     <header className="cw-topbar">
-      <a href="/" className="cw-brand"><span><Icon name="spark" /></span><div><strong>SceneDeck</strong><small>课件创作</small></div></a>
+      <a href="/" className="cw-brand"><span><Icon name="spark" /></span><div><strong>术库</strong><small>课件创作</small></div></a>
       {managed?<strong className="cw-managed-title">{project.title}</strong>:<select aria-label="切换课程" value={project.courseId} disabled={Boolean(busy)} onChange={event => switchCourse(event.target.value)}>{courses.map(c => <option key={c.id} value={c.id}>{c.id === project.courseId ? project.title : c.title}</option>)}</select>}
       <span className="cw-save">{managed?managed.status:`✓ ${saved}`}</span>
       <div className="cw-actions">{managed?.actions}

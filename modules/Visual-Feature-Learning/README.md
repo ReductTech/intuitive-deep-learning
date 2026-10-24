@@ -4,7 +4,7 @@
 
 ## 缩略图
 
-缩略图不是浏览器运行时自动生成的。生成脚本启动 Vite，用 Playwright 访问 `/scenedeck/?scenedeckCapture=1&deck=visual-feature-learning&slide=<场景 ID>`，截图实际的 1600×900 画布，缩小为 400×225 PNG。SceneDeck 从 `assets/80396753-7fc8-4f55-9188-bddbdb828169/scenedeck-thumbnails/<场景 ID>.png` 读取；图片缺失时只显示章节文字。
+缩略图不是浏览器运行时自动生成的。生成脚本启动 Vite，用 Playwright 访问 `/scenedeck/?scenedeckCapture=1&deck=visual-feature-learning&slide=<场景 ID>`，截图实际的 1600×900 画布，缩小为 400×225 PNG。术库 从 `assets/80396753-7fc8-4f55-9188-bddbdb828169/scenedeck-thumbnails/<场景 ID>.png` 读取；图片缺失时只显示章节文字。
 
 在仓库根目录的 PowerShell 中运行：
 
