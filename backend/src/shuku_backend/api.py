@@ -1,3 +1,4 @@
+from .admin import listing as admin_listing
 """Standalone same-origin HTTP API. No changes to idl_backend HTTP handlers."""
 from hashlib import sha256
 from http.cookies import SimpleCookie, CookieError
@@ -95,7 +96,9 @@ def handler_for(app):
                     require(0<size<=1024*1024,413,'BODY_LIMIT','Webhook 请求体过大或为空。')
                     return self.send_json(202,app.workflow.github.webhook(self.headers,self.rfile.read(size)))
                 query=parse_qs(url.query,keep_blank_values=True)
-                require(not url.query or self.command=='GET' and path in ('/api/shuku/messages','/api/shuku/personal') and set(query)=={'cursor'} and len(query['cursor'])==1 and query['cursor'][0],400,'INVALID_INPUT','该接口不接受这些查询参数。')
+                admin_path=re.fullmatch(r'/api/shuku/admin/(courses|contributions|reports|records)',path)
+                allowed_query=self.command=='GET' and ((path in ('/api/shuku/messages','/api/shuku/personal') and set(query)=={'cursor'} and len(query['cursor'])==1 and query['cursor'][0]) or (admin_path and set(query)=={'page'} and len(query['page'])==1))
+                require(not url.query or allowed_query,400,'INVALID_INPUT','该接口不接受这些查询参数。')
                 if self.command=="GET" and path=="/api/shuku/health":
                     app.store.ready()
                     return self.send_json(200,{"ok":True,"service":"shuku_backend"})
@@ -149,6 +152,8 @@ def handler_for(app):
                     app.store.remove_session(token_hash(raw_token))
                     return self.send_json(200,{"message":"已退出登录"},self.cookie("",True))
                 user=app.store.session_user(token_hash(raw_token),app.clock())
+                if self.command=='GET' and admin_path:
+                    return self.send_json(200,admin_listing(app,user['id'],admin_path[1],query.get('page',['1'])[0]))
                 if self.command=="GET" and path=="/api/shuku/auth/me":
                     return self.send_json(200,{"user":user})
                 if path=='/api/shuku/profile' and self.command in ('GET','POST'):
