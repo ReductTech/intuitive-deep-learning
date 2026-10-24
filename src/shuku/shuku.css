@@ -22,3 +22,11 @@
 .shuku-github p {white-space:normal;overflow-wrap:anywhere;}
 .shuku-github .shuku-row-actions {flex-wrap:wrap;}
 .cw-actions .shuku-github>div{position:static;min-width:0;padding:8px 0;box-shadow:none;border:0;background:transparent}.cw-actions .shuku-github button{width:auto}.shuku-github>p{margin:12px 0;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+
+/* Account learning stays within the existing SceneDeck shell. */
+.shuku-learn-body>.shuku-player{height:auto;flex:1;min-height:0}.shuku-learn-body select{border:1px solid var(--sd-line);border-radius:8px;padding:6px;background:white;color:var(--sd-ink)}
+.shuku-learn-body>header>div{flex-wrap:wrap}.shuku-learn-body [role=alert]{padding:8px 20px;margin:0;color:#a23b40}.shuku-learn-body .shuku-player header strong{max-width:40%}
+@media(max-width:760px){.shuku-learn-body .shuku-player header,.shuku-learn-body .shuku-player footer{padding:10px;gap:8px;flex-wrap:wrap}.shuku-learn-body .shuku-player header span{max-width:45%;overflow:hidden;text-overflow:ellipsis}.shuku-learn-body .shuku-player button{padding:8px}.shuku-learn-body>header{flex-wrap:wrap;gap:8px}.shuku-learn-body .shuku-player-viewport{padding:4px}}
+@media(max-width:480px){.sd-library-topbar .shuku-session>button{white-space:nowrap;padding:3px;font-size:11px}.sd-library-topbar nav{gap:8px}.sd-library-topbar nav>button,.sd-library-topbar nav>.sd-authoring-menu>button{font-size:11px}}
+
+.sd-personal-history .sd-library-sidebar,.sd-personal-history .sd-library-search,.sd-personal-history .sd-library-filterbar{display:none}.sd-personal-history .sd-library-main{margin:0 auto;max-width:1200px}

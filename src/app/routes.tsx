@@ -1,3 +1,4 @@
+import {BuiltinLearning} from '../shuku/BuiltinLearning';
 import {MessagesPage} from '../shuku/Messages';
 import {LearningPage} from '../shuku/LearningPage';
 import { SceneDeck, type DeckDefinition } from '../../modules/shared/react/presentation';
@@ -33,6 +34,7 @@ function SceneDeckPage() {
 export const appRoutes: AppRoute[] = [
   { path: '/', element: <HomePage /> },
   { path: '/messages', element: <MessagesPage /> },
+  { path: '/study', element: <BuiltinLearning /> },
   { path: '/learn', element: <LearningPage /> },
   { path: '/my-courses', element: <CourseHub /> },
   { path: '/course-creation', element: <CourseHub /> },

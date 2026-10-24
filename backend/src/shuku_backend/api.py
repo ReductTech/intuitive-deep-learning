@@ -94,7 +94,7 @@ def handler_for(app):
                     require(0<size<=1024*1024,413,'BODY_LIMIT','Webhook 请求体过大或为空。')
                     return self.send_json(202,app.workflow.github.webhook(self.headers,self.rfile.read(size)))
                 query=parse_qs(url.query,keep_blank_values=True)
-                require(not url.query or self.command=='GET' and path=='/api/shuku/messages' and set(query)=={'cursor'} and len(query['cursor'])==1 and query['cursor'][0],400,'INVALID_INPUT','该接口不接受这些查询参数。')
+                require(not url.query or self.command=='GET' and path in ('/api/shuku/messages','/api/shuku/personal') and set(query)=={'cursor'} and len(query['cursor'])==1 and query['cursor'][0],400,'INVALID_INPUT','该接口不接受这些查询参数。')
                 if self.command=="GET" and path=="/api/shuku/health":
                     app.store.ready()
                     return self.send_json(200,{"ok":True,"service":"shuku_backend"})
@@ -106,6 +106,9 @@ def handler_for(app):
                 learning=re.fullmatch(r"/api/shuku/public/revisions/([^/]+)",path)
                 if self.command=='GET' and learning:
                     return self.send_json(200,app.workflow.feedback.learning(learning[1]))
+                study=re.fullmatch(r"/api/shuku/public/study/([^/]+)/([^/]+)",path)
+                if self.command=='GET' and study:
+                    return self.send_json(200,app.workflow.personal.context(unquote(study[1]),unquote(study[2])))
                 file_route=re.fullmatch(r"/api/shuku/revisions/([^/]+)/files/(.+)",path)
                 if self.command=="GET" and file_route:
                     try:viewer=app.store.session_user(token_hash(token_from(self.headers.get("Cookie"))),app.clock())["id"]
@@ -131,6 +134,17 @@ def handler_for(app):
                 user=app.store.session_user(token_hash(raw_token),app.clock())
                 if self.command=="GET" and path=="/api/shuku/auth/me":
                     return self.send_json(200,{"user":user})
+                if self.command=='POST' and path in ('/api/shuku/personal/study','/api/shuku/personal/favorites'):
+                    require(self.headers.get('X-Shuku-Account') in (None,user['id']),409,'ACCOUNT_CHANGED','登录账号已切换，请刷新页面后继续。')
+                if self.command=='GET' and path=='/api/shuku/personal':
+                    return self.send_json(200,app.workflow.personal.listing(user['id'],query.get('cursor',[None])[0]))
+                study=re.fullmatch(r"/api/shuku/personal/study/([^/]+)/([^/]+)",path)
+                if self.command=='GET' and study:
+                    return self.send_json(200,app.workflow.personal.state(user['id'],unquote(study[1]),unquote(study[2])))
+                if self.command=='POST' and path=='/api/shuku/personal/study':
+                    return self.send_json(200,app.workflow.personal.save(user['id'],self.body()))
+                if self.command=='POST' and path=='/api/shuku/personal/favorites':
+                    return self.send_json(200,app.workflow.personal.favorite(user['id'],self.body()))
                 feedback=app.workflow.feedback
                 if self.command=='GET' and path=='/api/shuku/github/reviews':
                     return self.send_json(200,{'courses':app.workflow.github.review_courses(user['id'])})

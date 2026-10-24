@@ -3,7 +3,7 @@ import type {User} from './client';
 import {SessionControl} from './SessionControl';
 import '../app/HomePage.css';
 import './shuku.css';
-type Section='courses'|'saved'|'authoring'|'messages';
+type Section='courses'|'saved'|'history'|'authoring'|'messages';
 export function SiteHeader({section,savedCount=0,onBrowse,user}:{section:Section;savedCount?:number;user?:User|null;onBrowse?:(section:'courses'|'saved')=>void}){
  const [open,setOpen]=useState(false);
  const menu=useRef<HTMLDivElement>(null),trigger=useRef<HTMLButtonElement>(null);
@@ -20,6 +20,7 @@ export function SiteHeader({section,savedCount=0,onBrowse,user}:{section:Section
   <nav aria-label="主导航">
    <button className={section==='courses'?'is-active':''} onClick={()=>onBrowse?onBrowse('courses'):location.assign('/')}>探索课程</button>
    <button className={section==='saved'?'is-active':''} onClick={()=>onBrowse?onBrowse('saved'):location.assign('/?view=saved')}>我的收藏{savedCount>0&&<span>{savedCount}</span>}</button>
+   <button className={section==='history'?'is-active':''} onClick={()=>location.assign('/?view=history')}>学习记录</button>
    <div className="sd-authoring-menu" ref={menu} onBlur={event=>{if(!event.currentTarget.contains(event.relatedTarget as Node|null))setOpen(false);}}>
     <button ref={trigger} className={section==='authoring'?'is-active':''} aria-expanded={open} aria-controls="authoring-subpages" onClick={()=>setOpen(value=>!value)}>课程创作<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d={open?'m4 10 4-4 4 4':'m4 6 4 4 4-4'}/></svg></button>
     {open&&<div id="authoring-subpages" className="sd-authoring-subpages" aria-label="课程创作子页面">{[['create','我要创建课程'],['mine','我的课程'],['reviews','共创待审核'],['workspaces','我参与的共创']].map(([value,label])=><a key={value} href={'/my-courses?tab='+value} aria-current={section==='authoring'&&tab===value?'page':undefined}>{label}</a>)}</div>}

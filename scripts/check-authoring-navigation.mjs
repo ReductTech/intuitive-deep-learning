@@ -24,7 +24,8 @@ try{
  }
  await page.route('**/api/shuku/auth/me',async route=>{await new Promise(resolve=>setTimeout(resolve,700));await route.continue();});await page.goto(base+'/my-courses');await page.getByRole('button',{name:'课程创作',exact:true}).click();await page.getByRole('heading',{name:'我的课程',exact:true}).waitFor();assert.equal(await page.getByRole('link',{name:'共创待审核',exact:true}).isVisible(),true,'auth refresh must not close the open dropdown');await page.keyboard.press('Escape');await page.unroute('**/api/shuku/auth/me');
  await page.getByRole('button',{name:'课程创作',exact:true}).click();await page.locator('h1').click();assert.equal(await page.getByRole('button',{name:'课程创作',exact:true}).getAttribute('aria-expanded'),'false');
- await page.getByRole('button',{name:'我的收藏',exact:true}).click();await page.getByRole('heading',{name:/留住你的好奇心/}).waitFor();
+ await page.getByRole('button',{name:/^我的收藏/}).click();await page.getByRole('heading',{name:/留住你的好奇心/}).waitFor();
+ await page.getByRole('button',{name:'学习记录',exact:true}).click();await page.getByRole('heading',{name:/继续你的学习/}).waitFor();assert.equal(await page.locator('.sd-library-search').isVisible(),false,'history does not show unused course filters');
  await page.getByRole('button',{name:'探索课程',exact:true}).click();await page.getByRole('heading',{name:/下一次理解/}).waitFor();await page.reload();await page.getByRole('heading',{name:/下一次理解/}).waitFor();
  await page.setViewportSize({width:390,height:844});await page.getByRole('button',{name:'课程创作',exact:true}).click();await page.getByRole('link',{name:'我要创建课程',exact:true}).click();await page.getByRole('heading',{name:'我要创建课程',exact:true}).waitFor();
  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'mobile page overflows');

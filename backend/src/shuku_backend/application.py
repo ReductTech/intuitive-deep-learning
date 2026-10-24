@@ -11,6 +11,7 @@ from .collaboration import Collaboration
 from .governance import Governance
 from .feedback import Feedback
 from .github_sync import GitHubSync
+from .personal import PersonalLearning
 
 
 @dataclass
@@ -52,6 +53,7 @@ def create_application(settings, clock=time.time):
     workflow.collaboration=Collaboration(workflow)
     workflow.governance=Governance(workflow)
     workflow.feedback=Feedback(workflow)
+    workflow.personal=PersonalLearning(workflow)
     workflow.github=GitHubSync(workflow,settings.github_config())
     worker=Worker(store,{"github.provision":workflow.github.provision,"github.sync":workflow.github.run,"governance.remove":workflow.governance.run,"file.verify":verify_file,"revision.build":workflow.build},clock)
     return Application(settings,store,bucket,identity,Courses(store,clock,workflow.github),worker,clock,workflow)
