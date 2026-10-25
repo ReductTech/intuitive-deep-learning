@@ -2,7 +2,7 @@ import {useEffect,useState} from 'react';
 import {api} from './client';
 import './PhoneLogin.css';
 
-export function PhoneLogin({checking,unavailable,error,busy,onRetry,onClearError,onDemo,onPhone}:{checking:boolean;unavailable:boolean;error:string;busy:boolean;onRetry:()=>void;onClearError:()=>void;onDemo:(form:HTMLFormElement)=>void;onPhone:(method:'sms'|'password',phone:string,credential:string)=>void}){
+export function PhoneLogin({checking,unavailable,error,busy,onRetry,onClearError,onDemo,onPhone,onGuest}:{checking:boolean;unavailable:boolean;error:string;busy:boolean;onRetry:()=>void;onClearError:()=>void;onDemo:(form:HTMLFormElement)=>void;onPhone:(method:'sms'|'password',phone:string,credential:string)=>void;onGuest:()=>void}){
  const [method,setMethod]=useState<'sms'|'password'>('sms'),[phone,setPhone]=useState(''),[code,setCode]=useState(''),[password,setPassword]=useState(''),[sending,setSending]=useState(false),[remaining,setRemaining]=useState(0),[codeError,setCodeError]=useState('');
  const validPhone=/^1[3-9][0-9]{9}$/.test(phone);
  useEffect(()=>{if(!remaining)return;const timer=setInterval(()=>setRemaining(v=>Math.max(0,v-1)),1000);return()=>clearInterval(timer);},[remaining>0]);
@@ -18,6 +18,7 @@ export function PhoneLogin({checking,unavailable,error,busy,onRetry,onClearError
     {method==='sms'?<label>验证码<div className="shuku-sms-field"><input name="code" inputMode="numeric" autoComplete="one-time-code" value={code} onChange={e=>setCode(e.target.value.replace(/\D/g,'').slice(0,8))} pattern="[0-9]{4,8}" maxLength={8} placeholder="请输入验证码" required/><button className="shuku-send-code" type="button" onClick={()=>void sendCode()} disabled={!validPhone||sending||remaining>0||busy}>{sending?'正在发送…':remaining?remaining+' 秒后重试':'发送验证码'}</button></div></label>:<label>密码<input name="password" type="password" autoComplete="current-password" value={password} onChange={e=>setPassword(e.target.value)} maxLength={256} placeholder="请输入密码" required/></label>}
     {(codeError||error)&&<p role="alert">{codeError||error}</p>}<button className="shuku-login-submit" disabled={busy||sending}>{busy?'正在登录…':'登录 / 注册'}</button>
    </form>
+   <button className="shuku-guest-entry" type="button" disabled={busy} onClick={onGuest}>游客体验</button>
    <details className="shuku-demo-login" onToggle={()=>{setCodeError('');onClearError();}}><summary>Demo 体验登录</summary><form onSubmit={e=>{e.preventDefault();setCodeError('');onDemo(e.currentTarget);}}><label>体验账号<select name="username" autoComplete="username"><option value="xiaoman">小满 · 课程作者</option><option value="linzhi">林知 · 学习者</option><option value="admin">管理员</option></select></label><label>Demo 密码<input name="password" type="password" autoComplete="current-password" required maxLength={256}/></label><button className="shuku-demo-submit" disabled={busy}>{busy?'正在登录…':'进入 Demo'}</button></form></details>
   </>}
   </section></div></main>;

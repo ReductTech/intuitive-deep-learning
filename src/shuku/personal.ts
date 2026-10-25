@@ -1,5 +1,6 @@
 import {useCallback,useEffect,useRef,useState} from 'react';
 import {api,ApiError} from './client';
+import {isGuestMode,requestSignIn} from './guest';
 export interface StudyPosition {page_id:string;mode:'guide'|'ppt';completed:string[]}
 export interface StudyContext {resource:string;title:string;version:string;version_label:string;pages:string[];url:string|null;available:boolean;sandboxed?:boolean;course_id?:string;revision_id?:string}
 export interface StudyRecord extends StudyContext,StudyPosition {updated_at:number;page_count:number}
@@ -8,8 +9,8 @@ export interface PersonalData {favorite_courses:PublishedCourse[];account_id:str
 export function studyHref(record:StudyRecord){return record.url+(record.url?.includes('?')?'&':'?')+'resume=1';}
 export function usePersonal(){
  const [data,setData]=useState<PersonalData>({favorite_courses:[],account_id:'',favorites:[],history:[],next_cursor:null}),[error,setError]=useState(''),[authenticated,setAuthenticated]=useState(false),[busy,setBusy]=useState(false),[loading,setLoading]=useState(true);
- useEffect(()=>{let active=true;api<PersonalData>('/personal').then(d=>{if(active){setData(d);setAuthenticated(true);}}).catch(e=>{if(active&&(!(e instanceof ApiError)||e.status!==401))setError(e.message);}).finally(()=>{if(active)setLoading(false);});return()=>{active=false;};},[]);
- async function favorite(resource:string){if(!authenticated){location.assign('/my-courses?next='+encodeURIComponent(location.pathname+location.search));return;}if(busy)return;setBusy(true);setError('');const saved=!data.favorites.includes(resource);try{await api('/personal/favorites',{resource,saved},{'X-Shuku-Account':data.account_id});setData(d=>({...d,favorites:saved?[...d.favorites,resource]:d.favorites.filter(k=>k!==resource)}));}catch(e){setError((e as Error).message);}finally{setBusy(false);}}
+ useEffect(()=>{if(isGuestMode()){setLoading(false);return;}let active=true;api<PersonalData>('/personal').then(d=>{if(active){setData(d);setAuthenticated(true);}}).catch(e=>{if(active&&(!(e instanceof ApiError)||e.status!==401))setError(e.message);}).finally(()=>{if(active)setLoading(false);});return()=>{active=false;};},[]);
+ async function favorite(resource:string){if(!authenticated){if(isGuestMode()){requestSignIn();return;}location.assign('/my-courses?next='+encodeURIComponent(location.pathname+location.search));return;}if(busy)return;setBusy(true);setError('');const saved=!data.favorites.includes(resource);try{await api('/personal/favorites',{resource,saved},{'X-Shuku-Account':data.account_id});setData(d=>({...d,favorites:saved?[...d.favorites,resource]:d.favorites.filter(k=>k!==resource)}));}catch(e){setError((e as Error).message);}finally{setBusy(false);}}
  async function more(){if(!data.next_cursor||busy)return;setBusy(true);try{const result=await api<PersonalData>('/personal?cursor='+encodeURIComponent(data.next_cursor));setData(d=>({...result,history:[...d.history,...result.history.filter(r=>!d.history.some(old=>old.resource===r.resource))]}));}catch(e){setError((e as Error).message);}finally{setBusy(false);}}
  return {data,error,authenticated,busy:busy||loading,favorite,more};
 }

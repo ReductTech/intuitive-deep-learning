@@ -149,6 +149,10 @@ def handler_for(app):
                     require(not set(body)-{"username","password"},400,"INVALID_INPUT","不支持额外登录字段。")
                     user,token=app.identity.login(body.get("username"),body.get("password"),self.client_address[0],token_hash(raw_token),app.clock())
                     return self.send_json(200,{"user":user},self.cookie(token))
+                if self.command=='POST' and path=='/api/shuku/auth/guest':
+                    require(not self.body(),400,'INVALID_INPUT','游客入口不接受账号信息。')
+                    app.store.remove_session(token_hash(raw_token))
+                    return self.send_json(200,{'guest':True},self.cookie('',True))
                 if self.command=="POST" and path=="/api/shuku/auth/logout":
                     self.body()
                     app.store.remove_session(token_hash(raw_token))
