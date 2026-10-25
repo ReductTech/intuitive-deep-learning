@@ -1,0 +1,21 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {buildSync} from 'esbuild';
+import {startGuided,outlineFor,compileGuided,guidedState,updateGuided} from './guided.ts';
+const original={version:1,id:'project',courseId:'test',title:'Agent 入门',duration:30,style:'简洁教学',outlineConfirmed:true,pages:[]};
+test('guided creation begins with choices and preserves course information',()=>{
+ const project=startGuided(original,'理解工具、记忆和规划');assert.equal(project.duration,20);assert.equal(guidedState(project.pages[0]).phase,'choices');assert.equal(project.source,undefined);assert.equal(original.pages.length,0);
+ const outline=outlineFor({...project,duration:10});assert.equal(outline.pages.length,4);assert.equal(outline.outlineConfirmed,false);assert.ok(outline.pages.every(p=>guidedState(p).phase==='outline'&&!p.ready));assert.match(outline.pages[0].summary,/工具/);
+ assert.equal(outlineFor({...project,duration:40}).pages.length,8);
+});
+test('page decisions and reference images survive serialization and compile to real React files',()=>{
+ let project=outlineFor(startGuided(original,'描述课程'));
+ project.pages[0]={...updateGuided(project.pages[0],{phase:'pages',layout:'question',brief:'使用流程图',confirmed:true,image:'data:image/png;base64,aW1hZ2U='}),title:'<script>不是代码</script>',summary:'内容包含 "引号" 和换行\n第二行'};
+ const built=compileGuided(project);assert.equal(built.pages[0].format,'react');assert.equal(built.pages[0].ready,true);assert.equal(built.pages[1].ready,false);assert.equal(guidedState(JSON.parse(JSON.stringify(built)).pages[0]).brief,'使用流程图');
+ const source=built.source.files['Page1.tsx'];assert.match(source,/question/);assert.ok(!source.includes('<script>'));assert.match(source,/data:image\/png/);
+ for(const [name,contents] of Object.entries(built.source.files))if(name.endsWith('.tsx'))assert.doesNotThrow(()=>buildSync({stdin:{contents,loader:'tsx'},bundle:true,write:false,external:['react','./guided.css'],logLevel:'silent'}));
+});
+test('changing one page leaves other page decisions intact',()=>{
+ const project=outlineFor(startGuided(original,'主题'));const changed=updateGuided(project.pages[1],{layout:'steps',confirmed:true});const next=compileGuided({...project,pages:project.pages.map((p,i)=>i===1?changed:p)});
+ assert.equal(guidedState(next.pages[1]).layout,'steps');assert.equal(guidedState(next.pages[0]).layout,undefined);assert.equal(guidedState(project.pages[1]).confirmed,false);
+});
