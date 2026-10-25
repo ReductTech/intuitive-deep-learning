@@ -42,5 +42,3 @@ try{
  await page.goto(base+'/my-courses?tab=create');await page.setViewportSize({width:390,height:844});await category.waitFor();assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
  assert.deepEqual(errors,[]);console.log('PASS category dropdown: defaults, existing categories, deduplication, custom category validation and payload, switching, mobile layout.');
 }finally{await browser.close();}
-
-
