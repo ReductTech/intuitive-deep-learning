@@ -16,6 +16,16 @@ class Settings:
     source_root: Path | None = None
     github_config_path: Path | None = field(default=None,repr=False)
 
+    github_identity_config_path: Path | None = field(default=None,repr=False)
+    github_token_key_path: Path | None = field(default=None,repr=False)
+
+    def github_identity_config(self):
+        path=self.github_identity_config_path or self.github_config_path
+        if path is None:return None
+        import json
+        config=json.loads(path.read_text())
+        return config if config.get("clientId") else None
+
     def github_config(self):
         if self.github_config_path is None:return None
         import json
@@ -51,4 +61,6 @@ class Settings:
                    host=os.environ.get("SHUKU_HOST", "127.0.0.1"),
                    port=int(os.environ.get("SHUKU_PORT", "8010")),
                    source_root=Path(os.environ["SHUKU_SOURCE_ROOT"]).resolve() if os.environ.get("SHUKU_SOURCE_ROOT") else None,
-                   github_config_path=Path(os.environ['SHUKU_GITHUB_CONFIG']).resolve() if os.environ.get('SHUKU_GITHUB_CONFIG') else None)
+                   github_config_path=Path(os.environ['SHUKU_GITHUB_CONFIG']).resolve() if os.environ.get('SHUKU_GITHUB_CONFIG') else None,
+                   github_identity_config_path=Path(os.environ['SHUKU_GITHUB_IDENTITY_CONFIG']).resolve() if os.environ.get('SHUKU_GITHUB_IDENTITY_CONFIG') else None,
+                   github_token_key_path=Path(os.environ['SHUKU_GITHUB_TOKEN_KEY']).resolve() if os.environ.get('SHUKU_GITHUB_TOKEN_KEY') else None)

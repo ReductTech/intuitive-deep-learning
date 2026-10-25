@@ -154,6 +154,12 @@ def handler_for(app):
                     app.store.remove_session(token_hash(raw_token))
                     return self.send_json(200,{"message":"已退出登录"},self.cookie("",True))
                 user=app.store.session_user(token_hash(raw_token),app.clock())
+                if self.command=='GET' and path=='/api/shuku/github/identity':
+                    return self.send_json(200,app.github_identity.status(user['id']))
+                identity_route=re.fullmatch(r'/api/shuku/github/identity/(start|poll|cancel|disconnect)',path)
+                if self.command=='POST' and identity_route:
+                    require(self.headers.get('X-Shuku-Account')==user['id'],409,'ACCOUNT_CHANGED','登录账号已切换，请刷新页面后继续。')
+                    return self.send_json(200,app.github_identity.action(user['id'],identity_route[1],self.body(4096)))
                 if self.command=='GET' and admin_path:
                     return self.send_json(200,admin_listing(app,user['id'],admin_path[1],query.get('page',['1'])[0]))
                 if self.command=='GET' and path=='/api/shuku/review-inbox':
