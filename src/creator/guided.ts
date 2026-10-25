@@ -6,6 +6,7 @@ export function startGuided(project:CreatorProject,description:string):CreatorPr
  return {...project,source:undefined,duration:20,style:'简洁图解',outlineConfirmed:false,pages:[{id:crypto.randomUUID(),format:'text',title:project.title,goal:'',summary:description,note:'',designed:false,ready:false,revisions:[],messages:[],outline:{guided:{phase:'choices',audience:'初学者',description}}}]};
 }
 export function outlineFor(project:CreatorProject):CreatorProject{
+ if(project.pages.length>1)return changeGuidedPhase(project,'outline');
  const state=guidedState(project.pages[0])!;
  const topics=state.description.split(/[，。；、\n]+/).map(s=>s.trim()).filter(Boolean);
  const count=project.duration<=10?4:project.duration<=20?6:8;
@@ -14,6 +15,18 @@ export function outlineFor(project:CreatorProject):CreatorProject{
 }
 export function updateGuided(page:CreatorPage,patch:Partial<GuidedState>):CreatorPage{
  return {...page,outline:{...page.outline,guided:{...guidedState(page),...patch}}};
+}
+export function changeGuidedPhase(project:CreatorProject,phase:GuidedState['phase']):CreatorProject{
+ return {...project,outlineConfirmed:phase==='pages',pages:project.pages.map(p=>updateGuided(p,{phase}))};
+}
+export function updateGuidedPreferences(project:CreatorProject,preferences:Partial<Pick<CreatorProject,'duration'|'style'>>&{audience?:string}):CreatorProject{
+ const changed=(preferences.duration!==undefined&&preferences.duration!==project.duration)||(preferences.style!==undefined&&preferences.style!==project.style)||(preferences.audience!==undefined&&preferences.audience!==guidedState(project.pages[0])?.audience);
+ const {audience,...settings}=preferences;
+ return {...project,...settings,outlineConfirmed:changed?false:project.outlineConfirmed,pages:project.pages.map(p=>{
+  const state=guidedState(p)!;const target=audience??state.audience;
+  const goal=p.goal.startsWith('帮助'+state.audience)?'帮助'+target+p.goal.slice(('帮助'+state.audience).length):p.goal;
+  return updateGuided({...p,goal},{audience:target,confirmed:changed?false:state.confirmed});
+ })};
 }
 export function compileGuided(project:CreatorProject):CreatorProject{
  const theme=project.style==='故事案例'?'.guided-lesson{background:#fffaf1}.guided-lesson button{color:#986e2f}':project.style==='动手探索'?'.guided-lesson{background:#f1f7ff}.guided-lesson button{color:#3168ad}':'';
