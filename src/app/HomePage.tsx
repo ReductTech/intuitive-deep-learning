@@ -48,26 +48,35 @@ const courses = activeModules.filter(module => module.pptDeck).sort((a, b) => {
   const rank = (id: string) => order.includes(id) ? order.indexOf(id) : order.length;
   return rank(a.id) - rank(b.id);
 });
-export function info(module: ActiveModule) {
+export interface LibraryCourse {kind:'library';id:string;module_id:string;alias:string;title:string;description:string;category:string;difficulty:string;page_count:number;cover_url:string|null;repository:string;source_commit:string;github_url:string;version:string}
+export type CatalogModule = ActiveModule & {catalog?:LibraryCourse};
+export function info(module: CatalogModule) {
+  if(module.catalog)return {title:module.catalog.title,summary:module.catalog.description,topic:module.catalog.category,color:'#e8f0ff',cover:undefined};
   return editorial[module.id] ?? { title: module.title, summary: module.description, topic: '神经网络', color: '#e8f0ff' };
 }
 function presentationHref(module: ActiveModule, pageId?: string) {
   return `/study?module=${encodeURIComponent(module.id)}&mode=ppt${pageId ? `&page=${encodeURIComponent(pageId)}` : ''}`;
 }
-export function Cover({ module }: { module: ActiveModule }) {
+export function Cover({ module }: { module: CatalogModule }) {
   const [failed, setFailed] = useState(false);
   const meta = info(module);
   const cover = meta.cover ?? module.pptDeck?.scenes[0]?.id;
   return <div className="sd-library-cover" style={{ '--cover-color': meta.color } as CSSProperties}>
-    {failed || !cover ? <div className="sd-library-cover-fallback"><Icon name={topics.find(topic => topic.name === meta.topic)?.icon ?? 'book'} /><span>{meta.topic}</span></div>
-      : <img src={moduleAssetUrl(module.assetId, `scenedeck-thumbnails/${cover}.png`)} alt={`${meta.title}课件预览`} loading="lazy" onError={() => setFailed(true)} />}
+    {failed || (!cover && !module.catalog?.cover_url) ? <div className="sd-library-cover-fallback"><Icon name={topics.find(topic => topic.name === meta.topic)?.icon ?? 'book'} /><span>{meta.topic}</span></div>
+      : <img src={module.catalog?.cover_url || moduleAssetUrl(module.assetId, `scenedeck-thumbnails/${cover}.png`)} alt={`${meta.title}课件预览`} loading="lazy" onError={() => setFailed(true)} />}
     <span className="sd-library-cover-count">{module.pages.length} 页</span>
   </div>;
 }
 
 export function HomePage() {
-  const [published,setPublished]=useState<{id:string;title:string;description:string;category:string;version:string;revision_id:string}[]>([]);
-  useEffect(()=>{if(isLocalPreview)return;api<{courses:typeof published}>('/public/courses').then(r=>setPublished(r.courses)).catch(()=>{});},[]);
+  type PublishedCourse={id:string;title:string;description:string;category:string;version:string;revision_id:string;kind?:undefined};
+  const [catalog,setCatalog]=useState<(PublishedCourse|LibraryCourse)[]>([]),[catalogError,setCatalogError]=useState(''),[loading,setLoading]=useState(!isLocalPreview);
+  useEffect(()=>{if(isLocalPreview)return;let active=true;api<{courses:(PublishedCourse|LibraryCourse)[]}>('/public/courses').then(r=>{if(active){setCatalog(r.courses);setCatalogError('');}}).catch(e=>{if(active)setCatalogError(e.message);}).finally(()=>{if(active)setLoading(false);});return()=>{active=false;};},[]);
+  const published=catalog.filter((c):c is PublishedCourse=>c.kind!=='library');
+  // Bundled components render courses; they no longer determine the public catalog.
+  const remoteCourses=catalog.filter((c):c is LibraryCourse=>c.kind==='library');
+  const listedCourses:CatalogModule[]=isLocalPreview?courses:remoteCourses.flatMap(c=>{const module=activeModules.find(m=>m.id===c.alias&&m.assetId===c.module_id&&m.pptDeck);return module?[{...module,title:c.title,description:c.description,difficulty:c.difficulty as ActiveModule['difficulty'],catalog:c}]:[];});
+  const catalogTopics=[{name:'全部课程',icon:'grid' as IconName},...Array.from(new Set([...listedCourses.map(m=>info(m).topic),...published.map(c=>c.category)].filter(Boolean))).map(name=>({name,icon:(topics.find(t=>t.name===name)?.icon||'book') as IconName}))];
   const [topic, setTopic] = useState('全部课程');
   const [query, setQuery] = useState('');
   const [level, setLevel] = useState('全部');
@@ -78,7 +87,7 @@ export function HomePage() {
   useEffect(() => { document.title = '术库 · 探索交互课程'; }, []);
   function toggleSaved(id:string){void personal.favorite('module:'+id);}
   const normalizedQuery = query.trim().toLocaleLowerCase();
-  const filtered = courses.filter(module => {
+  const filtered = listedCourses.filter(module => {
     const meta = info(module);
     const text = [meta.title, meta.summary, meta.topic, module.title, ...module.pages.map(page => `${page.title} ${page.goal ?? ''}`)].join(' ').toLocaleLowerCase();
     return (topic === '全部课程' || meta.topic === topic) && (!normalizedQuery || text.includes(normalizedQuery))
@@ -88,18 +97,19 @@ export function HomePage() {
   const recentCourse=personal.data.history[0];
   const knownPublished=[...published,...personal.data.favorite_courses.filter(c=>!published.some(other=>other.id===c.id))];
   const visiblePublished=(tab==='saved'?knownPublished:published).filter(c=>(tab!=='saved'||saved.includes('course:'+c.id))&&(!query||[c.title,c.description].join(' ').includes(query))&&(topic==='全部课程'||c.category===topic));
-  const unavailableFavorites=tab==='saved'?saved.filter(key=>!courses.some(m=>'module:'+m.id===key)&&!knownPublished.some(c=>'course:'+c.id===key)):[];
+  const unavailableFavorites=tab==='saved'?saved.filter(key=>!listedCourses.some(m=>'module:'+m.id===key)&&!knownPublished.some(c=>'course:'+c.id===key)):[];
   function reset() { setQuery(''); setTopic('全部课程'); setLevel('全部'); setTab('courses'); }
   return <div className={'sd-library'+(tab==='history'?' sd-personal-history':'')}>
     <a className="sd-library-skip" href="#sd-library-main">跳到课程</a>
     <SiteHeader section={tab==='saved'?'saved':tab==='history'?'history':'courses'} savedCount={saved.length} onBrowse={value=>{setTab(value);const url=new URL(location.href);if(value==='saved')url.searchParams.set('view','saved');else url.searchParams.delete('view');history.replaceState(null,'',url);}}/>
     <aside className="sd-library-sidebar" aria-label="课程分类">
       <p className="sd-library-nav-label">课程图书馆</p>
-      <div className="sd-library-topics">{topics.map(item => <button key={item.name} aria-pressed={topic === item.name} className={topic === item.name ? 'is-active' : ''} onClick={() => setTopic(item.name)}><Icon name={item.icon} /><span>{item.name}</span><small>{item.name === '全部课程' ? courses.length : courses.filter(module => info(module).topic === item.name).length}</small></button>)}</div>
+      <div className="sd-library-topics">{catalogTopics.map(item => <button key={item.name} aria-pressed={topic === item.name} className={topic === item.name ? 'is-active' : ''} onClick={() => setTopic(item.name)}><Icon name={item.icon} /><span>{item.name}</span><small>{item.name === '全部课程' ? listedCourses.length+published.length : listedCourses.filter(module => info(module).topic === item.name).length+published.filter(c=>c.category===item.name).length}</small></button>)}</div>
       <div className="sd-library-sidebar-bottom"><div className="sd-library-mode-note"><span className="sd-library-note-icon"><Icon name="spark" /></span><strong>让知识在共创中进化</strong><p>分享一种理解，<br />一起完善一门课程。</p></div><details className="sd-library-tools"><summary><Icon name="code" />开发工具<span>＋</span></summary><a href="/shared/ui-kit">Shared UI Kit <span>↗</span></a>{activeModules.filter(module => !module.pptDeck).map(module => <a href={module.path} key={module.id}>{module.badge === '接口联调' || module.id === 'memory-test' ? '接口联调' : '可编辑画布'}<span>↗</span></a>)}</details></div>
     </aside>
     <main id="sd-library-main" className="sd-library-main">
       {tab !== 'courses' && <div className="sd-library-heading"><div><p className="sd-library-eyebrow">EXPLORE · INTERACT · UNDERSTAND</p><h1>{tab === 'history'?'继续你的学习':tab === 'saved' ? '留住你的好奇心' : '下一次理解，从这里开始'}<span>。</span></h1><p>{tab === 'saved' ? '感兴趣的课程，随时回来继续探索。' : '从真实问题出发，在交互中建立直觉。'}</p></div><span className="sd-library-heading-mark" aria-hidden="true">✳</span></div>}
+      {loading&&<p role="status">正在加载课程…</p>}{catalogError&&<p role="alert">{catalogError} <button onClick={()=>location.reload()}>重新加载</button></p>}{!isLocalPreview&&remoteCourses.length>listedCourses.length&&<p role="status">部分课程正在更新，请稍后刷新。</p>}
       {personal.error&&<p role="alert">{personal.error}</p>}{!personal.authenticated&&tab!=='courses'&&<p>登录后查看您的收藏和学习记录。 <a onClick={event=>{if(isGuestMode()){event.preventDefault();requestSignIn();}}} href={'/my-courses?next='+encodeURIComponent('/?view='+tab)}>登录</a></p>}{recentCourse?.available&&tab!=='history'&&<a className="sd-library-recent" href={studyHref(recentCourse)}><Icon name="clock"/><span>最近学习<strong>{recentCourse.title}</strong></span><span>继续学习 <Icon name="arrow"/></span></a>}
       <div className="sd-library-search"><Icon name="search" /><input ref={searchRef} type="search" value={query} onChange={event => setQuery(event.target.value)} aria-label="搜索课程、知识点或页面" placeholder="想了解什么？搜索课程、知识点或页面…" />{query && <button aria-label="清空搜索" onClick={() => {setQuery(''); searchRef.current?.focus();}}><Icon name="close" /></button>}</div>
       <div className="sd-library-filterbar"><div className="sd-library-levels" aria-label="课程难度">{['全部', '入门', '进阶'].map(item => <button key={item} aria-pressed={level === item} className={level === item ? 'is-active' : ''} onClick={() => setLevel(item)}>{item}</button>)}</div><div className="sd-library-results"><span aria-live="polite">{tab==='history'?personal.data.history.length:filtered.length+visiblePublished.length+unavailableFavorites.length} 门课程</span><select aria-label="课程排序" value={sort} onChange={event => setSort(event.target.value)}><option value="default">推荐顺序</option><option value="pages">页数从少到多</option><option value="name">课程名称</option></select></div></div>
@@ -113,7 +123,7 @@ export function HomePage() {
           </div>
         </article>;
       })}</div>
-      {tab==='history'&&personal.authenticated&&!personal.data.history.length&&<p>还没有学习记录，<a href="/">选择一门课程开始学习</a>。</p>}{tab==='history'&&personal.data.next_cursor&&<button disabled={personal.busy} onClick={()=>void personal.more()}>更多学习记录</button>}{tab!=='history'&&!filtered.length&&!visiblePublished.length&&!unavailableFavorites.length && <div className="sd-library-empty"><Icon name={tab === 'saved' && !saved.length ? 'bookmark' : 'search'} /><h2>{tab === 'saved' && !saved.length ? '把感兴趣的课程收在这里' : '暂时没有找到相关课程'}</h2><p>{tab === 'saved' && !saved.length ? '点击课程卡片上的收藏图标，下次更容易找到。' : '试试其他关键词，或放宽分类与难度筛选。'}</p><button onClick={reset}>浏览全部课程 <Icon name="arrow" /></button></div>}
+      {tab==='history'&&personal.authenticated&&!personal.data.history.length&&<p>还没有学习记录，<a href="/">选择一门课程开始学习</a>。</p>}{tab==='history'&&personal.data.next_cursor&&<button disabled={personal.busy} onClick={()=>void personal.more()}>更多学习记录</button>}{!loading&&!catalogError&&tab!=='history'&&!filtered.length&&!visiblePublished.length&&!unavailableFavorites.length && <div className="sd-library-empty"><Icon name={tab === 'saved' && !saved.length ? 'bookmark' : 'search'} /><h2>{tab === 'saved' && !saved.length ? '把感兴趣的课程收在这里' : '暂时没有找到相关课程'}</h2><p>{tab === 'saved' && !saved.length ? '点击课程卡片上的收藏图标，下次更容易找到。' : '试试其他关键词，或放宽分类与难度筛选。'}</p><button onClick={reset}>浏览全部课程 <Icon name="arrow" /></button></div>}
       <footer className="sd-library-footer"><span>术库</span><p>不止于看见，更在于理解。</p><span>自主探索 · 课堂展示</span></footer>
     </main>
   </div>;

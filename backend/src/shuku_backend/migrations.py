@@ -6,7 +6,12 @@ from sqlalchemy import inspect, select, text
 from sqlalchemy.schema import AddConstraint
 from .schema import metadata, schema_migrations, locks
 
-VERSION = "001_mysql_sqlalchemy"
+VERSION = "002_remote_course_catalog"
+BASELINE = "001_mysql_sqlalchemy"
+BASELINE_CHECKSUM = "aba81a549885761ee0409746d8080eea790f7d7372180aab7c1fd1b08b2bd2bd"
+
+def expected_markers():
+    return {BASELINE: BASELINE_CHECKSUM, VERSION: checksum()}
 
 
 def checksum():
@@ -18,7 +23,7 @@ def verify(connection):
     if not set(metadata.tables).issubset(inspector.get_table_names()):
         raise RuntimeError("Run python -m shuku_backend migrate before serving")
     rows = connection.execute(select(schema_migrations)).mappings().all()
-    if {row["version"]: row["checksum"] for row in rows} != {VERSION: checksum()}:
+    if {row["version"]: row["checksum"] for row in rows} != expected_markers():
         raise RuntimeError("Database schema version/checksum does not match; run shuku_backend migrate")
     for table in metadata.tables.values():
         columns = {column["name"] for column in inspector.get_columns(table.name)}
@@ -46,7 +51,7 @@ def migrate(engine):
                 raise RuntimeError("Shuku requires MySQL 8.0.16+ (CHECK constraints and SKIP LOCKED)")
             if inspect(connection).has_table(schema_migrations.name):
                 rows = connection.execute(select(schema_migrations)).mappings().all()
-                if rows and {r["version"]: r["checksum"] for r in rows} != {VERSION: checksum()}:
+                if rows and {r["version"]: r["checksum"] for r in rows} not in (expected_markers(), {BASELINE: BASELINE_CHECKSUM}):
                     raise RuntimeError("Applied schema migration has changed; add an explicit upgrade migration")
             connection.commit()
             # MySQL DDL commits implicitly. Re-running resumes a failed baseline;
@@ -67,8 +72,9 @@ def migrate(engine):
                 from sqlalchemy.dialects.mysql import insert
                 guard = insert(locks).values(name="file-references")
                 connection.execute(guard.on_duplicate_key_update(name=guard.inserted.name))
-                marker = insert(schema_migrations).values(version=VERSION, checksum=checksum())
-                connection.execute(marker.on_duplicate_key_update(checksum=marker.inserted.checksum))
+                for version, digest in expected_markers().items():
+                    marker = insert(schema_migrations).values(version=version, checksum=digest)
+                    connection.execute(marker.on_duplicate_key_update(checksum=marker.inserted.checksum))
             verify(connection)
             connection.commit()
         finally:

@@ -348,3 +348,14 @@ Index("learning_recent", learning_states.c.user_id, learning_states.c.updated_at
 
 schema_migrations = table("schema_migrations", Column("version", String(100), primary_key=True), Column("checksum", CHAR(64), nullable=False))
 locks = table("locks", Column("name", String(100), primary_key=True))
+
+# Remote library metadata is independent of user drafts and review releases.
+library_courses = table('library_courses',
+    Column('module_id', CHAR(36), primary_key=True),
+    Column('snapshot_commit', String(40), primary_key=True),
+    Column('alias', String(150), nullable=False),
+    Column('repository', String(150), nullable=False),
+    Column('payload', JSON(), nullable=False),
+    Column('synced_at', Double(), nullable=False),
+    UniqueConstraint('snapshot_commit','alias', name='uq_library_snapshot_alias')
+)

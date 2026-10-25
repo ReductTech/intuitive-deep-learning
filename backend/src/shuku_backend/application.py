@@ -7,6 +7,7 @@ from .services import Courses
 from .storage import Store
 from .workers import Worker
 from .workflow import Workflow
+from .library_catalog import LibraryCatalog
 from .collaboration import Collaboration
 from .governance import Governance
 from .feedback import Feedback
@@ -55,6 +56,8 @@ def create_application(settings, clock=time.time):
         checkpoint({"verified":True})
         return {"size":len(data)}
     workflow=Workflow(store,bucket,settings.source_root,clock,course_root=settings.course_root)
+    workflow.library=LibraryCatalog(workflow)
+    workflow.library.sync()
     workflow.collaboration=Collaboration(workflow)
     workflow.governance=Governance(workflow)
     workflow.feedback=Feedback(workflow)

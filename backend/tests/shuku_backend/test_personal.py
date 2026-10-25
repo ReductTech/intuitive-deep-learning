@@ -115,6 +115,7 @@ def test_builtin_catalog_and_cursor_account_boundary(workflow):
 
 def test_personal_http_auth_csrf_validation_and_scoped_records(api):
     request,app=api;app.workflow.root=Path(__file__).resolve().parents[3]
+    app.workflow.course_root=app.workflow.root
     module=app.workflow.modules()[0];key='module:'+module['alias'];encoded=key.replace(':','%3A')
     assert request('GET','/personal')[0]==401
     assert request('POST','/personal/favorites',{'resource':key,'saved':True})[0]==401

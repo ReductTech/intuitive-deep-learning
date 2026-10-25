@@ -287,7 +287,8 @@ class Workflow:
 
     def public_courses(self):
         with self.store.transaction() as db:
-            return [course_view(row) for row in db.execute("SELECT c.id,c.title,c.description,c.category,c.module_id,r.version,r.revision_id FROM shuku_courses c JOIN shuku_releases r ON r.id=c.current_release WHERE c.status='published' AND NOT c.deleting ORDER BY r.created_at DESC LIMIT 100").fetchall()]
+            published = [course_view(row) for row in db.execute("SELECT c.id,c.title,c.description,c.category,c.module_id,r.version,r.revision_id FROM shuku_courses c JOIN shuku_releases r ON r.id=c.current_release WHERE c.status='published' AND NOT c.deleting ORDER BY r.created_at DESC LIMIT 100").fetchall()]
+        return published + self.library.courses()
 
 
     def public_course(self,cid):

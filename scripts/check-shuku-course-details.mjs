@@ -8,6 +8,9 @@ const browser=await chromium.launch({channel:'chrome',headless:true});
 const course={id:'public-course',title:'Agent 概念入门',description:'介绍 Agent 的基本概念与模块。',category:'人工智能',creator:'小满',version:'1.0.2',revision_id:'new-revision'};
 const releases=[{id:'release-new',version:'1.0.2',revision_id:'new-revision',current:true,created_at:1760000000,note:'完善示例'},{id:'release-old',version:'1.0.0',revision_id:'old-revision',current:false,created_at:1750000000,note:'初始版本'}];
 const personal={account_id:'author',favorites:[],favorite_courses:[],history:[{resource:'course:public-course',title:course.title,version:'old-revision',version_label:'v1.0.0',url:'/learn?revision=old-revision',available:true,pages:['first'],page_id:'first',mode:'guide',completed:[],updated_at:1750000010,page_count:1}],next_cursor:null};
+const native={kind:'library',id:'01439005-1b6c-42d8-b4ae-f750072f64d0',module_id:'01439005-1b6c-42d8-b4ae-f750072f64d0',alias:'neuron-guide',title:'认识人工神经元',description:'远程目录课程简介',category:'神经网络',difficulty:'introductory',page_count:18,cover_url:null,repository:'reduct-shuku/intuitive-deep-learning',source_commit:'a'.repeat(40),version:'aaaaaaaa',github_url:'https://github.com/reduct-shuku/intuitive-deep-learning'};
+// Read the stable UUID from the actual outline rather than duplicating it.
+const outline=JSON.parse(await fs.readFile('modules/Neuron-Guide/outlines.json','utf8'));native.id=native.module_id=outline.moduleIdentity.id;
 let posted=null;
 async function mocks(context){await context.route('**/api/shuku/**',async route=>{
  const req=route.request(),path=new URL(req.url()).pathname.slice('/api/shuku'.length);let data;
@@ -15,7 +18,8 @@ async function mocks(context){await context.route('**/api/shuku/**',async route=
  if(path==='/auth/me')data={user:{id:'author',username:'xiaoman',display_name:'小满',role:'creator'}};
  else if(path==='/messages')data={messages:[],unread_count:0};
  else if(path==='/personal')data=personal;
- else if(path==='/public/courses')data={courses:[course]};
+ else if(path==='/public/courses')data={courses:[course,native]};
+ else if(path==='/public/library/neuron-guide')data={course:native};
  else if(path==='/public/courses/public-course')data={course,releases,contributors:[{name:'林知',score:8,count:1},{name:'小满',score:0,count:0}]};
  else if(path==='/public/courses/public-course/releases')data={releases};
  else if(path==='/revisions/old-revision/feedback'){posted=req.postDataJSON();data={id:'feedback-result'};}
@@ -25,7 +29,7 @@ async function mocks(context){await context.route('**/api/shuku/**',async route=
 });}
 try{
  const context=await browser.newContext({viewport:{width:1440,height:1000}});await mocks(context);const page=await context.newPage();page.setDefaultTimeout(15000);const errors=[];page.on('pageerror',e=>errors.push(e.message));
- await page.goto(base+'/');await page.getByRole('link',{name:'认识人工神经元课程详情',exact:true}).click();await page.getByRole('heading',{name:'认识人工神经元',exact:true}).waitFor();assert.ok(page.url().includes('/course?module=neuron-guide'));assert.equal(await page.getByRole('dialog').count(),0);
+ await page.goto(base+'/');await page.getByRole('link',{name:'认识人工神经元课程详情',exact:true}).waitFor();assert.equal(await page.locator('.sd-library-grid > article').count(),2,'only API courses, no bundled extras');await page.getByRole('link',{name:'认识人工神经元课程详情',exact:true}).click();await page.getByRole('heading',{name:'认识人工神经元',exact:true}).waitFor();assert.ok(page.url().includes('/course?module=neuron-guide'));assert.equal(await page.getByRole('dialog').count(),0);
  assert.equal(await page.locator('.cd-records details[open]').count(),0);assert.equal(await page.getByRole('link',{name:'开始学习',exact:true}).getAttribute('href'),'/study?module=neuron-guide&mode=guide');assert.equal(await page.getByRole('button',{name:'我想共创',exact:true}).isDisabled(),true);
  await page.goto(base+'/');await page.getByRole('heading',{name:course.title,exact:true}).getByRole('link').click();await page.getByRole('heading',{name:course.title,exact:true}).waitFor();await page.getByText('小满',{exact:true}).first().waitFor();
  const version=page.getByRole('combobox',{name:'学习版本',exact:true});assert.equal(await version.inputValue(),'new-revision');assert.equal(await page.getByRole('link',{name:'开始学习',exact:true}).getAttribute('href'),'/learn?revision=new-revision');assert.match(await page.getByRole('link',{name:'继续上次学习 · v1.0.0',exact:true}).getAttribute('href'),/old-revision.*resume=1/);
@@ -36,5 +40,7 @@ try{
  await fs.mkdir('test-results/course-details',{recursive:true});await page.screenshot({path:'test-results/course-details/desktop.png',fullPage:true});await page.setViewportSize({width:390,height:844});assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));await page.screenshot({path:'test-results/course-details/mobile.png',fullPage:true});
  await page.goto(base+'/course?course=missing');await page.getByRole('alert').filter({hasText:'课程不存在或已不可访问。'}).waitFor();assert.equal(await page.getByRole('link',{name:'开始学习',exact:true}).count(),0);assert.deepEqual(errors,[]);
  const guest=await browser.newContext();await guest.addInitScript(()=>sessionStorage.setItem('shuku:guest','1'));await mocks(guest);const visitor=await guest.newPage();await visitor.goto(base+'/course?course=public-course');await visitor.getByRole('button',{name:'我想共创',exact:true}).click();await visitor.getByRole('heading',{name:'欢迎登录',exact:true}).waitFor();
+ const empty=await browser.newContext();await mocks(empty);await empty.route('**/api/shuku/public/courses',route=>route.fulfill({json:{courses:[]}}));const noCourses=await empty.newPage();await noCourses.goto(base+'/');await noCourses.getByRole('heading',{name:'暂时没有找到相关课程'}).waitFor();assert.equal(await noCourses.locator('.sd-library-grid > article').count(),0);
+ await empty.route('**/api/shuku/public/courses',route=>route.fulfill({status:503,json:{error:'课程目录暂不可用'}}));await noCourses.reload();await noCourses.getByRole('alert').filter({hasText:'课程目录暂不可用'}).waitFor();assert.equal(await noCourses.locator('.sd-library-grid > article').count(),0,'API error must not fall back to bundled courses');
  console.log('PASS course details: card links, built-in availability, creator/cover, latest version, historical resume, collapsed history/ranking, co-creation base, version-bound feedback, refresh, guest login, inaccessible courses and mobile.');
 }finally{await browser.close();}

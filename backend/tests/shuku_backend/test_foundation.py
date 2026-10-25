@@ -62,6 +62,7 @@ def test_ready_does_not_migrate_or_ignore_checksum(store,tmp_path):
         with pytest.raises(RuntimeError):create_application(settings(tmp_path,store.database_url))
         with pytest.raises(RuntimeError):store.migrate()
     finally:
-        from shuku_backend.migrations import VERSION, checksum
+        from shuku_backend.migrations import expected_markers
         with store.transaction() as db:
-            db.execute("UPDATE shuku_schema_migrations SET checksum=%s WHERE version=%s",(checksum(),VERSION))
+            for version,digest in expected_markers().items():
+                db.execute("UPDATE shuku_schema_migrations SET checksum=%s WHERE version=%s",(digest,version))
