@@ -16,11 +16,16 @@ def test_same_ip_demo_cookie_isolation(api):
 
 
 def test_independent_5175_deployment_contract():
+    import re
+    from shuku_backend.presentations import MAX_UPLOAD
     root=Path(__file__).resolve().parents[3]
     nginx=(root/'deploy/5175/nginx.conf').read_text()
     service=(root/'deploy/5175/shuku-idl.service').read_text()
     assert 'listen 5175 ssl;' in nginx and 'listen 443' not in nginx
     assert 'http://127.0.0.1:8010' in nginx and 'ssl_certificate_key' in nginx
     assert 'try_files $uri =404;' in nginx and 'sites-enabled/default' not in nginx
+    limit=re.search(r'client_max_body_size\s+(\d+)m;',nginx)
+    assert limit and int(limit[1])*1024*1024>=MAX_UPLOAD+65536
+    assert 'client_body_timeout 120s;' in nginx and 'proxy_send_timeout 120s;' in nginx
     assert 'EnvironmentFile=/etc/shuku-idl/runtime.env' in service
     assert 'MemoryMax=384M' in service and 'User=ecs-assist-user' in service

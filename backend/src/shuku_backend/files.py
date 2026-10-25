@@ -47,6 +47,29 @@ class Bucket:
             raise ValueError("Stored object checksum mismatch")
         return content
 
+    def put_file(self, source):
+        """Store large seekable uploads without materializing the whole file in RAM."""
+        source.seek(0);digest=sha256();size=0
+        fd,name=tempfile.mkstemp(prefix='.write-',dir=self.root)
+        try:
+            with os.fdopen(fd,'wb') as out:
+                while True:
+                    chunk=source.read(65536)
+                    if not chunk:break
+                    digest.update(chunk);size+=len(chunk);out.write(chunk)
+                out.flush();os.fsync(out.fileno())
+            path=self.path(digest.hexdigest());path.parent.mkdir(parents=True,exist_ok=True)
+            try:os.replace(name,path)
+            except PermissionError:
+                if not path.is_file() or path.stat().st_size!=size:raise
+                existing=sha256()
+                with path.open('rb') as stored:
+                    for chunk in iter(lambda:stored.read(65536),b''):existing.update(chunk)
+                if existing.digest()!=digest.digest():raise
+        finally:
+            if os.path.exists(name):os.unlink(name)
+        return {'sha256':digest.hexdigest(),'size':size}
+
     def remove(self,digest):
         """Caller must hold the exclusive reference lock and verify no live references."""
         path=self.path(digest)

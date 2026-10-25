@@ -27,8 +27,8 @@ try{
   await route.fulfill({json:data});
  });
  await page.goto(base+'/my-courses?tab=create');await page.getByLabel('课程名称',{exact:true}).fill(course.title);await page.getByLabel('课程简介',{exact:true}).fill(course.description);
- await page.getByLabel('上传课程 PPT',{exact:true}).setInputFiles({name:'old.ppt',mimeType:'application/vnd.ms-powerpoint',buffer:Buffer.from('legacy')});await page.getByText(/请选择 20 MB 以内的 .pptx/).first().waitFor();assert.equal(uploads,0);
- await page.getByLabel('上传课程 PPT',{exact:true}).setInputFiles({name:'我的课程.pptx',mimeType:'application/vnd.openxmlformats-officedocument.presentationml.presentation',buffer:Buffer.from('PPTX fixture bytes')});
+ await page.getByLabel('上传课程 PPT',{exact:true}).setInputFiles({name:'old.ppt',mimeType:'application/vnd.ms-powerpoint',buffer:Buffer.from('legacy')});await page.getByText(/请选择 100 MB 以内的 .pptx/).first().waitFor();assert.equal(uploads,0);
+ await page.getByLabel('上传课程 PPT',{exact:true}).setInputFiles({name:'我的课程.pptx',mimeType:'application/vnd.openxmlformats-officedocument.presentationml.presentation',buffer:Buffer.alloc(21*1024*1024,1)});
  await page.getByRole('button',{name:'开始创建',exact:true}).click();await page.getByRole('heading',{name:'这门课，你想怎样讲？',exact:true}).waitFor();assert.equal(uploads,1);await page.getByText('已读取 2 页',{exact:true}).waitFor();
  await page.getByRole('button',{name:'40 分钟',exact:true}).click();await page.getByRole('button',{name:'查看课程大纲',exact:true}).click();assert.equal(await page.locator('.ga-outline li').count(),2);assert.equal(await page.getByLabel('第 1 页标题',{exact:true}).inputValue(),'Agent 是什么');
  await page.getByLabel('第 1 页内容',{exact:true}).fill('结合已有 PPT 补充一个生活案例');await page.getByRole('button',{name:'确认大纲，开始逐页制作',exact:true}).click();

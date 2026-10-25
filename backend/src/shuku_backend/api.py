@@ -171,11 +171,12 @@ def handler_for(app):
                         from .presentations import read_upload,import_course,MAX_UPLOAD
                         try:size=int(self.headers.get('Content-Length','0'))
                         except ValueError:size=0
-                        require(0<size<=MAX_UPLOAD+65536,413,'PRESENTATION_LIMIT','请选择 20 MB 以内的 PPTX 文件。')
-                        self.connection.settimeout(30)
+                        require(0<size<=MAX_UPLOAD+65536,413,'PRESENTATION_LIMIT','请选择 100 MB 以内的 PPTX 文件。')
+                        self.connection.settimeout(60)
                         content_type=self.headers.get('Content-Type','')
-                        data,content,filename=read_upload(content_type,self.rfile.read(size))
-                        return self.send_json(201,import_course(app.workflow,user['id'],data,content,filename))
+                        data,content,filename=read_upload(content_type,self.rfile,size)
+                        try:return self.send_json(201,import_course(app.workflow,user['id'],data,content,filename))
+                        finally:content.close()
                     finally:PRESENTATION_SLOT.release()
                 if self.command=='GET' and path=='/api/shuku/github/identity':
                     return self.send_json(200,app.github_identity.status(user['id']))

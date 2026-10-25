@@ -8,41 +8,84 @@ from zipfile import ZipFile, BadZipFile
 from xml.etree import ElementTree as ET
 from .errors import BusinessError, require
 
-MAX_UPLOAD = 20 * 1024 * 1024
+MAX_UPLOAD = 100 * 1024 * 1024
+MAX_UNPACKED = 512 * 1024 * 1024
 NS = {'a':'http://schemas.openxmlformats.org/drawingml/2006/main',
       'p':'http://schemas.openxmlformats.org/presentationml/2006/main',
       'r':'http://schemas.openxmlformats.org/officeDocument/2006/relationships'}
 
 
-def read_upload(content_type,body):
+def read_upload(content_type,stream,size):
+    """Read the browser's metadata-then-file multipart form using bounded chunks."""
     from email.parser import BytesParser
     from email.policy import default
+    from tempfile import TemporaryFile
     require(isinstance(content_type,str) and content_type.lower().startswith('multipart/form-data;') and '\r' not in content_type and '\n' not in content_type,415,'MULTIPART_REQUIRED','请使用文件上传。')
-    message=BytesParser(policy=default).parsebytes(('Content-Type: '+content_type+'\r\nMIME-Version: 1.0\r\n\r\n').encode()+body)
-    require(message.is_multipart() and not message.defects,400,'INVALID_UPLOAD','文件上传格式不正确。')
-    parts=list(message.iter_parts());fields={}
-    require(len(parts)==2,400,'INVALID_UPLOAD','请上传课程信息和一个 PPTX 文件。')
-    for part in parts:
-        key=part.get_param('name',header='content-disposition')
-        require(part.get_content_disposition()=='form-data' and key in ('metadata','file') and key not in fields and not part.is_multipart() and not part.defects,400,'INVALID_UPLOAD','文件上传字段不正确。')
-        fields[key]=part
-    require(set(fields)=={'metadata','file'},400,'INVALID_UPLOAD','缺少课程信息或 PPTX。')
-    raw=fields['metadata'].get_payload(decode=True)
-    require(raw is not None and len(raw)<=16384,400,'INVALID_INPUT','课程信息过大。')
+    header=BytesParser(policy=default).parsebytes(('Content-Type: '+content_type+'\r\n\r\n').encode())
+    boundary=header.get_boundary() or ''
+    require(bool(re.fullmatch(r"[A-Za-z0-9'()+_,./:=?\-]{1,70}",boundary)),400,'INVALID_UPLOAD','文件上传边界不正确。')
+    require(0<size<=MAX_UPLOAD+65536,413,'PRESENTATION_LIMIT','请选择 100 MB 以内的 PPTX 文件。')
+    delimiter=b'\r\n--'+boundary.encode();buffer=bytearray();remaining=size
+
+    def more():
+        nonlocal remaining
+        require(remaining>0,400,'INVALID_UPLOAD','文件上传未完成。')
+        chunk=stream.read(min(65536,remaining))
+        require(bool(chunk),400,'INVALID_UPLOAD','文件上传未完成。')
+        remaining-=len(chunk);buffer.extend(chunk)
+
+    def until(marker,limit,out=None):
+        value=bytearray();written=0
+        def emit(data):
+            nonlocal written
+            written+=len(data)
+            require(written<=limit,413,'PRESENTATION_LIMIT','上传文件或字段过大。')
+            if out is None:value.extend(data)
+            else:out.write(data)
+        while True:
+            index=buffer.find(marker)
+            if index>=0:
+                emit(buffer[:index]);del buffer[:index+len(marker)]
+                return bytes(value)
+            keep=len(marker)-1
+            if len(buffer)>keep:
+                emit(buffer[:-keep]);del buffer[:-keep]
+            more()
+
+    def part(expected):
+        raw=until(b'\r\n\r\n',8192)
+        fields=BytesParser(policy=default).parsebytes(raw+b'\r\n\r\n')
+        require(not fields.defects and fields.get_content_disposition()=='form-data' and fields.get_param('name',header='content-disposition')==expected and not fields.get('Content-Transfer-Encoding'),400,'INVALID_UPLOAD','请先上传课程信息，再上传一个 PPTX 文件。')
+        return fields
+
+    require(until(b'\r\n',100)==b'--'+boundary.encode(),400,'INVALID_UPLOAD','文件上传格式不正确。')
+    part('metadata');raw=until(delimiter+b'\r\n',16384)
     try:data=json.loads(raw)
     except (ValueError,UnicodeDecodeError):raise BusinessError(400,'INVALID_INPUT','课程信息格式不正确。')
     require(isinstance(data,dict),400,'INVALID_INPUT','课程信息格式不正确。')
-    return data,fields['file'].get_payload(decode=True) or b'',fields['file'].get_filename() or ''
+    filename=part('file').get_filename() or ''
+    result=TemporaryFile(mode='w+b')
+    try:
+        until(delimiter,MAX_UPLOAD,result)
+        require(remaining+len(buffer)<=4,400,'INVALID_UPLOAD','请仅上传一个 PPTX 文件。')
+        while remaining:more()
+        require(buffer in (b'--',b'--\r\n'),400,'INVALID_UPLOAD','文件上传未完成或包含额外字段。')
+        result.seek(0)
+        return data,result,filename
+    except BaseException:
+        result.close();raise
 
 
 def parse_pptx(content, filename):
     require(isinstance(filename,str) and filename.lower().endswith('.pptx'),415,'PPTX_REQUIRED','请将 PPT 另存为 .pptx 后上传。')
-    require(0<len(content)<=MAX_UPLOAD,413,'PRESENTATION_LIMIT','请选择 20 MB 以内的 PPTX 文件。')
+    if isinstance(content,bytes):size=len(content)
+    else:content.seek(0,2);size=content.tell();content.seek(0)
+    require(0<size<=MAX_UPLOAD,413,'PRESENTATION_LIMIT','请选择 100 MB 以内的 PPTX 文件。')
     try:
-        with ZipFile(BytesIO(content)) as archive:
+        with ZipFile(BytesIO(content) if isinstance(content,bytes) else content) as archive:
             entries=archive.infolist();names=[entry.filename for entry in entries]
             require(len(entries)<=4000 and len(names)==len(set(names)),422,'INVALID_PRESENTATION','PPTX 文件结构不正确。')
-            require(sum(e.file_size for e in entries)<=80*1024*1024 and all(not e.flag_bits&1 for e in entries),413,'PRESENTATION_LIMIT','PPTX 解压内容过大或已加密。')
+            require(sum(e.file_size for e in entries)<=MAX_UNPACKED and all(not e.flag_bits&1 for e in entries),413,'PRESENTATION_LIMIT','PPTX 解压内容过大或已加密。')
             require(all(not n.startswith(('/','\\')) and '..' not in n.split('/') and '\\' not in n for n in names),422,'INVALID_PRESENTATION','PPTX 包含不安全路径。')
             require(not any('vbaproject' in n.lower() for n in names),422,'INVALID_PRESENTATION','请上传不含宏的 PPTX 文件。')
 
@@ -132,6 +175,6 @@ def import_course(flow,uid,data,content,filename):
         course=flow.store.create_course(uid,data,flow.clock(),flow.github,db=db)
         module=flow.module_context(course['module_id'])
         project=project_from_presentation(parsed,course['title'],course['description'],module['alias'])
-        original={**flow.bucket.put(content),'mime':'application/vnd.openxmlformats-officedocument.presentationml.presentation'}
+        original={**(flow.bucket.put(content) if isinstance(content,bytes) else flow.bucket.put_file(content)),'mime':'application/vnd.openxmlformats-officedocument.presentationml.presentation'}
         revision=flow.save_in(db,uid,course['id'],{'project':project,'expected_revision':None},materials={'materials/original.pptx':original})
         return {'course':course,'revision':revision}

@@ -7,7 +7,7 @@ import threading
 from http.client import HTTPConnection
 from pathlib import Path
 import pytest
-from shuku_backend.presentations import parse_pptx,read_upload,import_course,project_from_presentation
+from shuku_backend.presentations import parse_pptx,read_upload,import_course,project_from_presentation,MAX_UPLOAD
 from shuku_backend.errors import BusinessError
 from shuku_backend.application import create_application
 from shuku_backend.settings import Settings
@@ -54,8 +54,8 @@ def test_order_text_notes_and_imported_outline():
     assert state['phase']=='choices' and state['reference']==parsed['slides'][0]
     assert state['suggestions'] and not project['pages'][0]['ready']
     content_type,body=multipart({'title':'我的课'},pptx())
-    data,content,filename=read_upload(content_type,body)
-    assert data['title']=='我的课' and content==pptx() and filename=='课程.pptx'
+    data,content,filename=read_upload(content_type,BytesIO(body),len(body))
+    with content:assert data['title']=='我的课' and content.read()==pptx() and filename=='课程.pptx'
 
 
 @pytest.mark.parametrize('overrides',[
@@ -73,8 +73,8 @@ def test_unsafe_or_invalid_packages_are_rejected(overrides):
 def test_legacy_corrupt_and_invalid_uploads():
     for content,name in [(pptx(),'course.ppt'),(b'not a zip','course.pptx'),(b'','course.pptx')]:
         with pytest.raises(BusinessError):parse_pptx(content,name)
-    with pytest.raises(BusinessError):read_upload('application/json',b'{}')
-    with pytest.raises(BusinessError):read_upload('multipart/form-data; boundary=missing',b'invalid')
+    with pytest.raises(BusinessError):read_upload('application/json',BytesIO(b'{}'),2)
+    with pytest.raises(BusinessError):read_upload('multipart/form-data; boundary=missing',BytesIO(b'invalid'),7)
 
 
 def test_page_and_xml_limits():
@@ -82,6 +82,54 @@ def test_page_and_xml_limits():
     oversized=f'<p:presentation xmlns:p="http://schemas.openxmlformats.org/presentationml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><p:sldIdLst>{ids}</p:sldIdLst></p:presentation>'
     with pytest.raises(BusinessError,match='1～100'):parse_pptx(pptx(overrides={'ppt/presentation.xml':oversized}),'large.pptx')
     with pytest.raises(BusinessError):parse_pptx(pptx(overrides={'ppt/slides/slide2.xml':' '* (2*1024*1024+1)}),'large.pptx')
+
+
+def test_stream_boundaries_and_truncated_upload_cleanup(monkeypatch):
+    import tempfile
+    class TinyStream(BytesIO):
+        def read(self,size):return super().read(min(size,7))
+    ctype,body=multipart({'title':'分块读取'},pptx())
+    data,content,name=read_upload(ctype,TinyStream(body),len(body))
+    with content:assert content.read()==pptx() and data['title']=='分块读取'
+    created=[];factory=tempfile.TemporaryFile
+    def track(*args,**kwargs):
+        value=factory(*args,**kwargs);created.append(value);return value
+    monkeypatch.setattr(tempfile,'TemporaryFile',track)
+    for raw in [body[:-8],body+b'additional-field']:
+        with pytest.raises(BusinessError):read_upload(ctype,BytesIO(raw),len(raw))
+    assert created and all(value.closed for value in created)
+    with pytest.raises(BusinessError):read_upload(ctype,BytesIO(b''),MAX_UPLOAD+65537)
+
+
+def test_large_pptx_is_streamed_and_stored_without_full_file_reads(tmp_path):
+    from shuku_backend.files import Bucket
+    import shutil
+    source=tmp_path/'large.pptx';source.write_bytes(pptx())
+    with ZipFile(source,'a') as archive:
+        with archive.open('ppt/media/large.bin','w') as media:
+            for _ in range(384):media.write(b'x'*65536)
+    assert source.stat().st_size>20*1024*1024
+    ctype,small=multipart({'title':'大课件'},b'')
+    prefix,suffix=small.split(b'\r\n--ppt-test--\r\n')
+    uploaded=tmp_path/'multipart.bin'
+    with uploaded.open('wb') as out,source.open('rb') as stream:
+        out.write(prefix);shutil.copyfileobj(stream,out,65536);out.write(b'\r\n--ppt-test--\r\n')
+    class Bounded:
+        def __init__(self,value):self.value=value
+        def read(self,size):
+            assert 0<size<=65536
+            return self.value.read(size)
+        def seek(self,*args):return self.value.seek(*args)
+    with uploaded.open('rb') as stream:
+        data,content,name=read_upload(ctype,Bounded(stream),uploaded.stat().st_size)
+        with content:
+            assert parse_pptx(content,name)['slides'][0]['title']=='Agent 是什么'
+            obj=Bucket(tmp_path/'bucket').put_file(Bounded(content))
+            assert obj['size']==source.stat().st_size
+    with (tmp_path/'over-limit.pptx').open('w+b') as stream:
+        stream.truncate(MAX_UPLOAD+1)
+        with pytest.raises(BusinessError) as error:parse_pptx(stream,'large.pptx')
+        assert error.value.status==413
 
 
 @pytest.fixture
