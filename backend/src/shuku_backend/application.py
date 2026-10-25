@@ -54,7 +54,7 @@ def create_application(settings, clock=time.time):
         data=bucket.read(task["payload"]["sha256"])
         checkpoint({"verified":True})
         return {"size":len(data)}
-    workflow=Workflow(store,bucket,settings.source_root,clock)
+    workflow=Workflow(store,bucket,settings.source_root,clock,course_root=settings.course_root)
     workflow.collaboration=Collaboration(workflow)
     workflow.governance=Governance(workflow)
     workflow.feedback=Feedback(workflow)

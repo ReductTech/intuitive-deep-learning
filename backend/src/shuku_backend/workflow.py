@@ -20,13 +20,14 @@ def identifier(value):
 
 
 class Workflow:
-    def __init__(self,store,bucket,root,clock=time.time):
+    def __init__(self,store,bucket,root,clock=time.time,course_root=None):
         self.store,self.bucket,self.root,self.clock=store,bucket,root,clock
+        self.course_root=Path(course_root or root) if (course_root or root) else None
 
     def modules(self):
-        require(self.root is not None,503,"BUILD_NOT_CONFIGURED","课程构建目录尚未配置。")
+        require(self.course_root is not None,503,"BUILD_NOT_CONFIGURED","课程构建目录尚未配置。")
         result=[]
-        for path in sorted((Path(self.root)/'modules').glob('*/outlines.json')):
+        for path in sorted((self.course_root/'modules').glob('*/outlines.json')):
             data=json.loads(path.read_text())
             if data.get('ppt',{}).get('entry') and data.get('entry'):
                 result.append({'id':data['moduleIdentity']['id'],'alias':data.get('id',path.parent.name),'title':data['title'],'directory':str(path.parent),'entry':data['ppt']['entry'],'pages':[p['id'] for p in data.get('pages',[])]})
@@ -184,7 +185,7 @@ class Workflow:
                 with tempfile.TemporaryDirectory(prefix='shuku-build-') as folder:
                     folder=Path(folder);source=folder/'project.json';source.write_text(json.dumps(project));out=folder/'dist'
                     env=__import__('os').environ.copy();env['NODE_OPTIONS']='--max-old-space-size=256'
-                    process=subprocess.Popen(['node',str(Path(self.root)/'scripts/build-shuku-preview.mjs'),'--project',str(source),'--module',module['directory'] or '','--revision',rid,'--outdir',str(out)],stdout=subprocess.PIPE,stderr=subprocess.PIPE,env=env)
+                    process=subprocess.Popen(['node',str(Path(self.root)/'scripts/build-shuku-preview.mjs'),'--course-root',str(self.course_root),'--project',str(source),'--module',module['directory'] or '','--revision',rid,'--outdir',str(out)],stdout=subprocess.PIPE,stderr=subprocess.PIPE,env=env)
                     started=time.monotonic()
                     while True:
                         try:

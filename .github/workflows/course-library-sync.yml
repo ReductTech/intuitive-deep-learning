@@ -1,0 +1,72 @@
+name: Sync course library
+on:
+  schedule:
+    - cron: '3-59/5 * * * *'
+  workflow_dispatch:
+  repository_dispatch:
+    types: [sync-courses]
+  push:
+    branches: [main]
+    paths: ['.github/workflows/course-library-sync.yml']
+permissions:
+  contents: write
+concurrency:
+  group: course-library-sync
+  cancel-in-progress: false
+jobs:
+  sync:
+    if: github.repository == 'reduct-shuku/intuitive-deep-learning'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check source content versions
+        id: probe
+        env:
+          GH_TOKEN: ${{ github.token }}
+          FORCE_SYNC: ${{ github.event_name != 'schedule' }}
+        run: |
+          python3 - <<'PY'
+          import urllib.request,json,base64,os
+          def get(path):
+            req=urllib.request.Request('https://api.github.com/repos/'+path,headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'Accept':'application/vnd.github+json'})
+            with urllib.request.urlopen(req,timeout=30) as response:return json.load(response)
+          tree=get('ReductTech/intuitive-deep-learning/git/trees/develop')
+          keys={'modules','assets','creator-skill','package.json','scripts','.github'}
+          current={item['path']:item['sha'] for item in tree['tree'] if item['path'] in keys}
+          old=json.loads(base64.b64decode(get('reduct-shuku/intuitive-deep-learning/contents/source-lock.json?ref=main')['content']))
+          changed=current!=old['inputs'] or os.environ['FORCE_SYNC']=='true'
+          with open(os.environ['GITHUB_OUTPUT'],'a') as out:out.write('changed='+str(changed).lower()+'\n')
+          print('Course content changed:',changed)
+          PY
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        if: steps.probe.outputs.changed == 'true'
+        with:
+          ref: main
+          path: distribution
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        if: steps.probe.outputs.changed == 'true'
+        with:
+          repository: ReductTech/intuitive-deep-learning
+          ref: develop
+          path: upstream
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /modules/
+            /assets/
+            /creator-skill/
+            /scripts/course-library-export.py
+            /package.json
+            /.github/workflows/course-library-sync.yml
+      - name: Export and commit course changes
+        if: steps.probe.outputs.changed == 'true'
+        run: |
+          python3 upstream/scripts/course-library-export.py --source upstream --target distribution
+          cd distribution
+          git config user.name 'shuku-course-sync[bot]'
+          git config user.email 'shuku-course-sync@users.noreply.github.com'
+          git add modules assets creator-skill package.json README.md course-library.json source-lock.json .course-files.json scripts/course-library-export.py .github/workflows/course-library-sync.yml
+          if git diff --cached --quiet; then exit 0; fi
+          git diff --cached --check
+          git commit -m 'Sync committed course content from develop'
+          git push origin HEAD:main

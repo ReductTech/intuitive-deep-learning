@@ -55,7 +55,9 @@ interface ModuleOutlineFile {
 // 模块在 modules/<目录>/outlines.json 里注册自己：应用路由、首页入口和页面索引都来自这份文件。
 // 新增模块只要放好目录和 outlines.json，不需要改动这个文件或 routes.tsx。
 const outlineFiles = import.meta.glob('../../modules/*/outlines.json', { eager: true, import: 'default' }) as Record<string, ModuleOutlineFile>;
-const pageModules = import.meta.glob('../../modules/*/*.tsx', { eager: true }) as Record<string, Record<string, unknown>>;
+const discoveredPages = import.meta.glob('../../modules/*/*.tsx', { eager: true }) as Record<string, Record<string, unknown>>;
+// Independent snapshots have absolute glob keys; retain stable logical module paths.
+const pageModules = Object.fromEntries(Object.entries(discoveredPages).map(([file,exports])=>['../../modules/'+file.split('/modules/').at(-1),exports]));
 
 function moduleDir(file: string) {
   return file.split('/').at(-2) ?? '';

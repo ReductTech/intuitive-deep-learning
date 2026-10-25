@@ -18,6 +18,7 @@ class Settings:
 
     github_identity_config_path: Path | None = field(default=None,repr=False)
     github_token_key_path: Path | None = field(default=None,repr=False)
+    course_root: Path | None = None
 
     def github_identity_config(self):
         path=self.github_identity_config_path or self.github_config_path
@@ -50,6 +51,11 @@ class Settings:
             raise ValueError("SHUKU_DEMO_PASSWORD must contain 1..256 characters")
         if not self.bucket_dir.is_absolute() or not 0 <= self.port <= 65535:
             raise ValueError("Use an absolute SHUKU_BUCKET_DIR and valid SHUKU_PORT")
+        if self.course_root is not None:
+            import json
+            if not self.course_root.is_absolute():raise ValueError('SHUKU_COURSE_ROOT must be absolute')
+            manifest=json.loads((self.course_root/'course-library.json').read_text())
+            if manifest.get('schema')!=1 or manifest.get('repository')!='reduct-shuku/intuitive-deep-learning' or not manifest.get('modules'):raise ValueError('Invalid independent course library')
 
     @classmethod
     def from_env(cls):
@@ -63,4 +69,5 @@ class Settings:
                    source_root=Path(os.environ["SHUKU_SOURCE_ROOT"]).resolve() if os.environ.get("SHUKU_SOURCE_ROOT") else None,
                    github_config_path=Path(os.environ['SHUKU_GITHUB_CONFIG']).resolve() if os.environ.get('SHUKU_GITHUB_CONFIG') else None,
                    github_identity_config_path=Path(os.environ['SHUKU_GITHUB_IDENTITY_CONFIG']).resolve() if os.environ.get('SHUKU_GITHUB_IDENTITY_CONFIG') else None,
-                   github_token_key_path=Path(os.environ['SHUKU_GITHUB_TOKEN_KEY']).resolve() if os.environ.get('SHUKU_GITHUB_TOKEN_KEY') else None)
+                   github_token_key_path=Path(os.environ['SHUKU_GITHUB_TOKEN_KEY']).resolve() if os.environ.get('SHUKU_GITHUB_TOKEN_KEY') else None,
+                   course_root=Path(os.environ['SHUKU_COURSE_ROOT']).resolve() if os.environ.get('SHUKU_COURSE_ROOT') else None)

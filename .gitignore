@@ -24,3 +24,4 @@ setting.json
 
 # Obsolete generated asset copy; active assets use UUID directories.
 /assets/value-based-rl/
+/.course-library/

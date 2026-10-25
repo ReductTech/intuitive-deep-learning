@@ -9,7 +9,8 @@
     "build": "tsc -b && vite build",
     "typecheck": "tsc --noEmit",
     "test:edit-deck": "node --experimental-strip-types --test Edit-Deck/server.test.ts",
-    "cache:decision": "node scripts/content/generate_decision_candidate_cache.mjs"
+    "cache:decision": "node scripts/content/generate_decision_candidate_cache.mjs",
+    "courses:fetch": "node scripts/course-library-fetch.mjs"
   },
   "dependencies": {
     "@icon-park/react": "^1.4.2",
