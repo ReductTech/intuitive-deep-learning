@@ -23,7 +23,7 @@ def test_demo_login_rotation_restart_logout_expiry(store):
     store.remove_session(hashed(second))
     with pytest.raises(BusinessError):store.session_user(hashed(second),1003)
     with store.transaction() as db:
-        assert not db.execute("SELECT 1 FROM shuku_business.sessions WHERE token_hash=%s",(second,)).fetchone()
+        assert not db.execute("SELECT 1 FROM shuku_sessions WHERE token_hash=%s",(second,)).fetchone()
 
 
 def test_failed_attempts_persist_and_limit_concurrent_logins(store):
@@ -45,7 +45,7 @@ def test_unknown_user_inactive_user_and_bad_input(store):
         with pytest.raises(BusinessError) as error:provider.login(username,password,'peer','',1000)
         assert error.value.code=='INVALID_CREDENTIALS'
     _,token=provider.login('linzhi','test-password','peer','',1000)
-    with store.transaction() as db:db.execute("UPDATE shuku_business.users SET active=false WHERE username='linzhi'")
+    with store.transaction() as db:db.execute("UPDATE shuku_users SET active=false WHERE username='linzhi'")
     with pytest.raises(BusinessError):store.session_user(hashed(token),1001)
     with pytest.raises(BusinessError):provider.login('linzhi','test-password','peer','',1000)
     with pytest.raises(BusinessError) as error:provider.login({},'password','peer','',1000)

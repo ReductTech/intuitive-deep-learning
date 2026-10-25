@@ -30,7 +30,13 @@ class Bucket:
         try:
             with os.fdopen(fd,"wb") as out:
                 out.write(content);out.flush();os.fsync(out.fileno())
-            os.replace(name,path)
+            try:
+                os.replace(name,path)
+            except PermissionError:
+                # Windows may reject replacement while a concurrent writer reads
+                # the same immutable object. An identical published object suffices.
+                if not path.is_file() or sha256(path.read_bytes()).hexdigest()!=digest:
+                    raise
         finally:
             if os.path.exists(name):os.unlink(name)
         return {"sha256":digest,"size":len(content)}

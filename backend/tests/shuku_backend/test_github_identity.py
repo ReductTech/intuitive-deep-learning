@@ -53,7 +53,7 @@ def test_binding_pending_slowdown_restart_encryption_and_roles(binding):
     result=restored.action(uid,'poll',{'flow_id':flow['flow_id']})
     assert result['complete'] and result['identity']['login']=='octocat' and result['authorized']
     with identity.store.transaction() as db:
-        row=db.execute('SELECT credentials FROM shuku_business.github_identities WHERE user_id=%s',(uid,)).fetchone()
+        row=db.execute('SELECT credentials FROM shuku_github_identities WHERE user_id=%s',(uid,)).fetchone()
         assert 'private-user-token' not in row['credentials']
         assert identity.store.user_in(db,uid)['role']=='creator'
     assert restored.action(uid,'poll',{'flow_id':flow['flow_id']})['complete']
@@ -93,7 +93,7 @@ def test_revoke_failure_preserves_binding_refresh_and_disconnect(binding):
     assert client.revoked==['refreshed-token']
     with identity.store.transaction() as db:
         assert identity.store.user_in(db,uid)['role']=='learner'
-        assert db.execute('SELECT count(*) AS n FROM shuku_business.github_identity_flows').fetchone()['n']==0
+        assert db.execute('SELECT count(*) AS n FROM shuku_github_identity_flows').fetchone()['n']==0
 
 
 def test_reauthorization_expiry_rejection_and_identity_mismatch(binding):

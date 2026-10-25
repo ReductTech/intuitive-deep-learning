@@ -37,8 +37,8 @@ class Settings:
         return value
 
     def __post_init__(self):
-        if not self.database_url.startswith(("postgres://", "postgresql://")):
-            raise ValueError("SHUKU_DATABASE_URL must be a PostgreSQL connection URL")
+        from .database import mysql_url
+        mysql_url(self.database_url)
         parsed = urlsplit(self.origin)
         if parsed.scheme not in ("http", "https") or not parsed.hostname or parsed.username or parsed.password or parsed.path not in ("", "/") or parsed.query or parsed.fragment:
             raise ValueError("SHUKU_PUBLIC_ORIGIN must be an HTTP(S) origin")

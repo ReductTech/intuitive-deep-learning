@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:preview": "vite --mode preview --host 127.0.0.1 --port 5176",
     "build": "tsc -b && vite build",
     "typecheck": "tsc --noEmit",
     "test:edit-deck": "node --experimental-strip-types --test Edit-Deck/server.test.ts",

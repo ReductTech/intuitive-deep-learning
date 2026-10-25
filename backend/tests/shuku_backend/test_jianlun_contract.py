@@ -20,7 +20,7 @@ def test_reserved_phone_routes_never_simulate_sms_or_grant_a_session(api):
         status,data,cookie=request('POST',path,body)
         assert status==503 and data['code']=='JIANLUN_NOT_CONNECTED' and not cookie
     assert request('GET','/auth/me')[0]==401
-    with app.store.transaction() as db:assert db.execute('SELECT count(*) AS n FROM shuku_business.sessions').fetchone()['n']==0
+    with app.store.transaction() as db:assert db.execute('SELECT count(*) AS n FROM shuku_sessions').fetchone()['n']==0
     assert request('POST','/auth/sms-code',{'phone':'123'})[0]==400
     assert request('POST','/auth/sms-code',{'phone':phone},origin='https://other')[0]==403
     assert request('POST','/auth/phone-login',{'method':'sms','phone':phone,'code':'123456','uuid':str(uuid4())})[0]==400

@@ -8,6 +8,7 @@ import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { moduleAssetUrl } from '../../modules/shared/react/assets';
 import { activeModules, type ActiveModule } from './modules';
 import './HomePage.css';
+import { isLocalPreview } from './runtimeMode';
 
 type IconName = 'grid' | 'search' | 'brain' | 'image' | 'spark' | 'book' | 'play' | 'arrow' | 'bookmark' | 'code' | 'close' | 'clock';
 function Icon({ name }: { name: IconName }) {
@@ -66,7 +67,7 @@ function Cover({ module }: { module: ActiveModule }) {
 
 export function HomePage() {
   const [published,setPublished]=useState<{id:string;title:string;description:string;category:string;version:string;revision_id:string}[]>([]);
-  useEffect(()=>{api<{courses:typeof published}>('/public/courses').then(r=>setPublished(r.courses)).catch(()=>{});},[]);
+  useEffect(()=>{if(isLocalPreview)return;api<{courses:typeof published}>('/public/courses').then(r=>setPublished(r.courses)).catch(()=>{});},[]);
   const [topic, setTopic] = useState('全部课程');
   const [query, setQuery] = useState('');
   const [level, setLevel] = useState('全部');

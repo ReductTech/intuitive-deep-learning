@@ -41,16 +41,17 @@ def test_cli_lifecycle_and_persistent_sessions(store,tmp_path):
         obj=Bucket(tmp_path/'bucket').put(b'course-resource')
         tid=store.enqueue('file.verify','object:'+obj['sha256'],'lifecycle-verify',obj,time.time())
         for _ in range(50):
-            with store.transaction() as db:status=db.execute('SELECT status FROM shuku_business.tasks WHERE id=%s',(tid,)).fetchone()['status']
+            with store.transaction() as db:status=db.execute('SELECT status FROM shuku_tasks WHERE id=%s',(tid,)).fetchone()['status']
             if status=='succeeded':break
             time.sleep(0.05)
         assert status=='succeeded'
     finally:
         proc.terminate();stdout,stderr=proc.communicate(timeout=5)
-        assert proc.returncode==0,stderr.decode()
+        # Windows terminate() uses TerminateProcess (exit 1), not POSIX SIGTERM.
+        assert proc.returncode in ((0,1) if os.name=='nt' else (0,)),stderr.decode()
         assert b'temporary-test-password' not in stdout+stderr
     proc=start()
     try:assert request('/auth/me',cookie=cookie)[0]['user']['username']=='admin'
     finally:
         proc.terminate();proc.communicate(timeout=5)
-        assert proc.returncode==0
+        assert proc.returncode in ((0,1) if os.name=='nt' else (0,))

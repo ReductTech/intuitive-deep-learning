@@ -16,7 +16,7 @@ def test_profile_edit_persistence_isolation_and_validation(api):
     assert code==200 and saved['user']['display_name']=='课程作者'
     assert saved['user']['role']==original['user']['role'] and saved['user']['id']==uid
     assert saved['email']==payload['email'] and saved['bio']==payload['bio'] and saved['updated_at']
-    # New login reads PostgreSQL, not a browser cache.
+    # New login reads MySQL, not a browser cache.
     renewed=login(request,'xiaoman')
     assert request('GET','/profile',cookie=renewed)[1]==saved
     assert request('GET','/auth/me',cookie=renewed)[1]['user']['display_name']=='课程作者'

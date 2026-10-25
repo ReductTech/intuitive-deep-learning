@@ -22,7 +22,7 @@ def published(workflow):
 def workspace(app,course):
     wid=app.workflow.collaboration.create(CONTRIBUTOR,course['id'],{})['id']
     assert app.worker.run_once()
-    with app.store.transaction() as db:rid=str(db.execute('SELECT head_revision FROM shuku_business.courses WHERE id=%s',(wid,)).fetchone()['head_revision'])
+    with app.store.transaction() as db:rid=str(db.execute('SELECT head_revision FROM shuku_courses WHERE id=%s',(wid,)).fetchone()['head_revision'])
     return wid,app.workflow.revision(CONTRIBUTOR,rid)
 
 
@@ -114,7 +114,7 @@ def test_self_review_unauthorized_manager_and_stale_target_cannot_merge(publishe
     for method,data in [(app.workflow.collaboration.decide,{'revision_id':revision['id'],'decision':'approved','score':10}),(app.workflow.collaboration.merge,{'revision_id':revision['id']})]:
         with pytest.raises(BusinessError):method(CONTRIBUTOR,k['id'],data)
     outsider=str(uuid4())
-    with app.store.transaction() as db:db.execute("INSERT INTO shuku_business.users VALUES (%s,'outsider','无权用户','creator',true)",(outsider,))
+    with app.store.transaction() as db:db.execute("INSERT INTO shuku_users VALUES (%s,'outsider','无权用户','creator',true)",(outsider,))
     with pytest.raises(BusinessError):app.workflow.collaboration.detail(outsider,k['id'])
     with pytest.raises(BusinessError):accept(app,k,outsider)
     accept(app,k,owner)
@@ -129,12 +129,12 @@ def test_explicit_course_manager_and_failed_merge_retry(published):
     wid,initial=workspace(app,c);k,revision=suggestion(app,wid,initial)
     manager=str(uuid4())
     with app.store.transaction() as db:
-        db.execute("INSERT INTO shuku_business.users VALUES (%s,'manager','课程管理者','creator',true)",(manager,))
-        db.execute('INSERT INTO shuku_business.course_managers VALUES (%s,%s)',(c['id'],manager))
+        db.execute("INSERT INTO shuku_users VALUES (%s,'manager','课程管理者','creator',true)",(manager,))
+        db.execute('INSERT INTO shuku_course_managers VALUES (%s,%s)',(c['id'],manager))
     assert app.workflow.file(manager,revision['id'],'index.html')[0]
     accept(app,k,manager)
     result=app.workflow.collaboration.merge(manager,k['id'],{'revision_id':revision['id']})
-    with app.store.transaction() as db:db.execute("UPDATE shuku_business.tasks SET status='failed',attempts=max_attempts,error_code='BUILD_FAILED' WHERE idempotency_key=%s",('build:'+result['revision_id'],))
+    with app.store.transaction() as db:db.execute("UPDATE shuku_tasks SET status='failed',attempts=max_attempts,error_code='BUILD_FAILED' WHERE idempotency_key=%s",('build:'+result['revision_id'],))
     assert app.workflow.public_courses()[0]['revision_id']==old['id']
     assert app.workflow.collaboration.detail(manager,k['id'])['merge_task']['status']=='failed'
     retry=app.workflow.collaboration.merge(manager,k['id'],{'revision_id':revision['id']})

@@ -4,7 +4,39 @@
 
 支持现有模块的 React 页面和可编辑文字教学页。托管编辑不会改写共享 TSX；原编辑器的 AI 模拟生成不作为可发布产物。GitHub PR、共创评分和消息已接通；减论身份 API 仍待后续迁移。
 
-## 安装与运行
+## 本地 Windows 快速启动
+
+启动脚本会自动寻找已有依赖的 Python（本机为 Anaconda），也可通过 `-Python` 固定解释器。在仓库根目录执行：
+
+```powershell
+.\scripts\shuku-local.ps1 init --system-mysql
+.\scripts\shuku-local.ps1 start
+npm run dev -- --port 5175
+```
+
+初始化会提示输入本机 MySQL root 密码，只创建 `shuku_local` 和可丢弃的 `idl_shuku_test_local` 两个库，并创建仅能访问这两个库的 `shuku_local` 用户；不会保存 root 密码。开发用连接密码、Demo 登录密码与文件桶放在 Git 忽略的 `.private/shuku-local/`，Demo 密码为 `config.json` 中的 `demo_password`。测试账号为 `linzhi`、`xiaoman`、`admin`。正常启动不自动迁移或初始化账号。
+
+已初始化后运行 `.\scripts\shuku-local.ps1 start`；查看状态用 `status`，停止本脚本创建的后端用 `stop`，不会停止系统 MySQL 服务。如果本机没有运行 MySQL 服务，但已安装 mysqld，可使用不带 `--system-mysql` 的 `init` 创建只监听本机 3307 的独立开发实例；可用 `SHUKU_MYSQLD` 指定程序位置。
+
+本地业务测试（只清空上述测试库中的术库表）：
+
+```powershell
+.\scripts\shuku-local.ps1 test
+```
+
+完整计算服务仍使用 `scripts/devstart.ps1`，原 Cloud MySQL 缓存配置保持原样。
+
+## 无需登录和数据库的课件预览
+
+```powershell
+npm run dev:preview
+```
+
+打开 `http://127.0.0.1:5176/` 查看本地课件目录，`/preview?module=neuron-guide` 可直达某门课，支持 `page=<页面ID>`、`mode=guide|ppt`。此启动模式只提供本地源课件和图片/视频，不检查 Cloud 仓库、不调用 8010、不保存学习记录，也不提供创作、审核、消息或已保存私有修订的访问入口。训练、AI 等依赖计算服务的交互不会自动获得后端能力。
+
+预览仅在 Vite 开发模式 `preview` 启用并默认监听 127.0.0.1；正式构建（包括 `build --mode preview`）仍使用原登录入口。不要把 Vite 开发服务器部署到公网。
+
+## 手动安装与运行
 
 ```sh
 npm ci
@@ -18,7 +50,7 @@ python -m shuku_backend serve
 
 | 配置 | 说明 |
 | --- | --- |
-| `SHUKU_DATABASE_URL` | 独立 PostgreSQL 连接；使用 `shuku_business` schema，不指向原 Demo 业务库 |
+| `SHUKU_DATABASE_URL` | MySQL 8.0.16+ 连接，如 `mysql+mysqlconnector://user:password@127.0.0.1:3306/shuku_local`；SQLAlchemy 管理连接和事务，表名统一以 `shuku_` 开头 |
 | `SHUKU_BUCKET_DIR` | 文件桶绝对路径 |
 | `SHUKU_SOURCE_ROOT` | intuitive-deep-learning 仓库绝对路径，需包含模块、素材和已安装的 Node 依赖；修订构建需要此配置 |
 | `SHUKU_PUBLIC_ORIGIN` | 浏览器来源，如 `http://localhost:5173`，不带末尾斜杠；写请求必须匹配 Origin |
@@ -124,7 +156,7 @@ python -m shuku_backend serve
 
 ## 验证
 
-数据库测试只使用可丢弃的 `idl_shuku_test_*` 数据库，并配置 `SHUKU_TEST_DATABASE_URL`；测试会清空其中本模块的业务表。
+数据库测试只使用可丢弃的 MySQL `idl_shuku_test_*` 数据库，并配置 `SHUKU_TEST_DATABASE_URL`；测试会清空其中本模块的业务表。
 
 ```sh
 PYTHONPATH=backend/src python -m pytest backend/tests/shuku_backend -q
@@ -140,3 +172,10 @@ node scripts/check-shuku-workflow.mjs <Playwright模块路径>
 GitHub App、真实 PR、远程合并核验、Tag／Release、Webhook、周期校准和恢复见 [GitHub 对接与恢复](../../../docs/shuku-github-integration.md)。
 
 配置 SHUKU_GITHUB_CONFIG 后，新课程通过持久任务创建专属私有仓库；发布以 GitHub 核验结果为前提。未配置时保留本地演示，已绑定的课程不自动降级。安装 backend[shuku] 后显式执行 migrate，再 serve。
+
+
+## MySQL 存储约定
+
+业务层通过 SQLAlchemy 2 Core 的 Engine、连接池、参数绑定和事务访问 MySQL；表结构在 `schema.py`，显式迁移在 `migrations.py`。JSON 使用 MySQL JSON，UUID 存为 CHAR(36)，InnoDB 事务和行锁保护审核、幂等、任务租约与文件引用；默认 READ COMMITTED，审核列表在 REPEATABLE READ 快照内读取。
+
+迁移需要建表/索引/外键权限，生产运行账号只需业务表读写、迁移标记只读。MySQL DDL 会隐式提交，基线迁移支持失败重跑；全部外键完成后才写入版本和校验值。后续结构升级必须增加显式迁移，不能修改已应用的基线。此版本只初始化 MySQL，不会自动导入历史 PostgreSQL 数据；已有历史库应另做导出、映射和核验后再切换。

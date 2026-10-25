@@ -44,7 +44,7 @@ def test_contribution_review_merge_publish_scoping(published):
     result=feed(app,owner,'merge')
     assert result['total']==1 and result['counts']['merge']==0 and result['items'][0]['status']=='merging'
     with app.store.transaction() as db:
-        db.execute("UPDATE shuku_business.tasks SET status='failed' WHERE idempotency_key=%s",('build:'+merging['revision_id'],))
+        db.execute("UPDATE shuku_tasks SET status='failed' WHERE idempotency_key=%s",('build:'+merging['revision_id'],))
     assert feed(app,owner,'merge')['counts']['merge']==1
     app.workflow.collaboration.merge(owner,k['id'],{'revision_id':r['id']})
     assert feed(app,owner,'merge')['counts']['merge']==0
@@ -66,32 +66,32 @@ def test_inbox_api_validation_and_external_pr(api):
     uid=request('GET','/auth/me',cookie=creator)[1]['user']['id']
     cid=app.store.create_course(uid,{'title':'外部课程','module_id':str(uuid4())},app.clock())['id']
     with app.store.transaction() as db:
-        db.execute('INSERT INTO shuku_business.github_repositories VALUES (%s,1,1,\'example\',\'course\',\'main\',\'sha\',false,1)',(cid,))
-        db.execute("INSERT INTO shuku_business.github_external_prs(course_id,number,head_sha,base_sha,title,author,state,updated_at) VALUES (%s,2,'head','base','补充概念','other','open',1)",(cid,))
+        db.execute('INSERT INTO shuku_github_repositories VALUES (%s,1,1,\'example\',\'course\',\'main\',\'sha\',false,1)',(cid,))
+        db.execute("INSERT INTO shuku_github_external_prs(course_id,number,head_sha,base_sha,title,author,state,updated_at) VALUES (%s,2,'head','base','补充概念','other','open',1)",(cid,))
     result=request('GET','/review-inbox?stage=pending',cookie=creator)[1]
     assert result['counts']['pending']==1 and result['items'][0]['kind']=='github'
     assert request('GET','/review-inbox?stage=all',cookie=learner)[1]['items']==[]
     for query in ('stage=wrong','page=0','page=x','course=bad','stage=all&stage=pending','role=admin','page=10001'):
         assert request('GET','/review-inbox?'+query,cookie=admin)[0]==400
     with app.store.transaction() as db:
-        db.execute("UPDATE shuku_business.github_external_prs SET review_state='approved' WHERE course_id=%s",(cid,))
+        db.execute("UPDATE shuku_github_external_prs SET review_state='approved' WHERE course_id=%s",(cid,))
     assert request('GET','/review-inbox?stage=merge',cookie=creator)[1]['counts']['merge']==1
     assert request('GET','/review-inbox?'+urlencode({'stage':'all','q':'补充'}),cookie=creator)[1]['total']==1
     rid=str(uuid4())
     with app.store.transaction() as db:
-        db.execute("INSERT INTO shuku_business.revisions VALUES (%s,%s,%s,'hash','ready','{}','artifact',1)",(rid,cid,uid))
-        db.execute('UPDATE shuku_business.courses SET head_revision=%s WHERE id=%s',(rid,cid))
-        db.execute("INSERT INTO shuku_business.reviews(id,revision_id,course_id,status,artifact_hash,created_at) VALUES (%s,%s,%s,'pending','artifact',1)",(uuid4(),rid,cid))
-        db.execute("INSERT INTO shuku_business.github_revisions(revision_id,course_id,base_sha,branch,pr_number) VALUES (%s,%s,'base','review',2)",(rid,cid))
+        db.execute("INSERT INTO shuku_revisions VALUES (%s,%s,%s,'hash','ready','{}','artifact',1)",(rid,cid,uid))
+        db.execute('UPDATE shuku_courses SET head_revision=%s WHERE id=%s',(rid,cid))
+        db.execute("INSERT INTO shuku_reviews(id,revision_id,course_id,status,artifact_hash,created_at) VALUES (%s,%s,%s,'pending','artifact',1)",(uuid4(),rid,cid))
+        db.execute("INSERT INTO shuku_github_revisions(revision_id,course_id,base_sha,branch,pr_number) VALUES (%s,%s,'base','review',2)",(rid,cid))
     # A local suggestion mirrored as a PR must not become a second actionable item.
     dedup=request('GET','/review-inbox?stage=all',cookie=creator)[1]
     assert dedup['total']==1 and dedup['items'][0]['kind']=='course' and dedup['counts']['pending']==0
     with app.store.transaction() as db:
-        for i in range(23):db.execute("INSERT INTO shuku_business.github_external_prs(course_id,number,head_sha,base_sha,title,author,state,updated_at) VALUES (%s,%s,'head','base','分页建议','other','open',%s)",(cid,i+10,i+2))
+        for i in range(23):db.execute("INSERT INTO shuku_github_external_prs(course_id,number,head_sha,base_sha,title,author,state,updated_at) VALUES (%s,%s,'head','base','分页建议','other','open',%s)",(cid,i+10,i+2))
     first=request('GET','/review-inbox?stage=all&page=1',cookie=creator)[1]
     second=request('GET','/review-inbox?stage=all&page=2',cookie=creator)[1]
     assert first['total']==24 and len(first['items'])==20 and len(second['items'])==4
     assert not {i['id'] for i in first['items']} & {i['id'] for i in second['items']}
     with app.store.transaction() as db:
-        db.execute("UPDATE shuku_business.courses SET deleting=true WHERE id=%s",(cid,))
+        db.execute("UPDATE shuku_courses SET deleting=true WHERE id=%s",(cid,))
     assert request('GET','/review-inbox',cookie=creator)[1]['counts']['all']==0

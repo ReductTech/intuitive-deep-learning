@@ -12,7 +12,7 @@ from shuku_backend.errors import BusinessError
 @pytest.fixture
 def workflow(store,tmp_path):
     store.seed_demo();root=Path(__file__).resolve().parents[3]
-    app=create_application(Settings(store.database_url,tmp_path/'bucket','http://localhost:5175','test-password',source_root=root))
+    app=create_application(Settings(store.database_url,tmp_path/'bucket','http://localhost:5175','test-password',source_root=root,port=0))
     module=app.workflow.modules()[0]
     uid=DEMO_USERS[1][0];admin=DEMO_USERS[2][0]
     course=store.create_course(uid,{'module_id':module['id'],'title':'私有课程'},app.clock())
@@ -56,7 +56,7 @@ def test_private_save_build_review_publish_and_public_player(workflow):
     assert app.store.courses(DEMO_USERS[0][0])==[]
     with pytest.raises(BusinessError):app.store.course(DEMO_USERS[0][0],course['id'])
     with pytest.raises(BusinessError):app.workflow.file(None,revision['id'],'../project.json')
-    with app.store.transaction() as db:db.execute("UPDATE shuku_business.courses SET status='hidden' WHERE id=%s",(course['id'],))
+    with app.store.transaction() as db:db.execute("UPDATE shuku_courses SET status='hidden' WHERE id=%s",(course['id'],))
     with pytest.raises(BusinessError):app.workflow.file(None,revision['id'],'index.html')
 
 
@@ -78,7 +78,7 @@ def test_new_revision_invalidates_approval_and_preserves_old_version(workflow):
     assert app.workflow.public_courses()[0]['title']=='私有课程'
     assert app.workflow.file(None,first['id'],'index.html')[0]
     approve(app,course,fourth,uid,admin)
-    with app.store.transaction() as db:row=db.execute('SELECT files FROM shuku_business.revisions WHERE id=%s',(fourth['id'],)).fetchone()
+    with app.store.transaction() as db:row=db.execute('SELECT files FROM shuku_revisions WHERE id=%s',(fourth['id'],)).fetchone()
     digest=row['files']['project.json']['sha256'];path=app.bucket.path(digest);original=path.read_bytes();path.write_bytes(b'corrupt')
     try:
         with pytest.raises(ValueError):app.workflow.publish(uid,course['id'],{'revision_id':fourth['id'],'version':'1.0.1'})

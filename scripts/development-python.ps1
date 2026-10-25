@@ -3,6 +3,7 @@ function Resolve-DevelopmentPython {
 
   $required = @('psutil')
   if (-not $ManagementOnly) {
+    if ($Kind -eq 'shuku') { $required += @('sqlalchemy','mysql.connector','cryptography') }
     $required += 'dotenv'
     if ($Kind -in @('all','assessment')) { $required += @('langchain_core','pydantic') }
     if ($Kind -in @('all','vision')) { $required += @('torch','numpy','PIL') }

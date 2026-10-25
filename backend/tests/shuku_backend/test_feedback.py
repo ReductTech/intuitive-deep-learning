@@ -18,9 +18,9 @@ def test_feedback_notifies_active_course_managers_once_and_survives_restart(publ
     app,c,p,owner,admin,release,old=published
     manager=str(uuid4())
     with app.store.transaction() as db:
-        db.execute("INSERT INTO shuku_business.users VALUES (%s,'manager','课程管理者','creator',true)",(manager,))
-        db.execute('INSERT INTO shuku_business.course_managers VALUES (%s,%s)',(c['id'],manager))
-        db.execute('INSERT INTO shuku_business.course_managers VALUES (%s,%s)',(c['id'],owner))
+        db.execute("INSERT INTO shuku_users VALUES (%s,'manager','课程管理者','creator',true)",(manager,))
+        db.execute('INSERT INTO shuku_course_managers VALUES (%s,%s)',(c['id'],manager))
+        db.execute('INSERT INTO shuku_course_managers VALUES (%s,%s)',(c['id'],owner))
     key=str(uuid4())
     with ThreadPoolExecutor(max_workers=2) as pool:results=list(pool.map(lambda _:report(app,old['id'],key=key),range(2)))
     assert results[0]==results[1]
@@ -52,7 +52,7 @@ def test_feedback_status_reply_and_read_are_independent_and_recipient_scoped(pub
     assert c['title'] in f.messages(CONTRIBUTOR)['messages'][0]['title']
     assert f.detail(CONTRIBUTOR,fid)['reply']=='已核对并修正'
     outsider=str(uuid4())
-    with app.store.transaction() as db:db.execute("INSERT INTO shuku_business.users VALUES (%s,'outsider','其他学习者','learner',true)",(outsider,))
+    with app.store.transaction() as db:db.execute("INSERT INTO shuku_users VALUES (%s,'outsider','其他学习者','learner',true)",(outsider,))
     with pytest.raises(BusinessError):f.detail(outsider,fid)
     with pytest.raises(BusinessError):f.update(owner,fid,{'status':'in_progress','reply':'过期处理','expected_version':0})
     assert f.messages(CONTRIBUTOR)['unread_count']==1
@@ -62,9 +62,9 @@ def test_messages_cursor_pages_and_mark_all_only_affect_recipient(published):
     app,c,p,owner,admin,release,old=published;f=app.workflow.feedback
     fid=report(app,old['id'])['id']
     with app.store.transaction() as db:
-        db.execute('DELETE FROM shuku_business.messages')
+        db.execute('DELETE FROM shuku_messages')
         # Identical timestamps exercise the UUID tie-breaker in cursor pagination.
-        for i in range(41):db.execute("INSERT INTO shuku_business.messages(id,recipient_id,feedback_id,event_key,kind,title,summary,created_at) VALUES (%s,%s,%s,%s,'feedback_received','问题','描述',100)",(uuid4(),owner,fid,str(i)))
+        for i in range(41):db.execute("INSERT INTO shuku_messages(id,recipient_id,feedback_id,event_key,kind,title,summary,created_at) VALUES (%s,%s,%s,%s,'feedback_received','问题','描述',100)",(uuid4(),owner,fid,str(i)))
         f.notify(db,[admin],fid,'other-recipient','feedback_received','其他消息','不受影响')
     first=f.messages(owner);second=f.messages(owner,first['next_cursor']);third=f.messages(owner,second['next_cursor'])
     assert [len(page['messages']) for page in (first,second,third)]==[20,20,1]
@@ -103,12 +103,12 @@ def test_feedback_rate_limit_is_atomic_under_parallel_submissions(published):
 
 def test_feedback_fallback_and_transaction_rollback_without_active_manager(published):
     app,c,p,owner,admin,release,old=published
-    with app.store.transaction() as db:db.execute('UPDATE shuku_business.users SET active=false WHERE id=%s',(owner,))
+    with app.store.transaction() as db:db.execute('UPDATE shuku_users SET active=false WHERE id=%s',(owner,))
     report(app,old['id'])
     assert app.workflow.feedback.messages(admin)['unread_count']==1
-    with app.store.transaction() as db:db.execute('UPDATE shuku_business.users SET active=false WHERE id=%s',(admin,))
+    with app.store.transaction() as db:db.execute('UPDATE shuku_users SET active=false WHERE id=%s',(admin,))
     with pytest.raises(BusinessError):report(app,old['id'])
-    with app.store.transaction() as db:assert db.execute('SELECT count(*) AS n FROM shuku_business.feedback').fetchone()['n']==1
+    with app.store.transaction() as db:assert db.execute('SELECT count(*) AS n FROM shuku_feedback').fetchone()['n']==1
 
 
 def test_course_removal_cascades_feedback_and_messages(published):
@@ -116,8 +116,8 @@ def test_course_removal_cascades_feedback_and_messages(published):
     report(app,old['id']);app.workflow.governance.request(admin,'course',c['id'],{'confirm':True})
     assert app.worker.run_once()
     with app.store.transaction() as db:
-        assert db.execute('SELECT count(*) AS n FROM shuku_business.feedback').fetchone()['n']==0
-        assert db.execute('SELECT count(*) AS n FROM shuku_business.messages').fetchone()['n']==0
+        assert db.execute('SELECT count(*) AS n FROM shuku_feedback').fetchone()['n']==0
+        assert db.execute('SELECT count(*) AS n FROM shuku_messages').fetchone()['n']==0
 
 
 def test_feedback_http_auth_csrf_validation_pagination_and_read(published):

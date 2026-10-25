@@ -35,6 +35,7 @@ class Application:
     def close(self):
         self.workflow.github.close()
         self.worker.close()
+        self.store.close()
 
 
 def create_application(settings, clock=time.time):

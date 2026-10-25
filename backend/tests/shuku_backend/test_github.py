@@ -1,4 +1,4 @@
-"""Provider contracts + PostgreSQL transactions; no external credentials required."""
+"""Provider contracts + MySQL transactions; no external credentials required."""
 import copy
 import hashlib
 import hmac
@@ -106,7 +106,7 @@ def first_release(context):
     result=app.workflow.publish(owner,c['id'],{'revision_id':revision['id'],'version':'1.0.0','note':'首版'})
     assert result['pending'];drain(app)
     with app.store.transaction() as db:
-        state=db.execute('SELECT status FROM shuku_business.tasks WHERE kind=%s',('github.sync',)).fetchall()
+        state=db.execute('SELECT status FROM shuku_tasks WHERE kind=%s',('github.sync',)).fetchall()
     assert all(row['status']=='succeeded' for row in state),state
     assert app.workflow.public_courses()[0]['version']=='1.0.0'
 
@@ -131,9 +131,9 @@ def test_only_changed_files_upload_and_local_merge_waits_for_remote_truth(connec
     # The build queues a remote merge, defers, then remote merge can execute.
     assert app.worker.run_once();assert app.worker.run_once()
     with app.store.transaction() as db:
-        row=db.execute('SELECT status FROM shuku_business.contributions WHERE id=%s',(k['id'],)).fetchone()
+        row=db.execute('SELECT status FROM shuku_contributions WHERE id=%s',(k['id'],)).fetchone()
         assert row['status']=='merging'
-        db.execute("UPDATE shuku_business.tasks SET available_at=0 WHERE status='queued'")
+        db.execute("UPDATE shuku_tasks SET available_at=0 WHERE status='queued'")
     drain(app)
     assert app.workflow.collaboration.detail(owner,k['id'])['status']=='merged'
     # Official revision retains GitHub mapping even after private source removal.
@@ -151,7 +151,7 @@ def test_ambiguous_timeout_reconciles_without_duplicate_remote_writes(connected,
     result=app.workflow.publish(owner,c['id'],{'revision_id':revision['id'],'version':'1.0.0','note':'首版'})
     app.worker.run_once()
     assert app.workflow.public_courses()==[]
-    with app.store.transaction() as db:db.execute("UPDATE shuku_business.tasks SET available_at=0 WHERE status='queued'")
+    with app.store.transaction() as db:db.execute("UPDATE shuku_tasks SET available_at=0 WHERE status='queued'")
     drain(app)
     assert app.workflow.public_courses()[0]['version']=='1.0.0'
     assert len(fake.pulls)==len(fake.releases)==1
@@ -201,7 +201,7 @@ def test_feedback_issue_retry_and_external_state_reconciliation(connected):
     fake.fail_after=('POST','/issues')
     fid=app.workflow.feedback.submit(CONTRIBUTOR,revision['id'],{'request_key':str(uuid4()),'message':'公式需要核对'})['id']
     drain(app)
-    with app.store.transaction() as db:db.execute("UPDATE shuku_business.tasks SET available_at=0 WHERE status='queued'")
+    with app.store.transaction() as db:db.execute("UPDATE shuku_tasks SET available_at=0 WHERE status='queued'")
     drain(app);assert len(fake.issues)==1
     assert app.workflow.feedback.detail(owner,fid)['github_number']==1
     fake.issues[0]['state']='closed';sync.tick();drain(app)
@@ -213,21 +213,21 @@ def test_remote_delete_failure_keeps_local_records_and_retry_finishes(connected)
     first_release(connected)
     app,c,p,owner,admin,fake,sync,revision=connected
     # Explicitly disable destructive authority: local cleanup must not precede remote validation.
-    with app.store.transaction() as db:db.execute('UPDATE shuku_business.github_repositories SET allow_destroy=false')
+    with app.store.transaction() as db:db.execute('UPDATE shuku_github_repositories SET allow_destroy=false')
     receipt=app.workflow.governance.request(admin,'course',c['id'],{'confirm':True});app.worker.run_once()
     with app.store.transaction() as db:
-        assert db.execute('SELECT id FROM shuku_business.courses WHERE id=%s',(c['id'],)).fetchone()
-        db.execute('UPDATE shuku_business.github_repositories SET allow_destroy=true')
-        db.execute("UPDATE shuku_business.tasks SET available_at=0 WHERE status='queued'")
+        assert db.execute('SELECT id FROM shuku_courses WHERE id=%s',(c['id'],)).fetchone()
+        db.execute('UPDATE shuku_github_repositories SET allow_destroy=true')
+        db.execute("UPDATE shuku_tasks SET available_at=0 WHERE status='queued'")
     drain(app)
     assert fake.meta is None
-    with app.store.transaction() as db:assert not db.execute('SELECT id FROM shuku_business.courses WHERE id=%s',(c['id'],)).fetchone()
+    with app.store.transaction() as db:assert not db.execute('SELECT id FROM shuku_courses WHERE id=%s',(c['id'],)).fetchone()
 
 
 def test_new_content_upload_uses_git_blob_hash_and_deletion_entries(connected):
     app,c,p,owner,admin,fake,sync,revision=connected
     with app.store.transaction() as db:
-        row=db.execute('SELECT * FROM shuku_business.revisions WHERE id=%s',(revision['id'],)).fetchone()
+        row=db.execute('SELECT * FROM shuku_revisions WHERE id=%s',(revision['id'],)).fetchone()
     files=sync.export(row);fake.trees['base-tree']=[{'path':name,'sha':blob_sha(content),'type':'blob','mode':'100644'} for name,content in files.items()]
     fake.trees['base-tree'].append({'path':'courses/old.txt','sha':'f'*40,'type':'blob','mode':'100644'})
     approve(app,c,revision,owner,admin);app.workflow.publish(owner,c['id'],{'revision_id':revision['id'],'version':'1.0.0'});drain(app)
@@ -253,7 +253,7 @@ def test_external_pull_notifies_managers_once_and_new_head_invalidates_approval(
     with pytest.raises(BusinessError):sync.external_decision(owner,c['id'],{'number':20,'head_sha':'a'*40,'decision':'merge'})
     assert not any(method=='DELETE' for method,_,_ in fake.calls)
     with app.store.transaction() as db:
-        db.execute('UPDATE shuku_business.users SET active=false WHERE id=%s',(owner,))
+        db.execute('UPDATE shuku_users SET active=false WHERE id=%s',(owner,))
         sync.queue(db,c['id'],'reconcile','fallback-manager',{},admin)
     fake.pulls[0]['head']['sha']='c'*40;drain(app)
     assert app.workflow.feedback.messages(admin)['messages'][0]['kind']=='github_pr'
@@ -306,7 +306,7 @@ def test_external_merge_is_verified_but_does_not_publish_untrusted_content(conne
     sync.external_decision(owner,c['id'],{'number':1,'head_sha':head,'decision':'approved'})
     queued=sync.external_decision(owner,c['id'],{'number':1,'head_sha':head,'decision':'merge'})
     fake.fail_after=('PUT','/pulls/1/merge');drain(app)
-    with app.store.transaction() as db:db.execute("UPDATE shuku_business.tasks SET available_at=0 WHERE status='queued'")
+    with app.store.transaction() as db:db.execute("UPDATE shuku_tasks SET available_at=0 WHERE status='queued'")
     drain(app)
     assert sync.status(owner,c['id'])['external_prs'][0]['review_state']=='merged'
     assert not app.workflow.public_courses()
@@ -314,7 +314,7 @@ def test_external_merge_is_verified_but_does_not_publish_untrusted_content(conne
     imported=app.store.course(owner,c['id'])['head_revision']
     assert imported!=revision['id'] and app.workflow.revision(owner,imported)['project']['pages'][0]['summary']=='来自外部 PR 的新内容'
     with app.store.transaction() as db:
-        db.execute("UPDATE shuku_business.tasks SET status='failed' WHERE id=(SELECT task_id FROM shuku_business.github_jobs WHERE id=%s)",(queued['job_id'],))
+        db.execute("UPDATE shuku_tasks SET status='failed' WHERE id=(SELECT task_id FROM shuku_github_jobs WHERE id=%s)",(queued['job_id'],))
     sync.retry(owner,c['id'],queued['job_id']);drain(app)
     assert app.store.course(owner,c['id'])['head_revision']==imported
     approve(app,c,app.workflow.revision(owner,imported),owner,admin)
@@ -352,7 +352,7 @@ def test_deletion_recovers_repository_created_before_a_lost_binding(workflow):
     with app.store.transaction() as db:assert not sync.repo(db,c['id'])
     app.workflow.governance.request(admin,'course',c['id'],{'confirm':True});drain(app)
     assert fake.remote is None
-    with app.store.transaction() as db:assert not db.execute('SELECT 1 FROM shuku_business.courses WHERE id=%s',(c['id'],)).fetchone()
+    with app.store.transaction() as db:assert not db.execute('SELECT 1 FROM shuku_courses WHERE id=%s',(c['id'],)).fetchone()
 
 
 def test_bound_courses_never_fall_back_to_local_publish_without_provider(connected):

@@ -2,7 +2,6 @@ from concurrent.futures import ThreadPoolExecutor
 from uuid import uuid4
 import pytest
 from shuku_backend.errors import BusinessError
-from shuku_backend.storage import FILE_REFERENCE_LOCK
 from test_collaboration import published,workspace,suggestion,accept,CONTRIBUTOR
 from test_workflow import workflow,save_ready
 from test_http import api
@@ -32,10 +31,10 @@ def test_workspace_delete_preserves_merged_contribution_and_official_shared_file
     merged=app.workflow.collaboration.merge(owner,k['id'],{'revision_id':revision['id']});execute(app)
     app.workflow.publish(owner,c['id'],{'revision_id':merged['revision_id'],'version':'1.0.1'})
     with app.store.transaction() as db:
-        source=db.execute('SELECT files FROM shuku_business.revisions WHERE id=%s',(revision['id'],)).fetchone()['files']
+        source=db.execute('SELECT files FROM shuku_revisions WHERE id=%s',(revision['id'],)).fetchone()['files']
         shared=app.bucket.put(b'shared object')
-        from psycopg.types.json import Jsonb
-        for rid in (revision['id'],merged['revision_id']):db.execute("UPDATE shuku_business.revisions SET files=files||%s WHERE id=%s",(Jsonb({'static/shared':{**shared,'mime':'application/octet-stream'}}),rid))
+        from shuku_backend.database import JsonValue
+        for rid in (revision['id'],merged['revision_id']):db.execute("UPDATE shuku_revisions SET files=JSON_MERGE_PATCH(files,%s) WHERE id=%s",(JsonValue({'static/shared':{**shared,'mime':'application/octet-stream'}}),rid))
     removal=app.workflow.governance.request(CONTRIBUTOR,'workspace',wid,{'confirm':True})
     with pytest.raises(BusinessError):app.workflow.revision(CONTRIBUTOR,revision['id'])
     execute(app)
@@ -46,8 +45,8 @@ def test_workspace_delete_preserves_merged_contribution_and_official_shared_file
     assert app.bucket.read(shared['sha256'])==b'shared object'
     assert not app.bucket.path(source['project.json']['sha256']).exists()
     with app.store.transaction() as db:
-        assert db.execute('SELECT revision_id FROM shuku_business.contributions WHERE id=%s',(k['id'],)).fetchone()['revision_id'] is None
-        assert db.execute('SELECT 1 FROM shuku_business.revisions WHERE course_id=%s',(wid,)).fetchone() is None
+        assert db.execute('SELECT revision_id FROM shuku_contributions WHERE id=%s',(k['id'],)).fetchone()['revision_id'] is None
+        assert db.execute('SELECT 1 FROM shuku_revisions WHERE course_id=%s',(wid,)).fetchone() is None
     assert app.workflow.governance.request(CONTRIBUTOR,'workspace',wid,{'confirm':True})==removal
 
 
@@ -64,9 +63,9 @@ def test_permanent_course_delete_removes_related_records_but_not_other_course_fi
     execute(app)
     with app.store.transaction() as db:
         for table,column in [('courses','id'),('revisions','course_id'),('reviews','course_id'),('releases','course_id'),('course_managers','course_id')]:
-            assert db.execute(f'SELECT 1 FROM shuku_business.{table} WHERE {column}=ANY(%s::uuid[])',([c['id'],wid],)).fetchone() is None
-        assert db.execute('SELECT 1 FROM shuku_business.workspaces WHERE target_course_id=%s',(c['id'],)).fetchone() is None
-        assert db.execute('SELECT 1 FROM shuku_business.contributions WHERE target_course_id=%s',(c['id'],)).fetchone() is None
+            assert db.execute(f'SELECT 1 FROM shuku_{table} WHERE {column} IN %s',([c['id'],wid],)).fetchone() is None
+        assert db.execute('SELECT 1 FROM shuku_workspaces WHERE target_course_id=%s',(c['id'],)).fetchone() is None
+        assert db.execute('SELECT 1 FROM shuku_contributions WHERE target_course_id=%s',(c['id'],)).fetchone() is None
     assert app.workflow.file(owner,keep['id'],'index.html')[0]
 
 
@@ -78,13 +77,13 @@ def test_cleanup_failure_retry_reuses_receipt_and_handles_already_removed_object
         remove(digest);seen.append(digest);raise OSError('simulated disk error')
     monkeypatch.setattr(app.bucket,'remove',fail_after_unlink)
     # One final attempt produces a visible terminal failure without retry waiting.
-    with app.store.transaction() as db:db.execute("UPDATE shuku_business.tasks SET max_attempts=1 WHERE kind='governance.remove'")
+    with app.store.transaction() as db:db.execute("UPDATE shuku_tasks SET max_attempts=1 WHERE kind='governance.remove'")
     execute(app);assert seen
     assert g.listing(admin)[0]['state']=='failed'
     with pytest.raises(BusinessError):g.retry(CONTRIBUTOR,request['id'],{})
     monkeypatch.setattr(app.bucket,'remove',remove)
     from shuku_backend.application import create_application
-    # A fresh service instance must resume from PostgreSQL, not process memory.
+    # A fresh service instance must resume from MySQL, not process memory.
     restarted=create_application(app.settings)
     try:
         assert restarted.workflow.governance.retry(admin,request['id'],{})==request
@@ -101,7 +100,7 @@ def test_deletion_cancels_queued_build_and_recreating_deleted_workspace_is_possi
     with pytest.raises(BusinessError):app.workflow.governance.request(owner,'workspace',wid,{'confirm':True})
     app.workflow.governance.request(CONTRIBUTOR,'workspace',wid,{'confirm':True})
     execute(app)
-    with app.store.transaction() as db:assert db.execute('SELECT status FROM shuku_business.tasks WHERE idempotency_key=%s',('build:'+pending['id'],)).fetchone()['status']=='failed'
+    with app.store.transaction() as db:assert db.execute('SELECT status FROM shuku_tasks WHERE idempotency_key=%s',('build:'+pending['id'],)).fetchone()['status']=='failed'
     new=app.workflow.collaboration.create(CONTRIBUTOR,c['id'],{})
     assert new['id']!=wid
 
@@ -114,11 +113,11 @@ def test_running_related_build_defers_without_consuming_attempt_and_is_fenced(pu
     app.workflow.governance.request(admin,'course',c['id'],{'confirm':True})
     execute(app)
     with app.store.transaction() as db:
-        removal=db.execute("SELECT attempts,status,error_code FROM shuku_business.tasks WHERE kind='governance.remove'").fetchone()
+        removal=db.execute("SELECT attempts,status,error_code FROM shuku_tasks WHERE kind='governance.remove'").fetchone()
     assert removal['status']=='queued' and removal['attempts']==0 and removal['error_code']=='WAITING_FOR_RELATED_TASKS'
     with pytest.raises(BusinessError):app.workflow.build(task,lambda state:None)
     app.store.finish(task['id'],task['lease_token'],app.clock(),error='RESOURCE_REMOVED')
-    with app.store.transaction() as db:db.execute("UPDATE shuku_business.tasks SET available_at=0 WHERE kind='governance.remove'")
+    with app.store.transaction() as db:db.execute("UPDATE shuku_tasks SET available_at=0 WHERE kind='governance.remove'")
     execute(app);assert app.workflow.governance.listing(admin)[0]['state']=='succeeded'
 
 
@@ -127,15 +126,16 @@ def test_reference_writers_exclude_cleanup_and_shared_objects_survive(published)
     app.workflow.governance.request(admin,'course',c['id'],{'confirm':True})
     task=app.store.claim(['governance.remove'],app.clock())
     other=app.store.create_course(owner,{'module_id':c['module_id'],'title':'并发复用文件'},app.clock())
-    with app.store.transaction() as db:obj=db.execute('SELECT files FROM shuku_business.revisions WHERE id=%s',(old['id'],)).fetchone()['files']['project.json']
-    from psycopg.types.json import Jsonb
-    import psycopg
+    with app.store.transaction() as db:obj=db.execute('SELECT files FROM shuku_revisions WHERE id=%s',(old['id'],)).fetchone()['files']['project.json']
+    from shuku_backend.database import JsonValue
+    from sqlalchemy.exc import DatabaseError
     with app.store.transaction() as writer:
-        writer.execute('SELECT pg_advisory_xact_lock_shared(%s)',(FILE_REFERENCE_LOCK,))
-        writer.execute("INSERT INTO shuku_business.revisions VALUES (%s,%s,%s,'test','ready',%s,NULL,%s)",(uuid4(),other['id'],owner,Jsonb({'project.json':obj}),app.clock()))
-        with pytest.raises(psycopg.errors.LockNotAvailable):app.workflow.governance.run(task,lambda state:None)
+        writer.file_reference_lock(shared=True)
+        writer.execute("INSERT INTO shuku_revisions VALUES (%s,%s,%s,'test','ready',%s,NULL,%s)",(uuid4(),other['id'],owner,JsonValue({'project.json':obj}),app.clock()))
+        with pytest.raises(DatabaseError) as error:app.workflow.governance.run(task,lambda state:None)
+        assert error.value.orig.errno==1205
     app.store.finish(task['id'],task['lease_token'],app.clock(),error='LOCK_BUSY')
-    with app.store.transaction() as db:db.execute("UPDATE shuku_business.tasks SET available_at=0 WHERE id=%s",(task['id'],))
+    with app.store.transaction() as db:db.execute("UPDATE shuku_tasks SET available_at=0 WHERE id=%s",(task['id'],))
     execute(app);assert app.workflow.governance.listing(admin)[0]['state']=='succeeded'
     assert app.bucket.read(obj['sha256'])
 

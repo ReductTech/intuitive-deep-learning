@@ -39,7 +39,7 @@ def test_retry_is_bounded_and_errors_do_not_leak_secrets(store):
     worker=Worker(store,{'test':fail},lambda:clock[0])
     for now in [1000,1003,1008]:
         clock[0]=now;assert worker.run_once()
-    with store.transaction() as db:row=db.execute('SELECT * FROM shuku_business.tasks WHERE id=%s',(tid,)).fetchone()
+    with store.transaction() as db:row=db.execute('SELECT * FROM shuku_tasks WHERE id=%s',(tid,)).fetchone()
     assert row['status']=='failed' and row['error_code']=='HANDLER_FAILED' and row['attempts']==3
     assert store.claim(['test'],1100) is None
 
@@ -48,16 +48,16 @@ def test_worker_reopens_persisted_task_after_restart(store):
     tid=store.enqueue('test','resource','key',{},1000)
     worker=Worker(Store(store.database_url),{'test':lambda task,save:(save({'stage':'done'}),{'ok':True})[1]},lambda:1001)
     assert worker.run_once()
-    with store.transaction() as db:row=db.execute('SELECT * FROM shuku_business.tasks WHERE id=%s',(tid,)).fetchone()
+    with store.transaction() as db:row=db.execute('SELECT * FROM shuku_tasks WHERE id=%s',(tid,)).fetchone()
     assert row['status']=='succeeded' and row['checkpoint']=={'stage':'done'}
 
 
 def test_crash_on_last_attempt_reaches_terminal_state(store):
     tid=store.enqueue('test','resource','key',{},1000)
-    with store.transaction() as db:db.execute('UPDATE shuku_business.tasks SET max_attempts=1 WHERE id=%s',(tid,))
+    with store.transaction() as db:db.execute('UPDATE shuku_tasks SET max_attempts=1 WHERE id=%s',(tid,))
     assert store.claim(['test'],1000,ttl=5)
     assert store.claim(['test'],1006) is None
     with store.transaction() as db:
-        row=db.execute('SELECT status,error_code FROM shuku_business.tasks WHERE id=%s',(tid,)).fetchone()
+        row=db.execute('SELECT status,error_code FROM shuku_tasks WHERE id=%s',(tid,)).fetchone()
         assert row=={'status':'failed','error_code':'ATTEMPTS_EXHAUSTED'}
-        assert db.execute('SELECT count(*) AS n FROM shuku_business.task_leases').fetchone()['n']==0
+        assert db.execute('SELECT count(*) AS n FROM shuku_task_leases').fetchone()['n']==0

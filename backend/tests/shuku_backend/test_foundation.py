@@ -9,7 +9,7 @@ from shuku_backend.application import create_application
 from shuku_backend.storage import DEMO_USERS
 
 
-def settings(tmp_path,dsn="postgresql://test@localhost/idl_shuku_test_unit"):
+def settings(tmp_path,dsn="mysql+mysqlconnector://test@localhost/idl_shuku_test_unit"):
     return Settings(dsn,tmp_path/"bucket","http://localhost:5173","test-only-password",port=0)
 
 
@@ -45,26 +45,23 @@ def test_migrations_and_explicit_demo_seeding(store,tmp_path):
     store.migrate();store.ready()
     app=create_application(settings(tmp_path,store.database_url))
     with store.transaction() as db:
-        assert db.execute("SELECT count(*) AS n FROM shuku_business.users").fetchone()["n"]==0
+        assert db.execute("SELECT count(*) AS n FROM shuku_users").fetchone()["n"]==0
     app.close()
     with pytest.raises(RuntimeError,match="runtime dependencies"):
         create_application(replace(settings(tmp_path,store.database_url),source_root=tmp_path/"missing"))
     store.seed_demo();store.seed_demo()
     with store.transaction() as db:
-        assert db.execute("SELECT count(*) AS n FROM shuku_business.users").fetchone()["n"]==3
-        db.execute("UPDATE shuku_business.users SET role='admin' WHERE username='linzhi'")
+        assert db.execute("SELECT count(*) AS n FROM shuku_users").fetchone()["n"]==3
+        db.execute("UPDATE shuku_users SET role='admin' WHERE username='linzhi'")
     with pytest.raises(RuntimeError,match="conflicts"):store.seed_demo()
 
 
 def test_ready_does_not_migrate_or_ignore_checksum(store,tmp_path):
-    with store.transaction() as db:db.execute("UPDATE shuku_business.schema_migrations SET checksum='bad'")
+    with store.transaction() as db:db.execute("UPDATE shuku_schema_migrations SET checksum='bad'")
     try:
         with pytest.raises(RuntimeError):create_application(settings(tmp_path,store.database_url))
         with pytest.raises(RuntimeError):store.migrate()
     finally:
-        from importlib.resources import files
+        from shuku_backend.migrations import VERSION, checksum
         with store.transaction() as db:
-            for migration in files('shuku_backend').joinpath('migrations').iterdir():
-                if migration.name.endswith('.sql'):
-                    digest=sha256(migration.read_bytes()).hexdigest()
-                    db.execute("UPDATE shuku_business.schema_migrations SET checksum=%s WHERE version=%s",(digest,migration.name))
+            db.execute("UPDATE shuku_schema_migrations SET checksum=%s WHERE version=%s",(checksum(),VERSION))

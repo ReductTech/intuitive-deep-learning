@@ -27,7 +27,7 @@
 
 ## 保存与发布
 
-源码文本保存在不可变 project.json，同时按 `sources/<path>` 纳入文件桶哈希清单；课程、修订、任务和正式版本引用继续保存在 PostgreSQL，无新数据库表。所有读取继续校验课程权限。
+源码文本保存在不可变 project.json，同时按 `sources/<path>` 纳入文件桶哈希清单；课程、修订、任务和正式版本引用继续保存在 MySQL，无新数据库表。所有读取继续校验课程权限。
 
 Worker 使用虚拟文件解析器与固定前端依赖构建，不在服务器执行用户代码。产物包含播放器与实际 React 组件，源课程使用带沙箱策略的内嵌脚本和样式；源码 JSON、设计图和创作对话不作为公开资源提供。编译错误在作者编辑器显示，不能提交审核或改变旧正式版本。
 
@@ -39,4 +39,4 @@ Worker 使用虚拟文件解析器与固定前端依赖构建，不在服务器�
 - `scripts/check-shuku-source.mjs`：针对隔离环境实际点击创建、文件编辑、React 互动、沙箱、审核发布、跨页账号学习记录和失败后旧版可用。
 - 浏览器脚本需要 Playwright 模块绝对路径参数及 `SHUKU_SOURCE_TEST_PASSWORD`，地址通过 `SHUKU_SOURCE_URL` 配置，仅接受本机测试入口。
 
-运行环境继续使用原有 Node/esbuild、PostgreSQL 和文件桶。本次未改动 idl_backend，未切换 Demo／产品站部署。
+运行环境继续使用原有 Node/esbuild、MySQL 和文件桶。本次未改动 idl_backend，未切换 Demo／产品站部署。

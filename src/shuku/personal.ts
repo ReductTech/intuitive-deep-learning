@@ -1,6 +1,7 @@
 import {useCallback,useEffect,useRef,useState} from 'react';
 import {api,ApiError} from './client';
 import {isGuestMode,requestSignIn} from './guest';
+import {isLocalPreview} from '../app/runtimeMode';
 export interface StudyPosition {page_id:string;mode:'guide'|'ppt';completed:string[]}
 export interface StudyContext {resource:string;title:string;version:string;version_label:string;pages:string[];url:string|null;available:boolean;sandboxed?:boolean;course_id?:string;revision_id?:string}
 export interface StudyRecord extends StudyContext,StudyPosition {updated_at:number;page_count:number}
@@ -9,18 +10,24 @@ export interface PersonalData {favorite_courses:PublishedCourse[];account_id:str
 export function studyHref(record:StudyRecord){return record.url+(record.url?.includes('?')?'&':'?')+'resume=1';}
 export function usePersonal(){
  const [data,setData]=useState<PersonalData>({favorite_courses:[],account_id:'',favorites:[],history:[],next_cursor:null}),[error,setError]=useState(''),[authenticated,setAuthenticated]=useState(false),[busy,setBusy]=useState(false),[loading,setLoading]=useState(true);
- useEffect(()=>{if(isGuestMode()){setLoading(false);return;}let active=true;api<PersonalData>('/personal').then(d=>{if(active){setData(d);setAuthenticated(true);}}).catch(e=>{if(active&&(!(e instanceof ApiError)||e.status!==401))setError(e.message);}).finally(()=>{if(active)setLoading(false);});return()=>{active=false;};},[]);
- async function favorite(resource:string){if(!authenticated){if(isGuestMode()){requestSignIn();return;}location.assign('/my-courses?next='+encodeURIComponent(location.pathname+location.search));return;}if(busy)return;setBusy(true);setError('');const saved=!data.favorites.includes(resource);try{await api('/personal/favorites',{resource,saved},{'X-Shuku-Account':data.account_id});setData(d=>({...d,favorites:saved?[...d.favorites,resource]:d.favorites.filter(k=>k!==resource)}));}catch(e){setError((e as Error).message);}finally{setBusy(false);}}
+ useEffect(()=>{if(isLocalPreview||isGuestMode()){setLoading(false);return;}let active=true;api<PersonalData>('/personal').then(d=>{if(active){setData(d);setAuthenticated(true);}}).catch(e=>{if(active&&(!(e instanceof ApiError)||e.status!==401))setError(e.message);}).finally(()=>{if(active)setLoading(false);});return()=>{active=false;};},[]);
+ async function favorite(resource:string){if(!authenticated){if(isLocalPreview||isGuestMode()){requestSignIn();return;}location.assign('/my-courses?next='+encodeURIComponent(location.pathname+location.search));return;}if(busy)return;setBusy(true);setError('');const saved=!data.favorites.includes(resource);try{await api('/personal/favorites',{resource,saved},{'X-Shuku-Account':data.account_id});setData(d=>({...d,favorites:saved?[...d.favorites,resource]:d.favorites.filter(k=>k!==resource)}));}catch(e){setError((e as Error).message);}finally{setBusy(false);}}
  async function more(){if(!data.next_cursor||busy)return;setBusy(true);try{const result=await api<PersonalData>('/personal?cursor='+encodeURIComponent(data.next_cursor));setData(d=>({...result,history:[...d.history,...result.history.filter(r=>!d.history.some(old=>old.resource===r.resource))]}));}catch(e){setError((e as Error).message);}finally{setBusy(false);}}
  return {data,error,authenticated,busy:busy||loading,favorite,more};
 }
-export function useStudy(resource:string,version:string,resume:boolean,requestedMode:'guide'|'ppt'='guide',requestedPage?:string){
+export function useStudy(resource:string,version:string,resume:boolean,requestedMode:'guide'|'ppt'='guide',requestedPage?:string,localContext?:StudyContext){
  const [context,setContext]=useState<StudyContext|null>(null),[initial,setInitial]=useState<StudyPosition|null>(null),[error,setError]=useState(''),[status,setStatus]=useState(''),[guest,setGuest]=useState(false);
  const writer=useRef<{account:string;counter:number;pending:StudyPosition|null;busy:boolean;stopped:boolean;timer?:ReturnType<typeof setTimeout>}>({account:'',counter:0,pending:null,busy:false,stopped:true});
  useEffect(()=>{
   if(!resource)return;
   setError('');setContext(null);setInitial(null);setGuest(false);
   const w={account:'',counter:0,pending:null as StudyPosition|null,busy:false,stopped:false,timer:undefined as ReturnType<typeof setTimeout>|undefined};writer.current=w;let active=true;
+  if(isLocalPreview){
+   w.stopped=true;setGuest(true);
+   if(!localContext?.pages.length){setError('未找到本地课件。');return;}
+   setContext(localContext);setInitial({page_id:requestedPage&&localContext.pages.includes(requestedPage)?requestedPage:localContext.pages[0],mode:requestedMode,completed:[]});
+   return()=>{active=false;w.stopped=true;};
+  }
   async function load(){try{
    let c:StudyContext,s:StudyPosition|null=null;
    try{const result=await api<{account_id:string;context:StudyContext;state:(StudyPosition&{state_version:number})|null}>('/personal/study/'+encodeURIComponent(resource)+'/'+encodeURIComponent(version));c=result.context;s=result.state;w.account=result.account_id;w.counter=result.state?.state_version||0;}
@@ -29,7 +36,7 @@ export function useStudy(resource:string,version:string,resume:boolean,requested
    if(active){setContext(c);setInitial({page_id:resume&&s?s.page_id:requestedPage&&c.pages.includes(requestedPage)?requestedPage:c.pages[0],mode:resume&&s?s.mode:requestedMode,completed:s?.completed.filter(p=>c.pages.includes(p))||[]});}
   }catch(e){if(active)setError((e as Error).message);}}
   void load();return()=>{active=false;w.stopped=true;clearTimeout(w.timer);};
- },[resource,version,resume,requestedMode,requestedPage]);
+ },[resource,version,resume,requestedMode,requestedPage,localContext]);
  const flush=useCallback(async()=>{
   const w=writer.current;if(w.stopped||w.busy||!w.pending)return;const position=w.pending;w.pending=null;w.busy=true;setStatus('正在保存…');
   try{const result=await api<{state_version:number}>('/personal/study',{resource,version,...position,expected_version:w.counter},{'X-Shuku-Account':w.account});w.counter=result.state_version;if(!w.stopped)setStatus('已保存');}

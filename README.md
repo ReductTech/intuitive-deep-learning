@@ -2,7 +2,7 @@
 
 服务重构后的 Windows 启动、目录职责和兼容说明见 [backend/README.md](backend/README.md)。
 
-后续平台业务迁移范围见 [术库业务逻辑迁移范围](docs/术库业务逻辑迁移范围.md)：以本仓库为最终部署产品，迁入审核、共创、发布、治理及 PostgreSQL 持久化等逻辑，保留现有编辑和预览。
+后续平台业务迁移范围见 [术库业务逻辑迁移范围](docs/术库业务逻辑迁移范围.md)：以本仓库为最终部署产品，迁入审核、共创、发布、治理及 MySQL 持久化等逻辑，保留现有编辑和预览。
 
 > 用可视化、交互实验和小规模训练任务建立深度学习直觉。
 
@@ -62,6 +62,8 @@ python3 -m pip install -r requirements-torch.txt
 ```
 
 ## Windows 启动
+
+术库登录、课程与消息使用 SQLAlchemy + MySQL。首次本地准备、启动及不依赖数据库的课件预览，见 [术库业务后端说明](backend/src/shuku_backend/README.md)。免登录预览命令为 `npm run dev:preview`（`http://127.0.0.1:5176/`）。
 
 在仓库根目录、已激活的 Python 环境中，运行 `.\scripts\devstart.ps1` 启动全部本地后台服务；另一个终端运行 `npm run dev` 启动课件。状态与停止分别为 `.\scripts\devstart.ps1 -Status` 和 `.\scripts\devstop.ps1`。详情见 [scripts/README.md](scripts/README.md)。
 

@@ -105,7 +105,7 @@ def test_builtin_catalog_and_cursor_account_boundary(workflow):
     # Use trusted catalog entries with synthetic timestamps to exercise a full history page.
     with app.store.transaction() as db:
         for i in range(25):
-            db.execute("INSERT INTO shuku_business.learning_states VALUES (%s,%s,'builtin',NULL,NULL,'page','ppt','[]',1,%s)",(LEARNER,'module:missing'+str(i),i+1))
+            db.execute("INSERT INTO shuku_learning_states VALUES (%s,%s,'builtin',NULL,NULL,'page','ppt','[]',1,%s)",(LEARNER,'module:missing'+str(i),i+1))
     first=service.listing(LEARNER);second=service.listing(LEARNER,first['next_cursor'])
     assert len(first['history'])==20 and len(second['history'])==6
     assert not set(r['resource'] for r in first['history'])&set(r['resource'] for r in second['history'])

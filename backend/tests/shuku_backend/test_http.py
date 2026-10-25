@@ -63,7 +63,7 @@ def test_http_private_drafts_and_role_permissions(api):
     assert request('GET','/courses/not-a-uuid',cookie=owner)[0]==404
     assert request('POST','/courses',{**data,'module_id':'bad'},cookie=owner)[0]==400
     with app.store.transaction() as db:
-        assert db.execute("SELECT count(*) AS n FROM shuku_business.audit WHERE action='course.create'").fetchone()['n']==1
+        assert db.execute("SELECT count(*) AS n FROM shuku_audit WHERE action='course.create'").fetchone()['n']==1
 
 
 def test_http_database_failure_and_request_validation(api,monkeypatch):
@@ -83,7 +83,7 @@ def test_https_cookie_and_same_role_draft_isolation(api):
     request,app=api
     other_id=str(uuid4())
     with app.store.transaction() as db:
-        db.execute("INSERT INTO shuku_business.users VALUES (%s,'other-creator','另一作者','creator',true)",(other_id,))
+        db.execute("INSERT INTO shuku_users VALUES (%s,'other-creator','另一作者','creator',true)",(other_id,))
     owner=login(request,'xiaoman');other=login(request,'other-creator')
     code,body,_=request('POST','/courses',{'module_id':str(uuid4()),'title':'私有草稿'},cookie=owner)
     assert code==201

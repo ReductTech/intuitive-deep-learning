@@ -4,11 +4,12 @@ import {SessionControl} from './SessionControl';
 import '../app/HomePage.css';
 import './shuku.css';
 import {isGuestMode} from './guest';
+import {isLocalPreview} from '../app/runtimeMode';
 type Section='courses'|'saved'|'history'|'authoring'|'messages'|'profile'|'admin';
 export function SiteHeader({section,savedCount=0,onBrowse,user}:{section:Section;savedCount?:number;user?:User|null;onBrowse?:(section:'courses'|'saved')=>void}){
  const [open,setOpen]=useState(false),[account,setAccount]=useState<User|null>(null);
  const current=user===undefined?account:user;
- useEffect(()=>{if(user!==undefined||isGuestMode())return;let active=true;api<{user:User}>('/auth/me').then(r=>{if(active)setAccount(r.user);}).catch(()=>{});return()=>{active=false;};},[user]);
+ useEffect(()=>{if(isLocalPreview||user!==undefined||isGuestMode())return;let active=true;api<{user:User}>('/auth/me').then(r=>{if(active)setAccount(r.user);}).catch(()=>{});return()=>{active=false;};},[user]);
  const menu=useRef<HTMLDivElement>(null),trigger=useRef<HTMLButtonElement>(null);
  useEffect(()=>{
   if(!open)return;

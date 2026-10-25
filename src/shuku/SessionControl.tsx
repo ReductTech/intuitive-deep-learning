@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import { api, type User } from './client';
 import {isGuestMode,requestSignIn} from './guest';
+import {isLocalPreview} from '../app/runtimeMode';
 export function SessionControl({user:providedUser}:{user?:User|null}={}){
  const [user,setUser]=useState<User|null>(null);
- useEffect(()=>{if(providedUser!==undefined||isGuestMode())return;api<{user:User}>('/auth/me').then(r=>setUser(r.user)).catch(()=>{});},[providedUser]);
+ useEffect(()=>{if(isLocalPreview||providedUser!==undefined||isGuestMode())return;api<{user:User}>('/auth/me').then(r=>setUser(r.user)).catch(()=>{});},[providedUser]);
  const current=providedUser===undefined?user:providedUser;
- if(isGuestMode())return <span className="shuku-guest-session"><span>游客</span><button onClick={requestSignIn}>登录</button></span>;
+ if(isLocalPreview||isGuestMode())return <span className="shuku-guest-session"><span>{isLocalPreview?'本地预览':'游客'}</span><button onClick={requestSignIn}>登录</button></span>;
  return current?<span className="shuku-session"><MessageIndicator key={current.id}/><a className="shuku-profile-link" href="/profile" aria-label="个人信息" aria-current={location.pathname==='/profile'?'page':undefined}>{current.display_name}</a><button onClick={()=>void api('/auth/logout',{}).then(()=>location.assign('/'))}>退出</button></span>:<a className="sd-library-create" href="/my-courses">登录</a>;
 }
 

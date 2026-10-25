@@ -26,24 +26,24 @@ class DemoIdentity:
         failure=None
         result=None
         with self.store.transaction() as db:
-            db.execute("INSERT INTO shuku_business.login_attempts(peer_key,until_at) VALUES (%s,%s) ON CONFLICT DO NOTHING",(peer_key,now+60))
-            attempt=db.execute("SELECT * FROM shuku_business.login_attempts WHERE peer_key=%s FOR UPDATE",(peer_key,)).fetchone()
+            db.insert_once('INSERT INTO shuku_login_attempts(peer_key,until_at) VALUES (%s,%s)',(peer_key,now+60))
+            attempt=db.execute("SELECT * FROM shuku_login_attempts WHERE peer_key=%s FOR UPDATE",(peer_key,)).fetchone()
             if attempt["until_at"]<=now:
                 attempt={"failures":0,"until_at":now+60}
-                db.execute("UPDATE shuku_business.login_attempts SET failures=0,until_at=%s WHERE peer_key=%s",(now+60,peer_key))
+                db.execute("UPDATE shuku_login_attempts SET failures=0,until_at=%s WHERE peer_key=%s",(now+60,peer_key))
             if attempt["failures"]>=10:
                 failure=BusinessError(429,"LOGIN_RATE_LIMIT","登录尝试过于频繁，请稍后重试。")
             else:
                 valid=compare_digest(self._hash(password),self.password_hash)
-                user=db.execute("SELECT id FROM shuku_business.users WHERE username=%s AND active",(username,)).fetchone()
+                user=db.execute("SELECT id FROM shuku_users WHERE username=%s AND active",(username,)).fetchone()
                 if not valid or not user:
-                    db.execute("UPDATE shuku_business.login_attempts SET failures=failures+1 WHERE peer_key=%s",(peer_key,))
+                    db.execute("UPDATE shuku_login_attempts SET failures=failures+1 WHERE peer_key=%s",(peer_key,))
                     failure=BusinessError(401,"INVALID_CREDENTIALS","账号或密码不正确。")
                 else:
-                    db.execute("UPDATE shuku_business.login_attempts SET failures=0,until_at=%s WHERE peer_key=%s",(now+60,peer_key))
-                    db.execute("DELETE FROM shuku_business.sessions WHERE token_hash=%s OR expires_at<=%s",(old_token_hash,now))
+                    db.execute("UPDATE shuku_login_attempts SET failures=0,until_at=%s WHERE peer_key=%s",(now+60,peer_key))
+                    db.execute("DELETE FROM shuku_sessions WHERE token_hash=%s OR expires_at<=%s",(old_token_hash,now))
                     token=secrets.token_hex(32)
-                    db.execute("INSERT INTO shuku_business.sessions VALUES (%s,%s,%s)",(sha256(token.encode()).hexdigest(),user["id"],now+43200))
+                    db.execute("INSERT INTO shuku_sessions VALUES (%s,%s,%s)",(sha256(token.encode()).hexdigest(),user["id"],now+43200))
                     result=(self.store.user_in(db,user["id"]),token)
         # Raise after commit so failed-attempt increments survive.
         if failure:raise failure
