@@ -55,9 +55,9 @@ def test_permanent_course_delete_removes_related_records_but_not_other_course_fi
     wid,initial=workspace(app,c);suggestion(app,wid,initial)
     other=app.store.create_course(owner,{'module_id':c['module_id'],'title':'保留课程'},app.clock())
     keep=save_ready(app,other,p,owner)
-    with pytest.raises(BusinessError):app.workflow.governance.request(owner,'course',c['id'],{'confirm':True})
+    with pytest.raises(BusinessError):app.workflow.governance.request(CONTRIBUTOR,'course',c['id'],{'confirm':True})
     with pytest.raises(BusinessError):app.workflow.governance.request(admin,'course',c['id'],{})
-    with ThreadPoolExecutor(max_workers=2) as pool:receipts=list(pool.map(lambda _:app.workflow.governance.request(admin,'course',c['id'],{'confirm':True}),range(2)))
+    with ThreadPoolExecutor(max_workers=2) as pool:receipts=list(pool.map(lambda _:app.workflow.governance.request(owner,'course',c['id'],{'confirm':True}),range(2)))
     assert receipts[0]==receipts[1]
     assert app.workflow.public_courses()==[]
     execute(app)
@@ -71,7 +71,7 @@ def test_permanent_course_delete_removes_related_records_but_not_other_course_fi
 
 def test_cleanup_failure_retry_reuses_receipt_and_handles_already_removed_object(published,monkeypatch):
     app,c,p,owner,admin,release,old=published;g=app.workflow.governance
-    request=g.request(admin,'course',c['id'],{'confirm':True})
+    request=g.request(owner,'course',c['id'],{'confirm':True})
     remove=app.bucket.remove;seen=[]
     def fail_after_unlink(digest):
         remove(digest);seen.append(digest);raise OSError('simulated disk error')
@@ -79,17 +79,17 @@ def test_cleanup_failure_retry_reuses_receipt_and_handles_already_removed_object
     # One final attempt produces a visible terminal failure without retry waiting.
     with app.store.transaction() as db:db.execute("UPDATE shuku_tasks SET max_attempts=1 WHERE kind='governance.remove'")
     execute(app);assert seen
-    assert g.listing(admin)[0]['state']=='failed'
+    assert g.listing(owner)[0]['state']=='failed'
     with pytest.raises(BusinessError):g.retry(CONTRIBUTOR,request['id'],{})
     monkeypatch.setattr(app.bucket,'remove',remove)
     from shuku_backend.application import create_application
     # A fresh service instance must resume from MySQL, not process memory.
     restarted=create_application(app.settings)
     try:
-        assert restarted.workflow.governance.retry(admin,request['id'],{})==request
+        assert restarted.workflow.governance.retry(owner,request['id'],{})==request
         execute(restarted)
-        assert restarted.workflow.governance.listing(admin)[0]['state']=='succeeded'
-        assert restarted.workflow.governance.request(admin,'course',c['id'],{'confirm':True})==request
+        assert restarted.workflow.governance.listing(owner)[0]['state']=='succeeded'
+        assert restarted.workflow.governance.request(owner,'course',c['id'],{'confirm':True})==request
     finally:restarted.close()
 
 
@@ -159,6 +159,34 @@ def test_governance_http_permissions_csrf_and_draft_restore(api):
     execute(app)
     assert request('GET',path,cookie=admin)[0]==404
     assert request('GET','/removals',cookie=admin)[1]['removals'][0]['state']=='succeeded'
+
+
+def test_course_owner_http_delete_excludes_other_creators_and_managers(api):
+    from test_http import login
+    request,app=api
+    owner=login(request,'xiaoman')
+    other_id=str(uuid4())
+    with app.store.transaction() as db:
+        db.execute("INSERT INTO shuku_users VALUES (%s,'other-creator','受托管理者','creator',true)",(other_id,))
+    other=login(request,'other-creator')
+    course=request('POST','/courses',{'module_id':str(uuid4()),'title':'本人删除课程'},cookie=owner)[1]['course']
+    cid=course['id'];path='/courses/'+cid+'/remove'
+    with app.store.transaction() as db:db.execute('INSERT INTO shuku_course_managers VALUES (%s,%s)',(cid,other_id))
+    assert request('GET','/courses',cookie=owner)[1]['courses'][0]['owner_id']==course['owner_id']
+    assert request('GET','/courses',cookie=other)[1]['courses'][0]['id']==cid
+    assert request('POST',path,{'confirm':True},cookie=other)[0]==403
+    assert request('POST',path,{'confirm':True},cookie=owner,origin='https://other')[0]==403
+    assert request('POST',path,{},cookie=owner)[0]==400
+    code,body,_=request('POST',path,{'confirm':True},cookie=owner)
+    assert code==202
+    assert request('POST',path,{'confirm':True},cookie=owner)[1]==body
+    assert request('POST',path,{'confirm':True},cookie=other)[0]==403
+    assert request('GET','/courses',cookie=owner)[1]['courses']==[]
+    assert request('GET','/removals',cookie=owner)[1]['removals'][0]['id']==body['id']
+    assert request('POST','/removals/'+body['id']+'/retry',{},cookie=other)[0]==404
+    execute(app)
+    assert request('GET','/removals',cookie=owner)[1]['removals'][0]['state']=='succeeded'
+    assert request('POST',path,{'confirm':True},cookie=owner)[1]==body
 
 
 def test_deleted_workspace_cannot_be_approved_or_newly_merged(published):

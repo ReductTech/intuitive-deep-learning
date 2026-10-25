@@ -49,7 +49,8 @@ class Governance:
                 return {'id':str(previous['id'])}
             w=db.execute('SELECT * FROM shuku_workspaces WHERE id=%s',(cid,)).fetchone()
             if kind=='course':
-                self.admin(db,uid);require(not w,400,'NOT_OFFICIAL','请使用删除个人工作区。')
+                require(str(row['owner_id'])==uid or user['role']=='admin',403,'FORBIDDEN','只能删除自己创建的课程。')
+                require(not w,400,'NOT_OFFICIAL','请使用删除个人工作区。')
                 ids=[cid]+[str(r['id']) for r in db.execute('SELECT id FROM shuku_workspaces WHERE target_course_id=%s',(cid,)).fetchall()]
             else:
                 require(w and (str(w['owner_id'])==uid or user['role']=='admin'),403,'FORBIDDEN','只能删除本人的共创工作区。')
