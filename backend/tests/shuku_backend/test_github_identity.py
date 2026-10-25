@@ -158,3 +158,37 @@ def test_device_transport_uses_fixed_hosts_and_token_only_revocation(tmp_path):
     assert calls[2][0][1]=='https://api.github.com/user'
     assert calls[-1][0][1]=='https://api.github.com/applications/test/token'
     assert calls[-1][0][0]=='DELETE'
+
+
+def test_transport_fast_failure_and_sanitized_diagnostics(tmp_path,caplog):
+    from urllib.error import URLError,HTTPError
+    from shuku_backend.adapters.github_identity import GitHubDevice
+    from email.message import Message
+    client=GitHubDevice({'clientId':'test'})
+    class Broken:
+        def open(self,request,timeout):
+            assert timeout==4
+            raise URLError(TimeoutError('private-proxy-password'))
+    client.opener=Broken()
+    with pytest.raises(BusinessError) as failure:client.start()
+    assert failure.value.status==503 and failure.value.code=='GITHUB_TIMEOUT'
+    assert 'private-proxy-password' not in caplog.text+str(failure.value)
+    assert 'github.com' in caplog.text
+    class Limited:
+        def open(self,request,timeout):
+            headers=Message();headers['Retry-After']='60'
+            raise HTTPError(request.full_url,429,'private-token',headers,None)
+    client.opener=Limited()
+    with pytest.raises(BusinessError) as failure:client.start()
+    assert failure.value.status==429 and failure.value.code=='GITHUB_RATE_LIMIT'
+
+
+def test_network_failure_keeps_flow_for_retry(binding):
+    identity,client,clock,_,_=binding;uid=DEMO_USERS[1][0]
+    flow=identity.action(uid,'start',{});clock[0]+=5
+    original=client.poll
+    client.poll=lambda code:(_ for _ in ()).throw(BusinessError(503,'GITHUB_TIMEOUT','连接超时'))
+    with pytest.raises(BusinessError):identity.action(uid,'poll',{'flow_id':flow['flow_id']})
+    assert identity.action(uid,'start',{})['flow_id']==flow['flow_id']
+    client.poll=original
+    assert identity.action(uid,'poll',{'flow_id':flow['flow_id']})['complete']

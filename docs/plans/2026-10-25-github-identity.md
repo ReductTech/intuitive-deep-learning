@@ -1,6 +1,6 @@
 # GitHub 账号绑定
 
-在个人信息中提供「绑定 GitHub」「重新授权」「解除绑定」。复用 Demo 的 GitHub App Device Flow，不手工填写 GitHub 用户名或 Token。用户在 GitHub 确认，页面自动更新。
+在个人信息中提供「绑定 GitHub」「重新授权」「解除绑定」。复用 Demo 的 GitHub App Device Flow，不手工填写 GitHub 用户名或 Token。点击后立即显示授权弹窗；用户在 GitHub 确认，可点击「我已授权，检查连接」，也支持自动轮询。临时网络错误保留当前授权码并自动重试，不关闭流程。
 
 流程：本人登录 → 获取授权码 → 打开 GitHub 输入授权码 → 服务端换取 Token → GET /user 验证数字 ID → 保存绑定。GitHub 账号在本应用中只能对应一个术库账号。换绑先解绑；GitHub 用户名变化不改变账号身份。
 
@@ -16,6 +16,7 @@
 
 - SHUKU_GITHUB_IDENTITY_CONFIG：服务端 JSON 配置文件，包含 clientId、clientSecretPath。没有单独配置时可复用 SHUKU_GITHUB_CONFIG 中的对应字段。
 - SHUKU_GITHUB_TOKEN_KEY：绝对路径，文件保存 Fernet.generate_key() 生成的密钥。必须稳定保存并仅允许运行账号读取。
+- GitHub 请求支持标准 HTTP_PROXY、HTTPS_PROXY、NO_PROXY；在 Demo 主机部署时沿用已有代理地址。代理进程 active 不代表节点可用，需要实际验证 github.com（授权服务）和 api.github.com；订阅失效或节点不可用必须先修复网络。单次请求超时 4 秒，日志仅记录固定域名和错误类别，不记录订阅地址、Token 或上游异常原文。
 - App 必须开启 Enable Device Flow；clientSecretPath 指向该 App 的 Client Secret 文件。此配置与课程同步 App 配置可独立启用。
 - 显式运行数据库迁移，再重启后端并发布前端。受限运行角色须有两张新增表的 SELECT/INSERT/UPDATE/DELETE 权限。
 - 未配置时页面显示未配置，接口返回 503，不伪造绑定。
