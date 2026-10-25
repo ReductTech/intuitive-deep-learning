@@ -1,0 +1,28 @@
+[Unit]
+Description=Shuku intuitive-deep-learning business API
+Wants=network-online.target
+After=network-online.target docker.service
+
+[Service]
+Type=simple
+User=ecs-assist-user
+Group=ecs-assist-user
+WorkingDirectory=/home/ecs-assist-user/shukuDemo_server/intuitive-deep-learning
+EnvironmentFile=/etc/shuku-idl/runtime.env
+Environment=OPENBLAS_NUM_THREADS=1
+Environment=OMP_NUM_THREADS=1
+Environment=MKL_NUM_THREADS=1
+ExecStart=/opt/shuku-idl/venv/bin/python -m shuku_backend serve
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=30
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+MemoryHigh=256M
+MemoryMax=384M
+CPUQuota=100%
+TasksMax=128
+
+[Install]
+WantedBy=multi-user.target

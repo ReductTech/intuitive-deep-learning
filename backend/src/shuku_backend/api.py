@@ -11,7 +11,7 @@ import threading
 from .errors import BusinessError, require
 from .source import SANDBOX_CSP
 
-COOKIE="shuku_session"
+COOKIE="shuku_idl_session"
 
 
 def token_from(cookie):
