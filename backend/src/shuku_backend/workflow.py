@@ -281,3 +281,17 @@ class Workflow:
     def public_courses(self):
         with self.store.transaction() as db:
             return [course_view(row) for row in db.execute("SELECT c.id,c.title,c.description,c.category,c.module_id,r.version,r.revision_id FROM shuku_courses c JOIN shuku_releases r ON r.id=c.current_release WHERE c.status='published' AND NOT c.deleting ORDER BY r.created_at DESC LIMIT 100").fetchall()]
+
+
+    def public_course(self,cid):
+        """Public detail exposes published metadata and aggregates, never private drafts."""
+        cid=identifier(cid)
+        with self.store.transaction() as db:
+            course=db.execute("SELECT c.id,c.title,c.description,c.category,c.module_id,c.owner_id,u.display_name AS creator,r.version,r.revision_id FROM shuku_courses c JOIN shuku_users u ON u.id=c.owner_id JOIN shuku_releases r ON r.id=c.current_release WHERE c.id=%s AND c.status='published' AND NOT c.deleting",(cid,)).fetchone()
+            require(course,404,'NOT_FOUND','课程不存在或已不可访问。')
+            releases=[{**course_view(r),'current':bool(r['current'])} for r in db.execute("SELECT r.id,r.version,r.revision_id,r.created_at,r.note,r.id=c.current_release AS current FROM shuku_releases r JOIN shuku_courses c ON c.id=r.course_id WHERE r.course_id=%s ORDER BY current DESC,r.created_at DESC,r.id",(cid,)).fetchall()]
+            ranking={str(course['owner_id']):{'name':course['creator'],'score':0,'count':0}}
+            for row in db.execute("SELECT w.owner_id,u.display_name,SUM(k.score) AS score,COUNT(*) AS count FROM shuku_contributions k JOIN shuku_workspaces w ON w.id=k.workspace_id JOIN shuku_users u ON u.id=w.owner_id WHERE k.target_course_id=%s AND k.status='merged' GROUP BY w.owner_id,u.display_name ORDER BY score DESC,w.owner_id LIMIT 100",(cid,)).fetchall():
+                ranking[str(row['owner_id'])]={'name':row['display_name'],'score':int(row['score'] or 0),'count':int(row['count'])}
+            public={key:value for key,value in course_view(course).items() if key!='owner_id'}
+            return {'course':public,'releases':releases,'contributors':sorted(ranking.values(),key=lambda item:(-item['score'],item['name']))}

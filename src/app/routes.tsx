@@ -12,6 +12,7 @@ import { CourseHub } from '../shuku/CourseHub';
 import { ManagedEditor } from '../shuku/ManagedEditor';
 import { PreviewPage, ReviewPage } from '../shuku/PreviewPage';
 import { CreatorWorkspace } from '../creator/CreatorWorkspace';
+import {CourseDetails} from '../shuku/CourseDetails';
 
 
 const pptModules = activeModules.filter((module) => module.pptDeck);
@@ -35,6 +36,7 @@ function SceneDeckPage() {
 
 export const appRoutes: AppRoute[] = [
   { path: '/', element: <HomePage /> },
+  { path: '/course', element: <CourseDetails /> },
   { path: '/data', element: <AdminPage /> },
   { path: '/profile', element: <ProfilePage /> },
   { path: '/messages', element: <MessagesPage /> },
@@ -57,4 +59,3 @@ export const appRoutes: AppRoute[] = [
     { path: '/web_ppt/slide.html', element: <SceneDeckPage /> },
   ] : []),
 ];
-

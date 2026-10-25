@@ -106,6 +106,9 @@ def handler_for(app):
                     return self.send_json(200,{"ok":True,"service":"shuku_backend"})
                 if self.command=="GET" and path=="/api/shuku/public/courses":
                     return self.send_json(200,{"courses":app.workflow.public_courses()})
+                public_course=re.fullmatch(r"/api/shuku/public/courses/([^/]+)",path)
+                if self.command=="GET" and public_course:
+                    return self.send_json(200,app.workflow.public_course(public_course[1]))
                 releases=re.fullmatch(r"/api/shuku/public/courses/([^/]+)/releases",path)
                 if self.command=="GET" and releases:
                     return self.send_json(200,{'releases':app.workflow.collaboration.releases(releases[1])})

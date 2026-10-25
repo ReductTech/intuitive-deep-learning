@@ -1,5 +1,6 @@
 import { AppRouter, useAppPath } from '../app/Router';
 import { HomePage } from '../app/HomePage';
+import {CourseDetails} from '../shuku/CourseDetails';
 import { activeModules } from '../app/modules';
 import { BuiltinLearning } from '../shuku/BuiltinLearning';
 import { GuestFeaturePage } from '../shuku/GuestFeaturePage';
@@ -7,6 +8,7 @@ import { UiKitPage } from '../../modules/shared/react/routing/UiKitPage';
 
 const routes = [
   { path: '/', element: <HomePage /> },
+  { path: '/course', element: <CourseDetails /> },
   { path: '/study', element: <BuiltinLearning /> },
   // Keep links from the first preview implementation working.
   { path: '/preview', element: new URLSearchParams(location.search).has('module') ? <BuiltinLearning /> : <HomePage /> },

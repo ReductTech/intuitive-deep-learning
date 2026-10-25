@@ -48,13 +48,13 @@ const courses = activeModules.filter(module => module.pptDeck).sort((a, b) => {
   const rank = (id: string) => order.includes(id) ? order.indexOf(id) : order.length;
   return rank(a.id) - rank(b.id);
 });
-function info(module: ActiveModule) {
+export function info(module: ActiveModule) {
   return editorial[module.id] ?? { title: module.title, summary: module.description, topic: '神经网络', color: '#e8f0ff' };
 }
 function presentationHref(module: ActiveModule, pageId?: string) {
   return `/study?module=${encodeURIComponent(module.id)}&mode=ppt${pageId ? `&page=${encodeURIComponent(pageId)}` : ''}`;
 }
-function Cover({ module }: { module: ActiveModule }) {
+export function Cover({ module }: { module: ActiveModule }) {
   const [failed, setFailed] = useState(false);
   const meta = info(module);
   const cover = meta.cover ?? module.pptDeck?.scenes[0]?.id;
@@ -74,14 +74,8 @@ export function HomePage() {
   const [tab, setTab] = useState(new URLSearchParams(location.search).get('view')==='saved'?'saved':new URLSearchParams(location.search).get('view')==='history'?'history':'courses');
   const [sort, setSort] = useState('default');
   const personal=usePersonal(),saved=personal.data.favorites;
-  const [preview, setPreview] = useState<ActiveModule | null>(null);
-  const dialogRef = useRef<HTMLDialogElement>(null);
   const searchRef = useRef<HTMLInputElement>(null);
   useEffect(() => { document.title = '术库 · 探索交互课程'; }, []);
-  useEffect(() => {
-    if (preview) dialogRef.current?.showModal();
-    else dialogRef.current?.close();
-  }, [preview]);
   function toggleSaved(id:string){void personal.favorite('module:'+id);}
   const normalizedQuery = query.trim().toLocaleLowerCase();
   const filtered = courses.filter(module => {
@@ -109,12 +103,12 @@ export function HomePage() {
       {personal.error&&<p role="alert">{personal.error}</p>}{!personal.authenticated&&tab!=='courses'&&<p>登录后查看您的收藏和学习记录。 <a onClick={event=>{if(isGuestMode()){event.preventDefault();requestSignIn();}}} href={'/my-courses?next='+encodeURIComponent('/?view='+tab)}>登录</a></p>}{recentCourse?.available&&tab!=='history'&&<a className="sd-library-recent" href={studyHref(recentCourse)}><Icon name="clock"/><span>最近学习<strong>{recentCourse.title}</strong></span><span>继续学习 <Icon name="arrow"/></span></a>}
       <div className="sd-library-search"><Icon name="search" /><input ref={searchRef} type="search" value={query} onChange={event => setQuery(event.target.value)} aria-label="搜索课程、知识点或页面" placeholder="想了解什么？搜索课程、知识点或页面…" />{query && <button aria-label="清空搜索" onClick={() => {setQuery(''); searchRef.current?.focus();}}><Icon name="close" /></button>}</div>
       <div className="sd-library-filterbar"><div className="sd-library-levels" aria-label="课程难度">{['全部', '入门', '进阶'].map(item => <button key={item} aria-pressed={level === item} className={level === item ? 'is-active' : ''} onClick={() => setLevel(item)}>{item}</button>)}</div><div className="sd-library-results"><span aria-live="polite">{tab==='history'?personal.data.history.length:filtered.length+visiblePublished.length+unavailableFavorites.length} 门课程</span><select aria-label="课程排序" value={sort} onChange={event => setSort(event.target.value)}><option value="default">推荐顺序</option><option value="pages">页数从少到多</option><option value="name">课程名称</option></select></div></div>
-      <div className="sd-library-grid">{tab!=='history'&&visiblePublished.map(c=><article className="sd-library-card" key={c.id}><div className="sd-library-cover" style={{background:'var(--ui-accent-soft)'}}><div className="sd-library-cover-fallback"><Icon name="book"/><span>{c.category||'课程'}</span></div></div><div className="sd-library-card-copy"><div className="sd-library-card-meta"><span>{c.category}</span><span>v{c.version}</span><button disabled={personal.busy} aria-label={(saved.includes('course:'+c.id)?'取消收藏':'收藏')+c.title} aria-pressed={saved.includes('course:'+c.id)} onClick={()=>void personal.favorite('course:'+c.id)}><Icon name="bookmark"/></button></div><h2>{c.title}</h2><p>{c.description}</p><div className="sd-library-card-actions"><a href={'/learn?revision='+c.revision_id}>开始学习 <Icon name="arrow"/></a><CoCreateButton courseId={c.id}/></div></div></article>)}{tab==='saved'&&unavailableFavorites.map(key=><article className="sd-library-card" key={key}><div className="sd-library-card-copy"><h2>课程暂不可访问</h2><button disabled={personal.busy} onClick={()=>void personal.favorite(key)}>取消收藏</button></div></article>)}{tab==='history'?personal.data.history.map(record=><article className="sd-library-card" key={record.resource}><div className="sd-library-card-copy"><h2>{record.title}</h2><p>{record.version_label} · {record.mode==='guide'?'自学互动':'教学展示'} · 已学 {record.completed.length} / {record.page_count} 页</p>{record.available?<a href={studyHref(record)}>继续学习 →</a>:<p>课程暂不可访问</p>}</div></article>):filtered.map(module => {
+      <div className="sd-library-grid">{tab!=='history'&&visiblePublished.map(c=><article className="sd-library-card" key={c.id}><a className="sd-library-cover-button" href={"/course?course="+c.id} aria-label={c.title+"课程详情"}><div className="sd-library-cover" style={{background:'var(--ui-accent-soft)'}}><div className="sd-library-cover-fallback"><Icon name="book"/><span>{c.category||'课程'}</span></div></div></a><div className="sd-library-card-copy"><div className="sd-library-card-meta"><span>{c.category}</span><span>v{c.version}</span><button disabled={personal.busy} aria-label={(saved.includes('course:'+c.id)?'取消收藏':'收藏')+c.title} aria-pressed={saved.includes('course:'+c.id)} onClick={()=>void personal.favorite('course:'+c.id)}><Icon name="bookmark"/></button></div><h2><a href={"/course?course="+c.id}>{c.title}</a></h2><p>{c.description}</p><div className="sd-library-card-actions"><a href={'/learn?revision='+c.revision_id}>开始学习 <Icon name="arrow"/></a><CoCreateButton courseId={c.id}/></div></div></article>)}{tab==='saved'&&unavailableFavorites.map(key=><article className="sd-library-card" key={key}><div className="sd-library-card-copy"><h2>课程暂不可访问</h2><button disabled={personal.busy} onClick={()=>void personal.favorite(key)}>取消收藏</button></div></article>)}{tab==='history'?personal.data.history.map(record=><article className="sd-library-card" key={record.resource}><div className="sd-library-card-copy"><h2>{record.title}</h2><p>{record.version_label} · {record.mode==='guide'?'自学互动':'教学展示'} · 已学 {record.completed.length} / {record.page_count} 页</p>{record.available?<a href={studyHref(record)}>继续学习 →</a>:<p>课程暂不可访问</p>}</div></article>):filtered.map(module => {
         const meta = info(module);
         return <article className="sd-library-card" key={module.id} aria-label={meta.title}>
-          <button className="sd-library-cover-button" onClick={() => {setPreview(module);}} aria-label={`浏览${meta.title}目录`}><Cover module={module} /><span className="sd-library-cover-overlay">浏览课程目录 <Icon name="arrow" /></span></button>
+          <a className="sd-library-cover-button" href={"/course?module="+encodeURIComponent(module.id)} aria-label={`${meta.title}课程详情`}><Cover module={module} /><span className="sd-library-cover-overlay">查看课程详情 <Icon name="arrow" /></span></a>
           <div className="sd-library-card-copy"><div className="sd-library-card-meta"><span>{meta.topic}</span><span className="sd-library-difficulty">{module.difficulty === 'introductory' ? '入门' : module.difficulty === 'advanced' ? '高级' : module.difficulty === 'intermediate' ? '进阶' : '探索'}</span><button className={saved.includes('module:'+module.id) ? 'is-saved' : ''} onClick={() => toggleSaved(module.id)} aria-label={`${saved.includes('module:'+module.id) ? '取消收藏' : '收藏'}${meta.title}`} disabled={personal.busy} aria-pressed={saved.includes('module:'+module.id)}><Icon name="bookmark" /></button></div>
-            <h2><button onClick={() => { setPreview(module); }}>{meta.title}</button></h2><p>{meta.summary}</p>
+            <h2><a href={"/course?module="+encodeURIComponent(module.id)}>{meta.title}</a></h2><p>{meta.summary}</p>
             <div className="sd-library-card-actions"><a href={'/study?module='+encodeURIComponent(module.id)+'&mode=guide'}><Icon name="book" />自学互动模式</a><a href={presentationHref(module)}><Icon name="play" />教学展示模式</a></div>
           </div>
         </article>;
@@ -122,8 +116,5 @@ export function HomePage() {
       {tab==='history'&&personal.authenticated&&!personal.data.history.length&&<p>还没有学习记录，<a href="/">选择一门课程开始学习</a>。</p>}{tab==='history'&&personal.data.next_cursor&&<button disabled={personal.busy} onClick={()=>void personal.more()}>更多学习记录</button>}{tab!=='history'&&!filtered.length&&!visiblePublished.length&&!unavailableFavorites.length && <div className="sd-library-empty"><Icon name={tab === 'saved' && !saved.length ? 'bookmark' : 'search'} /><h2>{tab === 'saved' && !saved.length ? '把感兴趣的课程收在这里' : '暂时没有找到相关课程'}</h2><p>{tab === 'saved' && !saved.length ? '点击课程卡片上的收藏图标，下次更容易找到。' : '试试其他关键词，或放宽分类与难度筛选。'}</p><button onClick={reset}>浏览全部课程 <Icon name="arrow" /></button></div>}
       <footer className="sd-library-footer"><span>术库</span><p>不止于看见，更在于理解。</p><span>自主探索 · 课堂展示</span></footer>
     </main>
-    <dialog className="sd-library-dialog" ref={dialogRef} onCancel={() => setPreview(null)} onClick={event => {if (event.target === event.currentTarget) setPreview(null);}} aria-labelledby="sd-library-dialog-title">
-      {preview && <><header><div><span className="sd-library-eyebrow">{info(preview).topic} · {preview.pages.length} 页</span><h2 id="sd-library-dialog-title">{info(preview).title}</h2><p>{info(preview).summary}</p></div><button className="sd-library-dialog-close" autoFocus aria-label="关闭课程目录" onClick={() => setPreview(null)}><Icon name="close" /></button></header><div className="sd-library-dialog-modes sd-library-card-actions"><a href={'/study?module='+encodeURIComponent(preview.id)+'&mode=guide'}><Icon name="book" />自学互动模式</a><a href={presentationHref(preview)}><Icon name="play" />教学展示模式</a></div><ol className="sd-library-directory">{preview.pages.map((page, index) => <li key={page.id}><span>{String(index + 1).padStart(2, '0')}</span><div><h3>{page.title}</h3><p>{page.goal ?? page.summary}</p></div><a href={presentationHref(preview, page.id)} aria-label={`教学展示：${page.title}`}><Icon name="arrow" /></a></li>)}</ol></>}
-    </dialog>
   </div>;
 }
