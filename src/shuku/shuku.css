@@ -30,3 +30,7 @@
 @media(max-width:480px){.sd-library-topbar .shuku-session>button{white-space:nowrap;padding:3px;font-size:11px}.sd-library-topbar nav{gap:8px}.sd-library-topbar nav>button,.sd-library-topbar nav>.sd-authoring-menu>button{font-size:11px}}
 
 .sd-personal-history .sd-library-sidebar,.sd-personal-history .sd-library-search,.sd-personal-history .sd-library-filterbar{display:none}.sd-personal-history .sd-library-main{margin:0 auto;max-width:1200px}
+
+.shuku-create-panel .shuku-presentation-upload{display:grid;gap:8px;margin:4px 0 24px}.shuku-presentation-upload input[type=file]{font:inherit;font-size:14px;padding:12px;max-width:100%}.shuku-presentation-upload small{color:#7b8da2;line-height:1.6}
+
+.shuku-presentation-upload .shuku-remove-ppt{justify-self:start;padding:0;border:0;background:none;color:#55769b;font-size:14px;cursor:pointer}

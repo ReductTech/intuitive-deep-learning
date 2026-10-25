@@ -183,7 +183,7 @@ class Collaboration:
         import hashlib
         require(hashlib.sha256(json.dumps(row['files'],sort_keys=True).encode()).hexdigest()==row['artifact_hash'],409,'REVIEW_CHANGED','审核产物清单已变化。')
         for index,(name,obj) in enumerate(row['files'].items()):
-            if name in ('project.json',) or name.startswith('images/'):continue
+            if name in ('project.json',) or name.startswith(('images/','materials/')):continue
             data=self.bucket.read(obj['sha256'])
             require(len(data)==obj['size'],503,'FILE_CORRUPT','审核产物不完整。')
             if name in ('index.html','bundle.js','bundle.css','utilities.css'):

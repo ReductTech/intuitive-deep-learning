@@ -85,7 +85,7 @@ class Store:
         with self.transaction() as db:
             db.execute("DELETE FROM shuku_sessions WHERE token_hash=%s",(token_hash,))
 
-    def create_course(self, uid, data, now, github=None):
+    def create_course(self, uid, data, now, github=None, *, db=None):
         require(isinstance(data,dict),400,"INVALID_INPUT","课程信息格式不正确。")
         require(not set(data)-{"title","description","category","module_id"},400,"INVALID_INPUT","包含不支持的课程字段。")
         for key,limit in [("title",120),("description",3000),("category",80)]:
@@ -93,7 +93,8 @@ class Store:
             require(isinstance(value,str) and len(value)<=limit and (key!="title" or value.strip()),400,"INVALID_INPUT","请检查课程名称、简介和类别。")
         try: module_id=str(UUID(data.get("module_id","")))
         except (ValueError,TypeError,AttributeError):raise BusinessError(400,"INVALID_INPUT","模块 ID 必须为 UUID。")
-        with self.transaction() as db:
+        from contextlib import nullcontext
+        with (self.transaction() if db is None else nullcontext(db)) as db:
             user=self.user_in(db,uid)
             require(user["role"] in ("creator","admin"),403,"FORBIDDEN","当前账号没有创建权限。")
             cid=str(uuid4())

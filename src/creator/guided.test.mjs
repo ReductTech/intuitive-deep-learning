@@ -3,6 +3,14 @@ import assert from 'node:assert/strict';
 import {buildSync} from 'esbuild';
 import {startGuided,outlineFor,compileGuided,guidedState,updateGuided,changeGuidedPhase,updateGuidedPreferences} from './guided.ts';
 const original={version:1,id:'project',courseId:'test',title:'Agent 入门',duration:30,style:'简洁教学',outlineConfirmed:true,pages:[]};
+test('an imported single-slide presentation keeps its original content through choices and compilation',()=>{
+ const project=startGuided(original,'旧课程');project.presentation={filename:'旧课程.pptx',slideCount:1,warnings:[]};
+ project.pages[0]={...updateGuided(project.pages[0],{imported:true,reference:{title:'原始标题',body:'原始内容',notes:'演讲备注'},suggestions:['加入案例']}),title:'原始标题',summary:'原始内容'};
+ const next=outlineFor(updateGuidedPreferences(project,{duration:40,style:'动手探索'}));
+ assert.equal(next.pages.length,1);assert.equal(next.pages[0].id,project.pages[0].id);assert.equal(next.pages[0].summary,'原始内容');
+ assert.equal(guidedState(next.pages[0]).reference.notes,'演讲备注');assert.equal(next.presentation.filename,'旧课程.pptx');
+ const built=compileGuided(next);assert.match(built.source.files['Page1.tsx'],/原始内容/);assert.ok(!built.source.files['Page1.tsx'].includes('演讲备注'));
+});
 test('guided creation begins with choices and preserves course information',()=>{
  const project=startGuided(original,'理解工具、记忆和规划');assert.equal(project.duration,20);assert.equal(guidedState(project.pages[0]).phase,'choices');assert.equal(project.source,undefined);assert.equal(original.pages.length,0);
  const outline=outlineFor({...project,duration:10});assert.equal(outline.pages.length,4);assert.equal(outline.outlineConfirmed,false);assert.ok(outline.pages.every(p=>guidedState(p).phase==='outline'&&!p.ready));assert.match(outline.pages[0].summary,/工具/);

@@ -12,6 +12,7 @@ from .errors import BusinessError, require
 from .source import SANDBOX_CSP
 
 COOKIE="shuku_idl_session"
+PRESENTATION_SLOT=threading.BoundedSemaphore(1)
 
 
 def token_from(cookie):
@@ -161,6 +162,21 @@ def handler_for(app):
                     app.store.remove_session(token_hash(raw_token))
                     return self.send_json(200,{"message":"已退出登录"},self.cookie("",True))
                 user=app.store.session_user(token_hash(raw_token),app.clock())
+                if self.command=='POST' and path=='/api/shuku/courses/import-presentation':
+                    require(user['role'] in ('creator','admin'),403,'FORBIDDEN','当前账号没有创建权限。')
+                    require(self.headers.get('Origin')==app.settings.origin and self.headers.get('Sec-Fetch-Site')!='cross-site',403,'CROSS_SITE','不允许跨站操作。')
+                    require(not self.headers.get('Transfer-Encoding'),400,'INVALID_INPUT','不支持该请求编码。')
+                    require(PRESENTATION_SLOT.acquire(blocking=False),429,'IMPORT_BUSY','正在处理其他课件，请稍后重试。')
+                    try:
+                        from .presentations import read_upload,import_course,MAX_UPLOAD
+                        try:size=int(self.headers.get('Content-Length','0'))
+                        except ValueError:size=0
+                        require(0<size<=MAX_UPLOAD+65536,413,'PRESENTATION_LIMIT','请选择 20 MB 以内的 PPTX 文件。')
+                        self.connection.settimeout(30)
+                        content_type=self.headers.get('Content-Type','')
+                        data,content,filename=read_upload(content_type,self.rfile.read(size))
+                        return self.send_json(201,import_course(app.workflow,user['id'],data,content,filename))
+                    finally:PRESENTATION_SLOT.release()
                 if self.command=='GET' and path=='/api/shuku/github/identity':
                     return self.send_json(200,app.github_identity.status(user['id']))
                 identity_route=re.fullmatch(r'/api/shuku/github/identity/(start|poll|cancel|disconnect)',path)

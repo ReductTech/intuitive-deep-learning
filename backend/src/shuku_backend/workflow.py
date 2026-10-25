@@ -95,7 +95,7 @@ class Workflow:
         with self.store.transaction() as db:
             return self.save_in(db,uid,cid,data)
 
-    def save_in(self,db,uid,cid,data,remote_job_id=None):
+    def save_in(self,db,uid,cid,data,remote_job_id=None,materials=None):
         db.file_reference_lock(shared=True)
         course,_=self.owner(db,uid,cid)
         require(not db.execute("SELECT 1 FROM shuku_contributions WHERE (workspace_id=%s OR target_course_id=%s) AND status='merging'",(cid,cid)).fetchone(),409,'MERGE_BUSY','共创正在合并，请稍后再保存。')
@@ -104,6 +104,12 @@ class Workflow:
         module=self.module_context(course['module_id'])
         require(data.get('expected_revision')==(str(course['head_revision']) if course['head_revision'] else None),409,'REVISION_CONFLICT','课程已更新，请重新载入后保存。')
         objects,digest=self.prepare(data.get('project'),module)
+        # Retain private imported source across revisions without trusting client file pointers.
+        if course['head_revision']:
+            previous=db.execute('SELECT files FROM shuku_revisions WHERE id=%s AND course_id=%s',(course['head_revision'],cid)).fetchone()
+            objects.update({k:v for k,v in previous['files'].items() if k.startswith('materials/')})
+        if materials:objects.update(materials)
+        digest=hashlib.sha256(json.dumps(objects,sort_keys=True).encode()).hexdigest()
         rid=str(uuid4());now=self.clock()
         db.execute("INSERT INTO shuku_revisions VALUES (%s,%s,%s,%s,'building',%s,NULL,%s)",(rid,cid,uid,digest,JsonValue(objects),now))
         db.execute("UPDATE shuku_reviews SET status='superseded' WHERE course_id=%s AND status IN ('pending','approved')",(cid,))

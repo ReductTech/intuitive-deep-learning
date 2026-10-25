@@ -137,7 +137,7 @@ class GitHubSync:
         files=revision['files'];project=teaching(json.loads(self.bucket.read(files['project.json']['sha256'])))
         result={'courses/project.json':json.dumps(project,ensure_ascii=False,sort_keys=True,separators=(',',':')).encode()}
         for name,obj in files.items():
-            if name=='project.json' or name.startswith('images/'):continue
+            if name=='project.json' or name.startswith(('images/','materials/')):continue
             require(not name.startswith('/') and '..' not in name.split('/') and '\\' not in name,400,'UNSAFE_PATH','资源路径不正确。')
             result['courses/'+name]=self.bucket.read(obj['sha256'])
         return result
