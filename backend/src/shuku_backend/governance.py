@@ -101,6 +101,9 @@ class Governance:
             if r['state']=='queued':
                 db.execute('SELECT id FROM shuku_courses WHERE id IN %s ORDER BY id FOR UPDATE',(ids,)).fetchall()
                 manifests=db.execute('SELECT files FROM shuku_revisions WHERE course_id IN %s',(ids,)).fetchall()
+                players=db.execute("SELECT result FROM shuku_tasks WHERE kind='revision.player' AND resource_key IN %s AND result IS NOT NULL",(keys,)).fetchall()
+                manifests += [{'files':(player['result'] or {}).get('files',{})} for player in players]
+                db.execute("UPDATE shuku_tasks SET result=NULL WHERE kind='revision.player' AND resource_key IN %s",(keys,))
                 for manifest in manifests:
                     for obj in manifest['files'].values():
                         db.insert_once('INSERT INTO shuku_removal_objects(removal_id,sha256,result) VALUES (%s,%s,NULL)',(rid,obj['sha256']))
@@ -134,6 +137,8 @@ class Governance:
                 # JSON_TABLE projects object values without loading every manifest into Python.
                 rows=db.execute("SELECT DISTINCT j.sha FROM shuku_revisions r JOIN JSON_TABLE(JSON_EXTRACT(r.files, '$.*'), '$[*]' COLUMNS(sha VARCHAR(64) PATH '$.sha256')) AS j ON TRUE WHERE j.sha IN %s",(digests,)).fetchall()
                 referenced.update(row['sha'] for row in rows)
+                players=db.execute("SELECT DISTINCT j.sha FROM shuku_tasks t JOIN JSON_TABLE(JSON_EXTRACT(t.result, '$.files.*'), '$[*]' COLUMNS(sha VARCHAR(64) PATH '$.sha256')) AS j ON TRUE WHERE t.kind='revision.player' AND j.sha IN %s",(digests,)).fetchall()
+                referenced.update(row['sha'] for row in players)
                 for digest in digests:
                     if digest not in referenced:self.bucket.remove(digest)
                     db.execute('UPDATE shuku_removal_objects SET result=%s WHERE removal_id=%s AND sha256=%s',('shared' if digest in referenced else 'removed',rid,digest))

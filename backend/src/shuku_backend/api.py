@@ -122,12 +122,18 @@ def handler_for(app):
                 study=re.fullmatch(r"/api/shuku/public/study/([^/]+)/([^/]+)",path)
                 if self.command=='GET' and study:
                     return self.send_json(200,app.workflow.personal.context(unquote(study[1]),unquote(study[2])))
-                file_route=re.fullmatch(r"/api/shuku/revisions/([^/]+)/files/(.+)",path)
+                player_status=re.fullmatch(r"/api/shuku/revisions/([^/]+)/player",path)
+                if self.command=='GET' and player_status:
+                    try:viewer=app.store.session_user(token_hash(token_from(self.headers.get('Cookie'))),app.clock())['id']
+                    except BusinessError:viewer=None
+                    result=app.workflow.player.status(viewer,player_status[1])
+                    return self.send_json(200 if result['state']=='ready' else 202,result)
+                file_route=re.fullmatch(r"/api/shuku/revisions/([^/]+)/(player/)?files/(.+)",path)
                 if self.command=="GET" and file_route:
                     try:viewer=app.store.session_user(token_hash(token_from(self.headers.get("Cookie"))),app.clock())["id"]
                     except BusinessError:viewer=None
-                    content,mime=app.workflow.file(viewer,file_route[1],unquote(file_route[2]))
-                    sandboxed=unquote(file_route[2])=='index.html' and app.workflow.sandboxed(viewer,file_route[1])
+                    content,mime=(app.workflow.player.file if file_route[2] else app.workflow.file)(viewer,file_route[1],unquote(file_route[3]))
+                    sandboxed=unquote(file_route[3])=='index.html' and app.workflow.sandboxed(viewer,file_route[1])
                     self.send_response(200)
                     self.send_header("Content-Type",mime)
                     self.send_header("Content-Length",str(len(content)))
