@@ -57,6 +57,7 @@ def official(official_pending):
 def test_adopt_once_admin_manages_v1_and_governance_cannot_resurrect(official):
     app,cid,rid,admin,module,sync=official
     detail=app.workflow.public_course(cid)
+    assert 'planned-only' in app.workflow.module_context(module['id'])['pages'], 'Legacy revisions remain valid even though imports use implemented scenes only'
     assert len(app.workflow.revision(admin,rid)['project']['pages'])==1
     assert detail['course']['version']=='1.0.0' and detail['course']['creator']=='管理员'
     assert detail['course']['revision_id']==rid and detail['course']['library']['module_id']==module['id']

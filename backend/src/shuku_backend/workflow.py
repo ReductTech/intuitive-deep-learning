@@ -30,7 +30,7 @@ class Workflow:
         for path in sorted(((course_root or self.course_root)/'modules').glob('*/outlines.json')):
             data=json.loads(path.read_text())
             if data.get('ppt',{}).get('entry') and data.get('entry'):
-                result.append({'id':data['moduleIdentity']['id'],'alias':data.get('id',path.parent.name),'title':data['title'],'directory':str(path.parent),'entry':data['ppt']['entry'],'pages':[p['id'] for p in (self.runtime_scenes(data['moduleIdentity']['id'],course_root or self.course_root) or data.get('pages',[]))]})
+                result.append({'id':data['moduleIdentity']['id'],'alias':data.get('id',path.parent.name),'title':data['title'],'directory':str(path.parent),'entry':data['ppt']['entry'],'pages':list(dict.fromkeys(p['id'] for p in [*(self.runtime_scenes(data['moduleIdentity']['id'],course_root or self.course_root) or []),*data.get('pages',[])]))})
         return result
 
     def runtime_scenes(self,module_id,root=None,required=False,commit=None):
