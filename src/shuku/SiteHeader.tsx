@@ -31,6 +31,6 @@ export function SiteHeader({section,savedCount=0,onBrowse,user}:{section:Section
    </div>
    {current?.role==='admin'&&<button className={section==='admin'?'is-active':''} onClick={()=>location.assign('/data')}>数据管理</button>}
   </nav>
-  <span className="sd-library-topnote"><span/>让知识可以被探索</span><SessionControl user={current}/>
+  <SessionControl user={current}/>
  </header>;
 }
