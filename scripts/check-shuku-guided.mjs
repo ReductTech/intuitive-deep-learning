@@ -31,6 +31,8 @@ try{
  await page.getByRole('button',{name:'10 分钟',exact:true}).click();await page.getByRole('button',{name:'故事案例',exact:true}).click();await page.getByRole('button',{name:'有一定基础',exact:true}).click();await page.getByRole('button',{name:'生成课程大纲',exact:true}).click();
  await page.getByRole('heading',{name:'从整体，慢慢展开'}).waitFor();
  assert.equal(await page.locator('.oe-leaves button').count(),0,'initial overview is collapsed');
+ assert.equal(await page.locator('.oe-map').count(),1,'outline opens in the focused mind-map view');await page.getByRole('button',{name:'大纲',exact:true}).click();assert.equal(await page.locator('.oe-list').count(),1);await page.getByRole('button',{name:'思维导图',exact:true}).focus();await page.keyboard.press('Enter');assert.equal(await page.locator('.oe-map').count(),1);
+ const action=page.locator('.oe .ga-footer>.ga-primary');assert.equal(await action.evaluate(n=>getComputedStyle(n).color),'rgb(255, 255, 255)','primary action stays legible');
  await page.getByLabel('讲述逻辑',{exact:true}).fill('从生活问题出发，再理解 Agent 的能力');
  await page.getByRole('button',{name:'思维导图',exact:true}).click();assert.equal(await page.locator('.oe-map').count(),1);
  await page.getByRole('button',{name:'确定逻辑，细化模块',exact:true}).click();
@@ -49,6 +51,7 @@ try{
  await page.setViewportSize({width:1440,height:1000});await page.getByRole('button',{name:'思维导图',exact:true}).click();
  await page.getByRole('button',{name:'展开从生活出发',exact:true}).click();await page.locator('.oe-leaves button').first().click();
  await page.screenshot({path:'test-results/guided/outline-desktop.png',fullPage:true});
+ await page.setViewportSize({width:390,height:844});assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'expanded mind-map mobile overflow');await page.getByLabel('页面标题',{exact:true}).waitFor();assert.ok(await page.getByLabel('页面标题',{exact:true}).isVisible());await page.setViewportSize({width:1440,height:1000});
 await page.getByRole('button',{name:'确认大纲，开始逐页制作',exact:true}).click();
  assert.equal(await page.locator('.ga-design').count(),3);assert.equal(await page.getByRole('button',{name:'确认本页，下一页',exact:true}).isDisabled(),true);
  await page.getByRole('button',{name:'保存修订',exact:true}).click();await page.locator('.ga-header>small').filter({hasText:/^已保存$/}).waitFor();assert.equal(await page.getByRole('button',{name:'提交审核',exact:true}).isDisabled(),true,'unfinished pages cannot be submitted');
