@@ -25,7 +25,8 @@ def test_external_catalog_and_native_preview_build(workflow,tmp_path):
     (library/'course-library.json').write_text(json.dumps({'schema':1,'repository':'reduct-shuku/intuitive-deep-learning','modules':[directory]}))
     # Native courses may import HTML/JS as text and use SVG from CSS.
     entry=library/'modules'/directory/context['entry']
-    entry.write_text(entry.read_text()+"\nimport fixture from './fixture.html?raw';import './fixture.css';console.log(fixture);\n")
+    entry.write_text(entry.read_text()+"\nimport fixture from './fixture.html?raw';import './fixture.css';console.log(fixture);const pages=import.meta.glob('./fixture-*.ts',{eager:true});console.log(pages);\n")
+    (entry.parent/'fixture-page.ts').write_text('export const value="glob resource marker";')
     (entry.parent/'fixture.html').write_text('<section>raw resource marker</section>')
     (entry.parent/'fixture.css').write_text('.fixture {cursor:url(./cursor.svg),auto;}')
     (entry.parent/'cursor.svg').write_text('<svg xmlns="http://www.w3.org/2000/svg" width="1" height="1"/>')
@@ -34,7 +35,9 @@ def test_external_catalog_and_native_preview_build(workflow,tmp_path):
     project['pages'][0].update(nativeId=modules[0]['pages'][0],format='text')
     revision=save_ready(app,course,project,uid)
     assert app.workflow.file(uid,revision['id'],'index.html')[0]
-    assert b'raw resource marker' in app.workflow.file(uid,revision['id'],'bundle.js')[0]
+    bundle=app.workflow.file(uid,revision['id'],'bundle.js')[0]
+    assert b'raw resource marker' in bundle and b'glob resource marker' in bundle
+    assert b'import.meta.glob' not in bundle
     with app.store.transaction() as db:files=db.execute('SELECT files FROM shuku_revisions WHERE id=%s',(revision['id'],)).fetchone()['files']
     svg=next(name for name in files if name.startswith('static/') and name.endswith('.svg'))
     assert b'<svg' in app.workflow.file(uid,revision['id'],svg)[0]
