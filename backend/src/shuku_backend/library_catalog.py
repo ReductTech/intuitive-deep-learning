@@ -1,6 +1,6 @@
 """Register a validated, fixed remote snapshot; HTTP reads only database metadata.
 
-No user or published release is synthesized from Git history. Missing source entries
+Catalog sync never creates users or releases. Explicit bootstrap adopts an existing snapshot under an existing administrator. Missing source entries
 are absent from this deployed snapshot, while older snapshot records remain intact.
 """
 import json
@@ -8,7 +8,7 @@ from pathlib import Path
 import re
 import subprocess
 from urllib.parse import quote
-from uuid import UUID
+from uuid import UUID,uuid4,uuid5,NAMESPACE_URL
 from .errors import require
 
 REPOSITORY = 'reduct-shuku/intuitive-deep-learning'
@@ -79,12 +79,66 @@ class LibraryCatalog:
     def courses(self):
         if not self.commit:return []
         with self.w.store.transaction() as db:
-            # A user-created course can reuse a native module. That does not
-            # make it the same course or authorize hiding the remote original.
-            rows=db.execute("SELECT payload FROM shuku_library_courses WHERE snapshot_commit=%s ORDER BY alias",(self.commit,)).fetchall()
-            return [r['payload'] for r in rows]
+            rows=db.execute("SELECT l.payload,b.module_id AS bound,b.course_id,c.status,c.deleting,c.title,c.description,c.category,r.version,r.revision_id FROM shuku_library_courses l LEFT JOIN shuku_library_bindings b ON b.module_id=l.module_id LEFT JOIN shuku_courses c ON c.id=b.course_id LEFT JOIN shuku_releases r ON r.id=c.current_release WHERE l.snapshot_commit=%s ORDER BY l.alias",(self.commit,)).fetchall()
+            result=[]
+            for row in rows:
+                if row['bound'] and (not row['course_id'] or row['deleting'] or row['status']=='hidden'):continue
+                item=dict(row['payload'])
+                if row['bound'] and row['status']=='published' and row['revision_id']:
+                    item.update(course_id=row['course_id'],revision_id=row['revision_id'],version=row['version'],title=row['title'],description=row['description'],category=row['category'])
+                result.append(item)
+            return result
 
     def course(self,alias):
         result=next((c for c in self.courses() if c['alias']==alias),None)
         require(result,404,'NOT_FOUND','课程不存在或已不可访问。')
         return result
+
+    def bootstrap(self,manager='admin'):
+        """Explicit operator action: adopt current source as initial v1.0.0.
+
+        Build tasks use the normal lease, retry and artifact verification path.
+        Re-running never resets releases, managers or deletion tombstones.
+        """
+        require(self.commit,409,'COURSE_LIBRARY_REQUIRED','请先配置并同步独立课程快照。')
+        with self.w.store.transaction() as db:
+            user=db.execute("SELECT * FROM shuku_users WHERE username=%s AND role='admin' AND active",(manager,)).fetchone()
+            require(user,404,'ADMIN_REQUIRED','请指定现有的有效管理员账号。')
+            uid=user['id']
+            # Serializes concurrent bootstrap invocations without a new global lock.
+            db.execute('SELECT id FROM shuku_users WHERE id=%s FOR UPDATE',(uid,))
+            entries=db.execute('SELECT payload FROM shuku_library_courses WHERE snapshot_commit=%s ORDER BY alias',(self.commit,)).fetchall()
+            created=[];retried=0
+            for entry in entries:
+                item=entry['payload'];mid=item['module_id']
+                binding=db.execute('SELECT b.*,c.head_revision,c.current_release FROM shuku_library_bindings b LEFT JOIN shuku_courses c ON c.id=b.course_id WHERE b.module_id=%s',(mid,)).fetchone()
+                if binding:
+                    if binding['course_id'] and not binding['current_release'] and binding['head_revision']==binding['initial_revision_id']:
+                        retried+=db.execute("UPDATE shuku_tasks SET status='queued',attempts=0,error_code=NULL,available_at=%s WHERE idempotency_key=%s AND status='failed'",(self.w.clock(),'build:'+str(binding['initial_revision_id']))).rowcount
+                    continue
+                cid=str(uuid5(NAMESPACE_URL,'shuku:official:'+REPOSITORY+':'+mid))
+                require(not db.execute('SELECT id FROM shuku_courses WHERE id=%s',(cid,)).fetchone(),409,'COURSE_ID_CONFLICT','官方课程标识已被占用。')
+                module=self.w.module_context(mid)
+                data=json.loads((Path(module['directory'])/'outlines.json').read_text())
+                project={'version':1,'id':cid,'courseId':module['alias'],'title':item['title'],'duration':30,'style':'原课程','outlineConfirmed':True,'nativeSnapshot':self.commit,
+                         'pages':[{'id':p['id'],'nativeId':p['id'],'title':p['title'],'goal':p.get('goal',''),'summary':p.get('summary',''),'ready':True,'designed':True,'note':'','revisions':[],'messages':[]} for p in data['pages']]}
+                db.execute("INSERT INTO shuku_courses(id,owner_id,module_id,title,description,category,created_at) VALUES (%s,%s,%s,%s,%s,%s,%s)",(cid,uid,mid,item['title'],item['description'],item['category'],self.w.clock()))
+                db.execute('INSERT INTO shuku_course_managers VALUES (%s,%s)',(cid,uid))
+                db.execute('INSERT INTO shuku_library_bindings(module_id,course_id,source_commit,created_at) VALUES (%s,%s,%s,%s)',(mid,cid,self.commit,self.w.clock()))
+                revision=self.w.save_in(db,uid,cid,{'project':project,'expected_revision':None},native_snapshot=self.commit)
+                db.execute('UPDATE shuku_library_bindings SET initial_revision_id=%s WHERE module_id=%s',(revision['id'],mid))
+                self.w.audit(db,uid,'library.bootstrap',cid)
+                created.append({'course_id':cid,'revision_id':revision['id']})
+        return {'created':created,'count':len(created),'retried':retried}
+
+    def complete_initial(self,db,rid,digest):
+        row=db.execute("SELECT c.id,c.owner_id,c.head_revision,c.current_release,c.status FROM shuku_library_bindings b JOIN shuku_courses c ON c.id=b.course_id WHERE c.head_revision=%s AND b.initial_revision_id=%s FOR UPDATE",(rid,rid)).fetchone()
+        if not row or row['current_release'] or row['status']!='draft':return
+        # Only the explicit initial import has a draft without a release; normal
+        # review/publication gates remain mandatory for every later revision.
+        require(not db.execute('SELECT 1 FROM shuku_reviews WHERE course_id=%s',(row['id'],)).fetchone(),409,'INITIAL_IMPORT_CHANGED','初始登记已变化。')
+        release=str(uuid4());note='登记当前课程快照为初始版本'
+        db.execute("INSERT INTO shuku_reviews(id,revision_id,course_id,status,artifact_hash,note,created_at,decided_at) VALUES (%s,%s,%s,'published',%s,%s,%s,%s)",(uuid4(),rid,row['id'],digest,note,self.w.clock(),self.w.clock()))
+        db.execute('INSERT INTO shuku_releases(id,course_id,revision_id,version,note,publisher_id,created_at) VALUES (%s,%s,%s,%s,%s,%s,%s)',(release,row['id'],rid,'1.0.0',note,row['owner_id'],self.w.clock()))
+        db.execute("UPDATE shuku_courses SET status='published',current_release=%s WHERE id=%s",(release,row['id']))
+        self.w.audit(db,row['owner_id'],'library.initial_release',release)

@@ -24,18 +24,25 @@ class Workflow:
         self.store,self.bucket,self.root,self.clock=store,bucket,root,clock
         self.course_root=Path(course_root or root) if (course_root or root) else None
 
-    def modules(self):
+    def modules(self,course_root=None):
         require(self.course_root is not None,503,"BUILD_NOT_CONFIGURED","课程构建目录尚未配置。")
         result=[]
-        for path in sorted((self.course_root/'modules').glob('*/outlines.json')):
+        for path in sorted(((course_root or self.course_root)/'modules').glob('*/outlines.json')):
             data=json.loads(path.read_text())
             if data.get('ppt',{}).get('entry') and data.get('entry'):
                 result.append({'id':data['moduleIdentity']['id'],'alias':data.get('id',path.parent.name),'title':data['title'],'directory':str(path.parent),'entry':data['ppt']['entry'],'pages':[p['id'] for p in data.get('pages',[])]})
         return result
 
-    def module_context(self,module_id):
-        return next((m for m in self.modules() if m['id']==str(module_id)),
+    def module_context(self,module_id,course_root=None):
+        return next((m for m in self.modules(course_root) if m['id']==str(module_id)),
                     {'id':str(module_id),'alias':'custom-'+str(module_id),'pages':[],'directory':None})
+
+    def native_root(self,commit):
+        if not commit:return self.course_root
+        require(isinstance(commit,str) and re.fullmatch('[0-9a-f]{40}',commit) and self.course_root is not None,409,'SOURCE_SNAPSHOT_MISSING','课程基础源码快照不可用。')
+        root=self.course_root if commit==getattr(getattr(self,'library',None),'commit',None) or self.course_root.name==commit else self.course_root.parent/commit
+        require(root.is_dir() and not root.is_symlink() and json.loads((root/'course-library.json').read_text()).get('repository')=='reduct-shuku/intuitive-deep-learning',409,'SOURCE_SNAPSHOT_MISSING','课程基础源码快照不可用。')
+        return root
 
     def owner(self,db,uid,cid):
         user=self.store.user_in(db,uid)
@@ -96,13 +103,20 @@ class Workflow:
         with self.store.transaction() as db:
             return self.save_in(db,uid,cid,data)
 
-    def save_in(self,db,uid,cid,data,remote_job_id=None,materials=None):
+    def save_in(self,db,uid,cid,data,remote_job_id=None,materials=None,native_snapshot=None):
         db.file_reference_lock(shared=True)
         course,_=self.owner(db,uid,cid)
+        require(not db.execute('SELECT 1 FROM shuku_library_bindings WHERE course_id=%s AND initial_revision_id IS NOT NULL AND %s IS NULL',(cid,course['current_release'])).fetchone(),409,'INITIAL_IMPORT_BUSY','正在准备课程初始版本，请完成后再修改。')
         require(not db.execute("SELECT 1 FROM shuku_contributions WHERE (workspace_id=%s OR target_course_id=%s) AND status='merging'",(cid,cid)).fetchone(),409,'MERGE_BUSY','共创正在合并，请稍后再保存。')
         require(not db.execute("SELECT 1 FROM shuku_github_jobs j JOIN shuku_tasks t ON t.id=j.task_id WHERE j.course_id=%s AND j.kind='release' AND t.status IN ('queued','running')",(cid,)).fetchone(),409,'RELEASE_BUSY','课程正在发布，请完成后再保存。')
         require(not db.execute("SELECT 1 FROM shuku_github_jobs j JOIN shuku_tasks t ON t.id=j.task_id WHERE j.course_id=%s AND j.kind='external_merge' AND (%s IS NULL OR j.id<>%s) AND t.status IN ('queued','running')",(cid,remote_job_id,remote_job_id)).fetchone(),409,'MERGE_BUSY','外部共创正在合并，请完成后再保存。')
-        module=self.module_context(course['module_id'])
+        previous_project={}
+        if course['head_revision']:
+            prior=db.execute('SELECT files FROM shuku_revisions WHERE id=%s',(course['head_revision'],)).fetchone()
+            previous_project=json.loads(self.bucket.read(prior['files']['project.json']['sha256']))
+        pinned=previous_project.get('nativeSnapshot') or native_snapshot
+        require(isinstance(data.get('project'),dict) and data['project'].get('nativeSnapshot')==pinned,409,'SOURCE_SNAPSHOT_CHANGED','不能更换本次共创的基础源码快照。')
+        module=self.module_context(course['module_id'],self.native_root(pinned))
         require(data.get('expected_revision')==(str(course['head_revision']) if course['head_revision'] else None),409,'REVISION_CONFLICT','课程已更新，请重新载入后保存。')
         objects,digest=self.prepare(data.get('project'),module)
         # Retain private imported source across revisions without trusting client file pointers.
@@ -175,8 +189,9 @@ class Workflow:
             require(row,404,'NOT_FOUND','课程修订已移除。')
             if row['state']=='ready':return {'revision_id':rid}
             course=db.execute('SELECT module_id FROM shuku_courses WHERE id=%s',(row['course_id'],)).fetchone()
-        module=self.module_context(course['module_id'])
         objects=dict(row['files']);project=json.loads(self.bucket.read(objects['project.json']['sha256']))
+        build_root=self.native_root(project.get('nativeSnapshot'))
+        module=self.module_context(course['module_id'],build_root)
         checkpoint({'stage':'building','revision_id':rid})
         try:
             frozen=self.collaboration.frozen_merge(rid,objects,checkpoint) if hasattr(self,'collaboration') else None
@@ -185,7 +200,7 @@ class Workflow:
                 with tempfile.TemporaryDirectory(prefix='shuku-build-') as folder:
                     folder=Path(folder);source=folder/'project.json';source.write_text(json.dumps(project));out=folder/'dist'
                     env=__import__('os').environ.copy();env['NODE_OPTIONS']='--max-old-space-size=256'
-                    process=subprocess.Popen(['node',str(Path(self.root)/'scripts/build-shuku-preview.mjs'),'--course-root',str(self.course_root),'--project',str(source),'--module',module['directory'] or '','--revision',rid,'--outdir',str(out)],stdout=subprocess.PIPE,stderr=subprocess.PIPE,env=env)
+                    process=subprocess.Popen(['node',str(Path(self.root)/'scripts/build-shuku-preview.mjs'),'--course-root',str(build_root),'--project',str(source),'--module',module['directory'] or '','--revision',rid,'--outdir',str(out)],stdout=subprocess.PIPE,stderr=subprocess.PIPE,env=env)
                     started=time.monotonic()
                     while True:
                         try:
@@ -212,6 +227,7 @@ class Workflow:
                 require(lease,409,'STALE_LEASE','任务已被接管。')
                 db.execute("UPDATE shuku_revisions SET files=%s,artifact_hash=%s,state='ready' WHERE id=%s AND state='building'",(JsonValue(objects),artifact_hash,rid))
                 if hasattr(self,'collaboration'):self.collaboration.complete_merge(db,rid,artifact_hash)
+                if hasattr(self,'library'):self.library.complete_initial(db,rid,artifact_hash)
         except Exception:
             # Retry retains the immutable source; final failure is projected by revision().
             raise
@@ -287,7 +303,7 @@ class Workflow:
 
     def public_courses(self):
         with self.store.transaction() as db:
-            published = [course_view(row) for row in db.execute("SELECT c.id,c.title,c.description,c.category,c.module_id,r.version,r.revision_id FROM shuku_courses c JOIN shuku_releases r ON r.id=c.current_release WHERE c.status='published' AND NOT c.deleting ORDER BY r.created_at DESC LIMIT 100").fetchall()]
+            published = [course_view(row) for row in db.execute("SELECT c.id,c.title,c.description,c.category,c.module_id,r.version,r.revision_id FROM shuku_courses c JOIN shuku_releases r ON r.id=c.current_release WHERE c.status='published' AND NOT c.deleting AND NOT EXISTS (SELECT 1 FROM shuku_library_bindings b JOIN shuku_library_courses l ON l.module_id=b.module_id WHERE b.course_id=c.id AND l.snapshot_commit=%s) ORDER BY r.created_at DESC LIMIT 100",(self.library.commit,)).fetchall()]
         return published + self.library.courses()
 
 
@@ -297,6 +313,8 @@ class Workflow:
         with self.store.transaction() as db:
             course=db.execute("SELECT c.id,c.title,c.description,c.category,c.module_id,c.owner_id,u.display_name AS creator,r.version,r.revision_id FROM shuku_courses c JOIN shuku_users u ON u.id=c.owner_id JOIN shuku_releases r ON r.id=c.current_release WHERE c.id=%s AND c.status='published' AND NOT c.deleting",(cid,)).fetchone()
             require(course,404,'NOT_FOUND','课程不存在或已不可访问。')
+            binding=db.execute('SELECT l.payload FROM shuku_library_bindings b JOIN shuku_library_courses l ON l.module_id=b.module_id AND l.snapshot_commit=b.source_commit WHERE b.course_id=%s',(cid,)).fetchone()
+            if binding:course['library']=binding['payload']
             releases=[{**course_view(r),'current':bool(r['current'])} for r in db.execute("SELECT r.id,r.version,r.revision_id,r.created_at,r.note,r.id=c.current_release AS current FROM shuku_releases r JOIN shuku_courses c ON c.id=r.course_id WHERE r.course_id=%s ORDER BY current DESC,r.created_at DESC,r.id",(cid,)).fetchall()]
             ranking={str(course['owner_id']):{'name':course['creator'],'score':0,'count':0}}
             for row in db.execute("SELECT w.owner_id,u.display_name,SUM(k.score) AS score,COUNT(*) AS count FROM shuku_contributions k JOIN shuku_workspaces w ON w.id=k.workspace_id JOIN shuku_users u ON u.id=w.owner_id WHERE k.target_course_id=%s AND k.status='merged' GROUP BY w.owner_id,u.display_name ORDER BY score DESC,w.owner_id LIMIT 100",(cid,)).fetchall():

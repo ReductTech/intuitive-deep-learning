@@ -6,12 +6,14 @@ from sqlalchemy import inspect, select, text
 from sqlalchemy.schema import AddConstraint
 from .schema import metadata, schema_migrations, locks
 
-VERSION = "002_remote_course_catalog"
+VERSION = "003_official_library_courses"
+CATALOG_VERSION = "002_remote_course_catalog"
+CATALOG_CHECKSUM = "2f0cfefe0be54999bce6364ec6eeec4be0cbeba62dd3123d8e78d50a547c4388"
 BASELINE = "001_mysql_sqlalchemy"
 BASELINE_CHECKSUM = "aba81a549885761ee0409746d8080eea790f7d7372180aab7c1fd1b08b2bd2bd"
 
 def expected_markers():
-    return {BASELINE: BASELINE_CHECKSUM, VERSION: checksum()}
+    return {BASELINE: BASELINE_CHECKSUM, CATALOG_VERSION: CATALOG_CHECKSUM, VERSION: checksum()}
 
 
 def checksum():
@@ -51,7 +53,7 @@ def migrate(engine):
                 raise RuntimeError("Shuku requires MySQL 8.0.16+ (CHECK constraints and SKIP LOCKED)")
             if inspect(connection).has_table(schema_migrations.name):
                 rows = connection.execute(select(schema_migrations)).mappings().all()
-                if rows and {r["version"]: r["checksum"] for r in rows} not in (expected_markers(), {BASELINE: BASELINE_CHECKSUM}):
+                if rows and {r["version"]: r["checksum"] for r in rows} not in (expected_markers(), {BASELINE: BASELINE_CHECKSUM, CATALOG_VERSION: CATALOG_CHECKSUM}, {BASELINE: BASELINE_CHECKSUM}):
                     raise RuntimeError("Applied schema migration has changed; add an explicit upgrade migration")
             connection.commit()
             # MySQL DDL commits implicitly. Re-running resumes a failed baseline;

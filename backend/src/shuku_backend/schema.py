@@ -359,3 +359,13 @@ library_courses = table('library_courses',
     Column('synced_at', Double(), nullable=False),
     UniqueConstraint('snapshot_commit','alias', name='uq_library_snapshot_alias')
 )
+
+# Explicit source-to-official binding; deletion keeps a tombstone so a later
+# source sync cannot silently resurrect an administrator-removed course.
+library_bindings = table('library_bindings',
+    Column('module_id', CHAR(36), primary_key=True),
+    Column('course_id', CHAR(36), ForeignKey('shuku_courses.id', ondelete='SET NULL', use_alter=True, name='fk_library_binding_course'), nullable=True, unique=True),
+    Column('source_commit', String(40), nullable=False),
+    Column('initial_revision_id', CHAR(36), nullable=True),
+    Column('created_at', Double(), nullable=False)
+)

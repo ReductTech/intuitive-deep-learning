@@ -8,7 +8,8 @@ from .application import create_application
 
 def main():
     parser=argparse.ArgumentParser(description="Independent Shuku business backend")
-    parser.add_argument("command",choices=["migrate","seed-demo","serve"])
+    parser.add_argument("command",choices=["migrate","seed-demo","bootstrap-library","serve"])
+    parser.add_argument("--manager",default="admin",help="Existing administrator username for official library courses")
     args=parser.parse_args()
     settings=Settings.from_env()
     if args.command=="migrate":
@@ -21,6 +22,9 @@ def main():
         return
     app=create_application(settings)
     try:
+        if args.command=="bootstrap-library":
+            print(app.workflow.library.bootstrap(args.manager))
+            return
         server=app.server()
         def stop(*_):threading.Thread(target=server.shutdown,daemon=True).start()
         signal.signal(signal.SIGTERM,stop)

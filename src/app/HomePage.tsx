@@ -48,7 +48,7 @@ const courses = activeModules.filter(module => module.pptDeck).sort((a, b) => {
   const rank = (id: string) => order.includes(id) ? order.indexOf(id) : order.length;
   return rank(a.id) - rank(b.id);
 });
-export interface LibraryCourse {kind:'library';id:string;module_id:string;alias:string;title:string;description:string;category:string;difficulty:string;page_count:number;cover_url:string|null;repository:string;source_commit:string;github_url:string;version:string}
+export interface LibraryCourse {course_id?:string;revision_id?:string;kind:'library';id:string;module_id:string;alias:string;title:string;description:string;category:string;difficulty:string;page_count:number;cover_url:string|null;repository:string;source_commit:string;github_url:string;version:string}
 export type CatalogModule = ActiveModule & {catalog?:LibraryCourse};
 export function info(module: CatalogModule) {
   if(module.catalog)return {title:module.catalog.title,summary:module.catalog.description,topic:module.catalog.category,color:'#e8f0ff',cover:undefined};
@@ -85,19 +85,22 @@ export function HomePage() {
   const personal=usePersonal(),saved=personal.data.favorites;
   const searchRef = useRef<HTMLInputElement>(null);
   useEffect(() => { document.title = '术库 · 探索交互课程'; }, []);
-  function toggleSaved(id:string){void personal.favorite('module:'+id);}
+  function favoriteKey(module:CatalogModule){return saved.includes('module:'+module.id)?'module:'+module.id:module.catalog?.course_id?'course:'+module.catalog.course_id:'module:'+module.id;}
+  function detailsHref(module:CatalogModule){return module.catalog?.course_id?'/course?course='+module.catalog.course_id:'/course?module='+encodeURIComponent(module.id);}
+  function learnHref(module:CatalogModule,mode:string){return module.catalog?.revision_id?'/learn?revision='+module.catalog.revision_id+'&mode='+mode:'/study?module='+encodeURIComponent(module.id)+'&mode='+mode;}
+  function toggleSaved(module:CatalogModule){void personal.favorite(favoriteKey(module));}
   const normalizedQuery = query.trim().toLocaleLowerCase();
   const filtered = listedCourses.filter(module => {
     const meta = info(module);
     const text = [meta.title, meta.summary, meta.topic, module.title, ...module.pages.map(page => `${page.title} ${page.goal ?? ''}`)].join(' ').toLocaleLowerCase();
     return (topic === '全部课程' || meta.topic === topic) && (!normalizedQuery || text.includes(normalizedQuery))
-      && (tab !== 'saved' || saved.includes('module:'+module.id))
+      && (tab !== 'saved' || saved.includes(favoriteKey(module)))
       && (level === '全部' || (level === '入门' ? module.difficulty === 'introductory' : ['intermediate', 'advanced'].includes(module.difficulty ?? '')));
   }).sort((a, b) => sort === 'pages' ? a.pages.length - b.pages.length : sort === 'name' ? info(a).title.localeCompare(info(b).title, 'zh-CN') : 0);
   const recentCourse=personal.data.history[0];
   const knownPublished=[...published,...personal.data.favorite_courses.filter(c=>!published.some(other=>other.id===c.id))];
   const visiblePublished=(tab==='saved'?knownPublished:published).filter(c=>(tab!=='saved'||saved.includes('course:'+c.id))&&(!query||[c.title,c.description].join(' ').includes(query))&&(topic==='全部课程'||c.category===topic));
-  const unavailableFavorites=tab==='saved'?saved.filter(key=>!listedCourses.some(m=>'module:'+m.id===key)&&!knownPublished.some(c=>'course:'+c.id===key)):[];
+  const unavailableFavorites=tab==='saved'?saved.filter(key=>!listedCourses.some(m=>'module:'+m.id===key||'course:'+m.catalog?.course_id===key)&&!knownPublished.some(c=>'course:'+c.id===key)):[];
   function reset() { setQuery(''); setTopic('全部课程'); setLevel('全部'); setTab('courses'); }
   return <div className={'sd-library'+(tab==='history'?' sd-personal-history':'')}>
     <a className="sd-library-skip" href="#sd-library-main">跳到课程</a>
@@ -116,10 +119,10 @@ export function HomePage() {
       <div className="sd-library-grid">{tab!=='history'&&visiblePublished.map(c=><article className="sd-library-card" key={c.id}><a className="sd-library-cover-button" href={"/course?course="+c.id} aria-label={c.title+"课程详情"}><div className="sd-library-cover" style={{background:'var(--ui-accent-soft)'}}><div className="sd-library-cover-fallback"><Icon name="book"/><span>{c.category||'课程'}</span></div></div></a><div className="sd-library-card-copy"><div className="sd-library-card-meta"><span>{c.category}</span><span>v{c.version}</span><button disabled={personal.busy} aria-label={(saved.includes('course:'+c.id)?'取消收藏':'收藏')+c.title} aria-pressed={saved.includes('course:'+c.id)} onClick={()=>void personal.favorite('course:'+c.id)}><Icon name="bookmark"/></button></div><h2><a href={"/course?course="+c.id}>{c.title}</a></h2><p>{c.description}</p><div className="sd-library-card-actions"><a href={'/learn?revision='+c.revision_id}>开始学习 <Icon name="arrow"/></a><CoCreateButton courseId={c.id}/></div></div></article>)}{tab==='saved'&&unavailableFavorites.map(key=><article className="sd-library-card" key={key}><div className="sd-library-card-copy"><h2>课程暂不可访问</h2><button disabled={personal.busy} onClick={()=>void personal.favorite(key)}>取消收藏</button></div></article>)}{tab==='history'?personal.data.history.map(record=><article className="sd-library-card" key={record.resource}><div className="sd-library-card-copy"><h2>{record.title}</h2><p>{record.version_label} · {record.mode==='guide'?'自学互动':'教学展示'} · 已学 {record.completed.length} / {record.page_count} 页</p>{record.available?<a href={studyHref(record)}>继续学习 →</a>:<p>课程暂不可访问</p>}</div></article>):filtered.map(module => {
         const meta = info(module);
         return <article className="sd-library-card" key={module.id} aria-label={meta.title}>
-          <a className="sd-library-cover-button" href={"/course?module="+encodeURIComponent(module.id)} aria-label={`${meta.title}课程详情`}><Cover module={module} /><span className="sd-library-cover-overlay">查看课程详情 <Icon name="arrow" /></span></a>
-          <div className="sd-library-card-copy"><div className="sd-library-card-meta"><span>{meta.topic}</span><span className="sd-library-difficulty">{module.difficulty === 'introductory' ? '入门' : module.difficulty === 'advanced' ? '高级' : module.difficulty === 'intermediate' ? '进阶' : '探索'}</span><button className={saved.includes('module:'+module.id) ? 'is-saved' : ''} onClick={() => toggleSaved(module.id)} aria-label={`${saved.includes('module:'+module.id) ? '取消收藏' : '收藏'}${meta.title}`} disabled={personal.busy} aria-pressed={saved.includes('module:'+module.id)}><Icon name="bookmark" /></button></div>
-            <h2><a href={"/course?module="+encodeURIComponent(module.id)}>{meta.title}</a></h2><p>{meta.summary}</p>
-            <div className="sd-library-card-actions"><a href={'/study?module='+encodeURIComponent(module.id)+'&mode=guide'}><Icon name="book" />自学互动模式</a><a href={presentationHref(module)}><Icon name="play" />教学展示模式</a></div>
+          <a className="sd-library-cover-button" href={detailsHref(module)} aria-label={`${meta.title}课程详情`}><Cover module={module} /><span className="sd-library-cover-overlay">查看课程详情 <Icon name="arrow" /></span></a>
+          <div className="sd-library-card-copy"><div className="sd-library-card-meta"><span>{meta.topic}</span><span className="sd-library-difficulty">{module.difficulty === 'introductory' ? '入门' : module.difficulty === 'advanced' ? '高级' : module.difficulty === 'intermediate' ? '进阶' : '探索'}</span><button className={saved.includes(favoriteKey(module)) ? 'is-saved' : ''} onClick={() => toggleSaved(module)} aria-label={`${saved.includes(favoriteKey(module)) ? '取消收藏' : '收藏'}${meta.title}`} disabled={personal.busy} aria-pressed={saved.includes(favoriteKey(module))}><Icon name="bookmark" /></button></div>
+            <h2><a href={detailsHref(module)}>{meta.title}</a></h2><p>{meta.summary}</p>
+            <div className="sd-library-card-actions"><a href={learnHref(module,'guide')}><Icon name="book" />自学互动模式</a><a href={learnHref(module,'ppt')}><Icon name="play" />教学展示模式</a></div>
           </div>
         </article>;
       })}</div>

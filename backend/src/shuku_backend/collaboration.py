@@ -9,6 +9,7 @@ from .workflow import identifier
 def teaching(project):
     """Copy teaching material without author chats, image references or undo history."""
     value={k:project[k] for k in ('version','id','courseId','title','duration','style','outlineConfirmed')}
+    if project.get('nativeSnapshot'):value['nativeSnapshot']=project['nativeSnapshot']
     if project.get('source'):value['source']=json.loads(json.dumps(project['source']))
     value['pages']=[{**{k:p[k] for k in ('id','nativeId','format','sourceEntry','title','goal','summary','ready','designed') if k in p},'note':'','revisions':[],'messages':[]} for p in project['pages']]
     return value
@@ -44,7 +45,7 @@ class Collaboration:
             wid=str(uuid4());project['id']=wid
             db.execute("INSERT INTO shuku_courses(id,owner_id,module_id,title,description,category,created_at) VALUES (%s,%s,%s,%s,%s,%s,%s)",(wid,uid,course['module_id'],project['title'],course['description'],course['category'],self.clock()))
             db.execute('INSERT INTO shuku_workspaces(id,target_course_id,owner_id,base_release_id,created_at) VALUES (%s,%s,%s,%s,%s)',(wid,cid,uid,base,self.clock()))
-            self.flow.save_in(db,uid,wid,{'project':project,'expected_revision':None})
+            self.flow.save_in(db,uid,wid,{'project':project,'expected_revision':None},native_snapshot=project.get('nativeSnapshot'))
             self.flow.audit(db,uid,'workspace.create',wid)
             return {'id':wid}
 
