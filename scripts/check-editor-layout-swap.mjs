@@ -10,8 +10,9 @@ try{
  await page.route('**/api/shuku/auth/me',route=>route.fulfill({json:{user:{id:'author',username:'xiaoman',display_name:'小满',role:'creator'}}}));
  await page.route('**/api/shuku/messages',route=>route.fulfill({json:{messages:[],unread_count:0}}));
  await page.goto(base+'/scenedeck/?deck=neuron-guide',{waitUntil:'domcontentloaded'});await page.locator('.cw-native').waitFor();
+ const brand=page.getByRole('link',{name:'术库首页',exact:true});assert.equal(await brand.locator('strong').innerText(),'术库');assert.equal(await brand.locator('svg path').getAttribute('d'),'M12 5C8 2 4 3 2 4v16c4-2 7-1 10 1 3-2 6-3 10-1V4c-2-1-6-2-10 1ZM12 5v16');assert.match(await page.title(),/^术库 · /);
  const swap=page.getByRole('button',{name:'交换布局',exact:true}),chat=page.getByRole('region',{name:'当前页创作'}),sidebar=page.locator('.cw-sidebar'),viewport=page.locator('.cw-viewport'),draft=page.getByLabel('当前页修改要求',{exact:true});
- assert.equal(await swap.count(),0,'preview remains unchanged');await page.getByRole('button',{name:'✎ 编辑',exact:true}).click();await swap.waitFor();
+ assert.equal(await swap.count(),0,'preview remains unchanged');await page.getByRole('button',{name:'✎ 编辑',exact:true}).click();await swap.waitFor();assert.equal(await brand.locator('span').first().evaluate(node=>getComputedStyle(node).backgroundColor),'rgb(40, 100, 250)');
  await draft.fill('保留这个修改要求，交换布局时不要丢失。');await page.locator('.cw-native').evaluate(node=>node.dataset.layoutTest='same-node');
  const selected=await page.locator('.cw-ppt-page.active').getAttribute('aria-label');
  const originalChat=await chat.boundingBox(),originalSidebar=await sidebar.boundingBox(),originalViewport=await viewport.boundingBox();assert.ok(originalSidebar.x<originalViewport.x&&originalChat.y>=originalViewport.y+originalViewport.height-2);

@@ -24,7 +24,7 @@ function load(courseId: string,courses:readonly ActiveModule[]) {
   try { const stored: unknown = JSON.parse(localStorage.getItem(key(module.id)) ?? 'null'); if (isProject(stored, module.id)) return preserveExistingWebPages(stored, module); } catch { /* A fresh copy remains available. */ }
   return createProject(module);
 }
-const paths = { spark: 'm12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5z', play: 'm9 5 11 7-11 7z', plus: 'M12 5v14M5 12h14', send: 'm4 4 17 8-17 8 4-8zM8 12h13', back: 'm9 5-7 7 7 7M2 12h17', check: 'm5 12 4 4L19 6', close: 'm6 6 12 12M6 18 18 6', download: 'M12 3v12m-5-5 5 5 5-5M4 17v4h16v-4', settings: 'M4 7h16M4 17h16M8 4v6M16 14v6' };
+const paths = { book: 'M12 5C8 2 4 3 2 4v16c4-2 7-1 10 1 3-2 6-3 10-1V4c-2-1-6-2-10 1ZM12 5v16', spark: 'm12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5z', play: 'm9 5 11 7-11 7z', plus: 'M12 5v14M5 12h14', send: 'm4 4 17 8-17 8 4-8zM8 12h13', back: 'm9 5-7 7 7 7M2 12h17', check: 'm5 12 4 4L19 6', close: 'm6 6 12 12M6 18 18 6', download: 'M12 3v12m-5-5 5 5 5-5M4 17v4h16v-4', settings: 'M4 7h16M4 17h16M8 4v6M16 14v6' };
 function Icon({ name }: { name: keyof typeof paths }) { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={paths[name]} /></svg>; }
 function download(name: string, value: string, type = 'application/json') { const url = URL.createObjectURL(new Blob([value], { type })); const link = document.createElement('a'); link.href = url; link.download = name; link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); }
 const escape = (text: string) => text.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
@@ -83,7 +83,7 @@ export function CourseWorkspace({courses,initialProject,managed,reader}:Workspac
   function patchPage(patch: Partial<CreatorPage>) { commit({ ...project, pages: project.pages.map(item => item.id === page.id ? { ...item, ...patch } : item) }); }
   function select(id: string) { reader?.onChange({...reader.state,page_id:id});setActiveId(id); setView(project.pages.find(item => item.id === id)?.designImageId && !project.pages.find(item => item.id === id)?.ready ? 'design' : 'web'); setPrompt(''); setFeedback(''); setActionError(''); const url = new URL(location.href); url.searchParams.set('deck', module.pptDeck!.id); url.searchParams.set('slide', id); window.history.replaceState(null, '', url); }
   function step(delta: number) { select(project.pages[Math.max(0, Math.min(project.pages.length - 1, index + delta))].id); }
-  useEffect(() => { document.title = `SceneDeck · ${project.title}`; if(managed){managed.onChange(project);return;} setSaved('保存中…'); try { localStorage.setItem(key(reader?.storageKey||project.courseId), JSON.stringify(project)); setSaved('已保存到此浏览器'); } catch { setSaved('保存失败，请导出项目备份'); } }, [project]);
+  useEffect(() => { document.title = `术库 · ${project.title}`; if(managed){managed.onChange(project);return;} setSaved('保存中…'); try { localStorage.setItem(key(reader?.storageKey||project.courseId), JSON.stringify(project)); setSaved('已保存到此浏览器'); } catch { setSaved('保存失败，请导出项目备份'); } }, [project]);
   useEffect(() => { log.current?.scrollTo({ top: log.current.scrollHeight }); }, [page.messages, busy, chatOpen]);
   useEffect(() => {
     let active = true; setDesignImage(undefined); setImageError('');
@@ -222,7 +222,7 @@ export function CourseWorkspace({courses,initialProject,managed,reader}:Workspac
   const hint = feedback || (showingImage ? '直接描述想改哪里；满意后制作成网页。' : page.ready ? '描述这一页想怎么改，或直接预览。' : '写下这一页的内容和要求，生成第一版设计。');
   return <div className={`cw-app cw-streamlined ${editing ? 'cw-editing' : 'cw-viewing'} ${mode === 'present' ? 'cw-presenting' : ''} ${reader?'cw-reader':''} ${editing&&!managed&&panelsSwapped?'cw-panels-swapped':''}`} >
     <header className="cw-topbar">
-      <a href="/" target={reader?'_top':undefined} className="cw-brand"><span><Icon name="spark" /></span><div><strong>SceneDeck</strong><small>课件创作</small></div></a>
+      <a href="/" target={reader?'_top':undefined} className="cw-brand cw-shuku-brand" aria-label="术库首页"><span><Icon name="book" /></span><div><strong>术库</strong><small>课件创作</small></div></a>
       {managed?<strong className="cw-managed-title">{project.title}</strong>:<select aria-label="切换课程" value={project.courseId} disabled={Boolean(busy)} onChange={event => switchCourse(event.target.value)}>{courses.map(c => <option key={c.id} value={c.id}>{c.id === project.courseId ? project.title : c.title}</option>)}</select>}
       <span className="cw-save">{managed?managed.status:`✓ ${saved}`}</span>
       <div className="cw-actions">{managed?.actions}

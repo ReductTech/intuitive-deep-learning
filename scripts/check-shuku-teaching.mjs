@@ -46,7 +46,7 @@ try{
  const bounds=await page.locator('iframe').boundingBox();assert.deepEqual(bounds,{x:0,y:0,width:1440,height:1000},'original self-study covers the full viewport');
  assert.equal(await frame.getByLabel('学习方式',{exact:true}).count(),0,'no replacement mode toolbar');
  await page.goto(base+'/learn?revision='+rid+'&mode=ppt',{waitUntil:'domcontentloaded'});await frame.locator('.cw-sidebar').waitFor();
- assert.equal(await frame.locator('.cw-page-heading').innerText(),originalHeading,'same original workbench');
+ assert.equal(await frame.locator('.cw-page-heading').innerText(),originalHeading,'same original workbench');assert.equal(await frame.getByRole('link',{name:'术库首页',exact:true}).locator('strong').innerText(),'术库');
  await frame.getByRole('button',{name:'讲稿',exact:true}).click();await frame.getByRole('dialog',{name:'本页讲稿'}).waitFor();assert.ok((await frame.locator('.cw-settings').innerText()).length>10);await frame.getByRole('button',{name:'关闭面板'}).click();
  await frame.getByRole('button',{name:'✎ 编辑',exact:true}).click();await frame.getByRole('button',{name:'✓ 完成编辑',exact:true}).waitFor();await frame.getByRole('button',{name:'第1页属性',exact:true}).waitFor();await frame.getByLabel('当前页修改要求',{exact:true}).fill('布局切换保留内容');await frame.getByRole('button',{name:'交换布局',exact:true}).click();assert.equal(await frame.locator('.cw-panels-swapped').count(),1);assert.equal(await frame.getByLabel('当前页修改要求',{exact:true}).inputValue(),'布局切换保留内容');await frame.getByRole('button',{name:'交换布局',exact:true}).click();await frame.getByRole('button',{name:'✓ 完成编辑',exact:true}).click();
  await frame.getByRole('button',{name:'显示大纲',exact:true}).click();assert.equal(await frame.locator('.cw-ppt-title').count(),project.pages.length);
