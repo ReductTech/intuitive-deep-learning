@@ -16,7 +16,7 @@ try{
  else data={courses:[],workspaces:[],removals:[]};
  await route.fulfill({json:data});});
  await page.goto(base+'/my-courses');const dock=page.getByRole('complementary',{name:'当前账号'});await dock.waitFor();
- const position=async()=>{const b=await dock.boundingBox(),size=page.viewportSize();assert.ok(b.x<=12&&Math.abs(size.height-b.y-b.height)<=12,'account stays in bottom-left corner');assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));};
+ const position=async()=>{const create=page.locator('.sd-library-topbar').getByRole('link',{name:'创建课件',exact:true});assert.equal(await create.getAttribute('href'),'/my-courses?tab=create');const c=await create.boundingBox(),size=page.viewportSize();assert.ok(c&&c.x>size.width/2&&c.y<80,'create action stays at the top right');const b=await dock.boundingBox();assert.ok(b.x<=12&&Math.abs(size.height-b.y-b.height)<=12,'account stays in bottom-left corner');assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));};
  await position();assert.equal(await page.locator('.sd-library-topbar .shuku-profile-link').count(),0);assert.equal(await dock.getByRole('link',{name:'个人信息',exact:true}).getAttribute('href'),'/profile');assert.ok(await dock.getByText('小满',{exact:true}).isVisible());assert.ok(await dock.getByText('课程创作者',{exact:true}).isVisible());assert.ok(await page.locator('.sd-library-topbar').getByRole('link',{name:'我的消息，3 条未读',exact:true}).isVisible());
  await page.keyboard.press('Tab');await dock.getByRole('link',{name:'个人信息',exact:true}).focus();assert.equal(await dock.getByRole('link',{name:'个人信息',exact:true}).evaluate(n=>n===document.activeElement),true);
  await fs.mkdir('test-results/account-dock',{recursive:true});await page.screenshot({path:'test-results/account-dock/desktop.png'});
@@ -27,5 +27,5 @@ try{
  // Only mock requests are used; no server account or course records are changed.
  await page.route('**/api/shuku/auth/logout',async route=>{loggedOut=true;await route.fulfill({status:200,json:{ok:true}});});
  const navigation=page.waitForEvent('framenavigated',f=>f===page.mainFrame());await dock.getByRole('button',{name:'退出',exact:true}).click();await navigation;assert.ok(loggedOut);await dock.waitFor();await page.evaluate(()=>sessionStorage.setItem('shuku:guest','1'));await page.reload();await dock.getByText('游客',{exact:true}).waitFor();assert.ok(await dock.getByRole('button',{name:'登录',exact:true}).isVisible());assert.equal(await page.locator('.sd-library-topbar .shuku-message-link').count(),0);await position();
- assert.deepEqual(errors,[]);console.log('PASS account dock: bottom-left on home/management/mobile, profile navigation, role, admin access, message badge and logout request.');
+ assert.deepEqual(errors,[]);console.log('PASS account dock: bottom-left on home/management/mobile, profile navigation, role, top-right creation entry, admin access, message badge and logout request.');
 }finally{await browser.close();}
