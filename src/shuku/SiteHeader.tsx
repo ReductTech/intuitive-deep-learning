@@ -1,6 +1,6 @@
 import {useEffect,useRef,useState} from 'react';
 import {api,type User} from './client';
-import {SessionControl} from './SessionControl';
+import {SessionControl,MessageIndicator} from './SessionControl';
 import '../app/HomePage.css';
 import './shuku.css';
 import {isGuestMode} from './guest';
@@ -19,7 +19,7 @@ export function SiteHeader({section,savedCount=0,onBrowse,user}:{section:Section
   return()=>{document.removeEventListener('pointerdown',outside);document.removeEventListener('keydown',escape);};
  },[open]);
  const tab=new URLSearchParams(location.search).get('tab')||'mine';
- return <header className={"sd-library-topbar"+(current?.role==='admin'?' sd-admin-topbar':'')}>
+ return <><header className={"sd-library-topbar"+(current?.role==='admin'?' sd-admin-topbar':'')}>
   <a href="/" className="sd-library-brand" aria-label="术库首页"><span className="sd-library-logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round" aria-hidden="true"><path d="M12 5C8 2 4 3 2 4v16c4-2 7-1 10 1 3-2 6-3 10-1V4c-2-1-6-2-10 1ZM12 5v16"/></svg></span><span>术库</span></a>
   <nav aria-label="主导航">
    <button className={section==='courses'?'is-active':''} onClick={()=>onBrowse?onBrowse('courses'):location.assign('/')}>探索课程</button>
@@ -31,6 +31,6 @@ export function SiteHeader({section,savedCount=0,onBrowse,user}:{section:Section
    </div>
    {current?.role==='admin'&&<button className={section==='admin'?'is-active':''} onClick={()=>location.assign('/data')}>数据管理</button>}
   </nav>
-  <SessionControl user={current}/>
- </header>;
+  {current&&!isGuestMode()&&!isLocalPreview&&<span className="shuku-session"><MessageIndicator key={current.id}/></span>}
+ </header><SessionControl user={current}/></>;
 }

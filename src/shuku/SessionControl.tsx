@@ -6,8 +6,13 @@ export function SessionControl({user:providedUser}:{user?:User|null}={}){
  const [user,setUser]=useState<User|null>(null);
  useEffect(()=>{if(isLocalPreview||providedUser!==undefined||isGuestMode())return;api<{user:User}>('/auth/me').then(r=>setUser(r.user)).catch(()=>{});},[providedUser]);
  const current=providedUser===undefined?user:providedUser;
- if(isLocalPreview||isGuestMode())return <span className="shuku-guest-session"><span>{isLocalPreview?'本地预览':'游客'}</span><button onClick={requestSignIn}>登录</button></span>;
- return current?<span className="shuku-session"><MessageIndicator key={current.id}/><a className="shuku-profile-link" href="/profile" aria-label="个人信息" aria-current={location.pathname==='/profile'?'page':undefined}>{current.display_name}</a><button onClick={()=>void api('/auth/logout',{}).then(()=>location.assign('/'))}>退出</button></span>:<a className="sd-library-create" href="/my-courses">登录</a>;
+ const guest=isLocalPreview||isGuestMode();
+ const name=guest?(isLocalPreview?'本地预览':'游客'):current?.display_name;
+ if(!name)return null;
+ const avatar=<span className="shuku-account-avatar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7"><circle cx="12" cy="8" r="4"/><path d="M5 21v-3a7 7 0 0 1 14 0v3"/></svg></span>;
+ const identity=<>{avatar}<span className="shuku-account-copy"><strong>{name}</strong><small>{guest?'浏览体验':current?.role==='admin'?'管理员':current?.role==='creator'?'课程创作者':'普通用户'}</small></span></>;
+ return <aside className="shuku-account-dock" aria-label="当前账号">{guest?<button className="shuku-account-identity" onClick={requestSignIn} aria-label="登录账号">{identity}</button>:<a className="shuku-account-identity shuku-profile-link" href="/profile" aria-label="个人信息" aria-current={location.pathname==='/profile'?'page':undefined}>{identity}</a>}{guest?<button className="shuku-account-exit" onClick={requestSignIn}>登录</button>:<button className="shuku-account-exit" onClick={()=>void api('/auth/logout',{}).then(()=>location.assign('/'))}>退出</button>}</aside>;
+
 }
 
 export function MessageIndicator(){

@@ -34,3 +34,15 @@
 .shuku-create-panel .shuku-presentation-upload{display:grid;gap:8px;margin:4px 0 24px}.shuku-presentation-upload input[type=file]{font:inherit;font-size:14px;padding:12px;max-width:100%}.shuku-presentation-upload small{color:#7b8da2;line-height:1.6}
 
 .shuku-presentation-upload .shuku-remove-ppt{justify-self:start;padding:0;border:0;background:none;color:#55769b;font-size:14px;cursor:pointer}
+
+/* Keep account access at the foot of the library, outside the sticky header. */
+.shuku-account-dock{position:fixed;left:12px;bottom:12px;z-index:20;width:194px;display:flex;align-items:center;gap:8px;padding:14px 12px;background:#fff;border:1px solid var(--sd-line);border-radius:12px;box-shadow:0 4px 20px #192b430a}
+.shuku-account-identity{display:flex;align-items:center;gap:12px;flex:1;min-width:0;text-decoration:none;color:var(--sd-ink)}
+.sd-library .shuku-account-identity{padding:0;border:0;border-radius:0;background:none;text-align:left;color:var(--sd-ink)}
+.shuku-account-avatar{display:grid;place-items:center;flex:none;width:38px;height:38px;border-radius:50%;background:#edf3ff;color:var(--sd-blue)}
+.shuku-account-avatar svg{width:21px;height:21px}.shuku-account-copy{min-width:0}.shuku-account-copy strong{display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:14px;font-weight:600}.shuku-account-copy small{display:block;color:var(--sd-muted);font-size:11px;margin-top:3px}
+.sd-library .shuku-account-exit{flex:none;padding:5px 0;border:0;border-radius:4px;background:none;color:var(--sd-muted);font-size:11px;cursor:pointer}.shuku-account-identity:hover strong,.shuku-account-exit:hover{color:var(--sd-blue)}
+.sd-library:has(.sd-library-sidebar) .shuku-account-dock{left:0;bottom:0;width:218px;border-radius:0;border-width:1px 1px 0 0;box-shadow:none;padding:18px}
+.sd-library:has(.shuku-account-dock) .sd-library-sidebar{padding-bottom:100px}
+.sd-library:has(.shuku-account-dock)>main{padding-bottom:112px}
+@media(max-width:760px){.shuku-account-dock,.sd-library:has(.sd-library-sidebar) .shuku-account-dock{left:10px;bottom:10px;width:180px;padding:10px 12px;border:1px solid var(--sd-line);border-radius:12px;box-shadow:0 4px 20px #192b4312}.shuku-account-avatar{width:32px;height:32px}.sd-library:has(.shuku-account-dock) .sd-library-sidebar{padding-bottom:0}}
