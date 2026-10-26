@@ -14,8 +14,8 @@ function PersonalMenu({section,savedCount,onBrowse,accountId}:{section:Section;s
   <button ref={trigger} className={['saved','history','messages','profile'].includes(section)?'is-active':''} aria-expanded={open} aria-controls="personal-subpages" aria-description={count?count+' 条未读消息':undefined} onClick={()=>setOpen(v=>!v)}>个人中心{count>0&&<small className="sd-personal-unread" aria-hidden="true">{count>99?'99+':count}</small>}<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d={open?'m4 10 4-4 4 4':'m4 6 4 4 4-4'}/></svg></button>
   {open&&<div id="personal-subpages" className="sd-authoring-subpages" aria-label="个人中心子页面">
    <a href="/?view=saved" aria-current={section==='saved'?'page':undefined} onClick={e=>{if(onBrowse){e.preventDefault();onBrowse('saved');}setOpen(false);}}>我的收藏{savedCount>0&&<small className="sd-personal-saved">{savedCount}</small>}</a>
-   <MessageIndicator count={count}/>
    <a href="/?view=history" aria-current={section==='history'?'page':undefined}>学习记录</a>
+   <MessageIndicator count={count}/>
   </div>}
  </div>;
 }
