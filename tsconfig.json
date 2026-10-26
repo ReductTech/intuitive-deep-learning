@@ -21,7 +21,7 @@
     "allowImportingTsExtensions": true,
     "jsx": "react-jsx"
   },
-  "exclude": ["modules/*/_scratchpad/**"],
+  "exclude": ["modules/**/_scratchpad/**"],
   "include": [
     "src",
     "modules",

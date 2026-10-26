@@ -16,7 +16,6 @@ export async function generatePageDesign(project: CreatorProject, page: CreatorP
       '使用清晰准确的简体中文，标题层次明确、合理留白、一页一个主要教学目标。用于后续实现为可交互网页，不展示编辑器界面。',
       `课程：${project.title}；演讲时长：${project.duration} 分钟；视觉风格：${project.style}。`,
       `本页标题：${page.title}。教学目标：${page.goal}。内容：${page.summary}。`,
-      page.outline?.interaction ? `交互设计：${String(page.outline.interaction)}` : '',
       instruction.trim() ? `本次${reference ? '修改' : '设计'}要求：${instruction.trim()}` : '请根据教学目标设计清晰的教学画面。',
       reference ? '以上一版图片为基础修改，保留未要求改变的内容与视觉风格。' : '',
     ].filter(Boolean).join('\n'), images: reference ? [reference] : [],

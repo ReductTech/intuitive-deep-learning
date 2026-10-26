@@ -43,6 +43,7 @@ def build_parser() -> argparse.ArgumentParser:
         "--module", required=True, help="module directory, deck ID or UUID"
     )
     parser.add_argument("--slide", help="one slide ID; default all slides")
+    parser.add_argument("--page-directory", help="semantic directory under pages/ for single-slide intermediate outputs")
     parser.add_argument(
         "--max-chars",
         type=int,
@@ -365,6 +366,9 @@ def capture_module(args: argparse.Namespace, context_setup=None) -> dict:
             "Use --state <name> with --actions to preserve the default screenshot."
         )
     directory, deck_id, asset_id = resolve_module(args.module)
+    page_directory = getattr(args, "page_directory", None)
+    if page_directory and not args.slide:
+        raise ValueError("Use --slide with --page-directory to keep each page's outputs separate")
     if args.format in {"thumbnails", "both"} and args.state != "default":
         raise ValueError(
             "Interactive states are evaluation screenshots; use --format screenshots"
@@ -374,7 +378,7 @@ def capture_module(args: argparse.Namespace, context_setup=None) -> dict:
     if not args.inspect:
         if args.format in {"screenshots", "both"}:
             destinations.append(
-                scratchpad_path(directory, args.output, default="screenshots")
+                scratchpad_path(directory, args.output, default="screenshots", page_directory=page_directory)
             )
         if args.format in {"thumbnails", "both"}:
             thumbnail_output = (
@@ -394,7 +398,7 @@ def capture_module(args: argparse.Namespace, context_setup=None) -> dict:
     ):
         raise ValueError("Actions must map slide IDs to arrays of action objects.")
     with browser_session(
-        args.base_url, scratchpad=scratchpad_path(directory, default="")
+        args.base_url, scratchpad=scratchpad_path(directory, default="", page_directory=page_directory)
     ) as (context, base_url):
         if context_setup is not None:
             context_setup(context, asset_id)

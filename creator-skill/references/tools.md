@@ -18,7 +18,7 @@ python creator-skill/scripts/tools.py capture.slides --help
 
 工具正常执行向 stdout 返回一份带 `status` 的 JSON，进度和诊断写入 stderr。退出码 `0` 表示成功或无需修改，`1` 表示检查已完成但未通过，`2` 表示参数、依赖或执行错误。开发与维护脚本时读取[脚本规范](engineering/scripts.md)。
 
-中间产物遵守根入口的 `_scratchpad/` 约定。生成前先确定目标模块，缺少大纲时先运行 `module.init`。工具通过 `--module` 定位模块，默认选择目录内的输出位置；传入 `--output` 或 `--save-snapshot` 时须指向该模块的 `_scratchpad/`，相对路径按仓库根目录解析。目录按需创建，不要求手工预建。
+中间产物遵守根入口的两级 `_scratchpad/` 约定。逐页设计与检查产物保存到 `pages/<语义页目录>/_scratchpad/`；课程整体原稿和汇总结果保存到模块级 `_scratchpad/`。工具通过 `--module` 定位模块；逐页截图同时指定 `--slide` 与 `--page-directory`。其他逐页工具通过 `--output` 指向页目录内的 `_scratchpad/`；相对路径按仓库根目录解析。
 
 ## 分类
 
@@ -63,12 +63,12 @@ python creator-skill/scripts/tools.py extract.pptx "原稿.pptx" --module Digita
 以下以仓库中的 Policy-Gradient 为例，调用时替换为任务目标。模块可用目录名、课程 ID 或 UUID 指定；`--slide` 使用实际场景 ID，可通过 `capture.inspect` 查询。省略 `--slide` 会捕获整套课件。
 
 ```powershell
-python creator-skill/scripts/tools.py capture.slides --module Policy-Gradient --slide play-maze --base-url http://127.0.0.1:5173
+python creator-skill/scripts/tools.py capture.slides --module AI-Learning-Exploration --slide opening --page-directory OpeningPage --base-url http://127.0.0.1:5173
 python creator-skill/scripts/tools.py capture.thumbnails --module Policy-Gradient --slide play-maze
 python creator-skill/scripts/tools.py capture.inspect --module Policy-Gradient
 ```
 
-`capture.slides` 默认保存到 `modules/<模块目录名>/_scratchpad/screenshots/<页ID>.png`，操作状态用 `--state` 命名，保存为 `<页ID>/<状态>.png`。`--output` 可选该模块 `_scratchpad/` 内的其他图片目录。
+逐页使用 `capture.slides --slide <场景ID> --page-directory <语义页目录>`，保存到 `modules/<模块目录名>/pages/<语义页目录>/_scratchpad/screenshots/<场景ID>.png`；操作状态用 `--state` 命名为 `<场景ID>/<状态>.png`。批量捕获旧模块而未指定页目录时仍兼容模块级输出，制作新页时使用逐页目录。`--output` 可指定对应页 `_scratchpad/` 内的图片目录。
 
 `capture.thumbnails` 生成正式播放器缩略图，默认保存到 `assets/<UUID>/scenedeck-thumbnails/<页ID>.png`，只接受默认状态；其 `--output` 仅可选择正式缩略图目录内的位置。`capture.slides --format both` 从一次采集中同时写入评估目录和正式缩略图目录。图片均为 1600×900；已有图片对应当前实现和状态时直接复用。
 

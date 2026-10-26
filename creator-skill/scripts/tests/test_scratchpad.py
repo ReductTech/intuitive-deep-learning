@@ -43,6 +43,27 @@ def test_scratchpad_rejects_symlink_escape(tmp_path):
         scratchpad_path(directory, default="report.html")
 
 
+def test_page_scratchpad_resolves_default_and_explicit_output(tmp_path):
+    directory = tmp_path / "modules/Demo"
+    target = directory / "pages/OpeningPage/_scratchpad/screenshots/opening.png"
+    assert scratchpad_path(directory, default="screenshots/opening.png", page_directory="OpeningPage") == target
+    assert scratchpad_path(directory, target, default="unused") == target
+    assert not directory.exists()
+
+
+@pytest.mark.parametrize("name", ["..", "../Other", "Other/Page", "Other\\Page", ""])
+def test_page_scratchpad_rejects_invalid_directory(tmp_path, name):
+    with pytest.raises(ValueError, match="single semantic"):
+        scratchpad_path(tmp_path, default="a.png", page_directory=name)
+
+
+def test_page_scratchpad_rejects_escape_and_other_page(tmp_path):
+    directory = tmp_path / "modules/Demo"
+    for output in (directory / "pages/OpeningPage/a.png", directory / "pages/OtherPage/_scratchpad/a.png"):
+        with pytest.raises(ValueError, match="inside"):
+            scratchpad_path(directory, output, default="unused", page_directory="OpeningPage")
+
+
 def test_module_check_ignores_scratch_sources(tmp_path):
     initialize(
         tmp_path, "Demo", {"title": "Demo", "pages": [{"id": "one", "title": "One"}]}

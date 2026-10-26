@@ -1,5 +1,5 @@
-import { ContentBlock, Typography } from '../../shared/react';
-import outline from '../outlines.json';
+import { ContentBlock, Typography } from '../../../shared/react';
+import outline from '../../outlines.json';
 import './CreatorSkillIntro.css';
 
 const steps = [

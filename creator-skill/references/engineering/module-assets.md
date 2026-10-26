@@ -2,7 +2,7 @@
 
 ## 模块 UUID
 
-每个活跃模块在 `outlines.json` 顶层保存 `moduleIdentity`，其 `id` 是标准小写 UUID v4，与页面 `id` 分开。
+每个活跃模块在 `outlines.json` 顶层保存 `moduleIdentity`，其 `id` 是标准小写 UUID v4，与实现层的播放器场景 ID 分开；大纲每页仍只保存 `title` 与 `snippet`。
 
 ```json
 {"moduleIdentity": {"version": 1, "id": "2e5c4732-a40a-4d20-b954-a61507aabc75"}}
@@ -18,7 +18,7 @@
 
 课程专属图片、视频、字体、图标、3D 模型、外部数据文件和 术库 缩略图放仓库根目录 `assets/<moduleIdentity.id>/`。`moduleIdentity.id` 来自当前模块的 `outlines.json`；代码内定义的课程数据随模块实现保存。
 
-原稿提取、设计图、试制素材、检查截图与报告属于中间产物，放在当前模块的 `_scratchpad/`，不上传到资源 CDN。确定用于正式页面的素材再放入 `assets/<UUID>/`，实现不得引用 `_scratchpad/` 中的文件。
+设计图、试制素材、检查截图与报告等逐页中间产物放在 `pages/<语义页目录>/_scratchpad/`。课程整体原稿提取和汇总资料放在模块级 `_scratchpad/`，两者均不上传到资源 CDN。确定用于正式页面的素材再放入 `assets/<UUID>/`，实现不得引用 `_scratchpad/` 中的文件。
 
 ## 引用
 

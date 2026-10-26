@@ -35,6 +35,16 @@ def test_valid_course_and_literal_asset_are_accepted(tmp_path):
     assert validate_modules(tmp_path) == []
 
 
+@pytest.mark.parametrize("field", ["interaction", "next", "section", "implementationStatus"])
+def test_obsolete_outline_fields_are_rejected(tmp_path, field):
+    directory = course(tmp_path)
+    path = directory / "outlines.json"
+    doc = json.loads(path.read_text())
+    doc["pages"][0][field] = "legacy value"
+    path.write_text(json.dumps(doc))
+    assert any("obsolete outline fields" in error and field in error for error in validate_modules(tmp_path))
+
+
 def test_missing_and_escaping_assets_are_rejected(tmp_path):
     directory = course(tmp_path)
     (directory / "asset.ts").write_text(f"moduleAssetUrl('{UUID}', '../../outside.png')")

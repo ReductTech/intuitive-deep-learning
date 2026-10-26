@@ -13,6 +13,7 @@ upgrade.md
 runtime_logs/
 # Frontend dependencies and build output
 /modules/*/_scratchpad/
+/modules/*/pages/*/_scratchpad/
 node_modules/
 dist/
 *.tsbuildinfo

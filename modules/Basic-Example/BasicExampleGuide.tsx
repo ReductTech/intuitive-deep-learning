@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { useSceneScale } from '../shared/react/presentation/canvas';
 import '../shared/react/styles.css';
 import '../shared/react/presentation.css';
-import { CreatorSkillIntro } from './pages/CreatorSkillIntro';
+import { CreatorSkillIntro } from './pages/CreatorSkillIntro/CreatorSkillIntro';
 import outline from './outlines.json';
 
 export function BasicExampleGuide() {

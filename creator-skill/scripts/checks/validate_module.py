@@ -107,6 +107,9 @@ def validate_modules(repository: Path, requested: str | None = None) -> list[str
                 if not isinstance(page, dict):
                     errors.append(f"{label}: page {number} must be an object")
                     continue
+                obsolete = sorted(set(page) & {"interaction", "next", "section", "implementationStatus"})
+                if obsolete:
+                    errors.append(f"{label}: page {number} contains obsolete outline fields: {', '.join(obsolete)}; keep design and progress notes in _scratchpad/")
                 page_id = page.get("id")
                 if not isinstance(page_id, str) or not page_id.strip():
                     errors.append(f"{label}: page {number} has no valid id")

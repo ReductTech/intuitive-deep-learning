@@ -1,5 +1,5 @@
 import { SceneDeck, type DeckDefinition } from '../shared/react/presentation';
-import { CreatorSkillIntro } from './pages/CreatorSkillIntro';
+import { CreatorSkillIntro } from './pages/CreatorSkillIntro/CreatorSkillIntro';
 import outline from './outlines.json';
 
 export const deck: DeckDefinition = {

@@ -43,7 +43,8 @@ def emit_result(result: dict, *, status: str = "ok") -> None:
 
 
 def scratchpad_path(
-    directory: Path, requested: Path | None = None, *, default: str
+    directory: Path, requested: Path | None = None, *, default: str,
+    page_directory: str | None = None,
 ) -> Path:
     """Resolve an intermediate output inside its module; reject escapes and symlinks out.
 
@@ -51,11 +52,21 @@ def scratchpad_path(
     This helper validates only; callers create directories after input validation.
     """
     module = directory.resolve()
-    scratchpad = (module / "_scratchpad").resolve()
+    if page_directory is not None:
+        if not page_directory or Path(page_directory).name != page_directory or page_directory in {".", ".."} or "/" in page_directory or "\\" in page_directory:
+            raise ValueError("Page directory must be a single semantic directory name")
+        scratchpad = (module / "pages" / page_directory / "_scratchpad").resolve()
+    else:
+        scratchpad = (module / "_scratchpad").resolve()
     target = (requested if requested is not None else scratchpad / default).resolve()
+    # Explicit page-local outputs are also valid for tools with module-wide defaults.
+    if requested is not None and page_directory is None and target.is_relative_to(module):
+        parts = target.relative_to(module).parts
+        if len(parts) >= 3 and parts[0] == "pages" and parts[2] == "_scratchpad":
+            scratchpad = (module / "pages" / parts[1] / "_scratchpad").resolve()
     if not scratchpad.is_relative_to(module) or not target.is_relative_to(scratchpad):
         raise ValueError(
-            f"Intermediate output must be inside {module / '_scratchpad'}: {target}"
+            f"Intermediate output must be inside the module or selected page _scratchpad: {target}"
         )
     return target
 

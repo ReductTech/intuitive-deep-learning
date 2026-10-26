@@ -6,8 +6,6 @@ export interface ModulePageOutline {
   title: string;
   goal?: string;
   summary?: string;
-  interaction?: string;
-  next?: string;
   snippet?: string;
 }
 
