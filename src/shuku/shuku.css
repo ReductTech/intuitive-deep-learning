@@ -50,3 +50,8 @@
 .sd-library .shuku-header-create{display:inline-flex;align-items:center;justify-content:center;gap:8px;flex:none;white-space:nowrap;padding:11px 18px;border-radius:12px;background:#3265ff;color:#fff;font-weight:600;font-size:14px;transition:background .15s}
 .sd-library .shuku-header-create:hover{background:#2454e8}.shuku-header-create svg{width:18px;height:18px}
 @media(max-width:760px){.sd-library-topbar:has(.shuku-header-create){display:grid;grid-template-columns:minmax(0,1fr) auto;height:auto;min-height:98px;gap:6px 14px;padding:10px 18px 0}.sd-library-topbar:has(.shuku-header-create)>.sd-library-brand{grid-column:1;grid-row:1}.sd-library-topbar:has(.shuku-header-create)>.shuku-session{grid-column:2;grid-row:1;gap:16px}.sd-library-topbar:has(.shuku-header-create)>nav{grid-column:1/-1;grid-row:2;height:40px;gap:10px;justify-content:space-between;min-width:0}.sd-library .shuku-header-create{padding:9px 13px;font-size:12px;border-radius:10px}}
+
+.sd-personal-unread{display:inline-grid;place-items:center;min-width:17px;height:17px;padding:0 4px;border-radius:20px;background:#e44b59;color:#fff;font-size:10px;font-weight:600}
+.sd-personal-saved{float:right;font-size:11px;color:var(--sd-muted)}
+.sd-library-topbar nav .sd-personal-menu .shuku-message-link{display:flex;justify-content:space-between;gap:16px}.sd-personal-menu .shuku-message-icon{display:none!important}.sd-personal-menu .shuku-message-label{display:inline}.sd-personal-menu .shuku-message-link small{position:static}
+@media(max-width:480px){.sd-personal-menu .sd-authoring-subpages{left:0;right:auto}}

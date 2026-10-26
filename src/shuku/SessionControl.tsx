@@ -15,8 +15,12 @@ export function SessionControl({user:providedUser}:{user?:User|null}={}){
 
 }
 
-export function MessageIndicator(){
+export function useUnreadMessageCount(accountId?:string){
  const [count,setCount]=useState(0);
- useEffect(()=>{let active=true;const refresh=()=>void api<{unread_count:number}>('/messages').then(r=>{if(active)setCount(r.unread_count);}).catch(()=>{});refresh();const timer=setInterval(refresh,30000);window.addEventListener('shuku-messages-updated',refresh);return()=>{active=false;clearInterval(timer);window.removeEventListener('shuku-messages-updated',refresh);};},[]);
+ useEffect(()=>{setCount(0);if(!accountId)return;let active=true;const refresh=()=>void api<{unread_count:number}>('/messages').then(r=>{if(active)setCount(r.unread_count);}).catch(()=>{});refresh();const timer=setInterval(refresh,30000);window.addEventListener('shuku-messages-updated',refresh);return()=>{active=false;clearInterval(timer);window.removeEventListener('shuku-messages-updated',refresh);};},[accountId]);
+ return count;
+}
+
+export function MessageIndicator({count=0}:{count?:number}={}){
  return <a className="shuku-message-link" href="/messages" aria-label={'我的消息'+(count?'，'+count+' 条未读':'')} aria-current={location.pathname==='/messages'?'page':undefined}><svg className="shuku-message-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true"><path d="M5 17h14l-2-3V9a5 5 0 0 0-10 0v5l-2 3ZM10 20h4"/></svg><span className="shuku-message-label">我的消息</span>{count>0&&<small>{count>99?'99+':count}</small>}</a>;
 }
