@@ -44,5 +44,5 @@ export function SiteHeader({section,savedCount=0,onBrowse,user}:{section:Section
    {current?.role==='admin'&&<button className={section==='admin'?'is-active':''} onClick={()=>location.assign('/data')}>数据管理</button>}
   </nav>
   <span className="shuku-session"><a className="shuku-header-create" href="/my-courses?tab=create"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true"><path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5L12 3Z"/></svg>创建课件</a></span>
- </header><SessionControl user={current}/></>;
+ </header>{section==='courses'&&location.pathname==='/'&&<SessionControl user={current}/>}</>;
 }
