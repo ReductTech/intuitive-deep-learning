@@ -22,6 +22,8 @@ def test_independent_5175_deployment_contract():
     nginx=(root/'deploy/5175/nginx.conf').read_text()
     service=(root/'deploy/5175/shuku-idl.service').read_text()
     assert 'listen 5175 ssl;' in nginx and 'listen 443' not in nginx
+    assert re.search(r'location\s+\^~\s+/api/shuku/\s*\{',nginx), 'Revision JS/CSS/images must retain API authorization rather than match the static-file regex'
+    assert 'text/javascript' in nginx, 'Compress the MIME type emitted for native preview JavaScript'
     assert 'http://127.0.0.1:8010' in nginx and 'ssl_certificate_key' in nginx
     assert 'try_files $uri =404;' in nginx and 'sites-enabled/default' not in nginx
     limit=re.search(r'client_max_body_size\s+(\d+)m;',nginx)
