@@ -12,7 +12,7 @@ from .database import JsonValue
 from .errors import require
 from .workflow import identifier
 
-RENDERER='original-39a0557-v1'
+RENDERER='original-39a0557-layout-v2'
 
 class Player:
     def __init__(self,flow):

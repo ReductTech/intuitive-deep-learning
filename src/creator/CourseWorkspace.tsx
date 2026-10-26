@@ -41,6 +41,7 @@ export function CourseWorkspace({courses,initialProject,managed,reader}:Workspac
   const [actionError, setActionError] = useState('');
   const [busy, setBusy] = useState(''), [notice, setNotice] = useState(''), [saved, setSaved] = useState('已保存到此浏览器');
   const [chatOpen, setChatOpen] = useState(false);
+  const [panelsSwapped, setPanelsSwapped] = useState(false);
   const [designImage, setDesignImage] = useState<string | undefined>();
   const [imageError, setImageError] = useState('');
   const [propertiesId, setPropertiesId] = useState<string | null>(null);
@@ -219,7 +220,7 @@ export function CourseWorkspace({courses,initialProject,managed,reader}:Workspac
   }
   const mock = !native;
   const hint = feedback || (showingImage ? '直接描述想改哪里；满意后制作成网页。' : page.ready ? '描述这一页想怎么改，或直接预览。' : '写下这一页的内容和要求，生成第一版设计。');
-  return <div className={`cw-app cw-streamlined ${editing ? 'cw-editing' : 'cw-viewing'} ${mode === 'present' ? 'cw-presenting' : ''} ${reader?'cw-reader':''}`} >
+  return <div className={`cw-app cw-streamlined ${editing ? 'cw-editing' : 'cw-viewing'} ${mode === 'present' ? 'cw-presenting' : ''} ${reader?'cw-reader':''} ${editing&&!managed&&panelsSwapped?'cw-panels-swapped':''}`} >
     <header className="cw-topbar">
       <a href="/" target={reader?'_top':undefined} className="cw-brand"><span><Icon name="spark" /></span><div><strong>SceneDeck</strong><small>课件创作</small></div></a>
       {managed?<strong className="cw-managed-title">{project.title}</strong>:<select aria-label="切换课程" value={project.courseId} disabled={Boolean(busy)} onChange={event => switchCourse(event.target.value)}>{courses.map(c => <option key={c.id} value={c.id}>{c.id === project.courseId ? project.title : c.title}</option>)}</select>}
@@ -244,8 +245,8 @@ export function CourseWorkspace({courses,initialProject,managed,reader}:Workspac
       </div></div>{mode === 'present' && <div className="cw-fullscreen-controls"><button aria-label="上一页" disabled={index === 0} onClick={() => step(-1)}>←</button><span>{index + 1} / {project.pages.length}</span><button aria-label="下一页" disabled={index === project.pages.length - 1} onClick={() => step(1)}>→</button><button onClick={exitPresentation}>退出全屏 · Esc</button></div>}</div>
       <div className="cw-view-footer"><span>{index + 1} / {project.pages.length} · {Math.round(scale * 100)}%</span>{page.designImageId && page.ready && editing && <button onClick={() => setView(showingImage ? 'web' : 'design')}>{showingImage ? '查看网页' : '查看设计图'}</button>}{!editing && <div><button aria-label="上一页" disabled={index === 0} onClick={() => step(-1)}>←</button><button aria-label="下一页" disabled={index === project.pages.length - 1} onClick={() => step(1)}>→</button></div>}</div>
       {editing && !managed && <section className="cw-composer" aria-label="当前页创作">
-        {chatOpen && <div className="cw-conversation" ref={log}>{page.messages.map((message, i) => <p key={i} className={message.role}><span>{message.role === 'user' ? '你' : '助手'}</span>{message.text}</p>)}{!page.messages.length && <p>还没有修改记录。</p>}</div>}
-        <div className="cw-composer-hint"><span aria-live="polite">{busy || hint}</span>{page.messages.length > 0 && <button onClick={() => setChatOpen(!chatOpen)}>{chatOpen ? '收起记录' : '修改记录'}</button>}</div>
+        {(chatOpen || panelsSwapped) && <div className="cw-conversation" ref={log}>{page.messages.map((message, i) => <p key={i} className={message.role}><span>{message.role === 'user' ? '你' : '助手'}</span>{message.text}</p>)}{!page.messages.length && <p>还没有修改记录。</p>}</div>}
+        <div className="cw-composer-hint"><span aria-live="polite">{busy || hint}</span><button type="button" className="cw-layout-swap" aria-label="交换布局" aria-pressed={panelsSwapped} title={panelsSwapped?'恢复左侧页面、底部交互':'将交互窗口放到左侧，页面切换放到底部'} onClick={()=>setPanelsSwapped(value=>!value)}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true"><path d="M4 7h15m-4-4 4 4-4 4M20 17H5m4-4-4 4 4 4"/></svg>交换布局</button>{page.messages.length > 0 && <button onClick={() => setChatOpen(!chatOpen)}>{chatOpen ? '收起记录' : '修改记录'}</button>}</div>
         {actionError && <div className="cw-action-error" role="alert">{actionError}<button onClick={() => setPanel('settings')}>课程设置</button></div>}
         <form onSubmit={event => { event.preventDefault(); primaryAction(); }}><textarea aria-label="当前页修改要求" rows={2} maxLength={2000} disabled={Boolean(busy)} value={prompt} onChange={event => setPrompt(event.target.value)} onKeyDown={event => { if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); primaryAction(); } }} placeholder={showingImage ? '例如：减少文字，把右侧关系画得更直观…' : page.ready ? '例如：把这一页的标题缩短，增加一个思考问题…' : '这一页要讲什么？希望画面是什么样？'} />{busy ? <button type="button" onClick={stop}>停止</button> : <button className="cw-primary" type="submit">{primaryLabel}<span>↗</span></button>}</form>
         <footer><span>{showingImage || !page.ready ? '设计图修改' : native && import.meta.env.DEV ? '双击文字直接修改 · 保存到 TSX' : '网页修改 · 模拟演示'} · 自动保存</span><span>Enter 发送 · Shift Enter 换行</span></footer>
