@@ -31,3 +31,11 @@ def test_independent_5175_deployment_contract():
     assert 'client_body_timeout 120s;' in nginx and 'proxy_send_timeout 120s;' in nginx
     assert 'EnvironmentFile=/etc/shuku-idl/runtime.env' in service
     assert 'MemoryMax=384M' in service and 'User=ecs-assist-user' in service
+
+
+def test_cleanup_guard_grants_allow_exclusive_lock_without_ddl():
+    root=Path(__file__).resolve().parents[3]
+    sql=(root/'deploy/5175/mysql-cleanup-grants.sql').read_text()
+    import re
+    statements='\n'.join(line for line in sql.splitlines() if not line.startswith('--'))
+    assert re.fullmatch(r"\s*GRANT SELECT, UPDATE ON `shuku_idl_public`\.`shuku_locks`\s+TO 'shuku_idl_runtime'@'127\.0\.0\.1';\s*",statements)

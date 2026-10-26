@@ -220,3 +220,26 @@ def test_deleting_workspace_waits_for_started_merge_and_retains_retry_access(pub
     assert app.workflow.governance.listing(CONTRIBUTOR)[0]['state']=='succeeded'
     assert app.workflow.revision(owner,merged['revision_id'])['state']=='ready'
     assert app.workflow.collaboration.history(owner,c['id'])['ranking'][0]['score']==8
+
+
+def test_runtime_account_completes_cleanup_without_revision_objects(workflow):
+    # Deployment integration: migration/admin credentials can conceal missing lock grants.
+    import os
+    from dataclasses import replace
+    from sqlalchemy.engine import make_url
+    from shuku_backend.application import create_application
+    dsn=os.environ.get('SHUKU_TEST_RUNTIME_DATABASE_URL')
+    if not dsn:pytest.skip('Set a restricted runtime URL on the same disposable test database')
+    app,c,p,owner,admin=workflow
+    assert make_url(dsn).database==make_url(app.settings.database_url).database
+    restricted=create_application(replace(app.settings,database_url=dsn))
+    try:
+        with restricted.store.transaction() as db:
+            assert db.file_reference_lock(shared=True)
+        request=restricted.workflow.governance.request(owner,'course',c['id'],{'confirm':True})
+        execute(restricted)
+        item=next(r for r in restricted.workflow.governance.listing(owner) if r['id']==request['id'])
+        assert item['state']=='succeeded'
+        with restricted.store.transaction() as db:
+            assert db.execute('SELECT id FROM shuku_courses WHERE id=%s',(c['id'],)).fetchone() is None
+    finally:restricted.close()
