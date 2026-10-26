@@ -21,11 +21,20 @@ def official_pending(workflow,tmp_path):
     shutil.copytree(app.workflow.course_root/'modules/shared',library/'modules/shared')
     assets=app.workflow.course_root/'assets'/module['id']
     if assets.exists():shutil.copytree(assets,library/'assets'/module['id'])
+    planned=library/'modules'/directory/'outlines.json'
+    description=json.loads(planned.read_text());description['pages'].append({'id':'planned-only','title':'尚未实现的大纲页'})
+    planned.write_text(json.dumps(description))
     (library/'course-library.json').write_text(json.dumps({'schema':1,'repository':'reduct-shuku/intuitive-deep-learning','modules':[{'directory':directory,'id':module['alias'],'uuid':module['id']}]}))
     (library/'source-lock.json').write_text(json.dumps({'repository':'ReductTech/intuitive-deep-learning'}))
     def git(*args):return subprocess.check_output(['git','-C',str(library),*args],text=True).strip()
     git('init');git('config','user.email','test@example.invalid');git('config','user.name','Test');git('add','.');git('commit','-m','source snapshot')
     app.workflow.course_root=library
+    commit=git('rev-parse','HEAD')
+    outline=json.loads((library/'modules'/directory/'outlines.json').read_text())
+    # Only one native scene is implemented; additional planned outline pages
+    # must not become placeholder pages in an official baseline.
+    scene=outline['pages'][0]
+    (cache/('_runtime-'+commit+'.json')).write_text(json.dumps({'schema':1,'commit':commit,'modules':{module['id']:{'scenes':[{'id':scene['id'],'title':scene['title']}]}}}))
     def sync():
         original=app.workflow.root;app.workflow.root=None
         try:app.workflow.library.sync()
@@ -48,6 +57,7 @@ def official(official_pending):
 def test_adopt_once_admin_manages_v1_and_governance_cannot_resurrect(official):
     app,cid,rid,admin,module,sync=official
     detail=app.workflow.public_course(cid)
+    assert len(app.workflow.revision(admin,rid)['project']['pages'])==1
     assert detail['course']['version']=='1.0.0' and detail['course']['creator']=='管理员'
     assert detail['course']['revision_id']==rid and detail['course']['library']['module_id']==module['id']
     assert detail['releases'][0]['current'] and len(detail['releases'])==1

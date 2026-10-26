@@ -64,7 +64,7 @@ export function Cover({ module }: { module: CatalogModule }) {
   return <div className="sd-library-cover" style={{ '--cover-color': meta.color } as CSSProperties}>
     {failed || (!cover && !module.catalog?.cover_url) ? <div className="sd-library-cover-fallback"><Icon name={topics.find(topic => topic.name === meta.topic)?.icon ?? 'book'} /><span>{meta.topic}</span></div>
       : <img src={module.catalog?.cover_url || moduleAssetUrl(module.assetId, `scenedeck-thumbnails/${cover}.png`)} alt={`${meta.title}课件预览`} loading="lazy" onError={() => setFailed(true)} />}
-    <span className="sd-library-cover-count">{module.pages.length} 页</span>
+    <span className="sd-library-cover-count">{module.catalog?.page_count??module.pages.length} 页</span>
   </div>;
 }
 
@@ -96,7 +96,7 @@ export function HomePage() {
     return (topic === '全部课程' || meta.topic === topic) && (!normalizedQuery || text.includes(normalizedQuery))
       && (tab !== 'saved' || saved.includes(favoriteKey(module)))
       && (level === '全部' || (level === '入门' ? module.difficulty === 'introductory' : ['intermediate', 'advanced'].includes(module.difficulty ?? '')));
-  }).sort((a, b) => sort === 'pages' ? a.pages.length - b.pages.length : sort === 'name' ? info(a).title.localeCompare(info(b).title, 'zh-CN') : 0);
+  }).sort((a, b) => sort === 'pages' ? (a.catalog?.page_count??a.pages.length) - (b.catalog?.page_count??b.pages.length) : sort === 'name' ? info(a).title.localeCompare(info(b).title, 'zh-CN') : 0);
   const recentCourse=personal.data.history[0];
   const knownPublished=[...published,...personal.data.favorite_courses.filter(c=>!published.some(other=>other.id===c.id))].filter(c=>!listedCourses.some(m=>m.catalog?.course_id===c.id));
   const visiblePublished=(tab==='saved'?knownPublished:published).filter(c=>(tab!=='saved'||saved.includes('course:'+c.id))&&(!query||[c.title,c.description].join(' ').includes(query))&&(topic==='全部课程'||c.category===topic));

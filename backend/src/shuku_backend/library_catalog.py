@@ -55,7 +55,7 @@ class LibraryCatalog:
                     and re.fullmatch(r'[A-Za-z0-9_-]+',alias) and alias not in aliases and uid not in identities,
                     503,'INVALID_COURSE_LIBRARY','课程标识不匹配或重复。')
             aliases.add(alias);identities.add(uid)
-            pages=data.get('pages',[])
+            pages=self.w.runtime_scenes(uid,root,commit=commit) or data.get('pages',[])
             asset_id=uid
             thumbnails=root/'assets'/asset_id/'scenedeck-thumbnails'
             cover=next((p['id'] for p in pages if re.fullmatch(r'[A-Za-z0-9_-]+',p.get('id','')) and (thumbnails/(p['id']+'.png')).is_file()),None)
@@ -118,10 +118,7 @@ class LibraryCatalog:
                     continue
                 cid=str(uuid5(NAMESPACE_URL,'shuku:official:'+REPOSITORY+':'+mid))
                 require(not db.execute('SELECT id FROM shuku_courses WHERE id=%s',(cid,)).fetchone(),409,'COURSE_ID_CONFLICT','官方课程标识已被占用。')
-                module=self.w.module_context(mid)
-                data=json.loads((Path(module['directory'])/'outlines.json').read_text())
-                project={'version':1,'id':cid,'courseId':module['alias'],'title':item['title'],'duration':30,'style':'原课程','outlineConfirmed':True,'nativeSnapshot':self.commit,
-                         'pages':[{'id':p['id'],'nativeId':p['id'],'title':p['title'],'goal':p.get('goal',''),'summary':p.get('summary',''),'ready':True,'designed':True,'note':'','revisions':[],'messages':[]} for p in data['pages']]}
+                project=self.initial_project(mid,cid,item['title'])
                 db.execute("INSERT INTO shuku_courses(id,owner_id,module_id,title,description,category,created_at) VALUES (%s,%s,%s,%s,%s,%s,%s)",(cid,uid,mid,item['title'],item['description'],item['category'],self.w.clock()))
                 db.execute('INSERT INTO shuku_course_managers VALUES (%s,%s)',(cid,uid))
                 db.execute('INSERT INTO shuku_library_bindings(module_id,course_id,source_commit,created_at) VALUES (%s,%s,%s,%s)',(mid,cid,self.commit,self.w.clock()))
@@ -130,6 +127,14 @@ class LibraryCatalog:
                 self.w.audit(db,uid,'library.bootstrap',cid)
                 created.append({'course_id':cid,'revision_id':revision['id']})
         return {'created':created,'count':len(created),'retried':retried}
+
+    def initial_project(self,mid,cid,title):
+        module=self.w.module_context(mid)
+        data=json.loads((Path(module['directory'])/'outlines.json').read_text())
+        outlines={p['id']:p for p in data.get('pages',[])}
+        scenes=self.w.runtime_scenes(mid,required=True)
+        return {'version':1,'id':cid,'courseId':module['alias'],'title':title,'duration':30,'style':'原课程','outlineConfirmed':True,'nativeSnapshot':self.commit,'sourceSceneIds':[p['id'] for p in scenes],
+                'pages':[{'id':p['id'],'nativeId':p['id'],'title':p['title'],'goal':outlines.get(p['id'],{}).get('goal','理解本页的核心概念。'),'summary':outlines.get(p['id'],{}).get('summary',p['title']),'ready':True,'designed':True,'note':'','revisions':[],'messages':[]} for p in scenes]}
 
     def complete_initial(self,db,rid,digest):
         row=db.execute("SELECT c.id,c.owner_id,c.head_revision,c.current_release,c.status FROM shuku_library_bindings b JOIN shuku_courses c ON c.id=b.course_id WHERE c.head_revision=%s AND b.initial_revision_id=%s FOR UPDATE",(rid,rid)).fetchone()

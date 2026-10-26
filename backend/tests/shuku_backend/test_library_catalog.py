@@ -23,7 +23,7 @@ def snapshot(tmp_path,store):
     (root/'source-lock.json').write_text(json.dumps({'repository':'ReductTech/intuitive-deep-learning'}))
     image=root/'assets'/uid/'scenedeck-thumbnails'/'first.png';image.parent.mkdir(parents=True);image.write_bytes(b'png')
     git(root,'add','.');git(root,'commit','-m','snapshot')
-    catalog=LibraryCatalog(SimpleNamespace(course_root=root,root=None,store=store,clock=lambda:1234))
+    catalog=LibraryCatalog(SimpleNamespace(course_root=root,root=None,store=store,clock=lambda:1234,runtime_scenes=lambda *a,**kw:None))
     return root,uid,directory,data,catalog
 
 

@@ -30,8 +30,24 @@ class Workflow:
         for path in sorted(((course_root or self.course_root)/'modules').glob('*/outlines.json')):
             data=json.loads(path.read_text())
             if data.get('ppt',{}).get('entry') and data.get('entry'):
-                result.append({'id':data['moduleIdentity']['id'],'alias':data.get('id',path.parent.name),'title':data['title'],'directory':str(path.parent),'entry':data['ppt']['entry'],'pages':[p['id'] for p in data.get('pages',[])]})
+                result.append({'id':data['moduleIdentity']['id'],'alias':data.get('id',path.parent.name),'title':data['title'],'directory':str(path.parent),'entry':data['ppt']['entry'],'pages':[p['id'] for p in (self.runtime_scenes(data['moduleIdentity']['id'],course_root or self.course_root) or data.get('pages',[]))]})
         return result
+
+    def runtime_scenes(self,module_id,root=None,required=False,commit=None):
+        root=root or self.course_root
+        if root is None:
+            require(not required,409,'RUNTIME_CATALOG_REQUIRED','请先导出课程实际页面清单。')
+            return None
+        commit=commit or (root.name if re.fullmatch('[0-9a-f]{40}',root.name) else getattr(getattr(self,'library',None),'commit',None))
+        path=root.parent/('_runtime-'+str(commit)+'.json')
+        if not path.is_file():
+            require(not required,409,'RUNTIME_CATALOG_REQUIRED','请先导出课程实际页面清单，再登记正式版本。')
+            return None
+        data=json.loads(path.read_text());item=data.get('modules',{}).get(str(module_id))
+        require(data.get('schema')==1 and data.get('commit')==commit and isinstance(item,dict),409,'INVALID_RUNTIME_CATALOG','实际页面清单与课程快照不匹配。')
+        scenes=item.get('scenes')
+        require(isinstance(scenes,list) and 1<=len(scenes)<=100 and all(isinstance(p,dict) and isinstance(p.get('id'),str) and 0<len(p['id'])<=200 and isinstance(p.get('title'),str) and p['title'] for p in scenes) and len({p['id'] for p in scenes})==len(scenes),409,'INVALID_RUNTIME_CATALOG','实际页面清单不完整或存在重复页面。')
+        return scenes
 
     def module_context(self,module_id,course_root=None):
         return next((m for m in self.modules(course_root) if m['id']==str(module_id)),
