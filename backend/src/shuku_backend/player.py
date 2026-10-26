@@ -12,7 +12,7 @@ from .database import JsonValue
 from .errors import require
 from .workflow import identifier
 
-RENDERER='shuku-brand-layout-v3'
+RENDERER='shuku-fullheight-chat-v4'
 
 class Player:
     def __init__(self,flow):
