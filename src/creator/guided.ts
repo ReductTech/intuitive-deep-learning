@@ -1,6 +1,7 @@
 import type {CreatorPage,CreatorProject} from './model';
+import type {OutlinePlan} from './outline';
 export type GuidedLayout='visual'|'steps'|'question';
-export interface GuidedState {phase:'choices'|'outline'|'pages';audience:string;description:string;layout?:GuidedLayout;brief?:string;image?:string;confirmed?:boolean;imported?:boolean;reference?:{title:string;body:string;notes:string};suggestions?:string[]}
+export interface GuidedState {phase:'choices'|'outline'|'pages';audience:string;description:string;plan?:OutlinePlan;layout?:GuidedLayout;brief?:string;image?:string;confirmed?:boolean;imported?:boolean;reference?:{title:string;body:string;notes:string};suggestions?:string[]}
 export function guidedState(page:CreatorPage):GuidedState|undefined{const value=page.outline?.guided as GuidedState|undefined;return value&&['choices','outline','pages'].includes(value.phase)&&typeof value.audience==='string'&&typeof value.description==='string'?value:undefined;}
 export function startGuided(project:CreatorProject,description:string):CreatorProject{
  return {...project,source:undefined,duration:20,style:'简洁图解',outlineConfirmed:false,pages:[{id:crypto.randomUUID(),format:'text',title:project.title,goal:'',summary:description,note:'',designed:false,ready:false,revisions:[],messages:[],outline:{guided:{phase:'choices',audience:'初学者',description}}}]};
