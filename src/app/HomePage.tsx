@@ -98,7 +98,7 @@ export function HomePage() {
       && (level === '全部' || (level === '入门' ? module.difficulty === 'introductory' : ['intermediate', 'advanced'].includes(module.difficulty ?? '')));
   }).sort((a, b) => sort === 'pages' ? a.pages.length - b.pages.length : sort === 'name' ? info(a).title.localeCompare(info(b).title, 'zh-CN') : 0);
   const recentCourse=personal.data.history[0];
-  const knownPublished=[...published,...personal.data.favorite_courses.filter(c=>!published.some(other=>other.id===c.id))];
+  const knownPublished=[...published,...personal.data.favorite_courses.filter(c=>!published.some(other=>other.id===c.id))].filter(c=>!listedCourses.some(m=>m.catalog?.course_id===c.id));
   const visiblePublished=(tab==='saved'?knownPublished:published).filter(c=>(tab!=='saved'||saved.includes('course:'+c.id))&&(!query||[c.title,c.description].join(' ').includes(query))&&(topic==='全部课程'||c.category===topic));
   const unavailableFavorites=tab==='saved'?saved.filter(key=>!listedCourses.some(m=>'module:'+m.id===key||'course:'+m.catalog?.course_id===key)&&!knownPublished.some(c=>'course:'+c.id===key)):[];
   function reset() { setQuery(''); setTopic('全部课程'); setLevel('全部'); setTab('courses'); }
