@@ -37,6 +37,7 @@ class PersonalLearning:
         rid=str(release['revision_id'])
         return {'resource':key,'title':project['title'],'version':rid,'version_label':'v'+release['version'],
                 'course_id':cid,'revision_id':rid,'pages':[p['id'] for p in project['pages']],
+                'page_details':teaching_pages(project,revision['files'],rid,str(course['module_id'])),
                 'sandboxed':bool(project.get('source')),'url':'/learn?revision='+rid,'available':True}
 
     def context(self,key,version):
@@ -105,3 +106,13 @@ class PersonalLearning:
                 result.append({**context,**{k:row[k] for k in ('page_id','mode','completed','updated_at')},'page_count':len(context['pages'])})
             last=rows[19] if len(rows)>20 else None
             return {'account_id':uid,'favorite_courses':saved_courses,'favorites':[r['resource'] for r in favorites],'history':result,'next_cursor':json.dumps([last['updated_at'],last['resource'],last['version']]) if last else None}
+
+
+def teaching_pages(project,files,rid,module_id):
+    """Public presentation metadata, bound to the selected release's own artifacts."""
+    pages=[]
+    for page in project['pages']:
+        path='assets/'+module_id+'/scenedeck-thumbnails/'+str(page.get('nativeId',''))+'.png'
+        thumbnail='/api/shuku/revisions/'+rid+'/files/'+quote(path,safe='/') if page.get('nativeId') and path in files else None
+        pages.append({'id':page['id'],'title':page['title'],'thumbnail':thumbnail})
+    return pages

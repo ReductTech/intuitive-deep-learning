@@ -132,3 +132,23 @@ def test_personal_http_auth_csrf_validation_and_scoped_records(api):
     assert request('POST','/personal/study',data,cookie=learner)[0]==409
     assert request('GET','/personal?user_id='+LEARNER,cookie=owner)[0]==400
     assert request('POST','/personal/study',{**data,'expected_version':True},cookie=learner)[0]==400
+
+
+def test_teaching_navigation_uses_release_assets_and_never_exposes_private_notes():
+    from shuku_backend.personal import teaching_pages
+    project={'pages':[{'id':'first','nativeId':'native-first','title':'第一页','note':'private','summary':'private summary'},
+                      {'id':'second','nativeId':'missing','title':'第二页'},
+                      {'id':'custom','title':'自定义页'}]}
+    files={'assets/module/scenedeck-thumbnails/native-first.png':{'sha256':'unused'}}
+    result=teaching_pages(project,files,'release-1','module')
+    assert result==[{'id':'first','title':'第一页','thumbnail':'/api/shuku/revisions/release-1/files/assets/module/scenedeck-thumbnails/native-first.png'},
+                    {'id':'second','title':'第二页','thumbnail':None}, {'id':'custom','title':'自定义页','thumbnail':None}]
+    assert teaching_pages(project,{},'release-2','module')[0]['thumbnail'] is None
+
+
+def test_published_study_context_contains_only_safe_navigation(published):
+    app,c,p,owner,admin,release,revision=published
+    context=app.workflow.personal.context('course:'+c['id'],revision['id'])
+    assert [page['id'] for page in context['page_details']]==context['pages']
+    assert all(set(page)=={'id','title','thumbnail'} for page in context['page_details'])
+    assert context['page_details'][0]['title']==p['pages'][0]['title']

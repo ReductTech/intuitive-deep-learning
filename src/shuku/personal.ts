@@ -3,7 +3,7 @@ import {api,ApiError} from './client';
 import {isGuestMode,requestSignIn} from './guest';
 import {isLocalPreview} from '../app/runtimeMode';
 export interface StudyPosition {page_id:string;mode:'guide'|'ppt';completed:string[]}
-export interface StudyContext {resource:string;title:string;version:string;version_label:string;pages:string[];url:string|null;available:boolean;sandboxed?:boolean;course_id?:string;revision_id?:string}
+export interface StudyContext {resource:string;title:string;version:string;version_label:string;pages:string[];page_details?:{id:string;title:string;thumbnail?:string|null}[];url:string|null;available:boolean;sandboxed?:boolean;course_id?:string;revision_id?:string}
 export interface StudyRecord extends StudyContext,StudyPosition {updated_at:number;page_count:number}
 export interface PublishedCourse {id:string;title:string;description:string;category:string;version:string;revision_id:string}
 export interface PersonalData {favorite_courses:PublishedCourse[];account_id:string;favorites:string[];history:StudyRecord[];next_cursor:string|null}
