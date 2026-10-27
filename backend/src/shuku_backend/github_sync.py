@@ -15,13 +15,14 @@ from .storage import course_view
 from .workflow import identifier
 from .workers import DeferredTask
 from .collaboration import teaching
+from .hosted_workspaces import HostedWorkspaces
 
 
 class GitHubSync:
     def __init__(self,flow,config=None,client=None):
         self.flow=flow;self.store=flow.store;self.clock=flow.clock;self.bucket=flow.bucket
         self.config=config or {};self.client=client or (GitHub(config['appId'],config['privateKeyPath'],self.clock) if config else None)
-        self.stop=threading.Event();self.thread=None
+        self.stop=threading.Event();self.thread=None;self.hosted=HostedWorkspaces(self)
 
     def repo(self,db,cid):
         return db.execute('SELECT * FROM shuku_github_repositories WHERE course_id=%s',(cid,)).fetchone()
@@ -57,6 +58,8 @@ class GitHubSync:
     def status(self,uid,cid):
         with self.store.transaction() as db:
             self.flow.owner(db,uid,cid)
+            hosted=self.hosted.status_in(db,cid)
+            if hosted:return hosted
             repo=self.repo(db,cid)
             jobs=db.execute("SELECT j.id,j.kind,j.subject,t.status,t.checkpoint,t.error_code FROM shuku_github_jobs j JOIN shuku_tasks t ON t.id=j.task_id WHERE j.course_id=%s ORDER BY j.created_at DESC LIMIT 30",(cid,)).fetchall()
             external=db.execute('SELECT * FROM shuku_github_external_prs WHERE course_id=%s ORDER BY updated_at DESC LIMIT 100',(cid,)).fetchall()
@@ -101,6 +104,8 @@ class GitHubSync:
     def retry(self,uid,cid,jid):
         with self.store.transaction() as db:
             self.flow.owner(db,uid,cid)
+            if self.hosted.retry(db,cid,jid):
+                self.flow.audit(db,uid,'github.retry',jid);return {'id':jid}
             j=db.execute('SELECT * FROM shuku_github_jobs WHERE id=%s AND course_id=%s',(identifier(jid),cid)).fetchone()
             if not j:
                 provisioning=db.execute("SELECT id AS task_id FROM shuku_tasks WHERE id=%s AND resource_key=%s AND kind='github.provision'",(jid,'course:'+cid)).fetchone()
@@ -152,6 +157,12 @@ class GitHubSync:
         return row['merge_sha']
 
     def pull(self,repo,rid,call,state,save):
+        with self.store.transaction() as db:
+            candidate=db.execute('SELECT course_id FROM shuku_revisions WHERE id=%s',(rid,)).fetchone()
+            hosted=self.hosted.queue_in(db,str(candidate['course_id']),rid) if candidate else None
+        if hosted and hosted['status']!='succeeded':
+            require(hosted['status']!='failed',409,'WORKSPACE_SYNC_FAILED','私有工作区同步失败，请重试同步。')
+            save(stage='waiting-private-workspace');raise DeferredTask()
         with self.store.transaction() as db:
             revision=db.execute('SELECT r.* FROM shuku_revisions r JOIN shuku_courses c ON c.id=r.course_id WHERE r.id=%s AND NOT c.deleting',(rid,)).fetchone()
             require(revision and revision['state']=='ready',409,'NOT_READY','修订尚未就绪。')
@@ -392,6 +403,7 @@ class GitHubSync:
         return project
 
     def remove(self,task,checkpoint):
+        self.hosted.remove(task,checkpoint)
         with self.store.transaction() as db:
             r=db.execute('SELECT * FROM shuku_removals WHERE id=%s',(task['payload']['removal_id'],)).fetchone()
             if not r or r['state']!='queued':return

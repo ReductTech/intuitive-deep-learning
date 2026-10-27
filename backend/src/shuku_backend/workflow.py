@@ -30,7 +30,7 @@ class Workflow:
         for path in sorted(((course_root or self.course_root)/'modules').glob('*/outlines.json')):
             data=json.loads(path.read_text())
             if data.get('ppt',{}).get('entry') and data.get('entry'):
-                result.append({'id':data['moduleIdentity']['id'],'alias':data.get('id',path.parent.name),'title':data['title'],'directory':str(path.parent),'entry':data['ppt']['entry'],'pages':list(dict.fromkeys(p['id'] for p in [*(self.runtime_scenes(data['moduleIdentity']['id'],course_root or self.course_root) or []),*data.get('pages',[])]))})
+                result.append({'id':data['moduleIdentity']['id'],'alias':data.get('id',path.parent.name),'title':data['title'],'directory':str(path.parent),'entry':data['ppt']['entry'],'pages':list(dict.fromkeys(p['id'] for p in [*(self.runtime_scenes(data['moduleIdentity']['id'],course_root or self.course_root) or []),*data.get('pages',[])] if isinstance(p,dict) and isinstance(p.get('id'),str) and p['id']))})
         return result
 
     def runtime_scenes(self,module_id,root=None,required=False,commit=None):
@@ -148,6 +148,8 @@ class Workflow:
         db.execute("INSERT INTO shuku_tasks(id,kind,resource_key,idempotency_key,request_hash,payload,available_at,created_at) VALUES (%s,'revision.build',%s,%s,%s,%s,%s,%s)",(uuid4(),'course:'+cid,'build:'+rid,digest,JsonValue({'revision_id':rid}),now,now))
         db.execute("UPDATE shuku_contributions SET status='superseded' WHERE workspace_id=%s AND status IN ('pending','approved')",(cid,))
         self.audit(db,uid,'revision.save',rid)
+        github=getattr(self,'github',None)
+        if github and getattr(github,'hosted',None):github.hosted.queue_in(db,cid,rid)
         return {'id':rid,'state':'building'}
 
 
