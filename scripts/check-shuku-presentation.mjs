@@ -12,7 +12,8 @@ try{
  let uploads=0;
  await page.route('**/api/shuku/**',async route=>{
   const req=route.request(),path=new URL(req.url()).pathname.slice('/api/shuku'.length);let data;
-  if(path==='/auth/me')data={user:{id:'author',username:'xiaoman',display_name:'小满',role:'creator'}};
+  if(path.endsWith('/player'))data={state:'queued'};
+  else if(path==='/auth/me')data={user:{id:'author',username:'xiaoman',display_name:'小满',role:'creator'}};
   else if(path==='/messages')data={messages:[],unread_count:0};
   else if(path==='/modules')data={modules:[{id:course.module_id,title:'课程模板',alias:'neuron-guide'}]};
   else if(path==='/workspaces')data={workspaces:[]};
@@ -32,9 +33,9 @@ try{
  await page.getByRole('button',{name:'开始创建',exact:true}).click();await page.getByRole('heading',{name:'这门课，你想怎样讲？',exact:true}).waitFor();assert.equal(uploads,1);await page.getByText('已读取 2 页',{exact:true}).waitFor();
  await page.getByRole('button',{name:'40 分钟',exact:true}).click();await page.getByRole('button',{name:'查看课程大纲',exact:true}).click();await page.getByRole('button',{name:'确定逻辑，细化模块',exact:true}).click();await page.getByRole('button',{name:'确定模块，细化页面',exact:true}).click();await page.getByRole('button',{name:'展开从问题出发',exact:true}).click();await page.locator('.oe-leaves button').first().click();assert.equal(await page.getByLabel('页面标题',{exact:true}).inputValue(),'Agent 是什么');
  await page.getByLabel('这一页想讲清楚什么？',{exact:true}).fill('结合已有 PPT 补充一个生活案例');await page.getByRole('button',{name:'确认大纲，开始逐页制作',exact:true}).click();
- await page.getByText('原 PPT 与创作建议',{exact:true}).click();await page.getByText('先让学习者说出自己的看法',{exact:true}).waitFor();await page.getByText('加入一个贴近日常的案例或动手任务。',{exact:true}).waitFor();
+ await page.getByText('编辑本页内容',{exact:true}).click();await page.getByText('原 PPT 与创作建议',{exact:true}).click();await page.getByText('先让学习者说出自己的看法',{exact:true}).waitFor();await page.getByText('加入一个贴近日常的案例或动手任务。',{exact:true}).waitFor();
  await page.getByRole('button',{name:'选择分步讲解',exact:true}).click();await page.getByRole('button',{name:'确认本页，下一页',exact:true}).click();await page.getByRole('button',{name:'上一页',exact:true}).click();assert.equal(await page.getByLabel('讲解内容',{exact:true}).inputValue(),'结合已有 PPT 补充一个生活案例');
- await page.getByRole('button',{name:'保存修订',exact:true}).click();await page.locator('.ga-header>small').filter({hasText:/^已保存$/}).waitFor();await page.reload();await page.getByText('原 PPT 与创作建议',{exact:true}).waitFor();
+ await page.getByText('课程操作',{exact:true}).click();await page.getByRole('button',{name:'保存修订',exact:true}).click();await page.locator('.ga-header>small').filter({hasText:/^已保存$/}).waitFor();await page.reload();await page.locator('.cw-app.cw-editing').waitFor();await page.getByRole('button',{name:'查看课程大纲',exact:true}).click();await page.getByRole('heading',{name:'从整体，慢慢展开'}).waitFor();
  assert.equal(saved.presentation.filename,'我的课程.pptx');assert.equal(saved.pages[0].outline.guided.reference.body,'课程中的原有内容');assert.match(saved.source.files['Page1.tsx'],/生活案例/);
  await page.setViewportSize({width:390,height:844});assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));await fs.mkdir('test-results/presentation',{recursive:true});await page.screenshot({path:'test-results/presentation/mobile.png',fullPage:true});await page.setViewportSize({width:1440,height:1000});await page.screenshot({path:'test-results/presentation/desktop.png',fullPage:true});assert.deepEqual(errors,[]);
  console.log('PASS PPTX upload: format validation, multipart, imported outline, notes and suggestions, backtracking, source saving/reload and mobile.');

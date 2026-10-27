@@ -4,3 +4,57 @@
 .ga-app .ga-progress button{padding:0;border:0;border-radius:0;background:none;color:#8b98a8;font-size:14px}.ga-app .ga-progress button[aria-current=step]{color:var(--ui-accent,#287c71);font-weight:700;opacity:1}.ga-app .ga-progress button:not(:disabled):hover{text-decoration:underline}@media(max-width:800px){.ga-app .ga-progress button{font-size:12px}}
 
 .ga-presentation{padding:18px 22px;margin:20px 0 28px;background:#fff;border:1px solid #d5dfeb;border-radius:12px}.ga-presentation>strong{overflow-wrap:anywhere}.ga-presentation>span{margin-left:16px;color:#277b70;font-size:14px}.ga-presentation p{margin:8px 0}.ga-presentation small,.ga-reference-content small{color:#7b8da2}.ga-presentation details{margin-top:12px}.ga-presentation-reference{margin:20px 0;border:1px solid #d5dfeb;border-radius:12px;background:white;padding:16px 20px}.ga-presentation-reference summary{cursor:pointer;color:#456285}.ga-reference-content{display:grid;grid-template-columns:1fr 1fr;gap:30px}.ga-reference-content p{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.7;max-height:300px;overflow:auto}.ga-reference-content h3{font-size:16px;margin:20px 0 8px}.ga-reference-content h4{font-size:14px;margin-bottom:8px}@media(max-width:800px){.ga-reference-content{grid-template-columns:1fr;gap:0}}
+
+/* Page creation: one decision at a time; supporting information stays on demand. */
+.ga-focus .ga-main{max-width:1080px;padding:38px 36px 64px}
+.ga-focus .ga-production.ga-studio{display:block;max-width:960px;margin:auto}
+.ga-studio-position{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;color:var(--ui-text-muted,#8493a4)}
+.ga-studio-position>small{font-size:12px;font-variant-numeric:tabular-nums}
+.ga-page-switcher{position:relative;z-index:5}
+.ga-page-switcher>summary{display:flex;align-items:center;gap:22px;list-style:none;cursor:pointer;color:var(--ui-text-main,#17304f);font-size:14px;font-weight:500;padding:8px 0}
+.ga-page-switcher>summary::-webkit-details-marker,.ga-content-editor>summary::-webkit-details-marker{display:none}
+.ga-page-switcher>summary span{color:#94a0b0}
+.ga-page-switcher>div{position:absolute;top:100%;left:0;width:min(380px,calc(100vw - 40px));max-height:360px;overflow:auto;background:#fff;border:1px solid var(--ui-border,#dae3ed);border-radius:14px;box-shadow:0 16px 45px #21334b16;padding:8px}
+.ga-page-switcher>div>button{display:flex;width:100%;text-align:left;gap:12px;align-items:baseline;border:0;color:#6c7e94;padding:12px;font-size:13px}
+.ga-page-switcher button span:first-child{flex:none;width:20px;color:#8a9bb0;font-size:11px}
+.ga-page-switcher button span:last-child{overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.ga-page-switcher button[aria-current=page]{background:var(--ui-accent-soft,#eef8f5);color:var(--ui-accent,#287c71)}
+.ga-studio-heading{margin-bottom:32px}
+.ga-focus .ga-studio-heading h1{font-size:clamp(23px,2.1vw,30px);line-height:1.5;font-weight:600;letter-spacing:-.5px;margin:0 0 12px;max-width:850px;overflow-wrap:anywhere}
+.ga-content-editor>summary{cursor:pointer;font-size:13px;color:#8392a5;list-style:none;display:inline-block;padding:4px 0}
+.ga-content-editor>summary:hover{color:var(--ui-accent,#287c71)}
+.ga-content-editor>summary:after{content:' ＋';margin-left:4px}.ga-content-editor[open]>summary:after{content:' −'}
+.ga-content-editor .ga-page-fields{margin:18px 0 0;padding:22px;background:white;border:1px solid var(--ui-border,#dae3ed);border-radius:12px}
+.ga-visual-choices>h2{font-size:15px;font-weight:500;margin:0 0 16px}
+.ga-focus .ga-designs{gap:18px}
+.ga-focus .ga-design{border-radius:14px;padding:5px;box-shadow:0 2px 8px #21334b03;transition:border-color .15s,box-shadow .15s}
+.ga-focus .ga-design:hover{border-color:#a7bccc;box-shadow:0 5px 18px #21334b09}
+.ga-focus .ga-design>span{display:flex;justify-content:space-between;padding:13px 12px;font-size:13px}
+.ga-focus .ga-design>span>span{color:#91a0b0;font-size:12px}
+.ga-focus .ga-design .ga-canvas{padding:18px 16px;aspect-ratio:4/3}
+.ga-focus .ga-design .ga-canvas>strong{font-size:13px;line-height:1.5;max-height:3em}
+.ga-focus .ga-design .ga-canvas p{-webkit-line-clamp:2;display:-webkit-box;-webkit-box-orient:vertical;overflow:hidden;font-size:8px;max-height:3.2em}
+.ga-template-label{display:block;font-size:11px;color:#96a2b1;text-align:right;margin-top:10px}
+.ga-selected-layout{max-width:780px;margin:auto}
+.ga-selected-layout>.ga-canvas{padding:38px 44px;border-radius:16px;aspect-ratio:16/9}
+.ga-selected-layout .ga-canvas>small{font-size:11px;margin-bottom:16px}
+.ga-selected-layout .ga-canvas>strong{font-size:clamp(20px,2vw,28px);max-height:3em;line-height:1.5}
+.ga-selected-layout .ga-canvas-content{gap:24px;margin-top:24px}
+.ga-selected-layout .ga-canvas p{font-size:13px;max-height:6.4em}
+.ga-selected-layout .ga-mini-diagram{gap:10px}.ga-selected-layout .ga-mini-diagram span{font-size:11px;padding:14px 6px}.ga-selected-layout .ga-mini-diagram b{font-size:30px}
+.ga-selected-layout .ga-canvas img{max-height:180px}
+.ga-selected-caption{display:flex;align-items:center;justify-content:space-between;margin-top:8px;color:#91a0b0;font-size:12px}
+.ga-app .ga-selected-caption button,.ga-app .ga-refine-toggle button{border:0;background:none;font-size:13px;color:#71859b;padding:9px 0;border-radius:4px}
+.ga-selected-caption button:hover,.ga-refine-toggle button:hover{color:var(--ui-accent,#287c71)}
+.ga-refine-toggle{margin-top:18px;text-align:center}
+.ga-focus .ga-refine{max-width:780px;margin:14px auto 0;padding:24px}
+.ga-focus .ga-refine textarea{background:#fafbfd;line-height:1.7}
+.ga-focus .ga-reference-row{gap:12px}.ga-focus .ga-reference-row .ga-update-ideas{margin-left:auto}
+.ga-focus .ga-footer{border-top:1px solid var(--ui-border,#e1e7ee);padding-top:22px;margin-top:30px;align-items:center}
+.ga-focus .ga-footer>button:first-child{background:none;border-color:transparent;color:#8695a7;padding-left:0}
+.ga-focus .ga-footer .ga-primary{padding:12px 24px}
+@media(max-width:680px){.ga-focus .ga-main{padding:24px 20px 48px}.ga-studio-position{margin-bottom:20px}.ga-studio-heading{margin-bottom:24px}.ga-focus .ga-designs{grid-template-columns:1fr;gap:12px}.ga-focus .ga-design{display:grid;grid-template-columns:minmax(0,1fr) 100px;align-items:center;text-align:left}.ga-focus .ga-design .ga-canvas{aspect-ratio:16/9;padding:12px}.ga-focus .ga-design .ga-canvas>strong{font-size:11px}.ga-focus .ga-design>span{padding:12px;display:block}.ga-focus .ga-design>span>span{margin-left:6px}.ga-selected-layout>.ga-canvas{padding:22px;aspect-ratio:4/3}.ga-selected-layout .ga-canvas>strong{font-size:20px}.ga-selected-layout .ga-canvas-content{gap:14px;margin-top:18px}.ga-selected-layout .ga-canvas p{font-size:11px;max-height:5em}.ga-selected-layout .ga-mini-diagram span{font-size:8px;padding:10px 4px}.ga-selected-layout .ga-mini-diagram b{font-size:22px}.ga-focus .ga-refine{padding:18px}.ga-focus .ga-reference-row .ga-update-ideas{margin-left:0;width:100%}.ga-focus .ga-footer{margin-top:24px}.ga-selected-layout .ga-canvas img{max-height:110px}}
+@media(prefers-reduced-motion:reduce){.ga-focus .ga-design{transition:none}}
+
+.ga-course-actions{position:relative;z-index:8}.ga-course-actions>summary{list-style:none;cursor:pointer;font-size:13px;padding:10px 16px;border:1px solid var(--ui-border,#dae3ed);border-radius:10px;color:#6f8198;background:white}.ga-course-actions>summary::-webkit-details-marker{display:none}.ga-course-actions>summary:after{content:'⌄';margin-left:14px;color:#96a2b1}.ga-course-actions>div{position:absolute;right:0;top:calc(100% + 8px);width:210px;padding:8px;background:white;border:1px solid var(--ui-border,#dae3ed);border-radius:12px;box-shadow:0 16px 45px #21334b16;display:flex;flex-direction:column;gap:3px}.ga-app .ga-course-actions>div>button,.ga-app .ga-course-actions>div>a{display:block;width:100%;border:0;font-size:13px;text-align:left;padding:10px 12px;white-space:normal;margin:0}.ga-course-actions>div>button:hover,.ga-course-actions>div>a:hover{background:#f2f5fa}
+@media(max-width:680px){.ga-focus .ga-header{gap:12px;padding:14px 20px}.ga-focus .ga-header>strong{max-width:52vw;font-size:14px}.ga-focus .ga-header>small{font-size:11px}.ga-focus .ga-header nav{gap:10px}.ga-focus .ga-header nav>button{font-size:12px;padding:9px 13px}.ga-focus .ga-course-actions>summary{font-size:12px;padding:9px 13px}}
