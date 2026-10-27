@@ -22,3 +22,8 @@ assert.throws(()=>importOutlineMarkdown(project,'a'.repeat(256001)),/过长/);
 assert.throws(()=>applyOutline(project,{...plan,modules:[{...plan.modules[0],pageIds:['p0','p0']}]}),/重复/);
 assert.equal(project.pages[0].summary,'内容 0');
 console.log('PASS outline: progressive structure, revision round trip, Markdown, reorder, first-page removal, invalid imports.');
+
+// Legacy source projects keep their code and page entries when outlining.
+const source={...project,source:{files:{'Original.tsx':'export default function Original(){return <h1>KEEP</h1>}'}},pages:pages.map(p=>({...p,format:'react',sourceEntry:'Original.tsx',outline:{existing:'retained'}}))};
+const sourcePlan=outlinePlan(source),outlined=applyOutline(source,{...sourcePlan,logic:'原有课程的结构'});
+assert.deepEqual(outlined.source,source.source);assert.ok(outlined.pages.every(p=>p.sourceEntry==='Original.tsx'&&p.outline.existing==='retained'&&!p.outline.guided));assert.equal(outlinePlan(outlined).logic,'原有课程的结构');

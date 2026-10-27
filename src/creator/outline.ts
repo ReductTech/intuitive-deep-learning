@@ -6,7 +6,7 @@ export interface OutlinePlan {logic:string; step:'story'|'modules'|'pages'; modu
 
 // Keep the plan with the first page so existing revision persistence also saves it.
 export function outlinePlan(project:CreatorProject):OutlinePlan {
- const saved=guidedState(project.pages[0])?.plan;
+ const saved=guidedState(project.pages[0])?.plan || project.pages[0].outline?.courseOutline as OutlinePlan|undefined;
  const ids=new Set(project.pages.map(p=>p.id));
  if(saved?.modules?.length && saved.modules.every(m=>Array.isArray(m.pageIds))){
   const seen=new Set<string>();
@@ -22,7 +22,7 @@ export function applyOutline(project:CreatorProject,plan:OutlinePlan,pages=proje
  const byId=new Map(pages.map(p=>[p.id,p]));
  const ordered=plan.modules.flatMap(m=>m.pageIds.map(id=>byId.get(id)).filter((p):p is CreatorPage=>!!p));
  if(!ordered.length||ordered.length>100||new Set(ordered.map(p=>p.id)).size!==ordered.length)throw new Error('课程需要保留 1–100 页，且页面不能重复。');
- return {...project,outlineConfirmed:false,pages:ordered.map((p,i)=>updateGuided(p,{plan:i===0?plan:undefined}))};
+ return {...project,outlineConfirmed:false,pages:ordered.map((p,i)=>guidedState(p)?updateGuided(p,{plan:i===0?plan:undefined}):({...p,outline:{...p.outline,courseOutline:i===0?plan:undefined}}))};
 }
 function line(value:string){return value.replace(/[\r\n]+/g,' ').trim();}
 export function outlineMarkdown(project:CreatorProject,plan:OutlinePlan):string {
