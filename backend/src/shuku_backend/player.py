@@ -12,7 +12,7 @@ from .database import JsonValue
 from .errors import require
 from .workflow import identifier
 
-RENDERER='shuku-fullheight-chat-v4'
+RENDERER='shuku-managed-slide-v5'
 
 class Player:
     def __init__(self,flow):

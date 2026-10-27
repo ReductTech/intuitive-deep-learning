@@ -22,6 +22,7 @@ def test_original_player_is_authorized_cached_and_preserves_release(workflow):
     assert mime=='text/html' and b'/player/files/bundle.js' in html
     code,_=app.workflow.player.file(uid,rid,'bundle.js')
     assert b'cw-app' in code and b'private-chat-must-not-leak' not in code
+    assert b'shukuPage' in code, 'managed previews reuse the compiled page without nesting another player'
     for path in ('../project.json','project.json','sources/Lesson.tsx'):
         with pytest.raises(BusinessError):app.workflow.player.file(uid,rid,path)
     with pytest.raises(BusinessError):app.workflow.player.file(None,rid,'bundle.js')

@@ -3,6 +3,8 @@ import type {DeckDefinition} from '../../modules/shared/react/presentation';
 import {moduleAssetUrl} from '../../modules/shared/react/assets';
 import type {CreatorProject} from '../creator/model';
 import {CourseWorkspace} from '../creator/CourseWorkspace';
+import {NativeLesson} from './NativeLesson';
+import {TextPage} from './TextPage';
 import {GuideSession} from './GuideSession';
 import './RuntimePlayer.css';
 import {playbackModule} from './playbackModule';
@@ -27,6 +29,12 @@ export function RuntimePlayer({project,deck,guide,notes,assetId='',initialState,
   return()=>{clearTimeout(fallback);window.removeEventListener('message',receive);};
  },[revision]);
  useEffect(()=>{onProgress?.(state);if(channel)window.parent.postMessage({type:'shuku-study-position',revision,channel,state},location.origin);},[state,channel,onProgress,revision]);
+ // A managed editor embeds only the saved slide inside the original workspace.
+ const embeddedPage=new URLSearchParams(location.search).get('shukuPage');
+ if(embeddedPage){
+  const page=project.pages.find(p=>p.id===embeddedPage),scene=deck?.scenes.find(s=>s.id===(page?.nativeId||page?.id));
+  return <div className="course-shell course-page-surface ppt-slide-surface" style={{width:1600,height:900,overflow:'hidden'}}>{!page?<p role="alert">页面不存在。</p>:page.format==='text'?<TextPage title={project.title} page={page} completed={false} onComplete={()=>{}}/>:scene?<NativeLesson scene={scene} mode="ppt" completed={state.completed.includes(page.id)} onComplete={()=>setState({...state,completed:[...new Set([...state.completed,page.id])]})} onReset={()=>setState({...state,completed:state.completed.filter(id=>id!==page.id)})}/>:<p role="alert">该页面尚未生成。</p>}</div>;
+ }
  if(!initialized)return null;
  if(state.mode==='guide'&&guide)return <div className="shuku-original-guide"><GuideSession project={project} state={state} scope={scope} onChange={setState}>{guide}</GuideSession></div>;
  return <CourseWorkspace courses={courses} initialProject={project} reader={{state,onChange:setState,storageKey:scope+':'+revision,thumbnail:page=>assetId&&page.nativeId?moduleAssetUrl(assetId,`scenedeck-thumbnails/${page.nativeId}.png`):undefined}}/>;
