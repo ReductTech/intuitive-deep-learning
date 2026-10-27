@@ -59,7 +59,8 @@ class Settings:
 
     @classmethod
     def from_env(cls):
-        return cls(database_url=os.environ["SHUKU_DATABASE_URL"],
+        from .database import database_url_from_env
+        return cls(database_url=database_url_from_env(),
                    bucket_dir=Path(os.environ["SHUKU_BUCKET_DIR"]),
                    origin=os.environ["SHUKU_PUBLIC_ORIGIN"],
                    demo_password=os.environ.get("SHUKU_DEMO_PASSWORD", ""),

@@ -179,3 +179,16 @@ GitHub App、真实 PR、远程合并核验、Tag／Release、Webhook、周期�
 业务层通过 SQLAlchemy 2 Core 的 Engine、连接池、参数绑定和事务访问 MySQL；表结构在 `schema.py`，显式迁移在 `migrations.py`。JSON 使用 MySQL JSON，UUID 存为 CHAR(36)，InnoDB 事务和行锁保护审核、幂等、任务租约与文件引用；默认 READ COMMITTED，审核列表在 REPEATABLE READ 快照内读取。
 
 迁移需要建表/索引/外键权限，生产运行账号只需业务表读写、迁移标记只读。MySQL DDL 会隐式提交，基线迁移支持失败重跑；全部外键完成后才写入版本和校验值。后续结构升级必须增加显式迁移，不能修改已应用的基线。此版本只初始化 MySQL，不会自动导入历史 PostgreSQL 数据；已有历史库应另做导出、映射和核验后再切换。
+
+
+## 外部 MySQL / RDS
+
+当前使用 SQLAlchemy Core 表定义、连接池、参数绑定及显式事务，并非本地 JSON 模拟库。配置 `SHUKU_DATABASE_URL`，或使用外部环境提供的 `MYSQL_URL_TEST`。二者同时存在但指向不同连接时拒绝启动，避免静默连错数据库；测试只读取独立的 `SHUKU_TEST_DATABASE_URL`，不使用业务连接别名。
+
+示例（占位值）：`MYSQL_URL_TEST=mysql+mysqlconnector://app_user:replace-me@mysql.example.invalid/shuku_business`。实际凭证只放到服务器私有环境文件；不要写入源码、脚本或提交记录。MySQL 要求 8.0.16+。运行账号仅应具有术库表的业务读写权限，建表与索引授权由部署迁移账号管理。
+
+结构仍由 `python -m shuku_backend migrate` 显式创建/升级，正常服务启动不执行 DDL。共享数据库只新增 `shuku_` 表，不接管其他应用表。不额外建立第二套 Alembic 版本记录。
+
+数据搬迁使用 `python -m shuku_backend.database_transfer export --file /private/backup.json`。停止 HTTP/Worker 后导出，输出文件权限为 0600；切换到目标环境配置，先执行结构迁移，再运行 `database_transfer import --file /private/backup.json`，最后执行 `database_transfer verify --file /private/backup.json`。
+
+工具仅处理当前 SQLAlchemy metadata 内的术库表；逐表核对行数与 SHA-256，跳过生成列，恢复后检查循环外键。目标已有不同业务数据时拒绝覆盖，失败整笔回滚。结构标记与文件引用锁必须匹配，重复导入完全相同的快照不产生写入。课程文件桶、GitHub 凭证加密密钥及服务 origin 保持原配置；数据库快照包含私有业务数据，备份应妥善保管。

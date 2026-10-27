@@ -13,7 +13,7 @@ from shuku_backend.errors import BusinessError
 def workflow(store,tmp_path):
     store.seed_demo();root=Path(__file__).resolve().parents[3]
     app=create_application(Settings(store.database_url,tmp_path/'bucket','http://localhost:5175','test-password',source_root=root,port=0))
-    module=app.workflow.modules()[0]
+    module=next(item for item in app.workflow.modules() if item['pages'])
     uid=DEMO_USERS[1][0];admin=DEMO_USERS[2][0]
     course=store.create_course(uid,{'module_id':module['id'],'title':'私有课程'},app.clock())
     project={'version':1,'id':str(uuid4()),'courseId':module['alias'],'title':'私有课程','duration':30,'style':'简洁教学','outlineConfirmed':True,'pages':[{'id':str(uuid4()),'format':'text','title':'第一课','goal':'理解一个概念','summary':'真实课程内容','note':'','ready':True,'designed':True,'revisions':[],'messages':[]}]}

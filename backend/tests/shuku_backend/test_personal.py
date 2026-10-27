@@ -96,7 +96,7 @@ def test_hide_restore_and_permanent_delete_cleanup(published):
 
 def test_builtin_catalog_and_cursor_account_boundary(workflow):
     app,*_=workflow;service=app.workflow.personal
-    modules=app.workflow.modules();module=modules[0];key='module:'+module['alias']
+    modules=app.workflow.modules();module=next(item for item in modules if item['pages']);key='module:'+module['alias']
     service.favorite(LEARNER,{'resource':key,'saved':True})
     service.save(LEARNER,position(key,'builtin',module['pages'][0]))
     assert service.state(LEARNER,key,'builtin')['state']['mode']=='guide'
@@ -116,7 +116,7 @@ def test_builtin_catalog_and_cursor_account_boundary(workflow):
 def test_personal_http_auth_csrf_validation_and_scoped_records(api):
     request,app=api;app.workflow.root=Path(__file__).resolve().parents[3]
     app.workflow.course_root=app.workflow.root
-    module=app.workflow.modules()[0];key='module:'+module['alias'];encoded=key.replace(':','%3A')
+    module=next(item for item in app.workflow.modules() if item['pages']);key='module:'+module['alias'];encoded=key.replace(':','%3A')
     assert request('GET','/personal')[0]==401
     assert request('POST','/personal/favorites',{'resource':key,'saved':True})[0]==401
     assert request('GET','/public/study/'+encoded+'/builtin')[0]==200

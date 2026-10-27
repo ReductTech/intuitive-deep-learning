@@ -15,7 +15,7 @@ LEARNER=DEMO_USERS[0][0]
 @pytest.fixture
 def official_pending(workflow,tmp_path):
     app,_,_,owner,admin=workflow
-    module=app.workflow.modules()[0];directory=Path(module['directory']).name
+    module=next(item for item in app.workflow.modules() if item['pages']);directory=Path(module['directory']).name
     cache=tmp_path/'cache';library=cache/'current';library.mkdir(parents=True)
     shutil.copytree(Path(module['directory']),library/'modules'/directory)
     shutil.copytree(app.workflow.course_root/'modules/shared',library/'modules/shared')
@@ -33,7 +33,7 @@ def official_pending(workflow,tmp_path):
     outline=json.loads((library/'modules'/directory/'outlines.json').read_text())
     # Only one native scene is implemented; additional planned outline pages
     # must not become placeholder pages in an official baseline.
-    scene=outline['pages'][0]
+    scene=next(page for page in outline['pages'] if page.get('id') in module['pages'])
     (cache/('_runtime-'+commit+'.json')).write_text(json.dumps({'schema':1,'commit':commit,'modules':{module['id']:{'scenes':[{'id':scene['id'],'title':scene['title']}]}}}))
     def sync():
         original=app.workflow.root;app.workflow.root=None

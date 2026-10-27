@@ -1,6 +1,7 @@
 """SQLAlchemy connections and typed parameters for the MySQL business store."""
 from dataclasses import dataclass
 import json
+import os
 from uuid import UUID
 
 from sqlalchemy import JSON, bindparam, create_engine, event, text
@@ -19,6 +20,17 @@ def mysql_url(value):
     if url.drivername not in {"mysql", "mysql+mysqlconnector"} or not url.database:
         raise ValueError("SHUKU_DATABASE_URL must name a MySQL database (mysql+mysqlconnector://.../database)")
     return url.set(drivername="mysql+mysqlconnector")
+
+
+def database_url_from_env(environ=None):
+    env = os.environ if environ is None else environ
+    primary = env.get('SHUKU_DATABASE_URL', '').strip()
+    external = env.get('MYSQL_URL_TEST', '').strip()
+    if not primary and not external:
+        raise ValueError('Configure SHUKU_DATABASE_URL or MYSQL_URL_TEST')
+    if primary and external and mysql_url(primary) != mysql_url(external):
+        raise ValueError('Conflicting SHUKU_DATABASE_URL and MYSQL_URL_TEST; configure one database')
+    return primary or external
 
 
 def engine_for(value):
