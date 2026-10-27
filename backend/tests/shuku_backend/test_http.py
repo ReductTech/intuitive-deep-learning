@@ -92,3 +92,19 @@ def test_https_cookie_and_same_role_draft_isolation(api):
     app.settings=replace(app.settings,origin='https://localhost:5173')
     code,_,cookie=request('POST','/auth/login',{'username':'admin','password':'test-password'},origin='https://localhost:5173')
     assert code==200 and '; Secure' in cookie
+
+
+def test_public_https_port_switch_keeps_sessions_and_rejects_old_origin(api):
+    from dataclasses import replace
+    request,app=api
+    old='https://39.105.207.234:5175';new='https://39.105.207.234:5173'
+    app.settings=replace(app.settings,origin=old)
+    code,_,header=request('POST','/auth/login',{'username':'linzhi','password':'test-password'},origin=old)
+    assert code==200 and '; Secure' in header
+    cookie=header.split(';')[0]
+    app.settings=replace(app.settings,origin=new)
+    assert request('GET','/auth/me',cookie=cookie,origin=new)[1]['user']['username']=='linzhi'
+    assert request('POST','/auth/logout',{},cookie=cookie,origin=old)[0]==403
+    assert request('GET','/auth/me',cookie=cookie,origin=new)[0]==200
+    assert request('POST','/auth/login',{'username':'linzhi','password':'test-password'},origin=new)[0]==200
+    assert request('POST','/auth/login',{'username':'linzhi','password':'test-password'},origin=old)[0]==403
