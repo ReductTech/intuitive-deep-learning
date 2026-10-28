@@ -55,6 +55,8 @@ def test_deck_and_opted_in_canvas_registered_but_internal_module_hidden(tmp_path
     assert payloads['Canvas']['page_count'] == 1
     assert payloads['Canvas']['module_id'] == ids['Canvas']
     assert calls == [ids['Deck']]
+    assert payloads['Canvas']['interactive_path'] == '/modules/canvas'
+    assert payloads['Canvas']['page_ids'] == ['first']
 
 
 def test_bootstrap_leaves_guide_only_modules_as_native_courses():
@@ -73,3 +75,18 @@ def test_bootstrap_leaves_guide_only_modules_as_native_courses():
         module_context=lambda mid: {'id': mid, 'directory': None}))
     catalog.commit = 'a' * 40
     assert catalog.bootstrap() == {'created': [], 'count': 0, 'retried': 0}
+
+
+def test_interactive_course_personal_context_uses_registered_native_route():
+    from shuku_backend.personal import PersonalLearning
+    item = {'title': 'Canvas', 'interactive_path': '/modules/tldraw-demo', 'page_ids': ['editable-canvas']}
+    lookups = []
+    def course(alias):
+        lookups.append(alias)
+        return item
+    personal = PersonalLearning(SimpleNamespace(store=None, clock=lambda: 0, modules=lambda: [],
+        library=SimpleNamespace(course=course)))
+    context = personal.resource(None, 'module:tldraw-demo')
+    assert context['available'] and context['url'] == '/modules/tldraw-demo'
+    assert context['pages'] == ['editable-canvas']
+    assert lookups == ['tldraw-demo']

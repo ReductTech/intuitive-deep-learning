@@ -53,7 +53,11 @@ try{
   assert.equal(await start.getAttribute('href'),name==='Tldraw-Demo'?o.path:'/study?module='+encodeURIComponent(o.id||name)+'&mode=guide');
   await start.click();
   if(name==='Tldraw-Demo')await page.locator('iframe[title="tldraw 可编辑画布"]').waitFor();
-  else {await page.waitForFunction(()=>!document.body.innerText.includes('正在打开课程…'));assert.ok(!(await page.locator('body').innerText()).includes('未找到本地课件'));}
+  else {
+   await page.locator('.shuku-original-guide').waitFor();
+   await page.goto(base+'/study?module='+encodeURIComponent(o.id||name)+'&mode=ppt');
+   await page.locator('.cw-reader').waitFor();
+  }
   await page.goto(base);await page.getByText('18 门课程',{exact:true}).waitFor();
  }
  await page.setViewportSize({width:390,height:844});

@@ -67,6 +67,9 @@ class LibraryCatalog:
                      'repository':REPOSITORY,'source_commit':commit,
                      'github_url':'https://github.com/'+REPOSITORY+'/tree/'+commit+'/modules/'+quote(directory),
                      'version':commit[:8]}
+            if not (data.get('ppt') or {}).get('entry'):
+                payload.update(interactive_path=data.get('path') or '/modules/'+directory.lower(),
+                               page_ids=[page['id'] for page in pages])
             rows.append({'module_id':uid,'snapshot_commit':commit,'alias':alias,'repository':REPOSITORY,'payload':payload,'synced_at':self.w.clock()})
         require(rows,503,'INVALID_COURSE_LIBRARY','没有可学习的课程。')
         # Validate the entire snapshot before a single transaction writes it.

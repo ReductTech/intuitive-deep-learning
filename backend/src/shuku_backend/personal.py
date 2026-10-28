@@ -17,6 +17,12 @@ class PersonalLearning:
             alias=key[7:]
             require(re.fullmatch(r'[A-Za-z0-9_-]+',alias),400,'INVALID_INPUT','课程标识不正确。')
             module=next((m for m in self.flow.modules() if m['alias']==alias),None)
+            if module is None and version in (None,'builtin'):
+                item=self.flow.library.course(alias)
+                require(item.get('interactive_path') and item.get('page_ids'),404,'NOT_FOUND','互动课程不存在或已不可访问。')
+                return {'resource':key,'title':item['title'],'version':'builtin','version_label':'互动课程',
+                        'course_id':None,'revision_id':None,'pages':item['page_ids'],
+                        'url':item['interactive_path'],'available':True}
             require(module and version in (None,'builtin'),404,'NOT_FOUND','课程版本不存在或已不可访问。')
             return {'resource':key,'title':module['title'],'version':'builtin','version_label':'内置课程',
                     'course_id':None,'revision_id':None,'pages':module['pages'],
