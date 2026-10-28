@@ -396,3 +396,23 @@ catalog_candidates = table('catalog_candidates',
     Column('reviewed_by', CHAR(36), nullable=True),
     CheckConstraint("status IN ('pending','imported','rejected','invalid','removed')", name='rule_1')
 )
+
+# Local clients only receive hashed, course-scoped credentials.
+agent_credentials = table('agent_credentials',
+    Column('id', CHAR(36), primary_key=True),
+    Column('user_id', CHAR(36), ForeignKey("shuku_users.id", ondelete="RESTRICT", use_alter=True, name="fk_agent_credentials_user"), nullable=False),
+    Column('course_id', CHAR(36), ForeignKey("shuku_courses.id", ondelete="RESTRICT", use_alter=True, name="fk_agent_credentials_course"), nullable=False),
+    Column('token_hash', String(64), nullable=False, unique=True),
+    Column('created_at', Double(), nullable=False),
+    Column('expires_at', Double(), nullable=False),
+    Column('last_used_at', Double(), nullable=True),
+    Column('revoked_at', Double(), nullable=True),
+    Index('agent_credentials_user', 'user_id', 'expires_at')
+)
+agent_requests = table('agent_requests',
+    Column('course_id', CHAR(36), ForeignKey("shuku_courses.id", ondelete="RESTRICT", use_alter=True, name="fk_agent_requests_course"), primary_key=True),
+    Column('request_key', String(100), primary_key=True),
+    Column('request_hash', String(64), nullable=False),
+    Column('revision_id', CHAR(36), ForeignKey("shuku_revisions.id", ondelete="RESTRICT", use_alter=True, name="fk_agent_requests_revision"), nullable=False),
+    Column('created_at', Double(), nullable=False)
+)

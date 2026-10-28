@@ -68,12 +68,21 @@ def handler_for(app):
             self.end_headers()
             self.wfile.write(body)
 
+        def send_client(self,value):
+            body=value.encode()
+            self.send_response(200)
+            self.send_header('Content-Type','text/plain; charset=utf-8')
+            self.send_header('Content-Length',str(len(body)))
+            self.send_header('Cache-Control','no-store')
+            self.send_header('X-Content-Type-Options','nosniff')
+            self.end_headers();self.wfile.write(body)
+
         def cookie(self,token,expire=False):
             value=f"{COOKIE}={token}; HttpOnly; SameSite=Strict; Path=/api/shuku; Max-Age={0 if expire else 43200}"
             return value+("; Secure" if app.settings.origin.startswith("https://") else "")
 
-        def body(self,limit=65536):
-            require(self.headers.get("Origin")==app.settings.origin and self.headers.get("Sec-Fetch-Site")!="cross-site",403,"CROSS_SITE","不允许跨站操作。")
+        def body(self,limit=65536,agent=False):
+            require((self.headers.get("Origin")==app.settings.origin or agent and not self.headers.get("Origin")) and self.headers.get("Sec-Fetch-Site")!="cross-site",403,"CROSS_SITE","不允许跨站操作。")
             require(not self.headers.get("Transfer-Encoding"),400,"INVALID_INPUT","不支持该请求编码。")
             require(self.headers.get("Content-Type","").split(";",1)[0].lower()=="application/json",415,"JSON_REQUIRED","请使用 JSON 请求。")
             try:size=int(self.headers.get("Content-Length","0"))
@@ -102,6 +111,20 @@ def handler_for(app):
                 allowed_query=self.command=='GET' and ((path in ('/api/shuku/messages','/api/shuku/personal') and set(query)=={'cursor'} and len(query['cursor'])==1 and query['cursor'][0]) or (admin_path and set(query)<={'page','group'} and all(len(values)==1 for values in query.values()) and ('group' not in query or admin_path[1]=='courses')))
                 inbox_query=self.command=='GET' and path=='/api/shuku/review-inbox' and set(query)<={'stage','course','q','page'} and all(len(values)==1 for values in query.values())
                 require(not url.query or allowed_query or inbox_query,400,'INVALID_INPUT','该接口不接受这些查询参数。')
+                bearer=self.headers.get('Authorization')
+                if bearer is not None:
+                    require(bearer.startswith('Bearer '),401,'AGENT_UNAUTHORIZED','请使用本地创作凭证。')
+                    raw=bearer[7:]
+                    require((not self.headers.get('Origin') or self.headers.get('Origin')==app.settings.origin) and self.headers.get('Sec-Fetch-Site')!='cross-site',403,'CROSS_SITE','不允许跨站操作。')
+                    snapshot=re.fullmatch(r'/api/shuku/local-agent/courses/([^/]+)/project',path)
+                    save_agent=re.fullmatch(r'/api/shuku/courses/([^/]+)/revisions',path)
+                    read_agent=re.fullmatch(r'/api/shuku/revisions/([^/]+)',path)
+                    if self.command=='GET' and snapshot:return self.send_json(200,app.workflow.local_agent.snapshot(raw,snapshot[1]))
+                    if self.command=='POST' and save_agent:return self.send_json(202,app.workflow.local_agent.save(raw,save_agent[1],self.headers.get('Idempotency-Key'),self.body(16*1024*1024,agent=True)))
+                    if self.command=='GET' and read_agent:return self.send_json(200,app.workflow.local_agent.revision(raw,read_agent[1]))
+                    if self.command=='GET' and path=='/api/shuku/local-agent/client':
+                        return self.send_client(app.workflow.local_agent.client(raw))
+                    raise BusinessError(403,'AGENT_SCOPE','本地创作凭证不能执行此操作。')
                 if self.command=="GET" and path=="/api/shuku/health":
                     app.store.ready()
                     return self.send_json(200,{"ok":True,"service":"shuku_backend"})
@@ -173,6 +196,18 @@ def handler_for(app):
                     app.store.remove_session(token_hash(raw_token))
                     return self.send_json(200,{"message":"已退出登录"},self.cookie("",True))
                 user=app.store.session_user(token_hash(raw_token),app.clock())
+                if path=='/api/shuku/local-agent/credentials' and self.command=='GET':
+                    return self.send_json(200,app.workflow.local_agent.listing(user['id']))
+                if path=='/api/shuku/local-agent/courses' and self.command=='POST':
+                    return self.send_json(201,app.workflow.local_agent.create(user['id'],self.body()))
+                local_brief=re.fullmatch(r'/api/shuku/local-agent/courses/([^/]+)/brief',path)
+                if local_brief and self.command=='POST':
+                    require(not self.body(),400,'INVALID_INPUT','创作指令不接受额外字段。')
+                    return self.send_json(201,app.workflow.local_agent.issue(user['id'],local_brief[1]))
+                local_revoke=re.fullmatch(r'/api/shuku/local-agent/credentials/([^/]+)/revoke',path)
+                if local_revoke and self.command=='POST':
+                    require(not self.body(),400,'INVALID_INPUT','撤销不接受额外字段。')
+                    return self.send_json(200,app.workflow.local_agent.revoke(user['id'],local_revoke[1]))
                 if self.command=='POST' and path=='/api/shuku/courses/import-presentation':
                     require(user['role'] in ('creator','admin'),403,'FORBIDDEN','当前账号没有创建权限。')
                     require(self.headers.get('Origin')==app.settings.origin and self.headers.get('Sec-Fetch-Site')!='cross-site',403,'CROSS_SITE','不允许跨站操作。')

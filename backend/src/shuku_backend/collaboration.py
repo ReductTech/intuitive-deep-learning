@@ -54,7 +54,7 @@ class Collaboration:
     def workspaces(self,uid):
         with self.store.transaction() as db:
             self.store.user_in(db,uid)
-            return [course_view(r) for r in db.execute("SELECT w.id,w.target_course_id,c.title,r.version AS base_version,k.id AS contribution_id,k.status,k.score,k.note FROM shuku_workspaces w JOIN shuku_courses c ON c.id=w.target_course_id JOIN shuku_releases r ON r.id=w.base_release_id LEFT JOIN LATERAL (SELECT * FROM shuku_contributions WHERE workspace_id=w.id ORDER BY created_at DESC,id DESC LIMIT 1) k ON true WHERE w.owner_id=%s AND w.deleted_at IS NULL AND NOT c.deleting AND NOT EXISTS(SELECT 1 FROM shuku_courses p WHERE p.id=w.id AND p.deleting) ORDER BY w.created_at DESC LIMIT 100",(uid,)).fetchall()]
+            return [course_view(r) for r in db.execute("SELECT w.id,w.target_course_id,EXISTS(SELECT 1 FROM shuku_agent_credentials a WHERE a.course_id=w.id) AS local_agent,c.title,r.version AS base_version,k.id AS contribution_id,k.status,k.score,k.note FROM shuku_workspaces w JOIN shuku_courses c ON c.id=w.target_course_id JOIN shuku_releases r ON r.id=w.base_release_id LEFT JOIN LATERAL (SELECT * FROM shuku_contributions WHERE workspace_id=w.id ORDER BY created_at DESC,id DESC LIMIT 1) k ON true WHERE w.owner_id=%s AND w.deleted_at IS NULL AND NOT c.deleting AND NOT EXISTS(SELECT 1 FROM shuku_courses p WHERE p.id=w.id AND p.deleting) ORDER BY w.created_at DESC LIMIT 100",(uid,)).fetchall()]
 
     def can_preview(self,db,uid,revision):
         # Managers receive only submitted revisions, never unrelated personal drafts.

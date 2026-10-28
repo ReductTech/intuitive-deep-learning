@@ -115,6 +115,8 @@ class Governance:
                     db.execute("UPDATE shuku_contributions SET status='superseded' WHERE workspace_id=%s AND status<>'merged'",(r['resource_id'],))
                     db.execute('UPDATE shuku_workspaces SET deleted_at=%s WHERE id=%s',(self.clock(),r['resource_id']))
                     db.execute("UPDATE shuku_courses SET status='hidden',title='',description='',category='' WHERE id=%s",(r['resource_id'],))
+                db.execute('DELETE FROM shuku_agent_requests WHERE course_id IN %s',(ids,))
+                db.execute('DELETE FROM shuku_agent_credentials WHERE course_id IN %s',(ids,))
                 db.execute('DELETE FROM shuku_editor_drafts WHERE course_id IN %s',(ids,))
                 db.execute('DELETE FROM shuku_reviews WHERE course_id IN %s',(ids,))
                 db.execute('DELETE FROM shuku_releases WHERE course_id IN %s',(ids,))

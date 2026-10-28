@@ -109,14 +109,14 @@ class Store:
     def courses(self, uid):
         with self.transaction() as db:
             user=self.user_in(db,uid)
-            return [course_view(r) for r in db.execute("SELECT c.* FROM shuku_courses c WHERE NOT c.deleting AND NOT EXISTS(SELECT 1 FROM shuku_workspaces w WHERE w.id=c.id) AND (c.owner_id=%s OR %s OR EXISTS(SELECT 1 FROM shuku_course_managers m WHERE m.course_id=c.id AND m.user_id=%s)) ORDER BY c.created_at,c.id LIMIT 100",(uid,user["role"]=="admin",uid)).fetchall()]
+            return [course_view(r) for r in db.execute("SELECT c.*,EXISTS(SELECT 1 FROM shuku_agent_credentials a WHERE a.course_id=c.id) AS local_agent FROM shuku_courses c WHERE NOT c.deleting AND NOT EXISTS(SELECT 1 FROM shuku_workspaces w WHERE w.id=c.id) AND (c.owner_id=%s OR %s OR EXISTS(SELECT 1 FROM shuku_course_managers m WHERE m.course_id=c.id AND m.user_id=%s)) ORDER BY c.created_at,c.id LIMIT 100",(uid,user["role"]=="admin",uid)).fetchall()]
 
     def course(self, uid, cid):
         try: cid=str(UUID(cid))
         except ValueError:raise BusinessError(404,"NOT_FOUND","课程不存在。")
         with self.transaction() as db:
             user=self.user_in(db,uid)
-            row=db.execute("SELECT c.* FROM shuku_courses c WHERE c.id=%s AND NOT c.deleting AND NOT EXISTS(SELECT 1 FROM shuku_workspaces w JOIN shuku_courses t ON t.id=w.target_course_id WHERE w.id=c.id AND t.deleting) AND (c.owner_id=%s OR %s OR EXISTS(SELECT 1 FROM shuku_course_managers m WHERE m.course_id=c.id AND m.user_id=%s))",(cid,uid,user["role"]=="admin",uid)).fetchone()
+            row=db.execute("SELECT c.*,EXISTS(SELECT 1 FROM shuku_agent_credentials a WHERE a.course_id=c.id) AS local_agent FROM shuku_courses c WHERE c.id=%s AND NOT c.deleting AND NOT EXISTS(SELECT 1 FROM shuku_workspaces w JOIN shuku_courses t ON t.id=w.target_course_id WHERE w.id=c.id AND t.deleting) AND (c.owner_id=%s OR %s OR EXISTS(SELECT 1 FROM shuku_course_managers m WHERE m.course_id=c.id AND m.user_id=%s))",(cid,uid,user["role"]=="admin",uid)).fetchone()
             require(row,404,"NOT_FOUND","课程不存在。")
             result=course_view(row)
             workspace=db.execute('SELECT target_course_id,base_release_id FROM shuku_workspaces WHERE id=%s',(cid,)).fetchone()

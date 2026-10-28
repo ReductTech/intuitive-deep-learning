@@ -1,3 +1,4 @@
+import {LocalCoursePage} from '../shuku/LocalAgent';
 import {AdminPage} from '../shuku/Admin';
 import {ProfilePage} from '../shuku/Profile';
 import {BuiltinLearning} from '../shuku/BuiltinLearning';
@@ -45,6 +46,7 @@ export const appRoutes: AppRoute[] = [
   { path: '/my-courses', element: <CourseHub /> },
   { path: '/course-creation', element: <CourseHub /> },
   { path: '/my-courses/editor', element: <ManagedEditor /> },
+  { path: '/my-courses/local', element: <LocalCoursePage /> },
   { path: '/my-courses/preview', element: <PreviewPage /> },
   { path: '/my-courses/review', element: <ReviewPage /> },
   { path: '/edit-deck/legacy', element: <CreatorWorkspace /> },
