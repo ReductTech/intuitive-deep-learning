@@ -3,6 +3,11 @@ import { useEffect,useState } from 'react';
 import { api,type SavedRevision } from './client';
 import './shuku.css';
 export function PreviewPage(){
+ const course=new URLSearchParams(location.search).get('course');
+ useEffect(()=>{if(course)location.replace('/my-courses/editor?course='+encodeURIComponent(course));},[course]);
+ return course?<p role="status">正在打开课程编辑…</p>:<SavedRevisionPreview/>;
+}
+function SavedRevisionPreview(){
  const params=new URLSearchParams(location.search),id=params.get('revision')||'',courseId=params.get('course')||'';
  const [revision,setRevision]=useState<SavedRevision|null>(null),[error,setError]=useState(''),[empty,setEmpty]=useState(false),[title,setTitle]=useState('课程预览');
  useEffect(()=>{

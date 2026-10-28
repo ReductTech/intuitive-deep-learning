@@ -1,4 +1,5 @@
-import {useEffect,useState} from 'react';
+import {useEffect,useState,useRef} from 'react';
+import {useSceneScale} from '../../modules/shared/react/presentation/canvas';
 import {api} from './client';
 /** Render the saved component in isolation, with the original workspace around it. */
 export function SavedPagePreview({revision,page}:{revision:string;page:string}){
@@ -7,5 +8,11 @@ export function SavedPagePreview({revision,page}:{revision:string;page:string}){
   async function load(){try{const result=await api<{state:string;url?:string}>('/revisions/'+revision+'/player');if(!active)return;if(result.state==='ready'&&result.url)setUrl(result.url);else if(result.state==='failed')setError('预览准备失败，请重新保存修订后重试。');else timer=setTimeout(()=>void load(),1200);}catch(e){if(active)setError((e as Error).message);}}
   void load();return()=>{active=false;clearTimeout(timer);};
  },[revision]);
- return url?<iframe title="课程页面预览" src={url+'?shukuPage='+encodeURIComponent(page)} sandbox="allow-scripts" style={{width:'100%',height:'100%',border:0,display:'block'}}/>:<div className="cw-empty-slide"><p role={error?'alert':'status'}>{error||'正在准备页面预览…'}</p></div>;
+ return url?<iframe title="课程页面预览" src={url+'?shukuPage='+encodeURIComponent(page)} loading="lazy" sandbox="allow-scripts" style={{width:'100%',height:'100%',border:0,display:'block'}}/>:<div className="cw-empty-slide"><p role={error?'alert':'status'}>{error||'正在准备页面预览…'}</p></div>;
+}
+
+/** Use the saved slide itself as the thumbnail; never substitute a local module. */
+export function SavedPageThumbnail({revision,page}:{revision:string;page:string}){
+ const ref=useRef<HTMLDivElement>(null),scale=useSceneScale(ref);
+ return <div ref={ref} className="cw-saved-thumbnail" aria-hidden="true"><span style={{transform:`scale(${scale})`}}><SavedPagePreview revision={revision} page={page}/></span></div>;
 }

@@ -64,11 +64,10 @@ try{
  await page.route('**/my-courses/editor?course=local-course',route=>route.fulfill({contentType:'text/html',body:'<h1>在线创作入口</h1>'}));
  await chooser.selectOption('web');await page.waitForURL('**/my-courses/editor?course=local-course');
  await page.goto(base+'/my-courses');
- await page.getByRole('link',{name:'预览我的课程',exact:true}).click();
- await page.getByRole('status').filter({hasText:'暂时没有可预览的课程内容'}).waitFor();
- assert.equal(await page.locator('iframe').count(),0);
- await page.goto(base+'/my-courses');latestRevision='latest-saved';
- await page.getByRole('link',{name:'预览我的课程',exact:true}).click();
+ assert.equal(await page.getByRole('link',{name:'预览我的课程',exact:true}).getAttribute('href'),'/my-courses/editor?course=local-course');
+ // Course previews enter the shared editor; explicit revisions remain read-only.
+ latestRevision='latest-saved';
+ await page.goto(base+'/my-courses/preview?revision=latest-saved');
  await page.frameLocator('iframe[title="已保存的课程预览"]').getByRole('heading',{name:'当前保存的课程效果',exact:true}).waitFor();
  assert.ok(previewPolls>=2,'building preview should refresh until ready');
  previewState='failed';await page.reload();await page.getByRole('alert').filter({hasText:'课程预览生成失败'}).waitFor();

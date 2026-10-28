@@ -17,7 +17,7 @@ import { packProject, unpackProject } from './projectImages';
 import './CreatorWorkspace.css';
 
 export interface CourseReader {state:StudyPosition;onChange:(state:StudyPosition)=>void;thumbnail:(page:CreatorPage)=>string|undefined;storageKey:string}
-interface WorkspaceProps {courses:readonly ActiveModule[];initialProject?:CreatorProject;renderPage?:(page:CreatorPage)=>ReactNode;managed?:{status:string;actions:ReactNode;onChange:(project:CreatorProject)=>void};reader?:CourseReader}
+interface WorkspaceProps {courses:readonly ActiveModule[];initialProject?:CreatorProject;renderPage?:(page:CreatorPage)=>ReactNode;renderThumbnail?:(page:CreatorPage)=>ReactNode;managed?:{status:string;actions:ReactNode;onChange:(project:CreatorProject)=>void};reader?:CourseReader}
 const key = (courseId: string) => `scenedeck:creator:v1:${courseId}`;
 function load(courseId: string,courses:readonly ActiveModule[]) {
   const module = courses.find(item => item.id === courseId || item.pptDeck?.id === courseId) ?? courses[0];
@@ -29,7 +29,7 @@ function Icon({ name }: { name: keyof typeof paths }) { return <svg viewBox="0 0
 function download(name: string, value: string, type = 'application/json') { const url = URL.createObjectURL(new Blob([value], { type })); const link = document.createElement('a'); link.href = url; link.download = name; link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); }
 const escape = (text: string) => text.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
 
-export function CourseWorkspace({courses,initialProject,managed,reader,renderPage}:WorkspaceProps) {
+export function CourseWorkspace({courses,initialProject,managed,reader,renderPage,renderThumbnail}:WorkspaceProps) {
   const loadCourse=(id:string)=>load(id,courses);
   const [project, setProject] = useState(() => {if(reader&&initialProject){try{const saved=JSON.parse(localStorage.getItem(key(reader.storageKey))||'null');if(isProject(saved,initialProject.courseId))return saved;}catch{}return initialProject;}return initialProject??loadCourse(new URLSearchParams(location.search).get('deck')??'neuron-guide');});
   const [activeId, setActiveId] = useState(() => { const requested = new URLSearchParams(location.search).get('slide'); return project.pages.find(item => item.id === requested)?.id ?? project.pages[0].id; });
@@ -146,7 +146,7 @@ export function CourseWorkspace({courses,initialProject,managed,reader,renderPag
   function simulate(instruction = prompt) {
     if (!instruction.trim() || busy) return;
     setPrompt(''); setBusy('正在模拟修改页面…');
-    timer.current = setTimeout(() => { commit({ ...project, pages: project.pages.map(item => item.id === page.id ? simulateRevision(item, instruction.trim()) : item) }); setView('web'); setBusy(''); setFeedback('已完成模拟修改，继续输入即可调整。'); timer.current = null; }, 850);
+    timer.current = setTimeout(() => { commit({ ...project, pages: project.pages.map(item => item.id === page.id ? {...simulateRevision(item, instruction.trim()),...(managed&&item.format==='react'?{ready:item.ready}:{})} : item) }); setView('web'); setBusy(''); setFeedback('已完成模拟修改，继续输入即可调整。'); timer.current = null; }, 850);
   }
   function generate() { if (busy) return; setBusy('正在模拟生成交互网页…'); timer.current = setTimeout(() => { patchPage({ designed: true, ready: true, revisions: [...page.revisions, snapshot(page)], messages: [...page.messages, { role: 'assistant', text: '模拟网页已就绪。点击「预览」体验示例交互；你也可以继续修改或恢复上一版。' }] }); setBusy(''); setView('web'); setFeedback('网页预览已就绪，可以直接预览或继续修改。'); timer.current = null; }, 1000); }
   function restoreProject(next: CreatorProject) { next = preserveExistingWebPages(next, module); const current = next.pages.find(item => item.id === page.id) ?? next.pages[0]; setProject(next); setActiveId(current.id); setView(current.designImageId && !current.ready ? 'design' : 'web'); setActionError(''); setFeedback(''); }
@@ -220,22 +220,22 @@ export function CourseWorkspace({courses,initialProject,managed,reader,renderPag
   }
   const mock = !native;
   const hint = feedback || (showingImage ? '直接描述想改哪里；满意后制作成网页。' : page.ready ? '描述这一页想怎么改，或直接预览。' : '写下这一页的内容和要求，生成第一版设计。');
-  return <div className={`cw-app cw-streamlined ${editing ? 'cw-editing' : 'cw-viewing'} ${mode === 'present' ? 'cw-presenting' : ''} ${reader?'cw-reader':''} ${editing&&!managed&&panelsSwapped?'cw-panels-swapped':''}`} >
+  return <div className={`cw-app cw-streamlined ${editing ? 'cw-editing' : 'cw-viewing'} ${mode === 'present' ? 'cw-presenting' : ''} ${reader?'cw-reader':''} ${editing&&panelsSwapped?'cw-panels-swapped':''}`} >
     <header className="cw-topbar">
       <a href="/" target={reader?'_top':undefined} className="cw-brand cw-shuku-brand" aria-label="术库首页"><span><Icon name="book" /></span><div><strong>术库</strong><small>课件创作</small></div></a>
       {managed?<strong className="cw-managed-title">{project.title}</strong>:<select aria-label="切换课程" value={project.courseId} disabled={Boolean(busy)} onChange={event => switchCourse(event.target.value)}>{courses.map(c => <option key={c.id} value={c.id}>{c.id === project.courseId ? project.title : c.title}</option>)}</select>}
       <span className="cw-save">{managed?managed.status:`✓ ${saved}`}</span>
-      <div className="cw-actions">{managed?.actions}
+      <div className="cw-actions">
         {editing ? <>
           <button title="撤销" aria-label="撤销" disabled={!history.length || Boolean(busy)} onClick={undo}>↶</button><button title="重做" aria-label="重做" disabled={!future.length || Boolean(busy)} onClick={redo}>↷</button>
-          {!managed&&<details className="cw-file-menu"><summary>文件</summary><div onClick={event => { if ((event.target as HTMLElement).closest('button')) event.currentTarget.parentElement?.removeAttribute('open'); }}><button disabled={Boolean(busy)} onClick={newBlankProject}>新建课件（先备份当前）</button><button disabled={Boolean(busy)} onClick={() => importInput.current?.click()}>导入项目</button><button disabled={Boolean(busy)} onClick={exportProject}>导出可编辑项目</button><button disabled={Boolean(busy)} onClick={exportOffline}>离线演示（快照版）</button><button disabled={Boolean(busy)} onClick={() => setPanel('settings')}>课程设置</button></div></details>}
+          {<details className="cw-file-menu"><summary>文件</summary><div onClick={event => { if (!managed && (event.target as HTMLElement).closest('button')) event.currentTarget.parentElement?.removeAttribute('open'); }}>{managed?<><button onClick={()=>setPropertiesId(page.id)}>编辑内容</button>{managed.actions}</>:<><button disabled={Boolean(busy)} onClick={newBlankProject}>新建课件（先备份当前）</button><button disabled={Boolean(busy)} onClick={() => importInput.current?.click()}>导入项目</button><button disabled={Boolean(busy)} onClick={exportProject}>导出可编辑项目</button><button disabled={Boolean(busy)} onClick={exportOffline}>离线演示（快照版）</button><button disabled={Boolean(busy)} onClick={() => setPanel('settings')}>课程设置</button></>}</div></details>}
         </> : <><span className="cw-prototype">{mode === 'preview' ? '页面预览' : '演示模式'}</span><button onClick={() => setPanel('notes')}>讲稿</button></>}
-        {managed&&editing&&<button onClick={()=>setPropertiesId(page.id)}>编辑内容</button>}
+
          {mode !== 'present' && <button className="cw-edit-toggle" aria-pressed={editing} disabled={Boolean(busy)} title={editing ? '退出编辑，恢复页面交互（Esc）' : '进入编辑模式，修改文字和页面属性'} onClick={() => { setMode(editing ? 'preview' : 'edit'); setView('web'); setPanel(null); setPropertiesId(null); }}>{editing ? '✓ 完成编辑' : '✎ 编辑'}</button>}
         {mode !== 'present' && <button className="cw-present-button" disabled={Boolean(busy)} onClick={present}><Icon name="play" />演示</button>}
       </div>
     </header>
-    <PageNavigator pages={project.pages} activeId={page.id} busy={Boolean(busy)} editable={editing} thumbnail={item => reader?reader.thumbnail(item):item.nativeId ? moduleAssetUrl(module.assetId, `scenedeck-thumbnails/${item.nativeId}.png`) : undefined} onSelect={select} onReorder={reorder} onAdd={addPage} onProperties={setPropertiesId} />
+    <PageNavigator pages={project.pages} activeId={page.id} busy={Boolean(busy)} editable={editing} renderThumbnail={renderThumbnail} thumbnail={item => reader?reader.thumbnail(item):item.nativeId ? moduleAssetUrl(module.assetId, `scenedeck-thumbnails/${item.nativeId}.png`) : undefined} onSelect={select} onReorder={reorder} onAdd={addPage} onProperties={setPropertiesId} />
     <main className="cw-main">
       <header className="cw-page-heading"><div><span>{String(index + 1).padStart(2, '0')}</span><strong>{page.title}</strong><small>{showingImage ? '设计图' : page.ready ? '网页' : '待设计'}</small>{editing && <span className="cw-edit-indicator">{managed?'编辑模式':'编辑模式 · 双击文字修改'}</span>}</div>{editing && <details className="cw-canvas-menu"><summary aria-label="当前页更多操作">···</summary><div onClick={event => { if ((event.target as HTMLElement).closest('button')) event.currentTarget.parentElement?.removeAttribute('open'); }}>{page.designImageId && page.ready && <button disabled={Boolean(busy)} onClick={() => setView(showingImage ? 'web' : 'design')}>{showingImage ? '查看网页' : '查看设计图'}</button>}<button disabled={Boolean(busy)} onClick={() => void design(false)}>{page.designImageId ? '重新生成设计图' : '生成设计图'}</button>{page.revisions.length > 0 && <button disabled={Boolean(busy)} onClick={() => { const previous = page.revisions[page.revisions.length - 1]; patchPage({ ...previous, ready: Boolean(native) || previous.ready, revisions: page.revisions.slice(0, -1) }); setView(previous.designImageId && !previous.ready && !native ? 'design' : 'web'); setFeedback('已恢复上一版。'); }}>恢复上一版</button>}<button disabled={Boolean(busy)} onClick={() => setPanel('notes')}>查看讲稿</button></div></details>}</header>
       <div className="cw-viewport" ref={viewport}><div className="cw-slide-wrap" style={{ width: 1600 * scale, height: 900 * scale }}><div className="cw-slide course-shell ng-ppt-slide-surface" style={{ transform: `scale(${scale})` }}>
@@ -244,7 +244,7 @@ export function CourseWorkspace({courses,initialProject,managed,reader,renderPag
 
       </div></div>{mode === 'present' && <div className="cw-fullscreen-controls"><button aria-label="上一页" disabled={index === 0} onClick={() => step(-1)}>←</button><span>{index + 1} / {project.pages.length}</span><button aria-label="下一页" disabled={index === project.pages.length - 1} onClick={() => step(1)}>→</button><button onClick={exitPresentation}>退出全屏 · Esc</button></div>}</div>
       <div className="cw-view-footer"><span>{index + 1} / {project.pages.length} · {Math.round(scale * 100)}%</span>{page.designImageId && page.ready && editing && <button onClick={() => setView(showingImage ? 'web' : 'design')}>{showingImage ? '查看网页' : '查看设计图'}</button>}{!editing && <div><button aria-label="上一页" disabled={index === 0} onClick={() => step(-1)}>←</button><button aria-label="下一页" disabled={index === project.pages.length - 1} onClick={() => step(1)}>→</button></div>}</div>
-      {editing && !managed && <section className="cw-composer" aria-label="当前页创作">
+      {editing && <section className="cw-composer" aria-label="当前页创作">
         {(chatOpen || panelsSwapped) && <div className="cw-conversation" ref={log}>{page.messages.map((message, i) => <p key={i} className={message.role}><span>{message.role === 'user' ? '你' : '助手'}</span>{message.text}</p>)}{!page.messages.length && <p>还没有修改记录。</p>}</div>}
         <div className="cw-composer-hint"><span aria-live="polite">{busy || hint}</span><button type="button" className="cw-layout-swap" aria-label="交换布局" aria-pressed={panelsSwapped} title={panelsSwapped?'恢复左侧页面、底部交互':'将交互窗口放到左侧，页面切换放到底部'} onClick={()=>setPanelsSwapped(value=>!value)}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true"><path d="M4 7h15m-4-4 4 4-4 4M20 17H5m4-4-4 4 4 4"/></svg>交换布局</button>{page.messages.length > 0 && <button onClick={() => setChatOpen(!chatOpen)}>{chatOpen ? '收起记录' : '修改记录'}</button>}</div>
         {actionError && <div className="cw-action-error" role="alert">{actionError}<button onClick={() => setPanel('settings')}>课程设置</button></div>}
