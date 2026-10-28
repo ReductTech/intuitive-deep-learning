@@ -1,3 +1,4 @@
+import {mockEditorDrafts} from './mock-editor-drafts.mjs';
 // Mocked resume checks: no server course/revision is created or modified.
 import assert from 'node:assert/strict';
 import {pathToFileURL} from 'node:url';
@@ -26,6 +27,7 @@ try{
  else if(path.startsWith('/revisions/')){const id=path.split('/').at(-1);data={id,project:saved[id],state:'ready',review:null,preview_url:'/preview-test'};}
  else throw Error('Unexpected mock request '+path);
  await route.fulfill({json:data});});
+ await mockEditorDrafts(page,(id)=>courses.find(c=>c.id===id)?.head_revision||null);
  async function resume(id){await page.goto(base+'/my-courses');const item=page.locator('.shuku-course-list article').filter({has:page.getByRole('heading',{name:courses.find(c=>c.id===id).title,exact:true})});const outline=item.getByRole('link',{name:'查看课程大纲',exact:true});if(id==='empty')assert.equal(await outline.count(),0);else assert.match(await outline.getAttribute('href'),/outline=1/);const link=item.getByRole('link',{name:'继续创作',exact:true});assert.ok(!(await link.getAttribute('href')).includes('outline='),'continue resumes the editor rather than forcing the outline');await link.click();}
  await resume('empty');await page.getByRole('heading',{name:'这门课，你想怎样讲？',exact:true}).waitFor();assert.equal(await page.locator('.cw-app,.shuku-source-editor').count(),0);
  await resume('unfinished');await page.locator('.cw-app.cw-editing').waitFor();assert.equal(await page.locator('.oe,.ga-app').count(),0,'unfinished courses resume page editing, independently of the saved guided phase');await page.getByRole('button',{name:'查看课程大纲',exact:true}).click();await page.getByRole('heading',{name:'从整体，慢慢展开',exact:true}).waitFor();await page.getByRole('button',{name:'返回页面编辑',exact:true}).click();await page.locator('.cw-app.cw-editing').waitFor();

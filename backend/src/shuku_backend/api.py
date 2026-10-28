@@ -280,6 +280,11 @@ def handler_for(app):
                     return self.send_json(200,{"modules":[{k:v for k,v in m.items() if k not in ('directory','entry','pages')} for m in app.workflow.modules()]})
                 if self.command=="GET" and path=="/api/shuku/reviews":
                     return self.send_json(200,{"reviews":app.workflow.reviews(user['id'])})
+                draft_route=re.fullmatch(r"/api/shuku/courses/([^/]+)/draft",path)
+                if draft_route:
+                    from . import drafts
+                    if self.command=='GET':return self.send_json(200,drafts.read(app.workflow,user['id'],draft_route[1]))
+                    if self.command=='POST':return self.send_json(200,drafts.save(app.workflow,user['id'],draft_route[1],self.body(16*1024*1024)))
                 revision_route=re.fullmatch(r"/api/shuku/revisions/([^/]+)",path)
                 if self.command=="GET" and revision_route:
                     return self.send_json(200,app.workflow.revision(user['id'],revision_route[1]))

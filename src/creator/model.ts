@@ -2,7 +2,8 @@ import type { ActiveModule } from '../app/modules';
 
 export interface Revision { title: string; goal: string; summary: string; designed: boolean; ready: boolean; note: string; designImageId?: string; outline?: Record<string, unknown> }
 export interface CreatorPage extends Revision { format?: 'text'|'react'; sourceEntry?: string; id: string; nativeId?: string; revisions: Revision[]; messages: { role: 'user' | 'assistant'; text: string }[] }
-export interface CreatorProject { nativeSnapshot?:string; version: 1; id: string; courseId: string; title: string; duration: number; style: string; outlineConfirmed: boolean; presentation?:{filename:string;slideCount:number;warnings:string[]}; source?: {files:Record<string,string>}; sourceSceneIds?: string[]; pages: CreatorPage[] }
+export interface CreatorProject {
+  outlineDraftMarkdown?: string; nativeSnapshot?:string; version: 1; id: string; courseId: string; title: string; duration: number; style: string; outlineConfirmed: boolean; presentation?:{filename:string;slideCount:number;warnings:string[]}; source?: {files:Record<string,string>}; sourceSceneIds?: string[]; pages: CreatorPage[] }
 // Reconcile saved native pages with the live deck; removed pages must not become mock slides.
 export function preserveExistingWebPages(project: CreatorProject, module?: ActiveModule): CreatorProject {
   const sceneIds = module?.pptDeck && project.courseId === module.id

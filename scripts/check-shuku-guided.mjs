@@ -1,3 +1,4 @@
+import {mockEditorDrafts} from './mock-editor-drafts.mjs';
 // Interaction acceptance with mocked persistence; does not create live courses.
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
@@ -28,6 +29,7 @@ try{
   else throw new Error('Unexpected API '+path);
   await route.fulfill({json:data});
  });
+ await mockEditorDrafts(page,()=>course.head_revision);
  await page.goto(base+'/my-courses?tab=create');await page.getByLabel('课程名称',{exact:true}).fill(course.title);await page.getByLabel('课程简介',{exact:true}).fill(course.description);
  assert.equal(await page.getByLabel('起始内容',{exact:true}).count(),0);await page.getByRole('button',{name:'开始创建',exact:true}).click();
  await page.getByRole('heading',{name:'这门课，你想怎样讲？'}).waitFor();assert.equal(created.title,course.title);

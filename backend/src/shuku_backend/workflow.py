@@ -115,7 +115,7 @@ class Workflow:
         return objects,digest
 
     def save(self,uid,cid,data):
-        require(isinstance(data,dict) and set(data)<= {'project','expected_revision'},400,'INVALID_INPUT','修订请求格式不正确。')
+        require(isinstance(data,dict) and set(data)<= {'project','expected_revision','expected_draft'},400,'INVALID_INPUT','修订请求格式不正确。')
         with self.store.transaction() as db:
             return self.save_in(db,uid,cid,data)
 
@@ -126,6 +126,9 @@ class Workflow:
         require(not db.execute("SELECT 1 FROM shuku_contributions WHERE (workspace_id=%s OR target_course_id=%s) AND status='merging'",(cid,cid)).fetchone(),409,'MERGE_BUSY','共创正在合并，请稍后再保存。')
         require(not db.execute("SELECT 1 FROM shuku_github_jobs j JOIN shuku_tasks t ON t.id=j.task_id WHERE j.course_id=%s AND j.kind='release' AND t.status IN ('queued','running')",(cid,)).fetchone(),409,'RELEASE_BUSY','课程正在发布，请完成后再保存。')
         require(not db.execute("SELECT 1 FROM shuku_github_jobs j JOIN shuku_tasks t ON t.id=j.task_id WHERE j.course_id=%s AND j.kind='external_merge' AND (%s IS NULL OR j.id<>%s) AND t.status IN ('queued','running')",(cid,remote_job_id,remote_job_id)).fetchone(),409,'MERGE_BUSY','外部共创正在合并，请完成后再保存。')
+        draft=db.execute('SELECT version FROM shuku_editor_drafts WHERE course_id=%s',(cid,)).fetchone()
+        if 'expected_draft' in data:
+            require(data['expected_draft']==(draft['version'] if draft else None),409,'DRAFT_CONFLICT','草稿已在其他窗口更新，请保留当前内容并重新打开。')
         previous_project={}
         if course['head_revision']:
             prior=db.execute('SELECT files FROM shuku_revisions WHERE id=%s',(course['head_revision'],)).fetchone()
@@ -147,6 +150,8 @@ class Workflow:
         db.execute('UPDATE shuku_courses SET head_revision=%s WHERE id=%s',(rid,cid))
         db.execute("INSERT INTO shuku_tasks(id,kind,resource_key,idempotency_key,request_hash,payload,available_at,created_at) VALUES (%s,'revision.build',%s,%s,%s,%s,%s,%s)",(uuid4(),'course:'+cid,'build:'+rid,digest,JsonValue({'revision_id':rid}),now,now))
         db.execute("UPDATE shuku_contributions SET status='superseded' WHERE workspace_id=%s AND status IN ('pending','approved')",(cid,))
+        if 'expected_draft' in data:
+            db.execute('DELETE FROM shuku_editor_drafts WHERE course_id=%s',(cid,))
         self.audit(db,uid,'revision.save',rid)
         github=getattr(self,'github',None)
         if github and getattr(github,'hosted',None):github.hosted.queue_in(db,cid,rid)

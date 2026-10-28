@@ -43,6 +43,16 @@ courses = table('courses',
     CheckConstraint("hidden_from IN ('draft','published')", name="rule_2")
 )
 
+# Mutable private work in progress; never used as a published revision.
+editor_drafts = table('editor_drafts',
+    Column('course_id', CHAR(36), ForeignKey("shuku_courses.id", ondelete="RESTRICT", use_alter=True, name="fk_editor_drafts_course"), primary_key=True),
+    Column('author_id', CHAR(36), ForeignKey("shuku_users.id", ondelete="RESTRICT", use_alter=True, name="fk_editor_drafts_author"), nullable=False),
+    Column('base_revision', CHAR(36), nullable=True),
+    Column('version', CHAR(36), nullable=False),
+    Column('payload', JSON(), nullable=False),
+    Column('updated_at', Double(), nullable=False)
+)
+
 course_managers = table('course_managers',
     Column('course_id', CHAR(36), ForeignKey("shuku_courses.id", ondelete="RESTRICT", use_alter=True, name="fk_course_managers_course_id"), primary_key=True),
     Column('user_id', CHAR(36), ForeignKey("shuku_users.id", ondelete="RESTRICT", use_alter=True, name="fk_course_managers_user_id"), primary_key=True)

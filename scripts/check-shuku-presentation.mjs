@@ -1,3 +1,4 @@
+import {mockEditorDrafts} from './mock-editor-drafts.mjs';
 // Upload and authoring acceptance with mocked APIs; does not create live courses.
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
@@ -27,6 +28,7 @@ try{
   else throw new Error('Unexpected API '+path);
   await route.fulfill({json:data});
  });
+ await mockEditorDrafts(page,()=>course.head_revision);
  await page.goto(base+'/my-courses?tab=create');await page.getByLabel('课程名称',{exact:true}).fill(course.title);await page.getByLabel('课程简介',{exact:true}).fill(course.description);
  await page.getByLabel('上传课程 PPT',{exact:true}).setInputFiles({name:'old.ppt',mimeType:'application/vnd.ms-powerpoint',buffer:Buffer.from('legacy')});await page.getByText(/请选择 100 MB 以内的 .pptx/).first().waitFor();assert.equal(uploads,0);
  await page.getByLabel('上传课程 PPT',{exact:true}).setInputFiles({name:'我的课程.pptx',mimeType:'application/vnd.openxmlformats-officedocument.presentationml.presentation',buffer:Buffer.alloc(21*1024*1024,1)});
