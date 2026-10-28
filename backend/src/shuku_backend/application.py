@@ -8,6 +8,7 @@ from .storage import Store
 from .workers import Worker
 from .workflow import Workflow
 from .library_catalog import LibraryCatalog
+from .organization_catalog import OrganizationCatalog
 from .collaboration import Collaboration
 from .governance import Governance
 from .feedback import Feedback
@@ -65,5 +66,6 @@ def create_application(settings, clock=time.time):
     workflow.personal=PersonalLearning(workflow)
     workflow.player=Player(workflow)
     workflow.github=GitHubSync(workflow,settings.github_config())
-    worker=Worker(store,{"github.workspace":workflow.github.hosted.run,"github.provision":workflow.github.provision,"github.sync":workflow.github.run,"governance.remove":workflow.governance.run,"file.verify":verify_file,"revision.build":workflow.build,"revision.player":workflow.player.run},clock)
+    workflow.catalog=OrganizationCatalog(workflow)
+    worker=Worker(store,{"catalog.scan":workflow.catalog.scan,"catalog.import":workflow.catalog.publish,"github.workspace":workflow.github.hosted.run,"github.provision":workflow.github.provision,"github.sync":workflow.github.run,"governance.remove":workflow.governance.run,"file.verify":verify_file,"revision.build":workflow.build,"revision.player":workflow.player.run},clock)
     return Application(settings,store,bucket,identity,Courses(store,clock,workflow.github),worker,clock,workflow,ReservedJianlunIdentity(),GitHubIdentity(store,clock,settings.github_identity_config(),settings.github_token_key_path))

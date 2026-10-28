@@ -379,3 +379,20 @@ library_bindings = table('library_bindings',
     Column('initial_revision_id', CHAR(36), nullable=True),
     Column('created_at', Double(), nullable=False)
 )
+
+# Independent organization repositories; a retained row is also a deletion tombstone.
+catalog_candidates = table('catalog_candidates',
+    Column('repository_id', BigInteger(), primary_key=True),
+    Column('owner', String(100), nullable=False),
+    Column('name', String(100), nullable=False),
+    Column('payload', JSON(), nullable=False),
+    Column('source_sha', CHAR(40), nullable=True),
+    Column('imported_sha', CHAR(40), nullable=True),
+    Column('status', String(30), nullable=False),
+    Column('error_code', String(100), nullable=True),
+    Column('note', Text(), nullable=False, server_default=text("('')")),
+    Column('course_id', CHAR(36), ForeignKey('shuku_courses.id', ondelete='SET NULL', use_alter=True, name='fk_catalog_candidate_course'), nullable=True, unique=True),
+    Column('checked_at', Double(), nullable=False),
+    Column('reviewed_by', CHAR(36), nullable=True),
+    CheckConstraint("status IN ('pending','imported','rejected','invalid','removed')", name='rule_1')
+)

@@ -41,7 +41,9 @@ class Collaboration:
                 require(not db.execute('SELECT deleting FROM shuku_courses WHERE id=%s',(old['id'],)).fetchone()['deleting'],409,'WORKSPACE_REMOVING','本次工作区正在删除，请稍后重新创建。')
                 return {'id':str(old['id'])}
             revision=db.execute('SELECT * FROM shuku_revisions WHERE id=%s',(release['revision_id'],)).fetchone()
-            project=teaching(json.loads(self.bucket.read(revision['files']['project.json']['sha256'])))
+            original=json.loads(self.bucket.read(revision['files']['project.json']['sha256']))
+            require(not original.get('externalSnapshot'),409,'USE_GITHUB_CONTRIBUTION','静态仓库课程请通过 GitHub Pull Request 共创。')
+            project=teaching(original)
             wid=str(uuid4());project['id']=wid
             db.execute("INSERT INTO shuku_courses(id,owner_id,module_id,title,description,category,created_at) VALUES (%s,%s,%s,%s,%s,%s,%s)",(wid,uid,course['module_id'],project['title'],course['description'],course['category'],self.clock()))
             db.execute('INSERT INTO shuku_workspaces(id,target_course_id,owner_id,base_release_id,created_at) VALUES (%s,%s,%s,%s,%s)',(wid,cid,uid,base,self.clock()))

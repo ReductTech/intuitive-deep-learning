@@ -120,7 +120,9 @@ class Governance:
                 db.execute('DELETE FROM shuku_releases WHERE course_id IN %s',(ids,))
                 db.execute('DELETE FROM shuku_revisions WHERE course_id IN %s',(ids,))
                 db.execute('DELETE FROM shuku_course_managers WHERE course_id IN %s',(ids,))
-                if r['kind']=='course':db.execute('DELETE FROM shuku_courses WHERE id IN %s',(ids,))
+                if r['kind']=='course':
+                    db.execute("UPDATE shuku_catalog_candidates SET status='removed' WHERE course_id IN %s",(ids,))
+                    db.execute('DELETE FROM shuku_courses WHERE id IN %s',(ids,))
                 db.execute("UPDATE shuku_removals SET state='cleaning' WHERE id=%s",(rid,))
         while True:
             checkpoint({'stage':'cleaning-unreferenced-files'})

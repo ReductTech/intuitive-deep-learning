@@ -6,7 +6,9 @@ from sqlalchemy import inspect, select, text
 from sqlalchemy.schema import AddConstraint
 from .schema import metadata, schema_migrations, locks
 
-VERSION = "004_editor_drafts"
+VERSION = "005_organization_course_catalog"
+DRAFT_VERSION = "004_editor_drafts"
+DRAFT_CHECKSUM = "94fd8321d4d6e3b8c140c4b4e736034063fd7a6541b9265bebf91e81787a205d"
 LIBRARY_VERSION = "003_official_library_courses"
 LIBRARY_CHECKSUM = "d1f7765cb7ba3f37020e651d6bc248705edb4d2ad5e15c6236e16b13a5d5cbdf"
 CATALOG_VERSION = "002_remote_course_catalog"
@@ -15,7 +17,7 @@ BASELINE = "001_mysql_sqlalchemy"
 BASELINE_CHECKSUM = "aba81a549885761ee0409746d8080eea790f7d7372180aab7c1fd1b08b2bd2bd"
 
 def expected_markers():
-    return {BASELINE: BASELINE_CHECKSUM, CATALOG_VERSION: CATALOG_CHECKSUM, LIBRARY_VERSION: LIBRARY_CHECKSUM, VERSION: checksum()}
+    return {BASELINE: BASELINE_CHECKSUM, CATALOG_VERSION: CATALOG_CHECKSUM, LIBRARY_VERSION: LIBRARY_CHECKSUM, DRAFT_VERSION: DRAFT_CHECKSUM, VERSION: checksum()}
 
 
 def checksum():
@@ -55,7 +57,7 @@ def migrate(engine):
                 raise RuntimeError("Shuku requires MySQL 8.0.16+ (CHECK constraints and SKIP LOCKED)")
             if inspect(connection).has_table(schema_migrations.name):
                 rows = connection.execute(select(schema_migrations)).mappings().all()
-                if rows and {r["version"]: r["checksum"] for r in rows} not in (expected_markers(), {BASELINE: BASELINE_CHECKSUM, CATALOG_VERSION: CATALOG_CHECKSUM, LIBRARY_VERSION: LIBRARY_CHECKSUM}, {BASELINE: BASELINE_CHECKSUM, CATALOG_VERSION: CATALOG_CHECKSUM}, {BASELINE: BASELINE_CHECKSUM}):
+                if rows and {r["version"]: r["checksum"] for r in rows} not in (expected_markers(), {BASELINE: BASELINE_CHECKSUM, CATALOG_VERSION: CATALOG_CHECKSUM, LIBRARY_VERSION: LIBRARY_CHECKSUM, DRAFT_VERSION: DRAFT_CHECKSUM}, {BASELINE: BASELINE_CHECKSUM, CATALOG_VERSION: CATALOG_CHECKSUM, LIBRARY_VERSION: LIBRARY_CHECKSUM}, {BASELINE: BASELINE_CHECKSUM, CATALOG_VERSION: CATALOG_CHECKSUM}, {BASELINE: BASELINE_CHECKSUM}):
                     raise RuntimeError("Applied schema migration has changed; add an explicit upgrade migration")
             connection.commit()
             # MySQL DDL commits implicitly. Re-running resumes a failed baseline;

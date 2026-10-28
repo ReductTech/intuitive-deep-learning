@@ -42,8 +42,8 @@ class GitHub:
             'X-GitHub-Api-Version':'2022-11-28','User-Agent':'shuku-backend','Content-Type':'application/json'})
         try:
             with self.opener.open(request,timeout=8) as response:
-                body=response.read(8*1024*1024+1)
-                if len(body)>8*1024*1024:raise GitHubError()
+                body=response.read(12*1024*1024+1)
+                if len(body)>12*1024*1024:raise GitHubError()
                 return json.loads(body) if body else {}
         except HTTPError as error:
             error.close()

@@ -131,6 +131,9 @@ class Workflow:
             require(data['expected_draft']==(draft['version'] if draft else None),409,'DRAFT_CONFLICT','草稿已在其他窗口更新，请保留当前内容并重新打开。')
         previous_project={}
         if course['head_revision']:
+            existing=db.execute('SELECT files FROM shuku_revisions WHERE id=%s',(course['head_revision'],)).fetchone()
+            require(not json.loads(self.bucket.read(existing['files']['project.json']['sha256'])).get('externalSnapshot'),409,'USE_GITHUB_CONTRIBUTION','静态仓库课程请通过 GitHub Pull Request 共创。')
+        if course['head_revision']:
             prior=db.execute('SELECT files FROM shuku_revisions WHERE id=%s',(course['head_revision'],)).fetchone()
             previous_project=json.loads(self.bucket.read(prior['files']['project.json']['sha256']))
         pinned=previous_project.get('nativeSnapshot') or native_snapshot
@@ -195,10 +198,15 @@ class Workflow:
         require(len(content)==obj['size'],503,'FILE_CORRUPT','课程文件校验失败。')
         return content,obj['mime']
 
+    def external(self,uid,rid):
+        with self.store.transaction() as db:
+            row=self.allowed(db,rid,uid)
+            return json.loads(self.bucket.read(row['files']['project.json']['sha256'])).get('externalSnapshot')
+
     def sandboxed(self,uid,rid):
         with self.store.transaction() as db:
             row=self.allowed(db,rid,uid)
-            return bool(json.loads(self.bucket.read(row['files']['project.json']['sha256'])).get('source'))
+            return bool(json.loads(self.bucket.read(row['files']['project.json']['sha256'])).get('source')) or bool(json.loads(self.bucket.read(row['files']['project.json']['sha256'])).get('externalSnapshot'))
 
     def build(self,task,checkpoint):
         with self.store.transaction() as guard:
@@ -338,6 +346,8 @@ class Workflow:
             require(course,404,'NOT_FOUND','课程不存在或已不可访问。')
             binding=db.execute('SELECT l.payload FROM shuku_library_bindings b JOIN shuku_library_courses l ON l.module_id=b.module_id AND l.snapshot_commit=b.source_commit WHERE b.course_id=%s',(cid,)).fetchone()
             if binding:course['library']=binding['payload']
+            revision=db.execute('SELECT files FROM shuku_revisions WHERE id=%s',(course['revision_id'],)).fetchone()
+            course['external']=json.loads(self.bucket.read(revision['files']['project.json']['sha256'])).get('externalSnapshot')
             releases=[{**course_view(r),'current':bool(r['current'])} for r in db.execute("SELECT r.id,r.version,r.revision_id,r.created_at,r.note,r.id=c.current_release AS current FROM shuku_releases r JOIN shuku_courses c ON c.id=r.course_id WHERE r.course_id=%s ORDER BY current DESC,r.created_at DESC,r.id",(cid,)).fetchall()]
             ranking={str(course['owner_id']):{'name':course['creator'],'score':0,'count':0}}
             for row in db.execute("SELECT w.owner_id,u.display_name,SUM(k.score) AS score,COUNT(*) AS count FROM shuku_contributions k JOIN shuku_workspaces w ON w.id=k.workspace_id JOIN shuku_users u ON u.id=w.owner_id WHERE k.target_course_id=%s AND k.status='merged' GROUP BY w.owner_id,u.display_name ORDER BY score DESC,w.owner_id LIMIT 100",(cid,)).fetchall():

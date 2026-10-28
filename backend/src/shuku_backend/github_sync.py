@@ -521,6 +521,7 @@ class GitHubSync:
 
     def tick(self):
         if not self.client:return
+        if hasattr(self.flow,"catalog") and self.config.get("owner") and self.config.get("installationId"):self.flow.catalog.request_scan()
         cursor='00000000-0000-0000-0000-000000000000'
         while not self.stop.is_set():
             with self.store.transaction() as db:

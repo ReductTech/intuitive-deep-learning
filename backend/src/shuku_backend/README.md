@@ -198,3 +198,16 @@ GitHub App、真实 PR、远程合并核验、Tag／Release、Webhook、周期�
 数据搬迁使用 `python -m shuku_backend.database_transfer export --file /private/backup.json`。停止 HTTP/Worker 后导出，输出文件权限为 0600；切换到目标环境配置，先执行结构迁移，再运行 `database_transfer import --file /private/backup.json`，最后执行 `database_transfer verify --file /private/backup.json`。
 
 工具仅处理当前 SQLAlchemy metadata 内的术库表；逐表核对行数与 SHA-256，跳过生成列，恢复后检查循环外键。目标已有不同业务数据时拒绝覆盖，失败整笔回滚。结构标记与文件引用锁必须匹配，重复导入完全相同的快照不产生写入。课程文件桶、GitHub 凭证加密密钥及服务 origin 保持原配置；数据库快照包含私有业务数据，备份应妥善保管。
+
+
+## Independent organization course catalog
+
+The configured GitHub App organization is scanned at startup and every two hours. Administrators can also use Data management → Organization course catalog to queue a scan. The worker persists checkpoints/errors and retries transient network failures; ordinary course browsing reads database records and never scans GitHub.
+
+Public, non-archived, non-template, non-fork repositories with `shuku.json` (or legacy JSON content in `course.yaml`) can be candidates. The descriptor must declare schema_version=1, type=official, build_profile=static, course_id, title, semantic version, exact repository URL, ref, path and an HTML entry. The default-branch descriptor is resolved to an immutable commit and reread there; two descriptor files must agree. Other formats show a validation reason rather than being published.
+
+Only administrators can approve/reject a specific source SHA; approval queues revalidation and bounded static-file import (200 files, 8 MB/file, 24 MB total). GitHub App installation needs organization repository visibility and Contents read permission. No build/install scripts, GitHub writes, private repository publication, symlinks or submodules are allowed. Course bytes stay in the local content-addressed bucket; the database stores manifests, relationships, audit, tasks, revisions and reviews. Run the explicit `python -m shuku_backend migrate` before starting this version.
+
+Approved courses use the existing public catalog, version history, favorites, feedback and hide/restore/delete flows. New commits become new candidates and require explicit approval plus an increased version; failed imports retain the old release. Deleted courses retain a candidate tombstone and do not return on later scans. Independent HTML courses are played as sandboxed static pages, with no external network access. Their contribution link opens GitHub Pull Requests; HTML is not silently converted to the React editor. The existing React library and its online co-creation flow are unchanged.
+
+API: GET `/api/shuku/admin/catalog`; POST `/api/shuku/admin/catalog/scan` with `{}`; POST `/api/shuku/admin/catalog/:repository_id/decision` with `{decision: "approved"|"rejected", source_sha, note}`. A rejection requires a reason. Scan/import task states and safe error codes are returned by the admin catalog endpoint. Operators may queue a scan using `python -m shuku_backend scan-catalog`; the normal worker executes it. These operations do not automatically grant approval to newly discovered courses.

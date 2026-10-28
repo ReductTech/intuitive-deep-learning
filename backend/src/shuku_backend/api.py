@@ -133,13 +133,15 @@ def handler_for(app):
                     try:viewer=app.store.session_user(token_hash(token_from(self.headers.get("Cookie"))),app.clock())["id"]
                     except BusinessError:viewer=None
                     content,mime=(app.workflow.player.file if file_route[2] else app.workflow.file)(viewer,file_route[1],unquote(file_route[3]))
-                    sandboxed=unquote(file_route[3])=='index.html' and app.workflow.sandboxed(viewer,file_route[1])
+                    sandboxed=app.workflow.sandboxed(viewer,file_route[1])
+                    from .organization_catalog import STATIC_CSP
+                    external=app.workflow.external(viewer,file_route[1])
                     self.send_response(200)
                     self.send_header("Content-Type",mime)
                     self.send_header("Content-Length",str(len(content)))
                     self.send_header("Cache-Control","private, no-store")
                     self.send_header("X-Content-Type-Options","nosniff")
-                    self.send_header("Content-Security-Policy",SANDBOX_CSP if sandboxed else "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'self'")
+                    self.send_header("Content-Security-Policy",STATIC_CSP if external else SANDBOX_CSP if sandboxed else "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'self'")
                     self.end_headers();self.wfile.write(content);return
                 raw_token=token_from(self.headers.get("Cookie"))
                 if self.command=='POST' and path=='/api/shuku/auth/sms-code':
@@ -193,6 +195,14 @@ def handler_for(app):
                 if self.command=='POST' and identity_route:
                     require(self.headers.get('X-Shuku-Account')==user['id'],409,'ACCOUNT_CHANGED','登录账号已切换，请刷新页面后继续。')
                     return self.send_json(200,app.github_identity.action(user['id'],identity_route[1],self.body(4096)))
+                if path=='/api/shuku/admin/catalog' and self.command=='GET':
+                    return self.send_json(200,app.workflow.catalog.listing(user['id']))
+                if path=='/api/shuku/admin/catalog/scan' and self.command=='POST':
+                    require(not self.body(),400,'INVALID_INPUT','扫描不接受额外参数。')
+                    return self.send_json(202,app.workflow.catalog.request_scan(user['id']))
+                catalog_decision=re.fullmatch(r'/api/shuku/admin/catalog/([0-9]+)/decision',path)
+                if catalog_decision and self.command=='POST':
+                    return self.send_json(202,app.workflow.catalog.decision(user['id'],catalog_decision[1],self.body()))
                 if self.command=='GET' and admin_path:
                     return self.send_json(200,admin_listing(app,user['id'],admin_path[1],query.get('page',['1'])[0]))
                 if self.command=='GET' and path=='/api/shuku/review-inbox':

@@ -25,6 +25,8 @@ class Player:
         with self.store.transaction() as db:
             row=self.flow.allowed(db,rid,uid)
             require(row['state']=='ready',409,'NOT_READY','请等待课程预览准备完成。')
+            external=json.loads(self.bucket.read(row['files']['project.json']['sha256'])).get('externalSnapshot')
+            if external:return {'state':'ready','url':'/api/shuku/revisions/'+rid+'/files/static/'+external['entry']}
             require(self.flow.root,503,'BUILD_NOT_CONFIGURED','课程构建目录尚未配置。')
             now=self.clock();key=self.key(rid)
             db.insert_once("INSERT INTO shuku_tasks(id,kind,resource_key,idempotency_key,request_hash,payload,available_at,created_at) VALUES (%s,'revision.player',%s,%s,%s,%s,%s,%s)",(str(uuid4()),'course:'+str(row['course_id']),key,hashlib.sha256(key.encode()).hexdigest(),JsonValue({'revision_id':rid}),now,now))

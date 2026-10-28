@@ -8,7 +8,7 @@ from .application import create_application
 
 def main():
     parser=argparse.ArgumentParser(description="Independent Shuku business backend")
-    parser.add_argument("command",choices=["migrate","seed-demo","bootstrap-library","serve"])
+    parser.add_argument("command",choices=["migrate","seed-demo","bootstrap-library","scan-catalog","serve"])
     parser.add_argument("--manager",default="admin",help="Existing administrator username for official library courses")
     args=parser.parse_args()
     settings=Settings.from_env()
@@ -22,6 +22,9 @@ def main():
         return
     app=create_application(settings)
     try:
+        if args.command=="scan-catalog":
+            print(app.workflow.catalog.request_scan())
+            return
         if args.command=="bootstrap-library":
             print(app.workflow.library.bootstrap(args.manager))
             return

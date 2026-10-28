@@ -104,7 +104,7 @@ def test_upgrade_003_to_004_preserves_business_rows_and_is_repeatable(store):
     with store.engine.begin() as db:
         before=db.exec_driver_sql('SELECT count(*) FROM shuku_users').scalar()
         db.exec_driver_sql('DROP TABLE shuku_editor_drafts')
-        db.exec_driver_sql("DELETE FROM shuku_schema_migrations WHERE version='004_editor_drafts'")
+        db.exec_driver_sql("DELETE FROM shuku_schema_migrations WHERE version IN ('004_editor_drafts','005_organization_course_catalog')")
     with pytest.raises(RuntimeError):store.ready()
     store.migrate();store.migrate();store.ready()
     with store.engine.connect() as db:
