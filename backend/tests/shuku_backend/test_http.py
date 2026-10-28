@@ -1,5 +1,6 @@
 from http.client import HTTPConnection
 import json
+import os
 import threading
 from uuid import uuid4
 import pytest
@@ -15,7 +16,7 @@ def api(store,tmp_path):
     server=app.server()
     thread=threading.Thread(target=server.serve_forever);thread.start()
     def request(method,path,body=None,cookie='',origin='http://localhost:5173',extra=None):
-        connection=HTTPConnection(*server.server_address,timeout=5)
+        connection=HTTPConnection(*server.server_address,timeout=float(os.environ.get('SHUKU_TEST_HTTP_TIMEOUT','5')))
         headers={'Cookie':cookie,'Origin':origin,'Content-Type':'application/json',**(extra or {})}
         raw=None if body is None else json.dumps(body)
         connection.request(method,'/api/shuku'+path,body=raw,headers=headers)

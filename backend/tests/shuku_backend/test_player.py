@@ -82,6 +82,25 @@ def test_player_http_permissions_and_content_policy(workflow):
         assert status==200 and b'bundle.js' in content
         assert headers['Cache-Control']=='private, no-store'
         assert "frame-ancestors 'self'" in headers['Content-Security-Policy']
+        # SavedPagePreview selects a slide through this query. The HTML request
+        # must reach the normal file authorization and retain its content policy.
+        for entry in ('/files/index.html','/player/files/index.html'):
+            route='/revisions/'+rid+entry
+            status,page,policy=get(route+'?shukuPage='+project['pages'][0]['id'],cookie)
+            assert status==200, page
+            assert b'<!doctype html>' in page.lower()
+            assert policy['Cache-Control']=='private, no-store'
+            assert "frame-ancestors 'self'" in policy['Content-Security-Policy']
+            assert get(route+'?shukuPage='+project['pages'][0]['id'])[0]==404
+            for suffix in ('?shukuPage=', '?shukuPage=first&shukuPage=second',
+                           '?shukuPage=first&extra=1', '?shukuPage='+('x'*257),
+                           '?shukuPage=%00'):
+                assert get(route+suffix,cookie)[0]==400
+        # A preview parameter must not broaden other API or asset routes.
+        for route in ('/courses','/revisions/'+rid+'/player',
+                      '/revisions/'+rid+'/files/bundle.js',
+                      '/revisions/'+rid+'/player/files/bundle.js'):
+            assert get(route+'?shukuPage=first',cookie)[0]==400
         assert get('/revisions/'+rid+'/player/files/index.html')[0]==404
         assert get('/revisions/'+rid+'/player/files/project.json',cookie)[0]==404
     finally:server.shutdown();server.server_close();thread.join()

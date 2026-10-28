@@ -110,7 +110,13 @@ def handler_for(app):
                 admin_path=re.fullmatch(r'/api/shuku/admin/(courses|contributions|reports|records)',path)
                 allowed_query=self.command=='GET' and ((path in ('/api/shuku/messages','/api/shuku/personal') and set(query)=={'cursor'} and len(query['cursor'])==1 and query['cursor'][0]) or (admin_path and set(query)<={'page','group'} and all(len(values)==1 for values in query.values()) and ('group' not in query or admin_path[1]=='courses')))
                 inbox_query=self.command=='GET' and path=='/api/shuku/review-inbox' and set(query)<={'stage','course','q','page'} and all(len(values)==1 for values in query.values())
-                require(not url.query or allowed_query or inbox_query,400,'INVALID_INPUT','该接口不接受这些查询参数。')
+                # SavedPagePreview selects a page in the already authorized HTML.
+                # Never accept this selector on JSON APIs or other course assets.
+                preview_query=(self.command=='GET' and
+                    re.fullmatch(r'/api/shuku/revisions/[^/]+/(?:player/)?files/index\.html',path) and
+                    set(query)=={'shukuPage'} and len(query['shukuPage'])==1 and
+                    0<len(query['shukuPage'][0])<=256 and query['shukuPage'][0].isprintable())
+                require(not url.query or allowed_query or inbox_query or preview_query,400,'INVALID_INPUT','该接口不接受这些查询参数。')
                 bearer=self.headers.get('Authorization')
                 if bearer is not None:
                     require(bearer.startswith('Bearer '),401,'AGENT_UNAUTHORIZED','请使用本地创作凭证。')
