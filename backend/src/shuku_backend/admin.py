@@ -3,15 +3,18 @@ from .errors import require
 from .storage import course_view
 
 
-def listing(app,uid,tab,page):
+def listing(app,uid,tab,page,group=None):
     require(tab in ('courses','contributions','reports','records'),404,'NOT_FOUND','管理分类不存在。')
     require(isinstance(page,str) and page.isascii() and page.isdigit() and 1<=int(page)<=10000,400,'INVALID_INPUT','页码不正确。')
+    require(group is None or tab=='courses' and group in ('published','pending','deleted'),400,'INVALID_INPUT','课程分组不正确。')
     page=int(page);limit=20;offset=(page-1)*limit
     with app.store.transaction() as db:
         app.workflow.governance.admin(db,uid)
         if tab=='courses':
             source='shuku_courses c JOIN shuku_users u ON u.id=c.owner_id LEFT JOIN shuku_releases r ON r.id=c.current_release'
             where='NOT EXISTS(SELECT 1 FROM shuku_workspaces w WHERE w.id=c.id)'
+            if group:
+                where += {'published':" AND c.status='published' AND NOT c.deleting",'pending':" AND c.status='draft' AND NOT c.deleting",'deleted':" AND (c.status='hidden' OR c.deleting)"}[group]
             fields='c.id,c.title,c.description,c.category,c.status,c.deleting,c.created_at,c.owner_id,u.display_name AS owner,r.version'
             order='c.created_at DESC,c.id DESC'
         elif tab=='contributions':

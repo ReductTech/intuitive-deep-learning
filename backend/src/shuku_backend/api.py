@@ -99,7 +99,7 @@ def handler_for(app):
                     return self.send_json(202,app.workflow.github.webhook(self.headers,self.rfile.read(size)))
                 query=parse_qs(url.query,keep_blank_values=True)
                 admin_path=re.fullmatch(r'/api/shuku/admin/(courses|contributions|reports|records)',path)
-                allowed_query=self.command=='GET' and ((path in ('/api/shuku/messages','/api/shuku/personal') and set(query)=={'cursor'} and len(query['cursor'])==1 and query['cursor'][0]) or (admin_path and set(query)=={'page'} and len(query['page'])==1))
+                allowed_query=self.command=='GET' and ((path in ('/api/shuku/messages','/api/shuku/personal') and set(query)=={'cursor'} and len(query['cursor'])==1 and query['cursor'][0]) or (admin_path and set(query)<={'page','group'} and all(len(values)==1 for values in query.values()) and ('group' not in query or admin_path[1]=='courses')))
                 inbox_query=self.command=='GET' and path=='/api/shuku/review-inbox' and set(query)<={'stage','course','q','page'} and all(len(values)==1 for values in query.values())
                 require(not url.query or allowed_query or inbox_query,400,'INVALID_INPUT','该接口不接受这些查询参数。')
                 if self.command=="GET" and path=="/api/shuku/health":
@@ -204,7 +204,7 @@ def handler_for(app):
                 if catalog_decision and self.command=='POST':
                     return self.send_json(202,app.workflow.catalog.decision(user['id'],catalog_decision[1],self.body()))
                 if self.command=='GET' and admin_path:
-                    return self.send_json(200,admin_listing(app,user['id'],admin_path[1],query.get('page',['1'])[0]))
+                    return self.send_json(200,admin_listing(app,user['id'],admin_path[1],query.get('page',['1'])[0],query.get('group',[None])[0]))
                 if self.command=='GET' and path=='/api/shuku/review-inbox':
                     return self.send_json(200,review_inbox(app,user['id'],query))
                 if self.command=="GET" and path=="/api/shuku/auth/me":

@@ -46,3 +46,34 @@ def test_admin_contributions_and_ranking(published):
     assert app.worker.run_once()
     result=listing(app,admin,'contributions','1')
     assert result['ranking'][0]['score']==8 and result['ranking'][0]['merged_count']==1
+
+
+def test_admin_course_groups_filter_before_pagination_and_preserve_access(api):
+    request,app=api
+    creator=login(request,'xiaoman');admin=login(request,'admin')
+    uid=request('GET','/auth/me',cookie=creator)[1]['user']['id']
+    groups={'published':[],'pending':[],'deleted':[]}
+    for group,status,count in [('published','published',21),('pending','draft',2),('deleted','hidden',2)]:
+        for index in range(count):
+            row=app.store.create_course(uid,{'title':group+str(index),'module_id':str(uuid4())},app.clock())
+            groups[group].append(row['id'])
+            with app.store.transaction() as db:db.execute('UPDATE shuku_courses SET status=%s WHERE id=%s',(status,row['id']))
+    deleting=app.store.create_course(uid,{'title':'deleting','module_id':str(uuid4())},app.clock())['id']
+    with app.store.transaction() as db:db.execute('UPDATE shuku_courses SET deleting=true WHERE id=%s',(deleting,))
+    groups['deleted'].append(deleting)
+    for group,ids in groups.items():
+        path='/admin/courses?group='+group+'&page=1'
+        assert request('GET',path)[0]==401
+        assert request('GET',path,cookie=creator)[0]==403
+        code,body,_=request('GET',path,cookie=admin)
+        assert code==200 and body['total']==len(ids)
+        actual=[item['id'] for item in body['items']]
+        if len(ids)>20:
+            second=request('GET','/admin/courses?group='+group+'&page=2',cookie=admin)[1]
+            assert len(actual)==20 and len(second['items'])==1
+            actual += [item['id'] for item in second['items']]
+        assert set(actual)==set(ids)
+    for query in ['group=unknown','group=published&group=deleted','group=published&page=0','group=published&token=x']:
+        assert request('GET','/admin/courses?'+query,cookie=admin)[0]==400
+    assert request('GET','/admin/reports?group=published',cookie=admin)[0]==400
+    assert request('GET','/admin/courses?page=1',cookie=admin)[1]['total']==26

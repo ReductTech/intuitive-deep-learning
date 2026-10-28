@@ -12,7 +12,7 @@ export function CourseGovernance({course,onChange}:{course:Course;onChange:()=>v
  return <><button disabled={busy} onClick={()=>void visibility()}>{course.status==='hidden'?'恢复课程':'下架课程'}</button><RemovalButton kind="course" id={course.id} title={course.title} onChange={onChange}/>{error&&<p role="alert" className="shuku-error">{error}</p>}</>;
 }
 interface Removal {id:string;title:string;state:string;task_status:string;checkpoint:{stage?:string}}
-export function RemovalProgress({onComplete}:{onComplete:()=>void}){
+export function RemovalProgress({onComplete,embedded=false}:{onComplete:()=>void;embedded?:boolean}){
  const [items,setItems]=useState<Removal[]>([]),[error,setError]=useState(''),[busy,setBusy]=useState(false);
  const previous=useRef<Removal[]>([]),complete=useRef(onComplete);complete.current=onComplete;
  async function refresh(){const result=await api<{removals:Removal[]}>('/removals');if(result.removals.some(r=>r.state==='succeeded'&&previous.current.some(p=>p.id===r.id&&p.state!=='succeeded')))complete.current();previous.current=result.removals;setItems(result.removals);}
@@ -21,5 +21,6 @@ export function RemovalProgress({onComplete}:{onComplete:()=>void}){
  useEffect(()=>{if(!pending)return;const timer=setInterval(()=>void refresh().catch(e=>setError(e.message)),1200);return()=>clearInterval(timer);},[pending]);
  async function retry(id:string){setBusy(true);setError('');try{await api('/removals/'+id+'/retry',{});await refresh();}catch(e){setError((e as Error).message);}finally{setBusy(false);}}
  if(!items.length&&!error)return null;
- return <details className="shuku-removal-progress" aria-label="删除进度"><summary>删除进度</summary><div className="shuku-removal-list">{items.slice(0,10).map(item=><article key={item.id}><div><strong>{item.title}</strong><p role="status">{item.state==='succeeded'?'已删除':item.state==='failed'?'清理失败，可重试':item.checkpoint.stage==='waiting-for-tasks'?'等待相关任务结束':item.state==='cleaning'?'正在清理关联文件…':'正在删除…'}</p></div>{item.state==='failed'&&<button disabled={busy} onClick={()=>void retry(item.id)}>重试清理</button>}</article>)}</div>{error&&<p role="alert" className="shuku-error">{error}</p>}</details>;
+ const content=<><div className="shuku-removal-list">{(embedded?items:items.slice(0,10)).map(item=><article key={item.id}><div><strong>{item.title}</strong><p role="status">{item.state==='succeeded'?'已删除':item.state==='failed'?'清理失败，可重试':item.checkpoint.stage==='waiting-for-tasks'?'等待相关任务结束':item.state==='cleaning'?'正在清理关联文件…':'正在删除…'}</p></div>{item.state==='failed'&&<button disabled={busy} onClick={()=>void retry(item.id)}>重试清理</button>}</article>)}</div>{error&&<p role="alert" className="shuku-error">{error}</p>}</>;
+ return embedded?<section className="shuku-removal-progress" aria-label="永久删除记录"><h3>永久删除记录与清理进度</h3>{content}</section>:<details className="shuku-removal-progress" aria-label="删除进度"><summary>删除进度</summary>{content}</details>;
 }
