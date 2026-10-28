@@ -186,7 +186,7 @@ class Workflow:
             task=db.execute("SELECT status,error_code,checkpoint FROM shuku_tasks WHERE idempotency_key=%s",('build:'+rid,)).fetchone()
             state='failed' if row['state']=='building' and task and task['status']=='failed' else row['state']
             contribution=db.execute('SELECT id,status,score,note FROM shuku_contributions WHERE revision_id=%s',(rid,)).fetchone()
-            return {'id':str(row['id']),'state':state,'project':project,'build_error':(task.get('checkpoint') or {}).get('build_error','') if task else '', 'contribution':course_view(contribution) if contribution else None,'review':review,'preview_url':'/api/shuku/revisions/'+rid+'/files/index.html'}
+            return {'id':str(row['id']),'state':state,'project':project,'build_error':((task.get('checkpoint') or {}).get('build_error') or ('课程构建失败，任务已停止（'+str(task.get('error_code') or 'BUILD_FAILED')+'）。' if state=='failed' else '')) if task else '', 'contribution':course_view(contribution) if contribution else None,'review':review,'preview_url':'/api/shuku/revisions/'+rid+'/files/index.html'}
 
     def file(self,uid,rid,path):
         with self.store.transaction() as db:
@@ -231,16 +231,9 @@ class Workflow:
                 with tempfile.TemporaryDirectory(prefix='shuku-build-') as folder:
                     folder=Path(folder);source=folder/'project.json';source.write_text(json.dumps(project));out=folder/'dist'
                     env=__import__('os').environ.copy();env['NODE_OPTIONS']='--max-old-space-size=256'
-                    process=subprocess.Popen(['node',str(Path(self.root)/'scripts/build-shuku-preview.mjs'),'--course-root',str(build_root),'--project',str(source),'--module',module['directory'] or '','--revision',rid,'--outdir',str(out)],stdout=subprocess.PIPE,stderr=subprocess.PIPE,env=env)
-                    started=time.monotonic()
-                    while True:
-                        try:
-                            stdout,stderr=process.communicate(timeout=5);break
-                        except subprocess.TimeoutExpired:
-                            if time.monotonic()-started>90:
-                                process.kill();process.communicate();raise RuntimeError('Build timeout')
-                            checkpoint({'stage':'building','revision_id':rid})
-                    if process.returncode:
+                    from .build_process import run_build
+                    code,stdout,stderr=run_build(['node',str(Path(self.root)/'scripts/build-shuku-preview.mjs'),'--course-root',str(build_root),'--project',str(source),'--module',module['directory'] or '','--revision',rid,'--outdir',str(out)],env,lambda:checkpoint({'stage':'building','revision_id':rid}))
+                    if code:
                         checkpoint({'stage':'build-failed','revision_id':rid,'build_error':'源码构建失败，请检查入口、语法和依赖。'+stderr.decode(errors='replace')[-1600:]})
                         raise BusinessError(422,'SOURCE_BUILD_FAILED','课程源码构建失败。')
                     for path in sorted(out.rglob('*')):

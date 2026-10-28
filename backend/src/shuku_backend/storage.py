@@ -132,11 +132,24 @@ class Store:
             require(row["request_hash"]==digest,409,"IDEMPOTENCY_CONFLICT","相同请求标识不能用于不同内容。")
             return str(row["id"])
 
+    @staticmethod
+    def build_state(db,task,state,error=None):
+        if task['kind']!='revision.build':return
+        rid=(task.get('payload') or {}).get('revision_id')
+        if not rid:return
+        previous='building' if state=='failed' else 'failed'
+        db.execute('UPDATE shuku_revisions SET state=%s WHERE id=%s AND state=%s',(state,rid,previous))
+        if state=='failed':
+            progress=dict(task.get('checkpoint') or {})
+            progress.update(stage='build-failed',build_error=progress.get('build_error') or ('课程构建超时，构建进程已终止。' if error=='BUILD_TIMEOUT' else '课程构建失败，任务已停止（'+str(error or 'BUILD_FAILED')+'）。'))
+            db.execute('UPDATE shuku_tasks SET checkpoint=%s WHERE id=%s',(JsonValue(progress),task['id']))
+
     def claim(self, kinds, now, ttl=30):
         if not kinds:return None
         with self.transaction() as db:
-            exhausted=db.execute("SELECT id FROM shuku_tasks WHERE status='running' AND lease_until<=%s AND attempts>=max_attempts FOR UPDATE SKIP LOCKED",(now,)).fetchall()
+            exhausted=db.execute("SELECT * FROM shuku_tasks WHERE status='running' AND lease_until<=%s AND attempts>=max_attempts FOR UPDATE SKIP LOCKED",(now,)).fetchall()
             for old in exhausted:
+                self.build_state(db,old,'failed','ATTEMPTS_EXHAUSTED')
                 db.execute("UPDATE shuku_tasks SET status='failed',error_code='ATTEMPTS_EXHAUSTED',lease_token=NULL,lease_until=NULL WHERE id=%s",(old["id"],))
                 db.execute("DELETE FROM shuku_task_leases WHERE task_id=%s AND expires_at<=%s",(old["id"],now))
             candidates=db.execute("SELECT * FROM shuku_tasks WHERE kind IN %s AND attempts<max_attempts AND ((status='queued' AND available_at<=%s) OR (status='running' AND lease_until<=%s)) ORDER BY created_at,id LIMIT 16 FOR UPDATE SKIP LOCKED",(list(kinds),now,now)).fetchall()
@@ -148,6 +161,7 @@ class Store:
                 if lease["lease_token"]!=token and lease["expires_at"]>now:continue
                 db.execute("UPDATE shuku_task_leases SET task_id=%s,lease_token=%s,expires_at=%s WHERE resource_key=%s",(row["id"],token,now+ttl,row["resource_key"]))
                 db.execute("UPDATE shuku_tasks SET status='running',attempts=attempts+1,lease_token=%s,lease_until=%s WHERE id=%s",(token,now+ttl,row["id"]))
+                self.build_state(db,row,'building')
                 return db.execute("SELECT * FROM shuku_tasks WHERE id=%s",(row["id"],)).fetchone()
 
     def finish(self, tid, token, now, *, result=None, error=None, deferred=False):
@@ -159,6 +173,7 @@ class Store:
             status="queued" if deferred else "succeeded" if error is None else ("queued" if row["attempts"]<row["max_attempts"] else "failed")
             db.execute("UPDATE shuku_tasks SET status=%s,result=%s,error_code=%s,available_at=%s,attempts=attempts-%s,lease_until=NULL,lease_token=NULL WHERE id=%s",(status,JsonValue(result),error,now+(2 if deferred else min(60,2**row["attempts"])),1 if deferred else 0,tid))
             db.execute("DELETE FROM shuku_task_leases WHERE task_id=%s AND lease_token=%s",(tid,token))
+            if status=="failed":self.build_state(db,row,'failed',error)
             return status
 
     def checkpoint(self, tid, token, now, checkpoint, ttl=30):

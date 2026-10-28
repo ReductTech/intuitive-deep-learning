@@ -61,3 +61,38 @@ def test_crash_on_last_attempt_reaches_terminal_state(store):
         row=db.execute('SELECT status,error_code FROM shuku_tasks WHERE id=%s',(tid,)).fetchone()
         assert row=={'status':'failed','error_code':'ATTEMPTS_EXHAUSTED'}
         assert db.execute('SELECT count(*) AS n FROM shuku_task_leases').fetchone()['n']==0
+
+
+def test_build_failure_retry_and_expired_lease_update_revision_without_building(store):
+    from uuid import uuid4
+    from shuku_backend.storage import DEMO_USERS
+    from shuku_backend.database import JsonValue
+    store.seed_demo();uid=DEMO_USERS[1][0]
+    course=store.create_course(uid,{'module_id':str(uuid4()),'title':'Failure-state fixture'},1000)
+    rid=str(uuid4())
+    with store.transaction() as db:
+        db.execute("INSERT INTO shuku_revisions(id,course_id,author_id,source_hash,state,files,created_at) VALUES (%s,%s,%s,%s,'building',%s,1000)",(rid,course['id'],uid,'0'*64,JsonValue({})))
+    tid=store.enqueue('revision.build','course:'+course['id'],'build:'+rid,{'revision_id':rid},1000)
+    def state():
+        with store.transaction() as db:return db.execute('SELECT state FROM shuku_revisions WHERE id=%s',(rid,)).fetchone()['state']
+    first=store.claim(['revision.build'],1000)
+    assert store.finish(tid,first['lease_token'],1001,error='BUILD_TIMEOUT')=='queued'
+    assert state()=='building'
+    with store.transaction() as db:db.execute('UPDATE shuku_tasks SET max_attempts=2 WHERE id=%s',(tid,))
+    second=store.claim(['revision.build'],1004)
+    assert store.finish(tid,second['lease_token'],1005,error='BUILD_TIMEOUT')=='failed'
+    assert state()=='failed'
+    with store.transaction() as db:
+        checkpoint=db.execute('SELECT checkpoint FROM shuku_tasks WHERE id=%s',(tid,)).fetchone()['checkpoint']
+        assert checkpoint['stage']=='build-failed' and '超时' in checkpoint['build_error']
+        db.execute("UPDATE shuku_tasks SET status='queued',attempts=0,max_attempts=1,available_at=1006 WHERE id=%s",(tid,))
+    last=store.claim(['revision.build'],1007)
+    assert state()=='building'
+    assert store.claim(['revision.build'],1040) is None
+    assert state()=='failed'
+    with pytest.raises(BusinessError):store.finish(tid,last['lease_token'],1041,result={})
+    with store.transaction() as db:
+        db.execute("UPDATE shuku_revisions SET state='ready' WHERE id=%s",(rid,))
+        row=db.execute('SELECT * FROM shuku_tasks WHERE id=%s',(tid,)).fetchone()
+        store.build_state(db,row,'failed','ATTEMPTS_EXHAUSTED')
+    assert state()=='ready'
