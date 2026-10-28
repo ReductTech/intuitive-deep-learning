@@ -1,7 +1,7 @@
 import {isGuestMode,setGuestMode,requestSignIn} from './guest';
 import type { CreatorProject } from '../creator/model';
 export interface User { id:string; username:string; display_name:string; role:'learner'|'creator'|'admin' }
-export interface Course { id:string; owner_id?:string; title:string; description:string; module_id:string; category:string; head_revision:string|null; status:string; local_agent?:boolean; workspace?:{target_course_id:string;base_release_id:string} }
+export interface Course { id:string; owner_id?:string; title:string; description:string; module_id:string; category:string; head_revision:string|null; status:string; local_agent?:boolean; revision_state?:'building'|'ready'|'failed'|null; review_status?:string|null; review_note?:string|null; has_draft?:boolean; current_version?:string|null; workspace?:{target_course_id:string;base_release_id:string} }
 export interface SavedRevision { id:string; state:'building'|'ready'|'failed'; project:CreatorProject & {designImages?:unknown}; preview_url:string;build_error?:string; contribution?:{id:string;status:string;score:number|null;note:string}|null; review:{status:string;note:string}|null }
 export class ApiError extends Error { constructor(message:string,public status:number){super(message);} }
 let sessionGeneration=0;

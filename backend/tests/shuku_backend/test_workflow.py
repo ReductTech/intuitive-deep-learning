@@ -39,7 +39,10 @@ def test_private_save_build_review_publish_and_public_player(workflow):
     project['pages'][0]['messages']=[{'role':'user','text':'private-author-notes'}]
     project['pages'][0]['designImageId']='draft'
     project['designImages']={'draft':'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+a0V8AAAAASUVORK5CYII='}
+    assert app.store.courses(uid)[0]['revision_state'] is None
     revision=save_ready(app,course,project,uid)
+    assert app.store.courses(uid)[0]['revision_state']=='ready'
+    assert app.store.courses(uid)[0]['review_status'] is None
     assert b'private-author-notes' not in app.workflow.file(uid,revision['id'],'bundle.js')[0]
     assert app.workflow.public_courses()==[]
     with pytest.raises(BusinessError):app.workflow.file(None,revision['id'],'index.html')
@@ -48,10 +51,15 @@ def test_private_save_build_review_publish_and_public_player(workflow):
     assert b'bundle.js' in html and mime=='text/html'
     with pytest.raises(BusinessError):app.workflow.publish(uid,course['id'],{'revision_id':revision['id'],'version':'1.0.0'})
     approve(app,course,revision,uid,admin)
+    assert app.store.courses(uid)[0]['review_status']=='approved'
+    assert app.store.courses(uid)[0]['review_note']=='内容核对通过'
     release=app.workflow.publish(uid,course['id'],{'revision_id':revision['id'],'version':'1.0.0','note':'首版'})
     assert release==app.workflow.publish(uid,course['id'],{'revision_id':revision['id'],'version':'1.0.0','note':'首版'})
     assert app.workflow.file(None,revision['id'],'index.html')[0]==html
     with pytest.raises(BusinessError):app.workflow.file(None,revision['id'],'images/draft.png')
+    listed=app.store.courses(uid)[0]
+    assert listed['review_status']=='published' and listed['current_version']=='1.0.0'
+    assert 'project' not in listed and 'files' not in listed
     assert app.workflow.public_courses()[0]['revision_id']==revision['id']
     assert app.store.courses(DEMO_USERS[0][0])==[]
     with pytest.raises(BusinessError):app.store.course(DEMO_USERS[0][0],course['id'])
@@ -67,8 +75,13 @@ def test_new_revision_invalidates_approval_and_preserves_old_version(workflow):
     project['pages'][0]['summary']='第二版内容'
     project['title']='尚未批准的课程名称'
     second=save_ready(app,course,project,uid,first['id'])
+    listed=app.store.courses(uid)[0]
+    assert listed['review_status'] is None and listed['current_version']=='1.0.0'
     review=app.workflow.submit(uid,course['id'],{'revision_id':second['id']})
+    assert app.store.courses(uid)[0]['review_status']=='pending'
     app.workflow.decide(admin,review['id'],{'decision':'rejected','revision_id':second['id'],'note':'补充示例'})
+    assert app.store.courses(uid)[0]['review_status']=='rejected'
+    assert app.store.courses(uid)[0]['review_note']=='补充示例'
     with pytest.raises(BusinessError):app.workflow.publish(uid,course['id'],{'revision_id':second['id'],'version':'1.0.1'})
     third=save_ready(app,course,project,uid,second['id']);approve(app,course,third,uid,admin)
     project['pages'][0]['summary']='审核后的新修改'
@@ -120,3 +133,17 @@ def test_native_page_is_bundled_with_its_assets(workflow):
     assert b'RuntimePlayer' in js and len(js)>10000
     utilities,mime=app.workflow.file(uid,revision['id'],'utilities.css')
     assert b'display: grid' in utilities and b'.grid' in utilities
+
+
+def test_course_list_reports_failed_build_and_uncommitted_draft(workflow):
+    from shuku_backend import drafts
+    app,course,project,uid,admin=workflow
+    revision=app.workflow.save(uid,course['id'],{'project':project,'expected_revision':None})
+    assert app.store.courses(uid)[0]['revision_state']=='building'
+    with app.store.transaction() as db:
+        db.execute("UPDATE shuku_tasks SET status='failed' WHERE idempotency_key=%s",('build:'+revision['id'],))
+    assert app.store.courses(uid)[0]['revision_state']=='failed'
+    assert not app.store.courses(uid)[0]['has_draft']
+    drafts.save(app.workflow,uid,course['id'],{'project':project,'expected_revision':revision['id'],'expected_draft':None})
+    assert app.store.courses(uid)[0]['has_draft']
+    assert app.store.courses(DEMO_USERS[0][0])==[]
