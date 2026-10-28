@@ -16,7 +16,8 @@ def settings(tmp_path,dsn="mysql+mysqlconnector://test@localhost/idl_shuku_test_
 def test_settings_fail_closed(tmp_path):
     config=settings(tmp_path)
     assert 'test-only-password' not in repr(config)
-    for change in [dict(auth_provider="jianlun"),dict(demo_password=""),dict(origin="https://host/path"),dict(database_url="sqlite:///bad"),dict(bucket_dir=Path("relative"))]:
+    assert 'admin-test-secret' not in repr(replace(config,demo_admin_password='admin-test-secret'))
+    for change in [dict(auth_provider="jianlun"),dict(demo_password=""),dict(demo_admin_password=""),dict(demo_admin_password="x"*257),dict(origin="https://host/path"),dict(database_url="sqlite:///bad"),dict(bucket_dir=Path("relative"))]:
         with pytest.raises(ValueError):replace(config,**change)
 
 
@@ -66,3 +67,16 @@ def test_ready_does_not_migrate_or_ignore_checksum(store,tmp_path):
         with store.transaction() as db:
             for version,digest in expected_markers().items():
                 db.execute("UPDATE shuku_schema_migrations SET checksum=%s WHERE version=%s",(digest,version))
+
+
+def test_admin_password_environment_is_separate(monkeypatch,tmp_path):
+    monkeypatch.setenv('SHUKU_DATABASE_URL','mysql+mysqlconnector://test@localhost/idl_shuku_test_unit')
+    monkeypatch.delenv('MYSQL_URL_TEST',raising=False)
+    monkeypatch.setenv('SHUKU_BUCKET_DIR',str(tmp_path/'bucket'))
+    monkeypatch.setenv('SHUKU_PUBLIC_ORIGIN','http://localhost:5173')
+    monkeypatch.setenv('SHUKU_DEMO_PASSWORD','ordinary-test-password')
+    monkeypatch.setenv('SHUKU_DEMO_ADMIN_PASSWORD','separate-admin-test-password')
+    config=Settings.from_env()
+    assert config.demo_password=='ordinary-test-password'
+    assert config.demo_admin_password=='separate-admin-test-password'
+    assert 'separate-admin-test-password' not in repr(config)

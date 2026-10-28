@@ -120,3 +120,18 @@ def test_additional_demo_creators_login_without_admin_access(api,username):
     assert request('GET','/admin/courses',cookie=cookie)[0]==403
     app.store.seed_demo()
     assert request('GET','/auth/me',cookie=cookie)[1]['user']==body['user']
+
+
+def test_separate_admin_password_rejects_shared_password_and_preserves_creators(api):
+    from shuku_backend.adapters.identity import DemoIdentity
+    request,app=api
+    app.identity=DemoIdentity(app.store,'test-password',admin_password='separate-admin-test-password')
+    assert request('POST','/auth/login',{'username':'admin','password':'test-password'})[0]==401
+    code,body,cookie=request('POST','/auth/login',{'username':' ADMIN ','password':'separate-admin-test-password'})
+    assert code==200 and body['user']['username']=='admin' and body['user']['role']=='admin'
+    assert request('GET','/admin/courses',cookie=cookie.split(';')[0])[0]==200
+    for username in ('xiaoman','scy','msh'):
+        cookie=login(request,username)
+        assert request('GET','/auth/me',cookie=cookie)[1]['user']['role']=='creator'
+        assert request('GET','/admin/courses',cookie=cookie)[0]==403
+        assert request('POST','/auth/login',{'username':username,'password':'separate-admin-test-password'})[0]==401

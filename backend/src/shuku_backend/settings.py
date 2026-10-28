@@ -19,6 +19,7 @@ class Settings:
     github_identity_config_path: Path | None = field(default=None,repr=False)
     github_token_key_path: Path | None = field(default=None,repr=False)
     course_root: Path | None = None
+    demo_admin_password: str | None = field(default=None,repr=False)
 
     def github_identity_config(self):
         path=self.github_identity_config_path or self.github_config_path
@@ -49,6 +50,8 @@ class Settings:
             raise ValueError("Jianlun authentication is not implemented; no automatic Demo fallback")
         if not self.demo_password or len(self.demo_password) > 256:
             raise ValueError("SHUKU_DEMO_PASSWORD must contain 1..256 characters")
+        if self.demo_admin_password is not None and (not self.demo_admin_password or len(self.demo_admin_password)>256):
+            raise ValueError("SHUKU_DEMO_ADMIN_PASSWORD must contain 1..256 characters when configured")
         if not self.bucket_dir.is_absolute() or not 0 <= self.port <= 65535:
             raise ValueError("Use an absolute SHUKU_BUCKET_DIR and valid SHUKU_PORT")
         if self.course_root is not None:
@@ -64,6 +67,7 @@ class Settings:
                    bucket_dir=Path(os.environ["SHUKU_BUCKET_DIR"]),
                    origin=os.environ["SHUKU_PUBLIC_ORIGIN"],
                    demo_password=os.environ.get("SHUKU_DEMO_PASSWORD", ""),
+                   demo_admin_password=os.environ.get("SHUKU_DEMO_ADMIN_PASSWORD"),
                    auth_provider=os.environ.get("SHUKU_AUTH_PROVIDER", "demo"),
                    host=os.environ.get("SHUKU_HOST", "127.0.0.1"),
                    port=int(os.environ.get("SHUKU_PORT", "8010")),

@@ -11,10 +11,11 @@ class IdentityProvider(Protocol):
 
 
 class DemoIdentity:
-    def __init__(self, store, password):
+    def __init__(self, store, password, *, admin_password=None):
         self.store=store
         self.salt=secrets.token_bytes(16)
         self.password_hash=self._hash(password)
+        self.admin_password_hash=self._hash(admin_password) if admin_password is not None else None
 
     def _hash(self, value):
         return scrypt(value.encode(),salt=self.salt,n=16384,r=8,p=1,dklen=32)
@@ -34,7 +35,8 @@ class DemoIdentity:
             if attempt["failures"]>=10:
                 failure=BusinessError(429,"LOGIN_RATE_LIMIT","登录尝试过于频繁，请稍后重试。")
             else:
-                valid=compare_digest(self._hash(password),self.password_hash)
+                expected=self.admin_password_hash if username=="admin" and self.admin_password_hash is not None else self.password_hash
+                valid=compare_digest(self._hash(password),expected)
                 user=db.execute("SELECT id FROM shuku_users WHERE username=%s AND active",(username,)).fetchone()
                 if not valid or not user:
                     db.execute("UPDATE shuku_login_attempts SET failures=failures+1 WHERE peer_key=%s",(peer_key,))
