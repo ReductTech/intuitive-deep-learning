@@ -108,3 +108,15 @@ def test_public_https_port_switch_keeps_sessions_and_rejects_old_origin(api):
     assert request('GET','/auth/me',cookie=cookie,origin=new)[0]==200
     assert request('POST','/auth/login',{'username':'linzhi','password':'test-password'},origin=new)[0]==200
     assert request('POST','/auth/login',{'username':'linzhi','password':'test-password'},origin=old)[0]==403
+
+
+@pytest.mark.parametrize('username',['scy','msh'])
+def test_additional_demo_creators_login_without_admin_access(api,username):
+    request,app=api
+    cookie=login(request,username)
+    code,body,_=request('GET','/auth/me',cookie=cookie)
+    assert code==200 and body['user']['username']==username
+    assert body['user']['display_name']==username and body['user']['role']=='creator'
+    assert request('GET','/admin/courses',cookie=cookie)[0]==403
+    app.store.seed_demo()
+    assert request('GET','/auth/me',cookie=cookie)[1]['user']==body['user']

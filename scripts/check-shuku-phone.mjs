@@ -12,6 +12,9 @@ try{
  await page.getByText('减论科技，科技链接个体',{exact:true}).waitFor();await page.getByText('请选择一种方式登录您的减论账号',{exact:true}).waitFor();assert.equal(await page.getByText('使用减论账号登录术库',{exact:true}).count(),0);
  assert.equal(await page.getByRole('tab',{name:'验证码登录',exact:true}).getAttribute('aria-selected'),'true');assert.ok(await page.getByRole('button',{name:'发送验证码',exact:true}).isDisabled());
  assert.equal(await page.getByLabel('Demo 密码',{exact:true}).isVisible(),false);
+ await page.getByText('Demo 体验登录',{exact:true}).click();
+ for(const username of ['scy','msh']){await page.getByLabel('体验账号').selectOption(username);assert.equal(await page.getByLabel('体验账号').inputValue(),username);}
+ await page.getByText('Demo 体验登录',{exact:true}).click();
  await page.getByLabel('手机号',{exact:true}).fill('13800138000');await page.screenshot({path:output+'/sms-desktop.png'});
  await page.getByRole('button',{name:'发送验证码',exact:true}).click();await page.getByRole('alert').filter({hasText:'验证码服务暂未接入'}).waitFor();assert.equal(await page.getByRole('button',{name:'发送验证码',exact:true}).isEnabled(),true);assert.equal(calls.length,1);assert.deepEqual(calls[0].body,{phone:'13800138000'});
  await page.getByPlaceholder('请输入验证码',{exact:true}).fill('123456');await page.getByRole('button',{name:'登录 / 注册',exact:true}).click();await page.getByRole('alert').filter({hasText:'手机号登录暂未接入'}).waitFor();assert.deepEqual(calls[1].body,{method:'sms',phone:'13800138000',code:'123456'});

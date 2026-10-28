@@ -10,6 +10,8 @@ DEMO_USERS = (
     ("c46c13b0-4c69-5e36-aa4a-4d57ffdb0f01", "linzhi", "林知", "learner"),
     ("c46c13b0-4c69-5e36-aa4a-4d57ffdb0f02", "xiaoman", "小满", "creator"),
     ("c46c13b0-4c69-5e36-aa4a-4d57ffdb0f03", "admin", "管理员", "admin"),
+    ("c46c13b0-4c69-5e36-aa4a-4d57ffdb0f04", "scy", "scy", "creator"),
+    ("c46c13b0-4c69-5e36-aa4a-4d57ffdb0f05", "msh", "msh", "creator"),
 )
 
 

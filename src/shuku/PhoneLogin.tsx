@@ -19,7 +19,7 @@ export function PhoneLogin({checking,unavailable,error,busy,onRetry,onClearError
     {(codeError||error)&&<p role="alert">{codeError||error}</p>}<button className="shuku-login-submit" disabled={busy||sending}>{busy?'正在登录…':'登录 / 注册'}</button>
    </form>
    <button className="shuku-guest-entry" type="button" disabled={busy} onClick={onGuest}>游客体验</button>
-   <details className="shuku-demo-login" onToggle={()=>{setCodeError('');onClearError();}}><summary>Demo 体验登录</summary><form onSubmit={e=>{e.preventDefault();setCodeError('');onDemo(e.currentTarget);}}><label>体验账号<select name="username" autoComplete="username"><option value="xiaoman">小满 · 课程作者</option><option value="linzhi">林知 · 学习者</option><option value="admin">管理员</option></select></label><label>Demo 密码<input name="password" type="password" autoComplete="current-password" required maxLength={256}/></label><button className="shuku-demo-submit" disabled={busy}>{busy?'正在登录…':'进入 Demo'}</button></form></details>
+   <details className="shuku-demo-login" onToggle={()=>{setCodeError('');onClearError();}}><summary>Demo 体验登录</summary><form onSubmit={e=>{e.preventDefault();setCodeError('');onDemo(e.currentTarget);}}><label>体验账号<select name="username" autoComplete="username"><option value="xiaoman">小满 · 课程作者</option><option value="linzhi">林知 · 学习者</option><option value="scy">scy · 课程作者</option><option value="msh">msh · 课程作者</option><option value="admin">管理员</option></select></label><label>Demo 密码<input name="password" type="password" autoComplete="current-password" required maxLength={256}/></label><button className="shuku-demo-submit" disabled={busy}>{busy?'正在登录…':'进入 Demo'}</button></form></details>
   </>}
   </section></div></main>;
 }

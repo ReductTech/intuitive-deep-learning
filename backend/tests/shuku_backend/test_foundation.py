@@ -51,7 +51,7 @@ def test_migrations_and_explicit_demo_seeding(store,tmp_path):
         create_application(replace(settings(tmp_path,store.database_url),source_root=tmp_path/"missing"))
     store.seed_demo();store.seed_demo()
     with store.transaction() as db:
-        assert db.execute("SELECT count(*) AS n FROM shuku_users").fetchone()["n"]==3
+        assert db.execute("SELECT count(*) AS n FROM shuku_users").fetchone()["n"]==len(DEMO_USERS)
         db.execute("UPDATE shuku_users SET role='admin' WHERE username='linzhi'")
     with pytest.raises(RuntimeError,match="conflicts"):store.seed_demo()
 
