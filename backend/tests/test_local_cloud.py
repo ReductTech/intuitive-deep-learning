@@ -1,7 +1,34 @@
 import os
+import json
+from pathlib import Path
 
 import pytest
 from idl_backend.local.cloud import cloud_environment, cloud_repository
+
+
+@pytest.fixture(autouse=True)
+def isolated_user_config(tmp_path, monkeypatch):
+    monkeypatch.setattr(Path, 'home', lambda: tmp_path)
+
+
+@pytest.mark.skipif(os.name != 'nt', reason='Windows local development configuration')
+def test_user_test_database_overrides_production_cache(tmp_path, monkeypatch):
+    main, cloud = checkout(tmp_path)
+    monkeypatch.setenv('IDL_CLOUD_REPOSITORY', str(cloud))
+    monkeypatch.setenv('MYSQL_URL_REMOTE', 'mysql://user:production@example.invalid/production')
+    test_url = 'mysql://user:test@example.invalid/test'
+    (tmp_path / '.reduct_db_config.json').write_text(json.dumps({'MYSQL_URL_TEST': test_url}), encoding='utf-8-sig')
+    assert cloud_environment(main)['MYSQL_URL_REMOTE'] == test_url
+
+
+@pytest.mark.skipif(os.name != 'nt', reason='Windows local development configuration')
+def test_user_config_missing_test_database_never_falls_back_to_production(tmp_path, monkeypatch):
+    main, cloud = checkout(tmp_path)
+    monkeypatch.setenv('IDL_CLOUD_REPOSITORY', str(cloud))
+    monkeypatch.setenv('MYSQL_URL_REMOTE', 'mysql://user:production@example.invalid/production')
+    (tmp_path / '.reduct_db_config.json').write_text('{}', encoding='utf-8')
+    with pytest.raises(RuntimeError, match='MYSQL_URL_TEST'):
+        cloud_environment(main)
 
 
 def checkout(tmp_path):

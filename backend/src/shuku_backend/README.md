@@ -4,7 +4,13 @@
 
 支持现有模块的 React 页面和可编辑文字教学页。托管编辑不会改写共享 TSX；原编辑器的 AI 模拟生成不作为可发布产物。GitHub PR、共创评分和消息已接通；减论身份 API 仍待后续迁移。
 
-## 本地 Windows 快速启动
+## Windows 课件预览（默认）
+
+运行 `npm run dev` 或 `npm run dev:preview`，打开 `http://localhost:5173/`，直接浏览本地课件，无需登录或安装数据库。不要同时启动这两个命令；端口占用会直接报错。
+
+完整业务前端使用 `npm run dev:app`，需要已有的 8010 业务后端。Windows 后端在没有显式设置 `SHUKU_DATABASE_URL` / `MYSQL_URL_TEST` 时，自动读取 `C:\Users\<用户>\.reduct_db_config.json` 的 `MYSQL_URL_TEST`；凭据仅由 Python 服务端读取，不发送到浏览器。此读取不会初始化数据库或执行迁移。
+
+## 旧的独立本机数据库启动方式（默认预览不使用）
 
 启动脚本会自动寻找已有依赖的 Python（本机为 Anaconda），也可通过 `-Python` 固定解释器。在仓库根目录执行：
 
@@ -32,9 +38,9 @@ npm run dev -- --port 5175
 npm run dev:preview
 ```
 
-打开 `http://127.0.0.1:5176/` 查看本地课件目录，`/preview?module=neuron-guide` 可直达某门课，支持 `page=<页面ID>`、`mode=guide|ppt`。此启动模式只提供本地源课件和图片/视频，不检查 Cloud 仓库、不调用 8010、不保存学习记录，也不提供创作、审核、消息或已保存私有修订的访问入口。训练、AI 等依赖计算服务的交互不会自动获得后端能力。
+打开 `http://localhost:5173/` 查看本地课件目录，`/preview?module=neuron-guide` 可直达某门课，支持 `page=<页面ID>`、`mode=guide|ppt`。此启动模式提供本地源课件和图片/视频，不调用 8010、不保存学习记录，也不提供创作、审核、消息或已保存私有修订的访问入口。保留共用 Cloud runtime 和 API 代理，训练、AI 等交互需要已有的计算服务。
 
-预览仅在 Vite 开发模式 `preview` 启用并默认监听 127.0.0.1；正式构建（包括 `build --mode preview`）仍使用原登录入口。不要把 Vite 开发服务器部署到公网。
+预览仅在 Vite 开发模式 `preview` 启用；正式构建（包括 `build --mode preview`）仍使用原登录入口。Vite 使用双栈监听，支持 localhost、127.0.0.1 与 ::1。不要把 Vite 开发服务器部署到公网。
 
 ## 手动安装与运行
 

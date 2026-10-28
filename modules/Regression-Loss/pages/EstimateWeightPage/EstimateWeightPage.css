@@ -34,18 +34,68 @@
 .rl-estimate-game-values > div {display:grid;gap:2px;}
 .rl-estimate-content--loss .rl-estimate-game {padding:14px 20px;gap:7px;}
 
-/* Challenge layout has its own hierarchy; the introductory estimate page is unchanged. */
-.rl-estimate-challenge-page .rl-estimate-content--loss {gap:18px;}
-.rl-estimate-challenge-page .rl-estimate-loss-strip {grid-template-columns:1fr 1fr;gap:20px;padding:0;background:none;}
-.rl-estimate-challenge-page .rl-estimate-loss-strip > div {display:grid;grid-template-columns:1fr auto;align-items:center;gap:18px;padding:14px 26px;border:1px solid #bbd1ee;border-radius:var(--ui-radius-lg);background:linear-gradient(120deg,#edf5ff,#dceaff);}
-.rl-estimate-challenge-page .rl-estimate-loss-strip > div:nth-child(2) {background:linear-gradient(120deg,#eaf8f6,#d5eee9);border-color:#acd7cf;}
-.rl-estimate-challenge-page .rl-estimate-layout {grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:26px;}
-.rl-estimate-challenge-page .rl-estimate-reasoning {grid-template-rows:auto minmax(0,1fr);gap:14px;padding:0;}
-.rl-estimate-challenge-page .rl-estimate-instruction {display:none;}
-.rl-estimate-challenge-page .rl-estimate-estimation {padding:14px 22px;gap:4px;}
-.rl-estimate-challenge-page .rl-estimate-estimation > .ui-typography {justify-self:start;}
-.rl-estimate-challenge-page .rl-estimate-value {margin:0;}
-.rl-estimate-challenge-page .rl-estimate-game {padding:16px 22px;gap:9px;align-content:space-between;}
-.rl-estimate-challenge-page .rl-estimate-game .edu-btn {padding:5px 12px;}
-.rl-estimate-challenge-page .rl-estimate-game-values {gap:18px;}
-.rl-estimate-challenge-page .rl-estimate-stars {gap:6px;}
+/* The plot canvas owns both chart and drag coordinates on both estimate pages. */
+.rl-estimate-plot-canvas { position:relative; min-height:0; height:100%; }
+
+/* Page 07: chart first, with loss, estimate and challenge grouped on the right. */
+.rl-estimate-challenge-page.edu-content-block {
+  background:linear-gradient(#fff 0%,#fff 86%,rgba(255,255,255,.93) 100%),var(--rl-est-background) center bottom/cover;
+  border-top-color:#d6e1ed;
+}
+.rl-estimate-challenge-page > .edu-content-head { padding-bottom:20px; margin-bottom:22px; border-bottom:1px solid #d6e1ed; }
+.rl-estimate-challenge-page .rl-estimate-content--loss { grid-template-rows:minmax(0,1fr) auto; gap:22px; }
+.rl-estimate-challenge-page .rl-estimate-layout { grid-template-columns:minmax(0,1.95fr) minmax(0,1fr); gap:26px; }
+.rl-estimate-challenge-page .rl-estimate-plot { display:grid; grid-template-rows:auto minmax(0,1fr) auto; background:rgba(255,255,255,.96); border-color:#d4e0ed; border-radius:18px; padding:24px 16px 20px; }
+.rl-estimate-plot-heading { display:flex; justify-content:space-between; align-items:center; gap:18px; padding:0 10px; }
+.rl-estimate-drag-hint { color:#168c97; background:#edf7f7; border-radius:30px; padding:8px 18px; }
+.rl-estimate-challenge-page .rl-estimate-plot-canvas { height:auto; }
+.rl-estimate-challenge-page .rl-estimate-handle { width:34px; height:34px; border-width:3px; box-shadow:0 0 0 6px rgba(22,140,151,.1); }
+.rl-estimate-challenge-page .rl-estimate-handle span { left:1px; top:-1px; }
+.rl-estimate-legend { display:flex; align-items:center; justify-content:center; gap:32px; padding-top:8px; color:#27446e; }
+.rl-estimate-legend > * { display:flex; align-items:center; gap:12px; }
+.rl-estimate-legend i { display:inline-block; width:34px; height:3px; background:#168c97; }
+.rl-estimate-legend .rl-estimate-legend-dot { width:13px; height:13px; border-radius:50%; background:#27446e; }
+.rl-estimate-legend .rl-estimate-legend-error { background:#dda15a; }
+.rl-estimate-challenge-page .rl-estimate-reasoning { grid-template-rows:auto auto minmax(max-content,1fr); gap:16px; padding:0; }
+.rl-estimate-challenge-page .rl-estimate-instruction { display:none; }
+.rl-estimate-loss-card { display:grid; gap:12px; padding:20px 24px 16px; border:1px solid #d4e0ed; border-radius:18px; background:#fff; }
+.rl-estimate-challenge-page .rl-estimate-loss-strip { display:grid; grid-template-columns:1fr 1fr; gap:0; padding:0; background:none; border-radius:0; }
+.rl-estimate-challenge-page .rl-estimate-loss-strip > div { display:grid; justify-items:center; gap:0; }
+.rl-estimate-challenge-page .rl-estimate-loss-strip > div + div { border-left:1px solid #d6e1ed; }
+.rl-estimate-metric-label { color:#168c97; font-weight:600; }
+.rl-estimate-challenge-page .rl-estimate-loss-strip .ui-typography--h1 { font-size:52px; line-height:1.1; font-variant-numeric:tabular-nums; }
+.rl-estimate-loss-caption { text-align:center; }
+.rl-estimate-challenge-page .rl-estimate-estimation { padding:20px 24px; gap:6px; background:#edf8f8; border-color:#d0e4e8; border-radius:18px; }
+.rl-estimate-challenge-page .rl-estimate-value { margin:0; }
+.rl-estimate-challenge-page .rl-estimate-value .ui-typography--h1 { font-size:58px; line-height:1.2; white-space:nowrap; font-variant-numeric:tabular-nums; }
+.rl-estimate-challenge-page .rl-estimate-game { padding:20px 24px; gap:12px; align-content:start; background:#fff; border:1px solid #d4e0ed; border-radius:18px; }
+.rl-estimate-challenge-page .rl-estimate-stars { gap:14px; padding-bottom:14px; border-bottom:1px solid #d6e1ed; }
+.rl-estimate-star-icons { display:flex; gap:4px; flex-shrink:0; }
+.rl-estimate-challenge-page .rl-estimate-stars > .ui-typography { font-size:26px; }
+.rl-estimate-challenge-page .rl-estimate-game-values { gap:16px; }
+.rl-estimate-challenge-page .rl-estimate-game-values > div + div { padding-left:18px; border-left:1px solid #d6e1ed; }
+.rl-estimate-challenge-page .rl-estimate-game-values .ui-typography--h3 { font-size:30px; font-variant-numeric:tabular-nums; white-space:nowrap; }
+.rl-estimate-bias { color:#cf8524; }
+.rl-estimate-challenge-page .rl-estimate-game .edu-btn { padding:8px 22px; }
+.rl-estimate-challenge-page .rl-estimate-rating-rule { font-size:17px; line-height:1.4; margin-top:auto; }
+.rl-estimate-takeaway { display:flex; align-items:center; gap:14px; }
+.rl-estimate-takeaway::before { content:''; width:13px; height:13px; border-radius:50%; background:#168c97; flex-shrink:0; }
+
+/* Keep both challenge states within the fixed teaching canvas. */
+.rl-estimate-challenge-page {
+  --ui-type-h3-size:28px;
+  --ui-type-h3-line-height:1.25;
+  --ui-type-body-size:22px;
+  --ui-type-body-line-height:1.4;
+  --ui-type-body-small-size:20px;
+  --ui-type-body-small-line-height:1.4;
+}
+.rl-estimate-challenge-page .rl-estimate-loss-card { gap:6px; padding:12px 22px; }
+.rl-estimate-challenge-page .rl-estimate-metric-label { text-align:center; justify-self:center; }
+.rl-estimate-challenge-page .rl-estimate-loss-strip > div { text-align:center; --ui-type-body-size:18px; --ui-type-body-small-size:18px; }
+.rl-estimate-challenge-page .rl-estimate-loss-caption { --ui-type-body-small-size:18px; }
+.rl-estimate-challenge-page .rl-estimate-estimation { padding:12px 22px; }
+.rl-estimate-challenge-page .rl-estimate-game { padding:14px 22px; gap:8px; }
+.rl-estimate-challenge-page .rl-estimate-rating-rule { --ui-type-body-small-size:17px; margin:0; padding-top:4px; }
+.rl-estimate-challenge-page .rl-estimate-game-values .ui-typography--bodySmall { --ui-type-body-small-size:18px; }
+.rl-estimate-challenge-page .rl-estimate-stars { padding-bottom:10px; }

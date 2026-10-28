@@ -80,15 +80,7 @@ export default defineConfig(({ mode, command }) => {
       transformIndexHtml(html: string) {
         return html.replace('<script src="/modules/shared/telemetry.js"></script>', '');
       },
-      configureServer(server: import('vite').ViteDevServer) {
-        server.middlewares.use((request, response, next) => {
-          if (!request.url?.startsWith('/api/') && !request.url?.startsWith('/__telemetry')) return next();
-          response.statusCode = 503;
-          response.setHeader('Content-Type', 'application/json; charset=utf-8');
-          response.end(JSON.stringify({ error: '本地预览未连接业务或计算服务。' }));
-        });
-      },
-    }] : [editDeckPlugin(), creatorSkillDocuments()]), fixedLessonCanvas(), externalCourseImages(), react(), tailwindcss(), ...(command === 'serve' && !localPreview ? [cloudRuntime(__dirname)] : [])],
+    }] : [editDeckPlugin(), creatorSkillDocuments()]), fixedLessonCanvas(), externalCourseImages(), react(), tailwindcss(), ...(command === 'serve' ? [cloudRuntime(__dirname)] : [])],
     publicDir: path.join(library,'assets'),
     resolve: {dedupe:['react','react-dom','three','@icon-park/react']},
     build: {
@@ -104,10 +96,10 @@ export default defineConfig(({ mode, command }) => {
     },
     server: {
       // Windows 上 localhost 可能先解析到 ::1；单个双栈监听让 localhost 与 127.0.0.1 始终落到同一台开发服务器。
-      host: localPreview ? '127.0.0.1' : '::',
-      port: localPreview ? 5176 : 5173,
+      host: '::',
+      port: 5173,
       strictPort: true,
-      proxy: localPreview ? undefined : {
+      proxy: {
         '/api/shuku': { target: process.env.SHUKU_API_URL || 'http://127.0.0.1:8010', changeOrigin: true },
         '/api': {
           target: process.env.IDL_LOCAL_API_URL || 'http://127.0.0.1:8000',

@@ -1,6 +1,6 @@
 ---
 name: creator-skill
-description: 在当前仓库中规划、设计、实现、修改和评估 React PPT 演示。用于从主题或材料创作演示、将既有 PPT/PDF/截图改编为 React 演示，以及继续开发或修复已有模块。支持教学、科研和商业汇报；不用于普通网站开发或一般文档编辑。
+description: 在当前仓库中规划、设计、实现、修改和评估 React PPT 演示。包括仅在聊天中讨论汇报主线、设计或修改大纲，以及从主题或材料创作演示、将既有 PPT/PDF/截图改编为 React 演示、继续开发或修复已有模块。支持教学、科研和商业汇报；不用于普通网站开发或一般文档编辑。
 ---
 
 # React PPT 创作
@@ -11,6 +11,8 @@ description: 在当前仓库中规划、设计、实现、修改和评估 React 
 2. 必须读取[流程共用说明](references/workflow/common.md)，再判断任务模式，读取对应 Workflow。
 3. 确定当前阶段，从该阶段继续；复用已有大纲、设计、代码和确认结果。
 4. 按当前动作读取必要资料，不预读整个参考目录。
+
+涉及汇报主线、章节、开场、内容取舍或大纲时，执行[大纲](references/design/course-outline.md)规范；仅在聊天中讨论、尚不修改文件，也属于该动作。已读过且仍在上下文中的资料无需反复读取，但每轮须按用户最新要求判断当前交付是主线讨论、章节结构还是逐页题目与演讲稿，不能用“已读取”代替执行。
 
 | 任务模式 | 适用情况 | Workflow |
 |---|---|---|
@@ -50,7 +52,7 @@ description: 在当前仓库中规划、设计、实现、修改和评估 React 
 
 | 动作 | 资料 |
 |---|---|
-| 规划或修改大纲 | [大纲](references/design/course-outline.md) |
+| 讨论主线、章节与开场，或生成、修改大纲（含纯聊天） | [大纲](references/design/course-outline.md) |
 | 设计或调整页面内容、构图与交互 | [页面设计指导](references/design/design.md) |
 | 分析原稿及转换范围 | [参考与转换](references/workflow/reference-adaptation.md) |
 | 编写或修改 React 页面 | [工程实现](references/engineering/implementation.md) |

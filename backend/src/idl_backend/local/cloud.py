@@ -1,5 +1,6 @@
 """Run the same Cloud API locally; never copy its cache or routing implementation."""
 import os
+import json
 from pathlib import Path
 
 from idl_backend.config import repository_root
@@ -31,6 +32,14 @@ def cloud_environment(root=None):
             value = local.get(name) or production.get(name)
             if value:
                 environment[name] = value
+    # Windows development must use the user's remote TEST database, including
+    # the Cloud cache API (whose legacy setting is named MYSQL_URL_REMOTE).
+    config = Path.home() / '.reduct_db_config.json'
+    if os.name == 'nt' and config.is_file():
+        test_url = json.loads(config.read_text(encoding='utf-8-sig')).get('MYSQL_URL_TEST', '')
+        if not isinstance(test_url, str) or not test_url.strip():
+            raise RuntimeError('Configure MYSQL_URL_TEST in ~/.reduct_db_config.json')
+        environment['MYSQL_URL_REMOTE'] = test_url.strip()
     # The private-record publisher writes its server credentials to this ignored
     # runtime file. Read only OSS settings, never its production gateway topology.
     for name in ("OSS_ACCESS_KEY_ID", "OSS_ACCESS_KEY_SECRET", "IDL_RECORDS_OSS_BUCKET",

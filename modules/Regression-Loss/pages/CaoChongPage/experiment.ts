@@ -1,10 +1,29 @@
 /** Teaching simulation: a constant waterplane area; depth relative to the unloaded boat. */
 export const STONE_KG = 250;
-export const ELEPHANT_KG = 2300;
-export const TARGET_DEPTH_CM = 36.8;
+const DEPTH_PER_KG = .016;
+const targetKey = 'regression-loss:elephant-depth';
+const randomTargetDepth = () => Math.round((35.3 + Math.random() * 3) * 10) / 10;
+function readTargetDepth(): number {
+  try {
+    const saved = Number(localStorage.getItem(targetKey));
+    if (Number.isFinite(saved) && saved >= 35.3 && saved <= 38.3) return saved;
+  } catch { /* Use a fresh experiment when storage is unavailable. */ }
+  return randomTargetDepth();
+}
+export let TARGET_DEPTH_CM = readTargetDepth();
+export let ELEPHANT_KG = Number((TARGET_DEPTH_CM / DEPTH_PER_KG).toFixed(1));
+function persistTargetDepth() {
+  try { localStorage.setItem(targetKey, String(TARGET_DEPTH_CM)); } catch { /* The in-memory experiment still works. */ }
+}
+persistTargetDepth();
+export function resetElephantMeasurement() {
+  TARGET_DEPTH_CM = randomTargetDepth();
+  ELEPHANT_KG = Number((TARGET_DEPTH_CM / DEPTH_PER_KG).toFixed(1));
+  persistTargetDepth();
+}
 export const MAX_STONES = 13;
 export type Observation = { mass: number; depth: number };
-export const depthForMass = (mass: number) => mass * TARGET_DEPTH_CM / ELEPHANT_KG;
+export const depthForMass = (mass: number) => mass * DEPTH_PER_KG;
 // Two rows inside the shallow hull. Coordinates are in the boat sprite's local plane.
 export const stonePositions = [
   [23,25],[47,25],[71,25], [32,27],[56,27],[80,25],[17,24],[63,24],

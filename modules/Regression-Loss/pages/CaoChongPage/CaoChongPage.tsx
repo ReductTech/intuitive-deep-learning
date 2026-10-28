@@ -2,7 +2,7 @@ import { saveRecordedData } from '../../regressionData';
 import { Forbid } from '@icon-park/react';
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import { Button, EChartsChart, Typography, moduleAssetUrl } from '../../../shared/react';
-import { depthForMass, MAX_STONES, createStoneWeights, stonePositions, TARGET_DEPTH_CM, type Observation } from './experiment';
+import { depthForMass, MAX_STONES, createStoneWeights, resetElephantMeasurement, stonePositions, TARGET_DEPTH_CM, type Observation } from './experiment';
 import './CaoChongPage.css';
 
 const assetId = 'adde4a27-235d-4c03-a3cf-734ccf08b38d';
@@ -207,6 +207,7 @@ export function CaoChongPage() {
     countRef.current = 0;
     locked.current = false;
     recordsRef.current = [];
+    resetElephantMeasurement();
     saveRecordedData([]);
     setWeights(createStoneWeights()); setFlying([]); setCount(0); setRecords([]); setPhase('idle'); setStoryPhase('before-elephant'); setTargetRecorded(false);
   };
@@ -247,7 +248,7 @@ export function CaoChongPage() {
         </div>
         {flying.map((index,i)=><div key={index} className="rl-cao-flight" style={{ '--rl-landing-x': `${20 + stonePositions[index][0] * 9.7 - 179}px`, '--rl-landing-y': `${360 + stonePositions[index][1] * 3.5 + sink - 15}px`, animationDelay: `${(index-flightStart.current)*80}ms` } as CSSProperties} aria-hidden="true"><img src={stoneAsset(index)} alt="" /></div>)}
         <div className="rl-cao-water-front" aria-hidden="true"><canvas ref={waterRef} width={1000} height={900} className="rl-cao-water-texture" /><div className="rl-cao-water-rim" /></div>
-        {targetRecorded && <div className="rl-cao-target" style={{ top: targetY, transition: storyPhase !== 'before-elephant' ? 'none' : undefined }} title="大象上船时留下的刻痕"><i /><Typography variant="bodySmall" as="span" tone="inherit">大象水位 · 下沉 36.8 厘米</Typography></div>}
+        {targetRecorded && <div className="rl-cao-target" style={{ top: targetY, transition: storyPhase !== 'before-elephant' ? 'none' : undefined }} title="大象上船时留下的刻痕"><i /><Typography variant="bodySmall" as="span" tone="inherit">{`大象水位 · 下沉 ${TARGET_DEPTH_CM.toFixed(1)} 厘米`}</Typography></div>}
         <div className="rl-cao-empty-mark" aria-hidden="true" style={{ top: 610 + sink, transition: storyPhase !== 'before-elephant' ? 'none' : undefined }} />
         {phase === 'settling' && <div key={count} className="rl-cao-ripple" aria-hidden="true"><i /><i /><i /></div>}
         <div className="rl-cao-depth"><Typography variant="body" tone="inherit">{`下沉 ${depth.toFixed(1)} 厘米`}</Typography></div>
@@ -256,7 +257,7 @@ export function CaoChongPage() {
             <img src={storyPhase === 'stones' ? stoneAsset(completed ? MAX_STONES - 1 : count) : asset('elephant.png')} alt="" draggable={false} />
             {completed && <span className="rl-cao-stone-forbid" aria-hidden="true"><Forbid theme="outline" size={142} fill="#ff715e" strokeWidth={3} /></span>}
             {!completed && <Typography as="span" variant="h3" tone="inherit">{storyPhase === 'before-elephant' ? '点击称重' : storyPhase === 'unloading-elephant' ? '自动下船…' : storyPhase !== 'stones' ? '称重中…' : phase === 'falling' ? '石头落下…' : phase === 'settling' ? '记录水位…' : `投放 ${batchSize} 块`}</Typography>}
-            {!completed && <Typography as="span" variant="body" tone="inherit">{storyPhase === 'stones' ? `本次 ${nextBatchMass} 千克` : targetRecorded ? '已记下 36.8 厘米' : '自动记录水位'}</Typography>}
+            {!completed && <Typography as="span" variant="body" tone="inherit">{storyPhase === 'stones' ? `本次 ${nextBatchMass} 千克` : targetRecorded ? `已记下 ${TARGET_DEPTH_CM.toFixed(1)} 厘米` : '自动记录水位'}</Typography>}
             {storyPhase === 'stones' && !completed && <Typography as="span" variant="body" tone="inherit">剩余 {MAX_STONES - count} 块</Typography>}
           </Button>
         </div>
@@ -266,7 +267,7 @@ export function CaoChongPage() {
       <section className="rl-cao-notebook" aria-label="称象实验记录本">
         <div className="rl-cao-book-binding" aria-hidden="true"><i /><i /><i /></div>
         <div className="rl-cao-book-header"><Typography variant="h3" tone="accent">投石手记</Typography><Typography variant="bodySmall" tone="muted">{records.length} 条记录</Typography></div>
-        <Typography variant="bodySmall" tone={targetRecorded ? 'accent' : 'muted'} className="rl-cao-elephant-record">{targetRecorded ? '大象水位：36.8 厘米' : '大象水位：待记录'}</Typography>
+        <Typography variant="bodySmall" tone={targetRecorded ? 'accent' : 'muted'} className="rl-cao-elephant-record">{targetRecorded ? `大象水位：${TARGET_DEPTH_CM.toFixed(1)} 厘米` : '大象水位：待记录'}</Typography>
         <EChartsChart className="rl-cao-chart" option={option} minHeight={0} aria-label={`石重与下沉深度散点图，共${records.length}个点`} />
         <div className="rl-cao-book-footer"><Button onClick={reset}>重新开始</Button></div>
       </section>

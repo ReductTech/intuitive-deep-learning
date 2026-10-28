@@ -1,20 +1,36 @@
 import { useSyncExternalStore } from 'react';
+import { createStoneWeights, depthForMass } from './pages/CaoChongPage/experiment';
 export type RecordedObservation = { mass:number; depth:number };
 const key='regression-loss:recorded-orders';
 const listeners=new Set<()=>void>();
+let exampleData: RecordedObservation[] | undefined;
+function getExampleData(): RecordedObservation[] {
+  // Generate once so navigation and React renders share the same observations.
+  if (!exampleData) {
+    let mass = 0;
+    exampleData = createStoneWeights().map(weight => {
+      mass += weight;
+      const depth = Math.round(Math.max(0, depthForMass(mass) + (Math.random() - .5) * 4) * 10) / 10;
+      return { mass, depth };
+    });
+  }
+  return exampleData;
+}
 function readSaved():RecordedObservation[] {
   try { const value=JSON.parse(localStorage.getItem(key)??'[]'); return Array.isArray(value)?value.filter(p=>Number.isFinite(p.mass)&&Number.isFinite(p.depth)):[]; } catch { return []; }
 }
-export let calibration:RecordedObservation[]=readSaved();
+const savedData = readSaved();
+export let calibration:RecordedObservation[]=savedData.length ? savedData : getExampleData();
 export let slope=.016;
 export let intercept=0;
 export function saveRecordedData(points:RecordedObservation[]) {
-  calibration=points.map(p=>({...p}));
+  calibration=points.length ? points.map(p=>({...p})) : getExampleData();
   const n=calibration.length;
   if(n>1){const mx=calibration.reduce((s,p)=>s+p.mass,0)/n,my=calibration.reduce((s,p)=>s+p.depth,0)/n;
     const xx=calibration.reduce((s,p)=>s+(p.mass-mx)**2,0);
     if(xx){slope=calibration.reduce((s,p)=>s+(p.mass-mx)*(p.depth-my),0)/xx;intercept=my-slope*mx;}}
-  localStorage.setItem(key,JSON.stringify(calibration));listeners.forEach(fn=>fn());
+  // Keep simulated defaults out of the learner's saved experiment records.
+  localStorage.setItem(key,JSON.stringify(points));listeners.forEach(fn=>fn());
 }
 export function useRecordedData(){return useSyncExternalStore(fn=>{listeners.add(fn);return()=>{listeners.delete(fn);};},()=>calibration,()=>calibration);}
 export const predictDepth=(mass:number)=>slope*mass+intercept;

@@ -2,6 +2,7 @@
 from dataclasses import dataclass
 import json
 import os
+from pathlib import Path
 from uuid import UUID
 
 from sqlalchemy import JSON, bindparam, create_engine, event, text
@@ -26,6 +27,12 @@ def database_url_from_env(environ=None):
     env = os.environ if environ is None else environ
     primary = env.get('SHUKU_DATABASE_URL', '').strip()
     external = env.get('MYSQL_URL_TEST', '').strip()
+    # Local Windows development uses the user's remote test database. Never
+    # provision a local database or send this configuration to the frontend.
+    if environ is None and not primary and not external and os.name == 'nt':
+        config = Path.home() / '.reduct_db_config.json'
+        if config.is_file():
+            external = str(json.loads(config.read_text(encoding='utf-8-sig')).get('MYSQL_URL_TEST', '')).strip()
     if not primary and not external:
         raise ValueError('Configure SHUKU_DATABASE_URL or MYSQL_URL_TEST')
     if primary and external and mysql_url(primary) != mysql_url(external):

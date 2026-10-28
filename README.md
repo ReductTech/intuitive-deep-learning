@@ -63,7 +63,9 @@ python3 -m pip install -r requirements-torch.txt
 
 ## Windows 启动
 
-术库登录、课程与消息使用 SQLAlchemy + MySQL。首次本地准备、启动及不依赖数据库的课件预览，见 [术库业务后端说明](backend/src/shuku_backend/README.md)。免登录预览命令为 `npm run dev:preview`（`http://127.0.0.1:5176/`）。
+默认运行 `npm run dev`（或 `npm run dev:preview`），打开 `http://localhost:5173/`，无需登录即可预览本地课件。端口固定为 5173，占用时直接报错，不自动跳到 5176。无需安装本地数据库服务。
+
+完整登录、创作与消息入口使用 `npm run dev:app`，同样监听 5173，需要先停止预览进程，并准备业务后端 8010。Windows 业务后端在未显式配置数据库环境变量时，读取用户目录 `.reduct_db_config.json` 的 `MYSQL_URL_TEST`，使用远端测试库。详见 [术库业务后端说明](backend/src/shuku_backend/README.md)。
 
 在仓库根目录、已激活的 Python 环境中，运行 `.\scripts\devstart.ps1` 启动全部本地后台服务；另一个终端运行 `npm run dev` 启动课件。状态与停止分别为 `.\scripts\devstart.ps1 -Status` 和 `.\scripts\devstop.ps1`。详情见 [scripts/README.md](scripts/README.md)。
 
