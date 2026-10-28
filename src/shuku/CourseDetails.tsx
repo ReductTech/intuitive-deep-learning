@@ -12,7 +12,7 @@ import './CourseDetails.css';
 interface Release{id:string;version:string;revision_id:string;current:boolean;created_at:number;note:string}
 interface Detail{course:{id:string;title:string;description:string;category:string;creator:string;version:string;revision_id:string;external?:{repository:string;commit:string;entry:string};library?:LibraryCourse};releases:Release[];contributors:{name:string;score:number;count:number}[]}
 export function CourseDetails(){
- const params=new URLSearchParams(location.search),cid=params.get('course')||'',nativeModule=activeModules.find(m=>m.id===params.get('module')&&m.pptDeck);
+ const params=new URLSearchParams(location.search),cid=params.get('course')||'',nativeModule=activeModules.find(m=>m.id===params.get('module')&&(m.pptDeck||m.catalogListed));
  const [library,setLibrary]=useState<LibraryCourse|null>(null);
  const module:CatalogModule|undefined=nativeModule&&(isLocalPreview||library)?{...nativeModule,catalog:library||undefined}:undefined;
  const [detail,setDetail]=useState<Detail|null>(null),[error,setError]=useState(''),[selected,setSelected]=useState('');
@@ -25,7 +25,7 @@ export function CourseDetails(){
  const resource=cid?'course:'+cid:'module:'+module?.id;
  const recent=personal.data.history.find(r=>r.resource===resource&&r.available);
  const same=!!recent&&(module||recent.version===release?.revision_id);
- const start=same&&recent?studyHref(recent):module?'/study?module='+encodeURIComponent(module.id)+'&mode=guide':release?'/learn?revision='+release.revision_id:'';
+ const start=same&&recent?studyHref(recent):module?(module.pptDeck?'/study?module='+encodeURIComponent(module.id)+'&mode=guide':module.path):release?'/learn?revision='+release.revision_id:'';
  const old=recent&&!same&&releases.some(r=>r.revision_id===recent.version)?recent:null;
  useEffect(()=>{if(title)document.title='术库 · '+title;},[title]);
  function report(){if(isGuestMode()){requestSignIn();return;}if(!release)return;setFeedback({revision:release.revision_id,version:release.version,key:crypto.randomUUID()});setFeedbackError('');setMessage('');setPosition('');setReceipt('');}

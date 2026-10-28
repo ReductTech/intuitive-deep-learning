@@ -44,7 +44,7 @@ const editorial: Record<string, { title: string; summary: string; topic: string;
   'Linear-Regression-Loss': { title: '从身高遗传到线性回归', summary: '观察身高数据的趋势，亲手调整一条预测直线。', topic: '数学与优化', cover: 'uncertainty-opening', color: '#faeee3' },
 };
 const order = Object.keys(editorial);
-const courses = activeModules.filter(module => module.pptDeck).sort((a, b) => {
+const courses = activeModules.filter(module => module.pptDeck || module.catalogListed).sort((a, b) => {
   const rank = (id: string) => order.includes(id) ? order.indexOf(id) : order.length;
   return rank(a.id) - rank(b.id);
 });
@@ -75,7 +75,7 @@ export function HomePage() {
   const published=catalog.filter((c):c is PublishedCourse=>c.kind!=='library');
   // Bundled components render courses; they no longer determine the public catalog.
   const remoteCourses=catalog.filter((c):c is LibraryCourse=>c.kind==='library');
-  const listedCourses:CatalogModule[]=isLocalPreview?courses:remoteCourses.flatMap(c=>{const module=activeModules.find(m=>m.id===c.alias&&m.assetId===c.module_id&&m.pptDeck);return module?[{...module,title:c.title,description:c.description,difficulty:c.difficulty as ActiveModule['difficulty'],catalog:c}]:[];});
+  const listedCourses:CatalogModule[]=isLocalPreview?courses:remoteCourses.flatMap(c=>{const module=activeModules.find(m=>m.id===c.alias&&m.assetId===c.module_id&&(m.pptDeck||m.catalogListed));return module?[{...module,title:c.title,description:c.description,difficulty:c.difficulty as ActiveModule['difficulty'],catalog:c}]:[];});
   const catalogTopics=[{name:'全部课程',icon:'grid' as IconName},...Array.from(new Set([...listedCourses.map(m=>info(m).topic),...published.map(c=>c.category)].filter(Boolean))).map(name=>({name,icon:(topics.find(t=>t.name===name)?.icon||'book') as IconName}))];
   const [topic, setTopic] = useState('全部课程');
   const [query, setQuery] = useState('');
@@ -87,7 +87,7 @@ export function HomePage() {
   useEffect(() => { document.title = '术库 · 探索交互课程'; }, []);
   function favoriteKey(module:CatalogModule){return saved.includes('module:'+module.id)?'module:'+module.id:module.catalog?.course_id?'course:'+module.catalog.course_id:'module:'+module.id;}
   function detailsHref(module:CatalogModule){return module.catalog?.course_id?'/course?course='+module.catalog.course_id:'/course?module='+encodeURIComponent(module.id);}
-  function learnHref(module:CatalogModule,mode:string){return module.catalog?.revision_id?'/learn?revision='+module.catalog.revision_id+'&mode='+mode:'/study?module='+encodeURIComponent(module.id)+'&mode='+mode;}
+  function learnHref(module:CatalogModule,mode:string){if(!module.pptDeck)return module.path;return module.catalog?.revision_id?'/learn?revision='+module.catalog.revision_id+'&mode='+mode:'/study?module='+encodeURIComponent(module.id)+'&mode='+mode;}
   function toggleSaved(module:CatalogModule){void personal.favorite(favoriteKey(module));}
   const normalizedQuery = query.trim().toLocaleLowerCase();
   const filtered = listedCourses.filter(module => {
@@ -122,7 +122,7 @@ export function HomePage() {
           <a className="sd-library-cover-button" href={detailsHref(module)} aria-label={`${meta.title}课程详情`}><Cover module={module} /><span className="sd-library-cover-overlay">查看课程详情 <Icon name="arrow" /></span></a>
           <div className="sd-library-card-copy"><div className="sd-library-card-meta"><span>{meta.topic}</span><span className="sd-library-difficulty">{module.difficulty === 'introductory' ? '入门' : module.difficulty === 'advanced' ? '高级' : module.difficulty === 'intermediate' ? '进阶' : '探索'}</span><button className={saved.includes(favoriteKey(module)) ? 'is-saved' : ''} onClick={() => toggleSaved(module)} aria-label={`${saved.includes(favoriteKey(module)) ? '取消收藏' : '收藏'}${meta.title}`} disabled={personal.busy} aria-pressed={saved.includes(favoriteKey(module))}><Icon name="bookmark" /></button></div>
             <h2><a href={detailsHref(module)}>{meta.title}</a></h2><p>{meta.summary}</p>
-            <div className="sd-library-card-actions"><a href={learnHref(module,'guide')}><Icon name="book" />自学互动模式</a><a href={learnHref(module,'ppt')}><Icon name="play" />教学展示模式</a></div>
+            <div className="sd-library-card-actions"><a href={learnHref(module,'guide')}><Icon name="book" />{module.pptDeck?'自学互动模式':'打开互动课程'}</a>{module.pptDeck&&<a href={learnHref(module,'ppt')}><Icon name="play" />教学展示模式</a>}</div>
           </div>
         </article>;
       })}</div>

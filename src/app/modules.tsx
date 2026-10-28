@@ -32,6 +32,8 @@ export interface ActiveModule {
   getPptNotes?: (sceneId: string) => SpeakerNote[];
   /** 是否承接 /web_ppt/ 与 /web_ppt/slide.html 这两个通用播放入口。 */
   claimsPptPlayer: boolean;
+  /** Explicitly list a guide-only interactive module in the course catalog. */
+  catalogListed?: boolean;
 }
 
 interface ModuleOutlineFile {
@@ -47,6 +49,7 @@ interface ModuleOutlineFile {
   /** 课程主入口组件所在的文件名，例如 ExpandedNeuronGuidePage.tsx */
   entry?: string;
   ppt?: { entry?: string; path?: string; player?: boolean };
+  catalogListed?: boolean;
   pages?: ModulePageOutline[];
 }
 
@@ -98,6 +101,7 @@ export const activeModules: ActiveModule[] = Object.entries(outlineFiles)
       pptDeck: pptExports?.deck as DeckDefinition | undefined,
       getPptNotes: pptExports?.getPptNotes as ((sceneId: string) => SpeakerNote[]) | undefined,
       claimsPptPlayer: Boolean(outline.ppt?.player),
+      catalogListed: outline.catalogListed === true,
     };
   })
   .filter((module) => Boolean(module.element))

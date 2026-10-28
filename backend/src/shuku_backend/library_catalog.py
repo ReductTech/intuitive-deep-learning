@@ -49,13 +49,13 @@ class LibraryCatalog:
             path=root/'modules'/directory/'outlines.json'
             require(path.resolve().is_relative_to(root.resolve()) and path.is_file(),503,'INVALID_COURSE_LIBRARY','课程描述不存在。')
             data=json.loads(path.read_text())
-            if not data.get('ppt',{}).get('entry') or not data.get('entry'):continue
+            if not data.get('entry') or not ((data.get('ppt') or {}).get('entry') or data.get('catalogListed') is True):continue
             uid=str(UUID(data['moduleIdentity']['id']));alias=data.get('id') or directory
             require(uid==item.get('uuid') and (item.get('id') or directory)==alias
                     and re.fullmatch(r'[A-Za-z0-9_-]+',alias) and alias not in aliases and uid not in identities,
                     503,'INVALID_COURSE_LIBRARY','课程标识不匹配或重复。')
             aliases.add(alias);identities.add(uid)
-            pages=self.w.runtime_scenes(uid,root,commit=commit) or data.get('pages',[])
+            pages=(self.w.runtime_scenes(uid,root,commit=commit) if (data.get('ppt') or {}).get('entry') else None) or data.get('pages',[])
             asset_id=uid
             thumbnails=root/'assets'/asset_id/'scenedeck-thumbnails'
             cover=next((p['id'] for p in pages if re.fullmatch(r'[A-Za-z0-9_-]+',p.get('id','')) and (thumbnails/(p['id']+'.png')).is_file()),None)
@@ -111,6 +111,8 @@ class LibraryCatalog:
             created=[];retried=0
             for entry in entries:
                 item=entry['payload'];mid=item['module_id']
+                # Guide-only interactive modules have no deck revision to bootstrap.
+                if not self.w.module_context(mid).get('directory'):continue
                 binding=db.execute('SELECT b.*,c.head_revision,c.current_release FROM shuku_library_bindings b LEFT JOIN shuku_courses c ON c.id=b.course_id WHERE b.module_id=%s',(mid,)).fetchone()
                 if binding:
                     if binding['course_id'] and not binding['current_release'] and binding['head_revision']==binding['initial_revision_id']:
