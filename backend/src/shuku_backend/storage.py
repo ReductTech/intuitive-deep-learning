@@ -171,7 +171,7 @@ class Store:
             lease=db.execute("SELECT resource_key FROM shuku_task_leases WHERE task_id=%s AND lease_token=%s AND expires_at>%s FOR UPDATE",(tid,token,now)).fetchone()
             require(lease,409,"STALE_LEASE","任务租约已失效。")
             if result is None and row['kind']=='course.import.inspect':result=row['result']
-            status="queued" if deferred else "succeeded" if error is None else ("queued" if row["attempts"]<row["max_attempts"] else "failed")
+            status="queued" if deferred else "succeeded" if error is None else ("queued" if error!='BUILD_CLEANUP_FAILED' and row["attempts"]<row["max_attempts"] else "failed")
             db.execute("UPDATE shuku_tasks SET status=%s,result=%s,error_code=%s,available_at=%s,attempts=attempts-%s,lease_until=NULL,lease_token=NULL WHERE id=%s",(status,JsonValue(result),error,now+(2 if deferred else min(60,2**row["attempts"])),1 if deferred else 0,tid))
             db.execute("DELETE FROM shuku_task_leases WHERE task_id=%s AND lease_token=%s",(tid,token))
             if status=="failed":self.build_state(db,row,'failed',error)

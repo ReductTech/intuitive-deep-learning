@@ -116,3 +116,72 @@ def test_player_http_permissions_and_content_policy(workflow):
         assert get('/revisions/'+rid+'/player/files/index.html')[0]==404
         assert get('/revisions/'+rid+'/player/files/project.json',cookie)[0]==404
     finally:server.shutdown();server.server_close();thread.join()
+
+
+def test_player_failure_retries_same_task_without_changing_course_release(workflow,monkeypatch):
+    from shuku_backend import player as module
+    from copy import deepcopy
+    app,course,project,uid,admin=workflow
+    revision=save_ready(app,course,project,uid);rid=revision['id']
+    with pytest.raises(BusinessError):app.workflow.player.retry(DEMO_USERS[0][0],rid,{})
+    approve(app,course,revision,uid,admin)
+    release=app.workflow.publish(uid,course['id'],{'revision_id':rid,'version':'1.0.0'})
+    def snapshot():
+        with app.store.transaction() as db:
+            return deepcopy((db.execute('SELECT files,artifact_hash,state FROM shuku_revisions WHERE id=%s',(rid,)).fetchone(),db.execute('SELECT current_release,head_revision,status FROM shuku_courses WHERE id=%s',(course['id'],)).fetchone(),db.execute('SELECT * FROM shuku_releases WHERE id=%s',(release['id'],)).fetchone()))
+    original=snapshot();player=app.workflow.player;actual=module.run_build
+    assert player.status(uid,rid)['state']=='queued'
+    with app.store.transaction() as db:
+        task=db.execute('SELECT id FROM shuku_tasks WHERE idempotency_key=%s',(player.key(rid),)).fetchone();tid=task['id']
+        db.execute('UPDATE shuku_tasks SET max_attempts=1 WHERE id=%s',(tid,))
+    def fail(*args,**kwargs):raise BusinessError(422,'BUILD_TIMEOUT','test timeout')
+    monkeypatch.setattr(module,'run_build',fail);assert app.worker.run_once()
+    result=player.status(uid,rid)
+    assert result['state']=='failed' and result['error_code']=='BUILD_TIMEOUT' and result['can_retry']
+    assert not player.status(None,rid)['can_retry']
+    assert player.retry(uid,rid,{})['state']=='queued'
+    assert player.retry(uid,rid,{})['state']=='queued','duplicate retry must not create another task'
+    monkeypatch.setattr(module,'run_build',lambda *a,**k:(1,b'',b'private compiler details'))
+    assert app.worker.run_once();result=player.status(uid,rid)
+    assert result['error_code']=='SOURCE_BUILD_FAILED' and '源码' in result['message']
+    assert 'private compiler' not in str(result) and snapshot()==original
+    # Unconfirmed process cleanup is terminal, even when attempts remain.
+    player.retry(uid,rid,{})
+    with app.store.transaction() as db:db.execute('UPDATE shuku_tasks SET max_attempts=3 WHERE id=%s',(tid,))
+    def blocked(*args,**kwargs):raise BusinessError(503,'BUILD_CLEANUP_FAILED','cleanup not confirmed')
+    monkeypatch.setattr(module,'run_build',blocked);assert app.worker.run_once()
+    result=player.status(uid,rid)
+    assert result['state']=='failed' and not result['can_retry']
+    with pytest.raises(BusinessError) as error:player.retry(uid,rid,{})
+    assert error.value.code=='BUILD_CLEANUP_FAILED'
+    # An administrator has verified the old process is gone. This is test data only.
+    with app.store.transaction() as db:db.execute("UPDATE shuku_tasks SET error_code='BUILD_TIMEOUT' WHERE id=%s",(tid,))
+    player.retry(uid,rid,{});monkeypatch.setattr(module,'run_build',actual)
+    assert app.worker.run_once() and player.status(uid,rid)['state']=='ready'
+    with app.store.transaction() as db:
+        tasks=db.execute('SELECT id,status FROM shuku_tasks WHERE idempotency_key=%s',(player.key(rid),)).fetchall()
+    assert tasks==[{'id':tid,'status':'succeeded'}] and snapshot()==original
+
+
+def test_player_retry_http_auth_csrf_and_idempotency(workflow,monkeypatch):
+    from http.client import HTTPConnection
+    import json,threading
+    app,course,project,uid,admin=workflow
+    revision=save_ready(app,course,project,uid);rid=revision['id'];player=app.workflow.player
+    player.status(uid,rid)
+    with app.store.transaction() as db:db.execute("UPDATE shuku_tasks SET status='failed',error_code='BUILD_TIMEOUT' WHERE idempotency_key=%s",(player.key(rid),))
+    server=app.server();thread=threading.Thread(target=server.serve_forever);thread.start()
+    def request(path,body,cookie='',origin=None):
+        conn=HTTPConnection(*server.server_address,timeout=90)
+        conn.request('POST','/api/shuku'+path,body=json.dumps(body),headers={'Content-Type':'application/json','Origin':origin or app.settings.origin,'Cookie':cookie})
+        reply=conn.getresponse();result=reply.status,json.loads(reply.read()),reply.getheader('Set-Cookie');conn.close();return result
+    try:
+        path='/revisions/'+rid+'/player/retry'
+        assert request(path,{})[0]==401
+        code,_,cookie=request('/auth/login',{'username':'linzhi','password':'test-password'});assert code==200
+        assert request(path,{},cookie.split(';')[0])[0]==404
+        code,_,cookie=request('/auth/login',{'username':'xiaoman','password':'test-password'});assert code==200;cookie=cookie.split(';')[0]
+        assert request(path,{},cookie,origin='https://other.test')[0]==403
+        assert request(path,{'force':True},cookie)[0]==400
+        assert request(path,{},cookie)[0]==202 and request(path,{},cookie)[1]['state']=='queued'
+    finally:server.shutdown();server.server_close();thread.join()
