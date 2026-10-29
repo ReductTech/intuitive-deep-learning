@@ -10,7 +10,7 @@ from .errors import BusinessError
 
 def build_environment(environ=None):
     """Keep host credentials out of compilers, including case-insensitive Windows env."""
-    allowed={'PATH','HOME','LANG','LC_ALL','TMPDIR','TEMP','TMP','SYSTEMROOT','WINDIR','USERPROFILE','COMSPEC','PATHEXT'}
+    allowed={'PATH','HOME','LANG','LC_ALL','TMPDIR','TEMP','TMP','SYSTEMROOT','WINDIR','USERPROFILE','COMSPEC','PATHEXT','SHUKU_ASSET_BASE_URL'}
     result={key:value for key,value in (os.environ if environ is None else environ).items() if key.upper() in allowed}
     result['NODE_OPTIONS']='--max-old-space-size=256'
     return result

@@ -1,6 +1,7 @@
 from .review_inbox import listing as review_inbox
 from .admin import listing as admin_listing
 """Standalone same-origin HTTP API. No changes to idl_backend HTTP handlers."""
+from pathlib import Path
 from hashlib import sha256
 from http.cookies import SimpleCookie, CookieError
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -149,6 +150,14 @@ def handler_for(app):
                 require(not url.query or allowed_query or inbox_query or preview_query,400,'INVALID_INPUT','该接口不接受这些查询参数。')
                 library_asset=re.fullmatch(r'/api/shuku/public/library-assets/([a-f0-9]{40})/([^/]+)/(.+)',path)
                 if self.command=='GET' and library_asset:
+                    if hasattr(getattr(app,'bucket',None),'signed_url'):
+                        from urllib.parse import quote
+                        from idl_backend.config import asset_relative
+                        from .source import MEDIA
+                        root=app.workflow.native_root(library_asset[1]);uid=library_asset[2];name=unquote(library_asset[3])
+                        require(any(m['id']==uid for m in app.workflow.modules(root)) and Path(name).suffix.lower() in MEDIA|{'.svg','.json'} and all(p not in ('','.','..') and not p.startswith('.') for p in name.split('/')) and not any(c in name for c in '\\:%?#'),404,'NOT_FOUND','课程素材不存在。')
+                        target='https://image.reduct.cn/cloud-IDL/assets/'+quote(uid,safe='')+'/'+quote(asset_relative(uid,name,root),safe='/')
+                        self.send_response(302);self.send_header('Location',target);self.send_header('Cache-Control','no-store');self.end_headers();return
                     file,mime=app.workflow.local_agent.public_native_asset(library_asset[1],library_asset[2],unquote(library_asset[3]))
                     with file.open('rb') as content:
                         self.send_response(200);self.send_header('Content-Type',mime)
@@ -206,6 +215,9 @@ def handler_for(app):
                     try:viewer=app.store.session_user(token_hash(token_from(self.headers.get("Cookie"))),app.clock())["id"]
                     except BusinessError:viewer=None
                     content,mime=(app.workflow.player.file if file_route[2] else app.workflow.file)(viewer,file_route[1],unquote(file_route[3]))
+                    if hasattr(getattr(app,'bucket',None),'signed_url') and mime.startswith(('image/','video/','audio/')):
+                        import hashlib
+                        self.send_response(302);self.send_header('Location',app.bucket.signed_url(hashlib.sha256(content).hexdigest(),mime));self.send_header('Cache-Control','private, no-store');self.end_headers();return
                     sandboxed=app.workflow.sandboxed(viewer,file_route[1])
                     from .organization_catalog import STATIC_CSP
                     external=app.workflow.external(viewer,file_route[1])
@@ -214,11 +226,14 @@ def handler_for(app):
                     self.send_header("Content-Length",str(len(content)))
                     self.send_header("Cache-Control","private, no-store")
                     self.send_header("X-Content-Type-Options","nosniff")
-                    self.send_header("Content-Security-Policy",STATIC_CSP if external else SANDBOX_CSP if sandboxed else "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; media-src 'self' blob:; frame-ancestors 'self'")
+                    self.send_header("Content-Security-Policy",STATIC_CSP if external else SANDBOX_CSP if sandboxed else "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://image.reduct.cn https://jianlun.oss-cn-hangzhou.aliyuncs.com; font-src 'self' data: https://image.reduct.cn https://jianlun.oss-cn-hangzhou.aliyuncs.com; connect-src 'self' https://image.reduct.cn https://jianlun.oss-cn-hangzhou.aliyuncs.com; media-src 'self' blob: https://image.reduct.cn https://jianlun.oss-cn-hangzhou.aliyuncs.com; frame-ancestors 'self'")
                     self.end_headers();self.wfile.write(content);return
                 if self.command=='POST' and path=='/api/shuku/narration/segment':
                     body=self.body(65536)
                     content=app.workflow.narration.synthesize(body)
+                    if hasattr(getattr(app,'bucket',None),'signed_url'):
+                        obj=app.bucket.put(content)
+                        self.send_response(303);self.send_header('Location',app.bucket.signed_url(obj['sha256'],'audio/mpeg'));self.send_header('Cache-Control','private, no-store');self.end_headers();return
                     self.send_response(200)
                     self.send_header('Content-Type','audio/mpeg')
                     self.send_header('Content-Length',str(len(content)))

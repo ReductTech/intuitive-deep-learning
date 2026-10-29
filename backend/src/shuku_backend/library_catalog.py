@@ -60,7 +60,11 @@ class LibraryCatalog:
             pages=(self.w.runtime_scenes(uid,root,commit=commit) if (data.get('ppt') or {}).get('entry') else None) or data.get('pages',[])
             asset_id=uid
             assets=asset_directory(asset_id,root)
-            cover=next((asset_relative(asset_id,'scenedeck-thumbnails/'+p['id']+'.png',root) for p in pages if re.fullmatch(r'[A-Za-z0-9_-]+',p.get('id','')) and (assets/asset_relative(asset_id,'scenedeck-thumbnails/'+p['id']+'.png',root)).is_file()),None)
+            cover=next((asset_relative(asset_id,'scenedeck-thumbnails/'+p['id']+'.png',root) for p in pages if re.fullmatch(r'[A-Za-z0-9_-]+',p.get('id','')) and ((assets/asset_relative(asset_id,'scenedeck-thumbnails/'+p['id']+'.png',root)).is_file() or os.environ.get('SHUKU_STORAGE')=='oss')),None)
+            runtime_file=root.parent/('_runtime-'+commit+'.json')
+            if os.environ.get('SHUKU_STORAGE')=='oss' and runtime_file.is_file():
+                name=json.loads(runtime_file.read_text()).get('modules',{}).get(uid,{}).get('cover')
+                cover=asset_relative(uid,'scenedeck-thumbnails/'+name+'.png',root) if isinstance(name,str) and re.fullmatch('[A-Za-z0-9_-]+',name) else None
             payload={'kind':'library','id':uid,'module_id':uid,'alias':alias,
                      'title':data['title'],'description':data.get('description',''),
                      'category':data.get('category') or data.get('badge') or '课程',
@@ -138,7 +142,7 @@ class LibraryCatalog:
     def initial_project(self,mid,cid,title):
         module=self.w.module_context(mid)
         data=json.loads((Path(module['directory'])/'outlines.json').read_text())
-        outlines={p['id']:p for p in data.get('pages',[])}
+        outlines={p['id']:p for p in data.get('pages',[]) if p.get('id')}
         scenes=self.w.runtime_scenes(mid,required=True)
         return {'version':1,'id':cid,'courseId':module['alias'],'title':title,'duration':30,'style':'原课程','outlineConfirmed':True,'nativeSnapshot':self.commit,'sourceSceneIds':[p['id'] for p in scenes],
                 'pages':[{'id':p['id'],'nativeId':p['id'],'title':p['title'],'goal':outlines.get(p['id'],{}).get('goal','理解本页的核心概念。'),'summary':outlines.get(p['id'],{}).get('summary',p['title']),'ready':True,'designed':True,'note':'','revisions':[],'messages':[]} for p in scenes]}

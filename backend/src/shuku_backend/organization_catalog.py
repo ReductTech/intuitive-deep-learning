@@ -16,7 +16,7 @@ INTERVAL = 7200
 MAX_FILE = 8 * 1024 * 1024
 MAX_TOTAL = 24 * 1024 * 1024
 EXTENSIONS = {'.html', '.htm', '.js', '.mjs', '.css', '.json', '.svg', '.png', '.jpg', '.jpeg', '.gif', '.webp', '.ico', '.woff', '.woff2', '.ttf', '.mp3', '.mp4', '.pdf', '.txt', '.md'}
-STATIC_CSP = "sandbox allow-scripts; default-src 'none'; script-src 'unsafe-inline' 'self'; style-src 'unsafe-inline' 'self'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'; frame-ancestors 'self'"
+STATIC_CSP = "sandbox allow-scripts; default-src 'none'; script-src 'unsafe-inline' 'self'; style-src 'unsafe-inline' 'self'; img-src 'self' data: blob: https://image.reduct.cn https://jianlun.oss-cn-hangzhou.aliyuncs.com; font-src 'self' data: https://image.reduct.cn https://jianlun.oss-cn-hangzhou.aliyuncs.com; media-src 'self' data: blob: https://image.reduct.cn https://jianlun.oss-cn-hangzhou.aliyuncs.com; connect-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'; frame-ancestors 'self'"
 
 
 def safe_path(value, root=False):

@@ -33,6 +33,7 @@ class Narration:
         self.opener=opener
         self.slots=threading.BoundedSemaphore(2)
         self.locks=[threading.Lock() for _ in range(32)]
+        self.bucket=None
 
     def synthesize(self, body):
         text=body.get('text')
@@ -49,7 +50,10 @@ class Narration:
         key=sha256(data).hexdigest()
         file=self.directory/(key+'.mp3')
         with self.locks[int(key[:4],16)%len(self.locks)]:
-            if file.is_file():return file.read_bytes()
+            if self.bucket:
+                cached=self.bucket.read_named('narration/'+key+'.mp3')
+                if cached is not None:return cached
+            elif file.is_file():return file.read_bytes()
             api_key=self.env.get('MINIMAX_API_KEY','')
             require(api_key,503,'NARRATION_CONFIG','请在 settings.json 的 env 中配置 MINIMAX_API_KEY 并重启服务，或选择浏览器朗读。')
             require(self.env.get('MINIMAX_API_BASE','https://api.minimax.io/v1').rstrip('/')=='https://api.minimax.io/v1',503,'NARRATION_CONFIG','请使用 MiniMax 官方国际站接口。')
@@ -65,6 +69,9 @@ class Narration:
                 import re
                 require(isinstance(audio,str) and len(audio)>0 and len(audio)%2==0 and re.fullmatch('[a-fA-F0-9]+',audio),502,'NARRATION_FAILED','MiniMax 未返回有效音频，请重试。')
                 content=bytes.fromhex(audio)
+                if self.bucket:
+                    self.bucket.put_named('narration/'+key+'.mp3',content)
+                    return content
                 self.directory.mkdir(parents=True,exist_ok=True)
                 temporary=file.with_suffix('.tmp')
                 temporary.write_bytes(content);temporary.replace(file)

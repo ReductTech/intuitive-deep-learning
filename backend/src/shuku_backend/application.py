@@ -2,7 +2,7 @@ from dataclasses import dataclass
 import time
 from .adapters.identity import DemoIdentity
 from .api import Server, handler_for
-from .files import Bucket
+from .oss_files import configured_bucket
 from .services import Courses
 from .storage import Store
 from .workers import Worker
@@ -46,7 +46,7 @@ class Application:
 def create_application(settings, clock=time.time):
     store=Store(settings.database_url)
     store.ready()  # Explicit migration only; never seed or migrate during serving.
-    bucket=Bucket(settings.bucket_dir)
+    bucket=configured_bucket(settings.bucket_dir)
     if settings.source_root is not None:
         from pathlib import Path
         from shutil import which
@@ -61,6 +61,7 @@ def create_application(settings, clock=time.time):
         return {"size":len(data)}
     from .narration import Narration
     narration=Narration(settings.bucket_dir/'narration',settings_path=settings.source_root/'settings.json' if settings.source_root is not None else None)
+    narration.bucket=bucket if hasattr(bucket,'read_named') else None
     workflow=Workflow(store,bucket,settings.source_root,clock,course_root=settings.course_root)
     workflow.narration=narration
     workflow.library=LibraryCatalog(workflow)
