@@ -342,6 +342,9 @@ def handler_for(app):
                 if self.command=='POST' and path=='/api/shuku/personal/favorites':
                     return self.send_json(200,app.workflow.personal.favorite(user['id'],self.body()))
                 feedback=app.workflow.feedback
+                player_retry=re.fullmatch(r'/api/shuku/revisions/([^/]+)/player/retry',path)
+                if self.command=='POST' and player_retry:
+                    return self.send_json(202,app.workflow.player.retry(user['id'],player_retry[1],self.body()))
                 if self.command=='GET' and path=='/api/shuku/github/reviews':
                     return self.send_json(200,{'courses':app.workflow.github.review_courses(user['id'])})
                 name_route=re.fullmatch(r'/api/shuku/courses/([^/]+)/github/name(?:/(check))?',path)
