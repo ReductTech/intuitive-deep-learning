@@ -72,7 +72,7 @@ function externalCourseImages(): Plugin {
 }
 
 export default defineConfig(({ mode, command }) => {
-  const localPreview = command === 'serve' && mode === 'preview';
+  const localPreview = mode === 'public-preview' || (command === 'serve' && mode === 'preview');
   const assetBaseUrl = loadEnv(mode, '.', '').VITE_ASSET_BASE_URL?.trim();
   const library=courseLibraryRoot(__dirname,process.env.IDL_COURSE_LIBRARY_ROOT||loadEnv(mode,'.','').IDL_COURSE_LIBRARY_ROOT);
   return {
@@ -81,7 +81,7 @@ export default defineConfig(({ mode, command }) => {
       transformIndexHtml(html: string) {
         return html.replace('<script src="/modules/shared/telemetry.js"></script>', '');
       },
-    }] : [editDeckPlugin(), creatorSkillDocuments()]), fixedLessonCanvas(), externalCourseImages(), react(), tailwindcss(), ...(command === 'serve' ? [cloudRuntime(__dirname)] : [])],
+    }] : [editDeckPlugin()]), creatorSkillDocuments(), fixedLessonCanvas(), externalCourseImages(), react(), tailwindcss(), ...(command === 'serve' ? [cloudRuntime(__dirname)] : [])],
     publicDir: path.join(library,'assets'),
     resolve: {dedupe:['react','react-dom','three','@icon-park/react']},
     build: {

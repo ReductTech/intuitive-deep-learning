@@ -8,6 +8,7 @@
     "dev:preview": "vite --mode preview",
     "dev:app": "vite",
     "build": "tsc -b && vite build",
+    "build:public": "tsc -b && vite build --mode public-preview",
     "typecheck": "tsc --noEmit",
     "test:edit-deck": "node --experimental-strip-types --test Edit-Deck/server.test.ts",
     "cache:decision": "node scripts/content/generate_decision_candidate_cache.mjs",

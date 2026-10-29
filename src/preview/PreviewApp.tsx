@@ -1,4 +1,5 @@
 import { AppRouter, useAppPath } from '../app/Router';
+import {isPublicPreview} from '../app/runtimeMode';
 import { HomePage } from '../app/HomePage';
 import {CourseDetails} from '../shuku/CourseDetails';
 import { activeModules } from '../app/modules';
@@ -19,5 +20,5 @@ const routes = [
 /** Reuse Shuku's actual pages; only routing and the local data source differ. */
 export default function PreviewApp() {
   const path = useAppPath();
-  return <AppRouter routes={routes} fallback={<GuestFeaturePage key={path + location.search} path={path} />} />;
+  return <AppRouter routes={routes} fallback={isPublicPreview?<HomePage />:<GuestFeaturePage key={path + location.search} path={path} />} />;
 }

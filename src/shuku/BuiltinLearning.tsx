@@ -3,7 +3,7 @@ import {activeModules} from '../app/modules';
 import {createProject} from '../creator/model';
 import {RuntimePlayer} from './RuntimePlayer';
 import {useStudy} from './personal';
-import {isLocalPreview} from '../app/runtimeMode';
+import {isLocalPreview,isPublicPreview} from '../app/runtimeMode';
 import './shuku.css';
 export function BuiltinLearning(){
  const params=new URLSearchParams(location.search),alias=params.get('module')||'';

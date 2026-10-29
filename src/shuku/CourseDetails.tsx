@@ -1,7 +1,7 @@
 import {useEffect,useRef,useState} from 'react';
 import {activeModules} from '../app/modules';
 import {Cover,info,type LibraryCourse,type CatalogModule} from '../app/HomePage';
-import {isLocalPreview} from '../app/runtimeMode';
+import {isLocalPreview,isPublicPreview} from '../app/runtimeMode';
 import {useSceneScale} from '../../modules/shared/react/presentation/canvas';
 import {SiteHeader} from './SiteHeader';
 import {CoCreateButton} from './Collaboration';
