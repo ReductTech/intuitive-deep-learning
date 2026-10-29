@@ -6,7 +6,7 @@ from .errors import require
 
 EXTENSIONS={'.tsx','.ts','.jsx','.js','.css','.json','.svg','.md','.txt'}
 MEDIA={'.png','.jpg','.jpeg','.webp','.gif','.avif','.woff','.woff2','.ttf','.otf','.mp3','.wav','.mp4','.webm','.glb','.gltf','.bin'}
-SANDBOX_CSP="sandbox allow-scripts; default-src 'none'; script-src 'unsafe-inline' data:; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' data:; frame-src 'none'; form-action 'none'; base-uri 'none'; frame-ancestors 'self'"
+SANDBOX_CSP="sandbox allow-scripts; default-src 'none'; script-src 'unsafe-inline' data:; style-src 'unsafe-inline'; img-src 'self' data: blob: https://image.reduct.cn https://jianlun.oss-cn-hangzhou.aliyuncs.com; font-src 'self' data: https://image.reduct.cn https://jianlun.oss-cn-hangzhou.aliyuncs.com; media-src 'self' data: blob: https://image.reduct.cn https://jianlun.oss-cn-hangzhou.aliyuncs.com; connect-src 'self' data: https://image.reduct.cn https://jianlun.oss-cn-hangzhou.aliyuncs.com; frame-src 'none'; form-action 'none'; base-uri 'none'; frame-ancestors 'self'"
 
 
 def validate_source(project):
