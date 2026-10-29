@@ -1,4 +1,4 @@
-import index from '../../../assets/80396753-7fc8-4f55-9188-bddbdb828169/image-atlases/index.json';
+import index from '../assets/image-atlases/index.json';
 import { moduleAssetUrl } from '../../shared/react';
 export type AtlasRegion = {sheet:string;x:number;y:number;width:number;height:number;sheetWidth:number;sheetHeight:number};
 const regions = new Map(Object.entries(index).map(([path, region]) => [moduleAssetUrl('80396753-7fc8-4f55-9188-bddbdb828169',path),region as AtlasRegion]));

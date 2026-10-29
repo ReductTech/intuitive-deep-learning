@@ -11,7 +11,7 @@ import './ActionSpacePage.css';
 const robotArt = valueBasedRlAssetUrl('cover-v2/robot.png');
 const receivingStation = valueBasedRlAssetUrl('cover-v2/receiving-station-empty.png');
 const maintenancePit = valueBasedRlAssetUrl('cover-v2/maintenance-pit.png');
-const warehouseScene = valueBasedRlAssetUrl('cover-v2/warehouse.png');
+const warehouseScene = valueBasedRlAssetUrl('cover-v2/warehouse.jpg');
 const stateSpaceIcon = valueBasedRlAssetUrl('action-footer/state-space.png');
 const actionSpaceIcon = valueBasedRlAssetUrl('action-footer/action-space.png');
 const policyIcon = valueBasedRlAssetUrl('action-footer/policy.png');

@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 import { Typography, moduleAssetUrl } from '../../../../shared/react';
 import outline from '../outlines.json';
 import './WeightSharingAblation.css';
-const generatedImages = ['without-structure-v2.png','without-interaction-v2.png','without-visual-v2.png','without-format-v2.png'].map(name=>creatorGuideAssetUrl(outline.moduleIdentity.id, `images/skill-ablation/${name}`));
+const generatedImages = ['without-structure-v2.jpg','without-interaction-v2.jpg','without-visual-v2.jpg','without-format-v2.jpg'].map(name=>creatorGuideAssetUrl(outline.moduleIdentity.id, `images/skill-ablation/${name}`));
 const constraintNames = ['内容结构','交互行为','视觉风格','页面规范'];
 export function WeightSharingAblation({category}:{category:number}) {
   const video = useRef<HTMLVideoElement>(null);

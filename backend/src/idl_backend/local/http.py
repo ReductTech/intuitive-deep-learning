@@ -65,14 +65,15 @@ def create_server(host="127.0.0.1", port=28431, *, kind="vision", course_uuid=No
                 self.send_json(200, {"endpoints": endpoints(kind), "courses": list(courses) if not course_uuid else [course_uuid]})
                 return
             if path == "/face-recog/demo-image" and kind == "vision":
-                from idl_backend.config import repository_root
-                image = repository_root() / "assets/80396753-7fc8-4f55-9188-bddbdb828169/faces/face_demo.png"
+                from idl_backend.config import asset_directory, asset_relative
+                uid = '80396753-7fc8-4f55-9188-bddbdb828169'
+                image = asset_directory(uid) / asset_relative(uid,'faces/face_demo.png')
                 if not image.is_file():
                     self.send_json(404, {"detail": "Demo image unavailable."})
                     return
                 body = image.read_bytes()
                 self.send_response(200)
-                self.send_header("Content-Type", "image/png")
+                self.send_header("Content-Type", "image/jpeg" if image.suffix=='.jpg' else "image/png")
                 self.send_header("Content-Length", str(len(body)))
                 self.end_headers()
                 self.wfile.write(body)

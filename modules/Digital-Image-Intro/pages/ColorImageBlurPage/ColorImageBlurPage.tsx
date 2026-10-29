@@ -35,7 +35,7 @@ export function ColorImageBlurPage() {
       setSource(channels.map((_, c) => Uint8Array.from({ length: N * N }, (_, i) => rgba[i * 4 + c])));
     };
     image.onerror = () => { if (!cancelled) setError(true); };
-    image.src = moduleAssetUrl('10da7e16-ff24-449a-9978-b74b99524e47', 'images/color-space-macaw.png');
+    image.src = moduleAssetUrl('10da7e16-ff24-449a-9978-b74b99524e47', 'images/color-space-macaw.jpg');
     return () => { cancelled = true; };
   }, []);
   const filtered = useMemo(() => source.map(channel => blurChannel(channel, N, N, sigma)), [source, sigma]);

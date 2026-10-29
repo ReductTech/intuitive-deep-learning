@@ -13,7 +13,7 @@ const stairLabels = [
 ];
 export function FrontendJourneyPage() {
   return <article className="cg-journey-page cg-creator-typography" aria-labelledby="cg-journey-title">
-    <img className="cg-journey-full-art" src={moduleAssetUrl(outline.moduleIdentity.id, 'images/creator-equal-ascent-clean-background.png')} alt="通往交互课件的冰阶上，叠加着 AI 专业知识与前端工程能力两类门槛。" />
+    <img className="cg-journey-full-art" src={moduleAssetUrl(outline.moduleIdentity.id, 'images/creator-equal-ascent-clean-background.jpg')} alt="通往交互课件的冰阶上，叠加着 AI 专业知识与前端工程能力两类门槛。" />
     <header className="cg-journey-photo-heading"><Typography as="h1" id="cg-journey-title" variant="h1" tone="inherit">从想法到交互课件，还隔着一道技术门槛</Typography><Typography variant="body" tone="inherit">既要懂 AI，也要懂前端，实现起来并不容易。</Typography></header>
     <section className="cg-journey-flag cg-journey-flag-ai" aria-label="AI专业创作者"><Typography as="h2" variant="body" tone="inherit">AI 专业创作者</Typography><Typography variant="body" tone="inherit">更懂 AI<br />不太懂前端</Typography></section>
     <section className="cg-journey-flag cg-journey-flag-web" aria-label="前端工程师"><Typography as="h2" variant="body" tone="inherit">前端工程师</Typography><Typography variant="body" tone="inherit">更懂前端<br />不太懂 AI</Typography></section>

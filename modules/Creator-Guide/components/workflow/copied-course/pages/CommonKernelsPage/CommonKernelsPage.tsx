@@ -4,12 +4,12 @@ import { ContentBlock, MathFormulaStatic, moduleAssetUrl, Typography } from '../
 import './CommonKernelsPage.css';
 
 const moduleAssetId = '444f8951-dd2e-42dc-94e5-c5a878618631';
-const buildingImage = moduleAssetUrl(moduleAssetId, 'workflow/convolution-course/xiandaijianzhu.png');
-const bridgeImage = moduleAssetUrl(moduleAssetId, 'workflow/convolution-course/xielaqiao.png');
-const mountainImage = moduleAssetUrl(moduleAssetId, 'workflow/convolution-course/caiermate.png');
-const zebraImage = moduleAssetUrl(moduleAssetId, 'workflow/convolution-course/zebra.png');
-const pineappleImage = moduleAssetUrl(moduleAssetId, 'workflow/convolution-course/pineapple.png');
-const cityImage = moduleAssetUrl(moduleAssetId, 'workflow/convolution-course/be_city.png');
+const buildingImage = moduleAssetUrl(moduleAssetId, 'workflow/convolution-course/xiandaijianzhu.jpg');
+const bridgeImage = moduleAssetUrl(moduleAssetId, 'workflow/convolution-course/xielaqiao.jpg');
+const mountainImage = moduleAssetUrl(moduleAssetId, 'workflow/convolution-course/caiermate.jpg');
+const zebraImage = moduleAssetUrl(moduleAssetId, 'workflow/convolution-course/zebra.jpg');
+const pineappleImage = moduleAssetUrl(moduleAssetId, 'workflow/convolution-course/pineapple.jpg');
+const cityImage = moduleAssetUrl(moduleAssetId, 'workflow/convolution-course/be_city.jpg');
 
 type Matrix3 = readonly [readonly [number, number, number], readonly [number, number, number], readonly [number, number, number]];
 type ViewMode = 'gray' | 'edge' | 'signed';

@@ -3,7 +3,7 @@ import { useEffect, useState, type ReactNode } from 'react';
 import { ContentBlock, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, moduleAssetUrl, Typography } from '../../../../../../../../shared/react';
 import './SecondDifferencePage.css';
 
-const zermattImage = creatorGuideAssetUrl('444f8951-dd2e-42dc-94e5-c5a878618631', 'workflow/convolution-course/caiermate.png');
+const zermattImage = creatorGuideAssetUrl('444f8951-dd2e-42dc-94e5-c5a878618631', 'workflow/convolution-course/caiermate.jpg');
 
 interface DifferenceImages {
   input: string;

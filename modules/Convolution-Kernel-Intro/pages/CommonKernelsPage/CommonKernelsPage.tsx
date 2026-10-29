@@ -4,12 +4,12 @@ import { ContentBlock, MathFormulaStatic, moduleAssetUrl, Typography } from '../
 import './CommonKernelsPage.css';
 
 const moduleAssetId = '38cd1c79-d8b7-462a-b208-a567c5cd89c4';
-const buildingImage = moduleAssetUrl(moduleAssetId, 'xiandaijianzhu.png');
-const bridgeImage = moduleAssetUrl(moduleAssetId, 'xielaqiao.png');
-const mountainImage = moduleAssetUrl(moduleAssetId, 'caiermate.png');
-const zebraImage = moduleAssetUrl(moduleAssetId, 'zebra.png');
-const pineappleImage = moduleAssetUrl(moduleAssetId, 'pineapple.png');
-const cityImage = moduleAssetUrl(moduleAssetId, 'be_city.png');
+const buildingImage = moduleAssetUrl(moduleAssetId, 'xiandaijianzhu.jpg');
+const bridgeImage = moduleAssetUrl(moduleAssetId, 'xielaqiao.jpg');
+const mountainImage = moduleAssetUrl(moduleAssetId, 'caiermate.jpg');
+const zebraImage = moduleAssetUrl(moduleAssetId, 'zebra.jpg');
+const pineappleImage = moduleAssetUrl(moduleAssetId, 'pineapple.jpg');
+const cityImage = moduleAssetUrl(moduleAssetId, 'be_city.jpg');
 
 type Matrix3 = readonly [readonly [number, number, number], readonly [number, number, number], readonly [number, number, number]];
 type ViewMode = 'gray' | 'edge' | 'signed';

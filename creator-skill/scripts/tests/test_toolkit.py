@@ -43,10 +43,10 @@ def test_initializer_dry_run_writes_nothing_and_actual_run_never_overwrites(tmp_
     result=initialize(tmp_path,'Example',OUTLINE)
     directory=tmp_path/'modules/Example'
     assert (directory/'GuidePage.tsx').is_file()
-    assert (tmp_path/'assets'/result['uuid']).is_dir()
-    before={p.name:p.read_bytes() for p in directory.iterdir()}
+    assert (tmp_path/'modules/Example/assets').is_dir()
+    before={p.name:p.read_bytes() for p in directory.iterdir() if p.is_file()}
     with pytest.raises(ValueError,match='already exists'):initialize(tmp_path,'Example',OUTLINE)
-    assert before=={p.name:p.read_bytes() for p in directory.iterdir()}
+    assert before=={p.name:p.read_bytes() for p in directory.iterdir() if p.is_file()}
     # Reuse the actual module validator rather than duplicating expected file rules.
     from checks.validate_module import validate_modules
     assert validate_modules(tmp_path)==[]
@@ -69,7 +69,7 @@ def test_consistency_detects_ppt_guide_and_notes_drift():
 
 def test_asset_duplicates_are_reported_without_deleting(tmp_path):
     result=initialize(tmp_path,'Example',OUTLINE)
-    folder=tmp_path/'assets'/result['uuid']
+    folder=tmp_path/'modules/Example/assets'
     (folder/'a.png').write_bytes(b'same')
     (folder/'b.png').write_bytes(b'same')
     report=inspect_assets(tmp_path,'Example',True)
@@ -117,7 +117,7 @@ def test_real_capture_uses_existing_engine_for_default_and_click_states(tmp_path
                 with Image.open(folder/'one/changed.png') as saved:
                     assert saved.size==(1600,900) and saved.getpixel((1000,500))==(0,0,255)
                 assert capture_slides.main(command+['--format','thumbnails'])==0
-                official=tmp_path/'assets/fixture-uuid/scenedeck-thumbnails'
+                official=tmp_path/'assets/scenedeck-thumbnails'
                 with Image.open(official/'one.png') as saved:
                     assert saved.size==(1600,900) and saved.getpixel((1000,500))==(255,0,0)
                 assert not (official/'one/changed.png').exists()
@@ -139,7 +139,7 @@ def test_generated_scaffold_typechecks_against_real_shared(tmp_path):
 
 
 def test_initializer_asset_failure_does_not_register_partial_course(tmp_path):
-    (tmp_path/'assets').write_text('not a directory')
+    (tmp_path/'modules').write_text('not a directory')
     with pytest.raises(OSError):initialize(tmp_path,'Example',OUTLINE)
     assert not (tmp_path/'modules/Example').exists()
 

@@ -4,6 +4,8 @@ Catalog sync never creates users or releases. Explicit bootstrap adopts an exist
 are absent from this deployed snapshot, while older snapshot records remain intact.
 """
 import json
+import os
+from idl_backend.config import asset_directory, asset_relative
 from pathlib import Path
 import re
 import subprocess
@@ -57,13 +59,13 @@ class LibraryCatalog:
             aliases.add(alias);identities.add(uid)
             pages=(self.w.runtime_scenes(uid,root,commit=commit) if (data.get('ppt') or {}).get('entry') else None) or data.get('pages',[])
             asset_id=uid
-            thumbnails=root/'assets'/asset_id/'scenedeck-thumbnails'
-            cover=next((p['id'] for p in pages if re.fullmatch(r'[A-Za-z0-9_-]+',p.get('id','')) and (thumbnails/(p['id']+'.png')).is_file()),None)
+            assets=asset_directory(asset_id,root)
+            cover=next((asset_relative(asset_id,'scenedeck-thumbnails/'+p['id']+'.png',root) for p in pages if re.fullmatch(r'[A-Za-z0-9_-]+',p.get('id','')) and (assets/asset_relative(asset_id,'scenedeck-thumbnails/'+p['id']+'.png',root)).is_file()),None)
             payload={'kind':'library','id':uid,'module_id':uid,'alias':alias,
                      'title':data['title'],'description':data.get('description',''),
                      'category':data.get('category') or data.get('badge') or '课程',
                      'difficulty':data.get('difficulty',''),'page_count':len(pages),
-                     'cover_url':('/'+asset_id+'/scenedeck-thumbnails/'+cover+'.png') if cover else None,
+                     'cover_url':(os.environ.get('IDL_ASSET_BASE_URL','https://image.reduct.cn/cloud-IDL/assets').rstrip('/')+'/'+asset_id+'/'+cover) if cover else None,
                      'repository':REPOSITORY,'source_commit':commit,
                      'github_url':'https://github.com/'+REPOSITORY+'/tree/'+commit+'/modules/'+quote(directory),
                      'version':commit[:8]}

@@ -3,7 +3,7 @@ import { ContentBlock, moduleAssetUrl, Typography } from '../../../../../../shar
 import './TranslationEquivariancePage.css';
 
 const moduleAssetId = '444f8951-dd2e-42dc-94e5-c5a878618631';
-const backgroundUrl = moduleAssetUrl(moduleAssetId, 'workflow/convolution-course/layerd_scene/bg.png');
+const backgroundUrl = moduleAssetUrl(moduleAssetId, 'workflow/convolution-course/layerd_scene/bg.jpg');
 const ufoUrl = moduleAssetUrl(moduleAssetId, 'workflow/convolution-course/layerd_scene/ufo.png');
 const pillarUrl = moduleAssetUrl(moduleAssetId, 'workflow/convolution-course/layerd_scene/pillar.png');
 const foliageUrl = moduleAssetUrl(moduleAssetId, 'workflow/convolution-course/layerd_scene/dark_foliage.png');

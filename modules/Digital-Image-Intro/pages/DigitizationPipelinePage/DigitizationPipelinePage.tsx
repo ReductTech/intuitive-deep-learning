@@ -5,7 +5,7 @@ import { ContentBlock, Typography } from '../../../shared/react';
 import './DigitizationPipelinePage.css';
 
 const SIDE = 20;
-const photo = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/digital-image-cat-scene.png');
+const photo = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/digital-image-cat-scene.jpg');
 type RGB = [number, number, number];
 const tuple = (rgb: RGB) => `[${rgb.join(',')}]`;
 

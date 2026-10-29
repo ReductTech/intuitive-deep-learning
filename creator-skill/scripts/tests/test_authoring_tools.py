@@ -75,13 +75,13 @@ def test_missing_entry_and_duplicate_pages_are_rejected(tmp_path):
     assert any("duplicate page" in error for error in errors)
 
 
-def test_module_local_assets_and_wrong_asset_id_are_rejected(tmp_path):
+def test_module_local_assets_are_allowed_but_wrong_asset_id_is_rejected(tmp_path):
     directory = course(tmp_path)
     (directory / "assets").mkdir()
     (directory / "assets/picture.png").write_bytes(b"image")
     (directory / "Deck.tsx").write_text('const element = <SceneDeck assetId="example" />')
     errors = validate_modules(tmp_path)
-    assert any("module-local" in error for error in errors)
+    assert not any("module-local" in error for error in errors)
     assert any("assetId must" in error for error in errors)
 
 

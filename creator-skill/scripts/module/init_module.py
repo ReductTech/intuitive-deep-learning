@@ -163,7 +163,7 @@ def plan_module(root, directory, outline):
         raise ValueError("Duplicate module slug")
     if not isinstance(doc["id"], str) or not doc["id"].strip():
         raise ValueError("Invalid module slug")
-    if (root / "assets" / doc["moduleIdentity"]["id"]).exists():
+    if (target / "assets").exists():
         raise ValueError("Generated UUID asset directory already exists")
     guide = """import { useRef, type ReactNode } from 'react';
 import { Button, LessonFlow, ModuleShell } from '../shared/react';
@@ -221,14 +221,9 @@ def initialize(root, directory, outline, dry_run=False):
                 raise ValueError("Staging directory escaped workspace")
             for name, content in files.items():
                 (stage / name).write_text(content, encoding="utf-8")
-            asset_target = root / "assets" / doc["moduleIdentity"]["id"]
-            asset_target.mkdir(parents=True, exist_ok=False)
-            try:
-                # On Windows, rename fails if another process created the destination.
-                stage.rename(root / "modules" / directory)
-            except OSError:
-                asset_target.rmdir()  # only the empty directory just created by this run
-                raise
+            (stage / "assets").mkdir()
+            # On Windows, rename fails if another process created the destination.
+            stage.rename(root / "modules" / directory)
     return {
         "module": directory,
         "uuid": doc["moduleIdentity"]["id"],

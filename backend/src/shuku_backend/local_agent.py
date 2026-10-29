@@ -37,7 +37,8 @@ class LocalAgent:
         require(isinstance(name,str) and name and all(p not in ('','.','..') and not p.startswith('.') for p in name.split('/')) and not any(c in name for c in '\\:%?#'),404,'NOT_FOUND','课程素材不存在。')
         root=self.flow.native_root(commit)
         require(any(m['id']==asset for m in self.flow.modules(root)),404,'NOT_FOUND','课程素材不存在。')
-        base=root/'assets'/asset;target=base/name
+        from idl_backend.config import asset_directory, asset_relative
+        base=asset_directory(asset,root);target=base/asset_relative(asset,name,root)
         require(target.suffix.lower() in MEDIA|{'.svg','.json'} and target.is_file() and not target.is_symlink() and target.resolve().is_relative_to(base.resolve()),404,'NOT_FOUND','课程素材不存在。')
         return target,mimetypes.guess_type(target.name)[0] or 'application/octet-stream'
 

@@ -1,8 +1,8 @@
 import { AtlasImage } from '../../components/AtlasImage';
 import { useState, useLayoutEffect, useRef } from 'react';
 import { Button, ContentBlock, ExplainPanelButton, Typography, moduleAssetUrl } from '../../../shared/react';
-import manifest from '../../../../assets/80396753-7fc8-4f55-9188-bddbdb828169/feature-hierarchy/mobilenet-v3-small/manifest.json';
-import lessonChannels from '../../../../assets/80396753-7fc8-4f55-9188-bddbdb828169/feature-hierarchy/mobilenet-v3-small/lesson-channels.json';
+import manifest from '../../assets/feature-hierarchy/mobilenet-v3-small/manifest.json';
+import lessonChannels from '../../assets/feature-hierarchy/mobilenet-v3-small/lesson-channels.json';
 import './HierarchicalFeaturesPage.css';
 
 const ASSET_ID = '80396753-7fc8-4f55-9188-bddbdb828169';

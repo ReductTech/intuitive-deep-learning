@@ -3,7 +3,7 @@ import { moduleAssetUrl } from '../../../shared/react/assets';
 import { useEffect, useMemo, useRef, useState, type PointerEvent } from 'react';
 import { ContentBlock, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, Typography } from '../../../shared/react';
 import './BinarizationPage.css';
-const photo = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/binarization-metal-tokens.png');
+const photo = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/binarization-metal-tokens.jpg');
 const SIZE=500, GRAPH={x:58,y:38,width:390,height:218};
 function paint(canvas:HTMLCanvasElement|null, pixels:Uint8Array) {
   if(!canvas)return;const ctx=canvas.getContext('2d')!, image=ctx.createImageData(SIZE,SIZE);

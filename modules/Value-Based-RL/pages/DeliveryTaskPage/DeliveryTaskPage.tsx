@@ -8,7 +8,7 @@ import { TRAP, warehouseStep } from '../QLearningLoopPage/qLearningSimulation';
 import './DeliveryTaskPage.css';
 
 const robotIcon = valueBasedRlAssetUrl('cover-v2/robot.png');
-const warehouseScene = valueBasedRlAssetUrl('cover-v2/warehouse.png');
+const warehouseScene = valueBasedRlAssetUrl('cover-v2/warehouse.jpg');
 const heroRobot = valueBasedRlAssetUrl('cover-v2/robot.png');
 const directionKeycap = valueBasedRlAssetUrl('cover-v2/direction-keycap.png');
 const receivingStationEmpty = valueBasedRlAssetUrl('cover-v2/receiving-station-empty.png');

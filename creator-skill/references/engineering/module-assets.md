@@ -12,13 +12,13 @@
 
 从仓库根目录运行 `python creator-skill/scripts/tools.py module.identity --check` 只检查身份，不写文件；省略 `--check` 会扫描全部 `modules/*/outlines.json` 并补齐所有缺失身份，不只处理当前模块。工具先检查已有 UUID，遇到格式错误或重复时停止，不替换已有 UUID；后端加载也拒绝缺失或无效身份。命令无需安装后端包，依赖要求见工具帮助和[工具索引](../tools.md)。
 
-复制为独立新模块时，移除复制来的 `moduleIdentity` 再由工具生成新 UUID，将对应资源放入 `assets/<新 UUID>/`，同步运行时引用和 术库 `assetId`，不沿用源模块身份。
+复制为独立新模块时，移除复制来的 `moduleIdentity` 再由工具生成新 UUID，将对应资源放入 新模块自己的 `modules/<目录>/assets/`，同步运行时引用和 术库 `assetId`，不沿用源模块身份。
 
 ## 正式资源与中间产物
 
-课程专属图片、视频、字体、图标、3D 模型、外部数据文件和 术库 缩略图放仓库根目录 `assets/<moduleIdentity.id>/`。`moduleIdentity.id` 来自当前模块的 `outlines.json`；代码内定义的课程数据随模块实现保存。
+课程专属图片、视频、字体、图标、3D 模型、外部数据文件和 术库 缩略图放本课程目录 `modules/<课程目录>/assets/`。`moduleIdentity.id` 来自当前模块的 `outlines.json`；代码内定义的课程数据随模块实现保存。
 
-设计图、试制素材、检查截图与报告等逐页中间产物放在 `pages/<语义页目录>/_scratchpad/`。课程整体原稿提取和汇总资料放在模块级 `_scratchpad/`，两者均不上传到资源 CDN。确定用于正式页面的素材再放入 `assets/<UUID>/`，实现不得引用 `_scratchpad/` 中的文件。
+设计图、试制素材、检查截图与报告等逐页中间产物放在 `pages/<语义页目录>/_scratchpad/`。课程整体原稿提取和汇总资料放在模块级 `_scratchpad/`，两者均不上传到资源 CDN。确定用于正式页面的素材再放入 `modules/<课程目录>/assets/`，实现不得引用 `_scratchpad/` 中的文件。
 
 ## 引用
 
@@ -39,7 +39,7 @@ const imageUrl = moduleAssetUrl(moduleIdentity.id, 'images/example.png');
 
 ## 本地与 CDN
 
-Vite 直接提供根目录 `assets/` 中的文件。应用 base 为 `/` 时，磁盘文件 `assets/<UUID>/images/photo.png` 的本地 URL 是 `/<UUID>/images/photo.png`。页面只调用 `moduleAssetUrl`，由它处理应用 base 与资源域名。
+Vite 开发服务按模块 UUID 将请求映射到课程自己的 assets 目录。应用 base 为 `/` 时，磁盘文件 `modules/<课程目录>/assets/images/photo.jpg` 的本地 URL 仍是 `/<UUID>/images/photo.jpg`。页面只调用 `moduleAssetUrl`，由它处理应用 base 与资源域名。
 
 项目的资源发布配置为：
 
@@ -61,3 +61,12 @@ VITE_ASSET_BASE_URL=https://image.reduct.cn/cloud-IDL/assets
 上传模块素材时指定模块 UUID，保留 `<UUID>/相对路径`。省略模块筛选会处理整个资源根目录，不能把它当作当前模块上传。默认跳过已有对象，覆盖须明确指定；工具不删除远端文件，也不发布完整数据集、模型权重和训练产物。
 
 私有 JSON 回放记录使用 `--private-records`，写入 `cloud-IDL/records/`，采用 private ACL 与 no-store；普通页面素材使用默认资源发布模式。
+
+
+## 普通 PNG 压缩
+
+运行 `python creator-skill/scripts/tools.py assets.compress modules/<课程目录>/assets --dry-run` 先检查范围，移除 `--dry-run` 才执行。工具只处理单帧、完全不透明、普通 8 位 PNG，生成 `.jpg`；透明 PNG（包括调色板透明）、APNG、GIF、SVG、WebP、16 位 PNG 和其他格式保持原字节，不铺背景、不抽帧、不缩放。JPEG 不比原图小时不转换；已有 JPG 不覆盖；原 PNG 默认保留。
+
+只有成功转换的文件进入精确格式映射。`moduleAssetUrl` 使用 `modules/shared/react/asset-formats.json`，动态文件名也按实际结果选择后缀，不能统一把 `.png` 改成 `.jpg`。`modules/shared/asset-index.json` 记录本地目录与稳定 OSS UUID 前缀；移动本地目录不改变 UUID。
+
+上线素材仍单独上传 OSS，前端镜像不复制素材，Nginx 不提供素材内容。当前迁移的 JPG 是新对象，需要随发布上传，原有 OSS PNG 不自动删除。

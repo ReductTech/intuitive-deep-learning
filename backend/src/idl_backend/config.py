@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import os
+import json
 import sys
 from pathlib import Path
 
@@ -22,6 +23,28 @@ def data_directory() -> Path:
         return Path(configured).expanduser().resolve()
     root = repository_root()
     return root / "datasets"
+
+
+def asset_directory(module_id: str, root: Path | None = None) -> Path:
+    root = Path(root or repository_root()).resolve()
+    index = root / 'modules/shared/asset-index.json'
+    paths = json.loads(index.read_text(encoding='utf-8'))['roots'] if index.is_file() else {}
+    for outline in (root / 'modules').glob('*/outlines.json'):
+        identity = json.loads(outline.read_text(encoding='utf-8-sig')).get('moduleIdentity', {})
+        if identity.get('id') == module_id:
+            candidate = outline.parent / 'assets'
+            legacy = root / 'assets' / module_id
+            return legacy if not candidate.exists() and legacy.is_dir() else candidate
+    candidate = (root / paths[module_id]).resolve() if module_id in paths else root / 'assets' / module_id
+    if not candidate.is_relative_to(root):
+        raise ValueError('Asset directory leaves repository')
+    return candidate
+
+
+def asset_relative(module_id: str, name: str, root: Path | None = None) -> str:
+    index = Path(root or repository_root()) / 'modules/shared/asset-index.json'
+    formats = json.loads(index.read_text(encoding='utf-8'))['formats'] if index.is_file() else {}
+    return formats.get(module_id+'/'+name, name)
 
 
 def model_directory() -> Path:

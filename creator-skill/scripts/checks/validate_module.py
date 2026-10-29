@@ -16,6 +16,7 @@ import sys
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "common"))
 from _common import emit_result, report_error
+from module_assets import asset_directory, asset_relative
 from module.module_identity import ROOT, IdentityError, register_identity
 
 
@@ -120,8 +121,6 @@ def validate_modules(repository: Path, requested: str | None = None) -> list[str
                 if not isinstance(page.get("title"), str) or not page["title"].strip():
                     errors.append(f"{label}: page {number} has no title")
         local_assets = directory / "assets"
-        if local_assets.is_dir() and any(p.is_file() for p in local_assets.rglob("*")):
-            errors.append(f"{label}: move module-local assets to assets/{module_id}/")
         for source in directory.rglob("*"):
             if "_scratchpad" in source.relative_to(directory).parts:
                 continue
@@ -146,10 +145,10 @@ def validate_modules(repository: Path, requested: str | None = None) -> list[str
                     errors.append(
                         f"{source}: moduleAssetUrl UUID must be {module_id}, got {asset_id}"
                     )
-                elif not contained_file(repository / "assets" / module_id, relative):
+                elif not contained_file(asset_directory(repository, module_id), asset_relative(repository,module_id,relative)):
                     # Atlas consumers use virtual image names; validate the referenced sheet instead.
                     mapped = False
-                    asset_root = repository / "assets" / module_id
+                    asset_root = asset_directory(repository, module_id)
                     if re.search(
                         r"atlasCropUrl\(\s*$",
                         text[max(0, match.start() - 40) : match.start()],

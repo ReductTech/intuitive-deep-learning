@@ -39,7 +39,7 @@ function WeightSets({ shared }: { shared: boolean }) {
 
 export function HumanCollaborationPage() {
   return <article className="aipe-replay-cg-human-page aipe-replay-cg-creator-typography" aria-labelledby="aipe-replay-cg-human-title">
-    <img className="aipe-replay-cg-human-art" src={creatorGuideAssetUrl(outline.moduleIdentity.id, 'images/human-collaboration-blank-pads.png')} alt="同一位深蓝色上衣的创作者与机器人，在三个阶段使用同款空白平板协作"/>
+    <img className="aipe-replay-cg-human-art" src={creatorGuideAssetUrl(outline.moduleIdentity.id, 'images/human-collaboration-blank-pads.jpg')} alt="同一位深蓝色上衣的创作者与机器人，在三个阶段使用同款空白平板协作"/>
     <header><Typography as="h1" variant="display" tone="inherit" id="aipe-replay-cg-human-title">制作直觉式课件，人的作用是什么？</Typography></header>
     {stages.map((stage, i) => <section className={`aipe-replay-cg-human-stage aipe-replay-cg-human-stage-${i + 1}`} key={stage.title} aria-labelledby={`aipe-replay-cg-human-stage-title-${i}`}>
       <div className="aipe-replay-cg-human-stage-heading"><Typography as="span" variant="body" tone="inherit" className="aipe-replay-cg-human-number">{i + 1}</Typography><div className="aipe-replay-cg-human-heading-copy"><Typography as="h2" variant="h3" tone="inherit" wrap="nowrap" id={`aipe-replay-cg-human-stage-title-${i}`}>{stage.title}</Typography></div></div>

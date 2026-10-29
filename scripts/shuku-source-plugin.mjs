@@ -2,6 +2,7 @@ import {createHash} from 'node:crypto';
 import path from 'node:path';
 import fs from 'node:fs/promises';
 import ts from 'typescript';
+import {assetDirectory} from './module-assets.mjs';
 
 // Source files are resolved from this map, never from the host filesystem.
 export function sourcePlugin(files,root,{courseRoot=root,assetId='',sharedRoot=path.join(courseRoot,'modules/shared'),assets={},assetRoot}={}){
@@ -35,8 +36,9 @@ export function sourcePlugin(files,root,{courseRoot=root,assetId='',sharedRoot=p
    if(name==='modules/shared/react'||name.startsWith('modules/shared/react/'))return sharedImport(name.slice(15),build,args);
    if(Object.hasOwn(assets,name)){if(query&&query!=='url')throw Error('Binary assets accept only URL imports');return {path:name,namespace:'course-binary'};}
     const target=[name,...['.tsx','.ts','.jsx','.js','.json','.css','.svg','/index.tsx','/index.ts','/index.jsx','/index.js'].map(ext=>name+ext)].find(name=>Object.hasOwn(files,name));
-   if(!target&&assetId&&name.startsWith('assets/'+assetId+'/')){
-    const absolute=await fs.realpath(path.join(courseRoot,name));const allowed=await fs.realpath(path.join(courseRoot,'assets',assetId));
+   const frozenRelative=name.startsWith('assets/'+assetId+'/')?name.slice(('assets/'+assetId+'/').length):/^modules\/[^/]+\/assets\/(.+)$/.exec(name)?.[1];
+   if(!target&&assetId&&frozenRelative){
+    const allowed=await fs.realpath(assetDirectory(courseRoot,assetId));const absolute=await fs.realpath(path.join(allowed,frozenRelative));
     if(!absolute.startsWith(allowed+path.sep)||!media.has(path.extname(name).slice(1).toLowerCase()))throw Error('Unsupported frozen asset');
     return {path:absolute,namespace:'frozen-course-asset'};
    }

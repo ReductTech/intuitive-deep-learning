@@ -50,7 +50,7 @@ export function EstimateWeightPage({ showLoss = false }: { showLoss?: boolean } 
   }), [slope, endpointX, endpointY, inRange, mass, calibration, showLoss, TARGET_DEPTH_CM]);
   if(!calibration.length)return <ContentBlock title="请先完成称象记录" subtitle="本页使用第一页投石时实际记录的数据。" />;
   return <ContentBlock headingLevel={1} title={showLoss ? "调整直线，估计象重" : "石头不足，如何估计象重？"} subtitle={showLoss ? "让直线贴近观测，观察损失与象重估计的变化。" : "根据已有观测，选择一条直线进行估计。"} className={`aipe-showcase-rl-estimate-page${showLoss ? ' aipe-showcase-rl-estimate-challenge-page' : ''}`}
-    style={{ '--aipe-showcase-rl-est-background': `url("${moduleAssetUrl('b8d86e85-2150-47e3-9e1a-aa7cc7cce15c', 'cao-chong/estimate-background.png')}")` } as CSSProperties}>
+    style={{ '--aipe-showcase-rl-est-background': `url("${moduleAssetUrl('b8d86e85-2150-47e3-9e1a-aa7cc7cce15c', 'cao-chong/estimate-background.jpg')}")` } as CSSProperties}>
     <div className={`aipe-showcase-rl-estimate-content${showLoss ? ' aipe-showcase-rl-estimate-content--loss' : ''}`}>
     <div className="aipe-showcase-rl-estimate-layout">
       <section className="aipe-showcase-rl-estimate-plot" aria-label="调整直线并根据大象水位估计重量">

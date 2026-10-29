@@ -3,7 +3,7 @@ import { Light } from '@icon-park/react';
 import { ContentBlock, MathFormulaStatic, moduleAssetUrl, Typography } from '../../../../../../shared/react';
 import './LaplacianConstructionPage.css';
 
-const buildingImage = moduleAssetUrl('b8d86e85-2150-47e3-9e1a-aa7cc7cce15c', 'workflow/convolution-course/xiandaijianzhu.png');
+const buildingImage = moduleAssetUrl('b8d86e85-2150-47e3-9e1a-aa7cc7cce15c', 'workflow/convolution-course/xiandaijianzhu.jpg');
 
 const SECOND_X = [[0, 0, 0], [1, -2, 1], [0, 0, 0]];
 const SECOND_Y = [[0, 1, 0], [0, -2, 0], [0, 1, 0]];

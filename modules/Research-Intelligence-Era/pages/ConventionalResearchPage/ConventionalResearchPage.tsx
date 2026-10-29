@@ -9,7 +9,7 @@ export function ConventionalResearchPage() {
   const marker = useId().replaceAll(':', '');
   return (
     <ContentBlock title={outline.pages[2].title} subtitle="从提出问题，到形成研究成果" headingLevel={1} className="rie-traditional" data-scene-id="conventional-research">
-      <img className="rie-traditional-art" src={moduleAssetUrl(outline.moduleIdentity.id, 'images/conventional-research-art-v1.png')} alt="依次对应研究六个环节的笔记本、书籍、研究计划、资料夹、分析材料与文稿" />
+      <img className="rie-traditional-art" src={moduleAssetUrl(outline.moduleIdentity.id, 'images/conventional-research-art-v1.jpg')} alt="依次对应研究六个环节的笔记本、书籍、研究计划、资料夹、分析材料与文稿" />
       <svg className="rie-traditional-connections" viewBox="0 0 1600 900" aria-hidden="true">
         <defs>
           <marker id={`${marker}-forward`} viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#27446e" /></marker>

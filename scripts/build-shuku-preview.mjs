@@ -5,6 +5,7 @@ import { build } from 'esbuild';
 import {sourcePlugin} from './shuku-source-plugin.mjs';
 import {offlineSource} from './offline-source.mjs';
 import {writeOfflineHtml} from './offline-assets.mjs';
+import {assetDirectory} from './module-assets.mjs';
 import {runtimeCompatPlugin} from './shuku-runtime-compat.mjs';
 const args=Object.fromEntries(process.argv.slice(2).reduce((out,arg,i,all)=>{if(i%2===0)out.push([arg.replace(/^--/,''),all[i+1]]);return out;},[]));
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
@@ -35,14 +36,26 @@ if(entry&&!entry.startsWith(moduleDir+path.sep))throw Error('Invalid module entr
 const guideEntry=native&&outline?.entry?path.resolve(moduleDir,outline.entry):null;
 if(guideEntry&&!guideEntry.startsWith(moduleDir+path.sep))throw Error('Invalid guide entry');
 const guideName=outline?.entry?.replace(/\.tsx?$/,'');
-const embeddedAssetMap=Object.fromEntries(Object.entries(project.source?.files||{}).filter(([name])=>name.startsWith('assets/')).map(([name,value])=>[name,value.startsWith('data:')?value:'data:'+(name.toLowerCase().endsWith('.svg')?'image/svg+xml':name.toLowerCase().endsWith('.json')?'application/json':'text/plain')+';base64,'+Buffer.from(value).toString('base64')]));
+function publicAssetName(name){
+ if(name.startsWith('assets/'))return name;
+ const match=/^(modules\/[^/]+)\/assets\/(.+)$/.exec(name);if(!match)return null;
+ const document=project.source?.files?.[match[1]+'/outlines.json'];if(!document)return null;
+ const id=JSON.parse(document).moduleIdentity?.id;
+ return id?'assets/'+id+'/'+match[2]:null;
+}
+const embeddedAssetMap=Object.fromEntries(Object.entries(project.source?.files||{}).filter(([name])=>publicAssetName(name)).map(([name,value])=>[publicAssetName(name),value.startsWith('data:')?value:'data:'+(name.toLowerCase().endsWith('.svg')?'image/svg+xml':name.toLowerCase().endsWith('.json')?'application/json':'text/plain')+';base64,'+Buffer.from(value).toString('base64')]));
 for(const [name,obj] of Object.entries(project.sourceAssets||{})){
- if(!name.startsWith('assets/'))continue;
+ const publicName=publicAssetName(name);if(!publicName)continue;
  if(!args['asset-root']||!/^[a-f0-9]{64}$/.test(obj.sha256))throw Error('Invalid source asset');
  const content=await fs.readFile(path.join(args['asset-root'],obj.sha256));
  const {createHash}=await import('node:crypto');
  if(content.length!==obj.size||createHash('sha256').update(content).digest('hex')!==obj.sha256)throw Error('Source asset checksum mismatch');
- embeddedAssetMap[name]='data:'+obj.mime+';base64,'+content.toString('base64');
+ embeddedAssetMap[publicName]='data:'+obj.mime+';base64,'+content.toString('base64');
+}
+const migratedFormats=await fs.readFile(path.join(courseRoot,'modules/shared/react/asset-formats.json'),'utf8').then(JSON.parse).catch(()=>({}));
+for(const [old,relative] of Object.entries(migratedFormats)){
+ const converted='assets/'+old.split('/')[0]+'/'+relative;
+ if(embeddedAssetMap[converted])embeddedAssetMap['assets/'+old]=embeddedAssetMap[converted];
 }
 const sourceOutline=project.authoringModule?JSON.parse(project.source.files[project.authoringModule+'/outlines.json']):null;
 const assetId=outline?.moduleIdentity?.id||sourceOutline?.moduleIdentity?.id||outline?.id||'';
@@ -90,7 +103,7 @@ const embeddedAssets={name:'embedded-course-assets',setup(context){
  context.onLoad({filter:/.*/,namespace:'embedded-asset-bootstrap'},()=>({contents:'globalThis.__SHUKU_COURSE_ASSETS__='+JSON.stringify(embeddedAssetMap)+';',loader:'js'}));
  context.onLoad({filter:/assets\.ts$/,namespace:'file'},async args=>{
  if(!inline||await fs.realpath(args.path)!==await fs.realpath(path.join(sharedRoot,'react/assets.ts')))return;
- if(offline)return {contents:`export function moduleAssetUrl(id:string,relative:string){return (globalThis as any).__SHUKU_OFFLINE_ASSET__('assets/'+id+'/'+relative.replace(/^\\/+/,''));}`,loader:'ts'};
+ if(offline){const formats=await fs.readFile(path.join(sharedRoot,'react/asset-formats.json'),'utf8').then(JSON.parse).catch(()=>({}));return {contents:`const formats:Record<string,string>=${JSON.stringify(formats)};export function moduleAssetUrl(id:string,relative:string){relative=formats[id+'/'+relative]||relative;return (globalThis as any).__SHUKU_OFFLINE_ASSET__('assets/'+id+'/'+relative.replace(/^\\/+/,''));}`,loader:'ts'};}
  let code=await fs.readFile(args.path,'utf8');
  if(!code.includes('__SHUKU_COURSE_ASSETS__'))code=code.replace('  const assetBase =',"  const embedded=(globalThis as unknown as {__SHUKU_COURSE_ASSETS__?:Record<string,string>}).__SHUKU_COURSE_ASSETS__?.['assets/'+moduleAssetId+'/'+relativePath];if(embedded)return embedded;\n  const assetBase =");
  return {contents:code,loader:'ts',resolveDir:path.dirname(args.path)};
@@ -105,7 +118,7 @@ async function copyTree(from,to){
   else if(item.isFile()){await fs.mkdir(to,{recursive:true});await fs.copyFile(source,target);}
  }
 }
-if(native&&!managed&&!offline){const assets=path.join(courseRoot,'assets',outline.moduleIdentity.id);try{await copyTree(assets,path.join(outdir,'assets',outline.moduleIdentity.id));}catch(e){if(e.code!=='ENOENT')throw e;}}
+if(native&&!managed&&!offline){const assets=assetDirectory(courseRoot,outline.moduleIdentity.id);try{await copyTree(assets,path.join(outdir,'assets',outline.moduleIdentity.id));}catch(e){if(e.code!=='ENOENT')throw e;}}
 if(native||managed){
  const {compile}=await import('@tailwindcss/node');const {Scanner}=await import('@tailwindcss/oxide');
  const template=await fs.readFile(path.join(moduleDir||root,'tailwind.css'),'utf8').catch(()=> '@import "tailwindcss/theme.css" layer(theme);@import "tailwindcss/utilities.css" layer(utilities) source(none);');

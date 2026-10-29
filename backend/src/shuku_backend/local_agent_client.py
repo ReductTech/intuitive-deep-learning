@@ -151,8 +151,9 @@ def prepare(site,cid,token):
                 text=file.read_text(encoding='utf-8')
                 text=re.sub(r'([\x22\x27])(?:\.\./)+shared/',r'\1@shared/',text)
                 file.write_text(text,encoding='utf-8')
-        for file in (Path('courses/assets')/asset).rglob('*') if (Path('courses/assets')/asset).exists() else []:
-            if file.is_file():state['asset_hashes'][file.relative_to(Path('courses')).as_posix()]=sha256(file.read_bytes()).hexdigest()
+        for material in [Path('courses/assets')/asset,target/'assets']:
+            for file in material.rglob('*') if material.exists() else []:
+                if file.is_file():state['asset_hashes'][file.relative_to(Path('courses')).as_posix()]=sha256(file.read_bytes()).hexdigest()
         if not project.get('source'):
             original=read(target/'outlines.json')
             original_pages={p['id']:p for p in original['pages']}
@@ -249,7 +250,9 @@ def template_project(state,project,upload=None):
             if file.is_symlink():raise ValueError('课程不能包含符号链接。')
             if file.is_file() and file.suffix.lower() in EXTENSIONS|MEDIA:
                 name=file.relative_to(Path('courses')).as_posix();source_path(name)
-                add(name,file.read_bytes())
+                data=file.read_bytes()
+                if state.get('native_source') and file.suffix.lower() in MEDIA and name not in project.get('sourceAssets',{}) and state.get('asset_hashes',{}).get(name)==sha256(data).hexdigest():continue
+                add(name,data)
     # Only this course's material directory is delivered, not other template examples.
     own_asset=state.get('native_source',{}).get('asset_id') or outline.get('moduleIdentity',{}).get('id') or state['course']
     if not isinstance(own_asset,str) or not re.fullmatch('[A-Za-z0-9_-]{1,100}',own_asset):raise ValueError('课程素材标识不安全。')

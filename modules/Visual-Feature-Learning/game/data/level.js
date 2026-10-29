@@ -65,40 +65,40 @@
     normal: {
       label: '不变',
       textureKey: 'posFaceNormal',
-      asset: 'pos_face_normal.png',
+      asset: 'pos_face_normal.jpg',
       beard: {
-        h1: { textureKey: 'posFaceNormalH1', asset: 'pos_face_normal_h1.png' },
-        h2: { textureKey: 'posFaceNormalH2', asset: 'pos_face_h2.png' }
+        h1: { textureKey: 'posFaceNormalH1', asset: 'pos_face_normal_h1.jpg' },
+        h2: { textureKey: 'posFaceNormalH2', asset: 'pos_face_h2.jpg' }
       },
       actorKey: 'balujun'
     },
     farmer: {
       label: '农民',
       textureKey: 'posFaceFarmer',
-      asset: 'pos_face_farmer.png',
+      asset: 'pos_face_farmer.jpg',
       beard: {
-        h1: { textureKey: 'posFaceFarmerH1', asset: 'pos_face_farmer_h1.png' },
-        h2: { textureKey: 'posFaceFarmerH2', asset: 'pos_face_farmer_h2.png' }
+        h1: { textureKey: 'posFaceFarmerH1', asset: 'pos_face_farmer_h1.jpg' },
+        h2: { textureKey: 'posFaceFarmerH2', asset: 'pos_face_farmer_h2.jpg' }
       },
       actorKey: 'balujun'
     },
     trader: {
       label: '商人',
       textureKey: 'posFaceTrader',
-      asset: 'pos_face_trader.png',
+      asset: 'pos_face_trader.jpg',
       beard: {
-        h1: { textureKey: 'posFaceTraderH1', asset: 'pos_face_trader_h1.png' },
-        h2: { textureKey: 'posFaceTraderH2', asset: 'pos_face_trader_h2.png' }
+        h1: { textureKey: 'posFaceTraderH1', asset: 'pos_face_trader_h1.jpg' },
+        h2: { textureKey: 'posFaceTraderH2', asset: 'pos_face_trader_h2.jpg' }
       },
       actorKey: 'trader'
     },
     teacher: {
       label: '老师',
       textureKey: 'posFaceTeacher',
-      asset: 'pos_face_teacher.png',
+      asset: 'pos_face_teacher.jpg',
       beard: {
-        h1: { textureKey: 'posFaceTeacherH1', asset: 'pos_face_teacher_h1.png' },
-        h2: { textureKey: 'posFaceTeacherH2', asset: 'pos_face_teacher_h2.png' }
+        h1: { textureKey: 'posFaceTeacherH1', asset: 'pos_face_teacher_h1.jpg' },
+        h2: { textureKey: 'posFaceTeacherH2', asset: 'pos_face_teacher_h2.jpg' }
       },
       actorKey: 'teacher'
     }

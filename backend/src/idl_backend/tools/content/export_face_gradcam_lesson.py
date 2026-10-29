@@ -16,10 +16,10 @@ from torch import nn
 from torch.nn import functional as F
 from PIL import Image
 
-from idl_backend.config import repository_root, data_directory, model_directory
+from idl_backend.config import asset_directory, repository_root, data_directory, model_directory
 ROOT = repository_root()
 DATA = data_directory() / 'lfw-50-balanced'
-OUT = ROOT / 'assets/80396753-7fc8-4f55-9188-bddbdb828169/gradcam'
+OUT = asset_directory('80396753-7fc8-4f55-9188-bddbdb828169') / 'gradcam'
 MODELS = model_directory() / '80396753-7fc8-4f55-9188-bddbdb828169/gradcam'
 SEED = 205023
 torch.manual_seed(SEED)

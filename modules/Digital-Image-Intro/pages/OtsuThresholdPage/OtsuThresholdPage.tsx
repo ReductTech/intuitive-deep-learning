@@ -5,10 +5,10 @@ import { ContentBlock, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, Typ
 import { analyzeHistogram } from './otsuModel';
 import './OtsuThresholdPage.css';
 const SAMPLES=[
-  {id:'coins',title:'硬币',url:moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/binarization-metal-tokens.png')},
-  {id:'parts',title:'零件',url:moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/otsu-mechanical-parts.png')},
-  {id:'document',title:'文档',url:moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/otsu-document.png')},
-  {id:'cat',title:'猫咪',url:moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/digital-image-cat-scene.png')},
+  {id:'coins',title:'硬币',url:moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/binarization-metal-tokens.jpg')},
+  {id:'parts',title:'零件',url:moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/otsu-mechanical-parts.jpg')},
+  {id:'document',title:'文档',url:moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/otsu-document.jpg')},
+  {id:'cat',title:'猫咪',url:moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/digital-image-cat-scene.jpg')},
 ];
 function histogramOf(pixels:Uint8Array|undefined){const h=Array<number>(256).fill(0);pixels?.forEach(v=>h[v]++);return h;}
 function loadGray(url:string):Promise<Uint8Array>{return new Promise((resolve,reject)=>{const image=new Image(); image.crossOrigin = 'anonymous';image.onload=()=>{const c=document.createElement('canvas');c.width=SIZE;c.height=SIZE;const ctx=c.getContext('2d')!;ctx.drawImage(image,0,0,SIZE,SIZE);const rgba=ctx.getImageData(0,0,SIZE,SIZE).data;resolve(Uint8Array.from({length:SIZE*SIZE},(_,i)=>Math.round(.299*rgba[i*4]+.587*rgba[i*4+1]+.114*rgba[i*4+2])));};image.onerror=reject;image.src=url;});}

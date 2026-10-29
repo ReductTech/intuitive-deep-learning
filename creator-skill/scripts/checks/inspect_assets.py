@@ -13,6 +13,7 @@ import sys
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "common"))
 from _common import ROOT, resolve_module, emit_result, report_error
+from module_assets import asset_directory
 from checks.validate_module import validate_modules
 
 
@@ -32,7 +33,7 @@ def build_parser() -> argparse.ArgumentParser:
 def inspect_assets(repository: Path, module: str, duplicates: bool = False) -> dict:
     """Return inventory, duplicate groups and validation errors without changing assets."""
     directory, outline = resolve_module(module, repository)
-    asset_root = repository / "assets" / outline["moduleIdentity"]["id"]
+    asset_root = asset_directory(repository, outline["moduleIdentity"]["id"])
     files = (
         sorted(
             path

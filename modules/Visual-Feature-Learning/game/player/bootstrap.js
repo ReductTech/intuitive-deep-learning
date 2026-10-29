@@ -24,7 +24,7 @@
     map.className = 'face-act3-fallback-map';
     overlay.className = 'face-act3-fallback-overlay';
 
-    map.src = ASSET_ROOT + 'map.png';
+    map.src = ASSET_ROOT + 'map.jpg';
     map.alt = '';
     overlay.src = ASSET_ROOT + OVERLAY_ASSET;
     overlay.alt = '';

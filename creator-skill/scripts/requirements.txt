@@ -1,3 +1,4 @@
 # Optional tools: UUID and module checks use Python standard library only.
 PyYAML
 oss2
+Pillow>=11,<13

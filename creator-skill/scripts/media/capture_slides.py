@@ -26,6 +26,7 @@ from urllib.parse import urlencode
 from urllib.request import urlopen
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "common"))
+from module_assets import asset_directory
 from _common import emit_result, report_error, scratchpad_path
 from idl_backend.config import repository_root
 
@@ -373,7 +374,7 @@ def capture_module(args: argparse.Namespace, context_setup=None) -> dict:
         raise ValueError(
             "Interactive states are evaluation screenshots; use --format screenshots"
         )
-    thumbnail_root = (ROOT / "assets" / asset_id / "scenedeck-thumbnails").resolve()
+    thumbnail_root = (directory / "assets" / "scenedeck-thumbnails").resolve()
     destinations = []
     if not args.inspect:
         if args.format in {"screenshots", "both"}:
@@ -447,7 +448,19 @@ def capture_module(args: argparse.Namespace, context_setup=None) -> dict:
                     else:
                         target = scratchpad_path(directory, target, default="")
                     target.parent.mkdir(parents=True, exist_ok=True)
-                    image.save(target, format="PNG", optimize=True)
+                    index_path = ROOT / 'modules/shared/asset-index.json'
+                    formats = json.loads(index_path.read_text(encoding='utf-8')) if index_path.is_file() else None
+                    key = asset_id+'/'+target.relative_to(directory/'assets').as_posix() if screenshots.is_relative_to(thumbnail_root) else None
+                    mapped = formats['formats'].get(key) if formats and key else None
+                    if mapped and image.convert('RGBA').getchannel('A').getextrema()==(255,255):
+                        target = directory / 'assets' / mapped
+                        image.convert('RGB').save(target, format='JPEG', quality=92, subsampling=0, optimize=True, progressive=True)
+                    else:
+                        image.save(target, format="PNG", optimize=True)
+                        if mapped:
+                            del formats['formats'][key]
+                            index_path.write_text(json.dumps(formats,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+                            (ROOT/'modules/shared/react/asset-formats.json').write_text(json.dumps(formats['formats'],ensure_ascii=False,separators=(',',':'))+'\n',encoding='utf-8')
                     files.append(str(target))
                     print(
                         f"Captured {deck_id}/{slide_id}: {target}",

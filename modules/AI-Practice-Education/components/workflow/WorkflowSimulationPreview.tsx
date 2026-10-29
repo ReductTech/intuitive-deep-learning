@@ -27,7 +27,7 @@ export function WorkflowSimulationPreview({ view, page, reviewed, browsing }: { 
       <div className="cg-sim-outline-pages" ref={outlineRef}>{pages.map((item,i) => <div data-outline-page={i} key={item.title} className={page === i ? 'is-selected' : undefined}><Typography as="span" variant="bodySmall" tone="muted">{String(i+1).padStart(2,'0')}</Typography><div><Typography variant="bodySmall" tone="inherit">{item.title}</Typography><Typography variant="bodySmall" tone="muted">{item.summary}</Typography></div></div>)}</div>
     </div>;
   }
-  if ((view === 'design-draft' || view === 'design-refined') && page === 0) return <figure className="cg-sim-design"><img src={asset(view === 'design-draft' ? 'gomoku-design-draft.png' : 'gomoku-design-refined.png')} alt={view === 'design-draft' ? '第一页设计初稿：简洁棋盘和操作区' : '第一页修改版设计：庭院背景，左侧引导、中间棋盘、右侧对局面板'}/></figure>;
+  if ((view === 'design-draft' || view === 'design-refined') && page === 0) return <figure className="cg-sim-design"><img src={asset(view === 'design-draft' ? 'gomoku-design-draft.jpg' : 'gomoku-design-refined.jpg')} alt={view === 'design-draft' ? '第一页设计初稿：简洁棋盘和操作区' : '第一页修改版设计：庭院背景，左侧引导、中间棋盘、右侧对局面板'}/></figure>;
   if ((view === 'page' || view === 'review') && page === 0) return <CopiedCoursePreview page={page} reviewed={reviewed}/>;
   const item = simulationPages[page] ?? conventionalOutline[page];
   return <div className="cg-sim-slide cg-sim-text-slide"><Typography as="h2" variant="h2" tone="accent">{item.title}</Typography><Typography variant="bodySmall" tone="muted">内容提要 · 待逐页制作</Typography><Typography variant="body" tone="inherit">{item.summary}</Typography>{reviewed && page === 1 && <Typography className="cg-sim-link-note" variant="bodySmall" tone="accent">这些数字对应上一页的棋盘位置。</Typography>}</div>;

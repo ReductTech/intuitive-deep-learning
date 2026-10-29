@@ -5,7 +5,7 @@ import './CoverPage.css';
 export function CoverPage() {
   return (
     <section className="rie-cover" aria-labelledby="rie-cover-title" data-scene-id="cover">
-      <img className="rie-cover-art" src={moduleAssetUrl(moduleIdentity.id, 'images/research-cover-art-v1.png')} alt="研究手稿、实验器具与蓝色曲线组成的科研主题插画" />
+      <img className="rie-cover-art" src={moduleAssetUrl(moduleIdentity.id, 'images/research-cover-art-v1.jpg')} alt="研究手稿、实验器具与蓝色曲线组成的科研主题插画" />
       <div className="rie-cover-copy">
         <h1 id="rie-cover-title" className="rie-cover-title">
           <Typography as="span" variant="display" tone="inherit" wrap="nowrap">科研智能时代</Typography>

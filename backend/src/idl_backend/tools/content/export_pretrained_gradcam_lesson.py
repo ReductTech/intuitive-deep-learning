@@ -21,11 +21,11 @@ from onnx2torch import convert
 from torch.nn import functional as F
 from torchvision.models import MobileNet_V3_Small_Weights, mobilenet_v3_small
 
-from idl_backend.config import repository_root, model_directory
+from idl_backend.config import asset_directory, repository_root, model_directory
 
 ROOT = repository_root()
 UUID = '80396753-7fc8-4f55-9188-bddbdb828169'
-OUT = ROOT / 'assets' / UUID / 'gradcam'
+OUT = asset_directory(UUID) / 'gradcam'
 MODELS = model_directory() / UUID / 'gradcam' / 'pretrained'
 ZOO = 'https://media.githubusercontent.com/media/opencv/opencv_zoo/main/models/'
 SFACE_URL = ZOO + 'face_recognition_sface/face_recognition_sface_2021dec.onnx'

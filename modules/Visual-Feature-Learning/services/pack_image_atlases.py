@@ -2,7 +2,7 @@
 from pathlib import Path
 from PIL import Image
 import json, math, argparse
-ROOT = Path(__file__).resolve().parents[3] / 'assets/80396753-7fc8-4f55-9188-bddbdb828169'
+ROOT = Path(__file__).resolve().parents[1] / 'assets'
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('--remove-originals',action='store_true');args=parser.parse_args()
     out=ROOT/'image-atlases';out.mkdir(exist_ok=True)
@@ -10,7 +10,8 @@ def main():
     entries=json.loads(index_path.read_text()) if index_path.exists() else {}
     groups={}
     for area in ['feature-hierarchy','flatten-interface','gradcam']:
-        for path in sorted((ROOT/area).rglob('*.png')):
+        for path in sorted((ROOT/area).rglob('*')):
+            if path.suffix.lower() not in {'.png','.jpg','.jpeg'}:continue
             with Image.open(path) as im:
                 if max(im.size)>256:continue
             parts=path.relative_to(ROOT).parts

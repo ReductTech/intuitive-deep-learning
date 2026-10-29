@@ -19,6 +19,7 @@ from threading import local
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "common"))
 from _common import ROOT, emit_result, report_error
+from module_assets import asset_roots, object_relative, object_relatives
 
 OSS_KEY_ID = os.environ.get(
     "OSS_ACCESS_KEY_ID",
@@ -35,7 +36,7 @@ OSS_REGION = "cn-hangzhou"
 OSS_BUCKET_NAME = "jianlun"
 OSS_PREFIX = "cloud-IDL/assets/"
 PUBLIC_BASE_URL = "https://image.reduct.cn/cloud-IDL/assets"
-DEFAULT_ASSETS_DIR = ROOT / "assets"
+DEFAULT_ASSETS_DIR = ROOT / "modules"
 
 mimetypes.add_type("model/gltf-binary", ".glb")
 
@@ -46,7 +47,7 @@ def build_parser() -> argparse.ArgumentParser:
         "--assets-dir",
         type=Path,
         default=DEFAULT_ASSETS_DIR,
-        help="local asset root; relative to cwd, default repository assets/",
+        help="local asset root; default registered modules/*/assets directories",
     )
     parser.add_argument(
         "--module",
@@ -71,16 +72,20 @@ def build_parser() -> argparse.ArgumentParser:
 
 def object_key(assets_dir: Path, path: Path, private_records: bool = False) -> str:
     prefix = "cloud-IDL/records/" if private_records else OSS_PREFIX
-    return prefix + path.relative_to(assets_dir).as_posix()
+    relative = object_relative(ROOT, path) if assets_dir.resolve() == DEFAULT_ASSETS_DIR.resolve() else path.relative_to(assets_dir).as_posix()
+    return prefix + relative
 
 
 def visualization_files(assets_dir: Path) -> list[Path]:
     """Datasets, model weights and runtime artifacts never belong in OSS."""
     excluded_directories = {"dataset", "datasets", "models", "digit-training"}
     excluded_extensions = {".pt", ".pth", ".onnx", ".idx1-ubyte", ".idx3-ubyte"}
+    candidates = assets_dir.rglob('*')
+    if assets_dir.resolve() == DEFAULT_ASSETS_DIR.resolve():
+        candidates = {p for base in asset_roots(ROOT).values() for p in (ROOT/base).rglob('*')}
     return sorted(
         path
-        for path in assets_dir.rglob("*")
+        for path in candidates
         if path.is_file()
         and not path.is_symlink()
         and not excluded_directories.intersection(
@@ -99,6 +104,20 @@ def upload_one(
     private_records: bool = False,
 ) -> tuple[str, str]:
     key = object_key(assets_dir, path, private_records)
+    aliases = object_relatives(ROOT,path) if assets_dir.resolve() == DEFAULT_ASSETS_DIR.resolve() else []
+    # Historical UUID aliases remain valid without duplicating local media files.
+    if len(aliases)>1:
+        uploaded=False
+        for relative in aliases:
+            alias_key=('cloud-IDL/records/' if private_records else OSS_PREFIX)+relative
+            if not overwrite and bucket.object_exists(alias_key):continue
+            headers={'Content-Type':mimetypes.guess_type(path.name)[0] or 'application/octet-stream'}
+            if private_records:
+                if path.suffix.lower()!='.json':raise ValueError('Private playback records must be JSON')
+                headers.update({'x-oss-object-acl':'private','Cache-Control':'private, no-store'})
+            if not overwrite:headers['x-oss-forbid-overwrite']='true'
+            bucket.put_object_from_file(alias_key,str(path),headers=headers);uploaded=True
+        return ('uploaded' if uploaded else 'skipped'),key
     if not overwrite and bucket.object_exists(key):
         return "skipped", key
 
@@ -136,7 +155,7 @@ def upload_assets(args: argparse.Namespace) -> dict:
         files = [
             path
             for path in files
-            if path.relative_to(assets_dir).parts[0] == args.module
+            if object_key(assets_dir, path).startswith(OSS_PREFIX + args.module + '/')
         ]
     if args.private_records and any(path.suffix.lower() != ".json" for path in files):
         raise ValueError("--private-records accepts only JSON playback records")
@@ -151,7 +170,8 @@ def upload_assets(args: argparse.Namespace) -> dict:
             "status": "dry-run",
             "destination": destination,
             "objects": [
-                object_key(assets_dir, path, args.private_records) for path in files
+                ('cloud-IDL/records/' if args.private_records else OSS_PREFIX)+relative
+                for path in files for relative in (object_relatives(ROOT,path) if assets_dir.resolve()==DEFAULT_ASSETS_DIR.resolve() else [path.relative_to(assets_dir).as_posix()])
             ],
         }
 

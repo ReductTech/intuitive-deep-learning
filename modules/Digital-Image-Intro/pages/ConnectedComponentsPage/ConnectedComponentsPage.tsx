@@ -5,7 +5,7 @@ import { analyzeHistogram } from '../OtsuThresholdPage/otsuModel';
 import { diagonalExample,filteredMask,neighbors,traceComponents,type Connectivity } from './connectedModel';
 import './ConnectedComponentsPage.css';
 const N=128,COLORS=['#2783ed','#20a878','#9761d9','#ed9a28','#1aafb7','#d66a89'];
-const samples=[['硬币','binarization-metal-tokens.png'],['零件','otsu-mechanical-parts.png'],['文档','otsu-document.png'],['猫咪','digital-image-cat-scene.png'],['斜角示例','']];
+const samples=[['硬币','binarization-metal-tokens.jpg'],['零件','otsu-mechanical-parts.jpg'],['文档','otsu-document.jpg'],['猫咪','digital-image-cat-scene.jpg'],['斜角示例','']];
 function loadMask(file:string):Promise<Uint8Array>{return new Promise((resolve,reject)=>{const image=new Image(); image.crossOrigin = 'anonymous';image.onload=()=>{const c=document.createElement('canvas');c.width=N;c.height=N;const ctx=c.getContext('2d')!;ctx.drawImage(image,0,0,N,N);const rgba=ctx.getImageData(0,0,N,N).data,gray=Uint8Array.from({length:N*N},(_,i)=>Math.round(.299*rgba[i*4]+.587*rgba[i*4+1]+.114*rgba[i*4+2])),hist=Array<number>(256).fill(0);gray.forEach(v=>hist[v]++);const t=analyzeHistogram(hist).best??128;resolve(gray.map(v=>v<t?1:0));};image.onerror=reject;image.src=moduleAssetUrl(outline.moduleIdentity.id,'images/'+file);});}
 export function ConnectedComponentsPage(){
   const [inputs,setInputs]=useState<Uint8Array[]>([]),[failed,setFailed]=useState(false),[sample,setSample]=useState(0),[connectivity,setConnectivity]=useState<Connectivity>(8),[clean,setClean]=useState(true),[cursor,setCursor]=useState(0),[running,setRunning]=useState(false),[picked,setPicked]=useState(0),[use,setUse]=useState<'count'|'box'|'extract'>('count');

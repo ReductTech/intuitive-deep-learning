@@ -5,9 +5,9 @@ import { ContentBlock, MathFormulaStatic, Typography } from '../../../shared/rea
 import { useLecturePlayback } from '../../components/LecturePlayback';
 import './GanTrainingPage.css';
 
-const noise = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/gan-training/noise.png');
-const realPortrait = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/gan-training/real-portrait.png');
-const generatedPortrait = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/gan-training/generated-portrait.png');
+const noise = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/gan-training/noise.jpg');
+const realPortrait = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/gan-training/real-portrait.jpg');
+const generatedPortrait = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/gan-training/generated-portrait.jpg');
 
 type Mode = 'd' | 'g' | 'cycle';
 const lessons = {

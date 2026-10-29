@@ -5,10 +5,10 @@ import { ContentBlock, MathFormulaStatic, Typography } from '../../../shared/rea
 import { useLecturePlayback } from '../../components/LecturePlayback';
 import './ForwardDerivationPage.css';
 
-const x0 = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/forward-derivation/x0.png');
-const x1 = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/forward-derivation/x1.png');
-const x2 = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/forward-derivation/x2.png');
-const xt = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/forward-derivation/xt.png');
+const x0 = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/forward-derivation/x0.jpg');
+const x1 = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/forward-derivation/x1.jpg');
+const x2 = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/forward-derivation/x2.jpg');
+const xt = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/forward-derivation/xt.jpg');
 
 type Mode = 'two-step' | 'merge' | 'direct';
 export interface ForwardDerivationPageProps { onComplete?: () => void; }

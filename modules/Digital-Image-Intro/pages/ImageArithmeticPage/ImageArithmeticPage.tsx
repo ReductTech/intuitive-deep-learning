@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState, type RefObject, type PointerEvent
 import { ContentBlock, Typography } from '../../../shared/react';
 import { calculate, clip, HEIGHT, makeRegionMask, regions, WIDTH, type Operation } from './arithmeticModel';
 import './ImageArithmeticPage.css';
-const background = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/arithmetic-table-background.png');
+const background = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/arithmetic-table-background.jpg');
 const catPhoto = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/digital-image-cat-cutout.png');
 const operations: [Operation, string][] = [['add', '加'], ['subtract', '减'], ['multiply', '乘'], ['divide', '除']];
 function load(url: string): Promise<HTMLImageElement> {

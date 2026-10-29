@@ -1,8 +1,10 @@
+import assetFormats from './asset-formats.json';
 const configuredAssetBase = import.meta.env.VITE_ASSET_BASE_URL?.trim();
-const defaultAssetBase = import.meta.env.BASE_URL;
+const defaultAssetBase = import.meta.env.PROD ? 'https://image.reduct.cn/cloud-IDL/assets' : import.meta.env.BASE_URL;
 
 /** Build a stable module asset URL shared by local development and CDN hosting. */
 export function moduleAssetUrl(moduleAssetId: string, relativePath: string): string {
+  relativePath = (assetFormats as Record<string,string>)[moduleAssetId+'/'+relativePath] || relativePath;
   const assetBase = (configuredAssetBase || defaultAssetBase).replace(/\/+$/, '');
   const safeId = encodeURIComponent(moduleAssetId);
   const safePath = relativePath

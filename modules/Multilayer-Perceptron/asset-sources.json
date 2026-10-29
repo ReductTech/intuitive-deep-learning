@@ -1,7 +1,7 @@
 {
   "assets": [
     {
-      "path": "titanic/atlantic-liner.png",
+      "path": "titanic/atlantic-liner.jpg",
       "source": "OpenAI built-in ImageGen",
       "role": "第1页泰坦尼克号场景背景插图",
       "prompt": "Panoramic editorial illustration of intact four-funnel RMS Titanic on calm Atlantic at twilight; navy and cream palette, no text, no disaster imagery.",

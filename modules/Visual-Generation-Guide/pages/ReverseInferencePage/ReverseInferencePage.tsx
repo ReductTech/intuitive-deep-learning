@@ -5,9 +5,9 @@ import { useEffect, useRef } from 'react';
 import { ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from '../../../shared/react';
 import './ReverseInferencePage.css';
 
-const x0 = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/forward-derivation/x0.png');
-const x1 = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/forward-derivation/x1.png');
-const xt = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/forward-derivation/xt.png');
+const x0 = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/forward-derivation/x0.jpg');
+const x1 = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/forward-derivation/x1.jpg');
+const xt = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/forward-derivation/xt.jpg');
 const noise = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/two-processes/xt.jpg');
 
 const steps = [

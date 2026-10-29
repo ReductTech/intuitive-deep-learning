@@ -4,8 +4,8 @@ import { useGomokuOutcome } from '../../LessonContext';
 import './KernelBasicsPage.css';
 
 const moduleAssetId = '444f8951-dd2e-42dc-94e5-c5a878618631';
-const cityImage = moduleAssetUrl(moduleAssetId, 'workflow/convolution-course/mengdelian.png');
-const bridgeImage = moduleAssetUrl(moduleAssetId, 'workflow/convolution-course/xielaqiao.png');
+const cityImage = moduleAssetUrl(moduleAssetId, 'workflow/convolution-course/mengdelian.jpg');
+const bridgeImage = moduleAssetUrl(moduleAssetId, 'workflow/convolution-course/xielaqiao.jpg');
 
 const GRID_WIDTH = 16;
 const GRID_HEIGHT = 9;

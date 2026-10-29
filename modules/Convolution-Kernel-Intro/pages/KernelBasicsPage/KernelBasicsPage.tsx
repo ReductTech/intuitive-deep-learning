@@ -4,8 +4,8 @@ import { useGomokuOutcome } from '../../LessonContext';
 import './KernelBasicsPage.css';
 
 const moduleAssetId = '38cd1c79-d8b7-462a-b208-a567c5cd89c4';
-const cityImage = moduleAssetUrl(moduleAssetId, 'mengdelian.png');
-const bridgeImage = moduleAssetUrl(moduleAssetId, 'xielaqiao.png');
+const cityImage = moduleAssetUrl(moduleAssetId, 'mengdelian.jpg');
+const bridgeImage = moduleAssetUrl(moduleAssetId, 'xielaqiao.jpg');
 
 const GRID_WIDTH = 16;
 const GRID_HEIGHT = 9;

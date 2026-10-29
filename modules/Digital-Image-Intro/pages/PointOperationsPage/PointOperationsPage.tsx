@@ -4,7 +4,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from '../../../shared/react';
 import { mapGray, type Operation } from './pointModel';
 import './PointOperationsPage.css';
-const photo = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/digital-image-cat-scene.png');
+const photo = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/digital-image-cat-scene.jpg');
 const WIDTH = 480, HEIGHT = 400;
 const operations: [Operation, string][] = [['brighten', '变亮'], ['darken', '变暗'], ['invert', '反相'], ['threshold', '阈值']];
 const bound = (x: number, max: number) => Math.max(0, Math.min(max - 1, x));

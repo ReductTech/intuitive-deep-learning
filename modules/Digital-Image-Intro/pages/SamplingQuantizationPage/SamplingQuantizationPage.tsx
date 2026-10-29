@@ -4,7 +4,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { ContentBlock, Typography } from '../../../shared/react';
 import './SamplingQuantizationPage.css';
 
-const photo = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/digital-image-cat-scene.png');
+const photo = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/digital-image-cat-scene.jpg');
 type Raster = { width: number; height: number; data: Uint8ClampedArray };
 type Point = { x: number; y: number };
 type Mode = 'sampling' | 'quantization';

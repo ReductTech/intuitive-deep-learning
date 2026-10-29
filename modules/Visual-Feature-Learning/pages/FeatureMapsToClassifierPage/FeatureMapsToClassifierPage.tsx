@@ -1,7 +1,7 @@
 import { AtlasImage } from '../../components/AtlasImage';
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from 'react';
 import { Button, ContentBlock, Typography, moduleAssetUrl } from '../../../shared/react';
-import data from '../../../../assets/80396753-7fc8-4f55-9188-bddbdb828169/flatten-interface/responses.json';
+import data from '../../assets/flatten-interface/responses.json';
 import './FeatureMapsToClassifierPage.css';
 const CHANNELS = Array.from({length:16},(_,c)=>({c,score:data.samples.reduce((sum,s)=>{const v=s.values[c],mean=v.reduce((a,b)=>a+b,0)/v.length;return sum+v.reduce((a,b)=>a+(b-mean)**2,0)/v.length;},0)})).sort((a,b)=>b.score-a.score).slice(0,5).map(item=>item.c);
 const RANGES = Array.from({length:16},(_,c)=>{const v=data.samples.flatMap(s=>s.values[c]).sort((a,b)=>a-b),baseline=v[Math.floor(v.length/2)];return [baseline,Math.max(...v.map(n=>Math.abs(n-baseline)))];});

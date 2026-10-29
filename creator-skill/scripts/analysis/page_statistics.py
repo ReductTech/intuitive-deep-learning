@@ -21,6 +21,7 @@ import subprocess
 from datetime import datetime, timezone
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "common"))
+from module_assets import asset_directory
 from _common import ROOT, emit_result, report_error, resolve_module, scratchpad_path
 
 HTML_TEMPLATE = r"""<!doctype html>
@@ -258,7 +259,7 @@ def build_dataset(
             p["wordMethod"] = "导入前次统计"
         p.pop("text", None)
         p["thumbnail"] = None
-        asset_dir = root / "assets" / str(p["assetId"]) / "scenedeck-thumbnails"
+        asset_dir = asset_directory(root, str(p["assetId"])) / "scenedeck-thumbnails"
         file = next(
             (
                 asset_dir / (p["sceneId"] + ext)
@@ -277,7 +278,7 @@ def build_dataset(
         except Exception as exc:
             errors.append({"page": p["module"] + "/" + p["sceneId"], "error": str(exc)})
     relevant_asset_dirs = {
-        root / "assets" / str(p["assetId"]) / "scenedeck-thumbnails" for p in pages
+        asset_directory(root, str(p["assetId"])) / "scenedeck-thumbnails" for p in pages
     }
     unused = sorted(
         str(f.relative_to(root)).replace("\\", "/")
@@ -407,7 +408,7 @@ def write_report(args: argparse.Namespace) -> dict:
             p for p in data["pages"] if p["directory"] == module["directory"]
         ]
         ids = {p["module"] for p in subset["pages"]}
-        assets = {f"assets/{p['assetId']}/" for p in subset["pages"]}
+        assets = {asset_directory(root,str(p['assetId'])).relative_to(root).as_posix()+"/" for p in subset["pages"]}
         subset["missingThumbnails"] = [
             p
             for p in data["missingThumbnails"]

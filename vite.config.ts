@@ -8,6 +8,7 @@ import path from 'node:path';
 import { editDeckPlugin } from './deprecated/Edit-Deck/server';
 import { creatorSkillDocuments } from './modules/Creator-Guide/skillDocumentsPlugin';
 import {courseLibraryRoot,courseLibraryPlugin} from './scripts/course-library-vite';
+import {localModuleAssets} from './scripts/module-assets.mjs';
 
 function cloudRuntime(root: string): Plugin {
   const candidates = process.env.IDL_CLOUD_REPOSITORY
@@ -77,13 +78,13 @@ export default defineConfig(({ mode, command }) => {
   const assetBaseUrl = loadEnv(mode, '.', '').VITE_ASSET_BASE_URL?.trim();
   const library=courseLibraryRoot(__dirname,process.env.IDL_COURSE_LIBRARY_ROOT||loadEnv(mode,'.','').IDL_COURSE_LIBRARY_ROOT);
   return {
-    plugins: [courseLibraryPlugin(__dirname,library),offlineExport(__dirname,library),...(localPreview?[localNarration(__dirname)]:[]),...(localPreview ? [{
+    plugins: [localModuleAssets(library),courseLibraryPlugin(__dirname,library),offlineExport(__dirname,library),...(localPreview?[localNarration(__dirname)]:[]),...(localPreview ? [{
       name: 'local-course-preview',
       transformIndexHtml(html: string) {
         return html.replace('<script src="/modules/shared/telemetry.js"></script>', '');
       },
     }] : [editDeckPlugin()]), creatorSkillDocuments(), fixedLessonCanvas(), externalCourseImages(), react(), tailwindcss(), ...(command === 'serve' ? [cloudRuntime(__dirname)] : [])],
-    publicDir: path.join(library,'assets'),
+    publicDir: false,
     resolve: {dedupe:['react','react-dom','three','@icon-park/react']},
     build: {
       copyPublicDir: !assetBaseUrl,

@@ -190,6 +190,18 @@
         "node"
       ],
       "arguments": []
+    },
+    {
+      "id": "assets.compress",
+      "category": "assets",
+      "path": "scripts/media/compress-images.py",
+      "runtime": "python",
+      "description": "仅将静态不透明 PNG 转为更小的 JPG；透明和动画素材不变",
+      "effects": "保留原图和已有 JPG；更新精确格式映射；--dry-run 不写文件",
+      "dependencies": [
+        "Pillow"
+      ],
+      "arguments": []
     }
   ]
 }

@@ -3,7 +3,7 @@ import { Light, Picture } from '@icon-park/react';
 import { ContentBlock, MathFormulaBlock, MathFormulaStatic, moduleAssetUrl, Typography } from '../../../shared/react';
 import './GradientPage.css';
 
-const buildingImage = moduleAssetUrl('38cd1c79-d8b7-462a-b208-a567c5cd89c4', 'xiandaijianzhu.png');
+const buildingImage = moduleAssetUrl('38cd1c79-d8b7-462a-b208-a567c5cd89c4', 'xiandaijianzhu.jpg');
 
 interface GradientImages { horizontal: string; vertical: string; magnitude: string; }
 
