@@ -73,6 +73,9 @@ class Workflow:
     def prepare(self,project,module):
         require(isinstance(project,dict) and project.get('version')==1 and project.get('courseId')==module['alias'],400,'INVALID_PROJECT','课程内容与模块不匹配。')
         require(isinstance(project.get('title'),str) and 0<len(project['title'])<=120,400,'INVALID_PROJECT','请填写课件名称。')
+        if 'repositoryName' in project and project['repositoryName']!='':
+            from .repository_names import repository_name
+            project['repositoryName']=repository_name(project['repositoryName'])
         pages=project.get('pages')
         require(isinstance(pages,list) and 1<=len(pages)<=100,400,'INVALID_PROJECT','课程需要 1～100 页。')
         require(type(project.get('duration')) in (int,float) and 0<project['duration']<=480 and isinstance(project.get('style'),str) and isinstance(project.get('outlineConfirmed'),bool),400,'INVALID_PROJECT','课程设置格式不正确。')
@@ -313,7 +316,7 @@ class Workflow:
                 current=db.execute('SELECT version FROM shuku_releases WHERE id=%s',(course['current_release'],)).fetchone()
                 require(tuple(map(int,version.split('.')))>tuple(map(int,current['version'].split('.'))),409,'VERSION_ORDER','新版本号需高于当前版本。')
             # Verify every immutable referenced object before changing the live pointer.
-            remote=self.github.release_gate(db,uid,cid,rid,version,note)
+            remote=self.github.release_gate(db,uid,cid,rid,version,note,data.get('repository_name'))
             if remote:return remote
             for obj in revision['files'].values():
                 require(len(self.bucket.read(obj['sha256']))==obj['size'],503,'FILE_CORRUPT','课程文件不完整，保留原正式版。')

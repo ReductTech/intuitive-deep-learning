@@ -279,6 +279,13 @@ def handler_for(app):
                 feedback=app.workflow.feedback
                 if self.command=='GET' and path=='/api/shuku/github/reviews':
                     return self.send_json(200,{'courses':app.workflow.github.review_courses(user['id'])})
+                name_route=re.fullmatch(r'/api/shuku/courses/([^/]+)/github/name(?:/(check))?',path)
+                if name_route:
+                    names=app.workflow.github.names;cid=name_route[1]
+                    if self.command=='GET' and not name_route[2]:return self.send_json(200,names.info(user['id'],cid))
+                    if self.command=='POST':
+                        if name_route[2]:return self.send_json(200,names.check(user['id'],cid,self.body()))
+                        return self.send_json(202,names.request(user['id'],cid,self.body()))
                 github=re.fullmatch(r'/api/shuku/courses/([^/]+)/github(?:/(bind|provision|retry|reconcile|external-decision))?',path)
                 if github:
                     sync=app.workflow.github;cid=github[1]

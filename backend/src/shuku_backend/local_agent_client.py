@@ -249,7 +249,7 @@ def template_project(state,project):
         files[guide_entry]='import React from "react";import * as guide from '+json.dumps('../'+guide)+';export default function Guide(){const Component=guide['+json.dumps(name)+']||guide['+json.dumps(name[:1].upper()+name[1:])+']||guide.default;if(!Component)throw new Error("自学页面没有导出组件");return React.createElement(Component);}'
     # Keep immutable identity and nativeSnapshot; web/local optimistic locks are unchanged.
     if len(files)>500 or sum(len(v.encode()) for v in files.values())>12*1024*1024:raise ValueError('本次源码与新素材超过 500 文件或 12 MiB；请压缩素材后重试。')
-    return {**project,'authoringModule':state['module'],'title':outline.get('title',project['title']),'pages':pages,'source':{'files':files},**({'sourceGuideEntry':guide_entry} if guide_entry else {})}
+    return {**project,**({'repositoryName':outline['repositoryName']} if 'repositoryName' in outline else {}),'authoringModule':state['module'],'title':outline.get('title',project['title']),'pages':pages,'source':{'files':files},**({'sourceGuideEntry':guide_entry} if guide_entry else {})}
 
 
 def pull(site,cid,token):

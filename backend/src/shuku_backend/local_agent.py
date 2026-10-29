@@ -176,6 +176,7 @@ class LocalAgent:
             '准备阶段不生成正文、章节、练习或交互页面，不构建、打包、上传或保存修订。完成后告知工程位置，询问用户面向谁、讲什么、希望如何设计，然后等待具体要求。',
             '收到创作要求后，与用户逐步讨论整体逻辑、模块与逐页内容。保留页面 ID、courseId 和 nativeSnapshot；仅修改用户要求的内容。',
             '收到具体要求后，在 shuku-state.json 指定的 courses/modules/ 课程目录创作，按模板规范讨论整体逻辑、模块和逐页设计。保留课程标识和未要求修改的内容，不上传模板示例课程。',
+            '收到课程内容要求后，为课程拟一个简洁准确的英文仓库名（2～5 个英文单词，用小写字母、数字和连字符，以字母开头，最长 80 字符），不要附加 UUID 或随机串。标准工程写入 outlines.json 的 repositoryName；原 source 工程写入 project.json.repositoryName。首次准备阶段不提前取名。平台发布时由创建者确认并检查是否重名，Agent 不直接改名或公开 GitHub 仓库。',
             '本地预览：npm --prefix environment/frontend ci，然后 npm --prefix environment/frontend run dev。沿用模板的公共组件与视觉检查工具。',
             '标准模块用 outlines.json 登记页码和 ppt.entry，PPT 模块导出 deck；也兼容已有 source/ 工程。push 会将真实课程源码和素材转换为 IDL 修订，不只上传页面描述。',
             '支持 @shared/react、React、React DOM、three、@icon-park/react 与已安装的固定依赖；普通图片可放 courses/assets/。不安装任意依赖，不上传服务端程序、框架、node_modules 或凭证。',

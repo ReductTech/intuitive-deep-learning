@@ -16,13 +16,14 @@ from .workflow import identifier
 from .workers import DeferredTask
 from .collaboration import teaching
 from .hosted_workspaces import HostedWorkspaces
+from .repository_names import RepositoryNames,repository_name
 
 
 class GitHubSync:
     def __init__(self,flow,config=None,client=None):
         self.flow=flow;self.store=flow.store;self.clock=flow.clock;self.bucket=flow.bucket
         self.config=config or {};self.client=client or (GitHub(config['appId'],config['privateKeyPath'],self.clock) if config else None)
-        self.stop=threading.Event();self.thread=None;self.hosted=HostedWorkspaces(self)
+        self.stop=threading.Event();self.thread=None;self.hosted=HostedWorkspaces(self);self.names=RepositoryNames(self)
 
     def repo(self,db,cid):
         return db.execute('SELECT * FROM shuku_github_repositories WHERE course_id=%s',(cid,)).fetchone()
@@ -57,14 +58,14 @@ class GitHubSync:
 
     def status(self,uid,cid):
         with self.store.transaction() as db:
-            self.flow.owner(db,uid,cid)
+            course,_=self.flow.owner(db,uid,cid)
             hosted=self.hosted.status_in(db,cid)
             if hosted:return hosted
             repo=self.repo(db,cid)
             jobs=db.execute("SELECT j.id,j.kind,j.subject,t.status,t.checkpoint,t.error_code FROM shuku_github_jobs j JOIN shuku_tasks t ON t.id=j.task_id WHERE j.course_id=%s ORDER BY j.created_at DESC LIMIT 30",(cid,)).fetchall()
             external=db.execute('SELECT * FROM shuku_github_external_prs WHERE course_id=%s ORDER BY updated_at DESC LIMIT 100',(cid,)).fetchall()
             provisioning=db.execute("SELECT id,kind,status,checkpoint,error_code FROM shuku_tasks WHERE resource_key=%s AND kind='github.provision' ORDER BY created_at DESC LIMIT 1",('course:'+cid,)).fetchall()
-            return {'enabled':bool(self.client),'repository':{'owner':repo['owner'],'name':repo['name']} if repo else None,'jobs':[course_view(j) for j in jobs]+[course_view(j) for j in provisioning],'external_prs':[course_view(p) for p in external]}
+            return {'name_editable':self.names.editable(repo),'can_rename':bool(course['current_release']) and self.names.editable(repo),'enabled':bool(self.client),'repository':{'owner':repo['owner'],'name':repo['name']} if repo else None,'jobs':[course_view(j) for j in jobs]+[course_view(j) for j in provisioning],'external_prs':[course_view(p) for p in external]}
 
     def provision_request(self,uid,cid):
         require(self.client,503,'GITHUB_NOT_CONFIGURED','请先配置 GitHub App。')
@@ -243,7 +244,7 @@ class GitHubSync:
         require(task['status']!='failed',503,'GITHUB_MERGE_FAILED','远程合并失败，请在同步详情中重试。')
         if not mapping or not mapping['merge_sha']:checkpoint({'stage':'waiting-for-github-merge'});raise DeferredTask()
 
-    def release_gate(self,db,uid,cid,rid,version,note):
+    def release_gate(self,db,uid,cid,rid,version,note,requested_name=None):
         repo=self.repo(db,cid)
         if not repo:
             require(not self.client,409,'GITHUB_NOT_READY','请先等待专属 GitHub 仓库连接完成。')
@@ -252,10 +253,28 @@ class GitHubSync:
         mapping=db.execute('SELECT * FROM shuku_github_revisions WHERE revision_id=%s',(remote_rid,)).fetchone()
         if mapping and mapping['release_id'] and mapping['release_version']==version:
             require(mapping['release_note']==note,409,'VERSION_EXISTS','远程版本说明不匹配。');return None
+        name=None
+        if self.names.editable(repo):
+            row=db.execute('SELECT files FROM shuku_revisions WHERE id=%s',(rid,)).fetchone()
+            project=json.loads(self.bucket.read(row['files']['project.json']['sha256']))
+            course=db.execute('SELECT current_release FROM shuku_courses WHERE id=%s',(cid,)).fetchone()
+            value=requested_name if requested_name is not None else (repo['name'] if course['current_release'] else project.get('repositoryName'))
+            name=repository_name(value)
+            require(not db.execute("SELECT 1 FROM shuku_github_jobs j JOIN shuku_tasks t ON t.id=j.task_id WHERE j.course_id=%s AND j.kind='rename' AND t.status IN ('queued','running')",(cid,)).fetchone(),409,'REPOSITORY_NAME_BUSY','仓库正在改名，请完成后再发布。')
+            require(self.names.available(repo,name),409,'REPOSITORY_NAME_TAKEN','该名称已被占用，请换一个英文名称。')
+        elif requested_name is not None:
+            require(False,409,'REPOSITORY_NAME_UNAVAILABLE','此课程使用共享仓库，不能按单门课程改名。')
         require(not db.execute("SELECT 1 FROM shuku_github_jobs j JOIN shuku_tasks t ON t.id=j.task_id WHERE j.course_id=%s AND j.kind='release' AND j.subject<>%s AND t.status IN ('queued','running')",(cid,rid+':'+version)).fetchone(),409,'RELEASE_BUSY','另一版本正在发布，请稍后再试。')
-        jid=self.queue(db,cid,'release',rid+':'+version,{'revision_id':rid,'version':version,'note':note},uid)
+        payload={'revision_id':rid,'version':version,'note':note,**({'repository_name':name} if name else {})}
+        jid=self.queue(db,cid,'release',rid+':'+version,payload,uid)
         old=db.execute('SELECT payload FROM shuku_github_jobs WHERE id=%s',(jid,)).fetchone()
         require(old['payload']['note']==note,409,'VERSION_EXISTS','该版本正在按另一份说明发布。')
+        task=db.execute('SELECT t.status FROM shuku_tasks t JOIN shuku_github_jobs j ON j.task_id=t.id WHERE j.id=%s',(jid,)).fetchone()
+        if old['payload'].get('repository_name')!=name:
+            require(task['status']=='failed',409,'REPOSITORY_NAME_CHANGED','该版本正在使用另一仓库名称发布，请等待完成。')
+            db.execute('UPDATE shuku_github_jobs SET payload=%s WHERE id=%s',(JsonValue(payload),jid))
+        if task['status']=='failed':
+            db.execute("UPDATE shuku_tasks SET status='queued',attempts=0,error_code=NULL,available_at=%s WHERE id=(SELECT task_id FROM shuku_github_jobs WHERE id=%s)",(self.clock(),jid))
         return {'pending':True,'job_id':jid,'version':version}
 
     @staticmethod
@@ -269,16 +288,21 @@ class GitHubSync:
             job=db.execute('SELECT j.*,c.deleting,c.status AS course_status FROM shuku_github_jobs j JOIN shuku_courses c ON c.id=j.course_id WHERE j.id=%s',(task['payload']['job_id'],)).fetchone()
             if not job:return {'removed':True}
             repo=self.repo(db,job['course_id'])
-            if job['kind'] in ('merge','release','external_merge'):self.flow.owner(db,str(job['requested_by']),str(job['course_id']))
+            if job['kind'] in ('merge','release','external_merge','rename'):self.flow.owner(db,str(job['requested_by']),str(job['course_id']))
         require(not job['deleting'],409,'RESOURCE_REMOVED','课程正在移除。')
         state=dict(task['checkpoint'])
         def save(**changes):state.update(changes);checkpoint(state)
         def call(method,path='',data=None,missing=False):
             save();value=self.client.call(repo,method,path,data,missing);save();return value
-        identity=call('GET')
+        try:identity=call('GET')
+        except GitHubError as error:
+            if error.status not in (301,302,404):raise
+            identity=self.names.recover(repo,save)
         require(identity['id']==repo['repository_id'],409,'REPOSITORY_CHANGED','远程仓库已被替换。')
         kind=job['kind'];payload=job['payload'];rid=payload.get('revision_id')
-        if kind in ('pull','merge','release'):
+        if kind=='rename':
+            self.names.rename(repo,payload['name'],save)
+        elif kind in ('pull','merge','release'):
             if kind=='release':
                 with self.store.transaction() as db:
                     rid=self.remote_revision(db,rid)
@@ -305,6 +329,7 @@ class GitHubSync:
                     release=call('GET','/releases/tags/'+tag,missing=True)
                     if not release:release=call('POST','/releases',{'tag_name':tag,'target_commitish':sha,'name':tag,'body':body,'draft':False,'prerelease':False})
                     require(release['tag_name']==tag and release.get('body')==body and not release['draft'] and not release['prerelease'],409,'RELEASE_EXISTS','远程 Release 与本次发布不一致。')
+                    if payload.get('repository_name'):self.names.rename(repo,payload['repository_name'],save)
                     call('PATCH','',{'private':False})
                     require(call('GET')['private'] is False,409,'VISIBILITY_UNCONFIRMED','仓库尚未公开。')
                     with self.store.transaction() as db:db.execute('UPDATE shuku_github_revisions SET release_id=%s,release_version=%s,release_note=%s WHERE revision_id=%s',(release['id'],version,payload['note'],rid))

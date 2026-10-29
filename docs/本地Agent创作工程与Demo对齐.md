@@ -8,7 +8,8 @@
 2. 执行指令中的 `prepare`。新课取得标准工程；共创取得所选基础版本的原课程模块和素材。框架包含公共组件、创作规范、视觉样例、检查工具、安装与预览环境。
 3. 准备完成后等待用户提出创作要求，再讨论大纲和逐页设计。只修改 `shuku-state.json` 指定的课程目录，其他模板示例不参与上传。
 4. 本地执行 `npm --prefix environment/frontend ci`，再运行 `npm --prefix environment/frontend run dev` 预览。
-5. 执行 `python3 shuku-local-agent.py push` 保存修订，`status` 查看构建结果；回网页预览并提交审核或共创建议。
+5. Agent 完成内容后，在 `outlines.json.repositoryName` 提供课程英文仓库名，例如 `neural-network-basics`；客户端随项目上传。只准备环境时不猜名称。
+6. 执行 `python3 shuku-local-agent.py push` 保存修订，`status` 查看构建结果；回网页预览并提交审核或共创建议。发布时由创作者确认名称并检查占用，平台完成仓库改名与公开，Agent 不直接改名或公开仓库。见 [课程英文仓库名称](课程英文仓库名称.md)。
 
 已有工程不会被 `prepare` 覆盖。旧客户端的 `pull / push / status` 继续可用；切换标准工程时使用新目录，确认后再合并自己的本地修改。不要把凭证、状态文件、依赖目录或框架上传到 GitHub。
 

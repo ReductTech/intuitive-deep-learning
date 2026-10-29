@@ -57,3 +57,5 @@
 @media(max-width:480px){.sd-personal-menu .sd-authoring-subpages{left:0;right:auto}}
 
 .shuku-course-list article.shuku-course-card{flex-direction:column;align-items:stretch;gap:20px}.shuku-course-card>div{min-width:0}.shuku-course-list .shuku-course-card>.shuku-row-actions{justify-content:flex-start}
+
+.shuku-repository-name-input{display:flex;gap:8px;align-items:center}.shuku-repository-name-input input{flex:1;min-width:0}.shuku-repository-name-input button{flex:none;white-space:nowrap}.shuku-repository-name>small{display:block;margin-top:8px;color:var(--ui-text-muted)}.shuku-repository-name>p{font-size:13px;margin:8px 0 0}

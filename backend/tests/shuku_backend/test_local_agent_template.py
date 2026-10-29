@@ -38,6 +38,8 @@ def test_prompts_distinguish_creation_and_private_workspace_and_wait():
         assert '等待具体要求' in prompt and '不构建、打包、上传或保存修订' in prompt
         assert '不需要个人 Fork' in prompt and '修订接口' in prompt
         assert 'git switch' not in prompt and '个人仓库：' not in prompt
+        assert 'repositoryName' in prompt and 'outlines.json' in prompt
+        assert '改名' in prompt and '80' in prompt
 
 
 def fake_framework(repository,commit,destination,paths=None):
@@ -188,6 +190,18 @@ def test_saved_template_round_trip_keeps_module_paths_and_original_guide(client,
     assert repacked['source']==packed['source']
     assert repacked['authoringModule']==packed['authoringModule']
     validate_source(repacked)
+
+
+def test_agent_suggested_repository_name_survives_upload_and_resume(client,tmp_path,monkeypatch):
+    monkeypatch.chdir(tmp_path);data=snapshot()
+    monkeypatch.setattr(client,'request',lambda *args:deepcopy(data));monkeypatch.setattr(client,'checkout',fake_framework)
+    client.prepare('https://example.test','course','token');state=client.read('shuku-state.json')
+    path=Path('courses')/state['module']/'outlines.json';outline=client.read(path)
+    outline['repositoryName']='creator-skill-basics';client.write(path,outline)
+    packed=client.template_project(state,client.read('project.json'))
+    assert packed['repositoryName']=='creator-skill-basics'
+    outline.pop('repositoryName');client.write(path,outline)
+    assert client.template_project(state,packed)['repositoryName']=='creator-skill-basics'
 
 
 def test_standard_module_metadata_cannot_leave_submitted_source():
