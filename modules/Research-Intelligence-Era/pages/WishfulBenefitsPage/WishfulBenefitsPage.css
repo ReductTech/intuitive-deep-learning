@@ -1,0 +1,5 @@
+.rie-benefits { position: relative; width: 1600px; height: 900px; isolation: isolate; }
+.rie-benefits-art { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; z-index: -1; pointer-events: none; }
+.rie-benefits-grid { position: absolute; top: 240px; left: 350px; right: 38px; display: grid; grid-template-columns: minmax(0, 440px) minmax(0, 1fr); column-gap: 292px; row-gap: 166px; }
+.rie-benefits-copy { min-width: 0; display: grid; align-content: start; gap: 18px; min-height: 120px; }
+.rie-benefits-takeaway { position: absolute; top: 785px; left: 60px; right: 60px; text-align: center; }

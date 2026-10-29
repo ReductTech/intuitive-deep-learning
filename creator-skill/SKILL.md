@@ -25,6 +25,7 @@ description: 在当前仓库中规划、设计、实现、修改和评估 React 
 
 - 每页明确主要信息或核心问题，内容与整份演示的目标一致。
 - 图形、图片、动画和交互应承担表达或解释功能。
+- 所有视觉设计图必须使用 ImageGen 生成或修改；设计图流程禁止使用 Python，也不得用 SVG、Canvas、HTML 截图或其他程序化绘图替代 ImageGen。完整约束见[页面设计指导](references/design/design.md#视觉设计图的工具约束)。
 - 生成视觉设计图前，必须读取[页面设计指导](references/design/design.md)，实际打开相关成对视觉正反例，并将借鉴与避让的具体设计决策写入生图提示词；不能仅写“参考样例”或凭印象指定风格。
 - 根据用户要求和当前 Workflow 决定大纲确认、设计预览及制作批次。
 - 沿用已有确认与授权；局部修改只处理受影响内容及必要依赖。
@@ -44,7 +45,7 @@ description: 在当前仓库中规划、设计、实现、修改和评估 React 
 - 大纲每页只写 `title`（题目）和 `snippet`（演讲稿），不增加其他页面字段。用户尚未提供的内容不自行补全。结构要求见[大纲](references/design/course-outline.md)。
 - 每页独占 `modules/<模块目录名>/pages/<语义页目录>/`，页面组件与同名样式放在该目录，不平铺在 `pages/` 下。该页的设计图、prompt、检查截图及临时脚本放在页目录内的 `_scratchpad/`；课程整体的原稿、大纲备份和汇总记录放在模块级 `_scratchpad/`。两级临时目录均由 Git 忽略，正式资源按工程约定保存。
 - 页目录与 `_scratchpad/` 按实际制作需要创建，不根据大纲预建未开始页面的空目录或占位文件。
-- 遵守模块身份、静态资源和公共组件边界。
+- 正式静态资源归各模块所有，保存到 `modules/<模块目录名>/assets/`；真正跨模块共用的素材放在 `modules/shared/assets/`。页面仍用 `moduleAssetUrl(moduleIdentity.id, relativePath)` 引用，UUID 是运行时与 OSS 命名空间，不是本地目录名。具体约定见[模块身份与资源](references/engineering/module-assets.md)。
 
 ## 按动作读取
 

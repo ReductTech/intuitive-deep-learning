@@ -11,16 +11,17 @@ import {NarrationContext,parentNarration} from './narrationBridge';
 import {playbackModule} from './playbackModule';
 import type {ActiveModule} from '../app/modules';
 import type {StudyPosition} from './personal';
+const offlineDocument=Boolean((globalThis as {__SHUKU_OFFLINE__?:boolean}).__SHUKU_OFFLINE__);
 // Compatibility entry used by release builds. All viewer UI is the original workspace.
 export function RuntimePlayer({project,deck,guide,notes,assetId='',initialState,onProgress,account='guest'}:{project:CreatorProject;deck?:DeckDefinition;guide?:ReactNode;notes?:ActiveModule['getPptNotes'];account?:string;assetId?:string;initialState?:StudyPosition;onProgress?:(state:StudyPosition)=>void}){
  const [state,setState]=useState<StudyPosition>(initialState||{page_id:project.pages[0].id,mode:'ppt',completed:[]});
- const [channel,setChannel]=useState(''),[scope,setScope]=useState(account),[initialized,setInitialized]=useState(window.parent===window||Boolean(initialState));
+ const [channel,setChannel]=useState(''),[scope,setScope]=useState(account),[initialized,setInitialized]=useState(offlineDocument||window.parent===window||Boolean(initialState));
  const courses=useMemo(()=>[playbackModule(project,deck,assetId,notes)],[project,deck,assetId,notes]);
  // Sandboxed documents have location.origin === 'null'; the embedding page still has a verified URL origin.
  const hostOrigin=useMemo(()=>new URL(document.referrer||location.href).origin,[]);
  const revision=location.pathname.match(/^\/api\/shuku\/revisions\/([^/]+)\/(?:player\/)?files\//)?.[1]||project.id;
  useEffect(()=>{
-  if(window.parent===window)return;
+  if(offlineDocument||window.parent===window)return;
   const receive=(event:MessageEvent)=>{
    if(event.source!==window.parent||event.origin!==hostOrigin||event.data?.type!=='shuku-study-init'||event.data.revision!==revision||typeof event.data.channel!=='string')return;
    const value=event.data.state as StudyPosition;

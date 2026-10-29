@@ -27,3 +27,6 @@ setting.json
 /assets/value-based-rl/
 /.course-library/
 /.authoring-template/
+
+# Generated static code and resource manifests for local browser ZIP downloads
+.offline-preview/

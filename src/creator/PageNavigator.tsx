@@ -1,28 +1,33 @@
-import { useEffect, useState, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import type { CreatorPage } from './model';
 import { readDesignImage } from './designImages';
 
-function PageItem({ page, index, active, busy, thumbnail, outlineVisible, editable, preview, onSelect, onProperties, onDrop }: {
-  page: CreatorPage; index: number; active: boolean; busy: boolean; thumbnail?: string; preview?: ReactNode; outlineVisible: boolean; editable: boolean;
+function PageItem({ page, index, active, busy, thumbnail, outlineVisible, editable, preview, flatFallback, onSelect, onProperties, onDrop }: {
+  page: CreatorPage; index: number; active: boolean; busy: boolean; thumbnail?: string; preview?: ReactNode; outlineVisible: boolean; editable: boolean; flatFallback?:boolean;
   onSelect: () => void; onProperties: () => void; onDrop: (id: string) => void;
 }) {
   const [image, setImage] = useState<string>();
+  const [failed,setFailed]=useState(false);
+  useEffect(()=>setFailed(false),[thumbnail,image]);
+  const compact=Boolean(flatFallback&&(!(thumbnail||image||preview)||failed));
   useEffect(() => { let active = true; setImage(undefined); if (!thumbnail && page.designImageId) readDesignImage(page.designImageId).then(value => { if (active) setImage(value); }).catch(() => {}); return () => { active = false; }; }, [page.designImageId, thumbnail]);
-  return <article className={`cw-ppt-page ${active ? 'active' : ''}`} aria-label={`第${index + 1}页`} onDragOver={event => { if (editable && !busy) event.preventDefault(); }} onDrop={event => { event.preventDefault(); if (editable && !busy) onDrop(event.dataTransfer.getData('text/plain')); }}>
+  return <article className={`cw-ppt-page ${compact?'cw-text-page':''} ${active ? 'active' : ''}`} aria-label={`第${index + 1}页`} onDragOver={event => { if (editable && !busy) event.preventDefault(); }} onDrop={event => { event.preventDefault(); if (editable && !busy) onDrop(event.dataTransfer.getData('text/plain')); }}>
     <div className="cw-ppt-page-row"><span className="cw-ppt-index" draggable={editable && !busy} title={editable ? '拖动排序' : undefined} onDragStart={event => { event.dataTransfer.setData('text/plain', page.id); event.dataTransfer.effectAllowed = 'move'; }}>{String(index + 1).padStart(2, '0')}</span>
-      <button className="cw-ppt-thumb" aria-label={`打开第${index + 1}页：${page.title}`} aria-current={active ? 'page' : undefined} title={page.title} disabled={busy} onClick={onSelect}>{thumbnail || image ? <img src={thumbnail || image} alt="" /> : preview || <span className="cw-ppt-placeholder">{page.title}</span>}</button>
+      <button className={`${compact?'cw-offline-row':'cw-ppt-thumb'} ${flatFallback?'offline-page':''}`} aria-label={`打开第${index + 1}页：${page.title}`} aria-current={active ? 'page' : undefined} title={page.title} disabled={busy} onClick={onSelect}>{compact?<span>{page.title}</span>:thumbnail || image ? <img src={thumbnail || image} alt="" onError={()=>setFailed(true)}/> : preview || <span className="cw-ppt-placeholder">{page.title}</span>}</button>
       {editable && <button className="cw-ppt-more" aria-label={`第${index + 1}页属性`} title="页面属性" disabled={busy} onClick={() => { onSelect(); onProperties(); }}>···</button>}
-    </div>{outlineVisible && <button className="cw-ppt-title" disabled={busy} onClick={onSelect}>{page.title}</button>}
+    </div>{outlineVisible && !compact && <button className="cw-ppt-title" disabled={busy} onClick={onSelect}>{page.title}</button>}
   </article>;
 }
 
-export function PageNavigator({ pages, activeId, busy, editable, thumbnail, renderThumbnail, onSelect, onReorder, onProperties, onAdd }: {
-  pages: CreatorPage[]; activeId: string; busy: boolean; editable: boolean; thumbnail: (page: CreatorPage) => string | undefined; renderThumbnail?: (page: CreatorPage) => ReactNode;
+export function PageNavigator({ pages, activeId, busy, editable, thumbnail, renderThumbnail, flatFallback=false, onSelect, onReorder, onProperties, onAdd }: {
+  pages: CreatorPage[]; activeId: string; busy: boolean; editable: boolean; thumbnail: (page: CreatorPage) => string | undefined; renderThumbnail?: (page: CreatorPage) => ReactNode; flatFallback?:boolean;
   onSelect: (id: string) => void; onReorder: (fromId: string, toId: string) => void; onProperties: (id: string) => void; onAdd: () => void;
 }) {
   const [outlineVisible, setOutlineVisible] = useState(false);
-  return <aside className="cw-sidebar cw-ppt-sidebar"><header className="cw-pages-heading"><strong>幻灯片 <span>{pages.length}</span></strong><button aria-pressed={outlineVisible} onClick={() => setOutlineVisible(!outlineVisible)}>{outlineVisible ? '隐藏大纲' : '显示大纲'}</button></header>
-    <div className="cw-unified-pages">{pages.map((page, index) => <PageItem key={page.id} page={page} index={index} active={page.id === activeId} busy={busy} editable={editable} thumbnail={thumbnail(page)} preview={renderThumbnail?.(page)} outlineVisible={outlineVisible} onSelect={() => { if (page.id !== activeId) onSelect(page.id); }} onProperties={() => onProperties(page.id)} onDrop={id => onReorder(id, page.id)} />)}</div>
+  const nav=useRef<HTMLElement>(null);
+  useEffect(()=>{if(flatFallback)nav.current?.querySelector('[aria-current=page]')?.scrollIntoView({block:'nearest'});},[activeId,flatFallback]);
+  return <aside ref={nav} className={`cw-sidebar cw-ppt-sidebar ${flatFallback?'cw-offline-navigation':''}`} aria-label={flatFallback?'离线课件导航':undefined}><header className="cw-pages-heading"><strong>幻灯片 <span>{pages.length}</span></strong><button aria-pressed={outlineVisible} onClick={() => setOutlineVisible(!outlineVisible)}>{outlineVisible ? '隐藏大纲' : '显示大纲'}</button></header>
+    <div className="cw-unified-pages">{pages.map((page, index) => <PageItem key={page.id} page={page} index={index} active={page.id === activeId} busy={busy} editable={editable} flatFallback={flatFallback} thumbnail={thumbnail(page)} preview={renderThumbnail?.(page)} outlineVisible={outlineVisible} onSelect={() => { if (page.id !== activeId) onSelect(page.id); }} onProperties={() => onProperties(page.id)} onDrop={id => onReorder(id, page.id)} />)}</div>
     {editable && <button className="cw-add" disabled={busy || pages.length >= 100} onClick={onAdd}>＋ 添加页面</button>}
   </aside>;
 }

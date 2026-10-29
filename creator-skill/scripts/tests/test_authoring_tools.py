@@ -26,9 +26,10 @@ def course(root, name="Example", module_id=UUID):
     return directory
 
 
-def test_valid_course_and_literal_asset_are_accepted(tmp_path):
+@pytest.mark.parametrize("layout", ["module", "legacy"])
+def test_valid_course_and_literal_asset_are_accepted(tmp_path, layout):
     directory = course(tmp_path)
-    assets = tmp_path / "assets" / UUID
+    assets = directory / "assets" if layout == "module" else tmp_path / "assets" / UUID
     assets.mkdir(parents=True)
     (assets / "image.png").write_bytes(b"image")
     (directory / "asset.ts").write_text(f"moduleAssetUrl('{UUID}', 'image.png')")
@@ -147,9 +148,10 @@ def test_optional_module_slug_uses_existing_router_fallback(tmp_path):
     assert validate_modules(tmp_path) == []
 
 
-def test_atlas_virtual_image_requires_a_real_mapped_sheet(tmp_path):
+@pytest.mark.parametrize("layout", ["module", "legacy"])
+def test_atlas_virtual_image_requires_a_real_mapped_sheet(tmp_path, layout):
     directory = course(tmp_path)
-    assets = tmp_path / "assets" / UUID
+    assets = directory / "assets" if layout == "module" else tmp_path / "assets" / UUID
     (assets / "image-atlases").mkdir(parents=True)
     (assets / "image-atlases/index.json").write_text(json.dumps({"virtual.png": {"sheet": "image-atlases/sheet.png"}}))
     (directory / "asset.ts").write_text(f"atlasCropUrl(moduleAssetUrl('{UUID}', 'virtual.png'))")
@@ -158,3 +160,43 @@ def test_atlas_virtual_image_requires_a_real_mapped_sheet(tmp_path):
     assert validate_modules(tmp_path) == []
     (directory / "asset.ts").write_text(f"moduleAssetUrl('{UUID}', 'virtual.png')")
     assert any("missing" in error for error in validate_modules(tmp_path))
+
+
+def test_module_assets_take_precedence_over_legacy_root(tmp_path):
+    from module_assets import asset_directory
+    directory = course(tmp_path)
+    (directory / "assets").mkdir()
+    legacy = tmp_path / "assets" / UUID
+    legacy.mkdir(parents=True)
+    (legacy / "old.png").write_bytes(b"old")
+    (directory / "asset.ts").write_text(f"moduleAssetUrl('{UUID}', 'old.png')")
+    assert asset_directory(tmp_path, UUID) == directory / "assets"
+    assert any("missing" in error for error in validate_modules(tmp_path))
+    (directory / "assets/old.png").write_bytes(b"current")
+    assert validate_modules(tmp_path) == []
+
+
+def test_default_upload_discovers_module_assets_and_preserves_uuid(tmp_path, monkeypatch):
+    directory = course(tmp_path)
+    (directory / "assets/images").mkdir(parents=True)
+    (directory / "assets/images/picture.jpg").write_bytes(b"image")
+    (directory / "_scratchpad").mkdir()
+    (directory / "_scratchpad/draft.png").write_bytes(b"draft")
+    shared = tmp_path / "modules/shared"
+    (shared / "assets").mkdir(parents=True)
+    (shared / "assets/common.svg").write_bytes(b"shared")
+    (shared / "asset-index.json").write_text(json.dumps({
+        "roots": {UUID: "modules/Example/assets", "shared": "modules/shared/assets"},
+        "formats": {},
+    }))
+    monkeypatch.setattr(uploader, "ROOT", tmp_path)
+    monkeypatch.setattr(uploader, "DEFAULT_ASSETS_DIR", tmp_path / "modules")
+    args = uploader.build_parser().parse_args(["--module", UUID, "--dry-run"])
+    result = uploader.upload_assets(args)
+    assert result["objects"] == [f"cloud-IDL/assets/{UUID}/images/picture.jpg"]
+    args.module = None
+    result = uploader.upload_assets(args)
+    assert set(result["objects"]) == {
+        f"cloud-IDL/assets/{UUID}/images/picture.jpg",
+        "cloud-IDL/assets/shared/common.svg",
+    }

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Inventory module assets and optionally detect duplicate content.
 
-Reads: The selected module and its UUID asset directory.
+Reads: The selected module and its module-owned assets directory.
 Writes: None. Duplicate files are reported, never removed.
 """
 

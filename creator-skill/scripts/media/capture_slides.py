@@ -3,7 +3,7 @@
 
 Reads: The selected module and requested browser states.
 Writes: Evaluation PNGs in the module's _scratchpad/screenshots; thumbnails in
-assets/<UUID>/scenedeck-thumbnails only when requested. Owns its browser/Vite.
+modules/<module>/assets/scenedeck-thumbnails only when requested. Owns its browser/Vite.
 """
 
 from __future__ import annotations

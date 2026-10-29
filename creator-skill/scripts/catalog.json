@@ -53,7 +53,7 @@
       "path": "scripts/media/capture_slides.py",
       "runtime": "python",
       "description": "生成 术库 缩略图",
-      "effects": "启动隔离浏览器与可选临时 Vite；更新 assets/<UUID>/scenedeck-thumbnails 中的正式默认状态缩略图",
+      "effects": "启动隔离浏览器与可选临时 Vite；更新 modules/<模块目录名>/assets/scenedeck-thumbnails 中的正式默认状态缩略图",
       "dependencies": [
         "playwright",
         "PIL"

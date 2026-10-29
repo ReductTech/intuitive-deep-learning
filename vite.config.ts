@@ -1,4 +1,5 @@
-import {offlineExport} from './scripts/offline-export-vite';
+import {offlinePreview} from './scripts/offline-preview-vite';
+import {browserOffline} from './scripts/browser-offline-vite';
 import {localNarration} from './scripts/narration-vite';
 import { defineConfig, loadEnv, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
@@ -78,7 +79,7 @@ export default defineConfig(({ mode, command }) => {
   const assetBaseUrl = loadEnv(mode, '.', '').VITE_ASSET_BASE_URL?.trim();
   const library=courseLibraryRoot(__dirname,process.env.IDL_COURSE_LIBRARY_ROOT||loadEnv(mode,'.','').IDL_COURSE_LIBRARY_ROOT);
   return {
-    plugins: [localModuleAssets(library),courseLibraryPlugin(__dirname,library),offlineExport(__dirname,library),...(localPreview?[localNarration(__dirname)]:[]),...(localPreview ? [{
+    plugins: [localModuleAssets(library),courseLibraryPlugin(__dirname,library),browserOffline(__dirname,library),offlinePreview(__dirname,library),...(localPreview?[localNarration(__dirname)]:[]),...(localPreview ? [{
       name: 'local-course-preview',
       transformIndexHtml(html: string) {
         return html.replace('<script src="/modules/shared/telemetry.js"></script>', '');

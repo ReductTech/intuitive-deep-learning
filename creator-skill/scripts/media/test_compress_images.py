@@ -60,3 +60,49 @@ def test_high_bit_depth_png_is_untouched(tmp_path):
     before = p.read_bytes()
     assert compress.convert(p)['reason'] == 'unsupported-bit-depth-or-mode'
     assert p.read_bytes() == before and not p.with_suffix('.jpg').exists()
+
+
+@pytest.mark.parametrize('size,expected', [
+    ((2500, 1000), (1600, 640)), ((2500, 1800), (1250, 900)),
+    ((900, 1800), (450, 900)), ((1600, 900), (1600, 900)),
+    ((640, 480), (640, 480)), ((2000, 1), (1600, 1)),
+])
+def test_fit_both_bounds_without_cropping_or_enlargement(size, expected):
+    assert compress.fit_size(*size) == expected
+
+
+def test_large_transparent_png_keeps_alpha_and_original_backup(tmp_path):
+    p, backup = tmp_path/'large.png', tmp_path/'backup/large.png'
+    Image.new('RGBA', (2500, 1000), (255, 0, 0, 128)).save(p)
+    original = p.read_bytes()
+    result = compress.resize_image(p, backup)
+    assert result['status'] == 'resized' and backup.read_bytes() == original
+    with Image.open(p) as image:
+        assert image.size == (1600, 640) and image.mode == 'RGBA'
+        assert image.getchannel('A').getextrema() == (128, 128)
+    once = p.read_bytes()
+    assert compress.resize_image(p, backup)['reason'] == 'within-bounds'
+    assert p.read_bytes() == once and backup.read_bytes() == original
+
+
+def test_small_image_is_byte_identical_and_dry_run_writes_nothing(tmp_path):
+    p, backup = tmp_path/'small.jpg', tmp_path/'backup/small.jpg'
+    Image.new('RGB', (800, 600), 'white').save(p)
+    original = p.read_bytes()
+    assert compress.resize_image(p, backup)['reason'] == 'within-bounds'
+    assert p.read_bytes() == original and not backup.exists()
+    Image.new('RGB', (2500, 1800), 'red').save(p)
+    original = p.read_bytes()
+    assert compress.resize_image(p, backup, dry_run=True)['after_size'] == [1250, 900]
+    assert p.read_bytes() == original and not backup.exists()
+
+
+def test_jpeg_exif_orientation_is_applied_before_fitting(tmp_path):
+    p = tmp_path/'rotated.jpg'
+    exif = Image.Exif(); exif[274] = 6
+    Image.new('RGB', (2500, 1000), 'red').save(p, exif=exif)
+    result = compress.resize_image(p, tmp_path/'backup.jpg')
+    assert result['before_size'] == [1000, 2500]
+    with Image.open(p) as image:
+        assert image.size == (360, 900)
+        assert image.getexif().get(274, 1) == 1

@@ -70,7 +70,7 @@ python creator-skill/scripts/tools.py capture.inspect --module Policy-Gradient
 
 逐页使用 `capture.slides --slide <场景ID> --page-directory <语义页目录>`，保存到 `modules/<模块目录名>/pages/<语义页目录>/_scratchpad/screenshots/<场景ID>.png`；操作状态用 `--state` 命名为 `<场景ID>/<状态>.png`。批量捕获旧模块而未指定页目录时仍兼容模块级输出，制作新页时使用逐页目录。`--output` 可指定对应页 `_scratchpad/` 内的图片目录。
 
-`capture.thumbnails` 生成正式播放器缩略图，默认保存到 `assets/<UUID>/scenedeck-thumbnails/<页ID>.png`，只接受默认状态；其 `--output` 仅可选择正式缩略图目录内的位置。`capture.slides --format both` 从一次采集中同时写入评估目录和正式缩略图目录。图片均为 1600×900；已有图片对应当前实现和状态时直接复用。
+`capture.thumbnails` 生成正式播放器缩略图，默认保存到 `modules/<模块目录名>/assets/scenedeck-thumbnails/<页ID>.png`（已有精确格式映射时写入对应 JPG），只接受默认状态；其 `--output` 仅可选择正式缩略图目录内的位置。`capture.slides --format both` 从一次采集中同时写入评估目录和正式缩略图目录。图片均为 1600×900；已有图片对应当前实现和状态时直接复用。
 
 未指定 `--base-url` 时会临时启动 Vite，结束后停止；浏览器使用隔离的无头上下文，不读取用户浏览器配置。
 
@@ -99,6 +99,8 @@ python creator-skill/scripts/tools.py check.course --module Policy-Gradient --ba
 
 ### 资源与环境
 
+素材清单读取目标模块自己的 `modules/<模块目录名>/assets/`。上传使用默认资源发现与 `--module <UUID>` 保留 OSS UUID 前缀；共享素材与历史别名按资源索引解析，详见[模块身份与资源](engineering/module-assets.md)。
+
 ```powershell
 python creator-skill/scripts/tools.py assets.inspect --module Policy-Gradient --duplicates
 python creator-skill/scripts/tools.py assets.upload --module <UUID> --dry-run
@@ -119,7 +121,7 @@ python creator-skill/scripts/tools.py analyze.pages
 python creator-skill/scripts/tools.py analyze.pages --module Neuron-Guide
 ```
 
-离线扫描当前 PPT / course 的页面入口，不启动浏览器、不训练模型。近似统计每页可见文字、按钮、超链接、输入控件、图片、视频和图形声明；读取 UUID 目录下已有缩略图，计算大津二值化的亮像素留白率、主要颜色数、边缘密度、灰度熵等。缺图与未匹配当前页面的旧图单列，不用 0 填充视觉指标。报告默认保存到对应模块 `_scratchpad/reports/page-statistics.html`，附同名 CSV 和 JSON；未指定 `--module` 时逐模块保存报告，JSON 结果列出各报告路径。`--output` 需同时指定 `--module`，只能选择该模块 `_scratchpad/` 内的 `.html` 路径。报告嵌入缩略图和二值化预览，可以离线移动和打开。
+离线扫描当前 PPT / course 的页面入口，不启动浏览器、不训练模型。近似统计每页可见文字、按钮、超链接、输入控件、图片、视频和图形声明；通过模块 UUID 解析 `modules/<模块目录名>/assets/scenedeck-thumbnails/` 下已有缩略图，计算大津二值化的亮像素留白率、主要颜色数、边缘密度、灰度熵等。缺图与未匹配当前页面的旧图单列，不用 0 填充视觉指标。报告默认保存到对应模块 `_scratchpad/reports/page-statistics.html`，附同名 CSV 和 JSON；未指定 `--module` 时逐模块保存报告，JSON 结果列出各报告路径。`--output` 需同时指定 `--module`，只能选择该模块 `_scratchpad/` 内的 `.html` 路径。报告嵌入缩略图和二值化预览，可以离线移动和打开。
 
 留白率是亮部面积代理，深色背景与照片不等同于真实空白；控件数是源码声明数，循环不展开、条件分支可能多计。字数统一采用静态近似，与浏览器当前交互状态统计会有差异。使用时看报告中的口径说明，不把这些描述性指标直接当作质量分。可选 `--text-counts` 导入前次逐页文字 CSV；`--no-previews` 生成不嵌图的轻量报告。
 

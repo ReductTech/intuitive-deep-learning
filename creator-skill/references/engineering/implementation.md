@@ -36,6 +36,6 @@ Grid/Flex 布局子项使用 `min-width: 0` 和 `max-width: 100%`；列轨道优
 
 ## PPT 适配
 
-复用 `modules/shared/react/presentation` 的 `SceneDeck`，模块仅提供 deck、稳定的 `moduleId` / `progressKey`、页面与讲稿，不复制播放器。`assetId` 使用本模块的 UUID，与资源目录相同。
+复用 `modules/shared/react/presentation` 的 `SceneDeck`，模块仅提供 deck、稳定的 `moduleId` / `progressKey`、页面与讲稿，不复制播放器。`assetId` 使用本模块的 UUID；素材本体位于 `modules/<模块目录名>/assets/`，通过 UUID 解析，不以 UUID 命名本地目录。
 
 简答题复用 Shared `Question` 的 Guide 提交与 PPT 揭示行为，不在页面读取 URL、DOM 类名或手写 `isPpt` 分支。具体接入示例位于主入口直接列出的“大模型调用”说明。
