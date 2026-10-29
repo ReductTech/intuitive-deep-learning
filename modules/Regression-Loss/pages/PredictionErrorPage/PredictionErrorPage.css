@@ -31,3 +31,10 @@
 
 .rl-error-term-note {margin-left:auto;display:flex;align-items:center;gap:10px;flex-shrink:0;}
 .rl-error-term-note .explain-panel {top:auto;bottom:calc(100% + 14px);left:auto;right:0;transform:none;width:440px;}
+
+.rl-error-point-targets { position:absolute; inset:0; pointer-events:none; }
+.rl-error-point-target { position:absolute; width:30px; height:30px; padding:0; border:2px solid transparent; border-radius:50%; background:transparent; transform:translate(-50%,-50%); pointer-events:auto; cursor:pointer; }
+.rl-error-point-target:hover { border-color:rgba(66,126,224,.55); background:rgba(66,126,224,.08); }
+.rl-error-point-target:focus-visible { outline:3px solid #427ee0; outline-offset:3px; }
+.rl-error-select-hint { position:absolute; top:3%; right:4%; pointer-events:none; --ui-type-body-small-size:18px; }
+.rl-error-input { pointer-events:none; }

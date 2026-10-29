@@ -1,7 +1,6 @@
 import { useCallback, useState } from 'react';
-import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, Typography } from '../../../shared/react';
+import { Button, ContentBlock, MathFormulaBlock, MathFormulaTerm, Typography } from '../../../shared/react';
 import './OptimizationIntroPage.css';
-import { SaddleDiagram } from './SaddleDiagram';
 import { SurfaceDiagram, type Landmark } from '../LossLandscape/SurfaceDiagram';
 import catalog from '../LossLandscape/landscapes.json';
 
@@ -13,20 +12,22 @@ export function OptimizationIntroPage() {
     const v=Math.sin(model.angle)*x+Math.cos(model.angle)*y;
     return model.a*(u*u-1)**2+model.b*(v*v-1)**2+model.c*u+model.d*v;
   },[model]);
-  return <ContentBlock headingLevel={1} title="非凸问题：求导为零还不够" subtitle="更复杂的损失可能有多个局部极小值和鞍点，驻点不再保证是全局最优。" className="rl-optimization-page">
+  return <ContentBlock headingLevel={1} title="为什么不能总靠解析求解？" subtitle="求导、解方程、判断最优：每一步都可能遇到限制。" className="rl-optimization-page">
     <div className="rl-optimization-layout">
+      <div className="rl-optimization-top">
       <section className="rl-optimization-scene" aria-label="可旋转的非凸损失曲面">
-        <SurfaceDiagram height={height} landmarks={model.points as Landmark[]} axes={['\\theta_1','\\theta_2']} nonconvex revision={index} />
-        <div className="rl-landscape-change"><Typography variant="bodySmall" tone="muted">同一个曲面中，驻点可以有不同性质。</Typography><Button onClick={()=>setIndex(i=>(i+1+Math.floor(Math.random()*(catalog.length-1)))%catalog.length)}>换一组曲面</Button></div>
+        <SurfaceDiagram height={height} landmarks={model.points as Landmark[]} axes={['\\theta_1','\\theta_2']} nonconvex wide revision={index} toolbarActions={<Button onClick={()=>setIndex(i=>(i+1+Math.floor(Math.random()*(catalog.length-1)))%catalog.length)}>换一组曲面</Button>} />
       </section>
-      <section className="rl-optimization-explanation rl-nonconvex-explanation">
-        <Typography variant="h3" tone="accent">为什么驻点还不够？</Typography>
-        <MathFormulaBlock appearance="plain"><MathFormulaTerm latex="\nabla L(\theta)=0" tooltip="无约束、可微问题中，内部最优点必须满足梯度为零。但非凸时，反过来不成立：驻点可能是局部极小、极大或鞍点。" /></MathFormulaBlock>
-        <div className="rl-nonconvex-cases"><div><Typography variant="h3" tone="accent">局部极小</Typography><Typography variant="bodySmall" tone="muted">比附近低，别处仍可能更低。</Typography></div><div><Typography variant="h3" tone="accent">鞍点</Typography><Typography variant="bodySmall" tone="muted">有些方向升高，另一些方向降低。</Typography></div></div>
-        <SaddleDiagram />
-        <Typography variant="bodySmall" tone="muted">驻点还可能是极大值，仍需进一步判断。</Typography>
+        <aside className="rl-optimization-stationary" aria-label="驻点条件的含义">
+          <div className="rl-optimization-stationary-copy"><MathFormulaBlock appearance="plain"><MathFormulaTerm latex="\nabla L(\theta)=0" tooltip="无约束、可微问题中，内部最优点需要满足梯度为零；非凸时，驻点也可能是局部极小、鞍点或极大值。" /></MathFormulaBlock><Typography variant="body" tone="accent" align="center">只说明找到了驻点</Typography></div>
+        </aside>
+      </div>
+      <section className="rl-analytic-limits" aria-label="解析求解的三个局限，静态说明">
+        <div className="rl-analytic-limit"><Typography variant="h3" tone="accent">方程难解</Typography><Typography variant="body" tone="muted">复杂目标的驻点方程，<br />未必有闭式解。</Typography></div>
+        <div className="rl-analytic-limit"><Typography variant="h3" tone="accent">计算昂贵</Typography><Typography variant="body" tone="muted">参数很多时，<br />矩阵求解成本上升。</Typography></div>
+        <div className="rl-analytic-limit"><Typography variant="h3" tone="accent">最优性需判断</Typography><Typography variant="body" tone="muted">非凸时，<br />驻点未必是全局最优。</Typography></div>
       </section>
-      <div className="rl-optimization-footer"><Typography variant="h3" tone="accent" align="center">非凸问题：求导为零只是找到驻点，还不能断定全局最优。</Typography></div>
+      <div className="rl-optimization-footer"><Typography variant="body" tone="muted" align="center">因此，还需要迭代优化等方法。</Typography></div>
     </div>
   </ContentBlock>;
 }

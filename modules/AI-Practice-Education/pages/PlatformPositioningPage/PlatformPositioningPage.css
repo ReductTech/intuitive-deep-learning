@@ -1,0 +1,16 @@
+.aipe-platform-page{display:flex;flex-direction:column;position:relative;}
+.aipe-platform-page>.aipe-platform-body{position:relative;flex:1;min-height:0;display:block;}
+.aipe-platform-diagram{position:relative;width:100%;height:690px;}
+.aipe-platform-arrows{position:absolute;inset:0;width:100%;height:690px;pointer-events:none;}
+.aipe-platform-center{position:absolute;left:620px;top:235px;width:320px;height:220px;display:grid;place-items:center;background:radial-gradient(ellipse,#edf5fd 0%,#fff 72%);border-radius:50%;}
+.aipe-platform-feedback{position:absolute;left:400px;top:285px;color:var(--ui-accent-alt);writing-mode:vertical-rl;}
+.aipe-platform-ability{position:absolute;inset:0;}
+.aipe-platform-icon{position:absolute;left:var(--node-left);top:var(--node-top);width:210px;height:210px;background-size:200% 200%;background-repeat:no-repeat;border-radius:50%;background-color:#edf5ff;}
+.aipe-platform-number{position:absolute;z-index:1;left:var(--node-left);top:calc(var(--node-top) - 10px);box-sizing:border-box;width:62px;height:62px;display:grid;place-items:center;border-radius:50%;background:#72a9f3;color:#fff;border:2px solid #fff;}
+.aipe-platform-copy{position:absolute;top:calc(var(--node-top) + 42px);display:grid;gap:24px;width:430px;}
+.aipe-platform-information{--node-left:475px;--node-top:40px;}
+.aipe-platform-content{--node-left:875px;--node-top:40px;}
+.aipe-platform-practice{--node-left:875px;--node-top:440px;}
+.aipe-platform-evaluation{--node-left:475px;--node-top:440px;}
+.aipe-platform-information .aipe-platform-copy,.aipe-platform-evaluation .aipe-platform-copy{left:0;text-align:right;}
+.aipe-platform-content .aipe-platform-copy,.aipe-platform-practice .aipe-platform-copy{left:1120px;width:400px;text-align:left;}

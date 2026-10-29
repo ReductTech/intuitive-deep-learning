@@ -1,21 +1,19 @@
 .llmpe-def-page { display:flex; flex-direction:column; width:1600px; height:900px; box-sizing:border-box; }
 .llmpe-def-page > .llmpe-def-body { flex:1; min-height:0; grid-template-rows:minmax(0,1fr) 68px; gap:18px; }
-.llmpe-def-content { display:grid; grid-template-columns:minmax(0,2.65fr) minmax(0,1fr); gap:18px; min-height:0; }
-.llmpe-def-page :is(section,aside,div,img,footer) { min-width:0; max-width:100%; }
-.llmpe-def-model { display:flex; flex-direction:column; justify-content:space-between; gap:18px; padding:24px; min-height:0; background:#fff8ed; border-radius:var(--ui-radius-xl); }
-.llmpe-def-tensors { display:grid; grid-template-columns:156px minmax(0,1fr); gap:24px; align-items:center; }
-.llmpe-def-input { position:relative; padding:0 20px 16px 0; }
-.llmpe-def-input img { width:128px; height:128px; object-fit:cover; border-radius:var(--ui-radius-md); display:block; }
-.llmpe-def-channels { display:flex; position:absolute; right:0; bottom:0; gap:4px; }
-.llmpe-def-channels i { display:block; width:24px; height:36px; border-radius:4px; background:#d95b50; border:2px solid white; }
-.llmpe-def-channels i:nth-child(2) { background:#4d996c; }
-.llmpe-def-channels i:nth-child(3) { background:#4787cc; }
-.llmpe-def-shapes { display:grid; gap:8px; }
-.llmpe-def-main { display:grid; gap:10px; padding:20px; background:var(--ui-accent-soft); border-radius:var(--ui-radius-lg); }
-.llmpe-def-main .math-formula-block { margin:4px 0; }
-.llmpe-def-details { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.12fr); gap:28px; }
-.llmpe-def-details > div { display:grid; align-content:start; gap:12px; }
-.llmpe-def-gray { border-left:1px solid var(--ui-border-strong); padding-left:24px; }
+.llmpe-def-content { display:grid; grid-template-columns:minmax(0,2.8fr) minmax(0,1fr); gap:18px; min-height:0; }
+.llmpe-def-page :is(article,section,aside,div,figure,canvas,footer) { min-width:0; max-width:100%; box-sizing:border-box; }
+.llmpe-def-model { display:flex; flex-direction:column; justify-content:space-between; gap:10px; padding:18px 24px; border:1px solid var(--ui-border-strong); background:#fffefb; color:#17243a; min-height:0; }
+.llmpe-def-points { margin:0; padding-left:30px; display:grid; gap:5px; }
+.llmpe-def-response-model { display:grid; gap:0; }
+.llmpe-def-response-model .math-formula { font-size:28px; font-weight:500; color:#17243a; }
+.llmpe-def-response-model > p { margin-top:4px; }
+.llmpe-def-figure { margin:0; display:grid; justify-items:center; gap:6px; text-align:center; }
+.llmpe-def-figure-row { display:grid; grid-template-columns:minmax(0,1fr) 40px 180px 40px minmax(0,1fr); gap:16px; align-items:center; width:100%; }
+.llmpe-def-example-item { display:grid; justify-items:center; align-content:start; gap:6px; }
+.llmpe-def-example-item > .math-formula-block { height:140px; display:grid; align-items:center; }
+.llmpe-def-figure canvas { width:140px; height:140px; display:block; }
+.llmpe-def-figure-row svg { width:40px; height:30px; color:#929aa5; margin-bottom:40px; }
+.llmpe-def-figure-row .math-formula { font-size:27px; font-weight:500; color:#17243a; }
 .llmpe-def-sidebar { display:flex; flex-direction:column; justify-content:space-between; gap:18px; padding:26px 24px; background:var(--ui-accent-soft); border-radius:var(--ui-radius-xl); }
 .llmpe-def-sidebar .llmpe-cg-wormhole-benefit { gap:16px; min-height:82px; }
 .llmpe-def-sidebar .llmpe-cg-wormhole-icon { width:56px; height:56px; }
@@ -23,11 +21,3 @@
 .llmpe-def-question { display:grid; gap:8px; padding:18px; background:#fff2dc; border-radius:var(--ui-radius-lg); }
 .llmpe-def-conclusion { display:flex; justify-content:center; align-items:center; padding:8px 20px; background:var(--ui-accent-soft); border-radius:var(--ui-radius-lg); }
 .llmpe-def-page :is(.math-formula-block,.math-formula,math-field) { min-width:0; max-width:100%; }
-
-.llmpe-def-page .math-formula { font-size:24px; }
-.llmpe-def-main .math-formula { font-size:26px; }
-.llmpe-def-model { padding:20px 24px; gap:16px; }
-.llmpe-def-main { padding:14px 18px; gap:6px; }
-.llmpe-def-tensors { grid-template-columns:132px minmax(0,1fr); gap:20px; }
-.llmpe-def-input img { width:104px; height:104px; }
-.llmpe-def-details > div { gap:8px; }

@@ -6,12 +6,9 @@
 .llmpe-walk-heading { display:flex; align-items:center; justify-content:space-between; gap:16px; }
 .llmpe-walk-camera { position:relative; width:100%; height:100%; min-height:0; overflow:hidden; border-radius:var(--ui-radius-lg); background:#f5f7fa; }
 .llmpe-walk-camera > canvas { display:block; width:100%; height:100%; }
-.llmpe-walk-overlay { position:absolute; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); grid-template-rows:repeat(3,minmax(0,1fr)); outline:2px solid var(--ui-accent-alt); pointer-events:none; }
-.llmpe-walk-pixel { display:grid; grid-template-rows:minmax(0,1fr) minmax(0,1fr); align-items:center; justify-items:center; border:1px solid rgba(255,255,255,.65); }
-.llmpe-walk-pixel.is-active { outline:4px solid var(--ui-accent-alt); outline-offset:-4px; z-index:1; }
-.llmpe-walk-pixel .math-formula { color:inherit; font-size:22px; }
-.llmpe-walk-camera-label { position:absolute; top:12px; left:14px; padding:4px 12px; border-radius:var(--ui-radius-sm); background:rgba(255,255,255,.93); pointer-events:none; }
-.llmpe-walk-response { position:absolute; transform:translate(-50%,-50%); background:var(--ui-accent-alt); color:#fff; padding:10px 18px; border-radius:var(--ui-radius-md); box-shadow:0 4px 18px rgba(0,0,0,.15); }
+.llmpe-walk-pixel { display:grid; place-items:center; background:rgba(225,238,255,.58); color:var(--ui-accent); border:1px solid rgba(39,68,110,.4); }
+.llmpe-walk-camera-label { position:absolute; bottom:10px; right:calc(64% + 10px); padding:2px 8px; border-radius:var(--ui-radius-sm); background:rgba(255,255,255,.55); pointer-events:none; }
+.llmpe-walk-response { position:absolute; transform:translate(-50%,-50%); display:grid; place-items:center; pointer-events:none; }
 .llmpe-walk-formula { display:grid; grid-template-columns:minmax(0,2.8fr) minmax(0,1fr); gap:18px; align-items:center; padding:8px 18px; background:var(--ui-accent-soft); border-radius:var(--ui-radius-lg); }
 .llmpe-walk-formula > p { border-left:1px solid var(--ui-border-strong); padding-left:18px; }
 .llmpe-walk-page :is(.math-formula-block,.math-formula,math-field) { max-width:100%; min-width:0; }
@@ -23,3 +20,14 @@
 .llmpe-walk-note { padding:14px; border:1px solid var(--ui-border-strong); border-radius:var(--ui-radius-lg); }
 .llmpe-walk-footer { display:flex; align-items:center; justify-content:center; padding:8px 20px; background:var(--ui-accent-soft); border-radius:var(--ui-radius-lg); }
 .llmpe-walk-loading { display:grid; align-content:center; justify-items:center; gap:16px; }
+
+.llmpe-walk-output-label { right:10px; }
+.llmpe-walk-transfer { position:absolute; width:28px; height:28px; left:calc(39% - 14px); top:calc(50% - 14px); color:var(--ui-accent); }
+.llmpe-walk-transfer.is-right { left:calc(61% - 14px); }
+.llmpe-walk-kernel-panel { position:absolute; width:170px; left:50%; top:50%; transform:translate(-50%,-50%); display:grid; gap:14px; }
+.llmpe-walk-kernel-grid { display:grid; width:100%; aspect-ratio:1; grid-template-columns:repeat(3,minmax(0,1fr)); grid-template-rows:repeat(3,minmax(0,1fr)); background:var(--ui-accent-soft); }
+.llmpe-walk-input-values { position:absolute; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); grid-template-rows:repeat(3,minmax(0,1fr)); outline:1px solid rgba(237,125,49,.7); pointer-events:none; }
+.llmpe-walk-input-values > div { display:grid; place-items:center; border:1px solid rgba(255,255,255,.3); }
+.llmpe-walk-camera .is-highlighted { outline:4px solid var(--ui-accent-alt); outline-offset:-2px; box-shadow:0 0 0 5px rgba(237,125,49,.2); }
+.llmpe-walk-kernel-switch { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+.llmpe-walk-kernel-switch .edu-btn { min-width:0; min-height:48px; padding:8px 4px; }

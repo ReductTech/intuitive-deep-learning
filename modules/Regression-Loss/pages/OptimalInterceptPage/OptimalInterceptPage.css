@@ -1,9 +1,7 @@
 .rl-intercept-page { display:grid; grid-template-rows:auto minmax(0,1fr); }
 .rl-intercept-page > .edu-content-body { min-height:0; }
-.rl-intercept-layout { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,.08fr) minmax(0,1fr); grid-template-rows:auto minmax(0,1fr) auto; gap:14px; height:100%; min-height:0; }
+.rl-intercept-layout { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,.08fr) minmax(0,1fr); grid-template-rows:auto minmax(0,1fr); gap:14px; height:100%; min-height:0; }
 .rl-intercept-layout > * { min-width:0; min-height:0; max-width:100%; }
-.rl-intercept-control { grid-column:1/-1; display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; gap:24px; padding:12px 22px; background:#f2f7ff; border:1px solid #dfeaf7; border-radius:var(--ui-radius-lg); }
-.rl-intercept-control .edu-control { min-width:0; }
 .rl-intercept-visual { display:grid; grid-template-rows:auto minmax(0,1fr); gap:8px; padding:16px 12px 8px; background:#fff; border:1px solid #dfeaf7; border-radius:var(--ui-radius-lg); }
 .rl-intercept-plot-intro { display:flex; align-items:center; justify-content:space-between; gap:8px; padding:0 8px; }
 .rl-intercept-plot-intro > * { min-width:0; }
@@ -30,3 +28,17 @@
 
 .rl-intercept-number > * { margin:0; padding:0; text-align:center; }
 
+
+.rl-intercept-prediction-canvas { position:relative; min-height:0; }
+.rl-intercept-line-overlay { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; overflow:hidden; }
+.rl-intercept-line-hit { fill:none; stroke:transparent; stroke-width:28px; stroke-linecap:round; pointer-events:stroke; cursor:ns-resize; touch-action:none; outline:none; }
+.rl-intercept-line-hit:focus-visible { stroke:#009eaa25; }
+
+/* Pin the paired plots to their own columns on both derivation pages. */
+.rl-intercept-layout > .rl-intercept-visual { grid-column:1; grid-row:2; }
+.rl-intercept-layout > .rl-intercept-visual ~ .rl-intercept-visual { grid-column:3; }
+.rl-intercept-layout > .rl-intercept-link { grid-column:2; grid-row:2; }
+.rl-intercept-layout > .rl-intercept-derivation { grid-row:1; }
+
+.rl-line-drag-hint.edu-attention-hint { position:absolute; display:flex; align-items:center; gap:10px; width:max-content; max-width:calc(100% - 32px); padding:8px 14px; border:1px solid #a9deda; border-radius:var(--ui-radius-pill); background:#f0fbfa; color:#008e98; transform:translate(-50%,-100%); pointer-events:none; z-index:5; --attention-hint-rgb:0,158,170; }
+.rl-line-drag-hint > .i-icon { flex-shrink:0; }

@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState, useEffect } from 'react';
+import { useMemo, useRef, useState, useEffect, type ReactNode } from 'react';
 import { Button, MathFormulaBlock, MathFormulaStatic, Typography } from '../../../shared/react';
 import './SurfaceDiagram.css';
 
@@ -7,15 +7,16 @@ type V = {x:number;y:number;z:number};
 const names={global:'全局最优',local:'局部最优',saddle:'鞍点',maximum:'局部极大'};
 const colors={global:'#009eaa',local:'#f07e47',saddle:'#7955c8',maximum:'#64748b'};
 const stops=[[0,[46,124,241]],[.3,[108,175,250]],[.6,[192,221,247]],[.8,[245,235,205]],[1,[248,169,124]]] as const;
-function color(z:number) {
-  for(let i=1;i<stops.length;i++) if(z<=stops[i][0]) {
-    const [a,ca]=stops[i-1],[b,cb]=stops[i],t=Math.max(0,(z-a)/(b-a));
+function color(z:number, cool=false) {
+  const palette = cool ? [[0,[46,124,241]],[.55,[132,185,246]],[1,[220,237,255]]] as const : stops;
+  for(let i=1;i<palette.length;i++) if(z<=palette[i][0]) {
+    const [a,ca]=palette[i-1],[b,cb]=palette[i],t=Math.max(0,(z-a)/(b-a));
     return `rgb(${ca.map((v,j)=>Math.round(v+(cb[j]-v)*t)).join(',')})`;
   }
-  return 'rgb(248,169,124)';
+  return cool ? 'rgb(220,237,255)' : 'rgb(248,169,124)';
 }
 /** Samples an actual function; orthographic 3D projection and depth ordering update on orbit. */
-export function SurfaceDiagram({height, landmarks, axes=['w','b'], nonconvex=false, revision=0}:{height:(x:number,y:number)=>number;landmarks:Landmark[];axes?:string[];nonconvex?:boolean;revision?:number}) {
+export function SurfaceDiagram({height, landmarks, axes=['w','b'], nonconvex=false, revision=0, wide=false, toolbarActions}:{height:(x:number,y:number)=>number;landmarks:Landmark[];axes?:string[];nonconvex?:boolean;revision?:number;wide?:boolean;toolbarActions?:ReactNode}) {
   const [view,setView]=useState({yaw:.65,pitch:1.02,zoom:1});
   const [selected,setSelected]=useState(0);
   const drag=useRef<{x:number;y:number;view:typeof view}|null>(null);
@@ -33,8 +34,8 @@ export function SurfaceDiagram({height, landmarks, axes=['w','b'], nonconvex=fal
   },[height,nonconvex]);
   const project=(p:V)=>{
     const u=p.x*Math.cos(view.yaw)-p.y*Math.sin(view.yaw),d=p.x*Math.sin(view.yaw)+p.y*Math.cos(view.yaw);
-    const h=(p.z-mesh.min)/(mesh.max-mesh.min||1)*245;
-    return {x:400+u*154*view.zoom,y:360+(d*154*Math.cos(view.pitch)-h*Math.sin(view.pitch))*view.zoom,depth:d*154*Math.sin(view.pitch)+h*Math.cos(view.pitch)};
+    const h=(p.z-mesh.min)/(mesh.max-mesh.min||1)*(wide ? 180 : 245);
+    return {x:(wide ? 680 : 400)+u*(wide ? 230 : 154)*view.zoom,y:(wide ? 245 : 360)+(d*(wide ? 75 : 154)*Math.cos(view.pitch)-h*Math.sin(view.pitch))*view.zoom,depth:d*(wide ? 75 : 154)*Math.sin(view.pitch)+h*Math.cos(view.pitch)};
   };
   const path=(points:V[])=>points.map((p,i)=>{const q=project(p);return `${i?'L':'M'}${q.x.toFixed(2)},${q.y.toFixed(2)}`;}).join(' ');
   const floor=mesh.min-(mesh.max-mesh.min)*.12;
@@ -43,15 +44,21 @@ export function SurfaceDiagram({height, landmarks, axes=['w','b'], nonconvex=fal
   const tip=active?project({x:active.x,y:active.y,z:active.value}):null;
   const shown=landmarks.filter(p=>p.kind!=='maximum');
   return <div className="rl-surface-viewer" data-revision={revision} data-yaw={view.yaw} data-zoom={view.zoom} data-selected-kind={active?.kind}>
-    <svg ref={svg} viewBox="0 0 800 540" className="rl-surface-svg" role="img" aria-label="三维损失曲面：拖动旋转，滚轮缩放" onPointerDown={e=>{drag.current={x:e.clientX,y:e.clientY,view};e.currentTarget.setPointerCapture(e.pointerId);}} onPointerMove={e=>{const d=drag.current;if(d)setView({...d.view,yaw:d.view.yaw+(e.clientX-d.x)*.004,pitch:Math.max(.72,Math.min(1.3,d.view.pitch+(e.clientY-d.y)*.003))});}} onPointerUp={()=>{drag.current=null;}} onPointerCancel={()=>{drag.current=null;}}>
+    <svg ref={svg} viewBox={wide ? "0 0 1400 440" : "0 0 800 540"} className="rl-surface-svg" role="img" aria-label="三维损失曲面：拖动旋转，滚轮缩放" onPointerDown={e=>{drag.current={x:e.clientX,y:e.clientY,view};e.currentTarget.setPointerCapture(e.pointerId);}} onPointerMove={e=>{const d=drag.current;if(d)setView({...d.view,yaw:d.view.yaw+(e.clientX-d.x)*.004,pitch:Math.max(.72,Math.min(1.3,d.view.pitch+(e.clientY-d.y)*.003))});}} onPointerUp={()=>{drag.current=null;}} onPointerCancel={()=>{drag.current=null;}}>
       <path d={path(base)+'Z'} fill="#e9f3ff" fillOpacity=".75" stroke="#c5dafa" strokeWidth="1"/>
       {mesh.contours.map((c,i)=><path key={`c${i}`} d={path(c)} fill="none" stroke="#93bcf0" strokeWidth=".8" opacity=".6"/>)}
-      {mesh.faces.map(f=>({f,depth:f.reduce((a,p)=>a+project(p).depth,0)/4})).sort((a,b)=>a.depth-b.depth).map(({f},i)=><path key={i} d={path(f)+'Z'} fill={color((f.reduce((a,p)=>a+p.z,0)/4-mesh.min)/(mesh.max-mesh.min||1))} stroke="rgba(48,103,168,.22)" strokeWidth=".55" strokeLinejoin="round"/>)}
+      {mesh.faces.map(f=>({f,depth:f.reduce((a,p)=>a+project(p).depth,0)/4})).sort((a,b)=>a.depth-b.depth).map(({f},i)=><path key={i} d={path(f)+'Z'} fill={color((f.reduce((a,p)=>a+p.z,0)/4-mesh.min)/(mesh.max-mesh.min||1),wide)} stroke="rgba(48,103,168,.22)" strokeWidth=".55" strokeLinejoin="round"/>)}
       {shown.map((p,i)=>{const q=project({x:p.x,y:p.y,z:p.value});return <g key={i} role="button" tabIndex={0} aria-label={`选择${names[p.kind]}${i+1}`} onPointerDown={e=>e.stopPropagation()} onClick={()=>select(landmarks.indexOf(p))} onKeyDown={e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();select(landmarks.indexOf(p));}}} className="rl-surface-marker"><circle cx={q.x} cy={q.y} r={p===active?14:8} fill={colors[p.kind]} opacity={p===active?.23:1}/><circle cx={q.x} cy={q.y} r={p===active?8:6} fill={colors[p.kind]} stroke="white" strokeWidth="2"/><circle cx={q.x} cy={q.y} r="17" fill="transparent"/></g>;})}
-      {tip&&active&&<foreignObject x={Math.max(5,Math.min(645,tip.x-75))} y={Math.max(4,tip.y-50)} width="150" height="42" pointerEvents="none"><div className="rl-surface-point-label" style={{color:colors[active.kind]}}><Typography variant="bodySmall" tone="inherit">{nonconvex?names[active.kind]:'最低点'}</Typography></div></foreignObject>}
-      {[base.reduce((a,b)=>project(a).x>project(b).x?a:b),base.reduce((a,b)=>project(a).x<project(b).x?a:b)].map((p,i)=>{const q=project(p);return <foreignObject key={i} x={Math.max(0,Math.min(720,q.x-30))} y={Math.min(475,q.y+4)} width="70" height="52"><MathFormulaBlock appearance="plain"><MathFormulaStatic latex={axes[i]} /></MathFormulaBlock></foreignObject>;})}
+      {tip&&active&&<foreignObject x={Math.max(5,Math.min(wide ? 1245 : 645,tip.x-75))} y={Math.max(4,tip.y-50)} width="150" height="42" pointerEvents="none"><div className="rl-surface-point-label" style={{color:colors[active.kind]}}><Typography variant="bodySmall" tone="inherit">{nonconvex?names[active.kind]:'最低点'}</Typography></div></foreignObject>}
+      {[base.reduce((a,b)=>project(a).x>project(b).x?a:b),base.reduce((a,b)=>project(a).x<project(b).x?a:b)].map((p,i)=>{const q=project(p);return <foreignObject key={i} x={Math.max(0,Math.min(wide ? 1320 : 720,q.x-30))} y={Math.min(wide ? 380 : 475,q.y+4)} width="70" height="52"><MathFormulaBlock appearance="plain"><MathFormulaStatic latex={axes[i]} /></MathFormulaBlock></foreignObject>;})}
     </svg>
-    <div className="rl-surface-toolbar"><Typography variant="bodySmall" tone="muted">拖动旋转 · 滚轮缩放</Typography><Button onClick={()=>setView({yaw:nonconvex?Math.atan2(landmarks[0].x,landmarks[0].y):.65,pitch:nonconvex?1.12:1.02,zoom:1})}>复位视角</Button></div>
-    {nonconvex&&<div className="rl-surface-legend">{(['global','local','saddle'] as const).map(kind=><Button key={kind} aria-pressed={active?.kind===kind} onClick={()=>select(landmarks.findIndex(p=>p.kind===kind))}><i className="rl-surface-swatch" style={{background:colors[kind]}}/>{names[kind]}</Button>)}</div>}
+    {wide ? <div className="rl-surface-wide-controls" aria-label="曲面操作工具栏">
+      {nonconvex && <div className="rl-surface-legend">{(['global','local','saddle'] as const).map(kind=><Button key={kind} aria-pressed={active?.kind===kind} onClick={()=>select(landmarks.findIndex(p=>p.kind===kind))}><i className="rl-surface-swatch" style={{background:colors[kind]}}/>{names[kind]}</Button>)}</div>}
+      <Typography variant="body" tone="muted" className="rl-surface-wide-hint">拖动旋转 · 滚轮缩放</Typography>
+      <div className="rl-surface-wide-actions"><Button onClick={()=>setView({yaw:nonconvex?Math.atan2(landmarks[0].x,landmarks[0].y):.65,pitch:nonconvex?1.12:1.02,zoom:1})}>复位视角</Button>{toolbarActions}</div>
+    </div> : <>
+      <div className="rl-surface-toolbar"><Typography variant="bodySmall" tone="muted">拖动旋转 · 滚轮缩放</Typography><Button onClick={()=>setView({yaw:nonconvex?Math.atan2(landmarks[0].x,landmarks[0].y):.65,pitch:nonconvex?1.12:1.02,zoom:1})}>复位视角</Button></div>
+      {nonconvex&&<div className="rl-surface-legend">{(['global','local','saddle'] as const).map(kind=><Button key={kind} aria-pressed={active?.kind===kind} onClick={()=>select(landmarks.findIndex(p=>p.kind===kind))}><i className="rl-surface-swatch" style={{background:colors[kind]}}/>{names[kind]}</Button>)}</div>}
+    </>}
   </div>;
 }

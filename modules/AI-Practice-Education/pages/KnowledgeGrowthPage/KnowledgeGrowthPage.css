@@ -1,0 +1,39 @@
+.llmpe-kg-knowledge-page { position:relative; width:1600px; height:900px; flex:none; isolation:isolate; color:var(--ui-text-main); background:var(--ui-bg-card); }
+.llmpe-kg-knowledge-page * { box-sizing:border-box; min-width:0; max-width:100%; }
+.llmpe-kg-k-content { display:flex; flex-direction:column; width:100%; height:100%; }
+.llmpe-kg-k-content > .edu-content-body { flex:1; min-height:0; display:grid; grid-template-rows:minmax(0,1fr) auto; gap:14px; }
+.llmpe-kg-k-scene { display:grid; grid-template-columns:minmax(0,1.25fr) minmax(0,1fr); gap:22px; min-height:0; }
+.llmpe-kg-k-mountain { display:flex; flex-direction:column; justify-content:flex-end; min-height:0; }
+.llmpe-kg-k-mountain > svg { flex:1; min-height:0; width:100%; }
+.llmpe-kg-k-mountain-layer { width:100%; height:100%; background-size:200% 200%; background-repeat:no-repeat; filter:blur(.65px); }
+.llmpe-kg-k-knowledge { display:grid; grid-template-rows:80px minmax(0,1fr) 46px; min-height:0; }
+.llmpe-kg-k-ring-label { align-self:end; }
+.llmpe-kg-k-growth-circle { height:100%; width:100%; min-height:0; }
+.llmpe-kg-k-viewport { position:relative; min-height:0; cursor:grab; touch-action:none; user-select:none; }
+.llmpe-kg-k-viewport .llmpe-kg-k-growth-circle { display:block; pointer-events:none; overflow:hidden; }
+.llmpe-kg-k-viewport[data-dragging="true"] { cursor:grabbing; }
+.llmpe-kg-k-viewport:focus-visible { outline:2px solid var(--ui-focus); outline-offset:-2px; border-radius:var(--ui-radius-md); }
+.llmpe-kg-k-tip-note { position:absolute; width:24px; height:24px; z-index:2; cursor:default; }
+.llmpe-kg-k-tip-question.edu-btn { display:grid; place-items:center; width:24px; height:24px; padding:0; border:1px solid var(--ui-border-strong); border-radius:50%; background:var(--ui-bg-card); color:var(--ui-accent); box-shadow:none; cursor:help; }
+.llmpe-kg-k-tip-question.edu-btn > span { display:flex; align-items:center; justify-content:center; width:14px; height:14px; }
+.llmpe-kg-k-tip-icon { display:block; width:14px; height:14px; flex:none; }
+.llmpe-kg-k-tip-popover { position:absolute; max-width:none; padding:14px 18px; background:var(--ui-bg-card); color:var(--ui-text-main); border:1px solid var(--ui-border-strong); border-radius:var(--ui-radius-md); box-shadow:var(--ui-shadow-soft); user-select:text; }
+.llmpe-kg-k-tip-popover::before { content:''; position:absolute; inset:-8px 0 auto; height:8px; }
+.llmpe-kg-k-diagram-label .ui-typography { display:inline-block; background:var(--ui-bg-card); padding:2px 5px; }
+.llmpe-kg-k-label-new { color:var(--ui-accent-alt); }
+.llmpe-kg-k-legend { display:flex; align-items:center; justify-content:center; gap:23px; }
+.llmpe-kg-k-legend .ui-typography { display:flex; align-items:center; gap:9px; white-space:nowrap; }
+.llmpe-kg-k-legend i { display:inline-block; flex:none; width:15px; height:15px; border-radius:50%; }
+.llmpe-kg-k-total { background:var(--ui-bg-soft); border:1px solid var(--ui-border-strong); }
+.llmpe-kg-k-personal { background:var(--ui-accent); }
+.llmpe-kg-k-new { background:var(--ui-accent-alt); }
+.llmpe-kg-k-era-options { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:18px; width:100%; max-width:1400px; justify-self:center; padding-top:6px; }
+.llmpe-kg-k-era-option.edu-btn { height:128px; padding:12px; border-radius:var(--ui-radius-lg); color:var(--ui-text-main); background:var(--ui-bg-card); box-shadow:var(--ui-shadow-soft); text-align:left; transition:transform .2s ease,background .2s ease,border-color .2s ease; }
+.llmpe-kg-k-era-option > span { display:grid; grid-template-columns:minmax(0,1fr) 88px; gap:12px; align-items:center; width:100%; }
+.llmpe-kg-k-era-name > span { display:block; }
+.llmpe-kg-k-era-portrait { display:block; width:88px; height:88px; border-radius:var(--ui-radius-md); background-size:200% 200%; background-repeat:no-repeat; }
+.llmpe-kg-k-era-option.edu-btn:hover { transform:translateY(-3px); color:var(--ui-accent); }
+.llmpe-kg-k-era-option.edu-btn.is-selected { border-color:var(--ui-accent); color:var(--ui-accent); background:var(--ui-accent-soft); }
+.llmpe-kg-k-era-option.edu-btn:focus-visible { outline-color:var(--ui-focus); }
+
+@media (prefers-reduced-motion:reduce) { .llmpe-kg-k-era-option.edu-btn { transition:none; } .llmpe-kg-k-era-option.edu-btn:hover { transform:none; } }

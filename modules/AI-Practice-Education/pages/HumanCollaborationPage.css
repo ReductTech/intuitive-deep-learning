@@ -1,0 +1,26 @@
+.cg-human-page { position: relative; width: 1600px; height: 900px; flex: none; isolation: isolate; color: #102044; background: #fff; user-select: text; }
+.cg-human-page *, .cg-human-page *::before, .cg-human-page *::after { box-sizing: border-box; min-width: 0; max-width: 100%; }
+.cg-human-art { position: absolute; inset: 0; width: 1600px; height: 900px; object-fit: fill; z-index: -1; pointer-events: none; }
+.cg-human-page header { position: absolute; left: 42px; top: 26px; width: 1516px; color: #287dea; }
+.cg-human-stage { position: absolute; top: 146px; width: 468px; }
+.cg-human-stage-1 { left: 42px; }.cg-human-stage-2 { left: 566px; }.cg-human-stage-3 { left: 1092px; }
+.cg-human-stage-heading { position: relative; display: flex; gap: 12px; align-items: center; height: 54px; }
+.cg-human-number { display: grid; place-items: center; width: 54px; height: 54px; flex: none; color: #fff; background: #4a91f4; border-radius: 50%; }
+.cg-human-stage-2 .cg-human-number { background: #efb333; }.cg-human-stage-3 .cg-human-number { background: #24b782; }
+.cg-human-heading-copy { position: absolute; left: 66px; width: 550px; max-width: none; transform: scale(.72); transform-origin: left center; }
+.cg-human-description { margin: 10px 0 0 66px; color: #637c9d; }
+.cg-human-speech { position: absolute; top: 158px; left: 55px; width: 403px; padding: 15px 18px; text-align: center; background: #fff; border-radius: 30px; box-shadow: 0 6px 18px #587aaa14; }
+.cg-human-speech::after { content: ''; position: absolute; left: 54px; bottom: -15px; border-top: 17px solid #fff; border-right: 19px solid transparent; }
+.cg-human-pad { position: absolute; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #224a7a; background: #fff; }
+.cg-human-pad-1 { left: 145px; top: 641px; width: 274px; height: 139px; }
+.cg-human-pad-2 { left: 654px; top: 604px; width: 302px; height: 174px; }
+.cg-human-pad-3 { left: 1189px; top: 641px; width: 268px; height: 139px; }
+.cg-human-comparison { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; width: 286px; text-align: center; }
+.cg-human-arrows { position: absolute; inset: 0; width: 1600px; height: 900px; pointer-events: none; }
+
+.cg-human-io { width: 240px; }
+.cg-human-io-labels { display: flex; justify-content: space-between; width: 240px; }
+.cg-human-io svg { display: block; width: 240px; height: 64px; }
+.cg-human-positions { display: block; width: 132px; height: 60px; }
+.cg-human-sets { display: block; width: 110px; height: 53px; margin: 0 auto; }
+.cg-human-pad-3 .cg-human-comparison { width: 258px; gap: 8px; }
