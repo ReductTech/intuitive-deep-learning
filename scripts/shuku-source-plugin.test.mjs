@@ -2,8 +2,25 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {build} from 'esbuild';
 import {sourcePlugin} from './shuku-source-plugin.mjs';
+import fs from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
+import {createHash} from 'node:crypto';
 const root=process.cwd();
 function compile(files){return build({stdin:{contents:"import value from 'shuku-source:main.ts';console.log(value)",resolveDir:root,loader:'ts'},bundle:true,platform:'browser',write:false,logLevel:'silent',plugins:[sourcePlugin(files,root)]});}
+
+test('generic eager URL globs load authorized binary assets and verify their content',async()=>{
+ const folder=await fs.mkdtemp(path.join(os.tmpdir(),'shuku-binary-test-'));
+ try{
+  const content=Buffer.from('iVBORw0KGgo=','base64'),sha=createHash('sha256').update(content).digest('hex');
+  await fs.writeFile(path.join(folder,sha),content);
+  const files={'main.ts':"export default import.meta.glob<string>('./assets/**/*.{png,jpg}',{eager:true,query:'?url',import:'default'})"};
+  const assets={'assets/nested/image.png':{sha256:sha,size:content.length,mime:'image/png'}};
+  const compile=()=>build({stdin:{contents:"import images from 'shuku-source:main.ts';console.log(images)",resolveDir:root},bundle:true,write:false,logLevel:'silent',plugins:[sourcePlugin(files,root,{assets,assetRoot:folder})]});
+  const result=await compile();assert.match(result.outputFiles[0].text,/data:image\/png;base64/);assert.match(result.outputFiles[0].text,/nested\/image.png/);assert.doesNotMatch(result.outputFiles[0].text,/import\.meta\.glob/);
+  await fs.writeFile(path.join(folder,sha),Buffer.alloc(content.length));await assert.rejects(compile(),/incomplete/);
+ }finally{await fs.rm(folder,{recursive:true,force:true});}
+});
 
 test('raw text and ordinary image imports stay inside the virtual source map',async()=>{
  const result=await compile({'main.ts':"import text from './note.md?raw';import image from './图片.PNG';export default {text,image}",'note.md':'课程说明','图片.PNG':'data:image/png;base64,iVBORw0KGgo='});
@@ -41,4 +58,13 @@ test('page CSS uses the same fixed canvas breakpoints as the local template prev
  const result=await build({entryPoints:['shuku-source:modules/Course/pages/slide.css'],bundle:true,write:false,plugins:[sourcePlugin({'modules/Course/pages/slide.css':'@media(max-width:700px){.card{color:red}}'},root)]});
  assert.match(result.outputFiles[0].text,/@container lesson-slide/);assert.doesNotMatch(result.outputFiles[0].text,/@media/);
  await assert.rejects(build({entryPoints:['shuku-source:modules/Course/pages/slide.css'],bundle:true,write:false,logLevel:'silent',plugins:[sourcePlugin({'modules/Course/pages/slide.css':'@media (orientation: landscape){.card{color:red}}'},root)]}),/Fixed lesson canvas/);
+});
+
+
+test('glob documentation remains text while indirect or computed glob calls fail clearly',async()=>{
+ const result=await compile({'main.ts':"export default 'import.meta.glob is a course authoring API'"});
+ assert.match(result.outputFiles[0].text,/course authoring API/);
+ for(const expression of ['(()=>{const glob=import.meta.glob;return glob(pattern)})()',"import.meta['glob'](pattern)"]){
+  await assert.rejects(compile({'main.ts':'export default '+expression}),/static eager|metadata is unsupported/);
+ }
 });

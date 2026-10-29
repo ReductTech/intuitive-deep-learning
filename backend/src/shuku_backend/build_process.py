@@ -6,6 +6,14 @@ import threading
 from .errors import BusinessError
 
 
+def build_environment(environ=None):
+    """Keep host credentials out of compilers, including case-insensitive Windows env."""
+    allowed={'PATH','HOME','LANG','LC_ALL','TMPDIR','TEMP','TMP','SYSTEMROOT','WINDIR','USERPROFILE','COMSPEC','PATHEXT'}
+    result={key:value for key,value in (os.environ if environ is None else environ).items() if key.upper() in allowed}
+    result['NODE_OPTIONS']='--max-old-space-size=256'
+    return result
+
+
 def run_build(command, env, checkpoint, *, timeout=90, interval=5):
     process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                                env=env, start_new_session=True)

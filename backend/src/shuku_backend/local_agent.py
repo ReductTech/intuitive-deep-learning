@@ -117,7 +117,7 @@ class LocalAgent:
                 native={'repository':'https://github.com/reduct-shuku/intuitive-deep-learning.git','commit':commit,
                         'module':Path(module['directory']).relative_to(root).as_posix(),'asset_id':module['id']}
             return {'course_id':cid,'project':project,'course':{'title':course['title'],'description':course['description'],'category':course['category']},
-                    'authoring':AUTHORING,'native_source':native,'expected_revision':head,'expected_draft':draft['version'] if draft else None,
+                    'authoring':AUTHORING,'binary_assets':True,'native_source':native,'expected_revision':head,'expected_draft':draft['version'] if draft else None,
                     'workspace':dict(workspace) if workspace else None,'editor_url':self.origin+'/my-courses/editor?course='+cid}
 
     def revision(self,raw,rid):

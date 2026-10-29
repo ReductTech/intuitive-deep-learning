@@ -16,6 +16,7 @@ from .github_sync import GitHubSync
 from .personal import PersonalLearning
 from .local_agent import LocalAgent
 from .player import Player
+from .course_imports import CourseImports
 from .github_identity import GitHubIdentity
 from .adapters.jianlun import ReservedJianlunIdentity
 
@@ -50,7 +51,7 @@ def create_application(settings, clock=time.time):
         from pathlib import Path
         from shutil import which
         root=Path(settings.source_root)
-        required=[root/'scripts/build-shuku-preview.mjs',root/'scripts/shuku-source-plugin.mjs',root/'node_modules/esbuild/package.json',root/'node_modules/@tailwindcss/node/package.json',root/'node_modules/@tailwindcss/oxide/package.json']
+        required=[root/'scripts/build-shuku-preview.mjs',root/'scripts/shuku-source-plugin.mjs',root/'scripts/inspect-course-package.mjs',root/'scripts/shuku-runtime-compat.mjs',root/'node_modules/typescript/package.json',root/'node_modules/esbuild/package.json',root/'node_modules/@tailwindcss/node/package.json',root/'node_modules/@tailwindcss/oxide/package.json']
         if not which('node') or not all(path.is_file() for path in required):
             raise RuntimeError("Configure SHUKU_SOURCE_ROOT and install Node runtime dependencies before serving")
     identity=DemoIdentity(store,settings.demo_password,admin_password=settings.demo_admin_password)
@@ -72,5 +73,6 @@ def create_application(settings, clock=time.time):
     workflow.github=GitHubSync(workflow,settings.github_config())
     workflow.local_agent=LocalAgent(workflow,settings.origin)
     workflow.catalog=OrganizationCatalog(workflow)
-    worker=Worker(store,{"catalog.scan":workflow.catalog.scan,"catalog.import":workflow.catalog.publish,"github.workspace":workflow.github.hosted.run,"github.provision":workflow.github.provision,"github.sync":workflow.github.run,"governance.remove":workflow.governance.run,"file.verify":verify_file,"revision.build":workflow.build,"revision.player":workflow.player.run},clock)
+    workflow.imports=CourseImports(workflow)
+    worker=Worker(store,{"course.import.inspect":workflow.imports.inspect,"course.import.finalize":workflow.imports.finalize,"course.import.cleanup":workflow.imports.cleanup,"catalog.scan":workflow.catalog.scan,"catalog.import":workflow.catalog.publish,"github.workspace":workflow.github.hosted.run,"github.provision":workflow.github.provision,"github.sync":workflow.github.run,"governance.remove":workflow.governance.run,"file.verify":verify_file,"revision.build":workflow.build,"revision.player":workflow.player.run},clock,maintenance=workflow.imports.maintenance)
     return Application(settings,store,bucket,identity,Courses(store,clock,workflow.github),worker,clock,workflow,ReservedJianlunIdentity(),GitHubIdentity(store,clock,settings.github_identity_config(),settings.github_token_key_path))

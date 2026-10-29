@@ -70,7 +70,7 @@ class Workflow:
     def audit(self,db,uid,action,obj):
         db.execute('INSERT INTO shuku_audit(user_id,action,object_id,created_at) VALUES (%s,%s,%s,%s)',(uid,action,str(obj),self.clock()))
 
-    def prepare(self,project,module):
+    def prepare(self,project,module,allowed_assets=None):
         require(isinstance(project,dict) and project.get('version')==1 and project.get('courseId')==module['alias'],400,'INVALID_PROJECT','课程内容与模块不匹配。')
         require(isinstance(project.get('title'),str) and 0<len(project['title'])<=120,400,'INVALID_PROJECT','请填写课件名称。')
         if 'repositoryName' in project and project['repositoryName']!='':
@@ -92,10 +92,14 @@ class Workflow:
             require(native in module['pages'] if native else page.get('format') in ('text','react'),400,'UNSUPPORTED_PAGE','请使用原课程页面或文字教学页，模拟网页不能发布，请保存文字页或 React 源码。')
         from .source import validate_source
         source_files=validate_source(project)
+        from .source import validate_assets
+        assets=validate_assets(project)
+        require(all((allowed_assets or {}).get(name)==obj for name,obj in assets.items()),403,'SOURCE_ASSET_FORBIDDEN','素材未授权，请重新上传或读取当前课程。')
         value=json.loads(json.dumps(project))
         images=value.pop('designImages',{})
         require(isinstance(images,dict) and len(images)<=200,400,'INVALID_PROJECT','设计图数据格式不正确。')
         objects={'sources/'+name:{**self.bucket.put(text.encode()),'mime':'text/plain'} for name,text in source_files.items()}
+        objects.update({'source-assets/'+name:obj for name,obj in assets.items()})
         image_map={}
         for key,data in images.items():
             require(re.fullmatch(r'[A-Za-z0-9_-]{1,80}',key) and isinstance(data,str),400,'INVALID_IMAGE','设计图格式不正确。')
@@ -122,7 +126,7 @@ class Workflow:
         with self.store.transaction() as db:
             return self.save_in(db,uid,cid,data)
 
-    def save_in(self,db,uid,cid,data,remote_job_id=None,materials=None,native_snapshot=None):
+    def save_in(self,db,uid,cid,data,remote_job_id=None,materials=None,native_snapshot=None,source_assets=None):
         db.file_reference_lock(shared=True)
         course,_=self.owner(db,uid,cid)
         require(not db.execute('SELECT 1 FROM shuku_library_bindings WHERE course_id=%s AND initial_revision_id IS NOT NULL AND %s IS NULL',(cid,course['current_release'])).fetchone(),409,'INITIAL_IMPORT_BUSY','正在准备课程初始版本，请完成后再修改。')
@@ -141,9 +145,17 @@ class Workflow:
             previous_project=json.loads(self.bucket.read(prior['files']['project.json']['sha256']))
         pinned=previous_project.get('nativeSnapshot') or native_snapshot
         require(isinstance(data.get('project'),dict) and data['project'].get('nativeSnapshot')==pinned,409,'SOURCE_SNAPSHOT_CHANGED','不能更换本次共创的基础源码快照。')
+        origin=previous_project.get('importOrigin')
+        require(data['project'].get('importOrigin')==origin if previous_project else data['project'].get('importOrigin') is None or source_assets is not None,
+                409,'IMPORT_ORIGIN_CHANGED','不能更换课程的导入来源记录。')
         module=self.module_context(course['module_id'],self.native_root(pinned))
         require(data.get('expected_revision')==(str(course['head_revision']) if course['head_revision'] else None),409,'REVISION_CONFLICT','课程已更新，请重新载入后保存。')
-        objects,digest=self.prepare(data.get('project'),module)
+        allowed_assets=dict(previous_project.get('sourceAssets') or {})
+        if source_assets:allowed_assets.update(source_assets)
+        staged=db.execute("SELECT result FROM shuku_tasks WHERE kind='course.asset' AND resource_key=%s AND status='succeeded'",('course:'+cid,)).fetchall()
+        for name,obj in data['project'].get('sourceAssets',{}).items():
+            if any((item['result'] or {}).get('assets',{}).get(name)==obj for item in staged):allowed_assets[name]=obj
+        objects,digest=self.prepare(data.get('project'),module,allowed_assets)
         # Retain private imported source across revisions without trusting client file pointers.
         if course['head_revision']:
             previous=db.execute('SELECT files FROM shuku_revisions WHERE id=%s AND course_id=%s',(course['head_revision'],cid)).fetchone()
@@ -233,9 +245,15 @@ class Workflow:
             else:
                 with tempfile.TemporaryDirectory(prefix='shuku-build-') as folder:
                     folder=Path(folder);source=folder/'project.json';source.write_text(json.dumps(project));out=folder/'dist'
-                    env=__import__('os').environ.copy();env['NODE_OPTIONS']='--max-old-space-size=256'
+                    import os,shutil
+                    asset_root=folder/'binary';asset_root.mkdir()
+                    for obj in project.get('sourceAssets',{}).values():
+                        target=asset_root/obj['sha256']
+                        if not target.exists():shutil.copyfile(self.bucket.path(obj['sha256']),target)
+                    from .build_process import build_environment
+                    env=build_environment()
                     from .build_process import run_build
-                    code,stdout,stderr=run_build(['node',str(Path(self.root)/'scripts/build-shuku-preview.mjs'),'--course-root',str(build_root),'--project',str(source),'--module',module['directory'] or '','--revision',rid,'--outdir',str(out)],env,lambda:checkpoint({'stage':'building','revision_id':rid}))
+                    code,stdout,stderr=run_build(['node',str(Path(self.root)/'scripts/build-shuku-preview.mjs'),'--course-root',str(build_root),'--project',str(source),'--asset-root',str(asset_root),'--module',module['directory'] or '','--revision',rid,'--outdir',str(out)],env,lambda:checkpoint({'stage':'building','revision_id':rid}))
                     if code:
                         checkpoint({'stage':'build-failed','revision_id':rid,'build_error':'源码构建失败，请检查入口、语法和依赖。'+stderr.decode(errors='replace')[-1600:]})
                         raise BusinessError(422,'SOURCE_BUILD_FAILED','课程源码构建失败。')
@@ -263,6 +281,7 @@ class Workflow:
     def submit(self,uid,cid,data):
         with self.store.transaction() as db:
             course,_=self.owner(db,uid,cid);rid=identifier(data.get('revision_id'))
+            require(not db.execute("SELECT 1 FROM shuku_tasks WHERE kind='course.import.finalize' AND resource_key=%s AND status<>'succeeded'",('course:'+cid,)).fetchone(),409,'IMPORT_NOT_READY','请先完成课程预览和私有仓库初始化。')
             require(not db.execute('SELECT 1 FROM shuku_workspaces WHERE id=%s',(cid,)).fetchone(),409,'USE_CONTRIBUTION','请提交共创建议。')
             require(str(course['head_revision'])==rid,409,'REVISION_CONFLICT','请提交当前最新修订。')
             revision=db.execute("SELECT * FROM shuku_revisions WHERE id=%s AND course_id=%s AND state='ready'",(rid,cid)).fetchone()
@@ -302,6 +321,7 @@ class Workflow:
         require(isinstance(note,str) and len(note)<=3000,400,'INVALID_INPUT','版本说明过长。')
         with self.store.transaction() as db:
             course,_=self.owner(db,uid,cid)
+            require(not db.execute("SELECT 1 FROM shuku_tasks WHERE kind='course.import.finalize' AND resource_key=%s AND status<>'succeeded'",('course:'+cid,)).fetchone(),409,'IMPORT_NOT_READY','请先完成课程预览和私有仓库初始化。')
             require(not db.execute('SELECT 1 FROM shuku_workspaces WHERE id=%s',(cid,)).fetchone(),409,'WORKSPACE_PRIVATE','共创工作区不能直接发布。')
             require(course['status']!='hidden',409,'COURSE_HIDDEN','课程已下架，请管理员恢复后再发布。')
             previous=db.execute('SELECT * FROM shuku_releases WHERE course_id=%s AND version=%s',(cid,version)).fetchone()

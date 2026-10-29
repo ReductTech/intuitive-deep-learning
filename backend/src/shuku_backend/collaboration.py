@@ -13,6 +13,9 @@ def teaching(project):
     if project.get('authoringVersion'):value['authoringVersion']=project['authoringVersion']
     if project.get('sourceGuideEntry'):value['sourceGuideEntry']=project['sourceGuideEntry']
     if project.get('authoringModule'):value['authoringModule']=project['authoringModule']
+    if project.get('sourceFormatVersion'):value['sourceFormatVersion']=project['sourceFormatVersion']
+    if project.get('sourceAssets'):value['sourceAssets']=json.loads(json.dumps(project['sourceAssets']))
+    if project.get('importOrigin'):value['importOrigin']=json.loads(json.dumps(project['importOrigin']))
     if project.get('source'):value['source']=json.loads(json.dumps(project['source']))
     value['pages']=[{**{k:p[k] for k in ('id','nativeId','format','sourceEntry','title','goal','summary','ready','designed') if k in p},'note':'','revisions':[],'messages':[]} for p in project['pages']]
     return value
@@ -50,7 +53,7 @@ class Collaboration:
             wid=str(uuid4());project['id']=wid
             db.execute("INSERT INTO shuku_courses(id,owner_id,module_id,title,description,category,created_at) VALUES (%s,%s,%s,%s,%s,%s,%s)",(wid,uid,course['module_id'],project['title'],course['description'],course['category'],self.clock()))
             db.execute('INSERT INTO shuku_workspaces(id,target_course_id,owner_id,base_release_id,created_at) VALUES (%s,%s,%s,%s,%s)',(wid,cid,uid,base,self.clock()))
-            self.flow.save_in(db,uid,wid,{'project':project,'expected_revision':None},native_snapshot=project.get('nativeSnapshot'))
+            self.flow.save_in(db,uid,wid,{'project':project,'expected_revision':None},native_snapshot=project.get('nativeSnapshot'),source_assets=project.get('sourceAssets',{}))
             self.flow.audit(db,uid,'workspace.create',wid)
             return {'id':wid}
 
@@ -172,7 +175,8 @@ class Collaboration:
             require(source['state']=='ready' and source['artifact_hash']==row['artifact_hash'],409,'REVIEW_CHANGED','课程产物已变化。')
             # Verify all approved objects, then create an independent official revision.
             for obj in source['files'].values():self.bucket.read(obj['sha256'])
-            result=self.flow.save_in(db,uid,str(row['target_course_id']),{'project':self.project(db,row['revision_id']),'expected_revision':str(target['head_revision'])})
+            source_project=self.project(db,row['revision_id'])
+            result=self.flow.save_in(db,uid,str(row['target_course_id']),{'project':source_project,'expected_revision':str(target['head_revision'])},source_assets=source_project.get('sourceAssets',{}))
             db.execute("UPDATE shuku_contributions SET status='merging',merger_id=%s,merged_revision=%s WHERE id=%s",(uid,result['id'],kid))
             self.flow.audit(db,uid,'contribution.merge.request',kid)
             return {'status':'merging','revision_id':result['id']}

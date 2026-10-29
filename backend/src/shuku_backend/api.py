@@ -93,6 +93,36 @@ def handler_for(app):
             require(isinstance(body,dict),400,"INVALID_INPUT","请使用 JSON 对象。")
             return body
 
+        def upload(self,limit,agent=False):
+            require((self.headers.get('Origin')==app.settings.origin or agent and not self.headers.get('Origin')) and self.headers.get('Sec-Fetch-Site')!='cross-site',403,'CROSS_SITE','不允许跨站操作。')
+            require(not self.headers.get('Transfer-Encoding'),400,'INVALID_INPUT','不支持该请求编码。')
+            require(self.headers.get('Content-Type','').split(';',1)[0] in ('application/zip','application/octet-stream'),415,'UPLOAD_REQUIRED','请上传二进制文件。')
+            try:size=int(self.headers.get('Content-Length','0'))
+            except ValueError:size=0
+            require(0<size<=limit,413,'BODY_LIMIT','上传文件过大或为空。')
+            import tempfile
+            content=tempfile.SpooledTemporaryFile(max_size=1024*1024)
+            try:
+                remaining=size
+                while remaining:
+                    chunk=self.rfile.read(min(65536,remaining))
+                    require(chunk,400,'UPLOAD_INCOMPLETE','文件上传不完整。')
+                    content.write(chunk);remaining-=len(chunk)
+                content.seek(0);return content
+            except BaseException:content.close();raise
+
+        def asset_route(self,uid,route,agent=False):
+            if self.command=='GET' and route[2]:
+                file,mime=app.workflow.imports.asset(uid,route[1],route[2])
+                with file.open('rb') as source:
+                    self.send_response(200);self.send_header('Content-Type',mime);self.send_header('Content-Length',str(file.stat().st_size));self.send_header('Cache-Control','private, no-store');self.send_header('X-Content-Type-Options','nosniff');self.send_header('Content-Security-Policy',"sandbox; default-src 'none'");self.end_headers()
+                    while chunk:=source.read(65536):self.wfile.write(chunk)
+                return
+            require(self.command=='POST' and not route[2],404,'NOT_FOUND','接口不存在。')
+            with self.upload(32*1024*1024,agent=agent) as content:
+                value=app.workflow.imports.upload_asset(uid,route[1],unquote(self.headers.get('X-Shuku-Asset-Path','')),content.read())
+            return self.send_json(201,value)
+
         def do_GET(self):self.dispatch()
         def do_POST(self):self.dispatch()
 
@@ -132,6 +162,10 @@ def handler_for(app):
                     require(bearer.startswith('Bearer '),401,'AGENT_UNAUTHORIZED','请使用本地创作凭证。')
                     raw=bearer[7:]
                     require((not self.headers.get('Origin') or self.headers.get('Origin')==app.settings.origin) and self.headers.get('Sec-Fetch-Site')!='cross-site',403,'CROSS_SITE','不允许跨站操作。')
+                    asset=re.fullmatch(r'/api/shuku/courses/([^/]+)/assets(?:/([a-f0-9]{64}))?',path)
+                    if asset:
+                        with app.store.transaction() as db:credential=app.workflow.local_agent.authorize(db,raw,asset[1])
+                        return self.asset_route(str(credential['user_id']),asset,agent=True)
                     snapshot=re.fullmatch(r'/api/shuku/local-agent/courses/([^/]+)/project',path)
                     save_agent=re.fullmatch(r'/api/shuku/courses/([^/]+)/revisions',path)
                     read_agent=re.fullmatch(r'/api/shuku/revisions/([^/]+)',path)
@@ -221,6 +255,28 @@ def handler_for(app):
                     app.store.remove_session(token_hash(raw_token))
                     return self.send_json(200,{"message":"已退出登录"},self.cookie("",True))
                 user=app.store.session_user(token_hash(raw_token),app.clock())
+                asset=re.fullmatch(r'/api/shuku/courses/([^/]+)/assets(?:/([a-f0-9]{64}))?',path)
+                if asset:return self.asset_route(user['id'],asset)
+                if path=='/api/shuku/course-imports':
+                    if self.command=='GET':return self.send_json(200,app.workflow.imports.listing(user['id']))
+                    if self.command=='POST':return self.send_json(202,app.workflow.imports.create(user['id'],self.headers.get('Idempotency-Key'),self.body()))
+                if path=='/api/shuku/course-imports/zip' and self.command=='POST':
+                    from .course_package import MAX_UPLOAD
+                    require(PRESENTATION_SLOT.acquire(blocking=False),429,'IMPORT_BUSY','正在上传其他课程，请稍后重试。')
+                    try:
+                        with self.upload(MAX_UPLOAD) as content:result=app.workflow.imports.create(user['id'],self.headers.get('Idempotency-Key'),{'type':'zip'},content)
+                    finally:PRESENTATION_SLOT.release()
+                    return self.send_json(202,result)
+                course_import=re.fullmatch(r'/api/shuku/course-imports/([^/]+)(?:/(confirm|retry|cancel))?',path)
+                if course_import:
+                    imports=app.workflow.imports;tid=course_import[1];action=course_import[2]
+                    if self.command=='GET' and not action:return self.send_json(200,imports.status(user['id'],tid))
+                    if self.command=='POST':
+                        data=self.body()
+                        if action=='confirm':return self.send_json(202,imports.confirm(user['id'],tid,data))
+                        require(not data,400,'INVALID_INPUT','该操作不接受额外字段。')
+                        if action=='retry':return self.send_json(202,imports.retry(user['id'],tid))
+                        if action=='cancel':return self.send_json(200,imports.cancel(user['id'],tid))
                 if path=='/api/shuku/local-agent/credentials' and self.command=='GET':
                     return self.send_json(200,app.workflow.local_agent.listing(user['id']))
                 if path=='/api/shuku/local-agent/courses' and self.command=='POST':

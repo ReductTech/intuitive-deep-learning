@@ -16,20 +16,22 @@ export function RuntimePlayer({project,deck,guide,notes,assetId='',initialState,
  const [state,setState]=useState<StudyPosition>(initialState||{page_id:project.pages[0].id,mode:'ppt',completed:[]});
  const [channel,setChannel]=useState(''),[scope,setScope]=useState(account),[initialized,setInitialized]=useState(window.parent===window||Boolean(initialState));
  const courses=useMemo(()=>[playbackModule(project,deck,assetId,notes)],[project,deck,assetId,notes]);
+ // Sandboxed documents have location.origin === 'null'; the embedding page still has a verified URL origin.
+ const hostOrigin=useMemo(()=>new URL(document.referrer||location.href).origin,[]);
  const revision=location.pathname.match(/^\/api\/shuku\/revisions\/([^/]+)\/(?:player\/)?files\//)?.[1]||project.id;
  useEffect(()=>{
   if(window.parent===window)return;
   const receive=(event:MessageEvent)=>{
-   if(event.source!==window.parent||event.origin!==new URL(document.referrer||location.href).origin||event.data?.type!=='shuku-study-init'||event.data.revision!==revision||typeof event.data.channel!=='string')return;
+   if(event.source!==window.parent||event.origin!==hostOrigin||event.data?.type!=='shuku-study-init'||event.data.revision!==revision||typeof event.data.channel!=='string')return;
    const value=event.data.state as StudyPosition;
    if(!value||!project.pages.some(p=>p.id===value.page_id)||!['guide','ppt'].includes(value.mode)||!Array.isArray(value.completed))return;
    setState({...value,completed:value.completed.filter(id=>project.pages.some(p=>p.id===id))});setChannel(event.data.channel);setScope(typeof event.data.account==='string'?event.data.account:'guest');setInitialized(true);
   };
   const fallback=setTimeout(()=>setInitialized(true),500);
-  window.addEventListener('message',receive);window.parent.postMessage({type:'shuku-study-ready',revision,player:'course-workspace'},location.origin);
+  window.addEventListener('message',receive);window.parent.postMessage({type:'shuku-study-ready',revision,player:'course-workspace'},hostOrigin);
   return()=>{clearTimeout(fallback);window.removeEventListener('message',receive);};
- },[revision]);
- useEffect(()=>{onProgress?.(state);if(channel)window.parent.postMessage({type:'shuku-study-position',revision,channel,state},location.origin);},[state,channel,onProgress,revision]);
+ },[revision,hostOrigin]);
+ useEffect(()=>{onProgress?.(state);if(channel)window.parent.postMessage({type:'shuku-study-position',revision,channel,state},hostOrigin);},[state,channel,onProgress,revision,hostOrigin]);
  // A managed editor embeds only the saved slide inside the original workspace.
  const embeddedPage=new URLSearchParams(location.search).get('shukuPage');
  if(embeddedPage){

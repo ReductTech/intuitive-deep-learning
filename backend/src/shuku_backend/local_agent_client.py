@@ -13,7 +13,7 @@ import subprocess
 import sys
 import tempfile
 from urllib.error import HTTPError
-from urllib.parse import urlsplit
+from urllib.parse import urlsplit,quote
 from urllib.request import Request, build_opener, HTTPRedirectHandler
 from uuid import uuid4
 
@@ -57,6 +57,22 @@ def request(site,path,token,body=None,key=None):
         try:message=json.load(error).get('error','请求失败')
         except (ValueError,UnicodeDecodeError):message='请求失败，请稍后重试。'
         raise RuntimeError(str(error.code)+'：'+message) from None
+
+
+def binary_request(site,cid,token,name=None,data=None,digest=None):
+    headers={'Authorization':'Bearer '+token}
+    path='/courses/'+cid+'/assets'
+    if data is not None:
+        headers.update({'Content-Type':'application/octet-stream','X-Shuku-Asset-Path':quote(name,safe='')})
+    else:path+='/'+digest
+    req=Request(origin(site)+'/api/shuku'+path,data=data,headers=headers)
+    try:
+        with build_opener(NoRedirect()).open(req,timeout=60) as response:
+            if data is not None:return json.load(response)['asset']
+            content=response.read(32*1024*1024+1)
+            if len(content)>32*1024*1024 or sha256(content).hexdigest()!=digest:raise ValueError('素材下载校验失败。')
+            return content
+    except HTTPError as error:raise RuntimeError('素材传输失败（'+str(error.code)+'），请稍后重试。') from None
 
 
 def source_path(name):
@@ -113,7 +129,7 @@ def prepare(site,cid,token):
         if not re.fullmatch(r'modules/[A-Za-z0-9_-]+',restored_module) or restored_module+'/outlines.json' not in project.get('source',{}).get('files',{}):raise ValueError('保存的标准课程工程目录无效。')
     project['authoringVersion']=framework['commit']
     state={'origin':origin(site),'course':cid,'expected_revision':result['expected_revision'],'expected_draft':result['expected_draft'],
-           'layout':'template-v1','authoring':framework,'asset_hashes':{}}
+           'layout':'template-v1','authoring':framework,'asset_hashes':{},'binary_assets':bool(result.get('binary_assets') or 'sourceAssets' in project)}
     if native:
         directory=Path(native['module'])
         if len(directory.parts)!=2 or directory.parts[0]!='modules' or not re.fullmatch('[A-Za-z0-9_-]+',directory.parts[1]):raise ValueError('原课程目录不安全。')
@@ -149,6 +165,8 @@ def prepare(site,cid,token):
             source_path(name);file=Path('courses')/name;file.parent.mkdir(parents=True,exist_ok=True)
             data=base64.b64decode(text.split(',',1)[1],validate=True) if file.suffix.lower() in MEDIA else text.encode('utf-8')
             if file.exists() and state['asset_hashes'].get(name)!=sha256(file.read_bytes()).hexdigest():raise RuntimeError('已保留本地文件，不覆盖：'+name)
+            if file.suffix.lower() in {'.tsx','.ts','.jsx','.js','.css'}:
+                data=re.sub(r'([\x22\x27])(?:\.\./)+shared/',r'\1@shared/',data.decode('utf-8')).encode('utf-8')
             file.write_bytes(data)
             if name.startswith('modules/'):modules.add('/'.join(name.split('/')[:2]))
             if name.startswith('assets/'):state.setdefault('asset_ids',[]).append(name.split('/')[1])
@@ -195,6 +213,14 @@ def prepare(site,cid,token):
         (target/(guide_name+'.tsx')).write_text(('export {default as '+guide_name+'} from '+json.dumps('./'+project['sourceGuideEntry'])+';') if project.get('sourceGuideEntry') else ('export {'+deck_name+' as '+guide_name+"} from './"+deck_name+"';"),encoding='utf-8')
         write(target/'outlines.json',{'id':project['courseId'],'title':project['title'],'description':result['course']['description'],
               'moduleIdentity':{'id':cid},'entry':guide_name+'.tsx','ppt':{'entry':deck_name+'.tsx'},'pages':[{'id':p['id'],'title':p['title'],'goal':p['goal'],'summary':p['summary']} for p in pages]})
+    for name,obj in project.get('sourceAssets',{}).items():
+        source_path(name);target=Path('courses')/name
+        if target.exists() or target.is_symlink():raise RuntimeError('本地素材已存在，已保留原文件：'+name)
+        data=binary_request(site,cid,token,digest=obj['sha256'])
+        if len(data)!=obj['size']:raise ValueError('素材大小校验失败。')
+        target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(data)
+        state['asset_hashes'][name]=obj['sha256']
+        if name.startswith('assets/'):state.setdefault('asset_ids',[]).append(name.split('/')[1])
     write('project.json',project);write('shuku-state.json',state);write('shuku-course.json',result['course'])
     ignore=Path('.gitignore');rules=ignore.read_text(encoding='utf-8') if ignore.exists() else ''
     for name in ('api_token','shuku-state.json','project.json','.shuku/'):
@@ -203,18 +229,27 @@ def prepare(site,cid,token):
     print('准备完成：'+str(Path.cwd())+'。课程目录：courses/'+state['module']+'。已保留完整规范、公共组件、检查工具和预览环境。请等待用户提出具体创作要求。')
 
 
-def template_project(state,project):
+def template_project(state,project,upload=None):
     directory=Path('courses')/state['module'];outline=read(directory/'outlines.json')
     entry=outline.get('ppt',{}).get('entry')
     if not isinstance(entry,str) or not entry.endswith(('.tsx','.jsx','.ts','.js')):raise ValueError('请在 outlines.json 设置 ppt.entry 并导出 deck。')
     source_path(state['module']+'/'+entry)
-    files={}
-    for module in [state['module'],*state.get('extra_modules',[])]:
+    files={};binary_assets={}
+    def add(name,data):
+        if Path(name).suffix.lower() in MEDIA and state.get('binary_assets'):
+            obj=project.get('sourceAssets',{}).get(name)
+            if not obj or obj['sha256']!=sha256(data).hexdigest() or obj['size']!=len(data):
+                if upload is None:raise ValueError('新素材需要通过 push 上传。')
+                obj=upload(name,data)
+            binary_assets[name]=obj
+        elif Path(name).suffix.lower() in MEDIA:files[name]='data:'+(mimetypes.guess_type(name)[0] or 'application/octet-stream')+';base64,'+base64.b64encode(data).decode()
+        else:files[name]=data.decode('utf-8')
+    for module in [state['module'],*state.get('extra_modules',[]),'licenses']:
         for file in sorted((Path('courses')/module).rglob('*')):
             if file.is_symlink():raise ValueError('课程不能包含符号链接。')
             if file.is_file() and file.suffix.lower() in EXTENSIONS|MEDIA:
                 name=file.relative_to(Path('courses')).as_posix();source_path(name)
-                files[name]=('data:'+(mimetypes.guess_type(name)[0] or 'application/octet-stream')+';base64,'+base64.b64encode(file.read_bytes()).decode()) if file.suffix.lower() in MEDIA else file.read_text(encoding='utf-8')
+                add(name,file.read_bytes())
     # Only this course's material directory is delivered, not other template examples.
     own_asset=state.get('native_source',{}).get('asset_id') or outline.get('moduleIdentity',{}).get('id') or state['course']
     if not isinstance(own_asset,str) or not re.fullmatch('[A-Za-z0-9_-]{1,100}',own_asset):raise ValueError('课程素材标识不安全。')
@@ -226,10 +261,9 @@ def template_project(state,project):
             if not file.is_file():continue
             name=file.relative_to(Path('courses')).as_posix()
             data=file.read_bytes()
-            if file.suffix.lower() not in {'.json','.svg'} and state.get('asset_hashes',{}).get(name)==sha256(data).hexdigest():continue
+            if name not in project.get('sourceAssets',{}) and file.suffix.lower() not in {'.json','.svg'} and state.get('asset_hashes',{}).get(name)==sha256(data).hexdigest():continue
             source_path(name)
-            if file.suffix.lower() in MEDIA:files[name]='data:'+(mimetypes.guess_type(name)[0] or 'application/octet-stream')+';base64,'+base64.b64encode(data).decode()
-            else:files[name]=data.decode('utf-8')
+            add(name,data)
     existing={p['id']:p for p in project['pages']};pages=[]
     for item in outline.get('pages',[]):
         pid=item['id'];prior=existing.get(pid,{})
@@ -249,7 +283,13 @@ def template_project(state,project):
         files[guide_entry]='import React from "react";import * as guide from '+json.dumps('../'+guide)+';export default function Guide(){const Component=guide['+json.dumps(name)+']||guide['+json.dumps(name[:1].upper()+name[1:])+']||guide.default;if(!Component)throw new Error("自学页面没有导出组件");return React.createElement(Component);}'
     # Keep immutable identity and nativeSnapshot; web/local optimistic locks are unchanged.
     if len(files)>500 or sum(len(v.encode()) for v in files.values())>12*1024*1024:raise ValueError('本次源码与新素材超过 500 文件或 12 MiB；请压缩素材后重试。')
-    return {**project,**({'repositoryName':outline['repositoryName']} if 'repositoryName' in outline else {}),'authoringModule':state['module'],'title':outline.get('title',project['title']),'pages':pages,'source':{'files':files},**({'sourceGuideEntry':guide_entry} if guide_entry else {})}
+    title=outline.get('title',project['title'])
+    baseline=project.get('source',{}).get('files',{}).get(state['module']+'/outlines.json')
+    if baseline:
+        try:
+            if json.loads(baseline).get('title')==title:title=project['title']
+        except (ValueError,AttributeError):pass
+    return {**project,**({'sourceAssets':binary_assets} if state.get('binary_assets') else {}),**({'repositoryName':outline['repositoryName']} if 'repositoryName' in outline else {}),'authoringModule':state['module'],'title':title,'pages':pages,'source':{'files':files},**({'sourceGuideEntry':guide_entry} if guide_entry else {})}
 
 
 def pull(site,cid,token):
@@ -259,25 +299,37 @@ def pull(site,cid,token):
     project=result['project']
     for name in project.get('source',{}).get('files',{}):source_path(name)
     write('project.json',project)
-    write('shuku-state.json',{'origin':origin(site),'course':cid,'expected_revision':result['expected_revision'],'expected_draft':result['expected_draft']})
+    write('shuku-state.json',{'origin':origin(site),'course':cid,'expected_revision':result['expected_revision'],'expected_draft':result['expected_draft'],'binary_assets':True})
     for name,text in project.get('source',{}).get('files',{}).items():
-        path=source_path(name);path.parent.mkdir(parents=True,exist_ok=True);path.write_text(text,encoding='utf-8')
+        path=source_path(name);path.parent.mkdir(parents=True,exist_ok=True)
+        if path.suffix.lower() in MEDIA:path.write_bytes(base64.b64decode(text.split(',',1)[1],validate=True))
+        else:path.write_text(text,encoding='utf-8')
+    for name,obj in project.get('sourceAssets',{}).items():
+        path=source_path(name);path.parent.mkdir(parents=True,exist_ok=True)
+        data=binary_request(site,cid,token,digest=obj['sha256'])
+        if len(data)!=obj['size']:raise ValueError('素材大小校验失败。')
+        path.write_bytes(data)
     print('课程已读取。源码在 source/，页面、大纲和设置在 project.json。')
 
 
 def push(state,token):
     project=read('project.json')
-    if state.get('layout')=='template-v1':project=template_project(state,project)
+    if state.get('layout')=='template-v1':project=template_project(state,project,upload=lambda name,data:binary_request(state['origin'],state['course'],token,name,data))
     elif project.get('source') is not None:
-        files={}
+        files={};assets={}
         folder=Path('source')
         if not folder.is_dir() or folder.is_symlink():raise RuntimeError('缺少安全的 source/ 目录。')
         for path in sorted(folder.rglob('*')):
             if path.is_symlink():raise ValueError('源码不能包含符号链接。')
             if path.is_file():
                 name=path.relative_to(folder).as_posix();source_path(name)
-                files[name]=path.read_text(encoding='utf-8')
+                if state.get('binary_assets') and path.suffix.lower() in MEDIA:
+                    data=path.read_bytes();obj=project.get('sourceAssets',{}).get(name)
+                    if not obj or obj['sha256']!=sha256(data).hexdigest() or obj['size']!=len(data):obj=binary_request(state['origin'],state['course'],token,name,data)
+                    assets[name]=obj
+                else:files[name]=path.read_text(encoding='utf-8')
         project['source']={'files':files}
+        if state.get('binary_assets'):project['sourceAssets']=assets
     body={'project':project,'expected_revision':state['expected_revision'],'expected_draft':state['expected_draft']}
     digest=sha256(json.dumps(body,sort_keys=True,separators=(',',':'),ensure_ascii=False).encode()).hexdigest()
     pending=state.get('pending')

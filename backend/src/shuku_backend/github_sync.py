@@ -1,5 +1,6 @@
 """Durable GitHub effects. Local approvals remain authoritative; remote facts gate completion."""
 import base64
+from pathlib import Path
 import hashlib
 import hmac
 import json
@@ -142,10 +143,14 @@ class GitHubSync:
     def export(self,revision):
         files=revision['files'];project=teaching(json.loads(self.bucket.read(files['project.json']['sha256'])))
         result={'courses/project.json':json.dumps(project,ensure_ascii=False,sort_keys=True,separators=(',',':')).encode()}
+        if project.get('sourceFormatVersion')==2:
+            from .local_agent import AUTHORING
+            result['course.manifest.json']=json.dumps({'formatVersion':2,'courseId':project['courseId'],'authoringModule':project.get('authoringModule'),
+                'runtime':AUTHORING,'source':project.get('importOrigin'),'guide':project.get('sourceGuideEntry')},ensure_ascii=False,sort_keys=True).encode()
         for name,obj in files.items():
             if name=='project.json' or name.startswith(('images/','materials/')):continue
             require(not name.startswith('/') and '..' not in name.split('/') and '\\' not in name,400,'UNSAFE_PATH','资源路径不正确。')
-            result['courses/'+name]=self.bucket.read(obj['sha256'])
+            result['courses/'+('sources/'+name[len('source-assets/'):] if name.startswith('source-assets/') else name)]=self.bucket.read(obj['sha256'])
         return result
 
     def revision_base(self,db,repo,rid):
@@ -379,8 +384,12 @@ class GitHubSync:
         with self.store.transaction() as db:
             course,_=self.flow.owner(db,str(job['requested_by']),str(repo['course_id']))
             require((str(course['head_revision']) if course['head_revision'] else None)==data['target_head'],409,'REVISION_CONFLICT','官方待发布内容已变化。')
+            if course['head_revision']:
+                previous=db.execute('SELECT files FROM shuku_revisions WHERE id=%s',(course['head_revision'],)).fetchone()
+                base_project=json.loads(self.bucket.read(previous['files']['project.json']['sha256']))
+                require(all(project.get(key)==base_project.get(key) for key in ('importOrigin','nativeSnapshot')),409,'SOURCE_SNAPSHOT_CHANGED','外部 PR 不能更换课程来源或基础快照。')
             module=self.flow.module_context(course['module_id'])
-        self.flow.prepare(project,module)  # Validate before the irreversible remote merge; never execute remote code.
+        self.flow.prepare(project,module,project.get('sourceAssets'))  # Validate before the irreversible remote merge; never execute remote code.
         if not pr.get('merged'):
             require(pr['state']=='open' and pr['base']['sha']==row['base_sha'],409,'REMOTE_BASE_CHANGED','PR 基础提交已变化，请重新审核。')
             save(stage='merging-external-pull-request');call('PUT',path+'/merge',{'sha':sha,'merge_method':'merge'});pr=call('GET',path)
@@ -389,7 +398,7 @@ class GitHubSync:
         require([p['sha'] for p in actual['parents']]==[row['base_sha'],sha],409,'REMOTE_BASE_CHANGED','外部 PR 实际合并基础发生变化。')
         require(call('GET','/compare/'+pr['merge_commit_sha']+'...'+quote(repo['default_branch'],safe=''))['status'] in ('identical','ahead'),409,'MERGE_NOT_REACHABLE','合并提交已不在官方分支中。')
         with self.store.transaction() as db:
-            saved=self.flow.save_in(db,str(job['requested_by']),str(repo['course_id']),{'project':project,'expected_revision':data['target_head']},remote_job_id=job['id'])
+            saved=self.flow.save_in(db,str(job['requested_by']),str(repo['course_id']),{'project':project,'expected_revision':data['target_head']},remote_job_id=job['id'],source_assets=project.get('sourceAssets'))
             db.execute('INSERT INTO shuku_github_revisions(revision_id,course_id,base_sha,branch,commit_sha,pr_number,merge_sha,external) VALUES (%s,%s,%s,%s,%s,%s,%s,true)',(saved['id'],repo['course_id'],row['base_sha'],pr['head']['ref'],sha,number,pr['merge_commit_sha']))
             db.execute("UPDATE shuku_github_external_prs SET review_state='merged',merge_sha=%s,state='closed',local_revision_id=%s WHERE course_id=%s AND number=%s",(pr['merge_commit_sha'],saved['id'],repo['course_id'],number))
             self.flow.audit(db,str(job['requested_by']),'github.external.import',saved['id'])
@@ -410,17 +419,23 @@ class GitHubSync:
         content=base64.b64decode(blob['content'].replace('\n',''),validate=True)
         require(blob_sha(content)==obj['sha'],409,'BLOB_MISMATCH','外部课程数据校验失败。')
         project=teaching(json.loads(content))
-        sources={}
+        sources={};assets={}
+        from .source import MEDIA
+        import mimetypes
         source_nodes=[(p[16:],v) for p,v in after.items() if p.startswith('courses/sources/') and v.get('type')=='blob']
-        require(len(source_nodes)<=200,413,'SOURCE_LIMIT','源码文件过多。')
+        require(len(source_nodes)<=2000,413,'SOURCE_LIMIT','源码文件过多。')
         total=0
         for name,node in source_nodes:
-            require(node.get('size',0)<=1024*1024,413,'SOURCE_LIMIT','源码文件过大。')
+            require(node.get('size',0)<=(32*1024*1024 if Path(name).suffix.lower() in MEDIA else 1024*1024),413,'SOURCE_LIMIT','源码文件过大。')
             blob=call('GET','/git/blobs/'+node['sha'])
-            require(blob.get('encoding')=='base64' and blob.get('size',0)<=1024*1024,413,'SOURCE_LIMIT','源码文件过大。')
+            require(blob.get('encoding')=='base64' and blob.get('size',0)<=(32*1024*1024 if Path(name).suffix.lower() in MEDIA else 1024*1024),413,'SOURCE_LIMIT','源码文件过大。')
             data=base64.b64decode(blob['content'].replace('\n',''),validate=True);total+=len(data)
-            require(blob_sha(data)==node['sha'] and total<=4*1024*1024,409,'BLOB_MISMATCH','源码校验失败或超过大小限制。')
-            sources[name]=data.decode('utf-8')
+            require(blob_sha(data)==node['sha'] and total<=64*1024*1024,409,'BLOB_MISMATCH','源码校验失败或超过大小限制。')
+            if Path(name).suffix.lower() in MEDIA:assets[name]={**self.bucket.put(data),'mime':mimetypes.guess_type(name)[0] or 'application/octet-stream'}
+            else:sources[name]=data.decode('utf-8')
+        project['sourceAssets']=assets
+        from .source import validate_assets
+        validate_assets({'sourceAssets':assets})
         if source_nodes:project['source']={'files':sources}
         elif project.get('source'):require(not project['source'].get('files'),409,'SOURCE_REQUIRED','源码清单与仓库文件不一致。')
         from .source import validate_source

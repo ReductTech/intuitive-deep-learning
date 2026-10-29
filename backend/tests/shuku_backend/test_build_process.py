@@ -56,3 +56,9 @@ def test_entire_process_group_stops_on_timeout_or_checkpoint_failure(tmp_path,fa
     deadline=time.monotonic()+1
     while not stopped(pidfile) and time.monotonic()<deadline:time.sleep(.01)
     assert stopped(pidfile),'esbuild-like child must not remain running'
+
+
+def test_build_environment_preserves_windows_bootstrap_but_never_host_credentials():
+    from shuku_backend.build_process import build_environment
+    env=build_environment({'SystemRoot':'C:/Windows','SYSTEMROOT':'C:/Windows','PATH':'node-bin','MYSQL_URL_TEST':'secret','GITHUB_TOKEN':'secret','HTTPS_PROXY':'private','NODE_OPTIONS':'unsafe'})
+    assert env=={'SystemRoot':'C:/Windows','SYSTEMROOT':'C:/Windows','PATH':'node-bin','NODE_OPTIONS':'--max-old-space-size=256'}

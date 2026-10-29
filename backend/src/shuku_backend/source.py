@@ -43,3 +43,23 @@ def validate_source(project):
         require(not page.get('nativeId') and isinstance(page.get('sourceEntry'),str) and page['sourceEntry'] in files and PurePosixPath(page['sourceEntry']).suffix in ('.tsx','.jsx','.ts','.js'),400,'INVALID_SOURCE_ENTRY','React 页面的入口文件不存在。')
     require(react,400,'SOURCE_UNUSED','请为源码指定至少一个 React 页面入口。')
     return files
+
+
+def validate_assets(project):
+    require(project.get('sourceFormatVersion') in (None,2),400,'INVALID_SOURCE_VERSION','源码包版本不受支持。')
+    assets=project.get('sourceAssets',{})
+    require(isinstance(assets,dict) and len(assets)<=2000,400,'INVALID_SOURCE_ASSETS','素材清单无效。')
+    total=0;names=set()
+    for name,obj in assets.items():
+        require(isinstance(name,str) and 0<len(name)<=180 and name.isprintable() and not any(ord(c) in (0,34,35,37,42,58,60,62,63,92,124) for c in name)
+                and all(p not in ('','.','..') and not p.startswith('.') and p.rstrip(' .')==p for p in name.split('/'))
+                and PurePosixPath(name).suffix.lower() in MEDIA and name.casefold() not in names,
+                400,'UNSAFE_SOURCE_PATH','素材路径不安全或重复。')
+        require(isinstance(obj,dict) and set(obj)=={'sha256','size','mime'} and isinstance(obj['sha256'],str) and re.fullmatch('[a-f0-9]{64}',obj['sha256'])
+                and type(obj['size']) is int and 0<obj['size']<=32*1024*1024 and isinstance(obj['mime'],str)
+                and re.fullmatch(r'(?:image|font|audio|video|model|application)/[A-Za-z0-9.+-]+',obj['mime']),
+                400,'INVALID_SOURCE_ASSETS','素材对象无效。')
+        names.add(name.casefold());total+=obj['size']
+    require(total<=64*1024*1024,413,'SOURCE_ASSET_LIMIT','课程二进制素材最多 64 MiB。')
+    require(not {name.casefold() for name in assets}&{name.casefold() for name in (project.get('source') or {}).get('files',{})},400,'DUPLICATE_SOURCE_PATH','源码与素材路径重复。')
+    return assets

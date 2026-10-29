@@ -9,12 +9,14 @@ class DeferredTask(Exception):
 
 
 class Worker:
-    def __init__(self, store, handlers, clock=time.time):
+    def __init__(self, store, handlers, clock=time.time,maintenance=None):
         self.store,self.handlers,self.clock=store,handlers,clock
         self.stop_event=threading.Event()
         self.thread=None
+        self.maintenance=maintenance
 
     def run_once(self):
+        if self.maintenance:self.maintenance()
         task=self.store.claim(self.handlers.keys(),self.clock())
         if not task:return False
         try:

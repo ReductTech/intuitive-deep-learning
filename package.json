@@ -26,7 +26,8 @@
     "react": "19.2.7",
     "react-dom": "19.2.7",
     "tailwindcss": "^4.3.3",
-    "three": "^0.186.1"
+    "three": "^0.186.1",
+    "typescript": "^5.8.3"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.3",
@@ -36,7 +37,6 @@
     "@types/three": "^0.186.0",
     "@vitejs/plugin-react": "^4.4.1",
     "postcss": "^8.5.8",
-    "typescript": "^5.8.3",
     "vite": "^6.3.5"
   }
 }
