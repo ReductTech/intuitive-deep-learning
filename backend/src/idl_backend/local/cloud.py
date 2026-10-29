@@ -1,6 +1,5 @@
 """Run the same Cloud API locally; never copy its cache or routing implementation."""
 import os
-import json
 from pathlib import Path
 
 from idl_backend.config import repository_root
@@ -25,21 +24,17 @@ def cloud_environment(root=None):
     production = dotenv_values(cloud / "infra/.env.cloud.production")
     local = dotenv_values(cloud / ".env.local")
     records = dotenv_values(cloud / "infra/.env.cloud")
-    allowed = ("MYSQL_URL_REMOTE", "GPU_GATEWAY_API_TOKEN", "LLM_GATEWAY_API_TOKEN",
+    allowed = ("GPU_GATEWAY_API_TOKEN", "LLM_GATEWAY_API_TOKEN",
                "IDL_DATA_REVISION", "IDL_MODEL_REVISION", "IDL_VISION_CACHE_VERSION")
     for name in allowed:
         if not environment.get(name):
             value = local.get(name) or production.get(name)
             if value:
                 environment[name] = value
-    # Windows development must use the user's remote TEST database, including
-    # the Cloud cache API (whose legacy setting is named MYSQL_URL_REMOTE).
-    config = Path.home() / '.reduct_db_config.json'
-    if os.name == 'nt' and config.is_file():
-        test_url = json.loads(config.read_text(encoding='utf-8-sig')).get('MYSQL_URL_TEST', '')
-        if not isinstance(test_url, str) or not test_url.strip():
-            raise RuntimeError('Configure MYSQL_URL_TEST in ~/.reduct_db_config.json')
-        environment['MYSQL_URL_REMOTE'] = test_url.strip()
+    # One MySQL setting for local development and server deployment.
+    # The legacy per-user TEST setting and .env.local never override this URL.
+    if not environment.get('MYSQL_URL_REMOTE'):
+        environment['MYSQL_URL_REMOTE'] = production.get('MYSQL_URL_REMOTE') or ''
     # The private-record publisher writes its server credentials to this ignored
     # runtime file. Read only OSS settings, never its production gateway topology.
     for name in ("OSS_ACCESS_KEY_ID", "OSS_ACCESS_KEY_SECRET", "IDL_RECORDS_OSS_BUCKET",
@@ -49,7 +44,7 @@ def cloud_environment(root=None):
             if value:
                 environment[name] = value
     if not environment.get("MYSQL_URL_REMOTE"):
-        raise RuntimeError("Set MYSQL_URL_REMOTE in the environment or Cloud .env.local; local requests require the shared cloud cache.")
+        raise RuntimeError("Set MYSQL_URL_REMOTE in the environment or Cloud infra/.env.cloud.production.")
     environment.setdefault("GPU_GATEWAY_BASE_URL", "http://127.0.0.1:28431")
     environment.setdefault("LLM_GATEWAY_BASE_URL", "http://127.0.0.1:28432")
     environment.setdefault("IDL_TELEMETRY_ENABLED", "false")

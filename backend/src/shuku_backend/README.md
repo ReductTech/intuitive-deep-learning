@@ -8,7 +8,7 @@
 
 运行 `npm run dev` 或 `npm run dev:preview`，打开 `http://localhost:5173/`，直接浏览本地课件，无需登录或安装数据库。不要同时启动这两个命令；端口占用会直接报错。
 
-完整业务前端使用 `npm run dev:app`，需要已有的 8010 业务后端。Windows 后端在没有显式设置 `SHUKU_DATABASE_URL` / `MYSQL_URL_TEST` 时，自动读取 `C:\Users\<用户>\.reduct_db_config.json` 的 `MYSQL_URL_TEST`；凭据仅由 Python 服务端读取，不发送到浏览器。此读取不会初始化数据库或执行迁移。
+完整业务前端使用 `npm run dev:app`，需要已有的 8010 业务后端。后端优先使用 `MYSQL_URL_REMOTE`，默认与本地 Cloud API 一起读取 Cloud `infra/.env.cloud.production`；不再自动读取用户目录 TEST 配置。凭据只在服务端读取，不发送到浏览器。此读取不会初始化数据库或执行迁移。
 
 ## 旧的独立本机数据库启动方式（默认预览不使用）
 
@@ -56,7 +56,7 @@ python -m shuku_backend serve
 
 | 配置 | 说明 |
 | --- | --- |
-| `SHUKU_DATABASE_URL` | MySQL 8.0.16+ 连接，如 `mysql+mysqlconnector://user:password@127.0.0.1:3306/shuku_local`；SQLAlchemy 管理连接和事务，表名统一以 `shuku_` 开头 |
+| `MYSQL_URL_REMOTE` | 共用云端 MySQL 8.0.16+ 连接；SQLAlchemy 管理连接和事务，表名统一以 `shuku_` 开头 |
 | `SHUKU_BUCKET_DIR` | 文件桶绝对路径 |
 | `SHUKU_SOURCE_ROOT` | intuitive-deep-learning 仓库绝对路径，需包含模块、素材和已安装的 Node 依赖；修订构建需要此配置 |
 | `SHUKU_PUBLIC_ORIGIN` | 浏览器来源，如 `http://localhost:5173`，不带末尾斜杠；写请求必须匹配 Origin |
@@ -189,9 +189,9 @@ GitHub App、真实 PR、远程合并核验、Tag／Release、Webhook、周期�
 
 ## 外部 MySQL / RDS
 
-当前使用 SQLAlchemy Core 表定义、连接池、参数绑定及显式事务，并非本地 JSON 模拟库。配置 `SHUKU_DATABASE_URL`，或使用外部环境提供的 `MYSQL_URL_TEST`。二者同时存在但指向不同连接时拒绝启动，避免静默连错数据库；测试只读取独立的 `SHUKU_TEST_DATABASE_URL`，不使用业务连接别名。
+当前使用 SQLAlchemy Core 表定义、连接池、参数绑定及显式事务，并非本地 JSON 模拟库。统一配置 `MYSQL_URL_REMOTE`，本地与部署不需要维护两个业务数据库。仅在未提供统一连接时，为独立工具保留显式旧别名兼容；测试只读取独立的 `SHUKU_TEST_DATABASE_URL`，不使用业务连接别名。
 
-示例（占位值）：`MYSQL_URL_TEST=mysql+mysqlconnector://app_user:replace-me@mysql.example.invalid/shuku_business`。实际凭证只放到服务器私有环境文件；不要写入源码、脚本或提交记录。MySQL 要求 8.0.16+。运行账号仅应具有术库表的业务读写权限，建表与索引授权由部署迁移账号管理。
+示例（占位值）：`MYSQL_URL_REMOTE=mysql+mysqlconnector://app_user:replace-me@mysql.example.invalid/shuku_business`。实际凭证只放到服务器私有环境文件；不要写入源码、脚本或提交记录。MySQL 要求 8.0.16+。运行账号仅应具有术库表的业务读写权限，建表与索引授权由部署迁移账号管理。
 
 结构仍由 `python -m shuku_backend migrate` 显式创建/升级，正常服务启动不执行 DDL。共享数据库只新增 `shuku_` 表，不接管其他应用表。不额外建立第二套 Alembic 版本记录。
 

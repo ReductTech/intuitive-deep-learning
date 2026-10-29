@@ -25,16 +25,30 @@ def mysql_url(value):
 
 def database_url_from_env(environ=None):
     env = os.environ if environ is None else environ
+    canonical = env.get('MYSQL_URL_REMOTE', '').strip()
+    if not canonical and environ is None and not env.get('SHUKU_DATABASE_URL') and not env.get('MYSQL_URL_TEST'):
+        # Read the same deployment file as the local Cloud API, without dotenv
+        # as a mandatory dependency of the business backend.
+        from idl_backend.local.cloud import cloud_repository
+        try:
+            file = cloud_repository() / 'infra/.env.cloud.production'
+        except RuntimeError:
+            file = None
+        if file and file.is_file():
+            for line in file.read_text(encoding='utf-8-sig').splitlines():
+                name, sep, value = line.strip().removeprefix('export ').partition('=')
+                if sep and name.strip() == 'MYSQL_URL_REMOTE':
+                    canonical = value.strip().strip('\"\'')
+                    break
+    if canonical:
+        mysql_url(canonical)
+        return canonical
+    # Explicit legacy aliases remain for standalone integrations/test fixtures.
+    # They never override the shared canonical connection.
     primary = env.get('SHUKU_DATABASE_URL', '').strip()
     external = env.get('MYSQL_URL_TEST', '').strip()
-    # Local Windows development uses the user's remote test database. Never
-    # provision a local database or send this configuration to the frontend.
-    if environ is None and not primary and not external and os.name == 'nt':
-        config = Path.home() / '.reduct_db_config.json'
-        if config.is_file():
-            external = str(json.loads(config.read_text(encoding='utf-8-sig')).get('MYSQL_URL_TEST', '')).strip()
     if not primary and not external:
-        raise ValueError('Configure SHUKU_DATABASE_URL or MYSQL_URL_TEST')
+        raise ValueError('Configure MYSQL_URL_REMOTE in the environment or Cloud infra/.env.cloud.production')
     if primary and external and mysql_url(primary) != mysql_url(external):
         raise ValueError('Conflicting SHUKU_DATABASE_URL and MYSQL_URL_TEST; configure one database')
     return primary or external

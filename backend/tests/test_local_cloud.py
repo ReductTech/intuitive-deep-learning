@@ -12,23 +12,22 @@ def isolated_user_config(tmp_path, monkeypatch):
 
 
 @pytest.mark.skipif(os.name != 'nt', reason='Windows local development configuration')
-def test_user_test_database_overrides_production_cache(tmp_path, monkeypatch):
+def test_legacy_user_test_database_never_overrides_shared_connection(tmp_path, monkeypatch):
     main, cloud = checkout(tmp_path)
     monkeypatch.setenv('IDL_CLOUD_REPOSITORY', str(cloud))
     monkeypatch.setenv('MYSQL_URL_REMOTE', 'mysql://user:production@example.invalid/production')
     test_url = 'mysql://user:test@example.invalid/test'
     (tmp_path / '.reduct_db_config.json').write_text(json.dumps({'MYSQL_URL_TEST': test_url}), encoding='utf-8-sig')
-    assert cloud_environment(main)['MYSQL_URL_REMOTE'] == test_url
+    assert cloud_environment(main)['MYSQL_URL_REMOTE'] == 'mysql://user:production@example.invalid/production'
 
 
 @pytest.mark.skipif(os.name != 'nt', reason='Windows local development configuration')
-def test_user_config_missing_test_database_never_falls_back_to_production(tmp_path, monkeypatch):
+def test_empty_legacy_user_config_does_not_block_shared_connection(tmp_path, monkeypatch):
     main, cloud = checkout(tmp_path)
     monkeypatch.setenv('IDL_CLOUD_REPOSITORY', str(cloud))
     monkeypatch.setenv('MYSQL_URL_REMOTE', 'mysql://user:production@example.invalid/production')
     (tmp_path / '.reduct_db_config.json').write_text('{}', encoding='utf-8')
-    with pytest.raises(RuntimeError, match='MYSQL_URL_TEST'):
-        cloud_environment(main)
+    assert cloud_environment(main)['MYSQL_URL_REMOTE'] == 'mysql://user:production@example.invalid/production'
 
 
 def checkout(tmp_path):
@@ -71,3 +70,13 @@ def test_missing_cache_configuration_fails_instead_of_bypassing_cloud(tmp_path, 
     monkeypatch.delenv('MYSQL_URL_REMOTE', raising=False)
     with pytest.raises(RuntimeError, match='MYSQL_URL_REMOTE'):
         cloud_environment(main)
+
+
+def test_local_database_setting_does_not_create_a_second_connection(tmp_path, monkeypatch):
+    main,cloud=checkout(tmp_path)
+    monkeypatch.setenv('IDL_CLOUD_REPOSITORY',str(cloud))
+    monkeypatch.delenv('MYSQL_URL_REMOTE',raising=False)
+    canonical='mysql+mysqlconnector://user@shared.invalid/course'
+    (cloud/'infra/.env.cloud.production').write_text('MYSQL_URL_REMOTE='+canonical+'\n')
+    (cloud/'.env.local').write_text('MYSQL_URL_REMOTE=mysql://old@other.invalid/course\n')
+    assert cloud_environment(main)['MYSQL_URL_REMOTE']==canonical

@@ -5,6 +5,13 @@ import pytest
 from sqlalchemy.exc import IntegrityError
 
 from shuku_backend.database import mysql_url
+from shuku_backend.database import database_url_from_env
+
+
+def test_canonical_connection_overrides_legacy_database_aliases():
+    url='mysql+mysqlconnector://user@shared.invalid/course'
+    assert database_url_from_env({'MYSQL_URL_REMOTE':url,'MYSQL_URL_TEST':'mysql://old@other.invalid/test',
+                                  'SHUKU_DATABASE_URL':'mysql://old@localhost/local'})==url
 
 
 @pytest.mark.parametrize('url', ['mssql://user@localhost/business', 'sqlite:///business',
