@@ -52,6 +52,7 @@ try{
  await page.getByLabel('当前页修改要求',{exact:true}).waitFor();
  assert.equal(await page.getByRole('button',{name:'保存修订',exact:true}).isVisible(),true);
  assert.equal(await page.locator('.cw-file-menu').count(),0);
+ for(const name of ['我的课程','预览已保存版本'])assert.equal(await page.locator('.cw-topbar').getByRole('link',{name,exact:true}).count(),0);
  for(const label of ['页面详情','提交审核','查看课程大纲'])assert.equal(await page.getByRole('button',{name:label,exact:true}).isVisible(),true);
  for(const label of ['使用本地 Agent 修改','编辑源码','同步与审核详情'])assert.equal(await page.getByRole('button',{name:label,exact:true}).count(),0);
 
@@ -93,6 +94,9 @@ try{
  await page.goto(base+'/my-courses/preview?course=fixture');
  await page.waitForURL('**/my-courses/editor?course=fixture');await page.locator('.cw-editing .cw-composer').waitFor();
  await fs.mkdir('test-results/unified-editor',{recursive:true});await page.screenshot({path:'test-results/unified-editor/editor.png'});
+ course.workspace={id:'fixture'};await page.reload();await page.locator('.cw-editing .cw-composer').waitFor();
+ assert.equal(await page.getByRole('button',{name:'提交共创建议',exact:true}).isVisible(),true);
+ assert.equal(await page.locator('.cw-topbar').getByRole('link',{name:'预览已保存版本',exact:true}).count(),0);
  await page.goto(base+'/my-courses/editor?course=denied');await page.getByText('课程不存在或没有权限。',{exact:true}).waitFor();assert.equal(await page.locator('.cw-app').count(),0);
  assert.deepEqual(errors,[]);
  console.log('PASS shared editor/preview entry, real source, thumbnails, compact toolbar, chat/layout swap, page selection, cloud draft/revision/reload, outline, notes/presentation and denied access');
