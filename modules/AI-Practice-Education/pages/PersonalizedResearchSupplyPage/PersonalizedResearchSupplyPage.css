@@ -1,0 +1,28 @@
+.aipe-supply-page{display:flex;flex-direction:column;}
+.aipe-supply-page>.aipe-supply-body{position:relative;flex:1;min-height:0;display:block;}
+.aipe-supply-kicker{position:absolute;top:16px;left:0;color:var(--ui-accent-alt);}
+.aipe-supply-input,.aipe-supply-platform,.aipe-supply-output{position:absolute;top:96px;min-width:0;}
+.aipe-supply-input{left:0;width:445px;}
+.aipe-supply-platform{left:515px;width:555px;}
+.aipe-supply-output{left:1140px;width:398px;}
+.aipe-supply-paper-pile{margin-top:20px;width:445px;height:330px;background-size:200% 100%;background-position:0 0;background-repeat:no-repeat;}
+.aipe-supply-limits{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:20px;}
+.aipe-supply-limits>div{display:flex;align-items:center;gap:12px;white-space:nowrap;}
+.aipe-supply-limits svg{width:52px;height:52px;flex-shrink:0;color:var(--ui-accent);stroke-width:1.7;}
+.aipe-supply-flow{position:absolute;top:315px;width:58px;height:58px;stroke-width:2.4;color:#6094ce;}
+.aipe-supply-flow-in{left:451px;}.aipe-supply-flow-out{left:1076px;}
+.aipe-supply-panel{position:relative;margin-top:20px;height:365px;border-radius:30px;background:linear-gradient(135deg,#eef5fe,#eaf2fc);}
+.aipe-supply-goal{position:absolute;top:16px;left:92px;width:372px;height:60px;border-radius:24px;background:#ffeadc;display:flex;align-items:center;justify-content:center;gap:16px;}
+.aipe-supply-goal>svg{width:36px;height:36px;color:var(--ui-accent-alt);fill:#ffb484;stroke-width:1.5;}
+.aipe-supply-goal-arrow{position:absolute;left:260px;top:80px;width:35px;height:35px;color:#6491c9;}
+.aipe-supply-stages{position:absolute;top:116px;left:20px;right:20px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;}
+.aipe-supply-stage{position:relative;display:grid;justify-items:center;gap:10px;min-width:0;}
+.aipe-supply-stage-icon{display:grid;place-items:center;width:112px;height:112px;border-radius:50%;background:#dceafe;}
+.aipe-supply-stage-icon>svg{width:63px;height:63px;color:var(--ui-accent);stroke-width:2;}
+.aipe-supply-stage:nth-child(2) .aipe-supply-stage-icon>svg{color:var(--ui-accent-alt);}
+.aipe-supply-stage-arrow{position:absolute;left:145px;top:39px;width:35px;height:35px;color:#4c7fbd;}
+.aipe-supply-daily{position:absolute;left:50px;right:50px;bottom:20px;height:58px;display:grid;place-items:center;border-radius:20px;background:#dfeeff;}
+.aipe-supply-selected-papers{position:absolute;top:58px;width:398px;height:360px;background-size:200% 100%;background-position:100% 0;background-repeat:no-repeat;}
+.aipe-supply-output-caption{margin-top:285px;}
+.aipe-supply-conclusion{position:absolute;top:615px;left:0;width:100%;}
+.aipe-supply-conclusion span{color:var(--ui-accent-alt);}

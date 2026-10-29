@@ -25,6 +25,8 @@ export async function saveDesignImage(image: string, id = crypto.randomUUID()): 
 }
 export async function readDesignImage(id?: string): Promise<string | undefined> {
   if (!id) return undefined;
+  const offline=(globalThis as {__SHUKU_OFFLINE_DESIGNS__?:Record<string,string>}).__SHUKU_OFFLINE_DESIGNS__;
+  if(offline)return offline[id];
   const db = await openDatabase();
   return new Promise((resolve, reject) => {
     const request = db.transaction('images', 'readonly').objectStore('images').get(id);

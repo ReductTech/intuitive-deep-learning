@@ -1,3 +1,3 @@
 import { OutlinePlaceholder } from '../../components/OutlinePlaceholder';
 import outline from '../../outlines.json';
-export function FeedbackLoopPage() { return <OutlinePlaceholder title={outline.pages[22].title} lead={"根据兴趣、基础与任务表现调整学习支持"} points={[["识别当前困难", "区分概念、实现和实验推理中的问题。"], ["提供针对性反馈", "回看过程、补充练习或检查代码。"], ["安排后续任务", "巩固基础，或选择更深入的拓展。"]]} references={[]} />; }
+export function FeedbackLoopPage() { return <OutlinePlaceholder title={outline.pages[33].title} lead={"让任务表现连接具体学习证据"} points={[["学生与任务", "呈现学校、课程、研究方向及任务完成情况。"], ["多维表现", "分别观察知识理解、代码复现、实验分析与创新思考。"], ["查看依据", "从具体表现进入作品、代码和实验记录，支持教师指导与人才发现。"]]} references={[]} />; }

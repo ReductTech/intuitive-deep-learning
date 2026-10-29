@@ -30,7 +30,7 @@ function load(courseId: string,courses:readonly ActiveModule[]) {
 const paths = { edit: 'm15 5 4 4M4 20l4-1L20 7a2.8 2.8 0 0 0-4-4L4 15v5Z', book: 'M12 5C8 2 4 3 2 4v16c4-2 7-1 10 1 3-2 6-3 10-1V4c-2-1-6-2-10 1ZM12 5v16', spark: 'm12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5z', play: 'm9 5 11 7-11 7z', plus: 'M12 5v14M5 12h14', send: 'm4 4 17 8-17 8 4-8zM8 12h13', back: 'm9 5-7 7 7 7M2 12h17', check: 'm5 12 4 4L19 6', close: 'm6 6 12 12M6 18 18 6', download: 'M12 3v12m-5-5 5 5 5-5M4 17v4h16v-4', settings: 'M4 7h16M4 17h16M8 4v6M16 14v6' };
 function Icon({ name }: { name: keyof typeof paths }) { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={paths[name]} /></svg>; }
 function download(name: string, value: string, type = 'application/json') { const url = URL.createObjectURL(new Blob([value], { type })); const link = document.createElement('a'); link.href = url; link.download = name; link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); }
-const escape = (text: string) => text.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
+const offline = Boolean((globalThis as {__SHUKU_OFFLINE__?:boolean}).__SHUKU_OFFLINE__);
 
 export function CourseWorkspace({courses,initialProject,managed,reader,renderPage,renderThumbnail}:WorkspaceProps) {
   const loadCourse=(id:string)=>load(id,courses);
@@ -88,7 +88,7 @@ export function CourseWorkspace({courses,initialProject,managed,reader,renderPag
   const notesBody=useRef<HTMLDivElement>(null);
   const pageNotes=typeof page.outline?.snippet==='string'?page.outline.snippet:module.getPptNotes?.(page.nativeId??page.id)?.map(note=>note.text).filter(Boolean).join('\n')||'';
   useEffect(()=>{notesBody.current?.scrollTo({top:0});},[page.id]);
-  const autoplay=useAutoplay(project.pages,page.id,project.id,!editing,select);
+  const autoplay=useAutoplay(project.pages,page.id,project.id,!editing&&!offline,select);
   const autoplayControls=<NarrationControls player={autoplay}/>;
   function step(delta: number) { select(project.pages[Math.max(0, Math.min(project.pages.length - 1, index + delta))].id); }
   useEffect(() => { document.title = `术库 · ${project.title}`; if(managed){managed.onChange(project);return;} setSaved('保存中…'); try { localStorage.setItem(key(reader?.storageKey||project.courseId), JSON.stringify(project)); setSaved('已保存到此浏览器'); } catch { setSaved('保存失败，请导出项目备份'); } }, [project]);
@@ -207,40 +207,35 @@ export function CourseWorkspace({courses,initialProject,managed,reader,renderPag
     commit({ ...project, id: crypto.randomUUID(), title: '未命名课件', outlineConfirmed: false, pages: [item] }); setActiveId(item.id); setView('design'); setPanel('settings');
   }
   async function exportOffline() {
-    setBusy('正在准备离线课件…');
+    if(busy)return;
+    setBusy('正在打包当前模块的交互和图片…');setNotice('');
     try {
-      const slides = await Promise.all(project.pages.map(async item => {
-        if (item.designImageId && !item.nativeId) {
-          const image = await readDesignImage(item.designImageId);
-          if (!image) throw new Error('设计图缺失，离线导出未完成。请导入完整备份或重新生成。');
-          return `<section><img alt="${escape(item.title)}" src="${image}"><p class="caption">${escape(item.title)} · 设计图快照</p></section>`;
-        }
-        if (item.nativeId) {
-          const response = await fetch(moduleAssetUrl(module.assetId, `scenedeck-thumbnails/${item.nativeId}.png`)); if (!response.ok) throw new Error(`第 ${project.pages.indexOf(item) + 1} 页缺少快照，离线导出未完成`);
-          const blob = await response.blob(); const data = await new Promise<string>((resolve, reject) => { const reader = new FileReader(); reader.onload = () => resolve(String(reader.result)); reader.onerror = reject; reader.readAsDataURL(blob); });
-          return `<section><img alt="${escape(item.title)}" src="${data}"><p class="caption">${escape(item.title)} · 原课程快照（交互需在线打开）</p></section>`;
-        }
-        return `<section><article><small>教学设计 · ${escape(project.style)}</small><h1>${escape(item.title)}</h1><h2>${escape(item.goal)}</h2><p>${escape(item.summary)}</p>${item.note ? `<blockquote>本版调整：${escape(item.note)}</blockquote>` : ''}<button onclick="this.textContent='✓ 已完成思考'">我已经理解，标记完成</button></article></section>`;
-      }));
-      download(`${project.title}-离线演示.html`, `<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escape(project.title)}</title><style>*{box-sizing:border-box}body{margin:0;background:#eef2f8;color:#19345e;font:20px system-ui}header{height:70px;padding:16px 4vw;background:white;display:flex;justify-content:space-between;align-items:center}button{padding:10px 18px;border:1px solid #ccd8ef;border-radius:8px;cursor:pointer;background:white;color:#245ce8}section{display:none;height:calc(100vh - 100px);padding:20px 4vw;text-align:center}section.active{display:flex;flex-direction:column;align-items:center;justify-content:center}img{max-width:100%;max-height:82%;object-fit:contain}article{background:white;width:min(1200px,100%);padding:6%;text-align:left;border-radius:16px}h1{font-size:clamp(28px,4vw,55px)}p,h2{line-height:1.6}.caption{font-size:14px}</style><header><strong>${escape(project.title)}</strong><div><button id="prev">← 上一页</button> <span id="count"></span> <button id="next">下一页 →</button></div></header>${slides.join('')}<script>let i=0;const s=[...document.querySelectorAll('section')];function show(n){i=Math.max(0,Math.min(s.length-1,n));s.forEach((e,j)=>e.classList.toggle('active',j===i));document.getElementById('count').textContent=(i+1)+' / '+s.length;document.getElementById('prev').disabled=i===0;document.getElementById('next').disabled=i===s.length-1}document.getElementById('prev').onclick=()=>show(i-1);document.getElementById('next').onclick=()=>show(i+1);document.onkeydown=e=>{if(e.key==='ArrowRight')show(i+1);if(e.key==='ArrowLeft')show(i-1)};show(0)</script></html>`, 'text/html');
-      setNotice('离线 HTML 已导出：原课程为缩略图快照，模拟页面为基础网页。');
-    } catch (error) { setNotice(error instanceof Error ? error.message : '离线导出失败，请重试'); } finally { setBusy(''); }
+      const response=await fetch('/api/shuku/offline-export',{method:'POST',headers:{'Content-Type':'application/json'},body:await packProject(project)});
+      if(!response.ok){const data=await response.json().catch(()=>({}));throw new Error(data.error||'离线导出失败，请确认本地术库正在运行。');}
+      if(!response.headers.get('content-type')?.includes('text/html'))throw new Error('离线导出服务不可用，请在本地术库中导出。');
+      const blob=await response.blob(),url=URL.createObjectURL(blob),link=document.createElement('a');
+      link.href=url;link.download=`${project.title.replace(/[<>:"/\\|?*]/g,'_')}-离线交互.html`;link.click();setTimeout(()=>URL.revokeObjectURL(url),60000);
+      setNotice(`当前模块已导出（${(blob.size/1024/1024).toFixed(1)} MB）。双击 HTML 即可离线演示，保留图片和前端交互。`);
+    } catch(error){setNotice(error instanceof Error?error.message:'离线导出失败，请重试。');}
+    finally{setBusy('');}
   }
   const mock = !native;
   const hint = feedback || (showingImage ? '直接描述想改哪里；满意后制作成网页。' : page.ready ? '描述这一页想怎么改，或直接预览。' : '写下这一页的内容和要求，生成第一版设计。');
   return <div className={`cw-app cw-streamlined ${editing ? 'cw-editing' : 'cw-viewing'} ${mode === 'present' ? 'cw-presenting' : ''} ${reader?'cw-reader':''} ${editing&&panelsSwapped?'cw-panels-swapped':''}`} >
     <header className="cw-topbar">
-      <div className="cw-header-identity"><a href="/" target={reader?'_top':undefined} className="cw-brand cw-shuku-brand" aria-label="术库首页"><span><Icon name="book" /></span><div><strong>术库</strong></div></a><div className="cw-course-context">
+      <div className="cw-header-identity"><a href={offline?'#':'/'} target={reader&&!offline?'_top':undefined} className="cw-brand cw-shuku-brand" aria-label="术库首页"><span><Icon name="book" /></span><div><strong>术库</strong></div></a><div className="cw-course-context">
       {managed?<strong className="cw-managed-title">{project.title}</strong>:<select aria-label="切换课程" value={project.courseId} disabled={Boolean(busy)} onChange={event => switchCourse(event.target.value)}>{courses.map(c => <option key={c.id} value={c.id}>{c.id === project.courseId ? project.title : c.title}</option>)}</select>}
       <span className="cw-save" title={managed?managed.status:saved}>{managed?managed.status:saved==='已保存到此浏览器'?'已保存':saved}</span></div></div>
       <div className="cw-actions">
         {editing ? <>
           <button title="撤销" aria-label="撤销" disabled={!history.length || Boolean(busy)} onClick={undo}>↶</button><button title="重做" aria-label="重做" disabled={!future.length || Boolean(busy)} onClick={redo}>↷</button>
-          {managed?<><button onClick={()=>setPropertiesId(page.id)}>页面详情</button>{managed.actions}</>:<details className="cw-file-menu"><summary>文件</summary><div onClick={event => { if (!managed && (event.target as HTMLElement).closest('button')) event.currentTarget.parentElement?.removeAttribute('open'); }}><><button disabled={Boolean(busy)} onClick={newBlankProject}>新建课件（先备份当前）</button><button disabled={Boolean(busy)} onClick={() => importInput.current?.click()}>导入项目</button><button disabled={Boolean(busy)} onClick={exportProject}>导出可编辑项目</button><button disabled={Boolean(busy)} onClick={exportOffline}>离线演示（快照版）</button><button disabled={Boolean(busy)} onClick={() => setPanel('settings')}>课程设置</button></></div></details>}
+          {managed?<><button onClick={()=>setPropertiesId(page.id)}>页面详情</button>{managed.actions}</>:<details className="cw-file-menu"><summary>文件</summary><div onClick={event => { if (!managed && (event.target as HTMLElement).closest('button')) event.currentTarget.parentElement?.removeAttribute('open'); }}><><button disabled={Boolean(busy)} onClick={newBlankProject}>新建课件（先备份当前）</button><button disabled={Boolean(busy)} onClick={() => importInput.current?.click()}>导入项目</button><button disabled={Boolean(busy)} onClick={exportProject}>导出可编辑项目</button><button disabled={Boolean(busy)} onClick={exportOffline}>保存离线交互网页</button><button disabled={Boolean(busy)} onClick={() => setPanel('settings')}>课程设置</button></></div></details>}
         </> : null}
 
-         {mode !== 'present' && <button className="cw-edit-toggle" aria-pressed={editing} disabled={Boolean(busy)} title={editing ? '退出编辑，恢复页面交互（Esc）' : '进入编辑模式，修改文字和页面属性'} onClick={() => { setMode(editing ? 'preview' : 'edit'); setView('web'); setPanel(null); setPropertiesId(null); }}><Icon name={editing?'check':'edit'} />{editing ? '完成编辑' : '编辑'}</button>}
-        {!editing&&mode!=='present'&&<><span className="cw-action-divider" aria-hidden="true"/>{autoplayControls}</>}
+         {!offline && mode !== 'present' && <button className="cw-edit-toggle" aria-pressed={editing} disabled={Boolean(busy)} title={editing ? '退出编辑，恢复页面交互（Esc）' : '进入编辑模式，修改文字和页面属性'} onClick={() => { setMode(editing ? 'preview' : 'edit'); setView('web'); setPanel(null); setPropertiesId(null); }}><Icon name={editing?'check':'edit'} />{editing ? '完成编辑' : '编辑'}</button>}
+        {!offline&&!editing&&mode!=='present'&&<><span className="cw-action-divider" aria-hidden="true"/>{autoplayControls}</>}
+        {!offline&&!managed&&mode!=='present'&&<button disabled={Boolean(busy)} onClick={()=>void exportOffline()}>{busy?'正在打包…':'保存离线网页'}</button>}
+        {offline&&mode!=='present'&&<span className="cw-save">离线交互版</span>}
         {mode !== 'present' && <button className="cw-present-button" disabled={Boolean(busy)} onClick={present}><Icon name="play" />演示</button>}
       </div>
     </header>

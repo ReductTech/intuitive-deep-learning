@@ -17,7 +17,7 @@ try{
  await page.route('**/__source-preview__/**',route=>route.fulfill({contentType:'text/html; charset=utf-8',body:html}));
  const base='http://localhost:5175/__source-preview__/index.html';
  await page.goto(base+'?shukuPage=first');await page.getByRole('heading',{name:'Real source lesson'}).waitFor();assert.equal(await page.locator('.cw-app').count(),0,'no nested player toolbar or navigation');await page.getByRole('button',{name:'Count 0'}).click();await page.getByRole('button',{name:'Count 1'}).waitFor();
- await page.goto(base);await page.locator('.cw-app.cw-reader').waitFor();await page.getByRole('heading',{name:'Real source lesson'}).waitFor();await page.getByRole('button',{name:'讲稿',exact:true}).waitFor();assert.equal(await page.locator('iframe').count(),0,'normal playback stays in the original player');
+ await page.goto(base);await page.locator('.cw-app.cw-reader').waitFor();await page.getByRole('heading',{name:'Real source lesson'}).waitFor();await page.locator('.cw-inline-notes-body').waitFor();assert.equal(await page.locator('iframe').count(),0,'normal playback stays in the original player');
  await page.goto(base+'?shukuPage=missing');await page.getByRole('alert').waitFor();assert.equal(await page.getByRole('heading',{name:'Real source lesson'}).count(),0);
  assert.deepEqual(errors,[]);console.log('PASS real compiled React page, interactive state, slide-only editor embed, original full player and missing-page handling');
 }finally{await browser?.close();await fs.rm(folder,{recursive:true,force:true});}
