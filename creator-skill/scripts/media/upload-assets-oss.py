@@ -78,7 +78,7 @@ def object_key(assets_dir: Path, path: Path, private_records: bool = False) -> s
 
 def visualization_files(assets_dir: Path) -> list[Path]:
     """Datasets, model weights and runtime artifacts never belong in OSS."""
-    excluded_directories = {"dataset", "datasets", "models", "digit-training"}
+    excluded_directories = {"dataset", "datasets", "digit-training"}
     excluded_extensions = {".pt", ".pth", ".onnx", ".idx1-ubyte", ".idx3-ubyte"}
     candidates = assets_dir.rglob('*')
     if assets_dir.resolve() == DEFAULT_ASSETS_DIR.resolve():
@@ -91,6 +91,9 @@ def visualization_files(assets_dir: Path) -> list[Path]:
         and not excluded_directories.intersection(
             path.relative_to(assets_dir).parts[:-1]
         )
+        and ('models' not in path.relative_to(assets_dir).parts[:-1]
+             or path.suffix.lower() in {'.png','.jpg','.jpeg','.svg','.webp','.avif','.gif','.glb','.gltf'}
+             or path.suffix.lower()=='.bin' and any(path.parent.glob('*.gltf')))
         and path.suffix.lower() not in excluded_extensions
         and path.resolve().is_relative_to(assets_dir.resolve())
     )
