@@ -15,7 +15,7 @@ try{
  const rid='11111111-1111-4111-8111-111111111111',next='22222222-2222-4222-8222-222222222222';
  let head=rid,revisionWrites=0,revisionProject;
  const source="import React,{useState} from 'react';export default function Lesson(){const [n,setN]=useState(0);return <main><h1>真实 React 课程</h1><button onClick={()=>setN(n+1)}>互动次数 {n}</button></main>}";
- const project={version:1,id:'project',courseId:'custom-fixture',title:'本地 Agent 课程',duration:20,style:'简洁教学',outlineConfirmed:true,source:{files:{'Lesson.tsx':source}},pages:['first','second'].map((id,i)=>({id,format:'react',sourceEntry:'Lesson.tsx',title:'第'+(i+1)+'页',goal:'理解课程',summary:'课程说明',note:'',ready:true,designed:true,revisions:[],messages:[]}))};
+ const project={authoringVersion:'5494acc45c2069e4bf793c0b2e95b21cfe0f18eb',version:1,id:'project',courseId:'custom-fixture',title:'本地 Agent 课程',duration:20,style:'简洁教学',outlineConfirmed:true,source:{files:{'Lesson.tsx':source}},pages:['first','second'].map((id,i)=>({id,format:'react',sourceEntry:'Lesson.tsx',title:'第'+(i+1)+'页',goal:'理解课程',summary:'课程说明',note:'',ready:true,designed:true,revisions:[],messages:[]}))};
  revisionProject=project;
  const course={id:'fixture',owner_id:'owner',title:project.title,module_id:'custom-fixture',description:'',category:'人工智能',status:'draft',head_revision:head};
  await fs.writeFile(path.join(folder,'project.json'),JSON.stringify(project));
@@ -46,12 +46,16 @@ try{
   return route.fulfill({json:data});
  });
  const drafts=await mockEditorDrafts(page,()=>head);
- const openFiles=async()=>{const menu=page.locator('.cw-file-menu');if(await menu.getAttribute('open')===null)await menu.locator(':scope>summary').click();};
+ const openFiles=async()=>{const menu=page.locator('.cw-file-menu');if(await menu.count()&&await menu.getAttribute('open')===null)await menu.locator(':scope>summary').click();};
  await page.goto(base+'/my-courses/editor?course=fixture');
  await page.locator('.cw-app.cw-editing').waitFor();
  await page.getByLabel('当前页修改要求',{exact:true}).waitFor();
- assert.equal(await page.getByRole('button',{name:'保存修订',exact:true}).isVisible(),false,'management actions stay behind File');
- assert.equal(await page.locator('.cw-topbar .cw-actions>button').count(),4,'only undo, redo, edit and present on toolbar');
+ assert.equal(await page.getByRole('button',{name:'保存修订',exact:true}).isVisible(),true);
+ assert.equal(await page.locator('.cw-file-menu').count(),0);
+ for(const label of ['页面详情','提交审核','查看课程大纲'])assert.equal(await page.getByRole('button',{name:label,exact:true}).isVisible(),true);
+ for(const label of ['使用本地 Agent 修改','编辑源码','同步与审核详情'])assert.equal(await page.getByRole('button',{name:label,exact:true}).count(),0);
+
+ await page.getByRole('button',{name:'页面详情',exact:true}).click();await page.getByRole('dialog',{name:'页面属性',exact:true}).waitFor();await page.getByRole('button',{name:'关闭页面属性',exact:true}).click();
  assert.equal(await page.locator('.cw-saved-thumbnail').count(),2,'source slides have actual preview thumbnails');
  const frame=page.frameLocator('.cw-viewport iframe');
  await frame.getByRole('heading',{name:'真实 React 课程'}).waitFor();
@@ -70,7 +74,7 @@ try{
  assert.equal(drafts.get('fixture').project.source.files['Lesson.tsx'],source);
  await openFiles();await page.getByRole('button',{name:'保存修订',exact:true}).click();
  await page.waitForFunction(()=>document.querySelector('.cw-save')?.textContent==='已保存');
- assert.equal(revisionWrites,1);assert.equal(revisionProject.pages[1].title,'保存后的第二页');
+ assert.equal(revisionProject.authoringVersion,project.authoringVersion);assert.equal(revisionWrites,1);assert.equal(revisionProject.pages[1].title,'保存后的第二页');
  await page.reload();await page.locator('.cw-editing .cw-composer').waitFor();
  assert.match(await page.locator('.cw-page-heading').innerText(),/保存后的第二页/);
  await openFiles();await page.getByRole('button',{name:'查看课程大纲',exact:true}).click();
@@ -80,7 +84,11 @@ try{
  await page.getByRole('button',{name:'讲稿',exact:true}).click();await page.getByRole('dialog',{name:'本页讲稿'}).waitFor();await page.getByRole('button',{name:'关闭面板'}).click();
  await page.getByRole('button',{name:'✎ 编辑',exact:true}).click();await page.locator('.cw-editing .cw-composer').waitFor();
  await page.getByRole('button',{name:'演示',exact:true}).click();await page.waitForFunction(()=>!!document.fullscreenElement);await page.evaluate(()=>document.exitFullscreen());
- await page.goto(base+'/my-courses');await page.getByRole('link',{name:'预览我的课程',exact:true}).click();
+ await page.goto(base+'/my-courses');
+ await page.locator('.shuku-course-card h2').waitFor();
+ assert.equal(await page.getByRole('link',{name:'查看课程大纲',exact:true}).count(),0);
+ for(const width of [1440,390]){await page.setViewportSize({width,height:1000});const card=page.locator('.shuku-course-card').first();const info=await card.locator(':scope>div').first().boundingBox(),actions=await card.locator(':scope>.shuku-row-actions').boundingBox();assert.ok(actions.y>=info.y+info.height,'course actions are below information');}
+ await page.setViewportSize({width:1600,height:1000});await page.getByRole('link',{name:'预览我的课程',exact:true}).click();
  await page.waitForURL('**/my-courses/editor?course=fixture');await page.locator('.cw-editing .cw-composer').waitFor();
  await page.goto(base+'/my-courses/preview?course=fixture');
  await page.waitForURL('**/my-courses/editor?course=fixture');await page.locator('.cw-editing .cw-composer').waitFor();
