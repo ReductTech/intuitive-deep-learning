@@ -3,7 +3,7 @@ import { Typography } from '../../../shared/react';
 
 export type MaeStage = 0 | 1 | 2;
 type Frame = { absolute: number; bars: number; mean: number };
-const orange = '#ed7047', blue = '#427ee0';
+const orange = '#f17c60', blue = '#4c89ed';
 
 export function MergedAbsoluteErrorPlot({ errors, stage, replay, onAnimationComplete, onInteraction, loss = 'absolute' }: { errors: number[]; stage: MaeStage; replay: number; onAnimationComplete: () => void; onInteraction: () => void; loss?: 'absolute' | 'squared' }) {
   const [frame, setFrame] = useState<Frame>({ absolute: 0, bars: 0, mean: 0 });
@@ -11,7 +11,7 @@ export function MergedAbsoluteErrorPlot({ errors, stage, replay, onAnimationComp
   const svgRef = useRef<SVGSVGElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [{ width, height }, setSize] = useState({ width: 1000, height: 540 });
-  const plot = { left: 72, right: width - 30, top: 35, bottom: height - 75 };
+  const plot = { left: 80, right: width - 30, top: 25, bottom: height - 68 };
   useLayoutEffect(() => {
     const container = containerRef.current;
     if (!container) return;
@@ -83,22 +83,22 @@ export function MergedAbsoluteErrorPlot({ errors, stage, replay, onAnimationComp
     <svg ref={svgRef} viewBox={`0 0 ${width} ${height}`} className="rl-mae-merged-svg" role="img" aria-label={`残差与${squared ? '平方' : '绝对值'}函数合并图，当前第${stage + 1}阶段，共${errors.length}条记录`}>
       <g className="rl-mae-merged-grid">{yTicks.map(value => <line key={value} x1={plot.left} x2={plot.right} y1={py(value)} y2={py(value)} />)}</g>
       <g className="rl-mae-merged-axes"><line x1={plot.left} x2={plot.right} y1={py(0)} y2={py(0)} /><line x1={plot.left} x2={plot.left} y1={plot.top} y2={plot.bottom} />{ticks.map(value => <Typography as="text" variant="bodySmall" tone="accent" key={value} x={px(value)} y={plot.bottom + 30} textAnchor="middle">{value}</Typography>)}{yTicks.map(value => <Typography as="text" variant="bodySmall" tone="accent" key={value} x={plot.left - 16} y={py(value) + 7} textAnchor="end">{Number(value.toFixed(1))}</Typography>)}<Typography as="text" variant="body" tone="accent" x={(plot.left + plot.right) / 2} y={height - 18} textAnchor="middle">残差 e</Typography><Typography as="text" variant="body" tone="accent" transform={`translate(24 ${(plot.top + plot.bottom) / 2}) rotate(-90)`} textAnchor="middle">{stage === 0 ? '原始残差' : squared ? '平方误差' : '绝对误差'}</Typography></g>
+      <polyline points={curve} fill="none" stroke="#ee7759" strokeWidth="2.5" strokeLinejoin="round" pointerEvents="none" />
       <g className="rl-mae-merged-bars">{errors.map((error, index) => {
         const end = py(transformed(error) * frame.bars);
         const zero = py(0);
         const active = hovered === index;
+        const color = error < 0 ? blue : orange;
         return <g key={index} onMouseEnter={() => setHovered(index)} onMouseLeave={() => setHovered(null)} onFocus={() => { onInteraction(); setHovered(index); }} onBlur={() => setHovered(null)} tabIndex={0} role="button" aria-label={`样本${index + 1}，残差${error.toFixed(1)}，${squared ? '平方误差' : '绝对误差'}${lossValue(error).toFixed(1)}`} onClick={() => { onInteraction(); setProbe(error); }} onKeyDown={event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); onInteraction(); setProbe(error); } }}>
-          <rect x={px(error) - (active ? 10 : 7)} y={Math.min(zero, end)} width={active ? 20 : 14} height={Math.max(1, Math.abs(end - zero))} rx="2" fill={active || error < 0 && frame.absolute < .5 ? blue : orange} opacity={.35 + frame.bars * .3} />
+          <rect x={px(error) - 9} y={Math.min(zero, end)} width="18" height={Math.max(1, Math.abs(end - zero))} rx="4" fill={color} opacity={active ? .9 : .68} />
           <line x1={px(error)} x2={px(error)} y1={zero} y2={end} stroke="transparent" strokeWidth="24" />
-          <circle cx={px(error)} cy={end} r={active ? 7 : 4} fill={active ? blue : orange} opacity={frame.bars} />
+          {active && <circle cx={px(error)} cy={end} r="13" fill={color} opacity=".13" />}
+          <circle cx={px(error)} cy={end} r={active ? 7 : 5.5} fill={color} stroke="white" strokeWidth="2" opacity={frame.bars} />
         </g>;
       })}</g>
-      <polyline points={curve} fill="none" stroke={orange} strokeWidth="4" pointerEvents="none" />
-      <g opacity={frame.mean} pointerEvents="none"><line x1={plot.left} x2={plot.right} y1={py(mean)} y2={py(mean)} stroke={blue} strokeWidth="2" strokeDasharray="10 7" /><Typography as="text" variant="bodySmall" tone="accent" x={plot.right - 8} y={py(mean) - 12} textAnchor="end">{metric} = {mean.toFixed(1)}</Typography></g>
-      <line x1={px(probe)} x2={px(probe)} y1={py(0)} y2={probeY} stroke="#91a9c5" strokeDasharray="4 5" pointerEvents="none" />
+      <g opacity={frame.mean} pointerEvents="none"><line x1={plot.left} x2={plot.right} y1={py(mean)} y2={py(mean)} stroke="#15958c" strokeWidth="2" strokeDasharray="8 6" /><Typography as="text" variant="bodySmall" tone="accent" x={plot.right - 8} y={py(mean) - 12} textAnchor="end">{metric} = {mean.toFixed(1)}</Typography></g>
     </svg>
-    <button className="rl-mae-merged-probe" aria-label={`拖动函数上的点，观察原始残差与${squared ? '平方' : '绝对值'}`} style={{ left: `${px(probe) / width * 100}%`, top: `${probeY / height * 100}%` }} onPointerDown={event => { onInteraction(); event.currentTarget.setPointerCapture(event.pointerId); }} onPointerMove={dragProbe} onPointerUp={event => event.currentTarget.releasePointerCapture(event.pointerId)} onKeyDown={event => { if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') { event.preventDefault(); onInteraction(); setProbe(Math.max(-bound, Math.min(bound, Math.round((probe + (event.key === 'ArrowLeft' ? -.1 : .1)) * 10) / 10))); } }} />
-    <div className="rl-mae-merged-probe-readout"><Typography variant="bodySmall" tone="accent">e = {probe.toFixed(1)} {stage > 0 && <> → {squared ? 'e²' : '|e|'} = {lossValue(probe).toFixed(1)}</>}</Typography></div>
+    <button className="rl-mae-merged-probe" aria-label={`拖动函数上的点，观察原始残差与${squared ? '平方' : '绝对值'}`} style={{ left: `${px(probe) / width * 100}%`, top: `${probeY / height * 100}%` }} onPointerDown={event => { onInteraction(); event.currentTarget.setPointerCapture(event.pointerId); }} onPointerMove={dragProbe} onPointerUp={event => { if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId); }} onKeyDown={event => { if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') { event.preventDefault(); onInteraction(); setProbe(Math.max(-bound, Math.min(bound, Math.round((probe + (event.key === 'ArrowLeft' ? -.1 : .1)) * 10) / 10))); } }} />
     {hoveredError !== undefined && <div className="rl-mae-merged-tooltip" role="tooltip"><Typography variant="body" tone="accent">样本 {(hovered ?? 0) + 1}</Typography><Typography variant="body" tone="accent">残差：{hoveredError.toFixed(1)}</Typography><Typography variant="body" tone="accent">{squared ? '平方' : '绝对值'}：{lossValue(hoveredError).toFixed(1)}</Typography></div>}
   </div>;
 }
