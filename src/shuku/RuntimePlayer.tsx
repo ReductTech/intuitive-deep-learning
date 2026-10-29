@@ -7,6 +7,7 @@ import {NativeLesson} from './NativeLesson';
 import {TextPage} from './TextPage';
 import {GuideSession} from './GuideSession';
 import './RuntimePlayer.css';
+import {NarrationContext,parentNarration} from './narrationBridge';
 import {playbackModule} from './playbackModule';
 import type {ActiveModule} from '../app/modules';
 import type {StudyPosition} from './personal';
@@ -37,5 +38,5 @@ export function RuntimePlayer({project,deck,guide,notes,assetId='',initialState,
  }
  if(!initialized)return null;
  if(state.mode==='guide'&&guide)return <div className="shuku-original-guide"><GuideSession project={project} state={state} scope={scope} onChange={setState}>{guide}</GuideSession></div>;
- return <CourseWorkspace courses={courses} initialProject={project} reader={{state,onChange:setState,storageKey:scope+':'+revision,thumbnail:page=>assetId&&page.nativeId?moduleAssetUrl(assetId,`scenedeck-thumbnails/${page.nativeId}.png`):undefined}}/>;
+ return <NarrationContext.Provider value={window.origin==='null'?parentNarration(revision,channel):null}><CourseWorkspace courses={courses} initialProject={project} reader={{state,onChange:setState,storageKey:scope+':'+revision,thumbnail:page=>assetId&&page.nativeId?moduleAssetUrl(assetId,`scenedeck-thumbnails/${page.nativeId}.png`):undefined}}/></NarrationContext.Provider>;
 }

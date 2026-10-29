@@ -58,7 +58,10 @@ def create_application(settings, clock=time.time):
         data=bucket.read(task["payload"]["sha256"])
         checkpoint({"verified":True})
         return {"size":len(data)}
+    from .narration import Narration
+    narration=Narration(settings.bucket_dir/'narration',settings_path=settings.source_root/'settings.json' if settings.source_root is not None else None)
     workflow=Workflow(store,bucket,settings.source_root,clock,course_root=settings.course_root)
+    workflow.narration=narration
     workflow.library=LibraryCatalog(workflow)
     workflow.library.sync()
     workflow.collaboration=Collaboration(workflow)

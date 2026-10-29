@@ -180,7 +180,16 @@ def handler_for(app):
                     self.send_header("Content-Length",str(len(content)))
                     self.send_header("Cache-Control","private, no-store")
                     self.send_header("X-Content-Type-Options","nosniff")
-                    self.send_header("Content-Security-Policy",STATIC_CSP if external else SANDBOX_CSP if sandboxed else "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'self'")
+                    self.send_header("Content-Security-Policy",STATIC_CSP if external else SANDBOX_CSP if sandboxed else "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; media-src 'self' blob:; frame-ancestors 'self'")
+                    self.end_headers();self.wfile.write(content);return
+                if self.command=='POST' and path=='/api/shuku/narration/segment':
+                    body=self.body(65536)
+                    content=app.workflow.narration.synthesize(body)
+                    self.send_response(200)
+                    self.send_header('Content-Type','audio/mpeg')
+                    self.send_header('Content-Length',str(len(content)))
+                    self.send_header('Cache-Control','private, no-store')
+                    self.send_header('X-Content-Type-Options','nosniff')
                     self.end_headers();self.wfile.write(content);return
                 raw_token=token_from(self.headers.get("Cookie"))
                 if self.command=='POST' and path=='/api/shuku/auth/sms-code':
