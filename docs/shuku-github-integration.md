@@ -16,7 +16,7 @@
 
 ## 配置与启动
 
-安装 `backend[shuku]`，其中包含 `psycopg` 和用于 RS256 签名的 `cryptography`。先显式执行迁移，再启动服务；新增迁移为 `006_github.sql`、`007_external_revision.sql`。
+安装 `backend[shuku]`，其中包含 `SQLAlchemy`、`mysql-connector-python` 和用于 RS256 签名的 `cryptography`。先显式执行迁移，再启动服务；新增迁移为 `006_github.sql`、`007_external_revision.sql`。
 
 `SHUKU_GITHUB_CONFIG` 指向服务端配置文件，兼容 Demo 字段：
 

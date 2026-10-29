@@ -10,7 +10,7 @@
 - MySQL 8.0.16+：使用独立术库业务库和 `mysql+mysqlconnector://` 连接，表名前缀为 `shuku_`。迁移账号具有 DDL 权限，运行账号无建表、建库权限，`shuku_schema_migrations` 只读。此项为待部署配置说明；本次只修改和验证本地环境，不变更云端数据库。
 - 登录 Cookie 使用 shuku_idl_session，Path=/api/shuku，HTTPS 下启用 Secure；避免同 IP 的旧 Demo shuku_session 干扰。
 
-MySQL 基线不会自动导入历史 PostgreSQL/IDL 演示库；已有历史数据必须先完成独立转换、备份和验收，不能直接替换数据库连接。本地开发端口仍按各自启动配置设置，本次仅切换服务器 HTTPS 入口，不改动本地开发库。
+MySQL 基线不会自动导入历史旧库/IDL 演示库；已有历史数据必须先完成独立转换、备份和验收，不能直接替换数据库连接。本地开发端口仍按各自启动配置设置，本次仅切换服务器 HTTPS 入口，不改动本地开发库。
 
 发布前在有依赖的环境运行 npm ci、npm run build，并运行相关后端与页面检查。打包 dist 到服务器，将静态 assets 与 dist 合入新的 release，验证后切换 current。后端升级先用迁移配置执行 python -m shuku_backend migrate，再启动或重启 shuku-idl；正常 serve 不自动迁移。
 

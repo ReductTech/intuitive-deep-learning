@@ -7,7 +7,7 @@ from sqlalchemy.exc import IntegrityError
 from shuku_backend.database import mysql_url
 
 
-@pytest.mark.parametrize('url', ['postgresql://user@localhost/business', 'sqlite:///business',
+@pytest.mark.parametrize('url', ['mssql://user@localhost/business', 'sqlite:///business',
                                  'mysql+mysqlconnector://user@localhost'])
 def test_only_explicit_mysql_database_is_accepted(url):
     with pytest.raises(ValueError):

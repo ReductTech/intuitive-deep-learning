@@ -45,7 +45,7 @@ def test_local_api_uses_same_cloud_checkout_and_only_server_credentials(tmp_path
     main, cloud = checkout(tmp_path)
     for name in ('IDL_CLOUD_REPOSITORY', 'MYSQL_URL_REMOTE', 'GPU_GATEWAY_BASE_URL', 'LLM_GATEWAY_BASE_URL', 'IDL_TELEMETRY_ENABLED'):
         monkeypatch.delenv(name, raising=False)
-    (cloud / 'infra/.env.cloud.production').write_text('MYSQL_URL_REMOTE=mysql+pymysql://example\nGPU_GATEWAY_BASE_URL=http://production-host\nDATABASE_URL=postgresql://production-only\n', encoding='utf-8')
+    (cloud / 'infra/.env.cloud.production').write_text('MYSQL_URL_REMOTE=mysql+pymysql://example\nGPU_GATEWAY_BASE_URL=http://production-host\nDATABASE_URL=unused://production-only\n', encoding='utf-8')
     environment = cloud_environment(main)
     assert cloud_repository(main) == cloud
     assert environment['MYSQL_URL_REMOTE'] == 'mysql+pymysql://example'
