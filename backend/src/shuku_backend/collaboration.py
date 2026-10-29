@@ -10,6 +10,9 @@ def teaching(project):
     """Copy teaching material without author chats, image references or undo history."""
     value={k:project[k] for k in ('version','id','courseId','title','duration','style','outlineConfirmed')}
     if project.get('nativeSnapshot'):value['nativeSnapshot']=project['nativeSnapshot']
+    if project.get('authoringVersion'):value['authoringVersion']=project['authoringVersion']
+    if project.get('sourceGuideEntry'):value['sourceGuideEntry']=project['sourceGuideEntry']
+    if project.get('authoringModule'):value['authoringModule']=project['authoringModule']
     if project.get('source'):value['source']=json.loads(json.dumps(project['source']))
     value['pages']=[{**{k:p[k] for k in ('id','nativeId','format','sourceEntry','title','goal','summary','ready','designed') if k in p},'note':'','revisions':[],'messages':[]} for p in project['pages']]
     return value
@@ -99,7 +102,7 @@ class Collaboration:
             require(target,409,'TARGET_UNAVAILABLE','课程当前不可共创。')
             base=db.execute('SELECT revision_id FROM shuku_releases WHERE id=%s',(w['base_release_id'],)).fetchone()
             diff=self.difference(db,base['revision_id'],rid)
-            require(diff['pages'] or diff['settings'],409,'NO_CHANGES','尚未修改教学内容。')
+            require(diff['pages'] or diff['settings'] or diff.get('source_files'),409,'NO_CHANGES','尚未修改教学内容。')
             contribution_id=str(uuid4())
             db.execute("INSERT INTO shuku_contributions(id,workspace_id,target_course_id,revision_id,target_head,artifact_hash,summary,status,created_at) VALUES (%s,%s,%s,%s,%s,%s,%s,'pending',%s)",(contribution_id,wid,w['target_course_id'],rid,target['head_revision'],revision['artifact_hash'],data['summary'].strip(),self.clock()))
             row=db.execute("SELECT * FROM shuku_contributions WHERE id=%s",(contribution_id,)).fetchone()

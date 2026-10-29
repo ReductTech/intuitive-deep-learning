@@ -117,6 +117,16 @@ def handler_for(app):
                     set(query)=={'shukuPage'} and len(query['shukuPage'])==1 and
                     0<len(query['shukuPage'][0])<=256 and query['shukuPage'][0].isprintable())
                 require(not url.query or allowed_query or inbox_query or preview_query,400,'INVALID_INPUT','该接口不接受这些查询参数。')
+                library_asset=re.fullmatch(r'/api/shuku/public/library-assets/([a-f0-9]{40})/([^/]+)/(.+)',path)
+                if self.command=='GET' and library_asset:
+                    file,mime=app.workflow.local_agent.public_native_asset(library_asset[1],library_asset[2],unquote(library_asset[3]))
+                    with file.open('rb') as content:
+                        self.send_response(200);self.send_header('Content-Type',mime)
+                        self.send_header('Content-Length',str(file.stat().st_size));self.send_header('Cache-Control','public, max-age=31536000, immutable')
+                        self.send_header('X-Content-Type-Options','nosniff');self.send_header('Access-Control-Allow-Origin','*')
+                        self.send_header('Content-Security-Policy',"sandbox; default-src 'none'");self.end_headers()
+                        while chunk:=content.read(65536):self.wfile.write(chunk)
+                    return
                 bearer=self.headers.get('Authorization')
                 if bearer is not None:
                     require(bearer.startswith('Bearer '),401,'AGENT_UNAUTHORIZED','请使用本地创作凭证。')

@@ -10,6 +10,14 @@ const moduleDir=args.module?path.resolve(args.module):null,outdir=path.resolve(a
 if((moduleDir&&!moduleDir.startsWith(path.join(courseRoot,'modules')+path.sep))||!/^[-a-f0-9]{36}$/.test(args.revision))throw Error('Invalid build context');
 const outline=moduleDir?JSON.parse(await fs.readFile(path.join(moduleDir,'outlines.json'),'utf8')):null;
 const project=JSON.parse(await fs.readFile(args.project,'utf8'));
+let sharedRoot=path.join(courseRoot,'modules/shared');
+if(project.authoringVersion){
+ const lock=JSON.parse(await fs.readFile(path.join(root,'local-authoring.lock.json'),'utf8'));
+ if(!/^[a-f0-9]{40}$/.test(project.authoringVersion)||project.authoringVersion!==lock.commit)throw Error('Unsupported authoring framework version');
+ sharedRoot=path.join(root,'.authoring-template',lock.commit,'creator-skills/shared');
+ await fs.access(path.join(sharedRoot,'react/index.ts'));
+}
+
 if(outline&&project.courseId!==(outline.id||path.basename(moduleDir)))throw Error('Module identity mismatch');
 const base='/api/shuku/revisions/'+args.revision+(args.player?'/player/files/':'/files/');
 const native=project.pages.some(p=>p.nativeId);
@@ -22,10 +30,11 @@ if(entry&&!entry.startsWith(moduleDir+path.sep))throw Error('Invalid module entr
 const guideEntry=native&&outline?.entry?path.resolve(moduleDir,outline.entry):null;
 if(guideEntry&&!guideEntry.startsWith(moduleDir+path.sep))throw Error('Invalid guide entry');
 const guideName=outline?.entry?.replace(/\.tsx?$/,'');
+const embeddedAssetMap=Object.fromEntries(Object.entries(project.source?.files||{}).filter(([name])=>name.startsWith('assets/')).map(([name,value])=>[name,value.startsWith('data:')?value:'data:'+(name.toLowerCase().endsWith('.svg')?'image/svg+xml':name.toLowerCase().endsWith('.json')?'application/json':'text/plain')+';base64,'+Buffer.from(value).toString('base64')]));
 const publicProject={version:1,id:args.revision,courseId:project.courseId,title:project.title,duration:project.duration,style:project.style,outlineConfirmed:true,pages:project.pages.map(p=>({id:p.id,nativeId:p.nativeId,format:p.format,title:p.title,goal:p.goal,summary:p.summary,note:'',ready:true,designed:true,revisions:[],messages:[]}))};
-const source=`import React from 'react';import {createRoot} from 'react-dom/client';import {RuntimePlayer} from ${JSON.stringify(path.join(root,'src/shuku/RuntimePlayer.tsx'))};import ${JSON.stringify(path.join(courseRoot,'modules/shared/react/styles.css'))};${native?'import * as nativeModule from '+JSON.stringify(entry)+';const nativeDeck=nativeModule.deck;':''}${guideEntry?'import * as guideModule from '+JSON.stringify(guideEntry)+';':''}${imports}const Guide=guideModuleValue();function guideModuleValue(){return ${guideEntry?'guideModule['+JSON.stringify(guideName)+']||guideModule['+JSON.stringify(guideName[0].toUpperCase()+guideName.slice(1))+']||guideModule.default':'null'};}const deck={scenes:[${native?'...nativeDeck.scenes,':''}${scenes}]};const project=${JSON.stringify(publicProject)};createRoot(document.getElementById('root')).render(React.createElement(RuntimePlayer,{project,guide:Guide?React.createElement(Guide):undefined,notes:${native?'nativeModule.getPptNotes':'undefined'},assetId:${JSON.stringify(outline?.moduleIdentity?.id||'')}${native||managed?',deck':''}}));`;
+const source=`import React from 'react';import {createRoot} from 'react-dom/client';import {RuntimePlayer} from ${JSON.stringify(path.join(root,'src/shuku/RuntimePlayer.tsx'))};import ${JSON.stringify(path.join(sharedRoot,'react/styles.css'))};${native?'import * as nativeModule from '+JSON.stringify(entry)+';const nativeDeck=nativeModule.deck;':''}${guideEntry?'import * as guideModule from '+JSON.stringify(guideEntry)+';':''}${imports}${project.sourceGuideEntry?'import SourceGuide from '+JSON.stringify('shuku-source:'+project.sourceGuideEntry)+';':''}const Guide=${project.sourceGuideEntry?'SourceGuide':'guideModuleValue()'};function guideModuleValue(){return ${guideEntry?'guideModule['+JSON.stringify(guideName)+']||guideModule['+JSON.stringify(guideName[0].toUpperCase()+guideName.slice(1))+']||guideModule.default':'null'};}globalThis.__SHUKU_COURSE_ASSETS__=${JSON.stringify(embeddedAssetMap)};const deck={scenes:[${native?'...nativeDeck.scenes,':''}${scenes}]};const project=${JSON.stringify(publicProject)};createRoot(document.getElementById('root')).render(React.createElement(RuntimePlayer,{project,guide:Guide?React.createElement(Guide):undefined,notes:${native?'nativeModule.getPptNotes':'undefined'},assetId:${JSON.stringify(outline?.moduleIdentity?.id||'')}${native||managed?',deck':''}}));`;
 const urlAssets={name:'url-assets',setup(context){context.onResolve({filter:/\?raw$/,namespace:'file'},async args=>{const file=await fs.realpath(path.resolve(args.resolveDir,args.path.slice(0,-4)));const relative=path.relative(courseRoot,file);if(relative.startsWith('..')||path.isAbsolute(relative)||!['modules','assets','creator-skill'].includes(relative.split(path.sep)[0]))throw Error('Raw resource leaves the course snapshot');return {path:file,namespace:'shuku-raw'};});context.onLoad({filter:/.*/,namespace:'shuku-raw'},async args=>({contents:await fs.readFile(args.path,'utf8'),loader:'text'}));context.onResolve({filter:/\?url$/},args=>({path:path.resolve(args.resolveDir,args.path.slice(0,-4)),namespace:'shuku-url'}));context.onLoad({filter:/.*/,namespace:'shuku-url'},async args=>({contents:await fs.readFile(args.path),loader:'file'}));}};
-const courseDocuments={name:'course-creator-documents',setup(context){context.onResolve({filter:/^virtual:creator-skill-documents$/},()=>({path:'documents',namespace:'course-documents'}));context.onLoad({filter:/.*/,namespace:'course-documents'},async()=>{const folder=path.join(courseRoot,'creator-skill');async function read(dir){const result=[];for(const item of await fs.readdir(dir,{withFileTypes:true})){const file=path.join(dir,item.name);if(item.isDirectory())result.push(...await read(file));else if(item.name.endsWith('.md'))result.push({path:path.relative(folder,file).replaceAll('\\','/'),content:await fs.readFile(file,'utf8')});}return result;}return {contents:'export default '+JSON.stringify(await read(folder)),loader:'js'};});}};
+const courseDocuments={name:'course-creator-documents',setup(context){context.onResolve({filter:/^virtual:creator-skill-documents$/},()=>({path:'documents',namespace:'course-documents'}));context.onLoad({filter:/.*/,namespace:'course-documents'},async()=>{const folder=project.authoringVersion?path.resolve(sharedRoot,'..'):path.join(courseRoot,'creator-skill');async function read(dir){const result=[];for(const item of await fs.readdir(dir,{withFileTypes:true})){const file=path.join(dir,item.name);if(item.isDirectory())result.push(...await read(file));else if(item.name.endsWith('.md'))result.push({path:path.relative(folder,file).replaceAll('\\','/'),content:await fs.readFile(file,'utf8')});}return result;}return {contents:'export default '+JSON.stringify(await read(folder)),loader:'js'};});}};
 // Expand trusted native eager globs during compilation; managed source maps
 // never enter the filesystem namespace and cannot use this loader to read files.
 const nativeGlobs={name:'native-eager-globs',setup(context){context.onLoad({filter:/\.[jt]sx?$/,namespace:'file'},async args=>{
@@ -51,14 +60,23 @@ const nativeGlobs={name:'native-eager-globs',setup(context){context.onLoad({filt
 });}};
 // Host adapters must use the same shared contexts as the frozen course scenes.
 const sharedRuntime={name:'frozen-shared-runtime',setup(context){context.onResolve({filter:/^\.\.?\//},async args=>{
- if(!native||args.namespace!=='file')return;
+ if(!(native||managed)||args.namespace!=='file')return;
  const absolute=path.resolve(args.resolveDir,args.path),shared=path.join(root,'modules/shared')+path.sep;
- if(!absolute.startsWith(shared)||courseRoot===root)return;
- const mapped=path.join(courseRoot,'modules/shared',absolute.slice(shared.length));
+ if(!absolute.startsWith(shared)||(courseRoot===root&&sharedRoot===path.join(root,'modules/shared')))return;
+ const mapped=path.join(sharedRoot,absolute.slice(shared.length));
  for(const candidate of [mapped,mapped+'.tsx',mapped+'.ts',mapped+'.js',path.join(mapped,'index.ts')])if(await fs.stat(candidate).then(s=>s.isFile(),()=>false))return {path:candidate};
- throw Error('Shared runtime missing from frozen snapshot');
+ // Canvas fitting belongs to the host player; older templates inline this helper.
+ if(absolute===path.join(root,'modules/shared/react/presentation/canvas'))return;
+ throw Error('Shared runtime missing from frozen snapshot: '+absolute+' -> '+mapped);
 });}};
-await build({plugins:[...(managed?[sourcePlugin(project.source.files,root)]:[]),sharedRuntime,urlAssets,nativeGlobs,courseDocuments],nodePaths:[path.join(root,'node_modules')],resolveExtensions:['.tsx','.ts','.jsx','.js','.json'],stdin:{contents:source,resolveDir:root,loader:'tsx'},bundle:true,jsx:'automatic',format:managed?'iife':'esm',platform:'browser',target:'es2022',outdir,entryNames:'bundle',assetNames:'static/[hash]',loader:{...Object.fromEntries(['.svg','.png','.jpg','.jpeg','.webp','.gif','.avif','.mp4','.webm','.mp3','.wav'].map(ext=>[ext,managed?'dataurl':'file'])),'.woff':managed?'dataurl':'file','.woff2':managed?'dataurl':'file','.ttf':managed?'dataurl':'file','.otf':managed?'dataurl':'file'},define:{'process.env.NODE_ENV':'"production"','import.meta.env':JSON.stringify({BASE_URL:base+'assets/',VITE_ASSET_BASE_URL:base+'assets/',DEV:false,PROD:true})},logLevel:'silent'});
+
+const embeddedAssets={name:'embedded-course-assets',setup(context){context.onLoad({filter:/assets\.ts$/,namespace:'file'},async args=>{
+ if(!managed||args.path!==path.join(sharedRoot,'react/assets.ts'))return;
+ let code=await fs.readFile(args.path,'utf8');
+ if(!code.includes('__SHUKU_COURSE_ASSETS__'))code=code.replace('  const assetBase =',"  const embedded=(globalThis as unknown as {__SHUKU_COURSE_ASSETS__?:Record<string,string>}).__SHUKU_COURSE_ASSETS__?.['assets/'+moduleAssetId+'/'+relativePath];if(embedded)return embedded;\n  const assetBase =");
+ return {contents:code,loader:'ts',resolveDir:path.dirname(args.path)};
+});}};
+await build({plugins:[...(managed?[sourcePlugin(project.source.files,root,{courseRoot,assetId:outline?.moduleIdentity?.id||'',sharedRoot})]:[]),embeddedAssets,sharedRuntime,urlAssets,nativeGlobs,courseDocuments],nodePaths:[path.join(root,'node_modules')],resolveExtensions:['.tsx','.ts','.jsx','.js','.json'],stdin:{contents:source,resolveDir:root,loader:'tsx'},bundle:true,jsx:'automatic',format:managed?'iife':'esm',platform:'browser',target:'es2022',outdir,entryNames:'bundle',assetNames:'static/[hash]',loader:{...Object.fromEntries(['.svg','.png','.jpg','.jpeg','.webp','.gif','.avif','.mp4','.webm','.mp3','.wav'].map(ext=>[ext,managed?'dataurl':'file'])),'.woff':managed?'dataurl':'file','.woff2':managed?'dataurl':'file','.ttf':managed?'dataurl':'file','.otf':managed?'dataurl':'file'},define:{'process.env.NODE_ENV':'"production"','import.meta.env':JSON.stringify({BASE_URL:base+'assets/',VITE_ASSET_BASE_URL:managed&&project.nativeSnapshot?'/api/shuku/public/library-assets/'+project.nativeSnapshot:base+'assets/',DEV:false,PROD:true})},logLevel:'silent'});
 async function copyTree(from,to){
  for(const item of await fs.readdir(from,{withFileTypes:true})){
   if(item.isSymbolicLink())throw Error('Symlink in course assets');
@@ -67,14 +85,14 @@ async function copyTree(from,to){
   else if(item.isFile()){await fs.mkdir(to,{recursive:true});await fs.copyFile(source,target);}
  }
 }
-if(native){const assets=path.join(courseRoot,'assets',outline.moduleIdentity.id);try{await copyTree(assets,path.join(outdir,'assets',outline.moduleIdentity.id));}catch(e){if(e.code!=='ENOENT')throw e;}}
-if(native){
+if(native&&!managed){const assets=path.join(courseRoot,'assets',outline.moduleIdentity.id);try{await copyTree(assets,path.join(outdir,'assets',outline.moduleIdentity.id));}catch(e){if(e.code!=='ENOENT')throw e;}}
+if(native||managed){
  const {compile}=await import('@tailwindcss/node');const {Scanner}=await import('@tailwindcss/oxide');
- const template=await fs.readFile(path.join(moduleDir,'tailwind.css'),'utf8').catch(()=> '@import "tailwindcss/theme.css" layer(theme);@import "tailwindcss/utilities.css" layer(utilities) source(none);');
+ const template=await fs.readFile(path.join(moduleDir||root,'tailwind.css'),'utf8').catch(()=> '@import "tailwindcss/theme.css" layer(theme);@import "tailwindcss/utilities.css" layer(utilities) source(none);');
  const resolvedTemplate=template.replace(/(["'])tailwindcss\//g,(_,quote)=>quote+path.join(root,'node_modules/tailwindcss/').replaceAll('\\','/'));
- const compiler=await compile(resolvedTemplate,{base:moduleDir,onDependency:()=>{}});
- const scanner=new Scanner({sources:[...compiler.sources,{base:moduleDir,pattern:'**/*.{ts,tsx}',negated:false},{base:path.join(courseRoot,'modules/shared'),pattern:'**/*.{ts,tsx}',negated:false}]});
- await fs.writeFile(path.join(outdir,'utilities.css'),compiler.build(scanner.scan()));
+ const compiler=await compile(resolvedTemplate,{base:moduleDir||root,onDependency:()=>{}});
+ const scanner=new Scanner({sources:[...compiler.sources,...(native?[{base:moduleDir,pattern:'**/*.{ts,tsx}',negated:false}]:[]),{base:sharedRoot,pattern:'**/*.{ts,tsx}',negated:false}]});
+ await fs.writeFile(path.join(outdir,'utilities.css'),compiler.build([...scanner.scan(),...(managed?scanner.scanFiles(Object.entries(project.source.files).filter(([name])=>/\.[jt]sx?$/.test(name)).map(([name,content])=>({content,extension:path.extname(name).slice(1)}))):[])]));
 }
 if(managed){
  const escape=text=>text.replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll('<','&lt;').replaceAll('>','&gt;');

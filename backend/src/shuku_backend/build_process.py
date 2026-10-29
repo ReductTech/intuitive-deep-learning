@@ -12,6 +12,10 @@ def run_build(command, env, checkpoint, *, timeout=90, interval=5):
     expired = threading.Event()
 
     def kill_group():
+        if os.name=='nt':
+            if process.poll() is None:
+                subprocess.run(['taskkill','/PID',str(process.pid),'/T','/F'],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,creationflags=subprocess.CREATE_NO_WINDOW)
+            return
         try:
             os.killpg(process.pid, signal.SIGKILL)
         except ProcessLookupError:

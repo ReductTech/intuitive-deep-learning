@@ -22,8 +22,15 @@ def store():
         try:
             for name in metadata.tables:
                 if name not in ('shuku_schema_migrations','shuku_locks'):
-                    db.exec_driver_sql('TRUNCATE TABLE `'+name+'`')
+                    # UUID-keyed fixtures need empty rows, not a DDL rebuild for
+                    # every table/test (especially costly on a remote MySQL disk).
+                    db.exec_driver_sql('DELETE FROM `'+name+'`')
+            db.commit()
+        except BaseException:
+            db.rollback()
+            raise
         finally:
             db.exec_driver_sql('SET FOREIGN_KEY_CHECKS=1')
+            db.commit()
     yield result
     result.close()

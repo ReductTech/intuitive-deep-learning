@@ -11,20 +11,22 @@
     "typecheck": "tsc --noEmit",
     "test:edit-deck": "node --experimental-strip-types --test Edit-Deck/server.test.ts",
     "cache:decision": "node scripts/content/generate_decision_candidate_cache.mjs",
-    "courses:fetch": "node scripts/course-library-fetch.mjs"
+    "courses:fetch": "node scripts/course-library-fetch.mjs",
+    "authoring:prepare": "node scripts/prepare-authoring-framework.mjs"
   },
   "dependencies": {
     "@icon-park/react": "^1.4.2",
     "@langchain/core": "^1.2.18",
     "@langchain/langgraph": "^1.5.0",
+    "@tailwindcss/node": "^4.3.3",
+    "@tailwindcss/oxide": "^4.3.3",
+    "esbuild": "^0.28.2",
     "esbuild-wasm": "^0.28.2",
+    "lucide-react": "1.63.0",
     "react": "19.2.7",
     "react-dom": "19.2.7",
-    "three": "^0.186.1",
-    "esbuild": "^0.28.2",
     "tailwindcss": "^4.3.3",
-    "@tailwindcss/node": "^4.3.3",
-    "@tailwindcss/oxide": "^4.3.3"
+    "three": "^0.186.1"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.3",

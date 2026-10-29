@@ -3,6 +3,7 @@ import base64
 from hashlib import sha256
 import json
 from pathlib import Path
+import mimetypes
 import re
 import secrets
 from uuid import uuid4
@@ -11,6 +12,7 @@ from .workflow import identifier
 
 LIFETIME=30*86400
 TOKEN=re.compile(r'shu_local_[A-Za-z0-9_-]{43}')
+AUTHORING={'repository':'https://github.com/reduct-shuku/course-template.git','commit':'5494acc45c2069e4bf793c0b2e95b21cfe0f18eb'}
 
 
 class LocalAgent:
@@ -27,6 +29,17 @@ class LocalAgent:
             project=json.loads(self.flow.bucket.read(row['files']['project.json']['sha256']))
             require(not project.get('externalSnapshot'),409,'USE_GITHUB_CONTRIBUTION','此课程是静态仓库快照，请使用原有 GitHub 共创流程。')
         return course,workspace
+
+    def public_native_asset(self,commit,asset,name):
+        """Only public, pinned library media; never course buckets or source files."""
+        from .source import MEDIA
+        require(isinstance(asset,str) and re.fullmatch(r'[A-Za-z0-9_-]{1,100}',asset),404,'NOT_FOUND','课程素材不存在。')
+        require(isinstance(name,str) and name and all(p not in ('','.','..') and not p.startswith('.') for p in name.split('/')) and not any(c in name for c in '\\:%?#'),404,'NOT_FOUND','课程素材不存在。')
+        root=self.flow.native_root(commit)
+        require(any(m['id']==asset for m in self.flow.modules(root)),404,'NOT_FOUND','课程素材不存在。')
+        base=root/'assets'/asset;target=base/name
+        require(target.suffix.lower() in MEDIA|{'.svg','.json'} and target.is_file() and not target.is_symlink() and target.resolve().is_relative_to(base.resolve()),404,'NOT_FOUND','课程素材不存在。')
+        return target,mimetypes.guess_type(target.name)[0] or 'application/octet-stream'
 
     def issue_in(self,db,uid,cid):
         course,workspace=self.owned(db,uid,cid)
@@ -95,7 +108,16 @@ class LocalAgent:
                 project={'version':1,'id':cid,'courseId':alias,'title':course['title'],'duration':20,'style':'简洁','outlineConfirmed':False,
                          'pages':[{'id':'page-1','format':'react','sourceEntry':'Lesson.tsx','title':'第一课','goal':'','summary':'','note':'','ready':False,'designed':False,'revisions':[],'messages':[]}],
                          'source':{'files':{'Lesson.tsx':"export default function Lesson(){return <main><h1>开始创作</h1></main>}"}}}
-            return {'course_id':cid,'project':project,'expected_revision':head,'expected_draft':draft['version'] if draft else None,
+            native=None
+            if project.get('nativeSnapshot') or any(p.get('nativeId') for p in project['pages']):
+                commit=project.get('nativeSnapshot')
+                require(isinstance(commit,str) and re.fullmatch('[0-9a-f]{40}',commit),409,'SOURCE_SNAPSHOT_MISSING','原课程缺少固定源码版本，请先由管理员登记基础源码。')
+                root=self.flow.native_root(commit);module=self.flow.module_context(course['module_id'],root)
+                require(module['directory'],409,'SOURCE_SNAPSHOT_MISSING','固定版本中找不到原课程源码。')
+                native={'repository':'https://github.com/reduct-shuku/intuitive-deep-learning.git','commit':commit,
+                        'module':Path(module['directory']).relative_to(root).as_posix(),'asset_id':module['id']}
+            return {'course_id':cid,'project':project,'course':{'title':course['title'],'description':course['description'],'category':course['category']},
+                    'authoring':AUTHORING,'native_source':native,'expected_revision':head,'expected_draft':draft['version'] if draft else None,
                     'workspace':dict(workspace) if workspace else None,'editor_url':self.origin+'/my-courses/editor?course='+cid}
 
     def revision(self,raw,rid):
@@ -134,10 +156,14 @@ class LocalAgent:
     def instructions(self,course,token,base):
         cid=str(course['id'])
         return '\n'.join([
-            course['title']+' · 本地 Agent 创作说明',
-            '首次只准备本地目录和创作环境，读取课程与规范，然后询问用户想创作或修改什么，等待明确指令。不要直接生成课程、保存修订或提交审核。',
-            '可以阅读 https://github.com/reduct-shuku/course-template 的 creator-skills/SKILL.md，参考从零创作、参考改编、大纲讨论、视觉正反例和验收规范。',
-            '本项目使用下面的修订接口。不要执行模板 UPLOAD.md 的 ZIP 上传，不使用 /api/agent/courses/upload。',
+            course['title']+(' · 私有工作区共创说明' if base else ' · 课程创作说明'),
+            '首次收到本说明时，只执行准备阶段。标题、简介和分类是背景信息，不是立即生成课程的指令。',
+            '课程信息：'+json.dumps({'course_id':cid,'title':course['title'],'description':course.get('description',''),'category':course.get('category','')},ensure_ascii=False),
+            '准备阶段：',
+            ('新建本次共创目录 '+cid+'，不复制模板示例；下面的 prepare 会下载所选版本的完整原课程，并补齐固定版本创作框架。已有工程时沿用，不能覆盖本地修改。') if base else ('从 '+AUTHORING['repository']+' 克隆完整标准工程到新目录 '+cid+'，切换到固定提交 '+AUTHORING['commit']+'。已有本次工程时沿用，不能覆盖本地修改。'),
+            '公共创作框架：'+AUTHORING['repository']+'，固定提交：'+AUTHORING['commit']+'。',
+            '必须保留 creator-skills/、environment/、runtime/：包含公共组件、设计规范、视觉正反例、参考样例、检查工具和本地预览环境，不能只下载 SKILL.md。',
+            '阅读 README.md、creator-skills/SKILL.md、courses/README.md；共创还需阅读 creator-skills/collaboration/SKILL.md（如有）。准备阶段只了解结构，不启动创作流程。',
             '术库地址：'+self.origin, '课程 ID：'+cid,
             '基础发布版本：'+str(base['version']) if base else '本课程为本人私有创作。',
             '本次共创保留已选择的基础版本；不得换成官方最新版本或覆盖其他人的修改。',
@@ -145,11 +171,15 @@ class LocalAgent:
             'API Token：'+token,
             '凭证有效期 30 天，只能读取和保存本课程；不能审核、发布或管理账号。可以在个人信息中撤销。',
             '准备本地助手：使用 Authorization: Bearer <api_token 中的凭证>，GET '+self.origin+'/api/shuku/local-agent/client ，将响应保存为 shuku-local-agent.py。',
-            '首次读取：python3 shuku-local-agent.py --origin '+self.origin+' --course '+cid+' pull',
-            '助手会保存 project.json、shuku-state.json，并将 project.source.files 写入 source/。已有这些文件时不覆盖，请沿用原目录。',
+            '准备工程：python3 shuku-local-agent.py --origin '+self.origin+' --course '+cid+' prepare',
+            '助手保存 project.json、shuku-state.json 和课程基本信息。新课准备本课程的 courses/modules/ 目录；共创会克隆所选固定快照中的完整原课程模块与素材，不复制官方当前最新版。已有文件不会覆盖。',
+            '准备阶段不生成正文、章节、练习或交互页面，不构建、打包、上传或保存修订。完成后告知工程位置，询问用户面向谁、讲什么、希望如何设计，然后等待具体要求。',
             '收到创作要求后，与用户逐步讨论整体逻辑、模块与逐页内容。保留页面 ID、courseId 和 nativeSnapshot；仅修改用户要求的内容。',
-            'React 页面组件默认导出，在 project.json 的 pages 中设置 format=react、sourceEntry，并在 source/ 中保存源码。原生页保持 nativeId；要改写其实现时建立 React 页面并去掉该页 nativeId，不能只修改本地原生文件却期待服务器生效。',
-            '沿用既有源码契约：TS/TSX/JS/JSX/CSS/JSON/SVG 文本，最多 200 文件、单文件 1 MiB、总源码 4 MiB；图片可内嵌，不能添加任意 npm 依赖或服务端代码。',
+            '收到具体要求后，在 shuku-state.json 指定的 courses/modules/ 课程目录创作，按模板规范讨论整体逻辑、模块和逐页设计。保留课程标识和未要求修改的内容，不上传模板示例课程。',
+            '本地预览：npm --prefix environment/frontend ci，然后 npm --prefix environment/frontend run dev。沿用模板的公共组件与视觉检查工具。',
+            '标准模块用 outlines.json 登记页码和 ppt.entry，PPT 模块导出 deck；也兼容已有 source/ 工程。push 会将真实课程源码和素材转换为 IDL 修订，不只上传页面描述。',
+            '支持 @shared/react、React、React DOM、three、@icon-park/react 与已安装的固定依赖；普通图片可放 courses/assets/。不安装任意依赖，不上传服务端程序、框架、node_modules 或凭证。',
+            '交付采用以下修订接口，不执行 UPLOAD.md 的 ZIP 上传、不调用 /api/agent/courses/upload，不需要个人 Fork 或用户绑定 GitHub。',
             '需要保存阶段成果时：python3 shuku-local-agent.py push 。随后 python3 shuku-local-agent.py status 查询构建；失败修复后再次保存，网络重试沿用原请求编号。',
             '网页和本地同时修改出现冲突时保留本地文件，先与用户确认，不自动覆盖网页草稿。',
             '完成后回到 '+self.origin+'/my-courses/editor?course='+cid+' 预览，确认后由用户在网页提交审核或共创建议。',
