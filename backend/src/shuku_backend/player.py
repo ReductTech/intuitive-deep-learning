@@ -12,7 +12,7 @@ from .database import JsonValue
 from .errors import require
 from .workflow import identifier
 
-RENDERER='shuku-managed-slide-v5'
+RENDERER='shuku-managed-slide-v6-narration'
 
 class Player:
     def __init__(self,flow):

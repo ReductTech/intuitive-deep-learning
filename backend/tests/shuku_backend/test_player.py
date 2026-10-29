@@ -1,3 +1,6 @@
+from uuid import uuid4
+from hashlib import sha256
+from shuku_backend.database import JsonValue
 import pytest
 from shuku_backend.errors import BusinessError
 from shuku_backend.storage import DEMO_USERS
@@ -7,15 +10,21 @@ from test_workflow import workflow,save_ready,approve
 def test_original_player_is_authorized_cached_and_preserves_release(workflow):
     app,course,project,uid,admin=workflow
     project['pages'][0]['messages']=[{'role':'user','text':'private-chat-must-not-leak'}]
+    project['pages'][0]['outline']={'snippet':'approved-narration-must-be-retained'}
     revision=save_ready(app,course,project,uid);rid=revision['id']
     with app.store.transaction() as db:
         original=db.execute('SELECT files,artifact_hash FROM shuku_revisions WHERE id=%s',(rid,)).fetchone()
     with pytest.raises(BusinessError):app.workflow.player.status(None,rid)
     with pytest.raises(BusinessError):app.workflow.player.status(DEMO_USERS[0][0],rid)
+    # Previously rendered releases must get a new player after narration ships.
+    legacy_key='player:shuku-managed-slide-v5:'+rid
+    legacy_result={'revision_id':rid,'renderer':'shuku-managed-slide-v5','files':{}}
+    with app.store.transaction() as db:
+        db.execute("INSERT INTO shuku_tasks(id,kind,status,resource_key,idempotency_key,request_hash,payload,result,available_at,created_at) VALUES (%s,'revision.player','succeeded',%s,%s,%s,%s,%s,%s,%s)",(str(uuid4()),'course:'+course['id'],legacy_key,sha256(legacy_key.encode()).hexdigest(),JsonValue({'revision_id':rid}),JsonValue(legacy_result),app.clock(),app.clock()))
     assert app.workflow.player.status(uid,rid)['state']=='queued'
     assert app.workflow.player.status(uid,rid)['state']=='queued'
     with app.store.transaction() as db:
-        assert db.execute("SELECT count(*) AS n FROM shuku_tasks WHERE kind='revision.player'").fetchone()['n']==1
+        assert db.execute("SELECT count(*) AS n FROM shuku_tasks WHERE kind='revision.player' AND idempotency_key=%s",(app.workflow.player.key(rid),)).fetchone()['n']==1
     assert app.worker.run_once()
     assert app.workflow.player.status(uid,rid)['state']=='ready'
     html,mime=app.workflow.player.file(uid,rid,'index.html')
@@ -23,6 +32,9 @@ def test_original_player_is_authorized_cached_and_preserves_release(workflow):
     code,_=app.workflow.player.file(uid,rid,'bundle.js')
     assert b'cw-app' in code and b'private-chat-must-not-leak' not in code
     assert b'shukuPage' in code, 'managed previews reuse the compiled page without nesting another player'
+    assert b'cw-smart-narration' in code and b'approved-narration-must-be-retained' in code
+    with app.store.transaction() as db:
+        assert db.execute('SELECT result FROM shuku_tasks WHERE idempotency_key=%s',(legacy_key,)).fetchone()['result']==legacy_result
     for path in ('../project.json','project.json','sources/Lesson.tsx'):
         with pytest.raises(BusinessError):app.workflow.player.file(uid,rid,path)
     with pytest.raises(BusinessError):app.workflow.player.file(None,rid,'bundle.js')

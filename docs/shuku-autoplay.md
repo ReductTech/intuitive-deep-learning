@@ -13,3 +13,5 @@
 验证命令：`npm run typecheck`；`python -m pytest backend/tests/shuku_backend/test_narration.py -q`；在 Vite preview 模式下运行 `node scripts/check-shuku-autoplay.mjs <playwright/index.mjs 路径>`。
 
 MiniMax 朗读采用当前页加下一页的预载窗口：当前页开始播放时，后台生成下一段非空讲稿并下载、解码为可播放音频。翻页复用已完成或进行中的预载请求，不重复合成。手动跳页释放窗口外缓存，停止或修改音色、语速会清理音频及请求；下一页预载失败不打断当前页，到下一页时重试。
+
+已发布课程使用独立播放器缓存。播放器版本更新为 `shuku-managed-slide-v6-narration` 后，旧 v5 缓存不会继续命中；访问课程时按需生成新版播放器，保留原课程文件、发布版本及 artifact hash。仅清理浏览器缓存无法升级旧播放器。独立 HTML 快照维持原页面，不自动注入平台控件。
