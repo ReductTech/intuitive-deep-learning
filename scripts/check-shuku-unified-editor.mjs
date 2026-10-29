@@ -81,9 +81,10 @@ try{
  await openFiles();await page.getByRole('button',{name:'查看课程大纲',exact:true}).click();
  await page.getByRole('heading',{name:'从整体，慢慢展开',exact:true}).waitFor();
  await page.getByRole('button',{name:'返回页面编辑',exact:true}).click();await page.locator('.cw-editing .cw-composer').waitFor();
- await page.getByRole('button',{name:'✓ 完成编辑',exact:true}).click();assert.equal(await page.locator('.cw-composer').count(),0);
- await page.getByRole('button',{name:'讲稿',exact:true}).click();await page.getByRole('dialog',{name:'本页讲稿'}).waitFor();await page.getByRole('button',{name:'关闭面板'}).click();
- await page.getByRole('button',{name:'✎ 编辑',exact:true}).click();await page.locator('.cw-editing .cw-composer').waitFor();
+ await page.getByRole('button',{name:'完成编辑',exact:true}).click();assert.equal(await page.locator('.cw-composer').count(),0);
+ await page.getByRole('region',{name:'本页讲稿',exact:true}).waitFor();assert.ok(await page.locator('.cw-inline-notes-body').isVisible());
+ await page.getByRole('button',{name:'编辑',exact:true}).click();await page.locator('.cw-editing .cw-composer').waitFor();
+ await page.getByLabel('当前页更多操作',{exact:true}).click();await page.getByRole('button',{name:'查看讲稿',exact:true}).click();await page.getByRole('dialog',{name:'本页讲稿'}).waitFor();await page.getByRole('button',{name:'关闭面板'}).click();
  await page.getByRole('button',{name:'演示',exact:true}).click();await page.waitForFunction(()=>!!document.fullscreenElement);await page.evaluate(()=>document.exitFullscreen());
  await page.goto(base+'/my-courses');
  await page.locator('.shuku-course-card h2').waitFor();

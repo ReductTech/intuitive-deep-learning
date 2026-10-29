@@ -1,6 +1,8 @@
 import assert from 'node:assert/strict';
 import {pathToFileURL} from 'node:url';
 const {chromium}=await import(pathToFileURL(process.argv[2]).href);
+const base=process.env.SHUKU_E2E_URL||'http://localhost:5175';
+assert.ok(['localhost','127.0.0.1'].includes(new URL(base).hostname));
 const browser=await chromium.launch({channel:'chrome',headless:true});
 try{
  const page=await browser.newPage({viewport:{width:1440,height:1000}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
@@ -18,14 +20,15 @@ try{
   else throw new Error('Unexpected API '+path);
   await route.fulfill({json});
  });
- await page.goto('http://localhost:5175/my-courses?tab=workspaces');
+ await page.goto(base+'/my-courses?tab=workspaces');
  await page.getByText('同步与审核详情',{exact:true}).click();
  await page.getByText('术库私有工作区 · 无需 GitHub 账号',{exact:true}).waitFor();
  assert.equal(await page.getByRole('button',{name:'连接课程仓库',exact:true}).count(),0);
  assert.equal(await page.getByRole('link',{name:'课程仓库 ↗',exact:true}).count(),0);
  await page.getByRole('button',{name:'重试',exact:true}).click();assert(retried);
  await page.getByText('同步未完成').waitFor({state:'hidden'});
- assert.equal(await page.getByRole('link',{name:'继续修改',exact:true}).getAttribute('href'),'/my-courses/editor?course='+wid);
+ assert.ok(await page.getByRole('combobox',{name:'继续创作',exact:true}).isVisible());
+ assert.equal(await page.getByRole('link',{name:'预览我的共创',exact:true}).getAttribute('href'),'/my-courses/editor?course='+wid);
  await page.setViewportSize({width:390,height:844});assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
  assert.deepEqual(errors,[]);console.log('PASS unbound learner workspace entry, private status, scoped retry and mobile layout (all APIs mocked)');
 }finally{await browser.close();}
