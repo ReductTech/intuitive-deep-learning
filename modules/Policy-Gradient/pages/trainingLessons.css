@@ -37,5 +37,3 @@
 .pg-tr-training-curve{align-items:start}.pg-tr-training-curve svg{height:54px;flex-shrink:0}.pg-tr-training-curve>div:first-child{height:54px}.pg-tr-training-curve>.pg-tr-curve-plot{display:grid;gap:2px}
 
 .pg-tr-training-curve{height:128px}.pg-tr-training-curve svg,.pg-tr-training-curve>div:first-child{height:84px}.pg-tr-training-curve>.pg-tr-curve-plot{height:128px;grid-template-columns:minmax(0,1fr);grid-template-rows:84px auto;justify-content:stretch}
-
-.pg-readable-live .pg-tr-flow-right{gap:6px}

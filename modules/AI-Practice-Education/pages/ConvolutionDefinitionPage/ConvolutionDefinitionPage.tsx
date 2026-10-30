@@ -56,7 +56,7 @@ function SobelFigure() {
 }
 
 export function ConvolutionDefinitionPage() {
-  return <ContentBlock className="llmpe-def-page" headingLevel={1} title={outline.pages[11].title}
+  return <ContentBlock className="llmpe-def-page" headingLevel={1} title={outline.pages[12].title}
     subtitle="以边缘检测为例：解释梯度、算子与响应" bodyClassName="llmpe-def-body">
     <div className="llmpe-def-content">
       <article className="llmpe-def-model" aria-label="专业式教育的边缘检测案例">

@@ -11,6 +11,3 @@
 .pg-update-wrap{height:100%;min-height:0;display:grid;grid-template-rows:auto minmax(0,1fr);gap:12px;min-width:0;max-width:100%}.pg-update-wrap .pg-update-main{gap:12px}.pg-update-wrap .pg-update-overview{gap:12px 44px}.pg-update-wrap .pg-update-stages>div{gap:12px;padding:14px}
 
 .pg-update-wrap .pg-update-stages>div{gap:8px;padding:10px 14px}.pg-update-wrap .pg-update-main{gap:10px}
-
-.pg-readable-update .pg-update-main{gap:6px}
-.pg-readable-update .pg-update-results{padding-top:8px}

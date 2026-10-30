@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent } from 'react';
+import { useLayoutEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';
 import { Button, moduleAssetUrl, Typography } from '../../../shared/react';
 import { recognizeEmnistDigit } from '../../services/emnistDigitRecognizer';
 import { recognizedAmountWords } from './amountWords';
@@ -179,7 +179,7 @@ export function DigitRecognitionOpeningPage() {
     setError(null);
   };
 
-  return <main className="vfl-check-opening relative h-[900px] w-[1600px] overflow-hidden bg-[#e6c79e] bg-[length:100%_100%] bg-center text-[#143656]" style={{ backgroundImage: `url(${background})`, '--vfl-pen-cursor': `url("${moduleAssetUrl(ASSET_ID, 'pages/DigitRecognitionOpeningPage/pen-cursor.svg')}") 4 28, crosshair` } as CSSProperties}>
+  return <main className="vfl-check-opening relative h-[900px] w-[1600px] overflow-hidden bg-[#e6c79e] bg-[length:100%_100%] bg-center text-[#143656]" style={{ backgroundImage: `url(${background})` }}>
     <header className="vfl-check-opening__heading absolute left-[78px] top-[82px] z-[2] w-[1080px]">
       <Typography as="h1" variant="display" tone="inherit">计算机如何识别手写数字？</Typography>
       <div className="vfl-check-opening__rule mt-[15px] h-[10px] w-[890px] -skew-x-[32deg] border-b-[3px] border-t-[5px] border-b-[#b34835] border-t-[#173b60]" aria-hidden="true" />

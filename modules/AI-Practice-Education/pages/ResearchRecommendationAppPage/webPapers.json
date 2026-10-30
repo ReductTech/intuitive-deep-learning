@@ -1,0 +1,80 @@
+[
+  {
+    "id": "web-1",
+    "title": "MOSS-Image Technical Report",
+    "authors": "MOSI.AI(MOSI Intelligence, SII, Fudan University, Shanghai Jiao Tong University)",
+    "abstract": "国际投资服务公司、复旦大学和上海交通大学推出了 MOSS-Image，一种基于5B参数单流扩散transformer的开放式文本到图像生成系统，结合意图感知的提示增强模块，实现了双语长文本渲染与精确布局控制，并在长文本和布局丰富图像生成任务中取得领先性能。",
+    "category": "cs.CV",
+    "date": "2026-10-19",
+    "imageSource": "https://image.reduct.cn/resource/311c3d8b-6336-4593-95f1-4c2ff99611e8/fig-3-1.jpg",
+    "stars": "2.3k",
+    "likes": 3,
+    "saves": 1,
+    "image": "images/recommendation-web/paper-1.jpg"
+  },
+  {
+    "id": "web-2",
+    "title": "Batching the Reflective Optimization Loop: Parallel Proposals Make GEPA Faster and Better",
+    "authors": "Jialin Zhang,Lakshya A Agrawal,Shangyin Tan,Donghyun Lee,Lutfi Eren Erdogan,Dan Klein,Koushik Sen,Alex Dimakis,Matei Zaharia(Unknown)",
+    "abstract": "该论文提出通过在GEPA优化器中采用批量并行提案和评估策略，有效提升反射式文本优化的计算效率和性能表现。",
+    "category": "cs.AI",
+    "date": "2026-10-28",
+    "imageSource": "https://image.reduct.cn/resource/4ab181d0-eea0-4957-b86a-8775991abe0c/fig-0-1.jpg",
+    "stars": "7.2k",
+    "likes": 1,
+    "saves": 0,
+    "image": "images/recommendation-web/paper-2.jpg"
+  },
+  {
+    "id": "web-3",
+    "title": "A note on data-efficient finetuning of vision foundation models",
+    "authors": "Niclas Hergenröther,Antonio Orvieto(ELLIS Institute, Max Planck Institute for Intelligent Systems, Tübingen AI Center)",
+    "abstract": "ELLIS研究院、马克斯·普朗克智能系统研究所与图宾根人工智能中心介绍了针对视觉基础模型的数据高效微调方法，通过系统评估不同模型架构与迁移范式（包括Visual Prompting、Linear Probing、Full Fine-tuning及Low Rank Adaptation）在资源受限条件下的性能表现，旨在揭示各方法间的相互作用及优化潜力。",
+    "category": "cs.CV",
+    "date": "2026-10-28",
+    "imageSource": "https://image.reduct.cn/resource/3b121db1-5193-466f-823d-f9457a01cdc7/fig-0-1.jpg",
+    "stars": "2.2k",
+    "likes": 1,
+    "saves": 0,
+    "image": "images/recommendation-web/paper-3.jpg"
+  },
+  {
+    "id": "web-4",
+    "title": "RobotAgentBench: Towards Open-world Robot Autonomy",
+    "authors": "Lingjun Mao,Jinglin Cao,Lukun He,Wenpeng Xu,Yuchen Yan,Hengyu Jin,Zijun Zhang,Jinzhou Tang,Songyao Jin,Ziche Liu,Yifei Shao,Junbo Huang,Fang Nan,Ruobing Han,Ziqiao Xi,Ziming Xu,Shuang Liang,Sibo Zhu,Wenyi Wu,Xinyue Wang(University of California San Diego, Aether AI, University of California Davis)",
+    "abstract": "加利福尼亚大学圣地亚哥分校与加利福尼亚大学戴维斯分校推出了 RobotAgentBench（RAB），该基准通过构建多样化的家庭环境和任务，采用人机协同的真实到仿真流程，系统评估机器人代理在任务发现、上下文推理、操作执行、故障恢复及鲁棒性等多维度的开放世界自主能力。",
+    "category": "cs.AI",
+    "date": "2026-10-27",
+    "imageSource": "https://image.reduct.cn/resource/f9a26f0a-f4ae-4ff2-a6af-dcf1e0bbd4b0/fig-4-1.jpg",
+    "stars": "38",
+    "likes": 1,
+    "saves": 0,
+    "image": "images/recommendation-web/paper-4.jpg"
+  },
+  {
+    "id": "web-5",
+    "title": "MedVTok: A General-Purpose Medical Visual Tokenizer",
+    "authors": "Chenglong Ma,Yuanfeng Ji,Junzhi Ning,Jiyao Liu,Yujie Wei,Shaohao Rui,Chaoyang Zhang,Wenjie Li,Wenhao Tang,Cheng Tang,Wei Li,Shujian Gao,Yujie Zhang,Ying Chen,Zilong Li,Zongyuan Ge,Diping Song,Jin Ye,Ming Hu,Junjun He(Shanghai Innovation Institute, Fudan University, Stanford University School of Medicine, Ant Healthcare, Shanghai Artificial Intelligence Laboratory, Shanghai Jiao Tong University, Monash University)",
+    "abstract": "上海创新研究院、复旦大学和莫纳什大学提出了MedVTok，一种通用医疗视觉tokenizer，通过切片差分正则化和多专家表示对齐，将多模态二维图像与三维体积映射至统一token空间，实现跨维度和模态的解剖结构与临床语义一致性编码。",
+    "category": "cs.CV",
+    "date": "2026-10-27",
+    "imageSource": "https://image.reduct.cn/resource/9b1a8869-5f28-43a4-83f1-be4f5941daaf/fig-2-1.jpg",
+    "stars": "11",
+    "likes": 2,
+    "saves": 1,
+    "image": "images/recommendation-web/paper-5.jpg"
+  },
+  {
+    "id": "web-6",
+    "title": "OpenVLHarness: Real World Visual Agentic Tool-Use with Multimodal Memory",
+    "authors": "Yu Zhou,Cheng-Fu Yang,Rui Sun,Di Wu,Sibo Peng,Mingyang Zhang,Zhen Yang,Ruiyi Zhang,Nanyun Peng,Zhe Gan,Kai-Wei Chang(University of California, Apple)",
+    "abstract": "加利福尼亚大学与苹果公司推出了OpenVLHarness，一种基于能力层与持久多模态记忆的多模态推理框架，通过整合异构工具接口与可解释的证据渲染，实现跨步骤保留图像、结构化数据及网页引用，支持多工具结果组合计算，显著提升22项基准测试中的视觉推理性能。",
+    "category": "cs.AI",
+    "date": "2026-10-20",
+    "imageSource": "https://image.reduct.cn/resource/609cbdd6-4a16-4f37-b426-463671a6af8f/fig-2-1.jpg",
+    "stars": "318",
+    "likes": 2,
+    "saves": 0,
+    "image": "images/recommendation-web/paper-6.jpg"
+  }
+]

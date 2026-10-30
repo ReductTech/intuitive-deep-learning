@@ -1,0 +1,12 @@
+.pg-update-overview{display:grid;grid-template-columns:minmax(0,.78fr) minmax(0,1.55fr);gap:18px 44px;align-content:center;height:100%}
+.pg-update-overview *{min-width:0;max-width:100%;box-sizing:border-box}
+.pg-update-scene{display:grid;gap:10px;justify-items:center;align-content:center}.pg-update-scene .pg-world{width:300px}.pg-update-scene .pg-hero-marker.is-fox,.pg-update-scene .pg-fox-avatar{width:70px;height:70px}
+.pg-update-main{display:grid;gap:18px;align-content:center}
+.pg-update-stages{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.pg-update-stages>div{display:grid;gap:20px;padding:20px 14px;border-top:3px solid #d1dce6;background:#f4f7fa;border-radius:4px 4px 12px 12px}.pg-update-stages>div.is-ready{border-color:#8ba49b}.pg-update-stages>div.is-trained{border-color:#315b7b;background:#e6eff4}
+.pg-update-distribution{display:flex;height:18px;width:100%;border-radius:5px}.pg-update-distribution>span{height:100%;flex-shrink:0}.pg-update-distribution>span:first-child{border-radius:5px 0 0 5px}.pg-update-distribution>span:last-child{border-radius:0 5px 5px 0}
+.pg-update-legend{display:flex;gap:22px;justify-content:flex-end}.pg-update-legend>div{display:flex;align-items:center;gap:8px}.pg-update-legend>div>span{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.pg-update-results{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px;padding-top:14px;border-top:1px solid #d8e2eb}.pg-update-results>div{display:grid;gap:8px}
+.pg-update-rule{grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:32px;padding:6px 20px;background:#edf2f8;border-radius:10px}.pg-update-rule>*{min-width:0;max-width:100%}.pg-update-rule .math-formula-block{padding:0;margin:0}
+.pg-update-simple-change{display:flex;align-items:center;justify-content:center;gap:22px;min-width:0;max-width:100%}.pg-update-simple-change>*{min-width:0;max-width:100%}
+
+.pg-update-wrap{height:100%;min-height:0;display:grid;grid-template-rows:auto minmax(0,1fr);gap:12px;min-width:0;max-width:100%}.pg-update-wrap .pg-update-main{gap:12px}.pg-update-wrap .pg-update-overview{gap:12px 44px}.pg-update-wrap .pg-update-stages>div{gap:12px;padding:14px}

@@ -1,0 +1,32 @@
+{
+  "kind": "illustrative-demo",
+  "source": "existing page illustrative examples; not successful model inference",
+  "modelCaptureAttempt": {
+    "attemptedAt": "2026-10-30T11:55:20.671875+00:00",
+    "status": "failed",
+    "detail": "The online Gradio service returned event:error with null data for all three requested examples."
+  },
+  "examples": [
+    {
+      "label": "MeanFlow",
+      "title": "Mean Flows for One-step Generative Modeling",
+      "abstract": "MeanFlow models one-step image generation through average flow velocity. A relationship between average and instantaneous velocity guides training, allowing the model to learn from scratch without a pretrained generator or a distillation stage. The approach studies how a single model evaluation can reduce the gap between one-step and multi-step generation.",
+      "impact": 0.72,
+      "quality": 0.78
+    },
+    {
+      "label": "SARDet-100K",
+      "title": "SARDet-100K: Towards Open-Source Benchmark and ToolKit for Large-Scale SAR Object Detection",
+      "abstract": "This work brings together ten existing synthetic aperture radar detection datasets to create a large, diverse benchmark. It examines the mismatch between pretraining on natural images and adapting models to radar imagery. A multi-stage pretraining approach with filter augmentation addresses differences in input representation, data domain, and network structure, providing a practical foundation for evaluating radar object detectors.",
+      "impact": 0.68,
+      "quality": 0.74
+    },
+    {
+      "label": "FasterNet",
+      "title": "Run, Don't Walk: Chasing Higher FLOPS for Faster Neural Networks",
+      "abstract": "Reducing arithmetic operations does not always make a neural network faster, because memory access and hardware utilization also affect latency. This work introduces partial convolution to reduce redundant computation and memory traffic while extracting spatial features. The resulting FasterNet family examines this design across different processors and visual recognition tasks, emphasizing measured running speed alongside predictive accuracy.",
+      "impact": 0.7,
+      "quality": 0.76
+    }
+  ]
+}

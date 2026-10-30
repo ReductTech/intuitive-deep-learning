@@ -4,4 +4,4 @@
 .rl-slope-substitution .math-formula { font-size:24px; color:#00959f; }
 .rl-slope-derivation .rl-intercept-answer .math-formula { font-size:29px; }
 
-.rl-slope-page .rl-intercept-line-hit { cursor:var(--rl-rotation-cursor, grab); }
+.rl-slope-page .rl-intercept-line-hit { cursor:url("./rotation-cursor.svg") 16 16, grab; }
