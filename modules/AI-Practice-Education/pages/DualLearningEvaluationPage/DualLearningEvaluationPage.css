@@ -9,6 +9,10 @@
 .aipe-assessment-thumbnail--0{left:40px;top:0;transform:rotate(-2deg);}
 .aipe-assessment-thumbnail--1{left:23px;top:39px;transform:rotate(-.7deg);}
 .aipe-assessment-thumbnail--2{left:0;top:82px;box-shadow:0 10px 23px #254c761c;}
+.aipe-assessment-more-pages{position:absolute;left:544px;top:-20px;display:flex;gap:10px;align-items:center;color:#8293aa;}
+.aipe-assessment-more-pages>i{display:block;width:7px;height:7px;border-radius:50%;background:currentColor;}
+.aipe-assessment-more-pages>i:nth-child(2){transform:translateY(-8px);}
+.aipe-assessment-more-pages>i:nth-child(3){transform:translateY(-16px);}
 .aipe-assessment-stack figcaption{position:absolute;left:0;right:0;top:424px;margin:0;text-align:center;}
 .aipe-assessment-reviewers{margin-top:53px;}
 .aipe-assessment-reviewer{display:grid;grid-template-columns:45px minmax(0,1fr) auto;align-items:center;column-gap:14px;height:145px;min-width:0;border-bottom:1px solid #dce5ef;opacity:0;visibility:hidden;transform:translateY(12px);transition:opacity .45s ease,transform .45s ease,visibility .45s;}

@@ -1,5 +1,5 @@
 import { ResearchRecommendationAppPage } from './pages/ResearchRecommendationAppPage/ResearchRecommendationAppPage';
-import { EducationalAgentPracticePage } from './pages/EducationalAgentPracticePage/EducationalAgentPracticePage';
+import { ShukuCommunityEvolutionPage } from './pages/ShukuCommunityEvolutionPage/ShukuCommunityEvolutionPage';
 import { FlexibleTeachingModesPage } from './pages/FlexibleTeachingModesPage/FlexibleTeachingModesPage';
 import { RecommendedAssessmentPage } from './pages/RecommendedAssessmentPage/RecommendedAssessmentPage';
 import { ShukuEditingPreviewPage } from './pages/ShukuEditingPreviewPage/ShukuEditingPreviewPage';
@@ -60,7 +60,7 @@ const sceneDefinitions = {
   {id:'creator-copy-skill-constraints',title:outline.pages[27].title,section:'课程组织与实践创作',render:()=> <CreatorGuideReplay page="skill-constraints"/>},
   {id:'creator-copy-ui-kit',title:outline.pages[28].title,section:'课程组织与实践创作',render:()=> <CreatorGuideReplay page="ui-kit"/>},
   {id:'creator-copy-creation-workflow',title:outline.pages[29].title,section:'课程组织与实践创作',render:()=> <CreatorGuideReplay page="creation-workflow"/>},
-  {id:'educational-agent-practice',title:outline.pages[30].title,section:'课程组织与实践创作',render:()=> <EducationalAgentPracticePage/>},
+  {id:'educational-agent-practice',title:outline.pages[30].title,section:'课程组织与实践创作',render:()=> <ShukuCommunityEvolutionPage/>},
   {id:'dual-learning-evaluation',title:outline.pages[31].title,section:'学习评价',render:()=> <DualLearningEvaluationPage/>},
   {id:'teaching-talent-discovery',title:outline.pages[32].title,section:'人才与生态',render:()=> <TeachingTalentDiscoveryPage/>},
   {id:'education-ecosystem-preview',title:outline.pages[33].title,section:'人才与生态',render:()=> <EducationEcosystemPreviewPage/>},

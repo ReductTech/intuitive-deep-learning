@@ -1,8 +1,7 @@
-import { useEffect, useId, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Bot, RotateCcw, UserRound, UsersRound } from 'lucide-react';
 import { Button, ContentBlock, Typography, moduleAssetUrl } from '../../../shared/react';
 import outline from '../../outlines.json';
-import { handwrittenEightOutline, handwrittenEightStroke } from './handwrittenGrade';
 import './DualLearningEvaluationPage.css';
 
 const reviewers = [
@@ -17,15 +16,13 @@ const thumbnails = [
   { file: 'kernel-basics.jpg', label: '卷积核：输入图像、卷积核与输出特征图' },
 ] as const;
 
+const eightStroke = 'M83 17C57 8 35 24 38 46C41 64 64 77 86 91C112 107 115 130 100 149C86 166 48 169 33 148C15 122 43 96 68 79C92 64 113 43 101 26C97 20 91 18 83 17';
+
 function HandwrittenGrade() {
-  const maskId = `aipe-grade-${useId().replaceAll(':', '')}`;
-  return <svg className="aipe-assessment-handwriting" viewBox="0 0 280 185" role="img" aria-label={`${average}分`} data-final-score={average} data-typeface="Bradley Hand ITC">
-    <defs>{['first', 'second'].map(digit => <mask key={digit} id={`${maskId}-${digit}`} maskUnits="userSpaceOnUse" x="-50" y="-50" width="250" height="300">
-      <path className="aipe-assessment-digit" data-digit={digit} pathLength="1" d={handwrittenEightStroke} fill="none" stroke="white" strokeWidth="80" strokeLinecap="round" strokeLinejoin="round" />
-    </mask>)}</defs>
-    <g fill="currentColor" aria-hidden="true">
-      <path d={handwrittenEightOutline} mask={`url(#${maskId}-first)`} />
-      <g transform="translate(140 0) rotate(-2 75 90)"><path d={handwrittenEightOutline} mask={`url(#${maskId}-second)`} /></g>
+  return <svg className="aipe-assessment-handwriting" viewBox="0 0 252 185" role="img" aria-label={`${average}分`} data-final-score={average}>
+    <g fill="none" stroke="currentColor" strokeWidth="10" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path className="aipe-assessment-digit" data-digit="first" pathLength="1" d={eightStroke} />
+      <path className="aipe-assessment-digit" data-digit="second" pathLength="1" d={eightStroke} transform="translate(112 0)" />
     </g>
   </svg>;
 }
@@ -78,8 +75,9 @@ export function DualLearningEvaluationPage() {
       <div className="aipe-assessment-layout">
         <section className="aipe-assessment-courseware" aria-labelledby="aipe-assessment-work-title">
           <Typography as="h2" variant="h2" tone="accent" id="aipe-assessment-work-title">学生课件</Typography>
-          <figure className="aipe-assessment-stack" aria-label="同一份交互课件的三张页面缩略图">
+          <figure className="aipe-assessment-stack" aria-label="同一份交互课件的部分页面，后续还有更多页面">
             {thumbnails.map((thumbnail, index) => <img key={thumbnail.file} className={`aipe-assessment-thumbnail aipe-assessment-thumbnail--${index}`} src={moduleAssetUrl(outline.moduleIdentity.id, `workflow/course-thumbnails/${thumbnail.file}`)} width="400" height="225" alt={thumbnail.label} draggable={false} />)}
+            <span className="aipe-assessment-more-pages" role="img" aria-label="还有更多课件页面"><i /><i /><i /></span>
             <Typography as="figcaption" variant="body" tone="muted">同一份交互课件</Typography>
           </figure>
         </section>
