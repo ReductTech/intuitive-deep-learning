@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Button, Typography } from '../../../shared/react';
+import { Button, ContentBlock, Typography } from '../../../shared/react';
 import { GanModel, type Distribution, type Point } from './ganModel';
 import './GanPlaygroundPage.css';
 
@@ -172,11 +172,7 @@ export function GanPlaygroundPage({ onComplete }: { onComplete?: () => void }) {
     nextUpdate.current = 'd';
   };
 
-  return <section ref={pageRef} className="vg-gan-game" data-stage={stage} data-active={active} data-running={running} data-d-steps={model.dSteps} data-g-steps={model.gSteps} aria-label="亲手训练一个二维 GAN">
-    <header className="vg-gan-game__heading">
-      <Typography as="h1" variant="h1">亲手训练一个 GAN</Typography>
-      <Typography variant="bodySmall" tone="muted">让橙色生成点，学会真实样本的分布。</Typography>
-    </header>
+  return <ContentBlock ref={pageRef} headingLevel={1} title="亲手训练一个 GAN" subtitle="让橙色生成点，学会真实样本的分布。" className="vg-shared-page vg-gan-game" bodyClassName="vg-gan-game__body" data-stage={stage} data-active={active} data-running={running} data-d-steps={model.dSteps} data-g-steps={model.gSteps} aria-label="亲手训练一个二维 GAN">
     <div className="vg-gan-game__main">
       <div className="vg-gan-game__plot">
         <div className="vg-gan-game__plot-top">
@@ -234,5 +230,5 @@ export function GanPlaygroundPage({ onComplete }: { onComplete?: () => void }) {
     <footer className="vg-gan-game__footer">
       <Button onClick={() => reset()}>重新训练</Button>
     </footer>
-  </section>;
+  </ContentBlock>;
 }

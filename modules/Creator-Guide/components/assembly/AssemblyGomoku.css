@@ -1,0 +1,71 @@
+/* 第 01 页：以参考图的教学面板构图承载五子棋交互。 */
+.cg-kit-result-shell .cg-built-gomoku {
+  --ck-navy: #173b78; --ck-ink: #203d6d;
+  --ck-board-paper: linear-gradient(152deg, #f7ead1 0%, #eedcb8 58%, #e4cda3 100%);
+  position: relative; display: grid; width:1600px;height:900px;min-height:0; padding: 0;
+  background: #eaf2fb;
+}
+.cg-kit-result-shell .cg-built-gomoku__background-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+.cg-kit-result-shell .cg-built-gomoku > .edu-content-body { display: grid; height: 100%; min-height: 0; gap: 0; }
+.cg-kit-result-shell .cg-built-gomoku__layout { position: relative; display: grid; grid-template-columns: minmax(0, 25%) minmax(0, 75%); min-width: 0; min-height: 0; }
+.cg-kit-result-shell .cg-built-gomoku__rail { display: grid; align-content: start; gap: 44px; min-width: 0; min-height: 0; padding: 28px 40px; }
+.cg-kit-result-shell .cg-built-gomoku__progress { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 7px 10px; color: var(--ck-navy); }
+.cg-kit-result-shell .cg-built-gomoku__dots { display: flex; grid-column: 1 / -1; gap: 12px; }
+.cg-kit-result-shell .cg-built-gomoku__dots span { width: 10px; height: 10px; border-radius: 50%; background: rgba(61, 104, 165, .2); }
+.cg-kit-result-shell .cg-built-gomoku__dots span.is-active { background: var(--ck-navy); }
+.cg-kit-result-shell .cg-built-gomoku__intro { min-width: 0; }
+.cg-kit-result-shell .cg-built-gomoku__intro h1 { color: var(--ck-navy); }
+.cg-kit-result-shell .cg-built-gomoku__brief { display: grid; align-content: start; gap: 0; min-width: 0; }
+.cg-kit-result-shell .cg-built-gomoku__brief p { margin: 0; }
+.cg-kit-result-shell .cg-built-gomoku__brief::after { content: ''; width: 72px; height: 2px; margin-top: 28px; background: linear-gradient(90deg, rgba(59, 100, 170, .5), rgba(59, 100, 170, 0)); }
+.cg-kit-result-shell .cg-built-gomoku__role { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.cg-kit-result-shell .cg-built-gomoku__role-stone { width: 22px; height: 22px; flex: 0 0 auto; border-radius: 50%; background: radial-gradient(circle at 34% 30%, #5c6d85, #28374e 46%, #0e1622 100%); box-shadow: 0 2px 5px rgba(16, 24, 38, .25); }
+.cg-kit-result-shell .cg-built-gomoku__difficulty { display: grid; gap: 9px; min-width: 0; }
+.cg-kit-result-shell .cg-built-gomoku__control-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 6px; min-width: 0; }
+.cg-kit-result-shell .cg-built-gomoku__difficulty-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 3px; min-width: 0; border: 1px solid rgba(51, 103, 172, .14); border-radius: 13px; background: rgba(218, 231, 249, .52); padding: 4px; }
+.cg-kit-result-shell .cg-built-gomoku__difficulty-options button { min-width: 0; border: 0; border-radius: 9px; background: transparent; color: var(--ck-ink); padding: 8px 3px; cursor: pointer; transition: background 160ms ease, box-shadow 160ms ease, color 160ms ease; }
+.cg-kit-result-shell .cg-built-gomoku__difficulty-options button:hover:not(.is-active) { background: rgba(255, 255, 255, .76); }
+.cg-kit-result-shell .cg-built-gomoku__difficulty-options button.is-active { background: var(--ck-navy); color: #fff; box-shadow: 0 3px 8px rgba(23, 59, 120, .2); }
+.cg-kit-result-shell .cg-built-gomoku__difficulty-options button:focus-visible { outline: 3px solid rgba(79, 143, 242, .35); outline-offset: 2px; }
+.cg-kit-result-shell .cg-built-gomoku__difficulty p { margin: 0; min-width: 0; }
+.cg-kit-result-shell .cg-built-gomoku__actions { display: grid; gap: 7px; min-width: 0; border-top: 1px solid rgba(64, 112, 177, .18); padding-top: 12px; }
+.cg-kit-result-shell .cg-built-gomoku__actions .edu-btn { width: 100%; padding: 7px 12px; }
+.cg-kit-result-shell .cg-built-gomoku__actions .edu-btn span { display: inline-flex; align-items: center; justify-content: center; gap: 9px; }
+.cg-kit-result-shell .cg-built-gomoku__icon { width: 1.08em; height: 1.08em; flex: 0 0 auto; }
+.cg-kit-result-shell .cg-built-gomoku__main { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 320px); grid-template-rows: minmax(0, 1fr); gap: 20px; min-width: 0; min-height: 0; padding: 24px 32px 18px; }
+.cg-kit-result-shell .cg-built-gomoku__status { grid-column: 2; grid-row: 1; align-self: center; display: grid; grid-template-columns: minmax(0, 1fr); align-content: start; gap: 12px; min-width: 0; max-width: 100%; border: 1px solid rgba(94, 142, 207, .2); border-radius: 22px; background: linear-gradient(155deg, rgba(255, 255, 255, .95), rgba(239, 246, 255, .89)); box-shadow: 0 18px 38px rgba(36, 67, 109, .12), inset 0 1px rgba(255, 255, 255, .9); padding: 16px; }
+.cg-kit-result-shell .cg-built-gomoku__panel-heading { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.cg-kit-result-shell .cg-built-gomoku__panel-line { flex: 1; height: 1px; background: rgba(64, 112, 177, .18); }
+.cg-kit-result-shell .cg-built-gomoku__status-player, .cg-kit-result-shell .cg-built-gomoku__status-situation { display: flex; align-items: center; gap: 13px; min-width: 0; }
+.cg-kit-result-shell .cg-built-gomoku__status-player { padding: 2px 4px; }
+.cg-kit-result-shell .cg-built-gomoku__status-situation { justify-content: flex-start; border-radius: 14px; background: rgba(231, 242, 255, .68); padding: 10px 12px; }
+.cg-kit-result-shell .cg-built-gomoku__turn { width: 25px; height: 25px; flex: 0 0 auto; border-radius: 50%; }
+.cg-kit-result-shell .cg-built-gomoku__turn--black { background: radial-gradient(circle at 34% 30%, #5c6d85, #28374e 46%, #0e1622 100%); box-shadow: 0 1px 3px rgba(16, 24, 38, .3); }
+.cg-kit-result-shell .cg-built-gomoku__turn--white { background: radial-gradient(circle at 34% 30%, #fff, #f3f7fb 58%, #c9d4e2 100%); box-shadow: inset 0 0 0 1px rgba(33, 50, 74, .26); }
+.cg-kit-result-shell .cg-built-gomoku__lamp { position: relative; width: 20px; height: 20px; flex: 0 0 auto; border-radius: 50%; background: #76c77c; box-shadow: 0 0 0 5px rgba(118, 199, 124, .13), 0 2px 8px rgba(49, 108, 57, .18); margin: 0 3px; }
+.cg-kit-result-shell .cg-built-gomoku__lamp::after { content: ''; position: absolute; top: 4px; left: 6px; width: 5px; height: 5px; border-radius: 50%; background: rgba(255, 255, 255, .72); }
+.cg-kit-result-shell .cg-built-gomoku__lamp--red { background: #df5f5f; box-shadow: 0 0 0 5px rgba(223, 95, 95, .13), 0 2px 8px rgba(144, 47, 47, .18); }
+.cg-kit-result-shell .cg-built-gomoku__lamp--orange { background: #ed9b48; box-shadow: 0 0 0 5px rgba(237, 155, 72, .13), 0 2px 8px rgba(154, 92, 25, .18); }
+.cg-kit-result-shell .cg-built-gomoku__lamp--off { background: #aebbd0; box-shadow: 0 0 0 5px rgba(125, 145, 174, .11); }
+.cg-kit-result-shell .cg-built-gomoku__board-stage { display: contents; }
+.cg-kit-result-shell .cg-built-gomoku__board { grid-column: 1; grid-row: 1; --ck-play-pad: 7.5%; position: relative; justify-self: center; align-self: center; width: min(100%, 820px); height: min(100%, 820px); aspect-ratio: 1 / 1; max-width: 100%; max-height: 100%; overflow: hidden; border: 1px solid rgba(120, 92, 54, .26); border-radius: 16px; background: var(--ck-board-paper); box-shadow: 0 16px 32px rgba(33, 50, 74, .16), inset 0 0 0 1px rgba(255, 255, 255, .2); }
+.cg-kit-result-shell .cg-built-gomoku__board-canvas { display: block; width: 100%; height: 100%; touch-action: none; }
+.cg-kit-result-shell .cg-built-gomoku__hover-stone { position: absolute; z-index: 2; width: 5.8%; aspect-ratio: 1; transform: translate(-50%, -50%); pointer-events: none; opacity: 0; border-radius: 50%; background: radial-gradient(circle at 34% 30%, #66758b, #2b394f 48%, #101925 100%); box-shadow: 0 3px 8px rgba(16, 24, 38, .28); transition: opacity 40ms linear; }
+.cg-kit-result-shell .cg-built-gomoku__hint-stone { position:absolute; z-index:1; width:5.8%; aspect-ratio:1; transform:translate(-50%,-50%); pointer-events:none; border:2px dashed rgba(23,59,120,.75); border-radius:50%; background:radial-gradient(circle at 34% 30%,rgba(102,117,139,.55),rgba(43,57,79,.45) 48%,rgba(16,25,37,.35) 100%); box-shadow:0 0 0 5px rgba(244,248,255,.42); animation:ck-gomoku-hint-appear .25s ease-out both; }
+@keyframes ck-gomoku-hint-appear { from { opacity:0; scale:.7; } to { opacity:1; scale:1; } }
+.cg-kit-result-shell .cg-built-gomoku__board.is-interactive .cg-built-gomoku__board-canvas { cursor: crosshair; }
+.cg-kit-result-shell .cg-built-gomoku__board-canvas:focus { outline: none; }
+.cg-kit-result-shell .cg-built-gomoku__board-canvas:focus-visible { outline: 3px solid rgba(240, 126, 71, .38); outline-offset: -5px; }
+.cg-kit-result-shell .cg-built-gomoku__board-axis { position: absolute; inset: 0; pointer-events: none; }
+.cg-kit-result-shell .cg-built-gomoku__board-axis-cols { position: absolute; top: 0; right: var(--ck-play-pad); left: var(--ck-play-pad); height: var(--ck-play-pad); }
+.cg-kit-result-shell .cg-built-gomoku__board-axis-rows { position: absolute; top: var(--ck-play-pad); bottom: var(--ck-play-pad); left: 0; width: var(--ck-play-pad); }
+.cg-kit-result-shell .cg-built-gomoku__board-axis .ui-typography { position: absolute; color: rgba(104, 78, 42, .68); }
+.cg-kit-result-shell .cg-built-gomoku__board-axis-cols .ui-typography { top: 50%; transform: translate(-50%, -50%); }
+.cg-kit-result-shell .cg-built-gomoku__board-axis-rows .ui-typography { left: 50%; transform: translate(-50%, -50%); }
+.cg-kit-result-shell .cg-built-gomoku__strip { grid-column: 2; grid-row: 1; display: grid; justify-items: center; align-self: end; min-width: 0; }
+.cg-kit-result-shell .cg-built-gomoku__rule { display: inline-flex; align-items: center; justify-content: center; min-height: 180px; border: 1px solid rgba(39, 68, 110, .16); border-radius: 999px; background: rgba(239, 247, 255, .65); padding: 18px 10px; text-align: center; writing-mode: vertical-rl; }
+.cg-kit-result-shell .cg-built-gomoku { width: 100%; height: 100%; min-height: 0; padding: 0; }
+
+.cg-kit-result-shell .cg-built-gomoku{border:0;border-radius:0;}
+.cg-kit-result-shell .cg-built-gomoku *{box-sizing:border-box;min-width:0;max-width:100%;}
+.cg-kit-result-shell .cg-built-gomoku__rail{padding-top:40px;}

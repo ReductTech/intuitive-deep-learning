@@ -1,0 +1,45 @@
+import {useEffect,useMemo,useState,type ReactNode} from 'react';
+import type {DeckDefinition} from '../../modules/shared/react/presentation';
+import {moduleAssetUrl} from '../../modules/shared/react/assets';
+import type {CreatorProject} from '../creator/model';
+import {CourseWorkspace} from '../creator/CourseWorkspace';
+import {NativeLesson} from './NativeLesson';
+import {TextPage} from './TextPage';
+import {GuideSession} from './GuideSession';
+import './RuntimePlayer.css';
+import {NarrationContext,parentNarration} from './narrationBridge';
+import {playbackModule} from './playbackModule';
+import type {ActiveModule} from '../app/modules';
+import type {StudyPosition} from './personal';
+const offlineDocument=Boolean((globalThis as {__SHUKU_OFFLINE__?:boolean}).__SHUKU_OFFLINE__);
+// Compatibility entry used by release builds. All viewer UI is the original workspace.
+export function RuntimePlayer({project,deck,guide,notes,assetId='',initialState,onProgress,account='guest'}:{project:CreatorProject;deck?:DeckDefinition;guide?:ReactNode;notes?:ActiveModule['getPptNotes'];account?:string;assetId?:string;initialState?:StudyPosition;onProgress?:(state:StudyPosition)=>void}){
+ const [state,setState]=useState<StudyPosition>(initialState||{page_id:project.pages[0].id,mode:'ppt',completed:[]});
+ const [channel,setChannel]=useState(''),[scope,setScope]=useState(account),[initialized,setInitialized]=useState(offlineDocument||window.parent===window||Boolean(initialState));
+ const courses=useMemo(()=>[playbackModule(project,deck,assetId,notes)],[project,deck,assetId,notes]);
+ // Sandboxed documents have location.origin === 'null'; the embedding page still has a verified URL origin.
+ const hostOrigin=useMemo(()=>new URL(document.referrer||location.href).origin,[]);
+ const revision=location.pathname.match(/^\/api\/shuku\/revisions\/([^/]+)\/(?:player\/)?files\//)?.[1]||project.id;
+ useEffect(()=>{
+  if(offlineDocument||window.parent===window)return;
+  const receive=(event:MessageEvent)=>{
+   if(event.source!==window.parent||event.origin!==hostOrigin||event.data?.type!=='shuku-study-init'||event.data.revision!==revision||typeof event.data.channel!=='string')return;
+   const value=event.data.state as StudyPosition;
+   if(!value||!project.pages.some(p=>p.id===value.page_id)||!['guide','ppt'].includes(value.mode)||!Array.isArray(value.completed))return;
+   setState({...value,completed:value.completed.filter(id=>project.pages.some(p=>p.id===id))});setChannel(event.data.channel);setScope(typeof event.data.account==='string'?event.data.account:'guest');setInitialized(true);
+  };
+  const fallback=setTimeout(()=>setInitialized(true),500);
+  window.addEventListener('message',receive);window.parent.postMessage({type:'shuku-study-ready',revision,player:'course-workspace'},hostOrigin);
+  return()=>{clearTimeout(fallback);window.removeEventListener('message',receive);};
+ },[revision,hostOrigin]);
+ useEffect(()=>{onProgress?.(state);if(channel)window.parent.postMessage({type:'shuku-study-position',revision,channel,state},hostOrigin);},[state,channel,onProgress,revision,hostOrigin]);
+ // A managed editor embeds only the saved slide inside the original workspace.
+ const embeddedPage=new URLSearchParams(location.search).get('shukuPage');
+ if(embeddedPage){
+  const page=project.pages.find(p=>p.id===embeddedPage),scene=deck?.scenes.find(s=>s.id===(page?.nativeId||page?.id));
+  return <div className="course-shell course-page-surface ppt-slide-surface" style={{width:1600,height:900,overflow:'hidden'}}>{!page?<p role="alert">页面不存在。</p>:page.format==='text'?<TextPage title={project.title} page={page} completed={false} onComplete={()=>{}}/>:scene?<NativeLesson scene={scene} mode="ppt" completed={state.completed.includes(page.id)} onComplete={()=>setState({...state,completed:[...new Set([...state.completed,page.id])]})} onReset={()=>setState({...state,completed:state.completed.filter(id=>id!==page.id)})}/>:<p role="alert">该页面尚未生成。</p>}</div>;
+ }
+ if(!initialized)return null;
+ if(state.mode==='guide'&&guide)return <div className="shuku-original-guide"><GuideSession project={project} state={state} scope={scope} onChange={setState}>{guide}</GuideSession></div>;
+ return <NarrationContext.Provider value={window.origin==='null'?parentNarration(revision,channel):null}><CourseWorkspace courses={courses} initialProject={project} reader={{state,onChange:setState,storageKey:scope+':'+revision,thumbnail:page=>assetId&&page.nativeId?moduleAssetUrl(assetId,`scenedeck-thumbnails/${page.nativeId}.png`):undefined}}/></NarrationContext.Provider>;
+}

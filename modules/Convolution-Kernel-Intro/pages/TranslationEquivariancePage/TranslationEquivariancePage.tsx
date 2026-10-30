@@ -3,7 +3,7 @@ import { ContentBlock, moduleAssetUrl, Typography } from '../../../shared/react'
 import './TranslationEquivariancePage.css';
 
 const moduleAssetId = '38cd1c79-d8b7-462a-b208-a567c5cd89c4';
-const backgroundUrl = moduleAssetUrl(moduleAssetId, 'layerd_scene/bg.png');
+const backgroundUrl = moduleAssetUrl(moduleAssetId, 'layerd_scene/bg.jpg');
 const ufoUrl = moduleAssetUrl(moduleAssetId, 'layerd_scene/ufo.png');
 const pillarUrl = moduleAssetUrl(moduleAssetId, 'layerd_scene/pillar.png');
 const foliageUrl = moduleAssetUrl(moduleAssetId, 'layerd_scene/dark_foliage.png');

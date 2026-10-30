@@ -1,0 +1,13 @@
+/* Use the Shared UIKit font token for this entire deck. Page-specific sizes stay intact. */
+.aipe-replay-cg-creator-typography,
+.aipe-replay-cg-creator-typography .ui-typography,
+.aipe-replay-cg-creator-typography :is(button, input, select, textarea) {
+  font-family: var(--ui-font-sans);
+}
+
+/* Labels inside native/Shared controls retain the control's existing visual metrics. */
+.aipe-replay-cg-creator-typography .aipe-replay-cg-creator-control-copy {
+  --ui-type-body-small-size: inherit;
+  --ui-type-body-small-weight: inherit;
+  --ui-type-body-small-line-height: inherit;
+}

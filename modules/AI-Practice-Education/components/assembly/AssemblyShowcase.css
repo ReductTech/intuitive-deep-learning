@@ -1,0 +1,17 @@
+.cg-kit-assembly-page{position:relative;width:1600px;height:900px;flex:none;background:#eef2f7;}
+.cg-kit-assembly-page *{box-sizing:border-box;min-width:0;max-width:100%;}
+.cg-assembly-catalog,.cg-kit-result-shell{position:absolute;inset:0;width:1600px;height:900px;}
+.cg-assembly-catalog{z-index:1;}
+.cg-kit-result-shell{z-index:3;}
+.is-assembling .cg-built-gomoku{background:transparent;}
+.cg-assembly-overlay{position:absolute;inset:0;z-index:2;pointer-events:none;}
+.cg-assembly-expanding-frame{position:absolute;box-sizing:border-box;border:1px solid #b3cbe9;background:transparent;}
+.cg-assembly-board-veil{position:absolute;inset:0;background:#e9f2fc;pointer-events:none;z-index:5;}
+.cg-assembly-grid-drawing{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:6;}
+.cg-assembly-toolbar{position:absolute;top:28px;right:34px;z-index:30;}
+.cg-assembly-toolbar .edu-btn{padding:7px 14px;background:#fffffff0;box-shadow:0 4px 12px #18375b15;}
+.cg-assembly-toolbar .edu-btn--primary{background:#27446e;color:white;}
+.cg-assembly-progress{position:absolute;left:0;top:0;width:1px;height:1px;clip-path:inset(50%);overflow:hidden;white-space:nowrap;}
+
+.cg-assembly-blueprint{width:100%;height:100%;display:block;fill:none;stroke:#9fbadb;stroke-width:1.2;}
+.cg-assembly-blueprint path{stroke-dasharray:1;}

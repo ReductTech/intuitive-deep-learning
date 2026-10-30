@@ -1,0 +1,90 @@
+{
+  "moduleIdentity": "adde4a27-235d-4c03-a3cf-734ccf08b38d",
+  "assets": [
+    {
+      "path": "cao-chong/river-motion.mp4",
+      "source": "User-supplied video_1791521660560.mp4, copied without transcoding",
+      "role": "Full-slide looping muted video and synchronized foreground water",
+      "metadata": {
+        "width": 1280,
+        "height": 720,
+        "fps": 24,
+        "durationSeconds": 5.041666666666667
+      }
+    },
+    {
+      "path": "cao-chong/river-video-poster.jpg",
+      "source": "First frame extracted from the user-supplied video",
+      "role": "Video loading poster and foreground fallback"
+    },
+    {
+      "path": "cao-chong/rock-slate.png",
+      "source": "OpenAI built-in ImageGen",
+      "role": "Second stone variant; transparent slate sprite",
+      "prompt": "Single flat broad gray slate boulder, asymmetric layered angular silhouette, pale veins, upper-left sunlight, realistic 2.5D sprite, transparent alpha, no surroundings or text."
+    },
+    {
+      "path": "cao-chong/rock-basalt.png",
+      "source": "OpenAI built-in ImageGen",
+      "role": "Third stone variant; transparent dark angular sprite",
+      "prompt": "Single tall angular dark charcoal basalt boulder, chipped polygonal silhouette, warm brown highlights, upper-left sunlight, realistic 2.5D sprite, transparent alpha, no surroundings or text."
+    },
+    {
+      "path": "cao-chong/rock-sandstone.png",
+      "source": "OpenAI built-in ImageGen",
+      "role": "Fourth stone variant; transparent pale oblong sprite",
+      "prompt": "Single pale honey beige oblong sandstone boulder, erosion grooves and rough sandy grain, upper-left sunlight, realistic 2.5D sprite, transparent alpha, no surroundings or text."
+    },
+    {
+      "path": "cao-chong/river.jpg",
+      "source": "OpenAI built-in ImageGen",
+      "role": "Previous static scenery, retained as the original illustration source; opening now uses the supplied video",
+      "prompt": "Realistic painterly 2.5D ancient Chinese river background, warm daylight, mountains and pavilions, single elephant standing on the right stone embankment, clean open foreground water, no boats, people, hands, text or UI."
+    },
+    {
+      "path": "cao-chong/boat.png",
+      "source": "OpenAI built-in ImageGen",
+      "role": "Previous curved hull sprite retained as source; no longer used by pages 01–02",
+      "prompt": "Single isolated empty ancient Chinese wooden cargo boat, wide side view with shallow interior, realistic aged oak, transparent alpha, full dry hull, no people, stones, masts, ropes, water, text or shadows outside silhouette."
+    },
+    {
+      "path": "cao-chong/rock.png",
+      "source": "OpenAI built-in ImageGen",
+      "role": "Transparent clickable, falling and loaded stone sprite",
+      "prompt": "Single irregular compact gray-brown river boulder, realistic 2.5D game sprite, textured weathered surfaces, sunlight upper left, clean transparent alpha silhouette, no ground, surroundings, people or text."
+    },
+    {
+      "path": "cao-chong/elephant.png",
+      "source": "OpenAI built-in ImageGen",
+      "role": "Transparent elephant sprite for page 01 weighing sequence and page 02 reference scene",
+      "prompt": "Complete adult Asian elephant facing left, three-quarter side view, textured grey skin, warm upper-left sunlight, all feet aligned on invisible deck, transparent background, no scenery, boat, people or text."
+    },
+    {
+      "path": "cao-chong/boat-rectangular.png",
+      "source": "OpenAI built-in ImageGen",
+      "role": "Page 01–02 rectangular prism pontoon; transparent rear layer and straight front-wall mask",
+      "prompt": "Single empty ancient wooden rectangular flat-bottom cargo pontoon; horizontal flat bottom, vertical planar sidewalls, constant horizontal footprint at every immersion depth, blunt rectangular ends; nearly side-on view slightly above deck, aged oak, warm upper-left light; full dry hull visible, transparent alpha, no tapered or curved ends, no water, cargo, people, elephant, ropes, text."
+    },
+    {
+      "path": "cao-chong/estimate-background.jpg",
+      "source": "OpenAI built-in ImageGen",
+      "role": "Subtle full-slide historical riverside background for pages 02 and 03",
+      "prompt": "Photorealistic low-contrast ancient Chinese riverside, misty mountains and distant buildings; small elephant on far right shore; straight-wall flat-bottom barge with stones at bottom-right; broad pale open sky and water for chart and text overlays; no people, labels, UI or watermark."
+    },
+    {
+      "path": "optimization/optimization-terrain.png",
+      "source": "OpenAI built-in ImageGen",
+      "role": "Illustrative nonconvex loss terrain with shallow local valley, deeper global valley, and feasible parameter plane for page 18. No computed or measured loss values.",
+      "prompt": "Transparent 3:2 textbook terrain, pale yellow ridges and blue smooth meshed valleys, shallow local valley on left and deeper global valley on right, pale-blue feasible plane with dashed boundary and contour rings, no text, axes, markers or UI.",
+      "generatedImage": "exec-65f53423-86be-45f7-87f9-efd60f2ddc70.png"
+    }
+  ],
+  "simulation": "Page 01 first measures elephant depth 44 cm, retaining unknown weight. Only six stones of 250 kg are available (1500 kg), producing ideal physical depth 24 cm. Observations share the small measurement offsets used on pages 02–04. No extra stone can be added after six; weight is inferred on page 02. The shortage and values are invented teaching modifications, not historical claims.",
+  "page02Simulation": "Six calibration masses 250–1500 kg with small symmetric measurement offsets; fitted trend has slope 0.016 cm/kg. Inverting target depth 44 cm estimates 2750 kg. Invented teaching values, not historical measurements.",
+  "physicsModel": "Constant horizontal waterplane area A=6.25 m², water density rho=1000 kg/m³, displacement change Delta V=A Delta h, added mass m=rho A Delta h. Hence ideal Delta h=0.016 cm/kg. Assumes upright stable flotation, uniform water density, waterline stays on the vertical-wall portion, no overflow or change in hull/other load. The illustrated boat is a teaching model, not a reconstruction of Cao Chong’s historical vessel.",
+  "storySource": {
+    "title": "三国志·魏书·武文世王公传（曹冲称象节选）",
+    "url": "https://m.gushiwen.cn/shiwenv_31b814913b16.aspx",
+    "note": "Original describes using a boat waterline and weighed replacement goods; limited stones and prism hull are explicitly instructional modifications."
+  }
+}

@@ -1,7 +1,7 @@
 import { useLecturePlayback } from '../../components/LecturePlayback';
 import { useEffect, useId, useMemo, useRef } from 'react';
-import { Typography } from '../../../shared/react';
-import discriminatorDiagram from '../../assets/gan-discriminator/gan-discriminator.svg?raw';
+import { ContentBlock, Typography } from '../../../shared/react';
+import { useDiagramAsset } from '../../components/useDiagramAsset';
 import '../GanOverviewPage/GanOverviewPage.css';
 import './GanDiscriminatorPage.css';
 
@@ -19,6 +19,7 @@ const stages = [
 ] as const;
 
 export function GanDiscriminatorPage({ onComplete }: { onComplete?: () => void }) {
+  const { markup: discriminatorDiagram, failed: diagramFailed } = useDiagramAsset('images/gan-discriminator/gan-discriminator.svg');
   const { stage, controls } = useLecturePlayback(stages.length, 1000);
   const completedRef = useRef(false);
   const id = useId().replaceAll(':', '');
@@ -29,7 +30,7 @@ export function GanDiscriminatorPage({ onComplete }: { onComplete?: () => void }
     .replace(/data-reveal="(\d+)"/g, (_, value: string) => {
       const reveal = Number(value);
       return `data-reveal="${value}" data-hidden="${reveal > stage}" data-current="${reveal === stage}" aria-hidden="${reveal > stage}"`;
-    }), [id, stage]);
+    }), [id, stage, discriminatorDiagram]);
 
   useEffect(() => {
     if (stage !== stages.length - 1 || completedRef.current) return;
@@ -37,10 +38,10 @@ export function GanDiscriminatorPage({ onComplete }: { onComplete?: () => void }
     onComplete?.();
   }, [onComplete, stage]);
 
-  return <section className="vg-gan vg-gan-discriminator" aria-label="GAN 判别器：图像真假判断流程" data-stage={stage}>
+  return <ContentBlock headingLevel={1} title="GAN 判别器：图像真假判断流程" subtitle="图像经过特征提取，得到判别器对真实程度的评分。" bodyClassName="vg-gan__layout" className="vg-shared-page vg-gan vg-gan-discriminator" aria-label="GAN 判别器：图像真假判断流程" data-stage={stage}>
     <div className="vg-gan__body">
       <div className="vg-gan__canvas">
-        <div className="vg-gan__diagram" dangerouslySetInnerHTML={{ __html: diagram }} />
+        {diagramFailed ? <Typography role="alert" variant="bodySmall">图示加载失败，请刷新页面重试。</Typography> : <div className="vg-gan__diagram" dangerouslySetInnerHTML={{ __html: diagram }} />}
         {stage >= 1 && <Typography as="span" variant="bodySmall" tone="muted" className="vg-gan-discriminator__model-label">判别器 D</Typography>}
         <div className="vg-gan__explanation" aria-live="polite" aria-atomic="true">
           <Typography as="strong" variant="body" tone="accent">{stages[stage].title}</Typography>
@@ -53,5 +54,5 @@ export function GanDiscriminatorPage({ onComplete }: { onComplete?: () => void }
         {controls}
       </div>
     </footer>
-  </section>;
+  </ContentBlock>;
 }

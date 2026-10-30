@@ -1,0 +1,21 @@
+import fs from 'node:fs';
+import ts from 'typescript';
+import assert from 'node:assert/strict';
+for(const name of ['model','forest']){const source=fs.readFileSync(`modules/Gradient-Descent/${name}.ts`,'utf8');const code=ts.transpileModule(source,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ESNext}}).outputText.replaceAll("'./forest'","'./forest.mjs'");fs.writeFileSync(`work/evacuation-check/${name}.mjs`,code);}
+const m=await import('./model.mjs');
+const fresh=()=>({...m.newGame(),phase:'playing',sentries:[]});
+const tick=(s,n)=>{for(let i=0;i<Math.ceil(n/.1);i++)s=m.advanceGame(s,.1);return s;};
+let s=fresh();assert.equal(m.canRescue({...s,position:m.EXIT}),false);
+s={...s,position:m.PICKUPS[0].point};s=m.startSearch(s);s=tick(s,1.5);assert.ok(s.collected.includes('scanner'));
+const before=s.energy;s=m.toggleScan(s);assert.equal(s.energy,before-12);assert.equal(s.scan,true);s=tick(s,4.2);assert.equal(s.scan,false);
+s={...s,position:m.PICKUPS[3].point};s=m.startSearch(s);s=tick(s,1.5);assert.equal(s.cores,1);assert.equal(s.value,250);
+let damaged=m.startSearch({...fresh(),position:m.PICKUPS[0].point,bolts:[{id:1,position:m.PICKUPS[0].point,velocity:{x:0,z:0},life:2}]});damaged=m.advanceGame(damaged,.1);assert.equal(damaged.search,null);assert.ok(damaged.health<92);
+let interrupted=m.startSearch({...fresh(),position:m.PICKUPS[0].point});interrupted=m.movePlayer(interrupted,{x:-8,z:11});assert.equal(interrupted.search,null);assert.ok(interrupted.energy<100);assert.equal(m.movePlayer(interrupted,{x:-5,z:11}),interrupted);
+let enemy={...m.newGame().sentries[0],position:{x:-15,z:13},health:90};s=m.movePlayer({...fresh(),sentries:[enemy]},{x:-10,z:13});assert.equal(s.kills,1);assert.equal(s.value,40);assert.ok(s.brokenTrees.length>0);
+let pulse={...fresh(),position:{x:0,z:0},sentries:[{...enemy,position:{x:1,z:0}}],bolts:[{id:2,position:{x:2,z:0},velocity:{x:1,z:0},life:3}]};pulse=m.shockwave(pulse);assert.equal(pulse.kills,1);assert.equal(pulse.bolts.length,0);assert.equal(m.shockwave(pulse),pulse);
+s={...fresh(),position:m.EXIT,cores:1,value:250};s=m.requestRescue(s);assert.equal(s.sentries.length,3);s=tick(s,7);assert.equal(s.phase,'rescuing');s=tick(s,1.2);assert.equal(s.phase,'won');assert.ok(s.health>0);
+s=m.requestRescue({...fresh(),position:m.EXIT,cores:1});s=m.advanceGame({...s,position:{x:40,z:-20}},.1);assert.equal(s.phase,'playing');assert.equal(s.extraction,0);
+assert.equal(m.advanceGame({...fresh(),elapsed:179.95},.1).phase,'lost');
+assert.equal(m.advanceGame({...fresh(),health:.01},.1).phase,'lost');
+const trees=m.forest(m.riverX);assert.equal(new Set(trees.map(t=>t.id)).size,trees.length);
+console.log(JSON.stringify({passed:true,checks:['search rewards and interruption','scan cost and expiry','blink kills and tree destruction','energy and cooldown','pulse clears bullets','extraction gates and defense','storm and health loss'],trees:trees.length}));

@@ -1,0 +1,5 @@
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-multi-replica__selector { position:absolute; top:12px; right:14px; z-index:2; display:flex; gap:4px; max-width:100%; border:1px solid #d7e6fb; border-radius:9px; background:rgba(255,255,255,.92); padding:4px; }
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-multi-replica__selector button { min-width:0; border:1px solid transparent; border-radius:6px; background:transparent; color:#496286; cursor:pointer; padding:5px 10px; }
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-multi-replica__selector button.is-selected { border-color:#8db4ec; background:#dceaff; color:#194c99; }
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-multi-replica__selector button:hover { background:#eaf3ff; }
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-multi-replica__selector button .ui-typography { margin:0; }

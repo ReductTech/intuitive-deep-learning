@@ -1,0 +1,7 @@
+.rie-traditional { position: relative; width: 1600px; height: 900px; isolation: isolate; }
+.rie-traditional-art { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; z-index: -1; pointer-events: none; }
+.rie-traditional-connections { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.rie-traditional-labels { position: absolute; top: 570px; left: 30px; right: 30px; list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); text-align: center; }
+.rie-traditional-labels > li { min-width: 0; }
+.rie-traditional-return { position: absolute; top: 680px; left: 660px; width: 540px; color: var(--ui-accent-alt); text-align: center; }
+.rie-traditional-takeaway { position: absolute; top: 785px; left: 60px; right: 60px; text-align: center; }

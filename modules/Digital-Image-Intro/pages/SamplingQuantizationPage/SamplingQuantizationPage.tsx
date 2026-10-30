@@ -1,8 +1,10 @@
+import moduleAssetOutline from '../../outlines.json';
+import { moduleAssetUrl } from '../../../shared/react/assets';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { ContentBlock, Typography } from '../../../shared/react';
 import './SamplingQuantizationPage.css';
 
-const photo = new URL('../../assets/digital-image-cat-scene.png', import.meta.url).href;
+const photo = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/digital-image-cat-scene.jpg');
 type Raster = { width: number; height: number; data: Uint8ClampedArray };
 type Point = { x: number; y: number };
 type Mode = 'sampling' | 'quantization';
@@ -56,7 +58,7 @@ function DigitalPrecisionPage({ mode }: { mode: Mode }) {
   const [links, setLinks] = useState<string[]>([]);
   useEffect(() => {
     let active = true;
-    const image = new Image();
+    const image = new Image(); image.crossOrigin = 'anonymous';
     image.onload = () => {
       if (!active) return;
       const render = (width: number): Raster => {

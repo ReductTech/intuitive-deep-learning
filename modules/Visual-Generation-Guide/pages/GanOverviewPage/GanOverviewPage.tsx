@@ -1,11 +1,13 @@
+import { ContentBlock, Typography } from '../../../shared/react';
 import { useLecturePlayback } from '../../components/LecturePlayback';
 import { useEffect, useId, useMemo, useRef } from 'react';
-import ganFlowDiagram from '../../assets/gan-overview/gan-generator-discriminator.svg?raw';
+import { useDiagramAsset } from '../../components/useDiagramAsset';
 import './GanOverviewPage.css';
 
 const revealCount = 6;
 
 export function GanOverviewPage({ onComplete }: { onComplete?: () => void }) {
+  const { markup: ganFlowDiagram, failed: diagramFailed } = useDiagramAsset('images/gan-overview/gan-generator-discriminator.svg');
   const { stage, controls } = useLecturePlayback(revealCount, 1000);
   const completedRef = useRef(false);
   const id = useId().replaceAll(':', '');
@@ -16,7 +18,7 @@ export function GanOverviewPage({ onComplete }: { onComplete?: () => void }) {
     .replace(/data-reveal="(\d+)"/g, (_, value: string) => {
       const reveal = Number(value);
       return `data-reveal="${value}" data-hidden="${reveal > stage}" data-current="${reveal === stage}" aria-hidden="${reveal > stage}"`;
-    }), [id, stage]);
+    }), [id, stage, ganFlowDiagram]);
 
   useEffect(() => {
     if (stage !== revealCount - 1 || completedRef.current) return;
@@ -24,10 +26,10 @@ export function GanOverviewPage({ onComplete }: { onComplete?: () => void }) {
     onComplete?.();
   }, [onComplete, stage]);
 
-  return <section className="vg-gan vg-gan-overview" aria-label="GAN：生成器与判别器流程图" data-stage={stage}>
+  return <ContentBlock headingLevel={1} title="GAN：生成器造样本，判别器辨真假" subtitle="随机噪声经过生成器得到图像，真实图像与生成图像送入同一个判别器。" bodyClassName="vg-gan__layout" className="vg-shared-page vg-gan vg-gan-overview" aria-label="GAN：生成器与判别器流程图" data-stage={stage}>
     <div className="vg-gan__body">
       <div className="vg-gan__canvas">
-        <div className="vg-gan__diagram" dangerouslySetInnerHTML={{ __html: diagram }} />
+        {diagramFailed ? <Typography role="alert" variant="bodySmall">图示加载失败，请刷新页面重试。</Typography> : <div className="vg-gan__diagram" dangerouslySetInnerHTML={{ __html: diagram }} />}
       </div>
     </div>
     <footer className="vg-gan__footer">
@@ -35,5 +37,5 @@ export function GanOverviewPage({ onComplete }: { onComplete?: () => void }) {
         {controls}
       </div>
     </footer>
-  </section>;
+  </ContentBlock>;
 }

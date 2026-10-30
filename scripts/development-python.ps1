@@ -3,11 +3,11 @@ function Resolve-DevelopmentPython {
 
   $required = @('psutil')
   if (-not $ManagementOnly) {
+    if ($Kind -eq 'shuku') { $required += @('sqlalchemy','mysql.connector','cryptography') }
     $required += 'dotenv'
-    if ($Kind -in @('all','assessment','vision','api')) { $required += 'cryptography' }
     if ($Kind -in @('all','assessment')) { $required += @('langchain_core','pydantic') }
     if ($Kind -in @('all','vision')) { $required += @('torch','numpy','PIL') }
-    if ($Kind -in @('all','api')) { $required += @('fastapi','uvicorn','sqlalchemy','mysql.connector','psycopg','psycopg_pool','oss2') }
+    if ($Kind -in @('all','api')) { $required += @('fastapi','uvicorn','sqlalchemy','mysql.connector','oss2') }
   }
   $probe = 'import importlib.util,json,sys; missing=[]' + "`n" + 'for name in sys.argv[1:]: ' + "`n" + ' try: found=importlib.util.find_spec(name)' + "`n" + ' except (ImportError,ValueError): found=None' + "`n" + ' if found is None: missing.append(name)' + "`n" + 'print(json.dumps(dict(executable=sys.executable,missing=missing)))'
   $candidates = if ($Requested) {

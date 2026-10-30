@@ -1,0 +1,24 @@
+.di-arithmetic { display:grid; grid-template-rows:auto minmax(0,1fr); background:linear-gradient(135deg,#fff,#f3f9ff); }
+.di-arithmetic > .edu-content-body { min-height:0; }
+.di-arithmetic :is(div,section,footer,button,canvas,input,label) { min-width:0; max-width:100%; }
+.di-arithmetic p,.di-arithmetic h2 { margin:0; }
+.di-arithmetic__body { height:100%; min-height:0; display:grid; grid-template-rows:50px minmax(0,1fr) 112px; gap:18px; }
+.di-arithmetic__tabs { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; }
+.di-arithmetic button { border:1px solid #c9dcf4; border-radius:10px; background:#eaf3fc; color:#31557e; cursor:pointer; }
+.di-arithmetic button.is-selected { background:linear-gradient(120deg,#3389fa,#126ff3); color:white; border-color:transparent; }
+.di-arithmetic__images { display:grid; grid-template-columns:minmax(0,1fr) 30px minmax(0,1fr) 30px minmax(0,1fr); gap:8px; align-items:center; min-height:0; }
+.di-arithmetic__panel { align-self:stretch; display:grid; grid-template-rows:47px minmax(0,1fr) 39px; gap:6px; min-height:0; }
+.di-arithmetic__image { position:relative; min-height:0; width:100%; aspect-ratio:4/3; align-self:center; cursor:crosshair; }
+.di-arithmetic__image canvas { position:absolute; inset:0; width:100%; height:100%; border-radius:7px; }
+.di-arithmetic__selection { position:absolute; width:23px; height:23px; transform:translate(-50%,-50%); border:3px solid #1687ff; box-shadow:0 0 0 2px white; pointer-events:none; }
+.di-arithmetic__scan { position:absolute; left:0; right:0; border-top:1px dashed #38a3ff; opacity:.75; pointer-events:none; }
+.di-arithmetic__pixel-value { position:absolute; transform:translateX(-50%); background:rgba(255,255,255,.96); border:1px solid #b9d9ff; border-radius:7px; padding:0 12px; min-width:66px; text-align:center; box-shadow:0 2px 8px #17375824; pointer-events:none; }
+.di-arithmetic__explanation { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,.33fr); gap:24px; align-items:center; padding:8px 22px; border-radius:14px; background:#e9f3ff; }
+.di-arithmetic__controls { display:flex; flex-direction:column; justify-content:center; align-items:stretch; gap:4px; padding-left:20px; border-left:1px solid #c2d8f1; }
+.di-arithmetic__controls button { background:white; padding:0 12px; }
+.di-arithmetic__controls p { text-align:center; }
+.di-arithmetic__controls label { display:grid; }
+.di-arithmetic__controls input { width:100%; accent-color:#1687ff; cursor:pointer; }
+.di-arithmetic__regions { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:6px; }
+.di-arithmetic__regions button { padding:4px; }
+.di-arithmetic button:focus-visible,.di-arithmetic__image:focus-visible,.di-arithmetic input:focus-visible { outline:3px solid #397dc5; outline-offset:2px; }

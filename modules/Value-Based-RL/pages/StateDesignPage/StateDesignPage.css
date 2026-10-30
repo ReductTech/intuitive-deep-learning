@@ -1,0 +1,38 @@
+.vbrl-state { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; height: 100%; min-height: 0; }
+.vbrl-state__warehouse > .vbrl-teaching-panel__body { display: grid; grid-template-columns: minmax(0, .64fr) minmax(0, .36fr); align-items: center; gap: 14px; padding: 14px 16px; }
+.vbrl-state__map-column { display: grid; align-content: center; justify-items: center; gap: 8px; min-height: 0; }
+.vbrl-state .vbrl-state__map { width: min(100%, 420px); }
+.vbrl-state__map .vbrl-map__frame { height: 420px; }
+.vbrl-state__map .vbrl-map__board { height: 100%; aspect-ratio: auto; }
+.vbrl-state__map .vbrl-map__cell.is-selected { outline-color: #2875c5; }
+.vbrl-state__map .vbrl-map__cell.edu-btn:hover { transform: none; }
+.vbrl-state__map .vbrl-map__cell img { width: 94%; height: 94%; }
+.vbrl-state__map .vbrl-map__cell img[alt="机器人"] { width: 88%; height: 88%; }
+.vbrl-state__map .vbrl-map__cell:is(.is-goal, :has(.vbrl-map__marker-art)) img[alt="机器人"] { width: 45%; height: 45%; }
+.vbrl-state__map .vbrl-map__cell:has(img[alt="机器人"]) .vbrl-map__marker-art { width: 55%; height: 55%; }
+.vbrl-state__environment { display: grid; gap: 14px; min-height: 0; }
+.vbrl-state__legend { display: grid; gap: 8px; }
+.vbrl-state__legend-item { display: grid; grid-template-columns: 44px minmax(0, 1fr); align-items: center; gap: 8px; min-height: 48px; }
+.vbrl-state__legend-art { display: grid; place-items: center; width: 44px; height: 44px; }
+.vbrl-state__legend-art img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.vbrl-state__obstacle, .vbrl-state__floor { display: block; width: 36px; height: 36px; border: 1px solid #d9e5f0; border-radius: 7px; background: #fbfdff; }
+.vbrl-state__obstacle { border-color: #96aac1; background: repeating-linear-gradient(135deg, #afc0d4 0 6px, #97abc3 6px 12px); }
+.vbrl-state__full-state { padding: 10px 12px; border-radius: var(--ui-radius-sm); background: #edf6ff; }
+.vbrl-state__right { display: grid; grid-template-rows: minmax(0, .48fr) minmax(0, .52fr); gap: 16px; min-height: 0; }
+.vbrl-state__observation > .vbrl-teaching-panel__body { display: grid; grid-template-columns: 176px minmax(0, 1fr); align-items: center; gap: 18px; padding: 12px 16px; }
+.vbrl-state__position-sensor { display: grid; justify-items: center; align-content: center; gap: 6px; width: 176px; height: 176px; padding: 8px; border: 1px solid #c9e0f6; border-radius: 14px; background: #edf6ff; }
+.vbrl-state__position-sensor > img { display: block; width: 104px; height: 104px; object-fit: contain; }
+.vbrl-state__position-reading { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; width: 100%; }
+.vbrl-state__position-reading > span { text-align: center; border-radius: 6px; background: #fff; }
+.vbrl-state__observation-copy { display: grid; gap: 6px; }
+.vbrl-state__comparison > .vbrl-teaching-panel__head { background: var(--ui-success); }
+.vbrl-state__comparison > .vbrl-teaching-panel__body { padding: 10px 14px; }
+.vbrl-state__comparison-table { width: 100%; height: 100%; table-layout: fixed; border-collapse: collapse; }
+.vbrl-state__comparison-label { width: 16%; }
+.vbrl-state__comparison-table th, .vbrl-state__comparison-table td { padding: 0 10px; border: 1px solid #d9e7f6; text-align: left; vertical-align: middle; }
+.vbrl-state__comparison-table thead th { background: #e9f4ff; }
+.vbrl-state__comparison-table tbody th { background: #f3f8ff; }
+.vbrl-state-page .vbrl-page-footer { padding: 8px 20px; }
+.vbrl-state__summary { display: grid; grid-template-columns: minmax(0, .15fr) minmax(0, .78fr) minmax(0, .07fr); align-items: center; gap: 18px; }
+.vbrl-state__summary-copy { display: grid; gap: 2px; padding-left: 24px; border-left: 2px solid #458fe3; }
+.vbrl-state__summary > img { display: block; justify-self: end; width: 72px; height: 72px; object-fit: contain; }

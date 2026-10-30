@@ -8,7 +8,7 @@ from PIL import Image
 from torchvision.models import mobilenet_v3_small, MobileNet_V3_Small_Weights
 
 repo = Path(__file__).resolve().parents[3]
-root = repo / 'assets' / '80396753-7fc8-4f55-9188-bddbdb828169'
+root = Path(__file__).resolve().parents[1] / 'assets'
 out = root / 'flatten-interface'
 out.mkdir(exist_ok=True)
 torch.set_num_threads(4)
@@ -16,7 +16,7 @@ weights = MobileNet_V3_Small_Weights.IMAGENET1K_V1
 model = mobilenet_v3_small(weights=weights).eval()
 source = root / 'mnist/7/60000.png'
 if not source.exists():
-    source = sorted((root / 'mnist/7').glob('*.png'))[0]
+    source = sorted(p for p in (root / 'mnist/7').iterdir() if p.suffix.lower() in {'.png','.jpg','.jpeg'})[0]
 image = Image.open(source).convert('RGB')
 records = []
 with torch.inference_mode():

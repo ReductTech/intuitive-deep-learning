@@ -1,0 +1,12 @@
+/* Offline playback uses the same slide shell and thumbnail navigation as the online reader. */
+.cw-offline-navigation .cw-text-page{padding:3px 5px;margin-bottom:3px;border-radius:7px}
+.cw-offline-navigation .cw-text-page .cw-ppt-page-row{align-items:stretch;gap:7px}
+.cw-offline-navigation .cw-text-page .cw-ppt-index{display:flex;align-items:center;justify-content:center;cursor:default}
+.cw-app .cw-offline-navigation .cw-offline-row{display:flex;flex:1;align-items:center;min-width:0;min-height:48px;padding:10px 9px;border:0;border-radius:5px;background:transparent;box-shadow:none;text-align:left;font-family:inherit;font-size:13px;line-height:1.6;color:#294260;cursor:pointer}
+.cw-app .cw-offline-navigation .cw-offline-row span{min-width:0;overflow-wrap:anywhere}
+.cw-app .cw-offline-navigation .cw-offline-row:hover{background:#f3f6fb}
+.cw-app .cw-offline-navigation .active .cw-offline-row{color:#245cbe;font-weight:600}
+.cw-offline-navigation .cw-ppt-index{cursor:default}
+.cw-app .cw-offline-navigation button:focus-visible{outline:2px solid #3674ff;outline-offset:2px}
+.offline-export-status{position:fixed;z-index:300;right:24px;bottom:24px;padding:20px;width:min(390px,calc(100vw - 48px));background:white;box-shadow:0 10px 45px #17335930;border:1px solid #dce4ef;border-radius:12px;color:#19345e}.offline-export-status progress{width:100%;accent-color:#3568f4;margin:10px 0}.offline-export-status p{font-size:13px;line-height:1.6}.offline-export-status button{padding:7px 12px;border:1px solid #dce4ef;background:#fff;border-radius:6px;cursor:pointer}
+

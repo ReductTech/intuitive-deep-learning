@@ -8,8 +8,7 @@ import '../styles.css';
 import '../presentation.css';
 import './SceneDeck.css';
 
-const SCENE_WIDTH = 1600;
-const SCENE_HEIGHT = 900;
+import { SCENE_WIDTH, SCENE_HEIGHT, useSceneScale } from './canvas';
 interface LessonProgressState { completedIds?: string[]; visibleCount?: number; completed?: boolean; }
 export type { DeckDefinition, LessonContext, SceneDeckProps, SceneDefinition, SpeakerNote } from './types';
 
@@ -34,28 +33,6 @@ function readProgress(progressKey: string) {
     const state = raw ? JSON.parse(raw) as LessonProgressState : null;
     return Array.isArray(state?.completedIds) ? state.completedIds : [];
   } catch { return []; }
-}
-
-function useSceneScale(viewportRef: RefObject<HTMLDivElement | null>) {
-  const [scale, setScale] = useState(1);
-  useLayoutEffect(() => {
-    const viewport = viewportRef.current;
-    if (!viewport) return;
-    const update = () => {
-      if (document.fullscreenElement === viewport) return;
-      const style = window.getComputedStyle(viewport);
-      const width = viewport.clientWidth - (parseFloat(style.paddingLeft) || 0) - (parseFloat(style.paddingRight) || 0);
-      const height = viewport.clientHeight - (parseFloat(style.paddingTop) || 0) - (parseFloat(style.paddingBottom) || 0);
-      if (!width || !height) return;
-      const fit = parseFloat(style.getPropertyValue('--sd-stage-fit')) || 1;
-      setScale(Math.min(1, width / SCENE_WIDTH, height / SCENE_HEIGHT) * fit);
-    };
-    update();
-    const observer = new ResizeObserver(update);
-    observer.observe(viewport);
-    return () => observer.disconnect();
-  }, [viewportRef]);
-  return scale;
 }
 
 function requestStageFullscreen(viewport: HTMLDivElement | null) {
@@ -235,7 +212,7 @@ function SceneDeckPlayer({ catalog, moduleId, assetId, progressKey, getNotes }: 
 
   useEffect(() => {
     document.body.classList.add('ppt-body');
-    document.title = 'SceneDeck · ' + (sceneIndex + 1) + '. ' + scene.title;
+    document.title = '术库 · ' + (sceneIndex + 1) + '. ' + scene.title;
     return () => document.body.classList.remove('ppt-body');
   }, [scene.title, sceneIndex]);
 
@@ -248,12 +225,12 @@ function SceneDeckPlayer({ catalog, moduleId, assetId, progressKey, getNotes }: 
   }, []);
 
   return <div ref={appRef} className="scenedeck-app" data-ppt-react-slide data-scene-deck>
-    <header className="scenedeck-toolbar" aria-label="SceneDeck 工具栏">
+    <header className="scenedeck-toolbar" aria-label="术库工具栏">
       <div className="scenedeck-toolbar__leading">
         <div className="scenedeck-brand">
           <span className="scenedeck-brand__mark" aria-hidden="true"><Icon name="sparkle" /></span>
           <span className="scenedeck-brand__copy">
-            <Typography as="strong" variant="bodySmall" tone="inherit">SceneDeck</Typography>
+            <Typography as="strong" variant="bodySmall" tone="inherit">术库</Typography>
             <Typography as="span" variant="bodySmall" tone="muted">课程播放器</Typography>
           </span>
         </div>

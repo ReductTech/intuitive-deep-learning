@@ -1,8 +1,10 @@
+import moduleAssetOutline from '../../outlines.json';
+import { moduleAssetUrl } from '../../../shared/react/assets';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from '../../../shared/react';
 import { mapGray, type Operation } from './pointModel';
 import './PointOperationsPage.css';
-const photo = new URL('../../assets/digital-image-cat-scene.png', import.meta.url).href;
+const photo = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/digital-image-cat-scene.jpg');
 const WIDTH = 480, HEIGHT = 400;
 const operations: [Operation, string][] = [['brighten', '变亮'], ['darken', '变暗'], ['invert', '反相'], ['threshold', '阈值']];
 const bound = (x: number, max: number) => Math.max(0, Math.min(max - 1, x));
@@ -29,7 +31,7 @@ export function PointOperationsPage() {
  const parameter = operation === 'threshold' ? threshold : amount;
  const offset = (selected.y * WIDTH + selected.x) * 4, r = source?.[offset] ?? 0, s = mapGray(r, operation, parameter);
  useEffect(() => {
-  let active = true; const image = new Image();
+  let active = true; const image = new Image(); image.crossOrigin = 'anonymous';
   image.onload = () => {
    if (!active) return;
    const c = document.createElement('canvas'); c.width = WIDTH; c.height = HEIGHT; const ctx = c.getContext('2d')!;

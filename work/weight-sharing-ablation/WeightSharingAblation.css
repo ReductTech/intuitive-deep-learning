@@ -1,0 +1,8 @@
+.cg-weight-ablation{position:relative;min-width:0;max-width:100%;}
+.cg-weight-ablation-controls{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:8px 0 12px;}
+.cg-weight-ablation-controls>div{display:flex;gap:6px;flex:none;}
+.cg-weight-ablation-controls .edu-btn{min-height:28px;padding:3px 8px;}
+.cg-weight-ablation-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;}
+.cg-weight-generated,.cg-weight-original{display:block;width:100%;max-width:100%;height:auto;aspect-ratio:16 / 9;object-fit:contain;background:#fff;border:1px solid #d4e2f7;border-radius:10px;}
+.cg-weight-ablation-step{margin-top:10px;}
+.cg-weight-ablation.is-enlarged{position:absolute;left:-24px;top:-90px;width:1520px;max-width:none;padding:20px;background:white;border:1px solid #c4d7ee;border-radius:14px;box-shadow:0 20px 60px #173b6b33;z-index:2;}

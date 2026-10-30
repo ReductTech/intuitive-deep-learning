@@ -1,0 +1,23 @@
+.aipe-service-page{display:flex;flex-direction:column;}
+.aipe-service-page>.aipe-service-body{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1070px) minmax(0,1fr);gap:46px;padding-top:8px;}
+.aipe-service-demo{min-width:0;align-self:start;background:#fff;border:1px solid var(--ui-border);border-radius:22px;padding:24px;box-shadow:0 8px 26px #27446e0b;}
+.aipe-service-demo-head{display:flex;align-items:center;justify-content:space-between;gap:14px;padding-bottom:20px;border-bottom:1px solid #e9edf3;}
+.aipe-service-form-layout{display:grid;grid-template-columns:minmax(0,610px) minmax(0,1fr);gap:26px;padding-top:18px;}
+.aipe-service-inputs{min-width:0;display:grid;align-content:start;gap:13px;}
+.aipe-service-inputs .aipe-service-title-input{height:94px;min-height:94px;resize:none;}
+.aipe-service-inputs .aipe-service-abstract{height:166px;min-height:166px;resize:none;}
+.aipe-service-examples{display:flex;gap:10px;align-items:center;}
+.aipe-service-examples .edu-btn{white-space:nowrap;}
+.aipe-service-actions{display:flex;align-items:center;gap:10px;}
+.aipe-service-actions .edu-btn{white-space:nowrap;}
+.aipe-service-results{min-width:0;padding-top:20px;display:flex;flex-direction:column;align-items:center;gap:24px;}
+.aipe-service-score-dial{position:relative;width:292px;height:292px;max-width:100%;}
+.aipe-service-score-dial>svg{display:block;width:100%;height:100%;}
+.aipe-service-score-dial>div{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;}
+.aipe-service-score-note{margin-top:10px;}
+.aipe-service-promotion{min-width:0;padding:8px 0 0 30px;border-left:1px solid var(--ui-border);display:flex;flex-direction:column;align-items:center;gap:36px;}
+.aipe-service-usage{width:100%;display:grid;gap:8px;}
+.aipe-service-run-count{color:var(--ui-accent-alt);font-variant-numeric:tabular-nums;}
+.aipe-service-qr-area{width:100%;display:flex;flex-direction:column;align-items:center;gap:20px;}
+.aipe-service-qr-area>img{display:block;max-width:100%;background:white;}
+.aipe-service-qr-area>.edu-btn{align-self:stretch;text-align:center;}

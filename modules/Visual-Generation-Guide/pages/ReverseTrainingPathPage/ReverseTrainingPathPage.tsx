@@ -1,10 +1,13 @@
+import moduleAssetOutline from '../../outlines.json';
+import { moduleAssetUrl } from '../../../shared/react/assets';
 import { useLecturePlayback } from '../../components/LecturePlayback';
 import { useEffect, useRef, useState } from 'react';
 import { ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from '../../../shared/react';
-import x0 from '../../assets/forward-derivation/x0.png';
-import x1 from '../../assets/forward-derivation/x1.png';
-import x2 from '../../assets/forward-derivation/x2.png';
 import './ReverseTrainingPathPage.css';
+
+const x0 = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/forward-derivation/x0.jpg');
+const x1 = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/forward-derivation/x1.jpg');
+const x2 = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/forward-derivation/x2.jpg');
 
 const stages = [
   '先用前向加噪，得到一对相邻的带噪图像。',
@@ -49,7 +52,7 @@ export function ReverseTrainingPathPage({ onComplete }: ReverseTrainingPathPageP
     onComplete?.();
   }, [stage, onComplete]);
 
-  return <ContentBlock headingLevel={1} className="vg-reverse-training" bodyClassName="vg-reverse-training__body"
+  return <ContentBlock headingLevel={1} className="vg-shared-page vg-reverse-training" bodyClassName="vg-reverse-training__body"
     title="前向加噪，如何为反向去噪提供训练路径？" subtitle={stages[stage]}>
     <div className="vg-reverse-training__main">
       <section className="vg-reverse-training__path" aria-label="前向加噪和反向训练路径">

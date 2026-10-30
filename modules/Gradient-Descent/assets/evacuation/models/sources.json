@@ -1,0 +1,29 @@
+{
+  "nature": {
+    "author": "Quaternius",
+    "source": "https://quaternius.com/packs/stylizednaturemegakit.html",
+    "license": "CC0 1.0",
+    "files": [
+      "Pine_1",
+      "Pine_2",
+      "Pine_3",
+      "CommonTree_1",
+      "CommonTree_3",
+      "DeadTree_1",
+      "DeadTree_3",
+      "Rock_Medium_1",
+      "Rock_Medium_2",
+      "Rock_Medium_3",
+      "Bush_Common",
+      "Fern_1",
+      "Grass_Common_Short",
+      "Flower_3_Group"
+    ]
+  },
+  "industrial": {
+    "author": "Kenney",
+    "source": "https://kenney.nl/assets/city-kit-industrial",
+    "license": "CC0 1.0"
+  },
+  "terrain": "Procedural 3D mesh. No map image."
+}

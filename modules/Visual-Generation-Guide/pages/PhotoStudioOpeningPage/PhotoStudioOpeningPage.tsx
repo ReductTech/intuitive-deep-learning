@@ -1,9 +1,12 @@
+import moduleAssetOutline from '../../outlines.json';
+import { moduleAssetUrl } from '../../../shared/react/assets';
 import { useState } from 'react';
-import { Typography } from '../../../shared/react';
-import catOne from '../../assets/photo-studio-opening/cat-photo-01.png';
-import catTwo from '../../assets/photo-studio-opening/cat-photo-02.png';
-import catThree from '../../assets/photo-studio-opening/cat-photo-03.png';
+import { Button, ContentBlock, Typography } from '../../../shared/react';
 import './PhotoStudioOpeningPage.css';
+
+const catOne = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/photo-studio-opening/cat-photo-01.jpg');
+const catTwo = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/photo-studio-opening/cat-photo-02.jpg');
+const catThree = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/photo-studio-opening/cat-photo-03.jpg');
 
 const photos = [
   { src: catOne, alt: '戴红围巾的橘猫坐在木窗边，面向镜头。' },
@@ -25,23 +28,16 @@ export function PhotoStudioOpeningPage({ onComplete }: { onComplete?: () => void
     if (next === photos.length) onComplete?.();
   };
 
-  return <section className="vg-photo-studio" aria-label="没有相机的摄影师" data-photo-count={visibleCount}>
-    <header className="vg-photo-studio__head">
-      <div>
-        <Typography as="h1" variant="display" tone="inherit">没有相机的摄影师</Typography>
-        <Typography variant="subtitle" tone="inherit">给这位摄影师一句描述，看看它会“拍”出什么。</Typography>
-      </div>
-      <Typography variant="bodySmall" tone="inherit" className="vg-photo-studio__topic">视觉生成</Typography>
-    </header>
-
+  return <ContentBlock headingLevel={1} className="vg-shared-page vg-photo-studio" bodyClassName="vg-photo-studio__body"
+    title="没有相机的摄影师" subtitle="给这位摄影师一句描述，看看它会“拍”出什么。" data-photo-count={visibleCount}>
     <div className="vg-photo-studio__workbench">
       <aside className="vg-photo-studio__prompt">
         <Typography as="h2" variant="h3" tone="inherit">你的描述</Typography>
         <Typography variant="body" tone="inherit">一只戴着红围巾的橘猫，坐在窗边。</Typography>
-        <button className="vg-photo-studio__shoot" type="button" onClick={revealPhoto}>
+        <Button variant="primary" className="vg-photo-studio__shoot" onClick={revealPhoto}>
           <Sparkle />
           <Typography as="span" variant="body" tone="inherit">{visibleCount === 0 ? '拍一张' : visibleCount < photos.length ? '再拍一张' : '重新体验'}</Typography>
-        </button>
+        </Button>
       </aside>
 
       <div className="vg-photo-studio__prints" aria-label="同一句描述的三张生成图像示例">
@@ -57,5 +53,5 @@ export function PhotoStudioOpeningPage({ onComplete }: { onComplete?: () => void
       <Typography variant="subtitle" tone="inherit">从一句描述到一张图像，走进视觉生成。</Typography>
     </footer>
     <span className="vg-photo-studio__announcement" role="status">{visibleCount > 0 ? `已展示${visibleCount}张生成图像。` : ''}</span>
-  </section>;
+  </ContentBlock>;
 }

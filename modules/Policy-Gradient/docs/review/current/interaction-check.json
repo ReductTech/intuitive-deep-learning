@@ -1,0 +1,54 @@
+[
+  {
+    "label": "01 highest score",
+    "overflow": []
+  },
+  {
+    "label": "01 reset",
+    "overflow": []
+  },
+  {
+    "label": "03 input change",
+    "overflow": []
+  },
+  {
+    "label": "08 executed sample",
+    "overflow": []
+  },
+  {
+    "label": "09 return step",
+    "overflow": []
+  },
+  {
+    "label": "10 update",
+    "overflow": []
+  },
+  {
+    "label": "11 training",
+    "overflow": []
+  },
+  {
+    "label": "13 执行这一步",
+    "overflow": []
+  },
+  {
+    "label": "13 计算目标",
+    "overflow": []
+  },
+  {
+    "label": "13 更新 Critic",
+    "overflow": []
+  },
+  {
+    "label": "14 Actor update",
+    "overflow": []
+  },
+  {
+    "label": "15 actual training",
+    "overflow": []
+  },
+  {
+    "label": "15 training complete",
+    "overflow": []
+  }
+]

@@ -1,0 +1,16 @@
+.naipag-layout{height:100%;display:grid;grid-template-rows:minmax(0,1fr) auto;gap:14px;}
+.naipag-columns{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:56px;}
+.naipag-cards{display:grid;grid-template-rows:minmax(0,1fr) auto;gap:12px;}
+.naipag-fan{position:relative;height:100%;}
+.naipag-card.edu-btn{position:absolute;display:block;width:65%;height:82%;border:1px solid var(--ui-border);border-radius:4px;background:white;box-shadow:0 5px 12px #21324a12;padding:0;max-width:100%;}
+.naipag-card>span{display:block;width:100%;height:100%;}
+.naipag-card img{display:block;width:100%;height:100%;object-fit:contain;}
+.naipag-card--0{top:0;right:0;}
+.naipag-card--1{top:8%;right:17%;}
+.naipag-card--2{top:16%;right:34%;}
+.naipag-card.edu-btn:hover{background:white;border-color:var(--ui-accent);}
+.naipag-card.edu-btn:focus-visible{outline:3px solid var(--ui-accent);outline-offset:3px;}
+.naipag-benefits{display:grid;gap:40px;align-content:center;}
+.naipag-benefits section{display:grid;grid-template-columns:84px minmax(0,1fr);gap:24px;align-items:center;}
+.naipag-benefits section>div:last-child{display:grid;gap:12px;}
+.naipag-icon{color:var(--ui-accent);display:grid;place-items:center;}

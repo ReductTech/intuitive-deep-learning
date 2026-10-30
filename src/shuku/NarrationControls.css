@@ -1,0 +1,33 @@
+.cw-smart-narration{position:relative;display:flex;align-items:center;gap:7px;flex:none;color:#294b84}
+.cw-smart-buttons{display:flex;align-items:stretch;height:38px;border:1px solid #245ad6;border-radius:10px;background:linear-gradient(180deg,#4381ff,#2862e8);box-shadow:inset 0 1px 0 #ffffff40,0 1px 2px #153c8420,0 3px 8px #2864fa1a}
+.cw-app .cw-smart-start{height:36px;background:transparent!important;color:#fff!important;border:0;border-radius:9px 0 0 9px!important;padding:0 13px!important;font-size:13px!important;font-weight:600;white-space:nowrap;gap:7px;transition:background .16s,box-shadow .16s}
+.cw-app .cw-smart-start:hover:not(:disabled){background:#ffffff14!important}
+.cw-app .cw-smart-start:active{background:#122f7426!important;box-shadow:inset 0 2px 4px #12377630}
+.cw-app .cw-smart-start>svg{width:17px;height:17px}
+.cw-smart-menu{position:static!important}
+.cw-app .cw-smart-menu>summary{display:flex;align-items:center;justify-content:center;list-style:none;width:32px;height:36px;padding:0;background:transparent;color:#fff;border:0;border-left:1px solid #ffffff30;border-radius:0 9px 9px 0;cursor:pointer;box-shadow:inset 1px 0 0 #153b8e18;transition:background .16s}
+.cw-smart-menu>summary::-webkit-details-marker{display:none}
+.cw-app .cw-smart-menu>summary:hover,.cw-app .cw-smart-menu[open]>summary{background:#153d8c26}
+.cw-app .cw-smart-menu>summary>svg{width:16px;height:16px;transition:transform .16s}
+.cw-smart-menu[open]>summary>svg{transform:rotate(180deg)}
+.cw-app .cw-smart-menu>.cw-smart-settings{position:absolute;top:calc(100% + 10px);right:0;z-index:80;width:290px;min-width:290px;max-width:calc(100vw - 24px);padding:18px;background:#fff;color:#233959;border:1px solid #dce4f1;border-radius:14px;box-shadow:0 16px 48px #19345e24,0 2px 6px #19345e0a;display:flex;flex-direction:column;gap:13px;text-align:left;white-space:normal}
+.cw-smart-settings>strong{font-size:15px}
+.cw-smart-settings>p{margin:-7px 0 0;color:#77859c;font-size:12px}
+.cw-smart-settings>label{display:flex;flex-direction:column;gap:6px;font-size:12px;color:#53647e}
+.cw-app .cw-smart-settings select{width:100%;padding:8px 10px;background:#f8faff;font-size:13px;color:#233959}
+.cw-smart-settings>small{font-size:11px;color:#8a97aa;line-height:1.6}
+.cw-smart-settings .cw-smart-advance{flex-direction:row;align-items:center;justify-content:space-between;padding:10px 0;border-top:1px solid #edf0f5;border-bottom:1px solid #edf0f5;color:#233959}
+.cw-smart-advance small{display:block;color:#8a97aa;font-size:11px;margin-top:3px}
+.cw-smart-advance input{width:17px;height:17px;accent-color:#2864fa}
+.cw-smart-state{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.cw-smart-error{position:absolute;right:0;top:calc(100% + 10px);width:300px;max-width:85vw;padding:12px 14px;z-index:90;color:#9d3f31;background:#fff5f2;border:1px solid #edcfc8;border-radius:10px;font-size:12px;white-space:normal}
+.cw-smart-narration.is-compact .cw-smart-label{display:none}
+.cw-app .is-compact .cw-smart-buttons{height:32px;border-radius:8px;background:linear-gradient(180deg,#f9fbff,#eaf0f8);border-color:#cbd5e3;box-shadow:inset 0 1px 0 #fff,0 1px 2px #19345e0c}
+.cw-app .is-compact .cw-smart-start{width:32px;height:30px;padding:0!important;color:#345785!important;border-radius:7px 0 0 7px!important}
+.cw-app .is-compact .cw-smart-start:hover:not(:disabled){background:#dbe6f6!important}
+.cw-app .is-compact .cw-smart-menu>summary{width:22px;height:30px;border-color:#ced8e6;border-radius:0 7px 7px 0;color:#61748e;box-shadow:inset 1px 0 0 #fff8}
+.cw-app .is-compact .cw-smart-menu>summary:hover,.cw-app .is-compact .cw-smart-menu[open]>summary{background:#dbe6f6}
+.cw-fullscreen-controls .cw-smart-settings{top:auto!important;bottom:calc(100% + 14px);right:auto!important;left:0}
+.cw-fullscreen-controls .cw-smart-error{top:auto;bottom:calc(100% + 14px);right:auto;left:0}
+@media(max-width:1100px){.cw-topbar .cw-prototype,.cw-topbar .cw-save{display:none}}
+@media(prefers-reduced-motion:reduce){.cw-app .cw-smart-start,.cw-app .cw-smart-menu>summary,.cw-app .cw-smart-menu>summary>svg{transition:none}}

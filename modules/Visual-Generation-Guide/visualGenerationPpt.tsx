@@ -1,3 +1,4 @@
+import outline from './outlines.json';
 import { SceneDeck, type DeckDefinition, type SceneDefinition } from '../shared/react/presentation';
 import { visualGenerationCourse } from './course';
 
@@ -15,5 +16,5 @@ export const deck: DeckDefinition = {
 const catalog: [DeckDefinition, ...DeckDefinition[]] = [deck];
 
 export function VisualGenerationPpt() {
-  return <SceneDeck catalog={catalog} moduleId="visual-generation-guide" assetId="visual-generation-guide" progressKey="lesson-flow:visual-generation-guide-v4" />;
+  return <SceneDeck catalog={catalog} moduleId="visual-generation-guide" assetId={outline.moduleIdentity.id} progressKey="lesson-flow:visual-generation-guide-v4" />;
 }

@@ -1,3 +1,1 @@
-# Only needed when regenerating SceneDeck thumbnails.
-playwright>=1.58,<2
-Pillow>=11,<13
+-r creator-skill/scripts/requirements-capture.txt

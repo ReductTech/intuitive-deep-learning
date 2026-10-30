@@ -1,14 +1,16 @@
-# Intuitive Deep Learning
+# 术库
 
 服务重构后的 Windows 启动、目录职责和兼容说明见 [backend/README.md](backend/README.md)。
 
+后续平台业务迁移范围见 [术库业务逻辑迁移范围](docs/术库业务逻辑迁移范围.md)：以本仓库为最终部署产品，迁入审核、共创、发布、治理及 MySQL 持久化等逻辑，保留现有编辑和预览。
+
 > 用可视化、交互实验和小规模训练任务建立深度学习直觉。
 
-Intuitive Deep Learning 是一套可本地运行的深度学习互动课程。项目把抽象概念拆成可以操作的学习模块：从“为什么需要神经元”开始，逐步进入损失函数、梯度下降、激活函数、MLP、数字图像、卷积核、LeNet-5 和人脸识别等主题。
+本仓库为术库正式版代码，仓库名为 `intuitive-deep-learning`。术库支持课程探索、学习、创作与共创，并提供可本地运行的深度学习互动课程。项目把抽象概念拆成可以操作的学习模块：从“为什么需要神经元”开始，逐步进入损失函数、梯度下降、激活函数、MLP、数字图像、卷积核、LeNet-5 和人脸识别等主题。
 
 课程适合用于课堂演示、自学实验和 AI 教学助手调用。学习者可以从课程地图按路线推进，也可以直接打开某个模块，在滑块、画布、动画和训练面板中观察参数变化如何影响模型行为。
 
-![深度学习互动课程地图](./assets/course_map.png)
+![深度学习互动课程地图](./modules/shared/assets/course_map.jpg)
 
 ## 课程特色
 
@@ -61,6 +63,10 @@ python3 -m pip install -r requirements-torch.txt
 
 ## Windows 启动
 
+默认运行 `npm run dev`（或 `npm run dev:preview`），打开 `http://localhost:5173/`，无需登录即可预览本地课件。端口固定为 5173，占用时直接报错，不自动跳到 5176。无需安装本地数据库服务。
+
+完整登录、创作与消息入口使用 `npm run dev:app`，同样监听 5173，需要先停止预览进程，并准备业务后端 8010。Windows 业务后端在未显式配置数据库环境变量时，读取用户目录 `.reduct_db_config.json` 的 `MYSQL_URL_TEST`，使用远端测试库。详见 [术库业务后端说明](backend/src/shuku_backend/README.md)。
+
 在仓库根目录、已激活的 Python 环境中，运行 `.\scripts\devstart.ps1` 启动全部本地后台服务；另一个终端运行 `npm run dev` 启动课件。状态与停止分别为 `.\scripts\devstart.ps1 -Status` 和 `.\scripts\devstop.ps1`。详情见 [scripts/README.md](scripts/README.md)。
 
 ## 项目结构
@@ -81,7 +87,7 @@ python3 -m pip install -r requirements-torch.txt
 
 ## 开发与校验
 
-### SceneDeck 缩略图
+### 术库 缩略图
 
 左栏使用各模块 `assets/scenedeck-thumbnails/` 中的静态图片，不再同时运行所有幻灯片组件。修改课件页面后，可按模块重新生成默认画面的缩略图：
 

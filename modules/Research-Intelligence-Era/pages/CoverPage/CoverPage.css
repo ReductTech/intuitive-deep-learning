@@ -1,0 +1,50 @@
+.rie-cover {
+  position: relative;
+  width: 1600px;
+  height: 900px;
+  background: var(--ui-bg-page-top);
+  isolation: isolate;
+}
+
+.rie-cover-art {
+  position: absolute;
+  inset: 0 0 0 auto;
+  width: 900px;
+  height: 900px;
+  object-fit: contain;
+  mask-image: linear-gradient(to right, transparent, #000 20%);
+  z-index: -1;
+}
+
+.rie-cover-copy {
+  position: absolute;
+  top: 238px;
+  left: 90px;
+  width: 850px;
+  max-width: 100%;
+  min-width: 0;
+  --ui-type-display-size: 88px;
+  --ui-type-subtitle-size: 38px;
+}
+
+.rie-cover-title {
+  margin: 0;
+  color: var(--ui-navy);
+}
+
+.rie-cover-title > span {
+  display: block;
+}
+
+.rie-cover-title > span + span {
+  margin-top: 32px;
+  --ui-type-display-size: 80px;
+}
+
+.rie-cover-accent {
+  width: 126px;
+  height: 9px;
+  border-radius: var(--ui-radius-pill);
+  background: var(--ui-accent-alt);
+  margin: 54px 0 30px;
+}

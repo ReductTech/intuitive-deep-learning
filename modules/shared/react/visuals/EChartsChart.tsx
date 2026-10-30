@@ -6,10 +6,19 @@ export interface EChartsOption {
   [key: string]: unknown;
 }
 
-interface EChartsInstance {
+export interface EChartsInstance {
   setOption(option: EChartsOption): void;
   resize(): void;
   dispose(): void;
+  dispatchAction(action: Record<string, unknown>): void;
+  on(event: string, handler: (event: EChartsEvent) => void): void;
+}
+
+export interface EChartsEvent {
+  componentType?: string;
+  seriesType?: string;
+  seriesIndex?: number;
+  dataIndex?: number;
 }
 
 interface EChartsGlobal {
@@ -51,10 +60,14 @@ function loadECharts(): Promise<EChartsGlobal> {
 export interface EChartsChartProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
   option: EChartsOption;
   minHeight?: number;
+  onEvents?: Record<string, (event: EChartsEvent) => void>;
+  onReady?: (chart: EChartsInstance | null) => void;
 }
 
-export function EChartsChart({ option, minHeight = 260, className, style, ...props }: EChartsChartProps) {
+export function EChartsChart({ option, minHeight = 260, className, style, onEvents, onReady, ...props }: EChartsChartProps) {
   const hostRef = useRef<HTMLDivElement>(null);
+  const callbacks = useRef({ onEvents, onReady });
+  callbacks.current = { onEvents, onReady };
 
   useEffect(() => {
     const host = hostRef.current;
@@ -66,6 +79,10 @@ export function EChartsChart({ option, minHeight = 260, className, style, ...pro
       if (disposed || !host.isConnected) return;
       chart = echarts.init(host, null, { renderer: 'canvas' });
       chart.setOption(option);
+      for (const event of ['mouseover', 'mouseout', 'mousemove', 'click', 'globalout']) {
+        chart.on(event, value => callbacks.current.onEvents?.[event]?.(value));
+      }
+      callbacks.current.onReady?.(chart);
     }).catch(() => {
       if (!disposed) host.dataset.chartError = 'true';
     });
@@ -76,6 +93,7 @@ export function EChartsChart({ option, minHeight = 260, className, style, ...pro
     return () => {
       disposed = true;
       resizeObserver?.disconnect();
+      callbacks.current.onReady?.(null);
       chart?.dispose();
       chart = null;
     };

@@ -1,0 +1,30 @@
+.cg-copy-course-shell .cg-copy-ck-rgb { display:grid; grid-template-rows:auto minmax(0,1fr); row-gap:0; width:100%; height:100%; min-width:0; min-height:0; overflow:hidden; padding:18px 28px 16px; }
+.cg-copy-course-shell .cg-copy-ck-rgb > .edu-content-body { display:grid; grid-template-rows:minmax(0,1fr) auto; gap:12px; min-width:0; min-height:0; }
+.cg-copy-course-shell .cg-copy-ck-rgb__stage { display:grid; grid-template-rows:minmax(0,1fr) auto; gap:8px; min-width:0; min-height:0; }
+.cg-copy-course-shell .cg-copy-ck-rgb__scene-wrap { position:relative; min-width:0; min-height:0; overflow:hidden; border:1px solid #ccdcf4; border-radius:14px; background:radial-gradient(ellipse at 50% 50%,#eaf3ff 0%,#f8fbff 57%,#fff 90%); }
+.cg-copy-course-shell .cg-copy-ck-rgb__scene { position:absolute; inset:0; min-width:0; min-height:0; }
+.cg-copy-course-shell .cg-copy-ck-rgb__scene canvas { display:block; width:100%; height:100%; max-width:100%; cursor:grab; touch-action:none; }
+.cg-copy-course-shell .cg-copy-ck-rgb__scene canvas:active { cursor:grabbing; }
+.cg-copy-course-shell .cg-copy-ck-rgb__hint { position:absolute; top:12px; left:14px; pointer-events:none; border:1px solid #d7e6fb; border-radius:8px; background:rgba(255,255,255,.88); padding:5px 10px; }
+.cg-copy-course-shell .cg-copy-ck-rgb__hint .ui-typography { margin:0; }
+.cg-copy-course-shell .cg-copy-ck-rgb__channel-key { display:flex; min-width:0; align-items:center; justify-content:center; gap:22px; }
+.cg-copy-course-shell .cg-copy-ck-rgb__channel-key > span { display:flex; align-items:center; gap:7px; }
+.cg-copy-course-shell .cg-copy-ck-rgb__channel-key > span::before { content:""; width:13px; height:13px; flex:0 0 auto; border-radius:3px; background:#ef7180; }
+.cg-copy-course-shell .cg-copy-ck-rgb__channel-key > span:nth-child(2)::before { background:#65be91; }
+.cg-copy-course-shell .cg-copy-ck-rgb__channel-key > span:nth-child(3)::before { background:#5c95ee; }
+.cg-copy-course-shell .cg-copy-ck-rgb__footer { display:flex; align-items:center; justify-content:center; min-width:0; border:1px solid #d6e5f8; border-radius:12px; background:#f0f6ff; padding:10px 14px; }
+.cg-copy-course-shell .cg-copy-ck-rgb__footer > .cg-copy-ck-rgb__formula { width:100%; max-width:100%; min-width:0; min-height:96px; border:0; background:transparent; padding:10px; }
+.cg-copy-course-shell .cg-copy-ck-rgb__formula .math-formula { flex-wrap:nowrap; font-size:1.5rem; }
+.cg-copy-course-shell .cg-copy-ck-rgb__formula .math-formula-term::before { top:auto; bottom:calc(100% + 4px); }
+.cg-copy-course-shell .cg-copy-ck-rgb__formula .math-formula-term::after { top:auto; bottom:calc(100% + 9px); }
+.cg-copy-course-shell .cg-copy-ck-rgb__fallback { position:absolute; inset:35px 0 70px; display:flex; align-items:center; justify-content:space-around; gap:20px; padding:20px; }
+.cg-copy-course-shell .cg-copy-ck-rgb__fallbacg-copy-ck-input { position:relative; width:35%; aspect-ratio:1; }
+.cg-copy-course-shell .cg-copy-ck-rgb__fallbacg-copy-ck-plane,.cg-copy-course-shell .cg-copy-ck-rgb__fallbacg-copy-ck-output { display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); aspect-ratio:1; border:2px solid #8daee2; background:#a9c4ed; }
+.cg-copy-course-shell .cg-copy-ck-rgb__fallbacg-copy-ck-plane { position:absolute; inset:0; }
+.cg-copy-course-shell .cg-copy-ck-rgb__fallbacg-copy-ck-plane.is-r { transform:translate(-20px,-20px); }
+.cg-copy-course-shell .cg-copy-ck-rgb__fallbacg-copy-ck-plane.is-b { transform:translate(20px,20px); }
+.cg-copy-course-shell .cg-copy-ck-rgb__fallbacg-copy-ck-plane button,.cg-copy-course-shell .cg-copy-ck-rgb__fallbacg-copy-ck-output button { min-width:0; min-height:0; border:1px solid #a9c4ed; background:rgba(255,255,255,.7); cursor:pointer; }
+.cg-copy-course-shell .cg-copy-ck-rgb__fallbacg-copy-ck-plane.is-r button.is-selected { background:#ef7180; }.cg-copy-course-shell .cg-copy-ck-rgb__fallbacg-copy-ck-plane.is-g button.is-selected { background:#65be91; }.cg-copy-course-shell .cg-copy-ck-rgb__fallbacg-copy-ck-plane.is-b button.is-selected { background:#5c95ee; }
+.cg-copy-course-shell .cg-copy-ck-rgb__fallbacg-copy-ck-output-stack { position:relative; width:30%; aspect-ratio:1; }
+.cg-copy-course-shell .cg-copy-ck-rgb__fallbacg-copy-ck-output { position:absolute; inset:0; width:100%; grid-template-columns:repeat(5,minmax(0,1fr)); }
+.cg-copy-course-shell .cg-copy-ck-rgb__fallbacg-copy-ck-output button.is-selected { background:#3b85f3; }

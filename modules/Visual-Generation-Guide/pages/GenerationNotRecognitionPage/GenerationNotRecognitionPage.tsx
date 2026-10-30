@@ -1,11 +1,14 @@
+import moduleAssetOutline from '../../outlines.json';
+import { moduleAssetUrl } from '../../../shared/react/assets';
 import { type CSSProperties } from 'react';
 import { ContentBlock, Typography } from '../../../shared/react';
-import visualGenerationOverview from '../../assets/00visual-generation.svg';
-import resultOne from '../../assets/00result-01.svg';
-import resultTwo from '../../assets/00result-02.svg';
-import resultThree from '../../assets/00result-03.svg';
-import resultFour from '../../assets/00result-04.svg';
 import './GenerationNotRecognitionPage.css';
+
+const visualGenerationOverview = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/00visual-generation.svg');
+const resultOne = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/00result-01.svg');
+const resultTwo = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/00result-02.svg');
+const resultThree = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/00result-03.svg');
+const resultFour = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/00result-04.svg');
 
 const resultMasks = [
   { x: 1197, y: 480, width: 399, height: 234 },
@@ -21,7 +24,7 @@ export function GenerationNotRecognitionPage() {
   return (
     <ContentBlock
       headingLevel={1}
-      className="vg-generation-page"
+      className="vg-shared-page vg-generation-page"
       title="视觉理解与视觉生成，学习方向正好相反"
       subtitle="典型的分类或识别任务把高维图像压缩为少量结果信息；生成任务则从有限条件中展开一张合理但不唯一的高维图像。"
     >
@@ -79,9 +82,6 @@ export function GenerationNotRecognitionPage() {
           <Typography variant="bodySmall" tone="muted">从提示词等有限信息中，生成一张合适但不唯一的图像。</Typography>
         </article>
 
-        <div className="vg-generation-page__conclusion">
-          <Typography as="strong" variant="body" tone="main">视觉理解压缩视觉信息；视觉生成展开视觉内容。</Typography>
-        </div>
       </section>
     </ContentBlock>
   );

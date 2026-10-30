@@ -1,0 +1,6 @@
+.vbrl-lesson.vbrl-foundation-page { background: #f7fbff; }
+.vbrl-foundation-page .vbrl-page-footer { display: grid; align-items: center; min-height: 86px; padding: 12px 22px; border: 1px solid #cfe0f4; border-radius: var(--ui-radius-lg); background: #edf6ff; }
+.vbrl-teaching-panel { display: grid; grid-template-rows: 64px minmax(0, 1fr); min-width: 0; max-width: 100%; min-height: 0; border: 1px solid #d9e7f6; border-radius: var(--ui-radius-lg); background: #fff; box-shadow: var(--ui-shadow-soft); }
+.vbrl-teaching-panel__head { display: flex; align-items: center; padding: 6px 20px; min-width: 0; max-width: 100%; gap: 14px; border-radius: 17px 17px 0 0; background: #458fe3; color: #fff; }
+.vbrl-teaching-panel__body { min-width: 0; max-width: 100%; min-height: 0; padding: 18px 22px; }
+.vbrl-teaching-panel :is(section, header, div, figure, button, p, span, svg, img, math-field) { min-width: 0; max-width: 100%; }

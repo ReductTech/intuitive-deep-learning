@@ -1,14 +1,27 @@
-import { ContentBlock, ModuleShell } from '../../modules/shared/react';
+import {LocalCoursePage} from '../shuku/LocalAgent';
+import {AdminPage} from '../shuku/Admin';
+import {ProfilePage} from '../shuku/Profile';
+import {BuiltinLearning} from '../shuku/BuiltinLearning';
+import {MessagesPage} from '../shuku/Messages';
+import {LearningPage} from '../shuku/LearningPage';
 import { SceneDeck, type DeckDefinition } from '../../modules/shared/react/presentation';
 import { UiKitPage } from '../../modules/shared/react/routing/UiKitPage';
-import { activeModules, type ActiveModule, type ModulePageOutline } from './modules';
-import { AppLink, type AppRoute } from './Router';
+import { activeModules } from './modules';
+import { type AppRoute } from './Router';
+import { HomePage } from './HomePage';
+import { CourseHub } from '../shuku/CourseHub';
+import { ManagedEditor } from '../shuku/ManagedEditor';
+import { PreviewPage, ReviewPage } from '../shuku/PreviewPage';
+import { CreatorWorkspace } from '../creator/CreatorWorkspace';
+import {CourseDetails} from '../shuku/CourseDetails';
+
 
 const pptModules = activeModules.filter((module) => module.pptDeck);
 const pptCatalog = pptModules.map((module) => module.pptDeck) as [DeckDefinition, ...DeckDefinition[]];
 
 function SceneDeckPage() {
   if (!pptCatalog.length) return <p>Page not found.</p>;
+  if (new URLSearchParams(window.location.search).get('scenedeckCapture') !== '1') return <CreatorWorkspace />;
   return <SceneDeck
     catalog={pptCatalog}
     moduleId={(deckId) => deckId}
@@ -22,23 +35,22 @@ function SceneDeckPage() {
   />;
 }
 
-/** 页面索引中的每一页对应 PPT 的一页；没有 PPT 的模块指向课程本身。 */
-function pageHref(module: ActiveModule, page: ModulePageOutline) {
-  return module.pptPath ? `${module.pptPath}?deck=${encodeURIComponent(module.id)}&slide=${encodeURIComponent(page.id)}` : module.path;
-}
-
-function HomePage() {
-  return <ModuleShell title="Intuitive Deep Learning" subtitle="从真实问题出发，逐步建立可解释的数学模型。" shellClassName="app-home-shell">
-    <section className="app-course-directory" aria-labelledby="app-course-directory-title">
-      <header className="app-course-directory__head"><div><span className="app-course-directory__kicker">COURSE DIRECTORY</span><h2 id="app-course-directory-title">课程模块</h2></div><p>选择一个课程，进入完整学习流程或 SceneDeck。</p></header>
-      <div className="app-course-accordion">{activeModules.map((module, moduleIndex) => <details className="app-course-group" key={module.id} open><summary className="app-course-group__summary"><span className="app-course-group__index">{String(moduleIndex + 1).padStart(2, '0')}</span><span className="app-course-group__copy"><strong>{module.title}</strong><span>{module.description}</span></span><span className="app-course-group__count">{module.pages.length} 页</span><span className="app-course-group__chevron" aria-hidden="true" /></summary><div className="app-course-group__body"><AppLink className="app-course-launch" to={module.path}><span className="edu-badge">{module.badge}</span><span><strong>进入完整课程</strong><small>按教学顺序连续学习全部内容</small></span><em>开始学习 →</em></AppLink>{module.pages.length > 0 && <ol className="app-course-lessons">{module.pages.map((page, index) => <li key={page.id}><a className="app-course-lesson" href={pageHref(module, page)}><span className="app-course-lesson__number">{String(index + 1).padStart(2, '0')}</span><span className="app-course-lesson__copy"><strong>{page.title}</strong><small>{page.goal ?? page.summary}</small></span><span className="app-course-lesson__arrow" aria-hidden="true">→</span></a></li>)}</ol>}</div></details>)}</div>
-    </section>
-    <ContentBlock className="app-developer-tools" title="开发工具" subtitle="共享组件检查与 SceneDeck 演示入口。"><div className="app-developer-tools__grid"><AppLink className="app-ui-kit-card" to="/shared/ui-kit"><span className="edu-badge">设计系统</span><strong>Shared UI Kit</strong><span>检查共享组件、流程控制和题型。</span><em>打开 →</em></AppLink><a className="app-ui-kit-card" href="/scenedeck/"><span className="edu-badge">SceneDeck</span><strong>SceneDeck 播放器</strong><span>用固定 1600 × 900 场景播放课程。</span><em>打开 →</em></a></div></ContentBlock>
-  </ModuleShell>;
-}
-
 export const appRoutes: AppRoute[] = [
   { path: '/', element: <HomePage /> },
+  { path: '/course', element: <CourseDetails /> },
+  { path: '/data', element: <AdminPage /> },
+  { path: '/profile', element: <ProfilePage /> },
+  { path: '/messages', element: <MessagesPage /> },
+  { path: '/study', element: <BuiltinLearning /> },
+  { path: '/learn', element: <LearningPage /> },
+  { path: '/my-courses', element: <CourseHub /> },
+  { path: '/course-creation', element: <CourseHub /> },
+  { path: '/my-courses/editor', element: <ManagedEditor /> },
+  { path: '/my-courses/local', element: <LocalCoursePage /> },
+  { path: '/my-courses/preview', element: <PreviewPage /> },
+  { path: '/my-courses/review', element: <ReviewPage /> },
+  { path: '/edit-deck/legacy', element: <CreatorWorkspace /> },
+  { path: '/edit-deck', element: <CreatorWorkspace /> },
   { path: '/shared/ui-kit', element: <UiKitPage /> },
   ...activeModules.flatMap((module) => [
     { path: module.path, element: module.element },
@@ -49,4 +61,3 @@ export const appRoutes: AppRoute[] = [
     { path: '/web_ppt/slide.html', element: <SceneDeckPage /> },
   ] : []),
 ];
-

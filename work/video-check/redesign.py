@@ -1,0 +1,27 @@
+from playwright.sync_api import sync_playwright
+import json
+with sync_playwright() as p:
+ b=p.chromium.launch(headless=True,channel='chrome')
+ page=b.new_page(viewport={'width':2200,'height':1400},device_scale_factor=1)
+ errors=[]
+ page.on('pageerror',lambda e: errors.append(str(e)))
+ page.goto('http://localhost:5173/scenedeck/?deck=digital-image-intro&slide=video-frames')
+ page.wait_for_selector('.di-video__body[data-ready="true"]',timeout=15000)
+ page.evaluate("""() => {let e=document.querySelector('.di-video');while(e){if(getComputedStyle(e).transform!=='none')e.style.transform='none';e=e.parentElement}}""")
+ page.locator('.di-video').screenshot(path='work/video-check/redesign.png')
+ print('initial:',page.locator('.di-video__body').get_attribute('data-frame'))
+ print('video:',page.locator('video').evaluate('(v)=>({src:v.currentSrc,width:v.videoWidth,height:v.videoHeight,readyState:v.readyState})'))
+ page.get_by_role('button',name='回到开头',exact=True).click()
+ page.wait_for_function("document.querySelector('.di-video__body').dataset.frame==='0'")
+ page.get_by_role('button',name='下一帧',exact=True).click()
+ page.wait_for_function("document.querySelector('.di-video__body').dataset.frame==='1'")
+ page.get_by_role('button',name='播放',exact=True).click()
+ page.wait_for_function("Number(document.querySelector('.di-video__body').dataset.frame)>=24")
+ page.get_by_role('button',name='暂停',exact=True).click()
+ print('paused:',page.locator('video').evaluate('(v)=>({paused:v.paused,currentTime:v.currentTime})'))
+ page.get_by_role('button',name='查看第 120 帧',exact=True).click()
+ page.wait_for_function("document.querySelector('.di-video__body').dataset.frame==='120'")
+ page.locator('.di-video').screenshot(path='work/video-check/redesign-last.png')
+ print('bounds:',page.evaluate("""() => {const s=document.querySelector('.di-video'),b=s.getBoundingClientRect();return {size:[b.width,b.height],outside:[...s.querySelectorAll('*')].filter(e=>{const r=e.getBoundingClientRect();return r.width&&r.height&&(r.left<b.left-1||r.top<b.top-1||r.right>b.right+1||r.bottom>b.bottom+1)}).map(e=>e.className)}}"""))
+ print('errors:',errors)
+ b.close()

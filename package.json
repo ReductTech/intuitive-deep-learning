@@ -4,16 +4,31 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --mode preview",
+    "dev:preview": "vite --mode preview",
+    "dev:app": "vite",
     "build": "tsc -b && vite build",
+    "build:public": "tsc -b && vite build --mode public-preview",
     "typecheck": "tsc --noEmit",
-    "cache:decision": "node scripts/content/generate_decision_candidate_cache.mjs"
+    "test:edit-deck": "node --experimental-strip-types --test Edit-Deck/server.test.ts",
+    "cache:decision": "node scripts/content/generate_decision_candidate_cache.mjs",
+    "courses:fetch": "node scripts/course-library-fetch.mjs",
+    "authoring:prepare": "node scripts/prepare-authoring-framework.mjs"
   },
   "dependencies": {
     "@icon-park/react": "^1.4.2",
+    "@langchain/core": "^1.2.18",
+    "@langchain/langgraph": "^1.5.0",
+    "@tailwindcss/node": "^4.3.3",
+    "@tailwindcss/oxide": "^4.3.3",
+    "esbuild": "^0.28.2",
+    "esbuild-wasm": "^0.28.2",
+    "lucide-react": "1.63.0",
     "react": "19.2.7",
     "react-dom": "19.2.7",
-    "three": "^0.186.1"
+    "tailwindcss": "^4.3.3",
+    "three": "^0.186.1",
+    "typescript": "^5.8.3"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.3",
@@ -23,8 +38,6 @@
     "@types/three": "^0.186.0",
     "@vitejs/plugin-react": "^4.4.1",
     "postcss": "^8.5.8",
-    "tailwindcss": "^4.3.3",
-    "typescript": "^5.8.3",
     "vite": "^6.3.5"
   }
 }

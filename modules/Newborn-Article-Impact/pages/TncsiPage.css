@@ -1,0 +1,11 @@
+.naipt-layout{height:100%;display:grid;grid-template-rows:auto minmax(0,1fr);gap:24px;}
+.naipt-flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:36px;}
+.naipt-flow section{position:relative;display:grid;gap:6px;padding:16px;background:var(--ui-bg-soft);border-radius:var(--ui-radius-md);}
+.naipt-arrow{position:absolute;right:-30px;top:28px;}
+.naipt-detail{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;}
+.naipt-distribution{display:grid;grid-template-rows:auto minmax(0,1fr) auto auto;gap:4px;}
+.naipt-formulas{display:grid;grid-template-rows:repeat(3,minmax(0,1fr)) auto auto;gap:8px;}
+.naipt-result{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:24px;padding:10px 20px;background:var(--ui-bg-soft);border-radius:var(--ui-radius-md);}
+
+.naipt-distribution{grid-template-rows:auto minmax(0,1fr) auto auto auto;}
+.naipt-density{display:flex;gap:8px;justify-content:center;}

@@ -7,7 +7,7 @@ const asset = (name: string) => moduleAssetUrl('10da7e16-ff24-449a-9978-b74b9952
 type Position = { x: number; y: number; columns: number; rows: number } | null;
 const densities = [[48, 64], [24, 32], [16, 22]];
 const labels = ['原图', '细密拼豆', '简化拼豆', '极简拼豆'];
-const photos = [['alpine-lake-source.png', '山湖'], ['coast-source.png', '海岸'], ['fox-source.png', '狐狸'], ['car-source.png', '汽车'], ['cat-portrait.jpg', '猫咪']];
+const photos = [['alpine-lake-source.jpg', '山湖'], ['coast-source.jpg', '海岸'], ['fox-source.jpg', '狐狸'], ['car-source.jpg', '汽车'], ['cat-portrait.jpg', '猫咪']];
 
 function BeadBoard({ source, grid, position, onPoint }: { source: HTMLCanvasElement; grid?: BeadGrid; position: Position; onPoint: (p: Position) => void }) {
   const ref = useRef<HTMLCanvasElement>(null);
@@ -36,7 +36,7 @@ function BeadBoard({ source, grid, position, onPoint }: { source: HTMLCanvasElem
 }
 
 export function BeadOpeningPage() {
-  const [url, setUrl] = useState(asset('car-source.png'));
+  const [url, setUrl] = useState(asset('car-source.jpg'));
   const [source, setSource] = useState<HTMLCanvasElement | null>(null);
   const [position, setPosition] = useState<Position>(null);
   const [colorCount, setColorCount] = useState(24);
@@ -49,7 +49,7 @@ export function BeadOpeningPage() {
     setSource(null);
     setPosition(null);
     setError('');
-    const image = new Image();
+    const image = new Image(); image.crossOrigin = 'anonymous';
     image.onload = () => {
       if (!active) return;
       try { setSource(photographCanvas(image)); } catch { setError('无法读取这张照片，请换一张。'); }
@@ -64,7 +64,7 @@ export function BeadOpeningPage() {
   const selectedGrid = position ? grids.find(g => g.columns === position.columns && g.rows === position.rows) ?? grids[2] : null;
   const current = position && selectedGrid ? selectedGrid.colors[Math.min(selectedGrid.rows - 1, Math.floor(position.y * selectedGrid.rows)) * selectedGrid.columns + Math.min(selectedGrid.columns - 1, Math.floor(position.x * selectedGrid.columns))] : null;
 
-  return <ContentBlock className="di-beads" headingLevel={1} title="照片，也可以拼出来吗？" subtitle="一张照片会失去什么，又保留什么？" style={{ '--di-studio': `url("${asset('craft-studio-background.png')}")` } as CSSProperties}>
+  return <ContentBlock className="di-beads" headingLevel={1} title="照片，也可以拼出来吗？" subtitle="一张照片会失去什么，又保留什么？" style={{ '--di-studio': `url("${asset('craft-studio-background.jpg')}")` } as CSSProperties}>
     <div className="di-beads__body">
       <div className="di-beads__tools">
         <Button onClick={() => uploadRef.current?.click()}><Typography as="span" variant="bodySmall" tone="inherit">↑ 上传照片</Typography></Button>

@@ -1,0 +1,3 @@
+const {chromium}=require('C:/Users/Ocean/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+(async()=>{const b=await chromium.launch({channel:'msedge',headless:true});const p=await b.newPage({viewport:{width:1600,height:900},deviceScaleFactor:1});await p.goto('http://127.0.0.1:5173/scenedeck/?scenedeckCapture=1&deck=convolution-kernel-intro&slide=gomoku-play');await p.locator('[data-scene-deck-capture]').waitFor();await p.getByRole('button',{name:'示例棋局',exact:true}).click();await p.waitForTimeout(400);await p.locator('[data-scene-deck-capture]').screenshot({path:'assets/444f8951-dd2e-42dc-94e5-c5a878618631/images/multi-format/convolution/gomoku-play-completed.png'});await b.close()})().catch(e=>{console.error(e);process.exit(1)});
+

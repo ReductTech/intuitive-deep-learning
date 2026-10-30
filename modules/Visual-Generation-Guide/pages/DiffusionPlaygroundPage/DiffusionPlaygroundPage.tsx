@@ -1,14 +1,17 @@
+import moduleAssetOutline from '../../outlines.json';
+import { moduleAssetUrl } from '../../../shared/react/assets';
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
-import { MathFormulaStatic, Typography } from '../../../shared/react';
-import flower from '../../assets/diffusion-playground/flower.jpg';
+import { Button, ContentBlock, MathFormulaStatic, Typography } from '../../../shared/react';
 import { alphaBars, betas, denoisingPrediction, ForwardChain, gaussianNoise, histogram, pixelStatistics, TOTAL_STEPS } from './diffusionExperiment';
 import './DiffusionPlaygroundPage.css';
+
+const flower = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/diffusion-playground/flower.jpg');
 
 function Label({ children, className = '' }: { children: ReactNode; className?: string }) {
   return <Typography variant="bodySmall" className={`vg-replica__label ${className}`}>{children}</Typography>;
 }
 function Control({ children, active = false, onClick, disabled = false, primary = false }: { children: ReactNode; active?: boolean; onClick: () => void; disabled?: boolean; primary?: boolean }) {
-  return <button type="button" className={`vg-replica__button${active || primary ? ' is-accent' : ''}`} disabled={disabled} onClick={onClick}><Typography as="span" variant="bodySmall">{children}</Typography></button>;
+  return <Button active={active} variant={primary ? "primary" : "default"} disabled={disabled} onClick={onClick}>{children}</Button>;
 }
 function Metric({ label, value, accent = false, hot = false }: { label: ReactNode; value: string; accent?: boolean; hot?: boolean }) {
   return <div className={`vg-replica__metric${accent ? ' is-accent' : ''}${hot ? ' is-hot' : ''}`}><Label>{label}</Label><Typography variant="body" className="vg-replica__value">{value}</Typography></div>;
@@ -72,7 +75,7 @@ function useImage(size: number) {
   useEffect(() => {
     let cancelled = false;
     setPixels(null); setError('');
-    const image = new Image();
+    const image = new Image(); image.crossOrigin = 'anonymous';
     image.onload = () => {
       if (cancelled) return;
       const canvas = document.createElement('canvas');
@@ -132,12 +135,10 @@ function ForwardModule({ onSeen }: { onSeen: () => void }) {
   const current = pixels?.[index] ?? 0;
   const epsilon = b ? (current - a * original) / b : 0;
   return <><section ref={host} className="vg-replica__panel vg-replica__forward" aria-label="前向加噪交互模块">
-    <header><Typography variant="h3">前向加噪过程体验</Typography></header>
     <div className="vg-replica__panel-body">
       <div className="vg-replica__metrics vg-replica__metrics--two">
         <Metric label="时间步 t" value={`${t} / 1000`} /><Metric label={<span className="math-formula vg-replica__alpha-symbol" aria-label="αₜ"><MathFormulaStatic latex={String.raw`\alpha_t`} /></span>} value={alphaSchedule[t].toFixed(5)} />
       </div>
-      <Typography variant="body" className="vg-replica__pick-hint">点击图像，追踪一个像素</Typography>
       <div className="vg-replica__forward-images">
         {pixels ? <Pixels pixels={pixels} size={128} label={`第 ${t} 步图像`} sub={image.name === 'flower.jpg' ? '示例花卉' : image.name} probe={probe} onPick={setProbe} /> : <Label>{image.error || '加载中…'}</Label>}
         <div className="vg-replica__histogram">
@@ -182,14 +183,12 @@ function ReverseModule({ onSeen }: { onSeen: () => void }) {
   const previousB = Math.sqrt(1 - alphaBars[t - 1]);
   const index = (probe.y * 96 + probe.x) * 3 + channel;
   return <><section className="vg-replica__panel vg-replica__reverse" aria-label="反向去噪交互模块">
-    <header><Typography variant="h3">反向去噪过程体验</Typography></header>
     <div className="vg-replica__panel-body">
       <div className="vg-replica__metrics vg-replica__metrics--four"><Metric label="时间步 t" value={String(t)} /><Metric label={<VariableLabel latex={String.raw`\overline{\alpha}_t`} />} value={alphaBars[t] < .001 ? alphaBars[t].toExponential(2) : alphaBars[t].toFixed(4)} /><Metric label="误差放大倍数" value={`${gain.toFixed(2)} 倍`} accent hot={gain > 5} /><Metric label="重建质量" value={`${(result?.psnr ?? 0).toFixed(1)} dB`} hot={!!result && result.psnr < 15} /></div>
       <div className="vg-replica__sliders"><label><Label>反向时间步 t = {t}</Label><input aria-label="反向时间步" aria-valuetext={`t = ${t}，从 x ${t} 去噪到 x ${t - 1}`} dir="rtl" type="range" min="1" max="1000" step="1" value={t} onChange={e => { setT(Number(e.target.value)); onSeen(); }} /></label><label><Label>噪声预测误差 = {error.toFixed(2)}（0 为准确预测）</Label><input aria-label="噪声预测误差" type="range" min="0" max="0.6" step="0.01" value={error} onChange={e => { setError(Number(e.target.value)); onSeen(); }} /></label></div>
       {result && image.pixels && noise ? <>
-        <Typography variant="body" className="vg-replica__pick-hint">向右拖动去噪；点击图像追踪像素</Typography>
-        <div className="vg-replica__prediction-row"><Label>第 {t} 步：预测噪声并去噪一步</Label><div className="vg-replica__four-images"><Pixels pixels={result.input} size={96} label="xₜ · 当前图像" probe={probe} onPick={setProbe} /><Pixels pixels={result.predicted} size={96} label="εθ · 预测噪声" noise /><Pixels pixels={result.recovered} size={96} label="x̂₀ · 估计原图" /><Pixels pixels={result.previous} size={96} label="xₜ₋₁ · 上一步" /></div></div>
-        <div className="vg-replica__target-row"><Label>第 {t} 步：三种预测目标</Label><div className="vg-replica__three-images"><Pixels pixels={noise} size={96} label="ε · 真实噪声" noise /><Pixels pixels={image.pixels} size={96} label="x₀ · 原始图像" /><Pixels pixels={result.velocity} size={96} label="v · 速度目标" /></div></div>
+        <div className="vg-replica__prediction-row"><div className="vg-replica__four-images"><Pixels pixels={result.input} size={96} label="xₜ · 当前图像" probe={probe} onPick={setProbe} /><Pixels pixels={result.predicted} size={96} label="εθ · 预测噪声" noise /><Pixels pixels={result.recovered} size={96} label="x̂₀ · 估计原图" /><Pixels pixels={result.previous} size={96} label="xₜ₋₁ · 上一步" /></div></div>
+        <div className="vg-replica__target-row"><div className="vg-replica__three-images"><Pixels pixels={noise} size={96} label="ε · 真实噪声" noise /><Pixels pixels={image.pixels} size={96} label="x₀ · 原始图像" /><Pixels pixels={result.velocity} size={96} label="v · 速度目标" /></div></div>
       </> : <Label>{image.error || '加载中…'}</Label>}
       <div className="vg-replica__uploads"><Control onClick={image.open}>上传自己的图像</Control>{image.picker}</div>
     </div>
@@ -205,9 +204,9 @@ function ReverseModule({ onSeen }: { onSeen: () => void }) {
 }
 export function DiffusionPlaygroundPage({ onComplete }: { onComplete?: () => void }) {
   const completed = useRef(false);
-  return <div className="vg-replica vg-formula-lab is-reverse"><ReverseModule onSeen={() => { if (!completed.current) { completed.current = true; onComplete?.(); } }} /></div>;
+  return <ContentBlock headingLevel={1} title="反向去噪实验：公式里的变量怎样变化？" subtitle="拖动时间步与预测误差，观察图像变化；点击图像追踪一个像素。" className="vg-shared-page vg-replica vg-formula-lab is-reverse" bodyClassName="vg-formula-lab__body"><ReverseModule onSeen={() => { if (!completed.current) { completed.current = true; onComplete?.(); } }} /></ContentBlock>;
 }
 export function ForwardDiffusionPlaygroundPage({ onComplete }: { onComplete?: () => void }) {
   const completed = useRef(false);
-  return <div className="vg-replica vg-formula-lab is-forward"><ForwardModule onSeen={() => { if (!completed.current) { completed.current = true; onComplete?.(); } }} /></div>;
+  return <ContentBlock headingLevel={1} title="前向加噪实验：公式里的变量怎样变化？" subtitle="调整时间步，观察图像与噪声的比例；点击图像追踪一个像素。" className="vg-shared-page vg-replica vg-formula-lab is-forward" bodyClassName="vg-formula-lab__body"><ForwardModule onSeen={() => { if (!completed.current) { completed.current = true; onComplete?.(); } }} /></ContentBlock>;
 }

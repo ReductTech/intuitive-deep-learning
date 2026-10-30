@@ -1,8 +1,10 @@
+import moduleAssetOutline from '../../outlines.json';
+import { moduleAssetUrl } from '../../../shared/react/assets';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { ContentBlock, Typography } from '../../../shared/react';
 import './ImageMemoryPage.css';
 
-const photo = new URL('../../assets/digital-image-cat-scene.png', import.meta.url).href;
+const photo = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/digital-image-cat-scene.jpg');
 const WIDTH = 600, HEIGHT = 450, COLS = 6, ROWS = 4;
 const clamp = (v: number, max: number) => Math.max(0, Math.min(max - 1, v));
 type Point = { x: number; y: number };
@@ -19,7 +21,7 @@ export function ImageMemoryPage() {
   const gray = (values: number[]) => Math.round(.299 * values[0] + .587 * values[1] + .114 * values[2]);
   const selectedRgb = rgb(point.x, point.y);
   useEffect(() => {
-    let active = true; const image = new Image();
+    let active = true; const image = new Image(); image.crossOrigin = 'anonymous';
     image.onload = () => {
       if (!active) return;
       const canvas = document.createElement('canvas'); canvas.width = WIDTH; canvas.height = HEIGHT;

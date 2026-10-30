@@ -1,0 +1,32 @@
+.cg-wormhole-lab { height: 100%; display: flex; flex-direction: column; gap: 12px; }
+.cg-wormhole-lab-main { min-height: 0; flex: 1; display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); gap: 18px; }
+.cg-wormhole-visual { min-height: 0; display: flex; flex-direction: column; gap: 6px; }
+.cg-wormhole-scene { flex: 1; min-height: 0; position: relative; border-radius: var(--ui-radius-lg); background: radial-gradient(ellipse at center, #e9f2fb99, transparent 70%); }
+.cg-wormhole-scene canvas { display: block; width: 100%; height: 100%; touch-action: none; cursor: grab; }
+.cg-wormhole-scene canvas:active { cursor: grabbing; }
+.cg-wormhole-scene-label { position: absolute; pointer-events: none; padding: 0 5px; border-radius: var(--ui-radius-sm); background: #ffffffc4; }
+.cg-wormhole-throat-trigger { pointer-events:auto; border:0; border-bottom:1px dotted currentColor; color:var(--ui-warning); cursor:help; z-index:3; }
+.cg-wormhole-throat-trigger:focus-visible { outline:2px solid var(--ui-focus); outline-offset:3px; }
+.cg-wormhole-formula-popover { position:absolute; left:8px; top:8px; z-index:5; width:500px; max-width:calc(100% - 16px); display:grid; gap:10px; padding:18px 20px; border:1px solid var(--ui-border-strong); border-radius:var(--ui-radius-lg); background:var(--ui-bg-card); box-shadow:var(--ui-shadow-soft); cursor:default; user-select:text; }
+.cg-wormhole-formula-popover .math-formula-block { width:100%; }
+.cg-wormhole-fallback { padding: 30px; }
+.cg-wormhole-unavailable { position: absolute; inset: 0; display: grid; align-content: center; justify-items: center; gap: 18px; text-align: center; pointer-events: none; }
+.cg-wormhole-controls { background: var(--ui-bg-card); border: 1px solid var(--ui-border); border-radius: var(--ui-radius-lg); padding: 16px; display: flex; flex-direction: column; gap: 8px; min-height: 0; }
+.cg-wormhole-controls > * { flex: none; }
+.cg-wormhole-controls .edu-control { gap: 6px; }
+.cg-wormhole-controls .edu-control-head { gap: 6px; }
+.cg-wormhole-energy-control { position: relative; min-width: 0; max-width: 100%; }
+.cg-wormhole-energy-help { position: absolute; top: 0; right: 54px; z-index: 6; }
+.cg-wormhole-energy-help .explain-panel-trigger { width: 28px; height: 28px; }
+.cg-wormhole-energy-help .explain-panel { left: auto; right: -54px; transform: none; width: 600px; max-width: 600px; display: grid; gap: 10px; }
+.cg-wormhole-energy-help .explain-panel[hidden] { display: none; }
+.cg-wormhole-energy-help .explain-panel::before { left: auto; right: 62px; }
+.cg-wormhole-result { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--ui-border); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+
+.cg-wormhole-times { flex: none; height: 106px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: minmax(0, 1fr); gap: 12px; }
+.cg-wormhole-time-card { min-width: 0; max-width: 100%; display: flex; flex-direction: column; justify-content: center; gap: 0; padding: 6px 16px; border: 1px solid transparent; border-radius: var(--ui-radius-lg); }
+.cg-wormhole-time-card--original { color: #2878a6; background: #edf6fc; border-color: #cfe4f1; }
+.cg-wormhole-time-card--shortcut { color: #ae6d14; background: #fff1df; border-color: #f1dabb; }
+.cg-wormhole-time-card--saving { color: var(--ui-accent); background: var(--ui-bg-card); border-color: var(--ui-border); }
+.cg-wormhole-time-card-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-width: 0; }
+.cg-wormhole-time-card .ui-typography { white-space: nowrap; }

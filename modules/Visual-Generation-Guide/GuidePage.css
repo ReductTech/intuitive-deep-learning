@@ -1,0 +1,17 @@
+/* The fixed lesson canvas must not determine the reading column's minimum width. */
+.vg-blog .edu-lesson-flow {
+  grid-template-columns: minmax(0, 1fr);
+  min-width: 0;
+  max-width: 100%;
+}
+
+.vg-blog .edu-lesson-flow > section {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.vg-blog .lesson-canvas-frame {
+  /* Hide only the unscaled layout footprint; the visible 1600 × 900 canvas
+     is fitted by BlogLessonCanvas's existing ResizeObserver and transform. */
+  overflow: clip;
+}

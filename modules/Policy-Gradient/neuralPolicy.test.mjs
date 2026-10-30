@@ -1,0 +1,11 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import ts from 'typescript';
+const compile=name=>ts.transpileModule(fs.readFileSync(new URL(name,import.meta.url),'utf8'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ESNext}}).outputText;
+const url=code=>`data:text/javascript;base64,${Buffer.from(code).toString('base64')}`;
+const base=url(compile('./mazeModel.ts'));
+const m=await import(url(compile('./neuralPolicy.ts').replace("'./mazeModel'",JSON.stringify(base))));
+test('successful example uses actual network probabilities',()=>{assert.equal(m.DEMO_PATH.length,6);assert.equal(m.DEMO_PATH.reduce((s,v)=>s+v.reward,0),5);for(const s of m.DEMO_PATH)assert.equal(s.probability,m.forward(m.DEMO,s.state).p[['U','D','L','R'].indexOf(s.action)]);});
+test('all 160 weight gradients match finite differences',()=>{const {g}=m.gradient(m.DEMO,m.DEMO_PATH);for(const [key,i,j] of [...Array.from({length:8},(_,i)=>Array.from({length:16},(_,j)=>['w1',i,j])).flat(),...Array.from({length:4},(_,i)=>Array.from({length:8},(_,j)=>['w2',i,j])).flat()]){const plus=m.copyNetwork(m.DEMO),minus=m.copyNetwork(m.DEMO),eps=1e-5;if(j!==undefined){plus[key][i][j]+=eps;minus[key][i][j]-=eps;}else{plus[key][i]+=eps;minus[key][i]-=eps;}const numeric=(m.gradient(plus,m.DEMO_PATH).loss-m.gradient(minus,m.DEMO_PATH).loss)/(2*eps);const analytic=j!==undefined?g[key][i][j]:g[key][i];assert.ok(Math.abs(numeric-analytic)<1e-6);}});
+test('live browser model learns an optimal route from random initialization',()=>{const run=m.trainNeural(m.newNeuralRun(),6000);const [path]=m.episode(run.network,run.seed,true);console.log('6000 episodes:',{mean100:run.returns.slice(-100).reduce((s,v)=>s+v,0)/100,route:path.map(v=>v.action),score:path.reduce((s,v)=>s+v.reward,0)});assert.equal(path.length,6);assert.equal(path.at(-1).terminal,true);});

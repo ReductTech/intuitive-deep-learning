@@ -1,11 +1,14 @@
+import moduleAssetOutline from '../../outlines.json';
+import { moduleAssetUrl } from '../../../shared/react/assets';
 import { useLecturePlayback } from '../../components/LecturePlayback';
 import { useEffect, useRef } from 'react';
 import { ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from '../../../shared/react';
-import x0 from '../../assets/forward-derivation/x0.png';
-import x1 from '../../assets/forward-derivation/x1.png';
-import xt from '../../assets/forward-derivation/xt.png';
-import noise from '../../assets/two-processes/xt.jpg';
 import './ReverseInferencePage.css';
+
+const x0 = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/forward-derivation/x0.jpg');
+const x1 = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/forward-derivation/x1.jpg');
+const xt = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/forward-derivation/xt.jpg');
+const noise = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/two-processes/xt.jpg');
 
 const steps = [
   '生成从第 T 步的纯噪声开始。',
@@ -60,7 +63,7 @@ export function ReverseInferencePage({ onComplete }: ReverseInferencePageProps) 
 
   const focused = step >= 4;
 
-  return <ContentBlock headingLevel={1} className="vg-inference" bodyClassName="vg-inference__body"
+  return <ContentBlock headingLevel={1} className="vg-shared-page vg-inference" bodyClassName="vg-inference__body"
     title="图像生成：反向去噪怎样一步步发生？" subtitle={steps[step]}>
     <div className={`vg-inference__content${focused ? ' is-focused' : ''}`}>
       <section className="vg-inference__chain" aria-label="从纯噪声到图像的反向生成链">

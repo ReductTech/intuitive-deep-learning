@@ -1,3 +1,5 @@
+import moduleAssetOutline from '../../outlines.json';
+import { moduleAssetUrl } from '../../../shared/react/assets';
 import {
   useRef,
   useState,
@@ -6,16 +8,17 @@ import {
   type PointerEvent as ReactPointerEvent,
 } from 'react';
 import { ContentBlock, Typography } from '../../../shared/react';
-import faceOne from '../../assets/distribution-modeling/face-1.png';
-import faceTwo from '../../assets/distribution-modeling/face-2.png';
-import faceThree from '../../assets/distribution-modeling/face-3.png';
-import faceFour from '../../assets/distribution-modeling/face-4.png';
-import faceFive from '../../assets/distribution-modeling/face-5.png';
-import faceSix from '../../assets/distribution-modeling/face-6.png';
-import anomalyThreeEyes from '../../assets/distribution-modeling/anomaly-three-eyes.png';
-import anomalyRandomFeatures from '../../assets/distribution-modeling/anomaly-random-features.png';
-import anomalyFaceCar from '../../assets/distribution-modeling/anomaly-face-car.png';
 import './DistributionViewPage.css';
+
+const faceOne = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/distribution-modeling/face-1.jpg');
+const faceTwo = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/distribution-modeling/face-2.jpg');
+const faceThree = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/distribution-modeling/face-3.jpg');
+const faceFour = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/distribution-modeling/face-4.jpg');
+const faceFive = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/distribution-modeling/face-5.jpg');
+const faceSix = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/distribution-modeling/face-6.jpg');
+const anomalyThreeEyes = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/distribution-modeling/anomaly-three-eyes.jpg');
+const anomalyRandomFeatures = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/distribution-modeling/anomaly-random-features.jpg');
+const anomalyFaceCar = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/distribution-modeling/anomaly-face-car.jpg');
 
 interface Point {
   x: number;
@@ -156,7 +159,7 @@ export function DistributionViewPage({ onComplete }: DistributionViewPageProps) 
   return (
     <ContentBlock
       headingLevel={1}
-      className="vg-distribution-page"
+      className="vg-shared-page vg-distribution-page"
       title="什么样的图像，更可能出现在真实世界中？"
       subtitle="拖动候选图像点 x，观察它在当前人脸数据分布中的可能性如何变化。"
     >

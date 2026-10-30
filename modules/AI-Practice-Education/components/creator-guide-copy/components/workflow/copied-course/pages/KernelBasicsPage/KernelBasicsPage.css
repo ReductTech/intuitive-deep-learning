@@ -1,0 +1,67 @@
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-convolution {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 12px;
+  min-height: 0;
+  overflow: hidden;
+  padding: 22px 30px 18px;
+}
+
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-convolution > .edu-content-body { display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: 12px; min-height: 0; }
+
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-convolution__explanation { display: grid; place-items:center; min-width: 0; border-radius:12px; background:#edf4ff; padding:15px 22px; text-align:center; }
+
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-convolution__definition {
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  align-items: stretch;
+  min-width: 0;
+  border: 1px solid rgba(39, 68, 110, .14);
+  border-radius: 10px;
+  background: linear-gradient(90deg, #e7eff8 0 88px, rgba(248, 250, 253, .96) 88px 100%);
+}
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-convolution__definition-label { display: grid; grid-row: 1 / 3; place-items: center; }
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-convolution__definition-label h3 { margin: 0; }
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-convolution__definition-copy { display: grid; align-content: center; gap: 6px; min-width: 0; padding: 12px 18px 0; }
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-convolution__definition-copy .ui-typography { max-width: 100%; }
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-convolution__definition-formula { width: 100%; min-height: 90px; border: 0; background: transparent; padding: 6px 12px 10px; }
+
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-convolution__workspace { display: grid; min-width: 0; min-height: 0; }
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-convolution__flow { display: grid; grid-template-columns: minmax(0, 1fr) 38px minmax(190px, .44fr) 38px minmax(0, 1fr); align-items: stretch; gap: 12px; min-width: 0; min-height: 0; }
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-convolution__stage, .aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-convolution__kernel-stage { display: grid; align-content: center; justify-items: center; gap: 14px; min-width: 0; min-height: 0; }
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-convolution__stage { border-radius:14px; background:#f1f6fd; padding:20px; }
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-convolution__stage h2, .aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-convolution__kernel-stage h2 { margin: 0; text-align: center; }
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-convolution__stage-note { max-width: 100%; text-align: center; }
+
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-convolution__image-frame { position: relative; width: min(100%, 520px); max-width: 100%; aspect-ratio: 16 / 9; overflow: hidden; border: 1px solid rgba(39, 68, 110, .18); border-radius: 8px; background: #e9edf3; box-shadow: 0 10px 22px rgba(33, 50, 74, .10); }
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-convolution__image-frame img { display: block; width: 100%; height: 100%; max-width: 100%; object-fit: contain; }
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-convolution__patch { position: absolute; box-sizing: border-box; border: 3px solid #3184dc; background: rgba(49, 132, 220, .13); box-shadow: 0 0 0 1px rgba(255, 255, 255, .84), 0 5px 14px rgba(49, 132, 220, .24); pointer-events: none; }
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-convolution__image-hover-target { position: absolute; inset: 0; z-index: 4; cursor: crosshair; }
+
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-convolution__matrix, .aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-convolution__output-map { display: grid; gap: 2px; width: 100%; max-width: 100%; min-width: 0; border: 1px solid rgba(39, 68, 110, .18); border-radius: 7px; background: rgba(39, 68, 110, .16); padding: 2px; }
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-convolution__kernel-matrix { width: min(100%, 180px); aspect-ratio: 1; }
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-convolution__matrix-cell { display: grid; place-items: center; min-width: 0; aspect-ratio: 1; background: #fff; }
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-convolution__matrix-cell.is-negative { background: rgba(39, 68, 110, .11); color: var(--ui-accent); }
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-convolution__matrix-cell.is-positive { background: rgba(240, 126, 71, .17); color: var(--ui-accent-alt); }
+
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-convolution__output-map { position: relative; display: block; width: min(100%, 520px); aspect-ratio: 16 / 9; overflow: hidden; background: #000; }
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-convolution__output-map::after { position: absolute; inset: 0; z-index: 3; border: 1px solid rgba(255, 255, 255, .55); content: ''; pointer-events: none; }
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-convolution__output-canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; background: #000; image-rendering: auto; }
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-convolution__output-grid { position: absolute; inset: 0; z-index: 2; display: grid; }
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-convolution__output-cell { appearance: none; display: block; min-width: 0; min-height: 0; overflow: hidden; border: 0; border-radius: 0; background: transparent; cursor: pointer; padding: 0; }
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-convolution__output-cell.is-selected { outline: 3px solid #3184dc; outline-offset: -3px; box-shadow: inset 0 0 0 2px #fff; }
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-convolution__output-cell:focus-visible { outline: 3px solid var(--ui-accent-alt); outline-offset: -3px; }
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-convolution__flow-arrow { display: grid; place-items: center; align-self:center; min-width: 0; }
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-convolution__flow-arrow .ui-typography { margin: 0; }
+
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-convolution__features { display: grid; align-content: start; gap: 12px; min-width: 0; min-height: 0; border-left: 1px solid rgba(39, 68, 110, .15); padding: 10px 0 8px 22px; }
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-convolution__features h2 { margin: 0; }
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-convolution__feature-list { display: grid; gap: 9px; min-width: 0; }
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-convolution__feature-item { display: grid; grid-template-columns: 52px minmax(0, 1fr); align-items: start; gap: 14px; min-width: 0; }
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-convolution__feature-number { display: grid; width: 52px; height: 52px; place-items: center; border-radius: 50%; background: #e7eff8; color: var(--ui-accent); }
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-convolution__feature-item h3 { margin: 0 0 4px; }
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-convolution__feature-item .ui-typography { max-width: 100%; }
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-convolution__value { color: var(--ui-accent-alt); font-weight: 700; }
+.aipe-replay-cg-copy-course-shell .aipe-replay-cg-copy-ck-convolution__loading { display: grid; place-items: center; width: 100%; aspect-ratio: 16 / 9; border: 1px solid var(--ui-border); background: var(--ui-bg-muted); }
+.course-page-surface .aipe-replay-cg-copy-ck-convolution { width: 100%; height: 100%; min-height: 0; }

@@ -5,7 +5,7 @@
   min-width: 0;
   min-height: 0;
   grid-template-rows: auto minmax(0, 1fr);
-  background: radial-gradient(circle at 96% 5%, rgba(45, 116, 193, .08), transparent 29%), #fff;
+
 }
 
 .course-page-surface .vg-process-page__body {

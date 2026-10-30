@@ -52,7 +52,7 @@ export function DisguiseVerificationPage({ onComplete, onReset }: { onComplete?:
           </div>
         </div>
         <aside className="vfl-disguise-details">
-          <img className="vfl-disguise-cover" src={moduleAssetUrl(outlines.moduleIdentity.id, 'yuhuanong/cover.png')} alt="雨花弄：变脸游戏封面" />
+          <img className="vfl-disguise-cover" src={moduleAssetUrl(outlines.moduleIdentity.id, 'yuhuanong/cover.jpg')} alt="雨花弄：变脸游戏封面" />
           <Typography variant="bodySmall" className="vfl-disguise-description">通缉画像上的人，正是你。搜查的脚步逼近，灯下只剩一面镜子。门开之前，你能换一张脸，逃过这一劫吗？</Typography>
           <dl className="vfl-disguise-facts">
             <div><Typography as="dt" variant="bodySmall">最近评测：</Typography><dd><ReviewButton /></dd></div>

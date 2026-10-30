@@ -1,0 +1,52 @@
+import { LossChoicePage } from './pages/LossChoicePage/LossChoicePage';
+import { OptimizationIntroPage } from './pages/OptimizationIntroPage/OptimizationIntroPage';
+import { ConvexMsePage } from './pages/ConvexMsePage/ConvexMsePage';
+import { MatrixModelPage } from './pages/MatrixModelPage/MatrixModelPage';
+import { OptimalLinePage } from './pages/OptimalLinePage/OptimalLinePage';
+import { OptimalSlopePage } from './pages/OptimalSlopePage/OptimalSlopePage';
+import { OptimalInterceptPage } from './pages/OptimalInterceptPage/OptimalInterceptPage';
+import { LeastSquaresPage } from './pages/LeastSquaresPage/LeastSquaresPage';
+import { AutomaticSearchPage, SearchLimitsPage } from './pages/AutomaticSearchPage/AutomaticSearchPage';
+import { MsePage } from './pages/MsePage/MsePage';
+import { MaePage } from './pages/MaePage/MaePage';
+import { PredictionErrorPage } from './pages/PredictionErrorPage/PredictionErrorPage';
+import { ResidualCancellationPage } from './pages/ResidualCancellationPage/ResidualCancellationPage';
+import { SceneDeck, type DeckDefinition } from '../shared/react/presentation';
+import { notesForScene } from './speakerNotes';
+import { CaoChongPage } from './pages/CaoChongPage/CaoChongPage';
+import { LinearRegressionPage } from './pages/LinearRegressionPage/LinearRegressionPage';
+import { EstimateWeightPage } from './pages/EstimateWeightPage/EstimateWeightPage';
+export const deck: DeckDefinition = {
+  id: 'regression-loss', title: '回归与损失：模型怎样变准', subtitle: '从称象到回归 · 当前展示 18 页',
+  scenes: [
+    { id: '01', title: '曹冲称象', section: '从称象到回归', render: () => <CaoChongPage /> },
+    { id: '02', title: '估计象重', section: '从称象到回归', render: () => <EstimateWeightPage /> },
+    { id: '03', title: '预测误差', section: '如何评价模型', render: () => <PredictionErrorPage /> },
+    { id: '04', title: '误差不能直接相加', section: '如何评价模型', render: () => <ResidualCancellationPage /> },
+    { id: '05', title: '平均绝对误差（MAE）', section: '如何评价模型', render: () => <MaePage /> },
+    { id: '06', title: '均方误差（MSE）', section: '如何评价模型', render: () => <MsePage /> },
+    { id: '07', title: '损失函数，体现任务的取舍', section: '如何评价模型', render: () => <LossChoicePage /> },
+    { id: '08', title: '用损失指导估重', section: '如何评价模型', render: () => <EstimateWeightPage showLoss /> },
+    { id: '09', title: '能否让计算机自动找线？', section: '从手动到自动', render: () => <AutomaticSearchPage /> },
+    { id: '10', title: '遍历搜索的局限', section: '从手动到自动', render: () => <SearchLimitsPage /> },
+    { id: '11', title: '线性回归模型', section: '建立线性模型', render: () => <LinearRegressionPage /> },
+    { id: '12', title: '最小二乘：从搜索到求解', section: '最小二乘', render: () => <LeastSquaresPage /> },
+    { id: '13', title: '先求最优截距', section: '最小二乘', render: () => <OptimalInterceptPage /> },
+    { id: '14', title: '再求最优斜率', section: '最小二乘', render: () => <OptimalSlopePage /> },
+    { id: '15', title: '得到最优直线', section: '最小二乘', render: () => <OptimalLinePage /> },
+    { id: '16', title: '用矩阵写出最小二乘', section: '最小二乘', render: () => <MatrixModelPage /> },
+    { id: '17', title: '为什么正规方程能找到全局最优？', section: '最小二乘', render: () => <ConvexMsePage /> },
+    { id: '18', title: '为什么不能总靠解析求解？', section: '优化基础', render: () => <OptimizationIntroPage /> },
+  ],
+};
+const catalog: [DeckDefinition, ...DeckDefinition[]] = [deck];
+export const getPptNotes = notesForScene;
+export function RegressionLossPpt() {
+  return <SceneDeck catalog={catalog} moduleId="regression-loss" assetId="adde4a27-235d-4c03-a3cf-734ccf08b38d" progressKey="lesson-flow:regression-loss" getNotes={notesForScene} />;
+}
+
+
+
+
+
+

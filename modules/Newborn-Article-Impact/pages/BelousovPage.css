@@ -1,0 +1,11 @@
+.naipb-layout{height:100%;display:grid;grid-template-rows:minmax(0,1fr) auto;gap:24px;}
+.naipb-evidence{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:40px;}
+.naipb-page figure{margin:0;display:grid;gap:12px;}
+.naipb-reaction{grid-template-rows:minmax(0,1fr) auto;}
+.naipb-page .naipc-photo{width:100%;height:100%;object-fit:contain;}
+.naipb-story{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1fr);gap:28px;align-items:center;}
+.naipb-person{grid-template-rows:280px auto;}
+.naipb-timeline{display:grid;gap:32px;border-left:3px solid var(--ui-border);padding:8px 0 8px 24px;}
+.naipb-timeline section{position:relative;display:grid;gap:6px;}
+.naipb-timeline section:before{content:'';position:absolute;left:-33px;top:15px;width:15px;height:15px;border-radius:50%;background:var(--ui-accent);border:2px solid white;}
+.naipb-takeaway{background:var(--ui-bg-soft);border-radius:var(--ui-radius-lg);padding:18px 24px;}

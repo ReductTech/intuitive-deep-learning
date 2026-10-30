@@ -1,10 +1,13 @@
-import { useEffect, useId, useRef, type ReactNode } from 'react';
+import moduleAssetOutline from '../../outlines.json';
+import { moduleAssetUrl } from '../../../shared/react/assets';
+import { useEffect, useId, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import { ContentBlock, MathFormulaStatic, Typography } from '../../../shared/react';
 import { useLecturePlayback } from '../../components/LecturePlayback';
-import noise from '../../assets/gan-training/noise.png';
-import realPortrait from '../../assets/gan-training/real-portrait.png';
-import generatedPortrait from '../../assets/gan-training/generated-portrait.png';
 import './GanTrainingPage.css';
+
+const noise = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/gan-training/noise.jpg');
+const realPortrait = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/gan-training/real-portrait.jpg');
+const generatedPortrait = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/gan-training/generated-portrait.jpg');
 
 type Mode = 'd' | 'g' | 'cycle';
 const lessons = {
@@ -44,24 +47,73 @@ function Sample({ image, label, note }: { image: string; label: string; note?: R
 
 function TrainingDiagram({ mode, stage }: { mode: 'd' | 'g'; stage: number }) {
   const id = useId().replaceAll(':', '');
+  const diagramRef = useRef<HTMLDivElement>(null);
+  const [connections, setConnections] = useState<{ width: number; height: number; forward: string[]; feedback: string[] } | null>(null);
+  useLayoutEffect(() => {
+    const diagram = diagramRef.current;
+    if (mode !== 'g' || !diagram) return;
+    const nodes = [
+      diagram.querySelector('.vg-gan-train__noise img'),
+      diagram.querySelector('.vg-gan-train__g .vg-gan-train__network'),
+      diagram.querySelector('.vg-gan-train__fake img'),
+      diagram.querySelector('.vg-gan-train__d .vg-gan-train__network'),
+      diagram.querySelector('.vg-gan-train__fake-target'),
+    ];
+    if (nodes.some(node => !node)) return;
+    const update = () => {
+      const bounds = diagram.getBoundingClientRect();
+      if (!bounds.width) return;
+      // Convert viewport coordinates back to the fixed canvas, including in blog mode.
+      const scale = diagram.offsetWidth / bounds.width;
+      const boxes = nodes.map(node => {
+        const rect = node!.getBoundingClientRect();
+        return {
+          left: (rect.left - bounds.left) * scale,
+          right: (rect.right - bounds.left) * scale,
+          top: (rect.top - bounds.top) * scale,
+          bottom: (rect.bottom - bounds.top) * scale,
+          cx: (rect.left + rect.width / 2 - bounds.left) * scale,
+          cy: (rect.top + rect.height / 2 - bounds.top) * scale,
+        };
+      });
+      const [, , , discriminator, score] = boxes;
+      const width = diagram.offsetWidth;
+      const height = bounds.height * scale;
+      // Preserve the original horizontal forward arrows and D-to-G return route.
+      const forward = [[168, 280], [448, 560], [728, 896], [1064, 1190]]
+        .map(([from, to]) => `M${from / 1400 * width} ${height * .4} H${to / 1400 * width}`);
+      const entryX = discriminator.cx + (discriminator.right - discriminator.cx) / 2;
+      const feedback = [
+        `M${score.cx} ${score.bottom + 6} V${Math.max(score.bottom + 22, discriminator.bottom + 40)} H${entryX} V${discriminator.bottom + 6}`,
+        `M${980 / 1400 * width} ${284 / 350 * height} V${330 / 350 * height} H${364 / 1400 * width} V${284 / 350 * height}`,
+      ];
+      const next = { width: diagram.offsetWidth, height, forward, feedback };
+      setConnections(current => JSON.stringify(current) === JSON.stringify(next) ? current : next);
+    };
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(diagram);
+    nodes.forEach(node => observer.observe(node!));
+    return () => observer.disconnect();
+  }, [mode, stage]);
   const judge = stage >= 1;
   const fakeJudged = stage >= (mode === 'd' ? 2 : 1);
-  return <div className={`vg-gan-train__diagram is-${mode}`} role="group" aria-label={mode === 'd' ? '真实与生成两类样本分别进入同一个判别器' : '生成器接收经过固定判别器的梯度反馈'}>
-    <svg className="vg-gan-train__wires" viewBox="0 0 1400 350" preserveAspectRatio="none" aria-hidden="true">
+  return <div ref={diagramRef} className={`vg-gan-train__diagram is-${mode}`} role="group" aria-label={mode === 'd' ? '真实与生成两类样本分别进入同一个判别器' : '生成器接收经过固定判别器的梯度反馈'}>
+    <svg className="vg-gan-train__wires" viewBox={mode === 'g' && connections ? `0 0 ${connections.width} ${connections.height}` : '0 0 1400 350'} preserveAspectRatio="none" aria-hidden="true">
       <defs>
         <marker id={`${id}-forward`} markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#66839f" /></marker>
         <marker id={`${id}-feedback`} markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill={mode === 'd' ? '#d95a64' : '#359361'} /></marker>
       </defs>
       <g fill="none" stroke="#66839f" strokeWidth="3" markerEnd={`url(#${id}-forward)`}>
-        <path d={mode === 'd' ? 'M168 215 H280' : 'M168 140 H280'} /><path d={mode === 'd' ? 'M448 215 H560' : 'M448 140 H560'} />
+        {mode === 'g' ? connections?.forward.map((path, index) => (index < 2 || fakeJudged) && <path key={index} data-flow="forward" d={path} />) : <><path d="M168 215 H280" /><path d="M448 215 H560" /></>}
         {mode === 'd' && stage >= 1 && <path d="M728 65 H800 Q820 65 820 90 V125 H896" />}
-        {fakeJudged && <path d={mode === 'd' ? 'M728 215 H800 Q820 215 820 185 V175 H896' : 'M728 140 H896'} />}
+        {mode === 'd' && fakeJudged && <path d="M728 215 H800 Q820 215 820 185 V175 H896" />}
         {mode === 'd' && stage >= 1 && <path d="M1064 125 H1110 Q1120 125 1120 90 V65 H1190" />}
-        {fakeJudged && <path d={mode === 'd' ? 'M1064 175 H1110 Q1120 175 1120 205 V215 H1190' : 'M1064 140 H1190'} />}
+        {mode === 'd' && fakeJudged && <path d="M1064 175 H1110 Q1120 175 1120 205 V215 H1190" />}
       </g>
       <g fill="none" stroke={mode === 'd' ? '#d95a64' : '#359361'} strokeWidth="3" strokeDasharray="9 6" markerEnd={`url(#${id}-feedback)`}>
         {mode === 'd' && stage >= 4 && <path d="M1280 330 H980 V250" />}
-        {mode === 'g' && stage >= 3 && <><path d="M1280 250 V280 H1068 V240 H1064" /><path d="M980 284 V330 H364 V284" /></>}
+        {mode === 'g' && stage >= 3 && connections?.feedback.map((path, index) => <path key={index} data-flow="gradient" d={path} />)}
       </g>
     </svg>
     <Reveal show className="vg-gan-train__noise"><Sample image={noise} label="随机噪声 z" note={<>z ∼ p<sub>z</sub>：噪声中取样</>} /></Reveal>
@@ -79,9 +131,12 @@ function CycleDiagram({ stage }: { stage: number }) {
   const id = useId().replaceAll(':', '');
   return <div className="vg-gan-train__cycle" data-focus={stage === 1 || stage === 3 ? 'd' : stage === 2 ? 'g' : 'both'}>
     <svg className="vg-gan-train__cycle-wires" viewBox="0 0 1400 350" preserveAspectRatio="none" aria-hidden="true">
-      <defs><marker id={`${id}-cycle`} markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#66839f" /></marker></defs>
+      <defs>
+        <marker id={`${id}-cycle`} markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#66839f" /></marker>
+        <marker id={`${id}-cycle-return`} markerWidth="6" markerHeight="6" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 Z" fill="#66839f" /></marker>
+      </defs>
       {stage >= 2 && <path d="M625 130 H770" fill="none" stroke="#66839f" strokeWidth="3" markerEnd={`url(#${id}-cycle)`} />}
-      {stage >= 3 && <path d="M1100 278 V302 H300 V278" fill="none" stroke="#66839f" strokeWidth="3" markerEnd={`url(#${id}-cycle)`} />}
+      {stage >= 3 && <path d="M1100 278 V310 H300 V278" fill="none" stroke="#66839f" strokeWidth="3" strokeLinejoin="miter" strokeLinecap="square" markerEnd={`url(#${id}-cycle-return)`} />}
     </svg>
     <Reveal show={stage >= 1} className="vg-gan-train__cycle-d">
       <Typography as="h2" variant="h3" tone="danger">训练 D，区分真假</Typography>
@@ -137,7 +192,7 @@ export function GanTrainingLesson({ mode, onComplete }: { mode: Mode; onComplete
     completed.current = true;
     onComplete?.();
   }, [stage, onComplete]);
-  return <ContentBlock headingLevel={1} title={lesson.title} subtitle={lesson.subtitle} className="vg-gan-train" bodyClassName="vg-gan-train__body" data-mode={mode} data-stage={stage}>
+  return <ContentBlock headingLevel={1} title={lesson.title} subtitle={lesson.subtitle} className="vg-shared-page vg-gan-train" bodyClassName="vg-gan-train__body" data-mode={mode} data-stage={stage}>
     <div className="vg-gan-train__visual">
       {mode === 'cycle' ? <CycleDiagram stage={stage} /> : <TrainingDiagram mode={mode} stage={stage} />}
       {mode === 'cycle' && <div className="vg-gan-train__narration" aria-live="polite" aria-atomic="true"><Typography variant="bodySmall">{cycleDetails[stage]}</Typography></div>}

@@ -1,11 +1,14 @@
+import moduleAssetOutline from '../../outlines.json';
+import { moduleAssetUrl } from '../../../shared/react/assets';
 import { useEffect, useRef, type ReactNode } from 'react';
 import { ContentBlock, MathFormulaStatic, Typography } from '../../../shared/react';
 import { useLecturePlayback } from '../../components/LecturePlayback';
-import x0 from '../../assets/forward-derivation/x0.png';
-import x1 from '../../assets/forward-derivation/x1.png';
-import x2 from '../../assets/forward-derivation/x2.png';
-import xt from '../../assets/forward-derivation/xt.png';
 import './ForwardDerivationPage.css';
+
+const x0 = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/forward-derivation/x0.jpg');
+const x1 = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/forward-derivation/x1.jpg');
+const x2 = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/forward-derivation/x2.jpg');
+const xt = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/forward-derivation/xt.jpg');
 
 type Mode = 'two-step' | 'merge' | 'direct';
 export interface ForwardDerivationPageProps { onComplete?: () => void; }
@@ -97,7 +100,7 @@ function ForwardLesson({ mode, onComplete }: ForwardDerivationPageProps & { mode
   const { stage, controls } = useLecturePlayback(lesson.count, 1000);
   const completed = useRef(false);
   useEffect(() => { if (stage === lesson.count - 1 && !completed.current) { completed.current = true; onComplete?.(); } }, [stage, lesson.count, onComplete]);
-  return <ContentBlock headingLevel={1} title={lesson.title} subtitle={lesson.subtitle} className="vg-forward-page" bodyClassName="vg-forward-page__body" data-mode={mode} data-stage={stage}>
+  return <ContentBlock headingLevel={1} title={lesson.title} subtitle={lesson.subtitle} className="vg-shared-page vg-forward-page" bodyClassName="vg-forward-page__body" data-mode={mode} data-stage={stage}>
     <Timeline mode={mode} stage={stage} />
     <LessonBody mode={mode} stage={stage} />
     <footer className="vg-forward-page__footer">{controls}</footer>

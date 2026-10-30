@@ -5,7 +5,7 @@ import { recognizedAmountWords } from './amountWords';
 import './DigitRecognitionOpeningPage.css';
 
 const ASSET_ID = '80396753-7fc8-4f55-9188-bddbdb828169';
-const background = moduleAssetUrl(ASSET_ID, '1980_usa_bg.png');
+const background = moduleAssetUrl(ASSET_ID, '1980_usa_bg.jpg');
 const cheque = moduleAssetUrl(ASSET_ID, 'cheque.png');
 const scanner = moduleAssetUrl(ASSET_ID, 'scanner_logo.png');
 const BOX_COUNT = 4;

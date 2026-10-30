@@ -18,11 +18,11 @@ python -m pip install -e './backend[vision,projection,assessment,dev]'
 
 启动脚本会检查所需依赖，并显示选用的 Python 路径；当前 `python` 缺少依赖时，会尝试 PATH 中的其他 Python 和用户目录的 Anaconda/Miniconda。用 `-Python C:\path\to\python.exe` 或环境变量 `IDL_PYTHON` 可以固定解释器；显式指定的环境缺少依赖时会直接报错，不会切换环境。
 
-不需要 Docker。本地必须有同级 Cloud 仓库（或设置 `IDL_CLOUD_REPOSITORY`），首次安装 `python -m pip install -r ../cloud-intuitive-deep-learning/backend/requirements.txt`。启动器复用 Cloud API 源码，从环境、Cloud `.env.local`、`infra/.env.cloud.production` 按优先级读取 MySQL 和服务 token；不会导入生产 FRP 地址，凭据只在服务端使用。
+不需要 Docker。本地必须有同级 Cloud 仓库（或设置 `IDL_CLOUD_REPOSITORY`），首次安装 `python -m pip install -r ../cloud-intuitive-deep-learning/backend/requirements.txt`。启动器复用 Cloud API 源码。本地计算 API 与术库后端统一使用 `MYSQL_URL_REMOTE`：优先读取进程环境，默认读取 Cloud 的 `infra/.env.cloud.production`。不再用用户目录的 TEST 配置或 Cloud `.env.local` 覆盖数据库连接。服务 token 仍按原方式读取，不导入生产 FRP 地址，凭据仅在服务端使用。无需安装本地数据库。
 
-`npm run dev` 自动注入 Cloud 的同一份 `frontend/cloud-runtime.js`，将视觉、训练和 LLM 请求转换为同源 `/api/lab`、`/api/ai`，再代理至 8000。缓存查询、计算任务交接和 `idl_cache` 写入都走同一个 Cloud API。学习记录继续使用本地 59411；本地默认关闭 Cloud PostgreSQL 遥测，生产默认开启。缺少共用缓存配置时启动报错，不静默绕过缓存。
+`npm run dev` 自动注入 Cloud 的同一份 `frontend/cloud-runtime.js`，将视觉、训练和 LLM 请求转换为同源 `/api/lab`、`/api/ai`，再代理至 8000。缓存查询、计算任务交接和 `idl_cache` 写入都走同一个 Cloud API。学习记录继续使用本地 59411；本地默认关闭 Cloud 遥测，生产开启时复用 MYSQL_URL_REMOTE 的 SQLAlchemy/MySQL 连接。缺少共用缓存配置时启动报错，不静默绕过缓存。
 
-独立启动某个 API 也可使用 `python -m idl_backend serve --kind vision --dev`。课程身份工具为 `python -m idl_backend.contracts.identity --check`。原 scripts 下的 Python 转发入口已删除。
+独立启动某个 API 也可使用 `python -m idl_backend serve --kind vision --dev`。课程 UUID 无需签发或密钥。运行 `python creator-skill/scripts/tools.py module.identity` 可生成缺失 UUID 并移除旧签名；`python creator-skill/scripts/tools.py module.identity --check` 只检查格式、重复和缺失，不写文件。原 scripts 下的 Python 转发入口已删除。
 
 ## 目录与职责
 
@@ -46,7 +46,7 @@ Python 离线工具直接运行公共包：
 ```powershell
 python -m idl_backend.tools.models.train_emnist_mobilenet_v3 --help
 python -m idl_backend.tools.content.generate_scenedeck_thumbnails --help
-python -m idl_backend.tools.media.remove_green_screen input.mp4
+python -m idl_backend.tools.media.remove_green_screen input.mp4 --module <模块目录名>
 ```
 
 新增任务只在 `contracts/tasks.py` 注册；新增课程使用 `outlines.json.moduleIdentity.id`，不用目录名作为身份。
@@ -89,3 +89,7 @@ npm run typecheck
 `/lenet5/fixed-kernel-train` 使用预准备的 `datasets/mnist/lenet-fixed11-*` 数据与 grid8 特征，筛出 0–9 标签（排除拒识样本），固定训练 10 轮、十类输出的线性分类器。旧十一类结果读取时失效，新结果完成后覆盖同一缓存键。六种核可多选，后端按固定顺序去重排序，`seed` 为整数 0–4。每个非空组合最多五组 Cloud MySQL 缓存，无版本字段；共 63 个组合，最多 315 组。缓存键只包含 `kernels` 与 `seed`，不包含当前画布；返回分类器权重、标准化参数、训练记录与指标，预测在浏览器完成。
 
 Cloud API 强制异步，进度接口为 `/lenet5/fixed-kernel-train-status`，结果通过既有 completion drainer 入库。特征计算为 28×28 → 不补边的 3×3 卷积及 ReLU → 26×26 → 将响应划为 8×8 区域并取平均；不是一次卷积直接得到 8×8，也不是固定 3×3、步长 3 的池化。
+
+## 术库业务模块
+
+新增并列的 [shuku_backend](src/shuku_backend/README.md)，承接课程业务迁移，独立安装和启动，不修改原计算后端。当前能力与待完成项见 [迁移进度](../docs/术库后端迁移进度.md)。

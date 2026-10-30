@@ -1,0 +1,11 @@
+.pg-au-wrap{height:100%;display:grid;gap:8px;min-height:0}.pg-au-wrap *{min-width:0;max-width:100%;box-sizing:border-box}
+.pg-au-body{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.6fr);gap:36px;align-items:center}.pg-au-left,.pg-au-right,.pg-au-scene{display:grid;align-content:center}.pg-au-scene{justify-items:center}.pg-au-scene .pg-tr-board .pg-hero-marker.is-fox,.pg-au-scene .pg-tr-board .pg-fox-avatar{width:50px;height:50px}
+.pg-au-prediction{display:grid;background:#faf1e3;border-left:4px solid #d99c53;border-radius:8px}
+.pg-au-target-parts,.pg-au-signal-bridge{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1.4fr);gap:14px;align-items:center}.pg-au-target-parts>div,.pg-au-signal-bridge>div{display:grid;background:var(--ui-bg-soft);border-radius:8px}
+.pg-au-policy-change{display:grid;gap:6px;border-top:1px solid var(--ui-border);padding:8px 0}.pg-au-policy-change>div{display:flex;gap:20px;align-items:center}.pg-au-right .math-formula-block{margin:0;padding:0}
+.pg-au-scene .pg-tr-board .pg-world{width:180px}.pg-au-prediction{padding:8px 12px;gap:4px}.pg-au-target-parts>div,.pg-au-signal-bridge>div{padding:6px 10px;gap:4px}.pg-au-left,.pg-au-right,.pg-au-scene{gap:6px}
+.pg-au-critic-wrap{gap:8px}.pg-au-local-progress{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;background:var(--ui-bg-soft);border-radius:10px;padding:4px}.pg-au-local-progress>div{padding:10px 4px;text-align:center;border-radius:8px}.pg-au-local-progress .is-current{background:var(--ui-accent)}.pg-au-local-progress .is-current .ui-typography{color:white}
+.pg-au-wrap .pg-au-scene .pg-tr-board .pg-world{width:260px}.pg-au-wrap .pg-au-scene .pg-tr-board .pg-hero-marker.is-fox,.pg-au-wrap .pg-au-scene .pg-tr-board .pg-fox-avatar{width:58px;height:58px}
+.pg-au-navigation{display:flex;justify-content:center;gap:12px}.pg-au-q-change{display:flex;gap:18px;align-items:center}.pg-au-loss-change{display:flex;align-items:center;gap:20px;border-top:1px solid var(--ui-border);padding-top:10px}.pg-au-critic-wrap .pg-au-right{gap:10px}
+
+.pg-au-wrap{grid-template-rows:auto minmax(0,1fr)}.pg-au-critic-wrap{grid-template-rows:auto minmax(0,1fr) auto}

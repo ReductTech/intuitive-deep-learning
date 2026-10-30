@@ -1,8 +1,15 @@
+import {offlinePreview} from './scripts/offline-preview-vite';
+import {browserOffline} from './scripts/browser-offline-vite';
+import {localNarration} from './scripts/narration-vite';
 import { defineConfig, loadEnv, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import fs from 'node:fs';
 import path from 'node:path';
+import { editDeckPlugin } from './deprecated/Edit-Deck/server';
+import { creatorSkillDocuments } from './modules/Creator-Guide/skillDocumentsPlugin';
+import {courseLibraryRoot,courseLibraryPlugin} from './scripts/course-library-vite';
+import {localModuleAssets} from './scripts/module-assets.mjs';
 
 function cloudRuntime(root: string): Plugin {
   const candidates = process.env.IDL_CLOUD_REPOSITORY
@@ -48,11 +55,38 @@ function fixedLessonCanvas(): Plugin {
   };
 }
 
-export default defineConfig(({ mode, command }) => {
-  const assetBaseUrl = loadEnv(mode, '.', '').VITE_ASSET_BASE_URL?.trim();
+/** Course images must stay on the configured asset host, not in the app bundle. */
+function externalCourseImages(): Plugin {
+  const image = /\.(?:png|jpe?g|webp|gif|svg|avif|bmp|ico)(?:\?|$)/i;
   return {
-    plugins: [fixedLessonCanvas(), react(), tailwindcss(), ...(command === 'serve' ? [cloudRuntime(__dirname)] : [])],
-    publicDir: 'assets',
+    name: 'external-course-images',
+    apply: 'build',
+    generateBundle(_options, bundle) {
+      const imported = [...this.getModuleIds()].filter(id => {
+        const normalized = id.replaceAll('\\', '/');
+        return /\/(?:modules|src)\//.test(normalized) && !normalized.includes('/node_modules/') && image.test(normalized);
+      });
+      const emitted = Object.values(bundle).filter(item => item.type === 'asset' && image.test(item.fileName));
+      if (imported.length || emitted.length) {
+        this.error(`课程图片必须使用 moduleAssetUrl，禁止打包进前端：\n${[...imported, ...emitted.map(item => item.fileName)].join('\n')}`);
+      }
+    },
+  };
+}
+
+export default defineConfig(({ mode, command }) => {
+  const localPreview = mode === 'public-preview' || (command === 'serve' && mode === 'preview');
+  const assetBaseUrl = loadEnv(mode, '.', '').VITE_ASSET_BASE_URL?.trim();
+  const library=courseLibraryRoot(__dirname,process.env.IDL_COURSE_LIBRARY_ROOT||loadEnv(mode,'.','').IDL_COURSE_LIBRARY_ROOT);
+  return {
+    plugins: [localModuleAssets(library),courseLibraryPlugin(__dirname,library),browserOffline(__dirname,library),offlinePreview(__dirname,library),...(localPreview?[localNarration(__dirname)]:[]),...(localPreview ? [{
+      name: 'local-course-preview',
+      transformIndexHtml(html: string) {
+        return html.replace('<script src="/modules/shared/telemetry.js"></script>', '');
+      },
+    }] : [editDeckPlugin()]), creatorSkillDocuments(), fixedLessonCanvas(), externalCourseImages(), react(), tailwindcss(), ...(command === 'serve' ? [cloudRuntime(__dirname)] : [])],
+    publicDir: false,
+    resolve: {dedupe:['react','react-dom','three','@icon-park/react']},
     build: {
       copyPublicDir: !assetBaseUrl,
       rollupOptions: {
@@ -61,8 +95,6 @@ export default defineConfig(({ mode, command }) => {
           visualFeatureGame: 'modules/Visual-Feature-Learning/game/index.html',
           visualFeatureGameEditor: 'modules/Visual-Feature-Learning/game/level-editor.html',
           visualFeatureGameDebug: 'modules/Visual-Feature-Learning/game/game-debug.html',
-          webPpt: 'web_ppt/index.html',
-          webPptSlide: 'web_ppt/slide.html',
         },
       },
     },
@@ -72,6 +104,7 @@ export default defineConfig(({ mode, command }) => {
       port: 5173,
       strictPort: true,
       proxy: {
+        '/api/shuku': { target: process.env.SHUKU_API_URL || 'http://127.0.0.1:8010', changeOrigin: true },
         '/api': {
           target: process.env.IDL_LOCAL_API_URL || 'http://127.0.0.1:8000',
           changeOrigin: true,

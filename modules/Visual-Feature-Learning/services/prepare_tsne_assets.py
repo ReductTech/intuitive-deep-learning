@@ -25,7 +25,7 @@ if __name__ == '__main__':
     projection = result['projection']
     projection['recording'] = {key: result[key] for key in ['epochs', 'architecture', 'train_count', 'val_count', 'session_id']}
     projection['recording']['seed'] = 20261001
-    out = root / 'assets' / '80396753-7fc8-4f55-9188-bddbdb828169' / 'digit-tsne'
+    out = Path(__file__).resolve().parents[1] / 'assets' / 'digit-tsne'
     out.mkdir(parents=True, exist_ok=True)
     (out / 'training-record.json').write_text(json.dumps(projection, separators=(',', ':')), encoding='utf-8')
     print('Saved measured training record:', result['session_id'])

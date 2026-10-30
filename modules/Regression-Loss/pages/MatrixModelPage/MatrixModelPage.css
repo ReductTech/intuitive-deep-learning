@@ -1,0 +1,45 @@
+.rl-matrix-page { display:grid; grid-template-rows:auto minmax(0,1fr); }
+.rl-matrix-page > .edu-content-body { min-height:0; }
+.rl-matrix-layout { display:grid; grid-template-columns:minmax(0,1.16fr) minmax(0,1fr); grid-template-rows:minmax(0,1fr) auto; gap:18px; height:100%; min-height:0; }
+.rl-matrix-layout > * { min-width:0; min-height:0; max-width:100%; }
+.rl-matrix-scalar-panel { display:grid; grid-template-rows:auto minmax(0,1fr) auto; gap:14px; padding:22px; background:linear-gradient(145deg,#f0f7ff,#f8fbff); border:1px solid #dce9f8; border-radius:var(--ui-radius-lg); }
+.rl-matrix-scalar-panel > .ui-typography:first-child { justify-self:start; padding:8px 18px; background:#dcecff; border-radius:var(--ui-radius-md); }
+.rl-matrix-scalar-content { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.2fr); gap:14px; min-height:0; }
+.rl-matrix-scalar-list { display:grid; align-content:center; gap:14px; min-width:0; }
+.rl-matrix-scalar-list .math-formula { font-size:30px; gap:3px; }
+.rl-matrix-scalar-row { padding:12px 7px; border-radius:var(--ui-radius-md); }
+.rl-matrix-chart { width:100%; height:100%; min-height:0; min-width:0; }
+.rl-matrix-unified-panel { display:grid; grid-template-rows:auto auto minmax(0,1fr); gap:8px; padding:18px; border:1px solid #d5eeeb; background:linear-gradient(145deg,#eefbf9,#f7fcfc); border-radius:var(--ui-radius-lg); }
+.rl-matrix-unified-panel > .ui-typography:first-child { justify-self:start; padding:8px 18px; background:#d6f3ed; border-radius:var(--ui-radius-md); }
+.rl-matrix-model { padding:2px 0; }
+.rl-matrix-model .math-formula { font-size:50px; gap:12px; }
+.rl-matrix-product { display:grid; grid-template-columns:minmax(0,1fr) 22px minmax(0,1.6fr) 22px minmax(0,.95fr); align-items:center; gap:7px; min-height:0; }
+.rl-matrix-product > * { min-width:0; max-width:100%; }
+.rl-matrix-object { display:grid; grid-template-rows:auto auto minmax(0,1fr); height:100%; min-height:0; justify-items:center; align-items:center; gap:5px; }
+.rl-matrix-object > .ui-typography { grid-row:1; white-space:nowrap; }
+.rl-matrix-object > .rl-matrix-dimension { grid-row:2; }
+.rl-matrix-object > .rl-matrix-bracket { grid-row:3; }
+.rl-matrix-bracket { position:relative; padding:5px 10px; width:100%; max-height:100%; min-height:0; }
+.rl-matrix-bracket::before,.rl-matrix-bracket::after { content:''; position:absolute; top:0; bottom:0; width:9px; border-top:2px solid #27446e; border-bottom:2px solid #27446e; }
+.rl-matrix-bracket::before { left:0; border-left:2px solid #27446e; }
+.rl-matrix-bracket::after { right:0; border-right:2px solid #27446e; }
+.rl-matrix-prediction,.rl-matrix-design { display:grid; grid-template-rows:repeat(4,minmax(0,1fr)); height:100%; }
+.rl-matrix-bracket .math-formula { font-size:28px; min-height:0; height:auto; }
+.rl-matrix-design-row { display:grid; grid-template-columns:1fr 1fr; border-radius:var(--ui-radius-sm); }
+.rl-matrix-parameters { display:grid; gap:8px; padding-top:12px; padding-bottom:12px; background:#e0f3ed; border-radius:var(--ui-radius-sm); }
+.rl-matrix-dimension .math-formula { font-size:21px; color:#5c7793; }
+.rl-matrix-operator { align-self:center; margin-top:58px; }
+.rl-matrix-operator .math-formula { font-size:28px; }
+.rl-matrix-page .is-row-active { background:#cfe5ff; border-radius:var(--ui-radius-sm); }
+.rl-matrix-page .is-column-active { background:#bfece0; border-radius:var(--ui-radius-sm); }
+.rl-matrix-bottom { grid-column:1/-1; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.1fr); gap:26px; padding:18px 24px; border:1px solid #dce9f8; border-radius:var(--ui-radius-lg); background:linear-gradient(100deg,#f5f9ff,#f8fcff); }
+.rl-matrix-bottom > * { min-width:0; display:grid; align-content:center; gap:12px; }
+.rl-matrix-normal { border-left:1px solid #dce9f8; padding-left:26px; }
+.rl-matrix-objective .math-formula { font-size:38px; gap:5px; }
+.rl-matrix-gradient .math-formula { font-size:28px; gap:3px; }
+.rl-matrix-normal-result { background:#dff5ef; border-radius:var(--ui-radius-md); padding:9px 20px; justify-self:center; }
+.rl-matrix-normal-result .math-formula { font-size:38px; gap:4px; }
+
+.rl-matrix-design-row > *, .rl-matrix-prediction > * { min-height:0; }
+.rl-matrix-product .math-formula-block { max-height:100%; }
+

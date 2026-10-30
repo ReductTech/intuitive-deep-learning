@@ -1,0 +1,3 @@
+# Same optional dependencies as the existing thumbnail tool.
+playwright>=1.58,<2
+Pillow>=11,<13

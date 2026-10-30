@@ -1,0 +1,7 @@
+.rie-wishful { position: relative; width: 1600px; height: 900px; isolation: isolate; }
+.rie-wishful-art { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; z-index: -1; pointer-events: none; }
+.rie-wishful-connections { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.rie-wishful-labels { position: absolute; top: 660px; left: 30px; right: 30px; display: grid; grid-template-columns: minmax(0, 440fr) minmax(0, 640fr) minmax(0, 440fr); text-align: center; }
+.rie-wishful-labels > * { min-width: 0; }
+.rie-wishful-work::after { content: ''; display: block; width: 110px; height: 4px; margin: 14px auto 0; border-radius: var(--ui-radius-pill); background: var(--ui-accent-alt); }
+.rie-wishful-takeaway { position: absolute; top: 785px; left: 60px; right: 60px; text-align: center; }

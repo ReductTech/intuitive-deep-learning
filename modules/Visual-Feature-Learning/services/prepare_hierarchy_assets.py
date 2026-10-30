@@ -39,7 +39,7 @@ def main():
     parser.add_argument("--preview", type=Path)
     args = parser.parse_args()
     repo = Path(__file__).resolve().parents[3]
-    root = repo / "assets" / UUID
+    root = Path(__file__).resolve().parents[1] / "assets"
     output = root / "feature-hierarchy" / "mobilenet-v3-small"
     output.mkdir(parents=True, exist_ok=True)
     args.cache.mkdir(parents=True, exist_ok=True)
@@ -56,7 +56,7 @@ def main():
 
     samples = []
     for digit in range(10):
-        paths = sorted((root / "mnist" / str(digit)).glob("*.png"))[:1]
+        paths = sorted([p for p in (root / "mnist" / str(digit)).iterdir() if p.suffix.lower() in {".png",".jpg",".jpeg"}])[:1]
         if len(paths) != 1:
             raise RuntimeError(f"Missing MNIST samples for {digit}")
         for ordinal, path in enumerate(paths):

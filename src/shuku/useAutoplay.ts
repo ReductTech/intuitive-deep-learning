@@ -1,0 +1,115 @@
+import {useContext, useEffect, useRef, useState} from 'react';
+import {NarrationContext,fetchNarration} from './narrationBridge';
+import type {CreatorPage} from '../creator/model';
+type AudioEntry={controller:AbortController;promise:Promise<HTMLAudioElement>;audio?:HTMLAudioElement;url?:string};
+
+export function useAutoplay(pages:CreatorPage[], pageId:string, courseId:string, enabled:boolean, select:(id:string)=>void) {
+ const requestNarration=useContext(NarrationContext)||fetchNarration;
+ const [state,setState]=useState<'idle'|'loading'|'playing'|'paused'>('idle');
+ const [provider,setProvider]=useState<'minimax'|'browser'>('minimax');
+ const [rate,setRate]=useState(1),[voiceId,setVoiceId]=useState(''),[browserVoice,setBrowserVoice]=useState('');
+ const [autoAdvance,setAutoAdvance]=useState(true);
+ const advance=useRef(autoAdvance);advance.current=autoAdvance;
+ const [error,setError]=useState('');
+ const session=useRef(0), active=useRef(false), paused=useRef(false);
+ const media=useRef<HTMLAudioElement|null>(null), utterance=useRef<SpeechSynthesisUtterance|null>(null);
+ const prepared=useRef(new Map<string,AudioEntry>());
+ const latest=useRef({pages,pageId,select}); latest.current={pages,pageId,select};
+ function clear() {
+  if(media.current){media.current.onended=null;media.current.onerror=null;media.current.pause();media.current=null;}
+  if(utterance.current){utterance.current.onend=null;utterance.current.onerror=null;window.speechSynthesis?.cancel();utterance.current=null;}
+ }
+ function keyFor(page:CreatorPage){return JSON.stringify([page.id,String(page.outline?.snippet||'').trim(),rate,voiceId]);}
+ function releaseEntry(key:string,entry:AudioEntry){
+  entry.controller.abort();
+  if(entry.audio){entry.audio.onended=null;entry.audio.onerror=null;entry.audio.oncanplaythrough=null;entry.audio.pause();entry.audio.removeAttribute('src');entry.audio.load();}
+  if(entry.url)URL.revokeObjectURL(entry.url);
+  if(prepared.current.get(key)===entry)prepared.current.delete(key);
+ }
+ function retain(keys:Set<string>){for(const [key,entry] of prepared.current)if(!keys.has(key))releaseEntry(key,entry);}
+ function loadAudio(page:CreatorPage):Promise<HTMLAudioElement>{
+  const key=keyFor(page),existing=prepared.current.get(key);if(existing)return existing.promise;
+  const controller=new AbortController();
+  const entry:AudioEntry={controller,promise:Promise.resolve(null as unknown as HTMLAudioElement)};
+  prepared.current.set(key,entry);
+  entry.promise=(async()=>{
+   const blob=await requestNarration(String(page.outline!.snippet).trim(),controller.signal,{rate,...(voiceId?{voiceId}:{})});
+   if(controller.signal.aborted)throw new DOMException('已取消预载','AbortError');
+   entry.url=URL.createObjectURL(blob);const audio=new Audio();entry.audio=audio;audio.preload='auto';
+   await new Promise<void>((resolve,reject)=>{
+    const cleanup=()=>{clearTimeout(timer);audio.oncanplaythrough=null;audio.onerror=null;controller.signal.removeEventListener('abort',cancel);};
+    const finish=(error?:Error)=>{cleanup();if(error)reject(error);else resolve();};
+    const cancel=()=>finish(new DOMException('已取消预载','AbortError'));
+    const timer=setTimeout(()=>finish(new Error('音频预载超时，请重试。')),20000);
+    audio.oncanplaythrough=()=>finish();audio.onerror=()=>finish(new Error('音频解码失败，请重试。'));
+    controller.signal.addEventListener('abort',cancel,{once:true});audio.src=entry.url!;audio.load();
+    if(audio.readyState>=4)finish();
+   });
+   return audio;
+  })().catch(error=>{releaseEntry(key,entry);throw error;});
+  return entry.promise;
+ }
+ function nextPage(id:string){const all=latest.current.pages,index=all.findIndex(page=>page.id===id);return index<0?undefined:all.slice(index+1).find(page=>typeof page.outline?.snippet==='string'&&page.outline.snippet.trim());}
+ function preloadNext(id:string){
+  if(provider!=='minimax'||!advance.current||!active.current)return;
+  const next=nextPage(id);if(next)void loadAudio(next).catch(()=>{/* Retry when this page becomes current; keep current audio playing. */});
+ }
+ function stop(){session.current++;active.current=false;paused.current=false;clear();retain(new Set());setState('idle');}
+ function fail(message:string){stop();setError(message);}
+ async function play(id:string,token:number){
+  if(token!==session.current)return;
+  clear();setState(paused.current?'paused':'loading');
+  const all=latest.current.pages, start=all.findIndex(p=>p.id===id);
+  if(!advance.current&&(start<0||typeof all[start].outline?.snippet!=='string'||!String(all[start].outline?.snippet).trim())){fail('本页暂无 snippet 讲稿。');return;}
+  const index=all.findIndex((p,i)=>i>=start&&typeof p.outline?.snippet==='string'&&Boolean(p.outline.snippet.trim()));
+  if(start<0||index<0){stop();return;}
+  const page=all[index],text=String(page.outline!.snippet).trim();
+  const next=advance.current?nextPage(page.id):undefined;
+  retain(new Set([keyFor(page),...(next?[keyFor(next)]:[])]));
+  playingId.current=page.id;latest.current.select(page.id);
+  const ended=()=>{
+   if(token!==session.current)return;
+   if(!advance.current){stop();return;}
+   const current=latest.current.pages, i=current.findIndex(p=>p.id===page.id);
+   if(i>=0&&i+1<current.length)void play(current[i+1].id,token);else stop();
+  };
+  try{
+   if(provider==='browser'){
+    if(!window.speechSynthesis)throw new Error('当前浏览器不支持朗读，请选择 MiniMax。');
+    const speech=new SpeechSynthesisUtterance(text);utterance.current=speech;speech.lang='zh-CN';speech.rate=rate;
+    speech.voice=window.speechSynthesis.getVoices().find(v=>v.voiceURI===browserVoice)||window.speechSynthesis.getVoices().find(v=>/^zh/i.test(v.lang))||null;
+    speech.onend=ended;speech.onerror=()=>{if(token===session.current)fail('浏览器朗读失败，请重新播放。');};
+    if(!paused.current)window.speechSynthesis.resume();window.speechSynthesis.speak(speech);if(paused.current)window.speechSynthesis.pause();setState(paused.current?'paused':'playing');
+   }else{
+    const audio=await loadAudio(page);if(token!==session.current)return;
+    media.current=audio;audio.currentTime=0;
+    audio.onended=ended;audio.onerror=()=>{if(token===session.current)fail('音频播放失败，请重试。');};
+    if(!paused.current){await audio.play();if(token===session.current&&!paused.current)setState('playing');}
+    if(token===session.current)preloadNext(page.id);
+   }
+  }catch(e){if(token===session.current&&!(paused.current&&(e as Error).name==='AbortError'))fail((e as Error).message);}
+ }
+ function toggle(){
+  setError('');
+  if(!active.current){
+   if(!latest.current.pages.slice(latest.current.pages.findIndex(p=>p.id===pageId)).some(p=>typeof p.outline?.snippet==='string'&&p.outline.snippet.trim())){setError('当前页及后续页面暂无 snippet 讲稿。');return;}
+   active.current=true;paused.current=false;void play(pageId,++session.current);
+  }else if(paused.current){
+   paused.current=false;const token=session.current;
+   if(utterance.current)window.speechSynthesis?.resume();
+   if(media.current)void media.current.play().then(()=>{if(token===session.current&&active.current&&!paused.current)setState('playing');}).catch(()=>{if(token===session.current&&active.current&&!paused.current)fail('无法继续播放，请重新开始。');});
+   setState(media.current||utterance.current?'playing':'loading');
+  }else{paused.current=true;media.current?.pause();if(utterance.current)window.speechSynthesis?.pause();setState('paused');}
+ }
+ // Manual navigation starts the selected page from its beginning, including while paused.
+ const playingId=useRef(pageId);
+ useEffect(()=>{if(playingId.current!==pageId){playingId.current=pageId;if(active.current)void play(pageId,++session.current);}},[pageId]);
+ useEffect(()=>{stop();setError('');},[courseId,provider,rate,voiceId,browserVoice,enabled]);
+ useEffect(()=>{
+  if(!active.current||provider!=='minimax')return;
+  if(autoAdvance)preloadNext(playingId.current);
+  else{const current=latest.current.pages.find(page=>page.id===playingId.current);retain(new Set(current?[keyFor(current)]:[]));}
+ },[autoAdvance]);
+ useEffect(()=>()=>{session.current++;active.current=false;clear();retain(new Set());},[]);
+ return {state,error,provider,setProvider,rate,setRate,voiceId,setVoiceId,browserVoice,setBrowserVoice,autoAdvance,setAutoAdvance,toggle,stop};
+}

@@ -1,4 +1,4 @@
-.course-page-surface .vg-gan-game { height: 100%; width: 100%; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; gap: 20px; padding: 32px 44px 20px; background: #fff; }
+.course-page-surface .vg-gan-game { height: 100%; width: 100%; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; gap: 20px;   }
 .course-page-surface .vg-gan-game, .course-page-surface .vg-gan-game * { box-sizing: border-box; }
 .course-page-surface .vg-gan-game__heading { display: grid; gap: 10px; }
 .course-page-surface .vg-gan-game__main { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 44px; min-height: 0; }

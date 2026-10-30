@@ -1,0 +1,12 @@
+.rl-surface-viewer {position:relative;display:flex;flex-direction:column;min-width:0;min-height:0;width:100%;height:100%;}
+.rl-surface-svg {flex:1;min-height:0;width:100%;max-width:100%;touch-action:none;cursor:grab;}
+.rl-surface-svg:active {cursor:grabbing;}
+.rl-surface-svg .math-formula {font-size:28px;}
+.rl-surface-marker {cursor:pointer;outline:none;}
+.rl-surface-marker:focus circle:last-child {stroke:#27446e;stroke-width:2;}
+.rl-surface-point-label {display:flex;justify-content:center;align-items:center;background:rgba(255,255,255,.95);border-radius:var(--ui-radius-sm);padding:3px 6px;}
+.rl-surface-toolbar {display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 14px 8px;}
+.rl-surface-legend {display:flex;justify-content:center;gap:12px;padding-bottom:12px;}
+.rl-surface-legend button {display:flex;align-items:center;gap:8px;}
+.rl-surface-swatch {display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px;flex-shrink:0;}
+.rl-surface-legend button[aria-pressed=true] {background:#e4efff;border-color:#b3cffa;}

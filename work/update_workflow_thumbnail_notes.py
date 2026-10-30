@@ -1,0 +1,3 @@
+from pathlib import Path
+p=Path('modules/Creator-Guide/components/workflow/simulation.ts');s=p.read_text(encoding='utf-8-sig').replace('这里先抽查第二页的内容提要：','这里先对照第二页的参考缩略图核验：').replace('其余页仍需继续制作与核验。','参考缩略图用于查看课程效果，仍需逐页核验。').replace("steps: ['补充跨页提示', '更新当前内容提要']", "steps: ['补充跨页提示', '更新核验说明']");p.write_text(s,encoding='utf-8')
+p=Path('modules/Creator-Guide/outlines.json');s=p.read_text(encoding='utf-8');s=s.replace('最后抽查第二页内容提要并补充跨页提示。','点击左侧24页目录可查看对应课程参考缩略图，最后对照第二页图片补充跨页核验提示。').replace('仅第一页具有完整交互，其他页面是内容提要，不能视为全课程已制作或核验。','仅第一页具有完整交互，其他页面展示独立复制到本模块的课程参考缩略图，不能视为本次演示中已逐页制作或核验。原资源缺少结束页缩略图，已从原课程实际页面补充截图。');p.write_text(s,encoding='utf-8')

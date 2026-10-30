@@ -16,6 +16,7 @@ export function useSensorSamples(url: string) {
   useEffect(() => {
     let active = true;
     const image = new Image();
+    image.crossOrigin = 'anonymous';
     image.onload = () => {
       if (!active) return;
       const size = 384;

@@ -70,9 +70,9 @@
     }
 
     preload() {
-      this.load.image('room', ASSET_ROOT + 'map.png');
+      this.load.image('room', ASSET_ROOT + 'map.jpg');
       this.load.image('overlay', ASSET_ROOT + OVERLAY_ASSET);
-      this.load.image('anchorFace', ASSET_ROOT + 'anchor_face.png');
+      this.load.image('anchorFace', ASSET_ROOT + 'anchor_face.jpg');
       this.load.image('wantedPoster', ASSET_ROOT + 'wanted.png');
       Object.keys(DISGUISE_TEMPLATES).forEach(function (templateKey) {
         var template = DISGUISE_TEMPLATES[templateKey];

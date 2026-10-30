@@ -1,0 +1,21 @@
+.di-interpolation { display:grid; grid-template-rows:auto minmax(0,1fr); background:linear-gradient(135deg,#fff,#f5faff); }
+.di-interpolation > .edu-content-body { min-height:0; }
+.di-interpolation :is(div,footer,button,canvas) { min-width:0; max-width:100%; }
+.di-interpolation p { margin:0; }
+.di-interpolation__body { display:grid; grid-template-rows:48px minmax(0,1fr) 174px; gap:12px; height:100%; min-height:0; }
+.di-interpolation__toolbar { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.di-interpolation__toolbar > div { display:flex; gap:10px; }
+.di-interpolation button { padding:0 22px; background:#eff6ff; border:1px solid #cbdff7; border-radius:10px; color:#2d5887; cursor:pointer; }
+.di-interpolation button.is-primary { background:#217bf4; color:white; border-color:#217bf4; }
+.di-interpolation button:disabled { opacity:.55; cursor:default; }
+.di-interpolation button:focus-visible { outline:3px solid #619de8; outline-offset:3px; }
+.di-interpolation__stage { position:relative; min-height:0; background:radial-gradient(#dce8f5 1px,transparent 1px) 0 0/20px 20px,#fbfdff; border:1px solid #d5e4f6; border-radius:18px; }
+.di-interpolation__stage canvas { width:100%; height:100%; image-rendering:pixelated; }
+.di-interpolation__stage-note { position:absolute; top:10px; left:18px; }
+.di-interpolation__position { position:absolute; top:40%; left:65%; text-align:center; }
+.di-interpolation__progress { position:absolute; right:18px; bottom:8px; }
+.di-interpolation__formula { display:grid; grid-template-rows:60px 48px 46px; gap:4px; padding:4px 16px; border:1px solid #d6e6f9; border-radius:16px; background:#eaf4ff; }
+.di-interpolation__formula .math-formula-block { margin:0; display:grid; align-content:center; }
+/* Explanations use the shared formula term tooltip, with no numeric examples. */
+.di-interpolation__annotations { display:flex; align-items:center; justify-content:center; gap:26px; }
+.di-interpolation__annotations p { white-space:nowrap; }

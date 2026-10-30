@@ -1,11 +1,14 @@
+import moduleAssetOutline from '../../outlines.json';
+import { moduleAssetUrl } from '../../../shared/react/assets';
 import { useLecturePlayback } from '../../components/LecturePlayback';
 import { useEffect, useRef } from 'react';
 import { ContentBlock, Typography } from '../../../shared/react';
-import x0 from '../../assets/two-processes/x0.jpg';
-import x1 from '../../assets/two-processes/x1.jpg';
-import xt from '../../assets/two-processes/xt.jpg';
-import xT from '../../assets/two-processes/xT.jpg';
 import './TwoProcessesPage.css';
+
+const x0 = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/two-processes/x0.jpg');
+const x1 = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/two-processes/x1.jpg');
+const xt = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/two-processes/xt.jpg');
+const xT = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/two-processes/xt.jpg');
 
 type Phase = 'ready' | 'forward' | 'forward-done' | 'reverse' | 'complete';
 
@@ -61,7 +64,7 @@ export function TwoProcessesPage({ onComplete }: TwoProcessesPageProps) {
   return (
     <ContentBlock
       headingLevel={1}
-      className="vg-process-page"
+      className="vg-shared-page vg-process-page"
       bodyClassName="vg-process-page__body"
       title="Diffusion 的核心：先加噪，再学会逆转"
       subtitle="同一张人脸，两条相反的路径。先观察图像怎样变成噪声，再看噪声怎样变成图像。"

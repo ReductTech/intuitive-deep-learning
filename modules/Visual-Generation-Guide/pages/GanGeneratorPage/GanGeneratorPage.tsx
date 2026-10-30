@@ -1,7 +1,7 @@
 import { useLecturePlayback } from '../../components/LecturePlayback';
 import { useEffect, useId, useMemo, useRef } from 'react';
-import { Typography } from '../../../shared/react';
-import generatorDiagram from '../../assets/gan-generator/gan-generator.svg?raw';
+import { ContentBlock, Typography } from '../../../shared/react';
+import { useDiagramAsset } from '../../components/useDiagramAsset';
 import '../GanOverviewPage/GanOverviewPage.css';
 import './GanGeneratorPage.css';
 
@@ -30,6 +30,7 @@ const diagramSummaries: Record<string, number> = {
 };
 
 export function GanGeneratorPage({ onComplete }: { onComplete?: () => void }) {
+  const { markup: generatorDiagram, failed: diagramFailed } = useDiagramAsset('images/gan-generator/gan-generator.svg');
   const { stage, controls } = useLecturePlayback(revealCount, 1000);
   const completedRef = useRef(false);
   const id = useId().replaceAll(':', '');
@@ -44,7 +45,7 @@ export function GanGeneratorPage({ onComplete }: { onComplete?: () => void }) {
     .replace(/<g aria-label="([^"]+)"/g, (match, label: string) => {
       const reveal = diagramSummaries[label];
       return reveal === undefined ? match : `${match} data-hidden="${stage < reveal}" aria-hidden="${stage < reveal}"`;
-    }), [id, stage]);
+    }), [id, stage, generatorDiagram]);
 
   useEffect(() => {
     if (stage !== revealCount - 1 || completedRef.current) return;
@@ -52,10 +53,10 @@ export function GanGeneratorPage({ onComplete }: { onComplete?: () => void }) {
     onComplete?.();
   }, [onComplete, stage]);
 
-  return <section className="vg-gan vg-gan-generator" aria-label="GAN 生成器：从随机噪声到人脸" data-stage={stage}>
+  return <ContentBlock headingLevel={1} title="GAN 生成器：从随机噪声到人脸" subtitle="从简单的随机向量出发，逐层学习图像的结构与细节。" bodyClassName="vg-gan__layout" className="vg-shared-page vg-gan vg-gan-generator" aria-label="GAN 生成器：从随机噪声到人脸" data-stage={stage}>
     <div className="vg-gan__body">
       <div className="vg-gan__canvas">
-        <div className="vg-gan__diagram" dangerouslySetInnerHTML={{ __html: diagram }} />
+        {diagramFailed ? <Typography role="alert" variant="bodySmall">图示加载失败，请刷新页面重试。</Typography> : <div className="vg-gan__diagram" dangerouslySetInnerHTML={{ __html: diagram }} />}
         {stage < explanations.length && <div className="vg-gan-generator__detail" aria-live="polite" aria-atomic="true">
           <Typography as="strong" variant="body" tone="accent">{explanations[stage].title}</Typography>
           <Typography variant="body" tone="main">{explanations[stage].text}</Typography>
@@ -73,5 +74,5 @@ export function GanGeneratorPage({ onComplete }: { onComplete?: () => void }) {
         {controls}
       </div>
     </footer>
-  </section>;
+  </ContentBlock>;
 }

@@ -1,8 +1,10 @@
+import moduleAssetOutline from '../../outlines.json';
+import { moduleAssetUrl } from '../../../shared/react/assets';
 import { useEffect, useRef, useState } from 'react';
 import { ContentBlock, Typography } from '../../../shared/react';
 import './PixelTypesPage.css';
 
-const cutout = new URL('../../assets/digital-image-cat-cutout.png', import.meta.url).href;
+const cutout = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/digital-image-cat-cutout.png');
 const SIDE = 320;
 const types = ['二值图', '灰度图', 'RGB 彩色图', 'RGBA 图像'];
 const descriptions = ['只有两个取值', '一个数表示明暗', '三个数表示颜色', '颜色加上不透明度'];
@@ -31,7 +33,7 @@ export function PixelTypesPage() {
   const [failed, setFailed] = useState(false);
   useEffect(() => {
     let active = true;
-    const image = new Image();
+    const image = new Image(); image.crossOrigin = 'anonymous';
     image.onload = () => {
       if (!active) return;
       const foregroundCanvas = document.createElement('canvas'); foregroundCanvas.width = foregroundCanvas.height = SIDE;

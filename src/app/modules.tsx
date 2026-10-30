@@ -6,8 +6,6 @@ export interface ModulePageOutline {
   title: string;
   goal?: string;
   summary?: string;
-  interaction?: string;
-  next?: string;
   snippet?: string;
 }
 
@@ -34,6 +32,8 @@ export interface ActiveModule {
   getPptNotes?: (sceneId: string) => SpeakerNote[];
   /** 是否承接 /web_ppt/ 与 /web_ppt/slide.html 这两个通用播放入口。 */
   claimsPptPlayer: boolean;
+  /** Explicitly list a guide-only interactive module in the course catalog. */
+  catalogListed?: boolean;
 }
 
 interface ModuleOutlineFile {
@@ -49,13 +49,16 @@ interface ModuleOutlineFile {
   /** 课程主入口组件所在的文件名，例如 ExpandedNeuronGuidePage.tsx */
   entry?: string;
   ppt?: { entry?: string; path?: string; player?: boolean };
+  catalogListed?: boolean;
   pages?: ModulePageOutline[];
 }
 
 // 模块在 modules/<目录>/outlines.json 里注册自己：应用路由、首页入口和页面索引都来自这份文件。
 // 新增模块只要放好目录和 outlines.json，不需要改动这个文件或 routes.tsx。
 const outlineFiles = import.meta.glob('../../modules/*/outlines.json', { eager: true, import: 'default' }) as Record<string, ModuleOutlineFile>;
-const pageModules = import.meta.glob('../../modules/*/*.tsx', { eager: true }) as Record<string, Record<string, unknown>>;
+const discoveredPages = import.meta.glob('../../modules/*/*.tsx', { eager: true }) as Record<string, Record<string, unknown>>;
+// Independent snapshots have absolute glob keys; retain stable logical module paths.
+const pageModules = Object.fromEntries(Object.entries(discoveredPages).map(([file,exports])=>['../../modules/'+file.split('/modules/').at(-1),exports]));
 
 function moduleDir(file: string) {
   return file.split('/').at(-2) ?? '';
@@ -98,6 +101,7 @@ export const activeModules: ActiveModule[] = Object.entries(outlineFiles)
       pptDeck: pptExports?.deck as DeckDefinition | undefined,
       getPptNotes: pptExports?.getPptNotes as ((sceneId: string) => SpeakerNote[]) | undefined,
       claimsPptPlayer: Boolean(outline.ppt?.player),
+      catalogListed: outline.catalogListed === true,
     };
   })
   .filter((module) => Boolean(module.element))

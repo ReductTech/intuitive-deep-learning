@@ -1,0 +1,21 @@
+.rie-barrier { position: relative; width: 1600px; height: 900px; isolation: isolate; }
+.rie-bridge-scene { position: relative; height: 540px; min-width: 0; overflow: hidden; }
+.rie-bridge-islands { position: absolute; width: 100%; height: 100%; inset: 0; object-fit: contain; z-index: -1; pointer-events: none; }
+.rie-bridge-start, .rie-bridge-end { position: absolute; top: 378px; text-align: center; width: 370px; }
+.rie-bridge-start { left: 0; }
+.rie-bridge-end { right: 0; }
+.rie-bridge-piece { position: absolute; width: 252px; height: 154px; padding: 0; border: 0; background: transparent; cursor: pointer; transform-origin: center; transition: filter 160ms; }
+.rie-bridge-piece--0 { left: 395px; top: 222px; --tilt: -11deg; --drop-tilt: -31deg; transform: rotate(var(--tilt)); }
+.rie-bridge-piece--1 { left: 644px; top: 195px; --tilt: 0deg; --drop-tilt: 18deg; transform: rotate(var(--tilt)); }
+.rie-bridge-piece--2 { left: 893px; top: 222px; --tilt: 11deg; --drop-tilt: 35deg; transform: rotate(var(--tilt)); }
+.rie-bridge-piece:hover:not(:disabled) { filter: brightness(1.04) drop-shadow(0 0 7px #8aa4d0); }
+.rie-bridge-piece:focus-visible { outline: 3px solid var(--ui-accent-alt); outline-offset: 5px; border-radius: 12px; }
+.rie-bridge-stone { display: block; width: 100%; height: 100%; filter: drop-shadow(0 8px 5px #27446e12); }
+.rie-bridge-piece-copy { position: absolute; inset: 37px 0 auto; display: grid; justify-items: center; pointer-events: none; }
+.rie-bridge-piece-copy > span { display: block; }
+.rie-bridge-piece.is-removed { animation: rie-piece-remove 180ms ease-out both; pointer-events: none; }
+.rie-bridge-piece.is-falling { animation: rie-piece-fall 1100ms 200ms cubic-bezier(.44,.02,.82,.56) both; pointer-events: none; }
+.rie-bridge-message { display: grid; align-content: start; justify-items: center; gap: 8px; text-align: center; }
+@keyframes rie-piece-remove { to { opacity: 0; transform: rotate(var(--tilt)) scale(.9); visibility: hidden; } }
+@keyframes rie-piece-fall { 0% { opacity: 1; transform: rotate(var(--tilt)) translateY(0); } 65% { opacity: .95; } 100% { opacity: 0; transform: translateY(235px) rotate(var(--drop-tilt)); visibility: hidden; } }
+@media (prefers-reduced-motion: reduce) { .rie-bridge-piece.is-removed, .rie-bridge-piece.is-falling { animation-duration: 1ms; animation-delay: 0ms; } .rie-bridge-piece { transition: none; } }

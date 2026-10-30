@@ -1,0 +1,23 @@
+const { chromium } = require('C:/Users/Ocean/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+const fs = require('node:fs');
+(async()=>{
+const browser=await chromium.launch({channel:'msedge',headless:true});
+const page=await browser.newPage({viewport:{width:1600,height:900},deviceScaleFactor:1});
+await page.goto('http://localhost:5173/scenedeck/?scenedeckCapture=1&deck=creator-guide&slide=presentation-comparison');
+const root=page.locator('.cg-case-page'); await root.waitFor();await page.evaluate(async()=>await document.fonts.ready);
+await page.waitForTimeout(1000);
+console.log('typing phase',await root.getAttribute('data-demo-phase'));
+const first=await page.locator('.cg-case-typing-area [aria-hidden=true]').first().textContent();await page.waitForTimeout(200);const second=await page.locator('.cg-case-typing-area [aria-hidden=true]').first().textContent();console.log('incremental typing',second.length>first.length);
+await page.locator('[data-scene-deck-capture]').screenshot({path:'work/comparison-typing.png'});
+await page.locator('.cg-case-virtual-cursor').waitFor({state:'visible',timeout:20000});console.log('cursor appears',true);
+await root.locator('[class*=unused]').count();
+await page.waitForFunction(()=>document.querySelector('.cg-case-page').dataset.demoPhase==='done');
+await page.waitForTimeout(1200);
+const bounds=await root.evaluate(surface=>{const r=surface.getBoundingClientRect();return [...surface.querySelectorAll('*')].flatMap(el=>{const b=el.getBoundingClientRect();return b.left<r.left-.5||b.top<r.top-.5||b.right>r.right+.5||b.bottom>r.bottom+.5?[{tag:el.tagName,class:el.className}]:[]})});console.log('outside',JSON.stringify(bounds));
+const out='assets/444f8951-dd2e-42dc-94e5-c5a878618631/scenedeck-thumbnails/presentation-comparison.png';await page.locator('[data-scene-deck-capture]').screenshot({path:out});
+console.log('video playing',await page.locator('video').evaluate(v=>!v.paused && v.videoWidth>0));
+await page.getByRole('button',{name:'重播演示'}).click();console.log('replay',await root.getAttribute('data-demo-phase')==='typing');
+await page.getByRole('button',{name:'生成',exact:true}).click();await page.waitForFunction(()=>document.querySelector('.cg-case-page').dataset.demoPhase==='done');console.log('manual generate',true);
+await page.emulateMedia({reducedMotion:'reduce'});await page.getByRole('button',{name:'重播演示'}).click();await page.waitForFunction(()=>document.querySelector('.cg-case-page').dataset.demoPhase==='done');console.log('reduced motion static',await page.locator('video').evaluate(v=>v.paused));
+await browser.close();
+})().catch(e=>{console.error(e);process.exit(1)});

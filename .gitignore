@@ -10,8 +10,10 @@ __pycache__/
 settings.json
 /.private/
 upgrade.md
-
+runtime_logs/
 # Frontend dependencies and build output
+/modules/*/_scratchpad/
+/modules/*/pages/*/_scratchpad/
 node_modules/
 dist/
 *.tsbuildinfo
@@ -19,3 +21,12 @@ setting.json
 
 # Temporary files and directories whose names start with .TMP (any casing)
 .[Tt][Mm][Pp]*
+/Creator-Showcase
+
+# Obsolete generated asset copy; active assets use UUID directories.
+/assets/value-based-rl/
+/.course-library/
+/.authoring-template/
+
+# Generated static code and resource manifests for local browser ZIP downloads
+.offline-preview/
