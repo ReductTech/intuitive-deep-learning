@@ -1,17 +1,18 @@
-import { courseAssetUrl } from '../../assets';
+import moduleAssetOutline from '../../outlines.json';
+import { moduleAssetUrl } from '../../../shared/react/assets';
 import { useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
 import { Button, ContentBlock, RangeControl, Typography } from '../../../shared/react';
 import './TrainingObjectivePage.css';
 
-const bird = courseAssetUrl('images/training-objective/bird.png');
-const car = courseAssetUrl('images/training-objective/car.png');
-const cat = courseAssetUrl('images/training-objective/cat.png');
-const city = courseAssetUrl('images/training-objective/city.png');
-const dog = courseAssetUrl('images/training-objective/dog.png');
-const mountain = courseAssetUrl('images/training-objective/mountain.png');
-const room = courseAssetUrl('images/training-objective/room.png');
-const sunset = courseAssetUrl('images/training-objective/sunset.png');
-const waterfall = courseAssetUrl('images/training-objective/waterfall.png');
+const bird = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/training-objective/bird.jpg');
+const car = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/training-objective/car.jpg');
+const cat = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/training-objective/cat.jpg');
+const city = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/training-objective/city.jpg');
+const dog = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/training-objective/dog.jpg');
+const mountain = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/training-objective/mountain.jpg');
+const room = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/training-objective/room.jpg');
+const sunset = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/training-objective/sunset.jpg');
+const waterfall = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/training-objective/waterfall.jpg');
 
 const realImages = [
   { src: mountain, alt: '山脉图片', x: 18, y: 29 },

@@ -1,7 +1,0 @@
-Model: GloVe Wiki-Gigaword-50
-Source: Gensim pre-trained model data repository
-Dataset: Wikipedia 2014 + Gigaword 5, uncased, 5.6B tokens, 400,000 words, 50 dimensions
-Compressed size: 69,182,535 bytes
-License listed by gensim-data: Open Data Commons Public Domain Dedication and Licence (PDDL)
-Model listing: https://github.com/piskvorky/gensim-data/blob/master/list.json
-GloVe project: https://nlp.stanford.edu/projects/glove/

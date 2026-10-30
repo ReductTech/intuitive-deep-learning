@@ -1,9 +1,0 @@
-.kvm-formula-slide { box-sizing:border-box; display:flex; flex-direction:column; width:1600px; height:900px; padding:46px 64px 48px; background:var(--ui-bg-card); color:var(--ui-text-main); }
-.kvm-formula-slide * { box-sizing:border-box; min-width:0; }
-.kvm-formula-content { flex:1; display:grid; align-content:center; gap:96px; min-height:0; }
-.kvm-formula-equation { max-width:100%; font-variant-numeric:tabular-nums; }
-.kvm-formula-equation sub { vertical-align:sub; }
-.kvm-formula-t { color:var(--ui-accent-alt); }
-.kvm-formula-factors { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:54px 72px; max-width:1360px; width:100%; justify-self:center; }
-.kvm-formula-factor { display:grid; gap:8px; align-content:start; justify-items:center; text-align:center; min-height:120px; padding-bottom:18px; border-bottom:2px solid var(--ui-border); }
-.kvm-formula-factor.is-emphasis { color:var(--ui-accent-alt); border-bottom:5px solid var(--ui-accent-alt); }

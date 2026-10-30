@@ -1,6 +1,0 @@
-.daa-photo-stage { position: relative; width: min(100%, 660px); aspect-ratio: 3 / 2; min-width: 0; min-height: 0; max-height: 100%; background: var(--ui-bg-muted); border-radius: var(--ui-radius-md); }
-.daa-photo-stage > img { display: block; width: 100%; height: 100%; object-fit: fill; border-radius: var(--ui-radius-md); }
-.daa-photo-overlay { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
-.daa-box-editor { pointer-events: auto; touch-action: none; }
-.daa-transform-window { position: relative; overflow: hidden; aspect-ratio: 3 / 2; width: 100%; border: 1px solid var(--ui-border); border-radius: var(--ui-radius-md); background: var(--ui-bg-muted); }
-.daa-transform-window > img { display: block; width: 100%; height: 100%; object-fit: fill; }

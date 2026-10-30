@@ -1,4 +1,0 @@
-.daa-turn-sign { display: block; width: 176px; aspect-ratio: 1; height: auto; max-width: 100%; }
-.daa-turn-sign-small { width: 110px; }
-.daa-turn-pair { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 16px; width: 100%; }
-.daa-turn-example { display: grid; justify-items: center; gap: 8px; min-width: 0; }

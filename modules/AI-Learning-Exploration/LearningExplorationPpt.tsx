@@ -7,7 +7,7 @@ const opening = outline.pages[0];
 export const deck: DeckDefinition = {
   id: outline.id,
   title: outline.title,
-  subtitle: `首页预览 · 新版大纲 ${outline.pages.length + outline.plannedPages.length} 页，页面待调整`,
+  subtitle: `首页预览 · 新版大纲 ${outline.pages.length} 页，页面待调整`,
   scenes: [{ id: 'opening', title: opening.title, section: '人工智能带来的求学问题', render: () => <OpeningPage /> }],
 };
 export const getPptNotes = (sceneId: string) => [{

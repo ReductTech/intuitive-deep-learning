@@ -1,4 +1,3 @@
-import { moduleIdentity } from '../outlines.json';
 import { useEffect, useRef, useState } from 'react';
 import { Button, Typography, moduleAssetUrl } from '../../shared/react';
 import { A, cellName, DIRECTIONS, DIR_LABEL, GOAL, START, transition, WALLS, type Direction, type Step } from '../mazeModel';
@@ -11,7 +10,7 @@ export function MazeBoard({ steps = [], visible = steps.length, pathStart = STAR
   const visited = new Set([pathStart, ...steps.slice(0, visible).map(step => step.next)]);
   const path = [pathStart, ...steps.slice(0, visible).filter(step => !step.wall).map(step => step.next)];
   const pathPoints = path.map(cell => `${12.5 + (cell % 4) * 25},${12.5 + Math.floor(cell / 4) * 25}`).join(' ');
-  return <div className={`pg-world pg-readable-maze ${large ? 'is-large' : ''} ${wallFlash ? 'is-bumping' : ''} ${exploring ? 'is-exploring' : ''}`} role={onSelect ? 'group' : 'img'} aria-label={`4 乘 4 迷宫，角色位于 ${cellName(location)}${exploring ? '；未探索的格子可能有障碍' : ''}`}>
+  return <div className={`pg-world ${large ? 'is-large' : ''} ${wallFlash ? 'is-bumping' : ''} ${exploring ? 'is-exploring' : ''}`} role={onSelect ? 'group' : 'img'} aria-label={`4 乘 4 迷宫，角色位于 ${cellName(location)}${exploring ? '；未探索的格子可能有障碍' : ''}`}>
     <div className="pg-world-grid">{Array.from({ length: 16 }, (_, cell) => {
       const wall = WALLS.includes(cell), goal = cell === GOAL, here = cell === location;
       const shownWall = wall && (!exploring || discoveredWalls.includes(cell));
@@ -23,7 +22,7 @@ export function MazeBoard({ steps = [], visible = steps.length, pathStart = STAR
           {unknown ? <svg className="pg-unknown-mark" viewBox="0 0 100 100" aria-hidden="true"><foreignObject width="100" height="100"><div className="pg-tile-name-inner"><Typography as="span" variant="h2" tone="inherit">?</Typography></div></foreignObject></svg> : !showPath && steps.slice(0, visible).filter(step => step.state === cell && !step.wall).length > 0 && !here && !goal && <span className="pg-footprint" aria-hidden="true">· ·</span>}
         </>}
       </div>;
-    })}{showPath && path.length > 1 && <svg className="pg-route-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><polyline className="pg-route-glow" points={pathPoints} /><polyline className="pg-route-line" points={pathPoints} /></svg>}<span className={`pg-hero-marker ${fox ? 'is-fox' : ''}`} style={{ left: (12.5 + (location % 4) * 25) + '%', top: (12.5 + Math.floor(location / 4) * 25) + '%' }} aria-hidden="true">{fox ? <img className="pg-fox-avatar" src={moduleAssetUrl(moduleIdentity.id, 'fox-explorer.png')} alt="" style={{ transform: `rotate(${({ U: 0, R: 90, D: 180, L: -90 } as Record<Direction, number>)[facing]}deg)` }} /> : <span className="pg-hero"><span className="pg-hero-eye" /></span>}</span></div>
+    })}{showPath && path.length > 1 && <svg className="pg-route-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><polyline className="pg-route-glow" points={pathPoints} /><polyline className="pg-route-line" points={pathPoints} /></svg>}<span className={`pg-hero-marker ${fox ? 'is-fox' : ''}`} style={{ left: (12.5 + (location % 4) * 25) + '%', top: (12.5 + Math.floor(location / 4) * 25) + '%' }} aria-hidden="true">{fox ? <img className="pg-fox-avatar" src={moduleAssetUrl('9831b46b-af10-4cb3-b9dc-94e0cee25143', 'fox-explorer.png')} alt="" style={{ transform: `rotate(${({ U: 0, R: 90, D: 180, L: -90 } as Record<Direction, number>)[facing]}deg)` }} /> : <span className="pg-hero"><span className="pg-hero-eye" /></span>}</span></div>
   </div>;
 }
 
@@ -76,13 +75,13 @@ export function MazeGame() {
   const reset = () => { setSteps([]); setAttempt(value => value + 1); setFacing('U'); setRevealMap(false); setDiscoveredWalls([]); setMessage('重新从起点 S 出发'); gameRef.current?.focus(); };
   return <div ref={gameRef} tabIndex={0} onKeyDown={onKeyDown} className="pg-re-explore pg-maze-adventure" aria-label="迷宫探索游戏">
     <div className="pg-adventure-board pg-adventure-maze-panel">
-      <div className="pg-adventure-rules"><Typography as="h2" variant="h3" tone="accent">规则</Typography><Typography variant="body" tone="accent">起点 S → 宝藏 G · 每步 <strong>−1</strong> · 终点 <strong>+10</strong></Typography><Typography variant="bodySmall" tone="muted">障碍隐藏，撞墙扣 1 分；每局最多 30 步。</Typography></div>
+      <div className="pg-adventure-rules"><Typography as="h2" variant="h3" tone="accent">规则</Typography><Typography variant="bodySmall" tone="accent">起点 S → 宝藏 G · 每步 <strong>−1</strong> · 终点 <strong>+10</strong></Typography><Typography variant="bodySmall" tone="muted">障碍隐藏，撞墙扣 1 分；每局最多 30 步。</Typography></div>
       <MazeBoard steps={steps} position={current} wallFlash={flash} exploring={!revealMap} discoveredWalls={discoveredWalls} showPath fox facing={facing} />
     </div>
     <div className="pg-adventure-controls">
       <div className="pg-adventure-scoreboard" aria-label="探索得分与步数">
-        <div className="pg-adventure-stat"><Typography variant="body" tone="muted">本局得分</Typography><Typography variant="h2" tone="accent">{total >= 0 ? '+' : ''}{total}</Typography><Typography variant="bodySmall" tone="muted">最好成绩 {best ? `${best.score >= 0 ? '+' : ''}${best.score}` : '—'}</Typography></div>
-        <div className="pg-adventure-stat"><Typography variant="body" tone="muted">已走步数</Typography><Typography variant="h2" tone="accent">{steps.length} 步</Typography><Typography variant="body" tone="accent">第 {attempt} 局</Typography></div>
+        <div className="pg-adventure-stat"><Typography variant="bodySmall" tone="muted">本局得分</Typography><Typography variant="h2" tone="accent">{total >= 0 ? '+' : ''}{total}</Typography><Typography variant="bodySmall" tone="muted">最好成绩 {best ? `${best.score >= 0 ? '+' : ''}${best.score}` : '—'}</Typography></div>
+        <div className="pg-adventure-stat"><Typography variant="bodySmall" tone="muted">已走步数</Typography><Typography variant="h2" tone="accent">{steps.length} 步</Typography><Typography variant="body" tone="accent">第 {attempt} 局</Typography></div>
       </div>
       <div className={`pg-adventure-feedback ${done ? 'is-success' : ''}`} aria-live="polite"><Typography as={done ? 'h2' : 'p'} variant={done ? 'h1' : 'body'} tone={done ? 'success' : 'accent'}>{done ? total === 5 ? '找到最高分路线！' : '找到宝藏了！' : steps.length >= 30 ? '这次绕远了，重新挑战吧' : steps.length ? message.replace('：位置不变，奖励 −1', '，留在原地 −1').replace('：奖励 −1', '，−1') : '用方向按钮，迈出第一步'}</Typography>{done && <Typography variant="bodySmall" tone="muted">{total === 5 ? '每一步都用在了前进上。' : '再试一次，能少走几步吗？'}</Typography>}</div>
       <div className="pg-adventure-control-bottom"><div className="pg-adventure-pad"><DirectionPad onMove={move} disabled={done || steps.length >= 30} /><span className="pg-pad-center" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M24 5 30 18 43 24 30 30 24 43 18 30 5 24 18 18Z" fill="currentColor"/><circle cx="24" cy="24" r="5" fill="#f9f1df"/></svg></span></div>

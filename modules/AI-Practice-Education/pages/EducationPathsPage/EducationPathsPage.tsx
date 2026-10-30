@@ -6,7 +6,7 @@ import './EducationPathsPage.css';
 export function EducationPathsPage() {
   return <article className="llmpe-cg-education-page llmpe-cg-creator-typography" aria-labelledby="llmpe-cg-education-title">
     <header className="llmpe-cg-education-header">
-      <Typography as="h1" id="llmpe-cg-education-title" variant="display" tone="inherit" align="center">{outline.pages[9].title}</Typography>
+      <Typography as="h1" id="llmpe-cg-education-title" variant="display" tone="inherit" align="center">{outline.pages[10].title}</Typography>
     </header>
     <KnowledgeIcebergScene />
     <footer className="llmpe-cg-education-question">

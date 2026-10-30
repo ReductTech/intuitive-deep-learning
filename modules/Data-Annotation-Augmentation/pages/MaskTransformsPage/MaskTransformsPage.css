@@ -1,3 +1,0 @@
-.daa-mask-geometry { display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: 22px; height: 100%; }
-.daa-mask-label { width: 360px; max-width: 100%; aspect-ratio: 3 / 2; background: var(--ui-bg-muted); border-radius: var(--ui-radius-md); }
-.daa-mask-controls { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px; }

@@ -1,0 +1,33 @@
+.aipe-shuku-page { display: flex; flex-direction: column; }
+.aipe-shuku-body { flex: 1; min-height: 0; display: grid; grid-template-rows: minmax(0, 1fr) 84px; gap: 16px; }
+.aipe-shuku-cycle { position: relative; min-width: 0; min-height: 0; isolation: isolate; }
+.aipe-shuku-panel { position: absolute; width: 43%; height: 48%; border-radius: 30px; z-index: -3; }
+.aipe-shuku-panel-feedback { left: 0; top: 0; background: #eaf4fd; }
+.aipe-shuku-panel-cocreate { right: 0; top: 0; background: #fff3e8; }
+.aipe-shuku-panel-review { right: 0; bottom: 0; background: #eaf4fd; }
+.aipe-shuku-panel-publish { left: 0; bottom: 0; background: #fff3e8; }
+.aipe-shuku-center-space { position: absolute; left: 23%; top: 25%; width: 54%; height: 53%; border-radius: 50%; background: white; z-index: -2; }
+.aipe-shuku-arrows { position: absolute; inset: 0; width: 100%; height: 100%; max-width: 100%; z-index: -1; }
+.aipe-shuku-arrows > path { fill: none; stroke: #fa8a41; stroke-width: 15; stroke-linecap: round; marker-end: url(#aipe-shuku-cycle-arrow); }
+.aipe-shuku-stages { list-style: none; margin: 0; padding: 0; }
+.aipe-shuku-stage { position: absolute; inset: 0; pointer-events: none; }
+.aipe-shuku-stage img { position: absolute; object-fit: contain; max-width: 100%; mix-blend-mode: multiply; }
+.aipe-shuku-stage-copy { position: absolute; display: grid; gap: 6px; min-width: 0; }
+.aipe-shuku-stage-feedback img { left: 0; top: 7%; width: 24%; height: 40%; }
+.aipe-shuku-stage-feedback .aipe-shuku-stage-copy { left: 21%; top: 6%; }
+.aipe-shuku-stage-cocreate img { right: 0; top: 12%; width: 26%; height: 35%; }
+.aipe-shuku-stage-cocreate .aipe-shuku-stage-copy { left: 61%; top: 6%; }
+.aipe-shuku-stage-review img { right: 0; bottom: 0; width: 24%; height: 40%; }
+.aipe-shuku-stage-review .aipe-shuku-stage-copy { left: 63%; bottom: 6%; }
+.aipe-shuku-stage-publish img { left: 0; bottom: 0; width: 24%; height: 42%; }
+.aipe-shuku-stage-publish .aipe-shuku-stage-copy { left: 22%; bottom: 6%; }
+.aipe-shuku-course { position: absolute; left: 34.5%; top: 26%; width: 31%; min-width: 0; display: grid; gap: 10px; }
+.aipe-shuku-course-label { justify-self: center; padding: 4px 20px; border-radius: 24px; background: #e0efff; }
+.aipe-shuku-browser { width: 100%; min-width: 0; border: 4px solid var(--ui-accent); border-radius: 16px; background: #f3f8ff; box-shadow: 0 7px 16px #27446e15; }
+.aipe-shuku-browser-chrome { display: flex; align-items: center; gap: 8px; height: 34px; padding: 0 14px; border-radius: 11px 11px 0 0; background: #78aee2; }
+.aipe-shuku-browser-chrome i { display: block; width: 12px; height: 12px; border-radius: 50%; background: #ff9478; }
+.aipe-shuku-browser-chrome i:nth-child(2) { background: #ffd26c; }
+.aipe-shuku-browser-chrome i:nth-child(3) { background: #7bd2d0; }
+.aipe-shuku-browser svg { display: block; width: 100%; max-width: 100%; height: auto; }
+.aipe-shuku-conclusion { display: flex; align-items: center; justify-content: center; min-width: 0; background: var(--ui-bg-soft); border-radius: 22px; }
+.aipe-shuku-conclusion span { color: var(--ui-accent-alt); }
