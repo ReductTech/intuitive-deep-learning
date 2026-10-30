@@ -1,1 +1,14 @@
-.aipe-showcase-course-shell{width:100%;height:100%;min-width:0;min-height:0;}
+.aipe-showcase-page{position:relative;width:100%;height:100%;overflow:hidden;color:#f5f8ff;background:radial-gradient(ellipse at 88% 12%,#294a72 0,transparent 55%),linear-gradient(135deg,#101e36,#1b3457);}
+.aipe-showcase-page::before{content:'';position:absolute;inset:0;background:linear-gradient(155deg,transparent 72%,#5b80ac0d 72.1%,transparent 92%);pointer-events:none;}
+.aipe-showcase-header{position:absolute;top:22px;left:48px;right:48px;}
+.aipe-showcase-heading{display:flex;align-items:center;gap:24px;}
+.aipe-showcase-badge{padding:2px 18px;border:1px solid #ffab7b66;border-radius:24px;background:linear-gradient(135deg,#ff9252,#f36d35);color:#fff;box-shadow:0 4px 14px #00000010;}
+.aipe-showcase-caption{margin-top:7px!important;color:#a9bfdc;}
+.aipe-showcase-steps{position:absolute;top:8px;right:0;display:flex;align-items:center;gap:38px;list-style:none;margin:0;padding:0;color:#9fb8d7;}
+.aipe-showcase-steps>li{position:relative;padding:4px 20px;border:1px solid #6c8bb2;border-radius:28px;background:#18345755;}
+.aipe-showcase-steps>li+li::before{content:'';position:absolute;width:20px;height:1px;left:-30px;top:50%;background:#8da8ca;}
+.aipe-showcase-steps>.is-current{border-color:#ffdfc9;background:#fff0df;color:#d75b26;box-shadow:0 4px 18px #f9864a14;}
+.aipe-showcase-window{position:absolute;left:128px;top:124px;width:1344px;height:756px;border-radius:14px;outline:1px solid #a9c6e35c;box-shadow:0 20px 50px #050e2038,0 0 0 5px #728fac09;}
+.aipe-showcase-stage-slot{position:relative;width:1344px;height:756px;overflow:clip;border-radius:14px;background:white;}
+.aipe-showcase-course-shell{position:absolute;inset:0 auto auto 0;width:1600px;height:900px;min-width:0;min-height:0;transform:scale(.84);transform-origin:top left;}
+.aipe-showcase-course-shell>.edu-content-block{border:0;border-radius:0;box-shadow:none;}

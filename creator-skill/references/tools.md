@@ -62,6 +62,22 @@ python creator-skill/scripts/tools.py extract.pptx "原稿.pptx" --module Digita
 
 以下以仓库中的 Policy-Gradient 为例，调用时替换为任务目标。模块可用目录名、课程 ID 或 UUID 指定；`--slide` 使用实际场景 ID，可通过 `capture.inspect` 查询。省略 `--slide` 会捕获整套课件。
 
+**仅更新缩略图，直接执行一条命令：**
+
+```powershell
+python creator-skill/scripts/tools.py capture.thumbnails --module AI-Practice-Education
+```
+
+优先复用 5173 端口上经握手确认属于当前仓库的 Vite；没有匹配服务时自动启动并关闭精简的临时服务。临时服务不启动全站离线构建、下载准备或 Cloud 注入，并使用独立依赖缓存，避免干扰正在开发的页面。其他端口可用 `--base-url` 明确指定。页 ID 已知时用 `--slide <ID>` 只更新受影响页；不必先运行 `capture.inspect`、扫描脚本源码或检查全部依赖。只有缺依赖或命令失败时再按具体错误诊断。
+
+默认复用一次加载的课件，每次切页重新挂载页面以重置状态；等待字体、图片、可见的 `aria-busy` 和 `data-capture-ready` 就绪，不为每页固定停留数秒。**常规生成不要传 `--settle-ms 6500`**；只有明确需要某个等待时刻的截图才指定 `--settle-ms`。异步生成内容或自动播放页面应在实际内容容器暴露 `data-capture-ready={是否完成}`，不要让通用截图脚本识别课程专属选择器。默认加载/就绪超时 15 秒，可用 `--timeout-ms` 调整；渲染异常直接报告原因。
+
+冷启动依赖优化导致首次加载超时时，工具保留已启动的服务并仅重试入口一次；不会无上限重跑整套。原有服务和用户浏览器不被关闭，工具自己的隔离浏览器在截图缓冲完成后直接退出。
+
+正式图片写入模块自己的 `assets/scenedeck-thumbnails/`。同时自动保存模块 `_scratchpad/thumbnails/report.json` 和 `contact-sheet.jpg`；单页任务保存 `<页ID>.json`，不重建整套总览。JSON 返回 `generatedCount`、`requestedCount`、`generationStatus`、`checksStatus`、`timing.totalSeconds`、各页 `elapsedMs` 及报告路径，无需另写汇总脚本。
+
+检查 `generationStatus` 和生成数量后打开总览核对。`generationStatus: ok` 表示图片已写入；`checksStatus: failed` / 退出码 `1` 表示另有布局检查发现，不等于没有生成图片，**不要因此反复重跑整套**。保留并按范围核对这些发现；只有执行错误、缺页或图像错误才补采相关页。缩略图维护不默认制作 ZIP、额外逐页截图或执行全仓库测试；修改了工具本身才运行工具回归测试。
+
 ```powershell
 python creator-skill/scripts/tools.py capture.slides --module AI-Learning-Exploration --slide opening --page-directory OpeningPage --base-url http://127.0.0.1:5173
 python creator-skill/scripts/tools.py capture.thumbnails --module Policy-Gradient --slide play-maze
@@ -72,7 +88,9 @@ python creator-skill/scripts/tools.py capture.inspect --module Policy-Gradient
 
 `capture.thumbnails` 生成正式播放器缩略图，默认保存到 `modules/<模块目录名>/assets/scenedeck-thumbnails/<页ID>.png`（已有精确格式映射时写入对应 JPG），只接受默认状态；其 `--output` 仅可选择正式缩略图目录内的位置。`capture.slides --format both` 从一次采集中同时写入评估目录和正式缩略图目录。图片均为 1600×900；已有图片对应当前实现和状态时直接复用。
 
-未指定 `--base-url` 时会临时启动 Vite，结束后停止；浏览器使用隔离的无头上下文，不读取用户浏览器配置。
+浏览器使用隔离的无头上下文，不读取用户浏览器配置。复用已有 Vite 时不关闭用户的服务；仅临时启动的服务会在任务结束后停止。
+
+截图入口在隔离浏览器内直接挂载目标模块 `outlines.json` 的 `ppt.entry`，复用真实课件组件、Shared 样式与资源，不依赖应用旧的 `/scenedeck/` 路由，也不另建页面副本。工具及浏览器启动辅助文件均位于 `creator-skill/scripts/`；后端同名旧命令只保留兼容转发。整批采集结束、关闭浏览器后才写入图片，避免更新资源触发 Vite 热刷新而打断后续页面。
 
 `--actions` 接收按 slide ID 分组的 JSON 文件路径，支持 `click`、`fill`、`press` 和有上限的 `wait`。例如文件内容为 `{"play-maze":[{"action":"click","selector":"button[data-example]"}]}`。选择器必须来自实际页面；只执行任务已授权的操作，不能随便点击训练或发布按钮。传入 `--actions` 时同时传入非 `default` 的 `--state`，如 `--state answered`，避免覆盖默认状态。复查截图覆盖对应状态文件，检查时必须重新读取。
 

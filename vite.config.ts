@@ -1,3 +1,4 @@
+import {pythonRuntime} from './scripts/python-runtime-vite';
 import {offlinePreview} from './scripts/offline-preview-vite';
 import {browserOffline} from './scripts/browser-offline-vite';
 import {localNarration} from './scripts/narration-vite';
@@ -10,6 +11,16 @@ import { editDeckPlugin } from './deprecated/Edit-Deck/server';
 import { creatorSkillDocuments } from './modules/Creator-Guide/skillDocumentsPlugin';
 import {courseLibraryRoot,courseLibraryPlugin} from './scripts/course-library-vite';
 import {localModuleAssets} from './scripts/module-assets.mjs';
+
+function creatorCapture(root: string): Plugin {
+  return {name:'creator-capture',apply:'serve',configureServer(server){
+    server.middlewares.use('/__creator_capture__/info',(_req,res)=>{
+      res.setHeader('Content-Type','application/json');
+      res.setHeader('Cache-Control','no-store');
+      res.end(JSON.stringify({kind:'creator-capture',root}));
+    });
+  }};
+}
 
 function cloudRuntime(root: string): Plugin {
   const candidates = process.env.IDL_CLOUD_REPOSITORY
@@ -76,15 +87,24 @@ function externalCourseImages(): Plugin {
 
 export default defineConfig(({ mode, command }) => {
   const localPreview = mode === 'public-preview' || (command === 'serve' && mode === 'preview');
+  const captureOnly = process.env.IDL_CAPTURE_ONLY === '1';
   const assetBaseUrl = loadEnv(mode, '.', '').VITE_ASSET_BASE_URL?.trim();
   const library=courseLibraryRoot(__dirname,process.env.IDL_COURSE_LIBRARY_ROOT||loadEnv(mode,'.','').IDL_COURSE_LIBRARY_ROOT);
   return {
-    plugins: [localModuleAssets(library),courseLibraryPlugin(__dirname,library),browserOffline(__dirname,library),offlinePreview(__dirname,library),...(localPreview?[localNarration(__dirname)]:[]),...(localPreview ? [{
+    ...(captureOnly ? {
+      cacheDir: 'node_modules/.vite-capture',
+      optimizeDeps: {
+        entries: ['creator-skill/scripts/common/_capture_entry.html'],
+        include: ['react','react-dom','react-dom/client','react/jsx-runtime','react/jsx-dev-runtime','@icon-park/react','lucide-react','@codemirror/state','@codemirror/view','@codemirror/language','@codemirror/lang-python','@codemirror/lint','@codemirror/autocomplete','@lezer/highlight'],
+        holdUntilCrawlEnd: false,
+      },
+    } : {}),
+    plugins: [creatorCapture(__dirname),pythonRuntime(__dirname),localModuleAssets(library),courseLibraryPlugin(__dirname,library),...(captureOnly?[]:[browserOffline(__dirname,library),offlinePreview(__dirname,library)]),...(localPreview&&!captureOnly?[localNarration(__dirname)]:[]),...(localPreview ? [{
       name: 'local-course-preview',
       transformIndexHtml(html: string) {
         return html.replace('<script src="/modules/shared/telemetry.js"></script>', '');
       },
-    }] : [editDeckPlugin()]), creatorSkillDocuments(), fixedLessonCanvas(), externalCourseImages(), react(), tailwindcss(), ...(command === 'serve' ? [cloudRuntime(__dirname)] : [])],
+    }] : [editDeckPlugin()]), creatorSkillDocuments(), fixedLessonCanvas(), externalCourseImages(), react(), tailwindcss(), ...(command === 'serve'&&!captureOnly ? [cloudRuntime(__dirname)] : [])],
     publicDir: false,
     resolve: {dedupe:['react','react-dom','three','@icon-park/react']},
     build: {

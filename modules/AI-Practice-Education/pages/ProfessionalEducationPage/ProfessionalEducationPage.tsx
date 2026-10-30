@@ -8,7 +8,7 @@ function Formula({ latex, label }: { latex: string; label: string }) {
 }
 
 export function ProfessionalEducationPage() {
-  return <WormholeLessonFrame className="llmpe-cg-pro-page" title={outline.pages[6].title} subtitle="直接从时空几何与场方程展开，严谨，但初次接触的门槛更高。" conclusion="从公式开始，学习者可能还没有建立可理解的画面。" sidebar={<>
+  return <WormholeLessonFrame className="llmpe-cg-pro-page" title={outline.pages[7].title} subtitle="直接从时空几何与场方程展开，严谨，但初次接触的门槛更高。" conclusion="从公式开始，学习者可能还没有建立可理解的画面。" sidebar={<>
     <Typography as="h2" variant="h2" tone="accent" className="llmpe-cg-wormhole-sidebar-title">专业教育的优势与问题</Typography>
     <WormholeBenefit kind="book" title="体系完整">从基本原理到推导</WormholeBenefit>
     <WormholeBenefit kind="formula" title="理论严谨">基于明确的物理框架</WormholeBenefit>
