@@ -15,13 +15,16 @@ def test_same_ip_demo_cookie_isolation(api):
     assert request('GET','/auth/me',cookie=cookie)[0]==401
 
 
-def test_independent_5173_deployment_contract():
+def test_independent_5175_deployment_contract():
     import re
     from shuku_backend.presentations import MAX_UPLOAD
     root=Path(__file__).resolve().parents[3]
-    nginx=(root/'deploy/5173/nginx.conf').read_text()
-    service=(root/'deploy/5173/shuku-idl.service').read_text()
-    assert 'listen 5173 ssl;' in nginx and 'listen 443' not in nginx
+    nginx=(root/'deploy/5175/nginx.conf').read_text()
+    service=(root/'deploy/5175/shuku-idl.service').read_text()
+    assert 'listen 5175 ssl;' in nginx and 'listen [::]:5175 ssl;' in nginx
+    assert 'listen 5173' not in nginx and 'listen 443' not in nginx
+    assert 'root /var/www/shuku-idl/current;' in nginx
+    assert 'proxy_set_header Host $http_host;' in nginx
     assert re.search(r'location\s+\^~\s+/api/shuku/\s*\{',nginx), 'Revision JS/CSS/images must retain API authorization rather than match the static-file regex'
     assert 'text/javascript' in nginx, 'Compress the MIME type emitted for native preview JavaScript'
     assert 'http://127.0.0.1:8010' in nginx and 'ssl_certificate_key' in nginx
@@ -35,7 +38,7 @@ def test_independent_5173_deployment_contract():
 
 def test_cleanup_guard_grants_allow_exclusive_lock_without_ddl():
     root=Path(__file__).resolve().parents[3]
-    sql=(root/'deploy/5173/mysql-cleanup-grants.sql').read_text()
+    sql=(root/'deploy/5175/mysql-cleanup-grants.sql').read_text()
     import re
     statements='\n'.join(line for line in sql.splitlines() if not line.startswith('--'))
     assert re.fullmatch(r"\s*GRANT SELECT, UPDATE ON `shuku_idl_public`\.`shuku_locks`\s+TO 'shuku_idl_runtime'@'127\.0\.0\.1';\s*",statements)
