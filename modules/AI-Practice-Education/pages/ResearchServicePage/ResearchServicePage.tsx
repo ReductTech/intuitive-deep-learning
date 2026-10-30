@@ -105,6 +105,7 @@ export function ResearchServicePage() {
     </section>
     <aside className="aipe-service-promotion" aria-label="服务使用规模与体验入口">
       <div className="aipe-service-usage"><Typography as="h2" variant="body" tone="accent"><strong>在线服务累计运行</strong></Typography><div className="aipe-service-run-count" role="img" aria-label="在线服务累计运行 14,000 次以上"><Typography as="span" variant="display" tone="accent" aria-hidden="true"><span data-run-count={runCount}>{runCount.toLocaleString('en-US')}</span><span className="aipe-service-run-plus">+</span></Typography><Typography as="span" variant="bodySmall" tone="accent" aria-hidden="true">次</Typography></div><Typography variant="bodySmall" tone="muted">项目方统计</Typography></div>
+      <div className="aipe-service-hugging-face"><img src={moduleAssetUrl(outline.moduleIdentity.id, 'images/hugging-face-logo.svg')} width="95" height="88" alt="Hugging Face" /></div>
       <div className="aipe-service-qr-area"><Typography as="h3" variant="body" tone="accent"><strong>扫码体验在线服务</strong></Typography><img src={moduleAssetUrl(outline.moduleIdentity.id, 'images/naip-service-qr.svg')} width="246" height="246" alt="Hugging Face 论文评价服务二维码" /><Button href={SERVICE_URL} target="_blank" rel="noreferrer">打开 Hugging Face Demo <ArrowUpRight aria-hidden="true" /></Button></div>
     </aside>
   </ContentBlock>;

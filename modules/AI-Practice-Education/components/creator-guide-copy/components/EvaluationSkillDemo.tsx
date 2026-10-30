@@ -68,7 +68,7 @@ export function EvaluationSkillDemo() {
       <label className="edu-check aipe-replay-cg-eval-autotoggle"><input type="checkbox" checked={enabled} readOnly tabIndex={-1}/><Typography as="span" variant="body" tone="inherit">启用 AI 评估</Typography></label>
       <Typography variant="bodySmall" tone="inherit" className="aipe-replay-cg-eval-stage-name">{stage}</Typography>
     </div>
-    <div className="aipe-replay-cg-mix-stage" role="group" aria-label={`颜色混合课件自动演示：${stage}`} style={{ '--upgrade': upgrade } as CSSProperties}>
+    <div className="aipe-replay-cg-mix-stage" role="group" aria-label={`颜色混合知识呈现作品自动演示：${stage}`} style={{ '--upgrade': upgrade } as CSSProperties}>
       <div className={`aipe-replay-cg-mix-content${reviewing ? ' is-under-review' : ''}`}>
         <Typography variant="h3" tone="inherit" className="aipe-replay-cg-mix-title">颜色混合</Typography>
         <div className="aipe-replay-cg-mix-instruction"><Typography variant="body" tone="muted" style={{ opacity: 1 - upgrade }}>调节比例，点击混合。</Typography><Typography variant="body" tone="inherit" style={{ opacity: upgrade }}>拖动颜料，直接观察颜色变化。</Typography></div>

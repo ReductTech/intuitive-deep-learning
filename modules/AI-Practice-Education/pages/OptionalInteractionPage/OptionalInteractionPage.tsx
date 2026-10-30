@@ -11,7 +11,7 @@ export function OptionalInteractionPage() {
         <SquareTranslationExperiment />
       </section>
       <section className="aipe-translation-panel aipe-translation-exploration">
-        <header><Typography as="h2" variant="h3" tone="inherit">我们的交互课件</Typography><Typography variant="bodySmall" tone="muted">自由移动目标，实时观察响应。</Typography></header>
+        <header><Typography as="h2" variant="h3" tone="inherit">我们的交互式知识呈现</Typography><Typography variant="bodySmall" tone="muted">自由移动目标，实时观察响应。</Typography></header>
         <Typography variant="bodySmall" tone="accent" className="aipe-translation-question">目标向右移动，响应会怎样变化？</Typography>
         <UfoTranslationScene />
         <div className="aipe-translation-note"><Typography variant="bodySmall" tone="accent">鼠标控制 UFO，自由选择位置。</Typography><Typography variant="bodySmall" tone="muted">可继续探索遮挡对响应的影响。</Typography></div>

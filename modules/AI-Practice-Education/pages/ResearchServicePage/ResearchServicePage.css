@@ -36,7 +36,9 @@
 .aipe-service-examples>div{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;max-width:100%;}
 .aipe-service-examples .edu-btn{min-width:0;min-height:40px;padding:4px 12px;border-radius:8px;background:#f7f9fc;white-space:nowrap;}
 .aipe-service-examples .edu-btn.is-active{border-color:#9cbbdf;background:#edf4fc;color:var(--ui-accent);}
-.aipe-service-promotion{min-width:0;min-height:0;display:flex;flex-direction:column;padding:8px 0 8px 28px;border-left:1px solid var(--ui-border);gap:32px;}
+.aipe-service-promotion{min-width:0;min-height:0;display:flex;flex-direction:column;padding:8px 0 8px 28px;border-left:1px solid var(--ui-border);gap:16px;}
+.aipe-service-hugging-face{display:flex;flex:1;min-height:88px;align-items:center;justify-content:center;}
+.aipe-service-hugging-face>img{display:block;width:95px;height:88px;max-width:100%;object-fit:contain;}
 .aipe-service-usage{display:flex;flex-direction:column;gap:10px;}
 .aipe-service-run-count{display:flex;align-items:baseline;gap:8px;font-variant-numeric:tabular-nums;}
 .aipe-service-run-count>.ui-typography--display{white-space:nowrap;}

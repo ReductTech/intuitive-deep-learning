@@ -11,8 +11,8 @@ const stages = [
 const asset = (name: string) => moduleAssetUrl(outline.moduleIdentity.id, `images/shuku-community/${name}`);
 
 export function ShukuCommunityEvolutionPage() {
-  return <ContentBlock title="Shùku：让课程在共创中持续更新"
-    subtitle="汇集学习反馈与教学经验，共同打磨更好的学习材料"
+  return <ContentBlock title="Shuku（术库）：让课程在共创中持续进化，形成知识循环"
+    subtitle="汇集实践中的发现与创造，共同打磨交互直觉的知识呈现"
     headingLevel={1} className="aipe-shuku-page" bodyClassName="aipe-shuku-body">
     <div className="aipe-shuku-cycle" role="group" aria-label="使用与反馈、师生共创、审核改进、发布新版，再次进入教学使用">
       <div className="aipe-shuku-panel aipe-shuku-panel-feedback" aria-hidden="true"/>
@@ -21,7 +21,7 @@ export function ShukuCommunityEvolutionPage() {
       <div className="aipe-shuku-panel aipe-shuku-panel-publish" aria-hidden="true"/>
       <div className="aipe-shuku-center-space" aria-hidden="true"/>
       <svg className="aipe-shuku-arrows" viewBox="0 0 1540 600" preserveAspectRatio="none" aria-hidden="true">
-        <defs><marker id="aipe-shuku-cycle-arrow" markerWidth="6" markerHeight="6" refX="4" refY="3" orient="auto"><path d="M0 0 L5 3 L0 6" fill="none" stroke="#fa8a41" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></marker></defs>
+        <defs><marker id="aipe-shuku-cycle-arrow" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" viewBox="0 0 12 12" refX="10" refY="6" orient="auto"><path d="M2 2 L10 6 L2 10" fill="none" stroke="#eea06e" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></marker></defs>
         <path d="M662 75 Q770 12 868 66" />
         <path d="M1082 246 Q1165 300 1100 360" />
         <path d="M878 514 Q770 580 666 528" />

@@ -70,12 +70,12 @@ export function CreationWorkflowPage() {
   const replay = () => {
     setRunning(false); setRunId(value => value + 1); setCompleted(0); setMessages([]); setPage(0); setBrowsing(false);
   };
-  return <GomokuLessonProvider key={runId}><article className="aipe-replay-cg-workflow-page aipe-replay-cg-creator-typography" aria-label="术库课件创作流程模拟" onKeyDown={event => {
+  return <GomokuLessonProvider key={runId}><article className="aipe-replay-cg-workflow-page aipe-replay-cg-creator-typography" aria-label="术库实践创作流程模拟" onKeyDown={event => {
     if (event.target instanceof Element && event.target.closest('button,input,textarea,svg,canvas,summary,.aipe-replay-cg-sim-native') && ['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End',' '].includes(event.key)) event.stopPropagation();
   }}>
     <header className="aipe-replay-cg-sim-toolbar">
       <div className="aipe-replay-cg-sim-brand"><span><Glyph kind="spark"/></span><Typography as="strong" variant="h3" tone="inherit">术库</Typography></div>
-      <Typography variant="bodySmall" tone="muted">{revised ? '从五子棋到卷积核' : ready ? '卷积核入门' : '新建课件'}</Typography>
+      <Typography variant="bodySmall" tone="muted">{revised ? '从五子棋到卷积核' : ready ? '卷积核入门' : '新建知识呈现作品'}</Typography>
       <div className="aipe-replay-cg-sim-toolbar-right"><Typography variant="bodySmall" tone="muted">模拟演示</Typography><Button aria-label="重新体验" onClick={replay}><Glyph kind="replay"/></Button></div>
     </header>
     <div className="aipe-replay-cg-sim-workspace">
@@ -84,8 +84,8 @@ export function CreationWorkflowPage() {
         {ready ? <nav ref={navigation} aria-label="模拟课程页面">{simulationOutline(revised).map((item,i) => <Button key={item.title} aria-current={page === item.index ? 'page' : undefined} active={page === item.index} onClick={() => { setPage(item.index); setBrowsing(revised); }} className="aipe-replay-cg-sim-page-item"><Typography as="span" variant="bodySmall" tone="muted">{String(i+1).padStart(2,'0')}</Typography><Typography as="span" variant="bodySmall" tone="inherit">{item.title}</Typography></Button>)}</nav> : <Typography className="aipe-replay-cg-sim-sidebar-empty" variant="bodySmall" tone="muted">暂无页面</Typography>}
       </aside>
       <main className="aipe-replay-cg-sim-main">
-        <section className="aipe-replay-cg-sim-preview" aria-label="课件预览">
-          {ready ? <WorkflowSimulationPreview key={completed >= 5 ? `produced-${page}` : `${view}-${page}`} view={view} page={page} reviewed={completed >= 7} browsing={browsing}/> : <div className="aipe-replay-cg-sim-empty"><Typography as="h2" variant="h2" tone="accent">从一个想法开始</Typography><Typography variant="bodySmall" tone="muted">在下方描述你想做的课件</Typography></div>}
+        <section className="aipe-replay-cg-sim-preview" aria-label="实践作品预览">
+          {ready ? <WorkflowSimulationPreview key={completed >= 5 ? `produced-${page}` : `${view}-${page}`} view={view} page={page} reviewed={completed >= 7} browsing={browsing}/> : <div className="aipe-replay-cg-sim-empty"><Typography as="h2" variant="h2" tone="accent">从一个想法开始</Typography><Typography variant="bodySmall" tone="muted">在下方描述你想做的知识呈现作品</Typography></div>}
         </section>
         <section className="aipe-replay-cg-sim-agent" aria-label="智能体对话">
           <div className="aipe-replay-cg-sim-messages" ref={log} role="log" aria-label="对话记录" aria-live="polite" aria-busy={running}>
@@ -98,7 +98,7 @@ export function CreationWorkflowPage() {
               </div></div>
             </div>)}
           </div>
-          <div className="aipe-replay-cg-sim-compose"><Typography as="div" variant="bodySmall" tone="inherit"><TextInput aria-label="预设教学要求" value={running ? '正在处理…' : turn?.prompt ?? '课件制作完成'} readOnly onKeyDown={event => { if(event.key==='Enter') {event.preventDefault();send();} }}/></Typography><Button variant="primary" aria-label="发送教学要求" onClick={send} disabled={!turn || running}><Glyph kind="send"/></Button></div>
+          <div className="aipe-replay-cg-sim-compose"><Typography as="div" variant="bodySmall" tone="inherit"><TextInput aria-label="预设教学要求" value={running ? '正在处理…' : turn?.prompt ?? '实践创作完成'} readOnly onKeyDown={event => { if(event.key==='Enter') {event.preventDefault();send();} }}/></Typography><Button variant="primary" aria-label="发送教学要求" onClick={send} disabled={!turn || running}><Glyph kind="send"/></Button></div>
         </section>
       </main>
     </div>

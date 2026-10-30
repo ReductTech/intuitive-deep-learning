@@ -8,7 +8,7 @@
 .aipe-shuku-panel-publish { left: 0; bottom: 0; background: #fff3e8; }
 .aipe-shuku-center-space { position: absolute; left: 23%; top: 25%; width: 54%; height: 53%; border-radius: 50%; background: white; z-index: -2; }
 .aipe-shuku-arrows { position: absolute; inset: 0; width: 100%; height: 100%; max-width: 100%; z-index: -1; }
-.aipe-shuku-arrows > path { fill: none; stroke: #fa8a41; stroke-width: 15; stroke-linecap: round; marker-end: url(#aipe-shuku-cycle-arrow); }
+.aipe-shuku-arrows > path { fill: none; stroke: #eea06e; stroke-width: 4; stroke-linecap: round; marker-end: url(#aipe-shuku-cycle-arrow); }
 .aipe-shuku-stages { list-style: none; margin: 0; padding: 0; }
 .aipe-shuku-stage { position: absolute; inset: 0; pointer-events: none; }
 .aipe-shuku-stage img { position: absolute; object-fit: contain; max-width: 100%; mix-blend-mode: multiply; }

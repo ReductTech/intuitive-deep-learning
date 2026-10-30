@@ -32,7 +32,7 @@ function Points({ warning = false, children }: { warning?: boolean; children: re
 }
 export function PaperQualityPage() {
   return <ContentBlock className="aipe-paper-method-page" headingLevel={1} title={outline.pages[6].title}
-    subtitle="从论文内容提供早期评价参考，支撑高质量筛选与个性化推荐" bodyClassName="aipe-paper-method-body">
+    subtitle="团队首次提出基于大语言模型的后训练微调方法，支撑高质量筛选与个性化推荐" bodyClassName="aipe-paper-method-body">
     <div className="aipe-method-columns">
       <section className="aipe-method-column aipe-method-traditional" aria-label="传统预测方法">
         <header><Typography as="h2" variant="h3" tone="accent">传统预测方法</Typography><Typography variant="bodySmall" tone="muted">依赖外部信息</Typography></header>

@@ -68,10 +68,10 @@ export function PresentationComparisonPage() {
         <img src={asset(`images/weight-sharing/version-${version}.png`)} alt={`权重共享图示方案 ${version}`} draggable={false}/>
       </button>)}
     </section>
-    <section className="aipe-replay-cg-case-result" aria-label="加入具体设计要求后的课件效果">
+    <section className="aipe-replay-cg-case-result" aria-label="加入具体设计要求后的知识呈现作品效果">
       <video ref={video} src={asset('videos/weight-sharing.mp4')}
         muted loop playsInline preload="auto" disablePictureInPicture disableRemotePlayback
-        aria-label="权重共享课件：窗口同步滑动，对比不同位置使用的权重"/>
+        aria-label="权重共享知识呈现作品：窗口同步滑动，对比不同位置使用的权重"/>
     </section>
     <div className="aipe-replay-cg-case-prompts">
       <section className="aipe-replay-cg-case-prompt" aria-label="只给主题的设计要求">

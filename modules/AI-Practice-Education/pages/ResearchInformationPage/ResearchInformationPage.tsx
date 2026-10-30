@@ -1,110 +1,80 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { Button, ContentBlock, RangeControl, Typography } from '../../../shared/react';
+import { useEffect, useRef, useState } from 'react';
+import { Button, ContentBlock, Typography, moduleAssetUrl } from '../../../shared/react';
 import outline from '../../outlines.json';
-import { formatSubmissionCount, iclrSubmissions } from './iclrSubmissions';
-import { PaperReliefScene } from './PaperReliefScene';
+import submissions from './neuripsSubmissions.json';
 import './ResearchInformationPage.css';
 
-const lastIndex = iclrSubmissions.length - 1;
-// Leave time for the final pile transition, keeping the whole reveal under 6s.
-const playbackDuration = 5200;
+const format = (count: number) => count.toLocaleString('en-US');
+const ceiling = 33000;
+const readingScene = moduleAssetUrl(outline.moduleIdentity.id, 'research-information/reading-still-life.png');
 
 export function ResearchInformationPage() {
-  const [index,setIndex] = useState(0);
-  const [playing,setPlaying] = useState(false);
-  const [visible,setVisible] = useState(false);
-  const [ready,setReady] = useState(false);
-  const [previousYear,setPreviousYear] = useState<number|null>(null);
-  const stageRef = useRef<HTMLDivElement>(null);
-  const indexRef = useRef(0);
-  const selected = iclrSubmissions[index];
-  const captionPhase = selected.year < 2017 ? 'early' : selected.year < 2022 ? 'growth' : selected.year < 2026 ? 'ai' : 'limit';
-  const caption = {
-    early:'早期投稿规模较小，研究者尚可逐篇研读。',
-    growth:'投稿规模持续扩大，文献阅读负担逐步加重。',
-    ai:'AI 研究快速发展，论文投稿量加速增长。',
-    limit:'论文数量已远超个人的阅读与理解极限。',
-  }[captionPhase];
-  const onReadyChange = useCallback((value:boolean) => setReady(value),[]);
-
-  useEffect(() => {
-    if (!playing || !ready || !visible) return;
-    const started = performance.now();
-    const startIndex = indexRef.current;
-    let frame = 0;
-    const advance = (now:number) => {
-      // A frame timestamp can precede this effect's performance.now() reading.
-      const next = Math.min(lastIndex,startIndex + Math.floor(Math.max(0,now-started)/playbackDuration*lastIndex));
-      if (next !== indexRef.current) {
-        setPreviousYear(iclrSubmissions[indexRef.current].year);
-        indexRef.current = next;
-        setIndex(next);
-      }
-      if (next === lastIndex) setPlaying(false);
-      else frame = requestAnimationFrame(advance);
-    };
-    frame = requestAnimationFrame(advance);
-    return () => cancelAnimationFrame(frame);
-  },[playing,ready,visible]);
-
+  const root = useRef<HTMLElement>(null);
+  const [visible, setVisible] = useState(false);
+  const [complete, setComplete] = useState(false);
+  const [hovered, setHovered] = useState<number | null>(null);
+  const [focused, setFocused] = useState<number | null>(null);
+  const active = hovered ?? focused;
+  const selected = active === null ? null : submissions[active];
   useEffect(() => {
     let inView = false;
-    const updateVisibility = () => setVisible(inView && !document.hidden);
-    document.addEventListener('visibilitychange',updateVisibility);
-    const observer = new IntersectionObserver(([entry]) => {
-      inView = entry.isIntersecting;
-      updateVisibility();
-    },{threshold:.25});
-    if(stageRef.current)observer.observe(stageRef.current);
-    return () => {document.removeEventListener('visibilitychange',updateVisibility);observer.disconnect();};
-  },[]);
-
+    const update = () => setVisible(inView && !document.hidden);
+    const observer = new IntersectionObserver(([entry]) => {inView = entry.isIntersecting; update();}, {threshold: .1});
+    if (root.current) observer.observe(root.current);
+    document.addEventListener('visibilitychange', update);
+    return () => {observer.disconnect(); document.removeEventListener('visibilitychange', update);};
+  }, []);
   useEffect(() => {
-    if (!visible) {setPlaying(false);return;}
-    indexRef.current = 0;
-    setIndex(0);
-    setPreviousYear(null);
-    setPlaying(true);
-  },[visible]);
-
-  function selectYear(next:number) {
-    setPlaying(false);
-    const bounded=Math.max(0,Math.min(lastIndex,next));
-    if(bounded!==index){setPreviousYear(selected.year);indexRef.current=bounded;setIndex(bounded);}
-  }
-
-  return <ContentBlock className="aipe-iclr-page" headingLevel={1} title={outline.pages[4].title}
-    subtitle="单个学术会议的年度投稿量，已从数十篇增至数万篇" bodyClassName="aipe-iclr-body">
-    <div className="aipe-iclr-stage" ref={stageRef} data-year={selected.year} data-playing={playing} data-capture-ready={ready && !playing}>
-      <PaperReliefScene year={selected.year} previousYear={previousYear} count={selected.count} onReadyChange={onReadyChange}/>
-      <div className="aipe-iclr-count" aria-live={playing?'off':'polite'} aria-atomic="true">
-        <Typography as="p" variant="bodySmall" tone="accent">当年投稿量</Typography>
-        <div className="aipe-iclr-count-line">
-          <Typography as="span" variant="h1" tone="inherit">{formatSubmissionCount(selected)}</Typography>
-          <Typography as="span" variant="h3" tone="accent">篇</Typography>
+    setComplete(false);
+    if (!visible) {setHovered(null); setFocused(null); return;}
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {setComplete(true); return;}
+    const timer = window.setTimeout(() => setComplete(true), 2100);
+    return () => window.clearTimeout(timer);
+  }, [visible]);
+  return <ContentBlock ref={root} className="aipe-neurips-page" headingLevel={1} title={outline.pages[4].title}
+    subtitle="NeurIPS 主轨道年度投稿量" bodyClassName="aipe-neurips-body">
+    <div className="aipe-neurips-composition" data-active={visible} data-capture-ready={visible && complete}>
+      <div className="aipe-neurips-visual">
+        <img className="aipe-neurips-reading" src={readingScene} alt="论文、笔记与时钟：阅读和理解需要投入时间"/>
+        <div className="aipe-neurips-chart" role="group" onPointerLeave={() => setHovered(null)} aria-label="NeurIPS 2015至2026年投稿量。聚焦或悬停年份查看数量与来源。">
+          <Typography as="p" variant="bodySmall" tone="accent" className="aipe-neurips-unit">投稿量（篇）</Typography>
+          {selected && <div className="aipe-neurips-detail" aria-live="polite">
+            <Typography as="span" variant="bodySmall" tone="accent">{selected.year} · {selected.count === null ? '暂无数据' : `${format(selected.count)} 篇`}</Typography>
+            <Typography as="a" variant="bodySmall" tone="muted" href={selected.source} target="_blank" rel="noreferrer" title={selected.note}>数据来源 ↗</Typography>
+          </div>}
+          <div className="aipe-neurips-plot">
+            {[0, 10000, 20000, 30000].map(value => <div key={value} className="aipe-neurips-gridline" style={{bottom: `${value / ceiling * 100}%`}} aria-hidden="true">
+              <Typography as="span" variant="bodySmall" tone="accent">{format(value)}</Typography>
+            </div>)}
+            <div className="aipe-neurips-columns">
+              {submissions.map((item, index) => {
+                return <Button key={item.year} className="aipe-neurips-column" data-year={item.year} data-count={item.count ?? 'unavailable'} data-highlight={active === index}
+                  style={{animationDelay: `${index * 120}ms`}}
+                  aria-label={`${item.year}年，${item.count === null ? '暂无投稿量数据' : `${format(item.count)}篇投稿`}`}
+                  onPointerEnter={() => setHovered(index)}
+                  onFocus={() => {setHovered(null); setFocused(index);}} onBlur={() => setFocused(null)}
+                  onKeyDown={event => {
+                    if (event.key === 'Escape') {event.currentTarget.blur(); setHovered(null); return;}
+                    if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+                    event.preventDefault(); event.stopPropagation();
+                    const next = event.key === 'Home' ? 0 : event.key === 'End' ? submissions.length - 1 : (index + (event.key === 'ArrowRight' ? 1 : submissions.length - 1)) % submissions.length;
+                    event.currentTarget.parentElement?.querySelector<HTMLButtonElement>(`[data-year="${submissions[next].year}"]`)?.focus();
+                  }}>
+                  {item.count !== null && <span className={`aipe-neurips-bar${item.year === 2026 ? ' is-latest' : ''}`} style={{height: `${item.count / ceiling * 100}%`}}/>}
+                  <Typography as="span" variant="bodySmall" tone="accent" className="aipe-neurips-year">{item.year}</Typography>
+                </Button>;
+              })}
+            </div>
+            <div className="aipe-neurips-values" aria-hidden="true">
+              {submissions.map((item, index) => item.count !== null && (active === index || (active === null && [2015, 2025, 2026].includes(item.year))) &&
+                <Typography key={item.year} as="span" variant="body" tone="accent" className="aipe-neurips-value" data-label-year={item.year}
+                  style={{left: `${(index + .5) / submissions.length * 100}%`, bottom: `calc(${item.count / ceiling * 100}% + 14px)`, animationDelay: `${index * 120}ms`}}>{format(item.count)}</Typography>)}
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <div className="aipe-iclr-caption" data-caption-phase={captionPhase}
-      aria-live={playing?'off':'polite'} aria-atomic="true">
-      <Typography as="p" variant="bodySmall" tone="accent">{caption}</Typography>
-    </div>
-    <div className="aipe-iclr-timeline" onKeyDown={event=>event.stopPropagation()}>
-      <div className="aipe-iclr-track">
-        <RangeControl label="年份" aria-label="年份" min={0} max={lastIndex} step={1} value={index}
-          controlClassName="aipe-iclr-range-control" className="aipe-iclr-range"
-          onChange={event=>selectYear(Number(event.currentTarget.value))} onPointerDown={()=>setPlaying(false)}
-          formatValue={value=>`${iclrSubmissions[Number(value)].year} 年，${formatSubmissionCount(iclrSubmissions[Number(value)])} 篇投稿`}/>
-        <div className="aipe-iclr-track-line" aria-hidden="true"/>
-        <div className="aipe-iclr-ticks">
-          {iclrSubmissions.map((item,tickIndex)=><Button key={item.year}
-            className={`aipe-iclr-tick${tickIndex===index?' is-selected':''}`} style={{left:`${tickIndex/lastIndex*100}%`}}
-            onClick={()=>selectYear(tickIndex)} aria-pressed={tickIndex===index}
-            aria-label={`查看 ${item.year} 年，${formatSubmissionCount(item)} 篇投稿`}>
-            <i className="aipe-iclr-dot" aria-hidden="true"/>
-            <Typography as="span" variant="bodySmall" tone="inherit">{item.year}</Typography>
-          </Button>)}
-        </div>
+      <div className="aipe-neurips-footer">
+        <Typography as="p" variant="h2" tone="accent" className="aipe-neurips-takeaway">论文数量远超人类阅读<Typography as="span" variant="h2" tone="inherit" className="aipe-neurips-limit">极限</Typography></Typography>
       </div>
     </div>
   </ContentBlock>;

@@ -22,8 +22,8 @@ export function TitlePage() {
   return <article className="aipe-replay-cg-cover-page aipe-replay-cg-creator-typography" aria-labelledby="aipe-replay-cg-cover-title">
     <KnowledgeRibbon/>
     <div className="aipe-replay-cg-cover-eyebrow"><Typography variant="bodySmall" tone="inherit">CREATOR SKILL</Typography></div>
-    <div className="aipe-replay-cg-cover-title"><Typography as="h1" variant="display" tone="inherit" wrap="nowrap" id="aipe-replay-cg-cover-title">课件创作指南</Typography></div>
-    <div className="aipe-replay-cg-cover-subtitle"><Typography as="p" variant="h2" tone="inherit" wrap="nowrap">把专业知识，变成容易理解的课件</Typography></div>
+    <div className="aipe-replay-cg-cover-title"><Typography as="h1" variant="display" tone="inherit" wrap="nowrap" id="aipe-replay-cg-cover-title">实践创作指南</Typography></div>
+    <div className="aipe-replay-cg-cover-subtitle"><Typography as="p" variant="h2" tone="inherit" wrap="nowrap">把专业知识，变成容易理解的知识呈现作品</Typography></div>
     <div className="aipe-replay-cg-cover-description"><Typography variant="subtitle" tone="inherit" wrap="nowrap">借助 Creator Skill，从内容构思到交互呈现</Typography></div>
     <footer className="aipe-replay-cg-cover-footer">
       {['明确目标', '设计讲解', '迭代成稿'].map((step, i) => <div className="aipe-replay-cg-cover-step" key={step}>

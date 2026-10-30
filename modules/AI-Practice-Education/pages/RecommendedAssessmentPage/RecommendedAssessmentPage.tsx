@@ -11,8 +11,8 @@ const advantages = [
 const asset = (file: string) => moduleAssetUrl(outline.moduleIdentity.id, `images/assessment/${file}`);
 
 export function RecommendedAssessmentPage() {
-  return <ContentBlock title="推荐考核模式"
-    subtitle="一个方向 · 三篇论文 · 三份交互作品"
+  return <ContentBlock title="课后专题研究考核模式"
+    subtitle="一个方向 · 三篇论文 · 三份交互作品 · 一次动手实践（复现 Jittor 代码）"
     headingLevel={1} className="aipe-assessment-page" bodyClassName="aipe-assessment-body">
     <figure className="aipe-assessment-hero">
       <img src={asset('assessment-flow-approved-v5.png')}
@@ -30,8 +30,8 @@ export function RecommendedAssessmentPage() {
           <Typography as="p" variant="body" tone="muted">{detail}</Typography></div>
       </li>)}
     </ul>
-    <Typography as="p" variant="bodySmall" tone="muted" className="aipe-assessment-complement">
-      传统考试检验基础，作品考核呈现理解与应用，可结合使用。
-    </Typography>
+    <div className="aipe-assessment-complement">
+      <Typography as="p" variant="bodySmall" tone="muted">传统考试检验基础，专题研究考核呈现理解、创造与实践，可结合使用。</Typography>
+    </div>
   </ContentBlock>;
 }

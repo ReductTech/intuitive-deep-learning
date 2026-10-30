@@ -18,7 +18,7 @@ export function FrontendJourneyPage() {
     <header className="aipe-replay-cg-journey-photo-heading"><Typography as="h1" id="aipe-replay-cg-journey-title" variant="h1" tone="inherit" align="center">围绕培养目标，提供工程支持</Typography></header>
     <section className="aipe-replay-cg-journey-flag aipe-replay-cg-journey-flag-ai" aria-label="本次培养重点是专业理解、实践与判断"><Typography as="h2" variant="body" tone="inherit">本次培养重点</Typography><Typography variant="body" tone="inherit">专业理解<br />实践与判断</Typography></section>
     <section className="aipe-replay-cg-journey-flag aipe-replay-cg-journey-flag-web" aria-label="平台提供工程基础，支持网页制作"><Typography as="h2" variant="body" tone="inherit">平台的支持</Typography><Typography variant="body" tone="inherit">提供工程基础<br />支持网页制作</Typography></section>
-    <div className="aipe-replay-cg-journey-summit-label"><Typography variant="bodySmall" tone="inherit">交互课件</Typography></div>
+    <div className="aipe-replay-cg-journey-summit-label"><Typography variant="bodySmall" tone="inherit">交互式知识呈现</Typography></div>
     <div className="aipe-replay-cg-journey-stairs" aria-label="学生承担理解与判断，平台支持网页布局、交互实现和工程调试">{stairLabels.map(stair => <div key={stair.text} className="aipe-replay-cg-journey-stair" style={{ left: stair.x - 205, top: stair.y - 30 }}><Typography variant="h3" tone="inherit" wrap="nowrap" style={{ transform: `scale(${stair.scale})` }}>{stair.text}</Typography></div>)}</div>
     <footer className="aipe-replay-cg-journey-photo-footer"><Typography variant="h3" tone="inherit">平台提供工程基础，让学生把专业理解落实成作品。</Typography></footer>
   </article>;

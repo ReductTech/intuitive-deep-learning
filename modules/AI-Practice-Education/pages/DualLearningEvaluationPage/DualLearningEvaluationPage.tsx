@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { Bot, RotateCcw, UserRound, UsersRound } from 'lucide-react';
-import { Button, ContentBlock, Typography, moduleAssetUrl } from '../../../shared/react';
+import { Bot, UserRound, UsersRound } from 'lucide-react';
+import { ContentBlock, Typography, moduleAssetUrl } from '../../../shared/react';
 import outline from '../../outlines.json';
 import './DualLearningEvaluationPage.css';
 
@@ -18,17 +18,17 @@ const thumbnails = [
 
 const eightStroke = 'M83 17C57 8 35 24 38 46C41 64 64 77 86 91C112 107 115 130 100 149C86 166 48 169 33 148C15 122 43 96 68 79C92 64 113 43 101 26C97 20 91 18 83 17';
 
-function HandwrittenGrade() {
-  return <svg className="aipe-assessment-handwriting" viewBox="0 0 252 185" role="img" aria-label={`${average}分`} data-final-score={average}>
+function FinalGrade() {
+  return <svg className="aipe-dual-evaluation-handwriting" viewBox="0 0 252 185" role="img" aria-label={`${average}分`} data-final-score={average}>
     <g fill="none" stroke="currentColor" strokeWidth="10" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path className="aipe-assessment-digit" data-digit="first" pathLength="1" d={eightStroke} />
-      <path className="aipe-assessment-digit" data-digit="second" pathLength="1" d={eightStroke} transform="translate(112 0)" />
+      <path className="aipe-dual-evaluation-digit" data-digit="first" pathLength="1" d={eightStroke} />
+      <path className="aipe-dual-evaluation-digit" data-digit="second" pathLength="1" d={eightStroke} transform="translate(112 0)" />
     </g>
   </svg>;
 }
 
 function StepArrow({ className, revealed }: { className: string; revealed: boolean }) {
-  return <svg className={`aipe-assessment-arrow ${className}`} data-revealed={revealed} viewBox="0 0 70 34" aria-hidden="true">
+  return <svg className={`aipe-dual-evaluation-arrow ${className}`} data-revealed={revealed} viewBox="0 0 70 34" aria-hidden="true">
     <path d="M3 17H62M49 4L63 17L49 30" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
   </svg>;
 }
@@ -38,7 +38,7 @@ export function DualLearningEvaluationPage() {
   const [active, setActive] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
   const [phase, setPhase] = useState(0);
-  const [replay, setReplay] = useState(0);
+  const [expanded, setExpanded] = useState(false);
 
   useEffect(() => {
     const element = root.current;
@@ -63,50 +63,50 @@ export function DualLearningEvaluationPage() {
   }, []);
 
   useEffect(() => {
-    if (!active) { setPhase(0); return; }
-    if (reducedMotion) { setPhase(4); return; }
+    if (!active) { setExpanded(false); setPhase(0); return; }
+    if (reducedMotion) { setExpanded(true); setPhase(4); return; }
+    setExpanded(false);
     setPhase(0);
-    const timers = [450, 1300, 2150, 3200].map((delay, index) => window.setTimeout(() => setPhase(index + 1), delay));
+    const timers = [
+      window.setTimeout(() => setExpanded(true), 900),
+      ...[2500, 3350, 4200, 4600].map((delay, index) => window.setTimeout(() => setPhase(index + 1), delay)),
+    ];
     return () => timers.forEach(timer => window.clearTimeout(timer));
-  }, [active, reducedMotion, replay]);
+  }, [active, reducedMotion]);
 
-  return <ContentBlock ref={root} title={outline.pages[31].title} headingLevel={1} className="aipe-assessment-page" bodyClassName="aipe-assessment-body">
-    <div className="aipe-assessment-composition" data-phase={phase} data-active={active} data-reduced-motion={reducedMotion}>
-      <div className="aipe-assessment-layout">
-        <section className="aipe-assessment-courseware" aria-labelledby="aipe-assessment-work-title">
-          <Typography as="h2" variant="h2" tone="accent" id="aipe-assessment-work-title">学生课件</Typography>
-          <figure className="aipe-assessment-stack" aria-label="同一份交互课件的部分页面，后续还有更多页面">
-            {thumbnails.map((thumbnail, index) => <img key={thumbnail.file} className={`aipe-assessment-thumbnail aipe-assessment-thumbnail--${index}`} src={moduleAssetUrl(outline.moduleIdentity.id, `workflow/course-thumbnails/${thumbnail.file}`)} width="400" height="225" alt={thumbnail.label} draggable={false} />)}
-            <span className="aipe-assessment-more-pages" role="img" aria-label="还有更多课件页面"><i /><i /><i /></span>
-            <Typography as="figcaption" variant="body" tone="muted">同一份交互课件</Typography>
+  return <ContentBlock ref={root} title={outline.pages[31].title} headingLevel={1} className="aipe-dual-evaluation-page" bodyClassName="aipe-dual-evaluation-body">
+    <div className="aipe-dual-evaluation-composition" data-phase={phase} data-active={active} data-reduced-motion={reducedMotion}>
+      <div className="aipe-dual-evaluation-layout">
+        <section className="aipe-dual-evaluation-courseware" aria-labelledby="aipe-dual-evaluation-work-title">
+          <Typography as="h2" variant="h2" tone="accent" id="aipe-dual-evaluation-work-title">学生实践成果</Typography>
+          <Typography as="p" variant="bodySmall" tone="muted" className="aipe-dual-evaluation-evidence">知识呈现作品 + 课后专题实践内容</Typography>
+          <figure className="aipe-dual-evaluation-stack" data-expanded={expanded} aria-label="三张实践成果示例，由叠放展开为扇形">
+            {thumbnails.map((thumbnail, index) => <img key={thumbnail.file} className={`aipe-dual-evaluation-thumbnail aipe-dual-evaluation-thumbnail--${index}`} src={moduleAssetUrl(outline.moduleIdentity.id, `workflow/course-thumbnails/${thumbnail.file}`)} width="400" height="225" alt={thumbnail.label} draggable={false} />)}
+            <Typography as="figcaption" variant="bodySmall" tone="muted">知识呈现 · Jittor 复现 · 实验分析</Typography>
           </figure>
         </section>
-        <section className="aipe-assessment-review" aria-labelledby="aipe-assessment-review-title">
-          <Typography as="h2" variant="h2" tone="accent" id="aipe-assessment-review-title">多方评分</Typography>
-          <div className="aipe-assessment-reviewers">
-            {reviewers.map(({ label, score, Icon }, index) => <div key={label} className="aipe-assessment-reviewer" data-reviewer={index} data-revealed={phase > index} aria-hidden={phase <= index}>
+        <section className="aipe-dual-evaluation-review" aria-labelledby="aipe-dual-evaluation-review-title">
+          <Typography as="h2" variant="h2" tone="accent" id="aipe-dual-evaluation-review-title">多方评分</Typography>
+          <div className="aipe-dual-evaluation-reviewers">
+            {reviewers.map(({ label, score, Icon }, index) => <div key={label} className="aipe-dual-evaluation-reviewer" data-reviewer={index} data-revealed={phase > index} aria-hidden={phase <= index}>
               <Icon aria-hidden="true" strokeWidth={1.65} />
               <Typography as="span" variant="body" tone="accent"><strong>{label}</strong></Typography>
-              <Typography as="span" variant="display" tone="accent" className="aipe-assessment-reviewer-score">{score}</Typography>
+              <Typography as="span" variant="display" tone="accent" className="aipe-dual-evaluation-reviewer-score">{score}</Typography>
             </div>)}
           </div>
         </section>
-        <section className="aipe-assessment-result" aria-labelledby="aipe-assessment-result-title">
-          <Typography as="h2" variant="h2" tone="accent" id="aipe-assessment-result-title">考核成绩</Typography>
-          <div className="aipe-assessment-result-content" data-revealed={phase === 4} aria-hidden={phase !== 4} key={replay}>
-            {phase === 4 && <div className="aipe-assessment-grade"><HandwrittenGrade /><Typography as="span" variant="h2" tone="accent">分</Typography></div>}
-            <div className="aipe-assessment-result-rule" />
+        <section className="aipe-dual-evaluation-result" aria-labelledby="aipe-dual-evaluation-result-title">
+          <Typography as="h2" variant="h2" tone="accent" id="aipe-dual-evaluation-result-title">考核成绩</Typography>
+          <div className="aipe-dual-evaluation-result-content" data-revealed={phase === 4} aria-hidden={phase !== 4}>
+            {phase === 4 && <div className="aipe-dual-evaluation-grade"><FinalGrade /><Typography as="span" variant="h2" tone="accent">分</Typography></div>}
+            <div className="aipe-dual-evaluation-result-rule" />
             <Typography as="p" variant="body" tone="muted">平均汇总</Typography>
           </div>
         </section>
       </div>
-      <StepArrow className="aipe-assessment-arrow--submit" revealed={phase > 0} />
-      <svg className="aipe-assessment-merge" data-revealed={phase >= 3} viewBox="0 0 48 370" aria-hidden="true"><path pathLength="1" d="M5 4Q29 4 29 29V158Q29 185 44 185Q29 185 29 212V341Q29 366 5 366" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" /></svg>
-      <StepArrow className="aipe-assessment-arrow--result" revealed={phase === 4} />
-      <div className="aipe-assessment-footer">
-        <Typography as="span" variant="bodySmall" tone="muted">评分示意</Typography>
-        <Button className="aipe-assessment-replay" aria-label="重播评分动画" title="重播评分动画" onClick={() => setReplay(value => value + 1)} onKeyDown={event => { if (event.key === 'Enter' || event.key === ' ') event.stopPropagation(); }}><RotateCcw size={24} aria-hidden="true" /></Button>
-      </div>
+      <StepArrow className="aipe-dual-evaluation-arrow--submit" revealed={phase > 0} />
+      <svg className="aipe-dual-evaluation-merge" data-revealed={phase >= 3} viewBox="0 0 48 370" aria-hidden="true"><path pathLength="1" d="M5 4Q29 4 29 29V158Q29 185 44 185Q29 185 29 212V341Q29 366 5 366" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" /></svg>
+      <StepArrow className="aipe-dual-evaluation-arrow--result" revealed={phase === 4} />
     </div>
   </ContentBlock>;
 }
