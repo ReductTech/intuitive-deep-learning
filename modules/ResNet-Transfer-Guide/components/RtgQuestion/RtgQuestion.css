@@ -1,0 +1,50 @@
+.course-shell .rtg-question {
+  min-width: 0;
+  gap: 9px;
+  padding: 11px 12px;
+}
+
+.course-shell .rtg-question .dl-question-head {
+  min-width: 0;
+  gap: 4px;
+}
+
+.course-shell .rtg-question .dl-question-title-row {
+  min-width: 0;
+  gap: 6px 10px;
+}
+
+.course-shell .rtg-question .dl-question-stem,
+.course-shell .rtg-question .dl-option-body,
+.course-shell .rtg-question .ui-typography {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.course-shell .rtg-question .dl-question-options {
+  min-width: 0;
+  gap: 7px;
+}
+
+.course-shell .rtg-question .dl-question-option {
+  min-width: 0;
+  min-height: 46px;
+  padding: 7px 10px;
+}
+
+.course-shell .rtg-question .dl-option-key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  box-sizing: border-box;
+  padding-block-end: 1px;
+  letter-spacing: 0;
+  text-align: center;
+}
+
+.course-shell .rtg-question .dl-option-body {
+  min-width: 0;
+  line-height: 1.35;
+}

@@ -1,0 +1,10 @@
+.tr-page-frame {
+  width: 100%;
+  overflow: hidden;
+}
+
+.tr-page-canvas {
+  width: 1600px;
+  height: 900px;
+  transform-origin: top left;
+}

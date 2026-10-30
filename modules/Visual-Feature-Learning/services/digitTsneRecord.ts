@@ -12,9 +12,12 @@ export async function loadTsneRecord(learningRate:number,batchSize:number,signal
  const key=`${learningRate}:${batchSize}`;
  const cached=records.get(key);if(cached)return cached;
  const response=await fetch(`/api/courses/${tsneCourseId}/records/digit-tsne`,{method:'POST',headers:{'Content-Type':'application/json'},credentials:'same-origin',body:JSON.stringify({learning_rate:learningRate,batch_size:batchSize}),signal});
- const body=await response.json();
+ if(!response.headers.get('content-type')?.includes('application/json'))throw new Error('训练记录接口未返回 JSON，请检查课程后端和 /api 代理配置。');
+ let body;
+ try{body=await response.json();}catch{throw new Error('训练记录响应为空或格式不完整，请检查课程后端后重试。');}
+ if(!body||typeof body!=='object')throw new Error('训练记录响应格式不正确。');
  if(!response.ok||!body.ok)throw new Error(typeof body.detail==='string'?body.detail:'训练记录暂不可用，请稍后重试。');
  const record=body.result as TsneRecord;
- if(record.recording?.epochs!==tsneEpochs||record.recording.learning_rate!==learningRate||record.recording.batch_size!==batchSize||record.frames?.length!==tsneEpochs+1)throw new Error('训练记录与所选参数不匹配。');
+ if(record?.recording?.epochs!==tsneEpochs||record.recording.learning_rate!==learningRate||record.recording.batch_size!==batchSize||record.frames?.length!==tsneEpochs+1)throw new Error('训练记录与所选参数不匹配。');
  records.set(key,record);return record;
 }

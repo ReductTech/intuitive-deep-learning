@@ -1,0 +1,97 @@
+/* Focused improvements from the teaching review: shared parameters and LN conditions. */
+.tr-ppt-content .tr-ffn-video-stage .tr-ffn-lane[role="button"] { cursor: pointer; opacity: .62; transition: opacity .25s; }
+.tr-ppt-content .tr-ffn-video-stage .tr-ffn-lane.is-focus { opacity: 1; }
+.tr-ppt-content .tr-ffn-video-stage .tr-ffn-param { fill: #9e704d; stroke: #fff; stroke-width: 4px; paint-order: stroke; font-size: 23px; font-weight: 700; }
+.tr-ppt-content .tr-ffn-video-stage .tr-ffn-overview-layers article[role="button"] { cursor: pointer; }
+.tr-ppt-content .tr-ffn-video-stage .tr-ffn-overview-footer { justify-content: space-between !important; gap: 18px; }
+.tr-ffn-focus-note { color: #688398; font-size: 21px; line-height: 1.4; max-width: 470px; min-width: 0; }
+.tr-ppt-content .tr-ffn-video-stage .tr-ffn-overview-footer > div { display: flex; gap: 9px; flex-shrink: 0; }
+.tr-ppt-content .tr-ffn-video-stage .tr-ffn-overview-footer .edu-btn { min-width: 0; padding: 10px 14px; }
+.tr-ppt-content .tr-ffn-video-stage .tr-ffn-overview-footer .edu-btn .ui-typography { font-size: 22px !important; }
+.tr-ppt-content .tr-ffn-video-stage .tr-ffn-overview-layers p { font-size: 27px !important; line-height: 1.4 !important; }
+.tr-ppt-content[data-slide] .tr-ffn-video-stage .tr-ffn-overview { grid-template-rows: minmax(0,1fr) 280px 66px; gap: 14px; }
+.tr-ppt-content[data-slide] .tr-ffn-video-stage .tr-ffn-overview-layers { gap: 20px; }
+.tr-ppt-content[data-slide] .tr-ffn-video-stage .tr-ffn-overview-layers article { padding: 0; grid-template-rows: 54px auto auto minmax(0,1fr); gap: 10px; }
+.tr-ppt-content[data-slide] .tr-ffn-video-stage .tr-ffn-overview-layers header { min-height: 0; }
+.tr-ppt-content[data-slide] .tr-ffn-video-stage .tr-ffn-overview-figure { position: relative; }
+.tr-ffn-example-controls { position: absolute; z-index: 3; right: 12px; top: 8px; display: flex; gap: 8px; }
+.tr-ffn-example-controls button { padding: 5px 11px; border: 1px solid #bcd5e2; border-radius: 9px; background: #fbfdff; color: #4d7b94; font-family: inherit; font-size: 18px; cursor: pointer; }
+.tr-ffn-example-controls button[aria-pressed="true"] { border-color: #9ebed0; background: #e6f3f8; }
+.tr-ppt-content .tr-ffn-video-stage .tr-ffn-toy-values { fill: #376a82; font: 750 31px/1 'Segoe UI',sans-serif; }
+.tr-ppt-content .tr-ffn-video-stage .tr-ffn-lane:focus { outline: none; }
+.tr-ppt-content .tr-ffn-video-stage .tr-ffn-lane:focus-visible { outline: 2px dashed #79acc2; outline-offset: 4px; }
+.tr-ffn-shared-parameters { position: absolute; z-index: 4; top: 50px; right: 16px; display: flex; flex-direction: column; gap: 9px; padding: 18px 20px; border: 1px solid #bcd5e2; border-radius: 13px; background: #fffffff5; box-shadow: 0 12px 26px #31577725; color: #54778e; font-size: 22px; line-height: 1.4; }
+.tr-ffn-shared-parameters strong { color: #326d87; }
+.tr-ffn-shared-parameters code { font-size: 22px; }
+.tr-ppt-content > .tr-norm-single .tr-norm-single-formula { grid-template-columns: minmax(0,.95fr) minmax(0,1.2fr) minmax(0,.65fr); gap: 0 20px; }
+.tr-ppt-content > .tr-norm-single .tr-norm-single-formula > p { font-size: 25px !important; line-height: 1.45 !important; }
+.tr-norm-parameter-note { display: block; margin-top: 10px; color: #688498; font-size: 23px; }
+.tr-ppt-content > .tr-norm-single .tr-norm-calibrate { display: flex; flex-direction: column; justify-content: center; gap: 12px; align-items: stretch; padding-right: 16px; min-width: 0; }
+.tr-ppt-content > .tr-norm-single .tr-norm-calibrate .edu-btn { min-width: 0; padding: 10px 12px; }
+.tr-ppt-content > .tr-norm-single .tr-norm-calibrate .ui-typography { font-size: 22px !important; }
+.tr-ppt-content > .tr-norm-single .tr-norm-single-footer { justify-content: space-between; }
+.tr-ppt-content > .tr-norm-single .tr-norm-single-footer > span { font-size: 21px; line-height: 1.4; }
+.tr-ffn-intro-action{display:flex;align-items:center;justify-content:space-between;gap:24px}.tr-ffn-intro-action .tr-ffn-block-note{font-size:21px;color:#7b92a1;line-height:1.5;margin-right:auto;font-weight:400}
+
+/* Highlight the quantities where students read them; keep the explanation on the same line. */
+.tr-norm-single .tr-norm-inline-highlight{background:linear-gradient(transparent 55%,#efdebd 55%);color:#a06c35;font-weight:700;padding:0 4px;border-radius:3px}
+.tr-norm-single .tr-norm-statistics mark{color:#9d6e3d;background:#fff0d9;padding:4px 7px;border-radius:7px;font-weight:650}
+.tr-norm-single .tr-norm-statistics.is-calibrated mark{color:#2b7c83;background:#e5f2f0}
+.tr-norm-single .tr-norm-statistics.is-calibrated strong{color:#2b7c83}
+.tr-ppt-content>.tr-norm-single .tr-norm-single-formula{grid-template-rows:minmax(0,1fr);margin-top:18px;align-items:center;padding:18px 0}
+
+/* A single band links all three statistics to the observation prompt. */
+.tr-norm-single .tr-norm-single-layout{grid-template-rows:300px 124px minmax(0,1fr) 58px;gap:16px}
+.tr-norm-single .tr-norm-observation-box{border:1px solid #cbdfe7;border-radius:16px;background:#f2f8fa;overflow:hidden;display:grid;grid-template-rows:61px minmax(0,1fr)}
+.tr-norm-single .tr-norm-statistics-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:58px;align-items:center;padding:0 19px}
+.tr-ppt-content .tr-norm-statistics-row p.tr-norm-statistics{display:flex;justify-content:space-between;align-items:center;font-size:25px!important;line-height:1.3!important;color:#527286;margin:0;padding:0 2px;font-variant-numeric:tabular-nums}
+.tr-norm-statistics-row strong{font-weight:700;color:#a06d38}
+.tr-ppt-content .tr-norm-observation-box p.tr-norm-observation-guide{margin:0;border-top:1px solid #d7e6ec;padding:13px 20px;font-size:26px!important;line-height:1.3!important;text-align:center;color:#54778a}
+.tr-norm-observation-box.is-applied{background:#f0f8f7;border-color:#c8dfdd}
+.tr-ppt-content>.tr-norm-single .tr-norm-single-formula{margin-top:0}
+
+/* Fold the mathematical detail into a quiet paper; interaction remains visible. */
+.tr-norm-single .tr-norm-single-layout{grid-template-rows:300px 76px minmax(0,1fr) 58px;gap:18px}
+.tr-norm-single .tr-norm-observation-box{grid-template-rows:1fr;background:#f2f8fa}
+.tr-norm-single .tr-norm-statistics.is-calibrated mark{color:#9d6e3d;background:#fff0d9}
+.tr-norm-single .tr-norm-statistics.is-calibrated strong{color:#a06d38}
+.tr-ppt-content>.tr-norm-single .tr-norm-single-formula.tr-norm-workbench{display:grid;grid-template-columns:560px minmax(0,1fr);grid-template-rows:minmax(0,1fr);gap:55px;padding:8px 10px;border:0;background:transparent;overflow:visible;align-items:stretch}
+.tr-norm-formula-note{position:relative;perspective:1400px;min-height:0;max-height:302px;align-self:stretch}
+.tr-norm-paper-turn{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .65s cubic-bezier(.25,.7,.25,1)}
+.tr-norm-formula-note.is-open .tr-norm-paper-turn{transform:rotateY(-180deg)}
+.tr-norm-paper-face{box-sizing:border-box;position:absolute;inset:0;border:1px solid #e4ddce;border-radius:12px;background:linear-gradient(130deg,#fffef9,#faf5e9);box-shadow:2px 6px 15px #4563780d;backface-visibility:hidden;-webkit-backface-visibility:hidden;color:#3c6076}
+.tr-norm-paper-front{display:grid;grid-template-rows:auto minmax(0,1fr) auto;text-align:left;padding:17px 23px 20px;cursor:pointer;font:inherit;overflow:hidden;transform:rotateY(0deg)}
+.tr-norm-paper-front:focus-visible{outline:3px solid #83b5c1;outline-offset:4px}
+.tr-norm-paper-label{font-size:18px;color:#97a0a1;letter-spacing:.5px}
+.tr-norm-paper-front .tr-norm-equation{font-size:40px;padding:4px 0;color:#31566e}
+.tr-norm-paper-hint{font-size:19px;color:#9b825e;text-align:right;padding-right:10px}
+.tr-norm-paper-corner{position:absolute;right:0;top:0;width:36px;height:36px;background:linear-gradient(225deg,#fff 0 49%,#e8dcc6 50%,#f5e9d3 80%);border-bottom-left-radius:9px;box-shadow:-2px 3px 5px #8b795918;transition:width .3s,height .3s}
+.tr-norm-paper-front:hover .tr-norm-paper-corner{width:43px;height:43px}
+.tr-norm-paper-back{transform:rotateY(180deg);padding:19px 24px;display:flex;flex-direction:column;justify-content:center;gap:13px}
+.tr-norm-paper-back>header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:2px}
+.tr-norm-paper-back>header>strong{font-size:23px;color:#67828e;font-weight:650}
+.tr-norm-paper-back>header>button{border:0;border-radius:17px;background:#eee5d6;padding:6px 12px;color:#9a805c;font:17px 'Microsoft YaHei',sans-serif;cursor:pointer}
+.tr-ppt-content .tr-norm-paper-back p{font-size:21px!important;line-height:1.5!important;color:#627b8c;margin:0!important;align-self:stretch}
+.tr-norm-paper-back p strong,.tr-norm-paper-back p b{color:#a17b48;font-weight:650}
+.tr-norm-paper-back>small{font-size:18px;color:#8b9ca4;margin-top:1px}
+.tr-norm-interaction{display:flex;flex-direction:column;justify-content:center;gap:16px;min-width:0;background:#f2f8fa;border:1px solid #d5e4eb;border-radius:18px;padding:22px 26px}
+.tr-norm-interaction.is-unapplied .tr-norm-observation-guide mark{background:linear-gradient(transparent 58%,#efdebd 58%);color:#a06c35;font-weight:700;padding:0 3px}
+.tr-ppt-content .tr-norm-interaction p.tr-norm-observation-guide{font-size:28px!important;line-height:1.6!important;color:#56788c;margin:0;padding:0;align-self:stretch;max-width:850px}
+.tr-norm-current-parameters{color:#7b909e;font-size:23px;line-height:1.4}
+.tr-norm-current-parameters>strong{color:#a47b47;font-weight:650;background:transparent}
+.tr-norm-current-parameters>small{display:block;font-size:18px;color:#8b9da7;margin-top:6px}
+.tr-ppt-content>.tr-norm-single .tr-norm-interaction .tr-norm-calibrate{flex-direction:row;justify-content:flex-start;padding:0;gap:15px}
+.tr-ppt-content>.tr-norm-single .tr-norm-interaction .tr-norm-calibrate .edu-btn{padding:11px 22px;border-radius:25px;min-width:235px}
+@media(prefers-reduced-motion:reduce){.tr-norm-paper-turn,.tr-norm-paper-corner{transition:none}}
+
+.tr-ppt-content .tr-norm-single-formula .tr-norm-paper-back p{font-size:21px!important;line-height:1.45!important;color:#627b8c;margin:0!important}.tr-norm-paper-back{gap:12px}
+.tr-ppt-content .tr-norm-single-formula .tr-norm-paper-back p{align-self:stretch;text-align:left}
+
+.tr-norm-guide-problem{display:block;font-size:22px;line-height:1.5;color:#8293a0;margin-bottom:10px}
+.tr-norm-guide-problem mark{background:linear-gradient(transparent 62%,#f0e2ca 62%);color:#9b7952;padding:0 2px}
+.tr-norm-guide-benefit{display:block;font-size:27px;line-height:1.5;color:#4c7385;font-weight:600}
+.tr-norm-guide-benefit mark{background:linear-gradient(transparent 60%,#d7ebe8 60%);color:#317e83;font-weight:750;padding:0 3px}
+/* Give the lesson's next action a clear destination. */
+.tr-norm-single-footer{display:flex;justify-content:space-between;align-items:center;gap:24px}
+.tr-norm-single-footer>.edu-btn{min-height:58px;padding:11px 25px;border-radius:29px;flex-shrink:0}
+.tr-ppt-content .tr-norm-single-footer>.edu-btn .ui-typography{font-size:24px!important;line-height:1.4!important}

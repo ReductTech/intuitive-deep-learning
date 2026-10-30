@@ -1,0 +1,6 @@
+import { useState } from 'react';
+import { Button, Question, Typography } from '../../../shared/react';
+import { LessonPage } from '../../components/LessonPage';
+import { PhotoStage } from '../../components/PhotoStage';
+const cases=[{name:'合理色偏',style:{filter:'hue-rotate(25deg)'},answer:'keep',why:'本任务判断水果类别，合理色偏仍支持苹果标签；它帮助削弱颜色捷径。'},{name:'目标被裁掉',style:{clipPath:'inset(0 80% 0 0)'},answer:'remove',why:'苹果已经不在可见区域，不能继续沿用苹果标签。'},{name:'严重过曝',style:{filter:'brightness(8)'},answer:'judge',why:'如果判别信息被破坏，需要重新判断是否还能使用这个样本。'}];
+export function AugmentationValidityPage(){const [i,setI]=useState(0);const c=cases[i];return <LessonPage id="10" subtitle="变换后的图片，必须仍然支持当前任务的标签。" takeaway="分类可能保持类别；检测和分割还需要同步修改位置或像素标签。"><div className="daa-two"><div className="daa-center"><PhotoStage imageStyle={c.style}/><Typography variant="bodySmall" tone="muted">原始标签：苹果</Typography></div><div className="daa-reading"><div className="daa-actions">{cases.map((x,j)=><Button key={x.name} active={i===j} onClick={()=>setI(j)}><Typography as="span" variant="bodySmall" tone="inherit">{x.name}</Typography></Button>)}</div><Question key={i} title="原来的苹果标签还能直接使用吗？" answer={c.answer} options={[{value:'keep',label:'保留标签'},{value:'remove',label:'目标消失，丢弃这个分类视图'},{value:'judge',label:'信息受损，需要重新判断'}]} feedback={{correct:`正确：${c.why}`,wrong:`错误：${c.why}`}}/></div></div></LessonPage>;}

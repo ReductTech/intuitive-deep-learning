@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 260">
+ <defs><style>.wire{fill:none;stroke:#86bfd0;stroke-width:2;opacity:.42}.hot{stroke:#e88962;opacity:.72}.node{stroke:#17324f;stroke-width:2.5}.inout{fill:#dff3f5}.hidden{fill:#fff0e8}.glow{fill:#fff;opacity:.72}</style></defs>
+ <g>
+  <path class="wire" d="M64 50L264 25M64 50L264 55M64 50L264 85M64 50L264 115M64 50L264 145M64 50L264 175M64 50L264 205M64 50L264 235"/>
+  <path class="wire" d="M64 103L264 25M64 103L264 55M64 103L264 85M64 103L264 115M64 103L264 145M64 103L264 175M64 103L264 205M64 103L264 235"/>
+  <path class="wire hot" d="M64 157L264 25M64 157L264 55M64 157L264 85M64 157L264 115M64 157L264 145M64 157L264 175M64 157L264 205M64 157L264 235"/>
+  <path class="wire" d="M64 210L264 25M64 210L264 55M64 210L264 85M64 210L264 115M64 210L264 145M64 210L264 175M64 210L264 205M64 210L264 235"/>
+  <path class="wire" d="M296 25L496 50M296 55L496 50M296 85L496 50M296 115L496 50M296 145L496 50M296 175L496 50M296 205L496 50M296 235L496 50"/>
+  <path class="wire" d="M296 25L496 103M296 55L496 103M296 85L496 103M296 115L496 103M296 145L496 103M296 175L496 103M296 205L496 103M296 235L496 103"/>
+  <path class="wire hot" d="M296 25L496 157M296 55L496 157M296 85L496 157M296 115L496 157M296 145L496 157M296 175L496 157M296 205L496 157M296 235L496 157"/>
+  <path class="wire" d="M296 25L496 210M296 55L496 210M296 85L496 210M296 115L496 210M296 145L496 210M296 175L496 210M296 205L496 210M296 235L496 210"/>
+  <g class="node inout"><rect x="32" y="34" width="32" height="32" rx="9"/><rect x="32" y="87" width="32" height="32" rx="9"/><rect x="32" y="141" width="32" height="32" rx="9"/><rect x="32" y="194" width="32" height="32" rx="9"/></g>
+  <g class="node hidden"><circle cx="280" cy="25" r="16"/><circle cx="280" cy="55" r="16"/><circle cx="280" cy="85" r="16"/><circle cx="280" cy="115" r="16"/><circle cx="280" cy="145" r="16"/><circle cx="280" cy="175" r="16"/><circle cx="280" cy="205" r="16"/><circle cx="280" cy="235" r="16"/></g>
+  <g class="node inout"><rect x="496" y="34" width="32" height="32" rx="9"/><rect x="496" y="87" width="32" height="32" rx="9"/><rect x="496" y="141" width="32" height="32" rx="9"/><rect x="496" y="194" width="32" height="32" rx="9"/></g>
+ </g>
+</svg>

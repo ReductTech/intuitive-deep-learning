@@ -120,7 +120,7 @@ export function MultiFormatPage() {
     return () => { observer.disconnect(); document.removeEventListener('visibilitychange', update); };
   }, []);
   function select(index: number) { stopNarration(); setSelected(index); setStep(0); setExplaining(false); setSpeechError(''); }
-  return <ContentBlock ref={root} className="aipe-replay-cg-format-page aipe-replay-cg-creator-typography" headingLevel={1} title="同一份课件，适配多种教学与学习场景" bodyClassName="aipe-replay-cg-format-body" onKeyDown={event => { if (event.key === ' ' && event.target instanceof Element && event.target.closest('button')) event.stopPropagation(); }}>
+  return <ContentBlock ref={root} className="aipe-replay-cg-format-page aipe-replay-cg-creator-typography" headingLevel={1} title="一种全新的课件形态" bodyClassName="aipe-replay-cg-format-body" onKeyDown={event => { if (event.key === ' ' && event.target instanceof Element && event.target.closest('button')) event.stopPropagation(); }}>
     <div className="aipe-replay-cg-format-source-row"><svg className="aipe-replay-cg-format-source-links" viewBox="0 0 1536 112" aria-hidden="true"><path d="M768 52C500 35 305 39 248 112M768 52v60M768 52c268-17 463-13 520 60" /></svg><div className="aipe-replay-cg-format-source"><span className="aipe-replay-cg-format-source-icon"><FormatStyleIcon kind="code" /></span><div><Typography variant="h3" tone="accent">同一份内容</Typography><Typography variant="bodySmall" tone="muted">HTML-based 交互课件</Typography></div></div><Typography variant="bodySmall" tone="warning">一次设计，多种应用场景</Typography></div>
     <div className={`aipe-replay-cg-format-columns${expanded ? ' has-expanded' : ''}`}>
       {expanded && <button type="button" className="aipe-replay-cg-format-backdrop" aria-label="关闭放大预览" onClick={() => setExpanded(null)}/>}

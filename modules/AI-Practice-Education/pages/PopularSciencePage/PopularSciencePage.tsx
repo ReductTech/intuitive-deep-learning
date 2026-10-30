@@ -5,7 +5,7 @@ import './PopularSciencePage.css';
 import { FoldingWormhole } from './FoldingWormhole';
 
 export function PopularSciencePage() {
-  return <WormholeLessonFrame className="llmpe-cg-pop-page" title={outline.pages[5].title} subtitle="折纸的比喻让人迅速理解“捷径”，但还没有解释虫洞的物理条件。" conclusion="先建立印象，再追问机制与适用条件。" sidebar={<>
+  return <WormholeLessonFrame className="llmpe-cg-pop-page" title={outline.pages[4].title} subtitle="折纸的比喻让人迅速理解“捷径”，但还没有解释虫洞的物理条件。" conclusion="先建立印象，再追问机制与适用条件。" sidebar={<>
     <Typography as="h2" variant="h2" tone="accent" className="llmpe-cg-wormhole-sidebar-title">科普教育的优势</Typography>
     <WormholeBenefit kind="light" title="直观">用熟悉的事物帮助理解</WormholeBenefit>
     <WormholeBenefit kind="book" title="低门槛">不需要太多专业知识</WormholeBenefit>

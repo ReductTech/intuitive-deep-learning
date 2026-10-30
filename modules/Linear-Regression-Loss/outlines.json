@@ -87,5 +87,6 @@
   "moduleIdentity": {
     "version": 1,
     "id": "a805d0a5-9d46-42ef-9989-e11aeb79e49e"
-  }
+  },
+  "id": "linear-regression-loss"
 }
