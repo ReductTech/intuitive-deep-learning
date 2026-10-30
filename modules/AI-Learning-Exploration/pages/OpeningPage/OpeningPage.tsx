@@ -1,3 +1,4 @@
+import outline from '../../outlines.json';
 import { Typography } from '../../../shared/react';
 import './OpeningPage.css';
 
@@ -38,7 +39,7 @@ export function OpeningPage() {
     </figure>
     <footer className="ale-opening-footer">
       <Typography variant="bodySmall" tone="inherit">人工智能带来的求学问题</Typography>
-      <Typography variant="bodySmall" tone="inherit" aria-label="第1页，大纲共58页">01 / 58</Typography>
+      <Typography variant="bodySmall" tone="inherit" aria-label={`第1页，大纲共${outline.pages.length + outline.plannedPages.length}页`}>01 / {outline.pages.length + outline.plannedPages.length}</Typography>
     </footer>
   </article>;
 }

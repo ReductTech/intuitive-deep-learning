@@ -9,7 +9,7 @@
 .aipe-replay-cg-constraints-checks{grid-column:1 / -1;display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding-left:30px;color:#405b80;}
 .aipe-replay-cg-constraints-checks>div{display:flex;align-items:center;gap:12px;}
 .aipe-replay-cg-constraints-checks span{width:27px;height:27px;display:grid;place-items:center;flex:none;background:var(--skill-color);border-radius:50%;color:white;}
-.aipe-replay-cg-constraints-connector{position:absolute;left:619px;top:389px;height:25px;border-left:2px dashed #b9d0fa;}
+.aipe-replay-cg-constraints-connector{position:absolute;left:799px;top:389px;height:25px;border-left:2px dashed #b9d0fa;}
 .aipe-replay-cg-constraints-carousel{position:absolute;left:0;top:430px;width:1600px;height:420px;perspective:1600px;}
 .aipe-replay-cg-constraints-platform{position:absolute;left:85px;top:210px;width:1430px;height:190px;border:1px solid #b8cae6;border-bottom:15px solid #afc2df;border-radius:50%;background:linear-gradient(180deg,#f6f9fe 20%,#e8f0fb 75%,#d7e4f5);box-shadow:0 18px 28px #17345a12,inset 0 0 0 12px #ffffffb5;}
 .aipe-replay-cg-constraints-orbit{position:absolute;left:40px;top:204px;width:1520px;height:190px;border:1px solid #c4d8fb;border-radius:50%;}
@@ -47,6 +47,7 @@
 .aipe-replay-cg-constraints-preview.aipe-replay-cg-evolution-preview {border-color:#f0c8d8;}
 .aipe-replay-cg-evolution-preview>.aipe-replay-cg-constraints-preview-heading .ui-typography {color:#63334b;}
 .aipe-replay-cg-constraints-preview.aipe-replay-cg-visual-preview {left:70px;width:1460px;--aipe-replay-cg-comparison-color:#123ecb;}
+.aipe-replay-cg-visual-preview.aipe-replay-cg-format-preview {--aipe-replay-cg-comparison-color:#00a584;}
 .aipe-replay-cg-visual-preview>.aipe-replay-cg-constraints-preview-heading>.ui-typography {color:var(--aipe-replay-cg-comparison-color);}
 .aipe-replay-cg-visual-preview .aipe-replay-cg-constraints-visual-options {margin-top:0;gap:8px;}
 .aipe-replay-cg-visual-preview .aipe-replay-cg-constraints-visual-options [aria-pressed="true"] {background:color-mix(in srgb,var(--aipe-replay-cg-comparison-color) 9%,white);color:var(--aipe-replay-cg-comparison-color);border-color:color-mix(in srgb,var(--aipe-replay-cg-comparison-color) 30%,white);}

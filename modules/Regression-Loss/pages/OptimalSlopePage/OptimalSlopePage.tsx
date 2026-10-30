@@ -1,5 +1,7 @@
+import { moduleAssetUrl } from '../../../shared/react/assets';
+import { moduleIdentity } from '../../outlines.json';
 import { Rotate } from '@icon-park/react';
-import { useLayoutEffect, useMemo, useRef, useState, type PointerEvent } from 'react';
+import { useLayoutEffect, useMemo, useRef, useState, type CSSProperties, type PointerEvent } from 'react';
 import { ContentBlock, EChartsChart, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, Typography } from '../../../shared/react';
 import { useRecordedData } from '../../regressionData';
 import { InterceptLossPlot } from '../OptimalInterceptPage/InterceptLossPlot';
@@ -65,7 +67,7 @@ export function OptimalSlopePage() {
     ]
   }), [data,model,w,b,yMin,yMax]);
   if (!data.length || !model.xx) return <ContentBlock title="请先完成称象记录" subtitle="需要不同累计石重下的实际观测。" />;
-  return <ContentBlock headingLevel={1} title="再求最优斜率" subtitle="截距取最优值，调整直线倾斜程度，寻找平方误差最小的位置。" className="rl-intercept-page rl-slope-page"><div className="rl-intercept-layout">
+  return <ContentBlock headingLevel={1} title="再求最优斜率" subtitle="截距取最优值，调整直线倾斜程度，寻找平方误差最小的位置。" className="rl-intercept-page rl-slope-page" style={{ '--rl-rotation-cursor': `url("${moduleAssetUrl(moduleIdentity.id, 'pages/OptimalSlopePage/rotation-cursor.svg')}") 16 16, grab` } as CSSProperties}><div className="rl-intercept-layout">
     <section className="rl-intercept-derivation rl-slope-derivation">
       <div className="rl-intercept-step"><div className="rl-intercept-heading"><span className="rl-intercept-number"><Typography as="span" variant="body" tone="inherit">1</Typography></span><Typography variant="h3" tone="accent">代入最优截距</Typography></div><MathFormulaBlock appearance="plain" className="rl-slope-substitution"><MathFormulaTerm latex="b^*(w)=\bar y-w\bar x" tooltip="沿用上一页结果，每次改变w，b都自动取这个条件最优值，因此直线始终通过平均中心。" /></MathFormulaBlock><MathFormulaBlock appearance="plain"><MathFormulaTerm latex="S(w)" tooltip="这里简写S(w,b*(w))，截距已消去，只剩斜率一个变量。" /><MathFormulaStatic latex="=" /><MathFormulaTerm latex="\sum_i[(y_i-\bar y)-w(x_i-\bar x)]^2" tooltip="代入截距并整理，得到中心化后的平方误差之和。" /></MathFormulaBlock></div>
       <div className="rl-intercept-step"><div className="rl-intercept-heading"><span className="rl-intercept-number"><Typography as="span" variant="body" tone="inherit">2</Typography></span><Typography variant="h3" tone="accent">对 w 求导</Typography></div><MathFormulaBlock appearance="plain"><MathFormulaTerm latex="S'(w)=-2\sum_i(x_i-\bar x)" tooltip="链式法则：平方求导产生2，内层对w求导是−(xᵢ−x̄)。" /></MathFormulaBlock><MathFormulaBlock appearance="plain"><MathFormulaTerm latex="\cdot[(y_i-\bar y)-w(x_i-\bar x)]" tooltip="这一行接在上行求和符号内部，每条中心化误差乘相应的中心化输入。" /></MathFormulaBlock></div>

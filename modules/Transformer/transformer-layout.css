@@ -1,0 +1,33 @@
+html, body, #root { min-height: 100%; }
+html { overflow-x: hidden; }
+body { margin: 0; min-width: 320px; overflow-x: hidden; }
+.tr-root, .tr-shell, .tr-root * { box-sizing: border-box; }
+.tr-root { container: ppt-slide / inline-size; }
+.tr-shell { width: min(100% - 24px, 1600px); min-width: 0; }
+.tr-root .edu-lesson-flow-step { scroll-margin-top: 18px; }
+
+@container ppt-slide (max-width: 900px) {
+  .tr-mission-grid, .tr-workbench { grid-template-columns: 1fr; }
+  .tr-route { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tr-insight { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .tr-insight > .edu-btn { grid-column: 1 / -1; }
+}
+
+@container ppt-slide (max-width: 680px) {
+  .tr-shell { width: min(100% - 12px, 1600px); }
+  .tr-stage p { font-size: 16px; }
+  .tr-route { grid-template-columns: 1fr; }
+  .tr-matrix-layout { grid-template-columns: 1fr; }
+  .tr-token-selector { flex-direction: row; overflow-x: auto; overflow-y: hidden; max-height: none; padding-bottom: 5px; }
+  .tr-token-selector button { min-width: 92px; }
+  .tr-insight { grid-template-columns: 1fr; }
+  .tr-complete-row { align-items: stretch; flex-direction: column; }
+  .tr-vector-readout { grid-template-columns: auto 1fr; }
+  .tr-vector-readout code { grid-column: 1 / -1; }
+  .tr-matrix th, .tr-matrix td { min-width: 58px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tr-token { animation: none; }
+  * { scroll-behavior: auto !important; }
+}

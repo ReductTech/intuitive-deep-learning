@@ -1,5 +1,17 @@
 # 回归与损失：模型怎样变准
 
+<!-- module-structure:start -->
+## 模块入口与目录约定
+
+- 课程 ID：`regression-loss`；连续阅读入口：`/modules/regression-loss` → `GuidePage.tsx`。
+- 已实现页面索引：`outlines.json` 的 `pages`（18 页）。
+- PPT：`/scenedeck/?deck=regression-loss` → `RegressionLossPpt.tsx`；复用共享 SceneDeck。
+- 页面布局与页面样式放在 `pages/`；模块内复用交互放在 `components/`；数据、模型和服务按需分目录。
+- 专属素材归当前模块 `assets/`；共享能力只引用 `modules/shared/`，不依赖其他课程或 `modules-legacy/`。
+- 教学画布为 1600×900；独立文字使用 Shared Typography；入口不复制播放器。
+- 从仓库根目录运行 `npm run dev`，检查运行 `node modules/check-module-structure.mjs` 与 `npm run typecheck`。
+<!-- module-structure:end -->
+
 18-page course available in Guide and PPT. The Titanic and logistic regression pages (former 16–20) have moved to the independent Multilayer-Perceptron module. The former final pages 21 and 22 remain here as pages 16 and 17, with their contents unchanged. Existing signed module identity is preserved.
 
 - Guide: `/modules/regression-loss`

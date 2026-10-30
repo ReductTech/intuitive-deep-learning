@@ -1,6 +1,18 @@
 # 策略梯度入门
 
-15 张固定 1600×900 教学页；Guide 与 术库 共用内容。
+<!-- module-structure:start -->
+## 模块入口与目录约定
+
+- 课程 ID：`policy-gradient`；连续阅读入口：`/modules/policy-gradient` → `GuidePage.tsx`。
+- 已实现页面索引：`outlines.json` 的 `pages`（15 页）。
+- PPT：`/scenedeck/?deck=policy-gradient` → `PolicyGradientPpt.tsx`；复用共享 SceneDeck。
+- 页面布局与页面样式放在 `pages/`；模块内复用交互放在 `components/`；数据、模型和服务按需分目录。
+- 专属素材归当前模块 `assets/`；共享能力只引用 `modules/shared/`，不依赖其他课程或 `modules-legacy/`。
+- 教学画布为 1600×900；独立文字使用 Shared Typography；入口不复制播放器。
+- 从仓库根目录运行 `npm run dev`，检查运行 `node modules/check-module-structure.mjs` 与 `npm run typecheck`。
+<!-- module-structure:end -->
+
+15 张固定 1600×900 教学页；Guide 与 SceneDeck 共用内容。
 包含实际 REINFORCE 与 Q 型 Actor-Critic 训练。顺序参考用户提供的 DRL.pdf：7.4 REINFORCE → 7.5 Actor-Critic。
 
 ## 课程顺序
@@ -92,7 +104,7 @@ actorCritic.ts 按 DRL.pdf §7.5 的Q型方法实现，非A2C：
 
 ## Theory page versions
 
-课程在第15页Actor-Critic真实训练结束；版本对照页已从Guide与术库移除。训练前铺垫收为两页：第6页GradientAscentLesson说明优化方向，第7页LearningSignal说明回报加权与单局梯度估计；第8页直接进入REINFORCE采样。
+课程在第15页Actor-Critic真实训练结束；版本对照页已从Guide与SceneDeck移除。训练前铺垫收为两页：第6页GradientAscentLesson说明优化方向，第7页LearningSignal说明回报加权与单局梯度估计；第8页直接进入REINFORCE采样。
 
 ## 参数更新页精简
 
@@ -108,12 +120,12 @@ actorCritic.ts 按 DRL.pdf §7.5 的Q型方法实现，非A2C：
 - `assets/`：本课程图片原件和全部缩略图，包含旧版本素材。
 - `pages/`：当前课程页面；训练目标、概率实验、模型、采样、回报与真实训练已分别拆成独立文件。
 - `components/`：本课专用迷宫、公式及文字组合；基础组件继续引用 Shared。
-- `versions/`：保留原有对照版本，以及本次清理前的页面和样式快照，不在课程中注册。
+- `../../module-drafts/Policy-Gradient/versions/`：保留原有对照版本，以及本次清理前的页面和样式快照，不在课程中注册。
 - `docs/review/current/`：当前15页截图与画布边界检查记录。
 - `docs/review/references/`：实际查看过的成品课件参考截图。
 - `scripts/link-assets.mjs`：为本模块创建或核对公共资源入口。
 
-素材原件统一位于仓库根目录 `assets/<moduleIdentity.id>/`，不再使用模块内素材目录或目录链接。场景图、狐狸和缩略图通过 Shared `moduleAssetUrl` 与同一 UUID 引用。可从仓库根目录运行 `node modules/Policy-Gradient/scripts/link-assets.mjs` 检查资源目录是否存在。
+按本次用户要求，素材原件集中在模块内。仓库 `assets/policy-gradient` 是指向本模块 `assets` 的相对目录链接，没有第二份待维护原件。Vite 构建会沿链接将素材复制到 dist；场景图、狐狸和缩略图仍使用 Shared `moduleAssetUrl`。初次检出时可从仓库根目录运行 `node modules/Policy-Gradient/scripts/link-assets.mjs`。这一存储位置是用户明确要求对 creator-skill 根目录资源规则的例外。
 
 ### 已处理的规范问题
 
@@ -122,12 +134,12 @@ actorCritic.ts 按 DRL.pdf §7.5 的Q型方法实现，非A2C：
 - 移除328条仅对应已停用界面的样式规则；清理前快照保留在 versions。
 - 通用教学面板的背景、边线和强调色改用 Shared Theme Token。
 - 场景背景经组件的 CSS 自定义属性传入。
-- 活跃代码不依赖 modules-legacy 或其他课程实现；播放器继续复用 共享课程播放器。
+- 活跃代码不依赖 modules-legacy 或其他课程实现；播放器继续复用 Shared SceneDeck。
 - Guide与PPT共用course和相同页面组件；固定1600×900，只由外层等比缩放。
 
-### 模块身份与资源
+### 尚未完成的规范项
 
-模块使用 `outlines.json.moduleIdentity.id` 中的稳定 UUID；无需签发、密钥或验签。静态资源存放在仓库根目录 `assets/<UUID>/`，运行时资源引用和 术库 `assetId` 使用同一 UUID。
+`outlines.json` 缺少签名模块身份。官方验证工具确认其他7个模块身份有效，本模块缺失。官方签发工具无法运行到签发阶段，因为当前环境没有 `.private/module-identity-ed25519.pem`。没有生成替代私钥，没有伪造UUID或签名。需恢复原签发私钥后，再使用仓库工具补齐身份，并同步资源入口和 assetId 至签名UUID。
 
 ### 从成品课件借鉴的设计
 

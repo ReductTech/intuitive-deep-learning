@@ -5,3 +5,8 @@
 .pg-tr-model .pg-tr-neuron.is-output.is-traced{background:var(--ui-bg-card);border-color:var(--ui-accent-alt);box-shadow:0 0 0 3px rgba(var(--ui-accent-alt-rgb),.12)}
 
 .pg-tr-model .pg-tr-aligned-probs>.edu-btn>span{display:flex;align-items:center;justify-content:space-between;gap:4px;width:100%;min-width:0;max-width:100%}.pg-tr-model .pg-tr-aligned-softmax{white-space:nowrap}
+
+/* More space for the larger numeric readouts. */
+.pg-readable-model .pg-tr-aligned-scores{left:58%;width:12%}
+.pg-readable-model .pg-tr-aligned-softmax{left:71%;width:9%}
+.pg-readable-model .pg-tr-aligned-probs{left:82%;width:18%}

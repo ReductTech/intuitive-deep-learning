@@ -1,0 +1,25 @@
+.vgr-cover-body { display: flex; flex: 1; min-height: 0; flex-direction: column; gap: 20px; }
+.vgr-cover-scene { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 90px; align-items: center; padding: 0 90px; }
+.vgr-cover-letter { display: flex; flex-direction: column; gap: 25px; padding: 30px 36px; background: var(--ui-bg-muted); border: 1px solid var(--ui-border); box-shadow: var(--ui-shadow-soft); transform: rotate(-2deg); }
+.vgr-cover-letterhead { display: flex; justify-content: space-between; align-items: center; padding-bottom: 14px; border-bottom: 1px solid var(--ui-border); }
+.vgr-cover-letterhead > p:last-child { border: 1px solid currentColor; padding: 2px 12px; transform: rotate(7deg); }
+.vgr-cover-postscript { display: flex; flex-direction: column; gap: 6px; }
+.vgr-cover-photo-area { position: relative; display: flex; flex-direction: column; align-items: center; gap: 25px; min-width: 0; }
+.vgr-page .vgr-cover-photo-button { width: 420px; max-width: 100%; height: 430px; padding: 0; border: 0; background: transparent; box-shadow: none; color: var(--ui-accent); perspective: 1400px; }
+.vgr-page .vgr-cover-photo-button:disabled { opacity: 1; }
+.vgr-cover-photo-button > span { display: block; width: 100%; height: 100%; }
+.vgr-cover-snapshot { position: relative; display: block; width: 100%; height: 100%; transform: rotate(2deg); transform-style: preserve-3d; transition: transform .7s ease; }
+.vgr-cover-snapshot.is-flipped { transform: rotate(2deg) rotateY(180deg); }
+.vgr-cover-photo-front, .vgr-cover-photo-back { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 14px; background: var(--ui-bg-card,#fff); border: 1px solid var(--ui-border); box-shadow: var(--ui-shadow-soft); backface-visibility: hidden; }
+.vgr-cover-photo-image { position: relative; display: block; width: 100%; height: 340px; background: var(--ui-bg-soft); }
+.vgr-cover-photo-image > img { width: 100%; height: 100%; object-fit: cover; opacity: 0; filter: brightness(1.8); transition: opacity 1.2s, filter 1.2s; }
+.vgr-cover-photo-image.is-developed > img { opacity: 1; filter: brightness(1); }
+.vgr-cover-empty-paper { position: absolute; inset: 0; display: grid; place-items: center; }
+.vgr-cover-photo-back { justify-content: center; gap: 32px; text-align: center; transform: rotateY(180deg); background: var(--ui-bg-muted); }
+.vgr-cover-stamp { position: absolute; right: -8px; bottom: 84px; border: 3px solid var(--ui-accent-alt); padding: 4px 16px; background: var(--ui-bg-card,#fff); transform: rotate(-12deg) scale(1.15); opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .25s, transform .25s; }
+.vgr-cover-stamp.is-visible { visibility: visible; opacity: 1; transform: rotate(-12deg) scale(1); }
+.vgr-cover-photo-hint { opacity: 0; visibility: hidden; }
+.vgr-cover-photo-hint.is-visible { opacity: 1; visibility: visible; }
+.vgr-cover-invitation { flex-shrink: 0; min-height: 80px; display: flex; align-items: center; justify-content: center; text-align: center; border-top: 1px solid var(--ui-border); padding: 14px 20px; }
+.vgr-cover-story { top: 80%; }
+@media (prefers-reduced-motion: reduce) { .vgr-cover-snapshot, .vgr-cover-photo-image > img, .vgr-cover-stamp { transition: none; } }

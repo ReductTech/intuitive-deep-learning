@@ -1,7 +1,0 @@
-.pg-ls-page{height:100%;display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.5fr);gap:12px 36px;align-content:center}
-.pg-ls-page *{min-width:0;max-width:100%;box-sizing:border-box}
-.pg-ls-scene{display:grid;gap:16px;justify-items:center;align-content:center}.pg-ls-scene .pg-tr-board .pg-world{width:280px}.pg-ls-scene .pg-tr-board .pg-hero-marker.is-fox,.pg-ls-scene .pg-tr-board .pg-fox-avatar{width:65px;height:65px}
-.pg-ls-explanation{display:grid;gap:12px;align-content:center}.pg-ls-pieces{display:grid;grid-template-columns:minmax(0,.7fr) auto minmax(0,1.3fr);gap:12px;align-items:center}.pg-ls-pieces>div{display:grid;gap:8px;border-top:3px solid var(--ui-border,#cddce6);padding:8px 6px}
-.pg-ls-meaning{display:flex;gap:32px;padding:12px 16px;background:var(--ui-bg-soft,#edf2f8);border-radius:10px}
-.pg-ls-rule{grid-column:1/-1;display:grid;gap:8px;padding:12px 18px;background:var(--ui-bg-soft,#edf2f8);border-radius:12px}
-.pg-ls-symbols{display:flex;gap:32px;justify-content:space-between}

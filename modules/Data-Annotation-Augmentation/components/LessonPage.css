@@ -1,0 +1,48 @@
+.daa-lesson { display: flex; flex-direction: column; }
+.daa-lesson-body { flex: 1; min-height: 0; grid-template-rows: minmax(0, 1fr) auto; gap: 22px; padding-top: 8px; }
+.daa-lesson-main { min-width: 0; min-height: 0; }
+.daa-lesson-main * { min-width: 0; max-width: 100%; }
+.daa-takeaway { display: grid; align-content: center; min-height: 88px; padding: 14px 24px; border-left: 4px solid var(--ui-accent); background: var(--ui-bg-soft); border-radius: 0 var(--ui-radius-sm) var(--ui-radius-sm) 0; }
+.daa-two { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); gap: 32px; height: 100%; }
+.daa-equal { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.daa-stack { display: flex; flex-direction: column; gap: 20px; min-height: 0; }
+.daa-center { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 18px; min-height: 0; }
+.daa-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.daa-actions .edu-btn { min-height: 50px; }
+.daa-reading { display: flex; flex-direction: column; justify-content: center; gap: 20px; min-height: 0; }
+.daa-three { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: minmax(0, 1fr); gap: 26px; height: 100%; }
+.daa-example { display: grid; grid-template-rows: minmax(0, 1fr) auto auto; gap: 12px; min-height: 0; }
+.daa-example img { width: 100%; height: 100%; object-fit: contain; min-height: 0; border-radius: var(--ui-radius-md); }
+.daa-table { border-collapse: collapse; width: 100%; }
+.daa-table td, .daa-table th { border-bottom: 1px solid var(--ui-border); text-align: left; padding: 12px 16px; }
+.daa-record { display: grid; gap: 12px; padding: 20px; background: var(--ui-bg-muted); border: 1px solid var(--ui-border); border-radius: var(--ui-radius-md); }
+.daa-code { white-space: pre-wrap; overflow-wrap: anywhere; }
+.daa-flow { display: flex; align-items: center; justify-content: space-around; gap: 18px; min-height: 0; }
+.daa-flow-node { display: grid; gap: 12px; justify-items: center; padding: 20px; background: var(--ui-bg-muted); border: 1px solid var(--ui-border); border-radius: var(--ui-radius-md); }
+.daa-flow-node img { width: 180px; height: 120px; object-fit: contain; }
+.daa-lanes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; height: 100%; }
+.daa-lane { display: flex; flex-direction: column; align-items: center; gap: 14px; min-height: 0; border-top: 4px solid var(--ui-accent); padding: 14px; background: var(--ui-bg-muted); }
+.daa-lane.is-risk { border-color: var(--ui-danger); background: rgba(var(--ui-danger-rgb), .04); }
+.daa-lane img { width: 156px; height: 104px; object-fit: contain; }
+.daa-source-row { display: flex; align-items: center; justify-content: center; gap: 12px; }
+.daa-source-row img { width: 128px; height: 85px; object-fit: contain; }
+.daa-coverage { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 18px; min-height: 0; flex: 1; }
+.daa-coverage-cell { display: grid; place-items: center; gap: 8px; padding: 10px; border: 1px solid var(--ui-border); border-radius: var(--ui-radius-sm); background: var(--ui-bg-muted); }
+.daa-coverage-cell img { width: 140px; height: 92px; object-fit: contain; }
+.daa-coverage-cell.is-missing { border-style: dashed; }
+.daa-lesson .dl-question { min-width: 0; max-width: 100%; }
+.daa-lesson .dl-question-options { display: grid; grid-template-columns: minmax(0, 1fr); }
+.daa-lesson .dl-question-option { grid-template-columns: 40px minmax(0, 1fr); }
+.daa-lesson .dl-option-key { width: 40px; height: 40px; align-self: center; }
+.daa-order { display: flex; flex-direction: column; gap: 12px; }
+.daa-order-item { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px; align-items: center; padding: 6px 18px; border: 1px solid var(--ui-border); background: var(--ui-bg-muted); border-radius: var(--ui-radius-sm); }
+.daa-order-item .edu-btn { padding: 0 12px; min-height: 42px; }
+.daa-dot-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.daa-dot { width: 20px; height: 20px; background: var(--ui-accent); border-radius: 50%; }
+.daa-dot.is-variant { background: var(--ui-accent-alt); }
+.daa-split-layout { gap: 14px; }
+.daa-split-layout .daa-lane { gap: 10px; }
+.daa-split-layout .daa-lane img { width: 120px; height: 80px; }
+.daa-split-layout .daa-lane .daa-center { gap: 8px; }
+
+.daa-lesson-no-takeaway .daa-lesson-body { grid-template-rows: minmax(0, 1fr); }

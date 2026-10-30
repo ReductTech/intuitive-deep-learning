@@ -112,7 +112,7 @@ export function ConvolutionObservationPage() {
 
   return (
     <ContentBlock ref={root} className="llmpe-conv-page" headingLevel={1}
-      title={outline.pages[11].title} subtitle="以边缘检测为例：先观察图像处理的效果"
+      title={outline.pages[10].title} subtitle="以边缘检测为例：先观察图像处理的效果"
       bodyClassName="llmpe-conv-body" data-kernel={direction} data-pattern={frame.pattern}
       data-tiles={frame.tiles} data-phase={frame.phase} data-ready={Boolean(samples)}>
       <div className="llmpe-conv-content">
