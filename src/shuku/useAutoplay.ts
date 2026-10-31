@@ -7,15 +7,18 @@ export function useAutoplay(pages:CreatorPage[], pageId:string, courseId:string,
  const requestNarration=useContext(NarrationContext)||fetchNarration;
  const [state,setState]=useState<'idle'|'loading'|'playing'|'paused'|'waiting'>('idle');
  const [provider,setProvider]=useState<'minimax'|'browser'>('minimax');
- const [rate,setRate]=useState(1),[voiceId,setVoiceId]=useState(''),[browserVoice,setBrowserVoice]=useState('');
+ const [rate,setRate]=useState(1.1),[voiceId,setVoiceId]=useState('Chinese (Mandarin)_Warm_Bestie'),[browserVoice,setBrowserVoice]=useState('');
  const [error,setError]=useState('');
+ const [showSubtitles,setShowSubtitles]=useState(false);
+ const [caption,setCaption]=useState<{pageId:string;text:string}|null>(null);
  const session=useRef(0), active=useRef(false), paused=useRef(false);
  const media=useRef<HTMLAudioElement|null>(null), utterance=useRef<SpeechSynthesisUtterance|null>(null);
  const prepared=useRef(new Map<string,AudioEntry>());
  const latest=useRef({pages,pageId}); latest.current={pages,pageId};
  function clear() {
-  if(media.current){media.current.onended=null;media.current.onerror=null;media.current.pause();media.current=null;}
-  if(utterance.current){utterance.current.onend=null;utterance.current.onerror=null;window.speechSynthesis?.cancel();utterance.current=null;}
+  if(media.current){media.current.onended=null;media.current.onerror=null;media.current.ontimeupdate=null;media.current.pause();media.current=null;}
+  if(utterance.current){utterance.current.onend=null;utterance.current.onerror=null;utterance.current.onboundary=null;window.speechSynthesis?.cancel();utterance.current=null;}
+  setCaption(null);
  }
  function keyFor(page:CreatorPage){return JSON.stringify([page.id,String(page.outline?.snippet||'').trim(),rate,voiceId]);}
  function releaseEntry(key:string,entry:AudioEntry){
@@ -60,6 +63,13 @@ export function useAutoplay(pages:CreatorPage[], pageId:string, courseId:string,
   const all=latest.current.pages, start=all.findIndex(p=>p.id===id);
   if(start<0||typeof all[start].outline?.snippet!=='string'||!String(all[start].outline?.snippet).trim()){fail('本页暂无 snippet 讲稿。');return;}
   const page=all[start],text=String(page.outline!.snippet).trim();
+  // Only punctuation ends a cue; never cut a sentence at a character limit or a line break.
+  const cues=Array.from(text.matchAll(/[\s\S]+?(?:[，,。！？!?；;：:…]+[”’」』）)\]】]*|\.(?!\d)[”’」』）)\]】]*|$)/gu),match=>({start:match.index!,end:match.index!+match[0].length,text:match[0].trim()})).filter(cue=>cue.text);
+  const updateCaption=(charIndex:number)=>{
+   if(token!==session.current)return;
+   const cue=cues.find(cue=>charIndex<cue.end)||cues[cues.length-1];
+   if(cue)setCaption(current=>current?.pageId===page.id&&current.text===cue.text?current:{pageId:page.id,text:cue.text});
+  };
   const next=nextPage(page.id);
   retain(new Set([keyFor(page),...(next?[keyFor(next)]:[])]));
   playingId.current=page.id;
@@ -72,12 +82,15 @@ export function useAutoplay(pages:CreatorPage[], pageId:string, courseId:string,
    if(provider==='browser'){
     if(!window.speechSynthesis)throw new Error('当前浏览器不支持朗读，请选择 MiniMax。');
     const speech=new SpeechSynthesisUtterance(text);utterance.current=speech;speech.lang='zh-CN';speech.rate=rate;
+    updateCaption(0);speech.onboundary=event=>updateCaption(event.charIndex);
     speech.voice=window.speechSynthesis.getVoices().find(v=>v.voiceURI===browserVoice)||window.speechSynthesis.getVoices().find(v=>/^zh/i.test(v.lang))||null;
     speech.onend=ended;speech.onerror=()=>{if(token===session.current)fail('浏览器朗读失败，请重新播放。');};
     if(!paused.current)window.speechSynthesis.resume();window.speechSynthesis.speak(speech);if(paused.current)window.speechSynthesis.pause();setState(paused.current?'paused':'playing');
    }else{
     const audio=await loadAudio(page);if(token!==session.current)return;
     media.current=audio;audio.currentTime=0;
+    // The audio endpoint has no word timestamps; estimate sentence positions from playback progress.
+    updateCaption(0);audio.ontimeupdate=()=>{if(Number.isFinite(audio.duration)&&audio.duration>0)updateCaption(Math.min(text.length-1,Math.floor(audio.currentTime/audio.duration*text.length)));};
     audio.onended=ended;audio.onerror=()=>{if(token===session.current)fail('音频播放失败，请重试。');};
     if(!paused.current){await audio.play();if(token===session.current&&!paused.current)setState('playing');}
     if(token===session.current)preloadNext(page.id);
@@ -100,5 +113,6 @@ export function useAutoplay(pages:CreatorPage[], pageId:string, courseId:string,
  useEffect(()=>{if(playingId.current!==pageId){playingId.current=pageId;if(active.current)void play(pageId,++session.current);}},[pageId]);
  useEffect(()=>{stop();setError('');},[courseId,provider,rate,voiceId,browserVoice,enabled]);
  useEffect(()=>()=>{session.current++;active.current=false;clear();retain(new Set());},[]);
- return {state,error,provider,setProvider,rate,setRate,voiceId,setVoiceId,browserVoice,setBrowserVoice,toggle,stop};
+ const subtitle=enabled&&caption?.pageId===pageId&&(state==='playing'||state==='paused')?caption.text:'';
+ return {state,error,provider,setProvider,rate,setRate,voiceId,setVoiceId,browserVoice,setBrowserVoice,showSubtitles,setShowSubtitles,subtitle,toggle,stop};
 }

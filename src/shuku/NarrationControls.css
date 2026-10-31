@@ -16,6 +16,10 @@
 .cw-smart-settings>label{display:flex;flex-direction:column;gap:6px;font-size:12px;color:#53647e}
 .cw-app .cw-smart-settings select{width:100%;padding:8px 10px;background:#f8faff;font-size:13px;color:#233959}
 .cw-smart-settings>small{font-size:11px;color:#8a97aa;line-height:1.6}
+.cw-smart-settings>.cw-smart-subtitles{flex-direction:row;align-items:center;justify-content:space-between;padding:10px 0;border-top:1px solid #edf0f5;border-bottom:1px solid #edf0f5}
+.cw-app .cw-smart-subtitles input{width:17px;height:17px;margin:0;padding:0;accent-color:#2864fa;cursor:pointer}
+.cw-narration-subtitles{position:absolute;z-index:20;left:56px;right:56px;bottom:28px;display:flex;justify-content:center;pointer-events:none;text-align:center;font:500 28px/1.55 Inter,Arial,'Microsoft YaHei',sans-serif;color:#fff}
+.cw-narration-subtitles>span{max-width:100%;padding:10px 24px;border-radius:12px;background:#101b30e8;box-shadow:0 3px 16px #0002;white-space:pre-wrap;overflow-wrap:anywhere;text-shadow:0 1px 2px #0006}
 .cw-smart-settings .cw-smart-advance{flex-direction:row;align-items:center;justify-content:space-between;padding:10px 0;border-top:1px solid #edf0f5;border-bottom:1px solid #edf0f5;color:#233959}
 .cw-smart-advance small{display:block;color:#8a97aa;font-size:11px;margin-top:3px}
 .cw-smart-advance input{width:17px;height:17px;accent-color:#2864fa}
