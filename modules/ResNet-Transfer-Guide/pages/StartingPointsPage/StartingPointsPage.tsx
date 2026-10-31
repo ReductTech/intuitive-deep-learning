@@ -4,8 +4,9 @@ import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography, 
 import { RtgQuestion } from '../../components/RtgQuestion/RtgQuestion';
 import { useCompleteOnce } from '../../hooks/useCompleteOnce';
 import { useTeachingPlayback } from '../../hooks/useTeachingPlayback';
-import { neighborsFor, QUERY_SAMPLES, type StartingSample } from './model';
+import { neighborsFor, getQuerySamples, startingFrames, type StartingSample } from './model';
 import './StartingPointsPage.css';
+import { withAssetResources } from '../../../shared/react/withAssetResources';
 
 export interface StartingPointsPageProps { onComplete?: () => void; }
 function SamplePicture({ sample, className = '' }: { sample: StartingSample; className?: string }) {
@@ -19,6 +20,7 @@ function WeightFile() {
   </div>;
 }
 function StartingArchitecture({ loaded, loading, frame }: { loaded: boolean; loading: boolean; frame: number }) {
+  const QUERY_SAMPLES = getQuerySamples();
   return <div className="rtg-starting__architecture" data-architecture="single">
     <figure className="rtg-starting__input"><SamplePicture sample={QUERY_SAMPLES[0]} /><Typography as="figcaption" variant="bodySmall" tone="muted">输入图像</Typography></figure>
     <svg className="rtg-starting__input-arrow" viewBox="0 0 40 30" aria-hidden="true"><path d="M2 15H35M25 5L35 15L25 25" /></svg>
@@ -37,7 +39,8 @@ function StartingArchitecture({ loaded, loading, frame }: { loaded: boolean; loa
     <div className="rtg-starting__head" data-new-head><Typography variant="bodySmall" tone="accent" align="center">新分类头</Typography></div>
   </div>;
 }
-export function StartingPointsPage({ onComplete }: StartingPointsPageProps) {
+function StartingPointsContent({ onComplete }: StartingPointsPageProps) {
+  const QUERY_SAMPLES = getQuerySamples();
   const [phase, setPhase] = useState<0 | 1>(0), [loaded, setLoaded] = useState(false), [loading, setLoading] = useState(false);
   const [query, setQuery] = useState(0), [compared, setCompared] = useState<number[]>([]);
   const [quiz, setQuiz] = useState(false), [result, setResult] = useState<QuestionCheckResult | null>(null);
@@ -106,3 +109,5 @@ export function StartingPointsPage({ onComplete }: StartingPointsPageProps) {
     </section>
   </ContentBlock>;
 }
+
+export const StartingPointsPage = withAssetResources(StartingPointsContent, [startingFrames]);

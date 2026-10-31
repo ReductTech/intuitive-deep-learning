@@ -35,6 +35,35 @@ const imageUrl = moduleAssetUrl(moduleIdentity.id, 'images/example.png');
 
 深层页面按文件位置调整 import。第二个参数是相对于当前模块 `assets/` 的路径，例如文件 `modules/Example/assets/images/example.png` 对应 `images/example.png`，不包含模块目录、`assets/` 或 UUID 前缀；图片、视频、模型及 Canvas/WebGL 资源均通过此方法引用。CSS 背景图由组件生成 URL，再传入 CSS 自定义属性。
 
+### assets 是运行时边界
+
+`assets/` 中所有文件都应进入 OSS 资源发布范围，包括 JSON、二进制、音视频和模型；不按扩展名或大小偷偷跳过。开发时保留本地素材，由统一 URL 解析器选择本地服务、OSS 或离线包。私有数据、凭据、训练缓存及未准备公开的产物不得放进公共 `assets/`。
+
+禁止从 `assets/` 静态导入、动态 `import()`、重新导出、`require()`、`?url`/`?raw`、`import.meta.glob()`，或用 `new URL(相对素材路径, import.meta.url)` 让打包器收集资源。禁止在 CSS 中直接引用相对 `assets/` 路径；组件应通过 `moduleAssetUrl` 生成地址再传入。不要为修复构建添加按课程名称列举的 Docker COPY/白名单，也不要将资源内容复制进 TS 来绕过边界。
+
+JSON 同样在页面需要时加载，不能用 `import type` 从素材反推类型；在代码目录定义接口。通用加载器缓存成功结果、合并并发请求；失败可重试。例如：
+
+```tsx
+import { moduleJson } from '../shared/react/moduleJson';
+import { withAssetResources } from '../shared/react/withAssetResources';
+import { Typography } from '../shared/react/typography';
+import { moduleIdentity } from './outlines.json';
+
+interface LessonData { values: number[] }
+const data = moduleJson<LessonData>(moduleIdentity.id, 'data/lesson.json');
+function LessonContent() {
+  const { values } = data.read();
+  return <Typography variant="body">{values.join('、')}</Typography>;
+}
+export const Lesson = withAssetResources(LessonContent, [data]);
+```
+
+服务函数可使用 `await data.load()`；图片等直接将 `moduleAssetUrl` 返回值交给对应加载器。确实参与编译的小配置应放在代码目录，例如 `config/`，而不是 `assets/`。大型 JSON 按需加载，必要时分片，禁止打进前端 JS；没有统一的“JSON 都很小”假设。
+
+新增或修改资源引用后执行 `python creator-skill/scripts/tools.py check.asset-imports`，也可通过 `--module <模块目录名>` 限定范围。`npm run build` 与 `build:public` 已在编译前运行该检查。它检查源码引用，不代替真实加载验证。
+
+离线包必须保留同一 `moduleAssetUrl` 路径契约，将 JSON 与它引用的素材一并收集；解压后用 data/blob 地址读取 JSON，不能依赖被浏览器拦截的 `fetch(file://...)`。验证断网打开、交互、请求失败后重试，以及 JSON 内命名的图片/图集等依赖。
+
 正式术库缩略图保存在 `modules/<课程目录>/assets/scenedeck-thumbnails/`，默认为 `<scene-id>.png` 的 1600×900 原图；已有精确格式映射时按映射写入 JPG。由 `capture.thumbnails` 生成，播放器缩小显示。播放器 `assetId` 使用当前模块的 UUID，不使用目录名。
 
 已有正式缩略图对应当前实现时可直接用于检查，无需重复截图；交互状态截图保存在 `_scratchpad/`。
@@ -62,7 +91,7 @@ VITE_ASSET_BASE_URL=https://image.reduct.cn/cloud-IDL/assets
 
 使用已有 `assets.upload`，调用入口见[工具索引](../tools.md#资源与环境)，完整参数以 `assets.upload --help` 为准。上传前核对对象范围，并确认已有本次发布授权；凭据使用环境变量 `OSS_ACCESS_KEY_ID` 和 `OSS_ACCESS_KEY_SECRET`，不写入 Skill 或模块文件。
 
-上传模块素材时指定模块 UUID，保留 `<UUID>/相对路径`。默认从已注册的 `modules/*/assets/` 与索引中的共享、历史别名目录收集素材，再映射到原有 OSS 对象键；省略模块筛选会处理全部注册资源，不能把它当作当前模块上传。不要将 `--assets-dir modules/<课程目录>/assets` 当作上传单模块的快捷方式：显式资源根目录按其相对路径生成对象键，会丢失默认模式保留的 UUID 前缀。默认跳过已有对象，覆盖须明确指定；工具不删除远端文件，也不发布完整数据集、模型权重和训练产物。
+上传模块素材时指定模块 UUID，保留 `<UUID>/相对路径`。默认从已注册的 `modules/*/assets/` 与索引中的共享、历史别名目录收集全部文件，再映射到原有 OSS 对象键；省略模块筛选会处理全部注册资源，不能把它当作当前模块上传。不要将 `--assets-dir modules/<课程目录>/assets` 当作上传单模块的快捷方式：显式资源根目录按其相对路径生成对象键，会丢失默认模式保留的 UUID 前缀。默认跳过已有对象，覆盖须明确指定；工具不删除远端文件。非公开数据集、训练缓存、权重和产物留在公共 assets 之外，不依赖上传脚本的扩展名黑名单保护。
 
 私有 JSON 回放记录使用 `--private-records`，写入 `cloud-IDL/records/`，采用 private ACL 与 no-store；普通页面素材使用默认资源发布模式。
 

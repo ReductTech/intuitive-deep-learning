@@ -16,20 +16,21 @@ const cartonFlat = moduleAssetUrl(moduleIdentity.id, "starting-points/carton-fla
 const queryBottleFlat = moduleAssetUrl(moduleIdentity.id, "starting-points/query-bottle-flat.jpg");
 const queryCan = moduleAssetUrl(moduleIdentity.id, "starting-points/query-can.jpg");
 const queryCarton = moduleAssetUrl(moduleIdentity.id, "starting-points/query-carton.jpg");
-import frames from '../../assets/starting-points/images.json';
+import { moduleJson } from '../../../shared/react/moduleJson';
+export const startingFrames = moduleJson<Record<string, {width:number;height:number;viewBox:string}>>(moduleIdentity.id, 'starting-points/images.json');
 
 export interface StartingSample { id: string; image: string; label: string; category: number; width: number; height: number; viewBox: string; }
-function sample(id: keyof typeof frames, image: string, label: string, category: number): StartingSample {
-  const frame = frames[id];
+function sample(id: string, image: string, label: string, category: number): StartingSample {
+  const frame = startingFrames.read()[id];
   return { id, image, label, category, width: frame.width, height: frame.height, viewBox: frame.viewBox };
 }
-export const QUERY_SAMPLES = [
+export const getQuerySamples = () => [
   sample('query-bottle', bottle, '塑料瓶', 0),
   sample('query-bottle-flat', queryBottleFlat, '压扁塑料瓶', 0),
   sample('query-can', queryCan, '易拉罐', 1),
   sample('query-carton', queryCarton, '纸盒', 2),
 ];
-export const CANDIDATE_SAMPLES = [
+export const getCandidateSamples = () => [
   sample('bottle-blue', bottleBlue, '直立蓝瓶', 0),
   sample('bottle-label', bottleLabel, '标签瓶', 0),
   sample('bottle-bent', bottleBent, '弯折瓶', 0),
@@ -47,6 +48,7 @@ export const CANDIDATE_SAMPLES = [
 // Authored concept ranking, not inference or a measured similarity/training result.
 // A and B always rank the same eight candidates; the query itself is never included.
 export function neighborsFor(queryIndex: number, pretrained: boolean): StartingSample[] {
+  const QUERY_SAMPLES = getQuerySamples(), CANDIDATE_SAMPLES = getCandidateSamples();
   const query = QUERY_SAMPLES[queryIndex] ?? QUERY_SAMPLES[0];
   const same = CANDIDATE_SAMPLES.filter(item => item.category === query.category && item.image !== query.image);
   const matchingOrder = query.id === 'query-bottle-flat' ? [3, 2, 0, 1] : [0, 1, 2, 3];

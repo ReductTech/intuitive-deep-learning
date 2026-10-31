@@ -16,14 +16,16 @@ try {
  await fs.mkdir(moduleDir,{recursive:true});await fs.mkdir(path.join(assetDir,'icons'),{recursive:true});
  await fs.symlink(path.join(root,'modules/shared'),path.join(folder,'modules/shared'),process.platform==='win32'?'junction':'dir');
  await fs.writeFile(path.join(moduleDir,'outlines.json'),JSON.stringify({id:'offline-fixture',moduleIdentity:{id:'fixture-assets'},entry:'Guide.tsx',ppt:{entry:'Entry.tsx'},pages:[]}));
- await fs.writeFile(path.join(moduleDir,'Entry.tsx'),`import React,{useState} from 'react';import {moduleAssetUrl} from '../shared/react/assets';
- function Lesson(){const [n,setN]=useState(1);return <main><h1>Original interactive lesson</h1><button onClick={()=>setN(n===1?2:1)}>Count {n}</button><img alt="Dynamic lesson image" src={moduleAssetUrl('fixture-assets',\`icons/icon-\${n}.svg\`)}/><iframe title="Embedded lesson" src="/modules/offline-fixture?demo=1"/></main>}
- export const deck={id:'offline-fixture',title:'One module',subtitle:'',scenes:[{id:'first',title:'First',section:'',render:()=> <Lesson/>}]};`);
+ await fs.writeFile(path.join(moduleDir,'Entry.tsx'),`import React,{useState} from 'react';import {moduleAssetUrl} from '../shared/react/assets';import {moduleJson} from '../shared/react/moduleJson';import {withAssetResources} from '../shared/react/withAssetResources';const metadata=moduleJson('fixture-assets','metadata.json');
+ function Lesson(){const data=metadata.read();const [n,setN]=useState(1);return <main><p>{data.caption}</p><img alt="JSON referenced image" src={moduleAssetUrl('fixture-assets',data.image)}/><h1>Original interactive lesson</h1><button onClick={()=>setN(n===1?2:1)}>Count {n}</button><img alt="Dynamic lesson image" src={moduleAssetUrl('fixture-assets',\`icons/icon-\${n}.svg\`)}/><iframe title="Embedded lesson" src="/modules/offline-fixture?demo=1"/></main>}
+ const LoadedLesson=withAssetResources(Lesson,[metadata]);export const deck={id:'offline-fixture',title:'One module',subtitle:'',scenes:[{id:'first',title:'First',section:'',render:()=> <LoadedLesson/>}]};`);
  await fs.writeFile(path.join(moduleDir,'Guide.tsx'),`import React,{useState} from 'react';export default function Guide(){const [n,setN]=useState(0);return <main><h2>Embedded {new URLSearchParams(window.location.search).get('demo')}</h2><button onClick={()=>setN(n+1)}>Embedded count {n}</button></main>}`);
  const svg='<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><rect width="20" height="20" fill="blue"/></svg>';
  await fs.writeFile(path.join(assetDir,'icons/icon-1.svg'),svg);await fs.writeFile(path.join(assetDir,'icons/icon-2.svg'),svg);
  await fs.mkdir(path.join(assetDir,'scenedeck-thumbnails'));
  execFileSync(process.env.IDL_PYTHON||'python',['-c','from PIL import Image;import sys;Image.new("RGB",(160,90),"blue").save(sys.argv[1])',path.join(assetDir,'scenedeck-thumbnails/first.png')]);
+ await fs.writeFile(path.join(assetDir,'metadata.json'),JSON.stringify({caption:'Runtime JSON loaded',image:'json-only-picture.svg'}));
+ await fs.writeFile(path.join(assetDir,'json-only-picture.svg'),svg);
  await fs.writeFile(path.join(assetDir,'unused.svg'),'UNUSED_ASSET_MUST_NOT_TRAVEL');
  await fs.mkdir(path.join(folder,'assets/unrelated-module'),{recursive:true});
  await fs.writeFile(path.join(folder,'assets/unrelated-module/unrelated.svg'),'ANOTHER_MODULE_MUST_NOT_TRAVEL');
@@ -35,15 +37,16 @@ try {
  const sealed=await fs.readFile(path.join(out,'index.html'),'utf8');
  const html=gunzipSync(Buffer.from(sealed.match(/id="offline-payload"[^>]*>([^<]+)/)[1],'base64')).toString('utf8');
  assert.ok(!html.includes('UNUSED_ASSET_MUST_NOT_TRAVEL'));assert.ok(!html.includes('ANOTHER_MODULE_MUST_NOT_TRAVEL'));
- assert.equal((html.match(/type="application\/octet-stream"/g)||[]).length,2,'identical dynamic images stored once, plus one thumbnail');
+ assert.equal((html.match(/type="application\/octet-stream"/g)||[]).length,3,'identical images stored once, plus thumbnail and runtime JSON');
  // Move ONLY index.html: the original output folder is not available to the viewer.
  const portable=path.join(folder,'portable.html');await fs.rename(path.join(out,'index.html'),portable);await fs.rm(out,{recursive:true,force:true});
  browser=await chromium.launch({channel:'chrome',headless:true});
  const context=await browser.newContext({offline:true,viewport:{width:1600,height:1000}}),page=await context.newPage(),errors=[],network=[];
  await context.addInitScript(()=>{try{localStorage.setItem('scenedeck:creator:v1:guest:11111111-1111-4111-8111-111111111111',JSON.stringify({version:1,courseId:'offline-fixture',title:'Old cached outline',duration:20,style:'simple',outlineConfirmed:true,pages:[{id:'stale',title:'Stale page',goal:'',summary:'',note:'',designed:true,ready:true,revisions:[],messages:[]}]}));}catch{}});
  page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(/^https?:/.test(r.url()))network.push(r.url());});
- await page.goto(pathToFileURL(portable).href);
+ await page.goto(pathToFileURL(portable).href,{waitUntil:'domcontentloaded'});
  await page.getByRole('heading',{name:'Original interactive lesson'}).waitFor();
+ await page.getByText('Runtime JSON loaded',{exact:true}).waitFor();
  assert.equal(await page.locator('select[aria-label="切换课程"]').count(),0);
  assert.equal(await page.locator('.cw-course-context strong').innerText(),'One module');
  await page.getByRole('button',{name:'Count 1',exact:true}).click();await page.getByRole('button',{name:'Count 2',exact:true}).waitFor();
@@ -70,8 +73,10 @@ try {
  const entry=path.join(extracted,'打开课件.html'),zipHtml=await fs.readFile(entry,'utf8');
  assert.ok(!zipHtml.includes('offline-payload'),'ZIP entry does not encode the document');
  const zipPage=await context.newPage();zipPage.on('pageerror',e=>errors.push(e.message));zipPage.on('request',r=>{if(/^https?:/.test(r.url()))network.push(r.url());});
- await zipPage.goto(pathToFileURL(entry).href);await zipPage.getByRole('button',{name:'Count 1',exact:true}).click();await zipPage.getByRole('button',{name:'Count 2',exact:true}).waitFor();
+ await zipPage.goto(pathToFileURL(entry).href,{waitUntil:'domcontentloaded'});await zipPage.getByRole('button',{name:'Count 1',exact:true}).click();await zipPage.getByRole('button',{name:'Count 2',exact:true}).waitFor();
  await zipPage.waitForFunction(()=>{const image=document.querySelector('img[alt="Dynamic lesson image"]');return image?.complete&&image.naturalWidth>0;});
+ await zipPage.getByText('Runtime JSON loaded',{exact:true}).waitFor();
+ await zipPage.waitForFunction(()=>{const image=document.querySelector('img[alt="JSON referenced image"]');return image?.complete&&image.naturalWidth>0;});
  await zipPage.frameLocator('iframe').getByRole('button',{name:'Embedded count 0'}).click();await zipPage.frameLocator('iframe').getByRole('button',{name:'Embedded count 1'}).waitFor();
  await zipPage.getByRole('button',{name:'演示',exact:true}).click();
  const controls=zipPage.getByRole('group',{name:'演示控制'});
@@ -112,6 +117,7 @@ try {
  assert.deepEqual(errors,[]);assert.deepEqual(network,[]);
  console.log('PASS single HTML and extracted ZIP: React interaction, dynamic images, deduplication, text pages, navigation, embedded lesson and no network');
 } finally {
+ for(const context of browser?.contexts()||[])for(const page of context.pages())await page.goto('about:blank',{waitUntil:'commit',timeout:5000}).catch(()=>{});
  await browser?.close();
  await fs.rm(folder,{recursive:true,force:true});
 }

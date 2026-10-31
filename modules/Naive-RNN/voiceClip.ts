@@ -1,4 +1,6 @@
-const clipUrl = new URL('./assets/speech-i-like-learning.m4a', import.meta.url).href;
+import { moduleAssetUrl } from '../shared/react/assets';
+import { moduleIdentity } from './outlines.json';
+const clipUrl = moduleAssetUrl(moduleIdentity.id, 'speech-i-like-learning.m4a');
 
 export interface VoiceSyllable {
   character: string;

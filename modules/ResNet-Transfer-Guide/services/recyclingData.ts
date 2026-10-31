@@ -1,6 +1,6 @@
 import { moduleIdentity } from '../outlines.json';
 import { moduleAssetUrl } from '../../shared/react/assets';
-import dataset from '../assets/training-head/dataset.json';
+import { recyclingDataset } from './recyclingDataset';
 const image0 = moduleAssetUrl(moduleIdentity.id, "training-head/images/bottle-01.jpg");
 const image1 = moduleAssetUrl(moduleIdentity.id, "training-head/images/can-01.jpg");
 const image2 = moduleAssetUrl(moduleIdentity.id, "training-head/images/box-01.jpg");
@@ -603,6 +603,8 @@ const images: Record<string, string> = {
   'trashnet-can-163': image298,
   'trashnet-box-346': image299,
 };
-export const DEMO_CLASSES: string[] = dataset.classes;
-export const DEMO_COUNTS = dataset.split_counts;
-export const DEMO_SAMPLES = dataset.samples.map(sample => ({ ...sample, image: images[sample.id] }));
+export function demoData() {
+  const dataset = recyclingDataset.read();
+  return { DEMO_CLASSES: dataset.classes, DEMO_COUNTS: dataset.split_counts,
+    DEMO_SAMPLES: dataset.samples.map(sample => ({ ...sample, image: images[sample.id] })) };
+}

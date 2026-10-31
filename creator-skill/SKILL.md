@@ -48,6 +48,7 @@ description: 在当前仓库中规划、设计、实现、修改和评估 React 
 - 每页独占 `modules/<模块目录名>/pages/<语义页目录>/`，页面组件与同名样式放在该目录，不平铺在 `pages/` 下。该页的设计图、prompt、检查截图及临时脚本放在页目录内的 `_scratchpad/`；课程整体的原稿、大纲备份和汇总记录放在模块级 `_scratchpad/`。两级临时目录均由 Git 忽略，正式资源按工程约定保存。
 - 页目录与 `_scratchpad/` 按实际制作需要创建，不根据大纲预建未开始页面的空目录或占位文件。
 - 正式静态资源归各模块所有，保存到 `modules/<模块目录名>/assets/`；真正跨模块共用的素材放在 `modules/shared/assets/`。页面仍用 `moduleAssetUrl(moduleIdentity.id, relativePath)` 引用，UUID 是运行时与 OSS 命名空间，不是本地目录名。具体约定见[模块身份与资源](references/engineering/module-assets.md)。
+- `assets/` 内所有文件均为运行时 OSS 资源，与扩展名和体积无关；禁止 `import`、`require`、`?url` 或 `new URL(..., import.meta.url)` 把它们作为编译依赖。JSON 使用 `moduleAssetUrl` 后异步读取，优先复用 `moduleJson` 与 `withAssetResources`；构建必需的配置放在代码目录。修改资源引用后执行 `check.asset-imports`，并验证加载、失败重试与离线包；详见上述资源规范。
 
 ## 按动作读取
 

@@ -26,6 +26,7 @@ python creator-skill/scripts/tools.py capture.slides --help
 |---|---|---|
 | `module/` | `module.identity`、`module.init` | 模块身份与初始大纲 |
 | `checks/` | `check.module`、`check.bounds`、`check.course`、`check.styles`、`assets.inspect`、`check.skill`、`environment.doctor` | 模块、页面、资源、Skill 与环境检查 |
+| `checks/` | `check.asset-imports` | 检查 assets 运行时边界，禁止源码编译时导入；构建前自动执行 |
 | `media/` | `extract.pptx`、`capture.slides`、`capture.thumbnails`、`capture.inspect`、`assets.upload`、`media.remove-green` | 原稿提取、截图、上传与视频处理 |
 | `analysis/` | `analyze.pages` | 源码和缩略图统计 |
 | `common/` | 内部辅助文件 | 路径、输出与命令行共用逻辑 |

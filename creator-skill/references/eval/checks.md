@@ -49,6 +49,7 @@
 | 工具 | 覆盖范围与限制 |
 |---|---|
 | `check.module` | 元数据、页 ID、身份及字面量入口、资源引用；动态表达式仍需实测。身份变化补充 `module.identity --check`。 |
+| `check.asset-imports` | 禁止将 assets 内资源作为编译依赖；资源引用变更时执行，构建也会提前检查。JSON 加载、重试与离线兼容仍需实测。 |
 | `check.course` | 大纲、PPT 与 Guide 的实际页序、标题及讲稿对应；不存在的入口按任务说明不适用，无法读取的应标记未验证。 |
 | `capture.slides` | 复用页面就绪检查、真实截图及 `--actions` 动作；每页状态的 `checks` 返回边界、字数、警告和覆盖限制。截图与字数仍需核对。 |
 | `check.bounds` | 通过已有 Chromium 调试会话检查新开页面的默认状态；验证就绪与页 ID，返回相同的边界、字数口径。交互状态优先复用 `capture.slides`，不另设动作格式。 |

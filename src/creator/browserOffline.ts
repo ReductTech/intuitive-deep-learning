@@ -1,6 +1,7 @@
 import type {CreatorProject} from './model';
 import {prepareOfflineZip} from './offlineZip';
 import {verifyOfflineDownload} from './offlineDownload';
+import {jsonAssetReferences} from '../../scripts/runtime-asset-references.mjs';
 type Entry={name:string;bytes:Uint8Array<ArrayBuffer>};
 type Progress=(text:string,ratio?:number)=>void;
 const encoder=new TextEncoder();
@@ -53,11 +54,18 @@ export async function downloadCourseInBrowser(project:CreatorProject,signal:Abor
   const formats:Record<string,string>=index.formats||{};
   const aliases=new Map<string,string[]>();for(const [source,target] of Object.entries(formats)){if(!aliases.has(target))aliases.set(target,[]);aliases.get(target)!.push(source);}
   const selected=index.files.filter((f:any)=>!formats[f.path]&&(matches(f.path)||(aliases.get(f.path)||[]).some(matches)||(f.path.startsWith('scenedeck-thumbnails/')&&project.pages.some(p=>f.path.replace(/\.(png|jpe?g|webp)$/i,'').endsWith('/'+(p.nativeId||p.id))))));
+  const includeReferences=(bytes:Uint8Array,metadataPath:string)=>{
+   const refs=new Set(jsonAssetReferences(JSON.parse(new TextDecoder().decode(bytes)),metadataPath));
+   for(const candidate of index.files)if(!selected.includes(candidate)&&!formats[candidate.path]&&(refs.has(candidate.path)||(aliases.get(candidate.path)||[]).some(source=>refs.has(source))))selected.push(candidate);
+  };
   for(let i=0;i<selected.length;i++){
    signal.throwIfAborted();const f=selected[i],key='assets/'+namespace+'/'+f.path;progress(`正在从 OSS 下载素材 ${i+1} / ${selected.length}…`,(i+1)/selected.length);
-   if(dedup.has(f.sha256)){manifest[key]=[dedup.get(f.sha256)!,f.mime];for(const source of aliases.get(f.path)||[])manifest['assets/'+namespace+'/'+source]=manifest[key];continue;}
+   if(dedup.has(f.sha256)){manifest[key]=[dedup.get(f.sha256)!,f.mime];for(const source of aliases.get(f.path)||[])manifest['assets/'+namespace+'/'+source]=manifest[key];if(f.mime==='application/json')includeReferences(files.find(file=>file.name===dedup.get(f.sha256))!.bytes,f.path);continue;}
    let bytes=await get(new URL(f.url||namespace+'/'+f.path,assetBase+'/').href);
    const hash=[...new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))].map(b=>b.toString(16).padStart(2,'0')).join('');if(hash!==f.sha256)throw Error('素材版本校验失败，请刷新重试：'+f.path);
+   if(f.mime==='application/json'){
+    includeReferences(bytes,f.path);
+   }
    bytes=await resize(bytes,f.mime);const name='files/'+f.sha256.slice(0,24)+'.'+f.path.split('.').at(-1);dedup.set(f.sha256,name);manifest[key]=[name,f.mime];for(const source of aliases.get(f.path)||[])manifest['assets/'+namespace+'/'+source]=manifest[key];files.push({name,bytes});
   }
  }
@@ -71,8 +79,8 @@ export async function downloadCourseInBrowser(project:CreatorProject,signal:Abor
  });build.onLoad({filter:/.*/,namespace:'oss'},args=>{const code=args.path.includes('preload-helper-')?'export function _(callback){return callback()}':codes.get(args.path);if(code===undefined)throw Error('课件依赖未列入清单：'+args.path);return {contents:code,loader:'js'};});}}]});
  signal.throwIfAborted();const code=built.outputFiles![0].text+';OfflineCourse.mount('+JSON.stringify(project)+');';
  const canvasAssets:Record<string,string>={};
- // Raw local images cannot be read by canvas. Script transport preserves pixel operations.
- for(const f of files)if(manifest[Object.keys(manifest).find(k=>manifest[k][0]===f.name)!]?.[1]?.startsWith('image/'))canvasAssets[f.name]=await dataUrl(f.bytes,manifest[Object.keys(manifest).find(k=>manifest[k][0]===f.name)!][1]);
+ // Script transport also makes JSON fetchable when the extracted ZIP opens via file://.
+ for(const f of files)if(manifest[Object.keys(manifest).find(k=>manifest[k][0]===f.name)!]?.[1]?.match(/^(image\/|application\/json$)/))canvasAssets[f.name]=await dataUrl(f.bytes,manifest[Object.keys(manifest).find(k=>manifest[k][0]===f.name)!][1]);
  const bootstrap=`globalThis.__SHUKU_OFFLINE__=true;globalThis.__SHUKU_OFFLINE_DESIGNS__=${JSON.stringify((project as any).designImages||{})};const assets=${JSON.stringify(manifest)};globalThis.__SHUKU_OFFLINE_ASSET_KEYS__=Object.keys(assets);globalThis.__SHUKU_OFFLINE_ASSET__=key=>{const a=assets[key];if(!a){if(key.includes('/scenedeck-thumbnails/'))return 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg"/%3E';throw Error('缺少离线素材：'+key);}return globalThis.__SHUKU_CANVAS_ASSETS__?.[a[0]]||globalThis.__SHUKU_ZIP_FILES__?.[a[0]]||new URL(a[0],document.baseURI).href;};`;
  const frame=`globalThis.__SHUKU_OFFLINE_FRAME__=function(source){const u=new URL(source,'https://offline.invalid');if(!u.pathname.endsWith('/modules/'+${JSON.stringify(project.courseId)}))return '<p>此在线内容未包含在离线课件中。</p>';const startup=${JSON.stringify(bootstrap)};const values={__SHUKU_OFFLINE__:true,__SHUKU_OFFLINE_EMBED_QUERY__:u.search,__SHUKU_CANVAS_ASSETS__:globalThis.__SHUKU_CANVAS_ASSETS__,__SHUKU_ZIP_FILES__:globalThis.__SHUKU_ZIP_FILES__};const init='Object.assign(globalThis,'+JSON.stringify(values)+');'+startup+';globalThis.__SHUKU_OFFLINE_FRAME__=('+globalThis.__SHUKU_OFFLINE_FRAME__.toString()+');';return '<html><meta charset="utf-8"><style>'+document.querySelector('head style').textContent+'</style><body><div id="root"></div><script>'+init+'<'+String.fromCharCode(47)+'script><script>'+document.getElementById('offline-runtime').textContent+'<'+String.fromCharCode(47)+'script></body></html>';};`;
 

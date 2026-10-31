@@ -4,7 +4,9 @@ import { Button, ContentBlock, EChartsChart, NoticeStrip, RangeControl, Typograp
 import { UpdateStateIcon } from '../../components/ParameterRange/ParameterRange';
 import { WeightCheckpoint } from '../../components/TransferVisuals/TransferVisuals';
 import { useCompleteOnce } from '../../hooks/useCompleteOnce';
-import { DEMO_SAMPLES, DEMO_CLASSES, DEMO_COUNTS } from '../../services/recyclingData';
+import { demoData } from '../../services/recyclingData';
+import { recyclingDataset } from '../../services/recyclingDataset';
+import { withAssetResources } from '../../../shared/react/withAssetResources';
 import { evaluateRecyclingHead, loadRecyclingBackbone, replaceRecyclingHead, trainRecyclingHead,
   type BackboneSession, type NewHeadSession, type HeadEpoch, type HeadTestResult, type HeadTrainingResult } from '../../services/recyclingTraining';
 import './RealHeadTrainingPage.css';
@@ -43,7 +45,8 @@ function ResNet18Structure() {
   </div>;
 }
 export interface RealHeadTrainingPageProps { onComplete?: () => void; }
-export function RealHeadTrainingPage({ onComplete }: RealHeadTrainingPageProps) {
+function RealHeadTrainingContent({ onComplete }: RealHeadTrainingPageProps) {
+  const { DEMO_SAMPLES, DEMO_CLASSES, DEMO_COUNTS } = useMemo(demoData, []);
   const [phase, renderPhase] = useState<Phase>('empty'), [stage, setStage] = useState<Stage>(0);
   const [backbone, setBackbone] = useState<BackboneSession | null>(null), [head, setHead] = useState<NewHeadSession | null>(null);
   const [history, setHistory] = useState<HeadEpoch[]>([]), [result, setResult] = useState<HeadTrainingResult | null>(null);
@@ -252,3 +255,5 @@ export function RealHeadTrainingPage({ onComplete }: RealHeadTrainingPageProps) 
     <div className="rtg-real-head__footer"><NoticeStrip role="status" tone={error ? 'orange' : completed[stage] ? 'green' : 'blue'}>{error || stageFeedback}</NoticeStrip><Button data-action={phase} data-next-scene={next !== null ? next + 1 : undefined} data-load={stage === 0 && phase === 'empty' || undefined} data-replace={stage === 1 && phase === 'loaded' || undefined} data-train={stage === 2 && phase === 'head-ready' || undefined} data-test={stage === 3 && phase === 'trained' || undefined} variant="primary" disabled={!action || running} onClick={action}>{actionText}</Button></div>
   </ContentBlock>;
 }
+
+export const RealHeadTrainingPage = withAssetResources(RealHeadTrainingContent, [recyclingDataset]);

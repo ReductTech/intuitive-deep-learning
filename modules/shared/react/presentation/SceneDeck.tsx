@@ -297,7 +297,7 @@ function SceneDeckPlayer({ catalog, moduleId, assetId, progressKey, getNotes }: 
           <div className="scenedeck-stage-viewport" ref={viewportRef}>
             <div className="scenedeck-stage-grid" aria-hidden="true" />
             <div className="ppt-canvas scenedeck-stage course-shell" data-ppt-canvas style={{ transform: 'translate(-50%, -50%) scale(' + scale + ')' }}>
-              <SceneSurface scene={scene} complete={complete} reset={reset} isComplete={completedIds.includes(scene.id)} />
+              <SceneSurface scene={scene} complete={complete} reset={reset} isComplete={completedIds.includes(scene.id)} next={() => navigate(sceneIndex + 1)} />
             </div>
           </div>
           {notesOpen && <>
@@ -313,8 +313,8 @@ function SceneDeckPlayer({ catalog, moduleId, assetId, progressKey, getNotes }: 
 
 function clamp(value: number, min: number, max: number) { return Math.min(max, Math.max(min, value)); }
 
-const SceneSurface = memo(function SceneSurface({ scene, complete, reset, isComplete }: { scene: SceneDefinition; complete: () => void; reset: () => void; isComplete: boolean }) {
-  return <QuestionModeProvider mode="ppt"><div className="course-page-surface ppt-slide-surface">{scene.render({ complete, reset, isComplete })}</div></QuestionModeProvider>;
+const SceneSurface = memo(function SceneSurface({ scene, complete, reset, isComplete, next }: { scene: SceneDefinition; complete: () => void; reset: () => void; isComplete: boolean; next?: () => void }) {
+  return <QuestionModeProvider mode="ppt"><div className="course-page-surface ppt-slide-surface">{scene.render({ complete, reset, isComplete, next })}</div></QuestionModeProvider>;
 });
 
 function PanelResizeHandle({ label, onDelta }: { label: string; onDelta: (delta: number) => void }) {

@@ -1,4 +1,4 @@
-import dataset from '../assets/training-head/dataset.json';
+import { recyclingDataset } from './recyclingDataset';
 const base = (import.meta.env.VITE_CNN_SERVICE_URL || 'http://127.0.0.1:28431').replace(/\/$/, '');
 export interface HeadEpoch {
   epoch: number; train_loss: number; val_loss: number; train_correct: number; val_correct: number;
@@ -71,12 +71,16 @@ async function run(endpoint: string, payload: object, signal: AbortSignal, onPro
   }
 }
 export async function loadRecyclingBackbone(signal: AbortSignal, progress: (job: TrainingProgress) => void) {
+  const dataset = await recyclingDataset.load();
+  signal.throwIfAborted();
   const result = await run('/resnet/recycling/load-backbone', {}, signal, progress) as BackboneSession;
   if (!/^[0-9a-f]{32}$/.test(result.session_id) || result.dataset_revision !== dataset.revision
     || result.old_classes !== 1000 || result.feature_dimensions !== 512 || result.backbone_frozen !== true) throw new Error('预训练权重装入结果无法校验。');
   return result;
 }
 export async function replaceRecyclingHead(sessionId: string, seed: number, signal: AbortSignal) {
+  const dataset = await recyclingDataset.load();
+  signal.throwIfAborted();
   const result = await run('/resnet/recycling/replace-head', { session_id: sessionId, seed }, signal) as NewHeadSession;
   if (result.session_id !== sessionId || result.dataset_revision !== dataset.revision || result.new_classes !== 3 || result.head_parameters !== 1539
     || result.initial_probabilities?.length !== dataset.split_counts.validation
@@ -84,6 +88,8 @@ export async function replaceRecyclingHead(sessionId: string, seed: number, sign
   return result;
 }
 export async function trainRecyclingHead(sessionId: string, signal: AbortSignal, progress: (job: TrainingProgress) => void) {
+  const dataset = await recyclingDataset.load();
+  signal.throwIfAborted();
   const result = await run('/resnet/recycling/train-head', { session_id: sessionId }, signal, progress) as HeadTrainingResult;
   const expected = dataset.samples.filter(p => p.split === 'validation');
   if (!/^[0-9a-f]{32}$/.test(result.run_id) || result.epochs !== 20 || result.history?.length !== 21
@@ -104,6 +110,8 @@ export async function trainRecyclingHead(sessionId: string, signal: AbortSignal,
   return result;
 }
 export async function evaluateRecyclingHead(runId: string, signal: AbortSignal) {
+  const dataset = await recyclingDataset.load();
+  signal.throwIfAborted();
   const result = await run('/resnet/recycling/evaluate-head', { run_id: runId }, signal) as HeadTestResult;
   const expected = dataset.samples.filter(p => p.split === 'test');
   if (result.run_id !== runId || result.count !== expected.length || result.samples?.length !== expected.length

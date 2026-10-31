@@ -1,8 +1,9 @@
 import { AtlasImage } from '../../components/AtlasImage';
 import { useState, useLayoutEffect, useRef } from 'react';
 import { Button, ContentBlock, ExplainPanelButton, Typography, moduleAssetUrl } from '../../../shared/react';
-import manifest from '../../assets/feature-hierarchy/mobilenet-v3-small/manifest.json';
-import lessonChannels from '../../assets/feature-hierarchy/mobilenet-v3-small/lesson-channels.json';
+import { hierarchyManifest, hierarchyChannels } from '../../services/lessonData';
+import { atlasIndex } from '../../services/imageAtlas';
+import { withAssetResources } from '../../../shared/react/withAssetResources';
 import './HierarchicalFeaturesPage.css';
 
 const ASSET_ID = '80396753-7fc8-4f55-9188-bddbdb828169';
@@ -14,7 +15,8 @@ const LEVELS = [
   { key: 'shallow', label: '浅层', description: '提取边缘与方向' },
 ] as const;
 
-export function HierarchicalFeaturesPage() {
+function HierarchicalFeaturesContent() {
+  const manifest = hierarchyManifest.read(), lessonChannels = hierarchyChannels.read();
   const sceneRef=useRef<HTMLDivElement>(null);
   const [links,setLinks]=useState<Record<string,string>>({});
   const [sampleId, setSampleId] = useState('mnist-5-0');
@@ -90,3 +92,5 @@ export function HierarchicalFeaturesPage() {
     {failedSample === sampleId && <Typography className="vfl-hierarchy-error" variant="bodySmall" tone="danger" role="alert">图片加载失败，请刷新重试。</Typography>}
   </ContentBlock>;
 }
+
+export const HierarchicalFeaturesPage = withAssetResources(HierarchicalFeaturesContent, [hierarchyManifest, hierarchyChannels, atlasIndex]);

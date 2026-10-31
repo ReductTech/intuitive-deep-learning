@@ -131,12 +131,14 @@ def test_dry_run_preserves_uuid_prefix_without_oss_or_credentials(tmp_path, monk
     assert f"cloud-IDL/assets/{UUID}/picture.png" in capsys.readouterr().out
 
 
-def test_full_datasets_and_model_weights_are_not_uploaded(tmp_path):
+def test_all_files_explicitly_placed_in_public_assets_are_uploaded(tmp_path):
     for name in ["course/view.npz", "datasets/full.npy", "course/models/model.pt", "course/digit-training/job/result.npz"]:
         path = tmp_path / name
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_bytes(b"data")
-    assert [path.relative_to(tmp_path).as_posix() for path in uploader.visualization_files(tmp_path)] == ["course/view.npz"]
+    assert {path.relative_to(tmp_path).as_posix() for path in uploader.visualization_files(tmp_path)} == {
+        "course/view.npz", "datasets/full.npy", "course/models/model.pt", "course/digit-training/job/result.npz"
+    }
 
 
 def test_optional_module_slug_uses_existing_router_fallback(tmp_path):

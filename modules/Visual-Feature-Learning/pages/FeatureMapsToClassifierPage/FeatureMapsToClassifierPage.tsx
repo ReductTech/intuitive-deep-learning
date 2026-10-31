@@ -1,17 +1,20 @@
 import { AtlasImage } from '../../components/AtlasImage';
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from 'react';
 import { Button, ContentBlock, Typography, moduleAssetUrl } from '../../../shared/react';
-import data from '../../assets/flatten-interface/responses.json';
+import { flattenResponses, flattenDisplay } from '../../services/lessonData';
+import { atlasIndex } from '../../services/imageAtlas';
+import { withAssetResources } from '../../../shared/react/withAssetResources';
 import './FeatureMapsToClassifierPage.css';
-const CHANNELS = Array.from({length:16},(_,c)=>({c,score:data.samples.reduce((sum,s)=>{const v=s.values[c],mean=v.reduce((a,b)=>a+b,0)/v.length;return sum+v.reduce((a,b)=>a+(b-mean)**2,0)/v.length;},0)})).sort((a,b)=>b.score-a.score).slice(0,5).map(item=>item.c);
-const RANGES = Array.from({length:16},(_,c)=>{const v=data.samples.flatMap(s=>s.values[c]).sort((a,b)=>a-b),baseline=v[Math.floor(v.length/2)];return [baseline,Math.max(...v.map(n=>Math.abs(n-baseline)))];});
 function Texture({values,size,channel}:{values:number[];size:number;channel:number}){
+  const { RANGES } = flattenDisplay();
   const ref=useRef<HTMLCanvasElement>(null);
   useEffect(()=>{const ctx=ref.current?.getContext('2d');if(!ctx)return;const p=ctx.createImageData(size,size),[baseline,range]=RANGES[channel],colors=[[21,20,72],[20,65,136],[20,158,189],[112,205,108],[255,218,67]];values.forEach((v,i)=>{const t=Math.max(0,Math.min(.9999,Math.abs(v-baseline)/Math.max(range,1e-9)))*4,k=Math.floor(t),f=t-k;p.data.set([...colors[k].map((a,j)=>Math.round(a+(colors[k+1][j]-a)*f)),255],i*4);});ctx.putImageData(p,0,0);},[values,size,channel]);
   return <canvas ref={ref} width={size} height={size}/>;
 }
 const SIZES = [20, 24, 28, 32, 36, 40];
-export function FeatureMapsToClassifierPage(){
+function FeatureMapsToClassifierPageContent(){
+  const data = flattenResponses.read();
+  const { CHANNELS } = flattenDisplay();
   const [size,setSize]=useState(28),[failed,setFailed]=useState(false);
   const scene=useRef<HTMLDivElement>(null),drag=useRef<{x:number;y:number;size:number;scale:number}|null>(null);
   const sample=data.samples.find(s=>s.inputSize===size) ?? data.samples[0];
@@ -58,3 +61,5 @@ export function FeatureMapsToClassifierPage(){
     {failed && <Typography variant="bodySmall" tone="danger">图像加载失败，请刷新重试。</Typography>}
   </ContentBlock>;
 }
+
+export const FeatureMapsToClassifierPage = withAssetResources(FeatureMapsToClassifierPageContent, [flattenResponses, atlasIndex]);

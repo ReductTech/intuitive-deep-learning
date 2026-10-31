@@ -6,7 +6,7 @@ export interface SpeakerNote {
 }
 
 /** Runtime contract for a reusable lesson/presentation deck. */
-export type LessonContext = { complete: () => void; reset: () => void; isComplete: boolean };
+export type LessonContext = { complete: () => void; reset: () => void; isComplete: boolean; next?: () => void };
 
 export interface SceneDefinition {
   id: string;

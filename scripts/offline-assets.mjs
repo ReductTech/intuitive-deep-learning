@@ -7,6 +7,7 @@ import {fileURLToPath} from 'node:url';
 import {writeOfflineZip} from './offline-zip.mjs';
 import {sealOfflineDocument} from './offline-document.mjs';
 import {assetRoots} from './module-assets.mjs';
+import {jsonAssetReferences} from './runtime-asset-references.mjs';
 
 const mime = {'.png':'image/png','.jpg':'image/jpeg','.jpeg':'image/jpeg','.svg':'image/svg+xml','.webp':'image/webp','.gif':'image/gif','.avif':'image/avif','.mp4':'video/mp4','.webm':'video/webm','.mp3':'audio/mpeg','.wav':'audio/wav','.woff':'font/woff','.woff2':'font/woff2','.ttf':'font/ttf','.otf':'font/otf','.json':'application/json','.js':'text/javascript','.mjs':'text/javascript','.css':'text/css'};
 const escape = text => text.replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll('<','&lt;').replaceAll('>','&gt;');
@@ -51,6 +52,23 @@ export async function writeOfflineHtml({outdir,courseRoot,assetId,project,zip=fa
    // References from a copied/embedded component are dependencies of this module, not extra courses.
    if(!(namespace.name===assetId || javascript.includes(JSON.stringify(namespace.name))))continue;
    if(!await fs.stat(namespace.directory).then(s=>s.isDirectory(),()=>false))continue;
+   const jsonReferences=new Set(),metadata=[];
+   async function discover(directory){
+    for(const entry of await fs.readdir(directory,{withFileTypes:true})){
+     const file=path.join(directory,entry.name);
+     if(entry.isDirectory())await discover(file);
+     else if(entry.isFile()&&entry.name.endsWith('.json'))metadata.push(file);
+    }
+   }
+   await discover(namespace.directory);
+   const visited=new Set();let changed=true;
+   while(changed){changed=false;for(const file of metadata){
+    const local=path.relative(namespace.directory,file).replaceAll('\\','/');
+    if(visited.has(file)||!jsonReferences.has(local)&&!javascript.includes(local)&&!javascript.includes(path.basename(file)))continue;
+    visited.add(file);changed=true;
+    const data=JSON.parse(await fs.readFile(file,'utf8'));
+    for(const reference of jsonAssetReferences(data,local))jsonReferences.add(reference);
+   }}
    async function add(directory) {
     for(const entry of await fs.readdir(directory,{withFileTypes:true})) {
      const file=path.join(directory,entry.name);
@@ -61,7 +79,7 @@ export async function writeOfflineHtml({outdir,courseRoot,assetId,project,zip=fa
      const local=relative.slice(namespace.name.length+1);
      // Thumbnail history is often much larger than the current deck. Keep current page thumbnails only.
      if(relative.includes('/scenedeck-thumbnails/') && !project.pages.some(p=>relative.replace(/\.(png|jpg|jpeg|webp)$/i,'').endsWith('/'+(p.nativeId||p.id))))continue;
-     if(!relative.includes('/scenedeck-thumbnails/')&&!javascript.includes(local)&&!javascript.includes(entry.name)&&!patterns.some(([head,tail])=>(local.startsWith(head)||entry.name.startsWith(head)||local.includes('/'+head))&&local.endsWith(tail)))continue;
+     if(!relative.includes('/scenedeck-thumbnails/')&&!jsonReferences.has(local)&&!javascript.includes(local)&&!javascript.includes(entry.name)&&!patterns.some(([head,tail])=>(local.startsWith(head)||entry.name.startsWith(head)||local.includes('/'+head))&&local.endsWith(tail)))continue;
      const content=await fs.readFile(file),type=mime[path.extname(file).toLowerCase()]||'application/octet-stream';
      const hash=createHash('sha256').update(type).update(content).digest('hex');
      if(stored.has(hash)){manifest['assets/'+relative]=stored.get(hash);continue;}
@@ -83,9 +101,9 @@ export async function writeOfflineHtml({outdir,courseRoot,assetId,project,zip=fa
   const resizeScript=fileURLToPath(new URL('../creator-skill/scripts/media/compress-images.py',import.meta.url));
   execFileSync(process.env.IDL_PYTHON||'python',[resizeScript,path.join(outdir,'files'),'--resize-only','--backup-dir',path.join(outdir,'image-originals')],{windowsHide:true,timeout:120000,stdio:'pipe'});
   // Local file images may display but cannot be read back by a canvas. Only
-  // image-processing inputs use a small script transport, compressed by ZIP.
+  // image-processing inputs and fetchable JSON use script transport, compressed by ZIP.
   const canvasMap={},canvasNames=new Set();
-  for(const [key,[name,type]] of Object.entries(manifest))if(type.startsWith('image/')&&canvasPatterns.some(([head,tail])=>key.includes(head)&&key.endsWith(tail))){canvasNames.add(name);canvasMap[name]='data:'+type+';base64,'+(await fs.readFile(path.join(outdir,name))).toString('base64');}
+  for(const [key,[name,type]] of Object.entries(manifest))if(type==='application/json'||type.startsWith('image/')&&canvasPatterns.some(([head,tail])=>key.includes(head)&&key.endsWith(tail))){canvasNames.add(name);canvasMap[name]='data:'+type+';base64,'+(await fs.readFile(path.join(outdir,name))).toString('base64');}
   for(let i=zipEntries.length-1;i>=0;i--)if(canvasNames.has(zipEntries[i].name))zipEntries.splice(i,1);
   zipEntries.push({name:'files/canvas-assets.js',data:Buffer.from('globalThis.__SHUKU_CANVAS_ASSETS__='+JSON.stringify(canvasMap)+';')});
   const entry=path.join(outdir,'打开课件.html');await fs.rename(path.join(outdir,'index.html'),entry);

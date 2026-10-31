@@ -202,6 +202,16 @@
         "Pillow"
       ],
       "arguments": []
+    },
+    {
+      "id": "check.asset-imports",
+      "category": "checks",
+      "path": "scripts/checks/asset_imports.mjs",
+      "runtime": "node",
+      "description": "禁止源码编译时导入 assets 目录资源；可按模块检查",
+      "effects": "只读源码；检查 import/export/require/new URL/glob/CSS 引用",
+      "dependencies": [],
+      "arguments": []
     }
   ]
 }

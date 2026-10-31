@@ -12,7 +12,7 @@ function load(file, dependencies = {}, globals = {}) {
     module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022, jsx: ts.JsxEmit.ReactJSX,
   } }).outputText;
   vm.runInNewContext(code, { module, exports: module.exports, ...globals,
-    require: id => id in dependencies ? dependencies[id] : id.endsWith('.css') ? {} : /\.(png|jpg)$/.test(id) ? { default: id } : require(id) });
+    require: id => id in dependencies ? dependencies[id] : id.endsWith('/shared/react/assets') ? {moduleAssetUrl:(id,relative)=>`/${id}/${relative}`} : id.endsWith('.css') ? {} : id.endsWith('.json') ? require(path.resolve(path.dirname(file),id)) : /\.(png|jpg)$/.test(id) ? { default: id } : require(id) });
   return module.exports;
 }
 const sharedRoot = path.resolve(__dirname, '../../shared/react');
@@ -33,7 +33,7 @@ const blockConnections = load(path.join(__dirname, 'BasicBlockPage/connections.t
 const superResolutionMotion = load(path.join(__dirname, 'SuperResolutionPage/motion.ts'));
 const superResolutionScene = load(path.join(__dirname, 'SuperResolutionPage/scene.ts'));
 const startingFrames = require(path.resolve(__dirname, '../assets/starting-points/images.json'));
-const startingModel = load(path.join(__dirname, 'StartingPointsPage/model.ts'), { '../../assets/starting-points/images.json': { default: startingFrames } });
+const startingModel = load(path.join(__dirname, 'StartingPointsPage/model.ts'), { '../../../shared/react/moduleJson': { moduleJson: () => ({ready:true,read:()=>startingFrames,load:()=>Promise.resolve(startingFrames)}) }, '../../../shared/react/assets': { moduleAssetUrl: (id,relative)=>`/${id}/${relative}` }, '../../outlines.json': {moduleIdentity:{id:'test'}} });
 const transferClassification = load(path.join(__dirname, 'TransferableExperiencePage/classification.ts'));
 const RtgQuestion = props => require('react').createElement('div', { 'data-question': props.questionId }, props.title);
 const TransferCheckPanel = props => require('react').createElement('div', { 'data-review-panel': true, hidden: props.hidden });
@@ -96,6 +96,7 @@ function harness(name, reduced = false, failFirstImage = false, browserMocks = {
     './motion': superResolutionMotion,
     './scene': superResolutionScene,
     './model': startingModel,
+    '../../../shared/react/withAssetResources': { withAssetResources: Component => Component },
     './classification': transferClassification,
     './TransferCheckPanel': { TransferCheckPanel },
     '../../services/aiShortAnswer': { evaluateAiShortAnswer: serviceMocks.evaluateAiShortAnswer || (() => { throw Error('Unexpected AI request'); }) },
@@ -583,7 +584,7 @@ test('current page21 changes the common input in both A/B panels, keeps weights 
     if(query>0){byData(tree,query%2?'data-query-input':'data-change-input',true).props.onClick();tree=app.render();}
     assert.equal(tree.props['data-query'],query);
     const a=byData(tree,'data-parameter-side','A'),b=byData(tree,'data-parameter-side','B');
-    assert.equal(a.props['data-input-id'],startingModel.QUERY_SAMPLES[query].id);
+    assert.equal(a.props['data-input-id'],startingModel.getQuerySamples()[query].id);
     assert.equal(b.props['data-input-id'],a.props['data-input-id']);
     assert.equal(a.props['data-parameter-status'],'random');assert.equal(b.props['data-parameter-status'],'loaded');
     assert.equal(tree.props['data-loaded'],true);assert.equal(app.calls,0);
@@ -604,8 +605,8 @@ test('current page21 changes the common input in both A/B panels, keeps weights 
 });
 
 test('current page21 uses eight identical candidates per side, excludes self-matches and groups four visual variants in the pretrained example', () => {
-  for(let index=0;index<startingModel.QUERY_SAMPLES.length;index++){
-    const input=startingModel.QUERY_SAMPLES[index],a=startingModel.neighborsFor(index,false),b=startingModel.neighborsFor(index,true);
+  for(let index=0;index<startingModel.getQuerySamples().length;index++){
+    const input=startingModel.getQuerySamples()[index],a=startingModel.neighborsFor(index,false),b=startingModel.neighborsFor(index,true);
     assert.equal(a.length,8);assert.equal(b.length,8);
     assert.equal(new Set(a.map(item=>item.id)).size,8);assert.equal(new Set(b.map(item=>item.id)).size,8);
     assert.deepEqual([...a].map(item=>item.id).sort(),[...b].map(item=>item.id).sort());
@@ -615,11 +616,11 @@ test('current page21 uses eight identical candidates per side, excludes self-mat
     if(input.category===0){assert.ok(b.slice(0,4).some(item=>/压扁/.test(item.label)));assert.ok(b.slice(0,4).some(item=>/直立/.test(item.label)));}
   }
   const assetRoot=path.resolve(__dirname,'../assets/starting-points');
-  for(const sample of [...startingModel.QUERY_SAMPLES,...startingModel.CANDIDATE_SAMPLES]){
+  for(const sample of [...startingModel.getQuerySamples(),...startingModel.getCandidateSamples()]){
     const frame=startingFrames[sample.id],photo=path.resolve(assetRoot,frame.file);assert.ok(fs.existsSync(photo),photo);
     const [left,top,width,height]=sample.viewBox.split(' ').map(Number);
     assert.ok(left>=0&&top>=0&&width>0&&height>0&&left+width<=sample.width&&top+height<=sample.height);
-    assert.ok(sample.image.includes('assets/'));
+    assert.ok(sample.image.startsWith('/test/'));
     if(photo.endsWith('.jpg'))assert.equal(fs.readFileSync(photo).readUInt16BE(0),0xffd8);
   }
   assert.ok(startingFrames['query-bottle-flat'].source.includes('瓶07_压扁.jpg'));
@@ -812,7 +813,7 @@ test('page21 uses the same high-resolution photo for crops and highlights, with 
   const source=elements(tree).find(node=>node.type==='img').props.src;
   const crops=elements(tree).filter(node=>node.type==='image');assert.equal(crops.length,3);
   assert.ok(crops.every(node=>node.props.href===source));
-  assert.ok(source.includes('assets/pretraining/'));
+  assert.ok(source.includes('/pretraining/'));
   for(const index of [0,1,2]){
     byData(tree,'data-cue-choice',index).props.onClick();tree=app.render();
     const highlighter=byData(tree,'data-highlight',index);assert.ok(elements(highlighter).some(node=>node.type==='path'));
