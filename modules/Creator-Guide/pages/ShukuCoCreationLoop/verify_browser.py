@@ -18,7 +18,13 @@ def verify(url, artifacts, chromium=None):
         errors=[]
         page.on('pageerror',lambda e:errors.append(str(e)))
         page.goto(url,wait_until='networkidle')
-        assert page.locator('.scl-reference').evaluate('(e)=>e.complete && e.naturalWidth===1672 && e.naturalHeight===941')
+        expect(page.locator('.scl-art-heading h1')).to_contain_text('形成知识循环')
+        expect(page.locator('.scl-artwork')).to_contain_text('为什么学习率')
+        expect(page.locator('.scl-art-review-copy').first).to_contain_text('内容准确')
+        # Course text must be actual selectable DOM text, never a slide screenshot.
+        assert page.locator('.scl-reference,.scl-reference-crop').count()==0
+        assert page.locator('.scl-art-heading h1').evaluate("(el)=>{const range=document.createRange();range.selectNodeContents(el);const selection=window.getSelection();selection.removeAllRanges();selection.addRange(range);const text=selection.toString();selection.removeAllRanges();return text.includes('形成知识循环');}")
+        assert page.locator('.scl-artwork img').evaluate_all("els=>els.every(e=>e.complete && e.naturalWidth>0 && /(?:cat|noise|gradient-surface)-/.test(e.src))")
         page.screenshot(path=str(artifacts/'overview.png'))
         page.get_by_role('button',name='放大课堂使用',exact=True).click()
         dialog=page.get_by_role('dialog')
@@ -52,7 +58,7 @@ def verify(url, artifacts, chromium=None):
             assert box['x']>=0 and box['y']>=0 and box['x']+box['width']<=1600 and box['y']+box['height']<=900
             page.keyboard.press('Escape')
         assert not errors, errors
-        report={'reference_loaded':True,'accepted_only_publication':True,'reset_and_keyboard':True,'javascript_errors':errors}
+        report={'selectable_vector_text':True,'accepted_only_publication':True,'reset_and_keyboard':True,'javascript_errors':errors}
         (artifacts/'verification.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
         print(json.dumps(report,ensure_ascii=False))
         browser.close()

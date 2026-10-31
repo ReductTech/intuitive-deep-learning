@@ -25,12 +25,12 @@ test('learning rate demonstration reflects quadratic gradient descent',()=>{
  assert.ok(oscillating.every(loss=>loss===1));
 });
 
-import {readFileSync} from 'node:fs';
-test('reference art is included and the lesson is registered in both course modes',()=>{
+import {readFileSync,readdirSync} from 'node:fs';
+test('text-free assets and both course registrations are included',()=>{
  const outline=JSON.parse(readFileSync(new URL('../../outlines.json',import.meta.url),'utf8'));
  assert.equal(outline.pages.at(-1).id,'shuku-cocreation-loop');
  assert.equal(new Set(outline.pages.map(p=>p.id)).size,outline.pages.length);
  for(const file of ['../../CreatorPpt.tsx','../../CreatorGuide.tsx'])assert.match(readFileSync(new URL(file,import.meta.url),'utf8'),/ShukuCoCreationLoop/);
- const image=readFileSync(new URL('assets/loop-reference.png',import.meta.url));
- assert.equal(image.readUInt32BE(16),1672);assert.equal(image.readUInt32BE(20),941);
+ assert.deepEqual(readdirSync(new URL('assets/',import.meta.url)).sort(),['cat.png','gradient-surface.png','noise.png']);
+ assert.doesNotMatch(readFileSync(new URL('LoopArtwork.tsx',import.meta.url),'utf8'),/loop-reference|ReferenceCrop/);
 });

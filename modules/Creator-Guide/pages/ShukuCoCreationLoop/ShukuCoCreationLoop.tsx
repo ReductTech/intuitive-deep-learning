@@ -1,20 +1,16 @@
 import {useEffect,useId,useReducer,useRef,useState,type KeyboardEvent} from 'react';
-import referenceImage from './assets/loop-reference.png?url';
+import {LoopArtwork,LoopStageCard,LoopCourseCard,type LoopPanel} from './LoopArtwork';
 import {canPublish,examples,gradientSteps,initialLoop,loopReducer} from './model';
 import './ShukuCoCreationLoop.css';
 
-type Panel = 'classroom' | 'creation' | 'review' | 'release' | 'course';
-const panels:Record<Panel,{title:string;subtitle:string;tone:string;box:readonly number[]}>= {
- classroom:{title:'课堂使用',subtitle:'学生学习课程，提出问题与新想法',tone:'blue',box:[25,173,593,300]},
- creation:{title:'学生共创',subtitle:'补充更好的讲法与案例',tone:'orange',box:[1054,173,595,300]},
- review:{title:'教师审核',subtitle:'结合 AI 评价与教学判断进行筛选',tone:'purple',box:[1054,491,595,331]},
- release:{title:'纳入新版',subtitle:'优秀内容进入课程 v1.1',tone:'green',box:[25,491,593,331]},
- course:{title:'共同维护的课程',subtitle:'梯度下降 · 从直觉理解到互动演示',tone:'blue',box:[592,336,488,345]},
+type Panel = LoopPanel;
+const panels:Record<Panel,{title:string;subtitle:string;tone:string}>= {
+ classroom:{title:'课堂使用',subtitle:'学生学习课程，提出问题与新想法',tone:'blue'},
+ creation:{title:'学生共创',subtitle:'补充更好的讲法与案例',tone:'orange'},
+ review:{title:'教师审核',subtitle:'结合 AI 评价与教学判断进行筛选',tone:'purple'},
+ release:{title:'纳入新版',subtitle:'优秀内容进入课程 v1.1',tone:'green'},
+ course:{title:'共同维护的课程',subtitle:'梯度下降 · 从直觉理解到互动演示',tone:'blue'},
 };
-function ReferenceCrop({box,label}:{box:readonly number[];label:string}) {
- const [x,y,w,h]=box;
- return <div className="scl-reference-crop" style={{aspectRatio:`${w}/${h}`}}><img src={referenceImage} alt={label} draggable={false} style={{width:`${1672/w*100}%`,left:`${-x/w*100}%`,top:`${-y/h*100}%`}}/></div>;
-}
 export function ShukuCoCreationLoop(){
  const [panel,setPanel]=useState<Panel|null>(null),[rate,setRate]=useState(0.1);
  const [state,dispatch]=useReducer(loopReducer,undefined,initialLoop);
@@ -39,13 +35,13 @@ export function ShukuCoCreationLoop(){
  const losses=gradientSteps(rate),accepted=examples.filter(e=>state.decisions[e.id]==='accepted');
  const points=losses.map((loss,i)=>`${24+i*29},${235-Math.min(loss,2)*105}`).join(' ');
  return <article ref={root} className="scl-page cg-shuku-cocreation-loop" aria-label="术库：让课程在共创中持续进化，形成知识循环" onKeyDown={keys}>
-  <img className="scl-reference" src={referenceImage} alt="Shuku（术库）：让课程在共创中持续进化，形成知识循环。课堂使用产生学生反馈，学生共创补充案例，教师审核筛选后纳入新版。一人创建，一群人让课程持续生长。" draggable={false}/>
-  {(Object.keys(panels) as Panel[]).map(key=>{const item=panels[key];return <button key={key} className={`scl-hotspot scl-${item.tone}`} style={{left:`${item.box[0]/1672*100}%`,top:`${item.box[1]/941*100}%`,width:`${item.box[2]/1672*100}%`,height:`${item.box[3]/941*100}%`}} aria-label={`放大${item.title}`} title={`点击体验：${item.title}`} aria-haspopup="dialog" onClick={event=>open(key,event.currentTarget)}/>;})}
+  <LoopArtwork onOpen={open}/>
   {current&&panel&&<div className={`scl-overlay scl-${current.tone}`}>
    <button className="scl-backdrop" tabIndex={-1} aria-label="关闭放大预览" onClick={close}/>
    <section ref={dialog} className="scl-dialog" role="dialog" aria-modal="true" aria-labelledby={id+'-title'} aria-describedby={id+'-description'}>
     <header className="scl-dialog-header"><div><span className="scl-eyebrow">术库 · 知识共创 / 交互示例</span><h2 id={id+'-title'}>{current.title}</h2><p id={id+'-description'}>{current.subtitle}</p></div><button className="scl-close" onClick={close} aria-label="收起放大预览">收起 ↗</button></header>
-    <div className="scl-dialog-body"><div className="scl-original"><ReferenceCrop box={current.box} label={current.title+' · 原图素材'}/><p>示例演示 · 操作仅保留在当前页面，不提交到真实课程。</p><nav aria-label="切换共创流程">{(['classroom','creation','review','release'] as Panel[]).map((key,i)=><button key={key} aria-pressed={panel===key} onClick={()=>setPanel(key)}>{String(i+1).padStart(2,'0')} {panels[key].title}</button>)}</nav></div>
+    <div className="scl-dialog-body"><div className="scl-original">{panel==='course'?<LoopCourseCard/>:<LoopStageCard panel={panel}/>}
+<p>示例演示 · 操作仅保留在当前页面，不提交到真实课程。</p><nav aria-label="切换共创流程">{(['classroom','creation','review','release'] as Panel[]).map((key,i)=><button key={key} aria-pressed={panel===key} onClick={()=>setPanel(key)}>{String(i+1).padStart(2,'0')} {panels[key].title}</button>)}</nav></div>
     <div className="scl-interaction">
      {(panel==='classroom'||panel==='course')&&<><span className="scl-kicker">梯度下降 · 可操作演示</span><h3>为什么学习率太大会震荡？</h3><p>调节学习率，观察同一个目标函数的损失怎样变化。</p><div className="scl-chart"><svg viewBox="0 0 550 260" role="img" aria-label={`学习率 ${rate.toFixed(2)} 的损失变化曲线`}><path d="M24 15V235H530" stroke="#c9d9f0" fill="none"/><polyline points={points} fill="none" stroke="#0874ff" strokeWidth="3"/>{losses.map((loss,i)=><circle key={i} cx={24+i*29} cy={235-Math.min(loss,2)*105} r="3.5" fill="#0874ff"/>)}</svg></div><label className="scl-slider">学习率 η <input aria-label="调整学习率" type="range" min="0.05" max="1" step="0.05" value={rate} onChange={e=>setRate(Number(e.target.value))}/><output>{rate.toFixed(2)}</output></label><p className="scl-observation" role="status">{rate===1?'此时参数在两侧来回跳动，损失没有下降。':rate>0.5?'参数在最低点两侧交替移动；接近 1 时，收敛变慢。':'损失逐步下降；学习率很小时，需要更多步才能接近最低点。'}</p><button className="scl-primary" onClick={()=>dispatch({type:'feedback'})}>{state.feedback?'✓ 已记录：希望补充学习率演示':'提出反馈：希望补充学习率演示'}</button>{state.feedback&&<button className="scl-link" onClick={()=>setPanel('creation')}>带着这个问题参与共创 →</button>}</>}
      {panel==='creation'&&<><span className="scl-kicker">从学习中的问题出发</span><h3>两位学生，两种改进</h3><p>共创先发生在个人版本中，正式课程保持原样。</p><div className="scl-examples">{examples.map(e=><section key={e.id}><span>{e.author}</span><h4>{e.title}</h4><p>{e.id==='learning-rate'?'加入可调节参数的互动演示，让学习者观察收敛与震荡。':'补充从噪声到图像的应用案例，把抽象概念联系到真实任务。'}</p></section>)}</div><button className="scl-primary" disabled={state.published} onClick={()=>{dispatch({type:'submit'});setPanel('review');}}>提交两项改进，进入审核 →</button>{state.published&&<p>本轮已发布，可在“纳入新版”中重置演示。</p>}</>}
