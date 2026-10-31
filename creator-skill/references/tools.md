@@ -87,7 +87,7 @@ python creator-skill/scripts/tools.py capture.inspect --module Policy-Gradient
 
 逐页使用 `capture.slides --slide <场景ID> --page-directory <语义页目录>`，保存到 `modules/<模块目录名>/pages/<语义页目录>/_scratchpad/screenshots/<场景ID>.png`；操作状态用 `--state` 命名为 `<场景ID>/<状态>.png`。批量捕获旧模块而未指定页目录时仍兼容模块级输出，制作新页时使用逐页目录。`--output` 可指定对应页 `_scratchpad/` 内的图片目录。
 
-`capture.thumbnails` 生成正式播放器缩略图，默认保存到 `modules/<模块目录名>/assets/scenedeck-thumbnails/<页ID>.png`（已有精确格式映射时写入对应 JPG），只接受默认状态；其 `--output` 仅可选择正式缩略图目录内的位置。`capture.slides --format both` 从一次采集中同时写入评估目录和正式缩略图目录。图片均为 1600×900；已有图片对应当前实现和状态时直接复用。
+`capture.thumbnails` 生成正式播放器缩略图，默认保存到 `modules/<模块目录名>/assets/scenedeck-thumbnails/<页ID>.jpg`（320×180 渐进式 JPEG，质量 75、4:4:4 采样），只接受默认状态；其 `--output` 仅可选择正式缩略图目录内的位置。`capture.slides --format both` 从一次采集中同时写入评估目录和正式缩略图目录。评估截图仍为 1600×900 PNG。采集到当前运行时第一页时，自动另外生成 `assets/course-covers/<第一页ID>.jpg`（800×450，质量 80），供首页使用；封面直接由完整页面采样，不放大小缩略图。智能体只需指定模块，可选指定页 ID，无需填写尺寸和质量；已有图片对应当前实现和状态时直接复用。
 
 浏览器使用隔离的无头上下文，不读取用户浏览器配置。复用已有 Vite 时不关闭用户的服务；仅临时启动的服务会在任务结束后停止。
 
@@ -162,3 +162,11 @@ node --test creator-skill/scripts/tests/ppt_bounds.test.mjs
 ```
 
 测试环境需有 pytest；截图测试还需截图依赖和可用 Chromium，骨架类型检查复用仓库的 TypeScript。测试通过只证明工具覆盖的行为，不代表实际课程已经通过页面验收。
+
+批量重新生成全部已注册课件的 JPG 缩略图：
+
+```bash
+python creator-skill/scripts/media/capture_all_thumbnails.py --base-url http://localhost:5173
+```
+
+旧缩略图格式迁移：`python creator-skill/scripts/media/migrate_thumbnail_jpg.py`。保留已生成 JPG，转换缩略图目录内的旧格式，验证后移除旧文件，并同步旧地址兼容映射；普通教学图片和评估截图不受影响。

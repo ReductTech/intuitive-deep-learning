@@ -60,11 +60,11 @@ class LibraryCatalog:
             pages=(self.w.runtime_scenes(uid,root,commit=commit) if (data.get('ppt') or {}).get('entry') else None) or data.get('pages',[])
             asset_id=uid
             assets=asset_directory(asset_id,root)
-            cover=next((asset_relative(asset_id,'scenedeck-thumbnails/'+p['id']+'.png',root) for p in pages if re.fullmatch(r'[A-Za-z0-9_-]+',p.get('id','')) and ((assets/asset_relative(asset_id,'scenedeck-thumbnails/'+p['id']+'.png',root)).is_file() or os.environ.get('SHUKU_STORAGE')=='oss')),None)
+            cover=next((asset_relative(asset_id,'course-covers/'+p['id']+'.jpg',root) for p in pages if re.fullmatch(r'[A-Za-z0-9_-]+',p.get('id','')) and ((assets/asset_relative(asset_id,'course-covers/'+p['id']+'.jpg',root)).is_file() or os.environ.get('SHUKU_STORAGE')=='oss')),None)
             runtime_file=root.parent/('_runtime-'+commit+'.json')
             if os.environ.get('SHUKU_STORAGE')=='oss' and runtime_file.is_file():
                 name=json.loads(runtime_file.read_text()).get('modules',{}).get(uid,{}).get('cover')
-                cover=asset_relative(uid,'scenedeck-thumbnails/'+name+'.png',root) if isinstance(name,str) and re.fullmatch('[A-Za-z0-9_-]+',name) else None
+                cover=asset_relative(uid,'course-covers/'+name+'.jpg',root) if isinstance(name,str) and re.fullmatch('[A-Za-z0-9_-]+',name) else None
             payload={'kind':'library','id':uid,'module_id':uid,'alias':alias,
                      'title':data['title'],'description':data.get('description',''),
                      'category':data.get('category') or data.get('badge') or '课程',

@@ -64,7 +64,7 @@ export const Lesson = withAssetResources(LessonContent, [data]);
 
 离线包必须保留同一 `moduleAssetUrl` 路径契约，将 JSON 与它引用的素材一并收集；解压后用 data/blob 地址读取 JSON，不能依赖被浏览器拦截的 `fetch(file://...)`。验证断网打开、交互、请求失败后重试，以及 JSON 内命名的图片/图集等依赖。
 
-正式术库缩略图保存在 `modules/<课程目录>/assets/scenedeck-thumbnails/`，默认为 `<scene-id>.png` 的 1600×900 原图；已有精确格式映射时按映射写入 JPG。由 `capture.thumbnails` 生成，播放器缩小显示。播放器 `assetId` 使用当前模块的 UUID，不使用目录名。
+正式术库缩略图保存在 `modules/<课程目录>/assets/scenedeck-thumbnails/`，统一为 `<scene-id>.jpg`，320×180 渐进式 JPEG，质量 75、4:4:4 采样。由 `capture.thumbnails` 生成，播放器使用 320×180 小图；运行时第一页同时自动生成 `assets/course-covers/<第一页ID>.jpg` 的 800×450 首页封面（质量 80）。无需传入尺寸或质量参数，评估截图仍为 1600×900 PNG。播放器 `assetId` 使用当前模块的 UUID，不使用目录名。
 
 已有正式缩略图对应当前实现时可直接用于检查，无需重复截图；交互状态截图保存在 `_scratchpad/`。
 

@@ -5,7 +5,7 @@ from playwright.sync_api import sync_playwright, expect
 
 module = Path(__file__).resolve().parents[1]
 root = module.parents[1]
-out = module / 'assets/scenedeck-thumbnails/text-cross-attention'
+out = module / '_scratchpad/screenshots/text-cross-attention'
 out.mkdir(parents=True, exist_ok=True)
 errors = []
 

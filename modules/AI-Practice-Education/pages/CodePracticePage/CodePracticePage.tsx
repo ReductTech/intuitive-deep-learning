@@ -4,7 +4,7 @@ import { CodeEditor } from './CodeEditor';
 import { NUMPY_INITIAL_CODE, PythonRunner, type PythonGraph, type PythonNode, type PythonOutput } from './pythonRuntime';
 import './CodePracticePage.css';
 
-export function CodePracticePage() {
+export function CodePracticePage({autoRunOnEdit=true,parallelBranches=false}:{autoRunOnEdit?:boolean;parallelBranches?:boolean}={}) {
   const marker = useId().replace(/:/g, '');
   const [code, setCode] = useState(NUMPY_INITIAL_CODE), [runKey, setRunKey] = useState(0);
   const [graph, setGraph] = useState<PythonGraph | null>(null), [result, setResult] = useState<PythonOutput | null>(null);
@@ -55,11 +55,12 @@ export function CodePracticePage() {
     }
   }
   useEffect(() => {
+    if(!autoRunOnEdit&&(code!==NUMPY_INITIAL_CODE||runKey>0))return;
     timer.current = setTimeout(() => { void execute(); }, 350);
     return () => clearTimeout(timer.current);
     // The runtime executes the current source after typing pauses.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [code, runKey]);
+  }, [code, runKey,autoRunOnEdit]);
   function stop() {
     revision.current++; clearTimeout(timer.current); runner.current?.stop(); busy.current = false;
     setRunning(false); setGraph(null); setResult(null); setStatus('运行已停止');
@@ -77,6 +78,20 @@ export function CodePracticePage() {
   const positions: Record<string, { x: number; y: number }> = { input: { x: centerX, y: 36 } };
   nodes.forEach((node, index) => { positions[node.id] = { x: centerX, y: 108 + index * 72 }; });
   positions.output = { x: centerX, y: 108 + nodes.length * 72 };
+  const roots=nodes.filter(node=>node.kind==='Conv'&&node.inputs.includes('input'));
+  if(parallelBranches&&roots.length>1){
+    const depths=new Map<string,number>([['input',0]]),lanes=new Map<string,number>();
+    roots.forEach((node,i)=>lanes.set(node.id,i));
+    nodes.forEach(node=>{
+      const depth=1+Math.max(0,...node.inputs.map(input=>depths.get(input)??0));depths.set(node.id,depth);
+      if(node.kind!=='Add'&&!lanes.has(node.id)){
+        const lane=node.inputs.map(input=>lanes.get(input)).find(value=>value!==undefined);if(lane!==undefined)lanes.set(node.id,lane);
+      }
+      const lane=lanes.get(node.id);
+      positions[node.id]={x:lane===undefined?centerX:centerX+(lane-(roots.length-1)/2)*230,y:38+depth*70};
+    });
+    positions.output={x:centerX,y:38+((depths.get(graph?.output??'')??nodes.length)+1)*70};
+  }
   const height = positions.output.y + 40;
   const nodeById = new Map(nodes.map(node => [node.id, node]));
   const halfHeight = (id: string) => nodeById.get(id)?.kind === 'Add' ? 25 : 23;
@@ -128,14 +143,14 @@ export function CodePracticePage() {
                   {nodes.flatMap(node => node.inputs.map((input, index) => {
                     const from = positions[input], to = positions[node.id];
                     if (!from) return null;
-                    const shortcut = node.kind === 'Add' && index === 1;
+                    const shortcut = node.kind === 'Add' && index === 1 && (!parallelBranches||input==='input');
                     const routeX = Math.min(graphWidth - 160, Math.max(from.x + halfWidth(input) + 36, to.x + 148));
                     const path = shortcut ? `M${from.x + halfWidth(input)} ${from.y} H${routeX - 10} Q${routeX} ${from.y} ${routeX} ${from.y + 10} V${to.y - 10} Q${routeX} ${to.y} ${routeX - 10} ${to.y} H${to.x + halfWidth(node.id)}` : `M${from.x} ${from.y + halfHeight(input)} C${from.x} ${from.y + halfHeight(input) + 12} ${to.x} ${to.y - halfHeight(node.id) - 12} ${to.x} ${to.y - halfHeight(node.id)}`;
                     return <path key={`${node.id}-${index}`} d={path} className={`${shortcut ? 'shortcut' : ''} ${activeIds.includes(node.id) || activeIds.includes(input) ? 'is-active' : ''}`} markerEnd={`url(#${marker}-${shortcut ? 'blue-' : ''}arrow)`}/>;
                   }))}
                   <path markerEnd={`url(#${marker}-arrow)`} d={`M${positions[graph.output].x} ${positions[graph.output].y + halfHeight(graph.output)} L${positions.output.x} ${positions.output.y - 23}`}/>
                 </svg>
-                {nodes.filter(node => node.kind === 'Add' && node.inputs.length > 1).map(node => {
+                {nodes.filter(node => node.kind === 'Add' && node.inputs.length > 1 && (!parallelBranches||node.inputs[1]==='input')).map(node => {
                   const from = positions[node.inputs[1]], to = positions[node.id];
                   if (!from) return null;
                   const routeX = Math.min(graphWidth - 160, Math.max(from.x + halfWidth(node.inputs[1]) + 36, to.x + 148));

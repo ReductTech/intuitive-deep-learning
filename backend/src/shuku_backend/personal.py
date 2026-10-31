@@ -118,7 +118,9 @@ def teaching_pages(project,files,rid,module_id):
     """Public presentation metadata, bound to the selected release's own artifacts."""
     pages=[]
     for page in project['pages']:
-        path='assets/'+module_id+'/scenedeck-thumbnails/'+str(page.get('nativeId',''))+'.png'
-        thumbnail='/api/shuku/revisions/'+rid+'/files/'+quote(path,safe='/') if page.get('nativeId') and path in files else None
+        stem='assets/'+module_id+'/scenedeck-thumbnails/'+str(page.get('nativeId',''))
+        # Older frozen releases keep their original PNG members.
+        path=next((stem+ext for ext in ('.jpg','.png') if stem+ext in files),None)
+        thumbnail='/api/shuku/revisions/'+rid+'/files/'+quote(path,safe='/') if page.get('nativeId') and path else None
         pages.append({'id':page['id'],'title':page['title'],'thumbnail':thumbnail})
     return pages

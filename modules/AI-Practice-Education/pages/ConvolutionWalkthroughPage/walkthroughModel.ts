@@ -7,7 +7,8 @@ export const KERNELS = {
 } as const;
 export type KernelDirection = keyof typeof KERNELS;
 export const KERNEL = KERNELS.vertical;
-export const SLOW_DURATIONS = [3200, 2600, 2000, 1500, 1100];
+export const SLOW_DURATIONS = [3200, 2200, 1100];
+export const LOCAL_COUNT = SLOW_DURATIONS.length;
 export const SLOW_MS = SLOW_DURATIONS.reduce((a, b) => a + b, 0);
 export const ZOOM_MS = 3200;
 export const FAST_MS = 6500;
@@ -29,12 +30,12 @@ export function frameAt(elapsed: number) {
     const duration = SLOW_DURATIONS[index];
     if (time < start + duration) {
       const progress = (time - start) / duration;
-      return { cycle, phase: 'slow' as const, index, term: Math.min(8, Math.floor(progress / .75 * 9)), pulse: progress < .32 ? 'input' as const : progress < .7 ? 'kernel' as const : 'output' as const, summed: progress >= .7, completed: index + (progress >= .7 ? 1 : 0), zoom: 0, move: index < 4 ? ease((progress - .9) / .1) : 0 };
+      return { cycle, phase: 'slow' as const, index, term: Math.min(8, Math.floor(progress / .75 * 9)), pulse: time === 0 ? 'none' as const : progress < .32 ? 'input' as const : progress < .7 ? 'kernel' as const : 'output' as const, summed: progress >= .7, completed: index + (progress >= .7 ? 1 : 0), zoom: 0, move: index < LOCAL_COUNT - 1 ? ease((progress - .9) / .1) : 0 };
     }
     start += duration;
   }
-  if (time < SLOW_MS + ZOOM_MS) return { cycle, phase: 'zoom' as const, pulse: 'none' as const, index: 4, term: 8, summed: true, completed: 5, zoom: ease((time - SLOW_MS) / ZOOM_MS), move: 0 };
+  if (time < SLOW_MS + ZOOM_MS) return { cycle, phase: 'zoom' as const, pulse: 'none' as const, index: LOCAL_COUNT - 1, term: 8, summed: true, completed: LOCAL_COUNT, zoom: ease((time - SLOW_MS) / ZOOM_MS), move: 0 };
   const progress = Math.min(1, (time - SLOW_MS - ZOOM_MS) / FAST_MS);
-  const completed = Math.min(OUTPUT_COUNT, Math.floor(progress ** 2 * OUTPUT_COUNT));
+  const completed = Math.min(OUTPUT_COUNT, LOCAL_COUNT + Math.floor(progress ** 2 * (OUTPUT_COUNT - LOCAL_COUNT)));
   return { cycle, phase: progress < 1 ? 'fast' as const : 'hold' as const, pulse: 'none' as const, index: Math.min(OUTPUT_COUNT - 1, completed), term: 8, summed: true, completed, zoom: 1, move: 0 };
 }

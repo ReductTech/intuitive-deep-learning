@@ -2,8 +2,10 @@
 """Capture real 1600x900 术库 screenshots.
 
 Reads: The selected module and requested browser states.
-Writes: Evaluation PNGs in the module's _scratchpad/screenshots; thumbnails in
-modules/<module>/assets/scenedeck-thumbnails only when requested. Owns its browser/Vite.
+Writes: Evaluation PNGs remain 1600x900. Requested JPG thumbnails default to
+320x180 in assets/scenedeck-thumbnails; the runtime first slide also gets an
+800x450 JPG in assets/course-covers. No size/quality arguments are needed.
+Owns its browser/Vite.
 Thumbnail runs also save a report and batch contact sheet in module _scratchpad/thumbnails.
 """
 
@@ -504,7 +506,8 @@ def capture_module(args: argparse.Namespace, context_setup=None) -> dict:
         for items in actions.values()
     ):
         raise ValueError("Actions must map slide IDs to arrays of action objects.")
-    files, errors, checks, captured = [], [], [], []
+    from media.thumbnail_profiles import save_thumbnail, save_cover
+    files, errors, checks, captured, cover_files = [], [], [], [], []
     with browser_session(
         args.base_url, scratchpad=scratchpad_path(directory, default="", page_directory=page_directory)
     ) as (context, base_url):
@@ -528,6 +531,7 @@ def capture_module(args: argparse.Namespace, context_setup=None) -> dict:
             raise ValueError("Duplicate runtime slide IDs.")
         if args.inspect:
             return {"deck": deck_id, "uuid": asset_id, "slides": ids}
+        first_scene_id = ids[0] if ids else None
         if args.slide:
             if args.slide not in ids:
                 raise ValueError(f"Unknown slide: {args.slide}")
@@ -570,8 +574,10 @@ def capture_module(args: argparse.Namespace, context_setup=None) -> dict:
     for slide_id, image, inspection in captured:
         try:
             for screenshots in destinations:
+                is_thumbnail = screenshots.is_relative_to(thumbnail_root)
+                extension = "jpg" if is_thumbnail else "png"
                 target = (
-                    screenshots / f"{slide_id}.png"
+                    screenshots / f"{slide_id}.{extension}"
                     if args.state == "default"
                     else screenshots / slide_id / f"{args.state}.png"
                 )
@@ -583,14 +589,20 @@ def capture_module(args: argparse.Namespace, context_setup=None) -> dict:
                 index_path = ROOT / "modules/shared/asset-index.json"
                 formats = json.loads(index_path.read_text(encoding="utf-8")) if index_path.is_file() else None
                 key = asset_id + "/" + target.relative_to(directory / "assets").as_posix() if screenshots.is_relative_to(thumbnail_root) else None
-                mapped = formats["formats"].get(key) if formats and key else None
+                legacy_key = key[:-4] + ".png" if key else None
+                mapped = (formats["formats"].get(key) or formats["formats"].get(legacy_key)) if formats and key else None
                 if mapped:
                     target = (directory / "assets" / mapped).resolve()
                     if not target.is_relative_to(thumbnail_root) or target.suffix.lower() not in {".jpg", ".jpeg"}:
                         raise ValueError(f"Thumbnail format mapping escapes its directory or is not JPEG: {target}")
+                    target = target.with_suffix(".jpg")
                 target.parent.mkdir(parents=True, exist_ok=True)
-                if mapped:
-                    image.convert("RGB").save(target, format="JPEG", quality=92, subsampling=0, optimize=True, progressive=True)
+                if is_thumbnail:
+                    save_thumbnail(image, target)
+                    if slide_id == first_scene_id:
+                        cover = directory / 'assets/course-covers' / f'{slide_id}.jpg'
+                        save_cover(image, cover)
+                        cover_files.append(str(cover))
                 else:
                     image.save(target, format="PNG", compress_level=3)
                 files.append(str(target))
@@ -602,6 +614,7 @@ def capture_module(args: argparse.Namespace, context_setup=None) -> dict:
         "uuid": asset_id,
         "state": args.state,
         "files": files,
+        "coverFiles": cover_files,
         "errors": errors,
         "checks": checks,
         "timing": {

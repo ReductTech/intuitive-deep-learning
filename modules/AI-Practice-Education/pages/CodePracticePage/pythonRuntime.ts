@@ -56,10 +56,10 @@ export class PythonRunner {
   private start(): Promise<void> {
     if (this.ready) return this.ready;
     const offline = (globalThis as { __SHUKU_OFFLINE_PYTHON__?: { worker: string; assets: Record<string, string> } }).__SHUKU_OFFLINE_PYTHON__;
-    const offlineUrl = offline ? URL.createObjectURL(new Blob([offline.worker], { type: 'text/javascript' })) : null;
+    if ((globalThis as { __SHUKU_OFFLINE__?: boolean }).__SHUKU_OFFLINE__ && !offline) throw new Error('离线包缺少 Python 运行时，请重新下载课件。');
+    const offlineUrl = offline ? 'data:text/javascript;charset=utf-8,' + encodeURIComponent(offline.worker) : null;
     const worker = offlineUrl ? new Worker(offlineUrl, { type: 'module' })
       : new Worker(new URL('./python.worker.ts', import.meta.url), { type: 'module' });
-    if (offlineUrl) URL.revokeObjectURL(offlineUrl);
     this.worker = worker;
     this.ready = new Promise((resolve, reject) => {
       this.rejectReady = reject;

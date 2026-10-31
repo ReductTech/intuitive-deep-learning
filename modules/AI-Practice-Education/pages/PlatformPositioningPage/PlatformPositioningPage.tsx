@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState, type KeyboardEvent } from 'react';
+import { useEffect, useId, useRef, useState, type KeyboardEvent, type CSSProperties } from 'react';
 import { ContentBlock, Typography } from '../../../shared/react';
 import outline from '../../outlines.json';
 import { PlatformCapabilityIcon, PlatformLearnerIcon } from './PlatformCapabilityIcons';
@@ -12,20 +12,52 @@ const abilities = [
   { id: 'research', title: '科研探索与协同创新', lines: ['科研探索与', '协同创新'], description: '导师指导 · 问题探索' },
 ] as const;
 
-// Keep the arrowhead joined to the shaft, including at scaled canvas sizes.
-const arrows = [
-  { path: 'M885 82 Q970 90 1018 155', end: [1018, 155], control: [970, 90] },
-  { path: 'M1142 488 Q1134 531 1092 555', end: [1092, 555], control: [1134, 531] },
-  { path: 'M850 592 Q780 625 706 595', end: [706, 595], control: [780, 625] },
-  { path: 'M465 558 Q442 558 425 528', end: [425, 528], control: [442, 558] },
-  { path: 'M527 160 Q585 91 641 82', end: [641, 82], control: [585, 91] },
-];
-
-function arrowHead({ end: [x, y], control: [cx, cy] }: typeof arrows[number]) {
-  const length = Math.hypot(x - cx, y - cy);
-  const dx = (x - cx) / length, dy = (y - cy) / length;
-  return `${x - dy * 20},${y + dx * 20} ${x + dx * 30},${y + dy * 30} ${x + dy * 20},${y - dx * 20}`;
-}
+// Cards and every connector share one closed orbit; no independently placed arrows.
+const orbit = { x: 769, y: 390, rx: 500, ry: 280 };
+const card = { width: 440, height: 180 };
+const pointAt = (degrees: number) => {
+  const angle = degrees * Math.PI / 180;
+  return { x: orbit.x + orbit.rx * Math.cos(angle), y: orbit.y + orbit.ry * Math.sin(angle) };
+};
+const positions = abilities.map((_, index) => pointAt(-90 + index * 72));
+const arrows = abilities.map((_, index) => {
+  const from = -90 + index * 72, to = from + 72, middle = (from + to) / 2;
+  function inside(angle: number, node: typeof positions[number]) {
+    const p = pointAt(angle);
+    return Math.abs(p.x - node.x) <= card.width / 2 && Math.abs(p.y - node.y) <= card.height / 2;
+  }
+  function edge(a: number, b: number, node: typeof positions[number], startsInside: boolean) {
+    for (let n = 0; n < 24; n++) {
+      const mid = (a + b) / 2;
+      if (inside(mid, node) === startsInside) a = mid; else b = mid;
+    }
+    return (a + b) / 2;
+  }
+  const startAngle = edge(from, middle, positions[index], true) + 1.5;
+  const endAngle = edge(middle, to, positions[(index + 1) % positions.length], false) - 1.5;
+  const tip = pointAt(endAngle);
+  // One filled outline avoids the shaft protruding through a translucent SVG marker.
+  let headAngle = endAngle;
+  while (headAngle > startAngle && Math.hypot(pointAt(headAngle).x - tip.x, pointAt(headAngle).y - tip.y) < 24) headAngle -= 0.1;
+  function side(angle: number, width: number) {
+    const p = pointAt(angle), radians = angle * Math.PI / 180;
+    const dx = -orbit.rx * Math.sin(radians), dy = orbit.ry * Math.cos(radians);
+    const length = Math.hypot(dx, dy);
+    return `${p.x - dy / length * width} ${p.y + dx / length * width}`;
+  }
+  const count = Math.max(2, Math.ceil((headAngle - startAngle) / 0.5));
+  const angles = Array.from({ length: count + 1 }, (_, i) => startAngle + (headAngle - startAngle) * i / count);
+  const outline = [
+    ...angles.map(angle => side(angle, 6)),
+    side(headAngle, 16), `${tip.x} ${tip.y}`, side(headAngle, -16),
+    ...[...angles].reverse().map(angle => side(angle, -6)),
+  ];
+  const start = pointAt(startAngle), end = pointAt(headAngle);
+  return {
+    shape: `M${outline.join(' L')} Z`,
+    flow: `M${start.x} ${start.y} A${orbit.rx} ${orbit.ry} 0 0 1 ${end.x} ${end.y}`,
+  };
+});
 
 export function PlatformPositioningPage() {
   const id = `aipe-platform-${useId().replaceAll(':', '')}`;
@@ -69,16 +101,45 @@ export function PlatformPositioningPage() {
 
   return <ContentBlock ref={root} className="aipe-platform-page" headingLevel={1} title={outline.pages[3].title}
     bodyClassName="aipe-platform-body">
-    <div className="aipe-platform-diagram" data-active={active === null ? 'none' : abilities[active].id}
+    <div className="aipe-platform-diagram" style={{'--card-width':`${card.width}px`,'--card-height':`${card.height}px`,'--orbit-y':`${orbit.y}px`} as CSSProperties} data-active={active === null ? 'none' : abilities[active].id}
       data-motion={visible ? 'on' : 'off'} role="group" aria-label="围绕知识探索者的五项平台能力，按01到05顺时针阅读">
+      <svg className="aipe-platform-background" viewBox="0 0 1600 760" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id={`${id}-grid-fade`} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0.59" stopColor="white" stopOpacity="0"/>
+            <stop offset="0.8" stopColor="white" stopOpacity="0.55"/>
+            <stop offset="1" stopColor="white"/>
+          </linearGradient>
+          <mask id={`${id}-grid-mask`}><rect width="1600" height="760" fill={`url(#${id}-grid-fade)`}/></mask>
+        </defs>
+        <g mask={`url(#${id}-grid-mask)`}>
+          <path d="M0 440H1600V760H0Z" fill="#f5f9ff"/>
+          <g stroke="#b9d7fa" strokeWidth="0.9" opacity="0.7">
+            {Array.from({length: 65}, (_, i) => {
+              const x = -1760 + i * 80;
+              const startX = 800 + (x - 800) * 0.08;
+              const endX = Math.max(0, Math.min(1600, x));
+              const endY = 410 + 350 * (endX - startX) / (x - startX);
+              return <path key={`v${i}`} d={`M${startX} 410L${endX} ${endY}`}/>;
+            })}
+            {Array.from({length: 19}, (_, i) => {
+              const y = 420 + 340 * ((i + 1) / 19) ** 1.7;
+              return <path key={`h${i}`} d={`M0 ${y}H1600`}/>;
+            })}
+          </g>
+          <g fill="none" stroke="#8eb5e5" strokeWidth="1.3" opacity="0.75">
+            {[[90,722],[226,660],[390,718],[610,719],[841,694],[1060,722],[1368,671],[1478,718],[1510,602],[86,598]].map(([x,y]) =>
+              <path key={`${x}-${y}`} d={`M${x-5} ${y}h10M${x} ${y-5}v10`}/>)}
+          </g>
+        </g>
+      </svg>
       <svg className="aipe-platform-arrows" viewBox="0 0 1538 760" aria-hidden="true">
         <defs>
           <linearGradient id={`${id}-blue`}><stop stopColor="#d2e7ff"/><stop offset="1" stopColor="#79b2f5"/></linearGradient>
         </defs>
         {arrows.map((arrow, index) => <g key={index} className="aipe-platform-arrow" data-active={active === index}>
-          <path d={arrow.path} fill="none" stroke={`url(#${id}-blue)`} strokeWidth="20"/>
-          <polygon points={arrowHead(arrow)} fill="#79b2f5"/>
-          <path className="aipe-platform-arrow-flow" d={arrow.path} fill="none" stroke="white" strokeWidth="4" pathLength="100"/>
+          <path d={arrow.shape} fill={`url(#${id}-blue)`}/>
+          <path className="aipe-platform-arrow-flow" d={arrow.flow} fill="none" stroke="white" strokeWidth="4" pathLength="100"/>
         </g>)}
       </svg>
       <div className="aipe-platform-center">
@@ -92,14 +153,15 @@ export function PlatformPositioningPage() {
         <Typography as="h2" variant="h2" tone="accent">知识探索者</Typography>
       </div>
       {abilities.map((ability, index) => <section key={ability.id}
-        className={`aipe-platform-ability aipe-platform-${ability.id}`} data-active={active === index}>
+        className={`aipe-platform-ability aipe-platform-${ability.id}`} data-active={active === index}
+        style={{left:positions[index].x-card.width/2,top:positions[index].y-card.height/2}}
+        onPointerEnter={() => setHovered(index)} onPointerLeave={() => setHovered(null)}>
+        <span className="aipe-platform-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
         <button ref={element => { circles.current[index] = element; }} type="button" className="aipe-platform-circle"
           aria-labelledby={`${id}-${ability.id}-title`} aria-describedby={`${id}-${ability.id}-description`}
-          onPointerEnter={() => setHovered(index)} onPointerLeave={() => setHovered(null)}
           onFocus={() => setFocused(index)} onBlur={() => setFocused(null)} onKeyDown={event => navigate(event, index)}>
           <span className="aipe-platform-circle-halo" aria-hidden="true"/>
           <PlatformCapabilityIcon index={index}/>
-          <span className="aipe-platform-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
         </button>
         <div className="aipe-platform-copy">
           <Typography as="h2" id={`${id}-${ability.id}-title`} variant="h3" tone="accent">{ability.lines.map(line => <span key={line}>{line}</span>)}</Typography>

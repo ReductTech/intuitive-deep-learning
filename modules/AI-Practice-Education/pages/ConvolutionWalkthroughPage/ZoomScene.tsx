@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { Button, Typography } from '../../../shared/react';
-import { INPUT_SIZE, KERNELS, OUTPUT_SIZE, patchAt, type KernelDirection, type frameAt } from './walkthroughModel';
+import { INPUT_SIZE, KERNELS, LOCAL_COUNT, OUTPUT_SIZE, patchAt, type KernelDirection, type frameAt } from './walkthroughModel';
 
 export type ZoomSample = { gray: number[]; responses: number[]; seed: number };
 type Frame = ReturnType<typeof frameAt>;
@@ -8,7 +8,7 @@ const WIDTH = 1000, HEIGHT = 360, PANE = 360, RIGHT = 640, CLOSE_SCALE = 90;
 
 /** The patch and the final image share one world coordinate system throughout. */
 export function cameraAt(seed: number, frame: Frame) {
-  const local = seed + (frame.phase === 'slow' ? frame.index : 4);
+  const local = seed + (frame.phase === 'slow' ? frame.index : LOCAL_COUNT - 1);
   const x = local % OUTPUT_SIZE, y = Math.floor(local / OUTPUT_SIZE);
   const zoom = frame.zoom;
   // Begin at the upper-left corner in both the image and the enlarged view.
@@ -33,7 +33,7 @@ export function ZoomScene({ sample, frame, direction, onDirectionChange }: { sam
     return { input: make(INPUT_SIZE, sample.gray), output: make(OUTPUT_SIZE, sample.responses.map(v => Math.min(255, Math.abs(v) * .6))) };
   }, [sample]);
   const camera = cameraAt(sample.seed, frame);
-  const localIndex = sample.seed + (frame.phase === 'slow' ? frame.index : 4);
+  const localIndex = sample.seed + (frame.phase === 'slow' ? frame.index : LOCAL_COUNT - 1);
   const localX = localIndex % OUTPUT_SIZE, localY = Math.floor(localIndex / OUTPUT_SIZE);
 
   const patch = patchAt(sample.gray, localIndex);
@@ -43,7 +43,7 @@ export function ZoomScene({ sample, frame, direction, onDirectionChange }: { sam
   useEffect(() => {
     const ctx = canvas.current?.getContext('2d'); if (!ctx) return;
     const { x, y, scale } = camera;
-    const seeds = frame.phase === 'slow' ? Math.max(frame.completed, frame.summed ? frame.index + 1 : 0) : 5;
+    const seeds = frame.phase === 'slow' ? Math.max(frame.completed, frame.summed ? frame.index + 1 : 0) : LOCAL_COUNT;
     ctx.clearRect(0, 0, WIDTH, HEIGHT);
     ctx.fillStyle = '#fff8ed'; ctx.fillRect(0, 0, WIDTH, HEIGHT);
     ctx.imageSmoothingEnabled = false;
@@ -75,7 +75,7 @@ export function ZoomScene({ sample, frame, direction, onDirectionChange }: { sam
         for (let i = top; i <= bottom; i++) { ctx.moveTo(left, i); ctx.lineTo(right, i); }
         ctx.stroke();
       }
-      if (frame.phase !== 'hold') {
+      if (frame.phase !== 'hold' && (frame.phase !== 'slow' || frame.pulse !== 'none')) {
         const scan = frame.phase === 'fast' ? frame.index : localIndex;
         const sx = scan % OUTPUT_SIZE, sy = Math.floor(scan / OUTPUT_SIZE);
         ctx.strokeStyle = '#ed7d31'; ctx.lineWidth = 2 / scale;
@@ -83,7 +83,7 @@ export function ZoomScene({ sample, frame, direction, onDirectionChange }: { sam
       }
       ctx.restore();
     }
-  }, [sample, surfaces, camera.x, camera.y, camera.scale, frame.phase, frame.index, frame.completed, frame.summed, localIndex]);
+  }, [sample, surfaces, camera.x, camera.y, camera.scale, frame.phase, frame.pulse, frame.index, frame.completed, frame.summed, localIndex]);
 
   const left = PANE / 2 + (localX - camera.x) * camera.scale;
   const top = HEIGHT / 2 + (localY - camera.y) * camera.scale;

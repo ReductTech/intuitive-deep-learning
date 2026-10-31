@@ -21,7 +21,7 @@ def snapshot(tmp_path,store):
     (directory/'outlines.json').write_text(json.dumps(data))
     (root/'course-library.json').write_text(json.dumps({'schema':1,'repository':REPOSITORY,'modules':[{'directory':'Course','id':'course','uuid':uid}]}))
     (root/'source-lock.json').write_text(json.dumps({'repository':'ReductTech/intuitive-deep-learning'}))
-    image=root/'assets'/uid/'scenedeck-thumbnails'/'first.png';image.parent.mkdir(parents=True);image.write_bytes(b'png')
+    image=root/'assets'/uid/'course-covers'/'first.jpg';image.parent.mkdir(parents=True);image.write_bytes(b'jpg')
     git(root,'add','.');git(root,'commit','-m','snapshot')
     catalog=LibraryCatalog(SimpleNamespace(course_root=root,root=None,store=store,clock=lambda:1234,runtime_scenes=lambda *a,**kw:None))
     return root,uid,directory,data,catalog
@@ -32,7 +32,7 @@ def test_remote_snapshot_is_idempotent_and_http_reads_database(store,tmp_path):
     assert catalog.sync()==1;assert catalog.sync()==1
     course=catalog.course('course')
     assert course['title']=='远程课程' and course['module_id']==uid
-    assert course['cover_url']=='/'+uid+'/scenedeck-thumbnails/first.png'
+    assert course['cover_url']=='/'+uid+'/course-covers/first.jpg'
     assert course['source_commit']==git(root,'rev-parse','HEAD')
     assert REPOSITORY in course['github_url'] and str(root) not in json.dumps(course)
     # Changing a local file cannot silently change the public index.

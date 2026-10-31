@@ -289,7 +289,7 @@ function SceneDeckPlayer({ catalog, moduleId, assetId, progressKey, getNotes }: 
           <span className="scenedeck-sidebar__count"><Typography as="span" variant="bodySmall" tone="inherit">{String(sceneIndex + 1).padStart(2, '0')} / {scenes.length}</Typography></span>
         </div>
         <div className="scenedeck-sidebar__list">
-          {scenes.map((item, index) => <Thumbnail key={activeDeck.id + ':' + item.id} item={item} index={index} active={index === sceneIndex} complete={completedIds.includes(item.id)} src={moduleAssetUrl(activeAssetId, `scenedeck-thumbnails/${item.id}.png`)} onNavigate={navigate} />)}
+          {scenes.map((item, index) => <Thumbnail key={activeDeck.id + ':' + item.id} item={item} index={index} active={index === sceneIndex} complete={completedIds.includes(item.id)} src={moduleAssetUrl(activeAssetId, `scenedeck-thumbnails/${item.id}.jpg`)} onNavigate={navigate} />)}
         </div>
       </aside>
       <PanelResizeHandle label="调整缩略图栏宽度" onDelta={(delta) => setSidebarWidth((width) => clamp(width + delta, 200, 430))} />

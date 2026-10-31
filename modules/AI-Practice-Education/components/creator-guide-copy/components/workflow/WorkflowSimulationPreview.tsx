@@ -17,7 +17,7 @@ export function WorkflowSimulationPreview({ view, page, reviewed, browsing }: { 
   if ((browsing || !isOutline) && !firstPageDemo) {
     if (view === 'page' || view === 'review') return <CopiedCoursePreview page={page} reviewed={reviewed}/>;
     const item = simulationPages[page];
-    return <figure className="aipe-replay-cg-sim-design aipe-replay-cg-sim-course-thumbnail"><img src={asset(`course-thumbnails/${item.id}.png`)} alt={`课程参考缩略图：${item.title}`}/></figure>;
+    return <figure className="aipe-replay-cg-sim-design aipe-replay-cg-sim-course-thumbnail"><img src={asset(`course-thumbnails/${item.id}.jpg`)} alt={`课程参考缩略图：${item.title}`}/></figure>;
   }
   if (view === 'outline-basic' || view === 'outline-gomoku') {
     const revised = view === 'outline-gomoku';

@@ -39,6 +39,17 @@ export async function downloadCourseInBrowser(project:CreatorProject,signal:Abor
  };
  const course=await json(base+'offline-runtime/courses/'+encodeURIComponent(project.courseId)+'.json');
  if(!course)throw Error('当前课程的离线资源尚未发布，请更新课程资源后再下载。');
+ let pythonBootstrap='';
+ if(course.pythonRuntime){
+  progress('正在下载离线 Python 与 NumPy 运行时…');
+  const runtime=course.pythonRuntime,assets:Record<string,string>={};
+  for(const name of runtime.files){
+   const bytes=await get(assetBase+'/python-runtime/'+encodeURIComponent(runtime.version)+'/'+encodeURIComponent(name));
+   assets[name]=await dataUrl(bytes,name.endsWith('.mjs')?'text/javascript':name.endsWith('.json')?'application/json':name.endsWith('.wasm')?'application/wasm':'application/octet-stream');
+  }
+  const worker=new TextDecoder().decode(await get(base+runtime.worker));
+  pythonBootstrap='globalThis.__SHUKU_OFFLINE_PYTHON__='+JSON.stringify({worker,assets})+';';
+ }
  const codes=new Map<string,string>(),css:string[]=[],embedded=new Map<string,string>();
  progress('正在读取当前课件的运行代码…');
  for(const file of course.files){const bytes=await get(base+file);if(course.modules.includes(file))codes.set(file,new TextDecoder().decode(bytes));else if(file.endsWith('.css'))css.push(new TextDecoder().decode(bytes));else embedded.set(file,await dataUrl(bytes,file.endsWith('.woff2')?'font/woff2':file.endsWith('.js')?'text/javascript':'application/octet-stream'));}
@@ -82,11 +93,11 @@ export async function downloadCourseInBrowser(project:CreatorProject,signal:Abor
  // Script transport also makes JSON fetchable when the extracted ZIP opens via file://.
  for(const f of files)if(manifest[Object.keys(manifest).find(k=>manifest[k][0]===f.name)!]?.[1]?.match(/^(image\/|application\/json$)/))canvasAssets[f.name]=await dataUrl(f.bytes,manifest[Object.keys(manifest).find(k=>manifest[k][0]===f.name)!][1]);
  const bootstrap=`globalThis.__SHUKU_OFFLINE__=true;globalThis.__SHUKU_OFFLINE_DESIGNS__=${JSON.stringify((project as any).designImages||{})};const assets=${JSON.stringify(manifest)};globalThis.__SHUKU_OFFLINE_ASSET_KEYS__=Object.keys(assets);globalThis.__SHUKU_OFFLINE_ASSET__=key=>{const a=assets[key];if(!a){if(key.includes('/scenedeck-thumbnails/'))return 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg"/%3E';throw Error('缺少离线素材：'+key);}return globalThis.__SHUKU_CANVAS_ASSETS__?.[a[0]]||globalThis.__SHUKU_ZIP_FILES__?.[a[0]]||new URL(a[0],document.baseURI).href;};`;
- const frame=`globalThis.__SHUKU_OFFLINE_FRAME__=function(source){const u=new URL(source,'https://offline.invalid');if(!u.pathname.endsWith('/modules/'+${JSON.stringify(project.courseId)}))return '<p>此在线内容未包含在离线课件中。</p>';const startup=${JSON.stringify(bootstrap)};const values={__SHUKU_OFFLINE__:true,__SHUKU_OFFLINE_EMBED_QUERY__:u.search,__SHUKU_CANVAS_ASSETS__:globalThis.__SHUKU_CANVAS_ASSETS__,__SHUKU_ZIP_FILES__:globalThis.__SHUKU_ZIP_FILES__};const init='Object.assign(globalThis,'+JSON.stringify(values)+');'+startup+';globalThis.__SHUKU_OFFLINE_FRAME__=('+globalThis.__SHUKU_OFFLINE_FRAME__.toString()+');';return '<html><meta charset="utf-8"><style>'+document.querySelector('head style').textContent+'</style><body><div id="root"></div><script>'+init+'<'+String.fromCharCode(47)+'script><script>'+document.getElementById('offline-runtime').textContent+'<'+String.fromCharCode(47)+'script></body></html>';};`;
+ const frame=`globalThis.__SHUKU_OFFLINE_FRAME__=function(source){const u=new URL(source,'https://offline.invalid');if(!u.pathname.endsWith('/modules/'+${JSON.stringify(project.courseId)}))return '<p>此在线内容未包含在离线课件中。</p>';const startup=${JSON.stringify(bootstrap)};const values={__SHUKU_OFFLINE__:true,__SHUKU_OFFLINE_EMBED_QUERY__:u.search,__SHUKU_OFFLINE_PYTHON__:globalThis.__SHUKU_OFFLINE_PYTHON__,__SHUKU_CANVAS_ASSETS__:globalThis.__SHUKU_CANVAS_ASSETS__,__SHUKU_ZIP_FILES__:globalThis.__SHUKU_ZIP_FILES__};const init='Object.assign(globalThis,'+JSON.stringify(values)+');'+startup+';globalThis.__SHUKU_OFFLINE_FRAME__=('+globalThis.__SHUKU_OFFLINE_FRAME__.toString()+');';return '<html><meta charset="utf-8"><style>'+document.querySelector('head style').textContent+'</style><body><div id="root"></div><script>'+init+'<'+String.fromCharCode(47)+'script><script>'+document.getElementById('offline-runtime').textContent+'<'+String.fromCharCode(47)+'script></body></html>';};`;
 
  const html='<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src &#39;none&#39;;script-src &#39;unsafe-inline&#39; &#39;unsafe-eval&#39; file: blob: data:;style-src &#39;unsafe-inline&#39;;img-src data: blob: file:;media-src file: blob: data:;font-src data: blob: file:;connect-src data: blob:;frame-src file: blob: data:;worker-src blob: data:"><meta name="viewport" content="width=device-width,initial-scale=1"><style>'+styles.replace(/<\/style/gi,'<\\/style')+'</style></head><body><div id="root"></div><script src="./files/canvas-assets.js"></script><script>'+safeScript(bootstrap+frame)+'</script><script id="offline-runtime">'+safeScript(code)+'</script></body></html>';
  // Image bytes travel once, via the local script; videos remain raw binary files.
- const entries=files.filter(f=>!Object.hasOwn(canvasAssets,f.name));entries.push({name:'files/canvas-assets.js',bytes:encoder.encode('globalThis.__SHUKU_CANVAS_ASSETS__='+JSON.stringify(canvasAssets)+';')},{name:'打开课件.html',bytes:encoder.encode(html)},{name:'使用说明.txt',bytes:encoder.encode('请完整解压，再双击“打开课件.html”。请保留 files 文件夹。无需启动服务器。')});
+ const entries=files.filter(f=>!Object.hasOwn(canvasAssets,f.name));entries.push({name:'files/canvas-assets.js',bytes:encoder.encode('globalThis.__SHUKU_CANVAS_ASSETS__='+JSON.stringify(canvasAssets)+';'+pythonBootstrap)},{name:'打开课件.html',bytes:encoder.encode(html)},{name:'使用说明.txt',bytes:encoder.encode('请完整解压，再双击“打开课件.html”。请保留 files 文件夹。无需启动服务器。')});
  const zip=await browserZip(entries,signal,progress);progress('正在本机校验 ZIP 并逐页检查…');const check=await prepareOfflineZip(zip,signal);try{await verifyOfflineDownload(check.html,project.pages.map(p=>p.id),signal);}finally{check.release();}return zip;
 }
 function pathBase(path:string){return path.split('/').at(-1)!;}

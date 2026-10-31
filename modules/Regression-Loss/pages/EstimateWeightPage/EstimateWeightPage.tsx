@@ -59,8 +59,8 @@ export function EstimateWeightPage({ showLoss = false }: { showLoss?: boolean } 
         <EChartsChart className="rl-estimate-chart" option={option} minHeight={0} aria-label="石重与下沉深度的观测记录，实线表示已测范围，虚线表示趋势延伸" />
         <button className="rl-estimate-handle" role="slider" aria-label="直线端点" aria-valuemin={.008} aria-valuemax={.04} aria-valuenow={slope} aria-valuetext={`端点：${Math.round(endpointX)} 千克，${endpointY.toFixed(1)} 厘米；方向键调整直线`} title="沿上边缘或右边缘拖动，或使用方向键调整"
           style={{ left: `${10 + endpointX / 3000 * 84}%`, top: `${12 + (1 - endpointY / 48) * 74}%` }}
-          onPointerDown={event => { event.currentTarget.setPointerCapture(event.pointerId); adjust(event); }}
-          onPointerMove={event => { if (event.currentTarget.hasPointerCapture(event.pointerId)) adjust(event); }}
+          onPointerDown={event => { if(event.isTrusted)event.currentTarget.setPointerCapture(event.pointerId); adjust(event); }}
+          onPointerMove={event => { if (event.currentTarget.hasPointerCapture(event.pointerId)||(!event.isTrusted&&event.buttons===1)) adjust(event); }}
           onPointerUp={event => { if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId); }}
           onKeyDown={event => {
             if (['ArrowUp', 'ArrowRight', 'ArrowDown', 'ArrowLeft', 'Home', 'End'].includes(event.key)) {

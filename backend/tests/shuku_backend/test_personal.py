@@ -144,6 +144,8 @@ def test_teaching_navigation_uses_release_assets_and_never_exposes_private_notes
     assert result==[{'id':'first','title':'第一页','thumbnail':'/api/shuku/revisions/release-1/files/assets/module/scenedeck-thumbnails/native-first.png'},
                     {'id':'second','title':'第二页','thumbnail':None}, {'id':'custom','title':'自定义页','thumbnail':None}]
     assert teaching_pages(project,{},'release-2','module')[0]['thumbnail'] is None
+    files['assets/module/scenedeck-thumbnails/native-first.jpg']={'sha256':'jpeg'}
+    assert teaching_pages(project,files,'release-3','module')[0]['thumbnail'].endswith('/native-first.jpg')
 
 
 def test_published_study_context_contains_only_safe_navigation(published):

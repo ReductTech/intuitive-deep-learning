@@ -100,7 +100,7 @@ export function CourseWorkspace({courses,initialProject,managed,reader,renderPag
   });
 
   const native = module.pptDeck!.scenes.find(item => item.id === (page.nativeId ?? (reader?page.id:undefined)));
-  const thumbnail = page.nativeId ? moduleAssetUrl(module.assetId, `scenedeck-thumbnails/${page.nativeId}.png`) : '';
+  const thumbnail = page.nativeId ? moduleAssetUrl(module.assetId, `scenedeck-thumbnails/${page.nativeId}.jpg`) : '';
   const editing = mode === 'edit';
   useSourceTextEditing(nativeRoot, !managed && editing && Boolean(native) && view === 'web', page.id, setNotice);
 
@@ -275,7 +275,7 @@ export function CourseWorkspace({courses,initialProject,managed,reader,renderPag
         {mode !== 'present' && <button className="cw-present-button" disabled={Boolean(busy)} onClick={present}><Icon name="play" />演示</button>}
       </div>
     </header>
-    <PageNavigator flatFallback={offline} pages={project.pages} activeId={page.id} busy={Boolean(busy)} editable={editing} renderThumbnail={renderThumbnail} thumbnail={item => offline?offlineThumbnail(item):reader?reader.thumbnail(item):item.nativeId ? moduleAssetUrl(module.assetId, `scenedeck-thumbnails/${item.nativeId}.png`) : undefined} onSelect={select} onReorder={reorder} onAdd={addPage} onProperties={setPropertiesId} />
+    <PageNavigator flatFallback={offline} pages={project.pages} activeId={page.id} busy={Boolean(busy)} editable={editing} renderThumbnail={renderThumbnail} thumbnail={item => offline?offlineThumbnail(item):reader?reader.thumbnail(item):item.nativeId ? moduleAssetUrl(module.assetId, `scenedeck-thumbnails/${item.nativeId}.jpg`) : undefined} onSelect={select} onReorder={reorder} onAdd={addPage} onProperties={setPropertiesId} />
     <main className="cw-main">
       <header className="cw-page-heading"><div><span>{String(index + 1).padStart(2, '0')}</span><strong>{page.title}</strong><small>{showingImage ? '设计图' : page.ready ? '网页' : '待设计'}</small>{editing && <span className="cw-edit-indicator">{managed?'编辑模式':'编辑模式 · 双击文字修改'}</span>}</div>{editing && <details className="cw-canvas-menu"><summary aria-label="当前页更多操作">···</summary><div onClick={event => { if ((event.target as HTMLElement).closest('button')) event.currentTarget.parentElement?.removeAttribute('open'); }}>{page.designImageId && page.ready && <button disabled={Boolean(busy)} onClick={() => setView(showingImage ? 'web' : 'design')}>{showingImage ? '查看网页' : '查看设计图'}</button>}<button disabled={Boolean(busy)} onClick={() => void design(false)}>{page.designImageId ? '重新生成设计图' : '生成设计图'}</button>{page.revisions.length > 0 && <button disabled={Boolean(busy)} onClick={() => { const previous = page.revisions[page.revisions.length - 1]; patchPage({ ...previous, ready: Boolean(native) || previous.ready, revisions: page.revisions.slice(0, -1) }); setView(previous.designImageId && !previous.ready && !native ? 'design' : 'web'); setFeedback('已恢复上一版。'); }}>恢复上一版</button>}<button disabled={Boolean(busy)} onClick={() => setPanel('notes')}>查看讲稿</button></div></details>}</header>
       <div className="cw-viewport" ref={viewport}>{mode === 'present' && <FullscreenLaserPointer viewport={viewport} />}<div className="cw-slide-wrap" style={{ width: 1600 * scale, height: 900 * scale }}><div className="cw-slide course-shell ng-ppt-slide-surface" style={{ transform: `scale(${scale})` }}>

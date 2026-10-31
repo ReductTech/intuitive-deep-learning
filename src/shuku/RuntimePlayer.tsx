@@ -41,5 +41,5 @@ export function RuntimePlayer({project,deck,guide,notes,assetId='',initialState,
  }
  if(!initialized)return null;
  if(state.mode==='guide'&&guide)return <div className="shuku-original-guide"><GuideSession project={project} state={state} scope={scope} onChange={setState}>{guide}</GuideSession></div>;
- return <NarrationContext.Provider value={window.origin==='null'?parentNarration(revision,channel):null}><CourseWorkspace courses={courses} initialProject={project} reader={{state,onChange:setState,storageKey:scope+':'+revision,thumbnail:page=>assetId&&page.nativeId?moduleAssetUrl(assetId,`scenedeck-thumbnails/${page.nativeId}.png`):undefined}}/></NarrationContext.Provider>;
+ return <NarrationContext.Provider value={window.origin==='null'?parentNarration(revision,channel):null}><CourseWorkspace courses={courses} initialProject={project} reader={{state,onChange:setState,storageKey:scope+':'+revision,thumbnail:page=>assetId&&page.nativeId?moduleAssetUrl(assetId,`scenedeck-thumbnails/${page.nativeId}.jpg`):undefined}}/></NarrationContext.Provider>;
 }

@@ -8,7 +8,6 @@ import '../shuku/shuku.css';
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { moduleAssetUrl } from '../../modules/shared/react/assets';
 import { activeModules, type ActiveModule } from './modules';
-import { courseCoverScenes } from './courseCovers';
 import './HomePage.css';
 import { isLocalPreview,isPublicPreview } from './runtimeMode';
 
@@ -33,17 +32,17 @@ const topics: { name: string; icon: IconName }[] = [
   { name: '神经网络', icon: 'brain' }, { name: '计算机视觉', icon: 'image' },
   { name: '生成模型', icon: 'spark' }, { name: '课件创作', icon: 'book' },
 ];
-const editorial: Record<string, { title: string; summary: string; topic: string; cover?: string; color: string }> = {
-  'neuron-guide': { title: '认识人工神经元', summary: '从一次真实决策出发，看懂输入、权重与激活函数。', topic: '神经网络', cover: 'activation-catalog', color: '#e8f0ff' },
-  'convolution-kernel-intro': { title: '卷积基础', summary: '从五子棋到图像，亲手探索卷积怎样提取局部特征。', topic: '计算机视觉', cover: 'common-kernels', color: '#e5f4f0' },
+const editorial: Record<string, { title: string; summary: string; topic: string; color: string }> = {
+  'neuron-guide': { title: '认识人工神经元', summary: '从一次真实决策出发，看懂输入、权重与激活函数。', topic: '神经网络', color: '#e8f0ff' },
+  'convolution-kernel-intro': { title: '卷积基础', summary: '从五子棋到图像，亲手探索卷积怎样提取局部特征。', topic: '计算机视觉', color: '#e5f4f0' },
   'digital-image-intro': { title: '数字图像入门', summary: '从一颗拼豆开始，理解像素、颜色与图像的数字表达。', topic: '计算机视觉', color: '#fff0e1' },
-  'regression-loss': { title: '回归与损失', summary: '从曹冲称象到模型拟合，理解误差、损失与最优解。', topic: '数学与优化', cover: '07', color: '#e9e7fa' },
-  'visual-feature-learning': { title: '视觉特征学习', summary: '从手写数字到人脸验证，观察神经网络如何学习特征。', topic: '计算机视觉', cover: 'assemble-train-digit-network', color: '#e4eff8' },
+  'regression-loss': { title: '回归与损失', summary: '从曹冲称象到模型拟合，理解误差、损失与最优解。', topic: '数学与优化', color: '#e9e7fa' },
+  'visual-feature-learning': { title: '视觉特征学习', summary: '从手写数字到人脸验证，观察神经网络如何学习特征。', topic: '计算机视觉', color: '#e4eff8' },
   'visual-generation-guide': { title: '视觉生成：从噪声到图像', summary: '从 GAN 到 Diffusion，探索一张图像如何被生成。', topic: '生成模型', color: '#eee9fc' },
-  'creator-guide': { title: '课件创作指南', summary: '与 AI 一起，把教学想法变成可以探索的交互课件。', topic: '课件创作', cover: 'frontend-journey', color: '#e6efff' },
+  'creator-guide': { title: '课件创作指南', summary: '与 AI 一起，把教学想法变成可以探索的交互课件。', topic: '课件创作', color: '#e6efff' },
   'multilayer-perceptron': { title: '多层感知机', summary: '从泰坦尼克号存活预测，走进分类概率与参数学习。', topic: '神经网络', color: '#e1f3ef' },
   'gradient-descent': { title: '梯度下降与优化器', summary: '先体验禁区撤离，再追问怎样找到更安全的方向。', topic: '数学与优化', color: '#eee9e3' },
-  'Linear-Regression-Loss': { title: '从身高遗传到线性回归', summary: '观察身高数据的趋势，亲手调整一条预测直线。', topic: '数学与优化', cover: 'uncertainty-opening', color: '#faeee3' },
+  'Linear-Regression-Loss': { title: '从身高遗传到线性回归', summary: '观察身高数据的趋势，亲手调整一条预测直线。', topic: '数学与优化', color: '#faeee3' },
 };
 const order = Object.keys(editorial);
 const courses = activeModules.filter(module => module.pptDeck || module.catalogListed).sort((a, b) => {
@@ -53,20 +52,21 @@ const courses = activeModules.filter(module => module.pptDeck || module.catalogL
 export interface LibraryCourse {course_id?:string;revision_id?:string;kind:'library';id:string;module_id:string;alias:string;title:string;description:string;category:string;difficulty:string;page_count:number;cover_url:string|null;repository:string;source_commit:string;github_url:string;version:string}
 export type CatalogModule = ActiveModule & {catalog?:LibraryCourse};
 export function info(module: CatalogModule) {
-  if(module.catalog)return {title:module.catalog.title,summary:module.catalog.description,topic:module.catalog.category,color:'#e8f0ff',cover:undefined};
-  return editorial[module.id] ?? { title: module.title, summary: module.description, topic: '神经网络', color: '#e8f0ff' };
+  const cover = module.pptDeck?.scenes[0]?.id ?? module.pages[0]?.id;
+  if(module.catalog)return {title:module.catalog.title,summary:module.catalog.description,topic:module.catalog.category,color:'#e8f0ff',cover};
+  return { ...(editorial[module.id] ?? { title: module.title, summary: module.description, topic: '神经网络', color: '#e8f0ff' }), cover };
 }
 function presentationHref(module: ActiveModule, pageId?: string) {
   return `/study?module=${encodeURIComponent(module.id)}&mode=ppt${pageId ? `&page=${encodeURIComponent(pageId)}` : ''}`;
 }
 export function Cover({ module }: { module: CatalogModule }) {
-  const [failed, setFailed] = useState(false);
+  const [failedSource, setFailedSource] = useState<string>();
   const meta = info(module);
-  const preferredCover = courseCoverScenes[module.id] ?? meta.cover;
-  const cover = preferredCover ?? module.pptDeck?.scenes[0]?.id;
+  const firstScene = meta.cover;
+  const source = firstScene ? moduleAssetUrl(module.assetId, `course-covers/${firstScene}.jpg`) : module.catalog?.cover_url;
   return <div className="sd-library-cover" style={{ '--cover-color': meta.color } as CSSProperties}>
-    {failed || (!cover && !module.catalog?.cover_url) ? <div className="sd-library-cover-fallback"><Icon name={topics.find(topic => topic.name === meta.topic)?.icon ?? 'book'} /><span>{meta.topic}</span></div>
-      : <img src={preferredCover ? moduleAssetUrl(module.assetId, `scenedeck-thumbnails/${cover}.png`) : module.catalog?.cover_url || moduleAssetUrl(module.assetId, `scenedeck-thumbnails/${cover}.png`)} alt={`${meta.title}课件预览`} loading="lazy" onError={() => setFailed(true)} />}
+    {!source || failedSource === source ? <div className="sd-library-cover-fallback"><Icon name={topics.find(topic => topic.name === meta.topic)?.icon ?? 'book'} /><span>{meta.topic}</span></div>
+      : <img src={source} alt={`${meta.title}课件预览`} loading="lazy" onError={() => setFailedSource(source)} />}
     <span className="sd-library-cover-count">{module.catalog?.page_count??module.pages.length} 页</span>
   </div>;
 }

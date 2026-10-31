@@ -4,6 +4,7 @@ import {Typography,moduleAssetUrl} from '../../../shared/react';
 import outline from '../../outlines.json';
 import papers from './webPapers.json';
 import './ResearchWebMonitor.css';
+import {useAmbientFeedScroll} from './useAmbientFeedScroll';
 
 type WebPaper=typeof papers[number];
 // Bundled snapshot: this demo contains no iframe, remote image URL, fetch, or production login.
@@ -11,20 +12,22 @@ export function ResearchWebMonitor(){
  const [tab,setTab]=useState('首页'),[saved,setSaved]=useState<string[]>([]),[likes,setLikes]=useState<string[]>([]);
  const [query,setQuery]=useState(''),[detail,setDetail]=useState<WebPaper|null>(null),[notice,setNotice]=useState('');
  const viewport=useRef<HTMLDivElement>(null);
+ useAmbientFeedScroll(viewport, 'desktop');
  function changeTab(value:string){setTab(value);setDetail(null);setNotice('');setQuery('');viewport.current?.scrollTo({top:0})}
  function toggle(id:string,values:string[],set:(v:string[])=>void){set(values.includes(id)?values.filter(v=>v!==id):[...values,id])}
  const visible=papers.filter(p=>(tab!=='论文收藏'||saved.includes(p.id))&&`${p.title} ${p.abstract} ${p.category}`.toLowerCase().includes(query.toLowerCase()));
  function open(p:WebPaper){setDetail(p);viewport.current?.scrollTo({top:0})}
  return <div className="rw-monitor" aria-label="网页版科研信息服务演示" onWheel={e=>e.stopPropagation()} onPointerDown={e=>e.stopPropagation()} onKeyDown={e=>e.stopPropagation()}>
+  <img className="rw-device-photo" src={moduleAssetUrl(outline.moduleIdentity.id,'images/recommendation-app/monitor-photoreal.png')} alt="" draggable={false} aria-hidden="true"/>
   <div className="rw-case"><i className="rw-camera"/>
-   <div className="rw-display" data-ppt-viewport="电脑内的本地网站视口">
+   <div className="rw-display" data-feed-screen="desktop" data-ppt-viewport="电脑内的本地网站视口">
     <div className="rw-website">
      <header className="rw-nav">
-      <button className="rw-logo" aria-label="网站首页" onClick={()=>changeTab('首页')}><img src={moduleAssetUrl(outline.moduleIdentity.id,'images/recommendation-app/reduct-mark-white.svg')} alt=""/><Typography as="span" variant="h3" tone="inherit">减论科技</Typography></button>
+      <button className="rw-logo" aria-label="网站首页" onClick={()=>changeTab('首页')}><img src={moduleAssetUrl(outline.moduleIdentity.id,'images/recommendation-app/reduct-official-logo.png')} alt="减论科技"/></button>
       <nav aria-label="网页版导航">{['首页','热点','论文收藏'].map(t=><button key={t} className={tab===t?'active':''} onClick={()=>changeTab(t)}><Typography as="span" variant="bodySmall" tone="inherit">{t}</Typography></button>)}<button onClick={()=>setNotice('新芽计划：连接科研学习、实践培养与导师指导。')}>新芽计划⌄</button><button onClick={()=>setNotice('优博之路：关注科研成长与学术交流。')}>优博之路⌄</button></nav>
       <button className="rw-login" onClick={()=>setNotice('当前展示论文发现与阅读体验，可直接浏览和收藏。')}>登录</button>
      </header>
-     <div className="rw-scroll" ref={viewport} data-ppt-viewport="网页版论文列表和详情滚动区">
+     <div className="rw-scroll" ref={viewport} data-ppt-viewport="网页版论文列表和详情滚动区"><div data-ambient-feed-content>
       {notice&&<div className="rw-notice" role="status"><Typography variant="bodySmall" tone="inherit">{notice}</Typography><button aria-label="关闭网站提示" onClick={()=>setNotice('')}><X size={17}/></button></div>}
       {detail?<div className="rw-detail">
        <button className="rw-back" onClick={()=>{setDetail(null);viewport.current?.scrollTo({top:0})}}><ArrowLeft size={16}/> 返回论文列表</button>
@@ -48,7 +51,7 @@ export function ResearchWebMonitor(){
         </div>
        </article>)}{!visible.length&&<div className="rw-empty"><BookOpen/><Typography variant="h3" tone="inherit">{tab==='论文收藏'?'收藏值得深入阅读的论文':'没有找到相关论文'}</Typography><Typography variant="bodySmall" tone="inherit">{tab==='论文收藏'?'点击论文卡片的收藏图标，即可在这里回看。':'试试其他题目或关键词。'}</Typography><button onClick={()=>changeTab('首页')}>浏览推荐论文</button></div>}</div>
       </>}
-     </div>
+     </div></div>
     </div>
    </div>
    <div className="rw-chin"/>

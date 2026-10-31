@@ -10,7 +10,7 @@ module = Path(__file__).resolve().parents[1]
 root = module.parents[1]
 outline = json.loads((module / 'outlines.json').read_text(encoding='utf-8'))
 assets = module / 'assets'
-output = assets / 'scenedeck-thumbnails'
+output = module / '_scratchpad/screenshots'
 expected_sources = [None,'01','03','05','08','10','12','13','17','18','22',None,'24',None,None]
 base = 'http://127.0.0.1:5180/visual-architecture.html'
 errors = []

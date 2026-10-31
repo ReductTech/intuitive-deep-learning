@@ -23,7 +23,7 @@ try {
  const svg='<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><rect width="20" height="20" fill="blue"/></svg>';
  await fs.writeFile(path.join(assetDir,'icons/icon-1.svg'),svg);await fs.writeFile(path.join(assetDir,'icons/icon-2.svg'),svg);
  await fs.mkdir(path.join(assetDir,'scenedeck-thumbnails'));
- execFileSync(process.env.IDL_PYTHON||'python',['-c','from PIL import Image;import sys;Image.new("RGB",(160,90),"blue").save(sys.argv[1])',path.join(assetDir,'scenedeck-thumbnails/first.png')]);
+ execFileSync(process.env.IDL_PYTHON||'python',['-c','from PIL import Image;import sys;Image.new("RGB",(160,90),"blue").save(sys.argv[1])',path.join(assetDir,'scenedeck-thumbnails/first.jpg')]);
  await fs.writeFile(path.join(assetDir,'metadata.json'),JSON.stringify({caption:'Runtime JSON loaded',image:'json-only-picture.svg'}));
  await fs.writeFile(path.join(assetDir,'json-only-picture.svg'),svg);
  await fs.writeFile(path.join(assetDir,'unused.svg'),'UNUSED_ASSET_MUST_NOT_TRAVEL');

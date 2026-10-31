@@ -19,6 +19,7 @@ import { RegressionFitShowcasePage } from './pages/RegressionFitShowcasePage/Reg
 import { CodeExecutionShowcasePage } from './pages/CodeExecutionShowcasePage/CodeExecutionShowcasePage';
 import { ShukuWebsiteShowcasePage } from './pages/ShukuWebsiteShowcasePage/ShukuWebsiteShowcasePage';
 import { PlatformFoundationPage } from './pages/PlatformFoundationPage/PlatformFoundationPage';
+import { UserFoundationPage } from './pages/UserFoundationPage/UserFoundationPage';
 import { EducationCasePage } from './pages/EducationCasePage/EducationCasePage';
 
 const pages=[
@@ -37,6 +38,7 @@ const pages=[
  {id:'showcase-shuku',Component:ShukuWebsiteShowcasePage},
  {id:'foundation-four-title',Component:FoundationFourTitlePage},
  {id:'platform-foundation',Component:PlatformFoundationPage},
+ {id:'user-foundation',Component:UserFoundationPage},
  {id:'foundation-five-title',Component:FoundationFiveTitlePage},
  {id:'education-case',Component:EducationCasePage},
 ];

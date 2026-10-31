@@ -68,9 +68,15 @@ def test_publish_after_close_respects_module_format_mapping(tmp_path, monkeypatc
     args = capture.build_parser().parse_args(["--module", "fixture", "--format", "thumbnails"])
     result = capture.capture_module(args)
     assert result["errors"] == []
-    assert set(p.name for p in official.iterdir()) == {"one.jpg", "two.png"}
+    assert set(p.name for p in official.iterdir()) == {"one.jpg", "two.jpg"}
     with Image.open(official / "one.jpg") as saved:
-        assert saved.format == "JPEG" and saved.size == (1600, 900)
+        assert saved.format == "JPEG" and saved.size == (320, 180)
+        assert saved.info.get("progressive")
+    with Image.open(official / "two.jpg") as saved:
+        assert saved.format == "JPEG"
+    with Image.open(tmp_path / 'assets/course-covers/one.jpg') as cover:
+        assert cover.format == 'JPEG' and cover.size == (800, 450)
+    assert not (tmp_path / 'assets/course-covers/two.jpg').exists()
     assert not (tmp_path / "_scratchpad/screenshots").exists()
     report = json.loads((tmp_path / '_scratchpad/thumbnails/report.json').read_text(encoding='utf-8'))
     assert report['generatedCount'] == report['requestedCount'] == 2
@@ -91,6 +97,15 @@ def test_thumbnail_mapping_cannot_write_outside_thumbnail_directory(tmp_path, mo
     assert "escapes" in result["errors"][0]["error"]
     assert not (tmp_path / "escaped.jpg").exists()
     assert len(result["files"]) == 1
+
+
+def test_single_nonfirst_page_does_not_replace_home_cover(tmp_path, monkeypatch):
+    setup_capture(tmp_path, monkeypatch)
+    args = capture.build_parser().parse_args(['--module', 'fixture', '--slide', 'two', '--format', 'thumbnails'])
+    result = capture.capture_module(args)
+    assert result['generatedCount'] == result['requestedCount'] == 1
+    assert result['coverFiles'] == []
+    assert not (tmp_path / 'assets/course-covers').exists()
 
 
 def test_external_thumbnail_output_rejected_before_browser(tmp_path, monkeypatch):

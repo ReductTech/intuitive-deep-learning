@@ -4,6 +4,8 @@ import ts from 'typescript';
 import type {Plugin} from 'vite';
 // @ts-ignore existing Node authoring helper
 import {offlineSource} from './offline-source.mjs';
+// @ts-ignore Node export helper
+import {pythonOfflineFiles,buildOfflinePythonWorker} from './python-offline-runtime.mjs';
 
 /** Reuse Rollup's normal module graph: publish code/metadata, never prebuilt ZIPs. */
 export function browserOffline(root:string,library:string):Plugin{
@@ -29,8 +31,9 @@ export function browserOffline(root:string,library:string):Plugin{
    if(id.includes('/modules/')&&/\.[jt]sx?$/.test(id)&&code.includes('window.location.search'))return code.replaceAll('window.location.search',"((globalThis as any).__SHUKU_OFFLINE_EMBED_QUERY__||window.location.search)");
    if(id.endsWith('/mathlive.min.mjs'))return code.replaceAll('this.targetOrigin=window.origin','this.targetOrigin=window.origin==="null"?"*":window.origin').replace('se._fontsDirectory="./fonts/"','se._fontsDirectory=globalThis.__SHUKU_OFFLINE__?null:"./fonts/"');
   },
-  generateBundle:{order:'post',handler(_options,bundle){
+  generateBundle:{order:'post',async handler(_options,bundle){
    const catalog:Record<string,unknown>={};const all=new Set<string>();
+   let pythonEmitted=false;
    const entries=new Map(Object.values(bundle).filter(b=>b.type==='chunk').map(b=>[b.type==='chunk'?b.facadeModuleId:'',b]));
    const assetsByBase=new Map(Object.values(bundle).filter(b=>b.type==='asset').map(b=>[path.posix.basename(b.fileName),b.fileName]));
    for(const c of courses){const entry=entries.get('\0'+prefix+c.id);if(!entry||entry.type!=='chunk')continue;
@@ -48,7 +51,15 @@ export function browserOffline(root:string,library:string):Plugin{
       }collect(ast);
      }
      for(const dependency of [...b.imports,...b.dynamicImports,...((b as any).viteMetadata?.importedCss||[]),...((b as any).viteMetadata?.importedAssets||[])])visit(dependency);
-    }visit(entry.fileName);files.forEach(f=>all.add(f));const descriptor={entry:entry.fileName,files:[...files],modules:[...files].filter(f=>bundle[f]?.type==='chunk'),namespaces:[...namespaces],assetHints:[...hints],assetPatterns};
+    }visit(entry.fileName);
+    const usesPython=[...scanned].some(file=>file.replaceAll('\\','/').endsWith('/CodePracticePage/pythonRuntime.ts'));
+    let pythonRuntime;
+    if(usesPython){
+     const runtime=pythonOfflineFiles(root),worker='offline-runtime/python/worker.js';
+     pythonRuntime={version:runtime.version,files:Object.keys(runtime.files),worker};
+     if(!pythonEmitted){this.emitFile({type:'asset',fileName:worker,source:await buildOfflinePythonWorker(root)});all.add(worker);pythonEmitted=true;}
+    }
+    files.forEach(f=>all.add(f));const descriptor={entry:entry.fileName,files:[...files],modules:[...files].filter(f=>bundle[f]?.type==='chunk'),namespaces:[...namespaces],assetHints:[...hints],assetPatterns,...(pythonRuntime?{pythonRuntime}:{})};
     const name='offline-runtime/courses/'+encodeURIComponent(c.id)+'.json';this.emitFile({type:'asset',fileName:name,source:JSON.stringify(descriptor)});all.add(name);catalog[c.id]={descriptor:name};
    }
    this.emitFile({type:'asset',fileName:'offline-runtime/esbuild.wasm',source:fs.readFileSync(path.join(root,'node_modules/esbuild-wasm/esbuild.wasm'))});
