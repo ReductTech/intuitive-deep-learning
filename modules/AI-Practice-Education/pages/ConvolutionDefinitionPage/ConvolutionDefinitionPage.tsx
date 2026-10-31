@@ -51,24 +51,24 @@ function SobelFigure() {
       <FigureArrow />
       <div className="llmpe-def-example-item"><canvas ref={output} width={IMAGE_SIZE} height={IMAGE_SIZE} role="img" aria-label="该图像的竖向边缘响应强度" /><Typography variant="bodySmall" tone="inherit">竖向边缘响应</Typography></div>
     </div>
-    <Typography as="figcaption" variant="bodySmall" tone="inherit">{status === 'failed' ? '配图加载失败；上方公式仍可阅读。' : '不同方向的算子，对不同方向的边缘产生响应。'}</Typography>
+    {status === 'failed' && <Typography as="figcaption" variant="bodySmall" tone="inherit">配图加载失败</Typography>}
   </figure>;
 }
 
 export function ConvolutionDefinitionPage() {
-  return <ContentBlock className="llmpe-def-page" headingLevel={1} title={outline.pages[11].title}
+  return <ContentBlock className="llmpe-def-page" headingLevel={1} title={outline.pages[12].title}
     subtitle="以边缘检测为例：解释梯度、算子与响应" bodyClassName="llmpe-def-body">
     <div className="llmpe-def-content">
       <article className="llmpe-def-model" aria-label="专业式教育的边缘检测案例">
-        <ul className="llmpe-def-points">
-          <li><Typography variant="bodySmall" tone="inherit">图像边缘通常对应灰度变化较快的位置。</Typography></li>
-          <li><Typography variant="bodySmall" tone="inherit">Sobel 算子近似计算局部灰度梯度。</Typography></li>
-          <li><Typography variant="bodySmall" tone="inherit">以水平方向梯度为例，可突出竖向边缘。</Typography></li>
+        <Typography as="h2" variant="h3" tone="inherit" className="llmpe-def-lecture-title">一阶微分边缘检测——Sobel 算子</Typography>
+        <ul className="llmpe-def-lecture-points">
+          <li><Typography variant="bodySmall" tone="inherit">图像边缘表现为<strong>灰度的急剧变化</strong>，可利用一阶微分进行检测。</Typography></li>
+          <li><Typography variant="bodySmall" tone="inherit">Sobel 算子在 3 × 3 邻域内加权求和，近似计算局部灰度梯度。</Typography></li>
+          <li><Typography variant="bodySmall" tone="inherit">以水平方向为例，响应的绝对值越大，<strong>竖向边缘</strong>越明显。</Typography></li>
         </ul>
         <div className="llmpe-def-response-model">
           <Formula label="Sobel 水平方向梯度响应" latex={String.raw`G_x(r,c)=\sum_{i=0}^{2}\sum_{j=0}^{2}I(r+i,c+j)K_x(i,j)`} />
           <Formula label="该方向的边缘强度是梯度响应的绝对值" latex={String.raw`E_x(r,c)=|G_x(r,c)|`} />
-          <Typography variant="bodySmall" tone="muted" align="center">采用互相关约定；响应绝对值表示该方向的边缘强度。</Typography>
         </div>
         <SobelFigure />
       </article>
@@ -80,6 +80,6 @@ export function ConvolutionDefinitionPage() {
         <div className="llmpe-def-question"><Typography as="h3" variant="h3" tone="accent">第一次接触时</Typography><Typography variant="bodySmall" tone="muted">仍需理解算子为什么能找到边缘</Typography></div>
       </aside>
     </div>
-    <footer className="llmpe-def-conclusion"><Typography variant="body" tone="accent" align="center">知道方法与结果，还需要理解每个响应怎样产生</Typography></footer>
+    <footer className="llmpe-def-conclusion"><Typography variant="body" tone="accent" align="center">理解公式，还需看清计算过程</Typography></footer>
   </ContentBlock>;
 }

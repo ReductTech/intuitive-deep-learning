@@ -39,7 +39,7 @@ function WeightSets({ shared }: { shared: boolean }) {
 export function HumanCollaborationPage() {
   return <article className="cg-human-page cg-creator-typography" aria-labelledby="cg-human-title">
     <img className="cg-human-art" src={moduleAssetUrl(outline.moduleIdentity.id, 'images/human-collaboration-blank-pads.jpg')} alt="同一位深蓝色上衣的创作者与机器人，在三个阶段使用同款空白平板协作"/>
-    <header><Typography as="h1" variant="display" tone="inherit" id="cg-human-title">制作直觉式课件，人的作用是什么？</Typography></header>
+    <header><Typography as="h1" variant="display" tone="inherit" id="cg-human-title">制作交互直觉作品，人的作用是什么？</Typography></header>
     {stages.map((stage, i) => <section className={`cg-human-stage cg-human-stage-${i + 1}`} key={stage.title} aria-labelledby={`cg-human-stage-title-${i}`}>
       <div className="cg-human-stage-heading"><Typography as="span" variant="body" tone="inherit" className="cg-human-number">{i + 1}</Typography><div className="cg-human-heading-copy"><Typography as="h2" variant="h3" tone="inherit" wrap="nowrap" id={`cg-human-stage-title-${i}`}>{stage.title}</Typography></div></div>
       <Typography variant="bodySmall" tone="inherit" className="cg-human-description">{stage.description}</Typography>

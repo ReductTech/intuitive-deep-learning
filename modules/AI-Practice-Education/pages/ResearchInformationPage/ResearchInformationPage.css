@@ -1,12 +1,42 @@
-.aipe-research-challenge{display:flex;flex-direction:column;}
-.aipe-research-challenge>.aipe-research-challenge-body{position:relative;flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1050px) minmax(0,1fr);gap:42px;}
-.aipe-research-chart-area{position:relative;min-width:0;padding-top:12px;}
-.aipe-research-stat{margin-top:14px;}
-.aipe-research-stat strong{color:var(--ui-accent-alt);}
-.aipe-research-chart{position:relative;margin:20px 0 0;width:100%;height:450px;}
-.aipe-research-chart>img{display:block;width:100%;height:100%;object-fit:contain;object-position:left center;}
-.aipe-research-paper-backdrop{position:absolute;inset:0;opacity:.045;pointer-events:none;background-size:200% 100%;background-position:0 0;background-repeat:no-repeat;}
-.aipe-research-source{display:grid;gap:8px;margin-top:16px;}
-.aipe-research-source a{text-underline-offset:5px;}
-.aipe-research-reader-area{min-width:0;display:flex;flex-direction:column;justify-content:center;gap:32px;padding-bottom:40px;}
-.aipe-research-reader-art{width:100%;height:440px;background-size:228% 100%;background-position:100% 0;background-repeat:no-repeat;}
+.aipe-neurips-page { display: flex; flex-direction: column; }
+.aipe-neurips-page > .aipe-neurips-body { display: flex; flex: 1; min-height: 0; }
+.aipe-neurips-composition { display: flex; flex-direction: column; width: 100%; min-width: 0; min-height: 0; border-radius: 16px; background: linear-gradient(115deg, #eaf6ff 0%, #e3f1ff 70%, #dbeafa 100%); }
+.aipe-neurips-visual { position: relative; flex: 1; min-height: 0; isolation: isolate; }
+.aipe-neurips-reading { position: absolute; right: 0; top: 0; width: 480px; height: 100%; object-fit: cover; object-position: 60% 52%; border-top-right-radius: 16px; mask-image: linear-gradient(90deg, transparent, #000 16%); user-select: none; pointer-events: none; }
+.aipe-neurips-chart { position: absolute; inset: 0 auto 0 0; width: 1070px; max-width: 100%; }
+.aipe-neurips-unit { position: absolute; top: 30px; left: 24px; }
+.aipe-neurips-detail { position: absolute; top: 30px; left: 260px; display: flex; align-items: center; gap: 24px; }
+.aipe-neurips-detail a { text-underline-offset: 5px; }
+.aipe-neurips-detail a:focus-visible { outline: 2px solid var(--ui-focus); outline-offset: 3px; }
+.aipe-neurips-plot { position: absolute; left: 102px; right: 18px; top: 104px; bottom: 90px; border-left: 1px solid #7295bf; border-bottom: 1px solid #7295bf; }
+.aipe-neurips-gridline { position: absolute; left: 0; right: 0; border-top: 1px dashed #b7d2ee; pointer-events: none; }
+.aipe-neurips-gridline:first-child { border-top: none; }
+.aipe-neurips-gridline > span { position: absolute; right: calc(100% + 12px); top: 0; transform: translateY(-50%); white-space: nowrap; }
+.aipe-neurips-columns { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); }
+.aipe-neurips-column.edu-btn { position: relative; display: block; min-width: 0; height: 100%; padding: 0; border: none; border-radius: 0; background: transparent; box-shadow: none; cursor: crosshair; }
+.aipe-neurips-column.edu-btn > span { display: contents; }
+.aipe-neurips-column.edu-btn:hover { background: rgba(255,255,255,.2); }
+.aipe-neurips-column.edu-btn:focus-visible { outline: 2px solid var(--ui-focus); outline-offset: 3px; border-radius: 4px; }
+.aipe-neurips-bar { position: absolute; bottom: 0; left: 13%; width: 74%; border-radius: 3px 3px 0 0; background: linear-gradient(105deg, #349dff, #1283ef 65%, #1974d6); box-shadow: inset 1px 1px 0 rgba(255,255,255,.55); transition: filter .16s ease; }
+.aipe-neurips-bar.is-latest { background: linear-gradient(100deg, #0954a8, #063777); }
+.aipe-neurips-column[data-highlight=true] .aipe-neurips-bar { filter: saturate(1.2) brightness(1.09); box-shadow: inset 0 0 0 2px #ff943c; }
+.aipe-neurips-values { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+.aipe-neurips-value { position: absolute; transform: translateX(-50%); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.aipe-neurips-value::after { content: ''; position: absolute; width: 44px; height: 5px; border-radius: 3px; bottom: -5px; left: calc(50% - 22px); background: #ff8a1d; }
+.aipe-neurips-year { position: absolute; top: calc(100% + 12px); left: 50%; transform: translateX(-50%); white-space: nowrap; }
+.aipe-neurips-year::before { content: ''; position: absolute; left: 50%; top: -12px; height: 7px; border-left: 1px solid #7295bf; }
+.aipe-neurips-footer { display: flex; align-items: center; justify-content: space-between; gap: 30px; flex: 0 0 100px; padding: 8px 24px; min-width: 0; box-sizing: border-box; background: linear-gradient(90deg, rgba(255,255,255,.9), rgba(255,255,255,.44)); border-radius: 0 0 16px 16px; }
+.aipe-neurips-takeaway { display: flex; align-items: center; white-space: nowrap; }
+.aipe-neurips-takeaway::before { content: ''; display: block; height: 44px; width: 8px; margin-right: 26px; border-radius: 5px; background: #ff8a1d; }
+.aipe-neurips-limit { color: #f47e16; }
+.aipe-neurips-column.edu-btn { opacity: 0; }
+.aipe-neurips-composition[data-active=true] .aipe-neurips-column { animation: aipe-neurips-reveal .48s ease-out both; }
+.aipe-neurips-composition[data-active=true] .aipe-neurips-value { animation: aipe-neurips-label-reveal .48s ease-out both; }
+.aipe-neurips-composition[data-capture-ready=true] .aipe-neurips-value { animation: none; }
+@keyframes aipe-neurips-reveal { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes aipe-neurips-label-reveal { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .aipe-neurips-bar { transition: none; }
+  .aipe-neurips-composition[data-active=true] .aipe-neurips-column { animation: none; opacity: 1; }
+  .aipe-neurips-composition[data-active=true] .aipe-neurips-value { animation: none; }
+}

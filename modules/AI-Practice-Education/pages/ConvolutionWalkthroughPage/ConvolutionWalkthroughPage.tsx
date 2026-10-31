@@ -67,7 +67,7 @@ export function ConvolutionWalkthroughPage() {
 
   const result = sample?.responses[localIndex] ?? 0;
   const detailed = frame.phase === 'slow';
-  return <ContentBlock ref={root} className="llmpe-walk-page" headingLevel={1} title={outline.pages[12].title}
+  return <ContentBlock ref={root} className="llmpe-walk-page" headingLevel={1} title={outline.pages[13].title}
     subtitle="以边缘检测为例：从局部计算走向完整结果" bodyClassName="llmpe-walk-body"
     data-kernel={direction} data-pattern={pattern} data-phase={frame.phase} data-index={frame.index} data-completed={frame.completed} data-cycle={frame.cycle} data-ready={Boolean(samples)}>
     <div className="llmpe-walk-content"><section className="llmpe-walk-demo">

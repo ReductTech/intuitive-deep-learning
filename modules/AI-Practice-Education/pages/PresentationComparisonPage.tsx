@@ -107,8 +107,8 @@ export function PresentationComparisonPage() {
       {[1,2,3,4,5].filter(version => version <= count).map((version, index) => <button type="button" className="cg-case-stack-card" key={version} style={stackStyle(count === 5 ? (version - active + 7) % 5 : index)} aria-label={`查看生成方案 ${version}`} aria-pressed={count === 5 && active === version} onPointerEnter={() => { if (count === 5) setActive(version); }} onFocus={() => { if (count === 5) setActive(version); }} onClick={() => { if (count === 5) setActive(version); }}><img src={asset(`images/weight-sharing/version-${version}.png`)} alt={`权重共享图示方案 ${version}`} draggable={false}/></button>)}
     </section>
     {flying && <div key={count} className={`cg-case-flying${phase === 'simple-filing' ? ' is-filing' : ''}`} style={{ '--target-x': `${45 + slot.x}px`, '--target-y': `${205 + slot.y}px`, '--target-width': `${slot.width}px`, '--target-height': `${slot.height}px`, '--target-angle': `${slot.angle}deg` } as CSSProperties}><img src={asset(`images/weight-sharing/version-${count + 1}.png`)} alt={`第 ${count + 1} 张生成图示，随后移至左侧`}/></div>}
-    <section className={`cg-case-result${result ? ' is-ready' : ''}`} aria-label="加入具体设计要求后的课件效果" aria-hidden={!result}>
-      <video ref={video} src={asset('videos/weight-sharing.mp4')} muted loop playsInline preload="auto" disablePictureInPicture disableRemotePlayback aria-label="权重共享课件：窗口同步滑动，对比不同位置使用的权重"/>
+    <section className={`cg-case-result${result ? ' is-ready' : ''}`} aria-label="加入具体设计要求后的知识呈现作品效果" aria-hidden={!result}>
+      <video ref={video} src={asset('videos/weight-sharing.mp4')} muted loop playsInline preload="auto" disablePictureInPicture disableRemotePlayback aria-label="权重共享知识呈现作品：窗口同步滑动，对比不同位置使用的权重"/>
     </section>
     {loading && <div className="cg-case-loading" role="status"><span className="cg-case-spinner" aria-hidden="true"/><Typography variant="bodySmall" tone="muted">正在制作中…</Typography></div>}
     <section className="cg-case-composer" aria-label="共用创作输入窗口">

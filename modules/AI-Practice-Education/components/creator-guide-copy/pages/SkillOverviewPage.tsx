@@ -67,7 +67,7 @@ function ComponentSpecimen() {
 }
 export function SkillOverviewPage() {
   return <article className="aipe-replay-cg-overview-page aipe-replay-cg-creator-typography" aria-labelledby="aipe-replay-cg-overview-title">
-    <header><Typography as="h1" variant="display" tone="inherit" id="aipe-replay-cg-overview-title">Creator Skill：让创作者更专注于内容编排</Typography><Typography variant="bodySmall" tone="inherit">创作指导提供设计方法与表达建议，实现支持提供组件、模板与工具，帮助智能体落实教学想法。</Typography></header>
+    <header><Typography as="h1" variant="display" tone="inherit" align="center" id="aipe-replay-cg-overview-title">Creator Skill：让创作者更专注于内容编排</Typography></header>
     <section className="aipe-replay-cg-overview-panel aipe-replay-cg-overview-left" aria-labelledby="aipe-replay-cg-overview-soft">
       <div className="aipe-replay-cg-overview-panel-heading"><Typography as="span" variant="h2" tone="inherit" className="aipe-replay-cg-overview-number">1</Typography><div><Typography as="h2" variant="h2" tone="inherit" id="aipe-replay-cg-overview-soft">创作指导</Typography><Typography variant="bodySmall" tone="inherit">描述性的规则与偏好，指导智能体如何设计</Typography></div></div>
       <div className="aipe-replay-cg-overview-left-content">

@@ -22,7 +22,7 @@ export function WeightSharingAblation({category}:{category:number}) {
     <div className="aipe-replay-cg-constraints-preview-labels"><Typography variant="bodySmall" tone="muted">未启用</Typography><Typography variant="bodySmall" tone="inherit">已启用</Typography></div>
     <div className="aipe-replay-cg-weight-ablation-pair">
       <img className="aipe-replay-cg-weight-generated" src={generatedImages[category]} alt={`缺少${constraintNames[category]}的概念示意`}/>
-      <video ref={video} className="aipe-replay-cg-weight-original" src={creatorGuideAssetUrl(outline.moduleIdentity.id,'videos/weight-sharing.mp4')} autoPlay muted loop playsInline preload="auto" disablePictureInPicture disableRemotePlayback aria-label="启用技能后的原动态课件" onLoadedMetadata={event=>{const media=event.currentTarget;media.currentTime=0;void media.play().catch(()=>{});}}/>
+      <video ref={video} className="aipe-replay-cg-weight-original" src={creatorGuideAssetUrl(outline.moduleIdentity.id,'videos/weight-sharing.mp4')} autoPlay muted loop playsInline preload="auto" disablePictureInPicture disableRemotePlayback aria-label="启用技能后的原动态知识呈现作品" onLoadedMetadata={event=>{const media=event.currentTarget;media.currentTime=0;void media.play().catch(()=>{});}}/>
     </div>
   </div>;
 }

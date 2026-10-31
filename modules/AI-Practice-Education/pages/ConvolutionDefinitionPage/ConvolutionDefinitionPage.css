@@ -2,13 +2,16 @@
 .llmpe-def-page > .llmpe-def-body { flex:1; min-height:0; grid-template-rows:minmax(0,1fr) 68px; gap:18px; }
 .llmpe-def-content { display:grid; grid-template-columns:minmax(0,2.8fr) minmax(0,1fr); gap:18px; min-height:0; }
 .llmpe-def-page :is(article,section,aside,div,figure,canvas,footer) { min-width:0; max-width:100%; box-sizing:border-box; }
-.llmpe-def-model { display:flex; flex-direction:column; justify-content:space-between; gap:10px; padding:18px 24px; border:1px solid var(--ui-border-strong); background:#fffefb; color:#17243a; min-height:0; }
-.llmpe-def-points { margin:0; padding-left:30px; display:grid; gap:5px; }
+.llmpe-def-model { display:grid; grid-template-rows:auto auto auto minmax(0,1fr); align-content:start; gap:12px; padding:20px 30px; border:1px solid #aeb7c3; background:#fff; color:#151515; min-height:0; }
+.llmpe-def-lecture-title { text-align:center; padding-bottom:12px; border-bottom:2px solid #6c747e; }
+.llmpe-def-lecture-points { margin:0; padding-left:30px; display:grid; gap:8px; }
+.llmpe-def-lecture-points strong { color:#224d85; }
+.llmpe-def-model .ui-typography { margin:0; }
 .llmpe-def-response-model { display:grid; gap:0; }
 .llmpe-def-response-model .math-formula { font-size:28px; font-weight:500; color:#17243a; }
 .llmpe-def-response-model > p { margin-top:4px; }
-.llmpe-def-figure { margin:0; display:grid; justify-items:center; gap:6px; text-align:center; }
-.llmpe-def-figure-row { display:grid; grid-template-columns:minmax(0,1fr) 40px 180px 40px minmax(0,1fr); gap:16px; align-items:center; width:100%; }
+.llmpe-def-model > .llmpe-def-figure { margin:0; display:grid; width:100%; justify-self:stretch; justify-items:stretch; align-self:end; gap:6px; text-align:center; }
+.llmpe-def-figure-row { display:grid; grid-template-columns:minmax(0,1fr) 40px minmax(0,1fr) 40px minmax(0,1fr); gap:16px; align-items:center; width:100%; justify-self:stretch; }
 .llmpe-def-example-item { display:grid; justify-items:center; align-content:start; gap:6px; }
 .llmpe-def-example-item > .math-formula-block { height:140px; display:grid; align-items:center; }
 .llmpe-def-figure canvas { width:140px; height:140px; display:block; }

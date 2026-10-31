@@ -4,6 +4,7 @@ import { ImplementationBarrierPage } from './pages/ImplementationBarrierPage/Imp
 import { ConventionalResearchPage } from './pages/ConventionalResearchPage/ConventionalResearchPage';
 import { WishfulResearchPage } from './pages/WishfulResearchPage/WishfulResearchPage';
 import { WishfulBenefitsPage } from './pages/WishfulBenefitsPage/WishfulBenefitsPage';
+import { PublicationGrowthPage } from './pages/PublicationGrowthPage/PublicationGrowthPage';
 import outline from './outlines.json';
 
 // Only implemented pages enter playback; the full outline remains the authoring plan.
@@ -17,6 +18,7 @@ export const deck: DeckDefinition = {
     { id: 'conventional-research', title: outline.pages[2].title, section: '研究想法的实现', render: () => <ConventionalResearchPage /> },
     { id: 'wishful-research', title: outline.pages[3].title, section: '研究想法的实现', render: () => <WishfulResearchPage /> },
     { id: 'wishful-benefits', title: outline.pages[4].title, section: '研究想法的实现', render: () => <WishfulBenefitsPage /> },
+    { id: 'publication-growth', title: outline.pages[5].title, section: '论文阅读与判断', render: () => <PublicationGrowthPage /> },
   ],
 };
 
@@ -26,6 +28,7 @@ export function getPptNotes(sceneId: string): SpeakerNote[] {
   if (sceneId === 'conventional-research') return [{ text: outline.pages[2].snippet, selectors: ['.rie-traditional'] }];
   if (sceneId === 'wishful-research') return [{ text: outline.pages[3].snippet, selectors: ['.rie-wishful'] }];
   if (sceneId === 'wishful-benefits') return [{ text: outline.pages[4].snippet, selectors: ['.rie-benefits'] }];
+  if (sceneId === 'publication-growth') return [{ text: outline.pages[5].snippet, selectors: ['.rie-iclr-page'] }];
   return [];
 }
 
