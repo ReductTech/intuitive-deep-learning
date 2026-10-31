@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { EditorState } from '@codemirror/state';
-import { EditorView, keymap, lineNumbers, highlightActiveLine, highlightActiveLineGutter, drawSelection, hoverTooltip, Decoration, ViewPlugin } from '@codemirror/view';
+import { EditorView, keymap, lineNumbers, highlightActiveLine, highlightActiveLineGutter, hoverTooltip, Decoration, ViewPlugin } from '@codemirror/view';
 import { defaultKeymap, history, historyKeymap, indentWithTab } from '@codemirror/commands';
 import { python, pythonLanguage } from '@codemirror/lang-python';
 import { autocompletion, completionKeymap, closeBrackets, closeBracketsKeymap } from '@codemirror/autocomplete';
@@ -13,7 +13,7 @@ const theme = EditorView.theme({
   '.cm-content': { padding: '16px 0', caretColor: '#246df0' }, '.cm-line': { paddingLeft: '12px' },
   '.cm-gutters': { background: '#ffffff', color: '#92a4bc', border: 'none', padding: '0 5px' },
   '.cm-activeLine, .cm-activeLineGutter': { backgroundColor: '#eaf3ff' },
-  '&.cm-focused .cm-selectionBackground, .cm-selectionBackground': { background: '#c9dfff' },
+  '.cm-content::selection, .cm-content ::selection': { backgroundColor: '#245fc5', color: '#ffffff' },
   '.cm-indent-guide': { backgroundImage: 'repeating-linear-gradient(to right, #e6edf7 0, #e6edf7 1px, transparent 1px, transparent 4ch)' },
   '.cm-residual-term': { background: '#cdddff', borderRadius: '3px' },
   '.cm-cursor': { borderLeftColor: '#246df0' }, '.cm-tooltip': { background: '#ffffff', color: '#243c5c', border: '1px solid #cad9ec', fontSize: 'var(--ui-type-body-size)' },
@@ -54,7 +54,7 @@ export function CodeEditor({ value, onChange, onCursor, selectedLine, selectedRa
   useEffect(() => {
     if (!host.current) return;
     const editor = new EditorView({ parent: host.current, state: EditorState.create({ doc: value, extensions: [
-      lineNumbers(), lintGutter(), history(), drawSelection(), highlightActiveLine(), highlightActiveLineGutter(),
+      lineNumbers(), lintGutter(), history(), highlightActiveLine(), highlightActiveLineGutter(),
       python(), theme, indentGuides, syntaxHighlighting(highlight), bracketMatching(), closeBrackets(), indentOnInput(),
       keymap.of([{ key: 'Mod-Enter', run: () => { callbacks.current.onRun?.(); return true; } }, indentWithTab, ...closeBracketsKeymap, ...completionKeymap, ...defaultKeymap, ...historyKeymap]),
       EditorView.contentAttributes.of({ 'aria-label': '残差网络代码编辑器', spellcheck: 'false' }),
@@ -67,7 +67,8 @@ export function CodeEditor({ value, onChange, onCursor, selectedLine, selectedRa
       }),
       EditorView.updateListener.of(update => {
         if (update.docChanged && !replacing.current) callbacks.current.onChange(update.state.doc.toString());
-        if (update.selectionSet && !replacing.current) callbacks.current.onCursor(update.state.doc.lineAt(update.state.selection.main.head).number, update.state.selection.main.head - update.state.doc.lineAt(update.state.selection.main.head).from);
+        // Text selection belongs to the editor; only a caret links to graph nodes.
+        if (update.selectionSet && update.state.selection.main.empty && !replacing.current) callbacks.current.onCursor(update.state.doc.lineAt(update.state.selection.main.head).number, update.state.selection.main.head - update.state.doc.lineAt(update.state.selection.main.head).from);
       }),
     ] }) });
     view.current = editor;

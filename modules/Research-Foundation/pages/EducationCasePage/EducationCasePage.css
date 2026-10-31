@@ -1,0 +1,20 @@
+.rf-case { position:relative; }
+.rf-case-main { display:grid; grid-template-columns:minmax(0,1.65fr) minmax(0,1fr); gap:90px; align-items:center; min-height:0; padding:30px 80px; }
+.rf-case-evidence { display:flex; flex-direction:column; justify-content:center; min-width:0; min-height:0; }
+.rf-case-focus { display:grid; justify-items:start; gap:35px; }
+.rf-case-focus .ui-typography--display { --ui-type-display-size:60px; --ui-type-display-line-height:1.35; }
+.rf-case-focus > .edu-btn { border:0; padding:8px 0; background:none; }
+.rf-foundations { display:grid; gap:45px; }
+.rf-foundation-tabs { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; }.rf-foundation-tabs .edu-btn { padding:22px; }.rf-foundation-tabs .edu-btn > span { display:flex; align-items:center; gap:12px; }
+.rf-case-source-overlay { position:absolute; inset:100px 200px 70px; z-index:10; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:25px; background:#fffffff9; border:1px solid var(--ui-border); border-radius:var(--ui-radius-lg); box-shadow:var(--ui-shadow-soft); }
+.rf-document { position:relative; width:850px; max-width:100%; aspect-ratio:597/357; flex:0 0 auto; overflow:hidden; background:white; border:1px solid var(--ui-border); }
+.rf-document img { position:absolute; width:163.32%; max-width:none; left:-8.54%; top:-36.69%; }
+.rf-education-phone { display:flex; flex-direction:column; align-items:center; gap:12px; min-width:0; }.rf-education-phone > p { --ui-type-body-small-size:18px; }
+.rf-edu-device { display:flex; flex-direction:column; flex-shrink:0; position:relative; width:340px; height:580px; max-width:100%; border:8px solid #181b20; border-radius:44px; background:white; box-shadow:0 0 0 2px #92969e,var(--ui-shadow-soft); padding:0 12px 22px; --ui-type-body-small-size:16px; --ui-type-body-small-line-height:1.55; --ui-type-h3-size:23px; }
+.rf-edu-status { height:42px; display:flex; align-items:center; justify-content:space-between; padding:0 9px; }.rf-edu-status > i { width:92px; height:24px; border-radius:30px; background:#111; }
+.rf-edu-brand { display:flex; align-items:center; gap:12px; padding:12px 4px; }
+.rf-edu-banner { display:grid; grid-template-columns:auto 1fr; gap:2px 14px; padding:21px 13px; border-radius:var(--ui-radius-md); background:linear-gradient(120deg,#f1f3fc,#e8f4fb); }.rf-edu-banner > svg { grid-row:1/3; align-self:center; color:var(--ui-success); }
+.rf-edu-tabs { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; margin:15px 0; }.rf-edu-tabs .edu-btn { padding:9px 5px; }
+.rf-edu-content { display:grid; gap:11px; }.rf-edu-content > .ui-typography--h3 { border-left:3px solid var(--ui-accent); padding-left:8px; }
+.rf-edu-stages { display:flex; gap:7px; }.rf-edu-stages > button { display:grid; flex:1; gap:3px; justify-items:center; min-width:0; padding:10px 3px; border:1px solid var(--ui-border); border-radius:var(--ui-radius-sm); background:white; }.rf-edu-stages > button.active { background:var(--ui-bg-soft); border-color:var(--ui-accent); }
+.rf-edu-stage-detail { display:grid; gap:5px; padding:13px; border-radius:var(--ui-radius-sm); background:var(--ui-bg-muted); }.rf-edu-home { position:absolute; bottom:8px; width:100px; height:4px; background:#222; border-radius:10px; left:50%; transform:translateX(-50%); }

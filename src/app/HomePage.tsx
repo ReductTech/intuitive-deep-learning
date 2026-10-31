@@ -1,3 +1,4 @@
+import {ErrorPage} from './ErrorPage';
 import {isGuestMode,requestSignIn} from '../shuku/guest';
 import {CoCreateButton} from '../shuku/Collaboration';
 import { SiteHeader } from '../shuku/SiteHeader';
@@ -70,8 +71,8 @@ export function Cover({ module }: { module: CatalogModule }) {
 
 export function HomePage() {
   type PublishedCourse={id:string;title:string;description:string;category:string;version:string;revision_id:string;kind?:undefined};
-  const [catalog,setCatalog]=useState<(PublishedCourse|LibraryCourse)[]>([]),[catalogError,setCatalogError]=useState(''),[loading,setLoading]=useState(!isLocalPreview);
-  useEffect(()=>{if(isLocalPreview)return;let active=true;api<{courses:(PublishedCourse|LibraryCourse)[]}>('/public/courses').then(r=>{if(active){setCatalog(r.courses);setCatalogError('');}}).catch(e=>{if(active)setCatalogError(e.message);}).finally(()=>{if(active)setLoading(false);});return()=>{active=false;};},[]);
+  const [catalog,setCatalog]=useState<(PublishedCourse|LibraryCourse)[]>([]),[catalogError,setCatalogError]=useState<Error|null>(null),[loading,setLoading]=useState(!isLocalPreview);
+  useEffect(()=>{if(isLocalPreview)return;let active=true;api<{courses:(PublishedCourse|LibraryCourse)[]}>('/public/courses').then(r=>{if(active){setCatalog(r.courses);setCatalogError(null);}}).catch(e=>{if(active)setCatalogError(e);}).finally(()=>{if(active)setLoading(false);});return()=>{active=false;};},[]);
   const published=catalog.filter((c):c is PublishedCourse=>c.kind!=='library');
   // Bundled components render courses; they no longer determine the public catalog.
   const remoteCourses=catalog.filter((c):c is LibraryCourse=>c.kind==='library');
@@ -102,6 +103,7 @@ export function HomePage() {
   const visiblePublished=(tab==='saved'?knownPublished:published).filter(c=>(tab!=='saved'||saved.includes('course:'+c.id))&&(!query||[c.title,c.description].join(' ').includes(query))&&(topic==='全部课程'||c.category===topic));
   const unavailableFavorites=tab==='saved'?saved.filter(key=>!listedCourses.some(m=>'module:'+m.id===key||'course:'+m.catalog?.course_id===key)&&!knownPublished.some(c=>'course:'+c.id===key)):[];
   function reset() { setQuery(''); setTopic('全部课程'); setLevel('全部'); setTab('courses'); }
+  if(catalogError&&!catalog.length)return <ErrorPage error={catalogError}/>;
   return <div className={'sd-library'+(tab==='history'?' sd-personal-history':'')}>
     <a className="sd-library-skip" href="#sd-library-main">跳到课程</a>
     <SiteHeader section={tab==='saved'?'saved':tab==='history'?'history':'courses'} savedCount={saved.length} onBrowse={value=>{setTab(value);const url=new URL(location.href);if(value==='saved')url.searchParams.set('view','saved');else url.searchParams.delete('view');history.replaceState(null,'',url);}}/>
@@ -112,7 +114,7 @@ export function HomePage() {
     </aside>
     <main id="sd-library-main" className="sd-library-main">
       {tab !== 'courses' && <div className="sd-library-heading"><div><p className="sd-library-eyebrow">EXPLORE · INTERACT · UNDERSTAND</p><h1>{tab === 'history'?'继续你的学习':tab === 'saved' ? '留住你的好奇心' : '下一次理解，从这里开始'}<span>。</span></h1><p>{tab === 'saved' ? '感兴趣的课程，随时回来继续探索。' : '从真实问题出发，在交互中建立直觉。'}</p></div><span className="sd-library-heading-mark" aria-hidden="true">✳</span></div>}
-      {loading&&<p role="status">正在加载课程…</p>}{catalogError&&<p role="alert">{catalogError} <button onClick={()=>location.reload()}>重新加载</button></p>}{!isLocalPreview&&remoteCourses.length>listedCourses.length&&<p role="status">部分课程正在更新，请稍后刷新。</p>}
+      {loading&&<p role="status">正在加载课程…</p>}{catalogError&&<p role="alert">{catalogError?.message} <button onClick={()=>location.reload()}>重新加载</button></p>}{!isLocalPreview&&remoteCourses.length>listedCourses.length&&<p role="status">部分课程正在更新，请稍后刷新。</p>}
       {personal.error&&<p role="alert">{personal.error}</p>}{!personal.authenticated&&tab!=='courses'&&<p>登录后查看您的收藏和学习记录。 <a onClick={event=>{if(isGuestMode()){event.preventDefault();requestSignIn();}}} href={'/my-courses?next='+encodeURIComponent('/?view='+tab)}>登录</a></p>}{recentCourse?.available&&tab!=='history'&&<a className="sd-library-recent" href={studyHref(recentCourse)}><Icon name="clock"/><span>最近学习<strong>{recentCourse.title}</strong></span><span>继续学习 <Icon name="arrow"/></span></a>}
       <div className="sd-library-search"><Icon name="search" /><input ref={searchRef} type="search" value={query} onChange={event => setQuery(event.target.value)} aria-label="搜索课程、知识点或页面" placeholder="想了解什么？搜索课程、知识点或页面…" />{query && <button aria-label="清空搜索" onClick={() => {setQuery(''); searchRef.current?.focus();}}><Icon name="close" /></button>}</div>
       <div className="sd-library-filterbar"><div className="sd-library-levels" aria-label="课程难度">{['全部', '入门', '进阶'].map(item => <button key={item} aria-pressed={level === item} className={level === item ? 'is-active' : ''} onClick={() => setLevel(item)}>{item}</button>)}</div><div className="sd-library-results"><span aria-live="polite">{tab==='history'?personal.data.history.length:filtered.length+visiblePublished.length+unavailableFavorites.length} 门课程</span><select aria-label="课程排序" value={sort} onChange={event => setSort(event.target.value)}><option value="default">推荐顺序</option><option value="pages">页数从少到多</option><option value="name">课程名称</option></select></div></div>

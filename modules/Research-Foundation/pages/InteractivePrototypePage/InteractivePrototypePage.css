@@ -1,0 +1,11 @@
+.rf-prototype-main { min-height:0; padding:45px 25px 20px; }
+.rf-comparison { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:70px; height:100%; min-height:0; }
+.rf-comparison-panel { display:grid; grid-template-rows:auto minmax(0,1fr) 85px; min-height:0; padding:10px 0; }
+.rf-comparison-heading { text-align:center; }.rf-comparison-heading .ui-typography--h3 { --ui-type-h3-size:34px; }
+.rf-parameter-count { display:flex; align-items:center; justify-content:center; gap:35px; }
+.rf-parameter-count .math-formula-static { font-size:48px; color:var(--ui-accent); }
+.rf-prototype-controls { display:grid; grid-template-columns:minmax(0,1fr) 340px auto; align-items:center; gap:40px; }
+.rf-prototype-controls > p { --ui-type-body-small-size:18px; }.rf-prototype-controls .edu-control { min-width:0; }
+.rf-page .rf-share__scene-labels { right:12px; left:12px; gap:12px; }
+.rf-page .rf-share__scene-labels .ui-typography { --ui-type-body-small-size:21px; }
+.rf-prototype .rf-share__scene { background:none; }

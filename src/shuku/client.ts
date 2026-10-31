@@ -10,5 +10,17 @@ export async function api<T>(path:string, body?:unknown,headers:Record<string,st
   const generation=sessionGeneration;
   const multipart=body instanceof FormData;
   const response=await fetch('/api/shuku'+path,{method:body===undefined?'GET':'POST',credentials:'same-origin',headers:{...(body===undefined||multipart?{}:{'Content-Type':'application/json'}),...headers},...(body===undefined?{}:{body:multipart?body:JSON.stringify(body)})});
-  const data=await response.json();if(!response.ok){if(response.status===401&&!isGuestMode()&&generation===sessionGeneration&&!['/auth/login','/auth/phone-login','/auth/me'].includes(path))window.dispatchEvent(new Event('shuku-session-required'));throw new ApiError(data.error||'操作未完成，请重试。',response.status);}if(path==='/auth/login'||path==='/auth/phone-login'||path==='/auth/logout'||path==='/auth/guest'){sessionGeneration++;setGuestMode(path==='/auth/guest');}return data as T;
+  const text=await response.text();
+  let data: unknown;
+  try{data=text?JSON.parse(text):null;}catch{
+    // Gateways may return HTML or plain text. Preserve their HTTP status even then.
+    if(response.ok)throw new Error('服务返回的数据格式不正确，无法读取响应。');
+  }
+  if(!response.ok){
+    if(response.status===401&&!isGuestMode()&&generation===sessionGeneration&&!['/auth/login','/auth/phone-login','/auth/me'].includes(path))window.dispatchEvent(new Event('shuku-session-required'));
+    const detail=data&&typeof data==='object'?data as Record<string,unknown>:undefined;
+    const reason=typeof detail?.error==='string'?detail.error:typeof detail?.message==='string'?detail.message:!/^\s*</.test(text)&&text.trim()?text.trim().slice(0,2000):`服务返回 HTTP ${response.status}${response.statusText?' · '+response.statusText:''}，请求未能完成。`;
+    throw new ApiError(reason,response.status);
+  }
+  if(path==='/auth/login'||path==='/auth/phone-login'||path==='/auth/logout'||path==='/auth/guest'){sessionGeneration++;setGuestMode(path==='/auth/guest');}return data as T;
 }

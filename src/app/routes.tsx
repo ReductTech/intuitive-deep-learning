@@ -1,3 +1,4 @@
+import {ErrorPage} from './ErrorPage';
 import {LocalCoursePage} from '../shuku/LocalAgent';
 import {AdminPage} from '../shuku/Admin';
 import {ProfilePage} from '../shuku/Profile';
@@ -20,7 +21,7 @@ const pptModules = activeModules.filter((module) => module.pptDeck);
 const pptCatalog = pptModules.map((module) => module.pptDeck) as [DeckDefinition, ...DeckDefinition[]];
 
 function SceneDeckPage() {
-  if (!pptCatalog.length) return <p>Page not found.</p>;
+  if (!pptCatalog.length) return <ErrorPage status={404} error="没有可播放的课程内容。"/>;
   if (new URLSearchParams(window.location.search).get('scenedeckCapture') !== '1') return <CreatorWorkspace />;
   return <SceneDeck
     catalog={pptCatalog}

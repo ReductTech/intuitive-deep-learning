@@ -74,7 +74,7 @@
 .cg-format-benefit-3 .cg-format-benefit-icon { color: #9860e8; background: #f1eaff; }
 
 .cg-format-native-reader { position: relative; width: 800px; height: 600px; overflow: hidden; border-radius: 14px; background: #f4f7fb; }
-.cg-format-native-reader iframe { display: block; width: 1600px; max-width: none; height: 1200px; border: 0; transform: scale(.5); transform-origin: top left; }
+.cg-format-page .cg-format-native-content { display:block; width:1600px; max-width:none; height:1200px; overflow:auto; overscroll-behavior:contain; transform:scale(.5); transform-origin:top left; }
 
 .cg-format-page { position: relative; }
 .cg-format-card { position: relative; }

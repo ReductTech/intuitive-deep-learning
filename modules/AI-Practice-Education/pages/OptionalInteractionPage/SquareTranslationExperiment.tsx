@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Button, RangeControl, Typography } from '../../../shared/react';
 import { MAP_WIDTH as W, MAP_HEIGHT as H, LAPLACIAN_KERNEL, heatColor } from './laplacianResponse';
+import { DesignComparisonArrow } from '../../components/DesignComparisonHeader';
 
 export function SquareTranslationExperiment() {
   const [dx, setDx] = useState(0);
@@ -27,6 +28,7 @@ export function SquareTranslationExperiment() {
   return <>
     <div className="aipe-translation-pair aipe-translation-square">
       <figure><Typography variant="bodySmall" tone="muted">输入图像</Typography><canvas ref={input} width={W} height={H} role="img" aria-label="可水平和垂直平移的深色方块" /></figure>
+      <DesignComparisonArrow />
       <figure><Typography variant="bodySmall" tone="muted">边缘响应</Typography><canvas ref={output} width={W} height={H} role="img" aria-label="与方块位置同步变化的拉普拉斯边缘响应" /></figure>
     </div>
     <div className="aipe-translation-controls">
@@ -34,6 +36,5 @@ export function SquareTranslationExperiment() {
       <RangeControl label="垂直位移" min={-15} max={15} step={1} value={dy} onChange={event => setDy(Number(event.target.value))} />
       <Button onClick={() => { setDx(0); setDy(0); }}>重置</Button>
     </div>
-    <Typography variant="bodySmall" tone="muted" className="aipe-translation-note">改变目标位置，输入与响应同步更新。</Typography>
   </>;
 }

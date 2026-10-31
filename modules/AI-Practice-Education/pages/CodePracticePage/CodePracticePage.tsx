@@ -89,6 +89,7 @@ export function CodePracticePage() {
     setInspectOpen(Boolean(node)); setShowValues(false);
   }
   function codeCursor(line: number, column: number) {
+    setSelectedLine(undefined); setSelectedRange(undefined);
     const onLine = nodes.filter(node => node.line <= line && node.endLine >= line);
     const containing = onLine.filter(node => (line > node.line || column >= node.column) && (line < node.endLine || column < node.endColumn));
     const size = (node: PythonNode) => (node.endLine - node.line) * 10000 + node.endColumn - node.column;

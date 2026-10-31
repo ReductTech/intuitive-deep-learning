@@ -176,6 +176,7 @@ function SceneDeckPlayer({ catalog, moduleId, assetId, progressKey, getNotes }: 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       const target = event.target;
+      if (target instanceof Element && target.closest('[data-embedded-lesson]')) return;
       if (target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement || target instanceof HTMLSelectElement) return;
       if (event.key === 'ArrowRight' || event.key === 'PageDown' || event.key === ' ') { event.preventDefault(); navigate(sceneIndex + 1); }
       else if (event.key === 'ArrowLeft' || event.key === 'PageUp') { event.preventDefault(); navigate(sceneIndex - 1); }

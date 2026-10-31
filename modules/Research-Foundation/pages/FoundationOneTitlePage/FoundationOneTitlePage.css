@@ -1,0 +1,11 @@
+.rf-foundation-one-title {
+  position:relative;
+  background:radial-gradient(ellipse at 104% 40%,#deecfb 0%,#edf5fd 30%,#f8fbff 57%,#ffffff 88%);
+  color:#18385f;
+}
+.rf-foundation-one-copy { position:absolute; left:132px; top:213px; width:1230px; max-width:calc(100% - 264px); }
+.rf-foundation-one-accent { display:block; width:63px; height:5px; margin-bottom:32px; border-radius:2px; background:#409eff; }
+.rf-foundation-one-label { --ui-type-subtitle-size:38px; --ui-type-subtitle-line-height:1.4; --ui-type-subtitle-weight:500; }
+.rf-foundation-one-heading { display:grid; gap:5px; margin-top:32px; --ui-type-display-size:104px; --ui-type-display-line-height:1.25; --ui-type-display-weight:800; --ui-type-display-letter-spacing:-.025em; }
+.rf-foundation-one-label { color:#607c9e; }
+.rf-foundation-one-topic { color:#2e77bf; }

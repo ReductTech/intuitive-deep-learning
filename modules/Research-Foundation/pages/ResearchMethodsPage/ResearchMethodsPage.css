@@ -1,0 +1,16 @@
+.rf-method-body { display:grid; grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr); grid-template-rows:64px minmax(0,1fr); gap:55px 90px; padding:42px 70px 45px; min-height:0; }
+.rf-method-body > .rf-tabs { grid-column:1/-1; gap:25px; }
+.rf-method-body > .rf-tabs .edu-btn { min-width:160px; padding:12px 25px; }
+.rf-method-detail { display:flex; flex-direction:column; justify-content:center; gap:30px; min-width:0; padding-right:30px; }
+.rf-method-detail .ui-typography--display { --ui-type-display-size:64px; }
+.rf-method-detail .ui-typography--body { --ui-type-body-size:28px; max-width:390px; }
+.rf-paper-list { display:flex; flex-direction:column; justify-content:center; align-items:flex-start; gap:26px; min-width:0; min-height:0; }
+.rf-paper-rows { display:grid; gap:30px; width:100%; }
+.rf-paper-row { display:grid; gap:12px; text-align:left; min-width:0; width:100%; border:0; border-left:3px solid var(--ui-border); padding:12px 0 12px 30px; background:none; opacity:.5; transition:opacity .25s,border-color .25s; }
+.rf-paper-row.is-selected { opacity:1; border-color:var(--ui-accent); }
+.rf-paper-row .ui-typography--h2 { --ui-type-h2-size:42px; }
+.rf-paper-row .ui-typography--bodySmall { --ui-type-body-small-size:21px; }
+.rf-paper-row .ui-typography--body { --ui-type-body-size:25px; }
+.rf-paper-detail-toggle.edu-btn { padding:6px 0; min-height:30px; border:0; background:none; }
+.rf-full-title { padding:14px 20px; background:var(--ui-bg-muted); border-radius:var(--ui-radius-sm); }
+.rf-full-title .ui-typography { --ui-type-body-small-size:20px; }

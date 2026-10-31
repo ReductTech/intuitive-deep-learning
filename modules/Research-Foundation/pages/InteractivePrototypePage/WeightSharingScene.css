@@ -1,0 +1,22 @@
+.rf-page .rf-share__scene { position:relative; min-width:0; min-height:0; overflow:hidden; border-radius:10px; background:radial-gradient(ellipse at 48% 68%,#e8f1ff 0%,#f7faff 54%,#fff 84%); }
+.rf-page .rf-share__scene canvas { display:block; width:100%; height:100%; max-width:100%; cursor:grab; touch-action:none; }
+.rf-page .rf-share__scene canvas:active { cursor:grabbing; }
+.rf-page .rf-share__scene-labels { position:absolute; z-index:2; top:5px; right:36px; left:36px; display:flex; justify-content:space-between; gap:20px; pointer-events:none; }
+.rf-page .rf-share__scene-labels { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); }
+.rf-page .rf-share__scene-labels .ui-typography { min-width:0; text-align:center; }
+.rf-page .rf-share__fallback { display:block; width:100%; height:100%; max-width:100%; }
+.rf-page .rf-share__fallback { display:flex; align-items:center; justify-content:space-evenly; gap:10px; padding:50px 18px 20px; }
+.rf-page .rf-share__fallback-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:2px; flex:0 0 92px; width:92px; aspect-ratio:1; }
+.rf-page .rf-share__fallback-grid.is-input { grid-template-columns:repeat(5,minmax(0,1fr)); flex-basis:142px; width:142px; }
+.rf-page .rf-share__fallback-grid span { min-width:0; border:1px solid #a6c4ed; background:#e8f1ff; }
+.rf-page .rf-share__fallback-grid span.is-active, .rf-page .rf-share__fallback-grid.is-kernel span { background:#76abf6; }
+.rf-page .rf-share__fallback-grid.is-kernel span.is-version-1 { background:#a391e8; }
+.rf-page .rf-share__fallback-grid.is-kernel span.is-version-2 { background:#6fc7c8; }
+.rf-page .rf-share__fallback-arrow { flex:0 0 auto; }
+.rf-page .rf-share__fallback line { stroke:#4e84d8; stroke-opacity:.4; stroke-width:2; stroke-dasharray:7 7; animation:rf-share-flow 1s linear infinite; }
+.rf-page .rf-share__fallback rect { fill:#e8f1ff; stroke:#a6c4ed; stroke-width:2; }
+.rf-page .rf-share__fallback rect.is-active { fill:#76abf6; }
+.rf-page .rf-share__fallback rect.is-selected { fill:#347cff; animation:rf-share-pulse 1.5s ease-in-out infinite; }
+@keyframes rf-share-flow { to { stroke-dashoffset:-14; } }
+@keyframes rf-share-pulse { 50% { opacity:.58; } }
+@media (prefers-reduced-motion:reduce) { .rf-page .rf-share__fallback line, .rf-page .rf-share__fallback rect.is-selected { animation:none; } }

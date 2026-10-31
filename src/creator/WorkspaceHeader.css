@@ -27,8 +27,8 @@
 .cw-edit-indicator:before{content:'';width:5px;height:5px;background:#4e7dd8;border-radius:50%}
 .cw-editing .cw-text-editing [data-cw-source-text]:hover{outline-color:#7198ed}
 .cw-editing .cw-text-editing [data-cw-source-text][contenteditable=true]{outline-color:#477dfb;background:#eaf1ff80}
-.cw-fullscreen-controls{gap:4px;padding:5px 6px;bottom:18px;right:18px;background:rgba(244,247,252,.55);color:#72829a;border:1px solid rgba(191,204,223,.35);border-radius:12px;box-shadow:none;backdrop-filter:none;opacity:.65;transition:background-color .25s ease,color .25s ease,border-color .25s ease,opacity .25s ease,box-shadow .25s ease}
-.cw-fullscreen-controls:hover,.cw-fullscreen-controls:focus-within{background:rgba(39,61,91,.92);color:#fff;border-color:rgba(255,255,255,.22);opacity:1;box-shadow:0 4px 16px #182c4618;transition-duration:.25s}
+
+
 .cw-app .cw-fullscreen-controls>button{width:30px;height:32px;padding:0;border-radius:7px;color:inherit;font-size:17px}
 .cw-app .cw-fullscreen-controls>button:hover:not(:disabled){background:#e5ecf6;color:#254a82}
 .cw-app .cw-fullscreen-controls>button:active:not(:disabled){background:#d8e3f3}
@@ -36,4 +36,4 @@
 .cw-fullscreen-divider{width:1px;height:16px;margin:0 3px;background:#dce3ee;flex:none}
 .cw-app .cw-fullscreen-controls .cw-fullscreen-close>svg{width:16px;height:16px}
 @media(max-width:850px){.cw-app .cw-topbar .cw-actions>.cw-edit-toggle,.cw-app .cw-topbar .cw-actions>.cw-present-button{padding:0 9px}.cw-topbar .cw-actions>button>svg{display:block}}
-@media(prefers-reduced-motion:reduce){.cw-app .cw-topbar .cw-actions>.cw-edit-toggle,.cw-app .cw-topbar .cw-actions>.cw-present-button,.cw-fullscreen-controls{transition:none}}
+@media(prefers-reduced-motion:reduce){.cw-app .cw-topbar .cw-actions>.cw-edit-toggle,.cw-app .cw-topbar .cw-actions>.cw-present-button{transition:none}}

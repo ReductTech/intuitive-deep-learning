@@ -1,0 +1,25 @@
+.shuku-error-page{min-height:100dvh;background:#f8fafc;color:#192b43}
+.shuku-error-main{width:min(100%,760px);min-height:calc(100dvh - 78px);padding:48px 28px 64px;margin:0 auto;display:flex;align-items:center;justify-content:center}
+.shuku-error-summary{width:100%;padding:44px 48px 36px;text-align:center;border:1px solid #e5ebf4;border-radius:24px;background:#fff;box-shadow:0 12px 48px #27446e05;animation:shuku-error-enter .45s ease-out both}
+.shuku-error-code{color:#b9cff9;font-size:100px;font-weight:740;line-height:1.15;letter-spacing:-5px;font-variant-numeric:tabular-nums;user-select:none}
+.shuku-error-mark{display:block;width:28px;height:3px;margin:20px auto 24px;border-radius:3px;background:#2864ec}
+.shuku-error-main h1{font-size:30px;font-weight:700;line-height:1.45;letter-spacing:-.6px;margin:0 0 12px}
+.shuku-error-description{font-size:15px;line-height:1.9;color:#768296;margin:0;text-wrap:pretty}
+.shuku-error-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin:28px 0 32px}
+.shuku-error-actions>a,.shuku-error-actions>button{display:inline-flex;align-items:center;justify-content:center;min-width:138px;min-height:44px;border:1px solid #dce4ef;border-radius:10px;padding:10px 22px;background:#fff;color:#44566f;font-size:14px;line-height:1.5;font-weight:500;text-decoration:none;cursor:pointer;transition:transform .18s ease,background .18s ease,border-color .18s ease,box-shadow .18s ease}
+.shuku-error-actions>.is-primary{border-color:#2864ec;background:#2864ec;color:white;box-shadow:0 3px 9px #2864ec17}
+.shuku-error-actions>:hover:not(:disabled){transform:translateY(-2px);border-color:#a9bfeb;background:#f8faff;box-shadow:0 5px 12px #27446e0a}
+.shuku-error-actions>.is-primary:hover:not(:disabled){border-color:#2159da;background:#2159da;box-shadow:0 5px 14px #2864ec24}
+.shuku-error-actions>:active:not(:disabled){transform:translateY(0)}
+.shuku-error-actions>:disabled{opacity:.6;cursor:wait}
+.shuku-error-details{text-align:left;padding:18px 20px;border:1px solid #edf1f7;border-radius:12px;background:#f8fafc}
+.shuku-error-details h2{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 8px;font-size:12px;font-weight:600;color:#76859a}
+.shuku-error-details h2 span{color:#8c9ab0;font-size:11px;font-weight:500;letter-spacing:.3px}
+.shuku-error-details p{margin:0;font-size:13px;color:#5d6e86;line-height:1.85;white-space:pre-wrap;overflow-wrap:anywhere;max-height:220px;overflow:auto}
+.error-preview-picker{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:8px;padding:12px 16px;background:#edf3ff;font-family:inherit}
+.error-preview-picker>span{font-size:11px;color:#7689a6;margin-right:8px}
+.error-preview-picker button{border:1px solid #d9e3f5;background:#fff;color:#637898;padding:7px 12px;border-radius:7px;font-size:12px;font-family:inherit;cursor:pointer}
+.error-preview-picker button[aria-pressed=true]{color:#fff;background:#2864ec;border-color:#2864ec}
+@keyframes shuku-error-enter{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:600px){.shuku-error-main{padding:28px 16px 40px;align-items:flex-start}.shuku-error-summary{padding:36px 22px 24px;border-radius:18px}.shuku-error-code{font-size:82px}.shuku-error-main h1{font-size:25px}.shuku-error-description{font-size:14px}.shuku-error-actions{gap:10px;margin:24px 0 28px}.shuku-error-actions>a,.shuku-error-actions>button{min-width:0;flex:1;padding-inline:14px}.shuku-error-details{padding:16px}.shuku-error-page .sd-library-topbar{padding-inline:16px;gap:24px}.shuku-error-page .sd-library-topbar nav{gap:16px}.shuku-error-page .shuku-header-create{display:none}}
+@media(prefers-reduced-motion:reduce){.shuku-error-summary{animation:none}.shuku-error-actions>a,.shuku-error-actions>button{transition:none}.shuku-error-actions>:hover:not(:disabled){transform:none}}

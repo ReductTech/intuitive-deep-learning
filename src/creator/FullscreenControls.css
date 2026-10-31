@@ -1,0 +1,10 @@
+/* Imported by the shared workspace, including both offline export entry points. */
+.cw-app .cw-fullscreen-controls{position:absolute;bottom:18px;right:18px;z-index:5;display:flex;align-items:center;gap:4px;padding:5px 6px;border:1px solid rgba(191,204,223,.1);border-radius:14px;background:rgba(255,255,255,.1);color:#536d91;font-size:12px;opacity:1;box-shadow:none;transition:none}
+.cw-app .cw-fullscreen-controls:hover,.cw-app .cw-fullscreen-controls:has(:focus-visible){background:#fff;color:#294b77;border-color:#cad7e8;opacity:1;box-shadow:0 4px 16px #182c4618;transition:background-color .4s ease,border-color .4s ease,box-shadow .4s ease}
+.cw-app .cw-fullscreen-controls>:not(.cw-fullscreen-count){opacity:.1;transition:none}
+.cw-app .cw-fullscreen-controls:hover>:not(.cw-fullscreen-count),.cw-app .cw-fullscreen-controls:has(:focus-visible)>:not(.cw-fullscreen-count){opacity:1;transition:opacity 1.2s ease}
+.cw-app .cw-fullscreen-controls>button:disabled{opacity:.05}
+.cw-app .cw-fullscreen-controls:hover>button:disabled,.cw-app .cw-fullscreen-controls:has(:focus-visible)>button:disabled{opacity:.25}
+.cw-app .cw-fullscreen-controls .cw-fullscreen-count{display:grid;place-items:center;box-sizing:border-box;min-width:72px;height:32px;margin-left:2px;padding:0 12px;border-radius:10px;background:#e7f0ff;color:#17375f;font-size:13px;font-weight:650;font-variant-numeric:tabular-nums;white-space:nowrap;opacity:.8;transition:none}
+.cw-app .cw-fullscreen-controls:hover .cw-fullscreen-count,.cw-app .cw-fullscreen-controls:has(:focus-visible) .cw-fullscreen-count{opacity:1;transition:opacity 1.2s ease}
+@media(prefers-reduced-motion:reduce){.cw-app .cw-fullscreen-controls,.cw-app .cw-fullscreen-controls>*{transition:none}}

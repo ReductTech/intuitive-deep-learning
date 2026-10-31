@@ -8,6 +8,6 @@ import './NativeStudyPreview.css';
 export function NativeStudyPreview() {
   const [progressKey] = useState(() => `ai-practice-education:creator-guide-copy:convolution-preview:${crypto.randomUUID()}`);
   return <main className="aipe-replay-cg-study-embedded aipe-replay-cg-copy-course-shell aipe-replay-cg-copy-tw-root">
-    <GomokuLessonProvider><LessonFlow steps={convolutionLessonSteps} persistenceKey={progressKey}/></GomokuLessonProvider>
+    <GomokuLessonProvider><LessonFlow steps={convolutionLessonSteps} persistenceKey={progressKey} initialVisibleCount={4}/></GomokuLessonProvider>
   </main>;
 }

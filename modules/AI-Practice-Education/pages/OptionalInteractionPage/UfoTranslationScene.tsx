@@ -1,6 +1,7 @@
 // Scene assets, compositing, pointer control and idle trajectory copied from the original module.
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from 'react';
 import { moduleAssetUrl, Typography } from '../../../shared/react';
+import { DesignComparisonArrow } from '../../components/DesignComparisonHeader';
 import outline from '../../outlines.json';
 import { MAP_WIDTH, MAP_HEIGHT, loadImage, renderResponse, type Position, type SceneImages } from './laplacianResponse';
 const moduleAssetId = outline.moduleIdentity.id;
@@ -76,6 +77,7 @@ export function UfoTranslationScene() {
         <img className="aipe-translation-foliage" src={foliageUrl} alt="前景树叶" draggable="false" />
       </div>
     </figure>
+    <DesignComparisonArrow />
     <figure><Typography variant="bodySmall" tone="muted">边缘响应</Typography><canvas ref={heatmapRef} width={MAP_WIDTH} height={MAP_HEIGHT} role="img" aria-label="当前可见场景经拉普拉斯算子计算的实时边缘响应" /></figure>
   </div>;
 }

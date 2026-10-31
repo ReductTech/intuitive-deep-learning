@@ -8,6 +8,6 @@ import './NativeStudyPreview.css';
 export function NativeStudyPreview() {
   const [progressKey] = useState(() => `ai-practice-education:convolution-preview:${crypto.randomUUID()}`);
   return <main className="cg-study-embedded cg-copy-course-shell cg-copy-tw-root">
-    <GomokuLessonProvider><LessonFlow steps={convolutionLessonSteps} persistenceKey={progressKey}/></GomokuLessonProvider>
+    <GomokuLessonProvider><LessonFlow steps={convolutionLessonSteps} persistenceKey={progressKey} initialVisibleCount={4}/></GomokuLessonProvider>
   </main>;
 }
