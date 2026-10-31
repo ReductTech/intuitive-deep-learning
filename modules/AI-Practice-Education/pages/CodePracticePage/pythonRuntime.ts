@@ -49,19 +49,25 @@ export class PythonRunner {
   private ready: Promise<void> | null = null;
   private sequence = 0;
   private rejectReady: ((error: Error) => void) | null = null;
+  private initTimer: ReturnType<typeof setTimeout> | undefined;
   private pending = new Map<number, { resolve: (value: PythonExecution) => void; reject: (error: Error) => void; timer: ReturnType<typeof setTimeout> }>();
   private status: (message: string) => void;
   constructor(status: (message: string) => void) { this.status = status; }
   private start(): Promise<void> {
     if (this.ready) return this.ready;
-    const worker = new Worker(new URL('./python.worker.ts', import.meta.url), { type: 'module' });
+    const offline = (globalThis as { __SHUKU_OFFLINE_PYTHON__?: { worker: string; assets: Record<string, string> } }).__SHUKU_OFFLINE_PYTHON__;
+    const offlineUrl = offline ? URL.createObjectURL(new Blob([offline.worker], { type: 'text/javascript' })) : null;
+    const worker = offlineUrl ? new Worker(offlineUrl, { type: 'module' })
+      : new Worker(new URL('./python.worker.ts', import.meta.url), { type: 'module' });
+    if (offlineUrl) URL.revokeObjectURL(offlineUrl);
     this.worker = worker;
     this.ready = new Promise((resolve, reject) => {
       this.rejectReady = reject;
+      this.initTimer = setTimeout(() => this.stop('Python 初始化超时，请检查网络后点击重试。'), 60000);
       worker.onmessage = (event: MessageEvent) => {
         const data = event.data;
         if (data.type === 'status') this.status(data.message);
-        if (data.type === 'ready') { this.rejectReady = null; resolve(); }
+        if (data.type === 'ready') { clearTimeout(this.initTimer); this.rejectReady = null; resolve(); }
         if (data.type === 'init-error') { reject(new Error(data.error)); this.stop(data.error); }
         if (data.type === 'result') {
           const pending = this.pending.get(data.id);
@@ -69,6 +75,7 @@ export class PythonRunner {
         }
       };
       worker.onerror = event => { const error = new Error(event.message || 'Python Worker 加载失败'); reject(error); this.stop(error.message); };
+      if (offline) worker.postMessage({ type: 'init', assets: offline.assets });
     });
     return this.ready;
   }
@@ -83,6 +90,7 @@ export class PythonRunner {
     });
   }
   stop(reason = '运行已停止') {
+    clearTimeout(this.initTimer);
     this.rejectReady?.(new Error(reason)); this.rejectReady = null;
     this.worker?.terminate(); this.worker = null; this.ready = null;
     for (const pending of this.pending.values()) { clearTimeout(pending.timer); pending.reject(new Error(reason)); }

@@ -17,7 +17,7 @@ function Wires({ kind }: { kind: 'traditional' | 'single' | 'pair' }) {
   const paths = kind === 'traditional'
     ? ['M100 70V83H215V202', 'M330 70V83H215', 'M100 158V174H215', 'M330 158V174H215', 'M215 256V285']
     : kind === 'single' ? ['M215 76V145', 'M215 229V285']
-    : ['M100 72V130', 'M330 72V130', 'M100 196V221', 'M330 196V221', 'M100 259V271Q100 281 112 281H199Q215 281 215 297', 'M330 259V271Q330 281 318 281H231Q215 281 215 297'];
+    : ['M100 132V163', 'M330 132V163', 'M100 228V245', 'M330 228V245', 'M100 286V290Q100 294 112 294H199Q215 294 215 299', 'M330 286V290Q330 294 318 294H231Q215 294 215 299'];
   return <svg className="aipe-method-wires" viewBox="0 0 430 340" preserveAspectRatio="none" aria-hidden="true">
     <defs><marker id={id} viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1L9 5L1 9Z" fill="currentColor" /></marker></defs>
     {paths.map((d, i) => <path key={d} d={d} fill="none" stroke="currentColor" strokeWidth="1.8" markerEnd={(kind !== 'traditional' || i === 0 || i === 4) ? 'url(#'+id+')' : undefined} />)}
@@ -48,17 +48,17 @@ export function PaperQualityPage() {
         <header><Typography as="h2" variant="h3" tone="accent">NAIPv1</Typography><Typography variant="bodySmall" tone="muted">从内容预测潜在影响力</Typography></header>
         <div className="aipe-method-diagram aipe-method-single">
           <Wires kind="single" />
-          <div className="aipe-method-paper"><FileText aria-hidden="true" /><Copy>题目与摘要</Copy></div>
+          <div className="aipe-method-paper"><FileText aria-hidden="true" /><Copy>题目与摘要等<br/>内部信息</Copy></div>
           <Model />
           <div className="aipe-method-output"><ChartNoAxesColumnIncreasing aria-hidden="true" /><Copy>潜在影响力</Copy></div>
         </div>
-        <Points>{['仅需题目与摘要', '为新论文提供早期参考']}</Points>
+        <Points>{['无需等待长期引用积累', '为新论文提供早期参考']}</Points>
       </section>
       <section className="aipe-method-column aipe-method-v2" aria-label="NAIPv2 成对训练与单篇打分">
         <header><Typography as="h2" variant="h3" tone="accent">NAIPv2</Typography><Typography variant="bodySmall" tone="muted">学习相对质量，保留单篇打分</Typography></header>
         <div className="aipe-method-diagram aipe-method-pair">
           <Wires kind="pair" />
-          <div className="aipe-method-paper-pair">{['A', 'B'].map(name => <div className="aipe-method-paired-paper" key={name}><FileText aria-hidden="true" /><div><Copy>论文 {name}</Copy><Copy>题目与摘要</Copy></div></div>)}</div>
+          <div className="aipe-method-paper-pair">{['A', 'B'].map(name => <div className="aipe-method-paired-paper" key={name}><FileText aria-hidden="true" /><div><Copy>论文 {name}</Copy><Copy>题目与摘要等<br/>内部信息</Copy></div></div>)}</div>
           <Model pair />
           <div className="aipe-method-scores">{['A', 'B'].map(name => <div key={name}><Star aria-hidden="true" /><Copy>质量分 {name}</Copy></div>)}</div>
           <div className="aipe-method-comparison"><Copy>Pairwise 相对质量学习</Copy></div>

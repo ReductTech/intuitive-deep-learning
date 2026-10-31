@@ -7,7 +7,7 @@ import './InteractivePrototypePage.css';
 
 export function InteractivePrototypePage(){
  const p=usePlayback(9,1900);
- return <ContentBlock className="rf-page rf-prototype" title={outline.pages[6].title}>
+ return <ContentBlock className="rf-page rf-prototype" title={outline.pages[8].title}>
   <div className="rf-prototype-main"><div className="rf-comparison">{(['independent','shared'] as const).map((kind,i)=><article className={`rf-comparison-panel is-${kind}`} key={kind}>
    <div className="rf-comparison-heading"><Typography variant="h3">{i===0?'每个位置，换一套':'所有位置，用同一套'}</Typography></div>
    <WeightSharingScene key={`${kind}-${p.revision}`} kind={kind} position={p.step} playing={p.playing}/>

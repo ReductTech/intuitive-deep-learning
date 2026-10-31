@@ -95,6 +95,7 @@ function useConvolutionData(imageSource: string, kernel: number[][]): Convolutio
     let active = true;
     setData(null);
     const image = new Image();
+    image.crossOrigin = 'anonymous';
     image.onload = () => {
       if (!active) return;
       const inputWidth = INPUT_WIDTH;

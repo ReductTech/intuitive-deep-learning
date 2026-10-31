@@ -17,7 +17,9 @@ function SobelFigure() {
   useEffect(() => {
     let cancelled = false;
     async function draw() {
-      const image = new Image(); image.src = moduleAssetUrl(outline.moduleIdentity.id, 'images/edge-examples/building.jpg');
+      const image = new Image();
+      image.crossOrigin = 'anonymous';
+      image.src = moduleAssetUrl(outline.moduleIdentity.id, 'images/edge-examples/building.jpg');
       await image.decode(); if (cancelled) return;
       const source = document.createElement('canvas'); source.width = source.height = IMAGE_SIZE;
       const context = source.getContext('2d', { willReadFrequently: true });

@@ -109,7 +109,7 @@ export function CodePracticePage() {
       <div className="code-lab-toolbar">
         <div className="code-lab-file"><span className="code-lab-python" aria-hidden="true">Py</span><span>residual_block.py</span><span className="code-lab-file-dot">●</span></div>
         <span className={`code-lab-sync ${error ? 'is-invalid' : ''}`} role="status" title="CPython / NumPy；course_ops 提供 tensor、conv2d、relu 简单算子。">{running ? status : error ? 'Python 运行出错' : status}</span>
-        <div className="code-lab-actions"><button type="button" className="code-lab-run" title="Ctrl+Enter 运行" onClick={() => running ? stop() : void execute(true)}>{running ? '■ 停止' : '▶ 运行'}</button><button type="button" className="code-lab-reset" aria-label="重置" onClick={reset}>↻ 重置</button></div>
+        <div className="code-lab-actions"><button type="button" className="code-lab-run" title="Ctrl+Enter 运行" onClick={() => running ? stop() : void execute(true)}>{running ? '■ 停止' : error ? '↻ 重试' : '▶ 运行'}</button><button type="button" className="code-lab-reset" aria-label="重置" onClick={reset}>↻ 重置</button></div>
       </div>
       <div className="code-lab-layout">
         <section className="code-lab-left" aria-label="网络代码">

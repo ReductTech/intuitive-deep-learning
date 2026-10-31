@@ -64,6 +64,7 @@ function useGradientImages() {
   useEffect(() => {
     let active = true;
     const image = new Image();
+    image.crossOrigin = 'anonymous';
     image.onload = () => { if (active) setImages(buildGradientImages(image)); };
     image.src = buildingImage;
     return () => { active = false; };

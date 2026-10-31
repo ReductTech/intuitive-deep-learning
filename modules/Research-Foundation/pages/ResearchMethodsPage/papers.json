@@ -154,5 +154,31 @@
     "year": 2026,
     "citations": null,
     "url": "https://arxiv.org/pdf/2509.25179"
+  },
+  {
+    "id": "maecil",
+    "name": "MAE-CIL",
+    "title": "Masked Autoencoders are Efficient Class Incremental Learners",
+    "area": "持续学习",
+    "topic": "掩码自编码与类别增量学习",
+    "intro": "在学习新类别的同时保留已有知识。",
+    "detail": "利用掩码自编码器重建部分图像，并结合双分支结构学习更稳定的表征，研究有限存储条件下的类别增量学习。",
+    "venue": "ICCV",
+    "year": 2023,
+    "citations": null,
+    "url": "https://openaccess.thecvf.com/content/ICCV2023/papers/Zhai_Masked_Autoencoders_are_Efficient_Class_Incremental_Learners_ICCV_2023_paper.pdf"
+  },
+  {
+    "id": "cascadeclip",
+    "name": "Cascade-CLIP",
+    "title": "Cascade-CLIP: Cascaded Vision-Language Embeddings Alignment for Zero-Shot Semantic Segmentation",
+    "area": "图文对齐",
+    "topic": "级联视觉语言对齐",
+    "intro": "将多层视觉特征与语言表征对齐，支持零样本语义分割。",
+    "detail": "通过独立解码器级联对齐多层视觉特征与文本嵌入，利用中间层的物体细节，提升零样本语义分割能力。",
+    "venue": "ICML",
+    "year": 2024,
+    "citations": null,
+    "url": "https://raw.githubusercontent.com/mlresearch/v235/main/assets/li24aq/li24aq.pdf"
   }
 ]

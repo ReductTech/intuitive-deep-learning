@@ -82,6 +82,7 @@ function useDifferenceImages() {
   useEffect(() => {
     let active = true;
     const image = new Image();
+    image.crossOrigin = 'anonymous';
     image.onload = () => {
       if (active) setImages(buildDifferenceImages(image));
     };

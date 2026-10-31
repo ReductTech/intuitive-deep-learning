@@ -57,6 +57,10 @@ export function ResearchRecommendationAppPage(){
   <div className="rw-intro">
    <Typography className="rw-headline" variant="display" tone="inherit"><Typography as="span" className="rw-headline-context" variant="display" tone="inherit">科研信息供给的</Typography><Typography as="span" className="rw-headline-focus" variant="display" tone="inherit">全平台解决方案</Typography></Typography>
   </div>
+  <aside className="ra-experience-entry" aria-label="扫码或访问减论官网体验">
+   <a className="ra-experience-qr" href="https://www.reduct.cn/" target="_blank" rel="noreferrer" aria-label="打开减论官网"><img src={moduleAssetUrl(outline.moduleIdentity.id,'images/recommendation-app/reduct-site-qr.svg')} width="148" height="148" alt="扫码访问 https://www.reduct.cn/"/></a>
+   <div><Typography as="p" variant="body" tone="accent">扫码体验</Typography><Typography as="a" variant="bodySmall" tone="accent" href="https://www.reduct.cn/" target="_blank" rel="noreferrer">www.reduct.cn <ArrowUpRight aria-hidden="true"/></Typography></div>
+  </aside>
   <ResearchWebMonitor/>
   <div className="ra-phone" onWheel={e=>e.stopPropagation()} onPointerDown={e=>e.stopPropagation()} onKeyDown={e=>e.stopPropagation()}>
    <i className="ra-side ra-side-left"/><i className="ra-side ra-side-right"/>

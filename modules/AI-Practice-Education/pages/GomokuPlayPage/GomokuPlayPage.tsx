@@ -507,6 +507,7 @@ export function GomokuPlayPage({ onComplete }: GomokuPlayPageProps) {
     const step = steps[event.key];
     if (step) {
       event.preventDefault();
+      event.stopPropagation();
       setCursor((current) => ({
         row: Math.max(0, Math.min(BOARD_SIZE - 1, current.row + step[0])),
         col: Math.max(0, Math.min(BOARD_SIZE - 1, current.col + step[1])),
@@ -515,6 +516,7 @@ export function GomokuPlayPage({ onComplete }: GomokuPlayPageProps) {
     }
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
+      event.stopPropagation();
       if (canPlay) playHuman(cursor);
     }
   };

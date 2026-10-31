@@ -72,6 +72,7 @@ function useResponses() {
   useEffect(() => {
     let active = true;
     const image = new Image();
+    image.crossOrigin = 'anonymous';
     image.onload = () => { if (active) setResponses(buildResponses(image)); };
     image.src = buildingImage;
     return () => { active = false; };

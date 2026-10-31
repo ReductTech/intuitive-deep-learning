@@ -1,5 +1,12 @@
 
 .research-app-page{position:relative;width:1600px;height:900px;background:radial-gradient(ellipse at 73% 85%,#f1f4f8 0,white 46%);color:#111318;overflow:hidden;isolation:isolate}
+.ra-experience-entry{position:absolute;left:638px;top:86px;width:340px;display:flex;align-items:center;gap:16px;}
+.ra-experience-qr{display:block;flex:0 0 148px;border:1px solid #e0e8f2;border-radius:10px;background:white;}
+.ra-experience-qr img{display:block;width:148px;height:148px;max-width:100%;border-radius:10px;}
+.ra-experience-entry>div{display:grid;gap:8px;min-width:0;}
+.ra-experience-entry>div>a{display:inline-flex;align-items:center;gap:3px;white-space:nowrap;text-underline-offset:5px;}
+.ra-experience-entry>div>a svg{width:18px;height:18px;flex-shrink:0;}
+.ra-experience-entry a:focus-visible{outline:3px solid var(--ui-focus);outline-offset:4px;}
 .ra-intro{position:absolute;left:102px;top:113px;width:790px}
 .ra-intro .ui-typography{margin:0}
 .ra-eyebrow{color:#1685ff;--ui-type-body-size:24px;--ui-type-body-weight:600;--ui-type-body-line-height:1.5;letter-spacing:.035em}

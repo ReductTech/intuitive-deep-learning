@@ -176,6 +176,7 @@ export function CourseWorkspace({courses,initialProject,managed,reader,renderPag
   useEffect(() => { if (!notice) return; const id = setTimeout(() => setNotice(''), 4500); return () => clearTimeout(id); }, [notice]);
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
+      if (event.defaultPrevented) return;
       if (event.key === 'Escape') { if (mode === 'present') void exitPresentation(); else if (panel) setPanel(null); else { setMode('preview'); setView('web'); } return; }
       if ((event.target as HTMLElement).closest('input,textarea,select,[contenteditable]') || panel || busy) return;
       if(offline&&!editing&&['Home','End'].includes(event.key)){event.preventDefault();select(project.pages[event.key==='Home'?0:project.pages.length-1].id);return;}

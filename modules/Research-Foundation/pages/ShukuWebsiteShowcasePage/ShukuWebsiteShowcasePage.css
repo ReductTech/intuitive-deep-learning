@@ -1,0 +1,5 @@
+.rf-shuku-website{width:1600px;height:900px;padding:24px;background:#edf2f8;cursor:default;overflow:hidden}
+.rf-shuku-browser{width:1552px;height:852px;border:1px solid #dce5f0;border-radius:18px;overflow:hidden;box-shadow:0 16px 44px #203e6520;background:#f8faff;animation:rf-website-enter .7s cubic-bezier(.2,.7,.2,1) both}
+.rf-shuku-browser iframe{display:block;width:100%;height:100%;border:0;pointer-events:none;background:#f8faff}
+@keyframes rf-website-enter{from{opacity:0;transform:translateY(45px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.rf-shuku-browser{animation:none}}

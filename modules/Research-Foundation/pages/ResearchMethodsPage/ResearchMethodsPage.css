@@ -1,16 +1,18 @@
-.rf-wheel{position:relative;display:grid;grid-template-rows:88px minmax(0,1fr);padding:36px 56px 24px;background:#fff;color:#24272b;isolation:isolate;--ui-type-h1-size:45px;--ui-type-h1-line-height:1.2;--ui-type-h2-size:32px;--ui-type-h2-line-height:1.35;--ui-type-body-small-size:22px;--ui-type-body-small-line-height:1.45;--ui-type-h3-size:27px;}
-.rf-wheel-heading{position:relative;z-index:120;pointer-events:none;display:flex;flex-direction:column;gap:8px;align-items:flex-start;}
-.rf-wheel-heading>.ui-typography--bodySmall{--ui-type-body-small-size:21px;}
-.rf-wheel-stage{position:relative;min-width:0;min-height:0;perspective:1800px;}
-.rf-wheel-paper{position:absolute;left:50%;top:38%;width:1100px;height:580px;display:grid;grid-template-columns:300px minmax(0,1fr);gap:40px;align-items:center;padding:36px 40px;background:#fff;border:1px solid #e5e8eb;border-radius:7px;box-shadow:0 10px 32px #23384d12;transform-origin:center;will-change:transform,filter,opacity;}
-.rf-wheel-image{margin:0;width:100%;height:460px;display:flex;align-items:center;justify-content:center;min-width:0;min-height:0;}
-.rf-wheel-image>img{width:100%;height:100%;object-fit:contain;display:block;max-width:100%;}
-.rf-wheel-copy{min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:14px;}
-.rf-wheel-area{color:#31699f;--ui-type-body-small-size:21px;}
-.rf-wheel-title{--ui-type-h2-size:36px;--ui-type-h2-line-height:1.3;letter-spacing:-.015em;overflow-wrap:normal;}
-.rf-wheel-publication{color:#737c86;--ui-type-body-small-size:24px;--ui-type-body-small-line-height:1.4;}
-.rf-wheel-year{color:#285f94;--ui-type-h3-size:29px;--ui-type-h3-line-height:1.35;}
-.rf-wheel-specimen{width:100%;height:100%;padding:22px 16px;display:flex;flex-direction:column;justify-content:center;gap:28px;border-top:2px solid #8998aa;background:#fcfcfc;}
-.rf-wheel-specimen>.ui-typography--h2{--ui-type-h2-size:24px;--ui-type-h2-line-height:1.4;}
-.rf-wheel-specimen>.ui-typography--bodySmall{--ui-type-body-small-size:14px;}
-@media(prefers-reduced-motion:reduce){.rf-wheel-paper{will-change:auto;}}
+.rf-research{position:relative;display:grid;grid-template-rows:128px 716px;padding:32px 48px 24px;background:linear-gradient(180deg,#fff 65%,#fafbfc);color:#202833;--ui-type-h1-size:48px;--ui-type-h1-line-height:1.2;isolation:isolate;}
+.rf-research-heading{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;pointer-events:none;}
+.rf-research-summary{--ui-type-body-small-size:27px;--ui-type-body-small-line-height:1.45;color:#738091;}
+.rf-research-summary strong{color:#365875;font-weight:650;}
+.rf-research-viewport{position:relative;width:1504px;height:716px;overflow:hidden;}
+.rf-research-camera{position:absolute;inset:0;transform-origin:50% 50%;will-change:transform;}
+.rf-research-paper{position:absolute;width:358px;height:208px;display:grid;grid-template-columns:94px minmax(0,1fr);align-items:center;gap:18px;padding:14px 10px;will-change:transform,opacity;}
+.rf-research-image{margin:0;width:94px;height:164px;display:flex;align-items:center;justify-content:center;min-width:0;}
+.rf-research-image>img{display:block;width:100%;height:100%;max-width:100%;object-fit:contain;filter:drop-shadow(0 3px 5px #23384d12);}
+.rf-research-copy{display:flex;flex-direction:column;align-items:flex-start;gap:12px;min-width:0;}
+.rf-research-title{--ui-type-h2-size:16.5px;--ui-type-h2-line-height:1.3;color:#263445;letter-spacing:-.015em;overflow-wrap:normal;}
+.rf-research-publication{--ui-type-body-small-size:16px;--ui-type-body-small-line-height:1.3;color:#36658c;font-weight:650;}
+.rf-research-publication span{color:#738091;font-weight:500;white-space:nowrap;}
+.rf-research-specimen{height:100%;width:100%;display:flex;flex-direction:column;justify-content:center;gap:12px;padding:8px 5px;border-top:1px solid #8595a5;background:#fff;box-shadow:0 3px 8px #23384d0a;}
+.rf-research-specimen>.ui-typography--h2{--ui-type-h2-size:9px;--ui-type-h2-line-height:1.3;}
+.rf-research-specimen>.ui-typography--bodySmall{--ui-type-body-small-size:6px;--ui-type-body-small-line-height:1.4;}
+.rf-research[data-stage="wall"] .rf-research-camera,.rf-research[data-stage="wall"] .rf-research-paper{will-change:auto;}
+@media(prefers-reduced-motion:reduce){.rf-research-camera,.rf-research-paper{will-change:auto;}}

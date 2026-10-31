@@ -175,6 +175,7 @@ function SceneDeckPlayer({ catalog, moduleId, assetId, progressKey, getNotes }: 
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
+      if (event.defaultPrevented) return;
       const target = event.target;
       if (target instanceof Element && target.closest('[data-embedded-lesson]')) return;
       if (target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement || target instanceof HTMLSelectElement) return;

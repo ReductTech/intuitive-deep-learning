@@ -31,7 +31,7 @@ function Points({ warning = false, children }: { warning?: boolean; children: re
   return <div className={'rf-method-points' + (warning ? ' is-warning' : '')}>{children.map(text => <div key={text}><span className="rf-method-point-icon"><Icon aria-hidden="true" /></span><Typography as="span" variant="bodySmall" tone="accent"><strong>{text}</strong></Typography></div>)}</div>;
 }
 export function PaperQualityPage() {
-  return <ContentBlock className="rf-paper-method-page" headingLevel={1} title={outline.pages[3].title}
+  return <ContentBlock className="rf-paper-method-page" headingLevel={1} title={outline.pages[5].title}
     subtitle="团队首次提出基于大语言模型的后训练微调方法，支撑高质量筛选与个性化推荐" bodyClassName="rf-paper-method-body">
     <div className="rf-method-columns">
       <section className="rf-method-column rf-method-traditional" aria-label="传统预测方法">

@@ -163,6 +163,7 @@ export function CommonKernelsPage() {
     let active = true;
     setResult('');
     const image = new Image();
+    image.crossOrigin = 'anonymous';
     image.onload = () => { if (active) { setResult(computeConvolution(image, selectedKernel)); setError(''); } };
     image.onerror = () => { if (active) setError('图像无法读取，请选择另一张。'); };
     image.src = selectedImage.src;

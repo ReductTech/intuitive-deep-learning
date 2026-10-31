@@ -13,7 +13,7 @@ type Mode = 'both' | 'v1' | 'v2';
 type Scores = { impact: number | null; quality: number | null };
 const empty: Scores = { impact: null, quality: null };
 const modes = [{ value: 'both', label: '影响力与质量 · 双模型评价' }, { value: 'v1', label: 'NAIP V1 · 影响力预测' }, { value: 'v2', label: 'NAIP V2 · 质量估计' }];
-const metrics = [{ key: 'impact' as const, label: '影响力评分', model: 'NAIP V1', color: '#3789f7', radius: 124 }, { key: 'quality' as const, label: '质量评分', model: 'NAIP V2', color: '#19b7b6', radius: 91 }];
+const metrics = [{ key: 'impact' as const, label: '潜在影响力预测', model: 'NAIP V1', color: '#3789f7', radius: 124 }, { key: 'quality' as const, label: '质量估计', model: 'NAIP V2', color: '#19b7b6', radius: 91 }];
 
 function useUsageCount(visible: boolean, reducedMotion: boolean) {
   const [count, setCount] = useState(0);
@@ -82,7 +82,7 @@ export function ResearchServicePage() {
       fixtures(exampleIndex, mode); setRunning(false); replayTimer.current = null;
     }, reducedMotion ? 0 : 1000);
   }
-  return <ContentBlock ref={root} className="aipe-service-page" headingLevel={1} title={outline.pages[7].title} subtitle="基于论文题目与摘要，展示大模型的论文影响力预测与质量估计" bodyClassName="aipe-service-body">
+  return <ContentBlock ref={root} className="aipe-service-page" headingLevel={1} title={outline.pages[7].title} subtitle="提供潜在影响力与质量估计参考，辅助安排阅读优先级" bodyClassName="aipe-service-body">
     <section className="aipe-service-demo" aria-label="Gradio 风格论文评价服务" onKeyDown={e => e.stopPropagation()}>
       <header className="aipe-service-demo-head"><ChartNoAxesColumnIncreasing aria-hidden="true" /><div><Typography as="h2" variant="body" tone="accent"><strong>Predict Impact &amp; Quality of Newborn Papers</strong></Typography><Typography variant="bodySmall" tone="muted">固定论文示例 · 本地演示回放</Typography></div></header>
       <div className="aipe-service-form-layout">
@@ -92,8 +92,8 @@ export function ResearchServicePage() {
           <TextInput multiline readOnly label="论文摘要" aria-label="论文摘要" value={example.abstract} rows={6} className="aipe-service-abstract aipe-service-readonly ui-typography ui-typography--bodySmall" data-ppt-viewport="只读、可滚动阅读的英文摘要示例" />
           <Button className="aipe-service-predict" loading={running} onClick={predict}>{running ? '大模型预测中…' : '大模型预测'}</Button>
         </div>
-        <div className="aipe-service-results" aria-label="论文评价结果" aria-live="polite" aria-busy={running}>
-          <Typography as="h3" variant="body" tone="accent"><strong>论文评价结果</strong></Typography>
+        <div className="aipe-service-results" aria-label="模型预测参考" aria-live="polite" aria-busy={running}>
+          <Typography as="h3" variant="body" tone="accent"><strong>模型预测参考</strong></Typography>
           <div className="aipe-service-dual-ring" role="img" aria-label={metrics.map(item => item.label + ' ' + (scores[item.key]?.toFixed(2) ?? '待预测')).join('，')}>
             <svg viewBox="0 0 300 300" aria-hidden="true">{metrics.map(item => <g key={item.key}><circle cx="150" cy="150" r={item.radius} fill="none" stroke="#e5ebf3" strokeWidth="19" /><circle data-ring={item.key} cx="150" cy="150" r={item.radius} fill="none" stroke={item.color} strokeOpacity={scores[item.key] === null ? 0 : 1} strokeWidth="19" strokeLinecap="round" pathLength="1" strokeDasharray={(scores[item.key] ?? 0) + ' 1'} transform="rotate(-90 150 150)" /></g>)}</svg>
             <div className="aipe-service-ring-center"><span><FileText aria-hidden="true" /><CircleCheck aria-hidden="true" /></span></div>

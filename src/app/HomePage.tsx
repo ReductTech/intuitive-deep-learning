@@ -8,6 +8,7 @@ import '../shuku/shuku.css';
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { moduleAssetUrl } from '../../modules/shared/react/assets';
 import { activeModules, type ActiveModule } from './modules';
+import { courseCoverScenes } from './courseCovers';
 import './HomePage.css';
 import { isLocalPreview,isPublicPreview } from './runtimeMode';
 
@@ -61,10 +62,11 @@ function presentationHref(module: ActiveModule, pageId?: string) {
 export function Cover({ module }: { module: CatalogModule }) {
   const [failed, setFailed] = useState(false);
   const meta = info(module);
-  const cover = meta.cover ?? module.pptDeck?.scenes[0]?.id;
+  const preferredCover = courseCoverScenes[module.id] ?? meta.cover;
+  const cover = preferredCover ?? module.pptDeck?.scenes[0]?.id;
   return <div className="sd-library-cover" style={{ '--cover-color': meta.color } as CSSProperties}>
     {failed || (!cover && !module.catalog?.cover_url) ? <div className="sd-library-cover-fallback"><Icon name={topics.find(topic => topic.name === meta.topic)?.icon ?? 'book'} /><span>{meta.topic}</span></div>
-      : <img src={module.catalog?.cover_url || moduleAssetUrl(module.assetId, `scenedeck-thumbnails/${cover}.png`)} alt={`${meta.title}课件预览`} loading="lazy" onError={() => setFailed(true)} />}
+      : <img src={preferredCover ? moduleAssetUrl(module.assetId, `scenedeck-thumbnails/${cover}.png`) : module.catalog?.cover_url || moduleAssetUrl(module.assetId, `scenedeck-thumbnails/${cover}.png`)} alt={`${meta.title}课件预览`} loading="lazy" onError={() => setFailed(true)} />}
     <span className="sd-library-cover-count">{module.catalog?.page_count??module.pages.length} 页</span>
   </div>;
 }

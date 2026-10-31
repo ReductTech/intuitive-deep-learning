@@ -30,6 +30,7 @@ export function StudentCapabilitiesPage() {
     const delta = event.key === 'ArrowLeft' ? -1 : event.key === 'ArrowRight' ? 1 : 0;
     if (!delta) return;
     event.preventDefault();
+    event.stopPropagation();
     const next = (index + delta + capabilities.length) % capabilities.length;
     const buttons = event.currentTarget.parentElement?.querySelectorAll<HTMLButtonElement>('.aipe-capability-arch');
     buttons?.[next]?.focus();

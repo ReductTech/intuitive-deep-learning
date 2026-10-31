@@ -10,6 +10,7 @@ import './ConvolutionWalkthroughPage.css';
 type Sample = ZoomSample;
 async function loadSample(file: string): Promise<Sample> {
   const image = new Image();
+  image.crossOrigin = 'anonymous';
   image.src = moduleAssetUrl(outline.moduleIdentity.id, `images/edge-examples/${file}`);
   await image.decode();
   const canvas = document.createElement('canvas'); canvas.width = canvas.height = INPUT_SIZE;
