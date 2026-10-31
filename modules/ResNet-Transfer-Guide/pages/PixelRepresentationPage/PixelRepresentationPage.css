@@ -1,0 +1,74 @@
+.course-shell .rtg-pixel-representation {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  min-width: 0;
+  max-width: 100%;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 16px;
+  padding: 28px 36px 22px;
+  border-top: 4px solid var(--ui-accent);
+  background: var(--ui-bg-muted);
+}
+.course-shell .rtg-pixel-representation > .edu-content-head { margin: 0; }
+.course-shell .rtg-pixel-representation > .edu-content-body {
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  max-width: 100%;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 16px;
+}
+.course-shell .rtg-pixel-representation .ui-typography { margin: 0; min-width: 0; max-width: 100%; }
+.course-shell .rtg-pixel-representation__controls { display: grid; min-width: 0; max-width: 100%; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 20px; }
+.course-shell .rtg-pixel-representation__conditions { display: grid; min-width: 0; max-width: 100%; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.course-shell .rtg-pixel-representation .edu-btn { min-width: 0; max-width: 100%; }
+.course-shell .rtg-pixel-representation__comparison { display: grid; min-width: 0; min-height: 0; max-width: 100%; grid-template-columns: minmax(0, 1.9fr) minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto; gap: 12px 20px; }
+.course-shell .rtg-pixel-representation__photos { display: grid; min-width: 0; min-height: 0; max-width: 100%; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: minmax(0, 1fr); gap: 12px; }
+.course-shell .rtg-pixel-representation__photo { display: grid; min-width: 0; min-height: 0; max-width: 100%; margin: 0; padding: 16px 20px; background: #fff; border: 1px solid var(--ui-border); border-radius: 16px; grid-template-rows: auto minmax(0, 1fr) auto; gap: 10px; text-align: center; }
+.course-shell .rtg-pixel-representation__photo-area { display: grid; min-width: 0; min-height: 0; max-width: 100%; place-items: center; }
+.course-shell .rtg-pixel-representation__picture { position: relative; height: 100%; max-height: 360px; width: auto; min-width: 0; min-height: 0; max-width: 100%; aspect-ratio: 256 / 332; }
+.course-shell .rtg-pixel-representation__comparison .rtg-pixel-representation__picture { max-height: 460px; }
+.course-shell .rtg-pixel-representation__picture canvas { display: block; width: 100%; height: 100%; max-width: 100%; border-radius: 12px; cursor: crosshair; }
+.course-shell .rtg-pixel-representation__picture canvas:focus-visible { outline: 3px solid #eaa82c; outline-offset: 3px; }
+.course-shell .rtg-pixel-representation__probe { position: absolute; width: 20px; height: 20px; border: 3px solid #ffd065; background: rgba(255,208,101,.12); box-shadow: 0 0 0 1px #664809; transform: translate(-50%, -50%); pointer-events: none; }
+.course-shell .rtg-pixel-representation__rgb { display: flex; min-width: 0; max-width: 100%; align-items: center; justify-content: center; gap: 10px; }
+.course-shell .rtg-pixel-representation__swatch { display: block; width: 30px; height: 30px; flex: 0 0 30px; border: 1px solid var(--ui-border); border-radius: 7px; }
+.course-shell .rtg-pixel-representation__sample-caption { grid-column: 1; text-align: center; }
+.course-shell .rtg-pixel-representation__insight,
+.course-shell .rtg-pixel-representation__definition { display: grid; min-width: 0; min-height: 0; max-width: 100%; align-content: center; gap: 14px; padding: 22px; background: var(--ui-bg-soft); border: 1px solid var(--ui-border); border-radius: 16px; }
+.course-shell .rtg-pixel-representation__takeaway { display: grid; min-width: 0; max-width: 100%; gap: 8px; }
+.course-shell .rtg-pixel-representation__insight { gap: 40px; padding: 32px; }
+.course-shell .rtg-pixel-representation__question-wrap { min-width: 0; max-width: 100%; }
+.course-shell .rtg-pixel-representation__question {
+  width: 100%; min-height: 76px; padding: 14px 22px;
+  border-radius: var(--ui-radius-md); text-align: left;
+}
+.course-shell .rtg-pixel-representation__question > span { display: flex; min-width: 0; max-width: 100%; align-items: center; justify-content: space-between; gap: 16px; }
+.course-shell .rtg-pixel-representation__arrow { display: block; width: 30px; height: 30px; max-width: 100%; flex: 0 0 30px; }
+.course-shell .rtg-pixel-representation__feature-title:focus { outline: none; }
+.course-shell .rtg-pixel-representation__flow { display: grid; min-width: 0; max-width: 100%; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; list-style: none; padding: 0; margin: 0; }
+.course-shell .rtg-pixel-representation__flow li { position: relative; min-width: 0; max-width: 100%; padding: 6px 16px; border-bottom: 3px solid var(--ui-accent); background: var(--ui-bg-soft); border-radius: 8px 8px 0 0; text-align: center; }
+.course-shell .rtg-pixel-representation__flow li:last-child { border-color: var(--ui-success); }
+.course-shell .rtg-pixel-representation__flow li:not(:last-child)::after { position: absolute; content: ''; right: -13px; top: 50%; width: 8px; height: 8px; border-top: 2px solid var(--ui-accent); border-right: 2px solid var(--ui-accent); transform: translateY(-50%) rotate(45deg); }
+.course-shell .rtg-pixel-representation__representation { display: grid; min-width: 0; min-height: 0; max-width: 100%; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr) minmax(0, 1fr); gap: 20px; }
+.course-shell .rtg-pixel-representation__annotated { grid-template-rows: auto minmax(0, 1fr); }
+.course-shell .rtg-pixel-representation__annotated .rtg-pixel-representation__picture canvas { cursor: default; }
+.course-shell .rtg-pixel-representation__annotations { position: absolute; inset: 0; width: 100%; height: 100%; max-width: 100%; pointer-events: none; }
+.course-shell .rtg-pixel-representation__highlight { fill: rgba(24,148,87,.12); stroke: #048e4c; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; animation: rtg-representation-highlight .3s ease-out both; }
+.course-shell .rtg-pixel-representation__clues { display: grid; min-width: 0; min-height: 0; max-width: 100%; grid-template-rows: auto auto minmax(0, 1fr); gap: 12px; padding: 20px 0; }
+.course-shell .rtg-pixel-representation__clue-buttons { display: grid; min-width: 0; min-height: 0; max-width: 100%; grid-template-rows: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.course-shell .rtg-pixel-representation__clue-button { border-radius: 14px; padding: 10px 16px; text-align: left; justify-content: start; background: #fff; }
+.course-shell .rtg-pixel-representation__clue-button > span { display: grid; min-width: 0; max-width: 100%; gap: 2px; }
+.course-shell .rtg-pixel-representation__clue-button.is-active { border-color: var(--ui-success); background: #edf8f2; box-shadow: inset 4px 0 0 var(--ui-success); }
+.course-shell .rtg-pixel-representation__definition { gap: 28px; padding: 28px; background: #f1f8f4; border-color: #bbdcca; }
+.course-shell .rtg-pixel-representation__definition-copy { display: grid; min-width: 0; max-width: 100%; gap: 12px; }
+.course-shell .rtg-pixel-representation__feature-values { display: grid; min-width: 0; max-width: 100%; gap: 16px; padding-top: 24px; border-top: 1px solid #c6dfd0; }
+.course-shell .rtg-pixel-representation__vector { display: grid; min-width: 0; max-width: 100%; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+.course-shell .rtg-pixel-representation__vector code { min-width: 0; max-width: 100%; padding: 5px 0; background: #fff; border: 1px solid #c6dfd0; border-radius: 8px; text-align: center; }
+.course-shell .rtg-pixel-representation__footer { display: grid; min-width: 0; max-width: 100%; grid-template-columns: minmax(0, 1fr) auto; gap: 14px; align-items: center; }
+.course-shell .rtg-pixel-representation__footer--statement { grid-template-columns: minmax(0, 1fr); }
+.course-shell .rtg-pixel-representation__actions { display: flex; grid-column: -2 / -1; min-width: 0; max-width: 100%; align-items: center; gap: 10px; }
+@keyframes rtg-representation-highlight { from { opacity: .25; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .course-shell .rtg-pixel-representation__highlight { animation: none; } .course-shell .rtg-pixel-representation__question { transition: none; } .course-shell .rtg-pixel-representation__question:hover:not(:disabled) { transform: none; } }

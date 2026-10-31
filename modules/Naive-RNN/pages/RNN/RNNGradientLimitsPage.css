@@ -1,0 +1,299 @@
+/* 梯度爆炸与梯度消失：从完整 RNN 抽出 W₂ 时间路径，严格按两幕顺序展示。 */
+
+.course-shell .nrnn-gradient-limits {
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  grid-template-rows: auto minmax(0, 1fr);
+  overflow: hidden;
+}
+
+.course-shell .nrnn-gradient-limits > .edu-content-head {
+  max-width: none;
+  margin-bottom: 12px;
+}
+
+.course-shell .nrnn-gradient-limits > .edu-content-body {
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 12px;
+}
+
+.course-shell .nrnn-gradient-limits__lesson {
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
+  gap: 16px;
+}
+
+/* ---------- 左侧：简化的时间步 RNN ---------- */
+.course-shell .nrnn-gradient-limits__rnn-map,
+.course-shell .nrnn-gradient-limits__iteration,
+.course-shell .nrnn-gradient-limits__summary {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  border: 1px solid rgba(var(--ui-accent-rgb), .16);
+  border-radius: 20px;
+  background: linear-gradient(145deg, #fff 0%, #f7f9fc 100%);
+  box-shadow: 0 16px 40px rgba(42, 60, 91, .06);
+}
+
+.course-shell .nrnn-gradient-limits__rnn-map {
+  align-content: center;
+  grid-template-rows: auto auto 1fr auto;
+  gap: 10px;
+  padding: 20px 24px;
+  overflow: hidden;
+}
+
+.course-shell .nrnn-gradient-limits__rnn-map.is-danger { border-color: rgba(var(--ui-danger-rgb), .38); }
+.course-shell .nrnn-gradient-limits__rnn-map.is-accent { border-color: rgba(var(--ui-accent-rgb), .36); }
+
+.course-shell .nrnn-gradient-limits__map-heading {
+  display: grid;
+  min-width: 0;
+  gap: 4px;
+}
+
+.course-shell .nrnn-gradient-limits__map-note {
+  display: inline-flex;
+  width: max-content;
+  max-width: 100%;
+  align-items: center;
+  gap: 8px;
+  border: 1px dashed rgba(var(--ui-accent-rgb), .24);
+  border-radius: 999px;
+  padding: 4px 10px;
+}
+
+.course-shell .nrnn-gradient-limits__map-stack {
+  display: grid;
+  min-width: 0;
+  align-content: center;
+  gap: 18px;
+}
+
+.course-shell .nrnn-gradient-limits__map-row {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  grid-template-columns: 30px minmax(0, .95fr) 24px minmax(0, 1fr) 24px minmax(0, .95fr);
+  align-items: center;
+  gap: 6px;
+  opacity: .28;
+  transform: translateY(7px);
+  transition: opacity .55s ease, transform .55s ease;
+}
+
+.course-shell .nrnn-gradient-limits__map-row.is-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.course-shell .nrnn-gradient-limits__step-label {
+  justify-self: end;
+}
+
+.course-shell .nrnn-gradient-limits__map-box {
+  display: grid;
+  min-width: 0;
+  min-height: 64px;
+  align-content: center;
+  justify-items: center;
+  gap: 2px;
+  border: 1px solid rgba(var(--ui-accent-rgb), .22);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--ui-text-light);
+  box-shadow: 0 8px 18px rgba(42, 60, 91, .05);
+  transition: border-color .28s ease, background .28s ease, color .28s ease, transform .28s ease;
+}
+
+.course-shell .nrnn-gradient-limits__map-box.is-input { border-color: rgba(var(--ui-accent-alt-rgb), .48); }
+.course-shell .nrnn-gradient-limits__map-box.is-relu { border-color: rgba(var(--ui-accent-rgb), .46); }
+.course-shell .nrnn-gradient-limits__map-box.is-output { border-color: rgba(var(--ui-success-rgb), .42); }
+.course-shell .nrnn-gradient-limits__map-box .nrnn-cell-chain__relu { width: 54px; height: 34px; }
+
+.course-shell .nrnn-gradient-limits__map-row.is-active .nrnn-gradient-limits__map-box {
+  color: var(--ui-accent);
+  transform: translateY(-2px);
+}
+
+.course-shell .nrnn-gradient-limits__rnn-map.is-danger .nrnn-gradient-limits__map-row.is-active .nrnn-gradient-limits__map-box { border-color: rgba(var(--ui-danger-rgb), .58); color: var(--ui-danger); background: rgba(var(--ui-danger-rgb), .05); }
+.course-shell .nrnn-gradient-limits__rnn-map.is-accent .nrnn-gradient-limits__map-row:not(.is-active) { opacity: .5; }
+.course-shell .nrnn-gradient-limits__rnn-map.is-summary .nrnn-gradient-limits__map-box { border-color: var(--ui-success); color: var(--ui-success); }
+
+.course-shell .nrnn-gradient-limits__map-arrow { justify-self: center; color: var(--ui-accent); }
+
+.course-shell .nrnn-gradient-limits__feedback {
+  position: absolute;
+  z-index: 0;
+  top: calc(100% - 6px);
+  right: 22%;
+  left: 22%;
+  height: 28px;
+  border-right: 3px solid rgba(var(--ui-accent-rgb), .2);
+  border-bottom: 3px solid rgba(var(--ui-accent-rgb), .2);
+  color: var(--ui-text-light);
+  pointer-events: none;
+}
+
+.course-shell .nrnn-gradient-limits__feedback.is-active {
+  border-color: var(--ui-accent);
+  color: var(--ui-accent);
+}
+
+.course-shell .nrnn-gradient-limits__rnn-map.is-danger .nrnn-gradient-limits__feedback.is-active { border-color: var(--ui-danger); color: var(--ui-danger); }
+
+.course-shell .nrnn-gradient-limits__feedback::after {
+  position: absolute;
+  bottom: -7px;
+  left: -1px;
+  width: 10px;
+  height: 10px;
+  border-bottom: 3px solid currentColor;
+  border-left: 3px solid currentColor;
+  content: '';
+  transform: translateX(-35%) rotate(45deg);
+}
+
+.course-shell .nrnn-gradient-limits__feedback > .ui-typography {
+  position: absolute;
+  top: 5px;
+  right: 10%;
+  border-radius: 999px;
+  background: #fff;
+  padding: 1px 6px;
+}
+
+.course-shell .nrnn-gradient-limits__map-equation {
+  justify-self: end;
+  border-radius: 999px;
+  background: var(--ui-bg-soft);
+  padding: 5px 11px;
+}
+
+/* ---------- 右侧：一次只演示一个现象 ---------- */
+.course-shell .nrnn-gradient-limits__iteration {
+  align-content: start;
+  grid-template-rows: auto auto 1fr auto;
+  gap: 14px;
+  padding: 20px 24px;
+}
+
+.course-shell .nrnn-gradient-limits__iteration.is-danger { border-color: rgba(var(--ui-danger-rgb), .4); }
+.course-shell .nrnn-gradient-limits__iteration.is-accent { border-color: rgba(var(--ui-accent-rgb), .38); }
+
+.course-shell .nrnn-gradient-limits__iteration-head {
+  display: flex;
+  min-width: 0;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid var(--ui-border);
+  padding-bottom: 10px;
+}
+
+.course-shell .nrnn-gradient-limits__iteration.is-danger .nrnn-gradient-limits__iteration-head > .ui-typography:first-child { color: var(--ui-danger); }
+.course-shell .nrnn-gradient-limits__iteration.is-accent .nrnn-gradient-limits__iteration-head > .ui-typography:first-child { color: var(--ui-accent); }
+
+.course-shell .nrnn-gradient-limits__iteration-intro { max-width: 100%; }
+
+.course-shell .nrnn-gradient-limits__value-stack {
+  display: grid;
+  align-content: center;
+  gap: 7px;
+}
+
+.course-shell .nrnn-gradient-limits__value-row {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: 48px 70px minmax(0, 1fr);
+  align-items: center;
+  gap: 9px;
+  border-radius: 10px;
+  color: var(--ui-text-light);
+  padding: 5px 9px;
+  transition: color .25s ease, background .25s ease, transform .25s ease;
+}
+
+.course-shell .nrnn-gradient-limits__value-row.is-current {
+  background: rgba(var(--ui-accent-rgb), .08);
+  color: var(--ui-accent);
+  transform: translateX(6px);
+}
+
+.course-shell .nrnn-gradient-limits__iteration.is-danger .nrnn-gradient-limits__value-row.is-current { background: rgba(var(--ui-danger-rgb), .08); color: var(--ui-danger); }
+.course-shell .nrnn-gradient-limits__value-row > .ui-typography:last-child { justify-self: end; }
+
+.course-shell .nrnn-gradient-limits__far-result {
+  display: grid;
+  gap: 3px;
+  border-top: 1px solid var(--ui-border);
+  padding-top: 11px;
+}
+
+.course-shell .nrnn-gradient-limits__iteration.is-danger .nrnn-gradient-limits__far-result > .ui-typography:last-child { color: var(--ui-danger); }
+.course-shell .nrnn-gradient-limits__iteration.is-accent .nrnn-gradient-limits__far-result > .ui-typography:last-child { color: var(--ui-accent); }
+
+/* ---------- 总结 ---------- */
+.course-shell .nrnn-gradient-limits__summary {
+  align-content: center;
+  justify-items: center;
+  gap: 13px;
+  grid-column: 1 / -1;
+  padding: 24px;
+  text-align: center;
+}
+
+.course-shell .nrnn-gradient-limits__summary-rules {
+  display: grid;
+  width: min(100%, 760px);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.course-shell .nrnn-gradient-limits__summary-rules > div {
+  display: grid;
+  min-width: 0;
+  gap: 4px;
+  border: 1px solid var(--ui-border);
+  border-radius: 14px;
+  background: #fff;
+  padding: 12px;
+}
+
+.course-shell .nrnn-gradient-limits__summary-rules > div.is-danger { border-color: rgba(var(--ui-danger-rgb), .4); color: var(--ui-danger); }
+.course-shell .nrnn-gradient-limits__summary-rules > div.is-accent { border-color: rgba(var(--ui-accent-rgb), .35); color: var(--ui-accent); }
+
+/* ---------- 状态条 ---------- */
+.course-shell .nrnn-gradient-limits__status {
+  display: grid;
+  min-width: 0;
+  min-height: 78px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 20px;
+  border: 1px solid rgba(var(--ui-accent-rgb), .18);
+  border-radius: 18px;
+  background: var(--ui-bg-soft);
+  color: var(--ui-accent);
+  padding: 12px 16px 12px 24px;
+}
+
+.course-shell .nrnn-gradient-limits__status.is-success {
+  border-color: rgba(var(--ui-success-rgb), .38);
+  background: rgba(var(--ui-success-rgb), .08);
+  color: var(--ui-success);
+}
+
+@media (max-width: 1100px) {
+  .course-shell .nrnn-gradient-limits__lesson { grid-template-columns: minmax(0, 1fr) minmax(0, .9fr); }
+  .course-shell .nrnn-gradient-limits__map-row { grid-template-columns: 24px minmax(0, .9fr) 18px minmax(0, 1fr) 18px minmax(0, .9fr); gap: 4px; }
+  .course-shell .nrnn-gradient-limits__map-box { min-height: 58px; }
+}

@@ -1,0 +1,21 @@
+.attn-activity { --attn-activation: #7c57a6; display:grid; width:100%;height:100%;min-width:0;min-height:0;gap:24px;padding:42px 56px 48px;background:var(--ui-bg-card); }
+.attn-activity :where(header,footer,section,div,p,h1,h2,h3,span,button,svg,table) {min-width:0;max-width:100%;}
+.attn-page-content,.attn-page-content>.edu-content-body{display:contents;}
+.attn-activity-main--with-flow{grid-template-rows:auto minmax(0,1fr);gap:24px;}
+.attn-activity-main{min-height:0;display:grid;}.attn-activity-footer{min-height:0;display:grid;align-content:center;gap:16px;padding:18px 25px;border:2px solid var(--ui-border-strong);border-radius:var(--ui-radius-lg);background:var(--ui-accent-soft);}
+.attn-activity-formula.math-formula-block{min-height:0;width:100%;padding:10px 0;margin:0;border:0;background:transparent;}.attn-activity-formula math-field:not(:defined){visibility:hidden;}
+.attn-choice-row{display:flex;gap:14px;align-items:center;flex-wrap:wrap;}.attn-choice-row button{flex:1;}
+.attn-activity .dl-question{width:100%;margin:0;}.attn-activity .dl-question-title{margin:0;}.attn-activity .dl-question-options{gap:12px;}.attn-activity .dl-question-option{padding:10px 14px;}.attn-activity .dl-question-feedback{margin-top:8px;}
+.attn-two-columns{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:48px;min-height:0;}.attn-stack{display:grid;align-content:center;gap:24px;min-height:0;}.attn-row{display:flex;align-items:center;justify-content:space-between;gap:24px;}.attn-numeric{font-variant-numeric:tabular-nums;}
+.attn-q.ui-typography{color:var(--ui-accent);}.attn-k.ui-typography{color:var(--ui-accent-alt);}.attn-sum.ui-typography{color:var(--ui-success);}.attn-activation.ui-typography{color:var(--attn-activation);}
+.attn-activity .edu-range{margin:0;min-height:22px;}
+
+.attn-activity-footer .dl-question{padding:0;border:0;background:transparent;gap:10px;}.attn-activity .dl-question-type:empty{display:none;}
+.attn-lesson-check-result{display:grid;gap:8px;min-width:0;}
+.attn-lesson-check-retry{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px;align-items:center;}
+.attn-lesson-check-retry .edu-btn{white-space:nowrap;}
+
+/* Inline labels use the same Shared MathLive renderer and inherit Typography. */
+.attn-inline-math { vertical-align:middle; max-width:100%; }
+.attn-inline-math math-field { display:inline-flex; width:auto; min-width:0; max-width:100%; border:0; border-radius:0; outline:0; background:transparent; color:inherit; padding:0; font:inherit; pointer-events:none; --caret-color:transparent; --selection-background-color:transparent; --contains-highlight-background-color:transparent; }
+.attn-inline-math math-field:not(:defined) { visibility:hidden; }

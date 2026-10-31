@@ -1,0 +1,314 @@
+/* ==========================================================================
+   一阶马尔可夫模型页面样式（整洁自适应、彻底杜绝上下重合）
+   ========================================================================== */
+
+.course-shell .nrnn-markov-formula {
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  grid-template-rows: auto minmax(0, 1fr);
+  overflow: hidden;
+}
+
+.course-shell .nrnn-markov-formula > .edu-content-head {
+  max-width: none;
+  margin-bottom: 12px;
+}
+
+.course-shell .nrnn-markov-formula > .edu-content-body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  gap: 16px;
+  justify-content: space-between;
+}
+
+/* 上半部分左右卡片 */
+.course-shell .nrnn-markov-formula__stage {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: 18px;
+  align-items: stretch;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* ---------- 菜品图标尺寸定义 ---------- */
+.course-shell .nrnn-markov-formula__dish-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+}
+
+.course-shell .nrnn-markov-formula__dish-wrapper.is-medium svg,
+.course-shell .nrnn-markov-formula__dish-wrapper.is-medium img,
+.course-shell .nrnn-markov-formula__dish-wrapper.is-medium .dl-dish-icon {
+  width: 32px !important;
+  height: 32px !important;
+}
+
+.course-shell .nrnn-markov-formula__dish-wrapper.is-large svg,
+.course-shell .nrnn-markov-formula__dish-wrapper.is-large img,
+.course-shell .nrnn-markov-formula__dish-wrapper.is-large .dl-dish-icon {
+  width: 44px !important;
+  height: 44px !important;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.1));
+}
+
+/* ---------- 左侧公式与探索面板 ---------- */
+.course-shell .nrnn-markov-formula__formula-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 20px 28px;
+  border: 1px solid rgba(var(--ui-accent-rgb), 0.16);
+  border-radius: 20px;
+  background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+  box-shadow: 0 10px 28px rgba(42, 60, 91, 0.05);
+}
+
+.course-shell .nrnn-markov-formula__formula {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 20px;
+  background: rgba(var(--ui-accent-rgb), 0.07);
+  border: 1px solid rgba(var(--ui-accent-rgb), 0.12);
+  border-radius: 16px;
+  color: var(--ui-accent);
+}
+
+.course-shell .nrnn-markov-formula__math-line {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 50px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.course-shell .nrnn-markov-formula__math-approx {
+  font-size: 50px;
+  color: var(--ui-accent-alt, #d97706);
+}
+
+.course-shell .nrnn-markov-formula__math-prod {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 6px;
+  vertical-align: middle;
+}
+
+.course-shell .nrnn-markov-formula__prod-sym {
+  font-size: 60px;
+  line-height: 0.85;
+  font-family: serif, system-ui;
+  font-weight: 400;
+}
+
+.course-shell .nrnn-markov-formula__prod-sup,
+.course-shell .nrnn-markov-formula__prod-sub {
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.course-shell .nrnn-markov-formula__math-line sub {
+  font-size: 0.65em;
+  font-weight: 800;
+  bottom: -0.15em;
+}
+
+.course-shell .nrnn-markov-formula__formula-note {
+  font-size: 12px;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.course-shell .nrnn-markov-formula__story {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 16px;
+  background: #ffffff;
+  border: 1px solid var(--ui-border);
+  border-radius: 14px;
+}
+
+.course-shell .nrnn-markov-formula__dishes-preview {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  vertical-align: middle;
+  margin-left: 8px;
+}
+
+/* ---------- 右侧：大图转移概率表 ---------- */
+.course-shell .nrnn-markov-formula__example {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 20px;
+  border: 1px solid rgba(var(--ui-accent-rgb), 0.16);
+  border-radius: 20px;
+  background: #ffffff;
+  box-shadow: 0 10px 28px rgba(42, 60, 91, 0.05);
+}
+
+.course-shell .nrnn-markov-formula__table {
+  display: grid;
+  grid-template-columns: 86px repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  width: 100%;
+  flex: 1 1 auto;
+  align-content: center;
+}
+
+.course-shell .nrnn-markov-formula__cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 74px;
+  border-radius: 14px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  font-weight: bold;
+}
+
+.course-shell .nrnn-markov-formula__cell.is-corner {
+  background: transparent;
+  border-color: transparent;
+  font-size: 12px;
+  line-height: 1.3;
+  color: var(--ui-text-muted);
+}
+
+.course-shell .nrnn-markov-formula__cell.is-head {
+  padding: 4px;
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.course-shell .nrnn-markov-formula__cell.is-head .nrnn-markov-formula__dish-wrapper.is-large svg,
+.course-shell .nrnn-markov-formula__cell.is-head .nrnn-markov-formula__dish-wrapper.is-large img,
+.course-shell .nrnn-markov-formula__cell.is-head .nrnn-markov-formula__dish-wrapper.is-large .dl-dish-icon {
+  width: 52px !important;
+  height: 52px !important;
+}
+
+.course-shell .nrnn-markov-formula__cell.is-certain {
+  background: #eff6ff;
+  border-color: #93c5fd;
+  color: #1d4ed8;
+  font-size: 17px;
+  box-shadow: inset 0 0 0 2px #3b82f6;
+}
+
+.course-shell .nrnn-markov-formula__cell.is-zero {
+  color: #94a3b8;
+  font-size: 15px;
+}
+
+.course-shell .nrnn-markov-formula__caption {
+  margin: 0;
+  text-align: center;
+}
+
+/* ---------- 底部答题与结算区域（原地替换，零溢出） ---------- */
+.course-shell .nrnn-markov-formula__slot {
+  position: relative;
+  min-width: 0;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.course-shell .nrnn-markov-formula__quiz-wrapper.is-transitioning .dl-inline-answer {
+  border-color: #22c55e !important;
+  background: #f0fdf4 !important;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2) !important;
+}
+
+.course-shell .nrnn-markov-formula__chain-stem {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.course-shell .nrnn-markov-formula__stem-arrow {
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+/* 结算卡片：完全融合整体圆角卡片体系 */
+.course-shell .nrnn-markov-formula__summary-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px 22px;
+  border-radius: 18px;
+  border: 1px solid rgba(var(--ui-accent-rgb), 0.18);
+  background: linear-gradient(145deg, #ffffff 0%, var(--ui-bg-soft) 100%);
+  box-shadow: 0 10px 26px rgba(42, 60, 91, 0.05);
+  animation: summaryFadeIn 0.35s ease-out;
+}
+
+.course-shell .nrnn-markov-formula__summary-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  border-bottom: 1px solid var(--ui-border);
+  padding-bottom: 8px;
+}
+
+.course-shell .nrnn-markov-formula__summary-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.course-shell .nrnn-markov-formula__chain-route {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px dashed rgba(var(--ui-accent-rgb), 0.25);
+  align-self: flex-start;
+}
+
+.course-shell .nrnn-markov-formula__route-arrow {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ui-accent);
+}
+
+.course-shell .nrnn-markov-formula__route-tag {
+  font-size: 12px;
+  color: var(--ui-text-muted);
+}
+
+.course-shell .nrnn-markov-formula__summary-desc {
+  margin: 0;
+  line-height: 1.5;
+}
+
+@keyframes summaryFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 860px) {
+  .course-shell .nrnn-markov-formula__stage {
+    grid-template-columns: 1fr;
+  }
+}

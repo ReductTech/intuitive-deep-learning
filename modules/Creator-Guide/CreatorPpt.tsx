@@ -1,3 +1,4 @@
+import {ShukuCoCreationLoop} from './pages/ShukuCoCreationLoop';
 import {ShukuWhyPage,ShukuParticipationPage,ShukuReviewPage,ShukuGrowthPage} from './pages/ShukuIntroPages';
 import './CreatorTypography.css';
 import { TitlePage } from './pages/TitlePage';
@@ -44,6 +45,7 @@ export const deck: DeckDefinition = {
     { id: 'shuku-participation', title: outline.pages[18].title, section: '术库 · 知识共创', render: () => <ShukuParticipationPage /> },
     { id: 'shuku-review', title: outline.pages[19].title, section: '术库 · 知识共创', render: () => <ShukuReviewPage /> },
     { id: 'shuku-growth', title: outline.pages[20].title, section: '术库 · 知识共创', render: () => <ShukuGrowthPage /> },
+    { id: 'shuku-cocreation-loop', title: outline.pages[21].title, section: '术库 · 知识共创', render: () => <ShukuCoCreationLoop /> },
   ],
 };
 export const getPptNotes = (sceneId: string) => [{ text: outline.pages.find(page => page.id === sceneId)?.snippet ?? '', selectors: [sceneId.startsWith('shuku-') ? '.cg-shuku-'+sceneId.slice(6) : sceneId === 'creator-guide-title' ? '.cg-cover-page' : sceneId === 'learning-goals' ? '.cg-goal-page' : sceneId === 'education-paths' ? '.cg-education-page' : sceneId === 'popular-science' ? '.cg-pop-page' : sceneId === 'professional-education' ? '.cg-pro-page' : sceneId === 'intuitive-learning' ? '.cg-intuitive-page' : sceneId === 'multi-format' ? '.cg-format-page' : sceneId === 'discovery-learning' ? '.cg-discovery-page' : sceneId === 'progressive-disclosure' ? '.cg-disclosure-page' : sceneId === 'optional-interaction' ? '.cg-optional-page' : sceneId === 'creation-workflow' ? '.cg-workflow-page' : sceneId === 'human-collaboration' ? '.cg-human-page' : sceneId === 'presentation-comparison' ? '.cg-case-page' : sceneId === 'ui-kit' ? '.cg-kit-assembly-page' : sceneId === 'skill-overview' ? '.cg-overview-page' : sceneId === 'skill-constraints' ? '.cg-constraints-page' : sceneId === 'frontend-journey' ? '.cg-journey-page' : '.cg-cover-page'] }];
