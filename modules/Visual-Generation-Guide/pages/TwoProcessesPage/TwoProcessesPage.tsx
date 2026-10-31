@@ -1,13 +1,14 @@
-import { courseAssetUrl } from '../../assets';
+import moduleAssetOutline from '../../outlines.json';
+import { moduleAssetUrl } from '../../../shared/react/assets';
 import { useLecturePlayback } from '../../components/LecturePlayback';
 import { useEffect, useRef } from 'react';
 import { ContentBlock, Typography } from '../../../shared/react';
 import './TwoProcessesPage.css';
 
-const x0 = courseAssetUrl('images/two-processes/x0.jpg');
-const x1 = courseAssetUrl('images/two-processes/x1.jpg');
-const xt = courseAssetUrl('images/two-processes/xt.jpg');
-const xT = courseAssetUrl('images/two-processes/xt.jpg');
+const x0 = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/two-processes/x0.jpg');
+const x1 = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/two-processes/x1.jpg');
+const xt = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/two-processes/xt.jpg');
+const xT = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/two-processes/xt.jpg');
 
 type Phase = 'ready' | 'forward' | 'forward-done' | 'reverse' | 'complete';
 

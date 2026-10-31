@@ -19,27 +19,3 @@
 
 .pg-ac-intro-flow .pg-ac-board .pg-world{width:240px}.pg-ac-intro-flow .pg-ac-left,.pg-ac-intro-flow .pg-ac-right{gap:8px}.pg-ac-intro-flow .pg-ac-signal{padding:6px 12px}
 .pg-ac-training .pg-ac-left .pg-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-
-/* Page 12: one signal comparison, then one shared-state output diagram. */
-.pg-ac12-layout{height:100%;min-height:0;display:grid;grid-template-rows:auto minmax(0,1fr);gap:20px}
-.pg-ac12-layout *{min-width:0;max-width:100%;box-sizing:border-box}
-.pg-ac12-comparison{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:24px;padding:12px 30px;background:var(--ui-bg-muted,var(--ui-bg-soft));border-radius:var(--ui-radius-md)}
-.pg-ac12-comparison>div{display:flex;align-items:center;justify-content:center;gap:24px}
-.pg-ac12-comparison .math-formula-block{margin:0;padding:0}
-.pg-ac12-models{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.6fr);gap:56px;align-items:center;min-height:0}
-.pg-ac12-state{display:grid;gap:16px;justify-items:center;align-content:center}
-.pg-ac12-state .pg-ac-board .pg-world{width:290px}
-.pg-ac12-outputs{display:grid;gap:14px;align-content:center}
-.pg-ac12-head,.pg-ac12-rows>div{display:grid;grid-template-columns:minmax(0,.45fr) minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:center}
-.pg-ac12-head>div{display:grid;gap:8px;padding:12px 0;border-top:3px solid var(--ui-accent)}
-.pg-ac12-head>div:first-child{border:0}
-.pg-ac12-head>div:last-child{border-color:var(--ui-warning)}
-.pg-ac12-head>div:last-child>.ui-typography:first-child{align-self:center}
-.pg-ac12-rows{display:grid;gap:6px}
-.pg-ac12-rows>div{padding:10px 16px;background:var(--ui-bg-soft);border-radius:var(--ui-radius-sm)}
-.pg-ac12-head{padding:0 16px}
-.pg-ac12-comparison .math-formula{color:var(--ui-warning)}
-
-.pg-readable-ac-training .pg-ac-action-rows>div{padding-top:4px;padding-bottom:4px}
-
-.pg-readable-ac-training .pg-ac-right{gap:8px}

@@ -12,37 +12,6 @@ import { creatorSkillDocuments } from './modules/Creator-Guide/skillDocumentsPlu
 import {courseLibraryRoot,courseLibraryPlugin} from './scripts/course-library-vite';
 import {localModuleAssets} from './scripts/module-assets.mjs';
 
-// Only declared entry points belong to the application graph. Drafts and copied
-// standalone players may have dependencies that are unavailable in this app.
-function registeredModuleEntries(): Plugin {
-  return {
-    name: 'registered-module-entries',
-    enforce: 'pre',
-    transform(source, id) {
-      if (id.split('?')[0] !== path.resolve(__dirname, 'src/app/modules.tsx')) return null;
-      const entries = new Set<string>();
-      const modulesRoot = path.resolve(__dirname, 'modules');
-      for (const dir of fs.readdirSync(modulesRoot, { withFileTypes: true })) {
-        if (!dir.isDirectory()) continue;
-        const outlinePath = path.join(modulesRoot, dir.name, 'outlines.json');
-        if (!fs.existsSync(outlinePath)) continue;
-        this.addWatchFile(outlinePath);
-        const outline = JSON.parse(fs.readFileSync(outlinePath, 'utf8'));
-        if (!outline.entry) continue;
-        for (const entry of [outline.entry, outline.ppt?.entry]) {
-          if (typeof entry === 'string' && /^[^/\\]+\.tsx$/.test(entry)) {
-            entries.add(`../../modules/${dir.name}/${entry}`);
-          }
-        }
-      }
-      return source.replace(
-        "import.meta.glob('../../modules/*/*.tsx', { eager: true })",
-        `import.meta.glob(${JSON.stringify([...entries])}, { eager: true })`,
-      );
-    },
-  };
-}
-
 function creatorCapture(root: string): Plugin {
   return {name:'creator-capture',apply:'serve',configureServer(server){
     server.middlewares.use('/__creator_capture__/info',(_req,res)=>{
@@ -58,18 +27,7 @@ function cloudRuntime(root: string): Plugin {
     ? [process.env.IDL_CLOUD_REPOSITORY]
     : [path.resolve(root, '../cloud-intuitive-deep-learning'), path.resolve(root, '..')];
   const cloud = candidates.find(candidate => fs.existsSync(path.join(candidate, 'frontend/cloud-runtime.js')));
-  if (!cloud) {
-    if (process.env.IDL_CLOUD_REPOSITORY) {
-      throw new Error('IDL_CLOUD_REPOSITORY 中找不到 frontend/cloud-runtime.js，请检查 Cloud 仓库路径。');
-    }
-    return {
-      name: 'cloud-runtime-unavailable',
-      apply: 'serve',
-      configureServer(server) {
-        server.config.logger.warn('未找到 Cloud 仓库：课件和静态素材仍可浏览；训练与识别需要按 backend/README.md 配置 Cloud 后端。');
-      },
-    };
-  }
+  if (!cloud) throw new Error('找不到 Cloud 仓库，请设置 IDL_CLOUD_REPOSITORY；本地开发使用同一套 Cloud API。');
   const runtime = path.join(cloud, 'frontend/cloud-runtime.js');
   return {
     name: 'shared-cloud-runtime',
@@ -141,7 +99,7 @@ export default defineConfig(({ mode, command }) => {
         holdUntilCrawlEnd: false,
       },
     } : {}),
-    plugins: [registeredModuleEntries(),creatorCapture(__dirname),pythonRuntime(__dirname),localModuleAssets(library),courseLibraryPlugin(__dirname,library),...(captureOnly?[]:[browserOffline(__dirname,library),offlinePreview(__dirname,library)]),...(localPreview&&!captureOnly?[localNarration(__dirname)]:[]),...(localPreview ? [{
+    plugins: [creatorCapture(__dirname),pythonRuntime(__dirname),localModuleAssets(library),courseLibraryPlugin(__dirname,library),...(captureOnly?[]:[browserOffline(__dirname,library),offlinePreview(__dirname,library)]),...(localPreview&&!captureOnly?[localNarration(__dirname)]:[]),...(localPreview ? [{
       name: 'local-course-preview',
       transformIndexHtml(html: string) {
         return html.replace('<script src="/modules/shared/telemetry.js"></script>', '');

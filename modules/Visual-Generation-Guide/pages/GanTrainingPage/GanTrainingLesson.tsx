@@ -1,12 +1,13 @@
-import { courseAssetUrl } from '../../assets';
+import moduleAssetOutline from '../../outlines.json';
+import { moduleAssetUrl } from '../../../shared/react/assets';
 import { useEffect, useId, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import { ContentBlock, MathFormulaStatic, Typography } from '../../../shared/react';
 import { useLecturePlayback } from '../../components/LecturePlayback';
 import './GanTrainingPage.css';
 
-const noise = courseAssetUrl('images/gan-training/noise.png');
-const realPortrait = courseAssetUrl('images/gan-training/real-portrait.png');
-const generatedPortrait = courseAssetUrl('images/gan-training/generated-portrait.png');
+const noise = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/gan-training/noise.jpg');
+const realPortrait = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/gan-training/real-portrait.jpg');
+const generatedPortrait = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/gan-training/generated-portrait.jpg');
 
 type Mode = 'd' | 'g' | 'cycle';
 const lessons = {

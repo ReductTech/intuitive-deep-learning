@@ -6,7 +6,7 @@ $moduleRoot = Split-Path $PSScriptRoot -Parent
 $workspaceRoot = Split-Path (Split-Path (Split-Path $moduleRoot -Parent) -Parent) -Parent
 $sourcePng = Join-Path $workspaceRoot 'ref_png\00.PNG'
 $referenceSvg = Join-Path $workspaceRoot 'ref_svg\00visual-generation.svg'
-$assetDirectory = Join-Path $moduleRoot 'assets\images'
+$assetDirectory = Join-Path $moduleRoot 'assets'
 $temporaryDirectory = Join-Path ([IO.Path]::GetTempPath()) ("visual-generation-crops-{0}" -f [Guid]::NewGuid())
 
 $results = @(

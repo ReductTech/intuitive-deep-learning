@@ -14,15 +14,14 @@ import { ManagedEditor } from '../shuku/ManagedEditor';
 import { PreviewPage, ReviewPage } from '../shuku/PreviewPage';
 import { CreatorWorkspace } from '../creator/CreatorWorkspace';
 import {CourseDetails} from '../shuku/CourseDetails';
-import { isLocalPreview } from './runtimeMode';
 
 
 const pptModules = activeModules.filter((module) => module.pptDeck);
 const pptCatalog = pptModules.map((module) => module.pptDeck) as [DeckDefinition, ...DeckDefinition[]];
 
-export function SceneDeckPage() {
+function SceneDeckPage() {
   if (!pptCatalog.length) return <p>Page not found.</p>;
-  if (!isLocalPreview && new URLSearchParams(window.location.search).get('scenedeckCapture') !== '1') return <CreatorWorkspace />;
+  if (new URLSearchParams(window.location.search).get('scenedeckCapture') !== '1') return <CreatorWorkspace />;
   return <SceneDeck
     catalog={pptCatalog}
     moduleId={(deckId) => deckId}

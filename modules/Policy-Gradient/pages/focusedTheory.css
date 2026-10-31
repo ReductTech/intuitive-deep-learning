@@ -1,17 +1,8 @@
-/* Page 6: relationship on the left, update rule as the visual focus on the right. */
-.pg-ga-layout{height:100%;min-height:0;display:grid;grid-template-columns:minmax(0,.72fr) minmax(0,1.65fr);gap:70px;align-items:center;padding:12px 22px}
-.pg-ga-layout *{min-width:0;max-width:100%;box-sizing:border-box}
-.pg-ga-chain{display:grid;justify-items:stretch;align-content:center;gap:6px}
-.pg-ga-node{display:grid;gap:4px;justify-items:center;padding:12px 18px;background:var(--ui-bg-soft);border-radius:var(--ui-radius-md)}
-.pg-ga-node .math-formula-block{padding:0;margin:0}
-.pg-ga-connector{display:grid;place-items:center;height:30px}
-.pg-ga-update{display:grid;align-content:center;gap:32px;padding:38px 30px;border-top:4px solid var(--ui-accent-alt);background:var(--ui-bg-muted,var(--ui-bg-soft));border-radius:0 0 var(--ui-radius-lg) var(--ui-radius-lg)}
-.pg-ga-update>h3,.pg-ga-update>.ui-typography{justify-self:center;text-align:center}
-.pg-ga-expression{width:max-content;max-width:100%;margin:auto;display:grid;grid-template-columns:auto auto auto;gap:28px;align-items:start}
-.pg-ga-prefix{height:64px;display:grid;align-items:center}
-.pg-ga-factor{position:relative;display:grid;grid-template-rows:64px 36px;justify-items:center;align-items:center;padding-bottom:90px}
-.pg-ga-rate{color:var(--ui-warning)}
-.pg-ga-gradient{color:var(--ui-accent)}
-.pg-ga-factor>i{display:block;height:24px;width:2px;background:currentColor;position:relative}
-.pg-ga-factor>i::after{content:"";position:absolute;bottom:-2px;left:-3px;width:8px;height:8px;border-radius:50%;background:currentColor}
-.pg-ga-factor-label{position:absolute;top:110px;left:50%;transform:translateX(-50%);width:max-content;max-width:none;display:grid;gap:4px;justify-items:center;text-align:center}
+.pg-ft-page{height:100%;display:grid;align-content:center;gap:24px}
+.pg-ft-page *{min-width:0;max-width:100%;box-sizing:border-box}
+.pg-ft-chain{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr);gap:20px;align-items:center}
+.pg-ft-chain>div{display:grid;gap:10px;text-align:center;padding:16px;background:var(--ui-bg-muted,var(--ui-bg-soft));border-radius:12px}
+.pg-ft-central{display:grid;gap:12px;justify-items:center;padding:20px 0}
+.pg-ft-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px}.pg-ft-pair>div{display:grid;gap:10px;border-top:2px solid #ccdbe5;padding-top:16px}
+
+.pg-ft-page{gap:16px}

@@ -1,0 +1,12 @@
+.pg-page{width:100%;height:100%;display:grid;grid-template-rows:auto minmax(0,1fr)}
+.pg-page>.edu-content-body{min-height:0;display:grid;grid-template-rows:minmax(0,1fr) auto;gap:12px}
+.pg-main{min-height:0;min-width:0;display:grid;align-items:center}
+.pg-main *,.pg-page .edu-content-body>*{box-sizing:border-box;min-width:0;max-width:100%}
+.pg-takeaway{padding:12px 22px;border-left:4px solid var(--ui-accent-alt);background:var(--ui-bg-soft);border-radius:var(--ui-radius-sm)}
+.pg-controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.pg-controls .edu-btn{min-height:42px}
+.pg-guide-actions{display:flex;gap:16px;margin:24px 0}.pg-guide-canvas{margin-bottom:28px}.pg-guide .edu-shell{max-width:1300px}
+.pg-main math-field:not(:defined){visibility:hidden}
+@media(prefers-reduced-motion:reduce){.pg-main *{animation:none!important;transition:none!important}}
+
+.pg-page .pg-inline-math{display:inline-flex;vertical-align:middle;margin:0 .06em;color:inherit}.pg-page .pg-inline-math math-field{font:inherit;line-height:inherit}.pg-page .pg-inline-math math-field::part(menu-toggle),.pg-page .pg-inline-math math-field::part(virtual-keyboard-toggle){display:none}

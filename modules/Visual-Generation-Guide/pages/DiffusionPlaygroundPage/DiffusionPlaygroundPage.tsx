@@ -1,10 +1,11 @@
-import { courseAssetUrl } from '../../assets';
+import moduleAssetOutline from '../../outlines.json';
+import { moduleAssetUrl } from '../../../shared/react/assets';
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { Button, ContentBlock, MathFormulaStatic, Typography } from '../../../shared/react';
 import { alphaBars, betas, denoisingPrediction, ForwardChain, gaussianNoise, histogram, pixelStatistics, TOTAL_STEPS } from './diffusionExperiment';
 import './DiffusionPlaygroundPage.css';
 
-const flower = courseAssetUrl('images/diffusion-playground/flower.jpg');
+const flower = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/diffusion-playground/flower.jpg');
 
 function Label({ children, className = '' }: { children: ReactNode; className?: string }) {
   return <Typography variant="bodySmall" className={`vg-replica__label ${className}`}>{children}</Typography>;
