@@ -1,3 +1,6 @@
 .aipe-replay-cg-study-embedded { width: 100%; min-width: 0; margin: 0; padding: 0; color: #21334e; background: #f4f7fb; }
-.aipe-replay-cg-study-embedded .edu-lesson-flow { gap: 24px; }
-.aipe-replay-cg-study-embedded .lesson-canvas-frame { width: 100%; margin: 0; padding: 0; }
+.aipe-replay-cg-study-demo { position: relative; width: 100%; aspect-ratio: 16 / 9; }
+.aipe-replay-cg-study-demo > img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.aipe-replay-cg-study-example { position: absolute; left: 79%; top: 79%; width: 18%; height: 7%; padding: 0; border: 0; background: transparent; cursor: pointer; border-radius: 24px; }
+.aipe-replay-cg-study-example:focus-visible { outline: 3px solid var(--ui-accent); outline-offset: 2px; }
+.aipe-replay-cg-study-caption { display: grid; gap: 16px; padding: 32px; }

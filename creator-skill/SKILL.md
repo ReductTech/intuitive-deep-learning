@@ -44,7 +44,7 @@ description: 在当前仓库中规划、设计、实现、修改和评估 React 
 - 第一页不使用 `ContentBlock`，单独设计封面。其余页面默认使用 Shared `ContentBlock` 及其标准标题区，设计示意图阶段就遵守；只有用户明确要求其他版式时，才在指定范围内更换。视觉样例默认指导标题区以下的内容构图。
 - 独立文字使用 Shared `Typography` 或已封装它的组件。
 - 模块大纲位于 `modules/<模块目录名>/outlines.json`。
-- 大纲每页只写 `title`（题目）和 `snippet`（演讲稿），不增加其他页面字段。用户尚未提供的内容不自行补全。结构要求见[大纲](references/design/course-outline.md)。
+- 大纲每页必须包含非空字符串 `id`（稳定页面 ID）、`title`（题目）和 `snippet`（演讲稿）；ID 与 PPT scene.id、Guide step.id 一致，不增加其他页面字段。用户尚未提供的内容不自行补全。结构要求见[大纲](references/design/course-outline.md)。
 - 每页独占 `modules/<模块目录名>/pages/<语义页目录>/`，页面组件与同名样式放在该目录，不平铺在 `pages/` 下。该页的设计图、prompt、检查截图及临时脚本放在页目录内的 `_scratchpad/`；课程整体的原稿、大纲备份和汇总记录放在模块级 `_scratchpad/`。两级临时目录均由 Git 忽略，正式资源按工程约定保存。
 - 页目录与 `_scratchpad/` 按实际制作需要创建，不根据大纲预建未开始页面的空目录或占位文件。
 - 正式静态资源归各模块所有，保存到 `modules/<模块目录名>/assets/`；真正跨模块共用的素材放在 `modules/shared/assets/`。页面仍用 `moduleAssetUrl(moduleIdentity.id, relativePath)` 引用，UUID 是运行时与 OSS 命名空间，不是本地目录名。具体约定见[模块身份与资源](references/engineering/module-assets.md)。

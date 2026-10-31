@@ -3,18 +3,16 @@ import {NarrationContext,fetchNarration} from './narrationBridge';
 import type {CreatorPage} from '../creator/model';
 type AudioEntry={controller:AbortController;promise:Promise<HTMLAudioElement>;audio?:HTMLAudioElement;url?:string};
 
-export function useAutoplay(pages:CreatorPage[], pageId:string, courseId:string, enabled:boolean, select:(id:string)=>void) {
+export function useAutoplay(pages:CreatorPage[], pageId:string, courseId:string, enabled:boolean) {
  const requestNarration=useContext(NarrationContext)||fetchNarration;
- const [state,setState]=useState<'idle'|'loading'|'playing'|'paused'>('idle');
+ const [state,setState]=useState<'idle'|'loading'|'playing'|'paused'|'waiting'>('idle');
  const [provider,setProvider]=useState<'minimax'|'browser'>('minimax');
  const [rate,setRate]=useState(1),[voiceId,setVoiceId]=useState(''),[browserVoice,setBrowserVoice]=useState('');
- const [autoAdvance,setAutoAdvance]=useState(true);
- const advance=useRef(autoAdvance);advance.current=autoAdvance;
  const [error,setError]=useState('');
  const session=useRef(0), active=useRef(false), paused=useRef(false);
  const media=useRef<HTMLAudioElement|null>(null), utterance=useRef<SpeechSynthesisUtterance|null>(null);
  const prepared=useRef(new Map<string,AudioEntry>());
- const latest=useRef({pages,pageId,select}); latest.current={pages,pageId,select};
+ const latest=useRef({pages,pageId}); latest.current={pages,pageId};
  function clear() {
   if(media.current){media.current.onended=null;media.current.onerror=null;media.current.pause();media.current=null;}
   if(utterance.current){utterance.current.onend=null;utterance.current.onerror=null;window.speechSynthesis?.cancel();utterance.current=null;}
@@ -51,7 +49,7 @@ export function useAutoplay(pages:CreatorPage[], pageId:string, courseId:string,
  }
  function nextPage(id:string){const all=latest.current.pages,index=all.findIndex(page=>page.id===id);return index<0?undefined:all.slice(index+1).find(page=>typeof page.outline?.snippet==='string'&&page.outline.snippet.trim());}
  function preloadNext(id:string){
-  if(provider!=='minimax'||!advance.current||!active.current)return;
+  if(provider!=='minimax'||!active.current)return;
   const next=nextPage(id);if(next)void loadAudio(next).catch(()=>{/* Retry when this page becomes current; keep current audio playing. */});
  }
  function stop(){session.current++;active.current=false;paused.current=false;clear();retain(new Set());setState('idle');}
@@ -60,18 +58,15 @@ export function useAutoplay(pages:CreatorPage[], pageId:string, courseId:string,
   if(token!==session.current)return;
   clear();setState(paused.current?'paused':'loading');
   const all=latest.current.pages, start=all.findIndex(p=>p.id===id);
-  if(!advance.current&&(start<0||typeof all[start].outline?.snippet!=='string'||!String(all[start].outline?.snippet).trim())){fail('本页暂无 snippet 讲稿。');return;}
-  const index=all.findIndex((p,i)=>i>=start&&typeof p.outline?.snippet==='string'&&Boolean(p.outline.snippet.trim()));
-  if(start<0||index<0){stop();return;}
-  const page=all[index],text=String(page.outline!.snippet).trim();
-  const next=advance.current?nextPage(page.id):undefined;
+  if(start<0||typeof all[start].outline?.snippet!=='string'||!String(all[start].outline?.snippet).trim()){fail('本页暂无 snippet 讲稿。');return;}
+  const page=all[start],text=String(page.outline!.snippet).trim();
+  const next=nextPage(page.id);
   retain(new Set([keyFor(page),...(next?[keyFor(next)]:[])]));
-  playingId.current=page.id;latest.current.select(page.id);
+  playingId.current=page.id;
   const ended=()=>{
    if(token!==session.current)return;
-   if(!advance.current){stop();return;}
-   const current=latest.current.pages, i=current.findIndex(p=>p.id===page.id);
-   if(i>=0&&i+1<current.length)void play(current[i+1].id,token);else stop();
+   // Keep the session and preloaded audio ready for manual navigation.
+   clear();paused.current=false;setState('waiting');
   };
   try{
    if(provider==='browser'){
@@ -91,8 +86,7 @@ export function useAutoplay(pages:CreatorPage[], pageId:string, courseId:string,
  }
  function toggle(){
   setError('');
-  if(!active.current){
-   if(!latest.current.pages.slice(latest.current.pages.findIndex(p=>p.id===pageId)).some(p=>typeof p.outline?.snippet==='string'&&p.outline.snippet.trim())){setError('当前页及后续页面暂无 snippet 讲稿。');return;}
+  if(!active.current||state==='waiting'){
    active.current=true;paused.current=false;void play(pageId,++session.current);
   }else if(paused.current){
    paused.current=false;const token=session.current;
@@ -105,11 +99,6 @@ export function useAutoplay(pages:CreatorPage[], pageId:string, courseId:string,
  const playingId=useRef(pageId);
  useEffect(()=>{if(playingId.current!==pageId){playingId.current=pageId;if(active.current)void play(pageId,++session.current);}},[pageId]);
  useEffect(()=>{stop();setError('');},[courseId,provider,rate,voiceId,browserVoice,enabled]);
- useEffect(()=>{
-  if(!active.current||provider!=='minimax')return;
-  if(autoAdvance)preloadNext(playingId.current);
-  else{const current=latest.current.pages.find(page=>page.id===playingId.current);retain(new Set(current?[keyFor(current)]:[]));}
- },[autoAdvance]);
  useEffect(()=>()=>{session.current++;active.current=false;clear();retain(new Set());},[]);
- return {state,error,provider,setProvider,rate,setRate,voiceId,setVoiceId,browserVoice,setBrowserVoice,autoAdvance,setAutoAdvance,toggle,stop};
+ return {state,error,provider,setProvider,rate,setRate,voiceId,setVoiceId,browserVoice,setBrowserVoice,toggle,stop};
 }

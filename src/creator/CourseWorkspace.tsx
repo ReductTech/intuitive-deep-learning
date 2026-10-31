@@ -9,7 +9,7 @@ import { moduleAssetUrl } from '../../modules/shared/react/assets';
 import { Typography } from '../../modules/shared/react/typography';
 import {NativeLesson} from '../shuku/NativeLesson';
 import { useSceneScale } from '../../modules/shared/react/presentation/canvas';
-import { createProject, isProject, simulateRevision, snapshot, primaryActionFor, preserveExistingWebPages, applyPageOutline, type CreatorPage, type CreatorProject } from './model';
+import { createProject, isProject, simulateRevision, snapshot, primaryActionFor, preserveExistingWebPages, applyPageOutline, pageNarration, type CreatorPage, type CreatorProject } from './model';
 import { generatePageDesign } from './designGeneration';
 import {downloadCourseInBrowser} from './browserOffline';
 import './OfflineWorkspace.css';
@@ -120,9 +120,10 @@ export function CourseWorkspace({courses,initialProject,managed,reader,renderPag
   function patchPage(patch: Partial<CreatorPage>) { commit({ ...project, pages: project.pages.map(item => item.id === page.id ? { ...item, ...patch } : item) }); }
   function select(id: string) { reader?.onChange({...reader.state,page_id:id});setActiveId(id); setView(project.pages.find(item => item.id === id)?.designImageId && !project.pages.find(item => item.id === id)?.ready ? 'design' : 'web'); setPrompt(''); setFeedback(''); setActionError(''); const url = new URL(location.href); url.searchParams.set('deck', module.pptDeck!.id); url.searchParams.set('slide', id); try{window.history.replaceState(null,'',url);}catch(error){if(!offline)throw error;} }
   const notesBody=useRef<HTMLDivElement>(null);
-  const pageNotes=typeof page.outline?.snippet==='string'?page.outline.snippet:module.getPptNotes?.(page.nativeId??page.id)?.map(note=>note.text).filter(Boolean).join('\n')||'';
+  const pageNotes=pageNarration(page,module.getPptNotes);
   useEffect(()=>{notesBody.current?.scrollTo({top:0});},[page.id]);
-  const autoplay=useAutoplay(project.pages,page.id,project.id,!editing&&!offline,select);
+  const narrationPages=project.pages.map(item=>({...item,outline:{...item.outline,snippet:pageNarration(item,module.getPptNotes)}}));
+  const autoplay=useAutoplay(narrationPages,page.id,project.id,!editing&&!offline);
   const autoplayControls=<NarrationControls player={autoplay}/>;
   function step(delta: number) { select(project.pages[Math.max(0, Math.min(project.pages.length - 1, index + delta))].id); }
   useEffect(() => { document.title = `术库 · ${project.title}`; if(reader||offline)return; if(managed){managed.onChange(project);return;} setSaved('保存中…'); try { localStorage.setItem(key(project.courseId), JSON.stringify(project)); setSaved('已保存到此浏览器'); } catch { setSaved('保存失败，请导出项目备份'); } }, [project]);

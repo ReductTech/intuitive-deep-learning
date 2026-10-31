@@ -1,18 +1,22 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
+import { Check } from 'lucide-react';
 import { Typography, moduleAssetUrl } from '../../../shared/react';
 import { moduleIdentity } from '../../outlines.json';
 import { useRecordingDemo } from '../../components/RecordingDemo';
 import { elements, PAPER_PAGES, SELECTED_PAGES, pageDuration } from './paperFilmData';
 import './MainFigureSelectionPage.css';
 
-type Stage='pages'|'assemble'|'detect'|'focus';
+type Stage='pages'|'assemble'|'detect'|'confirm'|'focus'|'result'|'complete';
 const asset=(file:string)=>moduleAssetUrl(moduleIdentity.id,`research-papers/dinov3/${file}`);
 const pageAsset=(index:number)=>asset(`pages/page-${String(SELECTED_PAGES[index]).padStart(2,'0')}.jpg`);
 const copy={
  pages:['图表检测与提取','逐页定位论文中的图与表'],
  assemble:['汇聚论文中的图与表','从完整论文到候选视觉元素'],
- detect:['自研论文核心视觉元素识别算法','识别最能代表研究核心内容的图与表'],
- focus:['聚焦论文核心内容，加速理解','代表性方法图 · DINOv3，Figure 12'],
+ detect:['自研论文核心视觉元素识别算法','扫描候选图表，识别核心视觉元素'],
+ confirm:['已识别代表性方法图','锁定能够展示研究方法的关键图表'],
+ focus:['放大核心方法图','从候选图表聚焦研究方法'],
+ result:['用关键图表，加速论文理解','为论文概览与深入阅读提供入口'],
+ complete:['用关键图表，加速论文理解','为论文概览与深入阅读提供入口'],
 } as const;
 /** The PDF pages and detection coordinates are prepared offline for a smooth local film. */
 export function MainFigureSelectionPage({onComplete}:{onComplete?:()=>void}){
@@ -31,7 +35,7 @@ export function MainFigureSelectionPage({onComplete}:{onComplete?:()=>void}){
   // Start on the first page; remaining page images preload while the early scans play.
   void Promise.all([pageLoads[0],...artLoads]).then(()=>{if(!cancelled)setReady(true);}).catch(()=>{if(!cancelled)setFailed(true);});
   void Promise.all(pageLoads).catch(()=>{if(!cancelled)setFailed(true);});
-  if(matchMedia('(prefers-reduced-motion: reduce)').matches){setStage('focus');setFound(elements.map((_,i)=>i));}
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){setStage('result');setFound(elements.map((_,i)=>i));}
   return()=>{cancelled=true;imageCache.current=[];};
  },[]);
  useRecordingDemo(root,async demo=>{
@@ -51,12 +55,16 @@ export function MainFigureSelectionPage({onComplete}:{onComplete?:()=>void}){
    });
   }
   setFound(elements.map((_,i)=>i));setStage('assemble');await demo.wait(2800);
-  setStage('detect');await demo.wait(2300);
-  setStage('focus');await demo.wait(5200);
+  setStage('detect');await demo.wait(1250);
+  setStage('confirm');await demo.wait(950);
+  setStage('focus');await demo.wait(3200);
+  setStage('result');await demo.wait(1500);
+  setStage('complete');await demo.wait(500);
   onComplete?.();
  },{enabled:ready});
+ const visualStage=stage==='result'||stage==='complete'?'focus':stage;
  const currentElements=elements.filter(e=>e.page===SELECTED_PAGES[page]);
- return <section ref={root} className={`rf-page rf-paper-film stage-${stage} rf-recording-demo`} data-film-stage={stage} data-paper-page={SELECTED_PAGES[page]} data-sample-index={page+1} data-extracted={found.length} aria-label="逐页检测论文图表，提取候选视觉元素并聚焦代表性主图的自动影片">
+ return <section ref={root} className={`rf-page rf-paper-film stage-${visualStage} caption-${stage} rf-recording-demo`} data-film-stage={stage} data-paper-page={SELECTED_PAGES[page]} data-sample-index={page+1} data-extracted={found.length} aria-label="逐页检测论文图表，提取候选视觉元素并聚焦代表性主图的自动影片">
   <div className="rf-paper-film-viewport" data-ppt-viewport="电影镜头取景窗口：论文轮播与立体图表的进出画面">
    <div className="rf-paper-film-room"/>
    <Typography className="rf-paper-film-source" variant="bodySmall" tone="muted">DINOv3 · 2025</Typography>
@@ -73,13 +81,14 @@ export function MainFigureSelectionPage({onComplete}:{onComplete?:()=>void}){
      const fs=((e.box[2]-e.box[0])/612*440)/e.width;
      return <figure key={e.file} className={`rf-film-poster ${i===0?'is-primary':''} ${found.includes(i)?'is-found':''}`} style={{'--poster-w':`${e.width}px`,'--poster-h':`${e.height}px`,'--gx':`${e.gx}px`,'--gy':`${e.gy}px`,'--gs':e.scale,'--gr':`${e.rotate}deg`,'--rx':`${1165+(i%2)*65}px`,'--ry':`${85+i*75}px`,'--rs':i===0?.20:.29,'--fx':`${fx}px`,'--fy':`${fy}px`,'--fs':fs} as CSSProperties}>
       <img src={asset('pdf-elements/'+e.file)} alt={`从原文第${e.page}页提取的${e.label}`} draggable={false}/>
+      <div className="rf-film-scan-surface" aria-hidden="true"><i className="rf-film-scan-band"/></div>
+      {i===0&&<div className="rf-method-check" role="img" aria-label="已识别代表性方法图"><Check aria-hidden="true" strokeWidth={3.4}/></div>}
       <i className="rf-film-corner top-left"/><i className="rf-film-corner top-right"/><i className="rf-film-corner bottom-left"/><i className="rf-film-corner bottom-right"/>
      </figure>;
     })}
    </div>
-   <div className="rf-core-detector" aria-hidden="true"><i/><i/></div>
   </div>
-  <div className="rf-paper-film-copy" aria-live="polite" key={stage}>
+  <div className={`rf-paper-film-copy ${stage==='complete'?'is-complete':''}`} aria-hidden={stage==='complete'} aria-live="polite" key={copy[stage][0]}>
    <Typography as="h2" variant="h2" tone="inherit">{copy[stage][0]}</Typography>
    <Typography variant="subtitle" tone="muted">{copy[stage][1]}</Typography>
   </div>

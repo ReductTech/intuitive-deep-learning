@@ -212,6 +212,16 @@
       "effects": "只读源码；检查 import/export/require/new URL/glob/CSS 引用",
       "dependencies": [],
       "arguments": []
+    },
+    {
+      "id": "check.outlines",
+      "category": "checks",
+      "path": "scripts/checks/outline_fields.py",
+      "runtime": "python",
+      "description": "验证全库页面 id、title、snippet；--fix 补齐缺失 ID",
+      "effects": "默认只读，不启动浏览器或服务；--fix 仅补缺失 ID，保留已有 ID 与文案",
+      "dependencies": [],
+      "arguments": []
     }
   ]
 }

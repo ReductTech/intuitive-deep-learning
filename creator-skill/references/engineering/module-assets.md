@@ -2,7 +2,7 @@
 
 ## 模块 UUID
 
-每个活跃模块在 `outlines.json` 顶层保存 `moduleIdentity`，其 `id` 是标准小写 UUID v4，与实现层的播放器场景 ID 分开；大纲每页仍只保存 `title` 与 `snippet`。
+每个活跃模块在 `outlines.json` 顶层保存 `moduleIdentity`，其 `id` 是标准小写 UUID v4，与实现层的播放器场景 ID 分开；大纲每页必须保存 `id`、`title` 与 `snippet`，其中页面 `id` 与播放器场景 ID 一致，不是模块 UUID。
 
 ```json
 {"moduleIdentity": {"version": 1, "id": "2e5c4732-a40a-4d20-b954-a61507aabc75"}}

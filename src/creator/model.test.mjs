@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { createProject, isProject, simulateRevision, snapshot, primaryActionFor, preserveExistingWebPages, applyPageOutline } from './model.ts';
+import { createProject, isProject, simulateRevision, snapshot, primaryActionFor, preserveExistingWebPages, applyPageOutline, pageNarration } from './model.ts';
 import { isDesignImage } from './designImages.ts';
 
 const course = { id: 'test-course', title: '测试课程', pages: [{ id: 'first', goal: '理解神经元', summary: '观察复杂行为' }], pptDeck: { scenes: [{ id: 'first', title: '只有 302 个神经元，它为什么能完成这么多行为？' }] } };
@@ -112,4 +112,25 @@ test('an entirely stale saved deck returns to live pages while retaining project
   assert.equal(repaired.title, 'My title');
   assert.ok(isProject(repaired, course.id));
   assert.equal(preserveExistingWebPages(stale).pages[0].id, 'gone');
+});
+
+
+test('ID-less outlines supply narration in deck order and hydrate older saved pages', () => {
+  const module = { ...course, pages: [{ title: '题目', snippet: '按顺序匹配的讲稿' }] };
+  const fresh = createProject(module);
+  assert.equal(fresh.pages[0].outline.snippet, '按顺序匹配的讲稿');
+  const legacy = { ...fresh, pages: [{ ...fresh.pages[0], outline: { title: '用户标题' } }] };
+  const hydrated = preserveExistingWebPages(legacy, module);
+  assert.equal(hydrated.pages[0].outline.snippet, '按顺序匹配的讲稿');
+  assert.equal(hydrated.pages[0].outline.title, '用户标题');
+  legacy.pages[0].outline.snippet = '用户修改的讲稿';
+  assert.equal(preserveExistingWebPages(legacy, module).pages[0].outline.snippet, '用户修改的讲稿');
+});
+
+test('narration uses existing notes when a release page has no snippet', () => {
+  const page = createProject(course).pages[0];
+  const notes = id => [{ text: id + '的内置讲稿' }];
+  assert.equal(pageNarration(page, notes), 'first的内置讲稿');
+  assert.equal(pageNarration({ ...page, outline: { snippet: ' 定制讲稿 ' } }, notes), '定制讲稿');
+  assert.equal(pageNarration(page), '');
 });

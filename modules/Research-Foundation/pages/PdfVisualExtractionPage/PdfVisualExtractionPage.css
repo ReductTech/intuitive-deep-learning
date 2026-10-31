@@ -25,3 +25,5 @@
 .rf-pve-model-input{position:absolute;inset:0;width:1600px;height:900px;pointer-events:none}.rf-pve-model-input path{fill:none;stroke:#69a6df;stroke-width:2;stroke-dasharray:80;animation:rf-pve-model-line .6s ease both}
 .rf-pve-model-layer{position:absolute;left:595px;top:320px;width:160px;height:260px;display:grid;align-content:center;justify-items:center;gap:22px;border:1px solid #c9def1;border-radius:24px;background:linear-gradient(145deg,#fff,#eaf3ff);box-shadow:0 12px 35px #3b78ad16;color:#4286c3;animation:rf-pve-in .6s ease both}.rf-pve-model-layer>svg{filter:drop-shadow(0 4px 8px #438fd322)}
 @keyframes rf-pve-detect{from{border-color:transparent;background:transparent}to{border-color:var(--rf-box-color)}}@keyframes rf-pve-model-line{from{stroke-dashoffset:80}to{stroke-dashoffset:0}}
+
+.rf-pve-video .rf-recording-pointer{display:none}

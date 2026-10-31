@@ -3,6 +3,7 @@ import { BrainCircuit } from 'lucide-react';
 import { Typography, moduleAssetUrl } from '../../../shared/react';
 import outline from '../../outlines.json';
 import './PdfVisualExtractionPage.css';
+import { useRecordingDemo } from '../../components/RecordingDemo';
 const crops=[
  [60,1280,1009,340],[60,2820,1009,290],[60,4455,1009,380],
  [60,6050,1009,550],[60,7880,1009,680],[590,1280,479,340],
@@ -19,13 +20,23 @@ export function Lines(){return <div className="rf-pve-lines" aria-hidden="true">
 const fields=['正文与章节','作者与机构','关键词','文章总结'];
 /** Local explanatory animation; no OCR or database request is made. */
 export function PdfVisualExtractionPage({onComplete}:{onComplete?:()=>void}){
- const [phase,setPhase]=useState(0),locked=useRef(false),timer=useRef<number|undefined>(undefined);
+ const root=useRef<HTMLElement>(null);
+ const [phase,setPhase]=useState(()=>typeof window!=='undefined'&&matchMedia('(prefers-reduced-motion: reduce)').matches?5:0),locked=useRef(false),timer=useRef<number|undefined>(undefined);
  const [delays]=useState(()=>{
   const order=[0,1,2,3,4];
   for(let i=order.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[order[i],order[j]]=[order[j],order[i]]}
   return order.map(n=>n*140);
  });
  useEffect(()=>()=>window.clearTimeout(timer.current),[]);
+ useRecordingDemo(root,async demo=>{
+  setPhase(0);await demo.wait(1000);
+  setPhase(1);await demo.wait(1300);
+  setPhase(2);await demo.wait(1100);
+  setPhase(3);await demo.wait(1400);
+  setPhase(4);await demo.wait(1900);
+  setPhase(5);await demo.wait(1700);
+  onComplete?.();
+ });
  function advance(){
   if(locked.current)return;
   if(phase===5){onComplete?.();return}
@@ -34,7 +45,7 @@ export function PdfVisualExtractionPage({onComplete}:{onComplete?:()=>void}){
   timer.current=window.setTimeout(()=>{locked.current=false},phase===3?1700:850);
  }
  const boxStyle=(i:number)=>({'--rf-box-delay':`${delays[i]}ms`} as CSSProperties);
- return <section className={`rf-page rf-pve rf-pve-video phase-${phase} ${phase>=1?'boxes-on':''}`} data-phase={phase} onClick={event=>{if(event.button===0){event.stopPropagation();advance()}}} aria-label="左键逐步演示论文识别、模型分析和持久化入库">
+ return <section ref={root} className={`rf-page rf-pve rf-pve-video rf-recording-demo phase-${phase} ${phase>=1?'boxes-on':''}`} data-phase={phase} onClick={event=>{if(event.button===0){event.stopPropagation();advance()}}} aria-label="自动演示论文识别、模型分析和持久化入库，点击可接管并逐步推进">
   <div className="rf-pve-document">
    <Typography variant="body" className="rf-pve-paper-name">研究论文</Typography>
    <div className="rf-pve-region title" style={boxStyle(0)}><Lines/><Typography as="span" variant="body">标题</Typography></div>

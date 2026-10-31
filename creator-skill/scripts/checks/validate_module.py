@@ -120,6 +120,8 @@ def validate_modules(repository: Path, requested: str | None = None) -> list[str
                     page_ids.add(page_id)
                 if not isinstance(page.get("title"), str) or not page["title"].strip():
                     errors.append(f"{label}: page {number} has no title")
+                if not isinstance(page.get("snippet"), str) or not page["snippet"].strip():
+                    errors.append(f"{label}: page {number} has no snippet")
         local_assets = directory / "assets"
         for source in directory.rglob("*"):
             if "_scratchpad" in source.relative_to(directory).parts:

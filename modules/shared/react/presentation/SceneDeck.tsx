@@ -359,8 +359,8 @@ function SpeakerNotesPanel({ notes, noteIndex, onChange, canAdvanceScene, onAdva
   const [narrationActive, setNarrationActive] = useState(false);
   const [narrationPaused, setNarrationPaused] = useState(false);
   const [speechSupported] = useState(() => 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window);
-  const advanceRef = useRef({ notesLength: notes.length, noteIndex: safeNoteIndex, canAdvanceScene, onChange, onAdvanceScene });
-  advanceRef.current = { notesLength: notes.length, noteIndex: safeNoteIndex, canAdvanceScene, onChange, onAdvanceScene };
+  const advanceRef = useRef({ notesLength: notes.length, noteIndex: safeNoteIndex, onChange });
+  advanceRef.current = { notesLength: notes.length, noteIndex: safeNoteIndex, onChange };
 
   useEffect(() => {
     if (!narrationActive || !speechSupported || !noteText) return;
@@ -373,7 +373,6 @@ function SpeakerNotesPanel({ notes, noteIndex, onChange, canAdvanceScene, onAdva
     utterance.onend = () => {
       const current = advanceRef.current;
       if (current.noteIndex < current.notesLength - 1) current.onChange(current.noteIndex + 1);
-      else if (current.canAdvanceScene) current.onAdvanceScene();
       else setNarrationActive(false);
     };
     utterance.onerror = (event) => { if (event.error !== 'canceled' && event.error !== 'interrupted') setNarrationActive(false); };
@@ -443,7 +442,7 @@ function SpeakerNotesPanel({ notes, noteIndex, onChange, canAdvanceScene, onAdva
           <button className="scenedeck-notes__button" type="button" disabled={safeNoteIndex === notes.length - 1 && !canAdvanceScene} onClick={goToNext} title="下一段"><Icon name="chevronRight" /><Typography as="span" variant="bodySmall" tone="inherit" wrap="nowrap">下一段</Typography></button>
         </div>
         {targetRect && <div className="scenedeck-notes__focus"><span aria-hidden="true" /><Typography as="span" variant="bodySmall" tone="inherit" wrap="nowrap">已聚焦当前区域</Typography></div>}
-        <Typography as="p" variant="bodySmall" tone="muted" className="scenedeck-notes__hint">{canAdvanceScene ? '每段读完自动继续，读完本页自动翻页。' : '每段读完自动继续下一段。'}</Typography>
+        <Typography as="p" variant="bodySmall" tone="muted" className="scenedeck-notes__hint">每段读完自动继续，读完本页后请手动翻页。</Typography>
       </> : <div className="scenedeck-notes__empty">
         <Typography as="p" variant="body" tone="muted">这一页还没有讲稿。</Typography>
         <Typography as="p" variant="bodySmall" tone="muted">补充讲稿后，这里会逐段显示提示并支持朗读。</Typography>

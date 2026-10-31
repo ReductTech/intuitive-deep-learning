@@ -5,13 +5,27 @@ export interface CreatorPage extends Revision { format?: 'text'|'react'; sourceE
 export interface CreatorProject {
   sourceFormatVersion?:2; sourceAssets?:Record<string,{sha256:string;size:number;mime:string}>; importOrigin?:Record<string,unknown>; repositoryName?:string; authoringVersion?:string; authoringModule?:string; sourceGuideEntry?:string;
   outlineDraftMarkdown?: string; nativeSnapshot?:string; version: 1; id: string; courseId: string; title: string; duration: number; style: string; outlineConfirmed: boolean; presentation?:{filename:string;slideCount:number;warnings:string[]}; source?: {files:Record<string,string>}; sourceSceneIds?: string[]; pages: CreatorPage[] }
+// Current outlines may omit IDs; their order follows the deck by contract.
+function nativeOutline(module: ActiveModule | undefined, id: string) {
+  const index = module?.pptDeck?.scenes.findIndex(scene => scene.id === id) ?? -1;
+  return module?.pages.find(page => page.id === id)
+    ?? (index >= 0 && !module?.pages[index]?.id ? module?.pages[index] : undefined);
+}
+
+export function pageNarration(page: CreatorPage, notes?: ActiveModule['getPptNotes']): string {
+  const snippet = page.outline?.snippet;
+  if (typeof snippet === 'string' && snippet.trim()) return snippet.trim();
+  return notes?.(page.nativeId ?? page.id)?.map(note => note.text).filter(Boolean).join('\n').trim() || '';
+}
+
 // Reconcile saved native pages with the live deck; removed pages must not become mock slides.
 export function preserveExistingWebPages(project: CreatorProject, module?: ActiveModule): CreatorProject {
   const sceneIds = module?.pptDeck && project.courseId === module.id
     ? new Set(module.pptDeck.scenes.map(scene => scene.id)) : undefined;
   const retained = project.pages.filter(page => !sceneIds || !page.nativeId || sceneIds.has(page.nativeId));
   const pages = retained.map(page => {
-    const outline = page.outline ?? module?.pages.find(item => item.id === (page.nativeId ?? page.id));
+    const source = nativeOutline(module, page.nativeId ?? page.id);
+    const outline = source || page.outline ? { ...source, ...page.outline } : undefined;
     return { ...page, ready: page.nativeId ? true : page.ready, outline: outline ? { ...outline, id: page.id } : undefined };
   });
   if (!module?.pptDeck || project.courseId !== module.id) return { ...project, pages };
@@ -44,7 +58,7 @@ export function primaryActionFor(page: CreatorPage, view: 'design' | 'web', inst
 export const snapshot = ({ title, goal, summary, designed, ready, note, designImageId, outline }: Revision): Revision => ({ title, goal, summary, designed, ready, note, designImageId, outline });
 export function createProject(module: ActiveModule): CreatorProject {
   return { version: 1, id: crypto.randomUUID(), courseId: module.id, title: module.title, duration: 30, style: '简洁教学', outlineConfirmed: true, sourceSceneIds: module.pptDeck!.scenes.map(scene => scene.id),
-    pages: module.pptDeck!.scenes.map(scene => { const outline = module.pages.find(page => page.id === scene.id);
+    pages: module.pptDeck!.scenes.map(scene => { const outline = nativeOutline(module, scene.id);
       return { id: scene.id, nativeId: scene.id, title: scene.title, goal: outline?.goal ?? '理解本页的核心概念。', summary: outline?.summary ?? scene.title, outline: outline ? { ...outline } : undefined, designed: false, ready: true, note: '', revisions: [], messages: [] }; }) };
 }
 export function isProject(value: unknown, courseId: string): value is CreatorProject {

@@ -183,10 +183,13 @@ python creator-skill/scripts/tools.py module.init --directory the_module_name
 
 `pages` 按讲述顺序排列，每页严格只含：
 
+- `id`：模块内唯一、稳定的页面标识；与 PPT 的 `scene.id`、Guide 的步骤 ID 完全一致。
 - `title`：本页题目。
 - `snippet`：本页演讲稿。
 
-不增加页面 ID、目标、摘要、章节、衔接、交互、来源或制作状态字段。主线、约束、来源、原稿对应和实现映射，按需保存在模块 `_scratchpad/` 或实现代码中。
+三个字段均为必填非空字符串。ID 优先采用简短语义化 kebab-case，不能只写页码；重排或改标题时不改 ID。已有页面必须沿用实际场景 ID，不能为补字段另造一套 ID。待实现页面也先分配稳定 ID，后续实现直接复用。
+
+不增加目标、摘要、章节、衔接、交互、来源或制作状态字段。主线、约束、来源、原稿对应和实现映射，按需保存在模块 `_scratchpad/` 或实现代码中。
 
 ```json
 {
@@ -201,6 +204,7 @@ python creator-skill/scripts/tools.py module.init --directory the_module_name
   },
   "pages": [
     {
+      "id": "example-page",
       "title": "页面标题",
       "snippet": "本页演讲稿"
     }
@@ -232,8 +236,10 @@ python creator-skill/scripts/tools.py module.init --directory the_module_name
 - `entry` 指向模块根目录实际存在的 TSX 文件，组件按文件名命名导出；PPT 入口同理。
 - `src/app/modules.tsx` 自动发现大纲与模块根目录入口，一般不需要修改全局路由。
 - PPT 入口导出 `deck`，按需导出 `getPptNotes`，通过共享术库播放器播放。
-- 播放器场景 ID 在实现层维护，不回填到大纲。旧工具依赖旧字段时处理适配，不补回页面字段。
+- 大纲的页面 `id` 是场景与讲稿的关联键，实现层必须复用；不可依赖标题匹配或仅靠数组顺序关联。
 - 大纲可以包含待实现页面，不将不存在的入口或页面宣称为可播放成果。
+
+落盘后执行 `python creator-skill/scripts/tools.py check.outlines`，验证全库每页的 `id`、`title`、`snippet` 均存在、非空且 ID 不重复。只检查当前模块时加 `--module <目录名>`。历史缺失 ID 可用 `--fix` 从现有场景补齐；脚本不编造讲稿，缺失题目或讲稿必须根据页面内容补写，不能用空串或占位文字凑齐。
 
 落盘后检查 JSON 格式、页序和页面字段。交付已实现模块前，再核对入口、Guide 与 PPT 的对应关系。
 

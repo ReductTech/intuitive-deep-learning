@@ -170,3 +170,7 @@ python creator-skill/scripts/media/capture_all_thumbnails.py --base-url http://l
 ```
 
 旧缩略图格式迁移：`python creator-skill/scripts/media/migrate_thumbnail_jpg.py`。保留已生成 JPG，转换缩略图目录内的旧格式，验证后移除旧文件，并同步旧地址兼容映射；普通教学图片和评估截图不受影响。
+
+### 大纲必填字段
+
+`python creator-skill/scripts/tools.py check.outlines` 静态验证所有模块大纲每页的 `id`、`title`、`snippet` 非空且 ID 唯一，不启动服务。加 `--module <目录名>` 限定模块；`--fix` 优先从现有场景补 ID，保留已存在的 ID，不编造题目或讲稿。未实现页面生成一次性的稳定 ID。

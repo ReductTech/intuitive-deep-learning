@@ -19,25 +19,34 @@
 .rf-film-poster img{display:block;width:100%;height:100%;object-fit:contain;user-select:none}
 .stage-pages .rf-film-poster.is-found{opacity:1;animation:rf-figure-flyout .8s cubic-bezier(.2,.65,.2,1) both}
 .stage-pages .rf-film-poster.is-primary{z-index:5}
-.stage-assemble .rf-paper-reel,.stage-detect .rf-paper-reel,.stage-focus .rf-paper-reel{opacity:0;transform:translate3d(-400px,20px,-400px) rotateY(25deg);pointer-events:none}
-.stage-assemble .rf-film-poster,.stage-detect .rf-film-poster,.stage-focus .rf-film-poster{opacity:1;transform:translate3d(var(--gx),var(--gy),0) scale(var(--gs)) rotateY(var(--gr))}
+.stage-assemble .rf-paper-reel,.stage-detect .rf-paper-reel,.stage-confirm .rf-paper-reel,.stage-focus .rf-paper-reel{opacity:0;transform:translate3d(-400px,20px,-400px) rotateY(25deg);pointer-events:none}
+.stage-assemble .rf-film-poster,.stage-detect .rf-film-poster,.stage-confirm .rf-film-poster,.stage-focus .rf-film-poster{opacity:1;transform:translate3d(var(--gx),var(--gy),0) scale(var(--gs)) rotateY(var(--gr))}
 .rf-film-poster.is-primary{z-index:4}
-.stage-detect .rf-film-poster:not(.is-primary){filter:blur(1.2px) saturate(.6);opacity:.65}
-.stage-detect .rf-film-poster.is-primary,.stage-focus .rf-film-poster.is-primary{border-color:#ff922f;box-shadow:0 16px 60px #24415c35}
+.stage-confirm .rf-film-poster:not(.is-primary){filter:blur(1.2px) saturate(.6);opacity:.65}
+.stage-confirm .rf-film-poster.is-primary,.stage-focus .rf-film-poster.is-primary{border-color:#ff922f;box-shadow:0 16px 60px #24415c35}
 .stage-focus .rf-paper-film-gallery{transform:translateY(-5px) scale(1.02)}
 .stage-focus .rf-film-poster.is-primary{transform:translate3d(250px,125px,0) scale(1.10) rotateY(0);z-index:8}
 .stage-focus .rf-film-poster:not(.is-primary){filter:blur(3px) saturate(.45);opacity:.24;transform:translate3d(var(--gx),var(--gy),-120px) scale(var(--gs)) rotateY(var(--gr))}
 .rf-film-corner{position:absolute;width:26px;height:26px;border:0 solid #ff932f;opacity:0;transition:opacity .6s ease;pointer-events:none}
 .rf-film-corner.top-left{top:-2px;left:-2px;border-top-width:4px;border-left-width:4px}.rf-film-corner.top-right{top:-2px;right:-2px;border-top-width:4px;border-right-width:4px}.rf-film-corner.bottom-left{bottom:-2px;left:-2px;border-bottom-width:4px;border-left-width:4px}.rf-film-corner.bottom-right{bottom:-2px;right:-2px;border-bottom-width:4px;border-right-width:4px}
-.stage-detect .is-primary .rf-film-corner,.stage-focus .is-primary .rf-film-corner{opacity:1}
-.rf-core-detector{position:absolute;left:410px;top:75px;width:760px;height:500px;pointer-events:none;opacity:0;border:1px solid #4597ed45;transform:perspective(1500px) rotateY(-9deg)}
-.stage-detect .rf-core-detector{animation:rf-core-detect 2.1s ease both}.rf-core-detector>i:first-child{position:absolute;top:0;bottom:0;width:2px;background:#ff9b40;box-shadow:0 0 12px #ffb15a;animation:rf-core-line 1.8s ease both}.rf-core-detector>i:last-child{position:absolute;inset:0;background:linear-gradient(90deg,transparent,#54a6ee08,transparent)}
+.stage-confirm .is-primary .rf-film-corner,.stage-focus .is-primary .rf-film-corner{opacity:1}
+.rf-film-scan-surface{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:2}
+.rf-film-scan-band{position:absolute;left:0;right:0;top:0;height:80px;opacity:0;transform:translate3d(0,-80px,0);background:linear-gradient(180deg,transparent,#58a7ff12 40%,#58a7ff38 96%,#3e9af4c9);border-bottom:3px solid #448fe5;box-shadow:0 5px 14px #51a3f54d;will-change:transform}
+.stage-detect .rf-film-scan-band{animation:rf-poster-sweep 1.12s linear both}
+.rf-method-check{position:absolute;top:-20px;right:-20px;width:66px;height:66px;display:grid;place-items:center;background:#21a57b;color:#fff;border:4px solid #fff;border-radius:50%;box-shadow:0 5px 16px #123d3d30;z-index:4;opacity:0;transform:scale(.7);pointer-events:none}
+.rf-method-check svg{width:38px;height:38px}
+.stage-confirm .rf-method-check{animation:rf-method-confirm .3s cubic-bezier(.16,.8,.3,1.2) both}
+.stage-confirm .rf-method-check svg path,.stage-confirm .rf-method-check svg polyline{stroke-dasharray:45;animation:rf-check-draw .25s ease .13s both}
+.stage-focus .rf-method-check{opacity:1;transform:scale(1)}
 .rf-paper-film-copy{position:absolute;left:55px;right:55px;bottom:25px;height:125px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;animation:rf-film-copy-in .55s ease both;z-index:10}
 .rf-paper-film-error{position:absolute;top:54px;left:55px;z-index:15;padding:10px;background:#fff}
 .rf-paper-film .rf-recording-pointer{display:none}
 @keyframes rf-figure-flyout{from{transform:translate3d(var(--fx),var(--fy),40px) scale(var(--fs));opacity:1}to{transform:translate3d(var(--rx),var(--ry),-100px) scale(var(--rs)) rotateY(-14deg);opacity:1}}
 @keyframes rf-region-reveal{from{opacity:0}to{opacity:1}}
-@keyframes rf-core-detect{0%{opacity:0}15%,85%{opacity:1}100%{opacity:0}}
-@keyframes rf-core-line{from{left:0}to{left:100%}}
+@keyframes rf-poster-sweep{0%{opacity:0;transform:translate3d(0,-80px,0)}8%,90%{opacity:1}100%{opacity:0;transform:translate3d(0,var(--poster-h),0)}}
+@keyframes rf-method-confirm{from{opacity:0;transform:scale(.65)}to{opacity:1;transform:scale(1)}}
+@keyframes rf-check-draw{from{stroke-dashoffset:45}to{stroke-dashoffset:0}}
 @keyframes rf-film-copy-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-@media(prefers-reduced-motion:reduce){.rf-paper-film *{transition:none!important;animation:none!important}.rf-core-detector{display:none}}
+@media(prefers-reduced-motion:reduce){.rf-paper-film *{transition:none!important;animation:none!important}.rf-film-scan-surface{display:none}}
+
+.rf-paper-film-copy.is-complete{opacity:0;transform:translateY(6px);animation:none;transition:opacity .4s ease,transform .4s ease;pointer-events:none}
