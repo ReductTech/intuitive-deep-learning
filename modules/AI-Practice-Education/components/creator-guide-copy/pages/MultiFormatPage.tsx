@@ -47,7 +47,7 @@ function MiniWindow({ children }: { children: ReactNode }) {
 }
 function ReadingPreview({ onClose }: { onClose: () => void }) {
   return <MiniWindow>
-    <div className="aipe-replay-cg-format-native-reader"><div className="aipe-replay-cg-format-native-content" data-embedded-lesson="true" role="region" aria-label="卷积入门棋局演示" tabIndex={0} onClick={event => event.stopPropagation()} onKeyDown={event => { if (event.key === 'Escape') { event.stopPropagation(); onClose(); } }}><NativeStudyPreview /></div></div>
+    <div className="aipe-replay-cg-format-native-reader"><div className="aipe-replay-cg-format-native-content" data-embedded-lesson="true" role="region" aria-label="卷积入门自学流程，可上下滚动并逐步解锁" tabIndex={0} onClick={event => event.stopPropagation()} onKeyDown={event => { if (event.key === 'Escape') { event.stopPropagation(); onClose(); } }}><NativeStudyPreview /></div></div>
   </MiniWindow>;
 }
 export function MultiFormatPage() {

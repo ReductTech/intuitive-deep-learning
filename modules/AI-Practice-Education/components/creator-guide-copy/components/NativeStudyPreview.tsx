@@ -1,41 +1,83 @@
-import { useEffect, useRef, useState } from 'react';
-import { Typography } from '../../../../shared/react';
+import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
+import { LessonFlow, type LessonFlowStep, type LessonStepContext } from '../../../../shared/react';
 import { creatorGuideAssetUrl } from '../creatorGuideAssets';
+import { demoOutcome, GomokuLessonProvider, useGomokuOutcome } from './workflow/copied-course/LessonContext';
+import { BoardAsNumbersPage } from './workflow/copied-course/pages/BoardAsNumbersPage/BoardAsNumbersPage';
+import { WindowScanPage } from './workflow/copied-course/pages/WindowScanPage/WindowScanPage';
+import { KernelDesignPage } from './workflow/copied-course/pages/KernelDesignPage/KernelDesignPage';
+import './workflow/copied-course/tailwind.css';
 import './NativeStudyPreview.css';
 
-const image = (file: string) => creatorGuideAssetUrl('', `images/multi-format/convolution/${file}`);
-const scenes = [
-  { id: 'gomoku-play', file: 'gomoku-play.jpg', title: '从五子棋开始认识卷积核', page: 1, duration: 350 },
-  { id: 'gomoku-example', file: 'gomoku-play-completed.jpg', title: '示例棋局', page: 1, duration: 650 },
-  { id: 'board-as-numbers', file: 'board-as-numbers.jpg', title: '棋盘局部区域的数值表示', page: 2, duration: 1400 },
-  { id: 'window-scan', file: 'window-scan.png', title: '棋形的局部匹配', page: 3, duration: 1400 },
-  { id: 'kernel-design', file: 'kernel-design.png', title: '根据棋形调整模板', page: 4, duration: 1400 },
-] as const;
+const image = (completed: boolean) => creatorGuideAssetUrl('', `images/multi-format/convolution/gomoku-play${completed ? '-completed' : ''}.jpg`);
 
-/** Lightweight playback for the presentation's small self-study preview. */
+/** Only the first step is simulated; subsequent steps retain the real lesson flow. */
+function ExampleGomokuStep({ complete, isComplete, autoDemo }: LessonStepContext & { autoDemo: boolean }) {
+  const { recordOutcome } = useGomokuOutcome();
+  const button = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (!autoDemo) return;
+    const timer = setTimeout(() => button.current?.click(), 650);
+    return () => clearTimeout(timer);
+  }, [autoDemo]);
+  function showExample() {
+    if (isComplete) return;
+    recordOutcome(demoOutcome());
+    complete();
+  }
+  return <div className="aipe-replay-cg-study-demo" data-preview-scene={isComplete ? 'gomoku-example' : 'gomoku-play'}>
+    <img src={image(isComplete)} alt={isComplete ? '示例棋局：五子连线' : '从五子棋开始认识卷积核'} draggable={false}/>
+    <button ref={button} className="aipe-replay-cg-study-example" aria-label="示例棋局" onClick={showExample}/>
+  </div>;
+}
+
+const PlaybackContext = createContext(false);
+
+// The embedded reader is fixed at 1600px; no resize measurements are needed.
+function PreviewCanvas({ children }: { children: ReactNode }) {
+  return <div className="lesson-canvas-frame relative w-full overflow-hidden" style={{ width: 1600, height: 900, maxWidth: 'none', flexShrink: 0 }}>
+    <div className="course-page-surface aipe-replay-cg-copy-course-shell aipe-replay-cg-copy-tw-canvas origin-top-left" style={{ width: 1600, minWidth: 1600, maxWidth: 'none', height: 900, position: 'relative', transform: 'scale(1)', transformOrigin: 'top left' }}>{children}</div>
+  </div>;
+}
+
+function AutoStep({ completed, children }: { completed: boolean; children: (active: boolean) => ReactNode }) {
+  const running = useContext(PlaybackContext);
+  const root = useRef<HTMLDivElement>(null);
+  const active = running && !completed;
+  useEffect(() => {
+    if (!active) return;
+    const timer = setTimeout(() => {
+      const target = root.current;
+      const scroller = target?.closest<HTMLElement>('.aipe-replay-cg-format-native-content');
+      if (!target || !scroller) return;
+      const container = scroller.getBoundingClientRect();
+      const scale = container.height / scroller.clientHeight;
+      if (scale > 0) scroller.scrollTo({ top: scroller.scrollTop + (target.getBoundingClientRect().top - container.top) / scale, behavior: 'smooth' });
+    }, 250);
+    return () => clearTimeout(timer);
+  }, [active]);
+  return <div ref={root}>{children(active)}</div>;
+}
+
+const previewSteps: LessonFlowStep[] = [
+  { id: 'gomoku-play', revealMode: 'immediate', render: context => <AutoStep completed={context.isComplete}>{active => <ExampleGomokuStep {...context} autoDemo={active}/>}</AutoStep> },
+  { id: 'board-as-numbers', revealMode: 'immediate', render: context => <AutoStep completed={context.isComplete}>{active => <PreviewCanvas><BoardAsNumbersPage onComplete={context.complete} autoDemo={active}/></PreviewCanvas>}</AutoStep> },
+  { id: 'window-scan', revealMode: 'immediate', render: context => <AutoStep completed={context.isComplete}>{active => <PreviewCanvas><WindowScanPage onComplete={context.complete} autoDemo={active}/></PreviewCanvas>}</AutoStep> },
+  { id: 'kernel-design', revealMode: 'immediate', completesLesson: true, render: context => <AutoStep completed={context.isComplete}>{active => <PreviewCanvas><KernelDesignPage onComplete={context.complete} autoDemo={active}/></PreviewCanvas>}</AutoStep> },
+];
+
 export function NativeStudyPreview() {
+  const [progressKey] = useState(() => `ai-practice-education:creator-guide-copy:convolution-preview:${crypto.randomUUID()}`);
   const root = useRef<HTMLElement>(null);
-  const [index, setIndex] = useState(0);
-  const [visible, setVisible] = useState(false);
-  const scene = scenes[index];
+  const [running, setRunning] = useState(false);
   useEffect(() => {
     let intersecting = false;
-    const update = () => setVisible(intersecting && !document.hidden);
+    const update = () => setRunning(intersecting && !document.hidden);
     const observer = new IntersectionObserver(([entry]) => { intersecting = entry.isIntersecting; update(); });
     if (root.current) observer.observe(root.current);
     document.addEventListener('visibilitychange', update);
     return () => { observer.disconnect(); document.removeEventListener('visibilitychange', update); };
   }, []);
-  useEffect(() => {
-    if (!visible) return;
-    const timer = setTimeout(() => setIndex(value => (value + 1) % scenes.length), scene.duration);
-    return () => clearTimeout(timer);
-  }, [index, visible, scene.duration]);
-  return <main ref={root} className="aipe-replay-cg-study-embedded">
-    <div className="aipe-replay-cg-study-demo" data-preview-scene={scene.id}>
-      <img src={image(scene.file)} alt={scene.title} draggable={false}/>
-      {scene.page === 1 && <button className="aipe-replay-cg-study-example" aria-label="示例棋局" onClick={() => setIndex(1)}/>}
-    </div>
-    <div className="aipe-replay-cg-study-caption"><Typography variant="h3">{scene.title}</Typography><Typography variant="body" tone="muted">{scene.page} / 4</Typography></div>
+  return <main ref={root} className="aipe-replay-cg-study-embedded aipe-replay-cg-copy-course-shell aipe-replay-cg-copy-tw-root">
+    <PlaybackContext.Provider value={running}><GomokuLessonProvider><LessonFlow steps={previewSteps} persistenceKey={progressKey}/></GomokuLessonProvider></PlaybackContext.Provider>
   </main>;
 }

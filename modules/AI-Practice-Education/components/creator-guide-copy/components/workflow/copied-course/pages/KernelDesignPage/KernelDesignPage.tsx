@@ -50,9 +50,9 @@ function kernelForLine(line: Cell[]): number[][] {
 }
 const sameKernel = (left: number[][], right: number[][]) => left.every((row, r) => row.every((cell, c) => cell === right[r][c]));
 
-export interface KernelDesignPageProps { onComplete: () => void; }
+export interface KernelDesignPageProps { onComplete: () => void; autoDemo?: boolean; }
 
-export function KernelDesignPage({ onComplete }: KernelDesignPageProps) {
+export function KernelDesignPage({ onComplete, autoDemo = false }: KernelDesignPageProps) {
   const { outcome, designedKernel, recordDesignedKernel } = useGomokuOutcome();
   const boardRef = useRef<HTMLDivElement | null>(null);
   const dragOrigin = useRef<{ cell: Cell; topLeft: Cell } | null>(null);
@@ -68,6 +68,17 @@ export function KernelDesignPage({ onComplete }: KernelDesignPageProps) {
   const [topLeft, setTopLeft] = useState<Cell>({ row: 0, col: 0 });
   const [dragging, setDragging] = useState(false);
   useEffect(() => { setTopLeft({ row: 0, col: 0 }); completedRef.current = false; }, [outcome.board]);
+  useEffect(() => {
+    if (!autoDemo) return;
+    const cells = targetKernel.flatMap((row, r) => row.flatMap((value, c) => value ? [{ row: r, col: c }] : []));
+    const timers = cells.map((_, index) => setTimeout(() => {
+      const next = EMPTY_KERNEL.map(row => [...row]);
+      for (const cell of cells.slice(0, index + 1)) next[cell.row][cell.col] = 1;
+      recordDesignedKernel(next);
+    }, 650 + index * 180));
+    timers.push(setTimeout(() => setTopLeft(startCell(grid, targetKernel)), 1900));
+    return () => timers.forEach(clearTimeout);
+  }, [autoDemo, targetKernel, grid, recordDesignedKernel]);
   const patch = KERNEL_INDEX.map((r) => KERNEL_INDEX.map((c) => grid[topLeft.row + r][topLeft.col + c]));
   const value = windowActivation(grid, kernel, topLeft.row, topLeft.col);
   const found = best > 0 && value >= best;

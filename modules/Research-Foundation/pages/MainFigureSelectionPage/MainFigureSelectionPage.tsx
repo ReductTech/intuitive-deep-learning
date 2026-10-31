@@ -73,7 +73,6 @@ export function MainFigureSelectionPage({onComplete}:{onComplete?:()=>void}){
      <img src={pageAsset(i)} alt={`DINOv3原文第${SELECTED_PAGES[i]}页`} draggable={false}/>
      {i===page&&<div className="rf-paper-detection"><i className="rf-paper-scan"/>{currentElements.map(e=><div key={e.file} className="rf-paper-region" style={{left:`${e.box[0]/612*100}%`,top:`${e.box[1]/792*100}%`,width:`${(e.box[2]-e.box[0])/612*100}%`,height:`${(e.box[3]-e.box[1])/792*100}%`}}><Typography as="span" variant="bodySmall" tone="inherit">{e.label}</Typography></div>)}</div>}
     </div>)}
-    <Typography className="rf-paper-film-page" variant="bodySmall" tone="muted">精选页 {String(page+1).padStart(2,'0')} / {PAPER_PAGES}</Typography>
    </div>
    <div className="rf-paper-film-gallery" aria-label="检测提取的论文图与表">
     {elements.map((e,i)=>{

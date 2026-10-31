@@ -3,4 +3,6 @@
 .aipe-replay-cg-study-demo > img { display: block; width: 100%; height: 100%; object-fit: contain; }
 .aipe-replay-cg-study-example { position: absolute; left: 79%; top: 79%; width: 18%; height: 7%; padding: 0; border: 0; background: transparent; cursor: pointer; border-radius: 24px; }
 .aipe-replay-cg-study-example:focus-visible { outline: 3px solid var(--ui-accent); outline-offset: 2px; }
-.aipe-replay-cg-study-caption { display: grid; gap: 16px; padding: 32px; }
+.aipe-replay-cg-study-embedded .edu-lesson-flow { gap: 24px; }
+.aipe-replay-cg-study-embedded .lesson-canvas-frame { width: 100%; margin: 0; padding: 0; }
+.aipe-replay-cg-study-embedded .course-page-surface > .edu-content-block { width: 1600px; max-width: none; height: 900px; flex-shrink: 0; }

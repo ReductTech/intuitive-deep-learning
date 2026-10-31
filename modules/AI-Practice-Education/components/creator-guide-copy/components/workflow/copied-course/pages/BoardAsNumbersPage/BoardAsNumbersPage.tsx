@@ -273,9 +273,10 @@ function FlowArrow() {
 export interface BoardAsNumbersPageProps {
   onComplete: () => void;
   clarifyOrigin?: boolean;
+  autoDemo?: boolean;
 }
 
-export function BoardAsNumbersPage({ onComplete, clarifyOrigin = false }: BoardAsNumbersPageProps) {
+export function BoardAsNumbersPage({ onComplete, clarifyOrigin = false, autoDemo = false }: BoardAsNumbersPageProps) {
   const { outcome } = useGomokuOutcome();
   const [focus, setFocus] = useState<Cell | null>(null);
   const completedRef = useRef(false);
@@ -287,6 +288,11 @@ export function BoardAsNumbersPage({ onComplete, clarifyOrigin = false }: BoardA
   const grid = useMemo(() => toNumberGrid(board, outcome.winner), [board, outcome.winner]);
   // 窗口以获胜连线的最小外接矩形为中心，再整体夹回棋盘内。
   const zoom = useMemo(() => zoomWindow(outcome.winLine, WINDOW_SIZE), [outcome.winLine]);
+  useEffect(() => {
+    if (!autoDemo) return;
+    const timer = setTimeout(() => setFocus(zoom.centre), 1200);
+    return () => clearTimeout(timer);
+  }, [autoDemo, zoom]);
 
   // 赢方的子记 1，输方的子记 -1，空点记 0。
   const winnerIcon = outcome.winner === BLACK ? 'black' : 'white';

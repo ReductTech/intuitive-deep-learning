@@ -134,9 +134,10 @@ function startCellFor(grid: number[][], kernel: number[][]): Cell {
 
 export interface WindowScanPageProps {
   onComplete: () => void;
+  autoDemo?: boolean;
 }
 
-export function WindowScanPage({ onComplete }: WindowScanPageProps) {
+export function WindowScanPage({ onComplete, autoDemo = false }: WindowScanPageProps) {
   const { outcome } = useGomokuOutcome();
   const boardRef = useRef<HTMLDivElement | null>(null);
   const dragOrigin = useRef<{ cell: Cell; topLeft: Cell } | null>(null);
@@ -152,6 +153,17 @@ export function WindowScanPage({ onComplete }: WindowScanPageProps) {
 
   // 换了一盘棋就回到新的开局位置。
   useEffect(() => setTopLeft({ row: 4, col: 3 }), [outcome.board]);
+  useEffect(() => {
+    if (!autoDemo) return;
+    let target: Cell = { row: 0, col: 0 }, score = -Infinity;
+    for (let row = 0; row <= WINDOW_LIMIT; row++) for (let col = 0; col <= WINDOW_LIMIT; col++) {
+      const value = windowActivation(grid, kernel, row, col);
+      if (value > score) { score = value; target = { row, col }; }
+    }
+    const move = setTimeout(() => setTopLeft({ row: 3, col: 2 }), 650);
+    const match = setTimeout(() => setTopLeft(target), 1500);
+    return () => { clearTimeout(move); clearTimeout(match); };
+  }, [autoDemo, grid, kernel]);
 
   const patch = windowPatch(grid, topLeft.row, topLeft.col);
   const value = windowActivation(grid, kernel, topLeft.row, topLeft.col);
@@ -314,7 +326,6 @@ export function WindowScanPage({ onComplete }: WindowScanPageProps) {
 
             <div className="aipe-replay-cg-copy-ck-window-scan__operator-wrap">
               <Typography as="span" role="img" aria-label="卷积运算符" variant="h2" tone="main" className="aipe-replay-cg-copy-ck-window-scan__operator is-ready"><Asterisk size="28" strokeWidth={4} strokeLinecap="round" strokeLinejoin="round" theme="outline" fill="#173B7A" /></Typography>
-              <Typography as="span" variant="bodySmall" tone="muted" className="aipe-replay-cg-copy-ck-window-scan__operator-note">对应位置相乘<br />并求和</Typography>
             </div>
 
             <div className="aipe-replay-cg-copy-ck-window-scan__operand">
