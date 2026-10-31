@@ -26,6 +26,7 @@ const pages=[
  {id:'platform-foundation',Component:PlatformFoundationPage},
  {id:'education-case',Component:EducationCasePage},
 ];
-export const deck:DeckDefinition={id:outline.id,title:outline.title,subtitle:'研究基础 · 自动演示与交互',scenes:pages.map(({id,Component},i)=>({id,title:outline.pages[i].title,section:'研究基础',render:context=><Component {...(['pdf-structuring','main-figure-selection'].includes(id)?{onComplete:context.next}:{})}/>}))};
+export const deck:DeckDefinition={id:outline.id,title:outline.title,subtitle:'研究基础 · 自动演示与交互',scenes:pages.map(({id,Component},i)=>({id,title:outline.pages[i].title,section:'研究基础',render:context=><Component {...(['pdf-structuring','main-figure-selection','literature-service'].includes(id)?{onComplete:context.next}:{})}/>}))};
 export function getPptNotes(id:string):SpeakerNote[]{const i=pages.findIndex(page=>page.id===id);return i<0?[]:[{text:outline.pages[i].snippet,selectors:['.rf-page','.rf-paper-method-page','.rf-service-page']}];}
 export function ResearchFoundationPpt(){return <SceneDeck catalog={[deck]} moduleId={outline.id} assetId={outline.moduleIdentity.id} progressKey={`${outline.id}:ppt:v1`} getNotes={getPptNotes}/>;}
+

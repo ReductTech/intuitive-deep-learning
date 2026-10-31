@@ -31,8 +31,11 @@ export function useStudy(resource:string,version:string,resume:boolean,requested
   }
   async function load(){try{
    let c:StudyContext,s:StudyPosition|null=null;
+   if(isGuestMode()){c=await api<StudyContext>('/public/study/'+encodeURIComponent(resource)+'/'+encodeURIComponent(version));w.stopped=true;if(active)setGuest(true);}
+   else {
    try{const result=await api<{account_id:string;context:StudyContext;state:(StudyPosition&{state_version:number})|null}>('/personal/study/'+encodeURIComponent(resource)+'/'+encodeURIComponent(version));c=result.context;s=result.state;w.account=result.account_id;w.counter=result.state?.state_version||0;}
    catch(e){if(!(e instanceof ApiError)||e.status!==401)throw e;c=await api<StudyContext>('/public/study/'+encodeURIComponent(resource)+'/'+encodeURIComponent(version));w.stopped=true;if(active)setGuest(true);}
+   }
    if(resume&&s&&!c.pages.includes(s.page_id))throw Error('上次学习的页面已移除，请从课程首页重新开始。');
    if(active){setContext(c);setInitial({page_id:resume&&s?s.page_id:requestedPage&&c.pages.includes(requestedPage)?requestedPage:c.pages[0],mode:resume&&s?s.mode:requestedMode,completed:s?.completed.filter(p=>c.pages.includes(p))||[]});}
   }catch(e){if(active){setFailure(e);setError((e as Error).message);}}}

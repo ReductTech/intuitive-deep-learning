@@ -22,6 +22,8 @@ export function LoginGate({children}:{children:ReactNode}){
   finally{if(request===generation.current)setChecking(false);}
  }
  useEffect(()=>{
+  const url=new URL(location.href);
+  if(url.searchParams.get('login')==='1'){setGuestMode(false);setGuest(false);url.searchParams.delete('login');history.replaceState(null,'',url);}
   void check(true);
   const expired=()=>{if(loggingIn.current)return;generation.current++;setUser(null);setChecking(false);setUnavailable(false);setError('登录已失效，请重新登录。');};
   const requested=()=>{generation.current++;setGuestMode(false);setGuest(false);setUser(null);setChecking(false);setUnavailable(false);setError('');};

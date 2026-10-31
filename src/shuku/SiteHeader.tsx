@@ -3,7 +3,7 @@ import {api,type User} from './client';
 import {SessionControl,MessageIndicator,useUnreadMessageCount} from './SessionControl';
 import '../app/HomePage.css';
 import './shuku.css';
-import {isGuestMode} from './guest';
+import {isGuestMode,requestSignIn} from './guest';
 import {isLocalPreview,isPublicPreview} from '../app/runtimeMode';
 type Section='courses'|'saved'|'history'|'authoring'|'messages'|'profile'|'admin';
 function PersonalMenu({section,savedCount,onBrowse,accountId}:{section:Section;savedCount:number;onBrowse?:(section:'courses'|'saved')=>void;accountId?:string}){
@@ -43,6 +43,6 @@ export function SiteHeader({section,savedCount=0,onBrowse,user}:{section:Section
    </div>}
    {current?.role==='admin'&&<button className={section==='admin'?'is-active':''} onClick={()=>location.assign('/data')}>数据管理</button>}
   </nav>
-  {!isPublicPreview&&<span className="shuku-session"><a className="shuku-header-create" href="/my-courses?tab=create"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true"><path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5L12 3Z"/></svg>创建课件</a></span>}
+  {!isPublicPreview&&<span className="shuku-session"><a className="shuku-header-create" href="/my-courses?tab=create"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true"><path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5L12 3Z"/></svg>创建课件</a>{isGuestMode()&&<button className="shuku-header-create" onClick={requestSignIn}>登录</button>}</span>}
  </header>{section==='courses'&&location.pathname==='/'&&<SessionControl user={current}/>}</>;
 }

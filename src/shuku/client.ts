@@ -1,4 +1,4 @@
-import {isGuestMode,setGuestMode,requestSignIn} from './guest';
+import {isGuestMode,setGuestMode,requestSignIn,TEMPORARY_OPEN_PREVIEW} from './guest';
 import type { CreatorProject } from '../creator/model';
 export interface User { id:string; username:string; display_name:string; role:'learner'|'creator'|'admin' }
 export interface Course { id:string; owner_id?:string; title:string; description:string; module_id:string; category:string; head_revision:string|null; status:string; local_agent?:boolean; revision_state?:'building'|'ready'|'failed'|null; review_status?:string|null; review_note?:string|null; has_draft?:boolean; current_version?:string|null; workspace?:{target_course_id:string;base_release_id:string} }
@@ -22,5 +22,5 @@ export async function api<T>(path:string, body?:unknown,headers:Record<string,st
     const reason=typeof detail?.error==='string'?detail.error:typeof detail?.message==='string'?detail.message:!/^\s*</.test(text)&&text.trim()?text.trim().slice(0,2000):`服务返回 HTTP ${response.status}${response.statusText?' · '+response.statusText:''}，请求未能完成。`;
     throw new ApiError(reason,response.status);
   }
-  if(path==='/auth/login'||path==='/auth/phone-login'||path==='/auth/logout'||path==='/auth/guest'){sessionGeneration++;setGuestMode(path==='/auth/guest');}return data as T;
+  if(path==='/auth/login'||path==='/auth/phone-login'||path==='/auth/logout'||path==='/auth/guest'){sessionGeneration++;setGuestMode(path==='/auth/guest'||path==='/auth/logout'&&TEMPORARY_OPEN_PREVIEW);}return data as T;
 }
