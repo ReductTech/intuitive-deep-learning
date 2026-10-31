@@ -30,7 +30,7 @@ async function resize(bytes:Uint8Array<ArrayBuffer>,mime:string){
 let compiler:Promise<typeof import('esbuild-wasm')>|undefined;
 export async function downloadCourseInBrowser(project:CreatorProject,signal:AbortSignal,progress:Progress){
  const assetBase=(import.meta.env.VITE_ASSET_BASE_URL||location.origin).replace(/\/$/,'');
- const base=assetBase+'/_offline/';
+ const base=new URL(import.meta.env.BASE_URL||'/',location.href).href;
  const get=async(url:string)=>{signal.throwIfAborted();const response=await fetch(url,{signal,credentials:'omit',mode:'cors'});if(!response.ok){const data=await response.json().catch(()=>null);throw Error(data?.error||`资源下载失败（${response.status}）：${url}`);}return new Uint8Array(await response.arrayBuffer());};
  const json=async(url:string)=>{
   const text=new TextDecoder().decode(await get(url));
@@ -40,7 +40,7 @@ export async function downloadCourseInBrowser(project:CreatorProject,signal:Abor
  const course=await json(base+'offline-runtime/courses/'+encodeURIComponent(project.courseId)+'.json');
  if(!course)throw Error('当前课程的离线资源尚未发布，请更新课程资源后再下载。');
  const codes=new Map<string,string>(),css:string[]=[],embedded=new Map<string,string>();
- progress('正在从 OSS 读取当前课件的运行代码…');
+ progress('正在读取当前课件的运行代码…');
  for(const file of course.files){const bytes=await get(base+file);if(course.modules.includes(file))codes.set(file,new TextDecoder().decode(bytes));else if(file.endsWith('.css'))css.push(new TextDecoder().decode(bytes));else embedded.set(file,await dataUrl(bytes,file.endsWith('.woff2')?'font/woff2':file.endsWith('.js')?'text/javascript':'application/octet-stream'));}
  for(const [file,text]of codes){let patched=text;for(const [name,url]of embedded)patched=patched.replaceAll('/'+name,url);codes.set(file,patched);}
  // CSS font URLs are relative to emitted CSS, unlike JS public URLs.
@@ -50,7 +50,7 @@ export async function downloadCourseInBrowser(project:CreatorProject,signal:Abor
  const matches=(path:string)=>hints.some(h=>path===h||path.endsWith('/'+h)||pathBase(path)===h)||patterns.some(([head,tail])=>path.includes(head)&&path.endsWith(tail));
  progress('正在读取当前课件的图片和视频清单…');
  for(const namespace of course.namespaces){
-  const index=await json(base+'namespaces/'+encodeURIComponent(namespace)+'.json');
+  const index=await json(base+'offline-runtime/namespaces/'+encodeURIComponent(namespace)+'.json');
   const formats:Record<string,string>=index.formats||{};
   const aliases=new Map<string,string[]>();for(const [source,target] of Object.entries(formats)){if(!aliases.has(target))aliases.set(target,[]);aliases.get(target)!.push(source);}
   const selected=index.files.filter((f:any)=>!formats[f.path]&&(matches(f.path)||(aliases.get(f.path)||[]).some(matches)||(f.path.startsWith('scenedeck-thumbnails/')&&project.pages.some(p=>f.path.replace(/\.(png|jpe?g|webp)$/i,'').endsWith('/'+(p.nativeId||p.id))))));
