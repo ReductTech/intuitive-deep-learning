@@ -7,7 +7,7 @@ import './PlatformPositioningPage.css';
 const abilities = [
   { id: 'information', title: '科研信息供给', lines: ['科研信息供给'], description: '质量评价 · 个性推荐' },
   { id: 'content', title: '知识组织与直觉式学习', lines: ['知识组织与', '直觉式学习'], description: '知识关联 · 交互理解' },
-  { id: 'practice', title: '编程与可视化实践', lines: ['编程与', '可视化实践'], description: '核心实现 · 实验验证' },
+  { id: 'practice', title: '编程与可视化实践', lines: ['编程与', '可视化实践'], description: '代码实现 · 实验验证' },
   { id: 'evaluation', title: '学习者建模与评价', lines: ['学习者建模与', '评价'], description: '多元证据 · 反馈改进' },
   { id: 'research', title: '科研探索与协同创新', lines: ['科研探索与', '协同创新'], description: '导师指导 · 问题探索' },
 ] as const;
@@ -165,7 +165,7 @@ export function PlatformPositioningPage() {
         </button>
         <div className="aipe-platform-copy">
           <Typography as="h2" id={`${id}-${ability.id}-title`} variant="h3" tone="accent">{ability.lines.map(line => <span key={line}>{line}</span>)}</Typography>
-          <span hidden id={`${id}-${ability.id}-description`}>{ability.description}</span>
+          <Typography as="p" id={`${id}-${ability.id}-description`} variant="bodySmall" tone="muted" wrap="nowrap">{ability.description}</Typography>
         </div>
       </section>)}
     </div>

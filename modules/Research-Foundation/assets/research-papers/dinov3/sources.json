@@ -1,0 +1,401 @@
+{
+  "paper": "DINOv3",
+  "arxiv": "2508.10104",
+  "source": "https://ar5iv.labs.arxiv.org/html/2508.10104",
+  "note": "Original paper figures, SVG charts and tables exported from ar5iv HTML; visual content preserved. Representative Figure 1 is an illustrative preselected result, not live browser inference.",
+  "selected": "figure-01.png",
+  "elements": [
+    {
+      "id": "S1.F1",
+      "kind": "figure",
+      "number": 1,
+      "caption": "Figure 1: (a) Evolution of linear probing results on ImageNet1k (IN1k) over the years, comparing fully- (SL), weakly- (WSL) and self-supervised learning (SSL) methods. Despite coming into the picture later, SSL has quickly progressed and now reached the Imagenet accuracy plateau of recent years. On the other hand, we demonstrate that SSL offers the unique promise of high-quality dense features. With DINOv3, we markedly improve over weakly-supervised models on dense tasks, as shown by the relative performance of the best-in-class WSL models to DINOv3 (b). We also produce PCA maps of features obtained from high resolution images with DINOv3 trained on natural (c) and aerial images (d).",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#S1.F1",
+      "file": "figure-01.png"
+    },
+    {
+      "id": "S1.F2",
+      "kind": "figure",
+      "number": 2,
+      "caption": "Figure 2: Performance of the DINOv3 family of models, compared to other families of self- or weakly-supervised models, on different benchmarks. DINOv3 significantly surpasses others on dense benchmarks, including models that leverage mask annotation priors such as AM-RADIO (Heinrich et al. 2025).",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#S1.F2",
+      "file": "figure-02.png"
+    },
+    {
+      "id": "S1.F3",
+      "kind": "figure",
+      "number": 3,
+      "caption": "Figure 3: High-resolution dense features. We visualize the cosine similarity maps obtained with DINOv3 output features between the patches marked with a red cross and all other patches. Input image at 4096×4096. Please zoom in, do you agree with DINOv3?",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#S1.F3",
+      "file": "figure-03.png"
+    },
+    {
+      "id": "S2.F4",
+      "kind": "figure",
+      "number": 4,
+      "caption": "Figure 4: DINOv3 at very high resolution. We visualize dense features of DINOv3 by mapping the first three components of a PCA computed over the feature space to RGB. To focus the PCA on the subject, we mask the feature maps via background subtraction. With increasing resolution, DINOv3 produces crisp features that stay semantically meaningful. We visualize more PCAs in Section 6.1.1.",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#S2.F4",
+      "file": "figure-04.png"
+    },
+    {
+      "id": "S3.F5",
+      "kind": "figure",
+      "number": 5,
+      "caption": "Figure 5: Evolution of the cosine similarities (a) and of the accuracy on ImageNet1k linear (IN1k) and segmentation on VOC for ViT-g (b) and ViT-7B (c). We observe that the segmentation performance is maximal when the cosine similarities between the patch tokens and the class tokens are low. As training progresses, these similarities increase and the performance on dense tasks decreases.",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#S3.F5",
+      "file": "figure-05.png"
+    },
+    {
+      "id": "S4.F6",
+      "kind": "figure",
+      "number": 6,
+      "caption": "Figure 6: Evolution of the cosine similarity between the patch noted in red and all other patches. As training progresses, the features produced by the model become less localized and the similarity maps become noisier.",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#S4.F6",
+      "file": "figure-06.png"
+    },
+    {
+      "id": "S4.F7",
+      "kind": "figure",
+      "number": 7,
+      "caption": "Figure 7: Evolution trough the training iterations of the patch-level iBOT loss, the global loss DINO (applied to the global crops) and the newly introduced Gram loss. We highlight the iterations of the refinement step ℒRef\\mathcal{L}_{\\mathrm{Ref}} which uses the Gram objective.",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#S4.F7",
+      "file": "figure-07.png"
+    },
+    {
+      "id": "S4.F8",
+      "kind": "figure",
+      "number": 8,
+      "caption": "Figure 8: Evolution of the results on different benchmarks after applying our proposed Gram anchoring method. We visualize results when continuing the original training with our refinement step, noted ‘ℒRef\\mathcal{L}_{\\mathrm{Ref}}’. We also plot results obtained when using higher-resolution features for the Gram objective as introduced in following Section 4.3 and noted ‘ℒHRef\\mathcal{L}_{\\mathrm{HRef}}’. We highlight the iterations which use the Gram objective.",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#S4.F8",
+      "file": "figure-08.png"
+    },
+    {
+      "id": "S4.F9",
+      "kind": "figure",
+      "number": 9,
+      "caption": "Figure 9: Quantitative and qualitative study of the impact of high-resolution Gram. We show (a) the improved cosine maps after down-sampling the high-resolution maps into smaller ones, and (b) the quantitative improvements brought by varying the training iteration and the resolution of the Gram teacher.",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#S4.F9",
+      "file": "figure-09.png"
+    },
+    {
+      "id": "S4.F10",
+      "kind": "figure",
+      "number": 10,
+      "caption": "Figure 10: Qualitative effect of Gram anchoring. We visualize cosine maps before and after using the refinement objective ℒHRef\\mathcal{L}_{\\mathrm{HRef}}. The input resolution of the images is 1024×10241024\\times 1024 pixels.",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#S4.F10",
+      "file": "figure-10.png"
+    },
+    {
+      "id": "S5.F11",
+      "kind": "figure",
+      "number": 11,
+      "caption": "Figure 11: Effect of high resolution adaptation. Results before (‘Pre-HR’) and after (‘Post-HR’) resolution scaling (Section 5.1) on (a) linear classification on ImageNet, (b) applied OOD to ObjectNet, (c) linear semantic segmentation on ADE20k, and (d) segmentation tracking on DAVIS at different evaluation resolutions.",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#S5.F11",
+      "file": "figure-11.png"
+    },
+    {
+      "id": "S5.F12",
+      "kind": "figure",
+      "number": 12,
+      "caption": "Figure 12: Multi-student distillation procedure. In this diagram, we distill 3 students in parallel: we first share teacher inference across all T nodes to save compute, and gather inputs and results on all GPUs. Then, smaller groups perform student training. We adjust the size of these groups such that the training step has the same duration across all students S​iSi, minimizing idle time waiting at the synchronization barrier.",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#S5.F12",
+      "file": "figure-12.png"
+    },
+    {
+      "id": "S6.F13",
+      "kind": "figure",
+      "number": 13,
+      "caption": "Figure 13: Comparison of dense features. We compare several vision backbones by projecting their dense outputs using PCA and mapping them to RGB. From left to right: SigLIP 2 ViT-g/16, PEspatial ViT-G/14, DINOv2 ViT-g/14 with registers, DINOv3 ViT-7B/16. Images are forwarded at resolution 1280×9601280{\\times}960 for models using patch 16 and 1120×8401120{\\times}840 for patch 14, i.e. all feature maps have size 80×6080{\\times}60.",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#S6.F13",
+      "file": "figure-13.png"
+    },
+    {
+      "id": "S6.F14",
+      "kind": "figure",
+      "number": 14,
+      "caption": "Figure 14: Unsupervised object discovery. We apply TokenCut (Wang et al. 2022c) on the output patch features of different backbones and report CorLoc metric. We also visualize predicted masks obtained with DINOv3 (red overlay on input images at res. 10241024), obtained with no annotation and no post-processing.",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#S6.F14",
+      "file": "figure-14.png"
+    },
+    {
+      "id": "S6.F15",
+      "kind": "figure",
+      "number": 15,
+      "caption": "Figure 15: Segmentation tracking example. Given the ground-truth instance segmentation masks for the initial frame, we propagate the instance labels to subsequent frames according to patch similarity in the feature space of DINOv3. The input resolution is 2048×15362048{\\times}1536 pixels, resulting in 128×96128{\\times}96 patches.",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#S6.F15",
+      "file": "figure-15.png"
+    },
+    {
+      "id": "S7.F16",
+      "kind": "figure",
+      "number": 16,
+      "caption": "Figure 16: (a) Presentation of the distilled models’ characteristics. CNX stands for ConvNeXT. We present per model the number of parameters and the GFLOPs estimated on images of size 256×256256\\times 256 and 512×512512\\times 512. (b) We compare DINOv3 ViT-H+ to its 7B-sized teacher; despite having almost 10×\\times less parameters, the ViT-H+ is close to DINOv3 7B in performance.",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#S7.F16",
+      "file": "figure-16.png"
+    },
+    {
+      "id": "S7.F17",
+      "kind": "figure",
+      "number": 17,
+      "caption": "Figure 17: Stability of the features at multiple resolutions for the DINOv3 ViT family of models. Top-to-bottom: ViT-S, S+, B, L, H+. We run inference on an image at multiple resolutions, then perform principal component analysis on the features computed on a 1792×10241792\\times 1024 image (112×64112\\times 64 image tokens). We then project features at all resolutions onto the principal components 5–7 that we map to the RGB space for visualization. While the models are functional at all resolutions, we observe that the features remain consistent across a large range of resolutions before drifting: for example, ViT-S+ features are stable between 896×512896\\times 512 and 3584×20483584\\times 2048 inputs, while ViT-L barely starts drifting on the largest resolution 7168×40967168\\times 4096. ViT-H+ remains stable throughout the whole tested range.",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#S7.F17",
+      "file": "figure-17.png"
+    },
+    {
+      "id": "S8.F18",
+      "kind": "figure",
+      "number": 18,
+      "caption": "Figure 18: Illustration of versatile applications in remote sensing made possible by a single DINOv3 model. The PCA on DINOv3 features shows finer details than DINOv2. The segmentation map was computed using only GEO-Bench chesapeake labels. The canopy height model decoder was trained on the Open-Canopy dataset using 4 channels (RGB + InfraRed), while inference was performed on RGB channels only.",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#S8.F18",
+      "file": "figure-18.png"
+    },
+    {
+      "id": "S8.F19",
+      "kind": "figure",
+      "number": 19,
+      "caption": "Figure 19: A qualitative comparison of the DINOv3 7B satellite model to Tolan et al. 2024 on the Open Canopy dataset. For both models, the decoder is trained on 448×\\times448 input images. It can be seen that DINOv3 produces more accurate maps, for example the accurate height for the trees on the field.",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#S8.F19",
+      "file": "figure-19.png"
+    },
+    {
+      "id": "A1.F20",
+      "kind": "figure",
+      "number": 20,
+      "caption": "Figure 20: Impact of the different strategies to mitigate the presence of high-norm patch outliers, evaluated both (a) qualitatively and (b) quantitatively. We produce results with a 7B model trained with our recipe for 150k iterations, without any high-norm handling strategy ‘∅\\varnothing’, when using four register tokens [Darcet et al. 2024], or the attention bias and value gating strategies [An et al. 2025]. In (a, first row), we plot the distribution of the output patch norms (sorted by ascending values) computed for three images. We also visualize the output patch norms per image (bottom two rows), with the same colormap–min and max values are computed per image over the different outlier strategies.",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#A1.F20",
+      "file": "figure-20.png"
+    },
+    {
+      "id": "A2.F21",
+      "kind": "figure",
+      "number": 21,
+      "caption": "Figure 21: Results on five benchmarks using features from intermediate layers of DINOv3 7B. Evaluations (a-c) use a linear layer (see Sections 6.1.2 and 6.2.1), while (d, e) use a non-parametric approach (see Sections 6.1.3 and 6.1.5).",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#A2.F21",
+      "file": "figure-21.png"
+    },
+    {
+      "id": "A4.F22",
+      "kind": "figure",
+      "number": 22,
+      "caption": "Figure 22: Sampling clips for video classification. Choosing a clip for training or inference means determining the coordinates of a spatial crop and which frames/timestamps to sample. At training time, we sample clips at random by choosing random frames from the whole video and by applying a spatial crop that covers ≥40%\\geq 40\\% of the area. At inference time, we select clips in a deterministic way. Spatially, we take the three largest square crops aligned to the left, middle and right. Temporally, we take two overlapping sets of frames such that they cover as much of the video as possible and their timestamps interleave.",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#A4.F22",
+      "file": "figure-22.png"
+    },
+    {
+      "id": "S3.T1",
+      "kind": "table",
+      "number": 1,
+      "caption": "Table 1: Influence of training data on features quality shown via performance on downstream tasks. We compare datasets curated with clustering (Vo et al. 2024) and retrieval (Oquab et al. 2024) to raw data and to our data mixture. This ablation study is run for a shorter schedule of 200k iterations.",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#S3.T1",
+      "file": "table-01.png"
+    },
+    {
+      "id": "S3.T2",
+      "kind": "table",
+      "number": 2,
+      "caption": "Table 2: Comparison of the teacher architectures used in DINOv2 and DINOv3 models. We keep the model 4040 blocks deep, and increase the embedding dimension to 40964096. Importantly, we use a patch size of 1616 pixels, changing the effective sequence length for a given resolution.",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#S3.T2",
+      "file": "table-02.png"
+    },
+    {
+      "id": "S6.T3",
+      "kind": "table",
+      "number": 3,
+      "caption": "Table 3: Dense linear probing results on semantic segmentation and monocular depth estimation with frozen backbones. We report the mean Intersection-over-Union (mIoU) metric for the segmentation benchmarks ADE20k, Cityscapes, and VOC. We report the Root Mean Squared Error (RMSE) metric for the depth benchmarks NYUv2 and KITTI. For segmentation, all models are evaluated with input resolution adapted to 1024 patch tokens (i.e. 448×448448\\times 448 for patch size 14, 512×512512\\times 512 for patch size 16).",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#S6.T3",
+      "file": "table-03.png"
+    },
+    {
+      "id": "S6.T4",
+      "kind": "table",
+      "number": 4,
+      "caption": "Table 4: Evaluation of 3D consistency of dense representations. We estimate 3D keypoint correspondences across views following the evaluation protocol of Probe3D (Banani et al. 2024). To measure performance, we report the correspondence recall, i.e. the percentage of correspondences falling into a specified distance.",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#S6.T4",
+      "file": "table-04.png"
+    },
+    {
+      "id": "S6.T5",
+      "kind": "table",
+      "number": 5,
+      "caption": "Table 5: Video segmentation tracking evaluation. We report the 𝒥&ℱ\\mathcal{J}\\&\\mathcal{F}-mean on DAVIS, YouTube-VOS, and MOSE at multiple resolutions. For models with patch size 14/16, the small, medium and large resolutions correspond to a video short side of 420/480, 840/960, 1260/1140 pixels.",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#S6.T5",
+      "file": "table-05.png"
+    },
+    {
+      "id": "S6.T6",
+      "kind": "table",
+      "number": 6,
+      "caption": "Table 6: Video classification evaluation using attentive probes. We report top-1 accuracy on UCF101, Something-Something V2 (SSv2), and Kinetics-400 (K400). For each model, we report performance for evaluating a single clip per video, or applying test-time augmentation (TTA) by averaging the predicted probabilities from multiple clips.",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#S6.T6",
+      "file": "table-06.png"
+    },
+    {
+      "id": "S6.T7",
+      "kind": "table",
+      "number": 7,
+      "caption": "Table 7: Classification accuracy of linear probes trained on ImageNet1k with frozen backbones. Weakly- and self-supervised models are evaluated with image resolution adapted to 1024 patch tokens (i.e. 448×448448\\times 448 for patch size 14, 512×512512\\times 512 for patch size 16). For reference, we also list results from Dehghani et al. 2023 using a different evaluation protocol (marked with ∗).",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#S6.T7",
+      "file": "table-07.png"
+    },
+    {
+      "id": "S6.T9",
+      "kind": "table",
+      "number": 8,
+      "caption": "",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#S6.T9",
+      "file": "table-08.png"
+    },
+    {
+      "id": "S6.T10",
+      "kind": "table",
+      "number": 9,
+      "caption": "Table 10: Comparison with state-of-the-art systems on object detection. We train a detection adapter on top of a frozen DINOv3 backbone. We show results on the validation set of the COCO and COCO-O datasets, and report the mAP across IoU thresholds, as well as the effective robustness (ER). Our detection system based on DINOv3 sets a new state of the art. As the InternImage-G detection model has not been released, we were unable to reproduce their results or compute COCO-O scores.",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#S6.T10",
+      "file": "table-09.png"
+    },
+    {
+      "id": "S6.T11",
+      "kind": "table",
+      "number": 10,
+      "caption": "Table 11: Comparison with state-of-the-art systems for semantic segmentation on ADE20k. We evaluate the model in a single- or multi-scale setup (respectively Simple and TTA). Following common practice, we run this evaluation at resolution 896 and report mIoU scores. BEIT3, ONE-PEACE and DINOv3 use a Mask2Former with ViT-Adapter architecture, and the decoder parameters take into account both. We report results on further datasets in Table 24",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#S6.T11",
+      "file": "table-10.png"
+    },
+    {
+      "id": "S6.T12",
+      "kind": "table",
+      "number": 11,
+      "caption": "Table 12: Comparison with state-of-the-art systems for relative monocular depth estimation. By combining DINOv3 with Depth Anything V2 (Yang et al. 2024b), we obtain a SotA model for relative depth estimation.",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#S6.T12",
+      "file": "table-11.png"
+    },
+    {
+      "id": "S6.T13",
+      "kind": "table",
+      "number": 12,
+      "caption": "Table 13: 3D understanding using Visual Geometry Grounded Transformer (VGGT) (Wang et al. 2025). Simply by swapping DINOv2 for DINOv3 ViT-L as the image feature extractor in the VGGT pipeline, we are able to obtain state-of-the-art results on various 3D geometry tasks. We reproduce baseline results from Wang et al. 2025. We also report methods using ground truth camera information, marked with ∗. Camera pose estimation results are reported with AUC@30.",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#S6.T13",
+      "file": "table-12.png"
+    },
+    {
+      "id": "S7.T14",
+      "kind": "table",
+      "number": 13,
+      "caption": "Table 14: Comparison of our family of models against open-source alternatives of comparable size. We showcase our ViT-{S, S+, B, L, H+} models on a representative set of global and dense benchmarks: classification (IN-ReAL, IN-R, ObjectNet), retrieval (Oxford-H), segmentation (ADE20k), depth (NYU), tracking (DAVIS at 960px), and keypoint matching (NAVI, SPair). We match the number of patch tokens for a fair comparison across models of different patch size.",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#S7.T14",
+      "file": "table-13.png"
+    },
+    {
+      "id": "S7.T15",
+      "kind": "table",
+      "number": 14,
+      "caption": "Table 15: Evaluation of our distilled DINOv3 ConvNeXt models. We compare our models to off-the-shelf ConvNeXts trained supervised on ImageNet-22k (Liu et al. 2022). For global tasks, we give results at input resolutions 256 and 512, as we found the supervised models to significantly degrade at resolution 512.",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#S7.T15",
+      "file": "table-14.png"
+    },
+    {
+      "id": "S7.T16",
+      "kind": "table",
+      "number": 15,
+      "caption": "Table 16: Comparing our text-aligned DINOv3 ViT-L to the state-of-the-art. Our model achieves excellent dense alignment performance while staying competitive in global alignment tasks. All compared models are of ViT-L size and operate on the same sequence length of 576.",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#S7.T16",
+      "file": "table-15.png"
+    },
+    {
+      "id": "S8.T17",
+      "kind": "table",
+      "number": 16,
+      "caption": "Table 17: Evaluation of different backbones for high-resolution canopy height prediction. All models are trained with a DPT decoder. Results are presented either for experiments with the decoder trained on SatLidar and evaluated on IID samples (SatLidar Val) and OOD test sets (SatLidar Test, Neon and São Paulo), or for experiments with the decoder trained and evaluated on the Open-Canopy dataset. We list mean absolute error (MAE) and the block R2R^{2} metric from Tolan et al. 2024. For completeness, we additionally evaluate the original decoder of Tolan et al. 2024 that was trained on Neon dataset (denoted by ∗).",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#S8.T17",
+      "file": "table-16.png"
+    },
+    {
+      "id": "S8.T18",
+      "kind": "table",
+      "number": 17,
+      "caption": "Table 18: Comparison of our DINOv3 models against strong baselines DOFA (Xiong et al. 2024), Prithvi-v2 (Szwarcman et al. 2024), and Tolan et al. 2024 in Geo-Bench tasks. While Privthi-v2 and DOFA leverage all available optical bands, our models achieve significantly better performance with only RGB inputs.",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#S8.T18",
+      "file": "table-17.png"
+    },
+    {
+      "id": "S8.T19",
+      "kind": "table",
+      "number": 18,
+      "caption": "Table 19: We compare the performance of DINOv3 to state-of-the-art models Privthi-v2 (Szwarcman et al. 2024), BillionFM (Cha et al. 2024) and SkySense V2 (Zhang et al. 2025) for high resolution semantic geospatial tasks. We report mIoU for the segmentation datasets LoveDA (1024×\\times) and iSAID (896×\\times), and mAP for the detection dataset DIOR (800×800\\times).",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#S8.T19",
+      "file": "table-18.png"
+    },
+    {
+      "id": "S9.T20",
+      "kind": "table",
+      "number": 19,
+      "caption": "Table 20: Carbon footprint of model training. We report the potential carbon emission of reproducing a full model pre-training, computed using a PUE of 1.1 and carbon intensity factor of 0.385kg CO2eq/KWh.",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#S9.T20",
+      "file": "table-19.png"
+    },
+    {
+      "id": "A2.T21",
+      "kind": "table",
+      "number": 20,
+      "caption": "Table 21: Details of year of publication, performance, and reference of the numbers used in Fig. 1. For all papers, we report top-1 accuracy of this algorithm with the largest model on ImageNet. For weakly- and self-supervised models, we provide linear probing performance. For dates, we use the year of first appearance on arXiv.",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#A2.T21",
+      "file": "table-20.png"
+    },
+    {
+      "id": "A2.T22",
+      "kind": "table",
+      "number": 21,
+      "caption": "Table 22: Per-dataset results for finegrained classification on small datasets with linear probing (Fine-S, see Section 6.2.1), following Oquab et al. 2024.",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#A2.T22",
+      "file": "table-21.png"
+    },
+    {
+      "id": "A2.T23",
+      "kind": "table",
+      "number": 22,
+      "caption": "Table 23: Full results for instance recognition, presenting additional metrics for Section 6.2.2.",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#A2.T23",
+      "file": "table-22.png"
+    },
+    {
+      "id": "A2.T24",
+      "kind": "table",
+      "number": 23,
+      "caption": "Table 24: Comparison with state-of-the-art systems on semantic segmentation on other datasets, complementary to the ADE20k results in Table 11. We report mIoU scores when evaluating the model in a single- or multi-scale (TTA) setup and compare against the best previously published result for each dataset: Fang et al. 2023 for COCO-Stuff 164k, Wang et al. 2023b for Cityscapes, and Zoph et al. 2020 for VOC 2012. We use input resolutions of 1280 for COCO-Stuff, 1024 for VOC 2012, and 1280 for Cityscapes. All baselines require finetuning of the backbone, while we keep the DINOv3 backbone frozen.",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#A2.T24",
+      "file": "table-23.png"
+    },
+    {
+      "id": "A2.T25",
+      "kind": "table",
+      "number": 24,
+      "caption": "Table 25: Comparison of DINOv3 classification performance on OCR-heavy datasets. These are notoriously hard datasets for SSL. We compare DINOv3 with the best DINOv2 model (g), along with the best weakly-supervised PE-core model (G).",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#A2.T25",
+      "file": "table-24.png"
+    },
+    {
+      "id": "A2.T26",
+      "kind": "table",
+      "number": 25,
+      "caption": "Table 26: Geographical fairness and diversity analysis across income buckets and regions, following the protocol of Goyal et al. 2022b.",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#A2.T26",
+      "file": "table-25.png"
+    },
+    {
+      "id": "A4.T27",
+      "kind": "table",
+      "number": 26,
+      "caption": "Table 27: List of hyperparameters evaluated for video segmentation tracking on the training split of DAVIS 2017 [Pont-Tuset et al. 2017]. The best hyperparameters, highlighted, are applied to all datasets.",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#A4.T27",
+      "file": "table-26.png"
+    },
+    {
+      "id": "A4.T28",
+      "kind": "table",
+      "number": 27,
+      "caption": "Table 28: Description of the Satlidar dataset.",
+      "source": "https://ar5iv.labs.arxiv.org/html/2508.10104#A4.T28",
+      "file": "table-27.png"
+    }
+  ]
+}
