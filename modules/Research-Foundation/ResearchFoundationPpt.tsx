@@ -4,7 +4,7 @@ import '../shared/react/presentation.css';
 import './ResearchFoundation.css';
 import outline from './outlines.json';
 import { FoundationOneTitlePage } from './pages/FoundationOneTitlePage/FoundationOneTitlePage';
-import { PdfStructuringPage } from './pages/PdfStructuringPage/PdfStructuringPage';
+import { PdfVisualExtractionPage } from './pages/PdfVisualExtractionPage/PdfVisualExtractionPage';
 import { AirflowControlPage } from './pages/AirflowControlPage/AirflowControlPage';
 import { ResearchMethodsPage } from './pages/ResearchMethodsPage/ResearchMethodsPage';
 import { InteractivePrototypePage } from './pages/InteractivePrototypePage/InteractivePrototypePage';
@@ -13,7 +13,7 @@ import { EducationCasePage } from './pages/EducationCasePage/EducationCasePage';
 
 const pages=[
  {id:'foundation-one-title',Component:FoundationOneTitlePage},
- {id:'pdf-structuring',Component:PdfStructuringPage},
+ {id:'pdf-structuring',Component:PdfVisualExtractionPage},
  {id:'literature-service',Component:AirflowControlPage},
  {id:'research-methods',Component:ResearchMethodsPage},
  {id:'interactive-prototype',Component:InteractivePrototypePage},
