@@ -13,7 +13,7 @@ const steps=[
 ];
 export function PlatformFoundationPage(){
  const p=usePlayback(4,4500), step=steps[p.step];
- return <ContentBlock className="rf-page rf-platform" title={outline.pages[3].title}>
+ return <ContentBlock className="rf-page rf-platform" title={outline.pages[7].title}>
   <div className="rf-platform-main"><section className="rf-platform-story"><div className="rf-user-count"><Typography variant="display" className="rf-stat">6000+</Typography><Typography variant="h2">学习用户</Typography></div>
     <div className="rf-platform-steps">{steps.map(({name,Icon},i)=><Button key={name} active={p.step===i} aria-pressed={p.step===i} onClick={()=>p.go(i)}><Icon size={23}/><Typography as="span" variant="bodySmall" tone="inherit">{name}</Typography></Button>)}</div>
     <Typography key={p.step} className="rf-platform-line rf-fade" variant="body" tone="muted">{step.description}</Typography>

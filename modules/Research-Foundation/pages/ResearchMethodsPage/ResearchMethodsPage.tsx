@@ -18,7 +18,7 @@ export function ResearchMethodsPage(){
  const p=usePlayback(6,4800), [details,setDetails]=useState(false);
  useEffect(()=>setDetails(false),[p.step,p.revision]);
  const active=papers[p.step];
- return <ContentBlock className="rf-page rf-methods" title={outline.pages[1].title}>
+ return <ContentBlock className="rf-page rf-methods" title={outline.pages[5].title}>
   <div className="rf-method-body">
    <div className="rf-tabs">{areas.map(area=><Button key={area} active={active.area===area} onClick={()=>p.go(papers.findIndex(paper=>paper.area===area))}>{area}</Button>)}</div>
    <aside className="rf-method-detail rf-fade" key={active.area}><Typography variant="display">{active.area}</Typography><Typography variant="body" tone="muted">{active.use}</Typography></aside>
