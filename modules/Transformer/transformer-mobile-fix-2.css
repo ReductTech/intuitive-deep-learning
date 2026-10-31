@@ -1,0 +1,18 @@
+.tr-shell,
+.tr-root .edu-header,
+.tr-root .edu-lesson-flow,
+.tr-root .edu-lesson-flow-step,
+.tr-root .edu-stage,
+.tr-root .edu-stage > div { min-width: 0; max-width: 100%; }
+.tr-shell { overflow: clip; }
+
+@container ppt-slide (max-width: 680px) {
+  .tr-root { padding: 6px; }
+  .tr-shell { padding: 12px; }
+  .tr-root .edu-title { max-width: 100%; word-break: break-word; line-height: 1.1; }
+  .tr-mission-scene { width: 100%; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); overflow: hidden; }
+  .tr-mission-scene figure { width: 100%; }
+  .tr-mission-scene figure img { width: 100%; max-width: 100%; }
+  .tr-task-stack { width: 100%; min-width: 0; overflow: hidden; }
+  .tr-task-stack img { min-width: 0; max-width: 100%; }
+}

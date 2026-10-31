@@ -1,0 +1,13 @@
+.tr-root { width: 100%; }
+.tr-shell { width: min(100%, 1600px); }
+
+@container ppt-slide (max-width: 680px) {
+  .tr-root { padding: 8px; }
+  .tr-shell { width: 100%; padding: 14px; border-radius: 16px; }
+  .tr-root .edu-title { font-size: clamp(27px, 8vw, 36px); }
+  .tr-root .edu-header { flex-direction: column; }
+  .tr-root .edu-stage-title { font-size: 24px; }
+  .tr-mission-scene { min-width: 0; }
+  .tr-mission-scene > * { min-width: 0; }
+  .tr-mission-scene figure img { max-width: 100%; }
+}

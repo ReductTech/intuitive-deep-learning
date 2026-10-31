@@ -1,0 +1,5 @@
+.tr-assembly-feedback-body{display:flex;flex-direction:column;gap:18px}
+.tr-ppt-content[data-slide] .tr-assembly-feedback-body p.tr-assembly-feedback-actual,
+.tr-ppt-content[data-slide] .tr-assembly-feedback-body p.tr-assembly-feedback-needed{margin:0;font-size:24px!important;line-height:1.55!important;color:#425f70;font-weight:500;overflow-wrap:anywhere}
+.tr-assembly-feedback-warning{display:inline-grid;place-items:center;vertical-align:2px;width:27px;height:27px;margin-right:9px;border-radius:50%;background:#c66a5c;color:white;font:750 21px/1 'Segoe UI',sans-serif}
+.tr-assembly-feedback-needed mark{padding:0 2px;background:linear-gradient(transparent 63%,#dcece3 63%);color:#347873;font-weight:650;box-decoration-break:clone;-webkit-box-decoration-break:clone}

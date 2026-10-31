@@ -1,0 +1,147 @@
+/* Keep vertical sizing one-pass. Nested auto/minmax grids with a percentage-height
+   intrinsic image repeatedly remeasured this entire slide on focus and content changes. */
+.course-shell .rtg-learning { --learn-blue: #274b75; --learn-orange: #a86c23; --learn-purple: #72549a; --learn-green: #1d7c55; display: flex; flex-direction: column; width: 100%; height: 100%; min-height: 0; gap: 14px; padding: 26px 36px 20px; border: 0; border-top: 4px solid #27446e; border-radius: 0; background: radial-gradient(ellipse at 47% 45%, #eee9df66, transparent 65%), #f8fafc; }
+.course-shell .rtg-learning, .course-shell .rtg-learning * { box-sizing: border-box; min-width: 0; max-width: 100%; }
+.course-shell .rtg-learning > .edu-content-head { flex: 0 0 auto; margin: 0; }
+.course-shell .rtg-learning > .edu-content-body { display: flex; flex: 1 1 0; flex-direction: column; min-height: 0; gap: 12px; }
+.course-shell .rtg-learning > .edu-content-body > :not(.rtg-learning__scene) { flex: 0 0 auto; }
+.course-shell .rtg-learning__phase-bar { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px; align-items: center; }
+.course-shell .rtg-learning__phase-steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; margin: 0; padding: 0; list-style: none; }
+.course-shell .rtg-learning__phase-steps button { display: flex; width: 100%; align-items: center; gap: 10px; padding: 4px 8px 7px; border: 0; border-bottom: 2px solid #dbe1e8; border-radius: 0; color: #7a8799; background: transparent; cursor: pointer; }
+.course-shell .rtg-learning__phase-steps button.is-current { border-bottom-color: var(--learn-blue); color: var(--learn-blue); background: #eaf0f780; }
+.course-shell .rtg-learning__phase-steps button.is-visited { color: #365879; border-bottom-color: #9ab0c5; }
+.course-shell .rtg-learning__phase-steps button:disabled { cursor: default; }
+.course-shell .rtg-learning__phase-number { color: inherit; font-variant-numeric: tabular-nums; }
+.course-shell .rtg-learning__phase-steps button:focus-visible, .course-shell .rtg-learning__tools button:focus-visible { outline: 3px solid #b18a4c; outline-offset: 3px; }
+.course-shell .rtg-learning__scene { position: relative; display: flex; flex: 1 1 0; flex-direction: column; min-height: 0; gap: 24px; padding: 10px 20px 16px; border: 1px solid #dce3eb; border-radius: 18px; background: linear-gradient(140deg, #fffefd, #fdfefe); }
+.course-shell .rtg-learning__scene-head { position: relative; z-index: 2; display: flex; flex: 0 0 40px; min-height: 40px; align-items: center; justify-content: space-between; gap: 20px; }
+.course-shell .rtg-learning__tools { display: flex; align-items: center; gap: 20px; }
+.course-shell .rtg-learning__tools button { display: inline-flex; align-items: center; gap: 7px; padding: 0; border: 0; background: transparent; color: #6b7a8d; cursor: pointer; }
+.course-shell .rtg-learning__tools svg { width: 20px; height: 20px; flex: 0 0 auto; }
+.course-shell .rtg-learning__tools button:disabled { opacity: .6; cursor: default; }
+.course-shell .rtg-learning__pipeline { position: relative; z-index: 1; display: grid; flex: 1 1 0; min-height: 0; grid-template-columns: minmax(0, .9fr) minmax(0, 1.12fr) minmax(0, .8fr) minmax(0, 1.12fr) minmax(0, 1.3fr); gap: 30px; }
+.course-shell .rtg-learning__node { position: relative; display: grid; min-height: 0; grid-template-rows: auto minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 10px 12px; border: 1px solid transparent; border-radius: 12px; background: #fff; transition: opacity 180ms ease, border-color 180ms ease, background-color 180ms ease; }
+.course-shell .rtg-learning__node:not(:last-child)::after { content: ''; position: absolute; left: calc(100% + 4px); top: 50%; width: 22px; height: 12px; transform: translateY(-50%); background: #ccd7e3; clip-path: polygon(0 40%, 70% 40%, 70% 0, 100% 50%, 70% 100%, 70% 60%, 0 60%); transition: background-color 180ms ease; pointer-events: none; }
+.course-shell .rtg-learning__node--input { padding: 8px; }
+.course-shell .rtg-learning__node--extractor, .course-shell .rtg-learning__node--head { border-color: #e2e7ed; background: #f7f9fc; }
+.course-shell .rtg-learning__node--head { grid-template-rows: auto minmax(0, 1fr) auto auto; gap: 4px; }
+.course-shell .rtg-learning__node--prediction { grid-template-rows: auto minmax(0, 1fr) auto; gap: 6px; background: #f9fafc; border-color: #e3e8ef; }
+.course-shell .rtg-learning__node--prediction h2:focus { outline: none; }
+.course-shell .rtg-learning__photo { position: relative; min-height: 0; height: 100%; }
+.course-shell .rtg-learning__photo img { position: absolute; left: 50%; top: 50%; display: block; min-height: 0; width: auto; height: 100%; max-height: 180px; object-fit: contain; border-radius: 8px; transform: translate(-50%, -50%); }
+.course-shell .rtg-learning__node-foot { display: grid; min-height: 48px; align-items: center; }
+.course-shell .rtg-learning__parameter { position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 8px; padding: 5px 0 0; border-top: 1px solid #dae1e9; color: #4b6480; }
+.course-shell .rtg-learning__parameter.is-updated { color: var(--learn-green); border-top-color: #82b19b; }
+.course-shell .rtg-learning__parameter-track { position: relative; display: block; height: 5px; border-radius: 99px; background: #d4deea; }
+.course-shell .rtg-learning__parameter-track > span { position: absolute; left: 22%; top: 50%; width: 12px; height: 12px; border: 2px solid #fff; border-radius: 50%; background: var(--learn-blue); box-shadow: 0 0 0 1px var(--learn-blue); transform: translate(-50%, -50%); transition: left 360ms ease, background-color 180ms ease; }
+.course-shell .rtg-learning__parameter.is-updated .rtg-learning__parameter-track > span { left: 76%; background: var(--learn-green); box-shadow: 0 0 0 1px var(--learn-green); }
+.course-shell .rtg-learning__filters { position: relative; align-self: center; justify-self: center; width: 122px; height: 64px; }
+.course-shell .rtg-learning__filters span { position: absolute; top: 0; width: 62px; height: 62px; border: 1px solid #5c789b; border-radius: 6px; background: linear-gradient(45deg, transparent 43%, #9eb0c5 44% 55%, transparent 56%), #f7f9fc; }
+.course-shell .rtg-learning__filters span:nth-child(1) { left: 0; opacity: .45; }
+.course-shell .rtg-learning__filters span:nth-child(2) { left: 28px; opacity: .7; }
+.course-shell .rtg-learning__filters span:nth-child(3) { left: 56px; }
+.course-shell .rtg-learning__features { display: flex; min-height: 0; height: 100%; max-height: 90px; align-items: end; gap: 9px; border-bottom: 1px solid #ccd7e3; opacity: .25; transition: opacity 180ms ease; }
+.course-shell .rtg-learning__features.is-visible { opacity: 1; }
+.course-shell .rtg-learning__features > span { position: relative; flex: 1 1 0; height: 100%; }
+.course-shell .rtg-learning__features i, .course-shell .rtg-learning__features b { position: absolute; bottom: 0; display: block; width: 100%; border-radius: 5px 5px 0 0; transition: height 360ms ease, background-color 180ms ease; }
+.course-shell .rtg-learning__features i { background: #d6e0eb; }
+.course-shell .rtg-learning__features b { width: 65%; left: 18%; background: #466a94; }
+.course-shell [data-verified="true"] .rtg-learning__features b { background: #288360; }
+.course-shell .rtg-learning__score-symbol { display: grid; gap: 9px; width: 100%; }
+.course-shell .rtg-learning__score-symbol span { height: 9px; border-radius: 9px; background: #b5c5d8; }
+.course-shell .rtg-learning__score-symbol span:nth-child(1) { width: 44%; }
+.course-shell .rtg-learning__score-symbol span:nth-child(2) { width: 25%; }
+.course-shell .rtg-learning__score-symbol span:nth-child(3) { width: 78%; background: #7894b5; }
+.course-shell [data-verified="true"] .rtg-learning__score-symbol span:nth-child(1) { width: 78%; background: #288360; }
+.course-shell [data-verified="true"] .rtg-learning__score-symbol span:nth-child(3) { width: 44%; background: #b5c5d8; }
+.course-shell .rtg-learning__probabilities { display: grid; min-height: 0; grid-template-columns: max-content minmax(0, 1fr) max-content; align-content: center; gap: 6px 9px; }
+.course-shell .rtg-learning__probabilities > div { display: grid; grid-column: 1 / -1; grid-template-columns: subgrid; column-gap: 9px; align-items: center; color: #526982; }
+.course-shell .rtg-learning__probabilities > div > :last-child { text-align: right; font-variant-numeric: tabular-nums; }
+.course-shell .rtg-learning__probabilities .is-true-class { color: var(--learn-blue); }
+.course-shell .rtg-learning__probability-track { position: relative; height: 10px; border-radius: 8px; background: #e8edf3; }
+.course-shell .rtg-learning__probability-track i, .course-shell .rtg-learning__probability-track b { position: absolute; left: 0; top: 0; display: block; height: 100%; border-radius: inherit; background: #496e99; transition: width 360ms ease, background-color 180ms ease; }
+.course-shell .rtg-learning__probability-track i { background: #c3d0e0; }
+.course-shell [data-verified="true"] .rtg-learning__probability-track b { top: 3px; height: 4px; background: #2a8762; }
+.course-shell .rtg-learning__feedback-lane { position: relative; z-index: 1; display: grid; flex: 0 0 166px; min-height: 0; grid-template-columns: minmax(0, .9fr) minmax(0, 1.12fr) minmax(0, .8fr) minmax(0, 1.12fr) minmax(0, 1.3fr); gap: 30px; }
+/* Focused acts free space; phase 5 restores old results before phase 6 recomputes in place. */
+.course-shell .rtg-learning__scene--active-0 .rtg-learning__photo img,
+.course-shell .rtg-learning__scene--active-1 .rtg-learning__photo img { max-height:300px; }
+.course-shell .rtg-learning__scene--active-0 .rtg-learning__features,
+.course-shell .rtg-learning__scene--active-1 .rtg-learning__features { max-height:180px; }
+.course-shell .rtg-learning__scene--active-0 .rtg-learning__filters,
+.course-shell .rtg-learning__scene--active-1 .rtg-learning__filters,
+.course-shell .rtg-learning__scene--active-4 .rtg-learning__filters { width:150px; height:90px; }
+.course-shell .rtg-learning__scene--active-0 .rtg-learning__filters span,
+.course-shell .rtg-learning__scene--active-1 .rtg-learning__filters span,
+.course-shell .rtg-learning__scene--active-4 .rtg-learning__filters span { width:80px; height:80px; }
+.course-shell .rtg-learning__scene--active-0 .rtg-learning__filters span:nth-child(2),
+.course-shell .rtg-learning__scene--active-1 .rtg-learning__filters span:nth-child(2),
+.course-shell .rtg-learning__scene--active-4 .rtg-learning__filters span:nth-child(2) { left:34px; }
+.course-shell .rtg-learning__scene--active-0 .rtg-learning__filters span:nth-child(3),
+.course-shell .rtg-learning__scene--active-1 .rtg-learning__filters span:nth-child(3),
+.course-shell .rtg-learning__scene--active-4 .rtg-learning__filters span:nth-child(3) { left:68px; }
+.course-shell .rtg-learning__scene--active-2 { display:grid; grid-template-columns:minmax(0,1.2fr) minmax(0,1fr); grid-template-rows:40px minmax(0,1fr); gap:24px 40px; }
+.course-shell .rtg-learning__scene--active-2 .rtg-learning__scene-head { grid-column:1 / -1; }
+.course-shell .rtg-learning__scene--active-2 .rtg-learning__pipeline { grid-column:1; grid-row:2; grid-template-columns:minmax(0,1fr); }
+.course-shell .rtg-learning__scene--active-2 .rtg-learning__feedback-lane { grid-column:2; grid-row:2; grid-template-columns:minmax(0,1fr); }
+.course-shell .rtg-learning__scene--active-2 .rtg-learning__loss { grid-column:1; padding:24px; justify-items:center; text-align:center; }
+.course-shell .rtg-learning__scene--active-2 .rtg-learning__loss::before,
+.course-shell .rtg-learning__scene--active-2 .rtg-learning__loss::after { display:none; }
+.course-shell .rtg-learning__scene--active-2 .rtg-learning__node--prediction::after { content:''; position:absolute; left:calc(100% + 8px); top:50%; width:24px; height:14px; transform:translateY(-50%); background:var(--learn-orange); clip-path:polygon(0 40%,70% 40%,70% 0,100% 50%,70% 100%,70% 60%,0 60%); }
+.course-shell .rtg-learning__scene--active-3 .rtg-learning__feedback-lane { flex:1 1 0; grid-template-columns:repeat(3,minmax(0,1fr)); gap:40px; }
+.course-shell .rtg-learning__scene--active-3 .rtg-learning__optimizer { grid-column:1; grid-template-columns:minmax(0,1fr); justify-items:center; text-align:center; }
+.course-shell .rtg-learning__scene--active-3 .rtg-learning__gradient { grid-column:2; justify-items:center; text-align:center; padding:24px; gap:16px; }
+.course-shell .rtg-learning__scene--active-3 .rtg-learning__loss { grid-column:3; justify-items:center; text-align:center; padding:24px; gap:16px; }
+.course-shell .rtg-learning__scene--active-3 .rtg-learning__loss::after { display:none; }
+.course-shell .rtg-learning__scene--active-4 .rtg-learning__pipeline { grid-template-columns:repeat(2,minmax(0,1fr)); gap:32px; }
+.course-shell .rtg-learning__scene--active-4 .rtg-learning__node::after { display:none; }
+.course-shell .rtg-learning__scene--active-4 .rtg-learning__feedback-lane { flex:0 0 140px; grid-template-columns:minmax(0,1fr); }
+.course-shell .rtg-learning__scene--active-4 .rtg-learning__optimizer { grid-column:1; padding:16px 24px; }
+.course-shell .rtg-learning__scene--active-4 .rtg-learning__parameter-track > span { animation:rtg-learning-parameter-write 600ms ease-out both; }
+/* Static, grid-aligned return paths: split the two 1.12fr tracks at their centers.
+   Stay entirely in the existing 24px gutter; no DOM measurements or animation loop. */
+.course-shell .rtg-learning__update-routes { position: absolute; z-index: 2; left: 20px; right: 20px; bottom: 182px; height: 24px; display: grid; grid-template-columns: minmax(0, .9fr) 30px minmax(0, .56fr) [theta] minmax(0, .56fr) 30px minmax(0, .8fr) 30px minmax(0, .56fr) [phi] minmax(0, .56fr) 30px minmax(0, 1.3fr); color: var(--learn-green); pointer-events: none; }
+.course-shell .rtg-learning__update-bridge { grid-column: theta / phi; grid-row: 1; align-self: start; height: 2px; margin-top: 12px; background: currentColor; }
+.course-shell .rtg-learning__update-branch { position: relative; grid-row: 1; justify-self: start; align-self: start; width: 2px; margin-left: -1px; background: currentColor; }
+.course-shell .rtg-learning__update-branch--theta { grid-column: theta; height: 24px; }
+.course-shell .rtg-learning__update-branch--phi { grid-column: phi; height: 14px; }
+.course-shell .rtg-learning__update-branch::before { content: ''; position: absolute; left: -3px; top: 1px; width: 8px; height: 8px; border-top: 2px solid currentColor; border-left: 2px solid currentColor; transform: rotate(45deg); }
+.course-shell .rtg-learning__update-branch--theta::after { content: ''; position: absolute; left: -2px; bottom: -2px; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.course-shell .rtg-learning__scene--active-4 .rtg-learning__update-routes { bottom:156px; grid-template-columns:minmax(0,1fr) [theta] minmax(0,1fr) 32px minmax(0,1fr) [phi] minmax(0,1fr); }
+.course-shell .rtg-learning__scene--active-4 .rtg-learning__update-bridge { position:relative; }
+.course-shell .rtg-learning__scene--active-4 .rtg-learning__update-bridge::after { content:''; position:absolute; left:50%; top:0; width:2px; height:12px; background:currentColor; }
+.course-shell .rtg-learning__scene--active-4 .rtg-learning__update-branch { height:14px; }
+.course-shell .rtg-learning__scene--active-4 .rtg-learning__update-branch::after { display:none; }
+.course-shell .rtg-learning__optimizer, .course-shell .rtg-learning__gradient, .course-shell .rtg-learning__loss { position: relative; display: grid; min-height: 0; align-content: center; padding: 10px 12px; border: 1px solid #dce3ec; border-radius: 12px; background: #f9fafc; transition: opacity 180ms ease, border-color 180ms ease, background-color 180ms ease; }
+.course-shell .rtg-learning__optimizer { grid-column: 1 / span 2; grid-template-columns: minmax(0, 1fr) auto; gap: 14px; align-items: center; }
+.course-shell .rtg-learning__optimizer.is-updated { border-color: #b4d1c2; background: #f1f8f4; }
+.course-shell .rtg-learning__gradient { grid-column: 3 / span 2; gap: 3px; color: #526982; }
+.course-shell .rtg-learning__gradient.is-ready { color: var(--learn-purple); border-color: #c6b6db; background: #f7f4fb; }
+.course-shell .rtg-learning__loss { grid-column: 5; gap: 3px; }
+.course-shell .rtg-learning__loss.is-ready { background: #fffaf1; border-color: #dfc69f; }
+.course-shell .rtg-learning__gradient::before, .course-shell .rtg-learning__loss::before { content: ''; position: absolute; right: calc(100% + 4px); top: 50%; width: 22px; height: 12px; transform: translateY(-50%); background: #d5dce6; clip-path: polygon(100% 40%, 30% 40%, 30% 0, 0 50%, 30% 100%, 30% 60%, 100% 60%); transition: background-color 180ms ease; pointer-events: none; }
+.course-shell .rtg-learning__loss::after { content: ''; position: absolute; left: 50%; bottom: calc(100% + 3px); width: 12px; height: 18px; transform: translateX(-50%); background: #d5dce6; clip-path: polygon(40% 0, 60% 0, 60% 65%, 100% 65%, 50% 100%, 0 65%, 40% 65%); transition: background-color 180ms ease; pointer-events: none; }
+.course-shell .rtg-learning__action { position: relative; display: flex; min-width: 0; max-width: 100%; min-height: 48px; align-items: center; justify-content: center; gap: 7px; padding: 4px 10px; border: 1px solid #3b5d84; border-radius: 9px; color: #fff; background: linear-gradient(120deg, #315982, #264469); box-shadow: inset 0 1px 0 #ffffff20, 0 3px 8px #28496e15; cursor: pointer; transition: transform 150ms ease, box-shadow 150ms ease; }
+.course-shell .rtg-learning__action svg { width: 19px; height: 19px; flex: 0 0 auto; }
+.course-shell .rtg-learning__action--compare { background: #fff5e4; color: #87571d; border-color: #c7a26c; }
+.course-shell .rtg-learning__action--gradient { background: #f0eaf8; color: #63438b; border-color: #b69dce; }
+.course-shell .rtg-learning__action--update { background: #eaf5ee; color: #176743; border-color: #78aa91; }
+.course-shell .rtg-learning__action:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 5px 12px #28496e20; }
+.course-shell .rtg-learning__action:focus-visible { outline: 3px solid #b78b42; outline-offset: 3px; }
+.course-shell .rtg-learning__scene--active-1 .rtg-learning__node, .course-shell .rtg-learning__scene--active-5 .rtg-learning__node { border-color: #a9bed4; }
+.course-shell .rtg-learning__scene--active-1 .rtg-learning__node::after, .course-shell .rtg-learning__scene--active-5 .rtg-learning__node::after { background-color: var(--learn-blue); }
+.course-shell .rtg-learning__scene--active-6 .rtg-learning__node { border-color:#a9bed4; }
+.course-shell .rtg-learning__scene--active-6 .rtg-learning__node::after { background-color:var(--learn-green); }
+.course-shell .rtg-learning__feedback-lane { transition: opacity 180ms ease; }
+.course-shell .rtg-learning__scene--active-2 .rtg-learning__loss { border-color: #c7a26c; background-color: #fff3dd; }
+.course-shell .rtg-learning__scene--active-2 .rtg-learning__loss::after { background-color: var(--learn-orange); }
+.course-shell .rtg-learning__scene--active-3 .rtg-learning__loss::before, .course-shell .rtg-learning__scene--active-3 .rtg-learning__gradient::before { background-color: var(--learn-purple); }
+.course-shell .rtg-learning__scene--active-4 .rtg-learning__node--extractor, .course-shell .rtg-learning__scene--active-4 .rtg-learning__node--head { border-color: #8dbba3; background: #f4faf6; }
+.course-shell .rtg-learning__conclusion { display: grid; min-width: 0; gap: 2px; }
+@keyframes rtg-learning-parameter-write { from { left:22%; background:var(--learn-blue); } to { left:76%; background:var(--learn-green); } }
+@media (prefers-reduced-motion:no-preference) {
+  .course-shell .rtg-learning__scene--active-6 .rtg-learning__features b,
+  .course-shell .rtg-learning__scene--active-6 .rtg-learning__probability-track b { transition-duration:1000ms; }
+  .course-shell .rtg-learning__scene--active-6 .rtg-learning__score-symbol span { transition:width 1000ms ease,background-color 600ms ease; }
+}
+@media (prefers-reduced-motion: reduce) { .course-shell .rtg-learning *, .course-shell .rtg-learning *::before, .course-shell .rtg-learning *::after { transition: none; animation:none; } .course-shell .rtg-learning__action:hover { transform: none; } }

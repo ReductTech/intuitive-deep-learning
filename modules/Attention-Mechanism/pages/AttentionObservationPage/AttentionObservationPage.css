@@ -1,0 +1,24 @@
+.attn-observation-page {
+  width: 100%; height: 100%; min-width: 0; min-height: 0; max-width: 100%;
+  display: grid; grid-template-rows: auto minmax(0, 1fr) 148px;
+  gap: 28px; padding: 42px 56px 48px; background: var(--ui-bg-card);
+}
+.attn-observation-page *, .attn-observation-page *::before, .attn-observation-page *::after { box-sizing: border-box; }
+.attn-observation-page :where(header, section, footer, div, svg, button, p, h1, h2, h3, span) { min-width: 0; max-width: 100%; }
+.attn-observation-main { display: grid; grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr); gap: 46px; min-height: 0; align-items: center; }
+.attn-observation-visual { display: grid; align-items: center; min-height: 0; height: 100%; }
+.attn-desk-vector { display: block; width: 100%; max-height: 100%; border-radius: var(--ui-radius-lg); }
+.attn-observation-task { display: flex; flex-direction: column; align-items: flex-start; gap: 25px; min-height: 0; }
+.attn-observation-task > .edu-btn { margin-top: 6px; min-height: 62px; padding: 10px 24px; }
+.attn-observation-task .edu-callout { width: 100%; }
+.attn-observation-hidden { display: flex; height: 100%; min-height: 0; flex-direction: column; justify-content: center; align-items: center; gap: 19px; border: 2px dashed var(--ui-border); border-radius: var(--ui-radius-lg); background: var(--ui-bg-muted); }
+.attn-observation-hidden svg { width: 82px; height: 82px; fill: none; stroke: var(--ui-border-strong); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.attn-observation-question { width: 100%; border: 0; background: transparent; padding: 0; gap: 20px; }
+.attn-observation-question .dl-question-head { gap: 4px; }
+.attn-observation-question .dl-question-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.attn-observation-question .dl-question-option { grid-template-columns: minmax(0, 1fr); justify-items: center; min-height: 78px; padding: 12px 6px; }
+.attn-observation-question .dl-option-key { display: none; }
+.attn-observation-comparison { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; min-height: 0; }
+.attn-observation-round { display: grid; align-content: center; gap: 19px; min-height: 0; }
+.attn-observation-footer { display: flex; flex-direction: column; justify-content: center; gap: 8px; border: 2px solid var(--ui-border); padding: 18px 25px; min-height: 0; background: var(--ui-bg-muted); border-radius: var(--ui-radius-lg); }
+.attn-observation-footer.is-revealed { background: var(--ui-accent-soft); border-color: var(--ui-border-strong); }
