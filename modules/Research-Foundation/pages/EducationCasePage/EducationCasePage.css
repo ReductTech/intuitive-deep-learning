@@ -1,15 +1,12 @@
 .rf-case{position:relative;background:linear-gradient(110deg,#fff 63%,#f4f8fc);color:#213c5a;}
-.rf-case-heading{position:absolute;left:64px;top:64px;width:990px;display:flex;flex-direction:column;gap:18px;}
+.rf-case-heading{position:absolute;left:80px;top:42px;width:1440px;display:flex;flex-direction:column;gap:12px;}
 .rf-case-eyebrow{--ui-type-body-small-size:23px;--ui-type-body-small-line-height:1.4;color:#738aa1;}
-.rf-case-heading>h1{--ui-type-h1-size:50px;--ui-type-h1-line-height:1.25;--ui-type-h1-weight:750;letter-spacing:-.025em;color:#203e61;}
-.rf-case-heading>.ui-typography--subtitle{--ui-type-subtitle-size:25px;--ui-type-subtitle-line-height:1.5;--ui-type-subtitle-weight:400;color:#6c8197;}
-.rf-case-document{position:absolute;left:64px;top:258px;width:980px;margin:0;}
+.rf-case-heading>h1{--ui-type-h1-size:46px;--ui-type-h1-line-height:1.25;--ui-type-h1-weight:750;letter-spacing:-.025em;color:#203e61;}
+.rf-case-heading>.ui-typography--subtitle{--ui-type-subtitle-size:24px;--ui-type-subtitle-line-height:1.5;--ui-type-subtitle-weight:400;color:#6c8197;}
+.rf-case-document{position:absolute;left:270px;top:200px;width:1060px;margin:0;}
 .rf-case-document>figcaption{display:flex;justify-content:space-between;align-items:center;padding:0 2px 15px;color:#6b8096;}
 .rf-case-document>figcaption .ui-typography{--ui-type-body-small-size:20px;--ui-type-body-small-line-height:1.4;color:inherit;}
 .rf-case-document-image{position:relative;width:100%;border:1px solid #dae3ec;border-radius:5px;box-shadow:0 8px 25px #1c385c0b;background:white;}
 .rf-case-document-image>img{display:block;width:100%;height:auto;max-width:100%;border-radius:5px;}
 .rf-case-first-row{position:absolute;left:2.1%;right:3.5%;top:25.2%;height:4.4%;border:2px solid #6f9bc1;background:#5e99c50c;pointer-events:none;animation:rf-case-mark 1.3s ease both;}
-.rf-case-phone-label{position:absolute;left:1150px;top:46px;--ui-type-body-size:25px;--ui-type-body-line-height:1.4;color:#547492;}
-.rf-case-phone-host{position:absolute;left:1110px;top:100px;width:450px;height:900px;transform:scale(.83);transform-origin:top left;}
-.rf-case-phone-host>.ra-phone{position:relative;left:0;top:0;right:auto;transform:none;transform-origin:top left;}
 @keyframes rf-case-mark{from{opacity:0;}to{opacity:1;}}

@@ -2,8 +2,8 @@
   "paper": "DINOv3",
   "arxiv": "2508.10104",
   "source": "https://ar5iv.labs.arxiv.org/html/2508.10104",
-  "note": "Original paper figures, SVG charts and tables exported from ar5iv HTML; visual content preserved. Representative Figure 1 is an illustrative preselected result, not live browser inference.",
-  "selected": "figure-01.png",
+  "note": "Original figures and tables exported from ar5iv, with separate native PDF excerpts used for the local film. Figure 12 multi-student distillation is the preselected representative method diagram; the browser runs no live inference.",
+  "selected": "pdf-elements/figure-12.png",
   "elements": [
     {
       "id": "S1.F1",

@@ -20,6 +20,7 @@ import { CodeExecutionShowcasePage } from './pages/CodeExecutionShowcasePage/Cod
 import { ShukuWebsiteShowcasePage } from './pages/ShukuWebsiteShowcasePage/ShukuWebsiteShowcasePage';
 import { PlatformFoundationPage } from './pages/PlatformFoundationPage/PlatformFoundationPage';
 import { UserFoundationPage } from './pages/UserFoundationPage/UserFoundationPage';
+import { SproutLearningPage } from './pages/SproutLearningPage/SproutLearningPage';
 import { EducationCasePage } from './pages/EducationCasePage/EducationCasePage';
 
 const pages=[
@@ -40,6 +41,7 @@ const pages=[
  {id:'platform-foundation',Component:PlatformFoundationPage},
  {id:'user-foundation',Component:UserFoundationPage},
  {id:'foundation-five-title',Component:FoundationFiveTitlePage},
+ {id:'sprout-learning',Component:SproutLearningPage},
  {id:'education-case',Component:EducationCasePage},
 ];
 export const deck:DeckDefinition={id:outline.id,title:outline.title,subtitle:'研究基础 · 自动演示与交互',scenes:pages.map(({id,Component},i)=>({id,title:outline.pages[i].title,section:'研究基础',render:context=><Component {...(['foundation-one-title','foundation-two-title','foundation-three-title','foundation-four-title','foundation-five-title','pdf-structuring','main-figure-selection','literature-service'].includes(id)?{onComplete:context.next}:{})}/>}))};

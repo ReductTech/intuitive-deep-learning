@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { ChevronDown, Search, UserRound, ExternalLink } from 'lucide-react';
+import { ChevronDown, Search, UserRound } from 'lucide-react';
 import { Typography, moduleAssetUrl } from '../../../shared/react';
 import outline from '../../outlines.json';
 import './SproutProgramPage.css';
@@ -28,17 +28,26 @@ export function SproutProgramPage({autoPlay=false}:{autoPlay?:boolean}) {
  useEffect(()=>{
   if(!autoPlay||manual.current||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
   const element=root.current,scroll=viewport.current;if(!element||!scroll)return;
-  let frame=0,elapsed=0,last=performance.now(),visible=false;
+  let frame=0,elapsed=0,last=performance.now(),visible=false,position=scroll.scrollTop,loops=0;
   const observer=new IntersectionObserver(([entry])=>{visible=entry.isIntersecting;last=performance.now()});observer.observe(element);
   const pause=()=>{manual.current=true;element.dataset.playing='false';cancelAnimationFrame(frame)};
   element.addEventListener('pointerdown',pause);element.addEventListener('wheel',pause,{passive:true});element.addEventListener('keydown',pause);
-  const stops=[{at:0,id:'intro'},{at:3000,id:'stages'},{at:6500,id:'rewards'},{at:9500,id:'cases'},{at:12500,id:'mentors'}];
-  const target=(id:string)=>Math.min(Math.max(0,scroll.scrollHeight-scroll.clientHeight),scroll.querySelector<HTMLElement>(`[data-sprout-section="${id}"]`)?.offsetTop??0);
-  const tick=(now:number)=>{if(visible&&!document.hidden)elapsed=Math.min(16000,elapsed+Math.min(100,Math.max(0,now-last)));last=now;
-   let index=stops.length-1;while(index>0&&elapsed<stops[index].at)index--;
-   const t=Math.max(0,Math.min(1,(elapsed-stops[index].at)/1300)),ease=t*t*(3-2*t),start=target(stops[Math.max(0,index-1)].id),end=target(stops[index].id);
-   scroll.scrollTop=start+(end-start)*ease;element.dataset.time=String(Math.round(elapsed));element.dataset.phase=stops[index].id;element.dataset.playing=String(visible&&!document.hidden&&elapsed<16000);
-   if(elapsed<16000&&!manual.current)frame=requestAnimationFrame(tick);
+  const tick=(now:number)=>{
+   const active=visible&&!document.hidden,delta=Math.min(100,Math.max(0,now-last));last=now;
+   if(active){
+    elapsed+=delta;
+    const maximum=Math.max(0,scroll.scrollHeight-scroll.clientHeight);
+    if(maximum>0){
+     position+=delta*.042;
+     if(position>=maximum){position%=maximum;loops++}
+     scroll.scrollTop=position;
+    }
+   }
+   const sections=Array.from(scroll.querySelectorAll<HTMLElement>('[data-sprout-section]'));
+   const section=[...sections].reverse().find(section=>section.offsetTop<=scroll.scrollTop+20);
+   element.dataset.time=String(Math.round(elapsed));element.dataset.phase=section?.dataset.sproutSection??'intro';
+   element.dataset.loops=String(loops);element.dataset.playing=String(active);
+   if(!manual.current)frame=requestAnimationFrame(tick);
   };frame=requestAnimationFrame(tick);
   return()=>{cancelAnimationFrame(frame);observer.disconnect();element.removeEventListener('pointerdown',pause);element.removeEventListener('wheel',pause);element.removeEventListener('keydown',pause)};
  },[autoPlay]);
@@ -50,7 +59,7 @@ export function SproutProgramPage({autoPlay=false}:{autoPlay?:boolean}) {
    <section className="ra-sprout-section" data-sprout-section="stages"><Typography as="h3" variant="h3">新芽阶段</Typography><div className="ra-sprout-timeline">{[{title:'播种期',lines:['夯实基础、主题选择、持之以恒']},{title:'培育期',lines:['基础拔高、主题实现、开源复现']},{title:'成长期',lines:['多维选择（AI竞赛、科研成果等）','入组培养（对接主题关联课题组）','成功收获（竞赛获奖、论文发表）']}].map(p=><div key={p.title}><Typography variant="body"><strong>{p.title}</strong></Typography>{p.lines.map(line=><Typography key={line} variant="bodySmall">{line}</Typography>)}</div>)}</div></section>
    <section className="ra-sprout-section" data-sprout-section="rewards"><Typography as="h3" variant="h3">新芽奖励</Typography><Typography variant="bodySmall">新芽培育期间获得优秀的同学，可获得包括国内多个顶尖课题组的直通保研面试最终轮的绿色通道。目前战略合作及认可院校涵盖：清华大学、上海交通大学、南开大学、天津大学、中山大学、国防科技大学、西北工业大学、四川大学、西安交通大学、华东师范大学、中国农业大学、北京邮电大学等。</Typography></section>
    <section className="ra-sprout-section" data-sprout-section="cases"><Typography as="h3" variant="h3">新芽优秀案例</Typography><div className="ra-sprout-case"><img src={moduleAssetUrl(outline.moduleIdentity.id,'images/recommendation-app/sprout-case-paper.png')} alt="截图中的新芽优秀论文案例 K-LoRA"/><div className="ra-sprout-case-dots" aria-hidden="true"><i/><i/><i/><i/></div></div>
-    <details className="ra-sprout-learning"><summary>论文学习与考核流程</summary><Typography variant="bodySmall">线上报名与论文学习 → 线下机试、运动测试、面试 → 等待结果。今年多数同学使用 Paper Skill 网页讲解学习成果，以往主要使用 PPT。</Typography><Typography variant="bodySmall">Paper Skill 可读取 PDF、LaTeX 或论文链接，完成论文分析、学习设计、React + TypeScript 项目框架生成和初步检查。同学需结合自己的深度理解重新调整、导演和组织内容，核对内容准确性、教学逻辑与交互效果，并可制作小动画等素材。</Typography><Typography variant="bodySmall">完整可运行项目按 README 提交 GitHub，审核合并后可在论文集合找到自己的网页链接，用于复盘和面试讲解。</Typography><a href="https://github.com/ReductTech/PaperSkill" target="_blank" rel="noreferrer">Paper Skill 项目 <ExternalLink/></a><a href="https://reducttech.github.io/PaperSkill/#search" target="_blank" rel="noreferrer">论文网页集合 <ExternalLink/></a></details>
+
    </section>
    <form className="ra-sprout-filter" onSubmit={e=>{e.preventDefault();setSubmitted(query.trim())}}><label><select aria-label="导师筛选类型" value={field} onChange={e=>setField(e.target.value)}>{['学校','课题组','导师'].map(v=><option key={v}>{v}</option>)}</select><ChevronDown/></label><input aria-label="搜索新芽导师" placeholder="请输入" value={query} onChange={e=>{setQuery(e.target.value);if(!e.target.value)setSubmitted('')}}/><button type="submit">搜索</button></form>
    <section className="ra-sprout-section ra-sprout-directory" data-sprout-section="mentors"><Typography as="h3" variant="h3">新芽导师</Typography>{filtered.map(s=><details className="ra-sprout-school" key={s.name} open><summary>{s.name}<ChevronDown/></summary>{s.groups.map(g=><details className="ra-sprout-group" key={g.name} open><summary>{g.name}<ChevronDown/></summary>{g.people.length>0&&<div className="ra-sprout-people">{g.people.map((name,index)=><div className={g.people.length>4&&index===0?'ra-sprout-lead':''} key={name}><span role="img" aria-label="默认导师头像" data-default-avatar className="ra-sprout-default-avatar"><UserRound aria-hidden="true"/></span><Typography variant="bodySmall">{name}</Typography></div>)}</div>}</details>)}</details>)}{!filtered.length&&<div className="ra-sprout-no-results"><Search/><Typography variant="bodySmall">没有找到匹配的导师，请调整关键词</Typography></div>}</section>

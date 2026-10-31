@@ -1,0 +1,102 @@
+{
+  "source": "https://arxiv.org/pdf/2508.10104",
+  "paper": "DINOv3",
+  "pages": 67,
+  "pageSize": [
+    612,
+    792
+  ],
+  "note": "Read-only PDF page rendering and figure/table excerpts. These bounds and Figure 1 selection are prepared offline for the animation; no live detection is run.",
+  "elements": [
+    {
+      "file": "figure-01.png",
+      "page": 2,
+      "box": [
+        70,
+        78,
+        542,
+        366
+      ],
+      "kind": "图",
+      "label": "Figure 1"
+    },
+    {
+      "file": "figure-02.png",
+      "page": 3,
+      "box": [
+        72,
+        78,
+        540,
+        230
+      ],
+      "kind": "图",
+      "label": "Figure 2"
+    },
+    {
+      "file": "figure-03.png",
+      "page": 4,
+      "box": [
+        72,
+        78,
+        540,
+        434
+      ],
+      "kind": "图",
+      "label": "Figure 3"
+    },
+    {
+      "file": "table-02.png",
+      "page": 9,
+      "box": [
+        187,
+        123,
+        416,
+        317
+      ],
+      "kind": "表",
+      "label": "Table 2"
+    },
+    {
+      "file": "figure-05.png",
+      "page": 10,
+      "box": [
+        72,
+        78,
+        540,
+        295
+      ],
+      "kind": "图",
+      "label": "Figure 5"
+    },
+    {
+      "file": "figure-08.png",
+      "page": 13,
+      "box": [
+        72,
+        78,
+        540,
+        219
+      ],
+      "kind": "图",
+      "label": "Figure 8"
+    },
+    {
+      "file": "figure-12.png",
+      "page": 16,
+      "box": [
+        72,
+        78,
+        540,
+        302
+      ],
+      "kind": "图",
+      "label": "Figure 12"
+    }
+  ],
+  "representative": {
+    "file": "figure-12.png",
+    "page": 16,
+    "caption": "Multi-student distillation procedure",
+    "selection": "Method diagram chosen for this demonstration; not a claim that Figure 12 is the only summary of DINOv3."
+  }
+}

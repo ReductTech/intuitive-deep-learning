@@ -20,6 +20,6 @@ export function ResearchRecommendationAppPage(){
    <div><Typography as="p" variant="body" tone="accent">扫码体验</Typography><Typography as="a" variant="bodySmall" tone="accent" href="https://www.reduct.cn/" target="_blank" rel="noreferrer">www.reduct.cn <ArrowUpRight aria-hidden="true"/></Typography></div>
   </aside>
   <ResearchWebMonitor/>
-  <ResearchAppPhone/>
+  <ResearchAppPhone autoPlaySprout/>
  </section>
 }

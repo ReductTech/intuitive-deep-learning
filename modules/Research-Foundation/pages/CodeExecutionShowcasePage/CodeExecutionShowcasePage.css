@@ -7,3 +7,12 @@
 .rf-sim-node.rf-sim-add{width:40px;height:40px;border-radius:50%;background:#eaf3ff;border-color:#2477f3;color:#2477f3}
 .rf-sim-branch{border-color:#80b6ff;background:#edf5ff}
 .rf-sim-shortcut{position:absolute;right:0;top:43%;color:#2477f3;--ui-type-body-small-size:22px}
+
+.rf-sim-page .code-lab-toolbar{display:flex;height:62px}
+.rf-sim-page .cm-editor{font-size:23px;height:100%}
+.rf-sim-page .cm-scroller{line-height:1.25}
+.rf-sim-page .cm-content{padding-top:14px;padding-bottom:14px}
+.rf-sim-page .code-lab-left{padding-top:34px}
+.rf-sim-page .code-lab-editor-host{height:100%}
+
+.rf-sim-page .cm-activeLine,.rf-sim-page .cm-activeLineGutter{background:transparent}
