@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
-import { moduleAssetUrl } from '../../shared/react/assets';
-import outline from '../outlines.json';
+import { courseAssetUrl } from '../assets';
 
-/** Load the interactive SVG from the same asset host as all other course images. */
+/** Load the interactive SVG from this course's own assets directory. */
 export function useDiagramAsset(relativePath: string) {
   const [markup, setMarkup] = useState('');
   const [failed, setFailed] = useState(false);
@@ -10,7 +9,7 @@ export function useDiagramAsset(relativePath: string) {
     const controller = new AbortController();
     setMarkup('');
     setFailed(false);
-    fetch(moduleAssetUrl(outline.moduleIdentity.id, relativePath), { signal: controller.signal })
+    fetch(courseAssetUrl(relativePath), { signal: controller.signal })
       .then(response => {
         if (!response.ok) throw new Error(`Diagram HTTP ${response.status}`);
         return response.text();

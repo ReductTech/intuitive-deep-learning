@@ -1,0 +1,10 @@
+.daa-segmentation .daa-center { gap: 10px; }
+.daa-segmentation .daa-photo-stage { width: min(100%, 600px); }
+.daa-mask-result { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; min-height: 0; }
+.daa-mask-number-grid { display: grid; width: min(100%, 540px); aspect-ratio: 3 / 2; grid-template-columns: repeat(36, minmax(0, 1fr)); grid-template-rows: repeat(24, minmax(0, 1fr)); }
+.daa-mask-number-grid > div { position: relative; display: grid; place-items: center; background: var(--ui-bg-soft); color: var(--ui-text-muted); border: 1px solid var(--ui-border); }
+.daa-mask-number-grid > .is-apple { background: var(--ui-accent-alt); color: var(--ui-text-main); }
+
+.daa-segmentation.is-confirmed .daa-photo-stage { width: min(100%, 540px); }
+
+.daa-mask-number-grid .ui-typography { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) scale(.5); }

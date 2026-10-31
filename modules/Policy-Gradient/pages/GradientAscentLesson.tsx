@@ -1,4 +1,41 @@
+import { MathFormulaBlock, MathFormulaStatic } from '../../shared/react';
 import { Page, T, H, F } from '../components/LessonVisuals';
 import './focusedTheory.css';
 
-export function GradientAscentLesson(){return <Page title="目标确定了，网络权重怎样改？" subtitle="上一页改变路线概率；真正训练时，我们调整的是网络权重。" takeaway="先明确更新规则；接下来寻找能从走迷宫的经历中算出的梯度。"><div className="pg-ft-page"><div className="pg-ft-chain"><div><H>改权重</H><F latex={String.raw`\theta`}/><T small>两层网络的连接权重</T></div><T tone="accent">→</T><div><H>改变选择</H><F latex={String.raw`\pi_\theta(a\mid s)`}/><T small>各个位置的动作概率</T></div><T tone="accent">→</T><div><H>改变平均得分</H><F latex={String.raw`J(\theta)`}/><T small>希望越来越高</T></div></div><div className="pg-ft-central"><H>沿着提高目标的方向，改一小步</H><F latex={String.raw`\theta_{\mathrm{new}}=\theta+\underbrace{\alpha}_{\text{步长}}\underbrace{\nabla_\theta J(\theta)}_{\text{调整方向}}`}/></div><div className="pg-ft-pair"><div><T tone="accent">梯度：各个权重该往哪边改</T><T small>∇θJ 对每个权重给出一个局部调整方向。</T></div><div><T tone="accent">学习率：沿这个方向走多远</T><T small>提高回报用加号；降低损失用减号。α 控制步长。</T></div></div></div></Page>}
+export function GradientAscentLesson() {
+  return (
+    <Page
+      title="目标确定了，网络权重怎样改？"
+      subtitle="调整网络权重，让期望得分提高。"
+      takeaway="最大化回报：沿梯度方向，迈一小步。"
+    >
+      <div className="pg-ga-layout">
+        <div className="pg-ga-chain">
+          <div className="pg-ga-node"><H>改权重</H><F latex={String.raw`\theta`} /></div>
+          <div className="pg-ga-connector" aria-hidden="true"><T tone="accent">↓</T></div>
+          <div className="pg-ga-node"><H>改变选择</H><F latex={String.raw`\pi_\theta(a\mid s)`} /></div>
+          <div className="pg-ga-connector" aria-hidden="true"><T tone="accent">↓</T></div>
+          <div className="pg-ga-node"><H>改变平均得分</H><F latex={String.raw`J(\theta)`} /></div>
+        </div>
+        <div className="pg-ga-update">
+          <H>梯度上升</H>
+          <MathFormulaBlock appearance="plain" ariaLabel="梯度上升，学习率控制步长，梯度给出方向">
+            <div className="pg-ga-expression">
+              <div className="pg-ga-prefix"><MathFormulaStatic latex={String.raw`\theta_{\mathrm{new}}=\theta+`} /></div>
+              <div className="pg-ga-factor pg-ga-rate">
+                <MathFormulaStatic latex={String.raw`\alpha`} />
+                <i aria-hidden="true" />
+                <div className="pg-ga-factor-label"><T tone="warning">学习率</T><T tone="warning">改多少</T></div>
+              </div>
+              <div className="pg-ga-factor pg-ga-gradient">
+                <MathFormulaStatic latex={String.raw`\nabla_\theta J(\theta)`} />
+                <i aria-hidden="true" />
+                <div className="pg-ga-factor-label"><T tone="accent">梯度</T><T tone="accent">往哪边改</T></div>
+              </div>
+            </div>
+          </MathFormulaBlock>
+        </div>
+      </div>
+    </Page>
+  );
+}

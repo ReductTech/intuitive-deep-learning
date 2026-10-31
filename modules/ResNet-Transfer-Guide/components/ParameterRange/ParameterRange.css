@@ -1,0 +1,23 @@
+.course-shell .rtg-parameter-range { display:grid; width:100%; min-width:0; max-width:100%; grid-template-columns:repeat(6,minmax(0,1fr)); gap:28px; align-items:center; }
+.course-shell .rtg-parameter-range * { min-width:0; max-width:100%; box-sizing:border-box; }
+.course-shell .rtg-parameter-range__group { position:relative; display:flex; flex-direction:column; align-items:center; gap:20px; color:var(--ui-accent); }
+.course-shell .rtg-parameter-range__group:not(:last-child)::after { position:absolute; content:''; right:-18px; top:50%; width:10px; height:10px; border-top:2px solid var(--ui-accent); border-right:2px solid var(--ui-accent); transform:rotate(45deg); }
+.course-shell .rtg-parameter-range__blocks { display:block; width:100%; height:204px; stroke:var(--ui-text-light); stroke-width:1.2; stroke-linejoin:round; stroke-dasharray:none; }
+.course-shell .rtg-parameter-range__blocks .block-top { fill:var(--ui-bg-page); }
+.course-shell .rtg-parameter-range__blocks .block-side { fill:var(--ui-border-strong); }
+.course-shell .rtg-parameter-range__blocks .block-front { fill:var(--ui-border); }
+.course-shell .rtg-parameter-range__blocks .block-frozen-outline { fill:none; stroke:var(--ui-text-muted); stroke-dasharray:4 3; }
+.course-shell .rtg-parameter-range__group.is-trainable { color:var(--ui-warning); }
+.course-shell .is-trainable > .rtg-parameter-range__blocks { stroke:var(--ui-warning); stroke-dasharray:none; }
+.course-shell .is-trainable > .rtg-parameter-range__blocks .block-top { fill:rgba(var(--ui-warning-rgb),.18); }
+.course-shell .is-trainable > .rtg-parameter-range__blocks .block-side { fill:rgba(var(--ui-warning-rgb),.7); }
+.course-shell .is-trainable > .rtg-parameter-range__blocks .block-front { fill:rgba(var(--ui-warning-rgb),.4); }
+.course-shell .rtg-parameter-range__status { display:flex; align-items:center; justify-content:center; gap:8px; }
+.course-shell .rtg-parameter-range.is-pending .rtg-parameter-range__status { visibility:hidden; }
+.course-shell .rtg-parameter-range__state-icon { display:block; width:30px; height:30px; fill:none; stroke:currentColor; stroke-width:2.3; stroke-linecap:round; stroke-linejoin:round; }
+.course-shell .rtg-parameter-range.is-compact { gap:14px; }
+.course-shell .rtg-parameter-range.is-backbone-only { grid-template-columns:repeat(5,minmax(0,1fr)); }
+.course-shell .rtg-parameter-range.is-compact .rtg-parameter-range__group { gap:0; }
+.course-shell .rtg-parameter-range.is-compact .rtg-parameter-range__blocks { height:66px; }
+.course-shell .rtg-parameter-range.is-compact .rtg-parameter-range__state-icon { width:22px; height:22px; }
+.course-shell .rtg-parameter-range.is-compact .rtg-parameter-range__group:not(:last-child)::after { right:-9px; width:5px; height:5px; border-width:1.4px; }

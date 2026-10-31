@@ -1,7 +1,50 @@
-import { Page, T, H, F } from '../components/LessonVisuals';
+import { MathFormulaBlock, MathFormulaStatic, MathFormulaTerm } from '../../shared/react';
+import { Page, T } from '../components/LessonVisuals';
 import { MazeBoard } from '../components/ReinforceMaze';
 import { GOAL } from '../mazeModel';
 import { DEMO_PATH } from '../neuralPolicy';
 import './learningSignal.css';
 
-export function LearningSignal(){return <Page title="这次选择，怎样影响权重？" subtitle="没有正确动作标签，就用实际回报评价这次选择。" takeaway="只评价本步之后的回报；整局贡献合成一次更新，单局并不保证表现提高。"><div className="pg-ls-page"><div className="pg-ls-scene"><div className="pg-tr-board"><MazeBoard position={GOAL} steps={DEMO_PATH} focus={1} fox showPath/></div><T small>教学示例 · 橙框：第 2 步向右</T></div><div className="pg-ls-explanation"><H>本步贡献 = 回报 × 调整方向</H><div className="pg-ls-pieces"><div><T small>经历给评价</T><F latex={String.raw`G_1=10-4=6`}/><T small>四次移动，再到终点</T></div><T tone="accent">×</T><div><T small>网络给方向</T><F latex={String.raw`\nabla_\theta\log\pi_\theta(a_1\mid s_1)`}/><T small>提高所选动作概率的权重方向</T></div></div><T small tone="accent">路线概率来自逐步概率连乘；log 把连乘变求和，反向传播算出方向。</T><div className="pg-ls-meaning"><T small>本步正回报：鼓励该选择</T><T small>本步负回报：抑制该选择</T></div></div><div className="pg-ls-rule"><T small tone="accent">合并各步，得到目标梯度 ∇θJ 的单局估计 ĝ</T><F latex={String.raw`\widehat g=\sum_t\underbrace{G_t}_{\text{评价}}\underbrace{\nabla_\theta\log\pi_\theta(a_t\mid s_t)}_{\text{方向}}`}/><div className="pg-ls-symbols"><T small>sₜ：位置 · aₜ：动作 · t 从 0 计</T><T small>Σ：各步相加 · log：自然对数</T></div></div></div></Page>}
+export function LearningSignal() {
+  return (
+    <Page
+      title="这次选择，怎样影响权重？"
+      subtitle="回报给评价，梯度给方向。"
+      takeaway="用回报为方向加权，再把各步贡献相加。"
+    >
+      <div className="pg-signal-layout">
+        <div className="pg-signal-scene">
+          <div className="pg-tr-board"><MazeBoard position={GOAL} steps={DEMO_PATH} focus={1} fox showPath /></div>
+          <T tone="warning">第 2 步：向右</T>
+        </div>
+        <div className="pg-signal-math">
+          <div className="pg-signal-product">
+            <div className="pg-signal-return">
+              <T tone="warning">回报</T>
+              <MathFormulaBlock appearance="plain" ariaLabel="第二步之后的实际回报等于6">
+                <MathFormulaTerm className="pg-signal-warm" latex={String.raw`G_1=10-4=6`} tooltip="从第 2 步起，四次普通移动各扣 1 分，再送达得 10 分。" tooltipPlacement="top" />
+              </MathFormulaBlock>
+            </div>
+            <div className="pg-signal-times"><T tone="muted">×</T></div>
+            <div className="pg-signal-direction">
+              <T tone="accent">梯度方向</T>
+              <MathFormulaBlock appearance="plain" ariaLabel="所选向右动作的对数概率梯度">
+                <MathFormulaTerm latex={String.raw`\nabla_\theta\log\pi_\theta(a_1\mid s_1)`} tooltip="让这个位置的向右动作更常出现的权重调整方向。" tooltipPlacement="top" />
+              </MathFormulaBlock>
+            </div>
+          </div>
+          <div className="pg-signal-total">
+            <T tone="accent">整局贡献相加</T>
+            <MathFormulaBlock appearance="plain" ariaLabel="各步回报加权梯度相加，得到整局梯度估计">
+              <div className="pg-signal-sum">
+                <MathFormulaStatic latex={String.raw`\widehat g=\sum_t`} />
+                <MathFormulaTerm className="pg-signal-warm" latex={String.raw`G_t`} tooltip="第 t 步起的实际回报：对应上面的橙色回报。" tooltipPlacement="top" />
+                <MathFormulaTerm latex={String.raw`\nabla_\theta\log\pi_\theta(a_t\mid s_t)`} tooltip="第 t 步所选动作的梯度方向：对应上面的蓝色项。" tooltipPlacement="top" />
+              </div>
+            </MathFormulaBlock>
+          </div>
+        </div>
+      </div>
+    </Page>
+  );
+}

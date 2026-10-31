@@ -1,0 +1,56 @@
+.vga-page { height: 100%; display: flex; flex-direction: column; }
+.vga-page *, .vga-page *::before, .vga-page *::after { box-sizing: border-box; }
+.vga-page :where(div,section,article,figure,footer) { min-width: 0; max-width: 100%; }
+.vga-body { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 18px; }
+.vga-content { flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: center; gap: 16px; }
+.vga-takeaway { flex: 0 0 auto; padding: 14px 24px; border-left: 5px solid var(--ui-accent-alt); background: var(--ui-bg-soft); border-radius: var(--ui-radius-sm); }
+.vga-flow { display: flex; align-items: center; justify-content: space-between; gap: 18px; width: 100%; }
+.vga-flow > * { min-width: 0; max-width: 100%; flex-shrink: 1; }
+.vga-arrow { width: 55px; height: 32px; flex: 0 0 55px; color: var(--ui-accent); }
+.vga-warm { color: var(--ui-accent-alt); }
+.vga-block { min-height: 150px; padding: 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; border: 1px solid var(--ui-border); border-radius: var(--ui-radius-md); background: var(--ui-bg-soft); text-align: center; }
+.vga-block--warm { background: rgba(var(--ui-accent-alt-rgb), .08); border-color: rgba(var(--ui-accent-alt-rgb), .45); }
+.vga-reference-visual { display: block; object-fit: contain; max-width: 100%; }
+.vga-feature { position: relative; flex-shrink: 0; }
+.vga-feature .vga-reference-visual { width: 100%; height: 100%; filter: drop-shadow(0 5px 5px rgba(30,98,170,.12)); }
+.vga-feature.is-highlighted { filter: drop-shadow(0 0 5px rgba(255,130,30,.4)); }
+.vga-latent { position: relative; width: 250px; height: 205px; flex: 0 0 250px; display: flex; align-items: center; }
+.vga-latent > img { width: 100%; height: 100%; filter: drop-shadow(0 6px 6px rgba(30,98,170,.1)); }
+.vga-latent--small { width: 155px; height: 140px; flex-basis: 155px; }
+.vga-photo-wrap { width: 235px; flex: 0 0 235px; display: flex; flex-direction: column; gap: 12px; text-align: center; }
+.vga-photo { width: 100%; aspect-ratio: 1; border-radius: var(--ui-radius-sm); border: 1px solid var(--ui-border); position: relative; overflow: hidden; }
+.vga-photo > img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
+.vga-photo .vga-noise-overlay { transition: opacity .7s ease; }
+.vga-photo-wrap--small { width: 165px; flex-basis: 165px; }
+.vga-tokens { display: flex; justify-content: center; gap: 10px; padding: 14px 0; }
+.vga-tokens > img { width: 26px; height: 112px; object-fit: fill; box-shadow: 2px 3px 5px rgba(30,98,170,.12); }
+.vga-tokens i { height: 16px; background: var(--ui-accent); display: block; }
+.vga-tokens--warm > div { border-color: var(--ui-accent-alt); }
+.vga-tokens--warm i { background: var(--ui-accent-alt); }
+.vga-note { padding: 12px 22px; border-left: 3px solid var(--ui-accent); background: var(--ui-bg-muted); }
+.vga-note--warm { border-color: var(--ui-accent-alt); background: rgba(var(--ui-accent-alt-rgb), .06); }
+.vga-diagram { position: relative; width: 100%; flex: 0 0 auto; }
+.vga-diagram > svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.vga-node { position: absolute; display: flex; align-items: center; flex-direction: column; gap: 8px; text-align: center; transition: opacity .25s; }
+.vga-node--warm { color: var(--ui-accent-alt); }
+.vga-dim { opacity: .2; }
+.vga-step-label { display: flex; flex-direction: column; gap: 10px; }
+.vga-two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 38px; align-items: center; }
+.vga-three { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; align-items: center; }
+.vga-controls { display: flex; align-items: center; justify-content: center; gap: 18px; }
+.vga-controls .edu-control { width: 560px; }
+.vga-stack { display: flex; flex-direction: column; gap: 20px; }
+.vga-center { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+.vga-caption { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+.vga-attention { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .55fr) minmax(0, 1fr); gap: 20px; align-items: center; padding: 28px; border-block: 1px solid var(--ui-border); }
+.vga-patch-grid { width: 256px; height: 256px; display: grid; border: 2px solid var(--ui-accent); background: var(--ui-bg-soft); }
+.vga-patch-grid i { border: 1px solid rgba(var(--ui-accent-rgb), .35); background: rgba(var(--ui-accent-rgb), .08); }
+.vga-patch-grid i:first-child { background: var(--ui-accent-alt); }
+.vga-matrix { display: grid; grid-template-columns: minmax(0, .65fr) minmax(0, 1fr) minmax(0, 1fr); }
+.vga-matrix > div { min-width: 0; padding: 17px 24px; border-bottom: 1px solid var(--ui-border); }
+.vga-matrix .vga-matrix-head { background: var(--ui-bg-soft); }
+.vga-matrix .vga-matrix-focus { background: rgba(var(--ui-accent-alt-rgb), .1); border-left: 3px solid var(--ui-accent-alt); }
+.vga-reference-link { color: var(--ui-text-muted); }
+.vga-reference-link:focus-visible { outline: 3px solid var(--ui-focus); }
+.vga-map-question .dl-question-options { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; }
+@media (prefers-reduced-motion: reduce) { .vga-page * { transition: none !important; animation: none !important; } }

@@ -6,11 +6,15 @@ import { activeModules } from '../app/modules';
 import { BuiltinLearning } from '../shuku/BuiltinLearning';
 import { GuestFeaturePage } from '../shuku/GuestFeaturePage';
 import { UiKitPage } from '../../modules/shared/react/routing/UiKitPage';
+import { SceneDeckPage } from '../app/routes';
 
 const routes = [
   { path: '/', element: <HomePage /> },
   { path: '/course', element: <CourseDetails /> },
   { path: '/study', element: <BuiltinLearning /> },
+  { path: '/scenedeck/', element: <SceneDeckPage /> },
+  { path: '/web_ppt/', element: <SceneDeckPage /> },
+  { path: '/web_ppt/slide.html', element: <SceneDeckPage /> },
   // Keep links from the first preview implementation working.
   { path: '/preview', element: new URLSearchParams(location.search).has('module') ? <BuiltinLearning /> : <HomePage /> },
   { path: '/shared/ui-kit', element: <UiKitPage /> },

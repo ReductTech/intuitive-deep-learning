@@ -1,0 +1,9 @@
+.course-shell .rtg-transfer-check { display:grid; flex:1 1 0; min-height:0; grid-template-columns:minmax(0,1.1fr) minmax(0,1fr); gap:20px; }
+.course-shell .rtg-transfer-check[hidden] { display:none; }
+.course-shell .rtg-transfer-check, .course-shell .rtg-transfer-check * { box-sizing:border-box; min-width:0; max-width:100%; }
+.course-shell .rtg-transfer-check__question, .course-shell .rtg-transfer-check__reflection { display:grid; align-content:center; min-height:0; padding:22px; border:1px solid var(--ui-border); border-radius:var(--ui-radius-md); background:var(--ui-bg-card); }
+.course-shell .rtg-transfer-check__question .dl-question-options { grid-template-columns:minmax(0,1fr); }
+.course-shell .rtg-transfer-check__reflection { gap:16px; }
+.course-shell .rtg-transfer-check__reflection form, .course-shell .rtg-transfer-check__response { display:grid; gap:16px; }
+.course-shell .rtg-transfer-check__reflection .edu-textarea { min-height:180px; resize:none; }
+.course-shell .rtg-transfer-check__response > .edu-btn { justify-self:end; }
