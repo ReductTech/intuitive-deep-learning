@@ -1,0 +1,141 @@
+{
+  "sampleData": [
+    {
+      "step": 1000,
+      "label": "1k",
+      "showTick": false,
+      "v2_auc": 0.551,
+      "v1_auc": 0.543,
+      "v2_rho": 0.041,
+      "v1_rho": 0.056
+    },
+    {
+      "step": 2000,
+      "label": "2k",
+      "showTick": true,
+      "v2_auc": 0.552,
+      "v1_auc": 0.525,
+      "v2_rho": 0.042,
+      "v1_rho": 0.068
+    },
+    {
+      "step": 4000,
+      "label": "4k",
+      "showTick": true,
+      "v2_auc": 0.598,
+      "v1_auc": 0.529,
+      "v2_rho": 0.127,
+      "v1_rho": 0.019
+    },
+    {
+      "step": 6000,
+      "label": "6k",
+      "showTick": true,
+      "v2_auc": 0.677,
+      "v1_auc": 0.558,
+      "v2_rho": 0.25,
+      "v1_rho": 0.125
+    },
+    {
+      "step": 8000,
+      "label": "8k",
+      "showTick": true,
+      "v2_auc": 0.689,
+      "v1_auc": 0.575,
+      "v2_rho": 0.232,
+      "v1_rho": 0.098
+    },
+    {
+      "step": 10000,
+      "label": "10k",
+      "showTick": true,
+      "v2_auc": 0.719,
+      "v1_auc": 0.571,
+      "v2_rho": 0.309,
+      "v1_rho": 0.096
+    },
+    {
+      "step": 20000,
+      "label": "20k",
+      "showTick": true,
+      "v2_auc": 0.761,
+      "v1_auc": 0.629,
+      "v2_rho": 0.384,
+      "v1_rho": 0.224
+    },
+    {
+      "step": 23247,
+      "label": "23k",
+      "showTick": true,
+      "v2_auc": 0.782,
+      "v1_auc": 0.633,
+      "v2_rho": 0.432,
+      "v1_rho": 0.237
+    }
+  ],
+  "pairData": [
+    {
+      "step": 1000,
+      "label": "1k",
+      "showTick": false,
+      "auc": 0.639,
+      "rho": 0.192
+    },
+    {
+      "step": 2000,
+      "label": "2k",
+      "showTick": true,
+      "auc": 0.654,
+      "rho": 0.246
+    },
+    {
+      "step": 4000,
+      "label": "4k",
+      "showTick": false,
+      "auc": 0.698,
+      "rho": 0.325
+    },
+    {
+      "step": 6000,
+      "label": "6k",
+      "showTick": true,
+      "auc": 0.745,
+      "rho": 0.393
+    },
+    {
+      "step": 8000,
+      "label": "8k",
+      "showTick": false,
+      "auc": 0.76,
+      "rho": 0.404
+    },
+    {
+      "step": 10000,
+      "label": "10k",
+      "showTick": true,
+      "auc": 0.782,
+      "rho": 0.432
+    },
+    {
+      "step": 20000,
+      "label": "20k",
+      "showTick": true,
+      "auc": 0.764,
+      "rho": 0.395
+    },
+    {
+      "step": 40000,
+      "label": "40k",
+      "showTick": true,
+      "auc": 0.74,
+      "rho": 0.373
+    },
+    {
+      "step": 60000,
+      "label": "60k",
+      "showTick": true,
+      "auc": 0.706,
+      "rho": 0.325
+    }
+  ]
+}

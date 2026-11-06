@@ -1,0 +1,6 @@
+.naiptime-layout{height:100%;display:grid;grid-template-rows:minmax(0,1fr) auto;gap:24px;}
+.naiptime-comparison{display:grid;grid-template-columns:minmax(0,1.9fr) minmax(0,1fr);gap:48px;}
+.naiptime-chart{display:grid;grid-template-rows:auto minmax(0,1fr);gap:8px;}
+.naiptime-insights{display:grid;gap:56px;align-content:center;}
+.naiptime-insights section{display:grid;gap:16px;padding-left:24px;border-left:4px solid var(--ui-accent);}
+.naiptime-insights section:last-child{border-color:var(--ui-success);}

@@ -1,0 +1,2 @@
+import {PilotStage,PT,PH,Panel} from '../components/PilotStage';
+export function Page(){return <PilotStage title="NAIPv2 解决了什么"><div className="naipv2-setup">{[['评分尺度不一致','在同一领域、同一年份的组内进行成对学习，先限定可比范围，再学习相对质量。'],['评审置信度被忽略','RTS 联合建模审稿分数与置信度，将评分解释为带有不确定性的质量信号。'],['性能与效率难兼得','训练时采用成对监督，推理时仍按单篇打分，保留线性推理复杂度。'],['去偏数据基础不足','NAIDv2 包含 24,276 篇 ICLR 投稿及结构化内容，支持训练与评测。']].map(([title,text])=><Panel className="naipv2-stack" key={title}><PH>{title}</PH><PT>{text}</PT></Panel>)}</div></PilotStage>}

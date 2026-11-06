@@ -1,0 +1,43 @@
+.course-shell .rtg-strategy { display:flex; flex-direction:column; width:100%; height:100%; min-height:0; padding:22px 32px 18px; border:0; border-top:4px solid var(--ui-accent); background:var(--ui-bg-page-top); }
+.course-shell .rtg-strategy, .course-shell .rtg-strategy * { box-sizing:border-box; min-width:0; max-width:100%; }
+.course-shell .rtg-strategy > .edu-content-head { flex:0 0 auto; }
+.course-shell .rtg-strategy > .edu-content-body { display:flex; flex:1 1 0; flex-direction:column; min-height:0; gap:12px; }
+.course-shell .rtg-strategy__map { display:grid; flex:1 1 0; min-height:0; grid-template-columns:84px minmax(0,1fr); grid-template-rows:minmax(0,1fr) 46px; column-gap:14px; row-gap:10px; padding:14px 22px 8px 12px; border:1px solid var(--ui-border); border-radius:var(--ui-radius-lg); background:var(--ui-bg-card); }
+.course-shell .rtg-strategy__y-axis { position:relative; display:flex; flex-direction:column; align-items:center; justify-content:space-between; padding:14px 22px 12px 0; }
+.course-shell .rtg-strategy__y-axis::before { position:absolute; content:''; right:4px; top:0; bottom:0; border-right:2px solid var(--ui-accent); }
+.course-shell .rtg-strategy__y-axis::after { position:absolute; content:''; right:0; top:0; width:10px; height:10px; border-top:2px solid var(--ui-accent); border-left:2px solid var(--ui-accent); transform:rotate(45deg); }
+.course-shell .rtg-strategy__y-axis > :nth-child(2) { writing-mode:vertical-rl; }
+.course-shell .rtg-strategy__matrix { display:grid; min-height:0; grid-template-columns:repeat(2,minmax(0,1fr)); grid-template-rows:repeat(2,minmax(0,1fr)); gap:12px; }
+.course-shell .rtg-strategy__cell { position:relative; display:flex; min-height:0; flex-direction:column; align-items:center; justify-content:center; gap:4px; padding:10px 24px; border:2px solid var(--ui-border); border-radius:var(--ui-radius-md); background:var(--ui-bg-muted); transition:background-color .2s ease,border-color .2s ease; }
+.course-shell .rtg-strategy__cell.is-lit { background:var(--ui-bg-soft); border-color:rgba(var(--ui-accent-rgb),.25); }
+.course-shell .rtg-strategy__cell:not(.is-lit) .rtg-parameter-range { filter:grayscale(1); opacity:.6; }
+.course-shell .rtg-strategy__seen { position:absolute; top:6px; right:12px; pointer-events:none; }
+.course-shell .rtg-strategy__cell.is-selected { border-color:var(--ui-warning); background:rgba(var(--ui-warning-rgb),.055); }
+.course-shell .rtg-strategy__pin { position:absolute; z-index:1; pointer-events:none; top:2px; left:6px; width:48px; height:48px; fill:none; stroke-linejoin:round; }
+.course-shell .rtg-strategy__pin .pin-shadow { fill:rgba(var(--ui-accent-rgb),.12); }
+.course-shell .rtg-strategy__pin .pin-needle { fill:var(--ui-border-strong); stroke:var(--ui-accent); stroke-width:.7; }
+.course-shell .rtg-strategy__pin .pin-base, .course-shell .rtg-strategy__pin .pin-stem, .course-shell .rtg-strategy__pin .pin-head-rim { fill:var(--ui-warning); stroke:var(--ui-warning); stroke-width:1; }
+.course-shell .rtg-strategy__pin .pin-head-top { fill:var(--ui-bg-card); stroke:var(--ui-warning); stroke-width:1.3; }
+.course-shell .rtg-strategy__pin .pin-shine { fill:none; stroke:var(--ui-warning); stroke-width:1.5; stroke-linecap:round; }
+.course-shell .rtg-strategy__case-choice { display:flex; width:100%; height:100%; padding:0 4px; border-color:transparent; border-radius:var(--ui-radius-sm); background:transparent; }
+.course-shell .rtg-strategy__case-choice > span { display:flex; width:100%; flex-direction:column; align-items:center; justify-content:center; }
+.course-shell .rtg-strategy__trial-action { position:absolute; z-index:2; top:8px; right:52px; padding:1px 8px; }
+.course-shell .rtg-strategy__cell.has-trial-action .rtg-strategy__case-choice > span > .ui-typography:first-child { width:100%; padding-inline:36px 204px; text-align:center; }
+.course-shell .rtg-strategy__case-choice .rtg-parameter-range { flex:0 0 auto; margin-top:4px; }
+.course-shell .rtg-strategy__x-axis { position:relative; grid-column:2; display:flex; align-items:center; justify-content:space-between; gap:12px; padding:8px 18px 0; border-top:2px solid var(--ui-accent); }
+.course-shell .rtg-strategy__x-axis::after { position:absolute; content:''; right:0; top:-6px; width:10px; height:10px; border-top:2px solid var(--ui-accent); border-right:2px solid var(--ui-accent); transform:rotate(45deg); }
+.course-shell .rtg-strategy__reason { display:grid; flex:0 0 auto; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; padding:8px 12px; border-radius:var(--ui-radius-sm); background:var(--ui-bg-soft); }
+.course-shell .rtg-strategy__trial-live { width:100%; }
+.course-shell .rtg-strategy__trial-live .block-front, .course-shell .rtg-strategy__trial-live .block-side, .course-shell .rtg-strategy__trial-live .block-top { transition:fill .7s ease; }
+.course-shell .rtg-strategy__trial-live.is-tuning .rtg-parameter-range__group:nth-child(5) { animation:rtg-strategy-unfreeze 1000ms ease-in-out both; }
+.course-shell .rtg-strategy__trial-compare { display:grid; width:100%; grid-template-columns:minmax(0,1fr) 30px minmax(0,1fr); align-items:center; gap:10px; animation:rtg-strategy-compare 350ms ease-out both; }
+.course-shell .rtg-strategy__trial-compare > div { display:grid; justify-items:center; min-height:0; }
+.course-shell .rtg-strategy__trial-compare .rtg-parameter-range.is-compact { gap:6px; }
+.course-shell .rtg-strategy__trial-compare .rtg-parameter-range__blocks { height:58px; }
+.course-shell .rtg-strategy__trial-compare .rtg-parameter-range__group:not(:last-child)::after { right:-5px; width:4px; height:4px; }
+.course-shell .rtg-strategy__trial-compare .is-candidate .rtg-parameter-range__group:nth-child(5) > .rtg-parameter-range__blocks { stroke-dasharray:4 2; }
+.course-shell .rtg-strategy__footer { display:flex; flex:0 0 auto; align-items:center; justify-content:space-between; gap:18px; }
+.course-shell .rtg-strategy__footer > .edu-btn:last-child { margin-left:auto; }
+@keyframes rtg-strategy-unfreeze { 0% { transform:translateY(0); } 45% { transform:translateY(-6px); } 100% { transform:translateY(0); } }
+@keyframes rtg-strategy-compare { from { opacity:.3; transform:translateY(5px); } to { opacity:1; transform:translateY(0); } }
+@media (prefers-reduced-motion:reduce) { .course-shell .rtg-strategy * { animation:none !important; transition:none !important; } }

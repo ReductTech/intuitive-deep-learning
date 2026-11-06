@@ -1,0 +1,5 @@
+import { Typography } from '../../shared/react';
+import { Photo } from '../components/Stage';
+import { RefinedStage } from '../components/RefinedStage';
+import './FieldsPage.css';
+export function Page(){return <RefinedStage title="不同领域的引用尺度差别很大" subtitle="同样的引用次数，在不同领域代表不同的位置" className="naipj-page"><div className="naipj-layout"><div className="naipj-journals">{[['s9-shape1028.jpg','计算机视觉 · TPAMI','26.7'],['s9-shape1030.jpg','综合科学 · Nature','60.9'],['s9-shape1032.jpg','临床医学 · CA','307.2']].map(([image,label,value],i)=><figure key={image}><div className="naipj-cover"><Photo name={image} alt={label}/></div><Typography variant="body" align="center">{label}</Typography><Typography variant="display" tone="inherit" style={{color:i===2?'var(--ui-accent-alt)':'var(--ui-accent)'}} align="center">{value}</Typography></figure>)}</div><Typography variant="bodySmall" tone="muted" align="center">原报告列示的期刊指标示例</Typography><div className="naipj-insight"><Typography variant="body" tone="accent" align="center">比较文章影响力，需要先考虑它所在的研究主题。</Typography></div></div></RefinedStage>}

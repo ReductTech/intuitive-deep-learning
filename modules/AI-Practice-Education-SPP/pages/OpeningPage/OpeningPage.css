@@ -1,0 +1,43 @@
+/* Fixed 1600 × 900 slide; the presentation shell handles viewport scaling. */
+.llmpe-spp-opening {
+  --ui-type-display-size: 88px;
+  --ui-type-display-line-height: 1.28;
+  --ui-type-display-letter-spacing: -0.025em;
+  position: relative;
+  box-sizing: border-box;
+  width: 1600px;
+  height: 900px;
+  min-width: 0;
+  overflow: hidden;
+  color: #153b70;
+  background: radial-gradient(ellipse at 50% 44%, #fbfdff 0%, #f4f8fd 49%, #eaf3ff 100%);
+}
+.llmpe-spp-opening .llmpe-spp-network { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; pointer-events: none; user-select: none; }
+.llmpe-spp-opening .llmpe-spp-brand { position: absolute; top: 65px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 30px; }
+.llmpe-spp-opening .llmpe-spp-logo { display: block; width: 120px; height: 96px; object-fit: contain; }
+.llmpe-spp-opening .llmpe-spp-brand-divider { width: 1px; height: 76px; background: #a7bad3; }
+.llmpe-spp-opening .llmpe-spp-wordmark { display: flex; flex-direction: column; gap: 1px; white-space: nowrap; }
+.llmpe-spp-opening .llmpe-spp-wordmark > :first-child { margin: 0; font-size: 44px; line-height: 1.25; font-weight: 750; letter-spacing: 0.025em; }
+.llmpe-spp-opening .llmpe-spp-wordmark > :last-child { margin: 0; font-size: 27px; line-height: 1.5; letter-spacing: 0.1em; }
+.llmpe-spp-opening .llmpe-opening-copy { position: absolute; top: 229px; left: 56px; right: 56px; max-width: none; text-align: center; }
+.llmpe-spp-opening .llmpe-opening-title { margin: 0; color: #12396e; font-size: 88px; font-weight: 750; line-height: 1.28; letter-spacing: -0.025em; }
+.llmpe-spp-opening .llmpe-opening-title-line { display: block; white-space: nowrap; }
+.llmpe-spp-opening .llmpe-spp-speaker-rule { position: absolute; top: 507px; left: calc(50% - 29px); width: 58px; height: 4px; border-radius: 2px; background: #ec8b48; }
+.llmpe-spp-opening .llmpe-spp-speaker { position: absolute; top: 553px; left: 80px; right: 80px; text-align: center; }
+.llmpe-spp-opening .llmpe-spp-speaker p { margin: 0; }
+.llmpe-spp-opening .llmpe-spp-speaker > :first-child { color: #153b70; font-size: 42px; font-weight: 750; line-height: 1.4; }
+.llmpe-spp-opening .llmpe-spp-speaker p + p { margin-top: 5px; color: #536987; font-size: 30px; line-height: 1.5; }
+.llmpe-spp-opening .llmpe-spp-event-time { position: absolute; top: 721px; left: 60px; right: 60px; display: flex; justify-content: center; align-items: center; gap: 28px; white-space: nowrap; }
+.llmpe-spp-opening .llmpe-spp-event-time p { margin: 0; font-size: 30px; line-height: 1.5; }
+.llmpe-spp-opening .llmpe-spp-event-time p:last-child { color: #536987; }
+.llmpe-spp-opening .llmpe-spp-time-divider { display: block; width: 1px; height: 32px; background: #496480; }
+.llmpe-spp-opening .llmpe-spp-footer-rule { position: absolute; left: 48px; right: 48px; bottom: 48px; height: 2px; background: #214b7d; }
+.llmpe-guide { width: 100%; min-width: 0; }
+.llmpe-guide-frame { position: relative; width: 100%; min-width: 0; aspect-ratio: 16 / 9; }
+
+
+
+.llmpe-spp-opening .llmpe-spp-brand { mix-blend-mode:multiply; }
+
+/* Unmodified artwork from the CCF official 1920×1080 banner; show its SPP mark at 62% scale. */
+.llmpe-spp-opening .llmpe-spp-pilot-logo { display:block; flex-shrink:0; width:108px; height:108px; background-size:1190.4px 669.6px; background-position:-179px -27px; background-repeat:no-repeat; filter:brightness(1.14); }

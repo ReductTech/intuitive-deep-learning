@@ -1,0 +1,9 @@
+.attn-review-main{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:48px;min-width:0;min-height:0;align-items:center;}
+.attn-review-scenario,.attn-review-checks{display:grid;gap:24px;min-width:0;}
+.attn-review-records{display:grid;gap:12px;}
+.attn-review-records>div{display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1fr) minmax(0,1.1fr);gap:14px;padding:12px 0;border-bottom:1px solid var(--ui-border);}
+.attn-review-checks .dl-question-options{grid-template-columns:minmax(0,1fr);}
+.attn-review-checks .dl-question{padding:18px;}
+.attn-review-checks .dl-question-feedback a{color:var(--ui-accent);text-decoration:underline;}
+.attn-review-methods{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;}
+.attn-review-footer{display:grid;gap:10px;}

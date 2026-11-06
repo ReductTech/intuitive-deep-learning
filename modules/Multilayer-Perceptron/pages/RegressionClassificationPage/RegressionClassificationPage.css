@@ -1,0 +1,40 @@
+.rl-task-page { display:grid; grid-template-rows:auto minmax(0,1fr); background-image:linear-gradient(#ffffffe3,#ffffffe3),var(--titanic-image); background-size:cover; background-position:center; }
+.rl-task-page > .edu-content-body { min-height:0; }
+.rl-task-layout { height:100%; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.3fr); grid-template-rows:minmax(0,1fr); gap:32px; min-height:0; }
+.rl-task-layout > *, .rl-task-layout > * > * { min-width:0; max-width:100%; min-height:0; }
+.rl-task-comparison { display:grid; grid-template-rows:repeat(2,minmax(0,1fr)); gap:24px; }
+.rl-task-comparison > * { min-width:0; max-width:100%; min-height:0; }
+.rl-task-model-panel { display:grid; grid-template-rows:auto minmax(0,1fr) auto; padding:24px 28px; gap:18px; border-radius:var(--ui-radius-lg); border:1px solid #dce5ef99; }
+.rl-task-model-panel > * { min-width:0; max-width:100%; min-height:0; }
+.rl-task-model-panel--regression { background:linear-gradient(120deg,#f0f4faee,#fff1f1de); }
+.rl-task-model-panel--probability { background:linear-gradient(120deg,#ecfaf6ed,#f5fcf9e6); }
+.rl-task-model-flow { display:grid; grid-template-columns:minmax(0,1.4fr) 32px minmax(0,1fr) 32px minmax(0,1fr); align-items:center; gap:14px; }
+.rl-task-model-flow > * { min-width:0; max-width:100%; }
+.rl-task-model-flow > div:first-child { display:grid; gap:8px; }
+.rl-task-output-value .math-formula { font-size:48px; color:#16375b; }
+.rl-task-model-panel--probability .rl-task-output-value .math-formula { color:#009eaa; }
+.rl-task-model-explanation { display:grid; gap:10px; padding-top:14px; border-top:1px solid #dce5ef; }
+.rl-task-model-explanation .math-formula { font-size:30px; }
+
+.rl-task-manifest { display:grid; grid-template-rows:auto minmax(0,1fr) auto; gap:18px; padding:22px; border:1px solid #dce5ef99; border-radius:var(--ui-radius-lg); background:#ffffffce; }
+.rl-task-manifest-heading { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.rl-task-manifest-heading > * { min-width:0; }
+.rl-task-scroll { min-height:0; min-width:0; overflow-y:auto; overscroll-behavior:contain; scrollbar-gutter:stable; border:1px solid var(--ui-border); border-radius:var(--ui-radius-md); }
+.rl-task-scroll:focus-visible { outline:3px solid var(--ui-accent); outline-offset:3px; }
+.rl-task-table { table-layout:fixed; border-collapse:separate; border-spacing:0; width:100%; max-width:100%; }
+.rl-task-table col:nth-child(1) { width:10%; }
+.rl-task-table col:nth-child(2) { width:32%; }
+.rl-task-table col:nth-child(3), .rl-task-table col:nth-child(4) { width:10%; }
+.rl-task-table col:nth-child(5) { width:16%; }
+.rl-task-table col:nth-child(6) { width:22%; }
+.rl-task-table th { position:sticky; top:0; z-index:2; background:#27446e; color:#fff; text-align:left; padding:12px 6px; }
+.rl-task-table td { height:52px; padding:8px 6px; border-bottom:1px solid #dce5ef; }
+.rl-task-table td > * { min-width:0; max-width:100%; }
+.rl-task-table tbody tr:nth-child(even) { background:#eff5fb80; }
+.rl-task-table .rl-task-outcome { background:#fff3df99; }
+.rl-task-manifest-note { display:grid; gap:6px; }
+.rl-task-manifest-note .math-formula { font-size:25px; }
+.rl-task-label-note { display:flex; align-items:center; gap:14px; }
+.rl-task-label-note > * { min-width:0; max-width:100%; }
+
+.rl-task-model-flow > div:nth-child(3) { display:grid; gap:8px; }

@@ -1,0 +1,40 @@
+.course-shell .vfl-triplet-page{width:1600px;height:900px;padding:18px 30px 20px;display:grid;grid-template-rows:auto minmax(0,1fr);background:var(--ui-bg-card)}
+.vfl-triplet-page>.edu-content-body{min-height:0;min-width:0}
+.vfl-triplet-body{height:100%;display:grid;grid-template-columns:minmax(0,.38fr) minmax(0,.62fr);grid-template-rows:minmax(0,1fr) 194px;gap:20px 16px;min-height:0}
+.vfl-triplet-body *{min-width:0;max-width:100%;box-sizing:border-box}
+.vfl-triplet-body .ui-typography{margin:0}
+.vfl-triplet-body .positive{color:#26764f}.vfl-triplet-body .negative{color:#b64742}.vfl-triplet-body .margin{color:#987019}
+.vfl-triplet-samples{display:grid;grid-template-rows:auto minmax(0,1fr) 70px;gap:20px;border:1px solid var(--ui-border);border-radius:var(--ui-radius-lg);padding:22px;min-height:0}
+.vfl-triplet-sample-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-content:center;min-height:0}
+.vfl-triplet-sample{display:grid;grid-template-rows:40px 210px 40px;gap:10px;text-align:center;min-height:0}
+.vfl-triplet-label{display:flex;align-items:center;justify-content:center;gap:9px;color:var(--ui-accent);white-space:nowrap}
+.vfl-triplet-label>span{width:14px;height:14px;flex:0 0 14px;border-radius:50%;background:#348dec}
+.sample-1 .vfl-triplet-label{color:#26764f}.sample-2 .vfl-triplet-label{color:#b64742}.sample-1 .vfl-triplet-label>span{background:#269465}.sample-2 .vfl-triplet-label>span{background:#ed746e}
+.vfl-triplet-portrait{display:block;object-fit:cover;object-position:50% 28%;border-radius:var(--ui-radius-md);width:100%;height:100%;min-height:0}
+.vfl-triplet-sample-cues{display:grid;grid-template-columns:2fr 1fr;gap:18px;text-align:center;align-content:start}
+.vfl-triplet-sample-cues>div{display:grid;gap:16px;white-space:nowrap}
+.vfl-triplet-sample-cues>div>span{height:14px;border:2px solid currentColor;border-top:0;border-radius:0 0 20px 20px;margin:0 12px}
+.vfl-triplet-space{display:grid;grid-template-rows:48px minmax(0,1fr) 52px;gap:12px;background:#f6f9fe;border:1px solid var(--ui-border);border-radius:var(--ui-radius-lg);padding:22px;min-height:0}
+.vfl-triplet-space-title{display:flex;align-items:center;gap:26px}.vfl-triplet-space-title>.ui-typography:last-child{border-left:1px solid #b9c8dc;padding-left:26px}
+.vfl-triplet-plot{min-height:0;position:relative}.vfl-triplet-plot>svg{width:100%;height:100%;display:block;min-height:0}
+.vfl-triplet-point{width:72px;height:72px;border:3px solid #348dec;border-radius:50%;padding:3px;background:white}.vfl-triplet-point .vfl-triplet-portrait{border-radius:50%}.vfl-triplet-point.point-1{border-color:#269465}.vfl-triplet-point.point-2{border-color:#ed746e}
+.vfl-triplet-node-label{display:inline-block;border-radius:18px;padding:3px 12px;white-space:nowrap}.vfl-triplet-node-label.anchor{color:var(--ui-accent);background:#e1eeff}.vfl-triplet-node-label.positive{background:#def6e8}.vfl-triplet-node-label.negative{background:#ffebe8}
+.vfl-triplet-distance-label{height:56px;display:flex;align-items:center}
+.vfl-triplet-body .edu-formula-block{margin:0;padding:0;min-height:0;border:0;background:transparent}
+.vfl-triplet-distance-label .edu-formula-block{color:inherit;justify-content:start}
+.vfl-triplet-distance-label .math-formula{white-space:nowrap}
+.vfl-triplet-playbar{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.vfl-triplet-stage{flex:1;white-space:nowrap}
+.vfl-triplet-controls{display:flex;gap:10px;flex-shrink:0}.course-shell .vfl-triplet-controls .edu-btn{border-radius:var(--ui-radius-md);padding:8px 16px;white-space:nowrap}
+.vfl-triplet-calculation{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,.68fr) minmax(0,.32fr);gap:24px;background:#f6f9fe;border:1px solid var(--ui-border);border-radius:var(--ui-radius-lg);padding:18px 28px;align-items:center}
+.vfl-triplet-formula-panel{display:grid;grid-template-columns:200px minmax(0,1fr);gap:26px;align-items:center}
+.vfl-triplet-formula-panel>h3{border-right:1px solid #b9c8dc;padding-right:20px}
+.vfl-triplet-formula-content{display:grid;gap:16px}
+.vfl-triplet-formula-content>.edu-formula-block{justify-content:start;white-space:nowrap}
+.vfl-triplet-numbers{display:flex;align-items:center;gap:28px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.vfl-triplet-result{border-left:1px solid #b9c8dc;padding-left:28px;display:grid;gap:4px;text-align:center}
+.vfl-triplet-loss{display:flex;align-items:center;justify-content:center;gap:24px}
+.vfl-triplet-loss>.ui-typography:last-child{flex:0 0 4.5ch;min-width:4.5ch;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.vfl-triplet-condition{display:grid;gap:4px}.vfl-triplet-condition>.edu-formula-block{justify-content:center}
+
+.vfl-triplet-distance-label.positive .edu-formula-block{color:#26764f}.vfl-triplet-distance-label.negative .edu-formula-block{color:#b64742}

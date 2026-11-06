@@ -1,0 +1,29 @@
+.di-curves { display:grid; grid-template-rows:auto minmax(0,1fr); background:linear-gradient(135deg,#fff,#f3f9ff); }
+.di-curves > .edu-content-body { min-height:0; }
+.di-curves :is(div,section,footer,button,canvas,svg) { min-width:0; max-width:100%; }
+.di-curves p,.di-curves h2 { margin:0; }
+.di-curves__body { height:100%; min-height:0; display:grid; grid-template-rows:minmax(0,1fr) 105px; gap:14px; }
+.di-curves__main { display:grid; grid-template-columns:minmax(0,1.07fr) minmax(0,1fr); gap:18px; min-height:0; }
+.di-curves__compare { position:relative; min-height:0; border-radius:15px; border:1px solid #c7d8ea; touch-action:none; cursor:ew-resize; }
+.di-curves__compare canvas { position:absolute; inset:0; width:100%; height:100%; border-radius:14px; }
+.di-curves__image-label { position:absolute; top:16px; background:#18334fce; color:white; border-radius:8px; padding:0 14px; pointer-events:none; }
+.di-curves__image-label--before { left:16px; }.di-curves__image-label--after { right:16px; }
+.di-curves__divider { position:absolute; top:0; bottom:0; width:44px; transform:translateX(-50%); pointer-events:none; }
+.di-curves__divider::before { content:""; position:absolute; top:0; bottom:0; left:50%; width:2px; background:white; }
+.di-curves__divider > div { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:44px; height:44px; background:#fff; border-radius:50%; display:grid; place-items:center; pointer-events:auto; cursor:ew-resize; }
+.di-curves__tool { display:grid; grid-template-rows:47px 43px minmax(0,1fr) 49px; min-height:0; padding:10px 14px; border:1px solid #d7e5f7; border-radius:15px; background:#fff; }
+.di-curves__tool-heading { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.di-curves__legend { display:flex; align-items:center; gap:16px; }
+.di-curves__legend p { display:flex; align-items:center; gap:8px; }
+.di-curves__legend i { display:inline-block; width:13px; height:13px; background:#9ca8b4; border-radius:3px; }
+.di-curves__legend button i { background:#2587fa; }
+.di-curves button { border:1px solid #d0dff2; background:#eff5fb; color:#284f7f; border-radius:9px; cursor:pointer; }
+.di-curves__legend button { background:transparent; border-color:transparent; padding:0; }
+.di-curves__graph { width:100%; height:100%; min-height:0; touch-action:none; }
+.di-curves__point { cursor:grab; outline:none; }.di-curves__point:active { cursor:grabbing; }.di-curves__point:focus-visible { stroke:#167bfa; stroke-width:4; }
+.di-curves__y-label { writing-mode:vertical-rl; }
+.di-curves__presets { display:grid; grid-template-columns:repeat(3,minmax(0,1.1fr)) minmax(0,.65fr) minmax(0,.65fr); gap:6px; }
+.di-curves__presets button { padding:0 3px; }.di-curves__presets button.is-selected { color:white; background:#227df6; border-color:#227df6; }
+.di-curves__presets p { white-space:nowrap; }
+.di-curves__takeaway { display:grid; justify-items:center; align-content:center; padding:6px 20px; border-radius:14px; background:#e7f2ff; }
+.di-curves button:focus-visible,.di-curves__divider > div:focus-visible { outline:3px solid #397dc5; outline-offset:2px; }

@@ -1,0 +1,2 @@
+.spp-background-page { width: 1600px; height: 900px; overflow: hidden; background: #eef3fa; }
+.spp-background-page > img { display: block; width: 100%; height: 100%; object-fit: contain; }

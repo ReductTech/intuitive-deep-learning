@@ -1,0 +1,15 @@
+.vbrl-value { display: flex; flex-direction: column; min-height: 0; background: #f7fbff; }
+.vbrl-value > .edu-content-body { flex: 1; min-height: 0; display: grid; grid-template-rows: minmax(0, 1fr) 100px; gap: 18px; }
+.vbrl-value :is(section, header, div, button, span, p, img, svg, math-field) { min-width: 0; max-width: 100%; }
+.vbrl-value__comparison { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; min-height: 0; }
+.vbrl-value__policy--random .vbrl-experience-dot.edu-btn { background: #efa92e; }
+.vbrl-value__definition { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.15fr) minmax(0, .95fr); align-items: center; gap: 24px; padding: 8px 20px; border: 1px solid #cfe0f4; border-radius: var(--ui-radius-lg); background: #edf6ff; }
+.vbrl-value .math-formula-block { min-width: 0; max-width: 100%; }
+.vbrl-value__definition > .math-formula-block { padding: 0; margin: 0; }
+.vbrl-state-value > .edu-content-body { grid-template-rows: minmax(0, 1fr) 86px; }
+.vbrl-state-value .vbrl-experience-panel__body { grid-template-rows: minmax(0, 1fr); }
+.vbrl-state-value .vbrl-experience-panel__scene { grid-template-columns: minmax(0, .57fr) minmax(0, .43fr); }
+.vbrl-state-value .vbrl-experience-map { --experience-map-height: 400px; }
+.vbrl-state-value .vbrl-value__definition { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.3fr); }
+.vbrl-value__sampling { display: flex; align-items: center; gap: 18px; }
+.vbrl-value__sampling > .math-formula-block { margin: 0; padding: 0; }

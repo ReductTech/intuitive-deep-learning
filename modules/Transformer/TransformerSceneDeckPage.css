@@ -1,0 +1,9 @@
+/* The shared SceneDeck owns the player. These rules preserve the existing 1600×900 lesson canvas. */
+.scenedeck-stage .tr-ppt-content {
+  position: relative;
+  inset: auto;
+  width: 1600px;
+  height: 900px;
+  max-width: 100%;
+}
+

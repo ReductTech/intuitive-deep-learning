@@ -1,0 +1,28 @@
+.vbrl-parameters { display: grid; grid-template-rows: 104px minmax(0, 1fr); gap: 18px; height: 100%; min-height: 0; }
+.vbrl-parameters :is(div, section, table, th, td, label, p, span, svg, math-field) { min-width: 0; max-width: 100%; }
+.vbrl-parameters .math-formula-block { margin: 0; padding: 0; }
+.vbrl-parameters .math-formula { font-size: var(--ui-type-body-small-size); }
+.vbrl-parameters__experience { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .8fr) minmax(0, 1.45fr) minmax(0, 1fr); align-items: center; border: 1px solid #d4e5f6; border-radius: var(--ui-radius-md); background: #edf6ff; padding: 7px 20px; }
+.vbrl-parameters__experience > div { display: grid; align-content: center; justify-items: center; gap: 0; height: 100%; min-height: 0; padding: 0 12px; border-left: 1px solid #cadff3; }
+.vbrl-parameters__experience > .vbrl-parameters__context { justify-items: start; border: 0; padding-left: 0; }
+.vbrl-parameters__experience .math-formula { font-size: var(--ui-type-body-size); }
+.vbrl-parameters__stages { position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; min-height: 0; }
+.vbrl-parameters__stage { contain: size layout; }
+.vbrl-lesson .vbrl-parameters__stage > .vbrl-teaching-panel__body { display: grid; grid-template-rows: 99px 66px 64px 84px minmax(0, 1fr); gap: 8px; padding: 14px 22px; align-items: center; }
+.vbrl-parameters__formula { display: grid; grid-template-rows: 60px 39px; align-items: center; text-align: center; min-height: 0; }
+.vbrl-parameters__formula .math-formula { font-size: var(--ui-type-body-size); }
+.vbrl-parameters__calculation { display: flex; align-items: center; justify-content: center; gap: 12px; height: 100%; min-height: 0; padding: 8px 12px; background: #edf8f2; border-radius: 10px; }
+.vbrl-parameters__calculation > .ui-typography { flex: 0 0 auto; font-variant-numeric: tabular-nums; }
+.vbrl-parameters__calculation .math-formula { font-size: var(--ui-type-body-size); }
+.vbrl-parameters__stage.is-update .vbrl-parameters__calculation { background: #edf5ff; }
+.vbrl-parameters__stage.is-update .vbrl-parameters__calculation .math-formula { font-size: var(--ui-type-body-small-size); }
+.vbrl-parameters__transfer { position: absolute; left: 50%; top: 204px; width: 28px; height: 28px; transform: translateX(-50%); fill: #458fe3; }
+.vbrl-parameters__comparison { table-layout: fixed; width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid #d7e6f5; border-radius: 10px; }
+.vbrl-parameters__comparison :is(th, td) { padding: 1px 4px; text-align: center; font-variant-numeric: tabular-nums; }
+.vbrl-parameters__comparison th:first-child { width: 20%; }
+.vbrl-parameters__comparison thead { background: #f3f8fe; }
+.vbrl-parameters__comparison tbody :is(th, td) { border-top: 1px solid #d7e6f5; }
+.vbrl-parameters__comparison .is-current { background: #dcecff; }
+.vbrl-parameters__comparison thead th:first-child { border-top-left-radius: 9px; }
+.vbrl-parameters__comparison thead th:last-child { border-top-right-radius: 9px; }
+.vbrl-parameters__stage > .vbrl-teaching-panel__body > .ui-typography:last-child { align-self: end; }

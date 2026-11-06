@@ -1,0 +1,15 @@
+/* Shared ContentBlock 仍是普通 CSS，画布根节点需要维持同级选择器优先级。 */
+.course-page-surface .ngtw-weighted-sum {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  grid-template-rows: auto minmax(0, 1fr);
+  overflow: hidden;
+  background: #fbfdff;
+}
+
+.ngtw-weighted-sum > .edu-content-head { max-width: 1080px; margin-bottom: 8px; }
+.ngtw-weighted-sum > .edu-content-body { min-width: 0; min-height: 0; }
+.ngtw-weighted-sum__range:focus-visible { outline: 3px solid rgba(68, 135, 195, .3); outline-offset: 6px; }
+

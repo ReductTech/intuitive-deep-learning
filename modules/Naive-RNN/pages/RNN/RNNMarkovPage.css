@@ -1,0 +1,497 @@
+/* ==========================================================================
+   马尔可夫局限页（双框严格底部对齐、预留槽防跳动、字号绝对穿透保护）
+   ========================================================================== */
+
+.course-shell .nrnn-markov-linear {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+.course-shell .nrnn-markov-linear > .edu-content-head {
+  max-width: none;
+  margin-bottom: 10px;
+  flex-shrink: 0;
+}
+
+.course-shell .nrnn-markov-linear > .edu-content-body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  gap: 12px;
+  flex: 1 1 auto;
+  justify-content: space-between;
+}
+
+/* 核心左右分栏：stretch 确保左右卡片高度严格一致、底部对齐 */
+.course-shell .nrnn-markov-linear__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.28fr);
+  gap: 18px;
+  align-items: stretch;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* ==========================================================================
+   左侧：单水平时序流向轨道（底部对齐）
+   ========================================================================== */
+.course-shell .nrnn-markov-linear__track-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px 20px;
+  border-radius: 22px;
+  border: 1px solid rgba(var(--ui-accent-rgb), 0.16);
+  background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+  box-shadow: 0 10px 28px rgba(42, 60, 91, 0.05);
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.course-shell .nrnn-markov-linear__panel-header {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--ui-border);
+  padding-bottom: 10px;
+}
+
+.course-shell .nrnn-markov-linear__case-pill {
+  background: rgba(var(--ui-accent-rgb), 0.08);
+  padding: 3px 16px;
+  border-radius: 8px;
+}
+
+/* 水平单线流 */
+.course-shell .nrnn-markov-linear__track-line {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 8px 0;
+  flex: 1 1 auto;
+  align-content: center;
+}
+
+.course-shell .nrnn-markov-linear__node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  z-index: 2;
+}
+
+/* 节点圆形底座（120px） */
+.course-shell .nrnn-markov-linear__node-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2.5px solid #e2e8f0;
+  box-shadow: 0 8px 24px rgba(30, 41, 59, 0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  padding: 6px;
+}
+
+.course-shell .nrnn-markov-linear__node-circle:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(30, 41, 59, 0.14);
+}
+
+.course-shell .nrnn-markov-linear__node-circle.is-today-circle {
+  border-color: #60a5fa;
+  background: #f0f7ff;
+  box-shadow: 0 8px 26px rgba(59, 130, 246, 0.18);
+}
+
+.course-shell .nrnn-markov-linear__node-tag {
+  background: #ffffff;
+  border: 1px solid var(--ui-border);
+  padding: 2px 12px;
+  border-radius: 999px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+.course-shell .nrnn-markov-linear__node-tag.is-accent {
+  border-color: #93c5fd;
+  background: #eff6ff;
+}
+
+/* 动态缓动流动虚线 */
+.course-shell .nrnn-markov-linear__connector {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 44px;
+  height: 6px;
+  margin: 57px 8px 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.course-shell .nrnn-markov-linear__flowing-dash {
+  width: 100%;
+  height: 4px;
+  background: repeating-linear-gradient(
+    90deg,
+    #60a5fa 0,
+    #60a5fa 10px,
+    transparent 10px,
+    transparent 20px
+  );
+  background-size: 40px 100%;
+  animation: flowingDashMove 1.2s linear infinite;
+  border-radius: 2px;
+}
+
+@keyframes flowingDashMove {
+  0% { background-position: 0 0; }
+  100% { background-position: 40px 0; }
+}
+
+/* 明天目标圈与自转虚线 */
+.course-shell .nrnn-markov-linear__target-pod {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 8px 28px rgba(217, 119, 6, 0.12);
+}
+
+.course-shell .nrnn-markov-linear__spinning-ring {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 3px dashed #f59e0b;
+  animation: spinRotate 6s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes spinRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.course-shell .nrnn-markov-linear__pod-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 6px;
+  z-index: 2;
+}
+
+.course-shell .nrnn-markov-linear__target-qm {
+  color: var(--ui-accent-alt, #d97706);
+  animation: qmBreathe 1.8s ease-in-out infinite;
+}
+
+@keyframes qmBreathe {
+  0%, 100% { transform: scale(1); opacity: 0.85; }
+  50% { transform: scale(1.12); opacity: 1; }
+}
+
+.course-shell .nrnn-markov-linear__target-pod.is-revealed {
+  box-shadow: 0 10px 32px rgba(16, 185, 129, 0.25);
+  border: 3px solid #10b981;
+  animation: revealPop 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes revealPop {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.course-shell .nrnn-markov-linear__target-label {
+  max-width: 100%;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   右侧：答题区（高权重防覆盖锁定、预留槽、微调解释句）
+   ========================================================================== */
+.course-shell .nrnn-markov-linear__quiz-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 18px 22px 20px;
+  border-radius: 22px;
+  border: 1px solid rgba(var(--ui-accent-rgb), 0.16);
+  background: #ffffff;
+  box-shadow: 0 10px 28px rgba(42, 60, 91, 0.05);
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.course-shell .nrnn-markov-linear__quiz-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-bottom: 1px solid var(--ui-border);
+  padding-bottom: 8px;
+  flex-shrink: 0;
+}
+
+.course-shell .nrnn-markov-linear__quiz-body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1 1 auto;
+  justify-content: space-around;
+  padding: 4px 0;
+}
+
+.course-shell .nrnn-markov-linear__q-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+/* 题干标题行 */
+.course-shell .nrnn-markov-linear__q-header-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.course-shell .nrnn-markov-linear__q-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+/* 序号徽章尺寸锁定 */
+.course-shell .nrnn-markov-linear .nrnn-markov-linear__q-badge,
+.course-shell .nrnn-markov-linear__q-badge {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 50% !important;
+  background: var(--ui-accent) !important;
+  color: #ffffff !important;
+  flex-shrink: 0 !important;
+}
+
+.course-shell .nrnn-markov-linear .nrnn-markov-linear__q-title-text,
+.course-shell .nrnn-markov-linear__q-title-text {
+  margin: 0 !important;
+  padding: 0 !important;
+  flex-shrink: 0 !important;
+}
+
+.course-shell .nrnn-markov-linear__q-subnote {
+  min-width: 0;
+  flex-shrink: 1;
+}
+
+/* 上一页规律提示卡片 */
+.course-shell .nrnn-markov-linear__prev-rule-hint {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  max-width: 100%;
+  justify-self: start;
+  gap: 10px;
+  padding: 5px 14px;
+  border-radius: 12px;
+  background: #f1f5f9;
+  border: 1.5px solid #cbd5e1;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.04);
+  flex-shrink: 0;
+}
+
+.course-shell .nrnn-markov-linear__hint-tag {
+  background: #e2e8f0;
+  padding: 2px 10px;
+  border-radius: 6px;
+  letter-spacing: 0.5px;
+}
+
+.course-shell .nrnn-markov-linear__hint-chain {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.course-shell .nrnn-markov-linear__hint-dish {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px !important;
+  height: 44px !important;
+}
+
+.course-shell .nrnn-markov-linear__hint-dish.is-active {
+  transform: scale(1.18);
+  filter: drop-shadow(0 3px 6px rgba(59, 130, 246, 0.4));
+}
+
+.course-shell .nrnn-markov-linear__hint-arrow {
+  color: var(--ui-text-light);
+}
+
+.course-shell .nrnn-markov-linear__hint-arrow.is-next {
+  color: var(--ui-accent);
+}
+
+/* 选项行 */
+.course-shell .nrnn-markov-linear__choices-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  padding: 2px 6px;
+  flex-shrink: 0;
+}
+
+.course-shell .nrnn-markov-linear__choice-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 96px;
+  border-radius: 18px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.course-shell .nrnn-markov-linear__choice-btn:hover {
+  transform: translateY(-3px) scale(1.06);
+}
+
+.course-shell .nrnn-markov-linear__choice-dish {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 86px !important;
+  height: 86px !important;
+  z-index: 2;
+  transition: filter 0.25s ease;
+  filter: drop-shadow(0 4px 8px rgba(15, 23, 42, 0.1));
+}
+
+.course-shell .nrnn-markov-linear__choice-btn:hover .nrnn-markov-linear__choice-dish {
+  filter: drop-shadow(0 8px 18px rgba(15, 23, 42, 0.18));
+}
+
+.course-shell .nrnn-markov-linear__select-glow {
+  position: absolute;
+  inset: 4px;
+  border-radius: 16px;
+  background: transparent;
+  transition: all 0.25s ease;
+  z-index: 1;
+}
+
+.course-shell .nrnn-markov-linear__choice-btn.is-selected .nrnn-markov-linear__select-glow {
+  background: rgba(59, 130, 246, 0.08);
+  box-shadow: 0 0 0 2px #3b82f6;
+}
+
+.course-shell .nrnn-markov-linear__choice-btn.is-correct .nrnn-markov-linear__select-glow {
+  background: rgba(5, 150, 105, 0.1) !important;
+  box-shadow: 0 0 0 2.5px #059669, 0 6px 20px rgba(5, 150, 105, 0.25) !important;
+}
+
+.course-shell .nrnn-markov-linear__choice-btn.is-wrong .nrnn-markov-linear__select-glow {
+  background: rgba(220, 38, 38, 0.08) !important;
+  box-shadow: 0 0 0 2px #dc2626 !important;
+}
+
+/* ==========================================================================
+   预留槽位：44px 固定占位，彻底消除答题后的垂直跳动
+   ========================================================================== */
+.course-shell .nrnn-markov-linear__feedback-slot {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.course-shell .nrnn-markov-linear__feedback {
+  width: 100%;
+  padding: 6px 14px;
+  border-radius: 10px;
+  animation: feedbackFadeIn 0.25s ease-out;
+  box-sizing: border-box;
+}
+
+.course-shell .nrnn-markov-linear__feedback-text {
+  min-width: 0;
+}
+
+@keyframes feedbackFadeIn {
+  from { opacity: 0; transform: translateY(-3px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.course-shell .nrnn-markov-linear__feedback.is-correct {
+  background: #ecfdf5 !important;
+  color: #065f46 !important;
+  border: 1.5px solid #6ee7b7 !important;
+}
+
+.course-shell .nrnn-markov-linear__feedback.is-wrong {
+  background: #fef2f2 !important;
+  color: #991b1b !important;
+  border: 1.5px solid #fca5a5 !important;
+}
+
+/* 按钮操作区 */
+.course-shell .nrnn-markov-linear__action-area {
+  margin-top: 6px;
+  flex-shrink: 0;
+}
+
+.course-shell .nrnn-markov-linear__next-btn {
+  width: 100%;
+  height: 48px;
+  border-radius: 12px;
+}
+
+.course-shell .nrnn-markov-linear__next-btn:not(:disabled) {
+  background: linear-gradient(135deg, #059669, #047857) !important;
+  color: #ffffff !important;
+  border: none !important;
+  box-shadow: 0 4px 14px rgba(5, 150, 105, 0.35);
+  animation: btnPulse 1.6s infinite;
+}
+
+@keyframes btnPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+.course-shell .nrnn-markov-linear__insight {
+  border-top: 1px solid var(--ui-border);
+  padding-top: 10px;
+  margin: 0;
+  flex-shrink: 0;
+}
+
+@media (max-width: 900px) {
+  .course-shell .nrnn-markov-linear__layout {
+    grid-template-columns: 1fr;
+  }
+}

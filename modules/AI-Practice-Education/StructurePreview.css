@@ -1,0 +1,8 @@
+.aipe-preview-nav{position:sticky;top:0;z-index:1000;display:flex;align-items:center;gap:18px;padding:12px 24px;background:#fff;border-bottom:1px solid #dce3ed;}
+.aipe-preview-nav select{max-width:850px;min-width:300px;padding:8px 12px;border:1px solid #b9c8da;border-radius:6px;font:inherit;color:#27446e;background:#fff;}
+.aipe-preview-nav button{padding:8px 14px;border:1px solid #b9c8da;border-radius:6px;background:#fff;color:#27446e;cursor:pointer;font:inherit;}
+.aipe-preview-section{background:#edf1f6;}
+.aipe-preview-caption{padding:14px 24px;background:#f4f6f9;}
+.aipe-preview-section [data-scene-id]{scroll-margin-top:65px;}
+.aipe-preview-notes{padding:22px 50px;background:#fff8ef;border-bottom:1px solid #e4d9c9;}
+.aipe-preview-notes p{margin:0;font-size:20px;line-height:1.8;white-space:pre-line;}

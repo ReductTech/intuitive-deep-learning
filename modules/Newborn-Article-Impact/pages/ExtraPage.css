@@ -1,0 +1,6 @@
+.naipe-layout{height:100%;display:grid;grid-template-rows:minmax(0,1fr) auto auto;gap:16px;}
+.naipe-page .naipc-table :is(th,td){padding:3px 16px;}
+.naipe-choice.edu-btn{border:0;background:transparent;box-shadow:none;padding:2px 0;color:var(--ui-text);width:100%;justify-content:flex-start;text-align:left;border-radius:var(--ui-radius-sm);}
+.naipe-choice.edu-btn:hover{background:transparent;color:var(--ui-accent);}
+.naipe-choice.edu-btn:focus-visible{outline:3px solid var(--ui-accent);outline-offset:3px;}
+.naipe-explanation{display:grid;gap:4px;padding:14px 24px;background:var(--ui-bg-soft);border-radius:var(--ui-radius-lg);}

@@ -1,0 +1,45 @@
+.kvl-slide { box-sizing:border-box; width:1600px; height:900px; padding:32px 56px 24px; display:flex; flex-direction:column; background:var(--ui-bg-card); color:var(--ui-text-main); }
+.kvl-slide * { box-sizing:border-box; min-width:0; }
+.kvl-header { display:grid; gap:8px; }
+.kvl-stage { position:relative; height:660px; flex:0 0 660px; }
+.kvl-paths { position:absolute; inset:0; width:100%; height:100%; max-width:100%; color:#b1bdca; }
+.kvl-paths g > path { fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; transition:stroke .2s; }
+.kvl-paths g > path.is-active { color:#426b9b; stroke-width:3; }
+.kvl-paths .kvl-return-path { stroke-dasharray:5 7; }
+.kvl-cache { position:absolute; left:490px; top:0; width:550px; height:332px; padding:14px 28px; border:1.5px solid #94a6ba; border-radius:14px; background:linear-gradient(180deg,#f6f9fc,var(--ui-bg-card) 45%); box-shadow:0 6px 20px #2037520b,inset 0 1px 0 #fff; }
+.kvl-cache-header { display:flex; align-items:center; justify-content:space-between; gap:20px; }
+.kvl-cache-columns { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; margin-top:6px; }
+.kvl-cache-columns > div { display:grid; gap:5px; text-align:center; align-content:start; }
+.kvl-bars { display:grid; gap:6px; }
+.kvl-bar { display:grid; height:44px; place-items:center; color:#263649; border:1px solid #00000009; border-radius:4px; box-shadow:inset 0 1px 0 #ffffff50; white-space:nowrap; }
+.kvl-empty-row { height:46px; }
+.kvl-q .kvl-bar { background:#a8c9f1; }
+.kvl-k .kvl-bar { background:#f3d989; }
+.kvl-v .kvl-bar { background:#efb7b2; }
+.kvl-read-label,.kvl-write-label { position:absolute; background:var(--ui-bg-card); padding:0 8px; }
+.kvl-read-label { left:947px; top:350px; }
+.kvl-write-label { left:468px; top:366px; }
+.kvl-input,.kvl-result { position:absolute; top:388px; width:110px; display:grid; justify-items:center; gap:10px; }
+.kvl-input { left:24px; }
+.kvl-result { left:1335px; }
+.kvl-token { display:grid; width:80px; height:80px; place-items:center; border:1px solid #9bb0c7; border-radius:9px; background:var(--ui-bg-soft); box-shadow:0 3px 10px #2037520b; }
+.kvl-project { position:absolute; left:182px; top:405px; width:283px; display:grid; gap:9px; }
+.kvl-projection-row { display:grid; grid-template-columns:28px minmax(0,1fr); gap:12px; align-items:center; }
+.kvl-attention { position:absolute; left:560px; top:358px; width:420px; display:grid; gap:8px; text-align:center; }
+.kvl-use-matrices { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+.kvl-use-matrices > div { display:grid; align-content:start; gap:6px; }
+.kvl-project .kvl-bar,.kvl-attention .kvl-bar { height:46px; }
+.kvl-model { position:absolute; left:1018px; top:432px; width:232px; text-align:center; padding:12px 8px; border-top:1px solid var(--ui-border); border-bottom:1px solid var(--ui-border); }
+.kvl-project,.kvl-attention,.kvl-model,.kvl-result { opacity:0; visibility:hidden; transition:opacity .2s; }
+.kvl-stage .is-visible { opacity:1; visibility:visible; }
+.kvl-hidden { visibility:hidden; }
+.kvl-flight { position:absolute; z-index:3; top:0; left:0; display:grid; width:268px; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; offset-distance:0%; offset-rotate:0deg; offset-anchor:center center; filter:drop-shadow(0 5px 7px #20375235); pointer-events:none; animation:kvl-flight-travel 2.05s cubic-bezier(.42,0,.25,1) forwards; }
+.kvl-flight > div { display:grid; gap:3px; text-align:center; }
+.kvl-flight .kvl-bar { border-color:#71869b; }
+.kvl-feedback-token { position:absolute; top:437px; left:1350px; width:80px; height:80px; display:grid; place-items:center; background:var(--ui-bg-card); border:1px solid #9bb0c7; border-radius:9px; box-shadow:0 4px 12px #20375226; animation:kvl-return 2.4s ease-in-out both; }
+.kvl-footer { position:relative; display:flex; align-items:center; justify-content:flex-end; gap:25px; flex:1; }
+.kvl-subtitle { position:absolute; left:50%; width:calc(100% - 360px); transform:translateX(-50%); }
+.kvl-footer .edu-btn { flex:0 0 auto; }
+@keyframes kvl-return { 15% { transform:translate(0,150px); } 75% { transform:translate(-1311px,150px); } to { transform:translate(-1311px,0); } }
+@keyframes kvl-flight-travel { from { offset-distance:0%; opacity:.98; } to { offset-distance:100%; opacity:.9; } }
+@media (prefers-reduced-motion:reduce) { .kvl-slide * { animation-duration:.01ms !important; transition:none !important; } }

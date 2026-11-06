@@ -1,0 +1,72 @@
+/* Cropped image files contain only the framework; no CSS image cropping. */
+.tr-transformer-original-stage .tr-transformer-original-layout {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: 28px;
+}
+.tr-transformer-original-stage .tr-transformer-original-diagram {
+  position: static; display: flex; align-items: center; justify-content: center;
+  min-height: 0; height: clamp(320px, 60vh, 530px); overflow: visible;
+  border: 0; margin: 0; background: #fff;
+}
+.tr-transformer-original-stage .tr-transformer-original-diagram img {
+  position: static; display: block; width: 100%; height: 100%;
+  max-width: 100%; object-fit: contain; object-position: center;
+}
+.tr-transformer-original-stage .tr-transformer-original-copy { gap: 20px; }
+.tr-transformer-original-stage .tr-transformer-original-copy p,
+.tr-transformer-original-stage .tr-transformer-original-copy strong {
+  font-family: inherit; line-height: 1.55; padding: 24px;
+  font-size: clamp(18px, 1.7vw, 28px);
+}
+.tr-framework-actions.tr-equipment-footer {
+  justify-content: flex-end; background: transparent; padding: 0; margin-top: 12px;
+}
+.tr-roles-original-copy {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 36px;
+  margin: 0 2% 10px;
+}
+.tr-roles-original-copy section { min-width: 0; }
+.tr-roles-original-copy h3 { margin: 0 0 6px; color: #07869a; font-size: clamp(22px, 2vw, 30px); }
+.tr-roles-original-copy section:last-child h3 { color: #b85a2e; }
+.tr-roles-original-copy p { margin: 0; color: #294766; font-size: clamp(15px, 1.4vw, 21px); line-height: 1.6; }
+.tr-roles-original-copy small { color: #6a7c8f; font-size: 14px; }
+.tr-roles-original-diagram { margin: 0; height: clamp(200px, 47vh, 410px); }
+.tr-roles-original-diagram img { display: block; width: 100%; height: 100%; object-fit: contain; }
+
+/* A single SVG coordinate system keeps every wire attached at all sizes. */
+.tr-encoder-builder-stage .tr-enc-flow {
+  width: 100%; height: auto; margin: 4px auto 0;
+}
+.tr-encoder-builder-stage .tr-enc-flow > svg {
+  position: static; display: block; width: 100%; height: clamp(310px, 53vh, 440px);
+  overflow: visible;
+}
+.tr-enc-flow .tr-enc-wires path { stroke-width: 2; }
+.tr-enc-flow marker .tr-enc-arrow-tip { fill: none; stroke: #52788e; stroke-width: 1.5; }
+.tr-enc-flow .tr-enc-flow-module { box-sizing: border-box; height: 100%; width: 100%; border-width: 1.5px; box-shadow: none; }
+.tr-enc-flow .tr-enc-flow-module strong { font-size: 16px; }
+.tr-enc-flow .tr-enc-flow-module small { font-size: 12px; }
+.tr-enc-flow .tr-enc-residual-text { display: block; font-size: 13px; }
+.tr-enc-port { display: flex; align-items: center; justify-content: center; gap: 12px; box-sizing: border-box; width: 100%; height: 100%; border: 1.5px solid #8bafc1; border-radius: 10px; background: #f0f7fa; }
+.tr-enc-port.is-output { border-color: #56a99e; background: #edf8f5; }
+.tr-enc-port > span { display: grid; gap: 3px; color: #28566a; }
+.tr-enc-port strong { font-size: 16px; }
+.tr-enc-port small { font-size: 12px; }
+.tr-enc-flow .tr-enc-matrix { width: 66px; height: 38px; }
+.tr-enc-diagram-panel > header { min-height: 36px; }
+@container ppt-slide (min-width: 760px) and (max-width: 980px) {
+  .tr-enc-assembly-layout { grid-template-columns: minmax(210px, .7fr) minmax(0, 1.3fr); }
+  .tr-enc-piece-bank { grid-template-columns: 1fr; }
+  .tr-enc-run-layout { grid-template-columns: minmax(0, 1.3fr) minmax(210px, .7fr); }
+  .tr-enc-run-layout .tr-enc-layer-panel { grid-row: auto; grid-template-columns: 1fr; }
+}
+@container ppt-slide (max-width: 700px) {
+  .tr-transformer-original-stage .tr-transformer-original-layout { gap: 16px; grid-template-columns: 1fr; }
+  .tr-transformer-original-stage .tr-transformer-original-copy { gap: 10px; }
+  .tr-transformer-original-stage .tr-transformer-original-diagram { height: 390px; }
+  .tr-roles-original-copy { gap: 14px; margin-inline: 0; }
+  .tr-roles-original-copy p { font-size: 14px; }
+  .tr-roles-original-copy small { font-size: 12px; }
+  .tr-roles-original-diagram { height: auto; }
+  .tr-roles-original-diagram img { height: auto; }
+}

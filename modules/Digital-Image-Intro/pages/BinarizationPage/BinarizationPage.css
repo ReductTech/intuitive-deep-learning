@@ -1,0 +1,20 @@
+.di-binary { display:grid; grid-template-rows:auto minmax(0,1fr); background:linear-gradient(135deg,#fff,#f5faff); }
+.di-binary > .edu-content-body { min-height:0; }
+.di-binary :is(div,section,footer,button,label,canvas,svg) { min-width:0; max-width:100%; }
+.di-binary p,.di-binary h2 { margin:0; }
+.di-binary__body { height:100%; display:grid; grid-template-rows:minmax(0,1fr) 132px; gap:16px; min-height:0; }
+.di-binary__main { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,.96fr) minmax(0,1fr); gap:18px; min-height:0; }
+.di-binary__image { display:grid; grid-template-rows:48px minmax(0,1fr) 44px; min-height:0; border:1px solid #d4e4f7; border-radius:16px; background:#fff; padding:10px; }
+.di-binary__image > div { min-height:0; position:relative; }
+.di-binary__image canvas { position:absolute; inset:0; width:100%; height:100%; object-fit:contain; border-radius:10px; }
+.di-binary__control { display:grid; grid-template-rows:50px 72px minmax(0,1fr) 76px 44px; gap:5px; padding:12px 18px; border:1px solid #d4e4f7; border-radius:16px; background:#f0f6ff; min-height:0; }
+.di-binary__slider { display:grid; grid-template-columns:minmax(0,1fr) 120px; align-items:center; gap:12px; }
+.di-binary input { width:100%; accent-color:#197bf5; cursor:pointer; }
+.di-binary__histogram { width:100%; height:100%; min-height:0; cursor:ew-resize; touch-action:none; }
+.di-binary button { border:1px solid #c7daf3; border-radius:9px; background:white; color:#2b537e; cursor:pointer; padding:0 8px; }
+.di-binary button.is-selected { color:white; background:#217bf4; border-color:#217bf4; }
+.di-binary button:focus-visible,.di-binary input:focus-visible { outline:3px solid #619be3; outline-offset:3px; }
+.di-binary__actions { display:flex; justify-content:flex-end; gap:10px; }
+.di-binary__actions button { padding:0 15px; }
+.di-binary__rule { display:grid; grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr); align-items:center; gap:18px; padding:10px 22px; border-radius:16px; background:#e8f3ff; }
+.di-binary__rule .math-formula-block { margin:0; }

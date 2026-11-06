@@ -1,0 +1,15 @@
+.vbrl-replay__map { width: min(100%,400px); margin: 0 auto; }
+.vbrl-replay__map .vbrl-map__frame { height: 400px; padding: 8px; }
+.vbrl-replay__map .vbrl-map__board { height: 100%; aspect-ratio: auto; }
+.vbrl-replay__map .vbrl-map__cell img[alt="机器人"] { display: none; }
+.vbrl-replay__map .vbrl-map__cell .vbrl-map__marker-art { width: 88%; height: 88%; right: auto; bottom: auto; }
+.vbrl-replay__map-overlay { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(7,minmax(0,1fr)); grid-template-rows: repeat(7,minmax(0,1fr)); gap: 8px; pointer-events: none; z-index: 4; }
+.vbrl-replay__origin { border-radius: 9px; box-shadow: inset 0 0 0 3px var(--ui-accent-alt); }
+.vbrl-replay__destination { border-radius: 9px; box-shadow: inset 0 0 0 3px var(--ui-success); }
+.vbrl-replay__destination.is-same { margin: 4px; border: 1px dashed var(--ui-success); box-shadow: none; }
+.vbrl-replay__action { width: 100%; height: 100%; }
+.vbrl-replay__action path { fill: none; stroke: var(--ui-accent-alt); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+.vbrl-replay__robot { position: absolute; left: calc(var(--replay-col) * (100% + 8px) / 7); top: calc(var(--replay-row) * (100% + 8px) / 7); width: calc((100% - 48px) / 7); height: calc((100% - 48px) / 7); display: grid; place-items: center; transition: left .3s linear,top .3s linear; z-index: 2; }
+.vbrl-replay__robot img { width: 85%; height: 85%; max-width: 100%; object-fit: contain; }
+.vbrl-replay__robot.is-small img { width: 60%; height: 60%; align-self: start; justify-self: start; }
+@media (prefers-reduced-motion: reduce) { .vbrl-replay__robot { transition: none; } }

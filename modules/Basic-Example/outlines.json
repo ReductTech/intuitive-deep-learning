@@ -1,0 +1,29 @@
+{
+  "id": "basic-example",
+  "title": "基础示例：Creator Skill 是什么",
+  "description": "用一页认识 Creator Skill：将主题与材料转化为 React 演示页面的创作流程。",
+  "path": "/modules/basic-example",
+  "badge": "基础示例",
+  "moduleType": "teaching",
+  "difficulty": "introductory",
+  "audience": "general",
+  "entry": "BasicExampleGuide.tsx",
+  "ppt": {
+    "entry": "BasicExamplePpt.tsx",
+    "path": "/scenedeck/",
+    "player": false
+  },
+  "pages": [
+    {
+      "id": "creator-skill-intro",
+      "title": "Creator Skill 是什么？",
+      "goal": "理解 Creator Skill 的作用及基本创作流程。",
+      "summary": "Creator Skill 是指导 AI 创作 React 演示页面的一套工作流程与规范，连接内容组织、页面实现和评估修正。",
+      "snippet": "Creator Skill 是一套指导 AI 创作 React 演示页面的工作流程与规范。你提供主题、材料和表达目标，它帮助 AI 组织内容、设计页面、完成 React 实现，并检查与修正结果。配合项目已有的共享组件和工具，创作者可以更专注于内容表达。它适用于教学课件、科研汇报和商业演示。"
+    }
+  ],
+  "moduleIdentity": {
+    "version": 1,
+    "id": "1a8e20a6-6e70-4d1d-8830-3b6b9a34ffed"
+  }
+}

@@ -1,0 +1,27 @@
+.acw-directory-page { width:1600px; height:900px; }
+.acw-directory-page *, .acw-directory-page *::before, .acw-directory-page *::after { box-sizing:border-box; min-width:0; }
+.acw-directory-body { display:block; margin-top:20px; }
+.acw-directory-editor { height:680px; border:1px solid #cbd9eb; border-radius:14px; background:white; box-shadow:0 12px 30px #27446e0b; }
+.acw-directory-toolbar { height:54px; display:flex; align-items:center; gap:12px; padding:0 22px; background:#f3f7fc; border-radius:14px 14px 0 0; border-bottom:1px solid #dbe5f1; color:#4b87d7; }
+.acw-directory-toolbar > :last-child { margin-left:auto; }
+.acw-directory-workspace { display:grid; grid-template-columns:445px minmax(0,1fr); height:578px; }
+.acw-directory-sidebar { background:#f8fafd; border-right:1px solid #dbe5f1; padding:12px 0; }
+.acw-directory-row { display:flex; align-items:center; gap:11px; width:100%; min-height:34px; border:0; border-left:3px solid transparent; background:transparent; color:#689cdd; cursor:pointer; text-align:left; padding-block:0; }
+.acw-directory-row .ui-typography { color:#374d6c; }
+.acw-directory-row:hover { background:#edf3fc; }
+.acw-directory-row.is-selected { background:#dfecff; border-left-color:#287cf3; }
+.acw-directory-row.is-selected .ui-typography { color:#1c61bf; }
+.acw-directory-row:focus-visible { outline:3px solid #f07e47; outline-offset:-3px; }
+.acw-directory-folder { display:flex; align-items:center; gap:8px; height:40px; padding-left:20px; color:#6599d9; }
+.acw-directory-indent { padding-left:44px; }
+.acw-directory-preview { display:flex; flex-direction:column; }
+.acw-directory-preview-content { padding:30px 44px; display:flex; flex-direction:column; gap:20px; height:578px; }
+.acw-directory-file-heading { display:flex; align-items:center; gap:12px; color:#287cf3; }
+.acw-directory-rename-badge { margin-left:auto; padding:3px 16px; border:1px solid #7aaaff; border-radius:30px; background:#f3f8ff; color:#2267ce; white-space:nowrap; }
+.acw-directory-rename-badge.is-fixed { color:#a64e20; background:#fff5eb; border-color:#efbd9f; }
+.acw-directory-purpose { padding:0 0 20px; border-bottom:1px solid #d5e0ef; }
+.acw-directory-responsibility { display:grid; gap:8px; }
+.acw-directory-description { max-width:920px; }
+.acw-directory-rename-panel { display:grid; gap:10px; padding:18px 24px; border:1px solid #f1bf9b; border-radius:12px; background:#fff8f0; margin-top:2px; }
+.acw-directory-rename-label, .acw-directory-rename-consequence { color:#bb5b23; }
+.acw-directory-status { height:46px; display:flex; align-items:center; justify-content:space-between; padding:0 20px; border-top:1px solid #dbe5f1; background:#f7faff; border-radius:0 0 14px 14px; }

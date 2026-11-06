@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="delivery package illustration">
+  <defs><linearGradient id="box" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffd47f"/><stop offset="1" stop-color="#e99b35"/></linearGradient></defs>
+  <ellipse cx="80" cy="137" rx="48" ry="9" fill="#8e5e1b" opacity=".18"/>
+  <path d="M31 52 80 29l49 23-49 24z" fill="#ffe4a8"/>
+  <path d="M31 52v55l49 27V76z" fill="url(#box)"/>
+  <path d="M129 52v55l-49 27V76z" fill="#d98929"/>
+  <path d="m80 29 13 7-49 24-13-8z" fill="#fff0c8" opacity=".9"/>
+  <path d="M80 77v54M58 41l49 23" stroke="#c37b25" stroke-width="4" opacity=".65"/>
+  <path d="m70 82 10 6 10-6v19l-10 6-10-6z" fill="#fff3d3" opacity=".85"/>
+  <path d="M75 91h10" stroke="#d58b2c" stroke-width="3" stroke-linecap="round"/>
+</svg>

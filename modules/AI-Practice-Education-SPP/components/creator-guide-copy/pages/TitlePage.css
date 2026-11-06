@@ -1,0 +1,11 @@
+.aipe-replay-cg-cover-page { position: relative; isolation: isolate; width: 1600px; height: 900px; flex: none; margin: 0; color: #071b46; background: #fff; user-select: text; }
+.aipe-replay-cg-cover-page *, .aipe-replay-cg-cover-page *::before, .aipe-replay-cg-cover-page *::after { box-sizing: border-box; min-width: 0; max-width: 100%; }
+.aipe-replay-cg-cover-ribbon { position: absolute; right: 12px; top: 30px; width: 800px; height: 820px; pointer-events: none; }
+.aipe-replay-cg-cover-eyebrow { position: absolute; left: 76px; top: 148px; color: #1673f6; letter-spacing: .43em; }
+.aipe-replay-cg-cover-title { position: absolute; left: 70px; top: 226px; width: 390px; transform: scale(2); transform-origin: top left; }
+.aipe-replay-cg-cover-subtitle { position: absolute; left: 76px; top: 388px; width: 845px; }
+.aipe-replay-cg-cover-description { position: absolute; left: 76px; top: 480px; width: 845px; color: #707a91; }
+.aipe-replay-cg-cover-footer { position: absolute; left: 76px; bottom: 72px; display: flex; align-items: center; gap: 28px; }
+.aipe-replay-cg-cover-step { display: flex; align-items: center; gap: 28px; }
+.aipe-replay-cg-cover-arrow { color: #1673f6; }
+.aipe-replay-cg-cover-number { position: absolute; right: 68px; bottom: 46px; color: #929fba; }

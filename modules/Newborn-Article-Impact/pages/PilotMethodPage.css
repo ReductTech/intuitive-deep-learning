@@ -1,0 +1,3 @@
+.naipv2-method-layout{height:100%;display:grid;grid-template-rows:minmax(0,1fr) auto;gap:16px;}
+.naipv2-method-captions{display:grid;grid-template-columns:1.2fr .95fr 1fr 1fr;gap:12px;padding:0 4%;}
+.naipv2-method-captions>p{padding:8px;background:var(--ui-bg-soft);border-radius:var(--ui-radius-sm);}

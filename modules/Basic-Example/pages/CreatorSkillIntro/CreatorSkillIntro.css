@@ -1,0 +1,71 @@
+.be-intro {
+  width: 1600px;
+  height: 900px;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.be-intro-body {
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  max-width: 100%;
+  display: grid;
+  grid-template-rows: auto auto auto;
+  align-content: space-evenly;
+  gap: 36px;
+  padding: 0 34px;
+}
+
+.be-definition {
+  display: grid;
+  gap: 20px;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.be-process {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 44px;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.be-step {
+  display: grid;
+  align-content: start;
+  gap: 16px;
+  min-width: 0;
+  max-width: 100%;
+  padding-top: 22px;
+  border-top: 2px solid var(--ui-border);
+}
+
+.be-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  min-width: 0;
+  max-width: 100%;
+  padding-top: 24px;
+  border-top: 1px solid var(--ui-border);
+}
+
+.be-footer > * { min-width: 0; max-width: 100%; }
+
+.be-guide {
+  width: 100%;
+  min-width: 0;
+  max-width: 1600px;
+  margin-inline: auto;
+}
+
+.be-guide-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  min-width: 0;
+}

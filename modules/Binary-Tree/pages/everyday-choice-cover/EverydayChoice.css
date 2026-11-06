@@ -1,0 +1,33 @@
+.bt-cover { width:1600px; height:900px; max-width:100%; padding:40px 60px 28px; display:grid; grid-template-rows:146px 610px 76px; color:var(--ui-text-main); background:linear-gradient(130deg,var(--ui-bg-card),var(--ui-bg-page)); }
+.bt-heading { display:grid; gap:8px; align-content:start; }
+.bt-main { display:grid; grid-template-columns:minmax(0,400px) minmax(0,1020px); gap:60px; min-height:0; }
+.bt-main > *, .bt-heading > *, .bt-story > *, .bt-takeaway > * { min-width:0; max-width:100%; }
+.bt-story { display:flex; flex-direction:column; align-items:flex-start; gap:22px; padding-top:32px; color:var(--ui-accent); }
+.bt-feedback { width:100%; display:grid; gap:8px; padding:20px 0 20px 22px; border-left:4px solid var(--ui-accent-alt); }
+.bt-reset > span { display:flex; align-items:center; gap:10px; }
+.bt-tree { width:1020px; height:610px; position:relative; min-width:0; }
+.bt-edges { position:absolute; inset:0; width:100%; height:100%; max-width:100%; }
+.bt-edges path { fill:none; stroke:var(--ui-border-strong); stroke-width:4; transition:stroke .25s; }
+.bt-edges path.bt-active-edge { stroke:var(--ui-accent-alt); stroke-width:7; }
+.bt-question { position:absolute; width:300px; height:142px; padding:16px; display:grid; gap:12px; justify-items:center; color:var(--ui-bg-card); background:var(--ui-accent); border-radius:var(--ui-radius-lg); box-shadow:var(--ui-shadow-soft); }
+.bt-distance { left:360px; top:10px; }
+.bt-weather { left:570px; top:265px; transition:opacity .25s; }
+.bt-weather.is-waiting { opacity:.65; }
+.bt-answers { display:flex; gap:18px; }
+.bt-answers .edu-btn { width:86px; min-height:44px; background:var(--ui-bg-card); color:var(--ui-accent); border:2px solid transparent; }
+.bt-answers .edu-btn.is-active { background:var(--ui-accent-alt); color:var(--ui-bg-card); border-color:var(--ui-bg-card); }
+.bt-answers .edu-btn:focus-visible, .bt-reset:focus-visible { outline:4px solid var(--ui-accent-alt); outline-offset:4px; }
+.bt-leaf { position:absolute; width:200px; height:120px; display:flex; align-items:center; justify-content:center; gap:16px; border:3px solid var(--ui-border); border-radius:var(--ui-radius-lg); background:var(--ui-bg-soft); color:var(--ui-accent); transition:background .25s,border-color .25s; }
+.bt-walking { left:80px; top:265px; }
+.bt-bus { left:460px; top:490px; }
+.bt-bike { left:800px; top:490px; }
+.bt-leaf.is-chosen { background:var(--ui-bg-card); border-color:var(--ui-accent-alt); box-shadow:0 0 0 6px rgba(var(--ui-accent-alt-rgb),.12); }
+.bt-edge-label { position:absolute; padding:0 12px; border-radius:var(--ui-radius-pill); background:var(--ui-bg-page); color:var(--ui-accent); }
+.bt-label-near-yes { left:300px; top:191px; }
+.bt-label-near-no { left:615px; top:191px; }
+.bt-label-rain-yes { left:600px; top:434px; }
+.bt-label-rain-no { left:805px; top:434px; }
+.bt-takeaway { display:flex; align-items:center; justify-content:space-between; gap:24px; border-top:1px solid var(--ui-border); }
+.bt-guide { width:100%; max-width:1600px; margin-inline:auto; }
+.bt-guide-frame { position:relative; width:100%; aspect-ratio:16/9; min-width:0; }
+@media (prefers-reduced-motion:reduce) { .bt-cover * { transition:none; } }

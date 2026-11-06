@@ -1,0 +1,19 @@
+.vga-vae-sidebar > .vga-teaching-panel__body { gap: 16px; }
+.vga-vae-premise { display: flex; flex-direction: column; align-items: center; gap: 8px; width: 100%; padding: 12px; border-radius: 12px; background: #f0f7ff; text-align: center; }
+.vga-vae-premise .vga-latent { width: 140px; height: 130px; }
+.vga-vae-premise .vga-photo-wrap { width: 120px; }
+.vga-vae-comparison > .vga-teaching-panel__body { gap: 12px; padding: 14px; }
+.vga-vae-routes { display: grid; gap: 16px; width: 100%; }
+.vga-vae-route { padding: 10px; border: 2px solid #dfebf7; border-radius: 12px; background: #fafcff; }
+.vga-vae-route.is-selected { border-color: #458fe3; background: #f0f7ff; }
+.vga-vae-route-heading { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+.vga-vae-route-flow { display: grid; grid-template-columns: minmax(0,1fr) 24px minmax(0,1fr) 24px minmax(0,1fr) 24px minmax(0,1fr) 24px minmax(0,1fr); align-items: center; gap: 4px; }
+.vga-vae-route-flow .vga-arrow { width: 24px; height: 24px; }
+.vga-vae-stage { display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; }
+.vga-vae-route-flow .vga-latent { width: 100%; height: 84px; }
+.vga-vae-route-flow .vga-photo-wrap { width: 100%; gap: 6px; }
+.vga-vae-route-flow .vga-photo { max-width: 84px; align-self: center; }
+.vga-vae-route-flow .vga-photo-wrap > p, .vga-vae-stage > p { white-space: nowrap; }
+.vga-vae-operation { min-height: 96px; border: 1px solid #b5cff0; background: white; border-radius: 10px; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 8px; text-align: center; }
+.vga-vae-operation.is-diffusion { border-color: #efd2aa; background: #fff9f0; }
+.vga-vae-operation.is-decoder { border: 2px solid #458fe3; background: #e5f1ff; }

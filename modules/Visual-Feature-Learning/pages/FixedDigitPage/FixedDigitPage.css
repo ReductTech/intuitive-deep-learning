@@ -1,0 +1,53 @@
+.vfl-fixed-page { width:1600px; height:900px; box-sizing:border-box; background:#fcfdff; }
+.vfl-fixed-page * { box-sizing:border-box; }
+.vfl-fixed-toolbar { display:grid; grid-template-columns:minmax(0,205fr) minmax(0,150fr) minmax(0,730fr) minmax(0,145fr) minmax(0,145fr); gap:10px; align-items:center; width:1480px; max-width:100%; height:108px; padding:10px 16px; margin:18px auto 0; background:#f7fbff; border:1px solid #d5e5f8; border-radius:18px; }
+.vfl-fixed-toolbar>* { min-width:0; }
+.vfl-fixed-toolbar p { margin:0; white-space:nowrap; }
+.vfl-fixed-tags { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:6px; }
+.vfl-fixed-tags .edu-btn { padding:8px 2px; min-width:0; height:48px; border-radius:10px; white-space:nowrap; }
+.vfl-fixed-metric { display:flex; flex-direction:column; align-items:center; justify-content:center; height:86px; text-align:center; border-left:1px solid #d5e5f8; font-variant-numeric:tabular-nums; }
+.vfl-fixed-flow { display:grid; grid-template-columns:minmax(0,748fr) 34px minmax(0,330fr) 34px minmax(0,300fr); grid-template-rows:minmax(0,1fr); width:1480px; max-width:100%; height:436px; padding:14px 12px; margin:20px auto 0; border:1px solid #d5e5f8; border-radius:24px; background:#fff; align-items:center; }
+.vfl-fixed-stage { min-width:0; min-height:0; height:100%; padding:10px 12px; display:flex; flex-direction:column; }
+.vfl-fixed-heading { display:flex; align-items:center; justify-content:center; gap:12px; height:44px; flex-shrink:0; }
+.vfl-fixed-heading>span { display:grid; place-items:center; width:40px; height:40px; border-radius:50%; flex-shrink:0; color:white; background:#287bff; }
+.vfl-fixed-classifier .vfl-fixed-heading>span { background:#f28a26; }
+.vfl-fixed-heading h2 { margin:0; }
+.vfl-fixed-extraction-row { display:grid; grid-template-columns:minmax(0,1fr) 22px minmax(0,1fr) 22px minmax(0,1fr); align-items:center; gap:8px; min-width:0; flex:1; margin:10px 0 0; }
+.vfl-fixed-object { min-width:0; text-align:center; }
+.vfl-fixed-object p { margin:8px 0; white-space:nowrap; }
+.vfl-fixed-object canvas { display:block; width:100%; max-width:200px; aspect-ratio:1; margin:0 auto; background:black; border:2px solid #243d65; border-radius:12px; touch-action:none; cursor:crosshair; image-rendering:pixelated; }
+.vfl-fixed-arrow { display:block; height:38px; background:linear-gradient(90deg,#e5f1ff,#65a1f3); clip-path:polygon(0 30%,60% 30%,60% 0,100% 50%,60% 100%,60% 70%,0 70%); }
+.vfl-fixed-pile { display:grid; grid-template-rows:28px minmax(0,1fr) 28px; height:340px; width:100%; min-width:0; margin:auto; cursor:ns-resize; }
+.vfl-fixed-pile:focus-visible { outline:3px solid #8ab9fa; outline-offset:2px; }
+.vfl-fixed-pile-arrow.edu-btn { display:grid; place-items:center; justify-self:center; width:44px; height:28px; min-height:0; padding:0; border:0; background:transparent; box-shadow:none; color:#3975ca; }
+.vfl-fixed-pile-arrow.edu-btn svg { display:block; width:24px; height:24px; fill:none; stroke:currentColor; stroke-width:2; }
+.vfl-fixed-pile-stack { position:relative; min-width:0; min-height:0; width:100%; }
+.vfl-fixed-pile-ghost { position:absolute; left:50%; width:78%; height:68px; border:1px solid #d6e3f7; border-radius:10px; background:#f7faff; opacity:.42; padding:5px; transform:translateX(-50%); }
+.vfl-fixed-pile-ghost.before { top:0; }
+.vfl-fixed-pile-ghost.after { bottom:0; }
+.vfl-fixed-pile-front { position:absolute; top:50%; left:50%; z-index:2; display:grid; grid-template-rows:minmax(0,1fr) 38px; gap:10px; justify-items:center; width:100%; max-width:214px; height:242px; min-height:0; border:1px solid #94b8ed; border-radius:16px; background:#f4f8ff; box-shadow:0 10px 22px #214d991c; padding:14px 12px 10px; transform:translate(-50%,-50%); }
+.vfl-fixed-pile-front p { margin:0; }
+.vfl-fixed-pile-front.turning { animation:vfl-fixed-pile-turn 320ms ease-out; }
+@keyframes vfl-fixed-pile-turn { from { opacity:.55; transform:translate(-50%,-35%) scale(.94); } to { opacity:1; transform:translate(-50%,-50%) scale(1); } }
+.vfl-fixed-kernel { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); grid-template-rows:repeat(3,minmax(0,1fr)); width:100%; height:100%; border:1px solid #d2def0; background:#fff; }
+.vfl-fixed-kernel>span { display:grid; place-items:center; min-width:0; border:1px solid #d2def0; }
+.vfl-fixed-kernel>span.ui-typography--tone-danger { color:#bd3038; background:#fff0ef; }
+.vfl-fixed-kernel>span.ui-typography--tone-accent { color:#154ea4; background:#e9f2ff; }
+.vfl-fixed-map { display:grid; grid-template-columns:repeat(8,minmax(0,1fr)); grid-template-rows:repeat(8,minmax(0,1fr)); gap:1px; width:100%; height:100%; background:#fff4e8; }
+.vfl-fixed-pile-ghost .vfl-fixed-kernel { position:absolute; width:174px; height:174px; top:50%; left:50%; transform:translate(-50%,-50%) scale(.32); }
+.vfl-fixed-pile-ghost .vfl-fixed-map { width:80%; height:100%; margin:auto; }
+.vfl-fixed-input-actions { display:flex; justify-content:center; gap:8px; margin:4px 0; }
+.vfl-fixed-input-actions .edu-btn { padding:2px 10px; min-height:0; border-radius:8px; }
+.vfl-fixed-input-actions .ui-typography { white-space:nowrap; }
+.vfl-fixed-diagram { display:flex; flex:1; align-items:center; justify-content:center; min-height:0; }
+.vfl-fixed-diagram>div { width:100%; }
+.vfl-fixed-diagram svg { height:330px; }
+.vfl-fixed-probabilities { display:grid; grid-template-rows:repeat(10,minmax(0,1fr)); gap:6px; flex:1; min-height:0; margin:20px 0 16px; }
+.vfl-fixed-probabilities>div { display:grid; grid-template-columns:22px minmax(0,1fr) 72px; gap:8px; align-items:center; font-variant-numeric:tabular-nums; }
+.vfl-fixed-track { height:20px; border-radius:5px; background:#e8eef6; }
+.vfl-fixed-track>span { display:block; height:100%; max-width:100%; border-radius:inherit; background:#287bff; transition:width .2s; }
+.vfl-fixed-prediction { background:#edf5ff; border-radius:12px; padding:10px; text-align:center; }
+.vfl-fixed-prediction p { margin:0; }
+.vfl-fixed-note { display:flex; flex-direction:column; align-items:center; justify-content:center; width:1480px; max-width:100%; height:96px; margin:10px auto 0; background:#edf5ff; border:1px solid #d5e5f8; border-radius:16px; padding:8px 16px; text-align:center; }
+.vfl-fixed-note p { margin:0; flex-shrink:0; }
+@media(prefers-reduced-motion:reduce) { .vfl-fixed-pile-front.turning { animation:none; } }

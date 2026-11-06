@@ -1,0 +1,120 @@
+.tr-cross17-page {
+  box-sizing: border-box;
+  display: grid;
+  width: 1600px;
+  height: 900px;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 18px;
+  overflow: hidden;
+  background: #f3f8fb;
+  padding: 26px 40px 20px;
+  color: #173b5e;
+  font-family: "Microsoft YaHei", "Segoe UI", sans-serif;
+}
+
+.tr-cross17-page * { box-sizing: border-box; min-width: 0; }
+.tr-ppt-content .tr-cross17-header h2 { margin: 0; color: #173b5e; font-size: 52px !important; font-weight: 800; line-height: 1.16 !important; }
+.tr-ppt-content .tr-cross17-header p { margin: 7px 0 0; color: #60788d; font-size: 28px !important; line-height: 1.36 !important; }
+.tr-cross17-body { display: grid; align-content: start; gap: 20px; min-height: 0; touch-action: none; }
+.tr-cross17-panels { position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 76px; }
+.tr-cross17-panel { height: 465px; overflow: hidden; border: 1px solid #d1e1eb; border-radius: 14px; background: #fff; }
+.tr-cross17-panel h3 { display: flex; height: 66px; align-items: center; margin: 0; background: #eaf3f9; padding: 0 24px; color: #123d64; font-size: 27px; font-weight: 800; }
+.tr-cross17-v h3 { background: #e9f5f5; }
+.tr-cross17-c h3 { background: #f8f1e7; }
+.tr-cross17-axis { height: 60px; padding-top: 15px; color: #55748d; font-size: 19px; font-weight: 750; text-align: center; }
+.tr-cross17-matrix { display: grid; grid-template-columns: 100px repeat(4, minmax(0, 1fr)); grid-template-rows: repeat(5, 56px); margin: 0 19px; user-select: none; }
+.tr-cross17-matrix-vector { grid-template-columns: 100px repeat(5, minmax(0, 1fr)); }
+.tr-cross17-corner { display: flex; align-items: center; justify-content: center; gap: 5px; color: #55748d; font-size: 18px; font-weight: 750; white-space: nowrap; }
+.tr-cross17-corner strong, .tr-cross17-axis strong { color: #245c84; font-weight: 850; }
+.tr-cross17-row { display: contents; }
+.tr-cross17-column-label, .tr-cross17-row-label { display: flex; align-items: center; justify-content: center; border: 0; background: transparent; color: #173b5e; font: inherit; font-size: 21px; font-weight: 750; text-align: center; }
+.tr-cross17-row-label { justify-content: flex-start; padding-left: 3px; }
+.tr-cross17-weight-cell, .tr-cross17-vector-cell, .tr-cross17-result-cell { display: flex; align-items: center; justify-content: center; margin: 3px; border: 1px solid #d9e5ec; border-radius: 6px; background: #f5f9fb; cursor: grab; transition: background .2s ease, box-shadow .2s ease; }
+.tr-cross17-weight-cell:active, .tr-cross17-vector-cell:active, .tr-cross17-result-cell:active { cursor: grabbing; }
+.tr-cross17-weight-cell > span { width: var(--cross17-dot); height: var(--cross17-dot); border-radius: 50%; background: #8799bf; }
+.tr-cross17-vector-cell { border-color: #acd1d5; background: #cce6e8; }
+.tr-cross17-result-cell { border-color: #e6cca7; background: #f2dfc2; }
+.tr-cross17-ellipsis { display: flex; align-items: center; justify-content: center; color: #91a4b4; font-size: 27px; font-weight: 750; }
+.tr-cross17-a .is-selected { box-shadow: inset 0 0 0 2px #df9541; background: #fff3e5; color: #a9601d; }
+.tr-cross17-v .is-selected { box-shadow: inset 0 0 0 2px #2b91a0; background: #e5f7f8; color: #147381; }
+.tr-cross17-c .tr-cross17-result-cell.is-selected { box-shadow: inset 0 0 0 3px #bd6b1e; background: #ffe2b9; }
+.tr-cross17-dimension { display: grid; height: 35px; place-items: center; margin: 14px 18px 0; border-radius: 7px; background: #eaf3f8; color: #245c84; font-size: 20px; font-weight: 800; }
+.tr-cross17-multiply, .tr-cross17-equals { position: absolute; top: 214px; z-index: 2; width: 28px; transform: translateX(-50%); color: #617f94; font-family: "Cambria Math", "Segoe UI Symbol", serif; font-size: 30px; font-weight: 400; line-height: 1; text-align: center; pointer-events: none; }
+.tr-cross17-multiply { left: calc((100% - 152px) / 3 + 38px); }
+.tr-cross17-equals { left: calc((100% - 152px) * 2 / 3 + 114px); }
+.tr-cross17-captions { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 76px; }
+.tr-ppt-content .tr-cross17-captions p { min-height: 145px; margin: 0; border: 1px solid #d4e3ec; border-radius: 12px; background: #fff; padding: 14px 17px; color: #284a63; font-size: 28px !important; line-height: 1.36 !important; }
+.tr-cross17-captions p span { display: block; }
+.tr-ppt-content .tr-cross17-captions p:first-child { padding-block: 8px; font-size: 26px !important; }
+.tr-cross17-captions p:first-child span:first-child { white-space: nowrap; letter-spacing: -1px; }
+.tr-cross17-captions strong { color: #b96b20; }
+.tr-cross17-footer { display: flex; min-height: 64px; align-items: center; justify-content: space-between; gap: 20px; border-top: 1px solid #d5e3eb; padding-top: 8px; color: #55748d; font-size: 22px; }
+.tr-cross17-footer strong { color: #b96b20; }
+.tr-cross17-footer .edu-btn { min-height: 48px; padding-inline: 24px; }
+
+/* One row, one column, one visible scalar calculation. */
+.tr-cross17-page{gap:14px;padding:25px 36px 18px}
+.tr-ppt-content .tr-cross17-header h2{font-size:44px!important}
+.tr-ppt-content .tr-cross17-header p{font-size:24px!important;margin-top:9px}
+.tr-cross17-body{gap:13px}
+.tr-cross17-guide{display:flex;align-items:center;justify-content:center;gap:23px;color:#6d8797;font-size:20px;min-height:39px}
+.tr-cross17-guide>span{display:flex;align-items:center;gap:9px}
+.tr-cross17-guide b{display:grid;place-items:center;width:27px;height:27px;border-radius:50%;background:#e6eff4;color:#577e96;font-size:17px}
+.tr-cross17-guide i{font-style:normal;color:#95aab6}
+.tr-cross17-guide>strong{color:#9d7549;font-weight:600}
+.tr-cross17-panel{height:372px}
+.tr-cross17-panel h3{height:51px;font-size:25px;padding:0 21px}
+.tr-cross17-axis{height:42px;padding-top:11px;font-size:17px}
+.tr-cross17-matrix{grid-template-rows:repeat(5,46px);margin:0 13px;grid-template-columns:90px repeat(4,minmax(0,1fr))}
+.tr-cross17-matrix-vector{grid-template-columns:90px repeat(5,minmax(0,1fr))}
+.tr-cross17-column-label,.tr-cross17-row-label{font-size:19px}
+.tr-cross17-v .tr-cross17-row-label{font-size:18px}
+.tr-cross17-weight-cell>b{font-size:21px;font-weight:650;color:#a66b36}
+.tr-cross17-vector-cell{font:600 21px 'Segoe UI',sans-serif;color:#267c87}
+.tr-cross17-result-cell{font:650 18px 'Segoe UI',sans-serif;color:#a26b31;padding:0}
+.tr-cross17-dimension{height:29px;margin:9px 15px 0;font-size:18px}
+.tr-cross17-multiply,.tr-cross17-equals{top:184px}
+.tr-cross17-captions{gap:76px}
+.tr-ppt-content .tr-cross17-captions p,.tr-ppt-content .tr-cross17-captions p:first-child{min-height:0;border:0;background:transparent;padding:0 8px;font-size:18px!important;line-height:1.35!important}
+.tr-cross17-captions p>b{display:block;font:23px 'Cambria Math',serif;color:#426c84;margin-bottom:5px}
+.tr-cross17-captions p>span{font-size:18px;color:#6f8898}
+.tr-cross17-calculation{border:1px solid #dfdfd6;border-radius:17px;background:linear-gradient(120deg,#fffdf7,#fff);padding:15px 25px 12px;min-height:137px}
+.tr-cross17-calculation-heading{display:flex;align-items:center;gap:28px}
+.tr-cross17-calculation-heading>strong{color:#a37443;font-size:22px;font-weight:700}
+.tr-cross17-calculation-heading>span{font:23px 'Cambria Math',serif;color:#4a7187}
+.tr-cross17-calculation-heading>span sub,.tr-cross17-calculation-heading>span sup{font-size:14px}
+.tr-cross17-calculation-heading>small{margin-left:auto;color:#8c9da5;font-size:16px}
+.tr-cross17-sum{display:flex;align-items:flex-start;justify-content:center;gap:24px;margin-top:12px;font:30px/1.2 'Cambria Math',serif}
+.tr-cross17-sum-item{display:flex;align-items:flex-start;gap:24px}
+.tr-cross17-sum-item>span{display:grid;grid-template-columns:auto auto auto;gap:0 13px;align-items:center}
+.tr-cross17-sum-item b{font-weight:650;color:#9c723d}
+.tr-cross17-sum-item strong{font-weight:650;color:#277e88}
+.tr-cross17-sum em,.tr-cross17-sum i{font-style:normal;color:#97a7af;font-weight:400}
+.tr-cross17-sum-item small{grid-column:1/-1;text-align:center;font:16px 'Segoe UI',sans-serif;color:#8b9ca7;margin-top:5px}
+.tr-cross17-sum output{color:#a26b31;font-weight:700;border-radius:10px;background:#f9edd9;padding:3px 12px;margin-top:-3px;font-variant-numeric:tabular-nums}
+.tr-cross17-footer{min-height:55px;font-size:18px;gap:15px}
+.tr-cross17-footer .edu-btn .ui-typography{font-size:21px!important}
+
+/* Group guidance, matrices and their explanations into one visual workspace. */
+.tr-cross17-body{gap:18px}
+.tr-cross17-workspace{padding:0 18px 17px;border:1px solid #cfdee7;border-radius:23px;background:#eaf2f6;overflow:hidden;box-shadow:0 5px 15px #365b7206}
+.tr-cross17-guide{min-height:53px;margin:0 -18px 15px;padding:7px 20px;border-bottom:1px solid #d6e4ea;background:#f4f8fa;font-size:19px;gap:24px}
+.tr-cross17-guide b{background:#e3edf2}
+.tr-cross17-guide>strong{font-weight:600;color:#8e795a}
+.tr-cross17-panels{gap:60px}
+.tr-cross17-panel{height:431px;border-color:#d4e1e8;border-radius:16px}
+.tr-cross17-panel h3{height:51px}
+.tr-cross17-dimension{height:27px;background:transparent;color:#78909e;font-size:17px;margin:6px 16px 8px}
+.tr-cross17-panel-note{border-top:1px solid #e0e9ee;background:#f8fbfc;min-height:65px;padding:10px 17px;display:flex;flex-direction:column;gap:6px}
+.tr-cross17-panel-note>b{font:23px/1.1 'Cambria Math',serif;color:#456e84}
+.tr-cross17-panel-note>span{font-size:17px;line-height:1.3;color:#7a909e;white-space:nowrap}
+.tr-cross17-panel-note sub{font-size:15px}
+.tr-cross17-multiply{left:calc((100% - 120px)/3 + 30px)}
+.tr-cross17-equals{left:calc((100% - 120px)*2/3 + 90px)}
+.tr-cross17-calculation{min-height:125px;padding:16px 23px;background:#fffdf8;border-color:#e2ddd1}
+.tr-cross17-calculation-heading>strong{font-size:21px;background:#f4e8d6;border-radius:10px;padding:7px 13px}
+.tr-cross17-calculation-heading>span{font-size:22px}
+.tr-cross17-calculation-heading>small{font-size:16px;color:#95a2aa}
+.tr-cross17-sum{margin-top:15px;font-size:29px;gap:25px}
+.tr-cross17-footer{justify-content:flex-end;border-top:0;padding-top:0}
+.tr-cross17-panel{height:447px}.tr-cross17-panel-note{min-height:74px;padding:9px 17px 11px}

@@ -1,0 +1,9 @@
+.llmpe-cg-folding-wormhole { display: flex; flex-direction: column; flex: 1; min-height: 0; gap: 10px; }
+.llmpe-cg-folding-scene { flex: 1; min-height: 0; position: relative; border-radius: var(--ui-radius-lg); background: radial-gradient(ellipse at 50% 45%, #edf4fa88, transparent 68%); }
+.llmpe-cg-folding-scene canvas { display: block; width: 100%; height: 100%; touch-action: none; cursor: grab; }
+.llmpe-cg-folding-scene canvas:active { cursor: grabbing; }
+.llmpe-cg-folding-label { position: absolute; pointer-events: none; padding: 0 5px; border-radius: var(--ui-radius-sm); background: #ffffffc4; }
+.llmpe-cg-folding-gesture { position: absolute; bottom: 4px; left: 0; right: 0; text-align: center; pointer-events: none; }
+.llmpe-cg-folding-footer { display: flex; justify-content: space-between; align-items: center; gap: 16px; min-height: 44px; }
+.llmpe-cg-folding-footer .edu-btn { padding: 5px 18px; }
+.llmpe-cg-folding-actions { display: flex; align-items: center; gap: 10px; flex: none; }

@@ -1,0 +1,18 @@
+.rpb-slide { box-sizing:border-box; width:1600px; height:900px; padding:42px 56px 44px; display:flex; flex-direction:column; color:var(--ui-text-main); background:var(--ui-bg-card); }
+.rpb-slide * { box-sizing:border-box; min-width:0; max-width:100%; }
+.rpb-diagram { position:relative; flex:1; min-height:0; margin:28px 0 34px; }
+.rpb-wires { position:absolute; inset:0; width:100%; height:100%; color:var(--ui-text-muted); }
+.rpb-wires path { fill:none; stroke:currentColor; stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round; }
+.rpb-wires .rpb-wire--position { color:#8966b4; }
+.rpb-wires .rpb-wire--v { color:#bf4e56; }
+.rpb-node { position:absolute; width:140px; transform:translate(-50%,-50%); }
+.rpb-node .kvc-flow-matrix-grid { width:120px; height:96px; }
+.rpb-node .kvc-flow-matrix-dots,.rpb-node .kvc-flow-matrix-shape { display:none; }
+.rpb-node .kvc-flow-matrix { gap:8px; }
+.rpb-node--rotated .kvc-flow-matrix-grid { outline:2px solid #8966b4; outline-offset:5px; }
+.rpb-rotation { position:absolute; transform:translate(-50%,-50%); width:150px; height:140px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; color:#8966b4; background:color-mix(in srgb,#8966b4 9%,var(--ui-bg-card)); border:2px solid #8966b4; border-radius:var(--ui-radius-lg,16px); }
+.rpb-rotation svg { width:54px; height:54px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.rpb-score-label { position:absolute; width:160px; transform:translate(-50%,-50%); }
+.rpb-normalize { position:absolute; width:150px; transform:translate(-50%,-50%); display:grid; gap:10px; }
+.rpb-multiply { position:absolute; transform:translate(-50%,-50%); }
+.rpb-caption { flex:none; }

@@ -1,0 +1,27 @@
+.acw-skill-browser-page { width:1600px; height:900px; }
+.acw-skill-page *, .acw-skill-page *::before, .acw-skill-page *::after { box-sizing:border-box; min-width:0; }
+.acw-skill-browser-body { display:block; margin-top:20px; }
+.acw-skill-browser-editor { height:680px; border:1px solid var(--ui-border); border-radius:14px; background:white; box-shadow:var(--ui-shadow-soft); }
+.acw-skill-browser-toolbar { height:54px; display:flex; align-items:center; gap:12px; padding:0 22px; background:#f3f7fc; border-radius:14px 14px 0 0; border-bottom:1px solid #dbe5f1; color:#4b87d7; }
+.acw-skill-browser-toolbar > :last-child { margin-left:auto; }
+.acw-skill-browser-workspace { display:grid; grid-template-columns:445px minmax(0,1fr); height:578px; }
+.acw-skill-browser-sidebar { background:#f8fafd; border-right:1px solid #dbe5f1; padding:10px 0; }
+.acw-skill-browser-sidebar-label { display:block; padding:0 22px 5px; }
+.acw-skill-browser-folder { display:flex; align-items:center; gap:8px; min-height:40px; padding-left:20px; color:#6599d9; }
+.acw-skill-browser-row { display:flex; align-items:center; gap:11px; width:100%; min-height:40px; border:0; border-left:3px solid transparent; background:transparent; color:#689cdd; cursor:pointer; text-align:left; padding-block:0; }
+.acw-skill-browser-row .ui-typography { color:#374d6c; }
+.acw-skill-browser-row:hover { background:#edf3fc; }
+.acw-skill-browser-row.is-selected { background:#dfecff; border-left-color:#287cf3; }
+.acw-skill-browser-row.is-selected .ui-typography { color:#1c61bf; }
+.acw-skill-browser-row:focus-visible { outline:3px solid var(--ui-accent-alt); outline-offset:-3px; }
+.acw-skill-tree-spacer { width:16px; flex-shrink:0; }
+.acw-skill-browser-row > svg { flex-shrink:0; }
+.acw-skill-browser-preview { display:flex; flex-direction:column; }
+.acw-skill-browser-preview-tab { height:48px; flex-shrink:0; display:flex; align-items:center; gap:10px; padding:0 26px; color:#4b87d7; border-bottom:1px solid #e2eaf4; }
+.acw-skill-browser-preview-tab > :last-child { margin-left:auto; }
+.acw-skill-browser-preview-content { padding:22px 28px; display:flex; flex-direction:column; gap:16px; height:530px; }
+.acw-skill-browser-preview-heading { display:grid; gap:5px; }
+.acw-skill-browser-description { margin-top:22px; padding-left:24px; border-left:3px solid #bdd5f6; }
+.acw-skill-example { padding-left:27px; }
+.acw-skill-instruction { display:grid; gap:6px; padding:14px 18px; margin-top:auto; border-left:3px solid var(--ui-accent-alt); border-radius:0 8px 8px 0; background:var(--ui-bg-soft); }
+.acw-skill-browser-status { height:46px; display:flex; align-items:center; justify-content:space-between; padding:0 20px; border-top:1px solid #dbe5f1; background:#f7faff; border-radius:0 0 14px 14px; }

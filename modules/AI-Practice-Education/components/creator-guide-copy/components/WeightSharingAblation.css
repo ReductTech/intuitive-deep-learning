@@ -1,0 +1,4 @@
+.aipe-replay-cg-weight-ablation {position:relative;min-width:0;max-width:100%;}
+.aipe-replay-cg-weight-ablation-pair {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;}
+.aipe-replay-cg-weight-ablation-pair>* {min-width:0;max-width:100%;}
+.aipe-replay-cg-weight-generated,.aipe-replay-cg-weight-original {display:block;width:100%;height:auto;aspect-ratio:16 / 9;object-fit:contain;background:#fff;border:1px solid #d4e2f7;border-radius:10px;}

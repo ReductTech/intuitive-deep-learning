@@ -1,0 +1,13 @@
+.rf-interaction-showcase{background:#fff;min-width:0;min-height:0}
+.rf-interaction-showcase>.edu-content-block,.rf-interaction-showcase>.scl-page{width:1600px;height:900px}
+.rf-three-d-showcase>.edu-content-body,.rf-visual-feedback-showcase>.edu-content-body{grid-template-rows:minmax(0,1fr) auto;gap:22px}
+.rf-three-d-scene{display:flex;min-width:0;min-height:0;align-items:stretch;background:radial-gradient(ellipse at 50% 65%,#edf5ff,#fff 70%);border-radius:18px}
+.rf-three-d-scene>.ck-share__scene{width:100%;flex:1;min-height:0}
+.rf-three-d-scene .ck-share__scene-labels{left:100px;right:100px;top:20px}.rf-three-d-scene .ck-share__scene-labels .ui-typography{--ui-type-body-small-size:1.8rem}
+.rf-showcase-bottom{display:grid;gap:7px;text-align:center;padding:8px 0 12px}.rf-showcase-bottom>p{margin:0}
+.rf-feedback-scene{min-width:0;min-height:0;display:grid;align-items:center}
+.rf-feedback-scene .aipe-translation-pair{grid-template-columns:minmax(0,1fr) 48px minmax(0,1fr);gap:25px}.rf-feedback-scene .aipe-translation-pair figure>p{--ui-type-body-small-size:1.8rem}.rf-feedback-scene .aipe-design-comparison-arrow{width:48px;height:36px}
+.rf-code-showcase .code-lab-page{height:900px;width:1600px}
+.rf-game-showcase .ck-window-scan__cell,.rf-game-showcase .ck-window-scan__grid-cell{--ui-type-body-line-height:1.15;--ui-type-body-small-line-height:1.15}
+.rf-code-showcase .code-lab-workspace{margin-top:8px}
+.rf-shuku-showcase .scl-art-study-window,.rf-shuku-showcase .scl-art-study{height:160px}.rf-shuku-showcase .scl-art-course{height:340px}

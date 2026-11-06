@@ -1,0 +1,19 @@
+.course-shell .rtg-transferable { display:grid; width:100%; height:100%; min-height:0; grid-template-rows:auto minmax(0,1fr); gap:10px; border-top:4px solid var(--ui-accent); background:var(--ui-bg); padding:22px 32px 18px; }
+.course-shell .rtg-transferable, .course-shell .rtg-transferable * { box-sizing:border-box; min-width:0; max-width:100%; }
+.course-shell .rtg-transferable > .edu-content-body { display:flex; flex-direction:column; min-height:0; gap:12px; }
+.course-shell .rtg-transferable__nav { display:flex; flex:0 0 auto; gap:12px; }
+.course-shell .rtg-transferable__classification { display:grid; flex:1 1 0; min-height:0; grid-template-rows:minmax(0,1fr) auto; gap:12px; }
+.course-shell .rtg-transferable__classification[hidden] { display:none; }
+.course-shell .rtg-transferable__lab { display:grid; min-height:0; grid-template-columns:minmax(0,2.05fr) minmax(0,1fr); gap:16px; }
+.course-shell .rtg-transferable__choices, .course-shell .rtg-transferable__buckets { min-height:0; margin:0; border:1px solid var(--ui-border); border-radius:var(--ui-radius-md); background:var(--ui-bg-card); padding:14px; }
+.course-shell .rtg-transferable__choices { display:grid; min-height:0; grid-template-rows:auto minmax(0,1fr); gap:12px; }
+.course-shell .rtg-transferable__rows { display:grid; min-height:0; grid-template-rows:repeat(6,minmax(min-content,1fr)); gap:8px; }
+.course-shell .rtg-transferable__row { display:grid; grid-template-columns:minmax(0,1.5fr) repeat(2,minmax(0,.55fr)); align-items:center; gap:12px; padding:8px 12px; border:1px solid var(--ui-border); border-radius:var(--ui-radius-sm); background:var(--ui-bg-page-top); }
+.course-shell .rtg-transferable__row.is-wrong { border-color:var(--ui-danger); }
+.course-shell .rtg-transferable__row > .edu-btn { padding:5px 8px; }
+.course-shell .rtg-transferable__buckets { display:grid; grid-template-rows:auto auto; gap:12px; }
+.course-shell .rtg-transferable__bucket { display:grid; align-content:start; gap:7px; border-left:5px solid var(--ui-success); background:var(--ui-bg-soft); padding:12px; }
+.course-shell .rtg-transferable__bucket.is-task { border-left-color:var(--ui-warning); }
+.course-shell .rtg-transferable__footer { display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; gap:12px; }
+.course-shell .rtg-transferable__actions { display:flex; align-items:center; gap:10px; }
+.course-shell .rtg-transferable__footer .edu-btn { flex:0 0 auto; }

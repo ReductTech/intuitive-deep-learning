@@ -1,0 +1,27 @@
+.di-geometry { display:grid; grid-template-rows:auto minmax(0,1fr); background:linear-gradient(135deg,#fff,#f4f9ff); }
+.di-geometry > .edu-content-body { min-height:0; }
+.di-geometry :is(div,section,footer,button,svg,label) { min-width:0; max-width:100%; }
+.di-geometry p,.di-geometry h2 { margin:0; }
+.di-geometry__body { display:grid; grid-template-rows:52px minmax(0,1fr) 82px; gap:18px; height:100%; min-height:0; }
+.di-geometry__tabs { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); background:#e7f0fa; border-radius:10px; gap:2px; }
+.di-geometry button { border:1px solid #d0e0f3; background:#eff5fc; color:#31557e; cursor:pointer; border-radius:10px; padding:0 10px; }
+.di-geometry button.is-selected { color:#fff; background:#217bf4; border-color:#217bf4; }
+.di-geometry button:focus-visible,.di-geometry input:focus-visible { outline:3px solid #478ddd; outline-offset:3px; }
+.di-geometry__main { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.02fr) minmax(0,1fr); gap:18px; min-height:0; }
+.di-geometry__panel { display:grid; grid-template-rows:48px minmax(0,1fr); padding:12px; border:1px solid #d4e3f5; border-radius:16px; background:#fff; min-height:0; }
+.di-geometry__visual { display:grid; grid-template-rows:minmax(0,1fr) 44px; min-height:0; }
+.di-geometry__visual svg { width:100%; height:100%; min-height:0; }
+.di-geometry__coordinate { display:flex; align-items:center; justify-content:center; gap:10px; background:#eef5fe; border-radius:8px; }
+.di-geometry__coordinate i { width:10px; height:10px; background:#217bf4; border-radius:50%; }
+.di-geometry__transform { display:grid; grid-template-rows:48px 125px 150px minmax(0,1fr) 52px; padding:12px 18px; border-radius:16px; background:#eff6ff; border:1px solid #d4e3f5; min-height:0; }
+.di-geometry__transform .math-formula-block { margin:0; display:flex; align-items:center; justify-content:center; }
+.di-geometry__matrix { display:grid; place-items:center; background:#fff; border-radius:12px; }
+.di-geometry__controls { display:grid; align-content:center; gap:8px; }
+.di-geometry__slider { display:grid; gap:2px; }
+.di-geometry__slider > div { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.di-geometry input { width:100%; accent-color:#217bf4; cursor:pointer; }
+.di-geometry__flip { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+.di-geometry__hint { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.di-geometry__hint button { padding:0 9px; background:white; }
+.di-geometry__takeaway { display:grid; align-content:center; border-radius:14px; background:#e4f1ff; padding:10px 20px; }
+

@@ -1,0 +1,11 @@
+.cg-cover-page { position: relative; isolation: isolate; width: 1600px; height: 900px; flex: none; margin: 0; color: #071b46; background: #fff; user-select: text; }
+.cg-cover-page *, .cg-cover-page *::before, .cg-cover-page *::after { box-sizing: border-box; min-width: 0; max-width: 100%; }
+.cg-cover-ribbon { position: absolute; right: 12px; top: 30px; width: 800px; height: 820px; pointer-events: none; }
+.cg-cover-eyebrow { position: absolute; left: 76px; top: 148px; color: #1673f6; letter-spacing: .43em; }
+.cg-cover-title { position: absolute; left: 70px; top: 226px; width: 390px; transform: scale(2); transform-origin: top left; }
+.cg-cover-subtitle { position: absolute; left: 76px; top: 388px; width: 845px; }
+.cg-cover-description { position: absolute; left: 76px; top: 480px; width: 845px; color: #707a91; }
+.cg-cover-footer { position: absolute; left: 76px; bottom: 72px; display: flex; align-items: center; gap: 28px; }
+.cg-cover-step { display: flex; align-items: center; gap: 28px; }
+.cg-cover-arrow { color: #1673f6; }
+.cg-cover-number { position: absolute; right: 68px; bottom: 46px; color: #929fba; }

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="delivery robot illustration">
+  <defs>
+    <linearGradient id="body" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#496f9f"/><stop offset="1" stop-color="#203f6b"/></linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#dff1ff"/><stop offset="1" stop-color="#9fc4e5"/></linearGradient>
+  </defs>
+  <ellipse cx="80" cy="140" rx="48" ry="9" fill="#16365d" opacity=".18"/>
+  <rect x="35" y="68" width="90" height="58" rx="20" fill="url(#body)"/>
+  <rect x="48" y="78" width="64" height="35" rx="12" fill="#f8fbff" opacity=".94"/>
+  <rect x="56" y="85" width="48" height="21" rx="8" fill="url(#glass)"/>
+  <circle cx="69" cy="95" r="5" fill="#203f6b"/><circle cx="91" cy="95" r="5" fill="#203f6b"/>
+  <path d="M72 102c5 4 11 4 16 0" fill="none" stroke="#2d5b88" stroke-width="3" stroke-linecap="round"/>
+  <rect x="68" y="38" width="44" height="34" rx="15" fill="url(#body)"/>
+  <rect x="75" y="45" width="30" height="18" rx="8" fill="url(#glass)"/>
+  <circle cx="84" cy="54" r="3" fill="#203f6b"/><circle cx="96" cy="54" r="3" fill="#203f6b"/>
+  <path d="M90 38V24" stroke="#203f6b" stroke-width="5" stroke-linecap="round"/><circle cx="90" cy="18" r="8" fill="#f0ad4e"/>
+  <path d="M35 83H22M125 83h13" stroke="#203f6b" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="26" cy="83" r="8" fill="#f0ad4e"/><circle cx="134" cy="83" r="8" fill="#f0ad4e"/>
+  <rect x="47" y="118" width="20" height="18" rx="8" fill="#162f53"/><rect x="93" y="118" width="20" height="18" rx="8" fill="#162f53"/>
+</svg>

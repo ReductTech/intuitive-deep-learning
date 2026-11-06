@@ -1,0 +1,6 @@
+.aipe-capability-preview{display:flex;flex-direction:column;}
+.aipe-capability-preview>.aipe-capability-preview-body{display:flex;flex:1;min-height:0;flex-direction:column;gap:30px;padding-top:22px;}
+.aipe-capability-preview-flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:30px;margin-top:25px;}
+.aipe-capability-preview-flow section{display:grid;align-content:start;gap:18px;padding:18px 12px 18px 20px;border-left:3px solid #ccdbee;}
+.aipe-capability-preview-feedback{padding:8px 0 20px;text-align:center;}
+.aipe-capability-preview-ecosystem{margin-top:auto;display:grid;gap:22px;padding:30px 22px;border-top:2px solid #f07e47;background:#fff8f2;}

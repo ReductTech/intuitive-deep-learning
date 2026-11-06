@@ -1,0 +1,41 @@
+.vbrl-policy-page .vbrl-page-footer { min-height: 56px; padding: 6px 20px; }
+.vbrl-policy { display: grid; grid-template-columns: minmax(0,.32fr) minmax(0,.68fr); gap: 24px; height: 100%; min-height: 0; }
+.vbrl-policy :is(div,section,figure,button,p,span,svg,img,math-field) { min-width: 0; max-width: 100%; }
+.vbrl-policy .edu-btn:hover { transform: none; }
+.vbrl-policy .math-formula-block { padding: 0; margin: 0; }
+.vbrl-policy .math-formula { font-size: var(--ui-type-body-small-size); }
+.vbrl-policy__warehouse > .vbrl-teaching-panel__body { display: grid; grid-template-rows: 400px 43px minmax(0,1fr); align-content: start; justify-items: center; gap: 8px; padding: 14px; }
+.vbrl-policy .vbrl-policy__map { width: min(100%,400px); margin: 0; }
+.vbrl-policy__map .vbrl-map__frame { height: 400px; padding: 8px; }
+.vbrl-policy__map .vbrl-map__board { height: 100%; aspect-ratio: auto; }
+.vbrl-policy__map .vbrl-map__cell img[alt="机器人"] { display: none; }
+.vbrl-policy__map .vbrl-map__cell .vbrl-map__marker-art { width: 88%; height: 88%; right: auto; bottom: auto; }
+.vbrl-policy__map-overlay { position: absolute; inset: 0; z-index: 4; pointer-events: none; }
+.vbrl-policy__robot { position: absolute; left: calc(var(--policy-col) * (100% + 8px) / 7); top: calc(var(--policy-row) * (100% + 8px) / 7); width: calc((100% - 48px) / 7); height: calc((100% - 48px) / 7); display: grid; place-items: center; transition: left .4s ease, top .4s ease; }
+.vbrl-policy__robot img { width: 85%; height: 85%; object-fit: contain; }
+.vbrl-policy__local-example { display: grid; align-items: center; width: 100%; border-top: 1px solid #d9e7f6; }
+.vbrl-policy__methods { display: grid; grid-template-rows: minmax(0,.43fr) minmax(0,.57fr); gap: 16px; min-height: 0; }
+.vbrl-policy__value > .vbrl-teaching-panel__body { display: grid; grid-template-rows: 50px 60px 43px; align-content: center; gap: 6px; padding: 10px 16px; }
+.vbrl-policy__direct > .vbrl-teaching-panel__body { display: grid; grid-template-rows: 50px 67px 39px 43px 39px; align-content: center; gap: 6px; padding: 10px 16px; }
+.vbrl-policy__flow { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.vbrl-policy__flow > .ui-typography { white-space: nowrap; }
+.vbrl-policy__outputs { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 10px; }
+.vbrl-policy__output { display: flex; align-items: center; justify-content: space-between; padding: 6px 12px; border: 1px solid #d9e7f6; border-radius: var(--ui-radius-sm); background: #f6faff; font-variant-numeric: tabular-nums; }
+.vbrl-policy__output.is-best { border-color: #84c4a4; background: #eef9f3; }
+.vbrl-policy__action { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+.vbrl-policy__direction { width: 20px; height: 20px; flex: 0 0 20px; fill: #458fe3; }
+.vbrl-policy__value-control { display: flex; justify-content: space-between; align-items: center; gap: 14px; }
+.vbrl-policy__value-control .edu-btn,.vbrl-policy__controls .edu-btn { padding: 1px 14px; white-space: nowrap; }
+.vbrl-policy__probability { display: grid; grid-template-columns: minmax(0,1fr); grid-template-rows: 39px 8px; align-content: center; justify-content: stretch; gap: 5px; background: #f0f9f5; border-color: #c5e4d5; }
+.vbrl-policy__probability-label { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.vbrl-policy__probability-track { height: 8px; background: #deeee5; border-radius: 4px; }
+.vbrl-policy__probability-track > i { display: block; height: 100%; border-radius: 4px; background: var(--ui-success); transition: width .35s ease; }
+.vbrl-policy__probability.is-selected { border-color: var(--ui-success); box-shadow: inset 0 0 0 1px var(--ui-success); }
+.vbrl-policy__learning-flow { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 18px; background: #f0f7ff; border-radius: var(--ui-radius-sm); }
+.vbrl-policy__learning-flow > div { position: relative; display: grid; place-items: center; }
+.vbrl-policy__learning-flow span[aria-hidden] { position: absolute; right: -16px; color: #458fe3; }
+.vbrl-policy__controls { display: flex; justify-content: center; align-items: center; gap: 10px; }
+.vbrl-policy__stats { white-space: nowrap; text-align: center; }
+@media (prefers-reduced-motion: reduce) {
+  .vbrl-policy__robot,.vbrl-policy__probability-track > i { transition: none; }
+}

@@ -1,0 +1,13 @@
+.spp-showcase-frame.aipe-showcase-page{position:relative;width:100%;height:100%;overflow:hidden;color:#f5f8ff;background:radial-gradient(ellipse at 88% 12%,#294a72 0,transparent 55%),linear-gradient(135deg,#101e36,#1b3457);}
+.spp-showcase-frame.aipe-showcase-page::before{content:'';position:absolute;inset:0;background:linear-gradient(155deg,transparent 72%,#5b80ac0d 72.1%,transparent 92%);pointer-events:none;}
+.spp-showcase-frame .aipe-showcase-window{position:absolute;left:64px;top:60px;width:1472px;height:828px;border-radius:10px;outline:1px solid #a9c6e35c;box-shadow:0 12px 30px #050e2028;}
+.spp-showcase-frame .aipe-showcase-stage-slot{position:relative;width:1472px;height:828px;overflow:clip;border-radius:10px;background:white;}
+.spp-showcase-frame .aipe-showcase-course-shell{position:absolute;inset:0 auto auto 0;width:1600px;height:900px;min-width:0;min-height:0;transform:scale(.92);transform-origin:top left;}
+.spp-showcase-frame .aipe-showcase-course-shell>.edu-content-block{border:0;border-radius:0;box-shadow:none;}
+
+.spp-showcase-frame .aipe-showcase-header{position:absolute;top:8px;left:64px;right:64px;height:44px;display:flex;align-items:center;justify-content:space-between;gap:32px;}
+.spp-showcase-frame .aipe-showcase-header>.ui-typography{margin:0;}
+.spp-showcase-frame .aipe-showcase-wip{display:inline-flex;align-items:center;justify-content:center;padding:0 16px;border:1.5px solid #f17d79;color:#ff9993;letter-spacing:.12em;background:transparent;white-space:nowrap;}
+.spp-showcase-frame .aipe-showcase-development{display:flex;align-items:center;gap:18px;}
+.spp-showcase-frame .aipe-showcase-development-note{margin:0;color:#b5c6dd;white-space:nowrap;}
+

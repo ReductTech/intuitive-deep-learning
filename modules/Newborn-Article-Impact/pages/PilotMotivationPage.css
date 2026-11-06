@@ -1,0 +1,7 @@
+.naipv2-motivation-layout{height:100%;display:grid;grid-template-rows:minmax(0,1fr) auto;gap:28px;}
+.naipv2-motivation-columns{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:start;gap:32px;}
+.naipv2-motivation-columns section{display:grid;grid-template-rows:210px auto auto;gap:24px;padding:0 24px;border-left:1px solid var(--ui-border);}
+.naipv2-motivation-columns section:first-child{border:0;padding-left:0;}
+.naipv2-motivation-columns section:last-child{padding-right:0;}
+.naipv2-motivation-visual{display:grid;place-items:center;color:var(--ui-accent);}
+.naipv2-motivation-visual svg{width:220px;height:180px;}

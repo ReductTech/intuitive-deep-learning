@@ -1,0 +1,11 @@
+.naiptl-layout{height:100%;display:grid;grid-template-rows:minmax(0,1fr) auto;gap:24px;}
+.naiptl-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:48px;}
+.naiptl-sam{display:grid;grid-template-rows:auto minmax(0,1fr) auto;gap:16px;}
+.naiptl-sam>div:first-child{display:grid;gap:8px;}
+.naiptl-phones{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;}
+.naiptl-phones .naipc-photo{width:100%;height:100%;object-fit:contain;}
+.naiptl-reviews{display:grid;grid-template-rows:auto auto auto auto;gap:20px;align-content:center;}
+.naiptl-reviews article{display:grid;gap:14px;padding:24px;background:var(--ui-bg-soft);border-radius:var(--ui-radius-lg);}
+.naiptl-reviews article:nth-of-type(2){background:color-mix(in srgb,var(--ui-accent-alt) 12%,white);}
+.naiptl-gap{color:var(--ui-accent-alt);}
+.naiptl-insight{padding:14px 24px;background:var(--ui-bg-soft);border-radius:var(--ui-radius-lg);}

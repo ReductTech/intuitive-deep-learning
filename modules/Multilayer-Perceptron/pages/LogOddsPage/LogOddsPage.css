@@ -1,0 +1,24 @@
+.rl-logit-page { display:grid; grid-template-rows:auto minmax(0,1fr); }
+.rl-logit-page > .edu-content-body { min-height:0; }
+.rl-logit-layout { height:100%; min-height:0; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); grid-template-rows:minmax(0,1fr) auto auto auto; gap:16px; }
+.rl-logit-layout > *, .rl-logit-layout > * > * { min-width:0; max-width:100%; }
+.rl-logit-comparison { display:grid; grid-template-rows:auto minmax(0,1fr) auto auto; gap:12px; padding:22px 26px; border:1px solid #dce9f8; border-radius:var(--ui-radius-lg); min-height:0; }
+.rl-logit-linear { background:#f4f8ff; }
+.rl-logit-logistic { background:#f0fbf8; border-color:#cdeee6; }
+.rl-logit-comparison > .math-formula-block { align-self:center; }
+.rl-logit-comparison .math-formula { font-size:34px; gap:3px; }
+.rl-logit-model-note { display:flex; align-items:center; justify-content:space-between; gap:12px; border-top:1px solid #d9e8ef; padding-top:14px; }
+.rl-logit-model-note > * { min-width:0; max-width:100%; }
+.rl-logit-model-note .math-formula { font-size:30px; }
+.rl-logit-transform { grid-column:1/-1; padding:16px 22px; display:grid; gap:12px; border:1px solid #dce9f8; border-radius:var(--ui-radius-lg); background:#fff; }
+.rl-logit-control { display:flex; justify-content:space-between; align-items:center; gap:12px; }
+.rl-logit-presets { display:flex; gap:8px; }
+.rl-logit-values { display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr); gap:20px; align-items:center; }
+.rl-logit-values > * { min-width:0; max-width:100%; }
+.rl-logit-values > div { display:grid; justify-items:center; gap:5px; padding:8px; background:#f5f9ff; border-radius:var(--ui-radius-md); }
+.rl-logit-values > div:last-child { background:#e8f7f3; }
+.rl-logit-values .math-formula { font-size:27px; gap:2px; }
+.rl-logit-coefficient { grid-column:1/-1; padding:16px 22px; display:flex; align-items:center; justify-content:space-between; gap:20px; background:#e8f5f5; border-radius:var(--ui-radius-lg); }
+.rl-logit-coefficient > div:first-child { display:grid; gap:6px; }
+.rl-logit-coefficient .math-formula { font-size:29px; gap:2px; }
+.rl-logit-next { grid-column:1/-1; display:flex; justify-content:space-between; align-items:center; gap:16px; }

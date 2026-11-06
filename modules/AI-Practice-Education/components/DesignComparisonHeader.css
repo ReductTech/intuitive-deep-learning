@@ -1,0 +1,7 @@
+.course-shell .aipe-design-comparison-panel { min-width:0; padding:20px 24px; border:1px solid #dce4ef; border-radius:20px; background:#f7f9fc; }
+.course-shell .aipe-design-comparison-panel.is-ours { background:#f0f6ff; border-color:#d0e0f7; }
+.aipe-design-comparison-heading { display:grid; grid-template-columns:218px minmax(0,1fr); align-items:center; gap:18px; min-width:0; padding:0 0 16px; border-bottom:1px solid #d2ddeb; }
+.aipe-design-comparison-heading .ui-typography { margin:0; }
+.aipe-design-comparison-label { display:flex; align-items:center; justify-content:center; min-height:68px; padding:10px 18px; border-radius:14px; background:#e9eef5; color:#223d66; white-space:nowrap; }
+.aipe-design-comparison-heading.is-ours .aipe-design-comparison-label { background:#e5f1ff; color:#1765df; }
+.aipe-design-comparison-arrow { display:block; width:32px; height:26px; color:#8b9bb0; align-self:center; }

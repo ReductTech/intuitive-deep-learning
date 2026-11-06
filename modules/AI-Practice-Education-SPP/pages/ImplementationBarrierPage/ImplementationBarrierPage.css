@@ -1,0 +1,81 @@
+.rie-barrier { position: relative; width: 1600px; height: 900px; isolation: isolate; }
+.rie-bridge-scene { position: relative; height: 540px; min-width: 0; overflow: hidden; }
+.rie-bridge-islands { position: absolute; width: 100%; height: 100%; inset: 0; object-fit: contain; z-index: -1; pointer-events: none; }
+.rie-bridge-start, .rie-bridge-end { position: absolute; top: 378px; text-align: center; width: 370px; }
+.rie-bridge-start { left: 0; }
+.rie-bridge-end { right: 0; }
+.rie-bridge-piece { position: absolute; width: 252px; height: 154px; padding: 0; border: 0; background: transparent; cursor: pointer; transform-origin: center; transition: filter 160ms; }
+.rie-bridge-piece--0 { left: 395px; top: 222px; --tilt: -11deg; --drop-tilt: -31deg; transform: rotate(var(--tilt)); }
+.rie-bridge-piece--1 { left: 644px; top: 195px; --tilt: 0deg; --drop-tilt: 18deg; transform: rotate(var(--tilt)); }
+.rie-bridge-piece--2 { left: 893px; top: 222px; --tilt: 11deg; --drop-tilt: 35deg; transform: rotate(var(--tilt)); }
+.rie-bridge-piece:hover { filter: brightness(1.04) drop-shadow(0 0 7px #8aa4d0); }
+.rie-bridge-piece:focus-visible { outline: 3px solid var(--ui-accent-alt); outline-offset: 5px; border-radius: 12px; }
+.rie-original-stone { position:absolute; inset:0; pointer-events:none; }
+.rie-bridge-stone { display: block; width: 100%; height: 100%; filter: drop-shadow(0 8px 5px #27446e12); }
+.rie-bridge-piece-copy { position: absolute; inset: 37px 0 auto; display: grid; justify-items: center; pointer-events: none; }
+.rie-bridge-piece-copy > span { display: block; }
+.rie-original-stone.is-dropped { animation: rie-piece-drop 550ms var(--fall-delay, 0ms) cubic-bezier(.44,.02,.82,.56) both; }
+.rie-bridge-message { display: grid; align-content: start; justify-items: center; gap: 8px; text-align: center; }
+.rie-ai-controls { position:absolute; top:34px; right:34px; display:grid; justify-items:end; gap:10px; z-index:2; }
+.rie-ai-toggle.edu-btn { padding:8px 16px; background:#f6f8fb; border-color:transparent; border-radius:36px; }
+.rie-ai-toggle.edu-btn > span { display:flex; align-items:center; gap:16px; }
+.rie-ai-switch-track { display:block; width:94px; height:46px; border-radius:28px; background:#b8c8da; padding:5px; transition:background 180ms; }
+.rie-ai-switch-track > span { display:block; width:36px; height:36px; border-radius:50%; background:white; box-shadow:0 2px 4px #27446e20; transition:transform 180ms; }
+.rie-ai-toggle[aria-checked="true"] .rie-ai-switch-track { background:#ff971f; }
+.rie-ai-toggle[aria-checked="true"] .rie-ai-switch-track > span { transform:translateX(48px); }
+.rie-ai-controls-hint { display:flex; align-items:center; gap:16px; }
+.rie-bridge-reset.edu-btn { padding:2px 12px; border-color:#d5dfeb; background:#ffffffa6; }
+@keyframes rie-piece-drop { from { opacity:1; transform:translateY(0) rotate(0); } to { opacity:0; transform:translateY(240px) rotate(var(--drop-tilt)); visibility:hidden; } }
+@media (prefers-reduced-motion: reduce) { .rie-original-stone.is-dropped { animation-duration:1ms; animation-delay:0ms; } .rie-bridge-piece,.rie-ai-switch-track,.rie-ai-switch-track > span { transition:none; } }
+
+.rie-wishful-scene { position:absolute; inset:0; }
+.rie-wishful-route { position:absolute; left:395px; top:109px; width:756px; height:330px; }
+.rie-wishful-route-svg { display:block; width:100%; height:100%; filter:drop-shadow(0 5px 4px #80603c15); }
+.rie-wishful-route-label { position:absolute; top:136px; left:0; right:0; text-align:center; color:#27446e; text-shadow:0 1px 3px #ffffffc0; pointer-events:none; }
+.rie-wishful-route--building .rie-wishful-route-label { opacity:0; animation:rie-route-label 260ms 900ms both; }
+.rie-wishful-route--building .rie-wishful-segment { animation:rie-route-build 600ms var(--segment-delay) cubic-bezier(.2,.7,.25,1) both; }
+.rie-wishful-segment.is-reworking { animation:rie-route-rework 1000ms var(--segment-delay) cubic-bezier(.35,0,.2,1) both; }
+.rie-wishful-work { position:absolute; top:417px; left:395px; width:756px; text-align:center; }
+.rie-wishful-actions { position:absolute; top:475px; left:395px; width:756px; display:flex; justify-content:center; align-items:center; gap:18px; }
+.rie-wishful-result { position:absolute; top:378px; right:0; width:370px; display:grid; justify-items:center; gap:5px; opacity:0; transform:translateY(6px); transition:opacity 200ms,transform 200ms; }
+.rie-wishful-result.is-visible { opacity:1; transform:none; }
+@keyframes rie-route-build {
+  0% { opacity:0; transform:translateY(-22px) scaleY(.97); filter:drop-shadow(0 13px 5px #78501c20); }
+  24% { opacity:1; }
+  76% { opacity:1; transform:translateY(1.4px) scaleY(1); filter:drop-shadow(0 1px 1px #78501c10); }
+  100% { opacity:1; transform:none; filter:none; }
+}
+@keyframes rie-route-rework {
+  0%,100% { opacity:1; transform:none; filter:none; }
+  26% { opacity:1; transform:translate(var(--rework-shift),-15px) rotate(var(--rework-turn)); filter:drop-shadow(0 12px 5px #78501c25); }
+  52% { opacity:.7; transform:translate(var(--rework-shift),-15px) rotate(var(--rework-turn)); filter:drop-shadow(0 12px 5px #78501c25); }
+  84% { opacity:1; transform:translateY(1px); filter:drop-shadow(0 1px 1px #78501c10); }
+}
+@keyframes rie-route-label { from {opacity:0;} to {opacity:1;} }
+@media(prefers-reduced-motion:reduce){ .rie-wishful-route--building .rie-wishful-segment,.rie-wishful-route--building .rie-wishful-route-label,.rie-wishful-segment.is-reworking { animation:none; opacity:1; } .rie-wishful-result { transition:none; } }
+
+.rie-bridge-rainbow-side { filter:brightness(.8); }
+.rie-bridge-rainbow-face,.rie-bridge-rainbow-side { animation:rie-bridge-color 700ms var(--color-delay) both; }
+.rie-bridge-railing { animation:rie-bridge-rail-rise 650ms both; }
+.rie-bridge-handrail { animation:rie-bridge-draw 1000ms 180ms both; }
+.rie-bridge-piers { transform-origin:390px 123px; animation:rie-bridge-pier-grow 1000ms both; }
+.rie-bridge-piers.is-removing { animation:rie-bridge-pier-remove 650ms both; }
+.rie-bridge-tower { animation:rie-bridge-rail-rise 650ms both; }
+.rie-bridge-cable { animation:rie-bridge-draw 800ms var(--cable-delay) both; }
+@keyframes rie-bridge-color { from { opacity:0; } to { opacity:1; } }
+@keyframes rie-bridge-rail-rise { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:none; } }
+@keyframes rie-bridge-draw { from { stroke-dasharray:1; stroke-dashoffset:1; opacity:0; } to { stroke-dasharray:1; stroke-dashoffset:0; opacity:1; } }
+@keyframes rie-bridge-pier-grow { from { opacity:0; transform:scaleY(.1); } to { opacity:1; transform:scaleY(1); } }
+@keyframes rie-bridge-pier-remove { to { opacity:0; transform:scaleY(.1); visibility:hidden; } }
+@media(prefers-reduced-motion:reduce) {
+  .rie-bridge-rainbow-face,.rie-bridge-rainbow-side,.rie-bridge-railing,.rie-bridge-handrail,.rie-bridge-piers,.rie-bridge-tower,.rie-bridge-cable { animation:none; }
+  .rie-bridge-piers.is-removing { opacity:0; visibility:hidden; }
+}
+
+.rie-wishful-composer { position:absolute; top:462px; left:395px; width:756px; height:74px; display:flex; align-items:center; gap:12px; padding:8px 10px 8px 18px; border:1px solid #c6d4e4; border-radius:24px; background:#fffffff5; box-shadow:0 4px 16px #27446e0c; }
+.rie-wishful-draft-control.edu-control { flex:1; min-width:0; margin:0; gap:0; }
+.rie-wishful-draft.edu-input { width:100%; height:50px; padding:0; border:0; border-radius:0; box-shadow:none; background:transparent; color:var(--ui-accent); cursor:text; }
+.rie-wishful-draft.edu-input:focus { outline:none; box-shadow:none; }
+.rie-wishful-composer:focus-within { border-color:#7999bd; box-shadow:0 0 0 3px #aac3e32e; }
+.rie-wishful-send.edu-btn { flex-shrink:0; padding:10px 16px; border-radius:18px; }
+.rie-wishful-send.edu-btn > span { display:flex; align-items:center; gap:6px; }

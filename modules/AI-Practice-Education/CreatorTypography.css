@@ -1,0 +1,13 @@
+/* Use the Shared UIKit font token for this entire deck. Page-specific sizes stay intact. */
+.cg-creator-typography,
+.cg-creator-typography .ui-typography,
+.cg-creator-typography :is(button, input, select, textarea) {
+  font-family: var(--ui-font-sans);
+}
+
+/* Labels inside native/Shared controls retain the control's existing visual metrics. */
+.cg-creator-typography .cg-creator-control-copy {
+  --ui-type-body-small-size: inherit;
+  --ui-type-body-small-weight: inherit;
+  --ui-type-body-small-line-height: inherit;
+}

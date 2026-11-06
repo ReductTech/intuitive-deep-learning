@@ -1,0 +1,22 @@
+.course-shell .nrnn-memory-evolution { display: grid; min-width: 0; min-height: 0; grid-template-rows: auto minmax(0, 1fr); overflow: hidden; }
+.course-shell .nrnn-memory-evolution > .edu-content-head { max-width: none; margin-bottom: 14px; }
+.course-shell .nrnn-memory-evolution > .edu-content-body { display: grid; min-width: 0; min-height: 0; }
+.course-shell .nrnn-memory-evolution__layout { display: grid; min-width: 0; min-height: 0; grid-template-rows: minmax(0, 1fr) auto; gap: 14px; }
+.course-shell .nrnn-memory-evolution__stage { position: relative; min-width: 0; min-height: 0; overflow: hidden; border: 1px solid rgba(var(--ui-accent-rgb), .14); border-radius: 24px; background: radial-gradient(circle at 16% 20%, rgba(166, 198, 206, .18), transparent 30%), radial-gradient(circle at 84% 78%, rgba(229, 192, 177, .16), transparent 30%), linear-gradient(145deg, #fbfcfd 0%, #f1f5f8 100%); box-shadow: 0 20px 50px rgba(55, 78, 96, .09); }
+.course-shell .nrnn-memory-3d { min-width: 0; min-height: 0; width: 100%; height: 100%; }
+.course-shell .nrnn-memory-3d__canvas { display: block; width: 100%; height: 100%; cursor: grab; touch-action: none; }
+.course-shell .nrnn-memory-3d__canvas:active { cursor: grabbing; }
+.course-shell .nrnn-memory-evolution__stage-note { position: absolute; right: 22px; bottom: 16px; left: 22px; display: flex; min-width: 0; justify-content: space-between; gap: 18px; pointer-events: none; }
+.course-shell .nrnn-memory-evolution__stage-note > * { min-width: 0; text-shadow: 0 1px 0 #fff; }
+.course-shell .nrnn-memory-evolution__controls { display: grid; min-width: 0; gap: 9px; border-top: 1px solid rgba(var(--ui-accent-rgb), .12); padding: 12px 18px 2px; }
+.course-shell .nrnn-memory-evolution__controls-head { display: flex; min-width: 0; justify-content: space-between; gap: 18px; }
+.course-shell .nrnn-memory-evolution__controls-head > * { min-width: 0; }
+.course-shell .nrnn-memory-evolution__phase-list { display: grid; min-width: 0; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+.course-shell .nrnn-memory-evolution__phase { display: block; min-width: 0; min-height: 52px; border-color: rgba(var(--ui-accent-rgb), .15); background: rgba(255, 255, 255, .78); padding: 8px 12px; text-align: left; }
+.course-shell .nrnn-memory-evolution__phase > span { display: grid; min-width: 0; grid-template-columns: 28px minmax(0, 1fr); align-items: center; gap: 8px; }
+.course-shell .nrnn-memory-evolution__phase .ui-typography:first-child { color: var(--ui-accent-alt); }
+.course-shell .nrnn-memory-evolution__phase .ui-typography:last-child { color: var(--ui-accent); }
+.course-shell .nrnn-memory-evolution__phase.is-done { border-color: rgba(var(--ui-success-rgb), .24); background: rgba(var(--ui-success-rgb), .055); }
+.course-shell .nrnn-memory-evolution__phase.is-done .ui-typography:last-child { color: var(--ui-success); }
+.course-shell .nrnn-memory-evolution__phase.is-active { border-color: rgba(95, 135, 156, .7); background: rgba(154, 190, 203, .12); box-shadow: 0 0 0 3px rgba(123, 164, 180, .13); }
+@media (max-width: 820px) { .course-shell .nrnn-memory-evolution { height: auto; min-height: 100%; overflow: visible; } .course-shell .nrnn-memory-evolution__layout { min-height: 720px; } .course-shell .nrnn-memory-evolution__stage { min-height: 520px; } }

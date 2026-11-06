@@ -1,0 +1,31 @@
+[
+  {
+    "file": "jason-statham-2018.jpg",
+    "person": "Jason Statham / 杰森·斯坦森",
+    "source": "https://commons.wikimedia.org/wiki/File:Jason_Statham_2018.jpg",
+    "download_url": "https://upload.wikimedia.org/wikipedia/commons/d/d3/Jason_Statham_2018.jpg",
+    "author": "MTV International / MTV UK",
+    "license": "CC BY 3.0",
+    "license_url": "https://creativecommons.org/licenses/by/3.0/",
+    "changes": "Original JPEG retained; viewport crop via CSS only."
+  },
+  {
+    "file": "jason-statham-2014.jpg",
+    "person": "Jason Statham / 杰森·斯坦森",
+    "source": "https://commons.wikimedia.org/wiki/File:Jason_Statham_2014.jpg",
+    "download_url": "https://upload.wikimedia.org/wikipedia/commons/5/50/Jason_Statham_2014.jpg",
+    "author": "Georges Biard",
+    "license": "CC BY-SA 3.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "changes": "Original JPEG retained; viewport crop via CSS only."
+  },
+  {
+    "file": "guo-da.jpg",
+    "person": "郭达 / Guo Da",
+    "source": "https://ent.sina.com.cn/j/2006-08-28/11231219866.html",
+    "download_url": "https://image2.sina.com.cn/ent/j/2006-08-28/U1384P28T3D1219866F326DT20060828112351.JPG",
+    "publisher": "新浪娱乐",
+    "license": "Copyright retained by source; no open license asserted.",
+    "changes": "Original JPEG retained; viewport crop via CSS only."
+  }
+]

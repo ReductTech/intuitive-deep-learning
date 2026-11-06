@@ -1,0 +1,22 @@
+.vfl-face-complexity-page { box-sizing: border-box; width: 1600px; height: 900px; overflow: hidden; background: #fcfdff; }
+.vfl-face-complexity-page *, .vfl-face-complexity-page *::before, .vfl-face-complexity-page *::after { box-sizing: border-box; }
+.vfl-face-complexity-main { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 300px); gap: 20px; width: min(1430px, 100%); height: 490px; margin: 24px auto 0; }
+.vfl-face-complexity-main > * { min-width: 0; max-width: 100%; min-height: 0; }
+.vfl-face-complexity-gallery { display: flex; flex-direction: column; min-height: 0; min-width: 0; padding: 19px; border: 1px solid #d0e3f7; border-radius: 20px; background: #f7fbff; }
+.vfl-face-complexity-gallery-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.vfl-face-complexity-gallery-head .ui-typography { margin: 0; }
+.vfl-face-complexity-photo-row { display: grid; flex: 1; grid-template-columns: repeat(4, minmax(0, 1fr)); align-items: center; gap: 14px; min-width: 0; min-height: 0; margin: 13px 0; }
+.vfl-face-complexity-photo { min-width: 0; max-width: 100%; padding: 7px; border: 1px solid #dde8f4; border-radius: 15px; background: #fff; }
+.vfl-face-complexity-photo img { display: block; width: 100%; height: 290px; max-width: 100%; border-radius: 9px; object-fit: cover; }
+.vfl-face-complexity-same { padding: 7px 14px; border-radius: 11px; background: #e7f2ff; text-align: center; }
+.vfl-face-complexity-same .ui-typography { margin: 0; }
+.vfl-face-complexity-factors { display: flex; flex-direction: column; min-height: 0; padding: 20px; border: 1px solid #d0e3f7; border-radius: 20px; background: #fff; }
+.vfl-face-complexity-factors > .ui-typography { margin: 0; }
+.vfl-face-complexity-factors > h2 { text-align: center; }
+.vfl-face-complexity-factor-list { display: flex; flex: 1; flex-direction: column; justify-content: center; gap: 8px; min-height: 0; margin: 11px 0; }
+.vfl-face-complexity-factor-list .ui-typography { margin: 0; padding: 7px 8px; border: 1px solid #deebf7; border-radius: 11px; background: #f3f8ff; text-align: center; }
+.vfl-face-complexity-factor-note { padding: 10px 0 0; border-top: 1px solid #dce7f4; text-align: center; }
+.vfl-face-complexity-takeaway { display: flex; align-items: center; gap: 24px; width: min(1430px, 100%); height: 103px; margin: 18px auto 0; padding: 18px 30px; border: 1px solid #f4d5c4; border-radius: 18px; background: #fff4ed; }
+.vfl-face-complexity-takeaway .ui-typography { margin: 0; }
+.vfl-face-complexity-takeaway > strong { flex: none; padding-right: 24px; border-right: 2px solid #efc5b0; }
+.vfl-face-complexity-takeaway > p { min-width: 0; }

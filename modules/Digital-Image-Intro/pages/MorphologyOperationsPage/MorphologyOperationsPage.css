@@ -1,0 +1,15 @@
+.di-mop { display:grid; grid-template-rows:auto minmax(0,1fr); background:linear-gradient(135deg,#fff,#f5faff); }
+.di-mop > .edu-content-body { min-height:0; }
+.di-mop :is(div,section,svg,footer,button) { min-width:0; max-width:100%; }
+.di-mop p { margin:0; }
+.di-mop__body { height:100%; display:grid; grid-template-rows:68px minmax(0,1fr) 68px 106px; gap:12px; min-height:0; }
+.di-mop__toolbar,.di-mop__controls { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.di-mop__toolbar > div { display:flex; gap:10px; }
+.di-mop__board { display:grid; grid-template-rows:42px minmax(0,1fr) 68px; min-height:0; padding:12px 22px; border:1px solid #d5e4f6; border-radius:18px; background:white; }
+.di-mop__caption { display:flex; align-items:center; justify-content:space-between; gap:18px; }
+.di-mop__shape { width:100%; height:100%; min-height:0; }
+.di-mop__shape rect { transition:fill 650ms ease-in-out; }
+.di-mop__stages,.di-mop__stages > div { display:flex; justify-content:center; align-items:center; gap:18px; }
+.di-mop__controls { justify-content:flex-start; }
+.di-mop__controls > p { margin-left:auto; }
+.di-mop__takeaway { display:grid; align-content:center; gap:8px; background:#e8f3ff; padding:12px 24px; border-radius:16px; }

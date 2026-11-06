@@ -1,0 +1,62 @@
+.rl-linear-page.edu-content-block { display:grid; grid-template-rows:auto minmax(0,1fr); background:#fbfcfe; --ui-type-h3-size:28px; --ui-type-h3-line-height:1.25; --ui-type-body-small-size:21px; --ui-type-body-small-line-height:1.4; }
+.rl-linear-page > .edu-content-head { padding-bottom:20px; margin-bottom:22px; border-bottom:1px solid #d7e3ef; }
+.rl-linear-page > .edu-content-body { min-height:0; }
+.rl-linear-content { display:grid; grid-template-rows:minmax(0,1fr) auto; gap:18px; min-height:0; height:100%; }
+.rl-linear-layout { display:grid; grid-template-columns:minmax(0,1.75fr) minmax(0,1fr); gap:24px; min-height:0; }
+.rl-linear-layout > * { min-width:0; min-height:0; border:1px solid #d6e2ee; border-radius:18px; background:#fff; }
+.rl-linear-data { display:grid; grid-template-rows:auto minmax(0,1fr) auto; padding:22px 20px 18px; }
+.rl-linear-plot-head { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:0 4px; }
+.rl-linear-legend { display:flex; align-items:center; gap:24px; color:#657b97; font-size:20px; }
+.rl-linear-legend > span { display:flex; align-items:center; gap:10px; white-space:nowrap; }
+.rl-linear-legend i { display:inline-block; width:14px; height:14px; border-radius:50%; background:#8191a6; }
+.rl-linear-legend .is-line { width:36px; height:3px; border-radius:0; background:#168c97; }
+.rl-linear-chart { width:100%; height:100%; min-height:0; }
+.rl-linear-sample { display:grid; grid-template-columns:1.1fr 1fr 1fr; gap:12px; align-items:center; border-top:1px solid #d7e3ef; padding-top:18px; }
+.rl-linear-sample > * { display:flex; align-items:center; justify-content:center; gap:8px; white-space:nowrap; --ui-type-body-small-size:20px; }
+.rl-linear-sample > :first-child { justify-content:flex-start; }
+.rl-linear-sample > :not(:first-child) { border-left:1px solid #d7e3ef; }
+.rl-linear-sample strong { font-size:25px; font-variant-numeric:tabular-nums; }
+.rl-linear-observed { color:#bd7d28; }
+.rl-linear-predicted { color:#168c97; }
+.rl-linear-sample i { display:inline-block; width:16px; height:16px; border:2px solid #cf8c35; border-radius:50%; background:#cf8c35; flex-shrink:0; }
+.rl-linear-predicted i { background:#fff; border-color:#168c97; }
+.rl-linear-controls { display:grid; grid-template-rows:repeat(3,auto); align-content:start; row-gap:12px; padding:20px 26px; }
+.rl-linear-model-section { display:grid; gap:8px; padding-bottom:4px; min-width:0; }
+.rl-linear-model { padding:4px 0; background:none; }
+.rl-linear-model .math-formula { justify-content:center; }
+.rl-linear-model math-field { font-size:var(--ui-type-h1-size); }
+.rl-linear-variables { display:flex; align-items:center; justify-content:center; gap:12px; color:#7f91a8; }
+.rl-linear-variables > .ui-typography { --ui-type-body-small-size:19px; white-space:nowrap; }
+.rl-linear-parameter-note { --ui-type-body-small-size:18px; text-align:center; }
+.rl-linear-parameter { display:grid; align-content:start; gap:8px; padding:14px 0 8px; border-top:1px solid #d7e3ef; }
+.rl-linear-parameter .edu-control { gap:16px; }
+.rl-linear-parameter .edu-control-head { gap:12px; align-items:center; }
+.rl-linear-parameter .edu-control-value { --ui-type-body-small-size:23px; font-variant-numeric:tabular-nums; white-space:nowrap; }
+.rl-linear-parameter-label { display:flex; align-items:center; gap:12px; color:#27446e; font-size:25px; font-weight:700; }
+.rl-linear-parameter-label i { display:grid; place-items:center; width:44px; height:44px; border-radius:50%; background:#168c97; color:#fff; font-family:Georgia,serif; font-size:31px; font-weight:500; }
+.rl-linear-intercept .rl-linear-parameter-label i { background:#168c97; }
+.rl-linear-slope .edu-range { accent-color:#168c97; }
+.rl-linear-intercept .edu-range { accent-color:#168c97; }
+.rl-linear-range-ends { display:flex; align-items:center; justify-content:space-between; color:#748aa6; font-size:18px; font-variant-numeric:tabular-nums; margin-top:0; }
+.rl-linear-parameter > .ui-typography { --ui-type-body-small-size:20px; }
+.rl-linear-direction { color:#168c97; font-size:26px; margin-left:14px; }
+.rl-linear-intercept .rl-linear-direction { color:#168c97; }
+.rl-linear-takeaway { display:flex; align-items:center; gap:12px; --ui-type-body-small-size:20px; }
+.rl-linear-takeaway::before { content:''; width:12px; height:12px; border-radius:50%; background:#168c97; flex-shrink:0; }
+
+/* Both parameters share a teal thumb and a light neutral unfilled track. */
+.rl-linear-parameter .edu-range { appearance:none; -webkit-appearance:none; height:6px; margin:10px 2px; padding:0; border:0; border-radius:20px; cursor:pointer; }
+.rl-linear-parameter .edu-range::-webkit-slider-runnable-track { height:6px; border:0; border-radius:20px; background:transparent; }
+.rl-linear-parameter .edu-range::-webkit-slider-thumb { appearance:none; -webkit-appearance:none; width:14px; height:14px; margin-top:-4px; border:0; border-radius:50%; background:#168c97; }
+.rl-linear-parameter .edu-range::-moz-range-track { height:6px; border:0; border-radius:20px; background:transparent; }
+.rl-linear-parameter .edu-range::-moz-range-thumb { width:14px; height:14px; border:0; border-radius:50%; background:#168c97; }
+.rl-linear-parameter .edu-range:focus-visible { outline:2px solid #168c97; outline-offset:6px; }
+
+.rl-linear-plot-canvas { position:relative; min-height:0; }
+.rl-linear-handle.edu-btn { position:absolute; display:grid; place-items:center; width:34px; height:34px; min-width:0; padding:0; border:2px solid #168c97; border-radius:50%; background:#fff; color:#168c97; box-shadow:0 0 0 5px #168c9718; transform:translate(-50%,-50%); cursor:ns-resize; touch-action:none; user-select:none; z-index:8; }
+.rl-linear-handle.edu-btn > span { display:grid; place-items:center; }
+.rl-linear-handle.edu-btn:hover,.rl-linear-handle.edu-btn:active { transform:translate(-50%,-50%); background:#edf8f8; }
+.rl-linear-handle.edu-btn:focus-visible { outline:3px solid #168c97; outline-offset:5px; }
+
+.rl-linear-controls > * { min-width:0; }
+.rl-linear-parameter > .ui-typography { margin:0; }

@@ -1,0 +1,43 @@
+.aipe-replay-cg-goal-page { position: relative; width: 1600px; height: 900px; flex: none; isolation: isolate; background: radial-gradient(ellipse at 75% 56%, #eaf6ff7a, transparent 43%), #fcfdff; color: #09172e;  --ui-type-display-size: 58px; --ui-type-display-weight: 800; --ui-type-display-line-height: 1.25; --ui-type-subtitle-size: 28px; --ui-type-subtitle-line-height: 1.5; --ui-type-h2-size: 40px; --ui-type-h2-line-height: 1.2; --ui-type-body-size: 28px; --ui-type-body-weight: 700; --ui-type-body-line-height: 1.4; --ui-type-h3-size: 33px; --ui-type-h3-line-height: 1.45; user-select: text; }
+.aipe-replay-cg-goal-page *, .aipe-replay-cg-goal-page .ui-typography { box-sizing: border-box; user-select: text; -webkit-user-select: text; }
+.aipe-replay-cg-goal-header { position: absolute; left: 60px; top: 37px; width: 1480px; text-align: center; }
+.aipe-replay-cg-goal-header .ui-typography--subtitle { margin-top: 15px; color: #75849d; --ui-type-subtitle-size: 27px; }
+.aipe-replay-cg-goal-side { position: absolute; top: 230px; width: 425px; height: 470px; border-radius: 32px; }
+.aipe-replay-cg-goal-old { left: 33px; background: linear-gradient(120deg, #fff2e4a8, #fffcf8a8); color: #142a49; }
+.aipe-replay-cg-goal-new { right: 29px; width: 415px; background: linear-gradient(120deg, #edf7ffb0, #e3f1ff80); }
+.aipe-replay-cg-goal-pill { position: absolute; left: 89px; top: -33px; width: 250px; height: 72px; border-radius: 36px; display: flex; align-items: center; justify-content: center; color: #a94303; background: linear-gradient(120deg, #ffe7c5, #ffce95); }
+.aipe-replay-cg-goal-new .aipe-replay-cg-goal-pill { left: 82px; color: #0641a7; background: linear-gradient(120deg, #c6e3ff, #b3d8ff); }
+.aipe-replay-cg-goal-cards { position: absolute; top: 72px; left: 28px; right: 88px; display: grid; gap: 24px; }
+.aipe-replay-cg-goal-new .aipe-replay-cg-goal-cards { top: 55px; left: 110px; right: 23px; gap: 18px; }
+.aipe-replay-cg-goal-card { min-width: 0; height: 102px; display: flex; align-items: center; gap: 25px; padding: 15px 20px; background: #ffffffd9; border: 1px solid #fff; border-radius: 28px; box-shadow: 0 10px 24px #d88d3210; }
+.aipe-replay-cg-goal-new .aipe-replay-cg-goal-card { height: 82px; gap: 18px; padding: 10px 18px; border-radius: 25px; box-shadow: 0 10px 24px #358ce910; --ui-type-body-size: 26px; }
+.aipe-replay-cg-goal-card .ui-typography { white-space: nowrap; }
+.aipe-replay-cg-goal-card-icon { flex: none; width: 68px; height: 68px; border-radius: 50%; background: #fff0dd; color: #c45912; display: grid; place-items: center; }
+.aipe-replay-cg-goal-card-icon svg { width: 35px; height: 35px; }
+.aipe-replay-cg-goal-new .aipe-replay-cg-goal-card-icon { width: 62px; height: 62px; background: #e1efff; color: #1974ff; }
+.aipe-replay-cg-goal-connections { position: absolute; inset: 0; width: 1600px; height: 900px; pointer-events: none; }
+.aipe-replay-cg-goal-connections path { fill: none; stroke-width: 1.7; stroke-dasharray: 5 7; stroke-linecap: round; }
+.aipe-replay-cg-goal-direction { position: absolute; left: 615px; top: 320px; width: 395px; height: 165px; pointer-events: none; }
+.aipe-replay-cg-goal-core { position: absolute; top: 270px; left: 475px; width: 650px; text-align: center; --ui-type-body-size: 31px; --ui-type-body-line-height: 1.5; }
+.aipe-replay-cg-goal-core .ui-typography { white-space: nowrap; }
+.aipe-replay-cg-goal-core .ui-typography + .ui-typography { margin-top: 3px; }
+.aipe-replay-cg-goal-direction svg { width: 395px; height: 125px; position: absolute; top: 47px; }
+.aipe-replay-cg-goal-orange { color: #ad4c07; }
+.aipe-replay-cg-goal-blue { color: #0866ee; }
+.aipe-replay-cg-goal-floor { position: absolute; left: 466px; top: 673px; width: 666px; height: 55px; background: radial-gradient(ellipse, #718dae38, transparent 68%); }
+.aipe-replay-cg-goal-pivot { position: absolute; left: 718px; top: 576px; width: 164px; height: 106px; clip-path: polygon(50% 0, 100% 100%, 0 100%); background: linear-gradient(120deg, #627ca3, #acbcd4); border-radius: 5px; }
+.aipe-replay-cg-goal-assembly { position: absolute; left: 470px; top: 568px; width: 660px; height: 24px; transform: rotate(var(--aipe-replay-cg-angle)); transform-origin: 330px 12px; }
+.aipe-replay-cg-goal-beam { position: absolute; inset: 0; background: linear-gradient(#d1dff1 0 24%, #a5b9d8 25% 65%, #6e87ae 66%); border-radius: 12px; box-shadow: 0 5px 6px #829aba26; }
+.aipe-replay-cg-goal-orb-anchor { position: absolute; top: 12px; width: 0; height: 0; transform: rotate(calc(-1 * var(--aipe-replay-cg-angle))); }
+.aipe-replay-cg-goal-orb-left { left: 40px; }
+.aipe-replay-cg-goal-orb-right { left: 620px; }
+.aipe-replay-cg-goal-platform { position: absolute; left: -72px; bottom: 0; width: 144px; height: 24px; border-radius: 50% / 30%; background: linear-gradient(#eef5ff, #a9bddf 48%, #7895c5); box-shadow: 0 5px 5px #6c8ac129; }
+.aipe-replay-cg-goal-orb-right .aipe-replay-cg-goal-platform { background: linear-gradient(#d8f0ff, #7ab4fa 48%, #2372ec); }
+.aipe-replay-cg-goal-orb { position: absolute; left: -74px; bottom: 16px; width: 148px; height: 148px; border-radius: 50%; display: grid; place-items: center; box-shadow: inset -12px -13px 20px #bf763a10, 0 11px 14px #d09c5a18; }
+.aipe-replay-cg-goal-orb-orange { background: radial-gradient(circle at 32% 25%, #fff6e7, #ffd197 58%, #efb26f); color: #603009; }
+.aipe-replay-cg-goal-orb-blue { background: radial-gradient(circle at 30% 24%, #e5f7ff, #a7d5ff 53%, #5f9fec); color: #063b92; cursor: pointer; }
+.aipe-replay-cg-goal-orb-blue:focus-visible { outline: 3px solid #0866ee; outline-offset: 5px; }
+.aipe-replay-cg-goal-orb .ui-typography { --ui-type-body-size: 24px; white-space: nowrap; }
+.aipe-replay-cg-goal-conclusion { position: absolute; left: 46px; top: 732px; width: 1508px; height: 127px; border-radius: 35px; background: linear-gradient(100deg, #f0f7ff, #e6f3ff); display: flex; align-items: center; padding: 22px 90px; gap: 39px; }
+.aipe-replay-cg-goal-conclusion > svg { width: 70px; height: 65px; flex: none; }
+.aipe-replay-cg-goal-conclusion .ui-typography { min-width: 0; border-left: 1px solid #8aa9d0; padding-left: 40px; --ui-type-h3-size: 32px; white-space: nowrap; }

@@ -1,0 +1,16 @@
+.acw-judgment-page { width:1600px; height:900px; }
+.acw-judgment-page *, .acw-judgment-page *::before, .acw-judgment-page *::after { box-sizing:border-box; min-width:0; }
+.acw-judgment-body { position:relative; display:block; height:680px; margin-top:22px; }
+.acw-judgment-lens { position:absolute; top:50px; width:850px; height:530px; border-radius:50%; pointer-events:none; }
+.acw-judgment-lens-product { left:140px; border:1px solid #d7edff; background:linear-gradient(145deg,#f0f8ffb0,#dceeffb0); }
+.acw-judgment-lens-taste { right:140px; border:1px solid #ffefd9; background:linear-gradient(145deg,#fff8edb0,#ffedcf90); }
+.acw-judgment-art { display:block; width:100%; height:100%; max-width:100%; }
+.acw-judgment-product,.acw-judgment-taste { position:absolute; top:170px; width:400px; display:flex; flex-direction:column; align-items:center; gap:8px; }
+.acw-judgment-product { left:175px; }
+.acw-judgment-taste { right:140px; }
+.acw-judgment-product > svg,.acw-judgment-taste > svg { width:180px; height:160px; margin-bottom:10px; }
+.acw-judgment-page .acw-judgment-body .ui-typography { margin:0; }
+.acw-judgment-work { position:absolute; left:569px; top:100px; width:400px; display:flex; flex-direction:column; align-items:center; gap:25px; }
+.acw-judgment-work-label { padding:7px 27px; background:linear-gradient(120deg,#fff,#edf4ff); border:1px solid #bcd5ff; border-radius:40px; box-shadow:0 5px 9px #27446e12; }
+.acw-judgment-work > svg { width:400px; height:300px; }
+.acw-judgment-takeaway { position:absolute; top:615px; left:60px; right:60px; }

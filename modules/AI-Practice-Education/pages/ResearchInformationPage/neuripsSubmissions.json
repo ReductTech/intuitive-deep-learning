@@ -1,0 +1,74 @@
+[
+  {
+    "year": 2015,
+    "count": 1838,
+    "source": "https://media.nips.cc/Conferences/2015/NIPS-2015-Conference-Book.pdf",
+    "note": "官方会议手册"
+  },
+  {
+    "year": 2016,
+    "count": 2403,
+    "source": "https://media.nips.cc/Conferences/2016/NIPS-2016-Conference-Book.pdf",
+    "note": "采用官方会议手册2403；评审过程材料与第三方另有2406/2425，需保留此差异，不认为已完全消除口径问题"
+  },
+  {
+    "year": 2017,
+    "count": 3240,
+    "source": "https://david-abel.github.io/blog/posts/misc/nips_2017.pdf",
+    "note": "参会研究者的现场记录；官方opening_remarks.pdf已定位，但web工具过大、直接下载超时，尚未独立读取验证，确认等级低于官方已读"
+  },
+  {
+    "year": 2018,
+    "count": 4856,
+    "source": "https://isr.tecnico.ulisboa.pt/real-world-problems-at-the-largest-ai-conference/",
+    "note": "参会研究机构的一手报道；官方会议手册已定位但本次未能下载核验"
+  },
+  {
+    "year": 2019,
+    "count": 6743,
+    "source": "https://neuripsconf.medium.com/what-we-learned-from-neurips-2019-data-111ab996462c",
+    "note": "会议官方账号报告：筛选后6743；通知时点剩6614"
+  },
+  {
+    "year": 2020,
+    "count": 9467,
+    "source": "https://neurips.cc/media/Press/NeurIPS_2021-Fact_Sheet.pdf",
+    "note": "2021官方Fact Sheet回列2020年论文投稿量"
+  },
+  {
+    "year": 2021,
+    "count": 9122,
+    "source": "https://neurips.cc/media/Press/NeurIPS_2021-Fact_Sheet.pdf",
+    "note": "论文投稿9122，不是摘要注册11292；另有D&B轨道不并入"
+  },
+  {
+    "year": 2022,
+    "count": 10411,
+    "source": "https://blog.neurips.cc/2023/12/09/reflections-on-the-neurips-2023-ethics-review-process/",
+    "note": "官方伦理审查报告回列2022主轨道10411；2022 Fact Sheet另有9634等相互不一致统计，不采用该混合表作为主轨道依据"
+  },
+  {
+    "year": 2023,
+    "count": 12343,
+    "source": "https://media.neurips.cc/Conferences/NeurIPS2023/NeurIPS2023-Fact_Sheet.pdf",
+    "note": "官方Fact Sheet主轨道12343；伦理审查初步报告曾列12345；采用Fact Sheet"
+  },
+  {
+    "year": 2024,
+    "count": 15671,
+    "source": "https://media.neurips.cc/Conferences/NeurIPS2024/NeurIPS2024-Fact_Sheet.pdf",
+    "note": "主轨道；全轨道含D&B为17491"
+  },
+  {
+    "year": 2025,
+    "count": 21575,
+    "source": "https://blog.neurips.cc/2025/09/30/reflections-on-the-2025-review-process-from-the-program-committee-chairs/",
+    "note": "官方程序主席报告valid main-track paper submissions"
+  },
+  {
+    "year": 2026,
+    "count": 30709,
+    "source": "https://blog.utc.edu/news/2026/10/utc-computer-science-teams-ai-research-paper-accepted-to-neurips-2026/",
+    "note": "参会大学报道valid main-track submissions，与MI-6研究团队报道一致；尚未定位已公开的会方年度统计报告，标为机构报道核实"
+  }
+]

@@ -1,0 +1,129 @@
+/* 把实例带入具体计算：大括号矩阵、分阶段运算和左侧结果动画。 */
+
+.course-shell .nrnn-matrix-computation { display: grid; min-width: 0; min-height: 0; grid-template-rows: auto minmax(0, 1fr); overflow: hidden; }
+.course-shell .nrnn-matrix-computation > .edu-content-head { max-width: none; margin-bottom: 12px; }
+.course-shell .nrnn-matrix-computation__body { display: grid; min-width: 0; min-height: 0; grid-template-rows: minmax(0, 1fr); }
+.course-shell .nrnn-matrix-computation__main { display: grid; min-width: 0; min-height: 0; grid-template-columns: minmax(0, 1.35fr) minmax(310px, .75fr); gap: 14px; }
+.course-shell .nrnn-matrix-computation__diagram,
+.course-shell .nrnn-matrix-computation__quiz { min-width: 0; max-width: 100%; border: 1px solid rgba(var(--ui-accent-rgb), .16); border-radius: 22px; background: linear-gradient(145deg, #fff 0%, #f7f9fc 100%); box-shadow: 0 16px 40px rgba(42, 60, 91, .06); }
+.course-shell .nrnn-matrix-computation__diagram { display: grid; min-height: 0; grid-template-rows: auto minmax(0, 1fr) auto; gap: 14px; padding: 18px 20px; }
+
+.course-shell .nrnn-matrix-computation__encoding { display: grid; min-width: 0; grid-template-columns: minmax(185px, .7fr) minmax(0, 1.3fr); align-items: center; gap: 18px; border-bottom: 1px solid var(--ui-border); padding: 0 4px 14px; }
+.course-shell .nrnn-matrix-computation__encoding-title { display: grid; min-width: 0; gap: 4px; }
+.course-shell .nrnn-matrix-computation__encoding-items { display: flex; min-width: 0; align-items: center; justify-content: space-around; gap: 12px; }
+.course-shell .nrnn-matrix-computation__encoding-item { display: flex; min-width: 0; align-items: center; gap: 7px; }
+.course-shell .nrnn-matrix-computation__encoding-item > .nrnn-dish-icon,
+.course-shell .nrnn-matrix-computation__encoding-item > .nrnn-weather-icon { width: 46px; height: 46px; flex: 0 0 46px; }
+
+.course-shell .nrnn-matrix-computation__operation { display: grid; min-width: 0; min-height: 0; grid-template-columns: minmax(155px, .7fr) minmax(0, 1.3fr); align-items: center; gap: 16px; border: 1px solid rgba(var(--ui-accent-alt-rgb), .32); border-radius: 20px; background: #fff; box-shadow: 0 14px 34px rgba(var(--ui-accent-alt-rgb), .1); padding: 22px 20px; animation: nrnn-matrix-computation-in .35s cubic-bezier(.2, .8, .2, 1) both; }
+.course-shell .nrnn-matrix-computation__operation-label { display: flex; min-width: 0; align-items: center; gap: 12px; }
+.course-shell .nrnn-matrix-computation__operation-label > .nrnn-dish-icon,
+.course-shell .nrnn-matrix-computation__operation-label > .nrnn-weather-icon { width: 68px; height: 68px; flex: 0 0 68px; }
+.course-shell .nrnn-matrix-computation__operation--merge { border-color: rgba(var(--ui-success-rgb), .38); box-shadow: 0 14px 34px rgba(var(--ui-success-rgb), .1); }
+.course-shell .nrnn-matrix-computation__merge-scene { display: grid; min-height: 0; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); gap: 12px; padding: 16px 18px; }
+.course-shell .nrnn-matrix-computation__merge-scene-head { display: flex; min-width: 0; align-items: center; justify-content: center; gap: 12px; }
+.course-shell .nrnn-matrix-computation__merge-scene-head .nrnn-dish-icon,
+.course-shell .nrnn-matrix-computation__merge-scene-head .nrnn-weather-icon { width: 52px; height: 52px; }
+.course-shell .nrnn-matrix-computation__merge-add-row { display: grid; min-width: 0; align-items: center; justify-content: center; grid-template-columns: minmax(145px, .9fr) auto minmax(145px, .9fr) auto minmax(54px, .45fr); gap: 10px; }
+.course-shell .nrnn-matrix-computation__merge-input { display: flex; min-width: 0; align-items: center; justify-content: center; gap: 9px; }
+.course-shell .nrnn-matrix-computation__merge-route-stack { display: grid; min-width: 0; gap: 7px; }
+.course-shell .nrnn-matrix-computation__merge-activate-row { display: grid; min-width: 0; max-width: 100%; align-items: center; justify-content: center; grid-template-columns: minmax(72px, .7fr) auto minmax(118px, 1fr) auto minmax(72px, .7fr) auto minmax(126px, 1fr); gap: 10px; }
+.course-shell .nrnn-matrix-computation__merge-step-block { display: grid; min-width: 0; justify-items: center; gap: 7px; }
+.course-shell .nrnn-matrix-computation__activation-gate { display: grid; min-width: 0; justify-items: center; gap: 4px; border: 1px solid rgba(var(--ui-accent-alt-rgb), .3); border-radius: 16px; background: rgba(var(--ui-accent-alt-rgb), .07); padding: 13px 10px; }
+.course-shell .nrnn-matrix-computation__merge-final-card { display: flex; min-width: 0; align-items: center; justify-content: center; gap: 8px; border: 1px solid rgba(var(--ui-success-rgb), .3); border-radius: 16px; background: rgba(var(--ui-success-rgb), .06); padding: 10px; }
+.course-shell .nrnn-matrix-computation__merge-symbol { display: grid; width: 68px; height: 68px; flex: 0 0 68px; place-items: center; border-radius: 20px; background: rgba(var(--ui-success-rgb), .12); color: var(--ui-success); font: 700 42px/1 var(--ui-font-mono); }
+.course-shell .nrnn-matrix-computation__equation { display: flex; min-width: 0; align-items: center; justify-content: center; gap: 12px; overflow: hidden; }
+.course-shell .nrnn-matrix-computation__merge-equation { justify-content: flex-start; }
+.course-shell .nrnn-matrix-computation__merge-output { display: flex; min-width: 0; align-items: center; gap: 12px; }
+
+/* 用 CSS 画出可随矩阵高度伸缩的大方括号，而不是依赖单个字符。 */
+.course-shell .nrnn-matrix-computation__matrix,
+.course-shell .nrnn-matrix-computation__vector,
+.course-shell .nrnn-matrix-computation__fill-vector { display: inline-flex; min-width: 0; align-items: center; color: var(--ui-text-main); font-family: var(--ui-font-mono); }
+.course-shell .nrnn-matrix-computation__matrix-bracket,
+.course-shell .nrnn-matrix-computation__vector-bracket,
+.course-shell .nrnn-matrix-computation__fill-bracket { position: relative; display: block; width: 11px; min-height: 30px; align-self: stretch; border-left: 3px solid var(--ui-text-light); }
+.course-shell .nrnn-matrix-computation__matrix-bracket.is-right,
+.course-shell .nrnn-matrix-computation__vector-bracket.is-right,
+.course-shell .nrnn-matrix-computation__fill-bracket.is-right { border-right: 3px solid var(--ui-text-light); border-left: 0; }
+.course-shell .nrnn-matrix-computation__matrix-bracket::before,
+.course-shell .nrnn-matrix-computation__matrix-bracket::after,
+.course-shell .nrnn-matrix-computation__vector-bracket::before,
+.course-shell .nrnn-matrix-computation__vector-bracket::after,
+.course-shell .nrnn-matrix-computation__fill-bracket::before,
+.course-shell .nrnn-matrix-computation__fill-bracket::after { position: absolute; right: 0; left: -3px; height: 3px; background: var(--ui-text-light); content: ''; }
+.course-shell .nrnn-matrix-computation__matrix-bracket::before,
+.course-shell .nrnn-matrix-computation__vector-bracket::before,
+.course-shell .nrnn-matrix-computation__fill-bracket::before { top: 0; }
+.course-shell .nrnn-matrix-computation__matrix-bracket::after,
+.course-shell .nrnn-matrix-computation__vector-bracket::after,
+.course-shell .nrnn-matrix-computation__fill-bracket::after { bottom: 0; }
+.course-shell .nrnn-matrix-computation__matrix-bracket.is-right::before,
+.course-shell .nrnn-matrix-computation__vector-bracket.is-right::before,
+.course-shell .nrnn-matrix-computation__fill-bracket.is-right::before,
+.course-shell .nrnn-matrix-computation__matrix-bracket.is-right::after,
+.course-shell .nrnn-matrix-computation__vector-bracket.is-right::after,
+.course-shell .nrnn-matrix-computation__fill-bracket.is-right::after { right: -3px; left: 0; }
+.course-shell .nrnn-matrix-computation__matrix-grid { display: flex; flex-direction: column; gap: 3px; padding: 6px 8px; }
+.course-shell .nrnn-matrix-computation__matrix-row { display: grid; min-width: 0; align-items: center; justify-items: center; gap: 3px 9px; }
+.course-shell .nrnn-matrix-computation__matrix-grid.is-3 .nrnn-matrix-computation__matrix-row { grid-template-columns: repeat(3, minmax(18px, 1fr)); }
+.course-shell .nrnn-matrix-computation__matrix-grid.is-2 .nrnn-matrix-computation__matrix-row { grid-template-columns: repeat(2, minmax(18px, 1fr)); }
+.course-shell .nrnn-matrix-computation__matrix-row.is-split-before { margin-top: 4px; border-top: 2px dashed var(--ui-border-strong); padding-top: 5px; }
+.course-shell .nrnn-matrix-computation__matrix-row.is-highlight { border-radius: 8px; background: rgba(var(--ui-success-rgb), .14); box-shadow: 0 0 0 4px rgba(var(--ui-success-rgb), .08); }
+.course-shell .nrnn-matrix-computation__vector-values { display: grid; min-width: 30px; justify-items: center; gap: 2px; border-radius: 8px; padding: 5px 7px; }
+.course-shell .nrnn-matrix-computation__vector.is-input .nrnn-matrix-computation__vector-values { background: rgba(var(--ui-accent-rgb), .07); }
+.course-shell .nrnn-matrix-computation__vector.is-question .nrnn-matrix-computation__vector-values { background: rgba(var(--ui-warning-rgb), .12); }
+.course-shell .nrnn-matrix-computation__vector.is-result .nrnn-matrix-computation__vector-values { background: rgba(var(--ui-success-rgb), .11); }
+.course-shell .nrnn-matrix-computation__vector.is-compact .nrnn-matrix-computation__vector-bracket { width: 7px; min-height: 20px; border-width: 2px; }
+.course-shell .nrnn-matrix-computation__vector.is-compact .nrnn-matrix-computation__vector-bracket::before,
+.course-shell .nrnn-matrix-computation__vector.is-compact .nrnn-matrix-computation__vector-bracket::after { height: 2px; left: -2px; }
+.course-shell .nrnn-matrix-computation__vector.is-compact .nrnn-matrix-computation__vector-values { min-width: 22px; gap: 0; padding: 1px 3px; }
+
+.course-shell .nrnn-matrix-computation__split-result { display: grid; min-width: 0; grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr); align-items: center; gap: 9px; }
+.course-shell .nrnn-matrix-computation__result-group { display: grid; min-width: 0; justify-items: center; gap: 3px; }
+.course-shell .nrnn-matrix-computation__result-group.is-same .nrnn-matrix-computation__vector-values { background: rgba(var(--ui-accent-alt-rgb), .08); }
+.course-shell .nrnn-matrix-computation__result-group.is-next .nrnn-matrix-computation__vector-values { background: rgba(var(--ui-warning-rgb), .1); }
+.course-shell .nrnn-matrix-computation__result-group > .nrnn-matrix-computation__route-card { margin-top: 5px; }
+.course-shell .nrnn-matrix-computation__result-divider { width: 1px; height: 56px; background: var(--ui-border-strong); }
+.course-shell .nrnn-matrix-computation__cards { display: flex; min-width: 0; grid-column: 1 / -1; align-items: center; justify-content: center; gap: 12px; }
+.course-shell .nrnn-matrix-computation__dish-card { display: flex; min-width: 0; align-items: center; gap: 6px; border: 1px solid var(--ui-border); border-radius: 14px; background: var(--ui-bg-muted); padding: 6px 10px; animation: nrnn-matrix-card-in .45s cubic-bezier(.2, .8, .2, 1) both; }
+.course-shell .nrnn-matrix-computation__dish-card.is-same { border-color: rgba(var(--ui-accent-alt-rgb), .35); }
+.course-shell .nrnn-matrix-computation__dish-card.is-next { border-color: rgba(var(--ui-warning-rgb), .45); }
+.course-shell .nrnn-matrix-computation__dish-card .nrnn-dish-icon { width: 42px; height: 42px; }
+.course-shell .nrnn-matrix-computation__route-card { display: flex; min-width: 0; align-items: center; gap: 5px; border: 1px solid var(--ui-border); border-radius: 12px; background: var(--ui-bg-muted); padding: 4px 7px; animation: nrnn-matrix-card-in .45s cubic-bezier(.2, .8, .2, 1) both; }
+.course-shell .nrnn-matrix-computation__route-card .nrnn-dish-icon,
+.course-shell .nrnn-matrix-computation__route-card .nrnn-weather-icon { width: 34px; height: 34px; flex: 0 0 34px; }
+.course-shell .nrnn-matrix-computation__weather-card { display: flex; min-width: 0; align-items: center; gap: 6px; border: 1px solid var(--ui-border); border-radius: 14px; background: var(--ui-bg-muted); padding: 6px 10px; animation: nrnn-matrix-card-in .45s cubic-bezier(.2, .8, .2, 1) both; }
+.course-shell .nrnn-matrix-computation__weather-card.is-same { border-color: rgba(var(--ui-accent-alt-rgb), .35); }
+.course-shell .nrnn-matrix-computation__weather-card.is-next { border-color: rgba(var(--ui-warning-rgb), .45); }
+.course-shell .nrnn-matrix-computation__weather-card .nrnn-weather-icon { width: 42px; height: 42px; }
+
+.course-shell .nrnn-matrix-computation__stage-track { display: flex; min-width: 0; align-items: center; gap: 8px; border-top: 1px dashed var(--ui-border-strong); padding: 12px 8px 0; }
+.course-shell .nrnn-matrix-computation__stage-track > span:not(:last-of-type) { width: 44px; height: 5px; flex: 0 0 44px; border-radius: 5px; background: var(--ui-border-strong); }
+.course-shell .nrnn-matrix-computation__stage-track > span:first-child,
+.course-shell .nrnn-matrix-computation__stage-track > span.is-active { background: var(--ui-accent-alt); }
+
+.course-shell .nrnn-matrix-computation__quiz { display: grid; min-height: 0; align-content: center; gap: 12px; padding: 20px 22px; }
+.course-shell .nrnn-matrix-computation__quiz-equation { display: grid; min-width: 0; grid-template-columns: auto auto auto minmax(0, 1fr); align-items: center; gap: 7px; border-radius: 14px; background: var(--ui-bg-muted); padding: 10px 9px; }
+.course-shell .nrnn-matrix-computation__quiz-output { display: grid; min-width: 0; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: 6px; }
+.course-shell .nrnn-matrix-computation__quiz-result-group { display: grid; min-width: 0; justify-items: center; gap: 3px; }
+.course-shell .nrnn-matrix-computation__answer-grid { display: grid; min-width: 0; max-width: 100%; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: 18px; border-radius: 14px; background: var(--ui-bg-muted); padding: 18px 14px; }
+.course-shell .nrnn-matrix-computation__answer-grid .nrnn-matrix-computation__quiz-result-group { display: grid; min-width: 0; justify-items: center; gap: 6px; }
+.course-shell .nrnn-matrix-computation__merge-quiz { display: flex; min-width: 0; align-items: center; justify-content: center; gap: 10px; border-radius: 14px; background: var(--ui-bg-muted); padding: 14px 10px; }
+.course-shell .nrnn-matrix-computation__fill-vector { min-height: 128px; }
+.course-shell .nrnn-matrix-computation__fill-cells { display: grid; gap: 6px; padding: 4px 7px; }
+.course-shell .nrnn-matrix-computation__fill-cells .edu-control { display: block; min-width: 0; }
+.course-shell .nrnn-matrix-computation__fill-input { width: 44px; height: 36px; padding: 3px; text-align: center; }
+.course-shell .nrnn-matrix-computation__fill-bracket { width: 10px; min-height: 128px; border-width: 2px; }
+.course-shell .nrnn-matrix-computation__fill-bracket::before,
+.course-shell .nrnn-matrix-computation__fill-bracket::after { height: 2px; left: -2px; }
+.course-shell .nrnn-matrix-computation__hint { margin: 0; border-left: 3px solid var(--ui-accent-alt); padding-left: 10px; }
+.course-shell .nrnn-matrix-computation__quiz-feedback { min-height: 36px; border: 1px solid var(--ui-border); border-radius: 12px; background: var(--ui-bg-muted); padding: 9px 11px; }
+.course-shell .nrnn-matrix-computation__quiz-feedback.is-wrong { border-color: rgba(var(--ui-danger-rgb), .32); }
+.course-shell .nrnn-matrix-computation__quiz-feedback.is-correct { border-color: rgba(var(--ui-success-rgb), .32); background: rgba(var(--ui-success-rgb), .07); }
+.course-shell .nrnn-matrix-computation__completion { display: flex; min-width: 0; align-items: center; gap: 10px; border-radius: 14px; background: rgba(var(--ui-success-rgb), .08); padding: 12px 14px; }
+.course-shell .nrnn-matrix-computation__completion .nrnn-dish-icon { width: 44px; height: 44px; }
+
+@keyframes nrnn-matrix-computation-in { from { opacity: 0; transform: translateX(16px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes nrnn-matrix-card-in { from { opacity: 0; transform: translateY(10px) scale(.92); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@media (prefers-reduced-motion: reduce) { .course-shell .nrnn-matrix-computation__operation, .course-shell .nrnn-matrix-computation__dish-card { animation: none; } .course-shell .nrnn-matrix-computation__handoff { transition: none; } }

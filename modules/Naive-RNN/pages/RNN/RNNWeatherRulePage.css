@@ -1,0 +1,527 @@
+/* 新规则：还要看天气——天气决定明天换不换菜。 */
+
+.course-shell .nrnn-weather-rule {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  grid-template-rows: auto minmax(0, 1fr);
+  overflow: hidden;
+}
+
+.course-shell .nrnn-weather-rule > .edu-content-head {
+  max-width: none;
+  margin-bottom: 12px;
+}
+
+.course-shell .nrnn-weather-rule > .edu-content-body {
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  grid-template-rows: auto minmax(0, 1fr) auto auto;
+  gap: 12px;
+}
+
+/* 竞速阶段：规则 → 状态条 → 传送带 → 作答。 */
+.course-shell .nrnn-weather-rule > .edu-content-body.is-race {
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+}
+
+/* ---------- 两条规则 ---------- */
+.course-shell .nrnn-weather-rule__rules {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.course-shell .nrnn-weather-rule__rule {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid rgba(var(--ui-accent-rgb), .16);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 12px 30px rgba(42, 60, 91, .05);
+  padding: 8px 20px;
+}
+
+.course-shell .nrnn-weather-rule__rule.is-rain { border-color: rgba(78, 138, 201, .28); }
+
+.course-shell .nrnn-weather-rule__glyph {
+  display: block;
+  width: 58px;
+  height: 58px;
+  flex: 0 0 58px;
+}
+
+.course-shell .nrnn-weather-rule__glyph.is-small {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+}
+
+.course-shell .nrnn-weather-rule__cycle {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 6px;
+}
+
+.course-shell .nrnn-weather-rule__cycle .nrnn-dish-icon { width: 42px; height: 42px; }
+
+.course-shell .nrnn-weather-rule__arrow { color: var(--ui-text-light); }
+
+/* ---------- 五天的推演板 ---------- */
+.course-shell .nrnn-weather-rule__board {
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  align-content: center;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+  border: 1px solid rgba(var(--ui-accent-rgb), .16);
+  border-radius: 22px;
+  background: linear-gradient(145deg, #fff 0%, #f7f9fc 100%);
+  box-shadow: 0 16px 40px rgba(42, 60, 91, .06);
+  padding: 16px 24px;
+}
+
+.course-shell .nrnn-weather-rule__day {
+  display: grid;
+  min-width: 0;
+  justify-items: center;
+  gap: 6px;
+  border: 1px solid var(--ui-border);
+  border-radius: 18px;
+  background: var(--ui-bg-muted);
+  padding: 12px 10px 14px;
+  transition: border-color .26s ease, background .26s ease, box-shadow .26s ease;
+}
+
+.course-shell .nrnn-weather-rule__day.is-done {
+  border-color: rgba(var(--ui-accent-rgb), .22);
+  background: #fff;
+}
+
+.course-shell .nrnn-weather-rule__day.is-current {
+  border-color: var(--ui-accent-alt);
+  background: rgba(var(--ui-accent-alt-rgb), .07);
+  box-shadow: 0 12px 30px rgba(var(--ui-accent-alt-rgb), .18);
+}
+
+.course-shell .nrnn-weather-rule__weather { width: 56px; height: 56px; }
+
+.course-shell .nrnn-weather-rule__dish {
+  display: grid;
+  width: 100%;
+  aspect-ratio: 1;
+  max-width: 108px;
+  place-items: center;
+  border-radius: 16px;
+  background: rgba(var(--ui-accent-rgb), .05);
+}
+
+.course-shell .nrnn-weather-rule__dish .nrnn-dish-icon { width: 82px; height: 82px; }
+
+.course-shell .nrnn-weather-rule__blank { color: var(--ui-text-light); }
+
+/* ---------- 作答 ---------- */
+.course-shell .nrnn-weather-rule__ask {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  border: 1px solid rgba(var(--ui-accent-rgb), .16);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 12px 30px rgba(42, 60, 91, .05);
+  padding: 10px 22px;
+}
+
+.course-shell .nrnn-weather-rule__options {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 18px;
+}
+
+.course-shell .nrnn-weather-rule__option {
+  display: grid;
+  width: 78px;
+  height: 78px;
+  place-items: center;
+  border: 1px solid transparent;
+  border-radius: 18px;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  transition: transform .2s cubic-bezier(.16, 1, .3, 1), background .2s ease, border-color .2s ease;
+}
+
+.course-shell .nrnn-weather-rule__option .nrnn-dish-icon { width: 66px; height: 66px; }
+
+.course-shell .nrnn-weather-rule__option:hover {
+  border-color: rgba(var(--ui-accent-rgb), .24);
+  background: rgba(var(--ui-accent-rgb), .05);
+  transform: translateY(-3px);
+}
+
+.course-shell .nrnn-weather-rule__option.is-wrong {
+  border-color: rgba(var(--ui-danger-rgb), .5);
+  background: rgba(var(--ui-danger-rgb), .08);
+}
+
+/* ---------- 反馈 ---------- */
+.course-shell .nrnn-weather-rule__feedback {
+  display: grid;
+  min-width: 0;
+  min-height: 74px;
+  align-content: center;
+  border: 1px solid rgba(var(--ui-accent-rgb), .18);
+  border-radius: 16px;
+  background: var(--ui-bg-soft);
+  color: var(--ui-accent);
+  padding: 10px 22px;
+  transition: border-color .24s ease, background .24s ease, color .24s ease;
+}
+
+.course-shell .nrnn-weather-rule__feedback.is-wrong {
+  border-color: rgba(var(--ui-danger-rgb), .42);
+  background: rgba(var(--ui-danger-rgb), .07);
+  color: var(--ui-danger);
+}
+
+.course-shell .nrnn-weather-rule__feedback.is-done {
+  border-color: rgba(var(--ui-success-rgb), .38);
+  background: rgba(var(--ui-success-rgb), .08);
+  color: var(--ui-success);
+}
+
+.course-shell .nrnn-weather-rule__feedback-row {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.course-shell .nrnn-weather-rule__answer {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+}
+
+.course-shell .nrnn-weather-rule__answer .nrnn-dish-icon { width: 48px; height: 48px; }
+
+/* ---------- 竞速：倒计时与比分 ---------- */
+.course-shell .nrnn-weather-rule__hud {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 24px;
+  border: 1px solid rgba(var(--ui-accent-rgb), .16);
+  border-radius: 18px;
+  background: linear-gradient(120deg, #fff 0%, #f6f9fd 100%);
+  box-shadow: 0 12px 30px rgba(42, 60, 91, .05);
+  padding: 8px 22px 10px;
+}
+
+.course-shell .nrnn-weather-rule__clock {
+  display: grid;
+  min-width: 0;
+  gap: 4px;
+  color: var(--ui-accent);
+}
+
+.course-shell .nrnn-weather-rule__clock-line {
+  display: flex;
+  min-width: 0;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.course-shell .nrnn-weather-rule__clock-value { font-variant-numeric: tabular-nums; }
+
+.course-shell .nrnn-weather-rule__clock-bar {
+  height: 8px;
+  overflow: hidden;
+  border-radius: var(--ui-radius-pill);
+  background: var(--ui-border);
+}
+
+.course-shell .nrnn-weather-rule__clock-bar > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--ui-accent), var(--ui-accent-alt));
+}
+
+.course-shell .nrnn-weather-rule__clock.is-urgent { color: var(--ui-danger); }
+
+.course-shell .nrnn-weather-rule__clock.is-urgent .nrnn-weather-rule__clock-bar > span {
+  background: linear-gradient(90deg, var(--ui-warning), var(--ui-danger));
+}
+
+.course-shell .nrnn-weather-rule__clock.is-urgent .nrnn-weather-rule__clock-value {
+  animation: nrnn-race-beat .6s ease-in-out infinite;
+}
+
+.course-shell .nrnn-weather-rule__hud-stats {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 22px;
+}
+
+.course-shell .nrnn-weather-rule__stat {
+  display: flex;
+  min-width: 0;
+  align-items: baseline;
+  gap: 6px;
+  border-left: 1px solid var(--ui-border);
+  padding-left: 22px;
+}
+
+.course-shell .nrnn-weather-rule__stat.is-miss { color: var(--ui-danger); }
+
+/* ---------- 竞速：传送带 ---------- */
+.course-shell .nrnn-weather-rule__track {
+  --nrnn-race-card-w: 188px;
+  --nrnn-race-step: 208px;
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid rgba(var(--ui-accent-rgb), .16);
+  border-radius: 22px;
+  background: linear-gradient(145deg, #fff 0%, #f7f9fc 100%);
+  box-shadow: 0 16px 40px rgba(42, 60, 91, .06);
+}
+
+/* 正中那一格是这一轮要答的天。 */
+.course-shell .nrnn-weather-rule__track::before {
+  position: absolute;
+  top: 14px;
+  bottom: 14px;
+  left: 50%;
+  width: calc(var(--nrnn-race-card-w) + 22px);
+  border: 1px dashed rgba(var(--ui-accent-alt-rgb), .34);
+  border-radius: 22px;
+  background: rgba(var(--ui-accent-alt-rgb), .05);
+  content: "";
+  pointer-events: none;
+  transform: translateX(-50%);
+}
+
+.course-shell .nrnn-weather-rule__rail {
+  position: absolute;
+  inset: 0;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 84px, #000 calc(100% - 84px), transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 84px, #000 calc(100% - 84px), transparent 100%);
+}
+
+.course-shell .nrnn-weather-rule__card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  width: var(--nrnn-race-card-w);
+  height: 236px;
+  align-content: center;
+  justify-items: center;
+  gap: 6px;
+  border: 1px solid var(--ui-border);
+  border-radius: 18px;
+  background: var(--ui-bg-muted);
+  padding: 12px 10px;
+  transition: transform .34s cubic-bezier(.2, .82, .3, 1), opacity .28s ease, border-color .28s ease, background .28s ease, box-shadow .28s ease;
+  will-change: transform;
+}
+
+.course-shell .nrnn-weather-rule__card.is-past {
+  border-color: rgba(var(--ui-accent-rgb), .22);
+  background: #fff;
+}
+
+.course-shell .nrnn-weather-rule__card.is-active {
+  --nrnn-race-scale: 1.06;
+  z-index: 2;
+  border-color: var(--ui-accent-alt);
+  background: #fff;
+  box-shadow: 0 16px 38px rgba(var(--ui-accent-alt-rgb), .22);
+}
+
+.course-shell .nrnn-weather-rule__card.is-future {
+  --nrnn-race-scale: .94;
+  opacity: .78;
+}
+
+.course-shell .nrnn-weather-rule__card.is-far { opacity: .2; }
+
+.course-shell .nrnn-weather-rule__card.is-future.is-far { --nrnn-race-scale: .86; }
+
+.course-shell .nrnn-weather-rule__card.is-origin {
+  border-style: dashed;
+  background: var(--ui-bg-soft);
+}
+
+.course-shell .nrnn-weather-rule__card.is-miss {
+  border-color: rgba(var(--ui-danger-rgb), .55);
+  background: rgba(var(--ui-danger-rgb), .06);
+}
+
+.course-shell .nrnn-weather-rule__card-weather {
+  display: grid;
+  height: 64px;
+  place-items: center;
+}
+
+.course-shell .nrnn-weather-rule__weather.is-race {
+  width: 64px;
+  height: 64px;
+}
+
+.course-shell .nrnn-weather-rule__card .nrnn-weather-rule__dish { max-width: 104px; }
+.course-shell .nrnn-weather-rule__card .nrnn-weather-rule__dish .nrnn-dish-icon { width: 78px; height: 78px; }
+
+/* ---------- 竞速：作答按钮 ---------- */
+.course-shell .nrnn-weather-rule__answers {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 18px;
+  border: 1px solid rgba(var(--ui-accent-rgb), .16);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 12px 30px rgba(42, 60, 91, .05);
+  padding: 10px 24px;
+  transition: opacity .24s ease;
+}
+
+.course-shell .nrnn-weather-rule__answers.is-locked { opacity: .64; }
+
+.course-shell .nrnn-weather-rule__options.is-race { gap: 20px; }
+
+.course-shell .nrnn-weather-rule__option.is-race {
+  grid-template-rows: minmax(0, 1fr) auto;
+  width: 118px;
+  height: 118px;
+  gap: 2px;
+  border: 1px solid var(--ui-border);
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 10px 24px rgba(42, 60, 91, .07);
+  padding: 8px 6px 10px;
+}
+
+.course-shell .nrnn-weather-rule__option.is-race .nrnn-dish-icon { width: 72px; height: 72px; }
+
+.course-shell .nrnn-weather-rule__option.is-race .nrnn-weather-rule__option-name {
+  color: var(--ui-text-muted);
+}
+
+.course-shell .nrnn-weather-rule__option.is-race:hover:not(:disabled) {
+  border-color: rgba(var(--ui-accent-rgb), .35);
+  background: #fff;
+  box-shadow: 0 16px 34px rgba(42, 60, 91, .13);
+  transform: translateY(-3px);
+}
+
+.course-shell .nrnn-weather-rule__option.is-race:disabled { cursor: default; }
+
+.course-shell .nrnn-weather-rule__option.is-race.is-wrong {
+  border-color: rgba(var(--ui-danger-rgb), .5);
+  background: rgba(var(--ui-danger-rgb), .08);
+  animation: nrnn-race-shake .3s ease;
+}
+
+/* ---------- 竞速：起跑与结算 ---------- */
+.course-shell .nrnn-weather-rule__ready {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 2px;
+  background: rgba(255, 255, 255, .84);
+  animation: nrnn-race-fade .18s ease both;
+}
+
+.course-shell .nrnn-weather-rule__ready-count { color: var(--ui-accent-alt); }
+
+.course-shell .nrnn-weather-rule__result {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  display: grid;
+  place-items: center;
+  background: rgba(24, 43, 75, .34);
+  padding: 28px;
+  animation: nrnn-race-fade .2s ease both;
+}
+
+.course-shell .nrnn-weather-rule__result-card {
+  display: grid;
+  width: min(660px, 100%);
+  justify-items: center;
+  gap: 10px;
+  border: 1px solid rgba(var(--ui-accent-rgb), .16);
+  border-top: 4px solid var(--ui-accent-alt);
+  border-radius: 24px;
+  background: #fff;
+  box-shadow: 0 30px 80px rgba(20, 35, 60, .3);
+  padding: 26px 34px 24px;
+  animation: nrnn-race-pop .3s cubic-bezier(.2, .9, .3, 1) both;
+}
+
+.course-shell .nrnn-weather-rule__result-eyebrow { letter-spacing: .08em; }
+
+.course-shell .nrnn-weather-rule__result-bar {
+  width: 100%;
+  height: 10px;
+  overflow: hidden;
+  border-radius: var(--ui-radius-pill);
+  background: var(--ui-bg-soft);
+}
+
+.course-shell .nrnn-weather-rule__result-bar > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--ui-accent), var(--ui-accent-alt));
+}
+
+.course-shell .nrnn-weather-rule__result-actions {
+  display: flex;
+  gap: 14px;
+  margin-top: 6px;
+}
+
+@keyframes nrnn-race-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-3px); }
+}
+
+@keyframes nrnn-race-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes nrnn-race-pop {
+  from { opacity: 0; transform: translateY(14px) scale(.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes nrnn-race-beat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}

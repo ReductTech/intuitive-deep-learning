@@ -1,0 +1,2 @@
+/* Keep course-level text preferences without an extra page wrapper. */
+.aipe-platform-page .ui-typography,.aipe-ff-page .ui-typography{letter-spacing:0.015em;}

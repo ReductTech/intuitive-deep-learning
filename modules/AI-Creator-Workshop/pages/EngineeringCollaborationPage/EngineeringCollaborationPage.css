@@ -1,0 +1,11 @@
+.acw-engineering-page { width:1600px; height:900px; }
+.acw-engineering-page *, .acw-engineering-page *::before, .acw-engineering-page *::after { box-sizing:border-box; min-width:0; }
+.acw-engineering-body { height:680px; display:flex; flex-direction:column; justify-content:center; gap:78px; }
+.acw-engineering-sequence { display:grid; grid-template-columns:minmax(0,1fr) 90px minmax(0,1.1fr) 90px minmax(0,1fr); gap:14px; align-items:center; }
+.acw-engineering-stage { display:flex; flex-direction:column; align-items:center; gap:24px; }
+.acw-engineering-stage > .ui-typography { margin:0; white-space:nowrap; }
+.acw-engineering-illustration { width:390px; height:310px; max-width:100%; position:relative; }
+.acw-engineering-illustration > svg { width:100%; height:100%; max-width:100%; }
+.acw-engineering-ai { position:absolute; left:39px; top:29px; margin:0; }
+.acw-engineering-arrow { width:90px; height:50px; max-width:100%; transform:translateY(-22px); }
+.acw-engineering-takeaway { margin:0; color:var(--ui-accent); }

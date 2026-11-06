@@ -1,0 +1,68 @@
+/* ContentBlock 的画布约束和 Shared 组件内部节点仍用局部 CSS。 */
+.course-page-surface .ngtw-three-factor-sum {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 12px;
+  overflow: hidden;
+}
+
+.ngtw-three-factor-sum > .edu-content-head { max-width: 1100px; margin-bottom: 0; }
+.ngtw-three-factor-sum > .edu-content-body { display: contents; }
+.ngtw-three-factor-sum__column-labels span:not(:first-child) { text-align: center; }
+.ngtw-three-factor-sum__factor-title h3 { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ngtw-three-factor-sum__factor-title .explain-panel-wrap { flex: 0 0 auto; }
+.ngtw-three-factor-sum__factor-title .explain-panel { left: 0; transform: none; }
+.ngtw-three-factor-sum__factor-title .explain-panel::before { left: 21px; }
+.ngtw-three-factor-sum__factor-control .edu-control-head { gap: 5px; }
+.ngtw-three-factor-sum__factor-control .edu-range { width: 100%; }
+
+/* 权重滑杆由 Shared RangeControl 渲染，伪元素需要浏览器专用选择器。 */
+.ngtw-three-factor-sum__weight-control { --ui-accent: #9ba5b2; }
+.ngtw-three-factor-sum__weight-control .edu-control-value { color: #8f99a7; }
+.ngtw-three-factor-sum__weight-control .edu-range {
+  --weight-fill: #b5bec9;
+  --weight-track: #dde3ea;
+  --weight-thumb: #adb7c4;
+  height: 16px;
+  appearance: none;
+  background: transparent;
+  cursor: not-allowed;
+}
+.ngtw-three-factor-sum__weight-control .edu-range::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: var(--ui-radius-pill);
+  background: linear-gradient(to right, var(--weight-fill) 0 calc(8px + (100% - 16px) * var(--weight-ratio, 0)), var(--weight-track) calc(8px + (100% - 16px) * var(--weight-ratio, 0)) 100%);
+}
+.ngtw-three-factor-sum__weight-control .edu-range::-webkit-slider-thumb { width: 16px; height: 16px; margin-top: -5px; border: 2px solid #fff; border-radius: 50%; background: var(--weight-thumb); box-shadow: 0 0 0 2px rgba(104,119,143,.14); appearance: none; }
+.ngtw-three-factor-sum__weight-control .edu-range::-moz-range-progress { height: 6px; border-radius: var(--ui-radius-pill); background: var(--weight-fill); }
+.ngtw-three-factor-sum__weight-control .edu-range::-moz-range-track { height: 6px; border-radius: var(--ui-radius-pill); background: var(--weight-track); }
+.ngtw-three-factor-sum__weight-control .edu-range::-moz-range-thumb { width: 16px; height: 16px; border: 2px solid #fff; border-radius: 50%; background: var(--weight-thumb); }
+
+.ngtw-three-factor-sum__factor-control.is-pending { --ui-accent: #9ba5b2; }
+.ngtw-three-factor-sum__factor-control.is-pending .edu-label { color: #9aa4b2; }
+.ngtw-three-factor-sum__factor-control.is-pending .edu-range { accent-color: #a3abb7; cursor: not-allowed; }
+.ngtw-three-factor-sum__factor-control.is-pending .edu-control-value { color: #9aa4b2; }
+.ngtw-three-factor-sum__factor-control.is-guiding { border-radius: 10px; }
+.ngtw-three-factor-sum__weight-control .edu-label,
+.ngtw-three-factor-sum__weight-control .edu-control-value { transition: color .24s ease; }
+.ngtw-three-factor-sum__weight-control.is-lit {
+  --ui-accent: var(--ui-accent-alt);
+  background: rgba(var(--ui-accent-alt-rgb), .07);
+  border-radius: 10px;
+  animation: ngtw-three-factor-weight-lit 1.2s ease-out 1;
+}
+.ngtw-three-factor-sum__weight-control.is-lit .edu-label,
+.ngtw-three-factor-sum__weight-control.is-lit .edu-control-value { color: var(--ui-accent-alt); }
+.ngtw-three-factor-sum__weight-control.is-lit .edu-range { --weight-fill: #f08a4c; --weight-track: #dfe4ea; --weight-thumb: #ef9a63; }
+
+@keyframes ngtw-three-factor-weight-lit {
+  0% { box-shadow: 0 0 0 0 rgba(var(--ui-accent-alt-rgb), .34); }
+  100% { box-shadow: 0 0 0 16px rgba(var(--ui-accent-alt-rgb), 0); }
+}
+
+.ngtw-three-factor-sum__weight-label .explain-panel { left: 50%; }
+.ngtw-three-factor-sum__weight-label .explain-panel-trigger { width: 32px; height: 32px; font-size: 17px; }
+

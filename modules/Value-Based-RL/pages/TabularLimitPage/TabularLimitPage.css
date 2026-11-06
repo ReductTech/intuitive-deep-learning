@@ -1,0 +1,37 @@
+.vbrl-limit { display: grid; grid-template-columns: minmax(0, .32fr) minmax(0, .68fr); gap: 24px; height: 100%; min-height: 0; }
+.vbrl-limit :is(div, section, figure, button, p, span, img, svg, math-field) { min-width: 0; max-width: 100%; }
+.vbrl-limit-page .math-formula-block { margin: 0; padding: 0; }
+.vbrl-limit-page .math-formula { font-size: var(--ui-type-body-small-size); }
+.vbrl-limit__small, .vbrl-limit__states, .vbrl-limit__size { contain: size layout; }
+.vbrl-limit__small > .vbrl-teaching-panel__body { display: grid; grid-template-rows: 400px 42px minmax(0, 1fr) 39px; gap: 8px; padding: 12px 14px; align-items: center; }
+.vbrl-limit .vbrl-limit__map { width: min(100%, 400px); margin: 0; }
+.vbrl-limit__map .vbrl-map__frame { height: 400px; padding: 8px; }
+.vbrl-limit__map .vbrl-map__board { height: 100%; aspect-ratio: auto; }
+.vbrl-limit__small-count { display: grid; grid-template-columns: minmax(0, .48fr) minmax(0, .52fr); align-items: center; gap: 8px; }
+.vbrl-limit__growth { display: grid; grid-template-rows: minmax(0, .584fr) minmax(0, .416fr); gap: 18px; min-height: 0; }
+.vbrl-limit__states > .vbrl-teaching-panel__body { display: grid; grid-template-rows: 200px 48px minmax(0, 1fr); align-items: center; gap: 8px; padding: 12px 18px; }
+.vbrl-limit__visual-state { display: grid; grid-template-columns: minmax(0, .28fr) minmax(0, .72fr); gap: 18px; height: 100%; min-height: 0; }
+.vbrl-limit__warehouse-art { display: grid; grid-template-rows: 154px 46px; margin: 0; align-items: center; }
+.vbrl-limit__warehouse-art > img { display: block; width: 100%; height: 154px; object-fit: contain; }
+.vbrl-limit__variables { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 10px; height: 100%; }
+.vbrl-limit__variables .edu-btn { display: grid; align-items: center; padding: 0 4px; border: 1px solid #d5e4f5; border-radius: 8px; background: #f5f8fc; color: var(--ui-text-muted); text-align: center; }
+.vbrl-limit__variables .edu-btn > span { display: grid; grid-template-rows: 39px 41px; align-items: center; align-content: center; height: 100%; }
+.vbrl-limit__variable-value { display: block; pointer-events: none; }
+.vbrl-limit__variables .edu-btn:hover { transform: none; }
+.vbrl-limit__variables .edu-btn.is-active { background: #edf6ff; border-color: #adcfef; color: var(--ui-accent); }
+.vbrl-limit__state-total { display: flex; justify-content: space-between; align-items: center; gap: 12px; font-variant-numeric: tabular-nums; }
+.vbrl-limit__size > .vbrl-teaching-panel__body { display: grid; grid-template-rows: 39px 108px minmax(0, 1fr); gap: 8px; padding: 10px 18px; align-items: center; }
+.vbrl-limit__scale { display: grid; grid-template-columns: minmax(0, .19fr) minmax(0, .81fr); gap: 12px; height: 100%; align-items: center; }
+.vbrl-limit__table-art { display: block; width: 100%; height: 108px; object-fit: contain; }
+.vbrl-limit__costs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; padding-inline: 12px; border-radius: 8px; background: #fff3f3; font-variant-numeric: tabular-nums; }
+.vbrl-limit__costs > div { display: grid; grid-template-rows: 39px 49px; align-items: center; }
+.vbrl-limit__costs > div + div { border-left: 1px solid #efcbd0; padding-left: 24px; }
+.vbrl-limit__problems { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1fr) minmax(0, 1.25fr); gap: 16px; text-align: center; }
+.vbrl-limit__problems > * + * { border-left: 1px solid #e4d8dd; }
+.vbrl-limit-page .vbrl-page-body { grid-template-rows: minmax(0, 1fr); gap: 0; }
+.vbrl-lesson.vbrl-limit-page .vbrl-page-footer { display: none; }
+.vbrl-limit__actions { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; align-items: center; text-align: center; }
+.vbrl-limit__actions > div { display: grid; justify-items: center; gap: 4px; }
+.vbrl-limit__keycap { position: relative; width: 60px; height: 60px; }
+.vbrl-limit__keycap img { width: 100%; height: 100%; object-fit: contain; }
+.vbrl-limit__keycap svg { position: absolute; width: 26px; height: 26px; left: 17px; top: 17px; fill: #c9efff; filter: drop-shadow(0 0 3px #5dbeff80); }

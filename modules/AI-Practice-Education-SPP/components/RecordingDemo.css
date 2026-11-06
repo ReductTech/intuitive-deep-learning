@@ -1,0 +1,7 @@
+.rf-recording-demo{position:relative}
+.rf-recording-pointer{position:absolute;left:0;top:0;width:32px;height:38px;z-index:1000;opacity:0;pointer-events:none;user-select:none}
+.rf-recording-pointer svg{display:block;width:30px;height:36px;overflow:visible;transform-origin:4px 3px;transition:transform .1s}
+.rf-recording-pointer i{position:absolute;left:-14px;top:-15px;width:36px;height:36px;border:2px solid #2864ec;border-radius:50%;opacity:0}
+.rf-recording-pointer.is-pressed svg{transform:scale(.86)}
+.rf-recording-pointer.is-pressed i{animation:rf-recording-click .35s ease-out both}
+@keyframes rf-recording-click{from{opacity:.85;transform:scale(.3)}to{opacity:0;transform:scale(1.15)}}

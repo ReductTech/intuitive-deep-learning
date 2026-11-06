@@ -1,0 +1,34 @@
+.di-otsu { display:grid; grid-template-rows:auto minmax(0,1fr); background:linear-gradient(135deg,#fff,#f5faff); }
+.di-otsu > .edu-content-body { min-height:0; }
+.di-otsu :is(div,section,footer,button,canvas,svg) { min-width:0; max-width:100%; }
+.di-otsu p,.di-otsu h2 { margin:0; }
+.di-otsu__body { height:100%; min-height:0; display:grid; grid-template-rows:48px minmax(0,1fr) 142px; gap:12px; }
+.di-otsu__toolbar { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.di-otsu__toolbar > div { display:flex; gap:8px; }
+.di-otsu button { border:1px solid #c9dcf5; background:#f0f6ff; color:#2c5684; padding:0 15px; border-radius:9px; cursor:pointer; }
+.di-otsu button.is-primary { background:#227ef5; color:white; }
+.di-otsu button:disabled { opacity:.5; cursor:default; }
+.di-otsu button:focus-visible { outline:3px solid #629de5; outline-offset:3px; }
+.di-otsu__main { display:grid; grid-template-columns:minmax(0,.9fr) minmax(0,1.2fr) minmax(0,.9fr); gap:18px; min-height:0; }
+.di-otsu__image { display:grid; grid-template-rows:48px minmax(0,1fr) 40px; padding:10px; border:1px solid #d3e4f8; border-radius:15px; background:white; min-height:0; }
+.di-otsu__image > div { position:relative; min-height:0; }
+.di-otsu__image canvas { position:absolute; inset:0; width:100%; height:100%; object-fit:contain; }
+.di-otsu__image > p { white-space:nowrap; }
+.di-otsu__badge { position:absolute; right:5px; top:5px; padding:0 12px; border-radius:8px; background:#217bf4; color:white; box-shadow:0 3px 9px #264c7c20; }
+.di-otsu__analysis { display:grid; grid-template-rows:44px 38px minmax(0,1fr) 90px 36px; gap:6px; padding:10px 16px; border:1px solid #d3e4f8; border-radius:15px; background:#f2f7ff; min-height:0; }
+.di-otsu__histogram { width:100%; height:100%; min-height:0; }
+.di-otsu__classes { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+.di-otsu__class { padding:0 10px; border-radius:8px; background:#e0effd; }
+.di-otsu__class--1 { background:#e9eef6; }
+.di-otsu__formula { display:grid; grid-template-rows:50px 36px 44px; gap:3px; align-content:center; background:#e7f2ff; padding:5px 20px; border-radius:15px; }
+.di-otsu__formula .math-formula-block { margin:0; display:grid; align-content:center; }
+
+.di-otsu__toolbar button { height:42px; }
+.di-otsu__samples { align-items:center; }
+.di-otsu__samples button { padding:0 22px; }
+
+.di-otsu__legend { display:flex; align-items:center; justify-content:space-between; gap:14px; }
+.di-otsu__legend p { display:flex; align-items:center; gap:10px; }
+.di-otsu__legend-bar { display:inline-block; width:22px; height:18px; background:#a5bcd4; border-radius:3px; }
+.di-otsu__legend-line { display:inline-block; width:28px; height:4px; background:#247aeb; border-radius:4px; }
+.di-otsu__class { display:grid; align-content:center; gap:4px; }

@@ -1,0 +1,20 @@
+.acw-credit-page { width:1600px; height:900px; }
+.acw-credit-page *, .acw-credit-page *::before, .acw-credit-page *::after { box-sizing:border-box; min-width:0; }
+.acw-credit-body { position:relative; height:680px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:35px; }
+.acw-credit-page .acw-credit-body .ui-typography { margin:0; }
+.acw-credit-profile { width:1218px; padding:27px 40px 34px; border:1px solid #b9d4ff; border-radius:32px; background:linear-gradient(140deg,#fff,#fbfdff); box-shadow:0 10px 24px #27446e08; }
+.acw-credit-profile-header { height:92px; display:flex; align-items:center; justify-content:space-between; gap:24px; border-bottom:1px solid #dce9fb; padding-bottom:24px; }
+.acw-credit-identity { display:flex; align-items:center; gap:24px; }
+.acw-credit-avatar { width:66px; height:66px; flex:none; border-radius:50%; display:grid; place-items:center; border:3px solid #ffca7b; background:linear-gradient(135deg,#fffdf7,#fff0d6); color:#f3a44b; }
+.acw-credit-history { display:flex; align-items:center; gap:12px; color:var(--ui-accent); }
+.acw-credit-history > svg { color:#1673f6; flex:none; }
+.acw-credit-trace { padding:5px 21px; border:1px solid #c0d8ff; border-radius:35px; background:linear-gradient(135deg,#edf5ff,#e1edff); white-space:nowrap; }
+.acw-credit-profile-content { display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,1fr); gap:70px; padding-top:30px; align-items:center; }
+.acw-credit-preview { position:relative; height:330px; }
+.acw-credit-preview > svg { display:block; width:100%; height:100%; max-width:100%; }
+.acw-credit-preview-label { position:absolute; left:0; right:0; bottom:29px; pointer-events:none; }
+.acw-credit-topics { display:flex; flex-direction:column; }
+.acw-credit-topic { display:flex; align-items:center; gap:28px; min-height:105px; }
+.acw-credit-topic + .acw-credit-topic { border-top:1px solid #dfebfb; }
+.acw-credit-topic-icon { width:70px; height:70px; flex:none; display:grid; place-items:center; background:linear-gradient(135deg,#f0f7ff,#e1edff); border-radius:18px; color:#388cf9; }
+.acw-credit-contexts { width:max-content; min-width:510px; padding:10px 40px; border-radius:50px; background:linear-gradient(120deg,#eef5ff,#e5efff); color:var(--ui-accent); }

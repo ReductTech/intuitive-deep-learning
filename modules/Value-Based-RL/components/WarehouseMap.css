@@ -1,0 +1,37 @@
+.vbrl-map { width: min(100%, 460px); max-width: 100%; min-width: 0; margin: 0 auto; display: grid; gap: 12px; }
+.vbrl-map__frame { padding: 12px; border: 1px solid var(--ui-border); border-radius: var(--ui-radius-lg); background: #e7f1fb; }
+.vbrl-map__board { position: relative; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); grid-template-rows: repeat(7, minmax(0, 1fr)); gap: 8px; aspect-ratio: 1; background: repeating-linear-gradient(135deg, #dce9f6 0 5px, #d0e1f1 5px 10px); border-radius: 10px; }
+.vbrl-map__cell { position: relative; display: grid; place-items: center; min-width: 0; max-width: 100%; min-height: 0; border: 1px solid #d9e5f0; border-radius: 9px; background: #fbfdff; background: color-mix(in srgb, var(--vbrl-value-color, var(--ui-accent)) calc(var(--vbrl-value-alpha, 0) * 100%), #fbfdff); padding: 0; }
+.vbrl-map__cell > span { display: grid; place-items: center; width: 100%; height: 100%; min-width: 0; }
+.vbrl-map__cell img { position: absolute; z-index: 2; width: 88%; height: 88%; object-fit: contain; max-width: 100%; pointer-events: none; }
+.vbrl-map__cell.is-wall { background: repeating-linear-gradient(135deg, #afc0d4 0 10px, #97abc3 10px 20px); border-color: #96aac1; }
+.vbrl-map__cell.is-goal { background: #e3f4e9; }
+.vbrl-map__cell.is-selected { outline: 3px solid var(--ui-accent-alt); outline-offset: -2px; }
+.vbrl-map__trails { position: absolute; inset: 0; width: 100%; height: 100%; max-width: 100%; pointer-events: none; }
+.vbrl-map__cell:has(.vbrl-map__marker) { background: #fce7e9; border: 2px solid var(--ui-danger); }
+.vbrl-map__marker { z-index: 3; }
+.vbrl-map__cell .vbrl-map__marker-art { z-index: 3; }
+.vbrl-map__cell:has(img[alt="机器人"]) .vbrl-map__marker-art { right: 0; bottom: 0; width: 55%; height: 55%; }
+.vbrl-map__cell:has(.vbrl-map__marker-art) img[alt="机器人"] { width: 45%; height: 45%; top: 0; left: 0; }
+.vbrl-map .vbrl-map__marker-icon { width: 70%; height: 70%; max-height: 100%; fill: none; stroke: var(--ui-danger); stroke-width: 2.8; stroke-linecap: round; }
+.vbrl-map__cell:has(img[alt="机器人"]) .vbrl-map__marker-icon { position: absolute; right: 0; bottom: 0; width: 45%; height: 45%; }
+.vbrl-map__cell:is(.is-goal, :has(.vbrl-map__marker-icon)) img[alt="机器人"] { width: 55%; height: 55%; top: 0; left: 0; }
+.vbrl-map .vbrl-map__cell.is-selected { background: #edf5ff; color: var(--ui-accent); }
+.vbrl-map__policy, .vbrl-map__update-arrow { position: absolute; top: 46%; right: 0; bottom: 0; left: 0; width: 100%; height: 54%; max-width: 100%; pointer-events: none; z-index: 3; }
+.vbrl-map__policy path, .vbrl-map__update-arrow path { fill: none; stroke: var(--ui-success); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+.vbrl-map__policy.is-tied path { stroke: var(--ui-text-muted); opacity: .45; stroke-width: 3; }
+.vbrl-map__update-arrow path { stroke: var(--ui-accent-alt); stroke-width: 7; }
+.vbrl-map__cell.is-updated { outline: 3px solid var(--ui-accent-alt); outline-offset: -2px; }
+.vbrl-map__cell .vbrl-map__q-value { position: absolute; top: 0; left: 0; right: 0; height: 44%; display: grid; place-items: center; z-index: 4; text-align: center; white-space: nowrap; }
+.vbrl-map__cell.has-policy img { width: 62%; height: 62%; top: 0; left: 19%; }
+.vbrl-map.has-coordinates .vbrl-map__frame { display: grid; grid-template-columns: 40px minmax(0, 1fr); grid-template-rows: 40px minmax(0, 1fr); gap: 6px; background: #f8fbff; border-color: #d8e5f2; }
+.vbrl-map.has-coordinates .vbrl-map__board { grid-area: 2 / 2; }
+.vbrl-map__column-labels, .vbrl-map__row-labels { display: grid; place-items: stretch; gap: 8px; min-width: 0; max-width: 100%; min-height: 0; background: #f0f5fb; }
+.vbrl-map__column-labels { grid-area: 1 / 2; grid-template-columns: repeat(7, minmax(0, 1fr)); border-radius: 8px 8px 0 0; border-bottom: 1px solid #d4e2f1; }
+.vbrl-map__row-labels { grid-area: 2 / 1; grid-template-rows: repeat(7, minmax(0, 1fr)); border-radius: 8px 0 0 8px; border-right: 1px solid #d4e2f1; }
+.vbrl-map__axis-label { position: relative; display: grid; place-items: center; width: 100%; height: 100%; min-width: 0; min-height: 0; border-radius: 7px; }
+.vbrl-map__axis-label::after { content: ''; position: absolute; background: #b5cbe0; }
+.vbrl-map__column-labels .vbrl-map__axis-label::after { bottom: 0; left: calc(50% - .5px); width: 1px; height: 4px; }
+.vbrl-map__row-labels .vbrl-map__axis-label::after { right: 0; top: calc(50% - .5px); width: 4px; height: 1px; }
+.vbrl-map__axis-label.is-active { background: #e0edfc; box-shadow: inset 0 0 0 1px #bdd8f5; }
+.vbrl-map__axis-label.is-active::after { background: #458fe3; }

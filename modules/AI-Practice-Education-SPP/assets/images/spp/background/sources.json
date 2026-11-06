@@ -1,0 +1,76 @@
+{
+  "retrievedOn": "2026-11-02",
+  "knowledgePageRestoredFrom": "1c4109b9",
+  "sources": [
+    {
+      "slide": "ai-acceleration",
+      "url": "https://www.nature.com/articles/s41586-025-09922-y",
+      "claim": "41.3 million papers; AI-user paper count 3.02x, citations 4.84x; observational association"
+    },
+    {
+      "slide": "ai-acceleration",
+      "url": "https://github.blog/news-insights/research/research-quantifying-github-copilots-impact-on-developer-productivity-and-happiness/",
+      "claim": "2022 controlled task experiment, n=95, 161 vs 71 minutes"
+    },
+    {
+      "slide": "conference-growth",
+      "url": "https://media.neurips.cc/Conferences/NeurIPS2024/NeurIPS2024-Fact_Sheet.pdf",
+      "value": 15671
+    },
+    {
+      "slide": "conference-growth",
+      "url": "https://media.neurips.cc/Conferences/NeurIPS2025/press/NeurIPS2025-Fact_Sheet.pdf",
+      "value": 21575
+    },
+    {
+      "slide": "conference-growth",
+      "url": "https://openreview.net/pdf/93f9090b613a2c28371741242752008478c64b03.pdf",
+      "value": 9473,
+      "note": "2024 ICML programme-chair decision letter"
+    },
+    {
+      "slide": "conference-growth",
+      "url": "https://aip.riken.jp/news/icml2025/",
+      "value": 12107
+    },
+    {
+      "slide": "conference-growth",
+      "url": "https://media.iclr.cc/Conferences/ICLR2024/ICLR2024_Press_Release.pdf",
+      "value": 7262
+    },
+    {
+      "slide": "conference-growth",
+      "url": "https://media.iclr.cc/Conferences/ICLR2025/ICLR2025_Fact_Sheet.pdf",
+      "value": 11603
+    },
+    {
+      "slide": "conference-growth",
+      "url": "https://blog.iclr.cc/2026/03/31/a-retrospective-on-the-iclr-2026-review-process/",
+      "value": 19525
+    },
+    {
+      "slide": "math-results",
+      "url": "https://openai.com/index/sharing-ai-progress-in-mathematics/"
+    },
+    {
+      "slide": "math-results",
+      "url": "https://github.com/openai/math",
+      "note": "Verification stages differ; some results unformalized"
+    },
+    {
+      "slide": "math-results",
+      "url": "https://www.nature.com/articles/d41586-026-03196-8",
+      "claim": "More than 700 preprints posted simultaneously on October 6"
+    },
+    {
+      "slide": "github-growth",
+      "url": "https://github.blog/news-insights/octoverse/octoverse-commits-pushes-reach-new-highs-in-2026-as-developers-build-with-agents/",
+      "claim": "17.9B pushes;34.3B commits;1.3B merged PRs; October 2025 to September 2026"
+    },
+    {
+      "slide": "github-growth",
+      "url": "https://github.blog/news-insights/company-news/the-august-17-outage-and-the-work-ahead/",
+      "note": "Infrastructure pressure context"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+node_modules/
+dist/
+work/
+.idl-build/
+*.tsbuildinfo
+__pycache__/
+*.pyc
+.pytest_cache/
+.env
+.env.*
+**/_scratchpad/
+.DS_Store
+Thumbs.db

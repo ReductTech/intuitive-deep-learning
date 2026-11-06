@@ -1,0 +1,73 @@
+.course-page-surface .ngtw-completion-stage { display: grid; grid-template-rows: auto minmax(0,1fr); }
+.course-page-surface .ngtw-completion-stage > .edu-content-body,
+.course-page-surface .model-viewer-layout,
+.course-page-surface .model-viewer-copy { min-height: 0; }
+.course-page-surface .model-viewer-frame,
+.course-page-surface .model-viewer-frame model-viewer,
+.course-page-surface .model-fallback { min-height: 0; height: 100%; }
+.ngtw-model-viewer-layout > * { min-width: 0; max-width: 100%; }
+.ngtw-model-viewer-frame { border: 1px solid var(--ui-border); border-radius: var(--ui-radius-md); background: radial-gradient(circle at 50% 42%, rgba(240,126,71,.12), transparent 45%), var(--ui-bg-muted); }
+.ngtw-model-viewer-frame model-viewer { display: block; width: 100%; height: 100%; min-height: 520px; }
+.ngtw-model-fallback { display: grid; height: 100%; min-height: 520px; place-items: center; }
+.ngtw-model-viewer-copy__idea,
+.ngtw-model-viewer-copy__scale { display: grid; align-content: start; gap: 8px; border: 1px solid var(--ui-border); border-top: 3px solid var(--ui-accent); border-radius: var(--ui-radius-md); background: #fff; padding: 14px 16px; }
+.ngtw-model-viewer-copy__scale { border-top-color: var(--ui-success); }
+.ngtw-model-viewer-copy__quote { border-left: 4px solid var(--ui-accent-alt); }
+.ngtw-model-viewer-copy__numbers > div { display: grid; align-content: start; gap: 5px; min-width: 0; border-radius: var(--ui-radius-sm); background: var(--ui-bg-muted); padding: 10px 12px; }
+
+/* Keep the closing slide balanced inside the fixed PPT canvas. */
+.course-page-surface .ngtw-completion-stage {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.course-page-surface .ngtw-completion-stage > .edu-content-body {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.course-page-surface .ngtw-model-viewer-layout {
+  min-height: 0;
+  height: 100%;
+  grid-template-columns: minmax(0, .84fr) minmax(0, 1.16fr);
+  gap: 14px;
+}
+
+.course-page-surface .ngtw-model-viewer-frame,
+.course-page-surface .ngtw-model-viewer-frame model-viewer,
+.course-page-surface .ngtw-model-fallback {
+  min-height: 0 !important;
+  height: 100%;
+}
+
+.course-page-surface .ngtw-model-viewer-copy {
+  min-height: 0;
+  overflow: hidden;
+  grid-template-rows: minmax(0, .82fr) minmax(0, 1.18fr);
+  gap: 10px;
+}
+
+.course-page-surface .ngtw-model-viewer-copy__idea,
+.course-page-surface .ngtw-model-viewer-copy__scale {
+  min-height: 0;
+  overflow: hidden;
+  padding: 12px 14px;
+}
+
+.course-page-surface .ngtw-model-viewer-copy__numbers {
+  min-height: 0;
+}
+
+.course-page-surface .ngtw-model-viewer-copy__numbers > div {
+  min-height: 0;
+  overflow: hidden;
+  padding: 8px 10px;
+}
+
+@media (max-width: 900px) {
+  .ngtw-model-viewer-layout { grid-template-columns: minmax(0,1fr); }
+  .ngtw-model-viewer-frame,
+  .ngtw-model-viewer-frame model-viewer,
+  .ngtw-model-fallback { min-height: 360px; }
+}
+

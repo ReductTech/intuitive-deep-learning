@@ -1,0 +1,24 @@
+.rf-page { width:1600px; height:900px; min-width:0; min-height:0; color:var(--ui-text-main); background:var(--ui-bg-card); }
+.rf-page, .rf-page * { box-sizing:border-box; }
+.rf-page.edu-content-block { display:grid; grid-template-rows:auto minmax(0,1fr); padding:36px 54px 28px; }
+.rf-page > .edu-content-body { display:grid; grid-template-rows:minmax(0,1fr) auto; gap:18px; min-width:0; min-height:0; }
+.rf-page button { cursor:pointer; }
+.rf-page button:disabled { cursor:default; }
+.rf-page button:focus-visible { outline:3px solid var(--ui-focus); outline-offset:4px; }
+.rf-playback { display:flex; align-items:center; gap:10px; min-width:0; min-height:48px; width:max-content; max-width:100%; margin-left:auto; }
+.rf-playback .edu-btn > span { display:flex; align-items:center; justify-content:center; gap:9px; }
+.rf-playback .edu-btn { min-height:40px; min-width:40px; padding:8px; white-space:nowrap; }
+.rf-playback .ui-typography { --ui-type-body-small-size:18px; }
+.rf-progress { display:flex; min-width:0; gap:7px; }
+.rf-progress button { width:8px; height:8px; border:0; border-radius:var(--ui-radius-pill); background:var(--ui-border); padding:0; }
+.rf-progress button.is-done { background:var(--ui-accent); }
+.rf-control-hint { flex:0 1 320px; }
+.rf-eyebrow { letter-spacing:.1em; color:var(--ui-text-muted); }
+.rf-note { padding:12px 16px; border-left:3px solid var(--ui-accent); background:var(--ui-bg-soft); }
+.rf-pill { display:inline-flex; align-items:center; justify-content:center; border-radius:var(--ui-radius-pill); background:var(--ui-bg-soft); color:var(--ui-accent); padding:4px 14px; white-space:nowrap; }
+.rf-stat { --ui-type-display-size:100px; color:var(--ui-accent); font-variant-numeric:tabular-nums; }
+.rf-tabs { display:flex; align-items:center; gap:10px; }
+.rf-source { color:var(--ui-text-muted); }
+.rf-fade { animation:rf-reveal .4s ease both; }
+@keyframes rf-reveal { from { opacity:.25; transform:translateY(8px); } to { opacity:1; transform:none; } }
+@media(prefers-reduced-motion:reduce) { .rf-page *, .rf-page *::before, .rf-page *::after { animation:none!important; transition:none!important; } }

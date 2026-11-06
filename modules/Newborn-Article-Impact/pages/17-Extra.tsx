@@ -1,0 +1,8 @@
+import {useState} from 'react';
+import {Button,Typography} from '../../shared/react';
+import {T,H} from '../components/Stage';
+import {RefinedStage} from '../components/RefinedStage';
+import './ExtraPage.css';
+const rows=[['题目与摘要','.216','.901','基线：只使用论文的题目和摘要。'],['＋是否开源','.214','.878','误差略降，但排序指标下降；补充信息未必同时改善所有指标。'],['＋是否公布数据集','.212','.915','这组实验中，误差与排序表现都优于基线。'],['＋是否声称达到 SOTA','.215','.881','自述的领先表现没有在这组实验中带来更好的排序。'],['＋参考文献质量（RQM）','.211','.931','这组实验中，单独加入 RQM 得到最高的 NDCG。'],['＋全部信息','.209','.917','全部信息得到最低 MAE，但 NDCG 并非最高。']];
+export function Page(){const [selected,setSelected]=useState(1);return <RefinedStage title="摘要之外，额外信息有用吗？" className="naipe-page" subtitle="点击一项输入特征，对照两个指标一起看"><div className="naipe-layout"><table className="naipc-table"><colgroup><col style={{width:'58%'}}/><col style={{width:'21%'}}/><col style={{width:'21%'}}/></colgroup><thead><tr>{['输入特征','MAE ↓','NDCG ↑'].map(t=><th key={t}><T>{t}</T></th>)}</tr></thead><tbody>{rows.map((r,i)=><tr key={r[0]} className={selected===i?'is-highlight':''}><td><Button className="naipe-choice" aria-pressed={selected===i} onClick={()=>setSelected(i)}><Typography variant="body" tone="inherit">{r[0]}</Typography></Button></td><td><Typography variant="body" tone={i===0?'main':'success'}>{r[1]}</Typography></td><td><Typography variant="body" tone={i===0?'main':Number(r[2])>.901?'success':'danger'}>{r[2]}</Typography></td></tr>)}</tbody></table><div className="naipe-explanation" aria-live="polite"><H>有帮助，但要看信息类型和评价指标。</H><T small>{rows[selected][3]}</T></div><T small>原报告实验；补充信息由 GPT-3.5 与 RAG 获取。</T></div></RefinedStage>}
+

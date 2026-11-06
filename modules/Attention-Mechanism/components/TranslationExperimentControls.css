@@ -1,0 +1,8 @@
+.attn-translation-example-picker, .attn-translation-checkpoint-timeline { min-width:0; max-width:100%; height:70px; }
+.attn-translation-example-picker { display:grid; align-items:center; }
+.attn-translation-example-picker .attn-choice-row { flex-wrap:nowrap; gap:10px; }
+.attn-translation-example-picker .edu-btn, .attn-translation-checkpoint-timeline .edu-btn { min-width:0; padding:6px 12px; }
+.attn-translation-checkpoint-timeline { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,2.1fr) 160px; align-items:center; gap:20px; width:100%; }
+.attn-translation-timeline-status { min-width:0; }
+.attn-translation-checkpoint-buttons { display:grid; grid-auto-flow:column; grid-auto-columns:minmax(0,1fr); align-items:center; min-width:0; gap:10px; }
+.attn-translation-return-slot { min-width:0; width:160px; display:grid; align-items:center; }

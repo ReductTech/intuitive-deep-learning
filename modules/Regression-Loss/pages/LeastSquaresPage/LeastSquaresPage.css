@@ -1,0 +1,28 @@
+.rl-least-page { display:grid; grid-template-rows:auto minmax(0,1fr); background:#fbfcfe; --ui-type-h3-size:28px; --ui-type-h3-line-height:1.25; --ui-type-body-small-size:22px; --ui-type-body-small-line-height:1.5; }
+.rl-least-page > .edu-content-head { padding-bottom:20px; margin-bottom:24px; border-bottom:1px solid #d7e3ef; }
+.rl-least-page > .edu-content-body { min-height:0; }
+.rl-least-layout { display:grid; grid-template-columns:minmax(0,1.65fr) minmax(0,1fr); gap:38px; min-height:0; height:100%; }
+.rl-least-layout > * { min-width:0; min-height:0; }
+.rl-least-observations { display:grid; grid-template-rows:auto minmax(0,1fr) auto; gap:8px; padding:24px 20px 22px; background:#fff; border:1px solid #d6e2ee; border-radius:18px; }
+.rl-least-observations > .ui-typography { padding-left:6px; }
+.rl-least-chart { height:100%; width:100%; min-height:0; }
+.rl-least-legend { display:flex; align-items:center; justify-content:center; gap:32px; color:#526b8c; font-size:21px; padding-top:4px; }
+.rl-least-legend span { display:flex; align-items:center; gap:12px; }
+.rl-least-legend i { display:inline-block; flex-shrink:0; }
+.rl-least-legend .is-observation { width:15px; height:15px; border-radius:50%; background:#668bb2; }
+.rl-least-legend .is-line { width:40px; height:3px; background:#168c97; }
+.rl-least-legend .is-residual { width:2px; height:22px; background:#aebbc9; }
+.rl-least-problem { display:grid; grid-template-rows:auto auto auto auto auto; align-content:center; gap:24px; padding:28px 8px 28px 0; }
+.rl-least-goal { font-size:34px; line-height:1.3; }
+.rl-least-adjust { --ui-type-body-size:24px; --ui-type-body-line-height:1.4; }
+.rl-least-objective { padding:16px 0 20px; }
+.rl-least-objective .math-formula { justify-content:center; flex-wrap:nowrap; gap:12px; }
+.rl-least-objective math-field { font-size:49px; }
+.rl-least-objective .math-formula-term { color:#168c97; }
+.rl-least-model { display:flex; align-items:center; justify-content:flex-start; gap:18px; }
+.rl-least-model > .ui-typography { --ui-type-body-size:26px; }
+.rl-least-model .math-formula { justify-content:flex-start; }
+.rl-least-model math-field { font-size:34px; }
+.rl-least-explanations { list-style:none; display:grid; gap:18px; padding:16px 0 0; margin:0; }
+.rl-least-explanations li { display:flex; align-items:center; gap:14px; }
+.rl-least-explanations li::before { content:''; width:11px; height:11px; flex-shrink:0; border-radius:50%; background:#168c97; }

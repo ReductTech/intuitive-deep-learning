@@ -1,0 +1,29 @@
+.vbrl-target-page .vbrl-page-footer { min-height: 64px; padding: 10px 20px; }
+.vbrl-target { display: grid; grid-template-rows: 56px minmax(0,1fr) 64px; gap: 12px; height: 100%; min-height: 0; }
+.vbrl-target :is(div,section,button,p,span,svg,math-field) { min-width: 0; max-width: 100%; }
+.vbrl-target .edu-btn:hover { transform: none; }
+.vbrl-target .math-formula-block { padding: 0; margin: 0; }
+.vbrl-target .math-formula { font-size: var(--ui-type-body-small-size); }
+.vbrl-target__experience { display: grid; grid-template-columns: minmax(0,.22fr) minmax(0,.65fr) minmax(0,.13fr); align-items: center; gap: 14px; padding: 4px 14px; border: 1px solid #cfe0f4; border-radius: var(--ui-radius-sm); background: #edf6ff; }
+.vbrl-target__batch { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 8px; }
+.vbrl-target__batch .edu-btn { padding: 1px 4px; }
+.vbrl-target__panels { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 24px; min-height: 0; }
+.vbrl-target__panels .vbrl-teaching-panel__body { display: grid; grid-template-rows: 43px minmax(0,1fr) 48px; gap: 8px; padding: 12px; }
+.vbrl-target__status { display: flex; align-items: center; justify-content: center; gap: 16px; background: #f0f7ff; border-radius: var(--ui-radius-sm); }
+.vbrl-target__frozen .vbrl-target__status { background: #eef9f3; }
+.vbrl-target__network-and-values { display: grid; grid-template-columns: minmax(0,.5fr) minmax(0,.5fr); gap: 22px; min-height: 0; align-items: center; }
+.vbrl-target__network { display: grid; grid-template-rows: 44px 176px 44px; gap: 8px; justify-items: center; }
+.vbrl-target__network .vbrl-position-network { height: 176px; }
+.vbrl-target__values { display: grid; grid-template-rows: repeat(4,43px) 60px; gap: 6px; }
+.vbrl-target__values > div:not(:last-child) { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 0 12px; border: 1px solid #d4e3f4; border-radius: 9px; background: #f5f8fc; font-variant-numeric: tabular-nums; }
+.vbrl-target__values > .is-executed { background: #fff7ee; border-color: #e8ac70; }
+.vbrl-target__values > .is-maximum { background: #eef9f3; border-color: #90c7ab; }
+.vbrl-target__chosen { display: grid; place-items: center; padding: 2px 8px; background: #fff7ee; border: 1px solid #edc5a1; border-radius: var(--ui-radius-sm); }
+.vbrl-target__chosen.is-target { background: #eef9f3; border-color: #a7d7bd; }
+.vbrl-target__target-value { display: grid; place-items: center; background: #eef9f3; border-radius: var(--ui-radius-sm); }
+.vbrl-target__target-value .math-formula { color: var(--ui-success); font-size: var(--ui-type-body-size); }
+.vbrl-target__actions { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.vbrl-target__controls { display: flex; align-items: center; gap: 10px; }
+.vbrl-target__controls .edu-btn { padding: 4px 14px; white-space: nowrap; }
+.vbrl-target__sync { border-color: #90c7ab; color: var(--ui-success); }
+.vbrl-target__sync-note { display: flex; align-items: center; gap: 18px; }

@@ -1,0 +1,4 @@
+.daa-motive-training { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+.daa-motive-training > div { display: grid; gap: 12px; }
+.daa-motive-training img { width: 100%; height: 180px; object-fit: contain; border-radius: var(--ui-radius-md); }
+.daa-motive-test { width: 460px; aspect-ratio: 3 / 2; object-fit: contain; border-radius: var(--ui-radius-md); }

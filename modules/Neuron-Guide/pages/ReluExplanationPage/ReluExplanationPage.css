@@ -1,0 +1,67 @@
+.ngtw-relu-explanation {
+  border-radius: var(--ui-radius-lg);
+  box-shadow: var(--ui-shadow-soft);
+  padding: clamp(16px, 2.4vw, 22px);
+}
+
+.ngtw-relu-explanation > .edu-content-head { margin-bottom: 16px; }
+
+.ngtw-relu-explanation .edu-content-head,
+.ngtw-relu-explanation .edu-content-subtitle {
+  width: 100%;
+  max-width: none;
+}
+
+.ngtw-relu-explanation__layout > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.ngtw-relu-explanation__definition,
+.ngtw-relu-explanation__figure {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: 0;
+  padding: 30px;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius-lg);
+  background: var(--ui-bg-card);
+}
+
+.ngtw-relu-explanation__formula {
+  border-inline-start: 4px solid var(--ui-accent-alt);
+}
+
+.ngtw-relu-explanation__cases > div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius-md);
+  background: var(--ui-bg-muted);
+}
+
+.ngtw-relu-explanation__cases > div:last-child {
+  border-color: color-mix(in srgb, var(--ui-success) 34%, var(--ui-border));
+}
+
+.ngtw-relu-explanation__plot {
+  flex: 1;
+}
+
+@media (max-width: 760px) {
+  .ngtw-relu-explanation__layout { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 760px) {
+  .ngtw-relu-explanation__cases { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 760px) {
+  .ngtw-relu-explanation__plot { min-height: 330px; }
+}
+
+

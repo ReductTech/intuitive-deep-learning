@@ -1,0 +1,7 @@
+.cg-intuitive-page .cg-wormhole-content { grid-template-columns: minmax(0, 2.75fr) minmax(0, 1fr); }
+.cg-intuitive-page .cg-wormhole-example { padding: 24px; }
+.cg-intuitive-page .cg-wormhole-sidebar { gap: 28px; }
+.cg-intuitive-page .cg-wormhole-benefit { gap: 16px; }
+.cg-intuitive-page .cg-wormhole-icon { width: 60px; height: 60px; }
+.cg-intuitive-model-note { margin-top: auto; }
+

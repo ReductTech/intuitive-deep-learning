@@ -1,0 +1,67 @@
+/* The experiment uses the shared page frame and unmodified Typography scale. */
+.vg-formula-lab__body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 24px; align-items: start; }
+.vg-formula-lab *, .vg-formula-lab *::before, .vg-formula-lab *::after { min-width: 0; max-width: 100%; }
+.vg-replica__panel { border: 1px solid var(--ui-border); border-radius: var(--ui-radius-sm); background: var(--ui-bg-card); }
+.vg-replica__panel-body { display: grid; gap: 10px; padding: 14px; }
+.vg-replica__label { color: var(--ui-text-muted); }
+.vg-replica__metrics { display: grid; gap: 8px; }
+.vg-replica__metrics--two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.vg-replica__metrics--four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.vg-replica__metric { padding: 6px 10px; border-bottom: 1px solid var(--ui-border); }
+.vg-replica__value, .vg-formula-lab__value { font-variant-numeric: tabular-nums; }
+.vg-replica__metric.is-accent .vg-replica__value { color: var(--ui-accent); }
+.vg-replica__metric.is-hot .vg-replica__value { color: var(--ui-warning); }
+.vg-replica__forward-images { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; align-items: start; }
+.vg-replica__pixels { display: grid; gap: 4px; margin: 0; justify-items: center; }
+.vg-replica__pixels figcaption { display: flex; flex-wrap: wrap; gap: 0 8px; width: 100%; }
+.vg-replica__pixels figcaption .vg-replica__sub { color: var(--ui-text-main); }
+.vg-replica__canvas-wrap { position: relative; width: min(100%, 220px); }
+.vg-replica__canvas-wrap.is-pickable { cursor: crosshair; }
+.vg-replica__pixels canvas { display: block; width: 100%; height: auto; aspect-ratio: 1; border: 1px solid var(--ui-border); border-radius: var(--ui-radius-sm); background: var(--ui-bg-muted); }
+.vg-replica__probe { position: absolute; width: 12px; height: 12px; border: 2px solid var(--ui-bg-card); box-shadow: 0 0 0 2px var(--ui-success); border-radius: 50%; transform: translate(-50%, -50%); pointer-events: none; }
+.vg-replica__histogram { display: grid; gap: 4px; padding: 10px; background: var(--ui-bg-muted); border-radius: var(--ui-radius-sm); }
+.vg-replica__hist-head { display: flex; flex-wrap: wrap; gap: 0 12px; justify-content: space-between; }
+.vg-replica__histogram svg { display: block; width: 100%; height: 100px; }
+.vg-replica__axis { display: flex; justify-content: space-between; }
+.vg-replica__legend { display: flex; flex-wrap: wrap; gap: 0 12px; }
+.vg-replica__legend .vg-replica__label { display: flex; align-items: center; gap: 6px; }
+.vg-replica__legend i { flex: 0 0 10px; width: 10px; height: 10px; border-radius: 2px; background: var(--ui-accent); }
+.vg-replica__legend i.is-gray { background: var(--ui-text-muted); opacity: .3; }
+.vg-replica__playback, .vg-replica__presets, .vg-replica__uploads { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.vg-replica__playback input { flex: 1; }
+.vg-replica input[type=range] { display: block; width: 100%; height: 20px; margin: 0; accent-color: var(--ui-accent); cursor: pointer; }
+.vg-replica__sliders { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.vg-replica__sliders label { display: grid; gap: 6px; }
+.vg-replica__prediction-row, .vg-replica__target-row { display: grid; gap: 4px; }
+.vg-replica__four-images { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.vg-replica__three-images { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.is-reverse .vg-replica__canvas-wrap { width: min(100%, 110px); }
+.vg-formula-lab__rail { display: grid; align-content: start; gap: 10px; min-height: 0; }
+.vg-formula-lab__equation { padding: 4px 0; }
+.vg-formula-lab__equation .math-formula { max-width: 100%; font-size: 30px; }
+.vg-formula-lab__variables { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 16px; }
+.vg-formula-lab__variable { display: grid; gap: 0; padding-bottom: 4px; border-bottom: 1px solid var(--ui-border); }
+.vg-formula-lab .is-signal { color: var(--ui-accent); }
+.vg-formula-lab .is-noise { color: var(--ui-warning); }
+.vg-formula-lab .is-output { color: var(--ui-success); }
+.vg-formula-lab__amplitudes { display: grid; gap: 4px; }
+.vg-formula-lab__amplitudes > div { display: grid; grid-template-columns: minmax(0, .3fr) minmax(0, 1fr); align-items: center; gap: 12px; }
+.vg-formula-lab__amplitudes progress { width: 100%; height: 12px; accent-color: var(--ui-accent); }
+.vg-formula-lab__amplitudes .is-noise progress { accent-color: var(--ui-warning); }
+.vg-formula-lab__pixel { display: grid; gap: 8px; padding: 12px; background: var(--ui-bg-muted); border: 1px solid var(--ui-border); border-radius: var(--ui-radius-sm); }
+.vg-formula-lab__probe-controls { display: flex; align-items: center; gap: 8px; }
+.vg-formula-lab__probe-controls > :first-child { flex: 1; }
+.vg-formula-lab__substitution { font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.vg-formula-lab__variable-label { display: flex; flex-wrap: wrap; align-items: center; gap: 0 8px; }
+.vg-formula-lab__variable-label .math-formula { font-size: 28px; }
+.vg-formula-lab__schedule-row { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 16px; }
+.vg-formula-lab__schedule-row > .vg-formula-lab__variable { grid-template-columns: minmax(0, 1fr) auto; align-items: center; }
+.vg-formula-lab__schedule-row > .vg-formula-lab__variable > .vg-formula-lab__value { grid-column: 2; grid-row: 1; }
+.vg-formula-lab__schedule-row .vg-alpha-schedule { grid-column: 1 / -1; }
+.vg-formula-lab__coefficients { display: grid; align-content: center; gap: 8px; }
+.vg-alpha-schedule { display: grid; gap: 2px; }
+.vg-alpha-schedule svg { display: block; width: 100%; height: auto; cursor: crosshair; }
+.vg-formula-lab__schedule-row .vg-alpha-schedule svg { height: 110px; }
+.vg-alpha-schedule__plot { position: relative; }
+.vg-alpha-schedule__tick { position: absolute; left: 0; transform: translateY(-50%); color: var(--ui-text-muted); pointer-events: none; }
+.vg-alpha-schedule__scale { display: flex; justify-content: space-between; padding-left: 8.75%; padding-right: 3.75%; color: var(--ui-text-muted); }

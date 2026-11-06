@@ -1,0 +1,28 @@
+{
+  "reviewedAt": "2026-11-01",
+  "scope": "教师姓名拼写核对；不据此新增或认证训练营合作关系。Research-Foundation 与 AI-Practice-Education 共用 SproutProgramPage。",
+  "corrections": [
+    {
+      "previous": "戴一弨",
+      "name": "戴一冕",
+      "source": "https://mmcheng.net/yimian/"
+    },
+    {
+      "previous": "侯涣彬",
+      "name": "侯淇彬",
+      "source": "https://cc.nankai.edu.cn/2021/0323/c13620a549988/page.htm"
+    },
+    {
+      "previous": "傅咸",
+      "name": "傅成",
+      "source": "https://faculty.cau.edu.cn/fc/"
+    }
+  ],
+  "withheld": [
+    {
+      "previous": "丁宁",
+      "institution": "南开大学媒体计算实验室",
+      "reason": "未找到与该课题组对应的官方教师资料，暂不展示；不可凭相似姓名推测替换。"
+    }
+  ]
+}

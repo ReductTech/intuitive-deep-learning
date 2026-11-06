@@ -1,0 +1,160 @@
+.activation-relu-intro {
+  border-radius: var(--ui-radius-lg);
+  box-shadow: var(--ui-shadow-soft);
+  padding: clamp(16px, 2.4vw, 22px);
+}
+
+.activation-relu-intro > .edu-content-head {
+  width: 100%;
+  max-width: none;
+  margin-bottom: 16px;
+}
+
+.ngtw-response-lab__scene {
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius-lg);
+}
+
+.ngtw-response-lab__threshold-view,
+.ngtw-response-lab__instruction > div:first-child,
+.ngtw-response-lab__current {
+  display: grid;
+  min-width: 0;
+  gap: 4px;
+}
+
+.ngtw-response-lab__current { flex: 0 0 auto; border-right: 3px solid var(--ui-accent-alt); }
+
+.ngtw-response-lab__neuron-demo {
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius-lg);
+}
+
+.ngtw-response-lab__charge-ring {
+  aspect-ratio: 1;
+  box-shadow: 0 14px 32px rgb(28 51 86 / 10%);
+  transition: background 90ms linear, transform 90ms linear, box-shadow 90ms linear;
+}
+
+.ngtw-response-lab__charge-ring::after {
+  position: absolute;
+  inset: 23px;
+  border: 1px solid rgb(255 255 255 / 78%);
+  border-radius: 50%;
+  content: '';
+}
+
+.ngtw-response-lab__neuron-core {
+  z-index: 1;
+  place-content: center;
+  border: 9px solid #fff;
+  color: #fff;
+  transition: background 120ms ease, box-shadow 120ms ease;
+}
+
+.ngtw-response-lab.is-active .ngtw-response-lab__charge-ring {
+  background: var(--ui-success);
+  transform: scale(var(--ngtw-output-scale));
+  box-shadow:
+    0 0 0 10px rgb(72 143 100 / 7%),
+    0 0 var(--ngtw-output-glow) rgb(72 143 100 / var(--ngtw-output-alpha));
+}
+
+.ngtw-response-lab.is-active .ngtw-response-lab__neuron-core { background: var(--ui-success); }
+
+.ngtw-response-lab__suppressed-flash {
+  border: 5px solid var(--ui-accent-alt);
+  pointer-events: none;
+  animation: ngtw-suppressed-breathe 620ms ease-in-out infinite;
+}
+
+.ngtw-response-lab__single-control {
+  border-radius: var(--ui-radius-sm);
+}
+
+.ngtw-response-lab__control-track {
+  background: linear-gradient(90deg, #cfd7e4 0 50%, rgb(72 143 100 / 24%) 50% 100%);
+  box-shadow: inset 0 2px 4px rgb(28 51 86 / 12%);
+}
+
+.ngtw-response-lab__control-track::after {
+  position: absolute;
+  top: 50%;
+  left: clamp(18px, var(--ngtw-signal-position), calc(100% - 18px));
+  z-index: 3;
+  width: 38px;
+  height: 38px;
+  border: 7px solid #fff;
+  border-radius: 50%;
+  background: var(--ui-accent-alt);
+  content: '';
+  transform: translate(-50%, -50%);
+  transition: background 120ms ease, box-shadow 120ms ease;
+  box-shadow: 0 0 0 2px rgb(240 126 71 / 22%), var(--ui-shadow-soft);
+}
+
+.ngtw-response-lab.is-active .ngtw-response-lab__control-track::after {
+  background: var(--ui-success);
+  box-shadow: 0 0 0 2px rgb(72 143 100 / 24%), 0 0 24px rgb(72 143 100 / 22%);
+}
+
+.ngtw-response-lab__control-threshold {
+  transform: translate(-50%, -100%);
+}
+
+.ngtw-response-lab__control-threshold::after {
+  width: 4px;
+  height: 40px;
+  border-radius: 999px;
+  background: var(--ui-navy);
+  content: '';
+  opacity: .44;
+}
+
+.ngtw-response-lab__direct-control {
+  z-index: 5;
+  height: calc(100% + 28px);
+  cursor: ew-resize;
+  opacity: 0;
+  touch-action: none;
+}
+
+.ngtw-response-lab__direct-control:active { cursor: grabbing; }
+.ngtw-response-lab__control-track:focus-within { outline: 3px solid var(--ui-focus); outline-offset: 5px; }
+
+.ngtw-response-lab__result {
+  border-left: 4px solid var(--ui-text-light);
+  border-radius: var(--ui-radius-sm);
+}
+
+.ngtw-response-lab.is-active .ngtw-response-lab__result {
+  border-left-color: var(--ui-success);
+  background: rgb(72 143 100 / 6%);
+}
+
+@media (max-width: 760px) {
+  .ngtw-response-lab__instruction,
+  .ngtw-response-lab__result {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: stretch;
+  }
+
+  .ngtw-response-lab__scene { gap: 40px; padding: 28px 20px; }
+
+  .ngtw-response-lab__neuron-demo {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 34px;
+    padding: 28px 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ngtw-response-lab__suppressed-flash { animation: none; }
+}
+
+@keyframes ngtw-suppressed-breathe {
+  0%, 100% { opacity: .12; transform: scale(.98); }
+  50% { opacity: .58; transform: scale(1.08); }
+}
+

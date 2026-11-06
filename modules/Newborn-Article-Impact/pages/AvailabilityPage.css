@@ -1,0 +1,12 @@
+.naipa-comparison{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:64px;height:100%;}
+.naipa-papers{display:grid;grid-template-rows:auto minmax(0,1fr) auto;gap:22px;}
+.naipa-papers>div:first-child{display:grid;gap:8px;}
+.naipa-paper-list{display:grid;grid-template-rows:repeat(4,minmax(0,1fr));}
+.naipa-paper-list>div{display:grid;align-items:center;padding:10px 0;border-bottom:1px solid var(--ui-border);}
+.naipa-paper-list>div:last-child{border:0;}
+.naipa-review{display:grid;grid-template-rows:minmax(0,1fr) auto auto;gap:18px;}
+.naipa-blind{position:relative;align-self:center;width:100%;aspect-ratio:640/420;}
+.naipa-blind>svg{display:block;width:100%;height:100%;}
+.naipa-person{position:absolute;top:45%;width:30%;transform:translateY(-50%);}
+.naipa-person--author{left:9%;}
+.naipa-person--reviewer{right:9%;}

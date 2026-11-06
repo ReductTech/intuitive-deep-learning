@@ -1,0 +1,10 @@
+.vbrl-position-network { width: 100%; height: 244px; min-width: 0; max-width: 100%; --vbrl-network-color: #458fe3; --vbrl-network-edge: #bed3ed; }
+.vbrl-position-network.is-target { --vbrl-network-color: #228d5c; --vbrl-network-edge: #bdddd0; }
+.vbrl-position-network__connections line { stroke: var(--vbrl-network-edge); stroke-width: .8; vector-effect: non-scaling-stroke; }
+.vbrl-position-network .is-input { fill: var(--vbrl-network-color); fill-opacity: .65; stroke: white; stroke-width: 2; }
+.vbrl-position-network .is-hidden { fill: var(--vbrl-network-color); stroke: var(--vbrl-network-color); stroke-width: 1.5; }
+.vbrl-position-network .is-output { fill: #f6fbf9; stroke: var(--ui-success); stroke-width: 2; }
+.vbrl-position-network .is-ellipsis { fill: #7891b2; }
+.vbrl-position-network.is-active .vbrl-position-network__connections line { stroke: var(--vbrl-network-color); stroke-dasharray: 5 6; animation: vbrl-position-network-flow .45s linear; }
+@keyframes vbrl-position-network-flow { to { stroke-dashoffset: -33; } }
+@media (prefers-reduced-motion: reduce) { .vbrl-position-network.is-active .vbrl-position-network__connections line { animation: none; } }

@@ -1,0 +1,9 @@
+.vga-page[data-lesson="pixel-to-latent"] .vga-sampling-controls { gap: 26px; }
+.vga-page[data-lesson="pixel-to-latent"] .vga-sampling-controls > .edu-control { width: auto; flex: 1; }
+.vga-sampling-latent { width: 380px; height: 190px; display: flex; flex-direction: column; align-items: center; gap: 4px; flex-shrink: 0; }
+.vga-sampling-latent > svg { display: block; width: 285px; height: 152px; flex-shrink: 0; }
+.vga-sampling-explanation { text-align: center; flex-shrink: 0; }
+.vga-page[data-lesson="pixel-to-latent"] .vga-content { gap: 12px; }
+.vga-page[data-lesson="pixel-to-latent"] .vga-space-panel > .vga-teaching-panel__body { gap: 8px; padding-top: 8px; padding-bottom: 8px; }
+.vga-page[data-lesson="pixel-to-latent"] .vga-space-panel .vga-photo-wrap { width: 150px; }
+.vga-page[data-lesson="pixel-to-latent"] .vga-space-panel .vga-photo-wrap > .ui-typography { white-space: nowrap; }

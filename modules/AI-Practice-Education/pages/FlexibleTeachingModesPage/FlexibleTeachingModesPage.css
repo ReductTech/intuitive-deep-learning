@@ -1,0 +1,71 @@
+.aipe-teaching-mode-page {
+  display: flex;
+  flex-direction: column;
+}
+
+.aipe-teaching-mode-body {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px;
+}
+
+.aipe-teaching-half {
+  min-width: 0;
+  min-height: 0;
+  max-width: 100%;
+  padding: 24px;
+  border-radius: var(--ui-radius-lg);
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 18px;
+  background: var(--ui-accent-soft);
+}
+
+.aipe-teaching-half--cocreation {
+  background: #fff2e8;
+}
+
+.aipe-teaching-half-heading {
+  min-width: 0;
+  display: grid;
+  justify-items: start;
+  gap: 8px;
+}
+
+.aipe-teaching-half-label {
+  width: fit-content;
+  padding: 2px 20px;
+  border-radius: var(--ui-radius-pill);
+  color: #fff;
+  background: var(--ui-accent);
+}
+
+.aipe-teaching-half--cocreation .aipe-teaching-half-label {
+  background: var(--ui-accent-alt);
+}
+
+.aipe-teaching-half-illustration {
+  margin: 0;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.aipe-teaching-half-illustration img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  border-radius: var(--ui-radius-md);
+}
+
+.aipe-teaching-half-summary {
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}

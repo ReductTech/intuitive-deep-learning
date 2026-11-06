@@ -1,0 +1,4 @@
+.naipv2-dataset-layout{height:100%;display:grid;grid-template-rows:auto minmax(0,1fr) auto;gap:22px;}
+.naipv2-dataset-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;}
+.naipv2-dataset-stats section{display:grid;gap:8px;padding:10px 24px;border-left:1px solid var(--ui-border);}
+.naipv2-dataset-stats section:first-child{padding-left:0;border:0;}

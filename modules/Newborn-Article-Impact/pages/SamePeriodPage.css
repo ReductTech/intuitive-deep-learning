@@ -1,0 +1,11 @@
+.naips-columns{height:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:48px;align-items:center;}
+.naips-topic,.naips-time{display:grid;gap:22px;align-content:center;}
+.naips-topic .naipc-table td,.naips-topic .naipc-table th{padding:18px 14px;}
+.naips-topic .naipc-table td:first-child{width:79%;}
+.naips-axis{position:relative;height:180px;}
+.naips-axis>svg{width:100%;height:150px;}
+.naips-time-labels{position:absolute;left:0;right:0;top:83px;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));}
+.naips-duration{position:absolute;bottom:0;left:0;right:0;}
+.naips-switch{display:flex;gap:18px;justify-content:center;}
+.naips-explanation{padding:14px 20px;background:var(--ui-bg-soft);border-radius:var(--ui-radius-md);}
+.naips-topic .naipc-table th:first-child{width:79%;}

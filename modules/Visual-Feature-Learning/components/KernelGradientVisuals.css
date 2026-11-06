@@ -1,0 +1,28 @@
+.vfl-gradient-page { display: flex; flex-direction: column; }
+.vfl-gradient-page .vfl-gradient-body { flex: 1; min-height: 0; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; gap: 16px; }
+.vfl-gradient-page :where(section, article, div) { min-width: 0; max-width: 100%; }
+.vfl-gradient-context { display: flex; align-items: center; gap: 24px; padding-bottom: 12px; border-bottom: 1px solid var(--ui-border); }
+.vfl-gradient-formula { width: auto; min-height: 0; margin: 0; padding: 8px 12px; background: transparent; border: 0; }
+.vfl-gradient-formula .math-formula { font-size: var(--ui-type-body-small-size); }
+.vfl-gradient-page math-field::part(container), .vfl-gradient-page math-field::part(content) { padding: 0; }
+.vfl-gradient-formula--large .math-formula { font-size: var(--ui-type-formula-size); }
+.vfl-gradient-matrix { width: 180px; aspect-ratio: 1; min-height: 0; padding: 8px; margin: 0 auto; background: var(--ui-bg-card); border-color: var(--ui-border-strong); }
+.vfl-gradient-matrix .math-formula { display: block; width: 100%; font-size: var(--ui-type-body-small-size); }
+.vfl-gradient-matrix__grid { display: grid; grid-template-columns: repeat(var(--vfl-gradient-size), minmax(0, 1fr)); gap: 5px; }
+.vfl-gradient-matrix__cell { display: grid; min-width: 0; min-height: 0; aspect-ratio: 1; place-items: center; padding: 0; border: 1px solid transparent; border-radius: var(--ui-radius-sm); color: var(--ui-accent); background: var(--ui-bg-soft); box-shadow: none; }
+.vfl-gradient-matrix__cell.is-zero { color: var(--ui-text-light); background: var(--ui-bg-muted); }
+.vfl-gradient-matrix__cell.is-window { background: rgba(var(--ui-accent-rgb), .13); }
+.vfl-gradient-matrix__cell.is-traced { border: 2px solid var(--ui-accent-alt); background: rgba(var(--ui-accent-alt-rgb), .12); color: var(--ui-accent); }
+.vfl-gradient-matrix__cell > span { display: inline-flex; justify-content: center; }
+button.vfl-gradient-matrix__cell { position: relative; }
+button.vfl-gradient-matrix__cell::after { position: absolute; inset: 0; z-index: 1; content: ''; }
+.vfl-gradient-matrix--compact { width: 150px; padding: 6px; }
+.vfl-gradient-matrix--compact .math-formula { font-size: 16px; }
+.vfl-gradient-matrix--compact .math-formula-static { font-size: 16px; }
+.vfl-gradient-matrix--compact math-field { font-size: 16px; }
+.vfl-gradient-matrix--success { border-color: var(--ui-success); }
+.vfl-gradient-arrow { text-align: center; align-self: center; }
+.vfl-gradient-label { display: flex; justify-content: center; align-items: center; gap: 8px; }
+.vfl-gradient-actions { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 64px; border-top: 1px solid var(--ui-border); padding-top: 12px; }
+.vfl-gradient-actions__buttons { display: flex; gap: 12px; flex-shrink: 0; }
+.vfl-gradient-placeholder { display: grid; place-content: center; text-align: center; gap: 10px; height: 100%; padding: 28px; background: var(--ui-bg-muted); border-radius: var(--ui-radius-lg); }

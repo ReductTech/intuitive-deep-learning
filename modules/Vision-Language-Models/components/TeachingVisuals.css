@@ -1,0 +1,123 @@
+.tv-stage {
+  display: grid;
+  align-content: center;
+  gap: 22px;
+  min-height: 0;
+  transition: opacity 220ms cubic-bezier(.22,1,.36,1), transform 220ms cubic-bezier(.22,1,.36,1);
+}
+.tv-muted {
+  opacity: 0.22;
+  transform: translateY(4px);
+}
+.tv-patch {
+  background-repeat: no-repeat;
+  border: 3px solid var(--ui-accent-alt);
+  flex-shrink: 0;
+}
+.tv-features {
+  display: grid;
+  gap: 5px;
+  width: 100%;
+}
+.tv-features i {
+  display: block;
+  height: 23px;
+  background: var(--ui-accent);
+}
+.tv-features.tv-orange i {
+  background: var(--ui-accent-alt);
+}
+.tv-vector-plot {
+  position: relative;
+  width: 100%;
+  max-width: 620px;
+  aspect-ratio: 1.4;
+  justify-self: center;
+}
+.tv-vector-plot svg {
+  width: 100%;
+  height: 100%;
+}
+.tv-vector-label {
+  position: absolute;
+  max-width: 30%;
+}
+.tv-image-focus {
+  position: relative;
+  width: 100%;
+}
+.tv-image-focus > img {
+  display: block;
+  width: 100%;
+}
+.tv-region {
+  position: absolute;
+  border: 4px solid var(--ui-accent-alt);
+  background: #f07e4730;
+  pointer-events: none;
+}
+.tv-horizontal {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+.tv-lane {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 40px minmax(0, 1fr) 40px minmax(0, 1fr);
+  gap: 24px;
+  align-items: center;
+}
+.tv-page-layout {
+  height: 100%;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 24px;
+}
+.tv-bottom-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 32px;
+}
+.tv-label {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.tv-rule {
+  border-top: 2px solid var(--ui-border);
+  padding-top: 24px;
+}
+.tv-callout {
+  border: 1px solid color-mix(in srgb, var(--ui-accent-alt) 42%, var(--ui-border));
+  background: color-mix(in srgb, var(--ui-accent-alt) 8%, white);
+  padding: 14px 18px;
+}
+.tv-small-photo {
+  width: 200px;
+}
+.tv-network {
+  display: grid;
+  gap: 18px;
+  padding: 24px;
+  border: 2px solid var(--ui-accent);
+  background: var(--ui-bg-soft);
+}
+.tv-network-layer {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--ui-border);
+  padding: 12px 0;
+}
+.tv-status {
+  border-radius: 30px;
+  padding: 6px 18px;
+  background: var(--ui-bg-soft);
+}
+.tv-status.is-trained {
+  background: #fce7db;
+  color: var(--ui-accent-alt);
+}
+@media (prefers-reduced-motion: reduce) { .tv-stage { transition:none; transform:none; } }

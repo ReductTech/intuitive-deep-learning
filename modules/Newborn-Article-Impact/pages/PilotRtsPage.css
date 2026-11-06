@@ -1,0 +1,6 @@
+.naipv2-rts-refined .naipv2-rts-right{grid-template-rows:auto auto auto minmax(0,1fr);gap:18px;}
+.naipv2-rts-key{display:flex;gap:24px;align-items:center;flex-wrap:wrap;}
+.naipv2-rts-key>span{display:flex;align-items:center;gap:10px;}
+.naipv2-rts-key>span:before{content:'';width:28px;border-top:3px solid var(--ui-success);}
+.naipv2-rts-key>span.is-score:before{border-color:var(--ui-warning);border-top-style:dashed;}
+.naipv2-rts-refined .naipv2-stack .naipv2-panel{gap:20px;}

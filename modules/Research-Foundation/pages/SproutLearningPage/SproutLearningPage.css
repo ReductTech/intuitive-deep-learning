@@ -1,0 +1,19 @@
+.rf-sprout-learning{position:relative;background:radial-gradient(ellipse at 0% 110%,#dce9c7a6 0%,#eff4e33b 32%,transparent 53%),#fff;color:#142d49}
+.rf-sprout-heading{position:absolute;left:110px;top:145px;display:flex;flex-direction:column;gap:32px;width:900px}
+.rf-sprout-eyebrow{--ui-type-body-small-size:25px;--ui-type-body-small-line-height:1.4;letter-spacing:.24em;color:#6c796b}
+.rf-sprout-heading>h1{--ui-type-h1-size:94px;--ui-type-h1-line-height:1.25;--ui-type-h1-weight:760;letter-spacing:-.035em;color:#132e4c}
+.rf-sprout-heading>.ui-typography--subtitle{--ui-type-subtitle-size:43px;--ui-type-subtitle-line-height:1.4;--ui-type-subtitle-weight:400;color:#59646b}
+.rf-sprout-journey{position:absolute;left:110px;top:460px;width:900px;height:290px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+.rf-sprout-path{position:absolute;left:0;top:98px;width:900px;height:70px;fill:none;stroke:#a6bf84;stroke-width:1.6}
+.rf-sprout-stage{position:relative;display:flex;align-items:center;flex-direction:column;gap:14px;min-width:0;animation:rf-sprout-rise 900ms ease both}
+.rf-sprout-stage-1{animation-delay:650ms}.rf-sprout-stage-2{animation-delay:1300ms}
+.rf-sprout-stage-icon{height:100px;width:100px;display:grid;place-items:center;color:#759b46}
+.rf-sprout-stage-icon>svg{width:78px;height:78px;max-width:100%}.rf-sprout-stage-0 .rf-sprout-stage-icon>svg{transform:rotate(-25deg);width:66px;height:66px}.rf-sprout-stage-2 .rf-sprout-stage-icon{color:#507d3d}
+.rf-sprout-stage>i{width:13px;height:13px;border-radius:50%;background:#9ab876;outline:6px solid #fff9;flex-shrink:0}
+.rf-sprout-stage-1>i{transform:translateY(-5px)}.rf-sprout-stage-2>i{transform:translateY(-16px)}
+.rf-sprout-stage>h2{--ui-type-h2-size:43px;--ui-type-h2-line-height:1.25;--ui-type-h2-weight:650;color:#214c29;margin-top:12px}
+.rf-sprout-stage>.ui-typography--body{--ui-type-body-size:30px;--ui-type-body-line-height:1.35;color:#69746c}
+.rf-sprout-phone-host{position:absolute;left:1120px;top:22px;width:450px;height:900px;transform:scale(.95);transform-origin:top left}
+.rf-sprout-phone-host>.ra-phone{position:relative;left:0;top:0;right:auto;transform:none;transform-origin:top left}
+@keyframes rf-sprout-rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.rf-sprout-stage{animation:none}}

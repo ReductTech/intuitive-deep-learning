@@ -1,0 +1,26 @@
+.vfl-feature__row-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: stretch;
+  min-width: 0;
+}
+
+.vfl-feature__row-title.ui-typography {
+  display: block;
+  font-size: 28px !important;
+  line-height: 36px;
+}
+
+.vfl-feature__row-detail.ui-typography {
+  display: block;
+  font-size: 18px !important;
+  line-height: 26px;
+  overflow-wrap: anywhere;
+}
+
+.vfl-feature__value.ui-typography {
+  font-size: 26px !important;
+  line-height: 32px;
+  white-space: nowrap;
+}

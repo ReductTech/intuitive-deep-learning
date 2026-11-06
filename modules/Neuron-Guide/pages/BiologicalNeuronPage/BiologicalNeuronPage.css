@@ -1,0 +1,97 @@
+.course-shell .ngtw-biological-model { width: 100%; }
+.course-shell .ngtw-biological-model .edu-content-body { gap: 18px; }
+
+.course-shell .ngtw-biological-model__steps {
+  list-style: none;
+}
+
+.course-shell .ngtw-biological-model__step {
+  --step-color: #5f9ed1;
+  --step-soft: #edf5fc;
+  border: 1px solid color-mix(in srgb, var(--step-color) 26%, white);
+  box-shadow: 0 10px 26px rgba(39, 68, 110, .07);
+}
+
+.course-shell .ngtw-biological-model__step--green { --step-color: #61a878; --step-soft: #edf8f0; }
+.course-shell .ngtw-biological-model__step--orange { --step-color: #df8d32; --step-soft: #fff5e7; }
+.course-shell .ngtw-biological-model__step--purple { --step-color: #7770c8; --step-soft: #f2f0fb; }
+
+.course-shell .ngtw-biological-model__step-head {
+  background: color-mix(in srgb, var(--step-color) 16%, white);
+}
+
+.course-shell .ngtw-biological-model__step-head > div {
+  display: grid;
+  min-width: 0;
+  gap: 4px;
+}
+
+.course-shell .ngtw-biological-model__step-index {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--step-color);
+  color: #fff;
+}
+
+.course-shell .ngtw-biological-model__image {
+  background: linear-gradient(180deg, #fff, color-mix(in srgb, var(--step-soft) 45%, white));
+}
+
+.course-shell .ngtw-biological-model__image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.course-shell .ngtw-biological-model__detail {
+  border-top: 1px solid color-mix(in srgb, var(--step-color) 18%, white);
+}
+
+.course-shell .ngtw-biological-model__detail--math {
+  background: color-mix(in srgb, var(--step-soft) 72%, white);
+}
+.course-shell .ngtw-biological-model__detail--math h3 { margin: 0; }
+.course-shell .ngtw-biological-model__detail code { white-space: nowrap; }
+
+.course-shell .ngtw-biological-model__year {
+  display: grid;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  border-radius: 50%;
+  background: #416da5;
+  color: #fff;
+}
+
+@media (max-width: 820px) {
+  .course-shell .ngtw-biological-model__steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 640px) {
+  .course-shell .ngtw-biological-model__steps { grid-template-columns: 1fr; }
+  .course-shell .ngtw-biological-model__footer { align-items: flex-start; flex-direction: column; }
+  .course-shell .ngtw-biological-model__divider { width: 100%; height: 1px; }
+}
+
+.course-page-surface .ngtw-biological-model {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  grid-template-rows: auto minmax(0, 1fr);
+}
+
+.course-page-surface .ngtw-biological-model .edu-content-body {
+  min-height: 0;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 16px;
+}
+
+.course-page-surface .ngtw-biological-model__steps,
+.course-page-surface .ngtw-biological-model__step { min-height: 0; height: 100%; }
+.course-page-surface .ngtw-biological-model__footer { min-height: 70px; padding-block: 10px; }
+

@@ -1,0 +1,7 @@
+.vga-page[data-lesson="text-cross-attention"] .vga-query-panel > .vga-teaching-panel__body { gap: 12px; padding-block: 14px; }
+.vga-query-surface { position: relative; width: 320px; height: 320px; flex: 0 0 320px; border: 1px solid #a8c9ee; border-radius: 8px; cursor: crosshair; touch-action: none; user-select: none; }
+.vga-query-surface > img { width: 100%; height: 100%; object-fit: fill; border-radius: 7px; pointer-events: none; }
+.vga-query-surface.is-dragging { cursor: grabbing; }
+.vga-query-surface:focus-visible { outline: 3px solid #458fe3; outline-offset: 5px; }
+.vga-query-marker { position: absolute; width: 6.25%; height: 6.25%; border: 3px solid #142e58; background: #ffffff30; box-shadow: 0 0 0 2px #fff, 0 0 0 4px #66e0ff; pointer-events: none; }
+.vga-query-tag { position: absolute; display: grid; place-items: center; width: 36px; height: 32px; border-radius: 6px; color: #fff; background: #142e58; box-shadow: 0 2px 5px #142e5826; pointer-events: none; }

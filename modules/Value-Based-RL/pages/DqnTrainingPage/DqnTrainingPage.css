@@ -1,0 +1,40 @@
+.vbrl-dqn-page .vbrl-page-footer { min-height: 56px; padding: 6px 12px; }
+.vbrl-dqn { display: grid; grid-template-columns: minmax(0,.325fr) minmax(0,.37fr) minmax(0,.305fr); gap: 24px; height: 100%; min-height: 0; }
+.vbrl-dqn :is(section,div,figure,table,th,td,button,p,span,svg,math-field) { min-width: 0; max-width: 100%; }
+.vbrl-dqn .edu-btn:hover { transform: none; }
+.vbrl-dqn .math-formula-block { margin: 0; padding: 0; }
+.vbrl-dqn .math-formula { font-size: var(--ui-type-body-small-size); }
+.vbrl-dqn__sample > .vbrl-teaching-panel__body { display: grid; grid-template-rows: 400px 43px 82px; gap: 8px; align-content: start; padding: 14px 8px 8px; }
+.vbrl-dqn__map-zone { display: grid; place-items: center; min-height: 0; }
+.vbrl-dqn__map-zone :is(.vbrl-replay__map,.vbrl-dqn__validation-map) { width: min(100%,400px); }
+.vbrl-dqn__map-zone .vbrl-map__frame { height: 400px; padding: 8px; }
+.vbrl-dqn__map-zone .vbrl-map__board { height: 100%; aspect-ratio: auto; }
+.vbrl-dqn__validation-map .is-goal img[alt="机器人"] { width: 45%; height: 45%; top: 0; left: 0; }
+.vbrl-dqn__batch { display: grid; grid-template-columns: 28px repeat(4,minmax(0,1fr)) 28px; gap: 5px; }
+.vbrl-dqn__batch > .ui-typography { grid-area: 1 / 1 / -1 / -1; align-self: center; }
+.vbrl-dqn__batch .edu-btn { padding: 0 1px; border-radius: 5px; background: #f0f7ff; }
+.vbrl-dqn__batch .edu-btn.is-active { background: #e4f0ff; color: var(--ui-accent); border-color: #458fe3; }
+.vbrl-dqn__tuple { text-align: center; background: #fff7ee; border: 1px solid #f2d1b4; border-radius: var(--ui-radius-sm); }
+.vbrl-dqn__gradient > .vbrl-teaching-panel__body { display: grid; grid-template-rows: 43px 92px 94px 184px 94px; gap: 8px; align-content: center; padding: 12px; }
+.vbrl-dqn__steps { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 8px; }
+.vbrl-dqn__steps .edu-btn { padding: 1px 4px; white-space: nowrap; }
+.vbrl-dqn__prediction-target { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 16px; text-align: center; }
+.vbrl-dqn__prediction-target > div { display: grid; align-content: center; border: 1px solid #edc5a1; border-radius: var(--ui-radius-sm); background: #fff7ee; }
+.vbrl-dqn__prediction-target > div:last-child { background: #eef9f3; border-color: #a7d7bd; }
+.vbrl-dqn__individual-loss,.vbrl-dqn__batch-loss,.vbrl-dqn__backprop { display: grid; align-content: center; justify-items: center; gap: 4px; text-align: center; }
+.vbrl-dqn__batch-loss { border-top: 1px solid #d4e3f4; border-bottom: 1px solid #d4e3f4; }
+.vbrl-dqn__backprop .math-formula { font-size: var(--ui-type-body-size); }
+.vbrl-dqn__decision > .vbrl-teaching-panel__body { display: grid; grid-template-rows: 44px 215px 43px 78px 94px 39px; gap: 6px; align-content: center; padding: 12px; }
+.vbrl-dqn__decision-state { display: flex; align-items: center; justify-content: center; gap: 14px; }
+.vbrl-dqn__q-table { table-layout: fixed; width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.vbrl-dqn__q-table th,.vbrl-dqn__q-table td { border: 1px solid #d4e3f4; text-align: center; padding: 0 4px; }
+.vbrl-dqn__q-table thead { background: #edf6ff; }
+.vbrl-dqn__q-table .is-before { background: #fff7ee; }
+.vbrl-dqn__q-table .is-after { background: #eef9f3; }
+.vbrl-dqn__choices { display: flex; align-items: center; justify-content: space-around; gap: 8px; background: #f8fbff; border-radius: var(--ui-radius-sm); }
+.vbrl-dqn__controls { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; }
+.vbrl-dqn__controls .edu-btn { padding: 1px 8px; }
+.vbrl-dqn__cycle { display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); align-items: center; gap: 18px; }
+.vbrl-dqn__cycle > div { position: relative; color: var(--ui-accent); text-align: center; }
+.vbrl-dqn__cycle > .is-learning { color: var(--ui-success); }
+.vbrl-dqn__cycle span[aria-hidden] { position: absolute; right: -17px; top: 8px; color: #458fe3; }

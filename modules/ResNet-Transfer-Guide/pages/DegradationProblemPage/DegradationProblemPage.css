@@ -1,0 +1,30 @@
+.course-shell .rtg-degradation { display: flex; flex-direction: column; width: 100%; height: 100%; min-height: 0; gap: 12px; padding: 22px 32px 18px; border: 0; border-top: 4px solid var(--ui-accent); border-radius: 0; background: radial-gradient(ellipse at 80% 48%, #e8e1d754, transparent 65%), #f6f8fc; }
+.course-shell .rtg-degradation, .course-shell .rtg-degradation * { box-sizing: border-box; min-width: 0; max-width: 100%; }
+.course-shell .rtg-degradation > .edu-content-head { flex: 0 0 auto; margin: 0; }
+.course-shell .rtg-degradation > .edu-content-body { display: flex; flex: 1 1 0; flex-direction: column; min-height: 0; gap: 12px; }
+.course-shell .rtg-degradation a:focus-visible { outline: 3px solid var(--ui-focus); outline-offset: 3px; }
+
+.course-shell .rtg-degradation__prediction { display: flex; flex: 1 1 0; flex-direction: column; min-height: 0; justify-content: center; }
+
+/* One stable paper spread: revealing content never resizes the source chart. */
+.course-shell .rtg-degradation__evidence { display: grid; flex: 1 1 0; min-height: 0; grid-template-columns: minmax(0, 1.18fr) minmax(0, 1fr); gap: 30px; padding: 18px 22px; border: 1px solid #dbe3ee; border-radius: 18px; background: #fff; box-shadow: 0 8px 30px #26466b04; }
+.course-shell .rtg-degradation__figure { display: flex; flex-direction: column; min-height: 0; gap: 10px; margin: 0; padding-right: 28px; border-right: 1px solid #e1e7ef; }
+.course-shell .rtg-degradation__figure-head { display: flex; flex: 0 0 auto; align-items: center; justify-content: space-between; gap: 12px; }
+.course-shell .rtg-degradation__plot-viewport { position: relative; display: grid; flex: 1 1 0; min-height: 0; place-items: center; }
+.course-shell .rtg-degradation__plot { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.course-shell .rtg-degradation__figure figcaption { flex: 0 0 auto; padding-top: 2px; }
+.course-shell .rtg-degradation__figure a { color: inherit; text-decoration-color: #c1ccd9; text-underline-offset: 4px; }
+.course-shell .rtg-degradation__curtain { display: flex; width: 100%; height: 100%; min-height: 0; flex-direction: column; align-items: center; justify-content: center; gap: 12px; border: 1px dashed #c8d5e4; border-radius: 12px; background: radial-gradient(ellipse, #edf2f9a3, #fafcff 75%); }
+.course-shell .rtg-degradation__curtain > svg { width: 70px; height: 80px; flex: 0 0 auto; margin-bottom: 5px; color: #a7b7cb; }
+.course-shell .rtg-degradation__sealed-rule { display: flex; width: 86px; align-items: center; justify-content: center; gap: 5px; margin-top: 8px; }
+.course-shell .rtg-degradation__sealed-rule i { width: 22px; height: 3px; border-radius: 2px; background: #c2d0e1; }
+
+.course-shell .rtg-degradation__analysis { display: flex; flex-direction: column; min-height: 0; gap: 10px; }
+.course-shell .rtg-degradation__analysis-head { display: flex; flex: 0 0 auto; align-items: center; justify-content: space-between; min-height: 36px; gap: 12px; }
+.course-shell .rtg-degradation__name { display: flex; align-items: center; gap: 10px; }
+.course-shell .rtg-degradation__name > span { width: 7px; height: 23px; flex: 0 0 auto; border-radius: 2px; background: #bb6b64; }
+.course-shell .rtg-degradation__conclusion { display: flex; flex: 1 1 0; flex-direction: column; min-height: 0; justify-content: center; gap: 20px; padding: 18px 0; }
+.course-shell .rtg-degradation__conclusion > * { flex: 0 0 auto; }
+.course-shell .rtg-degradation__prediction-review { display: grid; gap: 8px; padding-top: 18px; border-top: 1px solid #e0e6ef; }
+.course-shell .rtg-degradation > .edu-content-body > .edu-notice-strip { flex: 0 0 auto; }
+@media (prefers-reduced-motion: reduce) { .course-shell .rtg-degradation *, .course-shell .rtg-degradation button, .course-shell .rtg-degradation *::before, .course-shell .rtg-degradation *::after { transition: none; } }

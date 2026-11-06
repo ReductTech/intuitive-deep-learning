@@ -1,0 +1,25 @@
+.rl-convex-page { display:grid; grid-template-rows:auto minmax(0,1fr); }
+.rl-convex-page > .edu-content-body { min-height:0; grid-template-rows:minmax(0,1fr); }
+.rl-convex-layout { display:grid; grid-template-columns:minmax(0,1.08fr) minmax(0,1fr); gap:22px; height:100%; min-height:0; }
+.rl-convex-layout > *, .rl-convex-explanation > *, .rl-convex-visual > * { min-width:0; min-height:0; max-width:100%; }
+.rl-convex-visual { display:grid; grid-template-rows:minmax(0,1fr) auto; gap:4px; padding:4px 20px 22px; background:linear-gradient(145deg,rgba(var(--ui-accent-rgb),.025),#f4faff); border-radius:var(--ui-radius-lg); }
+.rl-convex-diagram { width:100%; height:100%; min-height:0; touch-action:none; cursor:grab; }
+.rl-convex-diagram:active { cursor:grabbing; }
+.rl-convex-diagram .math-formula { font-size:36px; }
+.rl-convex-labels { display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:24px; padding:0 18px; }
+.rl-convex-labels > div { display:flex; align-items:center; justify-content:center; gap:10px; padding:10px 12px; min-width:0; background:#e7f1ff; border-radius:var(--ui-radius-md); }
+.rl-convex-labels .math-formula { font-size:26px; }
+.rl-convex-explanation { display:grid; grid-template-rows:auto minmax(0,1fr) minmax(0,1fr) auto; gap:12px; padding:18px 22px; border:1px solid #dfeaf7; border-radius:var(--ui-radius-lg); background:#fff; }
+.rl-convex-objective { padding:10px 14px; border-radius:var(--ui-radius-md); background:#edf5ff; }
+.rl-convex-objective .math-formula { justify-content:center; }
+.rl-convex-objective math-field { font-size:var(--ui-type-h3-size); }
+.rl-convex-reason { display:grid; grid-template-rows:auto auto auto; align-content:center; gap:10px; padding-block:10px; }
+.rl-convex-reason--global { border-top:1px solid #dce8f6; }
+.rl-convex-reason-heading { display:flex; align-items:center; gap:14px; }
+.rl-convex-number { display:grid; place-items:center; flex:0 0 44px; height:44px; color:#fff; border-radius:50%; background:#367de8; }
+.rl-convex-reason--global .rl-convex-number { background:#009eaa; }
+.rl-convex-reason > .ui-typography { padding-left:58px; }
+.rl-convex-reason-formula { padding-block:4px; }
+.rl-convex-reason-formula .math-formula { justify-content:center; }
+.rl-convex-reason-formula math-field { font-size:var(--ui-type-formula-size); }
+.rl-convex-scope { display:grid; gap:6px; padding:10px 14px; border-radius:var(--ui-radius-md); background:#edf5ff; }
