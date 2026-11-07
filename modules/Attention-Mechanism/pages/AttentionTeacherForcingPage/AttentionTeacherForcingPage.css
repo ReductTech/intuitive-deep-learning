@@ -1,9 +1,0 @@
-.attn-teacher-main{display:grid;grid-template-rows:auto minmax(0,1fr) minmax(0,1fr);gap:22px;min-height:0;min-width:0;}
-.attn-teacher-example{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;gap:24px;min-width:0;}
-.attn-teacher-branch{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1fr) minmax(0,.4fr) minmax(0,1fr);gap:24px;border-top:1px solid var(--ui-border);padding-top:14px;min-height:0;min-width:0;align-items:center;}
-.attn-teacher-label,.attn-teacher-step{display:grid;gap:8px;min-width:0;}
-.attn-teacher-step{text-align:center;}
-.attn-teacher-input{justify-self:center;min-width:150px;}
-.attn-teacher-wrong{color:var(--ui-accent-alt);}
-.attn-teacher-dataset{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:42px;min-width:0;align-items:center;}
-.attn-teacher-data-lane{display:grid;gap:8px;min-width:0;}

@@ -1,0 +1,27 @@
+.attn-full-page{width:100%;height:100%;min-width:0;min-height:0;max-width:100%;display:flex;flex-direction:column;}
+.attn-full-page :where(section,div,footer,button,p,span){min-width:0;max-width:100%;}
+.attn-full-body{flex:1;min-height:0;display:grid;grid-template-rows:39px 64px minmax(0,1fr) auto;gap:12px;}
+.attn-full-query{display:grid;grid-template-columns:minmax(0,2.2fr) minmax(0,1fr);gap:30px;align-items:center;}
+.attn-full-query .attn-choice-row{flex-wrap:nowrap;gap:14px;}
+.attn-full-query .edu-btn{padding:7px 12px;white-space:nowrap;}
+.attn-full-query-vector{border-left:1px solid var(--ui-border);}
+.attn-full-table{display:grid;grid-template-rows:136px repeat(4,minmax(56px,1fr));min-height:0;}
+.attn-full-row{display:grid;grid-template-columns:220px 330px 240px minmax(0,1fr) 220px;gap:18px;align-items:center;padding:3px 18px;border-bottom:1px solid var(--ui-border);}
+.attn-full-row>div{display:grid;gap:2px;min-width:0;}
+.attn-full-head{background:var(--ui-bg-muted);border-top:1px solid var(--ui-border);}
+.attn-full-head>div{justify-items:center;}
+.attn-full-head>[role="columnheader"]:last-child{text-align:center;}
+.attn-full-row.is-focused{background:var(--ui-accent-soft);box-shadow:inset 4px 0 var(--ui-accent);}
+.attn-full-record{white-space:nowrap;}
+.attn-full-weight{grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:10px!important;}
+.attn-full-track{height:16px;background:var(--ui-bg-muted);border-radius:var(--ui-radius-sm);}
+.attn-full-track i{display:block;height:100%;background:var(--ui-accent);border-radius:inherit;}
+.attn-full-footer{display:grid;gap:8px;border-top:1px solid var(--ui-border-strong);padding-top:14px;}
+.attn-full-output{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:24px;align-items:center;padding:8px 24px;background:var(--ui-bg-muted);border-radius:var(--ui-radius-md);}
+.attn-full-output>div:first-child{display:grid;gap:4px;}
+.attn-full-dimensions{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;width:100%;max-width:100%;text-align:center;}
+.attn-full-page .math-formula-block{margin:0;min-height:0;max-width:100%;}
+.attn-full-page math-field:not(:defined){visibility:hidden;}
+
+.attn-full-body { grid-template-rows:auto minmax(0,1fr) auto; }
+.attn-full-note { display:flex; align-items:center; justify-content:space-between; gap:24px; }

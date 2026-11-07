@@ -1,0 +1,7 @@
+.kvc-cover { box-sizing:border-box; width:1600px; height:900px; padding:72px 100px; display:flex; flex-direction:column; justify-content:center; align-items:center; gap:104px; background:var(--ui-bg-card); color:var(--ui-text-main); }
+.kvc-cover * { box-sizing:border-box; min-width:0; max-width:100%; }
+.kvc-cover-heading { display:grid; justify-items:center; padding-block:12px; }
+.kvc-cover-heading > h1 { transform:scale(1.28); }
+.kvc-cover-topics { width:min(100%,1280px); display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:42px; }
+.kvc-cover-topic { display:grid; justify-items:center; gap:24px; }
+.kvc-cover-topic svg { display:block; width:min(100%,360px); color:var(--ui-text-muted); }

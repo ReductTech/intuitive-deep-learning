@@ -1,0 +1,21 @@
+.attn-reg-train-page{width:100%;height:100%;min-width:0;min-height:0;max-width:100%;display:flex;flex-direction:column;}
+.attn-reg-train-page :where(section,div,footer,button,p,span){min-width:0;max-width:100%;}
+.attn-reg-train-body{flex:1;min-height:0;display:grid;grid-template-rows:minmax(0,1fr) 176px;gap:14px;}
+.attn-reg-train-main{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:36px;min-height:0;}
+.attn-reg-train-plot{display:grid;grid-template-rows:42px minmax(0,1fr) 96px;gap:12px;min-height:0;}
+.attn-reg-train-landscape{display:grid;grid-template-rows:42px minmax(0,1fr) 174px;gap:12px;min-height:0;border-left:1px solid var(--ui-border);padding-left:26px;}
+.attn-reg-train-plot-heading,.attn-reg-train-loss-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.attn-reg-train-chart{width:100%;height:100%;min-height:0;}
+.attn-reg-train-kernel{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);align-items:center;gap:16px;padding:8px 16px;background:var(--ui-bg-muted);border-radius:var(--ui-radius-md);}
+.attn-reg-train-page .math-formula-block{margin:0;min-height:0;max-width:100%;}
+.attn-reg-train-loss-example{display:grid;grid-template-rows:60px minmax(0,1fr) 39px;gap:8px;min-height:0;}
+.attn-reg-train-footer{border-top:1px solid var(--ui-border-strong);padding-top:10px;display:grid;grid-template-rows:39px minmax(0,1fr);gap:12px;min-height:0;}
+.attn-reg-train-run{display:grid;align-content:center;gap:12px;min-height:0;}
+.attn-reg-train-status{display:flex;align-items:center;gap:24px;}
+.attn-reg-train-buttons{display:flex;gap:20px;}
+.attn-reg-train-page .dl-question{padding:0;border:0;background:transparent;margin:0;gap:8px;}
+.attn-reg-train-page .dl-question-type:empty{display:none;}
+.attn-reg-train-page .dl-question-options{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
+.attn-reg-train-page .dl-question-option{grid-template-columns:44px minmax(0,1fr);gap:14px;padding:6px 12px;min-height:60px;max-height:64px;}
+.attn-reg-train-page .dl-option-key{width:44px;height:44px;align-self:center;}
+.attn-reg-train-page math-field:not(:defined){visibility:hidden;}

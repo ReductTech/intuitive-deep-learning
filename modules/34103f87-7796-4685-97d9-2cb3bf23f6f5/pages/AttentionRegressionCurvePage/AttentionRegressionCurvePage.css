@@ -1,0 +1,17 @@
+.attn-reg-curve-page{width:100%;height:100%;min-width:0;min-height:0;max-width:100%;display:flex;flex-direction:column;}
+.attn-reg-curve-page :where(section,div,aside,footer,button,p,span){min-width:0;max-width:100%;}
+.attn-reg-curve-body{flex:1;min-height:0;display:grid;grid-template-rows:minmax(0,1fr) 200px;gap:14px;}
+.attn-reg-curve-main{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,3fr);gap:32px;min-height:0;}
+.attn-reg-curve-visual{display:grid;min-width:0;min-height:0;}
+.attn-reg-curve-readout{display:grid;align-content:center;gap:16px;min-width:0;min-height:0;border-left:1px solid var(--ui-border);padding-left:26px;}
+.attn-reg-curve-page .math-formula-block{margin:0;min-height:0;max-width:100%;}
+.attn-reg-curve-readout.is-mean .math-formula-block{color:var(--ui-text-muted);}
+.attn-reg-curve-footer{border-top:1px solid var(--ui-border-strong);padding-top:12px;min-height:0;}
+.attn-reg-curve-controls{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);grid-template-rows:auto auto;gap:16px 48px;align-items:center;min-height:0;}
+.attn-reg-curve-mode,.attn-reg-curve-query{display:contents;}
+.attn-reg-curve-mode>.attn-choice-row{grid-column:1;grid-row:1;}
+.attn-reg-curve-actions{grid-column:1;grid-row:2;}
+.attn-reg-curve-query>.edu-control{grid-column:2;grid-row:1;}
+.attn-reg-curve-query>.ui-typography{grid-column:2;grid-row:2;}
+.attn-reg-curve-actions{display:flex;align-items:center;gap:16px;}
+.attn-reg-curve-page math-field:not(:defined){visibility:hidden;}

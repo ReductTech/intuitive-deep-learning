@@ -27,3 +27,15 @@ Creator Guide 使用的 Skill 文档保存为本课程素材中的固定教学�
 外部模型/GPU 接口、生产 OSS 上传、正式发布和数据库不属于本次本地内容迁移验证。
 
 压缩后整库含产物与依赖约 1.70 GB；其中 modules 约 543 MB，dist 约 868 MB。重新验证 59 个模式入口：零页面脚本错误、零失败媒体 URL。构建产物资源基址按入口 HTML 解析，支持嵌套 URL 的 CSS 图片和模型纹理。
+
+## UUID 与共享内容对象迁移
+
+31 个模块目录改为 UUID，已有 30 个 moduleIdentity.id 复用，仅 Professional-Creator-Guide 草稿补齐新身份。大纲 id、path 和共享资源索引随目录更新，可读旧 id 保存为 alias。页文件名、页 id 与页序保留；跨模块相对 import 同步修改。迁移脚本默认只读计划，执行要求仓库外备份，不操作旧 legacy 仓库。
+
+构建清单升级 schema 2 / sha256-v1，按最终字节记录逻辑路径、对象键、MIME、大小及 SHA-256。生成文件间硬链接节省本地实际占用，云端使用统一 assets/sha256 命名空间；版本清单保持不可变，历史不因新版本覆盖。当前只调整本地代码和产物，未上传或清理真实 OSS。
+
+shared 本轮只修改 `modules/shared/asset-index.json` 的本地目录映射，复用原 UUID 与格式别名；没有修改共享 UI 组件。构建 runtime 将展示 deck 的模块身份统一成 UUID，Creator Skill 通过构建 catalog 找入口。
+
+## 统一构建迁入术库
+
+后续以 Shuku 的 `tooling/course-build/` 为检查、npm 依赖和构建运行时的唯一入口。上述 `npm run build`、`npm run preview`、`dist` 描述属于迁移时的历史流程；当前命令和目录以根 README 为准。根 scripts、runtime、package 文件及旧 modules 索引工具已移到术库，课程内容及 modules/shared 未修改。

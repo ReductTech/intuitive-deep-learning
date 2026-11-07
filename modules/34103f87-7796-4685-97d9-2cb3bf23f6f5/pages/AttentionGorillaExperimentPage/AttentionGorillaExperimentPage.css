@@ -1,0 +1,21 @@
+.attn-observation-experiment{width:100%;height:100%;display:grid;grid-template-rows:auto minmax(0,1fr) auto;gap:20px;padding:40px 64px 24px;background:var(--ui-bg-page-top);color:var(--ui-text-main);}
+.attn-observation-experiment *{box-sizing:border-box;min-width:0;max-width:100%;}
+.attn-observation-header{display:grid;gap:10px;}
+.attn-observation-layout{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:32px;min-height:0;align-items:center;}
+.attn-observation-task-panel{display:flex;flex-direction:column;align-items:stretch;gap:20px;padding:28px 26px;border-radius:var(--ui-radius-lg);background:var(--ui-accent-soft);max-height:100%;}
+.attn-observation-task-panel .edu-btn{align-self:flex-start;max-width:100%;white-space:normal;}
+.attn-observation-task-panel .edu-control{width:100%;}
+.attn-observation-task-panel textarea{resize:none;}
+.attn-observation-media{height:100%;min-height:0;display:grid;grid-template-rows:minmax(0,1fr) auto;gap:8px;}
+.attn-observation-media-frame{height:100%;min-height:0;display:grid;align-items:stretch;border:1px solid var(--ui-border);border-radius:var(--ui-radius-md);background:var(--ui-bg-card);}
+.attn-observation-poster{position:relative;height:100%;min-height:0;display:grid;place-items:center;}
+.attn-observation-poster img{position:absolute;inset:0;display:block;width:100%;height:100%;min-height:0;object-fit:contain;border-radius:var(--ui-radius-md);}
+.attn-video-player,.attn-video-player iframe{width:100%;height:100%;min-height:0;border:0;border-radius:var(--ui-radius-md);}
+.attn-observation-message{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;text-align:center;padding:40px;}
+.attn-observation-reveal{display:flex;flex-direction:column;justify-content:center;gap:14px;padding:24px 32px;}
+.attn-observation-count-result{display:grid;gap:10px;}
+.attn-observation-recall-result{display:grid;gap:6px;padding:12px 16px;background:var(--ui-bg-muted);border-radius:var(--ui-radius-sm);overflow-wrap:anywhere;}
+.attn-observation-source a{color:var(--ui-accent);text-decoration:underline;text-underline-offset:3px;}
+.attn-observation-page-footer{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--ui-border);padding-top:14px;}
+
+.attn-observation-experiment[data-observation-phase="intro"] .attn-observation-task-panel { transform:translateY(-28px); }

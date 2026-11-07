@@ -1,0 +1,25 @@
+.attn-trans-train-page { height:100%; display:grid; grid-template-rows:auto minmax(0,1fr); }
+.attn-trans-train-body { min-height:0; grid-template-rows:minmax(0,1fr) auto; gap:12px; }
+.attn-trans-train-footer { border-top:1px solid var(--ui-border-strong); padding-top:12px; }
+.attn-trans-train-row-label { display:grid; align-content:center; gap:4px; }
+.attn-trans-train-main{display:grid;grid-template-rows:auto 60px minmax(0,1fr) auto auto;gap:12px;min-height:0;}
+.attn-trans-train-targets{display:grid;grid-template-columns:100px minmax(0,1fr) minmax(0,1fr);gap:28px;align-items:center;}
+.attn-trans-train-targets .attn-choice-row{flex-wrap:nowrap;}
+.attn-trans-train-source-comparison{display:grid;grid-template-rows:repeat(2,minmax(0,1fr));gap:26px;min-height:0;}
+.attn-trans-train-source-row{display:grid;grid-template-columns:150px minmax(0,1fr);gap:28px;align-items:stretch;min-height:0;}
+.attn-trans-train-source-row>.ui-typography{align-self:center;}
+.attn-trans-train-source-tokens{display:grid;gap:18px;min-height:0;}
+.attn-trans-train-source-token{display:grid;place-items:center;align-content:center;gap:6px;border:3px solid transparent;border-radius:var(--ui-radius-lg);transition:background-color 160ms linear,color 160ms linear;min-height:0;}
+.attn-trans-train-source-token.is-top{border-color:var(--attn-activation);}
+.attn-trans-train-translation{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);align-items:start;gap:24px;border-top:1px solid var(--ui-border);padding-top:8px;}
+.attn-trans-train-translation-result,.attn-trans-train-translation-target{min-width:0;}
+.attn-trans-train-translation-result{overflow-wrap:anywhere;}
+.attn-trans-train-translation-target{padding-left:24px;border-left:1px solid var(--ui-border);}
+.attn-trans-train-actions{display:flex;gap:16px;}
+.attn-trans-train-examples{width:570px;min-width:0;}
+.attn-trans-train-footer{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:center;min-height:0;}
+.attn-trans-train-footer>.attn-translation-checkpoint-timeline{grid-column:1 / -1;}
+@media(prefers-reduced-motion:reduce){.attn-trans-train-source-token{transition:none;}}
+.attn-trans-train-page { --attn-activation:var(--ui-accent); }
+
+.attn-trans-train-page:has(.attn-translation-return-slot:not(:empty)) .attn-trans-train-main{gap:12px;}

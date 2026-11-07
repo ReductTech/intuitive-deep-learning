@@ -1,0 +1,4413 @@
+{
+  "schemaVersion": 1,
+  "description": "One-time migration ledger. Not imported by course runtime; retain for database/progress migration.",
+  "scopes": [
+    {
+      "outline": "modules/07951e3b-2fcb-477e-b5d8-ad7930c2a529/outlines.json",
+      "courseUuid": "07951e3b-2fcb-477e-b5d8-ad7930c2a529",
+      "pages": [
+        {
+          "previousId": "input-bridge",
+          "uuid": "e4bead0a-ce99-400e-9400-a169e79c8ac5",
+          "title": "图片是 H×W×C，Transformer 要的是 Token 序列"
+        },
+        {
+          "previousId": "long-range",
+          "uuid": "eaaa73a9-547b-476f-a9fa-aa698dd520d5",
+          "title": "女孩和龙猫相隔很远，信息要走几步？"
+        },
+        {
+          "previousId": "context",
+          "uuid": "6667ad69-dc30-493d-b86f-43568472a013",
+          "title": "只看这一小块，CNN 和 ViT 怎么找上下文？"
+        },
+        {
+          "previousId": "relations",
+          "uuid": "aabfaa7c-ec78-4a2e-94f3-bece57cb6c96",
+          "title": "哪把伞属于哪位女孩？"
+        },
+        {
+          "previousId": "patch-size",
+          "uuid": "653fbaea-7f34-431b-8de8-c2ed21014eb5",
+          "title": "为什么切块？块越小会怎样？"
+        },
+        {
+          "previousId": "patchify",
+          "uuid": "3c488c93-fd79-452d-89ba-a1801e690521",
+          "title": "二维图片怎样变成 Patch 序列？"
+        },
+        {
+          "previousId": "embedding",
+          "uuid": "d9114d77-698f-4a7b-a2e9-db7a53be140d",
+          "title": "每个 Patch 怎样变成 D 维 Token？"
+        },
+        {
+          "previousId": "position",
+          "uuid": "3c6356f6-9e21-452d-bb50-7be674c98a76",
+          "title": "为什么 Patch Token 还要加位置向量？"
+        },
+        {
+          "previousId": "attention-cls",
+          "uuid": "4a892c61-93fd-4eca-b7b3-3b6f16999ee6",
+          "title": "Attention 怎样把其他 Token 的信息汇入？"
+        },
+        {
+          "previousId": "vit-pipeline",
+          "uuid": "0ad1cbe8-6a0c-4450-b50b-15f367e9eb77",
+          "title": "从像素到分类结果，ViT 走了什么？"
+        },
+        {
+          "previousId": "fixed-classes",
+          "uuid": "914e3ddf-c0c1-425b-9592-b815969c5322",
+          "title": "图里是龙猫，类别表里没有怎么办？"
+        },
+        {
+          "previousId": "dual-encoder",
+          "uuid": "1af45311-c041-40a1-8b04-c5370412e40a",
+          "title": "不再预测固定类别，改为学习图文关系"
+        },
+        {
+          "previousId": "contrastive-loss",
+          "uuid": "128e1b0f-b6f2-47e0-9b4c-656a6a1b9786",
+          "title": "一次训练怎样提高正确图文对的相似度？"
+        },
+        {
+          "previousId": "batch-negatives",
+          "uuid": "3ba4ea81-4d93-485d-9957-136264c0e05c",
+          "title": "生成与匹配：两种不同的训练目标"
+        },
+        {
+          "previousId": "dynamic-classifier",
+          "uuid": "325ea54f-6f5d-4092-9a3d-5f5ebe728027",
+          "title": "从配对 Caption 到开放文本匹配"
+        },
+        {
+          "previousId": "zero-shot",
+          "uuid": "16d0b996-e161-4b38-9897-3def318174a4",
+          "title": "Zero-shot：用刚才的候选向量完成匹配"
+        },
+        {
+          "previousId": "prompt-ensemble",
+          "uuid": "fa1afb64-edbe-41dd-bc7b-1f29be9ba2f5",
+          "title": "换一句 Prompt，就是换一个文本向量"
+        },
+        {
+          "previousId": "clip-to-vlm",
+          "uuid": "15671eac-f162-4d7b-8559-30e8cc12df53",
+          "title": "CLIP 比较候选，开放回答还需要什么？"
+        },
+        {
+          "previousId": "vlm-dataflow",
+          "uuid": "d8e4ceaf-d433-4c74-b349-a4554bcf45d6",
+          "title": "视觉特征怎样接进语言模型？"
+        },
+        {
+          "previousId": "vlm-tasks",
+          "uuid": "8b389d8c-f325-4925-8eed-69b0f865eb82",
+          "title": "VLM 把视觉输入用于多种语言任务"
+        },
+        {
+          "previousId": "visual-features",
+          "uuid": "c385d011-a7c0-4ac9-b878-4d5c87940c49",
+          "title": "第一步：保留 ViT 的多个视觉 Token"
+        },
+        {
+          "previousId": "connector",
+          "uuid": "2bb8cbeb-9236-41ae-80c6-f51890144ee9",
+          "title": "第二步：映射到 LLM 的输入维度"
+        },
+        {
+          "previousId": "connector-comparison",
+          "uuid": "e098deb5-5d12-4d2e-a94f-2997168fd20f",
+          "title": "视觉信息还有哪些接入方式？"
+        },
+        {
+          "previousId": "multimodal-context",
+          "uuid": "934dba48-a821-4eca-90f7-94b6151d1284",
+          "title": "第三步：视觉 Token 拼进同一段上下文"
+        },
+        {
+          "previousId": "training",
+          "uuid": "eeb2c5f3-d519-401f-b94b-bda300d1294b",
+          "title": "训练分两步：对齐与视觉指令微调"
+        },
+        {
+          "previousId": "visual-evidence",
+          "uuid": "9a278d0a-a9ee-466d-82ac-6f4c91a67cee",
+          "title": "接入视觉信息后，回答就一定对吗？"
+        },
+        {
+          "previousId": "recap",
+          "uuid": "f41b3fe4-a92f-419b-a7bf-c5c5ea2e5707",
+          "title": "同一张图，表示、匹配与回答有什么区别？"
+        }
+      ]
+    },
+    {
+      "outline": "modules/0f7a1d06-ea17-4db8-83f4-a1e9aac506bc/outlines.json",
+      "courseUuid": "0f7a1d06-ea17-4db8-83f4-a1e9aac506bc",
+      "pages": [
+        {
+          "previousId": "model-harness-workspace",
+          "uuid": "f0223b62-a540-47cb-af98-77af5e820abe",
+          "title": "工具速览：Codex、Harness、CC Switch 与项目规则"
+        },
+        {
+          "previousId": "learn-by-explaining",
+          "uuid": "d40878d5-938e-4904-ab6a-b1053fbd5530",
+          "title": "给别人讲一遍，让自己的理解更清楚"
+        },
+        {
+          "previousId": "learn-through-engineering-challenges",
+          "uuid": "827fe7b5-c026-4799-be26-afc5365055ec",
+          "title": "在解决真实问题的过程中，练出与 AI 协作的工程能力"
+        },
+        {
+          "previousId": "develop-creator-judgment",
+          "uuid": "a86621d6-32c4-45ac-a341-375a4ea15914",
+          "title": "当解决方案越来越便宜，什么仍然稀缺？"
+        },
+        {
+          "previousId": "communicate-the-work",
+          "uuid": "0bd1d5cc-bc7b-405e-a6c5-261df6e62bec",
+          "title": "把作品讲给别人听，也是在练习表达能力"
+        },
+        {
+          "previousId": "publish-and-credit-contributors",
+          "uuid": "d0f8469d-67d1-4f36-b865-3ab51641c367",
+          "title": "让优秀作品上线，让真实贡献成为可展示的记录"
+        },
+        {
+          "previousId": "define-the-experiment",
+          "uuid": "9beb0e1f-0471-4ced-a417-66375246f0ee",
+          "title": "项目技术框架：React 怎样把课件运行起来"
+        },
+        {
+          "previousId": "run-the-first-interface",
+          "uuid": "1dfc9929-767f-4f45-a629-95fec161728f",
+          "title": "模块目录地图：一页课件、入口和资源分别放哪里"
+        },
+        {
+          "previousId": "iterate-with-a-screenshot",
+          "uuid": "345a0ecb-2738-452f-9412-24ee906cb096",
+          "title": "Skill：把创作方法变成可复用的工作流程"
+        }
+      ]
+    },
+    {
+      "outline": "modules/0fd05cd8-c7f8-496b-88e1-441930abb5d5/outlines.json",
+      "courseUuid": "0fd05cd8-c7f8-496b-88e1-441930abb5d5",
+      "pages": [
+        {
+          "previousId": "architecture-opening",
+          "uuid": "5a5b0705-c3d7-4762-bb1d-035f3dcd9a4d",
+          "title": "一张没拍过的照片"
+        },
+        {
+          "previousId": "prediction-call",
+          "uuid": "5470b6e4-194a-4a91-a93e-162df6424005",
+          "title": "生成小猫的每一步，网络到底预测什么？"
+        },
+        {
+          "previousId": "unet-backbone",
+          "uuid": "0d3ff084-e780-44db-a296-2533d881d4fc",
+          "title": "U-Net 用多尺度特征兼顾布局与细节"
+        },
+        {
+          "previousId": "unet-time",
+          "uuid": "24f126f2-84d9-4718-86e0-f1b53e8a5995",
+          "title": "时间编码让同一个 U-Net 适应不同噪声阶段"
+        },
+        {
+          "previousId": "text-cross-attention",
+          "uuid": "e07447e2-7175-4fad-a086-4d63db9e1aeb",
+          "title": "文本先编码，再通过 Cross-Attention 影响视觉特征"
+        },
+        {
+          "previousId": "conditioned-unet",
+          "uuid": "c9127167-26be-4336-9200-d7b14cad5a43",
+          "title": "三条输入在 U-Net 内汇合，完成一次条件预测"
+        },
+        {
+          "previousId": "pixel-to-latent",
+          "uuid": "c34b3206-3b10-4976-b955-ec591bb56637",
+          "title": "把反复去噪搬到更小的 latent 空间"
+        },
+        {
+          "previousId": "vae-bridge",
+          "uuid": "c52f4053-a764-4261-bbf6-5b07975fce26",
+          "title": "VAE 负责图像与 latent 之间的转换"
+        },
+        {
+          "previousId": "latent-training",
+          "uuid": "03fb6649-c38d-4f2c-aae2-9ec1ac110f10",
+          "title": "训练时，在 latent 上加噪并学习预测"
+        },
+        {
+          "previousId": "latent-sampling",
+          "uuid": "b61d0da9-d57c-4bbf-9efe-323b4654d99a",
+          "title": "生成时，预测与采样更新交替进行"
+        },
+        {
+          "previousId": "latent-tokenization",
+          "uuid": "41c9c3f1-72c3-458c-a700-d89fbcb174a9",
+          "title": "把二维 latent 切成 Transformer 可处理的 tokens"
+        },
+        {
+          "previousId": "dit-backbone",
+          "uuid": "deb49f1b-60d8-42ad-a357-adbc2a48f96c",
+          "title": "DiT 用 Transformer 承担同一个预测任务"
+        },
+        {
+          "previousId": "dit-time",
+          "uuid": "490d3641-226c-46ab-acda-836647bc5f58",
+          "title": "时间条件通过 AdaLN 调节 Transformer 特征"
+        },
+        {
+          "previousId": "dit-text",
+          "uuid": "ec646948-b88a-4ecb-8db6-6ccb94c6cf22",
+          "title": "文本与视觉 tokens 在网络内交换信息"
+        },
+        {
+          "previousId": "architecture-map",
+          "uuid": "97794a2b-5330-4af0-a33b-7e76907fdc4a",
+          "title": "生成空间与预测主干，是两个独立选择"
+        }
+      ]
+    },
+    {
+      "outline": "modules/10da7e16-ff24-449a-9978-b74b99524e47/outlines.json",
+      "courseUuid": "10da7e16-ff24-449a-9978-b74b99524e47",
+      "pages": [
+        {
+          "previousId": "bead-pixels",
+          "uuid": "ecfde4c9-fe8d-46fb-9aa7-eb863b2984a6",
+          "title": "拼豆"
+        },
+        {
+          "previousId": "world-to-digital-image",
+          "uuid": "06c7498f-a25d-449c-a996-516fa922c2a5",
+          "title": "现实世界如何变成数字图像"
+        },
+        {
+          "previousId": "sampling-resolution",
+          "uuid": "7b0db25e-0872-4ec2-9506-6e2697253595",
+          "title": "采样与空间分辨率"
+        },
+        {
+          "previousId": "quantization-bit-depth",
+          "uuid": "fd666f2e-31cd-46c2-b39d-73a594b2c42f",
+          "title": "量化与位深"
+        },
+        {
+          "previousId": "pixel-types-alpha",
+          "uuid": "85925820-200e-49e0-a7a2-c7d3af308cb1",
+          "title": "二值、灰度、彩色与 Alpha"
+        },
+        {
+          "previousId": "image-memory",
+          "uuid": "2fc67230-39e4-40a0-a970-d4ff14f9720d",
+          "title": "数字图像怎样存在内存里"
+        },
+        {
+          "previousId": "color-spaces",
+          "uuid": "c07daaa0-1c75-4c28-85b6-2989f741caef",
+          "title": "颜色空间"
+        },
+        {
+          "previousId": "point-operations",
+          "uuid": "62e8cc4c-2b64-4632-9bc4-2424e7ac85ba",
+          "title": "点运算"
+        },
+        {
+          "previousId": "intensity-transforms",
+          "uuid": "41de7a1a-90df-4135-a945-34d9d0709744",
+          "title": "线性、对数与 Gamma 变换"
+        },
+        {
+          "previousId": "image-arithmetic",
+          "uuid": "1372ab1f-af09-4f0f-a58c-3ead9b49b581",
+          "title": "图像也可以做加减乘除"
+        },
+        {
+          "previousId": "masks-roi",
+          "uuid": "97e1d141-7c53-492b-8472-000363ba5694",
+          "title": "掩膜与 ROI"
+        },
+        {
+          "previousId": "image-histograms",
+          "uuid": "ee7813f7-138d-491f-9c6d-677405c1054e",
+          "title": "直方图"
+        },
+        {
+          "previousId": "histogram-image-adjustment",
+          "uuid": "7dbd5f55-00a1-49d5-8e0c-dece7eb3add4",
+          "title": "直方图与图像调节"
+        },
+        {
+          "previousId": "geometric-transforms",
+          "uuid": "c4d6b684-1d03-4874-a587-b2713496eca6",
+          "title": "用矩阵变换图像"
+        },
+        {
+          "previousId": "image-interpolation",
+          "uuid": "2e40047e-8b31-44b5-81d7-2c4a4ecb0bbf",
+          "title": "双线性插值"
+        },
+        {
+          "previousId": "image-binarization",
+          "uuid": "a1d11a7d-773b-499a-afe9-31b10c11f4cc",
+          "title": "二值化"
+        },
+        {
+          "previousId": "otsu-thresholding",
+          "uuid": "a52c984d-72be-4913-9f83-8e56731f5dd7",
+          "title": "大津法（Otsu）"
+        },
+        {
+          "previousId": "connected-components",
+          "uuid": "fa698f10-7940-4209-b2c7-66fbb9d6ef00",
+          "title": "连通域"
+        },
+        {
+          "previousId": "morphology-operations",
+          "uuid": "c0d29c7c-868b-4c17-bd76-ff434a849b5e",
+          "title": "连通域的形态学操作"
+        },
+        {
+          "previousId": "color-image-blur",
+          "uuid": "f2c1e12e-3952-4c08-afe0-09c3365399b6",
+          "title": "彩色图像的模糊"
+        },
+        {
+          "previousId": "video-frames",
+          "uuid": "772fe3b9-26b2-4bbb-9716-adf45a4f5f36",
+          "title": "视频也是图像"
+        },
+        {
+          "previousId": "histogram-enhancement",
+          "uuid": "f25337c1-ae0c-4e51-b616-d9d178d68a93",
+          "title": "直方图拉伸、均衡化与规定化"
+        },
+        {
+          "previousId": "pixel-neighborhoods",
+          "uuid": "564ac947-6134-4ee3-9e2f-f31fc9782d0c",
+          "title": "一个像素够吗？"
+        },
+        {
+          "previousId": "resampling-aliasing",
+          "uuid": "1da1b0a3-db77-4354-9a64-89fe2eda77cc",
+          "title": "重采样、混叠与摩尔纹"
+        }
+      ]
+    },
+    {
+      "outline": "modules/1a8e20a6-6e70-4d1d-8830-3b6b9a34ffed/outlines.json",
+      "courseUuid": "1a8e20a6-6e70-4d1d-8830-3b6b9a34ffed",
+      "pages": [
+        {
+          "previousId": "creator-skill-intro",
+          "uuid": "f44e1a4d-1b51-4732-89ac-338e08d2ef97",
+          "title": "Creator Skill 是什么？"
+        }
+      ]
+    },
+    {
+      "outline": "modules/34103f87-7796-4685-97d9-2cb3bf23f6f5/outlines.json",
+      "courseUuid": "34103f87-7796-4685-97d9-2cb3bf23f6f5",
+      "pages": [
+        {
+          "previousId": "C01",
+          "uuid": "e114bde9-6373-45c0-ab0e-acdfadc9a972",
+          "title": "帮小明数清传球"
+        },
+        {
+          "previousId": "observation-cover",
+          "uuid": "b1e906b5-6939-48f0-87b5-caba60d2f85f",
+          "title": "同一段录像，留下了哪些信息？"
+        },
+        {
+          "previousId": "C02",
+          "uuid": "209a9404-d3bb-4f04-8667-faa6108edb15",
+          "title": "同一份记录，问题不同、关注不同"
+        },
+        {
+          "previousId": "C03",
+          "uuid": "cae3a855-d8dd-43e5-bef2-41fb7bee1f24",
+          "title": "用权重表示关注程度"
+        },
+        {
+          "previousId": "C26",
+          "uuid": "4f38d7eb-d5cd-46b4-a6a0-cad581f69a9a",
+          "title": "Q、K、V：问题、索引与内容"
+        },
+        {
+          "previousId": "C04",
+          "uuid": "916fb6b2-8765-46ed-9594-134b284ec38a",
+          "title": "点积评分：方向和长度的作用"
+        },
+        {
+          "previousId": "C05",
+          "uuid": "1193b399-85f6-4614-ab9b-135bcc87e24f",
+          "title": "匹配评分：点积与加性"
+        },
+        {
+          "previousId": "C10",
+          "uuid": "a64ebbbe-afbb-437b-badf-6e85e90c384b",
+          "title": "Softmax：把分数变成权重"
+        },
+        {
+          "previousId": "C11",
+          "uuid": "fe1fcc61-df6a-4342-9652-56b355031fc1",
+          "title": "缩放点积：控制分数尺度"
+        },
+        {
+          "previousId": "C12",
+          "uuid": "045a8c1a-245d-47e1-a7e3-9dcf4f567e14",
+          "title": "活动记录：注意力的完整计算"
+        },
+        {
+          "previousId": "C13",
+          "uuid": "741693a4-f9ac-441b-99f8-49372a4d5098",
+          "title": "补全队员位置：参考哪些时刻"
+        },
+        {
+          "previousId": "C14",
+          "uuid": "cae3726d-40e4-4bfa-80c9-89bcdc665284",
+          "title": "同一批记录，怎样补全整段轨迹"
+        },
+        {
+          "previousId": "C15",
+          "uuid": "f9fc90f6-32ac-4372-98c5-b380dd215b30",
+          "title": "用已知记录，学习参考范围"
+        },
+        {
+          "previousId": "C16",
+          "uuid": "da29608a-4079-4314-af54-a4637bf08d4b",
+          "title": "把每个时刻的读取比例排成热图"
+        },
+        {
+          "previousId": "C17",
+          "uuid": "5c63308a-629f-4c68-bc8e-5cf46014d5ec",
+          "title": "翻译讲解稿：每一步读取什么？"
+        },
+        {
+          "previousId": "C18",
+          "uuid": "2d12bcb6-0ae4-49a7-ad8d-d29aff9da042",
+          "title": "填充掩码：不给占位符分配权重"
+        },
+        {
+          "previousId": "C19",
+          "uuid": "62af0521-4fc8-474b-8713-ad7b6d37d187",
+          "title": "翻译模型：编码、读取与解码"
+        },
+        {
+          "previousId": "C20",
+          "uuid": "6c8f5db6-d35a-41d4-9f20-d5ca34f23eb2",
+          "title": "一步解码：从读取到译词"
+        },
+        {
+          "previousId": "C21",
+          "uuid": "d1359b7b-1189-487d-b9d3-a7761ea6122b",
+          "title": "训练与生成：前词从哪里来"
+        },
+        {
+          "previousId": "C24",
+          "uuid": "cdcfa315-6b76-429d-8ca2-8ddca2de861e",
+          "title": "训练讲解稿：读取比例怎样变化"
+        },
+        {
+          "previousId": "C25",
+          "uuid": "c08309cf-47be-4489-9ddd-2b3b837ac4fa",
+          "title": "留出讲解句：再检查一次翻译"
+        },
+        {
+          "previousId": "C28",
+          "uuid": "84716099-9bb5-40a7-a2ac-5ee941c03e4f",
+          "title": "同一幅画面，读取范围有多大"
+        },
+        {
+          "previousId": "C30",
+          "uuid": "bac295f5-eddf-4103-81aa-1d867f69ad15",
+          "title": "窗口与可变形采样：参考位置怎样变化"
+        },
+        {
+          "previousId": "C32",
+          "uuid": "44e23191-281d-4b0e-a14b-ad51e04b5934",
+          "title": "采样与汇聚：先读附近，再合成结果"
+        },
+        {
+          "previousId": "C33",
+          "uuid": "eed3eaaf-465f-4394-a346-0be743a531d8",
+          "title": "回顾：把活动材料串成讲解"
+        }
+      ],
+      "additionalAliases": [
+        {
+          "previousId": "C27",
+          "uuid": "4f38d7eb-d5cd-46b4-a6a0-cad581f69a9a"
+        },
+        {
+          "previousId": "C09",
+          "uuid": "1193b399-85f6-4614-ab9b-135bcc87e24f"
+        },
+        {
+          "previousId": "C22",
+          "uuid": "d1359b7b-1189-487d-b9d3-a7761ea6122b"
+        },
+        {
+          "previousId": "C23",
+          "uuid": "d1359b7b-1189-487d-b9d3-a7761ea6122b"
+        },
+        {
+          "previousId": "C31",
+          "uuid": "44e23191-281d-4b0e-a14b-ad51e04b5934"
+        },
+        {
+          "previousId": "C29",
+          "uuid": "84716099-9bb5-40a7-a2ac-5ee941c03e4f"
+        }
+      ]
+    },
+    {
+      "outline": "modules/3500e36d-8f2e-43f6-ba93-e830091cd541/outlines.json",
+      "courseUuid": "3500e36d-8f2e-43f6-ba93-e830091cd541",
+      "pages": [
+        {
+          "previousId": "cover",
+          "uuid": "4756be8f-194f-45db-b184-f5a952f0a262",
+          "title": "从文字到价值"
+        },
+        {
+          "previousId": "aip-definition",
+          "uuid": "81e1e5e0-7348-4e3b-a378-55ca50885555",
+          "title": "什么是文章影响力预测"
+        },
+        {
+          "previousId": "aip-value",
+          "uuid": "7b0cc11b-7d1a-4a8b-a836-ad213950815b",
+          "title": "为什么文章影响力预测很重要？"
+        },
+        {
+          "previousId": "problems-external",
+          "uuid": "55d3e009-ee79-4adf-a6be-019289a13e5f",
+          "title": "现有方法的问题"
+        },
+        {
+          "previousId": "missing-input",
+          "uuid": "8514346a-32e3-4c75-9b1f-fee61dc07fc0",
+          "title": "难以满足新论文的真实需求"
+        },
+        {
+          "previousId": "problems-venue",
+          "uuid": "e9987ce5-2ba5-42f4-a4d1-8075b1d69964",
+          "title": "现有方法的问题"
+        },
+        {
+          "previousId": "belousov",
+          "uuid": "b51f102e-604d-4db0-8aa1-c9692ba156a6",
+          "title": "期刊指标不能替代单篇文章评价"
+        },
+        {
+          "previousId": "problems-target",
+          "uuid": "5a932c8b-142f-40e7-966b-19ab935c4a35",
+          "title": "现有方法的问题"
+        },
+        {
+          "previousId": "field-difference",
+          "uuid": "80699ad5-3ae8-48a0-a6a1-d966e19e90e2",
+          "title": "不同领域的引用尺度差别很大"
+        },
+        {
+          "previousId": "problem-summary",
+          "uuid": "dd87d3dc-10b2-417a-99b8-62ba445c8524",
+          "title": "现有方法的问题"
+        },
+        {
+          "previousId": "tncsi-original",
+          "uuid": "c70718dd-226e-4d60-be08-26474a247a64",
+          "title": "TNCSI：可跨领域比较的归一化指标"
+        },
+        {
+          "previousId": "tncsi-limitations",
+          "uuid": "7dcc4caa-db42-4d8b-b5bc-12bf2ba60e9d",
+          "title": "我们能直接预测 TNCSI 吗？"
+        },
+        {
+          "previousId": "same-period-original",
+          "uuid": "ef29e356-25aa-40ff-ba62-95cbad2eb89a",
+          "title": "让参考文章来自相近的发表时期"
+        },
+        {
+          "previousId": "llm-original",
+          "uuid": "21d5a71f-7920-4165-b729-56a3c72d8fd7",
+          "title": "使用微调的 LLM 预测文章影响力"
+        },
+        {
+          "previousId": "baseline-original",
+          "uuid": "04d9f29e-c6d2-458a-af56-06c46ff11d68",
+          "title": "更少的输入，更好的排序表现"
+        },
+        {
+          "previousId": "temporal-original",
+          "uuid": "2ebc86b2-2d92-43cf-a368-a21c44552707",
+          "title": "同期比较如何改善预测表现"
+        },
+        {
+          "previousId": "extra-original",
+          "uuid": "3d1dbc0a-6031-46e0-8bce-e76f7c70ec3c",
+          "title": "摘要之外，额外信息有用吗？"
+        },
+        {
+          "previousId": "journal-original",
+          "uuid": "f471dd1e-faf4-424a-b4f2-f6e6df9d49ed",
+          "title": "应用展示：期刊新发表文章预测"
+        },
+        {
+          "previousId": "ethical-warning",
+          "uuid": "c9becfcf-5ca7-4332-9446-3bad3e8d761d",
+          "title": "使用边界与伦理提醒"
+        },
+        {
+          "previousId": "jianlun-agent",
+          "uuid": "fb41a6b3-9e65-4914-897d-0557fee240ba",
+          "title": "减论 Agent：发现与整理学术文献"
+        },
+        {
+          "previousId": "frontier",
+          "uuid": "012a4906-1f73-4a78-95d8-1572218b8629",
+          "title": "减论 Agent：紧跟研究前沿"
+        },
+        {
+          "previousId": "timeliness",
+          "uuid": "82305bb5-fa37-4833-89f6-2fd1df87a1a4",
+          "title": "文献信息的时效性"
+        },
+        {
+          "previousId": "thank-you",
+          "uuid": "f69047cb-1bf4-4150-b759-06c30672d69c",
+          "title": "感谢聆听"
+        },
+        {
+          "previousId": "naipv2-cover",
+          "uuid": "41821612-c78a-4c21-8560-5a8f61a61c91",
+          "title": "NAIPv2：面向论文质量评估的去偏成对学习方法"
+        },
+        {
+          "previousId": "naipv2-motivation",
+          "uuid": "1deeb927-b1d5-4278-94e1-4500bd4bedb0",
+          "title": "为什么需要自动化论文质量估计？"
+        },
+        {
+          "previousId": "naipv2-tradeoff",
+          "uuid": "1d584080-db10-4291-983a-c127cc2d6af7",
+          "title": "现有方法的核心矛盾"
+        },
+        {
+          "previousId": "naipv2-score-bias",
+          "uuid": "a9c24512-c9f2-4c26-bdca-1c91cb158e12",
+          "title": "为什么直接回归审稿分数不够稳？"
+        },
+        {
+          "previousId": "naipv2-method",
+          "uuid": "519f002e-00ad-414e-8d8d-39d209f65155",
+          "title": "NAIPv2 的核心思路"
+        },
+        {
+          "previousId": "naipv2-rts",
+          "uuid": "08fe1cc1-bacd-4f33-91da-07af8a3f7c7c",
+          "title": "RTS：带置信度的概率化质量信号"
+        },
+        {
+          "previousId": "naipv2-dataset",
+          "uuid": "90252962-cb3e-40c5-8b7a-8223d0354084",
+          "title": "NAIDv2：面向质量估计的去偏数据集"
+        },
+        {
+          "previousId": "naipv2-setup",
+          "uuid": "d6d8be86-9d94-40a0-b6a5-a1f1a54bdebb",
+          "title": "训练资源、超参数与评估设置"
+        },
+        {
+          "previousId": "naipv2-results",
+          "uuid": "781e0f51-8de0-47ac-962f-ba08f7d935ee",
+          "title": "主结果：NAIPv2 同时兼顾性能与效率"
+        },
+        {
+          "previousId": "naipv2-paradigms",
+          "uuid": "f10e0f5e-f41c-4280-94b2-17b374e992be",
+          "title": "学习范式对比与推理复杂度"
+        },
+        {
+          "previousId": "naipv2-grouping",
+          "uuid": "27848c32-c617-4afa-80db-01e44b03a216",
+          "title": "聚类与分组分析"
+        },
+        {
+          "previousId": "naipv2-scaling",
+          "uuid": "6e271175-9572-4f6a-97fb-6b91fae4f114",
+          "title": "NAIPv2 的数据效率"
+        },
+        {
+          "previousId": "naipv2-generalization",
+          "uuid": "f01ab717-1da2-4f2c-88d9-668decf7d0d0",
+          "title": "从 ICLR 到 NeurIPS：跨会议泛化案例"
+        },
+        {
+          "previousId": "naipv2-summary",
+          "uuid": "e6ef6900-4abb-4bde-a659-90bd7e44ef1f",
+          "title": "NAIPv2 解决了什么"
+        },
+        {
+          "previousId": "naipv2-thanks",
+          "uuid": "77df95a1-1ca0-4e5a-9d5a-b4173cbab043",
+          "title": "感谢聆听 · 交流与讨论"
+        }
+      ]
+    },
+    {
+      "outline": "modules/38cd1c79-d8b7-462a-b208-a567c5cd89c4/outlines.json",
+      "courseUuid": "38cd1c79-d8b7-462a-b208-a567c5cd89c4",
+      "pages": [
+        {
+          "previousId": "gomoku-play",
+          "uuid": "82c407d2-a894-46dd-9995-daac620a08f4",
+          "title": "从五子棋开始认识卷积核"
+        },
+        {
+          "previousId": "board-as-numbers",
+          "uuid": "a6936204-77eb-4016-b6aa-b294de4d978d",
+          "title": "棋盘局部区域的数值表示"
+        },
+        {
+          "previousId": "window-scan",
+          "uuid": "b1d8d08c-e12e-4d3a-91f5-ad567b11e343",
+          "title": "棋形的局部匹配"
+        },
+        {
+          "previousId": "kernel-design",
+          "uuid": "4807d64a-46a6-4827-9aba-55ed71a9f299",
+          "title": "根据棋形调整模板"
+        },
+        {
+          "previousId": "kernel-basics",
+          "uuid": "94300ea6-3dbf-473c-822d-67cc5cfe8821",
+          "title": "卷积核：从输入到输出"
+        },
+        {
+          "previousId": "correlation-convolution",
+          "uuid": "c97e3576-608d-4ece-8a38-835e96b69543",
+          "title": "互相关与卷积"
+        },
+        {
+          "previousId": "weighted-kernel",
+          "uuid": "7900db94-c206-4a1c-bc6e-021b1abe9dbd",
+          "title": "卷积核里的权重，决定如何匹配"
+        },
+        {
+          "previousId": "gradient",
+          "uuid": "6bdd7e10-2625-4ed0-996f-d2f11ff24567",
+          "title": "一阶差分与梯度"
+        },
+        {
+          "previousId": "second-difference",
+          "uuid": "45748acf-6a8b-406a-80be-45fed54baf52",
+          "title": "二阶差分：变化如何继续变化"
+        },
+        {
+          "previousId": "sobel-construction",
+          "uuid": "17f7e113-2a47-4167-a8fc-d7139ff2efc2",
+          "title": "从一阶差分到 Sobel"
+        },
+        {
+          "previousId": "laplacian-construction",
+          "uuid": "6ff2afcd-6ef5-4e83-ab05-13836ebf6da6",
+          "title": "从二阶差分到 Laplacian"
+        },
+        {
+          "previousId": "common-kernels",
+          "uuid": "cbdab537-8c9f-4be8-9647-6569ef3da133",
+          "title": "卷积核工作台"
+        },
+        {
+          "previousId": "sparse-connectivity",
+          "uuid": "48098a73-0de8-4bee-92d3-321da3ea4688",
+          "title": "稀疏连接：为什么参数更少？"
+        },
+        {
+          "previousId": "weight-sharing",
+          "uuid": "b5e1d9b0-a386-4a15-8b36-0aa97c4b8ff2",
+          "title": "权重共享：同一套权重反复使用"
+        },
+        {
+          "previousId": "translation-equivariance",
+          "uuid": "c6332d19-fc90-45e0-9fcb-79a6e28078b5",
+          "title": "平移等变性"
+        },
+        {
+          "previousId": "receptive-field",
+          "uuid": "92ab5945-179e-48e3-b95c-7c4fd405d932",
+          "title": "卷积核的堆叠与感受野"
+        },
+        {
+          "previousId": "kernel-size",
+          "uuid": "bbe1b999-3ffb-4452-a7e8-b92a4fdef7cc",
+          "title": "Kernel size：卷积核有多大？"
+        },
+        {
+          "previousId": "stride",
+          "uuid": "2a09a3f3-f9de-4e43-8acf-e6bd834be0bd",
+          "title": "卷积步长"
+        },
+        {
+          "previousId": "padding",
+          "uuid": "0379c752-e680-4fad-9a61-b8af426d80c3",
+          "title": "边界填充"
+        },
+        {
+          "previousId": "rgb-convolution",
+          "uuid": "5de70311-b8ae-4dfb-86fd-a8fb3babe53b",
+          "title": "RGB 多通道卷积"
+        },
+        {
+          "previousId": "multi-kernel",
+          "uuid": "ac18dbbf-a8bb-4165-ac54-ffcde178d992",
+          "title": "多核卷积：卷积核数量决定输出深度"
+        },
+        {
+          "previousId": "dilated-convolution",
+          "uuid": "7f6a3aaf-4069-479b-8817-d39496d71cea",
+          "title": "空洞卷积：扩大感受野，不增加参数"
+        },
+        {
+          "previousId": "deformable-convolution",
+          "uuid": "4f1ef7c0-be6e-48af-9339-ba1c884a5bff",
+          "title": "可变形卷积：让采样位置适应局部结构"
+        },
+        {
+          "previousId": "course-ending",
+          "uuid": "fa789c1b-a86c-4f52-b6f2-1d8d1ced4b91",
+          "title": "本节完成：卷积核"
+        }
+      ]
+    },
+    {
+      "outline": "modules/3a8a4e84-67b6-499a-ae8d-7762e6ddada8/outlines.json",
+      "courseUuid": "3a8a4e84-67b6-499a-ae8d-7762e6ddada8",
+      "pages": [
+        {
+          "previousId": "1",
+          "uuid": "285cbb45-7811-4a9d-b7b0-5bb25933e8a6",
+          "title": "一句英文，机器怎样翻成中文？"
+        },
+        {
+          "previousId": "2",
+          "uuid": "0d329cd0-d33c-4795-977c-fce61cdc83fe",
+          "title": "Transformer：编码器与解码器"
+        },
+        {
+          "previousId": "3",
+          "uuid": "3e732951-fcf1-4595-9165-c15068647c2b",
+          "title": "分词与词嵌入：把文字变成数字"
+        },
+        {
+          "previousId": "4",
+          "uuid": "6c2613e9-164c-449b-8e51-f570abce2267",
+          "title": "从几何角度理解词嵌入"
+        },
+        {
+          "previousId": "5",
+          "uuid": "18a0184b-46ee-4c9d-b290-55bb85412a98",
+          "title": "自注意力：结合上下文理解词义"
+        },
+        {
+          "previousId": "6",
+          "uuid": "4342496e-4f50-48b4-b781-1ba10fafc875",
+          "title": "自注意力①：用 Q 表达信息需求"
+        },
+        {
+          "previousId": "7",
+          "uuid": "c29e17fb-f126-4e0c-85ae-126372250dfa",
+          "title": "自注意力②：生成 K，与 Q 匹配"
+        },
+        {
+          "previousId": "8",
+          "uuid": "d4804e0a-739d-4e8e-884c-9349834b77dd",
+          "title": "自注意力③：用 V 汇聚上下文信息"
+        },
+        {
+          "previousId": "9",
+          "uuid": "22689e51-5d50-48d4-b95b-a97ecb47495a",
+          "title": "从注意力到自注意力"
+        },
+        {
+          "previousId": "10",
+          "uuid": "7d786d09-c9ba-403f-95c2-5a970218a7ac",
+          "title": "单头注意力的局限"
+        },
+        {
+          "previousId": "11",
+          "uuid": "ef0c8fca-9816-49ef-b2be-54b88ad7662c",
+          "title": "多头注意力：拆分 Q、K、V"
+        },
+        {
+          "previousId": "12",
+          "uuid": "a091acf5-514c-4487-95ce-40c1e2cc5e58",
+          "title": "多头注意力：8 个头并行计算"
+        },
+        {
+          "previousId": "13",
+          "uuid": "b770f455-3678-4d13-acde-cad77b42fa8a",
+          "title": "多头注意力：拼接与融合"
+        },
+        {
+          "previousId": "14",
+          "uuid": "bdc1b215-9684-43ff-9f2a-317823ba64ce",
+          "title": "多头注意力：完整流程"
+        },
+        {
+          "previousId": "15",
+          "uuid": "675a7a22-5db7-415c-a119-9735fc095d4a",
+          "title": "自注意力，知道词语顺序吗？"
+        },
+        {
+          "previousId": "16",
+          "uuid": "29647bfd-a9bc-4108-bd79-c1ef7b4ea25e",
+          "title": "位置编码：把位置加入输入"
+        },
+        {
+          "previousId": "17",
+          "uuid": "a0b7e3c4-1dc3-409b-a0b8-2b9ef49b5ac7",
+          "title": "位置编码怎样生成"
+        },
+        {
+          "previousId": "18",
+          "uuid": "c8a26ce5-2a51-40d7-a1e9-8a467cefaef7",
+          "title": "位置编码的点积：公式推导"
+        },
+        {
+          "previousId": "19",
+          "uuid": "97bf3da4-8c58-4397-a28c-e47cf1663b67",
+          "title": "移动位置，观察点积怎样变化"
+        },
+        {
+          "previousId": "20",
+          "uuid": "1532d8c9-6c41-4ee0-91b3-96fe3229e4b8",
+          "title": "不同维度组，点积变化的快慢不同"
+        },
+        {
+          "previousId": "21",
+          "uuid": "a7ba3a0a-4b52-4a14-a054-66682d8d43ac",
+          "title": "维度组编号越大，变化周期越长"
+        },
+        {
+          "previousId": "22",
+          "uuid": "971046c9-ade0-4bc7-bea3-da3eae2d3644",
+          "title": "多个周期：共同刻画远近位置"
+        },
+        {
+          "previousId": "23",
+          "uuid": "db3b29f8-7253-4543-b530-a387c24ba1dd",
+          "title": "逐位前馈网络"
+        },
+        {
+          "previousId": "24",
+          "uuid": "a4333f92-1e3d-4316-be42-f29789f2e8b7",
+          "title": "逐位前馈网络：升维、激活、降维"
+        },
+        {
+          "previousId": "25",
+          "uuid": "66fa881d-1879-4109-a086-91cb4c058564",
+          "title": "残差连接：为什么只学习变化？"
+        },
+        {
+          "previousId": "26",
+          "uuid": "acabdd48-e154-4651-8c50-7c63a6406f8d",
+          "title": "残差连接：保留输入，学习增量"
+        },
+        {
+          "previousId": "27",
+          "uuid": "687f00b8-6d2b-4b18-9b7e-5f222f6f97cc",
+          "title": "层规范化"
+        },
+        {
+          "previousId": "28",
+          "uuid": "9ba69139-f33e-4376-98db-7b667f356a85",
+          "title": "拼装编码器"
+        },
+        {
+          "previousId": "29",
+          "uuid": "dba3f01c-67c0-46a6-93d5-46a3a200faaa",
+          "title": "什么是解码器？"
+        },
+        {
+          "previousId": "30",
+          "uuid": "b7d419bb-478d-4a0f-9118-7f2cfa7a5eab",
+          "title": "交叉注意力"
+        },
+        {
+          "previousId": "31",
+          "uuid": "172cb4e3-c59a-4685-8818-cb44ed94d644",
+          "title": "向量怎样变成下一个词"
+        },
+        {
+          "previousId": "32",
+          "uuid": "136d804e-527f-4fb8-9f62-e16a42df7688",
+          "title": "训练时答案已知，模型会不会直接抄答案？"
+        },
+        {
+          "previousId": "33",
+          "uuid": "05197a4c-a043-4383-9723-8dffad1c1104",
+          "title": "把可见边界，变成注意力掩码"
+        },
+        {
+          "previousId": "34",
+          "uuid": "0af23e20-908f-4ae7-90bc-7453a20941c3",
+          "title": "拼装解码器"
+        }
+      ],
+      "additionalAliases": [
+        {
+          "previousId": "transformer-translation-opening-v1",
+          "uuid": "285cbb45-7811-4a9d-b7b0-5bb25933e8a6"
+        },
+        {
+          "previousId": "transformer-mission-v6",
+          "uuid": "0d329cd0-d33c-4795-977c-fce61cdc83fe"
+        },
+        {
+          "previousId": "transformer-tokenizer-v6",
+          "uuid": "3e732951-fcf1-4595-9165-c15068647c2b"
+        },
+        {
+          "previousId": "transformer-embedding-relations-v1",
+          "uuid": "6c2613e9-164c-449b-8e51-f570abce2267"
+        },
+        {
+          "previousId": "transformer-context-attention-v1",
+          "uuid": "18a0184b-46ee-4c9d-b290-55bb85412a98"
+        },
+        {
+          "previousId": "transformer-attention-workbench-v1",
+          "uuid": "4342496e-4f50-48b4-b781-1ba10fafc875"
+        },
+        {
+          "previousId": "transformer-context-bridge-v6",
+          "uuid": "c29e17fb-f126-4e0c-85ae-126372250dfa"
+        },
+        {
+          "previousId": "transformer-context-v6",
+          "uuid": "d4804e0a-739d-4e8e-884c-9349834b77dd"
+        },
+        {
+          "previousId": "transformer-self-attention-v6",
+          "uuid": "22689e51-5d50-48d4-b95b-a97ecb47495a"
+        },
+        {
+          "previousId": "transformer-multi-head-v6",
+          "uuid": "7d786d09-c9ba-403f-95c2-5a970218a7ac"
+        },
+        {
+          "previousId": "transformer-mh-split-v1",
+          "uuid": "ef0c8fca-9816-49ef-b2be-54b88ad7662c"
+        },
+        {
+          "previousId": "transformer-mh-parallel-v1",
+          "uuid": "a091acf5-514c-4487-95ce-40c1e2cc5e58"
+        },
+        {
+          "previousId": "transformer-mh-concat-v1",
+          "uuid": "b770f455-3678-4d13-acde-cad77b42fa8a"
+        },
+        {
+          "previousId": "transformer-mh-pipeline-v1",
+          "uuid": "bdc1b215-9684-43ff-9f2a-317823ba64ce"
+        },
+        {
+          "previousId": "transformer-position-story-v6",
+          "uuid": "675a7a22-5db7-415c-a119-9735fc095d4a"
+        },
+        {
+          "previousId": "transformer-position-comparison-v1",
+          "uuid": "29647bfd-a9bc-4108-bd79-c1ef7b4ea25e"
+        },
+        {
+          "previousId": "transformer-position-lab-v6",
+          "uuid": "a0b7e3c4-1dc3-409b-a0b8-2b9ef49b5ac7"
+        },
+        {
+          "previousId": "transformer-position-relation-v6",
+          "uuid": "c8a26ce5-2a51-40d7-a1e9-8a467cefaef7"
+        },
+        {
+          "previousId": "transformer-position-relative-experiment-v1",
+          "uuid": "97bf3da4-8c58-4397-a28c-e47cf1663b67"
+        },
+        {
+          "previousId": "transformer-position-multiscale-v6",
+          "uuid": "1532d8c9-6c41-4ee0-91b3-96fe3229e4b8"
+        },
+        {
+          "previousId": "transformer-position-period-v1",
+          "uuid": "a7ba3a0a-4b52-4a14-a054-66682d8d43ac"
+        },
+        {
+          "previousId": "transformer-position-benefit-v1",
+          "uuid": "971046c9-ade0-4bc7-bea3-da3eae2d3644"
+        },
+        {
+          "previousId": "transformer-ffn-v6",
+          "uuid": "db3b29f8-7253-4543-b530-a387c24ba1dd"
+        },
+        {
+          "previousId": "transformer-ffn-calculation-v1",
+          "uuid": "a4333f92-1e3d-4316-be42-f29789f2e8b7"
+        },
+        {
+          "previousId": "transformer-residual-intro-v1",
+          "uuid": "66fa881d-1879-4109-a086-91cb4c058564"
+        },
+        {
+          "previousId": "transformer-residual-mechanism-v1",
+          "uuid": "acabdd48-e154-4651-8c50-7c63a6406f8d"
+        },
+        {
+          "previousId": "transformer-layernorm-v6",
+          "uuid": "687f00b8-6d2b-4b18-9b7e-5f222f6f97cc"
+        },
+        {
+          "previousId": "transformer-block-v8",
+          "uuid": "9ba69139-f33e-4376-98db-7b667f356a85"
+        },
+        {
+          "previousId": "transformer-decoder-transition-v1",
+          "uuid": "dba3f01c-67c0-46a6-93d5-46a3a200faaa"
+        },
+        {
+          "previousId": "transformer-decoder-cross-v1",
+          "uuid": "b7d419bb-478d-4a0f-9118-7f2cfa7a5eab"
+        },
+        {
+          "previousId": "transformer-decoder-vocabulary-v1",
+          "uuid": "172cb4e3-c59a-4685-8818-cb44ed94d644"
+        },
+        {
+          "previousId": "transformer-mask-training-bridge-v1",
+          "uuid": "136d804e-527f-4fb8-9f62-e16a42df7688"
+        },
+        {
+          "previousId": "transformer-decoder-masked-v1",
+          "uuid": "05197a4c-a043-4383-9723-8dffad1c1104"
+        },
+        {
+          "previousId": "transformer-decoder-builder-v1",
+          "uuid": "0af23e20-908f-4ae7-90bc-7453a20941c3"
+        }
+      ]
+    },
+    {
+      "outline": "modules/444f8951-dd2e-42dc-94e5-c5a878618631/outlines.json",
+      "courseUuid": "444f8951-dd2e-42dc-94e5-c5a878618631",
+      "pages": [
+        {
+          "previousId": "creator-guide-title",
+          "uuid": "36a07f33-67e6-4506-ac5d-899713539767",
+          "title": "课件创作指南"
+        },
+        {
+          "previousId": "learning-goals",
+          "uuid": "c1766733-2d0c-49c0-9acf-98b5f2bf3a29",
+          "title": "AI 时代，学习的重点或从积累知识转向理解与应用"
+        },
+        {
+          "previousId": "education-paths",
+          "uuid": "abe35996-1789-4f4f-9175-8996da3ed46b",
+          "title": "面对陌生的知识，我们通常怎么学？"
+        },
+        {
+          "previousId": "popular-science",
+          "uuid": "82deb7aa-8b4a-43b8-b809-2827b01458dd",
+          "title": "科普教育的问题是什么？"
+        },
+        {
+          "previousId": "professional-education",
+          "uuid": "db916416-104c-42c0-95ad-8c66bb75b0d0",
+          "title": "专业教育的问题是什么？"
+        },
+        {
+          "previousId": "intuitive-learning",
+          "uuid": "70a617c1-ef45-4e65-8a64-2aac06667897",
+          "title": "直觉式学习会怎样讲解知识？"
+        },
+        {
+          "previousId": "frontend-journey",
+          "uuid": "46a6fcd1-df79-4298-9f8e-de7d5462a846",
+          "title": "从想法到交互课件，还隔着一道技术门槛"
+        },
+        {
+          "previousId": "skill-overview",
+          "uuid": "20270d29-3f3c-44f3-ac02-a8bf362ff3ec",
+          "title": "Creator Skill：让创作者更专注于内容编排"
+        },
+        {
+          "previousId": "skill-constraints",
+          "uuid": "a8ecfc2e-62b7-4f0e-8996-f5668b1e95f6",
+          "title": "创作指导：五类技能协同参与课件设计"
+        },
+        {
+          "previousId": "ui-kit",
+          "uuid": "74e76127-5081-4903-92e9-e1bb04c27fe9",
+          "title": "实现支持：组件与工具支撑课件制作"
+        },
+        {
+          "previousId": "multi-format",
+          "uuid": "8a1ba192-783a-4a0e-8f42-9fedb3ddce5b",
+          "title": "一种全新的课件形态"
+        },
+        {
+          "previousId": "human-collaboration",
+          "uuid": "e85b60a5-f071-44f7-9a02-70c80fce87df",
+          "title": "制作直觉式课件，人的作用是什么？"
+        },
+        {
+          "previousId": "presentation-comparison",
+          "uuid": "ba969d5f-76cf-40d8-b766-2c6d3b9a9aac",
+          "title": "把专业理解，变成具体的讲解设计"
+        },
+        {
+          "previousId": "creation-workflow",
+          "uuid": "3e17188f-cfcc-4b53-a359-8a8eb0b6bc27",
+          "title": "从想法到成品：课件创作流程"
+        },
+        {
+          "previousId": "optional-interaction",
+          "uuid": "0a3d818c-ae0c-432a-b244-5e9a6129ec22",
+          "title": "交互是可选项，理解才是目的"
+        },
+        {
+          "previousId": "progressive-disclosure",
+          "uuid": "1ab0d195-ccc9-4bc8-ac9d-7d88e7240d74",
+          "title": "渐进式披露，克制才是高级"
+        },
+        {
+          "previousId": "discovery-learning",
+          "uuid": "ad7cdb0d-2834-48ba-a537-36e0b38a1e07",
+          "title": "让学习者参与发现，而不只是接收答案"
+        },
+        {
+          "previousId": "shuku-why",
+          "uuid": "4f7f611a-cb68-48f9-895a-ef3ca2aa73a0",
+          "title": "世界知识在不断发展，课程也需要持续更新"
+        },
+        {
+          "previousId": "shuku-participation",
+          "uuid": "b4c2ce9c-1fc2-4b62-bba5-4b93a43beee6",
+          "title": "从提出一个问题，到贡献一种更好的讲法，每个人都可以参与到课程的进化"
+        },
+        {
+          "previousId": "shuku-review",
+          "uuid": "472981bb-4fb2-464b-993a-1229db64efea",
+          "title": "改进经过审核，才能成为课程的下一版"
+        },
+        {
+          "previousId": "shuku-growth",
+          "uuid": "ce06694c-ba51-42af-9871-781cdaff679c",
+          "title": "每一次学习，都可能推动课程再向前一步"
+        },
+        {
+          "previousId": "shuku-cocreation-loop",
+          "uuid": "3ccbfdd4-22de-40ea-a6f3-613bcc668199",
+          "title": "Shuku（术库）：让课程在共创中持续进化，形成知识循环"
+        }
+      ]
+    },
+    {
+      "outline": "modules/56a1d5b2-a439-4ee3-8f63-fd63ac09c741/outlines.json",
+      "courseUuid": "56a1d5b2-a439-4ee3-8f63-fd63ac09c741",
+      "pages": [
+        {
+          "previousId": "evacuation",
+          "uuid": "f4e46459-c7b3-4644-99fb-f884dedabfd9",
+          "title": "禁区撤离"
+        }
+      ]
+    },
+    {
+      "outline": "modules/5783c2b2-d620-49bf-bda4-f604563f4df1/outlines.json",
+      "courseUuid": "5783c2b2-d620-49bf-bda4-f604563f4df1",
+      "pages": [
+        {
+          "previousId": "00-generalization-intro",
+          "uuid": "2444d635-22b7-44db-9f9b-0b44f4cc0b91",
+          "title": "只有 300 张照片，怎样识别可回收物？"
+        },
+        {
+          "previousId": "02b-image-as-numbers",
+          "uuid": "343e6924-c722-4936-bbf5-57bae3fea894",
+          "title": "计算机是怎样“看”一张塑料瓶照片的？"
+        },
+        {
+          "previousId": "03-pixels-and-representation",
+          "uuid": "9eed79c8-902a-4fce-8f87-5780319d7c71",
+          "title": "能否仅通过原始像素数字逐个比较来进行可靠分类？"
+        },
+        {
+          "previousId": "03b-convolution-feature-map",
+          "uuid": "7cbd07c5-20ca-4fa3-9140-65088f6a1c9d",
+          "title": "特征表示怎样算出来？特征图怎样形成？"
+        },
+        {
+          "previousId": "04-feature-maps",
+          "uuid": "16c48261-e695-4ac5-be93-5b3c3680cf34",
+          "title": "特征图里存的是什么？"
+        },
+        {
+          "previousId": "06-learning-features",
+          "uuid": "d6cd940e-8926-439f-817b-69c4757fd8e9",
+          "title": "这些特征是怎样学出来的？"
+        },
+        {
+          "previousId": "08-embedding-output",
+          "uuid": "a59dc519-f42c-4211-9824-ca0f73be4d24",
+          "title": "换一个分类头，模型会回答什么问题？"
+        },
+        {
+          "previousId": "09-depth-capacity",
+          "uuid": "d9b48e20-3681-40dc-a731-f83342cff501",
+          "title": "更多层，究竟多了什么能力？"
+        },
+        {
+          "previousId": "11-degradation-problem",
+          "uuid": "51b54c1e-845a-4fc1-9458-4d74d0b40c51",
+          "title": "想要更好的网络，只要堆更多的层就好了吗？"
+        },
+        {
+          "previousId": "11b-overfitting-vs-degradation",
+          "uuid": "54306128-ed3d-4291-9d22-37ad5830d6f6",
+          "title": "过拟合与退化，到底差在哪里？"
+        },
+        {
+          "previousId": "12-identity-route",
+          "uuid": "acc3f931-6ed5-4a2d-9dbe-2604f242485b",
+          "title": "多加几层，也能保留原结果吗？"
+        },
+        {
+          "previousId": "12b-residual-idea",
+          "uuid": "a1d23748-fd53-49f7-93a6-9ed439d92efd",
+          "title": "ResNet 的想法：不重写，只学修改量"
+        },
+        {
+          "previousId": "14-basic-block",
+          "uuid": "73dd859f-dc1e-4ab1-a3fb-b16b4338e660",
+          "title": "一个残差块的两条路线：残差分支与快捷路径"
+        },
+        {
+          "previousId": "15-elementwise-addition",
+          "uuid": "d00bd957-dda5-4933-bd9f-55f41b5faff3",
+          "title": "两张特征图怎样相加？"
+        },
+        {
+          "previousId": "18-projection-shortcut",
+          "uuid": "ad198f4a-7cb6-4dee-b49c-7c0096a8f152",
+          "title": "形状不一样，怎样对齐后再相加？"
+        },
+        {
+          "previousId": "16-zero-residual",
+          "uuid": "c7c016d8-8eb6-4880-8631-da52f831ff3f",
+          "title": "当残差分支输出为 0，信息会消失吗？"
+        },
+        {
+          "previousId": "14b-super-resolution",
+          "uuid": "a708ba3c-e0f6-4730-8a1a-6c8d2eeee892",
+          "title": "把低清图变清晰，网络只学“细节差值”"
+        },
+        {
+          "previousId": "17-shortcut-gradient",
+          "uuid": "9db13104-04c6-4e6c-95a9-0f7a2d51a463",
+          "title": "捷径为什么让训练更顺？"
+        },
+        {
+          "previousId": "19-resnet18-assembly",
+          "uuid": "902aa599-2ea0-4a84-a07e-4f6f30e1aee2",
+          "title": "用残差块，构建完整的 ResNet-18"
+        },
+        {
+          "previousId": "20-pretraining",
+          "uuid": "dfdcbb71-eef8-4077-9d2c-bf46b4a8c8d9",
+          "title": "预训练，预先训练了什么？"
+        },
+        {
+          "previousId": "21-starting-points",
+          "uuid": "5ec84a8d-a6ff-4dc2-a6ae-0ace5655bea1",
+          "title": "同样的 ResNet-18，不同的参数起点"
+        },
+        {
+          "previousId": "22-transferable-visual-experience",
+          "uuid": "0765ad30-c2ed-472c-8d1e-4e3894fe1f72",
+          "title": "旧任务的视觉经验，哪些可以复用？"
+        },
+        {
+          "previousId": "23-replace-head",
+          "uuid": "59fca0aa-209a-42a9-b4d8-f8718fa394ef",
+          "title": "旧分类头会答旧问题，怎样让它答新问题？"
+        },
+        {
+          "previousId": "24-freeze-or-finetune",
+          "uuid": "68259cec-1abc-4bf6-b163-bd2e42be970f",
+          "title": "哪些参数正在学习？"
+        },
+        {
+          "previousId": "25-strategy-map",
+          "uuid": "7180cde6-b2c1-4c9f-a953-108dd5a70ac8",
+          "title": "从条件，直接读出微调范围"
+        },
+        {
+          "previousId": "26-transfer-workflow",
+          "uuid": "86483a6a-30d6-4d4d-bd70-eb9d2398fc52",
+          "title": "拿到预训练权重以后，下一步怎么做？"
+        },
+        {
+          "previousId": "27-compare-experiments",
+          "uuid": "02f1e583-ad66-4141-843c-3481ad47a3c7",
+          "title": "三种方案，应该比较什么？"
+        },
+        {
+          "previousId": "28-build-training-plan",
+          "uuid": "b3d92411-5648-4463-94a0-cee32935f379",
+          "title": "回到 300 张照片，你会怎样训练？"
+        },
+        {
+          "previousId": "29-course-chain",
+          "uuid": "c0fe2d7b-8d17-46f2-a372-17fbc44c960e",
+          "title": "这堂课其实只回答了一条问题链"
+        }
+      ]
+    },
+    {
+      "outline": "modules/74de5075-8163-413d-84d4-7176f2a3f4a2/components/creator-guide-copy/outlines.json",
+      "courseUuid": "74de5075-8163-413d-84d4-7176f2a3f4a2",
+      "pages": [
+        {
+          "previousId": "creator-guide-title",
+          "uuid": "69576a09-f343-4aa8-8cdc-6d86815d03a2",
+          "title": "实践创作指南"
+        },
+        {
+          "previousId": "learning-goals",
+          "uuid": "23c914d8-6972-4f2c-a98d-6134b38a2f6a",
+          "title": "AI 时代，学习的重点或从积累知识转向理解与应用"
+        },
+        {
+          "previousId": "education-paths",
+          "uuid": "52925008-4672-4ca2-a0a2-1f96062a1c6e",
+          "title": "面对陌生的知识，我们通常怎么学？"
+        },
+        {
+          "previousId": "popular-science",
+          "uuid": "e42eff88-284c-4c5c-9305-9d87a06422d4",
+          "title": "科普教育的问题是什么？"
+        },
+        {
+          "previousId": "professional-education",
+          "uuid": "0646bf13-497a-45d0-b738-367a659bdd4d",
+          "title": "专业教育的问题是什么？"
+        },
+        {
+          "previousId": "intuitive-learning",
+          "uuid": "5a988c2d-8fcb-4e1b-b880-d7f9d3a743e9",
+          "title": "直觉式学习会怎样讲解知识？"
+        },
+        {
+          "previousId": "frontend-journey",
+          "uuid": "5938b6ae-3003-48ce-8e4b-a147819fabcf",
+          "title": "从想法到交互式知识呈现，还隔着一道技术门槛"
+        },
+        {
+          "previousId": "skill-overview",
+          "uuid": "01a05b0a-9d59-4694-986b-5d853378f176",
+          "title": "Creator Skill：让创作者更专注于内容编排"
+        },
+        {
+          "previousId": "skill-constraints",
+          "uuid": "0e0ac5cb-6400-4fb7-9f93-96c830f9138e",
+          "title": "创作指导：四类技能协同参与知识呈现设计"
+        },
+        {
+          "previousId": "ui-kit",
+          "uuid": "49aed93c-5a72-4dfc-a205-ad44923bba32",
+          "title": "实现支持：组件与工具支撑实践创作"
+        },
+        {
+          "previousId": "multi-format",
+          "uuid": "2529070b-9d4e-4124-be29-107310405f89",
+          "title": "同一份知识内容，适配多种教学与学习场景"
+        },
+        {
+          "previousId": "human-collaboration",
+          "uuid": "5930c2e2-d82a-4993-bcf7-275299306f78",
+          "title": "制作交互直觉作品，人的作用是什么？"
+        },
+        {
+          "previousId": "presentation-comparison",
+          "uuid": "1502a3c2-01a6-4c20-b2ce-f68e722c5314",
+          "title": "把专业理解，变成具体的讲解设计"
+        },
+        {
+          "previousId": "creation-workflow",
+          "uuid": "98f4b092-7d7e-461c-a320-e5d1f885c9a4",
+          "title": "从想法到成品：实践创作流程"
+        },
+        {
+          "previousId": "optional-interaction",
+          "uuid": "f63d0e01-e1ee-4a4e-8bd0-242fd64f8ab9",
+          "title": "让学习者亲手探索，观察并验证结果"
+        },
+        {
+          "previousId": "progressive-disclosure",
+          "uuid": "b4fe6d42-b120-4eaf-907d-1335568d836b",
+          "title": "围绕学习问题，逐步展开操作"
+        },
+        {
+          "previousId": "discovery-learning",
+          "uuid": "50b60fc5-6773-4a2d-a62f-caf58162de05",
+          "title": "让学习者参与发现，而不只是接收答案"
+        },
+        {
+          "previousId": "shuku-why",
+          "uuid": "e97385bf-a1a4-4732-a5be-0cb548814879",
+          "title": "世界知识在不断发展，课程也需要持续更新"
+        },
+        {
+          "previousId": "shuku-participation",
+          "uuid": "3bfd5a7b-6749-43f9-89b5-79787852502f",
+          "title": "从提出一个问题，到贡献一种更好的讲法，每个人都可以参与到课程的进化"
+        },
+        {
+          "previousId": "shuku-review",
+          "uuid": "5eecf048-805b-4764-b237-8f498ca7b457",
+          "title": "改进经过审核，才能成为课程的下一版"
+        },
+        {
+          "previousId": "shuku-growth",
+          "uuid": "c6ba4d86-6b6c-4016-9e3d-a155eacdb491",
+          "title": "每一次学习，都可能推动课程再向前一步"
+        }
+      ]
+    },
+    {
+      "outline": "modules/74de5075-8163-413d-84d4-7176f2a3f4a2/outlines.json",
+      "courseUuid": "74de5075-8163-413d-84d4-7176f2a3f4a2",
+      "pages": [
+        {
+          "previousId": "opening",
+          "uuid": "cd92f6e8-4aae-420f-aec3-50a78ddf79a9",
+          "title": "大模型驱动的实践能力培养体系与平台"
+        },
+        {
+          "previousId": "spp-research-implementation-barrier",
+          "uuid": "aee1a1a1-9e6c-4d7c-90e3-25d418c52c4f",
+          "title": "AI 正在改变研究想法的实现方式"
+        },
+        {
+          "previousId": "spp-knowledge-frontier",
+          "uuid": "3eb8cbfa-5133-4a67-94c8-54408d834e2a",
+          "title": "我们追赶的知识前沿，正在加速远离我们"
+        },
+        {
+          "previousId": "learning-goals",
+          "uuid": "186b2816-6a7e-4f75-8541-b6814c762821",
+          "title": "AI 时代，学习的重点或从积累知识转向理解与应用"
+        },
+        {
+          "previousId": "student-capabilities",
+          "uuid": "50670946-ab25-4a39-88e0-4a63b4d70945",
+          "title": "学生能力培养目标"
+        },
+        {
+          "previousId": "platform-positioning",
+          "uuid": "8bca5254-091d-445c-b194-dce2c0dc354e",
+          "title": "面向知识探索者的科研与教育平台"
+        },
+        {
+          "previousId": "spp-research-publication-growth",
+          "uuid": "3a66a203-9cea-41c6-ab20-b71d57733afe",
+          "title": "论文数量快速增长，远超人类阅读极限"
+        },
+        {
+          "previousId": "personalized-research-supply",
+          "uuid": "53c7df3e-7d4c-4501-86ff-459e78985dc7",
+          "title": "高质量个性化科研信息供给"
+        },
+        {
+          "previousId": "paper-quality",
+          "uuid": "2bdb1f72-89f6-4d31-80e6-97ecd980a6ca",
+          "title": "自研论文影响力预测与质量估计算法"
+        },
+        {
+          "previousId": "research-service",
+          "uuid": "5ebd7132-4f46-483a-a1d6-90d22f87bb1e",
+          "title": "发现值得深入阅读的新论文"
+        },
+        {
+          "previousId": "spp-foundation-pdf-structuring",
+          "uuid": "2c29b4b8-4039-45ed-9d2a-a780654b131c",
+          "title": "从论文 PDF 到结构化信息"
+        },
+        {
+          "previousId": "spp-foundation-main-figure-selection",
+          "uuid": "94bba564-d4ec-4aa2-9bcb-a8c40142f634",
+          "title": "自研论文核心视觉元素识别算法"
+        },
+        {
+          "previousId": "spp-foundation-literature-service",
+          "uuid": "b1b26a9b-c341-408e-a6de-8de15e9025c1",
+          "title": "论文自动化处理框架"
+        },
+        {
+          "previousId": "research-recommendation-app",
+          "uuid": "b4f18ddc-6815-4c49-8e6e-2c74b3eaeb01",
+          "title": "科研信息供给的全平台解决方案"
+        },
+        {
+          "previousId": "cross-domain-foundation",
+          "uuid": "8435c800-bca3-476a-b09c-6290d44f935d",
+          "title": "服务前沿探索，也助力初学者入门"
+        },
+        {
+          "previousId": "education-paths",
+          "uuid": "96d7298c-135c-4ecb-8133-a97eb6c4e659",
+          "title": "初学者面对陌生知识，如何兼顾入门与深入"
+        },
+        {
+          "previousId": "popular-science",
+          "uuid": "4b73bf56-5848-4873-8e5d-80739c8cbcb0",
+          "title": "科普式教育：用直观现象建立初步认识"
+        },
+        {
+          "previousId": "professional-education",
+          "uuid": "6e6236b7-c87e-48d7-a446-0051e47d901d",
+          "title": "专业式教育：用概念与公式系统讲解"
+        },
+        {
+          "previousId": "intuitive-learning",
+          "uuid": "327440f9-b157-421c-8033-9e1085157d3a",
+          "title": "直觉式学习：连接直观体验与专业理解"
+        },
+        {
+          "previousId": "showcase-gomoku",
+          "uuid": "b58d4893-18ba-4965-9d13-af75e5d7d457",
+          "title": "交互直觉实践示例：从五子棋认识卷积核"
+        },
+        {
+          "previousId": "showcase-window-scan",
+          "uuid": "1870b760-60e3-4320-8648-6005eaf2fcc4",
+          "title": "交互直觉实践示例：从棋形理解局部匹配"
+        },
+        {
+          "previousId": "showcase-kernel-design",
+          "uuid": "5e33075a-74fa-400b-9be6-3bd39aa32d22",
+          "title": "交互式直觉实践示例：根据棋形调整模板"
+        },
+        {
+          "previousId": "showcase-multi-kernel",
+          "uuid": "c4ed0766-5755-4ca7-bbd5-ba43bb43d6c1",
+          "title": "多核卷积：卷积核数量决定输出深度"
+        },
+        {
+          "previousId": "showcase-digit-network",
+          "uuid": "4d39d976-2806-4e4f-a2f9-fe75a4d03863",
+          "title": "数字识别网络的前馈过程"
+        },
+        {
+          "previousId": "showcase-open-identity",
+          "uuid": "cd782b56-2aeb-4f68-a2e4-4e337be46847",
+          "title": "开放集身份识别与人脸验证"
+        },
+        {
+          "previousId": "showcase-disguise-verification",
+          "uuid": "4232ac4e-b42a-4cc1-881c-a90ea610caf9",
+          "title": "雨花弄：变脸"
+        },
+        {
+          "previousId": "showcase-triplet-loss",
+          "uuid": "f9b7c2a0-f264-49b9-a1b1-cf3a63fdc708",
+          "title": "三元组损失：让特征适合比较身份"
+        },
+        {
+          "previousId": "creator-copy-optional-interaction",
+          "uuid": "59b91124-2c95-4d00-b285-bda6765c7b15",
+          "title": "让学习者亲手探索，观察并验证结果"
+        },
+        {
+          "previousId": "creator-copy-progressive-disclosure",
+          "uuid": "449762da-0ad4-4101-bc4e-0b696adf810e",
+          "title": "围绕学习问题，逐步展开操作"
+        },
+        {
+          "previousId": "creator-copy-discovery-learning",
+          "uuid": "ac7b3ec8-2bbc-4210-8017-ce0e569b6bba",
+          "title": "让学习者参与发现，而不只是接收答案"
+        },
+        {
+          "previousId": "res2net-thinking",
+          "uuid": "73095b1f-b97a-4deb-b3b6-472528807e74",
+          "title": "让教学、实践与研究相互启发"
+        },
+        {
+          "previousId": "code-practice",
+          "uuid": "d3d181cc-c778-4f9c-bd16-020fa2957308",
+          "title": "通过编程实践，检验对网络结构的理解"
+        },
+        {
+          "previousId": "spp-foundation-showcase-shuku",
+          "uuid": "dc438046-fa16-4c6a-9abe-8300a58af6b0",
+          "title": "术库：浏览可探索的课程图书馆"
+        },
+        {
+          "previousId": "creator-copy-multi-format",
+          "uuid": "2d3361aa-4263-4f5c-b352-189ee0b890cb",
+          "title": "同一份知识内容，适配多种教学与学习场景"
+        },
+        {
+          "previousId": "flexible-teaching-modes",
+          "uuid": "4a3b72b2-16e6-4740-94ca-6f1d986746ad",
+          "title": "推荐授课模式"
+        },
+        {
+          "previousId": "recommended-assessment",
+          "uuid": "763364ce-da3d-41ae-b4b7-fbdeaa038b1f",
+          "title": "课后专题研究考核模式"
+        },
+        {
+          "previousId": "dual-learning-evaluation",
+          "uuid": "571b454b-3650-4ee0-bb95-43d41371c7ac",
+          "title": "实践成果的多元评价与考核"
+        },
+        {
+          "previousId": "creator-copy-presentation-comparison",
+          "uuid": "9146efc9-9f24-4ecd-bc68-bc8df903a106",
+          "title": "既然允许 AI 参与制作，怎样看出学生的理解？"
+        },
+        {
+          "previousId": "creator-copy-frontend-journey",
+          "uuid": "4719665f-e424-456f-bff6-f2e197b724e4",
+          "title": "围绕培养目标，提供工程支持"
+        },
+        {
+          "previousId": "creator-copy-skill-overview",
+          "uuid": "9e304051-3ed6-4a9c-9bda-eb4f900c108a",
+          "title": "Creator Skill：让创作者更专注于内容编排"
+        },
+        {
+          "previousId": "creator-copy-skill-constraints",
+          "uuid": "7417b501-e77f-4e98-9493-de9f83e475ae",
+          "title": "创作指导：四类技能协同参与知识呈现设计"
+        },
+        {
+          "previousId": "creator-copy-ui-kit",
+          "uuid": "5ef1f82c-d6eb-47c7-9941-43ad681bb821",
+          "title": "实现支持：组件与工具支撑实践创作"
+        },
+        {
+          "previousId": "creator-copy-creation-workflow",
+          "uuid": "f51293a6-5440-454c-9852-daca8d362b5a",
+          "title": "从想法到成品：实践创作流程"
+        },
+        {
+          "previousId": "educational-agent-practice",
+          "uuid": "b4abf5a8-577b-4fe3-bb83-2085b7c0a891",
+          "title": "Shuku（术库）：让课程在共创中持续进化，形成知识循环"
+        },
+        {
+          "previousId": "teaching-talent-discovery",
+          "uuid": "a3863cb3-5b2c-452e-9397-c8aa04e1bc4a",
+          "title": "在教学中发现人才，在科研中共同成长"
+        },
+        {
+          "previousId": "education-ecosystem-preview",
+          "uuid": "109d9380-8050-44a8-a3a2-65f19d192980",
+          "title": "连接教学、科研、人才与产业"
+        }
+      ]
+    },
+    {
+      "outline": "modules/80396753-7fc8-4f55-9188-bddbdb828169/outlines.json",
+      "courseUuid": "80396753-7fc8-4f55-9188-bddbdb828169",
+      "pages": [
+        {
+          "previousId": "digit-recognition-opening",
+          "uuid": "3c40737f-2756-4473-aa5e-bd0b4241ea48",
+          "title": "计算机如何识别手写数字？"
+        },
+        {
+          "previousId": "digit-differences",
+          "uuid": "85044d7f-f642-4dc7-8c4c-9505536aab0b",
+          "title": "手写数字的形态差异"
+        },
+        {
+          "previousId": "raw-pixel-variation",
+          "uuid": "1e8254cb-83fa-43ac-9e1c-842c19a78ede",
+          "title": "同类数字的像素差异"
+        },
+        {
+          "previousId": "feature-extraction",
+          "uuid": "38a93659-4c2c-4595-9e5f-4388d16454da",
+          "title": "从图像中提取特征"
+        },
+        {
+          "previousId": "manual-feature-capacity",
+          "uuid": "30793383-bd8c-4681-bb4d-f2a63b1b7c4f",
+          "title": "简单统计特征的局限"
+        },
+        {
+          "previousId": "simple-feature-statistics",
+          "uuid": "78fe6856-ecfe-4bc8-bac0-128e064fae79",
+          "title": "简单统计特征的分布"
+        },
+        {
+          "previousId": "manual-nine-grid",
+          "uuid": "e935cba6-b43f-4798-867e-34e918726f1b",
+          "title": "九宫格区域统计特征"
+        },
+        {
+          "previousId": "manual-feature-classifier",
+          "uuid": "0504e836-cdab-4f08-a2c6-9a4aa9483389",
+          "title": "基于人工特征的数字分类"
+        },
+        {
+          "previousId": "manual-feature-information-loss",
+          "uuid": "b3118c6a-f2fb-409a-832c-7371fe287593",
+          "title": "九宫格特征的信息损失"
+        },
+        {
+          "previousId": "fixed-digit-classification",
+          "uuid": "6921af12-7e6f-4e74-b2fb-9849311035b0",
+          "title": "固定卷积特征的数字分类"
+        },
+        {
+          "previousId": "two-stage-recognition",
+          "uuid": "274851e9-a3c8-4476-a153-03251fd66133",
+          "title": "人工设计特征的局限"
+        },
+        {
+          "previousId": "learnable-kernel",
+          "uuid": "f98f7a19-28a3-4e79-b4f9-ebad75526da0",
+          "title": "可学习卷积核"
+        },
+        {
+          "previousId": "optimize-kernel",
+          "uuid": "4f2078f2-d97c-41bb-887e-bbfea2109637",
+          "title": "损失怎样更新卷积核？"
+        },
+        {
+          "previousId": "optimize-kernel-shared",
+          "uuid": "cf80f900-16a5-4c80-a516-51a0f91c8143",
+          "title": "多个窗口，怎样更新同一个卷积核？"
+        },
+        {
+          "previousId": "pooling",
+          "uuid": "db33937a-fd67-4d1d-8aaf-2a8b79eba7a1",
+          "title": "池化：汇聚局部响应"
+        },
+        {
+          "previousId": "convolution-network-unit",
+          "uuid": "517a9aed-e74a-4395-bede-bc0a9c14cfc4",
+          "title": "卷积网络中的一层"
+        },
+        {
+          "previousId": "hierarchical-features",
+          "uuid": "3321d0b9-3f29-476b-b98a-8c79766e3b38",
+          "title": "从浅层特征到深层特征"
+        },
+        {
+          "previousId": "feature-maps-to-classifier",
+          "uuid": "28200f4a-53de-4495-b839-db8a5aec1f67",
+          "title": "从特征图到全连接分类器"
+        },
+        {
+          "previousId": "global-average-pooling",
+          "uuid": "d449aaf3-07ac-4ebb-a007-34bf349b86d0",
+          "title": "全局平均池化（GAP）"
+        },
+        {
+          "previousId": "assemble-train-digit-network",
+          "uuid": "d945cb08-e673-4ffd-90df-2dff514f527c",
+          "title": "数字识别网络的前馈过程"
+        },
+        {
+          "previousId": "training-feature-tsne",
+          "uuid": "5e806147-cf57-4b9e-863d-d62b5a80a75c",
+          "title": "训练怎样改变特征分布？"
+        },
+        {
+          "previousId": "digits-to-faces",
+          "uuid": "3c8ab017-17b5-41ac-8df6-b6261cd52db3",
+          "title": "开放集身份识别与人脸验证"
+        },
+        {
+          "previousId": "triplet-loss",
+          "uuid": "cd6bedc0-8f23-4293-9d41-b86d96d9f42a",
+          "title": "三元组损失：让特征适合比较身份"
+        },
+        {
+          "previousId": "training-objective-gradcam",
+          "uuid": "dc55ca82-a0fc-421e-ad6b-333eb297b7fc",
+          "title": "Grad-CAM：不同训练目标关注哪里？"
+        },
+        {
+          "previousId": "disguise-verification",
+          "uuid": "fe196098-d8f8-428b-92d6-357107fda9cd",
+          "title": "雨花弄：变脸"
+        }
+      ]
+    },
+    {
+      "outline": "modules/95728790-5709-43e1-ada6-99687813ab3b/outlines.json",
+      "courseUuid": "95728790-5709-43e1-ada6-99687813ab3b",
+      "pages": [
+        {
+          "previousId": "01",
+          "uuid": "1153ff8a-4924-46a8-b2e5-39df2d4a461c",
+          "title": "从数值预测到类别预测"
+        },
+        {
+          "previousId": "02",
+          "uuid": "ab165c60-5782-4e1e-9d0c-d470f9afe5be",
+          "title": "从线性分数到类别概率"
+        },
+        {
+          "previousId": "03",
+          "uuid": "d084586e-68f0-4c55-9219-a262b70d423d",
+          "title": "从概率到线性分数"
+        },
+        {
+          "previousId": "04",
+          "uuid": "18aec031-4d66-4205-8027-d0fa0c841d2a",
+          "title": "逻辑回归的概率预测与类别判定"
+        },
+        {
+          "previousId": "05",
+          "uuid": "4ece04bb-c817-406f-8ce0-05c1c03cfc70",
+          "title": "逻辑回归的参数估计"
+        }
+      ]
+    },
+    {
+      "outline": "modules/9831b46b-af10-4cb3-b9dc-94e0cee25143/outlines.json",
+      "courseUuid": "9831b46b-af10-4cb3-b9dc-94e0cee25143",
+      "pages": [
+        {
+          "previousId": "play-maze",
+          "uuid": "d8e5fb3c-f1ff-4ba1-a730-53f07268b6c9",
+          "title": "小狐狸怎样走，才能拿到最高分？"
+        },
+        {
+          "previousId": "value-policy",
+          "uuid": "1147ef31-e1d8-4fad-b142-b4e6b142c9df",
+          "title": "刚才你选方向，现在让模型来选"
+        },
+        {
+          "previousId": "model-forward",
+          "uuid": "8932ecbd-f542-49c5-a84b-309d66fb4c9f",
+          "title": "用神经网络决定行动"
+        },
+        {
+          "previousId": "training-overview",
+          "uuid": "ceb9bd2e-14d2-4686-a011-941e358d0094",
+          "title": "策略决定怎么走，目标是平均得分更高"
+        },
+        {
+          "previousId": "objective-gradient",
+          "uuid": "578a6f7a-48e3-4b0c-bdee-faa2db915f67",
+          "title": "怎样让高分路线更常出现？"
+        },
+        {
+          "previousId": "gradient-ascent",
+          "uuid": "eecdeea1-98f0-405f-99d1-07fc5f9111ce",
+          "title": "目标确定了，网络权重怎样改？"
+        },
+        {
+          "previousId": "trajectory-derivation",
+          "uuid": "599d70a9-4251-49aa-a836-9950d422fa10",
+          "title": "这次选择，怎样影响权重？"
+        },
+        {
+          "previousId": "rollout-steps",
+          "uuid": "d649a174-d7ae-4b65-b79c-e95edb1fb5e0",
+          "title": "REINFORCE 第一步：采样一局"
+        },
+        {
+          "previousId": "return-calculation",
+          "uuid": "46f0ffb5-0c39-47d8-8957-f20a63c1808b",
+          "title": "走完以后，倒着计算回报"
+        },
+        {
+          "previousId": "numeric-update",
+          "uuid": "fd09fc56-4c47-490a-ac2a-2ea68fb40cde",
+          "title": "更新网络，让行动概率改变"
+        },
+        {
+          "previousId": "live-training",
+          "uuid": "024fe211-343b-4a11-ad4e-a82c9e1c821a",
+          "title": "反复训练，看看策略是否学好了"
+        },
+        {
+          "previousId": "actor-critic-intro",
+          "uuid": "67940399-b894-4757-915f-bce28c11e258",
+          "title": "Actor-Critic：让另一个网络评价选择"
+        },
+        {
+          "previousId": "actor-critic-step",
+          "uuid": "71a654ae-c804-4cac-8a07-1e74ebe094de",
+          "title": "Critic 怎样学会预测回报？"
+        },
+        {
+          "previousId": "actor-update",
+          "uuid": "e61c82cb-86af-4d42-9b03-39dde432df3d",
+          "title": "Actor：用 Critic 的评分调整行动概率"
+        },
+        {
+          "previousId": "actor-critic-training",
+          "uuid": "fd3bae80-afce-4274-942d-24d207ea1cf1",
+          "title": "真实训练：走一步，就学一步"
+        }
+      ]
+    },
+    {
+      "outline": "modules/9acfbca1-b881-457e-add6-21e0b6b855a0/outlines.json",
+      "courseUuid": "9acfbca1-b881-457e-add6-21e0b6b855a0",
+      "pages": [
+        {
+          "previousId": "nematode-response",
+          "uuid": "fea52098-c5d3-4984-a0d9-f5fc33afc04c",
+          "title": "只有 302 个神经元，它为什么能完成这么多行为？"
+        },
+        {
+          "previousId": "biological-structure",
+          "uuid": "857354e3-f094-4f24-9a7f-60a26de0abd9",
+          "title": "人工神经元，源自生物神经元"
+        },
+        {
+          "previousId": "decision-bridge",
+          "uuid": "c9cf20c1-c6b7-4557-ad62-95744bb2e4f1",
+          "title": "一个神经元，只做一次简单判断"
+        },
+        {
+          "previousId": "signal-discovery",
+          "uuid": "79ba5443-37f6-4078-bcdc-ec46a6c760be",
+          "title": "让神经元帮你做一次判断"
+        },
+        {
+          "previousId": "weighted-sum",
+          "uuid": "c8d01bb6-58b6-49a8-af2c-a8f3869bcddb",
+          "title": "把一个现实因素，翻译成神经元能处理的输入"
+        },
+        {
+          "previousId": "extra-inputs",
+          "uuid": "9f6c7e39-a468-49e5-bb6e-8e12ae579c0a",
+          "title": "从一个因素，到三个因素"
+        },
+        {
+          "previousId": "weighted-contribution",
+          "uuid": "8356ddee-4759-4942-97c4-4c8f635cf478",
+          "title": "从加权求和到矩阵表示"
+        },
+        {
+          "previousId": "bias-natural-boundary",
+          "uuid": "bd19901c-3eee-460a-b5c0-e018632da031",
+          "title": "矩阵计算之后，如何形成分类判断？"
+        },
+        {
+          "previousId": "bias-threshold",
+          "uuid": "cf503bad-5f03-4900-b771-d7200f06cfa9",
+          "title": "偏置如何调整分类阈值？"
+        },
+        {
+          "previousId": "linear-shallow",
+          "uuid": "effd7148-7faa-40cc-9b94-2b75724edec3",
+          "title": "线性神经元的组合仍然是线性的"
+        },
+        {
+          "previousId": "nematode-xor",
+          "uuid": "52a2580d-1e72-4070-bec2-1a88fc0ef63c",
+          "title": "线性分类的边界：秀丽隐杆线虫的双侧刺激"
+        },
+        {
+          "previousId": "relu-intro",
+          "uuid": "51f235bd-337d-43ea-bb0b-bc4636a6ceee",
+          "title": "从线性计算到非线性响应"
+        },
+        {
+          "previousId": "relu-explanation",
+          "uuid": "e8439e2b-a75c-4052-a47d-1e7ecbf82964",
+          "title": "认识线性整流单元"
+        },
+        {
+          "previousId": "relu-network",
+          "uuid": "32a39382-9916-41c7-9da1-056d60ef9b33",
+          "title": "组合多个带有 ReLU 的神经元，曲线继续弯折"
+        },
+        {
+          "previousId": "relu-approximation",
+          "uuid": "1cc8cb8c-9a3a-400e-86b9-ceea46656e5e",
+          "title": "足够多带有 ReLU 的神经元，就能逼近任意曲线"
+        },
+        {
+          "previousId": "activation-catalog",
+          "uuid": "39d430a6-7a61-49cb-ab59-be18601f14b2",
+          "title": "认识这些被广泛使用的激活函数"
+        },
+        {
+          "previousId": "ending",
+          "uuid": "e378a0e9-3c01-43ed-8de9-3d51fe3d9355",
+          "title": "你已经搭出了一个人工神经元"
+        },
+        {
+          "previousId": "resources",
+          "uuid": "0ae5732b-f7a1-4bb7-a09c-8fbf1ad80599",
+          "title": "推荐资源"
+        }
+      ]
+    },
+    {
+      "outline": "modules/a805d0a5-9d46-42ef-9989-e11aeb79e49e/outlines.json",
+      "courseUuid": "a805d0a5-9d46-42ef-9989-e11aeb79e49e",
+      "pages": [
+        {
+          "previousId": "galton-archive",
+          "uuid": "fef60e3b-d79b-417d-887c-4302b0ac3999",
+          "title": "为什么高个子的父母，孩子未必一样高？"
+        },
+        {
+          "previousId": "trend-line",
+          "uuid": "b67375ce-7d2c-4009-b3d6-4f02afbc7209",
+          "title": "如果只能画一条线，你会把它放在哪里？"
+        },
+        {
+          "previousId": "prediction-residual",
+          "uuid": "8e1b7ad2-f161-484a-bd43-97480bd20261",
+          "title": "一条线怎样替每个人做预测？"
+        },
+        {
+          "previousId": "error-cancellation",
+          "uuid": "8402bb0a-1d3b-43cd-9e6c-64df83654449",
+          "title": "为什么不能直接把误差加起来？"
+        },
+        {
+          "previousId": "squared-error",
+          "uuid": "53290873-a9a6-4681-a4da-80451d8bea33",
+          "title": "平方，会让大错更显眼"
+        },
+        {
+          "previousId": "mse",
+          "uuid": "2b8c1ae8-f189-43e4-9413-f4716752722b",
+          "title": "让一条线接受整组数据的评分"
+        },
+        {
+          "previousId": "loss-landscape",
+          "uuid": "c45cc028-b868-4939-b3fe-622f8bff5b3a",
+          "title": "把每一条可能的直线放进一张地图"
+        },
+        {
+          "previousId": "gradient-step",
+          "uuid": "31b280bc-0e75-4df8-a1f5-b2edb90e3d23",
+          "title": "模型怎样知道下一步往哪里走？"
+        },
+        {
+          "previousId": "full-chain",
+          "uuid": "d651ccf6-b7ab-4123-a8d1-ea37c1a87731",
+          "title": "从输入到损失：线性回归的完整一轮"
+        },
+        {
+          "previousId": "ending",
+          "uuid": "dd270df5-5a20-4b2b-96bc-58b9ba0054ab",
+          "title": "你已经学会用一个数字判断模型好不好"
+        },
+        {
+          "previousId": "uncertainty-opening",
+          "uuid": "d30fc554-2aac-417c-b6a9-6229848955ba",
+          "title": "有些规律像定律，有些规律只表现为趋势"
+        }
+      ]
+    },
+    {
+      "outline": "modules/a9333d75-9e97-4c31-941d-9ce3e6f49608/outlines.json",
+      "courseUuid": "a9333d75-9e97-4c31-941d-9ce3e6f49608",
+      "pages": [
+        {
+          "previousId": "task",
+          "uuid": "3c8af52d-dba2-415d-9700-770a30f9127d",
+          "title": "从一个可验收的番茄钟开始"
+        },
+        {
+          "previousId": "tool-boundary",
+          "uuid": "de849b4c-b127-43a7-864d-c68b91330ebf",
+          "title": "模型提出请求，工具执行操作"
+        },
+        {
+          "previousId": "requirements",
+          "uuid": "ee321940-c709-4c19-af2d-3ed3f35bc920",
+          "title": "把一句需求变成四项验收"
+        },
+        {
+          "previousId": "tool-evidence",
+          "uuid": "c1d9351b-5c85-4d11-92f4-99cc7ee2db58",
+          "title": "从暂停现象到测试证据"
+        },
+        {
+          "previousId": "cot-paper",
+          "uuid": "d6479b8d-d730-40c2-9ee3-c1169a577604",
+          "title": "CoT：先把推理步骤展开"
+        },
+        {
+          "previousId": "cot-step",
+          "uuid": "745995b4-f0f4-45b7-9d76-21da4c23c578",
+          "title": "能分步计算，还缺什么"
+        },
+        {
+          "previousId": "react-paper",
+          "uuid": "26487fc9-67f3-415a-b205-778595ece7dd",
+          "title": "ReAct：让推理与行动交替发生"
+        },
+        {
+          "previousId": "react-reason",
+          "uuid": "8ebcf6dc-99ed-4d5d-a688-07538b4c6034",
+          "title": "① 判断：下一步缺少什么证据"
+        },
+        {
+          "previousId": "react-action",
+          "uuid": "fe9a2646-c340-4bc1-bae3-114c0903f194",
+          "title": "② 行动：把请求交给文件工具"
+        },
+        {
+          "previousId": "react-observe",
+          "uuid": "8aa85ad7-a354-48d8-a444-1c516ffd8c66",
+          "title": "③ 观察：新证据改变下一步"
+        },
+        {
+          "previousId": "quiz-observation",
+          "uuid": "75fcb15a-9b97-401f-990e-53227cc86359",
+          "title": "分清请求、行动与观察"
+        },
+        {
+          "previousId": "react-cycle",
+          "uuid": "db0f9c79-be9d-4931-a962-0347350e7311",
+          "title": "轮到你决定下一步"
+        },
+        {
+          "previousId": "timer-handle",
+          "uuid": "5d97f813-0fd3-407a-877f-71e71a0989eb",
+          "title": "定时器与暂停函数怎样关联"
+        },
+        {
+          "previousId": "read-code",
+          "uuid": "4dfa8d4b-4e07-4740-a2f6-130fbdcaae25",
+          "title": "改了标记，为什么还会减秒"
+        },
+        {
+          "previousId": "fix-test",
+          "uuid": "ca42d9be-f63b-47ac-b6cc-02115fd4291b",
+          "title": "让补丁接受实际测试"
+        },
+        {
+          "previousId": "acceptance",
+          "uuid": "3c6e6d67-28a1-4b45-b888-c8d421e35798",
+          "title": "暂停通过，还要检查整轮行为"
+        },
+        {
+          "previousId": "regression-resume",
+          "uuid": "27bf4149-033d-4710-803a-893f77cafd39",
+          "title": "继续为什么会回到一整轮"
+        },
+        {
+          "previousId": "regression-record",
+          "uuid": "c7e378fa-2aeb-4c13-a43d-4f64615b60d6",
+          "title": "一个完成事件，为什么记了两轮"
+        },
+        {
+          "previousId": "round-limit",
+          "uuid": "a48758ed-815a-4184-8d9b-d65fbc4f09ad",
+          "title": "为复测保留调用预算"
+        },
+        {
+          "previousId": "parallel",
+          "uuid": "83d46c41-0458-4cc8-be42-6922aa99d686",
+          "title": "哪些准备工作可以同时开展"
+        },
+        {
+          "previousId": "agent-paper",
+          "uuid": "af7b67c2-b54c-4616-aa8a-faf7150d37f4",
+          "title": "多智能体：通过消息协作"
+        },
+        {
+          "previousId": "agent-message",
+          "uuid": "98f93ec2-7e19-4cac-a43b-c7707a3ebbb7",
+          "title": "一条交接消息，需要传递什么"
+        },
+        {
+          "previousId": "roles",
+          "uuid": "01d5557e-fa8d-484f-9a12-af615becb85f",
+          "title": "分工要明确责任与产物"
+        },
+        {
+          "previousId": "integration",
+          "uuid": "2bf4cf15-6b6c-4086-85db-8d9e9dfc3d7d",
+          "title": "各自通过，接口仍可能接不上"
+        },
+        {
+          "previousId": "messages",
+          "uuid": "54bdbe9e-c82e-4b7c-a8e7-ec7f77ea3d46",
+          "title": "增加角色，也会增加沟通成本"
+        },
+        {
+          "previousId": "quiz-integration",
+          "uuid": "c3b6a468-e882-4862-9da7-acf8a0a5388b",
+          "title": "交付前应该验证哪个对象"
+        },
+        {
+          "previousId": "workflow-paper",
+          "uuid": "bff2ff06-2a70-487d-9c8a-a81338434241",
+          "title": "工作流：把执行条件写进路线"
+        },
+        {
+          "previousId": "workflow",
+          "uuid": "b63f7a20-1a79-4083-8bbf-580d3705c9c2",
+          "title": "版本与检查规则一起进入流程"
+        },
+        {
+          "previousId": "workflow-gate",
+          "uuid": "0fa68a7a-b1d1-4175-8e05-cadfdda494d9",
+          "title": "检查通过，才允许进入下一步"
+        },
+        {
+          "previousId": "workflow-fail",
+          "uuid": "3618decb-afab-4eb3-9ed1-87f5f067949c",
+          "title": "让失败停在看得见的地方"
+        },
+        {
+          "previousId": "timeout",
+          "uuid": "5e4c901b-b1c3-444d-a57c-14d3502552f2",
+          "title": "超时与失败，需要不同处理"
+        },
+        {
+          "previousId": "mechanism",
+          "uuid": "00603547-6e4c-4e55-8c55-cd11d0f92d4b",
+          "title": "固定路线与动态排查怎样分工"
+        },
+        {
+          "previousId": "quiz-workflow",
+          "uuid": "fe1c3bf5-dfa1-4288-924b-bd8de1905709",
+          "title": "为重复交付选择组织方式"
+        },
+        {
+          "previousId": "case-split",
+          "uuid": "8ae9b849-1f65-4440-850e-7938da30a6df",
+          "title": "综合案例 ① 三份产物并行准备"
+        },
+        {
+          "previousId": "case-merge",
+          "uuid": "80a0f39b-9601-4c57-85a3-655113127892",
+          "title": "综合案例 ② 合并后先核对接口"
+        },
+        {
+          "previousId": "case-evidence",
+          "uuid": "359e73ec-07b1-4dab-925f-dbf18651558b",
+          "title": "综合案例 ③ 流程留下失败证据"
+        },
+        {
+          "previousId": "case-repair",
+          "uuid": "ee1a907e-ca05-47a0-8b09-4065849b0c1a",
+          "title": "综合案例 ④ 用证据选择局部修复"
+        },
+        {
+          "previousId": "case-deliver",
+          "uuid": "ffe2020f-72c2-434f-afc1-506cd218fc92",
+          "title": "综合案例 ⑤ 新版本重新走完检查"
+        },
+        {
+          "previousId": "transfer",
+          "uuid": "d2c5dada-5a43-49fd-97d5-1181fc8c7f87",
+          "title": "换一个任务，还能选择三种方法吗"
+        },
+        {
+          "previousId": "recap",
+          "uuid": "f761bd43-5ca1-4ac1-a835-8bf707c0a209",
+          "title": "课程总结：从需求到可靠交付"
+        }
+      ]
+    },
+    {
+      "outline": "modules/aa380af5-efee-42a1-8896-16032f9331ea/outlines.json",
+      "courseUuid": "aa380af5-efee-42a1-8896-16032f9331ea",
+      "pages": [
+        {
+          "previousId": "delivery-task",
+          "uuid": "6c7cbfb6-ea90-4796-9822-e6c1036f5c05",
+          "title": "让机器人学会到达终点"
+        },
+        {
+          "previousId": "state-design",
+          "uuid": "3bf80ba6-d51a-4a5b-84ee-a6de04d0c99f",
+          "title": "状态与观测：真实环境和机器人感知的"
+        },
+        {
+          "previousId": "action-space",
+          "uuid": "a4ec52ff-cc8e-4ce7-850f-c1d4e97cd15f",
+          "title": "动作空间：机器人每一步能做什么？"
+        },
+        {
+          "previousId": "transition-loop",
+          "uuid": "d4c52373-87b2-4afe-8880-f62771424187",
+          "title": "强化学习循环：奖励、终止与策略"
+        },
+        {
+          "previousId": "return-discount",
+          "uuid": "e5021b70-e244-4400-8fe4-6edecdcf8cb7",
+          "title": "回报与折扣：这趟送货能得到多少分？"
+        },
+        {
+          "previousId": "state-value",
+          "uuid": "9d5707c1-91ae-4821-aad9-0f952d455dab",
+          "title": "状态价值：站在这里，未来大概有多好？"
+        },
+        {
+          "previousId": "action-value",
+          "uuid": "c516e17b-855f-475d-9ade-5a191c3e0ffd",
+          "title": "动作价值：在这里走哪一步更值得？"
+        },
+        {
+          "previousId": "q-table",
+          "uuid": "d46e53da-3d63-40b0-8fdd-ed557bcd5f77",
+          "title": "Q 表：把每个状态的动作价值存起来"
+        },
+        {
+          "previousId": "bellman-decomposition",
+          "uuid": "294aa79b-9511-4ba7-b923-0209eff46e9e",
+          "title": "Bellman：从回报分解到 Q 表更新"
+        },
+        {
+          "previousId": "alpha-gamma",
+          "uuid": "a8545858-df1f-40ea-b928-97e28a24e726",
+          "title": "先算目标，再改评分：γ 和 α 各管哪一步？"
+        },
+        {
+          "previousId": "q-learning-update",
+          "uuid": "e401aac9-f0de-46e8-b5fa-ef4f06e42710",
+          "title": "一次经历，怎样改写一个 Q 值？"
+        },
+        {
+          "previousId": "q-learning-loop",
+          "uuid": "d618ab72-7603-425f-871a-3854d9fd0583",
+          "title": "Q-learning：边走边更新整张表"
+        },
+        {
+          "previousId": "exploration-exploitation",
+          "uuid": "2479a2b1-0015-436e-92c6-94fcd669d32b",
+          "title": "Q 值还不准，机器人应该怎么选择动作？"
+        },
+        {
+          "previousId": "epsilon-schedule",
+          "uuid": "585a52a0-1ec9-4f6b-b506-019e479885ba",
+          "title": "探索率为什么要慢慢降下来？"
+        },
+        {
+          "previousId": "tabular-limit",
+          "uuid": "0e693378-20ac-4514-891c-6fef3231c70a",
+          "title": "从小地图到真实仓库：Q 表为什么会膨胀？"
+        },
+        {
+          "previousId": "dqn-architecture",
+          "uuid": "3a2de3d1-938e-49f0-845e-232bdc922202",
+          "title": "DQN：让网络替机器人估价"
+        },
+        {
+          "previousId": "replay-buffer",
+          "uuid": "10842ee3-ad38-4bdf-9816-e24a5f2f658a",
+          "title": "经验回放：保存经历，随机抽样再学习"
+        },
+        {
+          "previousId": "target-network",
+          "uuid": "b6c8a1f2-190a-4446-8eeb-89dedb00ea9a",
+          "title": "目标网络：固定参照，再更新估计"
+        },
+        {
+          "previousId": "dqn-training-loop",
+          "uuid": "8534859f-f819-4df7-934c-7f3eb562093a",
+          "title": "DQN：训练怎样改变机器人的决策？"
+        },
+        {
+          "previousId": "failure-modes",
+          "uuid": "3fb2edf9-c32b-47be-a3c8-c742c6a0aa7d",
+          "title": "奖励设计：让高分真正对应完成任务"
+        },
+        {
+          "previousId": "value-to-policy",
+          "uuid": "87b8f748-16f7-4b21-b784-afd31f5c75a9",
+          "title": "不比较Q值，能直接学会选动作吗？"
+        },
+        {
+          "previousId": "course-map",
+          "uuid": "277cc40d-246d-42c1-9409-e1238bd5b952",
+          "title": "基于价值的强化学习：从经历到决策"
+        }
+      ]
+    },
+    {
+      "outline": "modules/adde4a27-235d-4c03-a3cf-734ccf08b38d/outlines.json",
+      "courseUuid": "adde4a27-235d-4c03-a3cf-734ccf08b38d",
+      "pages": [
+        {
+          "previousId": "01",
+          "uuid": "77c0d524-f4a1-4bd8-9773-9577bdd1a3f9",
+          "title": "曹冲称象"
+        },
+        {
+          "previousId": "02",
+          "uuid": "52910535-203a-42a9-8ac6-8c30d8677886",
+          "title": "石头不足，如何估计象重？"
+        },
+        {
+          "previousId": "03",
+          "uuid": "995941bc-2d85-4186-8f8f-ca7f0348eb5b",
+          "title": "预测误差"
+        },
+        {
+          "previousId": "04",
+          "uuid": "09437179-8db9-4b9f-95ce-585e61cceab7",
+          "title": "误差不能直接相加"
+        },
+        {
+          "previousId": "05",
+          "uuid": "0724ef4f-cebe-4522-98a1-abcc733227ef",
+          "title": "平均绝对误差（MAE）"
+        },
+        {
+          "previousId": "06",
+          "uuid": "80d46956-fa0a-4633-84a0-a0e10bcf362d",
+          "title": "均方误差（MSE）"
+        },
+        {
+          "previousId": "07",
+          "uuid": "b11cf499-6cb4-411b-a448-c5fcc91fd2e6",
+          "title": "损失函数，体现任务的取舍"
+        },
+        {
+          "previousId": "08",
+          "uuid": "f94b76e8-73b8-4c26-bd6c-cbfa2ee5d74d",
+          "title": "调整直线，估计象重"
+        },
+        {
+          "previousId": "09",
+          "uuid": "1fa7e17a-ace0-49c9-85c4-f11669368b1e",
+          "title": "能否让计算机自动找线？"
+        },
+        {
+          "previousId": "10",
+          "uuid": "edf0a77e-0d19-43ef-9297-e19770ccf18e",
+          "title": "遍历搜索的局限"
+        },
+        {
+          "previousId": "11",
+          "uuid": "fbf3f3fe-cb23-4e2b-9a80-24c12a0fa152",
+          "title": "线性回归模型"
+        },
+        {
+          "previousId": "12",
+          "uuid": "8590273e-08e6-4a41-99c6-fae958184397",
+          "title": "最小二乘：从搜索到求解"
+        },
+        {
+          "previousId": "13",
+          "uuid": "daa84a80-6b79-4f55-a3f5-970060b3f1c1",
+          "title": "先求最优截距"
+        },
+        {
+          "previousId": "14",
+          "uuid": "607dfec1-4dfb-4380-88f3-0286281fa6fb",
+          "title": "再求最优斜率"
+        },
+        {
+          "previousId": "15",
+          "uuid": "e6c34248-ab1e-4357-90df-5bc1152d39e9",
+          "title": "得到最优直线"
+        },
+        {
+          "previousId": "16",
+          "uuid": "2574eb2f-e9b5-48c2-95ba-50f288573d54",
+          "title": "用矩阵写出最小二乘"
+        },
+        {
+          "previousId": "17",
+          "uuid": "21e129ca-5540-4663-bdd6-52931efc992a",
+          "title": "为什么正规方程能找到全局最优？"
+        },
+        {
+          "previousId": "18",
+          "uuid": "bf92bc7e-ba85-4332-9f39-0d496cd38a19",
+          "title": "为什么不能总靠解析求解？"
+        }
+      ]
+    },
+    {
+      "outline": "modules/b741543f-e85e-4008-9489-aa454d38351c/outlines.json",
+      "courseUuid": "b741543f-e85e-4008-9489-aa454d38351c",
+      "pages": [
+        {
+          "previousId": "rnn-memory",
+          "uuid": "748895e3-eeb1-4c03-b24c-9e6ae6c32bfd",
+          "title": "问题一 · 记忆：同一个词，为什么会有不同的意思？"
+        },
+        {
+          "previousId": "rnn-prediction",
+          "uuid": "1a53a896-2bdd-47ef-a63f-ed9ba5e863be",
+          "title": "问题二 · 预测：读到这里，下一个字符最可能是什么？"
+        },
+        {
+          "previousId": "rnn-text-to-numbers",
+          "uuid": "24078797-bc07-4d57-b9b1-8c86bc4476ae",
+          "title": "文本预处理：机器怎样“读懂”一段文本？"
+        },
+        {
+          "previousId": "rnn-why-sequences",
+          "uuid": "e68f33a7-a92b-40dc-b423-652bd665ac3a",
+          "title": "记忆的研究对象：序列"
+        },
+        {
+          "previousId": "rnn-markov-formula",
+          "uuid": "503120f5-e1de-4f14-800d-c54427aa2b81",
+          "title": "马尔可夫链：它是什么，怎么算？"
+        },
+        {
+          "previousId": "rnn-markov-limit",
+          "uuid": "1afa7f9e-1f56-44de-8a85-947f24556c90",
+          "title": "马尔可夫链的局限：它只记得上一步"
+        },
+        {
+          "previousId": "rnn-weather-rule",
+          "uuid": "33103210-01a5-460c-94e2-54627c7cb729",
+          "title": "新规则：还要看天气"
+        },
+        {
+          "previousId": "rnn-memory-evolution",
+          "uuid": "6ece92f6-a1a3-476b-ad37-463aa7989fd1",
+          "title": "RNN 如何获得记忆？"
+        },
+        {
+          "previousId": "rnn-unfolding",
+          "uuid": "c57f1d58-73b4-4a89-824b-1b73e186ce72",
+          "title": "RNN 是怎么循环的？"
+        },
+        {
+          "previousId": "rnn-matrix-computation",
+          "uuid": "9add22d9-598b-44be-8518-393635edaee7",
+          "title": "把实例带入具体计算"
+        },
+        {
+          "previousId": "rnn-prediction-process",
+          "uuid": "850143f2-cd57-45ec-ac39-08e25d7b8b89",
+          "title": "同一套计算，怎样一步步预测？"
+        },
+        {
+          "previousId": "rnn-gradient",
+          "uuid": "44e3e0b2-a230-4b5a-a55a-b978af597ae7",
+          "title": "梯度下降"
+        },
+        {
+          "previousId": "rnn-gradient-limits",
+          "uuid": "f2e5e2c9-8f77-4d1c-8b17-850a5af1c756",
+          "title": "梯度爆炸与梯度消失"
+        }
+      ]
+    },
+    {
+      "outline": "modules/b8d86e85-2150-47e3-9e1a-aa7cc7cce15c/components/creator-guide-copy/outlines.json",
+      "courseUuid": "b8d86e85-2150-47e3-9e1a-aa7cc7cce15c",
+      "pages": [
+        {
+          "previousId": "creator-guide-title",
+          "uuid": "91c36399-5d24-4c52-9438-6b0bfa2f5cf1",
+          "title": "实践创作指南"
+        },
+        {
+          "previousId": "learning-goals",
+          "uuid": "28a47665-c4ee-4407-90af-c77075fa7c04",
+          "title": "AI 时代，学习的重点或从积累知识转向理解与应用"
+        },
+        {
+          "previousId": "education-paths",
+          "uuid": "0e7e7276-1187-496c-8a2b-b3afa09e0f93",
+          "title": "面对陌生的知识，我们通常怎么学？"
+        },
+        {
+          "previousId": "popular-science",
+          "uuid": "0334e1d2-b1ff-4d54-9d63-0bd50fbcc4a7",
+          "title": "科普教育的问题是什么？"
+        },
+        {
+          "previousId": "professional-education",
+          "uuid": "f324fa87-51ce-40e9-a5eb-647db24ce26a",
+          "title": "专业教育的问题是什么？"
+        },
+        {
+          "previousId": "intuitive-learning",
+          "uuid": "8360ae3d-eed9-45bc-9734-72f517a8731e",
+          "title": "直觉式学习会怎样讲解知识？"
+        },
+        {
+          "previousId": "frontend-journey",
+          "uuid": "b3d55367-3696-490f-86af-12b6283844e8",
+          "title": "从想法到交互式知识呈现，还隔着一道技术门槛"
+        },
+        {
+          "previousId": "skill-overview",
+          "uuid": "50944a07-a6e1-4069-a11c-df775597c87b",
+          "title": "Creator Skill：让创作者更专注于内容编排"
+        },
+        {
+          "previousId": "skill-constraints",
+          "uuid": "04405b26-e4ce-4be6-ab64-485984da36e6",
+          "title": "创作指导：四类技能协同参与知识呈现设计"
+        },
+        {
+          "previousId": "ui-kit",
+          "uuid": "547f38b2-a668-4440-b161-463f85dabd41",
+          "title": "实现支持：组件与工具支撑实践创作"
+        },
+        {
+          "previousId": "multi-format",
+          "uuid": "45aafc10-be52-48fe-96d1-56b69ff6ce9a",
+          "title": "同一份知识内容，适配多种教学与学习场景"
+        },
+        {
+          "previousId": "human-collaboration",
+          "uuid": "e86c0e43-f113-4336-aa5b-ab5239eb6acd",
+          "title": "制作交互直觉作品，人的作用是什么？"
+        },
+        {
+          "previousId": "presentation-comparison",
+          "uuid": "47b4d6e4-5d50-4bd7-9ff3-2581ddea5350",
+          "title": "把专业理解，变成具体的讲解设计"
+        },
+        {
+          "previousId": "creation-workflow",
+          "uuid": "b2ea0179-d0ff-4c8d-b9bc-3735b55ca5cd",
+          "title": "从想法到成品：实践创作流程"
+        },
+        {
+          "previousId": "optional-interaction",
+          "uuid": "a4dd9f43-f53d-4de5-892c-4b7b9b51859d",
+          "title": "让学习者亲手探索，观察并验证结果"
+        },
+        {
+          "previousId": "progressive-disclosure",
+          "uuid": "e97cdd2c-b314-4804-aaaa-aadf2c06fa68",
+          "title": "围绕学习问题，逐步展开操作"
+        },
+        {
+          "previousId": "discovery-learning",
+          "uuid": "becbdeab-c773-44dd-855e-8595b6796147",
+          "title": "让学习者参与发现，而不只是接收答案"
+        },
+        {
+          "previousId": "shuku-why",
+          "uuid": "37f6c345-e000-4c50-8c62-322dad893b53",
+          "title": "世界知识在不断发展，课程也需要持续更新"
+        },
+        {
+          "previousId": "shuku-participation",
+          "uuid": "fb7a73de-fee6-4d19-8ee0-61151db7f771",
+          "title": "从提出一个问题，到贡献一种更好的讲法，每个人都可以参与到课程的进化"
+        },
+        {
+          "previousId": "shuku-review",
+          "uuid": "b46343fa-94ff-48e3-86b5-70a2d02652f3",
+          "title": "改进经过审核，才能成为课程的下一版"
+        },
+        {
+          "previousId": "shuku-growth",
+          "uuid": "9b7b49e9-eb61-4b58-912a-ef265bc280c9",
+          "title": "每一次学习，都可能推动课程再向前一步"
+        }
+      ]
+    },
+    {
+      "outline": "modules/b8d86e85-2150-47e3-9e1a-aa7cc7cce15c/outlines.json",
+      "courseUuid": "b8d86e85-2150-47e3-9e1a-aa7cc7cce15c",
+      "pages": [
+        {
+          "previousId": "opening",
+          "uuid": "e7f31889-ab3c-4124-9d5b-eb56df8d2e8f",
+          "title": "大模型驱动的实践能力培养体系与平台"
+        },
+        {
+          "previousId": "learning-goals",
+          "uuid": "66cefa17-c522-4228-a8ae-50c9785721d4",
+          "title": "AI 时代，学习的重点或从积累知识转向理解与应用"
+        },
+        {
+          "previousId": "student-capabilities",
+          "uuid": "d4992bfd-162d-4646-9d80-66ecbff8b190",
+          "title": "学生能力培养目标"
+        },
+        {
+          "previousId": "platform-positioning",
+          "uuid": "76acaf20-39a6-420c-9283-e7340cd139c7",
+          "title": "面向知识探索者的科研与教育平台"
+        },
+        {
+          "previousId": "research-information",
+          "uuid": "09effd37-4057-4b45-9441-2490a231bd96",
+          "title": "论文数量快速增长，个人阅读时间有限"
+        },
+        {
+          "previousId": "personalized-research-supply",
+          "uuid": "1c673e39-9fd4-4402-858e-67185f3125dd",
+          "title": "高质量个性化科研信息供给"
+        },
+        {
+          "previousId": "paper-quality",
+          "uuid": "c51115d8-0d27-4fc1-a962-cf7f41dd783e",
+          "title": "自研论文影响力预测与质量估计算法"
+        },
+        {
+          "previousId": "research-service",
+          "uuid": "3b2b1ca6-6e33-4ef8-965a-0c6077b374e4",
+          "title": "发现值得深入阅读的新论文"
+        },
+        {
+          "previousId": "research-recommendation-app",
+          "uuid": "37b3ae2a-6923-4e2b-9d67-a05488969bff",
+          "title": "科研信息供给的全平台解决方案"
+        },
+        {
+          "previousId": "cross-domain-foundation",
+          "uuid": "43fb0e5e-348b-4f16-9f3a-b65843674b9b",
+          "title": "服务前沿探索，也助力初学者入门"
+        },
+        {
+          "previousId": "education-paths",
+          "uuid": "74f59148-64d5-4754-9993-77aa06a25e3c",
+          "title": "初学者面对陌生知识，如何兼顾入门与深入"
+        },
+        {
+          "previousId": "popular-science",
+          "uuid": "af2c0a55-e6a7-41f8-a8d4-e5cda1b314cf",
+          "title": "科普式教育：用直观现象建立初步认识"
+        },
+        {
+          "previousId": "professional-education",
+          "uuid": "bab294fb-0874-4f74-ac74-898a56412a8a",
+          "title": "专业式教育：用概念与公式系统讲解"
+        },
+        {
+          "previousId": "intuitive-learning",
+          "uuid": "a33e7663-d8d9-4139-bfc8-1c85ebaca9fe",
+          "title": "直觉式学习：连接直观体验与专业理解"
+        },
+        {
+          "previousId": "showcase-gomoku",
+          "uuid": "ece0082a-3f11-41f9-823e-ffa37d703eca",
+          "title": "交互直觉实践示例：从五子棋认识卷积核"
+        },
+        {
+          "previousId": "showcase-window-scan",
+          "uuid": "81bd2b62-7f22-40a7-9c9e-10760e87f10d",
+          "title": "交互直觉实践示例：从棋形理解局部匹配"
+        },
+        {
+          "previousId": "creator-copy-multi-format",
+          "uuid": "1f7821d2-910c-45d2-9c8f-19be73b6a397",
+          "title": "同一份知识内容，适配多种教学与学习场景"
+        },
+        {
+          "previousId": "creator-copy-optional-interaction",
+          "uuid": "18fbd353-03f0-4ca2-93bd-d7060214d890",
+          "title": "让学习者亲手探索，观察并验证结果"
+        },
+        {
+          "previousId": "creator-copy-progressive-disclosure",
+          "uuid": "9bb146e3-27b6-4aa9-8222-d4b95047d3d9",
+          "title": "围绕学习问题，逐步展开操作"
+        },
+        {
+          "previousId": "creator-copy-discovery-learning",
+          "uuid": "eb184234-e05a-4c3b-945e-8e898f5adf4d",
+          "title": "让学习者参与发现，而不只是接收答案"
+        },
+        {
+          "previousId": "code-practice",
+          "uuid": "8f773d2d-b7cb-4662-913d-4d1cbb06a481",
+          "title": "通过编程实践，检验对网络结构的理解"
+        },
+        {
+          "previousId": "res2net-thinking",
+          "uuid": "3ef43424-082a-4982-a8f2-0e2bec5b6fe4",
+          "title": "让教学、实践与研究相互启发"
+        },
+        {
+          "previousId": "flexible-teaching-modes",
+          "uuid": "d709a294-b2b5-40b5-ab63-2d7b7148484c",
+          "title": "推荐授课模式"
+        },
+        {
+          "previousId": "recommended-assessment",
+          "uuid": "54d05bf2-9263-47c5-9cd8-34cf8cae85e1",
+          "title": "课后专题研究考核模式"
+        },
+        {
+          "previousId": "creator-copy-presentation-comparison",
+          "uuid": "ca1a3e4d-06a4-4ee7-9a2a-4359e79a8aaf",
+          "title": "既然允许 AI 参与制作，怎样看出学生的理解？"
+        },
+        {
+          "previousId": "creator-copy-frontend-journey",
+          "uuid": "2ffd7dec-ead1-4cb0-a1c4-76fd158861eb",
+          "title": "围绕培养目标，提供工程支持"
+        },
+        {
+          "previousId": "creator-copy-skill-overview",
+          "uuid": "3c6b5760-fb60-4ef7-9a8b-568b3dde3d14",
+          "title": "Creator Skill：让创作者更专注于内容编排"
+        },
+        {
+          "previousId": "creator-copy-skill-constraints",
+          "uuid": "2b9d4ae6-c2c5-4563-b5b3-dc567e8c3d2b",
+          "title": "创作指导：四类技能协同参与知识呈现设计"
+        },
+        {
+          "previousId": "creator-copy-ui-kit",
+          "uuid": "c1aa826f-05f5-4cf3-a137-3805f902b683",
+          "title": "实现支持：组件与工具支撑实践创作"
+        },
+        {
+          "previousId": "creator-copy-creation-workflow",
+          "uuid": "d1046113-3c53-4789-ae80-b2e4d6ae5ede",
+          "title": "从想法到成品：实践创作流程"
+        },
+        {
+          "previousId": "educational-agent-practice",
+          "uuid": "2e605fc8-06d2-40d0-a3e1-92e61bf6b1d1",
+          "title": "Shuku（术库）：让课程在共创中持续进化，形成知识循环"
+        },
+        {
+          "previousId": "dual-learning-evaluation",
+          "uuid": "6999d97a-3ec8-4c01-9d0a-bfc9a342e27b",
+          "title": "实践成果的多元评价与考核"
+        },
+        {
+          "previousId": "teaching-talent-discovery",
+          "uuid": "8cf558d0-cdc3-4c30-92a4-909c2d556b40",
+          "title": "在教学中发现人才，在科研中共同成长"
+        },
+        {
+          "previousId": "education-ecosystem-preview",
+          "uuid": "e6dbf69a-bcd1-41a4-a543-a591c4647e17",
+          "title": "连接教学、科研、人才与产业"
+        }
+      ]
+    },
+    {
+      "outline": "modules/bc6ed89d-ce23-4837-9b2f-bd44acb810b7/outlines.json",
+      "courseUuid": "bc6ed89d-ce23-4837-9b2f-bd44acb810b7",
+      "pages": [
+        {
+          "previousId": "prefill",
+          "uuid": "48574d12-82e1-4da5-917e-80e607ab2029",
+          "title": "四个 token，怎样变成 Q、K、V？"
+        },
+        {
+          "previousId": "attention-cycle",
+          "uuid": "4ee713fc-e7f3-46de-bdf0-03455ec56ef1",
+          "title": "Q、K、V 怎样完成一次计算？"
+        },
+        {
+          "previousId": "numeric-kv-repeat",
+          "uuid": "81a69403-cdb8-4b7a-b35e-3e3fe1a0a0ba",
+          "title": "新增一个 token，旧 K、V 会变吗？"
+        },
+        {
+          "previousId": "abstract-process",
+          "uuid": "cb26b071-ed4f-4e95-ad58-189cca617490",
+          "title": "只预测下一个字，还需要所有 Q 行吗？"
+        },
+        {
+          "previousId": "repeated-work",
+          "uuid": "608b7cca-443e-4abc-a36f-cabebee7946f",
+          "title": "只看 Q、K、V：预测下一个字要用哪些行？"
+        },
+        {
+          "previousId": "cache-loop",
+          "uuid": "1e3df927-6608-4a24-901d-7ed3a96388f6",
+          "title": "把 K、V 存起来，不再重复计算"
+        },
+        {
+          "previousId": "memory-boundary",
+          "uuid": "7d413df9-954b-4f33-aedd-26c0dcd1940a",
+          "title": "KV Cache 的显存怎么算？"
+        },
+        {
+          "previousId": "attention-memory-bridge",
+          "uuid": "8111e242-3660-435c-aed7-21acb84b2497",
+          "title": "上下文变长，显存会怎样？"
+        },
+        {
+          "previousId": "attention-matrix-growth",
+          "uuid": "0e3b685f-2a6f-4073-8ee8-c1322880fa5b",
+          "title": "注意力的临时显存来自这些大矩阵"
+        },
+        {
+          "previousId": "attention-io-movement",
+          "uuid": "278e23b2-688c-4261-b33e-ecdb1dc0e0a7",
+          "title": "大矩阵算完，还要来回搬"
+        },
+        {
+          "previousId": "tiled-score",
+          "uuid": "fd108683-33cd-48af-b924-9ee6bbec805a",
+          "title": "把大矩阵切割成小矩阵"
+        },
+        {
+          "previousId": "flash-normalize",
+          "uuid": "f4846592-414f-4e91-983d-9c97a9ed72de",
+          "title": "因果遮罩后，逐块形成 P"
+        },
+        {
+          "previousId": "flash-output",
+          "uuid": "95305364-7003-405e-b69e-af8767858a68",
+          "title": "权重 P 分块乘 V，得到输出 O"
+        },
+        {
+          "previousId": "flash-advantages",
+          "uuid": "039cda4d-e67c-4424-b28a-50491f0f424f",
+          "title": "FlashAttention 的两个优势"
+        },
+        {
+          "previousId": "kv-cache-optimization",
+          "uuid": "01e9ac2c-3c89-4eb2-a2d3-aae6f49dff2a",
+          "title": "接下来优化 KV Cache 占的显存"
+        },
+        {
+          "previousId": "multi-head-intro",
+          "uuid": "f138dbf6-ce6e-4538-990e-580ef654f17b",
+          "title": "真实情况中往往涉及多个注意力头"
+        },
+        {
+          "previousId": "attention-sharing",
+          "uuid": "afc9a348-1807-49c7-9306-68fd66d66168",
+          "title": "MHA、GQA、MQA 的 K、V 共享方式"
+        },
+        {
+          "previousId": "low-rank-compression",
+          "uuid": "c0f3ce34-665d-4362-b595-efd99caa95e1",
+          "title": "从投影推导 KV 潜在向量"
+        },
+        {
+          "previousId": "latent-kv",
+          "uuid": "cc731fdc-836e-473e-be4e-2e91cbfd9037",
+          "title": "存潜在向量，代替存 K、V"
+        },
+        {
+          "previousId": "matrix-absorption",
+          "uuid": "f851f5e0-b69f-4125-9b88-1fdd36f3175e",
+          "title": "每轮都计算展开历史 KV 会增加计算开销"
+        },
+        {
+          "previousId": "rope-placement",
+          "uuid": "759cab3c-0c09-4906-b9ad-66aba16ee8cb",
+          "title": "补上此前省略的位置编码：RoPE"
+        },
+        {
+          "previousId": "rope-introduction",
+          "uuid": "21c4961c-b0b8-4c63-a0ac-9161e02db926",
+          "title": "RoPE：按 token 位置旋转 Q、K"
+        },
+        {
+          "previousId": "decoupled-rope",
+          "uuid": "ed4453b0-558d-4773-9ac9-56139de0773c",
+          "title": "内容与位置，分开计算"
+        },
+        {
+          "previousId": "attention-comparison",
+          "uuid": "a1c6f5f9-b36d-4944-a5e9-0abd5629c985",
+          "title": "MLA 的三个关键优势"
+        },
+        {
+          "previousId": "cover",
+          "uuid": "2fea66a2-f5ab-439b-bcad-012c73c56b1a",
+          "title": "大模型推理中的注意力优化"
+        }
+      ]
+    },
+    {
+      "outline": "modules/bcb6d951-f361-4b01-b20d-557e6dfc2e87/outlines.json",
+      "courseUuid": "bcb6d951-f361-4b01-b20d-557e6dfc2e87",
+      "pages": [
+        {
+          "previousId": "model-harness-workspace",
+          "uuid": "18ad36ae-81cb-40b1-a240-301a3de410ac",
+          "title": "环境准备"
+        },
+        {
+          "previousId": "learn-by-explaining",
+          "uuid": "e828c4ec-c28f-4aa8-a4ee-4404531e2519",
+          "title": "做课件的过程可以让自己理解得更深入"
+        },
+        {
+          "previousId": "learn-through-engineering-challenges",
+          "uuid": "e547db3b-9b4b-41a1-bcd7-69b6a3328edf",
+          "title": "做课件的过程可以锻炼与 AI 协作的工程能力"
+        },
+        {
+          "previousId": "develop-creator-judgment",
+          "uuid": "a0e58f48-21d3-402c-993e-991a661ca3c6",
+          "title": "做课件的过程可以培养产品思维与审美能力"
+        },
+        {
+          "previousId": "publish-and-credit-contributors",
+          "uuid": "ce4ed8dd-ce1b-4b0c-a36a-cc9745f46b90",
+          "title": "让课件作品留下你的贡献记录"
+        },
+        {
+          "previousId": "communicate-the-work",
+          "uuid": "f069ebfb-40bd-4100-be9e-da6a8875597f",
+          "title": "把作品讲给别人听，也是在练习表达能力"
+        },
+        {
+          "previousId": "define-the-experiment",
+          "uuid": "a001b726-fc23-4cdb-8c36-925a86656ab2",
+          "title": "基于 React 的组件化交互课件框架设计"
+        },
+        {
+          "previousId": "run-the-first-interface",
+          "uuid": "17ce6165-3c41-4d34-80da-f07dbf3debbd",
+          "title": "模块目录地图：一页课件、入口和资源分别放哪里"
+        },
+        {
+          "previousId": "iterate-with-a-screenshot",
+          "uuid": "6589da25-0890-4bc3-8359-dfccecbe8f9e",
+          "title": "Skill：把创作方法变成可复用的工作流程"
+        }
+      ]
+    },
+    {
+      "outline": "modules/ce19337d-405b-47ff-92a9-9890127b5365/outlines.json",
+      "courseUuid": "ce19337d-405b-47ff-92a9-9890127b5365",
+      "pages": [
+        {
+          "previousId": "photo-studio-opening",
+          "uuid": "2807c354-b7a0-4e4c-b59f-4067ebbbd5bf",
+          "title": "没有相机的摄影师"
+        },
+        {
+          "previousId": "generation-not-recognition",
+          "uuid": "f3ccfcf3-3153-4428-9877-dedc752ce5e3",
+          "title": "视觉理解与视觉生成，学习方向正好相反"
+        },
+        {
+          "previousId": "distribution-view",
+          "uuid": "e6922032-cae8-40e1-ad69-0afee1e7d1d9",
+          "title": "什么样的图像，更可能出现在真实世界中？"
+        },
+        {
+          "previousId": "conditional-sampling",
+          "uuid": "5adea822-66b4-4ed2-aba6-a09debdcb59d",
+          "title": "条件如何改变生成结果的概率分布？"
+        },
+        {
+          "previousId": "training-objective",
+          "uuid": "7aa0ffb1-7365-499e-a97a-0dbde852e458",
+          "title": "生成模型到底在训练什么？"
+        },
+        {
+          "previousId": "gan-overview",
+          "uuid": "044188e6-81e8-4b3c-a4bb-e0df3faf0a00",
+          "title": "GAN：生成器造样本，判别器辨真假"
+        },
+        {
+          "previousId": "gan-generator",
+          "uuid": "0a44732e-d02c-455d-8d84-94efbdb66a31",
+          "title": "GAN 生成器：从随机噪声到人脸"
+        },
+        {
+          "previousId": "gan-discriminator",
+          "uuid": "871a82ce-3682-4e98-85cd-a5153d4acb4e",
+          "title": "GAN 判别器：图像真假判断流程"
+        },
+        {
+          "previousId": "gan-training",
+          "uuid": "9bfa4ec4-f772-48c8-ab10-9a0487bdab84",
+          "title": "训练判别器 D：真图判真，生成图判假"
+        },
+        {
+          "previousId": "gan-generator-training",
+          "uuid": "08f4129b-f3c6-4a47-b7af-1d6837a455a0",
+          "title": "训练生成器 G：让生成图获得高分"
+        },
+        {
+          "previousId": "gan-alternating-training",
+          "uuid": "a9ac3035-6d11-4b5a-b277-6d9d1381ea34",
+          "title": "交替训练：D 与 G 轮流更新"
+        },
+        {
+          "previousId": "gan-playground",
+          "uuid": "9a9d6ed4-b740-4b83-99e6-98668826c99b",
+          "title": "亲手训练一个 GAN"
+        },
+        {
+          "previousId": "two-processes",
+          "uuid": "34d05d94-2cf5-41ca-bc92-429a9685e7e4",
+          "title": "Diffusion 的核心：先加噪，再学会逆转"
+        },
+        {
+          "previousId": "closed-form-forward",
+          "uuid": "e1ca2323-d171-498c-97f0-b19238371739",
+          "title": "前向加噪：从一次加噪到连续两次"
+        },
+        {
+          "previousId": "forward-noise-merge",
+          "uuid": "5f832085-2368-4ab2-a266-ae4d54c87ef8",
+          "title": "合并噪声：为什么两份可以变成一份？"
+        },
+        {
+          "previousId": "forward-direct-sampling",
+          "uuid": "504bd442-74d1-43bd-94d9-adab40f0dc75",
+          "title": "直接采样：从原图得到第 t 步"
+        },
+        {
+          "previousId": "forward-diffusion-playground",
+          "uuid": "6a60cd81-9e03-45ff-94dc-199be9067eee",
+          "title": "前向加噪实验：公式里的变量怎样变化？"
+        },
+        {
+          "previousId": "reverse-training-path",
+          "uuid": "421d9728-af0a-41d5-a1bc-13a5a7a1da63",
+          "title": "前向加噪，如何为反向去噪提供训练路径？"
+        },
+        {
+          "previousId": "reverse-question",
+          "uuid": "95db06dc-b34c-4ee0-9ec0-e33c2c91face",
+          "title": "只看到 xₜ，能唯一知道上一步 xₜ₋₁ 吗？"
+        },
+        {
+          "previousId": "true-posterior",
+          "uuid": "c089d963-c718-4fb8-88ab-7840c7f2d2a9",
+          "title": "训练时多知道一个 x₀，就能得到真实后验"
+        },
+        {
+          "previousId": "posterior-formula",
+          "uuid": "0b9e884b-8a0c-482b-a4c1-663bb2a45e98",
+          "title": "线性高斯过程，让真实后验拥有闭式解"
+        },
+        {
+          "previousId": "learned-reverse",
+          "uuid": "204ad2cf-1c99-4920-9c31-5aa8c2238f57",
+          "title": "去噪器要学习一个只依赖 xₜ 的反向分布"
+        },
+        {
+          "previousId": "kl-objective",
+          "uuid": "4cc48d68-d7d0-4a96-bd5f-7327ef18de20",
+          "title": "训练目标：让模型分布逼近真实后验"
+        },
+        {
+          "previousId": "mean-matching",
+          "uuid": "d78af9eb-d811-4fa8-b9fb-b9a78405babb",
+          "title": "固定方差后，KL 主要变成均值预测误差"
+        },
+        {
+          "previousId": "reverse-training-map",
+          "uuid": "b9ec9ed1-18b9-4d62-be85-54204d1e3562",
+          "title": "把整个反向训练过程放回一张图"
+        },
+        {
+          "previousId": "reverse-inference",
+          "uuid": "ba2f3e81-8945-4217-b7d4-aadba10b967b",
+          "title": "图像生成：反向去噪怎样一步步发生？"
+        },
+        {
+          "previousId": "forward-geometry",
+          "uuid": "9ed744a5-3339-4ff5-b787-508193f1c512",
+          "title": "前向加噪，可以看成沿圆弧从图像走向噪声"
+        },
+        {
+          "previousId": "geometry-current-state",
+          "uuid": "0e544350-643d-4db5-b132-db07382ad470",
+          "title": "先把当前状态 xₜ 分解成图像与噪声"
+        },
+        {
+          "previousId": "geometry-previous-state",
+          "uuid": "cafcdab8-867b-41ea-8f8a-b9c52ba0e8fb",
+          "title": "前一个状态 xₜ₋₁，只是圆弧上的另一个点"
+        },
+        {
+          "previousId": "reverse-formula-derived",
+          "uuid": "19ab8750-8a3f-42b3-9c06-74067c832193",
+          "title": "反向递推式，就是“减噪声，再走到前一个圆弧点”"
+        },
+        {
+          "previousId": "diffusion-playground",
+          "uuid": "9e7352e0-a156-455a-ad7e-d734eb243949",
+          "title": "反向去噪实验：公式里的变量怎样变化？"
+        }
+      ]
+    },
+    {
+      "outline": "modules/d0c5d4f2-d72b-48be-9e5e-6a864cc88a45/outlines.json",
+      "courseUuid": "d0c5d4f2-d72b-48be-9e5e-6a864cc88a45",
+      "pages": [
+        {
+          "previousId": "foundation-one-title",
+          "uuid": "715b4edd-fa27-4ef5-bb83-200a7c1c3704",
+          "title": "研究基础一：数据基础"
+        },
+        {
+          "previousId": "pdf-structuring",
+          "uuid": "5dac728a-d418-4b2d-ae37-bce3b5b90949",
+          "title": "从论文 PDF 到结构化信息"
+        },
+        {
+          "previousId": "main-figure-selection",
+          "uuid": "9d90a533-c4de-4403-a2ff-6eaca0e3b06d",
+          "title": "自研论文核心视觉元素识别算法"
+        },
+        {
+          "previousId": "literature-service",
+          "uuid": "046255c6-c674-4df2-89f6-f8d50049cd31",
+          "title": "论文自动化处理框架"
+        },
+        {
+          "previousId": "foundation-two-title",
+          "uuid": "d80af044-b6eb-4d2b-9ffd-41ccd0704f4e",
+          "title": "研究基础二：算法基础"
+        },
+        {
+          "previousId": "paper-quality",
+          "uuid": "43137cd3-71ea-4fde-8322-f4706d819016",
+          "title": "自研论文影响力预测与质量估计算法"
+        },
+        {
+          "previousId": "research-service",
+          "uuid": "dcad9b1e-06a9-4535-95b8-a7837e4afe5f",
+          "title": "论文评价服务：从研究方法到在线应用"
+        },
+        {
+          "previousId": "research-methods",
+          "uuid": "575af7b1-9c95-4cbe-8af5-c2888526b0f1",
+          "title": "连续研究积累"
+        },
+        {
+          "previousId": "foundation-three-title",
+          "uuid": "5f43daf3-4758-4a8a-ab78-8deb4d8366c3",
+          "title": "研究基础三：交互教学基础"
+        },
+        {
+          "previousId": "showcase-caochong",
+          "uuid": "b73c28f3-fdb5-4adc-b19d-6977169170ef",
+          "title": "曹冲称象：从真实情境到交互实验"
+        },
+        {
+          "previousId": "showcase-regression-fit",
+          "uuid": "b2255b3a-b91e-435f-ad25-ca7899011d57",
+          "title": "线性回归：用损失指导估重"
+        },
+        {
+          "previousId": "showcase-code-execution",
+          "uuid": "61e3a590-92b5-4817-a2d3-08ea993735f3",
+          "title": "代码修改与网络结构联动"
+        },
+        {
+          "previousId": "showcase-shuku",
+          "uuid": "b7a3327f-eb1a-41a7-962c-efd68efe0183",
+          "title": "术库：浏览可探索的课程图书馆"
+        },
+        {
+          "previousId": "foundation-four-title",
+          "uuid": "1459e234-0943-4055-8088-11603e9bb36e",
+          "title": "研究基础四：平台与用户基础"
+        },
+        {
+          "previousId": "platform-foundation",
+          "uuid": "57cc9e9e-bdb6-46b3-820c-ee33bda44886",
+          "title": "科研信息供给的全平台解决方案"
+        },
+        {
+          "previousId": "user-foundation",
+          "uuid": "32d61739-577f-46d5-9419-f587012c7982",
+          "title": "科研信息服务：前期平台与用户基础"
+        },
+        {
+          "previousId": "foundation-five-title",
+          "uuid": "6cb75695-00b0-40f6-ad22-ceec5248ee40",
+          "title": "研究基础五：教育实践基础"
+        },
+        {
+          "previousId": "sprout-learning",
+          "uuid": "8af96ed3-74ca-42c1-93ba-e88b9e7238dc",
+          "title": "新芽训练营"
+        },
+        {
+          "previousId": "education-case",
+          "uuid": "68aa560f-74f9-4a14-95c7-c2f91736d619",
+          "title": "人工智能＋研究生教育典型案例"
+        }
+      ]
+    },
+    {
+      "outline": "modules/d85337ec-da9a-4eb7-8cd3-c6ed29992ba8/outlines.json",
+      "courseUuid": "d85337ec-da9a-4eb7-8cd3-c6ed29992ba8",
+      "pages": [
+        {
+          "previousId": "everyday-choice",
+          "uuid": "1e01d924-d7b9-42cc-9d40-6934cbd6e905",
+          "title": "出门怎么走？"
+        }
+      ]
+    },
+    {
+      "outline": "modules/dce4f1dd-b3a7-4b44-90e5-6a59545c9c08/outlines.json",
+      "courseUuid": "dce4f1dd-b3a7-4b44-90e5-6a59545c9c08",
+      "pages": [
+        {
+          "previousId": "01",
+          "uuid": "00c19198-cc92-4327-b95f-02a6a778fa35",
+          "title": "开场挑战：同一批水果，两种分法"
+        },
+        {
+          "previousId": "02",
+          "uuid": "03a61361-b5a3-4d1c-8062-58b671a536bb",
+          "title": "标签形式：按任务选择类别、框或掩膜"
+        },
+        {
+          "previousId": "03",
+          "uuid": "2aca8518-ef4a-45aa-8afc-33785a729049",
+          "title": "标签编码：把类别名称变成数值目标"
+        },
+        {
+          "previousId": "04",
+          "uuid": "58e748ac-e2b6-4a9f-b605-2a209bf84156",
+          "title": "标注规范：发现有歧义的样本"
+        },
+        {
+          "previousId": "05",
+          "uuid": "14cd7dcb-20e8-44d1-b988-96e895011e59",
+          "title": "标注规范：把判断写成可执行规则"
+        },
+        {
+          "previousId": "06",
+          "uuid": "385a7e62-a647-45e5-8e60-6fd5275d5951",
+          "title": "目标框与坐标：画出位置，保存训练标签"
+        },
+        {
+          "previousId": "07",
+          "uuid": "4e212d7f-60d1-4e02-9abc-c5fa348877fa",
+          "title": "像素掩膜：标出目标区域"
+        },
+        {
+          "previousId": "08",
+          "uuid": "35fcf1e9-f569-4890-acaa-d88580e7c3e7",
+          "title": "增广动机：黄色不一定是梨，圆形不一定是苹果"
+        },
+        {
+          "previousId": "09",
+          "uuid": "6c77032b-0dc6-405e-a1e4-5a34c34e8b5f",
+          "title": "增广目的：用合理变化改善泛化"
+        },
+        {
+          "previousId": "10",
+          "uuid": "493e3a2f-3704-4137-ba36-415cdf3da6ff",
+          "title": "增广原则：变换后仍须支持标签"
+        },
+        {
+          "previousId": "11",
+          "uuid": "84d0d4d2-c13f-460b-89ca-38732578449a",
+          "title": "任务语义：判断翻转是否保留类别"
+        },
+        {
+          "previousId": "12",
+          "uuid": "104dfa02-e7a1-41ff-8a60-632eb58803d0",
+          "title": "几何增广：翻转时同步目标框"
+        },
+        {
+          "previousId": "13",
+          "uuid": "52467f44-e381-4b66-8e4b-85f06774a274",
+          "title": "几何增广：裁剪后更新或移除目标"
+        },
+        {
+          "previousId": "14",
+          "uuid": "fadc7041-8021-415e-a175-40fe01071f4e",
+          "title": "几何增广：同步变换图像与掩膜"
+        },
+        {
+          "previousId": "15",
+          "uuid": "846bb852-80b1-4e3e-8665-c957294ecf8d",
+          "title": "外观增广：改变色偏，保留辨识信息"
+        },
+        {
+          "previousId": "16",
+          "uuid": "c69de653-d424-47a5-b76d-8697e9f0b216",
+          "title": "Cutout：遮挡局部，保留分类标签"
+        },
+        {
+          "previousId": "17",
+          "uuid": "8732c60e-044d-435d-b8a4-13e7b8a03504",
+          "title": "Mixup：按同一权重混合图像与标签"
+        },
+        {
+          "previousId": "18",
+          "uuid": "98f06226-8d88-47cf-9742-0dbd8e60f0c8",
+          "title": "CutMix：替换局部，按面积组合标签"
+        },
+        {
+          "previousId": "19",
+          "uuid": "37813117-9379-4906-9b92-55b985e1a4b3",
+          "title": "数据泄露：让训练、验证与测试保持独立"
+        },
+        {
+          "previousId": "20",
+          "uuid": "57a8218a-b0d6-4b28-818d-c736e5aa548d",
+          "title": "条件覆盖：检查训练数据的缺口"
+        },
+        {
+          "previousId": "21",
+          "uuid": "096a0205-0981-433d-917e-c12a28412a4a",
+          "title": "策略组合：设置概率并重放随机变化"
+        },
+        {
+          "previousId": "22",
+          "uuid": "93defe1d-d124-4ab0-80a5-fe6d19c37b74",
+          "title": "生成时机：选择在线增广或离线副本"
+        },
+        {
+          "previousId": "23",
+          "uuid": "3fdc29d7-6a1b-4b25-99c8-245e114d4466",
+          "title": "能力边界：增广不能替代独立实例"
+        },
+        {
+          "previousId": "24",
+          "uuid": "59c770c4-ad8c-42f1-b573-1b28a38a0afe",
+          "title": "流程迁移：为新任务安排数据步骤"
+        }
+      ]
+    },
+    {
+      "outline": "modules/f1751a2d-ea22-4f92-9fa4-32b506c011de/outlines.json",
+      "courseUuid": "f1751a2d-ea22-4f92-9fa4-32b506c011de",
+      "pages": [
+        {
+          "previousId": "choice-and-button",
+          "uuid": "546f0505-8d38-4c1c-be8f-3b7ba6aa6691",
+          "title": "选择与按钮"
+        },
+        {
+          "previousId": "slider-and-toggle",
+          "uuid": "323404f9-7c7d-4d53-94c5-987bb9c25335",
+          "title": "滑块与开关"
+        },
+        {
+          "previousId": "actions-and-review",
+          "uuid": "c7e7039e-fd87-419f-a1c0-c0f91c730f2f",
+          "title": "组合操作"
+        },
+        {
+          "previousId": "ending",
+          "uuid": "02bcca99-53d8-475b-bb43-eb98ee141c68",
+          "title": "结束与反馈"
+        }
+      ]
+    },
+    {
+      "outline": "modules/f80cb964-6f15-44cd-b32e-35e9c19169ee/outlines.json",
+      "courseUuid": "f80cb964-6f15-44cd-b32e-35e9c19169ee",
+      "pages": [
+        {
+          "previousId": "cover",
+          "uuid": "4deacf4d-782d-4f55-814e-322aa1f38422",
+          "title": "科研智能时代的机遇、挑战与探索"
+        },
+        {
+          "previousId": "implementation-barrier",
+          "uuid": "e0595adb-7c6e-466b-ab08-4129d9a2b04c",
+          "title": "研究想法的实现门槛"
+        },
+        {
+          "previousId": "conventional-research",
+          "uuid": "366440f3-29d5-4c7a-aed1-c1f3baf9d0f4",
+          "title": "以往的科研流程"
+        },
+        {
+          "previousId": "wishful-research",
+          "uuid": "d98982d4-186a-4307-93c4-d5a1e2be2625",
+          "title": "AI 时代的“许愿式科研”"
+        },
+        {
+          "previousId": "wishful-benefits",
+          "uuid": "4ad63653-03eb-4d05-b32d-2841a8b23d04",
+          "title": "许愿式科研带来的机会"
+        },
+        {
+          "previousId": "publication-growth",
+          "uuid": "de5f1df7-6945-48e4-b174-2a4b43e63f5f",
+          "title": "论文数量快速增长，个人阅读时间有限"
+        },
+        {
+          "previousId": "page-e50a59862299",
+          "uuid": "a83d1d58-5c25-4596-81b1-a9e74ef7571e",
+          "title": "面对一批新论文，先读哪一篇？"
+        },
+        {
+          "previousId": "page-d9e3fd0135f7",
+          "uuid": "73ac1e20-79ae-4814-8d3a-d37c27af5f03",
+          "title": "新论文最需要判断时，引用信号还没有形成"
+        },
+        {
+          "previousId": "page-27caab56fe55",
+          "uuid": "d95dd5aa-8f91-4cb0-a509-4fe46ef01845",
+          "title": "影响力与质量，是两种不同的评价目标"
+        },
+        {
+          "previousId": "page-c1249cfcb477",
+          "uuid": "9fcb3ddc-8ded-4db3-91f0-f412b67037ec",
+          "title": "NAIPv1：从题目和摘要预测新论文影响力"
+        },
+        {
+          "previousId": "page-28bb48e5234d",
+          "uuid": "bab5839a-0a6b-491e-b8a9-5dbbc477eb51",
+          "title": "同样二十次引用，代表同样的影响力吗？"
+        },
+        {
+          "previousId": "page-5081a88eb69f",
+          "uuid": "273b77e5-e195-4868-963c-e26c97935b5a",
+          "title": "TNCSI：把引用次数放回相关主题中比较"
+        },
+        {
+          "previousId": "page-bf3ebd1e8735",
+          "uuid": "381540cc-6b7c-417e-ac4e-7a40de4dddd7",
+          "title": "同期比较：减少发表时间带来的影响"
+        },
+        {
+          "previousId": "page-ac262d4cb29c",
+          "uuid": "b5b0ec28-e3ef-4f4f-8a71-539495b3bb39",
+          "title": "用已有论文学习文本与影响力之间的关系"
+        },
+        {
+          "previousId": "page-3c71408f0aa8",
+          "uuid": "cd98c946-cb29-4cd4-bb55-cd4219c0498a",
+          "title": "NAIPv1 的结果：比较目标会影响预测效果"
+        },
+        {
+          "previousId": "page-2330267f2324",
+          "uuid": "6555fd1c-12d4-439a-8199-d1217bf74f5c",
+          "title": "从未来引用走向论文质量估计"
+        },
+        {
+          "previousId": "page-ed6ef1b2a11b",
+          "uuid": "07b0cbdc-6bf7-4342-94f2-48ca2fd2858d",
+          "title": "NAIPv2：从专家评审中学习质量信号"
+        },
+        {
+          "previousId": "page-e48d6af0a8d0",
+          "uuid": "edf9eb44-edc5-400d-8934-996966063584",
+          "title": "不同评审的七分，未必是同一把尺子"
+        },
+        {
+          "previousId": "page-a2efa1b489ae",
+          "uuid": "080aa4bb-a0dd-4efd-8893-3d226ee56cb4",
+          "title": "RTS：把评分与评审者的判断把握一起考虑"
+        },
+        {
+          "previousId": "page-35b90066e789",
+          "uuid": "986e4686-f855-4188-a797-b35473db8f4b",
+          "title": "NAIDv2：用真实评审数据训练和检验"
+        },
+        {
+          "previousId": "page-5ee95887a475",
+          "uuid": "dec8cd7e-cc47-4961-b50c-91046cebccaa",
+          "title": "训练时比较两篇，使用时只需给一篇打分"
+        },
+        {
+          "previousId": "page-8ec8652dddf0",
+          "uuid": "faaf9648-be29-4a76-92f6-3b8593e5b469",
+          "title": "NAIPv2 的结果：质量排序信号得到改善"
+        },
+        {
+          "previousId": "page-f29adcccf956",
+          "uuid": "53581a1d-bea5-4895-8250-ca3be7b7f781",
+          "title": "NAIPv1 与 NAIPv2：为不同问题提供评价信号"
+        },
+        {
+          "previousId": "page-812d33983073",
+          "uuid": "441d63c0-d3f4-477b-bcb5-d06bf08ffd95",
+          "title": "简单应用：给新发表论文提供预测参考"
+        },
+        {
+          "previousId": "page-3e922ac9ec38",
+          "uuid": "aec5b079-a7a7-4f02-882c-b660ebbae24f",
+          "title": "减论 Agent：把新论文整理成阅读入口"
+        },
+        {
+          "previousId": "page-c981b4c27e4c",
+          "uuid": "aed9b223-a6d0-4b08-a7c6-07528e0a31bb",
+          "title": "应用探索：结合研究需求安排阅读优先级"
+        },
+        {
+          "previousId": "page-e2b87c7d122b",
+          "uuid": "1818750d-23bb-49ab-bdb9-864af2abc634",
+          "title": "从预测器到评价器：让分数参与选择"
+        },
+        {
+          "previousId": "page-9e031165438c",
+          "uuid": "3943bb9e-ab00-435b-bd16-343124326bab",
+          "title": "评价器可以怎样进入自动科研流程？"
+        },
+        {
+          "previousId": "page-a8362078a733",
+          "uuid": "6caa4886-ddf7-4990-8412-e3279c9f8784",
+          "title": "强化学习：用评价反馈引导 AI 改进"
+        },
+        {
+          "previousId": "page-f9af80e3e9a4",
+          "uuid": "9d335dc3-67d6-4294-b8b6-6d2ae4a8040f",
+          "title": "NAIP 作为奖励信号，需要奖励什么？"
+        },
+        {
+          "previousId": "page-9f6988f17024",
+          "uuid": "714f3110-613e-439b-bb49-8a7bafaa50f1",
+          "title": "检验奖励效果：高分是否对应真实改进？"
+        },
+        {
+          "previousId": "page-91262a8cec38",
+          "uuid": "bb596f9d-ce1a-4e20-9fe8-ee41149ceef6",
+          "title": "科研智能的探索：让生成与评价共同进步"
+        }
+      ]
+    },
+    {
+      "outline": "modules/444f8951-dd2e-42dc-94e5-c5a878618631/components/workflow/copied-course/pages.json",
+      "courseUuid": "444f8951-dd2e-42dc-94e5-c5a878618631",
+      "pages": [
+        {
+          "previousId": "gomoku-play",
+          "uuid": "2f973013-a68b-41b8-a60a-d7a2ce638425",
+          "title": "从五子棋开始认识卷积核"
+        },
+        {
+          "previousId": "board-as-numbers",
+          "uuid": "8c1957ca-507e-46b7-90ea-19967ee71ef8",
+          "title": "棋盘局部区域的数值表示"
+        },
+        {
+          "previousId": "window-scan",
+          "uuid": "8973b376-0795-4b82-9fc6-eb88c3daa262",
+          "title": "棋形的局部匹配"
+        },
+        {
+          "previousId": "kernel-design",
+          "uuid": "eef2860e-bea5-4d68-ac93-f97f46d64084",
+          "title": "根据棋形调整模板"
+        },
+        {
+          "previousId": "kernel-basics",
+          "uuid": "3ec04139-a69d-40d5-bc21-65ae9515d45d",
+          "title": "卷积核：从输入到输出"
+        },
+        {
+          "previousId": "correlation-convolution",
+          "uuid": "1702746b-6046-4089-921a-5d75d8610f1e",
+          "title": "互相关与卷积"
+        },
+        {
+          "previousId": "weighted-kernel",
+          "uuid": "8457458a-24c5-4741-9bfc-e96d180dc724",
+          "title": "权重决定局部响应"
+        },
+        {
+          "previousId": "gradient",
+          "uuid": "35a00948-7bb1-4756-b144-aa8bdcb0723d",
+          "title": "一阶差分：从方向变化到梯度"
+        },
+        {
+          "previousId": "second-difference",
+          "uuid": "1279a8bb-aa0c-41a3-94fa-f2e0f16329c7",
+          "title": "二阶差分：变化如何继续变化"
+        },
+        {
+          "previousId": "sobel-construction",
+          "uuid": "1c44ca0c-2dba-4aeb-bc74-2eef9b368a70",
+          "title": "从一阶差分到 Sobel"
+        },
+        {
+          "previousId": "laplacian-construction",
+          "uuid": "55ca9e6b-c8f9-4560-b7da-3811613e8d55",
+          "title": "从二阶差分到 Laplacian"
+        },
+        {
+          "previousId": "common-kernels",
+          "uuid": "e40c9a4a-0fbe-47a8-8cae-88065413fbdc",
+          "title": "卷积核工作台"
+        },
+        {
+          "previousId": "sparse-connectivity",
+          "uuid": "1d2f6171-3d9c-465d-9d94-b54582dd301e",
+          "title": "稀疏连接：为什么参数更少？"
+        },
+        {
+          "previousId": "weight-sharing",
+          "uuid": "9ea499c4-af11-4bed-9be4-d810ffaff0d8",
+          "title": "权重共享：同一套权重反复使用"
+        },
+        {
+          "previousId": "translation-equivariance",
+          "uuid": "fda31e36-2374-4e50-90e3-5550e682fb00",
+          "title": "平移等变性"
+        },
+        {
+          "previousId": "receptive-field",
+          "uuid": "2fd95ac5-81c2-4371-8419-2e3cc02ab4c9",
+          "title": "卷积核的堆叠与感受野"
+        },
+        {
+          "previousId": "kernel-size",
+          "uuid": "9d6f6004-cf43-43e3-92b3-c7d70333a233",
+          "title": "Kernel size：卷积核有多大？"
+        },
+        {
+          "previousId": "stride",
+          "uuid": "8db0d4b6-b103-42ce-8c93-626c7e64f228",
+          "title": "Stride：卷积核每次移动几格？"
+        },
+        {
+          "previousId": "padding",
+          "uuid": "36e7d8be-77bc-4b5e-b736-a47871beef91",
+          "title": "Padding：让边缘也参与计算"
+        },
+        {
+          "previousId": "rgb-convolution",
+          "uuid": "28421a30-64aa-4cbd-9cc6-d4eb364e9ea6",
+          "title": "RGB 多通道卷积"
+        },
+        {
+          "previousId": "multi-kernel",
+          "uuid": "3f75ae2b-6d99-4cc5-846e-182011392bf2",
+          "title": "多核卷积：卷积核数量决定输出深度"
+        },
+        {
+          "previousId": "dilated-convolution",
+          "uuid": "17a81a57-3778-4f35-83ae-77e29781cc9e",
+          "title": "空洞卷积"
+        },
+        {
+          "previousId": "deformable-convolution",
+          "uuid": "46147536-eb42-4a35-934d-e6d1887a552f",
+          "title": "可变形卷积"
+        },
+        {
+          "previousId": "course-ending",
+          "uuid": "0dd7965e-efe4-4e83-b07b-f04c071005c6",
+          "title": "本节完成：卷积核"
+        }
+      ]
+    },
+    {
+      "outline": "modules/74de5075-8163-413d-84d4-7176f2a3f4a2/components/creator-guide-copy/components/workflow/copied-course/pages.json",
+      "courseUuid": "74de5075-8163-413d-84d4-7176f2a3f4a2",
+      "pages": [
+        {
+          "previousId": "gomoku-play",
+          "uuid": "5501287a-1aa3-4300-8846-2648d1f98f20",
+          "title": "从五子棋开始认识卷积核"
+        },
+        {
+          "previousId": "board-as-numbers",
+          "uuid": "7749ed8d-7036-4cd6-bc26-b0c7306be0cd",
+          "title": "棋盘局部区域的数值表示"
+        },
+        {
+          "previousId": "window-scan",
+          "uuid": "ab8a2526-a563-43e1-84c8-0e2a71436c6f",
+          "title": "棋形的局部匹配"
+        },
+        {
+          "previousId": "kernel-design",
+          "uuid": "e6770157-498e-4f10-a488-0fb3d108feba",
+          "title": "根据棋形调整模板"
+        },
+        {
+          "previousId": "kernel-basics",
+          "uuid": "99bd426d-d515-4093-9997-2df4fa574a01",
+          "title": "卷积核：从输入到输出"
+        },
+        {
+          "previousId": "correlation-convolution",
+          "uuid": "8fe47aba-69bf-49c5-b321-20dd80c6cb4e",
+          "title": "互相关与卷积"
+        },
+        {
+          "previousId": "weighted-kernel",
+          "uuid": "40973d52-5ca6-4883-879b-e5a522a9ae14",
+          "title": "权重决定局部响应"
+        },
+        {
+          "previousId": "gradient",
+          "uuid": "c512b83b-c7b4-43f4-accb-6a98157d66a0",
+          "title": "一阶差分：从方向变化到梯度"
+        },
+        {
+          "previousId": "second-difference",
+          "uuid": "45d5527a-0858-41e0-bb73-de7bc479c687",
+          "title": "二阶差分：变化如何继续变化"
+        },
+        {
+          "previousId": "sobel-construction",
+          "uuid": "5c699a02-7c59-49e1-96d7-18119b5fbdde",
+          "title": "从一阶差分到 Sobel"
+        },
+        {
+          "previousId": "laplacian-construction",
+          "uuid": "72f17de9-34c4-4c0e-8c9e-664b98e2a6e7",
+          "title": "从二阶差分到 Laplacian"
+        },
+        {
+          "previousId": "common-kernels",
+          "uuid": "3a5ced59-afdd-45e9-a696-7decf59fe05b",
+          "title": "卷积核工作台"
+        },
+        {
+          "previousId": "sparse-connectivity",
+          "uuid": "45e43a43-18ff-470d-8ef2-7de973bc2fc4",
+          "title": "稀疏连接：为什么参数更少？"
+        },
+        {
+          "previousId": "weight-sharing",
+          "uuid": "73df8276-f11a-4bae-8ee4-5ebbbceff272",
+          "title": "权重共享：同一套权重反复使用"
+        },
+        {
+          "previousId": "translation-equivariance",
+          "uuid": "668b791d-52d0-4869-9b5d-8c7bced9a35e",
+          "title": "平移等变性"
+        },
+        {
+          "previousId": "receptive-field",
+          "uuid": "509e96ef-7f95-426f-956d-c08ee2813cbd",
+          "title": "卷积核的堆叠与感受野"
+        },
+        {
+          "previousId": "kernel-size",
+          "uuid": "cfc44ffc-ad50-43ba-ac59-9e5fd681cbf6",
+          "title": "Kernel size：卷积核有多大？"
+        },
+        {
+          "previousId": "stride",
+          "uuid": "1c5f2818-bb2c-4c97-b9cd-123d49e0e419",
+          "title": "Stride：卷积核每次移动几格？"
+        },
+        {
+          "previousId": "padding",
+          "uuid": "90a08447-c6fe-4051-ad25-56910de9ec5a",
+          "title": "Padding：让边缘也参与计算"
+        },
+        {
+          "previousId": "rgb-convolution",
+          "uuid": "513c8478-46fe-413a-911d-85c71abc998a",
+          "title": "RGB 多通道卷积"
+        },
+        {
+          "previousId": "multi-kernel",
+          "uuid": "49c018bd-4daf-43f6-a7be-5357a2eec014",
+          "title": "多核卷积：卷积核数量决定输出深度"
+        },
+        {
+          "previousId": "dilated-convolution",
+          "uuid": "e524ddc6-8cdd-4cfe-bd82-bdbfcaf854eb",
+          "title": "空洞卷积"
+        },
+        {
+          "previousId": "deformable-convolution",
+          "uuid": "0719e400-0540-437a-82c2-fc784099365a",
+          "title": "可变形卷积"
+        },
+        {
+          "previousId": "course-ending",
+          "uuid": "972dce7f-53dd-4f65-8289-3a7ae0e2c41d",
+          "title": "本节完成：卷积核"
+        }
+      ]
+    },
+    {
+      "outline": "modules/74de5075-8163-413d-84d4-7176f2a3f4a2/components/workflow/copied-course/pages.json",
+      "courseUuid": "74de5075-8163-413d-84d4-7176f2a3f4a2",
+      "pages": [
+        {
+          "previousId": "gomoku-play",
+          "uuid": "d2048104-8c26-4a91-a5fe-07e2fd6e10f4",
+          "title": "从五子棋开始认识卷积核"
+        },
+        {
+          "previousId": "board-as-numbers",
+          "uuid": "99574d03-8e96-49df-89f6-a3144c21f3f3",
+          "title": "棋盘局部区域的数值表示"
+        },
+        {
+          "previousId": "window-scan",
+          "uuid": "9be9b84b-2c83-418f-8184-7322b1ce2881",
+          "title": "棋形的局部匹配"
+        },
+        {
+          "previousId": "kernel-design",
+          "uuid": "2d6800a1-4754-4c72-86a9-5e007b7b5e45",
+          "title": "根据棋形调整模板"
+        },
+        {
+          "previousId": "kernel-basics",
+          "uuid": "85bbd805-0154-42f3-a857-efa87a38bb15",
+          "title": "卷积核：从输入到输出"
+        },
+        {
+          "previousId": "correlation-convolution",
+          "uuid": "6b402abb-32e4-4710-8421-4898f2cb6cf3",
+          "title": "互相关与卷积"
+        },
+        {
+          "previousId": "weighted-kernel",
+          "uuid": "e109f789-2c7c-4f50-a4fb-3e6b1ff1d618",
+          "title": "权重决定局部响应"
+        },
+        {
+          "previousId": "gradient",
+          "uuid": "a1da789d-6bdc-4673-bd45-19805ccd02e1",
+          "title": "一阶差分：从方向变化到梯度"
+        },
+        {
+          "previousId": "second-difference",
+          "uuid": "a1e23e53-e3af-4b05-ba9e-2b3c8751c97b",
+          "title": "二阶差分：变化如何继续变化"
+        },
+        {
+          "previousId": "sobel-construction",
+          "uuid": "a4409a4d-7f95-47fa-8818-6931b42a5540",
+          "title": "从一阶差分到 Sobel"
+        },
+        {
+          "previousId": "laplacian-construction",
+          "uuid": "d85f1844-8420-4911-89db-1edbba8d3a56",
+          "title": "从二阶差分到 Laplacian"
+        },
+        {
+          "previousId": "common-kernels",
+          "uuid": "4b9d1093-4057-4a1e-b1f0-ca57438bb9d9",
+          "title": "卷积核工作台"
+        },
+        {
+          "previousId": "sparse-connectivity",
+          "uuid": "343e2484-0763-44de-9900-509e8963cb13",
+          "title": "稀疏连接：为什么参数更少？"
+        },
+        {
+          "previousId": "weight-sharing",
+          "uuid": "431f9e8f-714c-44ad-9fb3-5e64f2e1ece6",
+          "title": "权重共享：同一套权重反复使用"
+        },
+        {
+          "previousId": "translation-equivariance",
+          "uuid": "12e922f7-b478-4da9-93c7-bef2767bec3e",
+          "title": "平移等变性"
+        },
+        {
+          "previousId": "receptive-field",
+          "uuid": "b6311c9f-9da0-4821-96b3-16d2b2b606aa",
+          "title": "卷积核的堆叠与感受野"
+        },
+        {
+          "previousId": "kernel-size",
+          "uuid": "56073651-dfce-4a22-8542-f23911fd3fda",
+          "title": "Kernel size：卷积核有多大？"
+        },
+        {
+          "previousId": "stride",
+          "uuid": "da7357ab-ffa3-4ab6-af7b-3d331f53cbad",
+          "title": "Stride：卷积核每次移动几格？"
+        },
+        {
+          "previousId": "padding",
+          "uuid": "67221b74-ec82-4c68-83e1-6f3e92a649d4",
+          "title": "Padding：让边缘也参与计算"
+        },
+        {
+          "previousId": "rgb-convolution",
+          "uuid": "bed3683f-6718-4e8b-943a-57553074a8f6",
+          "title": "RGB 多通道卷积"
+        },
+        {
+          "previousId": "multi-kernel",
+          "uuid": "e1473488-8519-4486-9756-b99711bd2a98",
+          "title": "多核卷积：卷积核数量决定输出深度"
+        },
+        {
+          "previousId": "dilated-convolution",
+          "uuid": "f7b7fce8-86cb-479e-9e65-e4a2bf0fe6d4",
+          "title": "空洞卷积"
+        },
+        {
+          "previousId": "deformable-convolution",
+          "uuid": "018a1d66-1220-4b59-9d7e-a72da09ae352",
+          "title": "可变形卷积"
+        },
+        {
+          "previousId": "course-ending",
+          "uuid": "db793394-de4e-4c66-b205-dfa32790b89a",
+          "title": "本节完成：卷积核"
+        }
+      ]
+    },
+    {
+      "outline": "modules/b8d86e85-2150-47e3-9e1a-aa7cc7cce15c/components/creator-guide-copy/components/workflow/copied-course/pages.json",
+      "courseUuid": "b8d86e85-2150-47e3-9e1a-aa7cc7cce15c",
+      "pages": [
+        {
+          "previousId": "gomoku-play",
+          "uuid": "d4af3cf5-56ae-4416-a37f-bff6135f3701",
+          "title": "从五子棋开始认识卷积核"
+        },
+        {
+          "previousId": "board-as-numbers",
+          "uuid": "613473b0-4ca0-40e8-a7cb-9c22a1c334d9",
+          "title": "棋盘局部区域的数值表示"
+        },
+        {
+          "previousId": "window-scan",
+          "uuid": "821bd225-32a3-43fb-95bb-01592ae8c50a",
+          "title": "棋形的局部匹配"
+        },
+        {
+          "previousId": "kernel-design",
+          "uuid": "301b37a7-6437-456c-9303-60ee58a997c9",
+          "title": "根据棋形调整模板"
+        },
+        {
+          "previousId": "kernel-basics",
+          "uuid": "e2588c85-d33c-4c75-847a-7ffd2ebe8a15",
+          "title": "卷积核：从输入到输出"
+        },
+        {
+          "previousId": "correlation-convolution",
+          "uuid": "2848ae86-2883-4ec5-9aa1-d5eeba19462f",
+          "title": "互相关与卷积"
+        },
+        {
+          "previousId": "weighted-kernel",
+          "uuid": "712b6f9a-f3ab-452c-bab6-d17b6aaa4d59",
+          "title": "权重决定局部响应"
+        },
+        {
+          "previousId": "gradient",
+          "uuid": "d0a19997-6801-47ea-a944-df86ec282248",
+          "title": "一阶差分：从方向变化到梯度"
+        },
+        {
+          "previousId": "second-difference",
+          "uuid": "92bde1d3-8bda-4ad5-924e-27921f70b148",
+          "title": "二阶差分：变化如何继续变化"
+        },
+        {
+          "previousId": "sobel-construction",
+          "uuid": "c7e22a75-de0c-43ec-ae64-37b1b4539b69",
+          "title": "从一阶差分到 Sobel"
+        },
+        {
+          "previousId": "laplacian-construction",
+          "uuid": "a9e5067a-7abb-4388-a194-b681656d43d6",
+          "title": "从二阶差分到 Laplacian"
+        },
+        {
+          "previousId": "common-kernels",
+          "uuid": "2e2ff2d5-7239-4ae3-93af-f87b847c22fa",
+          "title": "卷积核工作台"
+        },
+        {
+          "previousId": "sparse-connectivity",
+          "uuid": "7ba1bc7f-0f25-472b-91f5-c4f8f2a6712d",
+          "title": "稀疏连接：为什么参数更少？"
+        },
+        {
+          "previousId": "weight-sharing",
+          "uuid": "49fe1fe1-29b7-4c3d-9baf-3198090d15bc",
+          "title": "权重共享：同一套权重反复使用"
+        },
+        {
+          "previousId": "translation-equivariance",
+          "uuid": "2321f6e2-04c8-499e-8b54-f9a837f9b281",
+          "title": "平移等变性"
+        },
+        {
+          "previousId": "receptive-field",
+          "uuid": "dc2d232d-8d7d-41ef-bafc-bc4c408e1d38",
+          "title": "卷积核的堆叠与感受野"
+        },
+        {
+          "previousId": "kernel-size",
+          "uuid": "3a561016-ec2f-43c9-a2bc-bc682a1608be",
+          "title": "Kernel size：卷积核有多大？"
+        },
+        {
+          "previousId": "stride",
+          "uuid": "3f531ba0-d55d-4987-b4af-6eadcacec4c9",
+          "title": "Stride：卷积核每次移动几格？"
+        },
+        {
+          "previousId": "padding",
+          "uuid": "580280f9-6609-4c4a-a7f7-e1d9ff2eb7b4",
+          "title": "Padding：让边缘也参与计算"
+        },
+        {
+          "previousId": "rgb-convolution",
+          "uuid": "038ffb1b-021b-4038-a486-09bc9c03c1d0",
+          "title": "RGB 多通道卷积"
+        },
+        {
+          "previousId": "multi-kernel",
+          "uuid": "a815febb-6e0f-4180-a2dc-aaf409e85e45",
+          "title": "多核卷积：卷积核数量决定输出深度"
+        },
+        {
+          "previousId": "dilated-convolution",
+          "uuid": "91770002-4829-404c-a1ca-47f8703d7ac7",
+          "title": "空洞卷积"
+        },
+        {
+          "previousId": "deformable-convolution",
+          "uuid": "150b9aa8-f4e4-41bb-841f-22166cf85e40",
+          "title": "可变形卷积"
+        },
+        {
+          "previousId": "course-ending",
+          "uuid": "aed17285-224f-455d-b5f1-c6edcdad2c30",
+          "title": "本节完成：卷积核"
+        }
+      ]
+    },
+    {
+      "outline": "modules/b8d86e85-2150-47e3-9e1a-aa7cc7cce15c/components/workflow/copied-course/pages.json",
+      "courseUuid": "b8d86e85-2150-47e3-9e1a-aa7cc7cce15c",
+      "pages": [
+        {
+          "previousId": "gomoku-play",
+          "uuid": "31656ec4-19be-45e1-8465-465920796d1d",
+          "title": "从五子棋开始认识卷积核"
+        },
+        {
+          "previousId": "board-as-numbers",
+          "uuid": "16bb7ee8-f569-4e96-9fe9-cf482eeaf5a3",
+          "title": "棋盘局部区域的数值表示"
+        },
+        {
+          "previousId": "window-scan",
+          "uuid": "cc4b46b3-0e2e-4672-b255-4736dd0f66d5",
+          "title": "棋形的局部匹配"
+        },
+        {
+          "previousId": "kernel-design",
+          "uuid": "c0126735-dc25-4465-838f-1f3c32d13934",
+          "title": "根据棋形调整模板"
+        },
+        {
+          "previousId": "kernel-basics",
+          "uuid": "662f59f0-1f99-44d6-9f9b-144b1c3a621b",
+          "title": "卷积核：从输入到输出"
+        },
+        {
+          "previousId": "correlation-convolution",
+          "uuid": "ad13052c-ddab-4b53-a68b-52495e0ae862",
+          "title": "互相关与卷积"
+        },
+        {
+          "previousId": "weighted-kernel",
+          "uuid": "82e1ec42-fc48-4bd8-a605-de7b9710283f",
+          "title": "权重决定局部响应"
+        },
+        {
+          "previousId": "gradient",
+          "uuid": "52c86175-fd4e-4730-89d0-d9ee04047db8",
+          "title": "一阶差分：从方向变化到梯度"
+        },
+        {
+          "previousId": "second-difference",
+          "uuid": "b98ca3a8-0ac2-4071-acbe-8dd204bf997e",
+          "title": "二阶差分：变化如何继续变化"
+        },
+        {
+          "previousId": "sobel-construction",
+          "uuid": "2c465629-6094-46c7-bf5d-88d4687933be",
+          "title": "从一阶差分到 Sobel"
+        },
+        {
+          "previousId": "laplacian-construction",
+          "uuid": "fe3a71e5-37c6-437c-8e04-06c96ae39395",
+          "title": "从二阶差分到 Laplacian"
+        },
+        {
+          "previousId": "common-kernels",
+          "uuid": "0747f3f7-bd95-4d0d-b522-b87a98a5adcd",
+          "title": "卷积核工作台"
+        },
+        {
+          "previousId": "sparse-connectivity",
+          "uuid": "729b5f8a-067a-4971-b8dd-aafb54948440",
+          "title": "稀疏连接：为什么参数更少？"
+        },
+        {
+          "previousId": "weight-sharing",
+          "uuid": "c910ace7-463b-4d01-b801-3840e19042e5",
+          "title": "权重共享：同一套权重反复使用"
+        },
+        {
+          "previousId": "translation-equivariance",
+          "uuid": "e5b4b835-36e7-49ac-9f75-1c35cf2c6b98",
+          "title": "平移等变性"
+        },
+        {
+          "previousId": "receptive-field",
+          "uuid": "981524c8-05c1-424f-9958-26595da96f62",
+          "title": "卷积核的堆叠与感受野"
+        },
+        {
+          "previousId": "kernel-size",
+          "uuid": "4012e010-65f8-466b-967e-e31a1097075d",
+          "title": "Kernel size：卷积核有多大？"
+        },
+        {
+          "previousId": "stride",
+          "uuid": "6548d015-8f7e-4f6d-b8e5-7eebb4e70a13",
+          "title": "Stride：卷积核每次移动几格？"
+        },
+        {
+          "previousId": "padding",
+          "uuid": "b72b5c51-162e-47d5-877a-d74bfe24b528",
+          "title": "Padding：让边缘也参与计算"
+        },
+        {
+          "previousId": "rgb-convolution",
+          "uuid": "efebaf8f-b284-47db-8c12-284a574d046e",
+          "title": "RGB 多通道卷积"
+        },
+        {
+          "previousId": "multi-kernel",
+          "uuid": "4e8506b2-6f2a-4bea-b99f-9ee9eba6ad13",
+          "title": "多核卷积：卷积核数量决定输出深度"
+        },
+        {
+          "previousId": "dilated-convolution",
+          "uuid": "4f76490e-10a4-450e-a3e8-1f4be835a064",
+          "title": "空洞卷积"
+        },
+        {
+          "previousId": "deformable-convolution",
+          "uuid": "bcfe2812-de80-4204-a569-9265ff0c2712",
+          "title": "可变形卷积"
+        },
+        {
+          "previousId": "course-ending",
+          "uuid": "478726be-db37-462a-b857-a5fd324d3e92",
+          "title": "本节完成：卷积核"
+        }
+      ]
+    }
+  ]
+}

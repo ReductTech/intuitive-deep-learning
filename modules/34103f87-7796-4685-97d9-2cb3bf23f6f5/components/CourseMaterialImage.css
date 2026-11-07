@@ -1,0 +1,4 @@
+.attn-material-image{position:relative;width:100%;height:100%;min-width:0;min-height:0;display:grid;place-items:center;}
+.attn-material-image[data-ppt-viewport]{overflow:hidden;}
+.attn-material-image>img{display:block;width:100%;height:100%;max-width:100%;object-fit:contain;}
+.attn-material-image>.edu-btn{max-width:100%;}

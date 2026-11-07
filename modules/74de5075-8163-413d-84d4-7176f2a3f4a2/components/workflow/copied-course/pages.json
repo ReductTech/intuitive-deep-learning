@@ -1,0 +1,126 @@
+{
+  "schemaVersion": 1,
+  "pages": [
+    {
+      "id": "d2048104-8c26-4a91-a5fe-07e2fd6e10f4",
+      "title": "从五子棋开始认识卷积核",
+      "snippet": ""
+    },
+    {
+      "id": "99574d03-8e96-49df-89f6-a3144c21f3f3",
+      "title": "棋盘局部区域的数值表示",
+      "snippet": ""
+    },
+    {
+      "id": "9be9b84b-2c83-418f-8184-7322b1ce2881",
+      "title": "棋形的局部匹配",
+      "snippet": ""
+    },
+    {
+      "id": "2d6800a1-4754-4c72-86a9-5e007b7b5e45",
+      "title": "根据棋形调整模板",
+      "snippet": ""
+    },
+    {
+      "id": "85bbd805-0154-42f3-a857-efa87a38bb15",
+      "title": "卷积核：从输入到输出",
+      "snippet": ""
+    },
+    {
+      "id": "6b402abb-32e4-4710-8421-4898f2cb6cf3",
+      "title": "互相关与卷积",
+      "snippet": ""
+    },
+    {
+      "id": "e109f789-2c7c-4f50-a4fb-3e6b1ff1d618",
+      "title": "权重决定局部响应",
+      "snippet": ""
+    },
+    {
+      "id": "a1da789d-6bdc-4673-bd45-19805ccd02e1",
+      "title": "一阶差分：从方向变化到梯度",
+      "snippet": ""
+    },
+    {
+      "id": "a1e23e53-e3af-4b05-ba9e-2b3c8751c97b",
+      "title": "二阶差分：变化如何继续变化",
+      "snippet": ""
+    },
+    {
+      "id": "a4409a4d-7f95-47fa-8818-6931b42a5540",
+      "title": "从一阶差分到 Sobel",
+      "snippet": ""
+    },
+    {
+      "id": "d85f1844-8420-4911-89db-1edbba8d3a56",
+      "title": "从二阶差分到 Laplacian",
+      "snippet": ""
+    },
+    {
+      "id": "4b9d1093-4057-4a1e-b1f0-ca57438bb9d9",
+      "title": "卷积核工作台",
+      "snippet": ""
+    },
+    {
+      "id": "343e2484-0763-44de-9900-509e8963cb13",
+      "title": "稀疏连接：为什么参数更少？",
+      "snippet": ""
+    },
+    {
+      "id": "431f9e8f-714c-44ad-9fb3-5e64f2e1ece6",
+      "title": "权重共享：同一套权重反复使用",
+      "snippet": ""
+    },
+    {
+      "id": "12e922f7-b478-4da9-93c7-bef2767bec3e",
+      "title": "平移等变性",
+      "snippet": ""
+    },
+    {
+      "id": "b6311c9f-9da0-4821-96b3-16d2b2b606aa",
+      "title": "卷积核的堆叠与感受野",
+      "snippet": ""
+    },
+    {
+      "id": "56073651-dfce-4a22-8542-f23911fd3fda",
+      "title": "Kernel size：卷积核有多大？",
+      "snippet": ""
+    },
+    {
+      "id": "da7357ab-ffa3-4ab6-af7b-3d331f53cbad",
+      "title": "Stride：卷积核每次移动几格？",
+      "snippet": ""
+    },
+    {
+      "id": "67221b74-ec82-4c68-83e1-6f3e92a649d4",
+      "title": "Padding：让边缘也参与计算",
+      "snippet": ""
+    },
+    {
+      "id": "bed3683f-6718-4e8b-943a-57553074a8f6",
+      "title": "RGB 多通道卷积",
+      "snippet": ""
+    },
+    {
+      "id": "e1473488-8519-4486-9756-b99711bd2a98",
+      "title": "多核卷积：卷积核数量决定输出深度",
+      "snippet": ""
+    },
+    {
+      "id": "f7b7fce8-86cb-479e-9e65-e4a2bf0fe6d4",
+      "title": "空洞卷积",
+      "snippet": ""
+    },
+    {
+      "id": "018a1d66-1220-4b59-9d7e-a72da09ae352",
+      "title": "可变形卷积",
+      "snippet": ""
+    },
+    {
+      "id": "db793394-de4e-4c66-b205-dfa32790b89a",
+      "title": "本节完成：卷积核",
+      "snippet": ""
+    }
+  ],
+  "pageIdentityVersion": 1
+}

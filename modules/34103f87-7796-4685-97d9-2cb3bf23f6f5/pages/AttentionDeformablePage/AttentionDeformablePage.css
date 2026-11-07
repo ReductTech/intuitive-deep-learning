@@ -1,0 +1,13 @@
+.attn-window-page { height:100%; display:grid; grid-template-rows:auto minmax(0,1fr); }
+.attn-window-body { min-height:0; grid-template-rows:minmax(0,1fr) auto; gap:18px; }
+.attn-window-main { display:grid; grid-template-columns:minmax(0,1.8fr) minmax(0,1fr); gap:32px; min-height:0; min-width:0; }
+.attn-window-detail { display:grid; gap:16px; padding-top:16px; align-content:start; min-width:0; min-height:0; }
+.attn-window-detail .attn-choice-row { flex-wrap:nowrap; gap:8px; }
+.attn-window-detail .edu-btn { min-width:0; padding-inline:10px; }
+.attn-window-footer { border-top:1px solid var(--ui-border-strong); padding-top:12px; display:grid; gap:8px; }
+.attn-window-footer>div { display:flex; align-items:center; justify-content:space-between; gap:24px; }
+
+.attn-window-page .attn-passing-scene{justify-items:start;}
+
+.attn-window-result { display:grid; gap:6px; padding:14px 18px; background:var(--ui-bg-muted); border-radius:var(--ui-radius-md); }
+.attn-window-reference { display:grid; gap:8px; padding:12px 0 0; border-top:1px solid var(--ui-border); }
