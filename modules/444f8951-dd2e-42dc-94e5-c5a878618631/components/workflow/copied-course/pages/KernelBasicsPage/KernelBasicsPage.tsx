@@ -1,11 +1,12 @@
+import mengdelianAsset0 from '../../../../../assets/workflow/convolution-course/mengdelian.jpg';
+import xielaqiaoAsset1 from '../../../../../assets/workflow/convolution-course/xielaqiao.jpg';
 import { useEffect, useRef, useState } from 'react';
-import { ContentBlock, moduleAssetUrl, Typography } from '../../../../../../shared/react';
+import { ContentBlock, Typography } from '../../../../../../shared/react';
 import { useGomokuOutcome } from '../../LessonContext';
 import './KernelBasicsPage.css';
 
-const moduleAssetId = '444f8951-dd2e-42dc-94e5-c5a878618631';
-const cityImage = moduleAssetUrl(moduleAssetId, 'workflow/convolution-course/mengdelian.jpg');
-const bridgeImage = moduleAssetUrl(moduleAssetId, 'workflow/convolution-course/xielaqiao.jpg');
+const cityImage = mengdelianAsset0;
+const bridgeImage = xielaqiaoAsset1;
 
 const GRID_WIDTH = 16;
 const GRID_HEIGHT = 9;
@@ -94,6 +95,7 @@ function useConvolutionData(imageSource: string, kernel: number[][]): Convolutio
     let active = true;
     setData(null);
     const image = new Image();
+    image.crossOrigin = 'anonymous';
     image.onload = () => {
       if (!active) return;
       const inputWidth = INPUT_WIDTH;

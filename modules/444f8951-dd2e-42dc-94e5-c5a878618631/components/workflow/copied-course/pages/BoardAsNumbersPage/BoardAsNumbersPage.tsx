@@ -1,5 +1,6 @@
+import bg1Asset0 from '../../../../../assets/workflow/convolution-course/bg1.jpg';
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
-import { ContentBlock, moduleAssetUrl, Typography } from '../../../../../../shared/react';
+import { ContentBlock, Typography } from '../../../../../../shared/react';
 import { useGomokuOutcome } from '../../LessonContext';
 import {
   BLACK,
@@ -21,7 +22,7 @@ const BOARD_PAD_RATIO = 0.075;
 /** 棋盘上的星位：天元与四个星点。 */
 const STAR_POINTS: ReadonlyArray<readonly [number, number]> = [[3, 3], [3, 11], [7, 7], [11, 3], [11, 11]];
 const boardBackgroundStyle = {
-  '--cg-copy-ck-numbers-background': `url("${moduleAssetUrl('444f8951-dd2e-42dc-94e5-c5a878618631', 'workflow/convolution-course/bg1.jpg')}")`,
+  '--cg-numbers-background': `url("${bg1Asset0}")`,
 } as CSSProperties;
 
 /** 棋盘坐标轴：列用 A–O，行用 1–15，和右边矩阵的行列索引一致。 */
@@ -227,17 +228,17 @@ function NumbersBoard({ board, winLine, spotlight, label, origin }: NumbersBoard
   }, [size, board, winLine, spotlight, origin]);
 
   return (
-    <div className="cg-copy-ck-numbers__board" ref={frameRef}>
-      <canvas ref={canvasRef} className="cg-copy-ck-numbers__board-canvas" role="img" aria-label={label} />
-      <div className="cg-copy-ck-numbers__board-axis" aria-hidden="true">
-        <div className="cg-copy-ck-numbers__board-axis-cols">
+    <div className="cg-replay-numbers__board" ref={frameRef}>
+      <canvas ref={canvasRef} className="cg-replay-numbers__board-canvas" role="img" aria-label={label} />
+      <div className="cg-replay-numbers__board-axis" aria-hidden="true">
+        <div className="cg-replay-numbers__board-axis-cols">
           {Array.from({ length: WINDOW_SIZE }, (_, index) => COLUMN_LABELS[origin.col + index]).map((text, index) => (
               <Typography key={text} as="span" variant="body" style={{ left: `${(index / (WINDOW_SIZE - 1)) * 100}%` }}>
               {text}
             </Typography>
           ))}
         </div>
-        <div className="cg-copy-ck-numbers__board-axis-rows">
+        <div className="cg-replay-numbers__board-axis-rows">
           {Array.from({ length: WINDOW_SIZE }, (_, index) => ROW_LABELS[origin.row + index]).map((text, index) => (
               <Typography key={text} as="span" variant="body" style={{ top: `${(index / (WINDOW_SIZE - 1)) * 100}%` }}>
               {text}
@@ -263,8 +264,8 @@ interface MapTile {
  */
 function FlowArrow() {
   return (
-    <span className="cg-copy-ck-numbers__arrow-slot" aria-hidden="true">
-      <span className="cg-copy-ck-numbers__arrow" />
+    <span className="cg-replay-numbers__arrow-slot" aria-hidden="true">
+      <span className="cg-replay-numbers__arrow" />
     </span>
   );
 }
@@ -272,9 +273,10 @@ function FlowArrow() {
 export interface BoardAsNumbersPageProps {
   onComplete: () => void;
   clarifyOrigin?: boolean;
+  autoDemo?: boolean;
 }
 
-export function BoardAsNumbersPage({ onComplete, clarifyOrigin = false }: BoardAsNumbersPageProps) {
+export function BoardAsNumbersPage({ onComplete, clarifyOrigin = false, autoDemo = false }: BoardAsNumbersPageProps) {
   const { outcome } = useGomokuOutcome();
   const [focus, setFocus] = useState<Cell | null>(null);
   const completedRef = useRef(false);
@@ -286,6 +288,11 @@ export function BoardAsNumbersPage({ onComplete, clarifyOrigin = false }: BoardA
   const grid = useMemo(() => toNumberGrid(board, outcome.winner), [board, outcome.winner]);
   // 窗口以获胜连线的最小外接矩形为中心，再整体夹回棋盘内。
   const zoom = useMemo(() => zoomWindow(outcome.winLine, WINDOW_SIZE), [outcome.winLine]);
+  useEffect(() => {
+    if (!autoDemo) return;
+    const timer = setTimeout(() => setFocus(zoom.centre), 1200);
+    return () => clearTimeout(timer);
+  }, [autoDemo, zoom]);
 
   // 赢方的子记 1，输方的子记 -1，空点记 0。
   const winnerIcon = outcome.winner === BLACK ? 'black' : 'white';
@@ -318,34 +325,34 @@ export function BoardAsNumbersPage({ onComplete, clarifyOrigin = false }: BoardA
   return (
     <ContentBlock
       headingLevel={1}
-      className="cg-copy-ck-numbers"
+      className="cg-replay-numbers"
       style={boardBackgroundStyle}
       title="棋盘局部区域的数值表示"
       subtitle={clarifyOrigin ? '这些数字对应上一页的棋盘位置。将棋子与空位映射为数值，得到对应的局部矩阵。' : '将棋子与空位映射为数值，得到对应的局部矩阵。'}
     >
-      <div className="cg-copy-ck-numbers__layout">
-        <div className="cg-copy-ck-numbers__stage">
-          <div className="cg-copy-ck-numbers__step-heading"><span>1</span><div><Typography as="h2" variant="h3" tone="accent">局部区域选取</Typography><Typography variant="bodySmall" tone="muted">选取五子连线附近的局部棋盘。</Typography></div></div>
+      <div className="cg-replay-numbers__layout">
+        <div className="cg-replay-numbers__stage">
+          <div className="cg-replay-numbers__step-heading"><span>1</span><div><Typography as="h2" variant="h3" tone="accent">局部区域选取</Typography><Typography variant="bodySmall" tone="muted">选取五子连线附近的局部棋盘。</Typography></div></div>
           <NumbersBoard board={board} winLine={outcome.winLine} spotlight={focus} origin={zoom.origin} label={boardLabel} />
         </div>
 
         <FlowArrow />
 
-        <div className="cg-copy-ck-numbers__map">
-          <div className="cg-copy-ck-numbers__step-heading"><span>2</span><div><Typography as="h2" variant="h3" tone="accent">数值编码规则</Typography><Typography variant="bodySmall" tone="muted">目标棋子记为 1，对手棋子记为 −1，空位记为 0。</Typography></div></div>
-          <div className="cg-copy-ck-numbers__map-tiles">
+        <div className="cg-replay-numbers__map">
+          <div className="cg-replay-numbers__step-heading"><span>2</span><div><Typography as="h2" variant="h3" tone="accent">数值编码规则</Typography><Typography variant="bodySmall" tone="muted">目标棋子记为 1，对手棋子记为 −1，空位记为 0。</Typography></div></div>
+          <div className="cg-replay-numbers__map-tiles">
             {tiles.map((tile) => {
               const kind = tile.value === 1 ? 'one' : tile.value === -1 ? 'minus' : 'zero';
               return (
-                <div key={tile.key} className={`cg-copy-ck-numbers__map-tile cg-copy-ck-numbers__map-tile--${kind}`}>
-                  <div className="cg-copy-ck-numbers__map-face">
+                <div key={tile.key} className={`cg-replay-numbers__map-tile cg-replay-numbers__map-tile--${kind}`}>
+                  <div className="cg-replay-numbers__map-face">
                     <Typography as="span" variant="body" tone="muted">{tile.label}</Typography>
                     <span
-                      className={`cg-copy-ck-numbers__map-icon cg-copy-ck-numbers__map-icon--${tile.icon}`}
+                      className={`cg-replay-numbers__map-icon cg-replay-numbers__map-icon--${tile.icon}`}
                       aria-hidden="true"
                     />
                   </div>
-                  <div className="cg-copy-ck-numbers__map-value">
+                  <div className="cg-replay-numbers__map-value">
                     <Typography as="span" variant="h2" tone="inherit">
                       {tile.value}
                     </Typography>
@@ -358,12 +365,12 @@ export function BoardAsNumbersPage({ onComplete, clarifyOrigin = false }: BoardA
 
         <FlowArrow />
 
-        <div className="cg-copy-ck-numbers__panel">
-          <div className="cg-copy-ck-numbers__step-heading"><span>3</span><div><Typography as="h2" variant="h3" tone="accent">局部矩阵表示</Typography><Typography variant="bodySmall" tone="muted">按照相同的空间位置排列对应数值。</Typography></div></div>
-          <div className="cg-copy-ck-numbers__matrix">
-            <div className="cg-copy-ck-numbers__matrix-corner" aria-hidden="true" />
+        <div className="cg-replay-numbers__panel">
+          <div className="cg-replay-numbers__step-heading"><span>3</span><div><Typography as="h2" variant="h3" tone="accent">局部矩阵表示</Typography><Typography variant="bodySmall" tone="muted">按照相同的空间位置排列对应数值。</Typography></div></div>
+          <div className="cg-replay-numbers__matrix">
+            <div className="cg-replay-numbers__matrix-corner" aria-hidden="true" />
 
-            <div className="cg-copy-ck-numbers__matrix-cols" aria-hidden="true">
+            <div className="cg-replay-numbers__matrix-cols" aria-hidden="true">
               {matrixCols.map((col) => (
                 <Typography
                   key={col}
@@ -376,7 +383,7 @@ export function BoardAsNumbersPage({ onComplete, clarifyOrigin = false }: BoardA
               ))}
             </div>
 
-            <div className="cg-copy-ck-numbers__matrix-rows" aria-hidden="true">
+            <div className="cg-replay-numbers__matrix-rows" aria-hidden="true">
               {matrixRows.map((row) => (
                 <Typography
                   key={row}
@@ -390,7 +397,7 @@ export function BoardAsNumbersPage({ onComplete, clarifyOrigin = false }: BoardA
             </div>
 
             <div
-              className="cg-copy-ck-numbers__matrix-grid"
+              className="cg-replay-numbers__matrix-grid"
               role="group"
               aria-label={matrixLabel}
               onPointerLeave={() => onHoverCell(null)}
@@ -402,10 +409,10 @@ export function BoardAsNumbersPage({ onComplete, clarifyOrigin = false }: BoardA
                   Math.max(Math.abs(row - zoom.centre.row), Math.abs(col - zoom.centre.col)),
                 );
                 const classes = [
-                  'cg-copy-ck-numbers__cell',
-                  `cg-copy-ck-numbers__cell--ring-${ring}`,
-                  value === 1 ? 'cg-copy-ck-numbers__cell--one' : '',
-                  value === -1 ? 'cg-copy-ck-numbers__cell--minus' : '',
+                  'cg-replay-numbers__cell',
+                  `cg-replay-numbers__cell--ring-${ring}`,
+                  value === 1 ? 'cg-replay-numbers__cell--one' : '',
+                  value === -1 ? 'cg-replay-numbers__cell--minus' : '',
                   focus && focus.row === row && focus.col === col ? 'is-hovered' : '',
                 ].filter(Boolean).join(' ');
                 return (

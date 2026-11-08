@@ -1,8 +1,9 @@
+import caiermateAsset0 from '../../../../../assets/workflow/convolution-course/caiermate.jpg';
 import { useEffect, useState, type ReactNode } from 'react';
-import { ContentBlock, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, moduleAssetUrl, Typography } from '../../../../../../shared/react';
+import { ContentBlock, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, Typography } from '../../../../../../shared/react';
 import './SecondDifferencePage.css';
 
-const zermattImage = moduleAssetUrl('444f8951-dd2e-42dc-94e5-c5a878618631', 'workflow/convolution-course/caiermate.jpg');
+const zermattImage = caiermateAsset0;
 
 interface DifferenceImages {
   input: string;
@@ -82,6 +83,7 @@ function useDifferenceImages() {
   useEffect(() => {
     let active = true;
     const image = new Image();
+    image.crossOrigin = 'anonymous';
     image.onload = () => {
       if (active) setImages(buildDifferenceImages(image));
     };

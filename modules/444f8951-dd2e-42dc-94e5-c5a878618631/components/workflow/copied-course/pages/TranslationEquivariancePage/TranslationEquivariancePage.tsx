@@ -1,12 +1,15 @@
+import bgAsset0 from '../../../../../assets/workflow/convolution-course/layerd_scene/bg.jpg';
+import ufoAsset1 from '../../../../../assets/workflow/convolution-course/layerd_scene/ufo.png';
+import pillarAsset2 from '../../../../../assets/workflow/convolution-course/layerd_scene/pillar.png';
+import dark_foliageAsset3 from '../../../../../assets/workflow/convolution-course/layerd_scene/dark_foliage.png';
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from 'react';
-import { ContentBlock, moduleAssetUrl, Typography } from '../../../../../../shared/react';
+import { ContentBlock, Typography } from '../../../../../../shared/react';
 import './TranslationEquivariancePage.css';
 
-const moduleAssetId = '444f8951-dd2e-42dc-94e5-c5a878618631';
-const backgroundUrl = moduleAssetUrl(moduleAssetId, 'workflow/convolution-course/layerd_scene/bg.jpg');
-const ufoUrl = moduleAssetUrl(moduleAssetId, 'workflow/convolution-course/layerd_scene/ufo.png');
-const pillarUrl = moduleAssetUrl(moduleAssetId, 'workflow/convolution-course/layerd_scene/pillar.png');
-const foliageUrl = moduleAssetUrl(moduleAssetId, 'workflow/convolution-course/layerd_scene/dark_foliage.png');
+const backgroundUrl = bgAsset0;
+const ufoUrl = ufoAsset1;
+const pillarUrl = pillarAsset2;
+const foliageUrl = dark_foliageAsset3;
 
 const MAP_WIDTH = 80;
 const MAP_HEIGHT = 58;
@@ -17,6 +20,7 @@ interface SceneImages { background: HTMLImageElement; ufo: HTMLImageElement; pil
 function loadImage(src: string): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
     const image = new Image();
+    image.crossOrigin = 'anonymous';
     image.onload = () => resolve(image);
     image.onerror = reject;
     image.src = src;

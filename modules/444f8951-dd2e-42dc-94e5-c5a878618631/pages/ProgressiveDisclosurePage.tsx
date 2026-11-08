@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { Button, Select, Typography } from '../../shared/react';
+import { Button, ContentBlock, Select, Typography } from '../../shared/react';
+import { DesignComparisonHeader } from '../components/DesignComparisonHeader';
 import { correlate, formatResponse, initialSettings, inputPattern, kernels, type Settings } from '../components/disclosure/convolutionExperiment';
 import './ProgressiveDisclosurePage.css';
 
@@ -68,14 +69,12 @@ export function ProgressiveDisclosurePage() {
   }, []);
   const left=useExperiment(visible && pageVisible),right=useExperiment(visible && pageVisible);
   const [expanded,setExpanded]=useState(false);
-  return <article ref={root} className="cg-disclosure-page cg-creator-typography" aria-labelledby="cg-disclosure-title" onKeyDown={event=>{if(event.target instanceof Element && event.target.closest('button,input,select') && ['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End',' '].includes(event.key))event.stopPropagation();}}>
-    <header><Typography as="h1" variant="display" tone="inherit" id="cg-disclosure-title">渐进式披露，克制才是高级</Typography><Typography variant="body" tone="muted">同一个卷积实验台，让操作随着学习问题逐步展开。</Typography></header>
+  return <ContentBlock ref={root} headingLevel={1} title="围绕学习问题，逐步展开操作" subtitle="同一个卷积实验台，让设置随学习过程按需展开。" className="cg-disclosure-page cg-creator-typography" onKeyDown={event=>{if(event.target instanceof Element && event.target.closest('button,input,select') && ['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End',' '].includes(event.key))event.stopPropagation();}}>
     <div className="cg-disclosure-panels">
-      <section className="cg-disclosure-panel cg-disclosure-left" aria-label="全部设置同时展示"><Typography as="h2" variant="h3" tone="inherit">设置全部展开，从哪里开始？</Typography><ConvolutionView exp={left}/><div className="cg-disclosure-settings"><KernelControl exp={left}/><SizeControls exp={left}/><ViewControls exp={left}/></div><div className="cg-disclosure-left-actions"><Typography variant="bodySmall" tone="inherit" className="cg-disclosure-thought">我该先调哪个？</Typography><Button variant="primary" onClick={left.toggle}><Typography as="span" variant="bodySmall" tone="inherit">{left.finished?'重新扫描':left.playing?'暂停扫描':'继续扫描'}</Typography></Button></div></section>
-      <section className="cg-disclosure-panel cg-disclosure-right" aria-label="按问题逐步展开"><Typography as="h2" variant="h3" tone="inherit">先围绕一个问题，组织操作</Typography><Typography variant="body" tone="accent" className="cg-disclosure-question">卷积核怎样找到边缘？</Typography><ConvolutionView exp={right}/><div className="cg-disclosure-focused"><KernelControl exp={right}/><Button variant="primary" onClick={right.toggle}><Typography as="span" variant="bodySmall" tone="inherit">{right.finished?'重新扫描':right.playing?'暂停扫描':'继续扫描'}</Typography></Button></div><div className="cg-disclosure-more">
+      <section className="cg-disclosure-panel cg-disclosure-left cg-design-comparison-panel" aria-label="全部设置同时展示"><DesignComparisonHeader description="全部设置同时呈现"/><ConvolutionView exp={left}/><div className="cg-disclosure-settings"><KernelControl exp={left}/><SizeControls exp={left}/><ViewControls exp={left}/><Button variant="primary" onClick={left.toggle}><Typography as="span" variant="bodySmall" tone="inherit">{left.finished?'重新扫描':left.playing?'暂停扫描':'继续扫描'}</Typography></Button></div></section>
+      <section className="cg-disclosure-panel cg-disclosure-right cg-design-comparison-panel is-ours" aria-label="按问题逐步展开"><DesignComparisonHeader ours description="聚焦当前问题，按需展开"/><Typography variant="bodySmall" tone="accent" className="cg-disclosure-question">卷积核怎样找到边缘？</Typography><ConvolutionView exp={right}/><div className="cg-disclosure-focused"><KernelControl exp={right}/><Button variant="primary" onClick={right.toggle}><Typography as="span" variant="bodySmall" tone="inherit">{right.finished?'重新扫描':right.playing?'暂停扫描':'继续扫描'}</Typography></Button></div><div className="cg-disclosure-more">
         <div className="cg-disclosure-extra"><Button className="cg-disclosure-expand" aria-expanded={expanded} aria-controls="cg-disclosure-more-settings" onClick={()=>setExpanded(value=>!value)}><Typography as="span" variant="bodySmall" tone="inherit">更多设置</Typography><Typography as="span" variant="bodySmall" tone="inherit" aria-hidden="true">{expanded?'⌃':'›'}</Typography></Button>{expanded&&<div id="cg-disclosure-more-settings" className="cg-disclosure-extra-controls"><SizeControls exp={right}/><ViewControls exp={right}/></div>}</div>
       </div></section>
     </div>
-    <footer><Typography variant="h3" tone="inherit">先回答眼前的问题，再展开下一层复杂度。</Typography></footer>
-  </article>;
+  </ContentBlock>;
 }

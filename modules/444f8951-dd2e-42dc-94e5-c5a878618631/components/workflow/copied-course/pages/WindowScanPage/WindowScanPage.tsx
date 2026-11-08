@@ -1,3 +1,5 @@
+import type { KeyboardEvent as ReactKeyboardEvent } from 'react';
+import { NumericBoardDragHint } from '../../../../NumericBoardDragHint';
 import {
   useCallback,
   useEffect,
@@ -134,9 +136,10 @@ function startCellFor(grid: number[][], kernel: number[][]): Cell {
 
 export interface WindowScanPageProps {
   onComplete: () => void;
+  autoDemo?: boolean;
 }
 
-export function WindowScanPage({ onComplete }: WindowScanPageProps) {
+export function WindowScanPage({ onComplete, autoDemo = false }: WindowScanPageProps) {
   const { outcome } = useGomokuOutcome();
   const boardRef = useRef<HTMLDivElement | null>(null);
   const dragOrigin = useRef<{ cell: Cell; topLeft: Cell } | null>(null);
@@ -147,11 +150,23 @@ export function WindowScanPage({ onComplete }: WindowScanPageProps) {
   const centre = useMemo(() => windowCentre(outcome.winLine, ZOOM_SIZE), [outcome.winLine]);
   const best = useMemo(() => bestActivation(grid, kernel), [grid, kernel]);
 
-  const [topLeft, setTopLeft] = useState<Cell>({ row: 4, col: 3 });
+  const [topLeft, setTopLeft] = useState<Cell>({ row: 0, col: 0 });
   const [dragging, setDragging] = useState(false);
+  const [hasMoved, setHasMoved] = useState(false);
 
-  // 换了一盘棋就回到新的开局位置。
-  useEffect(() => setTopLeft({ row: 4, col: 3 }), [outcome.board]);
+  // 新棋局从左上角开始；有效移动后才收起手势提示。
+  useEffect(() => { setTopLeft({ row: 0, col: 0 }); setHasMoved(false); completedRef.current = false; }, [outcome.board]);
+  useEffect(() => {
+    if (!autoDemo) return;
+    let target: Cell = { row: 0, col: 0 }, score = -Infinity;
+    for (let row = 0; row <= WINDOW_LIMIT; row++) for (let col = 0; col <= WINDOW_LIMIT; col++) {
+      const value = windowActivation(grid, kernel, row, col);
+      if (value > score) { score = value; target = { row, col }; }
+    }
+    const move = setTimeout(() => setTopLeft({ row: 3, col: 2 }), 650);
+    const match = setTimeout(() => setTopLeft(target), 1500);
+    return () => { clearTimeout(move); clearTimeout(match); };
+  }, [autoDemo, grid, kernel]);
 
   const patch = windowPatch(grid, topLeft.row, topLeft.col);
   const value = windowActivation(grid, kernel, topLeft.row, topLeft.col);
@@ -186,10 +201,9 @@ export function WindowScanPage({ onComplete }: WindowScanPageProps) {
     if (!dragging || !origin) return;
     const cell = cellFromPointer(event);
     if (!cell) return;
-    setTopLeft({
-      row: clamp(origin.topLeft.row + cell.row - origin.cell.row, 0, WINDOW_LIMIT),
-      col: clamp(origin.topLeft.col + cell.col - origin.cell.col, 0, WINDOW_LIMIT),
-    });
+    const next = { row: clamp(origin.topLeft.row + cell.row - origin.cell.row, 0, WINDOW_LIMIT), col: clamp(origin.topLeft.col + cell.col - origin.cell.col, 0, WINDOW_LIMIT) };
+    if (next.row !== topLeft.row || next.col !== topLeft.col) setHasMoved(true);
+    setTopLeft(next);
   };
 
   const endDrag = useCallback(() => {
@@ -203,6 +217,16 @@ export function WindowScanPage({ onComplete }: WindowScanPageProps) {
     onComplete();
   }, [found, onComplete]);
 
+  const handleBoardKeyDown = (event: ReactKeyboardEvent<HTMLDivElement>) => {
+    const delta: Record<string, [number, number]> = { ArrowUp: [-1, 0], ArrowDown: [1, 0], ArrowLeft: [0, -1], ArrowRight: [0, 1] };
+    const step = delta[event.key];
+    if (!step) return;
+    event.preventDefault(); event.stopPropagation();
+    const next = { row: clamp(topLeft.row + step[0], 0, WINDOW_LIMIT), col: clamp(topLeft.col + step[1], 0, WINDOW_LIMIT) };
+    if (next.row !== topLeft.row || next.col !== topLeft.col) setHasMoved(true);
+    setTopLeft(next);
+  };
+
   const windowStyle: CSSProperties = {
     left: `${topLeft.col * UNIT}%`,
     top: `${topLeft.row * UNIT}%`,
@@ -212,22 +236,22 @@ export function WindowScanPage({ onComplete }: WindowScanPageProps) {
 
   // 小框贴到棋盘上边时把手缩回框内，不然会被棋盘裁掉一半。
   const windowClasses = [
-    'cg-copy-ck-window-scan__window',
+    'cg-replay-window-scan__window',
     topLeft.row === 0 ? 'is-clamped-top' : '',
   ].filter(Boolean).join(' ');
 
   return (
     <ContentBlock
       headingLevel={1}
-      className="cg-copy-ck-window-scan"
+      className="cg-replay-window-scan"
       title="棋形的局部匹配"
       subtitle="移动一个 5 × 5 模板，比较它与棋盘不同区域的匹配程度。"
     >
-      <div className="cg-copy-ck-window-scan__layout">
-        <div className="cg-copy-ck-window-scan__board-slot">
+      <div className="cg-replay-window-scan__layout">
+        <div className="cg-replay-window-scan__board-slot">
           <div
             ref={boardRef}
-            className="cg-copy-ck-window-scan__board"
+            className="cg-replay-window-scan__board" data-numeric-board="spp" tabIndex={0} onKeyDown={handleBoardKeyDown} data-window-row={topLeft.row} data-window-col={topLeft.col}
             role="group"
             aria-label="十五路棋盘写成的数字矩阵，橙色表示赢方棋子，蓝色表示输方棋子。拖动 5 × 5 窗口，比较不同区域的匹配得分。"
             onPointerDown={handlePointerDown}
@@ -243,12 +267,12 @@ export function WindowScanPage({ onComplete }: WindowScanPageProps) {
               const hit = inWindow && op === 1 && cell === 1;
               const ring = Math.min(RING_MAX, Math.max(Math.abs(row - centre.row), Math.abs(col - centre.col)));
               const classes = [
-                'cg-copy-ck-window-scan__cell',
-                `cg-copy-ck-window-scan__cell--ring-${ring}`,
-                cell === 1 ? 'cg-copy-ck-window-scan__cell--one' : '',
-                cell === -1 ? 'cg-copy-ck-window-scan__cell--minus' : '',
-                inWindow && op === 1 ? 'cg-copy-ck-window-scan__cell--eye' : '',
-                hit ? 'cg-copy-ck-window-scan__cell--hit' : '',
+                'cg-replay-window-scan__cell',
+                `cg-replay-window-scan__cell--ring-${ring}`,
+                cell === 1 ? 'cg-replay-window-scan__cell--one' : '',
+                cell === -1 ? 'cg-replay-window-scan__cell--minus' : '',
+                inWindow && op === 1 ? 'cg-replay-window-scan__cell--eye' : '',
+                hit ? 'cg-replay-window-scan__cell--hit' : '',
               ].filter(Boolean).join(' ');
               return (
                 <div key={cellKey(row, col)} className={classes}>
@@ -257,36 +281,37 @@ export function WindowScanPage({ onComplete }: WindowScanPageProps) {
               );
             }))}
 
+            {!autoDemo && !hasMoved && !dragging && <NumericBoardDragHint />}
             <div className={windowClasses} style={windowStyle} aria-hidden="true">
-              <span className="cg-copy-ck-window-scan__grip">
+              <span className="cg-replay-window-scan__grip">
                 <i /><i /><i />
               </span>
             </div>
           </div>
 
-          <ul className="cg-copy-ck-window-scan__key">
-            <li className="cg-copy-ck-window-scan__key-item">
-              <span className="cg-copy-ck-window-scan__key-chip cg-copy-ck-window-scan__key-chip--one" aria-hidden="true" />
+          <ul className="cg-replay-window-scan__key">
+            <li className="cg-replay-window-scan__key-item">
+              <span className="cg-replay-window-scan__key-chip cg-replay-window-scan__key-chip--one" aria-hidden="true" />
               <Typography as="span" variant="body" tone="muted">橙色＝赢方棋子（1）</Typography>
             </li>
-            <li className="cg-copy-ck-window-scan__key-item">
-              <span className="cg-copy-ck-window-scan__key-chip cg-copy-ck-window-scan__key-chip--minus" aria-hidden="true" />
+            <li className="cg-replay-window-scan__key-item">
+              <span className="cg-replay-window-scan__key-chip cg-replay-window-scan__key-chip--minus" aria-hidden="true" />
               <Typography as="span" variant="body" tone="muted">蓝色＝败方棋子（−1）</Typography>
             </li>
           </ul>
         </div>
 
-        <div className="cg-copy-ck-window-scan__panel">
-          <div className="cg-copy-ck-window-scan__compare">
-            <div className="cg-copy-ck-window-scan__operand">
-              <div className="cg-copy-ck-window-scan__operand-heading">
-                <span className="cg-copy-ck-window-scan__operand-icon" aria-hidden="true"><Picture size="25" strokeWidth={4} strokeLinecap="round" strokeLinejoin="round" theme="multi-color" fill={['#5B8DE8', '#E7EFFF', '#FFFFFF', '#5B8DE8']} /></span>
+        <div className="cg-replay-window-scan__panel">
+          <div className="cg-replay-window-scan__compare">
+            <div className="cg-replay-window-scan__operand">
+              <div className="cg-replay-window-scan__operand-heading">
+                <span className="cg-replay-window-scan__operand-icon" aria-hidden="true"><Picture size="25" strokeWidth={4} strokeLinecap="round" strokeLinejoin="round" theme="multi-color" fill={['#5B8DE8', '#E7EFFF', '#FFFFFF', '#5B8DE8']} /></span>
                 <div>
                   <Typography as="strong" variant="h3" tone="main">当前区域</Typography>
                 </div>
               </div>
               <div
-                className="cg-copy-ck-window-scan__grid"
+                className="cg-replay-window-scan__grid"
                 role="group"
                 aria-label="当前区域的 5 × 5 数值，橙色轮廓标出目标模板中的 1 对应的位置。"
               >
@@ -295,11 +320,11 @@ export function WindowScanPage({ onComplete }: WindowScanPageProps) {
                   const eye = kernel[row][col] === 1;
                   const hit = eye && cell === 1;
                   const classes = [
-                    'cg-copy-ck-window-scan__grid-cell',
-                    cell === 1 ? 'cg-copy-ck-window-scan__grid-cell--one' : '',
-                    cell === -1 ? 'cg-copy-ck-window-scan__grid-cell--minus' : '',
-                    eye ? 'cg-copy-ck-window-scan__grid-cell--eye' : '',
-                    hit ? 'cg-copy-ck-window-scan__grid-cell--hit' : '',
+                    'cg-replay-window-scan__grid-cell',
+                    cell === 1 ? 'cg-replay-window-scan__grid-cell--one' : '',
+                    cell === -1 ? 'cg-replay-window-scan__grid-cell--minus' : '',
+                    eye ? 'cg-replay-window-scan__grid-cell--eye' : '',
+                    hit ? 'cg-replay-window-scan__grid-cell--hit' : '',
                   ].filter(Boolean).join(' ');
                   return (
                     <div key={cellKey(row, col)} className={classes}>
@@ -312,27 +337,26 @@ export function WindowScanPage({ onComplete }: WindowScanPageProps) {
               </div>
             </div>
 
-            <div className="cg-copy-ck-window-scan__operator-wrap">
-              <Typography as="span" role="img" aria-label="卷积运算符" variant="h2" tone="main" className="cg-copy-ck-window-scan__operator is-ready"><Asterisk size="28" strokeWidth={4} strokeLinecap="round" strokeLinejoin="round" theme="outline" fill="#173B7A" /></Typography>
-              <Typography as="span" variant="bodySmall" tone="muted" className="cg-copy-ck-window-scan__operator-note">对应位置相乘<br />并求和</Typography>
+            <div className="cg-replay-window-scan__operator-wrap">
+              <Typography as="span" role="img" aria-label="卷积运算符" variant="h2" tone="main" className="cg-replay-window-scan__operator is-ready"><Asterisk size="28" strokeWidth={4} strokeLinecap="round" strokeLinejoin="round" theme="outline" fill="#173B7A" /></Typography>
             </div>
 
-            <div className="cg-copy-ck-window-scan__operand">
-              <div className="cg-copy-ck-window-scan__operand-heading">
-                <span className="cg-copy-ck-window-scan__operand-icon" aria-hidden="true"><GridFour size="25" strokeWidth={4} strokeLinecap="round" strokeLinejoin="round" theme="multi-color" fill={['#5B8DE8', '#E7EFFF', '#FFFFFF', '#5B8DE8']} /></span>
+            <div className="cg-replay-window-scan__operand">
+              <div className="cg-replay-window-scan__operand-heading">
+                <span className="cg-replay-window-scan__operand-icon" aria-hidden="true"><GridFour size="25" strokeWidth={4} strokeLinecap="round" strokeLinejoin="round" theme="multi-color" fill={['#5B8DE8', '#E7EFFF', '#FFFFFF', '#5B8DE8']} /></span>
                 <div>
                   <Typography as="strong" variant="h3" tone="main">目标模板</Typography>
                 </div>
               </div>
               <div
-                className="cg-copy-ck-window-scan__grid"
+                className="cg-replay-window-scan__grid"
                 role="group"
                 aria-label="五乘五目标模板：五格连成一线的地方是 1，其余是 0。"
               >
                 {KERNEL_INDEX.map((row) => KERNEL_INDEX.map((col) => {
                   const cell = kernel[row][col];
                   return (
-                    <div key={cellKey(row, col)} className={cell === 1 ? 'cg-copy-ck-window-scan__grid-cell cg-copy-ck-window-scan__grid-cell--one' : 'cg-copy-ck-window-scan__grid-cell'}>
+                    <div key={cellKey(row, col)} className={cell === 1 ? 'cg-replay-window-scan__grid-cell cg-replay-window-scan__grid-cell--one' : 'cg-replay-window-scan__grid-cell'}>
                       <Typography as="span" variant="body" tone={cell === 0 ? 'muted' : 'inherit'} aria-hidden="true">
                         {cell}
                       </Typography>
@@ -343,37 +367,37 @@ export function WindowScanPage({ onComplete }: WindowScanPageProps) {
             </div>
           </div>
 
-          <div className="cg-copy-ck-window-scan__result cg-copy-ck-window-scan__result-card">
-            <div className="cg-copy-ck-window-scan__result-heading">
+          <div className="cg-replay-window-scan__result cg-replay-window-scan__result-card">
+            <div className="cg-replay-window-scan__result-heading">
               <Typography as="span" variant="body" tone="muted">当前区域的得分</Typography>
             </div>
-            <div className="cg-copy-ck-window-scan__score-row">
-              <div className="cg-copy-ck-window-scan__activation-box">
+            <div className="cg-replay-window-scan__score-row">
+              <div className="cg-replay-window-scan__activation-box">
                 <Typography as="strong" variant="display" tone={found ? 'success' : 'main'}>{value < 0 ? `−${Math.abs(value)}` : value}</Typography>
                 <ExplainPanelButton label="查看匹配得分的计算过程" triggerText="?">
                     <Typography as="strong" variant="bodySmall" tone="accent">匹配得分怎么得到？</Typography>
                     <Typography variant="bodySmall" tone="muted">当前区域与目标模板对应位置相乘，再把 25 个乘积相加。</Typography>
-                    <div className="cg-copy-ck-window-scan__multiply" role="grid" aria-label="当前窗口与卷积核的逐项乘积">
+                    <div className="cg-replay-window-scan__multiply" role="grid" aria-label="当前窗口与卷积核的逐项乘积">
                       {KERNEL_INDEX.flatMap((row) => KERNEL_INDEX.map((col) => {
                         const product = kernel[row][col] * patch[row][col];
                         return (
-                          <span className={`cg-copy-ck-window-scan__multiply-cell${product !== 0 ? ' is-active' : ''}`} role="gridcell" key={cellKey(row, col)}>
+                          <span className={`cg-replay-window-scan__multiply-cell${product !== 0 ? ' is-active' : ''}`} role="gridcell" key={cellKey(row, col)}>
                             <Typography as="strong" variant="bodySmall" tone={product !== 0 ? 'success' : 'muted'}>{product}</Typography>
                             <Typography as="span" variant="bodySmall" tone="muted">{`${kernel[row][col]} × ${patch[row][col]}`}</Typography>
                           </span>
                         );
                       }))}
                     </div>
-                    <div className="cg-copy-ck-window-scan__sum-line" aria-label={`所有乘积相加等于 ${value}`}>
+                    <div className="cg-replay-window-scan__sum-line" aria-label={`所有乘积相加等于 ${value}`}>
                       <Typography as="span" variant="bodySmall" tone="accent">{`Σ（模板值 × 区域值）= ${value < 0 ? `−${Math.abs(value)}` : value}`}</Typography>
                     </div>
                 </ExplainPanelButton>
               </div>
-              <Typography variant="bodySmall" tone="muted" className="cg-copy-ck-window-scan__result-caption"><Tips size="36" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round" theme="multi-color" fill={['#EFA94B', '#FFF1D9', '#EFA94B']} /><span>得分越高，<br />当前位置越符合目标棋形。</span></Typography>
+              <Typography variant="bodySmall" tone="muted" className="cg-replay-window-scan__result-caption"><Tips size="36" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round" theme="multi-color" fill={['#EFA94B', '#FFF1D9', '#EFA94B']} /><span>得分越高，<br />当前位置越符合目标棋形。</span></Typography>
             </div>
           </div>
-          <div className="cg-copy-ck-window-scan__instruction" role="status">
-            <span className="cg-copy-ck-window-scan__instruction-icon" aria-hidden="true"><Move size="27" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round" theme="multi-color" fill={['#5B8DE8', '#E7EFFF']} /></span>
+          <div className="cg-replay-window-scan__instruction" role="status">
+            <span className="cg-replay-window-scan__instruction-icon" aria-hidden="true"><Move size="27" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round" theme="multi-color" fill={['#5B8DE8', '#E7EFFF']} /></span>
             <Typography as="span" variant="body" tone="muted">拖动左侧窗口，寻找匹配得分最高的位置。</Typography>
           </div>
         </div>

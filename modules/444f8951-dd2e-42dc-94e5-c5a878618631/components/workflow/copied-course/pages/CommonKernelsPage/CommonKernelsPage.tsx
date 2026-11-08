@@ -1,15 +1,20 @@
+import xiandaijianzhuAsset0 from '../../../../../assets/workflow/convolution-course/xiandaijianzhu.jpg';
+import xielaqiaoAsset1 from '../../../../../assets/workflow/convolution-course/xielaqiao.jpg';
+import caiermateAsset2 from '../../../../../assets/workflow/convolution-course/caiermate.jpg';
+import zebraAsset3 from '../../../../../assets/workflow/convolution-course/zebra.jpg';
+import pineappleAsset4 from '../../../../../assets/workflow/convolution-course/pineapple.jpg';
+import be_cityAsset5 from '../../../../../assets/workflow/convolution-course/be_city.jpg';
 import { useEffect, useRef, useState, type ChangeEvent } from 'react';
 import { Down, Up, UploadPicture } from '@icon-park/react';
-import { ContentBlock, MathFormulaStatic, moduleAssetUrl, Typography } from '../../../../../../shared/react';
+import { ContentBlock, MathFormulaStatic, Typography } from '../../../../../../shared/react';
 import './CommonKernelsPage.css';
 
-const moduleAssetId = '444f8951-dd2e-42dc-94e5-c5a878618631';
-const buildingImage = moduleAssetUrl(moduleAssetId, 'workflow/convolution-course/xiandaijianzhu.jpg');
-const bridgeImage = moduleAssetUrl(moduleAssetId, 'workflow/convolution-course/xielaqiao.jpg');
-const mountainImage = moduleAssetUrl(moduleAssetId, 'workflow/convolution-course/caiermate.jpg');
-const zebraImage = moduleAssetUrl(moduleAssetId, 'workflow/convolution-course/zebra.jpg');
-const pineappleImage = moduleAssetUrl(moduleAssetId, 'workflow/convolution-course/pineapple.jpg');
-const cityImage = moduleAssetUrl(moduleAssetId, 'workflow/convolution-course/be_city.jpg');
+const buildingImage = xiandaijianzhuAsset0;
+const bridgeImage = xielaqiaoAsset1;
+const mountainImage = caiermateAsset2;
+const zebraImage = zebraAsset3;
+const pineappleImage = pineappleAsset4;
+const cityImage = be_cityAsset5;
 
 type Matrix3 = readonly [readonly [number, number, number], readonly [number, number, number], readonly [number, number, number]];
 type ViewMode = 'gray' | 'edge' | 'signed';
@@ -163,6 +168,7 @@ export function CommonKernelsPage() {
     let active = true;
     setResult('');
     const image = new Image();
+    image.crossOrigin = 'anonymous';
     image.onload = () => { if (active) { setResult(computeConvolution(image, selectedKernel)); setError(''); } };
     image.onerror = () => { if (active) setError('图像无法读取，请选择另一张。'); };
     image.src = selectedImage.src;

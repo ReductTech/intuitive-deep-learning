@@ -1,9 +1,10 @@
+import xiandaijianzhuAsset0 from '../../../../../assets/workflow/convolution-course/xiandaijianzhu.jpg';
 import { useEffect, useState, type ReactNode } from 'react';
 import { Light, Picture } from '@icon-park/react';
-import { ContentBlock, MathFormulaBlock, MathFormulaStatic, moduleAssetUrl, Typography } from '../../../../../../shared/react';
+import { ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from '../../../../../../shared/react';
 import './GradientPage.css';
 
-const buildingImage = moduleAssetUrl('444f8951-dd2e-42dc-94e5-c5a878618631', 'workflow/convolution-course/xiandaijianzhu.jpg');
+const buildingImage = xiandaijianzhuAsset0;
 
 interface GradientImages { horizontal: string; vertical: string; magnitude: string; }
 
@@ -64,6 +65,7 @@ function useGradientImages() {
   useEffect(() => {
     let active = true;
     const image = new Image();
+    image.crossOrigin = 'anonymous';
     image.onload = () => { if (active) setImages(buildGradientImages(image)); };
     image.src = buildingImage;
     return () => { active = false; };

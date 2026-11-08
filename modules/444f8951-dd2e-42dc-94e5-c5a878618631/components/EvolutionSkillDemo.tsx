@@ -29,9 +29,9 @@ export function EvolutionSkillDemo() {
         <div className="cg-evolution-placeholder" aria-hidden={saved}><i/><i/><i/></div>
         <div className="cg-evolution-memory"><Typography variant="bodySmall" tone="muted">{saved ? '已记住使用习惯' : saving ? '正在浓缩反馈…' : '等待使用反馈'}</Typography><div className="cg-evolution-preferences">{['精简文字', '沿用粉色'].map(text => <div key={text}><span aria-hidden="true">✓</span><Typography variant="body" tone="inherit">{text}</Typography></div>)}</div></div>
       </div>
-      <div className="cg-evolution-generation"><Typography variant="bodySmall" tone="inherit">{next ? '沿用习惯' : saving ? '记录偏好' : '制作课件'}</Typography><svg viewBox="0 0 120 30" fill="none" stroke="currentColor" strokeWidth="3" aria-hidden="true"><path d={saving && !next ? 'M118 15H7M21 3 6 15l15 12' : 'M2 15h111M99 3l15 12-15 12'}/></svg></div>
+      <div className="cg-evolution-generation"><Typography variant="bodySmall" tone="inherit">{next ? '沿用习惯' : saving ? '记录偏好' : '制作知识呈现作品'}</Typography><svg viewBox="0 0 120 30" fill="none" stroke="currentColor" strokeWidth="3" aria-hidden="true"><path d={saving && !next ? 'M118 15H7M21 3 6 15l15 12' : 'M2 15h111M99 3l15 12-15 12'}/></svg></div>
       <div className="cg-evolution-workspace">
-        <div className="cg-evolution-build-status"><span className={local >= 0 && local < 2800 ? 'is-busy' : ''}/><Typography variant="bodySmall" tone="muted">{local < 0 ? '等待制作' : local < 2800 ? 'AI 正在制作…' : '课件已生成'}</Typography></div>
+        <div className="cg-evolution-build-status"><span className={local >= 0 && local < 2800 ? 'is-busy' : ''}/><Typography variant="bodySmall" tone="muted">{local < 0 ? '等待制作' : local < 2800 ? 'AI 正在制作…' : '知识呈现作品已生成'}</Typography></div>
         <div className="cg-evolution-lesson" key={next ? 'plant' : 'paint'}>
           <div className={`cg-evolution-reveal${local > 150 ? ' is-visible' : ''}`}><Typography variant="h3" tone="inherit">{next ? '水果投票' : '颜色混合'}</Typography></div>
           <div className={`cg-evolution-copy cg-evolution-reveal${local > 700 ? ' is-visible' : ''}`}><Typography variant="bodySmall" tone="inherit">{next ? '选一种你喜欢的水果。' : '红色和黄色混合后会得到橙色。调节两种颜色的比例，观察混合后的颜色变化。'}</Typography></div>

@@ -1,9 +1,10 @@
+import xiandaijianzhuAsset0 from '../../../../../assets/workflow/convolution-course/xiandaijianzhu.jpg';
 import { useEffect, useState, type ReactNode } from 'react';
 import { Light } from '@icon-park/react';
-import { ContentBlock, MathFormulaStatic, moduleAssetUrl, Typography } from '../../../../../../shared/react';
+import { ContentBlock, MathFormulaStatic, Typography } from '../../../../../../shared/react';
 import './LaplacianConstructionPage.css';
 
-const buildingImage = moduleAssetUrl('444f8951-dd2e-42dc-94e5-c5a878618631', 'workflow/convolution-course/xiandaijianzhu.jpg');
+const buildingImage = xiandaijianzhuAsset0;
 
 const SECOND_X = [[0, 0, 0], [1, -2, 1], [0, 0, 0]];
 const SECOND_Y = [[0, 1, 0], [0, -2, 0], [0, 1, 0]];
@@ -72,6 +73,7 @@ function useResponses() {
   useEffect(() => {
     let active = true;
     const image = new Image();
+    image.crossOrigin = 'anonymous';
     image.onload = () => { if (active) setResponses(buildResponses(image)); };
     image.src = buildingImage;
     return () => { active = false; };

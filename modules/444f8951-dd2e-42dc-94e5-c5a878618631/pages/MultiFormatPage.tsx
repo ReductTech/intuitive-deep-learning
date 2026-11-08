@@ -1,27 +1,29 @@
-import moduleAssetOutline from '../outlines.json';
-import { moduleAssetUrl } from '../../shared/react/assets';
+import gomoku_playAsset0 from '../assets/images/multi-format/convolution/gomoku-play.jpg';
+import board_as_numbersAsset1 from '../assets/images/multi-format/convolution/board-as-numbers.jpg';
+import window_scanAsset2 from '../assets/images/multi-format/convolution/window-scan.jpg';
+import kernel_designAsset3 from '../assets/images/multi-format/convolution/kernel-design.jpg';
 import { useEffect, useRef, useState, type ReactNode, type MouseEvent } from 'react';
 import { Button, ContentBlock, Typography } from '../../shared/react';
+import { NativeStudyPreview } from '../components/NativeStudyPreview';
 import './MultiFormatPage.css';
 
-const lessonImage = (id: string) => moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, `images/multi-format/convolution/${id}.png`);
 const lessons = [
-  { title: '从五子棋开始认识卷积核', image: lessonImage('gomoku-play'), steps: [
+  { title: '从五子棋开始认识卷积核', image: gomoku_playAsset0, steps: [
     { title: '先下一局', text: '先与 AI 下一局五子棋，从熟悉的棋盘和局部棋形开始。', box: [1, 3, 25, 90] },
     { title: '观察棋形', text: '棋盘上的黑白棋子形成局部形状，后面会把它们转成数字来寻找连线。', box: [27, 4, 50, 92] },
     { title: '完成对局', text: '完成一局，或查看示例棋局后，解锁下一步的数字编码。', box: [78, 60, 20, 36] },
   ] },
-  { title: '棋盘局部区域的数值表示', image: lessonImage('board-as-numbers'), steps: [
+  { title: '棋盘局部区域的数值表示', image: board_as_numbersAsset1, steps: [
     { title: '局部取样', text: '从上一局棋中取出一个局部区域，将棋子和数字对应起来。', box: [3, 26, 32, 65] },
     { title: '数字编码', text: '目标棋子记为一，对手棋子记为负一，空位记为零。', box: [38, 28, 28, 62] },
     { title: '位置对应', text: '数字矩阵保留棋盘的位置关系。将指针移到数字上，可以查看对应的棋盘位置。', box: [68, 26, 29, 65] },
   ] },
-  { title: '棋形的局部匹配', image: lessonImage('window-scan'), steps: [
+  { title: '棋形的局部匹配', image: window_scanAsset2, steps: [
     { title: '移动窗口', text: '让一个五乘五的窗口在数字棋盘上移动，观察它当前框住的局部区域。', box: [3, 17, 48, 76] },
     { title: '逐项对应', text: '将窗口内的数字与目标模板一一对应，计算当前位置的匹配得分。', box: [54, 20, 43, 40] },
     { title: '找到棋形', text: '拖动窗口找到最匹配的位置后，课程解锁下一步的模板设计。', box: [54, 62, 43, 32] },
   ] },
-  { title: '根据棋形调整模板', image: lessonImage('kernel-design'), steps: [
+  { title: '根据棋形调整模板', image: kernel_designAsset3, steps: [
     { title: '观察变化', text: '棋盘上的目标棋形换了方向，原来的模板也需要调整。', box: [3, 17, 48, 76] },
     { title: '修改模板', text: '点击右侧模板格子，排出你希望寻找的局部形状。', box: [54, 18, 43, 44] },
     { title: '验证匹配', text: '模板设置正确后，拖动窗口找到匹配位置，继续理解卷积核的计算。', box: [54, 65, 43, 28] },
@@ -45,7 +47,7 @@ function MiniWindow({ children }: { children: ReactNode }) {
 }
 function ReadingPreview({ onClose }: { onClose: () => void }) {
   return <MiniWindow>
-    <div className="cg-format-native-reader"><iframe src={`${import.meta.env.BASE_URL}modules/creator-guide?studyPreview=convolution`} title="卷积入门原生自学流程，可手动操作与滚动" loading="lazy" onLoad={event => { event.currentTarget.contentDocument?.addEventListener('keydown', key => { if (key.key === 'Escape') { key.stopPropagation(); onClose(); } }); }}/></div>
+    <div className="cg-format-native-reader" data-ppt-viewport="Scaled scrollable lesson preview"><div className="cg-format-native-content" data-ppt-viewport="Scrollable unlocked lesson steps" data-embedded-lesson="true" role="region" aria-label="卷积入门自学流程，可上下滚动并逐步解锁" tabIndex={0} onClick={event => event.stopPropagation()} onKeyDown={event => { if (event.key === 'Escape') { event.stopPropagation(); onClose(); } }}><NativeStudyPreview /></div></div>
   </MiniWindow>;
 }
 export function MultiFormatPage() {
@@ -119,13 +121,13 @@ export function MultiFormatPage() {
     return () => { observer.disconnect(); document.removeEventListener('visibilitychange', update); };
   }, []);
   function select(index: number) { stopNarration(); setSelected(index); setStep(0); setExplaining(false); setSpeechError(''); }
-  return <ContentBlock ref={root} className="cg-format-page cg-creator-typography" headingLevel={1} title="一种全新的课件形态" bodyClassName="cg-format-body" onKeyDown={event => { if (event.key === ' ' && event.target instanceof Element && event.target.closest('button')) event.stopPropagation(); }}>
-    <div className="cg-format-source-row"><svg className="cg-format-source-links" viewBox="0 0 1536 112" aria-hidden="true"><path d="M768 52C500 35 305 39 248 112M768 52v60M768 52c268-17 463-13 520 60" /></svg><div className="cg-format-source"><span className="cg-format-source-icon"><FormatStyleIcon kind="code" /></span><div><Typography variant="h3" tone="accent">同一份内容</Typography><Typography variant="bodySmall" tone="muted">HTML-based 交互课件</Typography></div></div><Typography variant="bodySmall" tone="warning">一次设计，多种应用场景</Typography></div>
+  return <ContentBlock ref={root} className="cg-format-page cg-creator-typography" headingLevel={1} title="同一份知识内容，适配多种教学与学习场景" bodyClassName="cg-format-body" onKeyDown={event => { if (event.key === ' ' && event.target instanceof Element && event.target.closest('button')) event.stopPropagation(); }}>
+    <div className="cg-format-source-row"><svg className="cg-format-source-links" viewBox="0 0 1536 112" aria-hidden="true"><path d="M768 52C500 35 305 39 248 112M768 52v60M768 52c268-17 463-13 520 60" /></svg><div className="cg-format-source"><span className="cg-format-source-icon"><FormatStyleIcon kind="code" /></span><div><Typography variant="h3" tone="accent">同一份内容</Typography><Typography variant="bodySmall" tone="muted">HTML-based 交互式知识呈现</Typography></div></div><Typography variant="bodySmall" tone="warning">一次设计，多种应用场景</Typography></div>
     <div className={`cg-format-columns${expanded ? ' has-expanded' : ''}`}>
       {expanded && <button type="button" className="cg-format-backdrop" aria-label="关闭放大预览" onClick={() => setExpanded(null)}/>}
       <section className={`cg-format-card cg-format-teaching${expanded === 'teaching' ? ' cg-format-expanded' : ''}`} onClick={event => expandCard('teaching', event)}><header><span className="cg-format-mode-icon"><FormatStyleIcon kind="screen" /></span><div><Typography as="h2" variant="h3" tone="accent">教学展示模式</Typography><Typography variant="bodySmall" tone="muted">面向课堂的组织化展示</Typography></div>{expandButton('teaching', '教学展示模式')}</header>
-        <MiniWindow><div className="cg-format-mini-top"><Typography variant="bodySmall" tone="accent">教学课件 · 卷积入门</Typography><Typography variant="bodySmall" tone="muted">{selected + 1} / 4</Typography></div>
-          <div className="cg-format-teaching-preview"><nav className="cg-format-slide-list" aria-label="选择预览课件">{lessons.map((item, index) => <Button key={item.title} active={selected === index} onClick={() => select(index)} aria-label={`展示第${index + 1}页：${item.title}`} aria-pressed={selected === index}><img src={item.image} alt={item.title} /></Button>)}</nav><div className="cg-format-main-preview"><img src={lesson.image} alt={lesson.title} /><Typography variant="bodySmall" tone="accent">{lesson.title}</Typography></div></div>
+        <MiniWindow><div className="cg-format-mini-top"><Typography variant="bodySmall" tone="accent">教学知识呈现作品 · 卷积入门</Typography><Typography variant="bodySmall" tone="muted">{selected + 1} / 4</Typography></div>
+          <div className="cg-format-teaching-preview"><nav className="cg-format-slide-list" aria-label="选择预览知识呈现作品">{lessons.map((item, index) => <Button key={item.title} active={selected === index} onClick={() => select(index)} aria-label={`展示第${index + 1}页：${item.title}`} aria-pressed={selected === index}><img src={item.image} alt={item.title} /></Button>)}</nav><div className="cg-format-main-preview"><img src={lesson.image} alt={lesson.title} /><Typography variant="bodySmall" tone="accent">{lesson.title}</Typography></div></div>
           <div className="cg-format-mini-footer"><Button onClick={() => select((selected + 3) % 4)} aria-label="预览上一页"><Typography as="span" variant="bodySmall" tone="inherit">上一页</Typography></Button><Typography variant="bodySmall" tone="muted">点选缩略图，切换课堂页面</Typography><Button onClick={() => select((selected + 1) % 4)} aria-label="预览下一页"><Typography as="span" variant="bodySmall" tone="inherit">下一页</Typography></Button></div>
         </MiniWindow>
       </section>
