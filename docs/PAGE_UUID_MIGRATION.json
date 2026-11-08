@@ -2170,67 +2170,6 @@
       ]
     },
     {
-      "outline": "modules/a805d0a5-9d46-42ef-9989-e11aeb79e49e/outlines.json",
-      "courseUuid": "a805d0a5-9d46-42ef-9989-e11aeb79e49e",
-      "pages": [
-        {
-          "previousId": "galton-archive",
-          "uuid": "fef60e3b-d79b-417d-887c-4302b0ac3999",
-          "title": "为什么高个子的父母，孩子未必一样高？"
-        },
-        {
-          "previousId": "trend-line",
-          "uuid": "b67375ce-7d2c-4009-b3d6-4f02afbc7209",
-          "title": "如果只能画一条线，你会把它放在哪里？"
-        },
-        {
-          "previousId": "prediction-residual",
-          "uuid": "8e1b7ad2-f161-484a-bd43-97480bd20261",
-          "title": "一条线怎样替每个人做预测？"
-        },
-        {
-          "previousId": "error-cancellation",
-          "uuid": "8402bb0a-1d3b-43cd-9e6c-64df83654449",
-          "title": "为什么不能直接把误差加起来？"
-        },
-        {
-          "previousId": "squared-error",
-          "uuid": "53290873-a9a6-4681-a4da-80451d8bea33",
-          "title": "平方，会让大错更显眼"
-        },
-        {
-          "previousId": "mse",
-          "uuid": "2b8c1ae8-f189-43e4-9413-f4716752722b",
-          "title": "让一条线接受整组数据的评分"
-        },
-        {
-          "previousId": "loss-landscape",
-          "uuid": "c45cc028-b868-4939-b3fe-622f8bff5b3a",
-          "title": "把每一条可能的直线放进一张地图"
-        },
-        {
-          "previousId": "gradient-step",
-          "uuid": "31b280bc-0e75-4df8-a1f5-b2edb90e3d23",
-          "title": "模型怎样知道下一步往哪里走？"
-        },
-        {
-          "previousId": "full-chain",
-          "uuid": "d651ccf6-b7ab-4123-a8d1-ea37c1a87731",
-          "title": "从输入到损失：线性回归的完整一轮"
-        },
-        {
-          "previousId": "ending",
-          "uuid": "dd270df5-5a20-4b2b-96bc-58b9ba0054ab",
-          "title": "你已经学会用一个数字判断模型好不好"
-        },
-        {
-          "previousId": "uncertainty-opening",
-          "uuid": "d30fc554-2aac-417c-b6a9-6229848955ba",
-          "title": "有些规律像定律，有些规律只表现为趋势"
-        }
-      ]
-    },
-    {
       "outline": "modules/a9333d75-9e97-4c31-941d-9ce3e6f49608/outlines.json",
       "courseUuid": "a9333d75-9e97-4c31-941d-9ce3e6f49608",
       "pages": [

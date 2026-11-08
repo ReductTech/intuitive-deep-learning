@@ -1,6 +1,6 @@
 # Intuitive Deep Learning
 
-本仓库保存课程源码、大纲、素材和课程共享组件。每个 `modules/<UUID>/` 是一门完整课程，`pages/` 是课程页面；模块目录名、`outlines.json.id` 和 `moduleIdentity.id` 必须一致，可读名称保存在 `alias`。当前 31 份大纲，30 门可构建，1 门大纲草稿。
+本仓库保存课程源码、大纲、素材和课程共享组件。每个 `modules/<UUID>/` 是一门完整课程，`pages/` 是课程页面；模块目录名、`outlines.json.id` 和 `moduleIdentity.id` 必须一致，可读名称保存在 `alias`。当前 30 份大纲，29 门可构建，1 门大纲草稿。
 
 ## 检查与构建在术库执行
 
