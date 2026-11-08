@@ -4,7 +4,7 @@ import './FlexibleTeachingModesPage.css';
 
 const illustration = (name: string) => moduleAssetUrl(
   outline.moduleIdentity.id,
-  `images/teaching-mode/${name}-cartoon-v1.png`,
+  `images/teaching-mode/${name}-cartoon-v1.jpg`,
 );
 
 export function FlexibleTeachingModesPage() {

@@ -9,9 +9,9 @@ import {
   Typography,
   type QuestionCheckResult,
 } from '../../../shared/react';
-const bottleFront = moduleAssetUrl(moduleIdentity.id, "recycling/camera-views/bottle-front.png");
-const canUpright = moduleAssetUrl(moduleIdentity.id, "recycling/can-upright.png");
-const cartonUpright = moduleAssetUrl(moduleIdentity.id, "recycling/carton-upright.png");
+const bottleFront = moduleAssetUrl(moduleIdentity.id, "recycling/camera-views/bottle-front.jpg");
+const canUpright = moduleAssetUrl(moduleIdentity.id, "recycling/can-upright.jpg");
+const cartonUpright = moduleAssetUrl(moduleIdentity.id, "recycling/carton-upright.jpg");
 import './ExtractorAndHeadPage.css';
 
 type PipelineStage = 0 | 1 | 2;

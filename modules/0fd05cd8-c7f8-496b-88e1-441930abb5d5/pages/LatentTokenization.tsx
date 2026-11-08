@@ -16,7 +16,7 @@ export function LatentTokenization() {
   return <Frame index={9} subtitle="给 Transformer 重新打包：从二维位置，变成一串视觉 tokens" takeaway="一个 patch 对应一个 token；patch 越大，token 数越少，每块展开后更长。">
     <LessonSplit>
       <TeachingPanel title="① 在 latent 中选择 patch" className="vga-sidebar vga-patch-panel">
-        <div className="vga-patch-choice" style={{ gridTemplateColumns: `repeat(${shown}, minmax(0,1fr))`, backgroundImage: `url("${courseAssetUrl('visuals/latent-channel.png')}")` }}>{Array.from({length:shown**2},(_,i) => <button key={i} type="button" className={i === selected ? 'is-selected' : ''} draggable aria-label={`选择第 ${i+1} 个 patch`} aria-pressed={i === selected} onClick={() => {setSelected(i);setSent(false);}} onDragStart={e => {setSelected(i);e.dataTransfer.setData('text/plain',String(i));}} />)}</div>
+        <div className="vga-patch-choice" style={{ gridTemplateColumns: `repeat(${shown}, minmax(0,1fr))`, backgroundImage: `url("${courseAssetUrl('visuals/latent-channel.jpg')}")` }}>{Array.from({length:shown**2},(_,i) => <button key={i} type="button" className={i === selected ? 'is-selected' : ''} draggable aria-label={`选择第 ${i+1} 个 patch`} aria-pressed={i === selected} onClick={() => {setSelected(i);setSent(false);}} onDragStart={e => {setSelected(i);e.dataTransfer.setData('text/plain',String(i));}} />)}</div>
         <Text muted>16 × 16 局部窗口 · 点击或拖动</Text>
         <div className="vga-stage-tabs"><Text>patch</Text>{[2,4].map(p => <Button key={p} active={patch === p} data-testid={`patch-${p}`} onClick={() => {setPatch(p);setSelected(0);setSent(false);}}>{p} × {p}</Button>)}</div>
         <Readout label="完整 latent 的 token 数" value={<span data-testid="token-count">{(64/patch)**2}</span>} warm />

@@ -3,7 +3,7 @@ import { ContentBlock, moduleAssetUrl, Typography } from '../../../shared/react'
 import { measureMnistImage, type MnistFeatures } from '../../services/mnistFeatures';
 import './FeatureExtractionPage.css';
 
-const IMAGE_URL = moduleAssetUrl('80396753-7fc8-4f55-9188-bddbdb828169', 'mnist/3/60018.png');
+const IMAGE_URL = moduleAssetUrl('80396753-7fc8-4f55-9188-bddbdb828169', 'mnist/3/60018.jpg');
 type FeatureKey = 'width' | 'height' | 'ink' | 'centroid';
 type DigitFeatures = MnistFeatures;
 

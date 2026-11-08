@@ -37,13 +37,13 @@ export function FfnCard({ onComplete, phase = 'intuition' }: CompleteProps & {
         <div className="tr-ffn-intuition">
           <article className="tr-ffn-intuition-panel is-attention">
             <h3>注意力子层</h3>
-            <div className="tr-ffn-person-scene is-discussion"><img src={transformerAsset("05_前馈网络/注意力到逐位加工.png")} alt="同学们互相讨论，交换笔记"/></div>
+            <div className="tr-ffn-person-scene is-discussion"><img src={transformerAsset("05_前馈网络/注意力到逐位加工.jpg")} alt="同学们互相讨论，交换笔记"/></div>
             <div className="tr-ffn-intuition-caption"><h4><span>1</span>先交流</h4><p>从其他 Token 中<strong>汇聚相关信息</strong>。</p></div>
           </article>
           <div className="tr-ffn-intuition-arrow" aria-label="从交流到加工"><svg viewBox="0 0 240 40" preserveAspectRatio="none" aria-hidden="true"><path d="M 0 20 H 224 M 208 6 L 224 20 L 208 34"/></svg></div>
           <article className="tr-ffn-intuition-panel is-processing">
             <h3>前馈网络（FFN）子层</h3>
-            <div className="tr-ffn-person-scene is-study"><img src={transformerAsset("05_前馈网络/注意力到逐位加工.png")} alt="学生独立整理刚获得的笔记"/></div>
+            <div className="tr-ffn-person-scene is-study"><img src={transformerAsset("05_前馈网络/注意力到逐位加工.jpg")} alt="学生独立整理刚获得的笔记"/></div>
             <div className="tr-ffn-intuition-caption"><h4><span>2</span>再加工</h4><p>每个 Token <strong>独立加工</strong>已有信息。</p><p className="tr-ffn-shared-rule">各个位置<strong>共享同一套参数</strong>。</p></div>
           </article>
         </div>

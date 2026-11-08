@@ -27,7 +27,7 @@ export function EducationEcosystemPreviewPage() {
       </div>)}
     </div>
     <img className="aipe-ecosystem-panorama"
-      src={moduleAssetUrl(outline.moduleIdentity.id, 'images/closing-preview/education-ecosystem-panorama-v3.png')}
+      src={moduleAssetUrl(outline.moduleIdentity.id, 'images/closing-preview/education-ecosystem-panorama-v3.jpg')}
       alt="同一大学教学研究空间中的连续长图：师生共同改进学习资料，指导学生实践，并与研究伙伴讨论成果。"
       draggable={false}/>
     <div className="aipe-ecosystem-outcomes">

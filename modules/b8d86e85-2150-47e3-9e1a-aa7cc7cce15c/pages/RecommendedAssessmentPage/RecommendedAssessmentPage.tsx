@@ -3,9 +3,9 @@ import outline from '../../outlines.json';
 import './RecommendedAssessmentPage.css';
 
 const advantages = [
-  { title: '呈现理解', detail: '方法关系讲清楚', image: 'assessment-understanding-icon-v5.png' },
-  { title: '看见AI协作', detail: '核验内容再改进', image: 'assessment-collaboration-icon-v5.png' },
-  { title: '积累学习资源', detail: '供同学学习复用', image: 'assessment-resource-icon-v5.png' },
+  { title: '呈现理解', detail: '方法关系讲清楚', image: 'assessment-understanding-icon-v5.jpg' },
+  { title: '看见AI协作', detail: '核验内容再改进', image: 'assessment-collaboration-icon-v5.jpg' },
+  { title: '积累学习资源', detail: '供同学学习复用', image: 'assessment-resource-icon-v5.jpg' },
 ] as const;
 
 const asset = (file: string) => moduleAssetUrl(outline.moduleIdentity.id, `images/assessment/${file}`);
@@ -15,7 +15,7 @@ export function RecommendedAssessmentPage() {
     subtitle="一个方向 · 三篇论文 · 三份交互作品 · 一次动手实践（复现 Jittor 代码）"
     headingLevel={1} className="aipe-assessment-page" bodyClassName="aipe-assessment-body">
     <figure className="aipe-assessment-hero">
-      <img src={asset('assessment-flow-approved-v5.png')}
+      <img src={asset('assessment-flow-approved-v5.jpg')}
         alt="选定一个研究方向，深读三篇论文，形成交互式学习作品。"
         draggable={false}/>
       <figcaption className="aipe-assessment-stage-labels">

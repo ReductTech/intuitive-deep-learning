@@ -10,7 +10,7 @@ import {
   Typography,
   type QuestionCheckResult,
 } from '../../../shared/react';
-const bottleFront = moduleAssetUrl(moduleIdentity.id, "recycling/camera-views/bottle-front.png");
+const bottleFront = moduleAssetUrl(moduleIdentity.id, "recycling/camera-views/bottle-front.jpg");
 import './HierarchicalFeaturesPage.css';
 
 type LayerIndex = 0 | 1 | 2;

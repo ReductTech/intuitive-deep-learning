@@ -3,7 +3,7 @@ import { moduleAssetUrl } from '../../../shared/react/assets';
 import { useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties, type KeyboardEvent, type MouseEvent } from 'react';
 import { Button, ContentBlock, NoticeStrip, Typography } from '../../../shared/react';
 import { useCompleteOnce } from '../../hooks/useCompleteOnce';
-const bottleImage = moduleAssetUrl(moduleIdentity.id, "recycling/bottle-upright.png");
+const bottleImage = moduleAssetUrl(moduleIdentity.id, "recycling/bottle-upright.jpg");
 import './ImageNumbersPage.css';
 
 type Rgb = readonly [number, number, number];

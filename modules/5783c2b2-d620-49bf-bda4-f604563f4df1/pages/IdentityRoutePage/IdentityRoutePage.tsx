@@ -4,7 +4,7 @@ import { moduleAssetUrl } from '../../../shared/react/assets';
 import { useEffect, useRef, useState } from 'react';
 import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from '../../../shared/react';
 import { useCompleteOnce } from '../../hooks/useCompleteOnce';
-const bottle = moduleAssetUrl(moduleIdentity.id, "recycling/camera-views/bottle-front.png");
+const bottle = moduleAssetUrl(moduleIdentity.id, "recycling/camera-views/bottle-front.jpg");
 import { canVerify, constructedOutput, initialConstruction, originalRoute, transitionConstruction,
   type ConstructionAction, type LayerIndex } from './identityConstruction';
 import './IdentityRoutePage.css';

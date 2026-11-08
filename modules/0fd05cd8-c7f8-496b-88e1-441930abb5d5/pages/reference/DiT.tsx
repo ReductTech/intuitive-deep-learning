@@ -18,7 +18,7 @@ export function DiTBackbone() {
       <RefBox rect={[54,415,1566,212]}><ReferenceVisual name="dit-blocks"/></RefBox>
       {story.playing && story.step>=3 && story.step<=5 && <RefBox rect={[395+(story.step-3)*341,445,260,155]} className="vgr-feature-focus"/>}
       <RefBox rect={[54,660,1566,78]} className="vgr-center"><Typography variant="h3" tone="accent">latent → Patchify → Transformer → Unpatchify → 空间预测</Typography></RefBox>
-    </> : <RefBox rect={[35,208,1600,535]}><img className="vgr-fill" src={referenceAsset('visuals/unet-body.png')} alt="参考页 03 的完整多尺度 U-Net 路线"/></RefBox>}
+    </> : <RefBox rect={[35,208,1600,535]}><img className="vgr-fill" src={referenceAsset('visuals/unet-body.jpg')} alt="参考页 03 的完整多尺度 U-Net 路线"/></RefBox>}
     <ReferenceControls rect={[54,764,1566,62]}><Button data-testid="backbone-unet" active={unet} onClick={()=>setUnet(true)}>U-Net 多尺度路径</Button><Button data-testid="backbone-dit" active={!unet} onClick={()=>setUnet(false)}>DiT 序列路径</Button><Text muted>{unet?'Down → Mid → Up，Skip 传回对应尺度特征':'Tokens → Transformer Blocks → 空间重排'}</Text></ReferenceControls>
     <div className="vgr-state-observer" data-backbone={unet?'unet':'dit'}/>
     <ReferenceStory story={story}/>

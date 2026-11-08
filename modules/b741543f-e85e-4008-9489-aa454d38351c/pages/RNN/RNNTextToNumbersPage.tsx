@@ -2,7 +2,7 @@ import { moduleIdentity } from '../../outlines.json';
 import { moduleAssetUrl } from '../../../shared/react/assets';
 import { Fragment, useRef, useState, useEffect, type CSSProperties } from 'react';
 import { Button, ContentBlock, Typography } from '../../../shared/react';
-const senderAvatar = moduleAssetUrl(moduleIdentity.id, "sender-avatar.png");
+const senderAvatar = moduleAssetUrl(moduleIdentity.id, "sender-avatar.jpg");
 import './RNNTextToNumbersPage.css';
 
 export interface RNNTextToNumbersPageProps {

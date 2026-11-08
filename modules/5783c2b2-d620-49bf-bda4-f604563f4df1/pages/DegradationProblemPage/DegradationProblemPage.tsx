@@ -3,7 +3,7 @@ import { moduleAssetUrl } from '../../../shared/react/assets';
 import { useEffect, useRef, useState } from 'react';
 import { Button, ContentBlock, NoticeStrip, Question, Typography, type QuestionCheckResult } from '../../../shared/react';
 import { useCompleteOnce } from '../../hooks/useCompleteOnce';
-const trainingCurve = moduleAssetUrl(moduleIdentity.id, "research/resnet-figure1-training-user.png");
+const trainingCurve = moduleAssetUrl(moduleIdentity.id, "research/resnet-figure1-training-user.jpg");
 import './DegradationProblemPage.css';
 
 const predictions = [

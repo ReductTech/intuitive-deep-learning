@@ -19,7 +19,7 @@ export function FaceFeatureComplexityPage() {
         </div>
         <div className="vfl-face-complexity-photo-row">
           {PHOTOS.map((index, position) => <div className="vfl-face-complexity-photo" key={index}>
-            <img src={moduleAssetUrl(ASSET_ID, `faces/lfw-serena-${index}.png`)} alt={`同一身份的人脸样本 ${position + 1}`} />
+            <img src={moduleAssetUrl(ASSET_ID, `faces/lfw-serena-${index}.jpg`)} alt={`同一身份的人脸样本 ${position + 1}`} />
           </div>)}
         </div>
         <div className="vfl-face-complexity-same"><Typography as="p" variant="body" tone="accent">四张照片属于同一人</Typography></div>

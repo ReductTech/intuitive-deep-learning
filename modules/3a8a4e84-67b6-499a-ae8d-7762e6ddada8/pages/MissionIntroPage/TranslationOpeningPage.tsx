@@ -6,7 +6,7 @@ export function TranslationOpeningPage({ onComplete }: {
     onComplete: () => void;
 }) {
     return <LessonPageFrame><section className="tr-translation-opening" aria-labelledby="tr-translation-title">
-    <img className="tr-translation-backdrop" src={transformerAsset("01_翻译引入/翻译任务.png")} alt="学生递出原文，机器人歪头托着下巴思考如何翻译"/>
+    <img className="tr-translation-backdrop" src={transformerAsset("01_翻译引入/翻译任务.jpg")} alt="学生递出原文，机器人歪头托着下巴思考如何翻译"/>
     <header className="tr-lesson-header">
       <Typography as="h1" variant="display" tone="accent" id="tr-translation-title">一句英文，机器怎样翻成中文？</Typography>
       <Typography variant="subtitle" tone="muted">先试着翻译这句英文，再进入课程看看机器怎样完成。</Typography>

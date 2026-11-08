@@ -1,0 +1,45 @@
+{
+  "name": "shuku-idl-player-preview",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --config vite.config.mjs",
+    "typecheck": "tsc --noEmit && tsc -p tsconfig.preview.json",
+    "build": "tsc --emitDeclarationOnly && vite build --config vite.library.config.ts"
+  },
+  "dependencies": {
+    "@codemirror/autocomplete": "^6.20.4",
+    "@codemirror/commands": "^6.11.1",
+    "@codemirror/lang-python": "^6.2.1",
+    "@codemirror/language": "^6.13.1",
+    "@codemirror/lint": "^6.9.7",
+    "@codemirror/state": "^6.7.6",
+    "@codemirror/view": "^6.43.15",
+    "@icon-park/react": "^1.4.2",
+    "@lezer/highlight": "^1.2.5",
+    "esbuild": "^0.28.2",
+    "esbuild-wasm": "^0.28.2",
+    "idb": "8.0.4",
+    "lucide-react": "1.63.0",
+    "p-queue": "10.0.0",
+    "pyodide": "314.0.7",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
+    "tailwindcss": "^4.3.3",
+    "three": "^0.186.1",
+    "typescript": "^5.8.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/node": "^22.20.5",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "@types/three": "^0.186.0",
+    "@vitejs/plugin-react": "^4.4.1",
+    "vite": "^6.3.5"
+  },
+  "engines": {
+    "node": ">=24"
+  }
+}

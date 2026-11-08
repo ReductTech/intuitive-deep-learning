@@ -6,12 +6,12 @@ import { photoUrl } from '../../data';
 
 type Label = '苹果' | '梨';
 const samples: { id: string; label: Label; file: string; variety: string; description: string }[] = [
-  { id: '01', label: '苹果', file: '01-fuji-apple.png', variety: '富士苹果', description: '红黄条纹、顶部凹陷的圆形水果，AI 生成' },
-  { id: '02', label: '梨', file: '02-bartlett-pear.png', variety: '巴特利特梨', description: '黄色带斑点、上窄下宽的水果，AI 生成' },
-  { id: '03', label: '苹果', file: '03-granny-smith-apple.png', variety: '青苹果', description: '青绿色、顶部凹陷的圆形水果，AI 生成' },
-  { id: '04', label: '梨', file: '04-bosc-pear.png', variety: '博斯克梨', description: '棕褐色粗糙果皮、细长颈部的水果，AI 生成' },
-  { id: '05', label: '苹果', file: '05-golden-delicious-apple.png', variety: '金冠苹果', description: '金黄色、顶部凹陷的圆形水果，AI 生成' },
-  { id: '06', label: '梨', file: '06-asian-pear.png', variety: '亚洲梨', description: '黄褐色、带细小斑点的扁圆形水果，AI 生成' },
+  { id: '01', label: '苹果', file: '01-fuji-apple.jpg', variety: '富士苹果', description: '红黄条纹、顶部凹陷的圆形水果，AI 生成' },
+  { id: '02', label: '梨', file: '02-bartlett-pear.jpg', variety: '巴特利特梨', description: '黄色带斑点、上窄下宽的水果，AI 生成' },
+  { id: '03', label: '苹果', file: '03-granny-smith-apple.jpg', variety: '青苹果', description: '青绿色、顶部凹陷的圆形水果，AI 生成' },
+  { id: '04', label: '梨', file: '04-bosc-pear.jpg', variety: '博斯克梨', description: '棕褐色粗糙果皮、细长颈部的水果，AI 生成' },
+  { id: '05', label: '苹果', file: '05-golden-delicious-apple.jpg', variety: '金冠苹果', description: '金黄色、顶部凹陷的圆形水果，AI 生成' },
+  { id: '06', label: '梨', file: '06-asian-pear.jpg', variety: '亚洲梨', description: '黄褐色、带细小斑点的扁圆形水果，AI 生成' },
 ];
 
 function FruitPhoto({ sample }: { sample: typeof samples[number] }) {
@@ -37,7 +37,7 @@ export function AnnotationOpeningPage() {
   };
 
   return <article className={`daa-opening${intro ? ' daa-opening-intro daa-opening-sack-scene' : ''}`} aria-label={outline.pages.find(page => page.id === '00c19198-cc92-4327-b95f-02a6a778fa35')!.title}>
-    <img className="daa-station-background" src={photoUrl(intro ? '14-two-sorters-sacks.png' : '13-opening-fruit-station.png')} alt="" aria-hidden="true" />
+    <img className="daa-station-background" src={photoUrl(intro ? '14-two-sorters-sacks.jpg' : '13-opening-fruit-station.jpg')} alt="" aria-hidden="true" />
     <header className="daa-station-header">
       <div><Typography variant="bodySmall" tone="accent">水果分拣站 · {intro ? '今日验收' : '标注工作台'}</Typography>
         <Typography as="h1" variant="h1" tone="accent">{intro ? '同一批水果，为什么分法不一样？' : '给这批水果写上答案'}</Typography></div>

@@ -4,7 +4,7 @@ import { useRef, useState } from 'react';
 import { Button, ContentBlock, TextInput, Typography } from '../../../shared/react';
 const appleFruit = moduleAssetUrl(moduleIdentity.id, "apple-fruit.jpg");
 const iphone18Pro = moduleAssetUrl(moduleIdentity.id, "iphone-18-pro.svg");
-const senderAvatar = moduleAssetUrl(moduleIdentity.id, "sender-avatar.png");
+const senderAvatar = moduleAssetUrl(moduleIdentity.id, "sender-avatar.jpg");
 import './RNNMemoryPage.css';
 
 export interface RNNMemoryPageProps {

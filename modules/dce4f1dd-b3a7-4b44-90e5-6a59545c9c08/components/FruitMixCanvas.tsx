@@ -7,7 +7,7 @@ export function FruitMixCanvas({weight}:{weight:number}) {
   useEffect(()=>{
     let active=true;
     const load=(file:string)=>new Promise<HTMLImageElement>((resolve,reject)=>{const img=new Image();img.onload=()=>resolve(img);img.onerror=reject;img.src=photoUrl(file);});
-    void Promise.all([load('01-fuji-apple.png'),load('02-bartlett-pear.png')]).then(([a,b])=>{
+    void Promise.all([load('01-fuji-apple.jpg'),load('02-bartlett-pear.jpg')]).then(([a,b])=>{
       if(!active||!ref.current)return;
       const context=ref.current.getContext('2d',{willReadFrequently:true});if(!context)return;
       const scratch=document.createElement('canvas');scratch.width=600;scratch.height=400;

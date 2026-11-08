@@ -12,7 +12,7 @@ const benefits = [
 export function WishfulBenefitsPage() {
   return (
     <ContentBlock title={outline.pages.find(page => page.id === '4ad63653-03eb-4d05-b32d-2841a8b23d04')!.title} headingLevel={1} className="rie-benefits" data-scene-id="4ad63653-03eb-4d05-b32d-2841a8b23d04">
-      <img className="rie-benefits-art" src={moduleAssetUrl(outline.moduleIdentity.id, 'images/wishful-benefits-art-v1.png')} alt="降低的台阶、进入实践的想法、尝试反馈的循环，以及留给思考的笔记本" />
+      <img className="rie-benefits-art" src={moduleAssetUrl(outline.moduleIdentity.id, 'images/wishful-benefits-art-v1.jpg')} alt="降低的台阶、进入实践的想法、尝试反馈的循环，以及留给思考的笔记本" />
       <div className="rie-benefits-grid">
         {benefits.map(([title, description]) => (
           <div key={title} className="rie-benefits-copy">

@@ -24,7 +24,7 @@ export function NoisyPhoto({ noise, blur, brightness = 1, hue = 0 }: { noise: nu
       }
       context.putImageData(pixels, 0, 0);
     };
-    image.src = photoUrl('01-fuji-apple.png');
+    image.src = photoUrl('01-fuji-apple.jpg');
     return () => { active = false; };
   }, [noise, blur, brightness, hue]);
   return <canvas ref={canvas} width={600} height={400} aria-label="外观增广后的水果图像" style={{width:'min(100%, 660px)',height:'auto',maxHeight:'100%',objectFit:'contain',borderRadius:'var(--ui-radius-md)'}} />;

@@ -1,0 +1,18 @@
+/* Application adapters; visual rules above are copied from CourseWorkspace. */
+.shuku-ppt-reader .cw-viewport{position:relative;overflow:hidden;min-height:0;min-width:0;display:flex;align-items:center;justify-content:center}
+.shuku-ppt-reader .cw-slide-wrap{position:relative;flex:none}
+.shuku-ppt-reader .cw-slide{width:1600px;height:900px;transform-origin:top left;overflow:hidden;background:#fff;border-radius:10px}
+.shuku-ppt-reader .cw-slide>iframe{display:block;width:1600px;height:900px;min-height:900px;max-width:none;border:0;background:#fff}
+.shuku-ppt-reader .cw-course-context{max-width:420px}
+.shuku-ppt-reader .ppt-download{padding:8px 12px;color:inherit;font-size:13px;white-space:nowrap;text-decoration:none;border-radius:8px}
+.shuku-ppt-reader .ppt-download:hover{background:#f2f5fa}
+.shuku-ppt-reader .ppt-slide-thumbnail{display:block;position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;background:white}
+.shuku-ppt-reader .ppt-slide-thumbnail>img{display:block;width:100%;height:100%;object-fit:contain}
+.shuku-ppt-reader .ppt-thumbnail-status{display:flex;align-items:center;justify-content:center;min-height:100%;padding:12px;color:#94a3b8;font-size:11px;text-align:center}
+.shuku-ppt-reader .cw-viewport:fullscreen{width:100vw;height:100vh;background:#fff;padding:0}
+.shuku-ppt-reader .cw-viewport:fullscreen .cw-slide{border-radius:0}
+.shuku-ppt-reader .ppt-reader-subtitle{position:absolute;bottom:65px;left:12%;right:12%;padding:12px 18px;text-align:center;background:#172744db;color:white;border-radius:8px;pointer-events:none}
+@media(max-width:760px){.shuku-ppt-reader{grid-template-columns:180px minmax(0,1fr)}.shuku-ppt-reader .cw-course-context{max-width:180px}.shuku-ppt-reader .ppt-download{display:none}.shuku-ppt-reader .cw-topbar{gap:10px;padding:0 12px}.shuku-ppt-reader .cw-header-identity{gap:10px}.shuku-ppt-reader .cw-header-identity .cw-brand{padding-right:10px}}
+
+.shuku-ppt-reader .ppt-reader-menu{position:relative}.shuku-ppt-reader .ppt-reader-menu>summary{list-style:none;padding:6px 10px;cursor:pointer}.shuku-ppt-reader .ppt-reader-menu>div{position:absolute;right:0;top:40px;z-index:20;display:flex;flex-direction:column;min-width:160px;padding:6px;background:#fff;border:1px solid #dce4f1;border-radius:9px;box-shadow:0 8px 24px #19345e16}.shuku-ppt-reader.cw-app .ppt-reader-menu>div>button{justify-content:flex-start;font-size:13px}
+.shuku-ppt-reader .ppt-player-error{margin:0;padding:8px 24px;font-size:12px;color:#b36161;background:#fff3f0}

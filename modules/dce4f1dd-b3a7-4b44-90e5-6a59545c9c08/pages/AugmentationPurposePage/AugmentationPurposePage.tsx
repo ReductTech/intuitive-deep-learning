@@ -15,7 +15,7 @@ export function AugmentationPurposePage() {
     takeaway="目标是在未见样本上也能识别正确（泛化）。">
     <div className="daa-purpose-layout">
       <div className="daa-purpose-views">{views.map((view,index)=><div key={index}>
-        <div className="daa-purpose-image"><img src={photoUrl('01-fuji-apple.png')} alt={view.label} style={view.style}/>{augmented&&index===2&&<div className="daa-purpose-cutout"/>}</div>
+        <div className="daa-purpose-image"><img src={photoUrl('01-fuji-apple.jpg')} alt={view.label} style={view.style}/>{augmented&&index===2&&<div className="daa-purpose-cutout"/>}</div>
         <Typography variant="bodySmall" align="center">{view.label}</Typography>
         <Typography variant="body" tone="success" align="center">标签：苹果</Typography>
       </div>)}</div>

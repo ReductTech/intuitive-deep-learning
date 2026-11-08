@@ -3,7 +3,7 @@ import { moduleAssetUrl } from '../../../shared/react/assets';
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, NoticeStrip, RangeControl, Typography } from '../../../shared/react';
 import { useCompleteOnce } from '../../hooks/useCompleteOnce';
-const reference = moduleAssetUrl(moduleIdentity.id, "super-resolution/reference-flower.png");
+const reference = moduleAssetUrl(moduleIdentity.id, "super-resolution/reference-flower.jpg");
 import { preparePixels, reconstructPixels, type ResidualPixels } from './pixels';
 import { drawResidualReveal, pictureTravel, type PictureTravel } from './motion';
 import { isSubtractionLayout, layoutDestinations, panelColumns, TRANSPOSE_DURATION_MS, type ResidualMotion, type ResidualStep } from './scene';

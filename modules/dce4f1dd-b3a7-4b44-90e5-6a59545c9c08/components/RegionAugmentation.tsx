@@ -14,7 +14,7 @@ export function RegionAugmentation({patch,onMove,mode,file}:{patch:Patch;onMove:
       onMove(Math.max(minX,Math.min(maxX,d.x+p.x-d.px)),Math.max(minY,Math.min(maxY,d.y+p.y-d.py)));}}
     onPointerUp={()=>{drag.current=null;}} onLostPointerCapture={()=>{drag.current=null;}}>
     <defs><clipPath id={id}><rect x={patch.x*600} y={patch.y*400} width={patch.width*600} height={patch.height*400}/></clipPath></defs>
-    {mode==='cutmix'?<g clipPath={`url(#${id})`}><image data-pear-image href={photoUrl('02-bartlett-pear.png')} x={(patch.x-(1-patch.width)/2)*600} y={(patch.y-(1-patch.height)/2)*400} width="600" height="400" preserveAspectRatio="none"/></g>:<rect x={patch.x*600} y={patch.y*400} width={patch.width*600} height={patch.height*400} fill="black"/>}
+    {mode==='cutmix'?<g clipPath={`url(#${id})`}><image data-pear-image href={photoUrl('02-bartlett-pear.jpg')} x={(patch.x-(1-patch.width)/2)*600} y={(patch.y-(1-patch.height)/2)*400} width="600" height="400" preserveAspectRatio="none"/></g>:<rect x={patch.x*600} y={patch.y*400} width={patch.width*600} height={patch.height*400} fill="black"/>}
     <rect data-patch-region x={patch.x*600} y={patch.y*400} width={patch.width*600} height={patch.height*400} fill="transparent" stroke="var(--ui-accent)" strokeWidth="3" style={{cursor:'move'}}/>
   </svg></PhotoStage>;
 }

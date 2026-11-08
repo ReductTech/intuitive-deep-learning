@@ -3,10 +3,10 @@ import outline from '../../outlines.json';
 import './ShukuCommunityEvolutionPage.css';
 
 const stages = [
-  { id: 'feedback', title: '使用与反馈', description: '发现问题，提出新需求', image: 'feedback.png' },
-  { id: 'cocreate', title: '师生共创', description: '补充案例，改进讲解', image: 'cocreate.png' },
-  { id: 'review', title: '审核改进', description: '核验内容，共同完善', image: 'review.png' },
-  { id: 'publish', title: '发布新版', description: '更新课程，供大家使用', image: 'publish.png' },
+  { id: 'feedback', title: '使用与反馈', description: '发现问题，提出新需求', image: 'feedback.jpg' },
+  { id: 'cocreate', title: '师生共创', description: '补充案例，改进讲解', image: 'cocreate.jpg' },
+  { id: 'review', title: '审核改进', description: '核验内容，共同完善', image: 'review.jpg' },
+  { id: 'publish', title: '发布新版', description: '更新课程，供大家使用', image: 'publish.jpg' },
 ] as const;
 const asset = (name: string) => moduleAssetUrl(outline.moduleIdentity.id, `images/shuku-community/${name}`);
 

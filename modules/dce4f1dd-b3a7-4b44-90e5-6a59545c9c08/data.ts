@@ -3,7 +3,7 @@ import { moduleAssetUrl } from '../shared/react';
 
 export const assetId = outline.moduleIdentity.id;
 export const photoUrl = (file: string) => moduleAssetUrl(assetId, file);
-export const fruitFiles = ['01-fuji-apple.png', '02-bartlett-pear.png', '03-granny-smith-apple.png', '04-bosc-pear.png', '05-golden-delicious-apple.png', '06-asian-pear.png'];
+export const fruitFiles = ['01-fuji-apple.jpg', '02-bartlett-pear.jpg', '03-granny-smith-apple.jpg', '04-bosc-pear.jpg', '05-golden-delicious-apple.jpg', '06-asian-pear.jpg'];
 export const appleBox = { x1: .25, y1: .08, x2: .77, y2: .89 };
 export type Box = typeof appleBox;
 export const sceneBoxes: Box[] = [{ x1: .12, y1: .24, x2: .45, y2: .78 }, { x1: .57, y1: .08, x2: .87, y2: .79 }];

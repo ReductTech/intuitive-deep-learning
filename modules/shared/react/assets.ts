@@ -1,18 +1,27 @@
-import assetFormats from './asset-formats.json';
-const configuredAssetBase = import.meta.env.VITE_ASSET_BASE_URL?.trim();
-const defaultAssetBase = import.meta.env.PROD ? 'https://image.reduct.cn/cloud-IDL/assets' : import.meta.env.BASE_URL;
+type AssetContext = typeof globalThis & {
+  __SHUKU_COURSE_ID__?: string;
+  __SHUKU_ASSET_URLS__?: Record<string, string>;
+  __SHUKU_OFFLINE_ASSET__?: (key: string) => string;
+};
 
-/** Build a stable module asset URL shared by local development and CDN hosting. */
-export function moduleAssetUrl(moduleAssetId: string, relativePath: string): string {
-  relativePath = (assetFormats as Record<string,string>)[moduleAssetId+'/'+relativePath] || relativePath;
-  const offline=(globalThis as {__SHUKU_OFFLINE_ASSET__?:(key:string)=>string}).__SHUKU_OFFLINE_ASSET__;
-  if(offline)return offline('assets/'+moduleAssetId+'/'+relativePath);
-  const assetBase = (configuredAssetBase || defaultAssetBase).replace(/\/+$/, '');
-  const safeId = encodeURIComponent(moduleAssetId);
-  const safePath = relativePath
-    .split('/')
-    .filter(Boolean)
-    .map((part) => encodeURIComponent(part))
-    .join('/');
-  return `${assetBase}/${safeId}/${safePath}`;
+/** Paths are relative to the course assets directory. Published URLs are platform-owned. */
+export function moduleAssetUrl(relativePath: string): string;
+export function moduleAssetUrl(moduleAssetId: string, relativePath: string): string;
+export function moduleAssetUrl(first: string, second?: string): string {
+  const context=globalThis as AssetContext;
+  const moduleId=second===undefined?context.__SHUKU_COURSE_ID__:first;
+  const relative=(second===undefined?first:second).replace(/^\.\//,'');
+  if(!moduleId || !/^[a-zA-Z0-9_-]+$/.test(moduleId))throw new Error('Missing course asset context');
+  if(!relative || relative.includes('\\') || /[:?#]/.test(relative) || relative.startsWith('/') || relative.split('/').some(part=>!part||part==='.'||part==='..')){
+    throw new Error('Use a relative path inside the course assets directory: '+relative);
+  }
+  const key='assets/'+moduleId+'/'+relative;
+  if(context.__SHUKU_OFFLINE_ASSET__)return context.__SHUKU_OFFLINE_ASSET__(key);
+  if(context.__SHUKU_ASSET_URLS__){
+    const url=context.__SHUKU_ASSET_URLS__[key];
+    if(!url)throw new Error('Asset absent from this published version: '+relative);
+    return url;
+  }
+  const base=(import.meta.env.VITE_ASSET_BASE_URL||import.meta.env.BASE_URL||'./').replace(/\/+$/,'');
+  return base+'/'+encodeURIComponent(moduleId)+'/'+relative.split('/').map(encodeURIComponent).join('/');
 }

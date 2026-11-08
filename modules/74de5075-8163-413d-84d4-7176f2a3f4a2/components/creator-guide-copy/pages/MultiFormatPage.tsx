@@ -6,7 +6,7 @@ import { Button, ContentBlock, Typography } from '../../../../shared/react';
 import { NativeStudyPreview } from '../components/NativeStudyPreview';
 import './MultiFormatPage.css';
 
-const lessonImage = (id: string) => creatorGuideAssetUrl(moduleAssetOutline.moduleIdentity.id, `images/multi-format/convolution/${id}.png`);
+const lessonImage = (id: string) => creatorGuideAssetUrl(moduleAssetOutline.moduleIdentity.id, `images/multi-format/convolution/${id}.jpg`);
 const lessons = [
   { title: '从五子棋开始认识卷积核', image: lessonImage('gomoku-play'), steps: [
     { title: '先下一局', text: '先与 AI 下一局五子棋，从熟悉的棋盘和局部棋形开始。', box: [1, 3, 25, 90] },

@@ -1,0 +1,24 @@
+@import 'tailwindcss';
+@source '../../';
+
+html,body,#root{min-height:100%;margin:0}
+body{font-family:"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
+.preview-catalog{max-width:1240px;margin:auto;padding:64px 32px;color:#172b46}
+.preview-catalog>header{margin-bottom:36px}
+.preview-eyebrow{font-size:12px;font-weight:600;letter-spacing:.07em;color:#59718f}
+.preview-catalog h1{font-size:38px;font-weight:700;margin:12px 0}
+.preview-catalog p{color:#62718a;line-height:1.8}
+.preview-demo{display:inline-block;margin-top:18px;color:#2459c2;font-weight:600}
+.preview-search{display:block;font-size:13px;font-weight:600}
+.preview-search input{display:block;box-sizing:border-box;width:100%;max-width:520px;margin-top:10px;padding:13px 16px;border:1px solid #d3ddea;border-radius:8px;font:inherit;background:#f8faff}
+.preview-count{font-size:13px;margin:24px 0 12px}
+.preview-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px}
+.preview-grid article{display:flex;flex-direction:column;padding:24px;border:1px solid #e0e7ef;border-radius:12px;background:#fff}
+.preview-grid h2{font-size:19px;font-weight:650;line-height:1.5;margin:14px 0 8px}
+.preview-grid p{font-size:14px;flex:1;margin-bottom:24px}
+.preview-grid footer{display:flex;gap:20px;font-size:14px;color:#2459c2;font-weight:600}
+.preview-grid footer span{color:#8793a5}
+.preview-catalog a:hover{text-decoration:underline}
+.preview-status{padding:48px;color:#334866;font:16px/1.8 "Microsoft YaHei",sans-serif}
+.preview-status h1{font-size:28px;font-weight:700}
+.preview-status a{color:#2459c2;text-decoration:underline}

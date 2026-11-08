@@ -14,7 +14,7 @@ export function TeachingTalentDiscoveryPage() {
     subtitle="教学发现 → 导师培养 → 科研产出" headingLevel={1}
     className="aipe-talent-page" bodyClassName="aipe-talent-body">
     <figure className="aipe-talent-process">
-      <img className="aipe-talent-scenes" src={asset('research-growth-scenes.png')}
+      <img className="aipe-talent-scenes" src={asset('research-growth-scenes.jpg')}
         alt="教师从课堂交流与实践中了解学生，带领学生深入科研，师生共同分析实验、推进研究成果。" draggable={false}/>
       <figcaption className="aipe-talent-stage-labels">
         {stages.map(stage => <div key={stage.title}>
@@ -25,11 +25,11 @@ export function TeachingTalentDiscoveryPage() {
     </figure>
     <div className="aipe-talent-benefits">
       <div>
-        <img src={asset('teacher-portrait.png')} alt="" aria-hidden="true" draggable={false}/>
+        <img src={asset('teacher-portrait.jpg')} alt="" aria-hidden="true" draggable={false}/>
         <Typography as="p" variant="body" tone="accent"><strong>教师：</strong>发现合适生源，充实研究团队</Typography>
       </div>
       <div>
-        <img src={asset('students-portrait.png')} alt="" aria-hidden="true" draggable={false}/>
+        <img src={asset('students-portrait.jpg')} alt="" aria-hidden="true" draggable={false}/>
         <Typography as="p" variant="body" tone="accent"><strong>学生：</strong>获得导师指导与科研机会</Typography>
       </div>
     </div>

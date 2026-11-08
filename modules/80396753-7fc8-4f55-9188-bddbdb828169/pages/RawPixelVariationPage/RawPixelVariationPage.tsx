@@ -4,7 +4,7 @@ import { measureMnistImage, MNIST_INK_THRESHOLD } from '../../services/mnistFeat
 import './RawPixelVariationPage.css';
 
 const ASSET_ID = '80396753-7fc8-4f55-9188-bddbdb828169';
-const samples = ['mnist/3/60030.png', 'mnist/3/60032.png'];
+const samples = ['mnist/3/60030.jpg', 'mnist/3/60032.jpg'];
 type Highlight = 'shared' | 'single' | 'background' | 'a' | 'b';
 type PixelCache = { images: ImageData[]; a: boolean[]; b: boolean[]; width: number; height: number };
 type Comparison = { same: number; foreground: number };

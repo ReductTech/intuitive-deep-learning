@@ -15,7 +15,7 @@ import {
   NoticeStrip,
   Typography,
 } from '../../../shared/react';
-const bottleFront = moduleAssetUrl(moduleIdentity.id, "recycling/camera-views/bottle-front.png");
+const bottleFront = moduleAssetUrl(moduleIdentity.id, "recycling/camera-views/bottle-front.jpg");
 import './FeatureMapsPage.css';
 
 type FeatureId = 'edge' | 'texture' | 'shape';

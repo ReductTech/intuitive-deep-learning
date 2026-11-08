@@ -3,8 +3,8 @@ import { moduleAssetUrl } from '../../../shared/react/assets';
 import { useEffect, useRef, useState, type KeyboardEvent, type MouseEvent } from 'react';
 import { Button, ContentBlock, Typography } from '../../../shared/react';
 import { useCompleteOnce } from '../../hooks/useCompleteOnce';
-const bottleFront = moduleAssetUrl(moduleIdentity.id, "recycling/camera-views/bottle-front.png");
-const bottleAngle = moduleAssetUrl(moduleIdentity.id, "recycling/camera-views/bottle-angle-45.png");
+const bottleFront = moduleAssetUrl(moduleIdentity.id, "recycling/camera-views/bottle-front.jpg");
+const bottleAngle = moduleAssetUrl(moduleIdentity.id, "recycling/camera-views/bottle-angle-45.jpg");
 import './PixelRepresentationPage.css';
 
 type Condition = 'angle' | 'light' | 'distance' | 'background';

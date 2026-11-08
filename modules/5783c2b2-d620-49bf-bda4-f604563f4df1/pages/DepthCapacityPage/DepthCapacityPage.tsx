@@ -3,7 +3,7 @@ import { moduleAssetUrl } from '../../../shared/react/assets';
 import { useEffect, useReducer, useRef, useState, type CSSProperties, type KeyboardEvent } from 'react';
 import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, NoticeStrip, Typography } from '../../../shared/react';
 import { useCompleteOnce } from '../../hooks/useCompleteOnce';
-const bottleFront = moduleAssetUrl(moduleIdentity.id, "recycling/camera-views/bottle-front.png");
+const bottleFront = moduleAssetUrl(moduleIdentity.id, "recycling/camera-views/bottle-front.jpg");
 import { centerCell, containsCell, layerSize, traceReceptiveField, type Cell, type ConvDepth, type Region } from './receptiveField';
 import { DependencyBands } from './DependencyBands';
 import { FeatureCompositionLab } from './FeatureCompositionLab';

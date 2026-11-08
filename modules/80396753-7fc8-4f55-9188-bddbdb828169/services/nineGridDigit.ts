@@ -3,7 +3,7 @@ import { MNIST_INK_THRESHOLD } from './mnistFeatures';
 
 export const NINE_GRID_IMAGE_SIZE = 28;
 export const NINE_GRID_EDGES = [0, 9, 18, 28] as const;
-export const NINE_GRID_IMAGE_URL = moduleAssetUrl('80396753-7fc8-4f55-9188-bddbdb828169', 'mnist/2/60035.png');
+export const NINE_GRID_IMAGE_URL = moduleAssetUrl('80396753-7fc8-4f55-9188-bddbdb828169', 'mnist/2/60035.jpg');
 
 export type NineGridCell = { x: number; y: number; ink: boolean; rank: number };
 

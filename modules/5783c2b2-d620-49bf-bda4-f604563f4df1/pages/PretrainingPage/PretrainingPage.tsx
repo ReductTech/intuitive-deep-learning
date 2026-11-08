@@ -4,7 +4,7 @@ import { moduleAssetUrl } from '../../../shared/react/assets';
 import { useState } from 'react';
 import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from '../../../shared/react';
 import { useCompleteOnce } from '../../hooks/useCompleteOnce';
-const bottle = moduleAssetUrl(moduleIdentity.id, "pretraining/bottle-white-cap-hd.png");
+const bottle = moduleAssetUrl(moduleIdentity.id, "pretraining/bottle-white-cap-hd.jpg");
 import './PretrainingPage.css';
 
 export const PRETRAINING_CUES = [

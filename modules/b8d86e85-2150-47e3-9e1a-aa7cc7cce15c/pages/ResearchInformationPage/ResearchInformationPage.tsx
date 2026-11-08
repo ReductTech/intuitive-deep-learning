@@ -6,7 +6,7 @@ import './ResearchInformationPage.css';
 
 const format = (count: number) => count.toLocaleString('en-US');
 const ceiling = 33000;
-const readingScene = moduleAssetUrl(outline.moduleIdentity.id, 'research-information/reading-still-life.png');
+const readingScene = moduleAssetUrl(outline.moduleIdentity.id, 'research-information/reading-still-life.jpg');
 
 export function ResearchInformationPage() {
   const root = useRef<HTMLElement>(null);

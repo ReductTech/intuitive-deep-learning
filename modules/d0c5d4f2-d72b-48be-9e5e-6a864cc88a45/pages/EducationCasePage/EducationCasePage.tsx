@@ -11,7 +11,7 @@ export function EducationCasePage() {
    <span className="rf-case-accent" aria-hidden="true"/>
   </header>
   <figure className="rf-case-document">
-   <div className="rf-case-document-image"><img src={moduleAssetUrl(outline.moduleIdentity.id, 'evidence/education-case-list-2026.png')} alt="2026年天津市人工智能加研究生教育典型案例名单：首项为南开大学个人智能体重构人才培养范式，负责人程明明"/><span className="rf-case-first-row" aria-hidden="true"/></div>
+   <div className="rf-case-document-image"><img src={moduleAssetUrl(outline.moduleIdentity.id, 'evidence/education-case-list-2026.jpg')} alt="2026年天津市人工智能加研究生教育典型案例名单：首项为南开大学个人智能体重构人才培养范式，负责人程明明"/><span className="rf-case-first-row" aria-hidden="true"/></div>
   </figure>
  </section>;
 }

@@ -1,6 +1,6 @@
 import { moduleIdentity } from '../../outlines.json';
 import { moduleAssetUrl } from '../../../shared/react/assets';
-const bottle = moduleAssetUrl(moduleIdentity.id, "pretraining/bottle-white-cap-hd.png");
+const bottle = moduleAssetUrl(moduleIdentity.id, "pretraining/bottle-white-cap-hd.jpg");
 const bottleBlue = moduleAssetUrl(moduleIdentity.id, "starting-points/bottle-blue.jpg");
 const bottleLabel = moduleAssetUrl(moduleIdentity.id, "starting-points/bottle-label.jpg");
 const bottleBent = moduleAssetUrl(moduleIdentity.id, "starting-points/bottle-bent.jpg");

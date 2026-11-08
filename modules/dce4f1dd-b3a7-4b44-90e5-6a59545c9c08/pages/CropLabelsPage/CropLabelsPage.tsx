@@ -27,7 +27,7 @@ export function CropLabelsPage() {
       </svg></PhotoStage>
       <Typography variant="bodySmall"><Typography as="span" variant="bodySmall" tone="warning">橙色：GT 目标框</Typography> · <Typography as="span" variant="bodySmall" tone="accent">蓝色：裁剪窗口（左右边均可拖拽）</Typography></Typography>
       <RangeControl label="裁剪窗口宽度" value={w} min={.1} max={.8} step={.01} digits={2} onChange={e=>{const width=+e.target.value;setCrop({x:Math.min(x,1-width),w:width});}}/></div>
-      <div className="daa-reading"><div className="daa-transform-window" style={{height:260,width:260*1.5*w/.8,aspectRatio:'auto'}}><img src={photoUrl('01-fuji-apple.png')} alt="裁剪后的水果图像" style={{position:'absolute',width:`${100/w}%`,maxWidth:'none',height:'125%',left:`${-x/w*100}%`,top:'-12.5%'}}/>{retained>=.25&&<BoxOverlay boxes={[box]}/>}</div>
+      <div className="daa-reading"><div className="daa-transform-window" style={{height:260,width:260*1.5*w/.8,aspectRatio:'auto'}}><img src={photoUrl('01-fuji-apple.jpg')} alt="裁剪后的水果图像" style={{position:'absolute',width:`${100/w}%`,maxWidth:'none',height:'125%',left:`${-x/w*100}%`,top:'-12.5%'}}/>{retained>=.25&&<BoxOverlay boxes={[box]}/>}</div>
         <Typography variant="body">剩余框面积：{Math.round(retained*100)}%</Typography><Typography variant="bodySmall" tone="muted">本例保留阈值为 25%，不是通用标准。</Typography><Typography variant="body" tone={retained>=.25?'success':'warning'}>检测记录：{retained>=.25?'保留并更新框':'丢弃目标框'}</Typography>
       </div></div>
   </LessonPage>;

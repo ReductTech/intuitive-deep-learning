@@ -41,7 +41,7 @@ export function StudentCapabilitiesPage() {
       onPointerLeave={() => setActive(2)}
       onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget)) setActive(2); }}>
       <div className="aipe-capability-scenery">
-        <img className="aipe-capability-background" src={asset('hall-background.png')} alt="五座相连的拱门构成能力殿堂，分别呈现文献、知识联系、表达、实践和创新" draggable={false}/>
+        <img className="aipe-capability-background" src={asset('hall-background.jpg')} alt="五座相连的拱门构成能力殿堂，分别呈现文献、知识联系、表达、实践和创新" draggable={false}/>
         {capabilities.map((capability, index) => <button key={capability.id} type="button"
           className="aipe-capability-arch" data-capability={capability.id} data-active={active === index}
           aria-labelledby={`aipe-capability-${capability.id}`} aria-pressed={active === index}

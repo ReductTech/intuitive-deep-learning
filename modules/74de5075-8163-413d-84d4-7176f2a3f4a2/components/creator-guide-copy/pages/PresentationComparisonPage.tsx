@@ -65,7 +65,7 @@ export function PresentationComparisonPage() {
       {[1,2,3,4,5].map(version => <button type="button" className="aipe-replay-cg-case-stack-card" key={version}
         style={stackStyle((version - active + 7) % 5)} aria-label={`查看生成方案 ${version}`} aria-pressed={active === version}
         onFocus={() => setActive(version)} onClick={() => setActive(version)}>
-        <img src={asset(`images/weight-sharing/version-${version}.png`)} alt={`权重共享图示方案 ${version}`} draggable={false}/>
+        <img src={asset(`images/weight-sharing/version-${version}.jpg`)} alt={`权重共享图示方案 ${version}`} draggable={false}/>
       </button>)}
     </section>
     <section className="aipe-replay-cg-case-result" aria-label="加入具体设计要求后的知识呈现作品效果">

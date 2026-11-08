@@ -3,7 +3,7 @@ import { moduleAssetUrl } from '../../../shared/react/assets';
 import { useEffect, useRef, useState } from 'react';
 import { Button, ContentBlock, NoticeStrip, Typography } from '../../../shared/react';
 import { useCompleteOnce } from '../../hooks/useCompleteOnce';
-const bottleFront = moduleAssetUrl(moduleIdentity.id, "recycling/camera-views/bottle-front.png");
+const bottleFront = moduleAssetUrl(moduleIdentity.id, "recycling/camera-views/bottle-front.jpg");
 import './LearningFeaturesPage.css';
 
 type Phase = 0 | 1 | 2 | 3 | 4 | 5 | 6;

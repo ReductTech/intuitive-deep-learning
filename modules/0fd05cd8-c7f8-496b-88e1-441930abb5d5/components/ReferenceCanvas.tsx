@@ -57,7 +57,7 @@ export function ReferenceCanvas({ index, source, children, title, subtitle, summ
     <div ref={viewport} className="vgr-viewport">
     <CropContext.Provider value={top}>
     <div className="vga-content vgr-contents" data-reference-body-top={top} style={{width:1600,height:canvasHeight,left:layout.left,top:layout.top,transform:`scale(${layout.scale})`}}>
-      {source && <img className="vgr-plate" src={referenceAsset(`visuals/reference-body-${source}.png`)} alt={`${page.title}：参考图内容区的原始图形与流程`} draggable={false} data-reference-plate={source} />}
+      {source && <img className="vgr-plate" src={referenceAsset(`visuals/reference-body-${source}.jpg`)} alt={`${page.title}：参考图内容区的原始图形与流程`} draggable={false} data-reference-plate={source} />}
       {children}
       {!source && <div className="vgr-native-summary"><Typography variant="h3" tone="accent">{summary}</Typography></div>}
     </div>
@@ -87,6 +87,6 @@ export function Cover({ rect, visible }: { rect: Rect; visible: boolean }) {
 export function LatentNoise({ progress }: { progress: number }) {
   const planes = ['395,9 522,44 522,238 433,212 433,50 395,39','273,17 423,58 423,257 318,228 318,67 273,55','142,26 306,72 306,266 203,237 203,76 142,59','9,37 190,86 190,278 9,239'];
   return <svg viewBox="0 0 530 293" className="vgr-latent-noise" data-testid="sampling-latent" data-progress={progress} role="img" aria-label={`去噪进度示意 ${Math.round(progress * 100)}%`}>
-    {planes.map(points => <image key={points} href={referenceAsset('visuals/noise-prediction.png')} x="0" y="0" width="530" height="293" preserveAspectRatio="none" style={{clipPath: `polygon(${points.split(' ').map(p => {const [x,y] = p.split(',').map(Number);return `${x/5.3}% ${y/2.93}%`;}).join(',')})`}} opacity={1-progress} />)}
+    {planes.map(points => <image key={points} href={referenceAsset('visuals/noise-prediction.jpg')} x="0" y="0" width="530" height="293" preserveAspectRatio="none" style={{clipPath: `polygon(${points.split(' ').map(p => {const [x,y] = p.split(',').map(Number);return `${x/5.3}% ${y/2.93}%`;}).join(',')})`}} opacity={1-progress} />)}
   </svg>;
 }
