@@ -1,3 +1,6 @@
+import type recordData from '../assets/precomputed/attention-regression.json';
+import {loadPrecomputed} from '../precomputed';
+const record=await loadPrecomputed<typeof recordData>('attention-regression');
 /**
  * Offline reconstruction of a recorded player's horizontal position, C13-C16.
  * Fifty seeded synthetic observations use seconds and metres directly.
@@ -166,61 +169,20 @@ export function attentionTrainingMetrics(dataset: AttentionDataset, w: number) {
   return { trainMse, validationMse, gradient };
 }
 
-export function createAttentionTrainingState(dataset: AttentionDataset): AttentionTrainingState {
-  const metrics = attentionTrainingMetrics(dataset, INITIAL_ATTENTION_W);
-  return {
-    epoch: 0,
-    w: INITIAL_ATTENTION_W,
-    gradient: metrics.gradient,
-    trainMse: metrics.trainMse,
-    validationMse: metrics.validationMse,
-    lossHistory: [metrics.trainMse],
-    validationHistory: [metrics.validationMse],
-  };
-}
+export function createAttentionTrainingState(dataset: AttentionDataset): AttentionTrainingState { return structuredClone(record.frames[0]); }
 
 export function trainAttentionStep(
   state: AttentionTrainingState,
   dataset: AttentionDataset,
   learningRate = D2L_LEARNING_RATE,
-): AttentionTrainingState {
-  if (!Number.isInteger(state.epoch) || state.epoch < 0 || state.epoch > MAX_ATTENTION_EPOCHS) {
-    throw new RangeError('The regression lesson supports epochs 0 through 5.');
-  }
-  if (state.epoch === MAX_ATTENTION_EPOCHS) return state;
-  if (!Number.isFinite(learningRate) || learningRate <= 0) {
-    throw new RangeError('The learning rate must be positive and finite.');
-  }
-  const before = attentionTrainingMetrics(dataset, state.w);
-  const nextW = Math.max(0.05, Math.min(8, state.w - learningRate * before.gradient));
-  const after = attentionTrainingMetrics(dataset, nextW);
-  return {
-    epoch: state.epoch + 1,
-    w: nextW,
-    gradient: after.gradient,
-    trainMse: after.trainMse,
-    validationMse: after.validationMse,
-    lossHistory: [...state.lossHistory, after.trainMse],
-    validationHistory: [...state.validationHistory, after.validationMse],
-  };
-}
+): AttentionTrainingState { return structuredClone(record.frames[Math.min(MAX_ATTENTION_EPOCHS,state.epoch+1)]); }
 
 export function runAttentionTraining(
   state: AttentionTrainingState,
   dataset: AttentionDataset,
   learningRate = D2L_LEARNING_RATE,
   epochs: number,
-) {
-  if (!Number.isInteger(epochs) || epochs < 0) {
-    throw new RangeError('The number of training epochs must be a non-negative integer.');
-  }
-  let next = state;
-  const remaining = Math.min(epochs, Math.max(0, MAX_ATTENTION_EPOCHS - state.epoch));
-  for (let index = 0; index < remaining; index += 1) {
-    next = trainAttentionStep(next, dataset, learningRate);
-  }
-  return next;
-}
+) { return structuredClone(record.frames[Math.min(MAX_ATTENTION_EPOCHS,state.epoch+epochs)]); }
 
 export function attentionAverage(samples: readonly AttentionSample[]): number {
   if (samples.length === 0) throw new RangeError('An average requires observations.');
@@ -294,13 +256,7 @@ export const ATTENTION_DATASET: AttentionDataset = (() => {
 })();
 
 /** Computed once, independently of any C15 activity state or persisted progress. */
-export const ATTENTION_TRAINING_SNAPSHOTS: readonly AttentionTrainingState[] = (() => {
-  const snapshots = [freezeTrainingState(createAttentionTrainingState(ATTENTION_DATASET))];
-  for (let epoch = 1; epoch <= MAX_ATTENTION_EPOCHS; epoch += 1) {
-    snapshots.push(freezeTrainingState(trainAttentionStep(snapshots[epoch - 1], ATTENTION_DATASET)));
-  }
-  return Object.freeze(snapshots);
-})();
+export const ATTENTION_TRAINING_SNAPSHOTS: readonly AttentionTrainingState[] = Object.freeze(record.frames.map(freezeTrainingState));
 
 export const ATTENTION_INITIAL_TRAINING = ATTENTION_TRAINING_SNAPSHOTS[0];
 export const ATTENTION_FIFTH_EPOCH_TRAINING = ATTENTION_TRAINING_SNAPSHOTS[MAX_ATTENTION_EPOCHS];

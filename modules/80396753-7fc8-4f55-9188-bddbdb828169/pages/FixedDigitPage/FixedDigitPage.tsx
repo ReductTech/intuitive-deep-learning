@@ -252,7 +252,7 @@ export function FixedDigitPage() {
 
   return <ContentBlock className="vfl-fixed-page" headingLevel={1} title="固定卷积特征的数字分类" subtitle="用固定卷积核描述笔画的局部结构，再训练分类器学习特征与数字类别的关系。">
     <div className="vfl-fixed-toolbar">
-      <Button variant="primary" disabled={training} loading={training} onClick={train}><Typography as="span" variant="body" tone="inherit">{training ? '训练中…' : '训练分类器'}</Typography></Button>
+      <Button variant="primary" disabled={training} loading={training} onClick={train}><Typography as="span" variant="body" tone="inherit">{training ? '回放中…' : '训练分类器'}</Typography></Button>
       <Typography variant="bodySmall" tone="muted">多选卷积核</Typography>
       <div className="vfl-fixed-tags" role="group" aria-label="选择固定卷积核">{KERNELS.map(kernel=><Button key={kernel.id} variant={selected.includes(kernel.id) ? 'primary' : 'default'} active={selected.includes(kernel.id)} aria-pressed={selected.includes(kernel.id)} onClick={()=>toggleKernel(kernel.id)}><Typography as="span" variant="bodySmall" tone="inherit">{kernel.name}</Typography></Button>)}</div>
       <div className="vfl-fixed-metric"><Typography variant="bodySmall" tone="accent">训练 ACC</Typography><Typography variant="body" tone="accent">{result ? percent(result.train_accuracy) : '—'}</Typography></div>

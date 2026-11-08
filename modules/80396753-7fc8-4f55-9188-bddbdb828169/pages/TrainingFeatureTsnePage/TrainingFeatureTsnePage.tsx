@@ -27,7 +27,7 @@ export function TrainingFeatureTsnePage(){
    <div className="vfl-tsne-control-title"><span className="vfl-tsne-icon-tile"><TrainingIcon kind="settings"/></span><Typography variant="bodySmall" tone="accent">训练参数</Typography></div>
    <Select label="学习率" value={learningRate} options={tsneLearningRates.map(value=>({value:String(value),label:<Typography as="span" variant="bodySmall">{value}</Typography>}))} onChange={setLearningRate}/>
    <Select label="批大小" value={batchSize} options={tsneBatchSizes.map(value=>({value:String(value),label:<Typography as="span" variant="bodySmall">{value} 张 / 批</Typography>}))} onChange={setBatchSize}/>
-   <Button variant="primary" disabled={loading||(!data&&!error)} onClick={()=>{if(error){setRetry(value=>value+1);return;}setStarted(true);if(index===(data?.frames.length??0)-1)setIndex(0);setPlaying(value=>!value);}}><TrainingIcon kind={playing?'pause':'play'}/><Typography as="span" variant="bodySmall" tone="inherit">{error?'重试读取':playing?'暂停训练':index===15?'重新训练':started?'继续训练':'开始训练'}</Typography></Button>
+   <Button variant="primary" disabled={loading||(!data&&!error)} onClick={()=>{if(error){setRetry(value=>value+1);return;}setStarted(true);if(index===(data?.frames.length??0)-1)setIndex(0);setPlaying(value=>!value);}}><TrainingIcon kind={playing?'pause':'play'}/><Typography as="span" variant="bodySmall" tone="inherit">{error?'重试读取':playing?'暂停回放':index===15?'重新回放':started?'继续回放':'播放缓存'}</Typography></Button>
   </div>
   <div className="vfl-tsne-main">
    <div className="vfl-tsne-metrics"><MetricChart frames={data?.frames??emptyFrames} index={index}/></div>

@@ -71,7 +71,7 @@ export function EpsilonSchedulePage() {
     timer.current = window.setTimeout(tick, 0);
   }
   useEffect(() => () => { generation.current++; if (timer.current !== null) window.clearTimeout(timer.current); }, []);
-  const message = dirty ? '曲线尚未重新训练；当前路线与回报仍来自上次训练。'
+  const message = dirty ? '曲线尚未重新回放；当前路线与回报仍来自上次训练。'
     : record.greedy.outcome === 'delivered' && record.training.outcome !== 'delivered'
       ? 'Q 表关闭探索后已能送达；本回合仍在探索，付出了额外成本。'
       : record.greedy.outcome !== 'delivered' && record.epsilon <= .2
@@ -92,9 +92,9 @@ export function EpsilonSchedulePage() {
         <div className="vbrl-controls" role="group" aria-label="参考衰减节奏">
           {SCHEDULE_PRESETS.map(preset => <Button key={preset.label} active={sameSchedule(schedule, preset.schedule)} disabled={training}
             onClick={() => changeSchedule({ ...preset.schedule })}>{preset.label}</Button>)}
-          <Button variant="primary" disabled={training} onClick={retrain}>{training ? '训练 ' + progress + '/' + SCHEDULE_EPISODES : '重新训练'}</Button>
+          <Button variant="primary" disabled={training} onClick={retrain}>{training ? '训练 ' + progress + '/' + SCHEDULE_EPISODES : '重新回放'}</Button>
         </div>
-        <Typography variant="bodySmall" tone={dirty ? 'warning' : 'muted'}>{dirty ? '曲线已修改 · 需重新训练' : '同一起点、空 Q 表与随机种子'}</Typography>
+        <Typography variant="bodySmall" tone={dirty ? 'warning' : 'muted'}>{dirty ? '曲线已修改 · 需重新回放' : '同一起点、空 Q 表与随机种子'}</Typography>
       </div>
       <div className="vbrl-epsilon__scene">
         <div className="vbrl-epsilon__charts">

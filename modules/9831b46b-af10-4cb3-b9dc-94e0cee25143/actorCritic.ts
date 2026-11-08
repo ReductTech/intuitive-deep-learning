@@ -1,3 +1,6 @@
+import type recordData from './assets/precomputed/ac.json';
+import {loadPrecomputed} from './precomputed';
+const record=await loadPrecomputed<typeof recordData>('ac');
 import { createNetwork, forward, gradient, type Network } from './neuralPolicy';
 import { START, DIRECTIONS, random, transition, type Step } from './mazeModel';
 // Q Actor-Critic, following DRL §7.5: independent preview action, no baseline.
@@ -12,4 +15,4 @@ export function acUpdate(actor:Network,critic:Network,step:Step,preview:number,t
  const ag=gradient(actor,[{...step,reward:q}]).g; // frozen old critic score, not TD error
  return{step,preview,terminal,q,nextQ,target,error:q-target,actorBefore:actor,actorAfter:descend(actor,ag,ACTOR_RATE),criticBefore:critic,criticAfter:descend(critic,cg.g,CRITIC_RATE)};}
 export function newACRun(seed=123):ACRun{return{actor:createNetwork(seed),critic:createNetwork(seed+777),seed:seed+100,episodes:0,scores:[],last:[]};}
-export function trainAC(run:ACRun,count:number):ACRun{let {actor,critic,seed}=run;let last:ACStep[]=[];const scores=[...run.scores];for(let e=0;e<count;e++){let s=START,score=0;last=[];for(let t=0;t<30;t++){let a;[a,seed]=drawAction(actor,s,seed);const result=transition(s,DIRECTIONS[a]);const step:Step={state:s,action:DIRECTIONS[a],probability:forward(actor,s).p[a],...result};const terminal=result.terminal||t===29;let preview=0;if(!terminal)[preview,seed]=drawAction(actor,step.next,seed);const update=acUpdate(actor,critic,step,preview,terminal);last.push(update);actor=update.actorAfter;critic=update.criticAfter;score+=step.reward;s=step.next;if(terminal)break;}scores.push(score);}return{actor,critic,seed,episodes:run.episodes+count,scores,last};}
+export function trainAC(run:ACRun,count:number):ACRun { const frames=record.frames as unknown as ACRun[];const frame=frames.find(f=>f.episodes>=run.episodes+count)??frames.at(-1)!;return structuredClone(frame); }

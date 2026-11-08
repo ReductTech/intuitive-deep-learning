@@ -111,7 +111,7 @@ export function ManualFeatureClassifierPage() {
     title="基于人工特征的数字分类"
     subtitle="将九宫格统计值作为输入，由分类器学习特征与数字类别之间的关系。">
     <div className="vfl-manual-toolbar" aria-label="训练状态、损失和验证准确率">
-      <Button variant="primary" disabled={training} onClick={startTraining}><span className="vfl-manual-play" aria-hidden="true"/><Typography as="span" variant="body" tone="inherit">{training ? '训练中' : '开始训练'}</Typography></Button>
+      <Button variant="primary" disabled={training} onClick={startTraining}><span className="vfl-manual-play" aria-hidden="true"/><Typography as="span" variant="body" tone="inherit">{training ? '训练中' : '播放缓存'}</Typography></Button>
       <div className="vfl-manual-training-state" aria-live="polite"><span className="vfl-manual-status-dot" aria-hidden="true"/><Typography as="span" variant="body" tone="muted">{training ? '正在训练' : trained ? cached ? '已训练 · 缓存' : '已训练' : '未训练'}</Typography></div>
       <div className="vfl-manual-toolbar-metric"><Typography as="span" variant="body" tone="muted">Loss {loss === null ? '—' : loss.toFixed(3)}</Typography></div>
       <div className="vfl-manual-toolbar-metric"><span className="vfl-manual-chart-icon" aria-hidden="true"><i/><i/><i/></span><Typography as="span" variant="body" tone="muted">ACC {accuracy === null ? '—' : `${(accuracy * 100).toFixed(1)}%`}</Typography></div>

@@ -1,3 +1,6 @@
+import type recordData from '../../assets/precomputed/policy.json';
+import {loadPrecomputed} from '../../precomputed';
+const record=await loadPrecomputed<typeof recordData>('policy');
 import { sampleDelivery } from '../../components/policyEvaluation';
 
 export const POLICY_BATCH_SIZE = 32;
@@ -32,25 +35,7 @@ export function samplePolicyAction(probabilities: readonly number[], uniform: nu
  * supplies G; gradients of log pi change the four policy parameters directly.
  * No Q values are read or converted into probabilities.
  */
-export function trainPolicy(previous: PolicySimulation, batches = 1): PolicySimulation {
-  const logits = [...previous.logits];
-  let seed = previous.seed, delivered = 0, totalReturn = 0;
-  const random = () => { seed = (1664525 * seed + 1013904223) >>> 0; return seed / 4294967296; };
-  for (let batch = 0; batch < batches; batch++) {
-    const probabilities = policyProbabilities(logits), gradient = [0, 0, 0, 0];
-    for (let episode = 0; episode < POLICY_BATCH_SIZE; episode++) {
-      const action = samplePolicyAction(probabilities, random());
-      const index = previous.episodes + batch * POLICY_BATCH_SIZE + episode;
-      const experience = sampleDelivery('safe', index, action);
-      const advantage = experience.value - RETURN_BASELINE;
-      for (let a = 0; a < 4; a++) gradient[a] += advantage * (Number(a === action) - probabilities[a]) / POLICY_BATCH_SIZE;
-      delivered += Number(experience.delivered); totalReturn += experience.value;
-    }
-    for (let action = 0; action < 4; action++) logits[action] += POLICY_RATE * gradient[action];
-  }
-  const episodes = batches * POLICY_BATCH_SIZE;
-  return { logits, seed, episodes: previous.episodes + episodes, lastBatch: { episodes, delivered, meanReturn: totalReturn / episodes } };
-}
+export function trainPolicy(previous: PolicySimulation, batches = 1): PolicySimulation { const frame=record.frames[Math.min(record.frames.length-1,Math.floor(previous.episodes/POLICY_BATCH_SIZE)+batches)];return structuredClone(frame); }
 // Display integer percentages while preserving a sum of 100%.
 export function roundedPercentages(probabilities: readonly number[]): number[] {
   const percentages = probabilities.map(value => Math.floor(value * 100));

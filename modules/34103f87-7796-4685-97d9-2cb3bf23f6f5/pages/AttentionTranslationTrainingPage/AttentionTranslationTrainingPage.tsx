@@ -79,7 +79,7 @@ export function AttentionTranslationTrainingPage(props: ActivityProps) {
       <Typography variant="bodySmall" tone="accent" data-training-loss={state.loss} data-display-loss={displayState.loss}>训练 {state.epoch}/{TRANSLATION_MAX_EPOCHS} 轮 · {experiment.reviewState ? <>第 {displayState.epoch} 轮交叉熵</> : "交叉熵"} {displayState.loss.toFixed(4)}</Typography>
       <div className="attn-row">
         <div className="attn-trans-train-actions">
-          <Button variant="primary" disabled={running || state.epoch >= TRANSLATION_MAX_EPOCHS} onClick={() => start(TRANSLATION_MAX_EPOCHS)}><Typography as="span" variant="bodySmall" tone="inherit">{error ? '训练中断，重试' : running ? '训练中…' : state.epoch >= TRANSLATION_MAX_EPOCHS ? '训练完成' : state.epoch === 0 ? '开始训练' : '继续训练'}</Typography></Button>
+          <Button variant="primary" disabled={running || state.epoch >= TRANSLATION_MAX_EPOCHS} onClick={() => start(TRANSLATION_MAX_EPOCHS)}><Typography as="span" variant="bodySmall" tone="inherit">{error ? '训练中断，重试' : running ? '回放中…' : state.epoch >= TRANSLATION_MAX_EPOCHS ? '训练完成' : state.epoch === 0 ? '播放缓存' : '继续回放'}</Typography></Button>
           {running&&<Button onClick={()=>{if(canInteract())experiment.pause();}}><Typography as="span" variant="bodySmall" tone="inherit">暂停</Typography></Button>}
           <Button disabled={running || state.epoch >= TRANSLATION_MAX_EPOCHS} onClick={() => start(Math.min(TRANSLATION_MAX_EPOCHS, state.epoch + 5))}><Typography as="span" variant="bodySmall" tone="inherit">+5 轮</Typography></Button>
           <Button disabled={running} onClick={() => { if (canInteract()) { experiment.reset(); setSelectedTargetRow(2); setSelectedHere(false); } }}><Typography as="span" variant="bodySmall" tone="inherit">重置</Typography></Button>

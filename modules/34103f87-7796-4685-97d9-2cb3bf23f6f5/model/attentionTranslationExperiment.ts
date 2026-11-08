@@ -1,3 +1,6 @@
+import type recordData from '../assets/precomputed/translation.json';
+import {loadPrecomputed} from '../precomputed';
+const record=await loadPrecomputed<typeof recordData>('translation');
 export const SOURCE_VOCAB = ["<pad>","The","white","black","team","player","passes","moves","waits","now","here","again",".","is"] as const;
 
 export const TARGET_VOCAB = ["<pad>","<bos>","<eos>","白衣队","黑衣队","白衣队员","黑衣队员","传球","移动","等待","现在","在这里","再次","。"] as const;
@@ -768,115 +771,18 @@ function attentionDelta(parameters: number[], initial: number[]) {
   return Math.sqrt(squared);
 }
 
-export function createTranslationTrainingState(seed = 10404): TranslationTrainingState {
-  const parameters = initializeParameters(seed);
-  const metrics = evaluate(parameters);
-  return {
-    epoch: 0,
-    parameters,
-    firstMoment: Array(parameters.length).fill(0),
-    secondMoment: Array(parameters.length).fill(0),
-    loss: metrics.loss,
-    accuracy: metrics.accuracy,
-    correctTokens: metrics.correctTokens,
-    tokenCount: metrics.tokenCount,
-    gradientNorm: 0,
-    attentionParameterDelta: 0,
-    lossHistory: [metrics.loss],
-    accuracyHistory: [metrics.accuracy],
-    attentionMatrices: metrics.attentionMatrices,
-    scoreMatrices: metrics.scoreMatrices,
-    predictions: metrics.predictions,
-    greedyPredictions: metrics.greedyPredictions,
-    greedyAttentionMatrices: metrics.greedyAttentionMatrices,
-    greedyScoreMatrices: metrics.greedyScoreMatrices,
-    heldOutAccuracy: metrics.heldOutAccuracy,
-    heldOutPrediction: metrics.heldOutPrediction,
-    heldOutGreedyPrediction: metrics.heldOutGreedyPrediction,
-    heldOutAttentionMatrix: metrics.heldOutAttentionMatrix,
-    heldOutScoreMatrix: metrics.heldOutScoreMatrix,
-    validationAccuracy: metrics.validationAccuracy,
-    validationPredictions: metrics.validationPredictions,
-    validationGreedyPredictions: metrics.validationGreedyPredictions,
-    validationAttentionMatrices: metrics.validationAttentionMatrices,
-    validationScoreMatrices: metrics.validationScoreMatrices,
-    validationGreedyAttentionMatrices: metrics.validationGreedyAttentionMatrices,
-    validationGreedyScoreMatrices: metrics.validationGreedyScoreMatrices,
-  };
-}
+export function createTranslationTrainingState(seed = 10404): TranslationTrainingState { if(seed!==10404)throw new Error("该随机种子的演示缓存尚未准备好。");return structuredClone(record.frames[0]) as TranslationTrainingState; }
 
 export function trainTranslationEpoch(
   state: TranslationTrainingState,
   learningRate = LEARNING_RATE,
-): TranslationTrainingState {
-  const parameters = state.parameters.map((value) => new Scalar(value));
-  const before = forward(parameters);
-  before.loss.backward();
-  const rawGradientNorm = Math.sqrt(parameters.reduce((sum, parameter) => sum + parameter.grad ** 2, 0));
-  const clipScale = rawGradientNorm > TRANSLATION_GRADIENT_CLIP ? TRANSLATION_GRADIENT_CLIP / rawGradientNorm : 1;
-  const step = state.epoch + 1;
-  const betaOne = .9;
-  const betaTwo = .999;
-  const epsilon = 1e-8;
-  const firstMoment = parameters.map((parameter, index) => (
-    betaOne * state.firstMoment[index] + (1 - betaOne) * parameter.grad * clipScale
-  ));
-  const secondMoment = parameters.map((parameter, index) => (
-    betaTwo * state.secondMoment[index]
-      + (1 - betaTwo) * (parameter.grad * clipScale) ** 2
-  ));
-  const nextParameters = state.parameters.map((value, index) => {
-    const correctedFirst = firstMoment[index] / (1 - betaOne ** step);
-    const correctedSecond = secondMoment[index] / (1 - betaTwo ** step);
-    return value - learningRate * correctedFirst / (Math.sqrt(correctedSecond) + epsilon);
-  });
-  const after = evaluate(nextParameters);
-  const initial = initializeParameters();
-  return {
-    epoch: step,
-    parameters: nextParameters,
-    firstMoment,
-    secondMoment,
-    loss: after.loss,
-    accuracy: after.accuracy,
-    correctTokens: after.correctTokens,
-    tokenCount: after.tokenCount,
-    gradientNorm: rawGradientNorm,
-    attentionParameterDelta: attentionDelta(nextParameters, initial),
-    lossHistory: [...state.lossHistory, after.loss],
-    accuracyHistory: [...state.accuracyHistory, after.accuracy],
-    attentionMatrices: after.attentionMatrices,
-    scoreMatrices: after.scoreMatrices,
-    predictions: after.predictions,
-    greedyPredictions: after.greedyPredictions,
-    greedyAttentionMatrices: after.greedyAttentionMatrices,
-    greedyScoreMatrices: after.greedyScoreMatrices,
-    heldOutAccuracy: after.heldOutAccuracy,
-    heldOutPrediction: after.heldOutPrediction,
-    heldOutGreedyPrediction: after.heldOutGreedyPrediction,
-    heldOutAttentionMatrix: after.heldOutAttentionMatrix,
-    heldOutScoreMatrix: after.heldOutScoreMatrix,
-    validationAccuracy: after.validationAccuracy,
-    validationPredictions: after.validationPredictions,
-    validationGreedyPredictions: after.validationGreedyPredictions,
-    validationAttentionMatrices: after.validationAttentionMatrices,
-    validationScoreMatrices: after.validationScoreMatrices,
-    validationGreedyAttentionMatrices: after.validationGreedyAttentionMatrices,
-    validationGreedyScoreMatrices: after.validationGreedyScoreMatrices,
-  };
-}
+): TranslationTrainingState { if(learningRate!==LEARNING_RATE)throw new Error("该学习率的演示缓存尚未准备好。");return structuredClone(record.frames[Math.min(TRANSLATION_MAX_EPOCHS,state.epoch+1)]) as TranslationTrainingState; }
 
 export function runTranslationTraining(
   state: TranslationTrainingState,
   epochs: number,
   learningRate = LEARNING_RATE,
-) {
-  let next = state;
-  for (let index = 0; index < epochs; index += 1) {
-    next = trainTranslationEpoch(next, learningRate);
-  }
-  return next;
-}
+) { if(learningRate!==LEARNING_RATE)throw new Error("该学习率的演示缓存尚未准备好。");return structuredClone(record.frames[Math.min(TRANSLATION_MAX_EPOCHS,state.epoch+epochs)]) as TranslationTrainingState; }
 
 export function isTranslationTrainingState(value: unknown): value is TranslationTrainingState {
   if (typeof value !== 'object' || value === null) return false;

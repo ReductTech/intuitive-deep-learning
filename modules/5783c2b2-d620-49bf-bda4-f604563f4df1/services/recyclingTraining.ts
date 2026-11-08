@@ -1,5 +1,5 @@
+import {loadRecord} from './precomputedRecord';
 import { recyclingDataset } from './recyclingDataset';
-const base = (import.meta.env.VITE_CNN_SERVICE_URL || 'http://127.0.0.1:28431').replace(/\/$/, '');
 export interface HeadEpoch {
   epoch: number; train_loss: number; val_loss: number; train_correct: number; val_correct: number;
   probabilities: number[][];
@@ -25,50 +25,9 @@ function validProbabilities(probabilities: number[]) {
     && probabilities.every(value => Number.isFinite(value) && value >= 0 && value <= 1)
     && Math.abs(probabilities.reduce((sum, value) => sum + value, 0) - 1) < 1e-5;
 }
-interface Job extends TrainingProgress {
-  id: string; status: 'queued' | 'running' | 'complete' | 'error' | 'cancelled'; error?: string;
-  result?: { ok: boolean; result?: unknown };
-}
-async function request(path: string, signal: AbortSignal, body?: object): Promise<Job> {
-  let response: Response;
-  try {
-    response = await fetch(base + path, { signal, method: body ? 'POST' : 'GET',
-      headers: body ? { 'Content-Type': 'application/json' } : undefined,
-      body: body ? JSON.stringify(body) : undefined });
-  } catch (error) {
-    if (signal.aborted) throw error;
-    throw new Error('真实训练服务暂时无法连接，请启动本地视觉计算服务后重试。');
-  }
-  const data = await response.json().catch(() => ({}));
-  if (!response.ok) throw new Error(data.detail || data.error || '训练服务返回失败。');
-  if (!['queued', 'running', 'complete', 'error', 'cancelled'].includes(data.status) || typeof data.id !== 'string') {
-    throw new Error('训练服务返回了无效任务状态。');
-  }
-  return data;
-}
-function delay(signal: AbortSignal) {
-  return new Promise<void>((resolve, reject) => {
-    const abort = () => { clearTimeout(timer); reject(new DOMException('Aborted', 'AbortError')); };
-    const timer = setTimeout(() => { signal.removeEventListener('abort', abort); resolve(); }, 300);
-    if (signal.aborted) abort(); else signal.addEventListener('abort', abort, { once: true });
-  });
-}
 async function run(endpoint: string, payload: object, signal: AbortSignal, onProgress?: (job: TrainingProgress) => void) {
-  let job = await request('/v1/jobs', signal, { endpoint, payload });
-  const deadline = Date.now() + 180000;
-  while (true) {
-    if (signal.aborted) throw new DOMException('Aborted', 'AbortError');
-    if (job.history) onProgress?.(job);
-    else onProgress?.({ progress: job.progress, message: job.message });
-    if (job.status === 'complete') {
-      if (!job.result?.ok || !job.result.result) throw new Error('训练任务缺少真实计算结果。');
-      return job.result.result;
-    }
-    if (job.status === 'error' || job.status === 'cancelled') throw new Error(job.error || '计算已中止，请重试。');
-    if (Date.now() > deadline) throw new Error('训练等待超时，请重试。');
-    await delay(signal);
-    job = await request('/v1/jobs/' + encodeURIComponent(job.id), signal);
-  }
+ const result=await loadRecord<unknown>(endpoint.slice(1).replaceAll('/','.'),payload,signal);
+ onProgress?.({progress:100,message:'预计算演示缓存'});return result;
 }
 export async function loadRecyclingBackbone(signal: AbortSignal, progress: (job: TrainingProgress) => void) {
   const dataset = await recyclingDataset.load();

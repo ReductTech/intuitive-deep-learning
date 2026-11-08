@@ -90,8 +90,8 @@ export function GanPlaygroundPage({ onComplete }: { onComplete?: () => void }) {
     if (!running) return;
     const timer = window.setInterval(() => {
       const update = nextUpdate.current;
-      // Each tick updates one network; the other network's parameters remain fixed.
-      if (update === 'd') model.trainD(6); else model.trainG(6);
+      // Read the next precomputed alternating checkpoint.
+      if(model.play('alternating'))setRunning(false);
       const sample = lossSample(model);
       setLossHistory((history) => appendLoss(history, sample));
       nextUpdate.current = update === 'd' ? 'g' : 'd';
@@ -143,7 +143,7 @@ export function GanPlaygroundPage({ onComplete }: { onComplete?: () => void }) {
   const train = (network: 'd' | 'g') => {
     setRunning(false);
     setRetry(false);
-    if (network === 'd') model.trainD(20); else model.trainG(20);
+    model.play(network);
     const sample = lossSample(model);
     setLossHistory((history) => appendLoss(history, sample));
     setActive(network);
@@ -168,7 +168,7 @@ export function GanPlaygroundPage({ onComplete }: { onComplete?: () => void }) {
     const nextModel = new GanModel(distribution);
     setRunning(false); setActive('none'); setModel(nextModel); setLossHistory([lossSample(nextModel)]); setRevision(0); setInspected(null);
     setRetry(false);
-    setFeedback('已重置，重新观察训练。');
+    setFeedback('已重置，回放预计算缓存。');
     nextUpdate.current = 'd';
   };
 
@@ -217,18 +217,18 @@ export function GanPlaygroundPage({ onComplete }: { onComplete?: () => void }) {
             <Button onClick={() => answer(stage === 0)}>{stage < 4 ? '背景变，点不动' : stage === 5 ? '够好，点像真样本' : '是，分不清真假了'}</Button>
             <Button onClick={() => answer(stage !== 0)}>{stage < 4 ? '点动，背景不变' : stage === 5 ? '不够，漏掉一类' : '不一定，要看分布'}</Button>
           </div>}
-          {stage === 1 && <Button variant="primary" onClick={() => train('d')}>训练 D，看背景变化</Button>}
-          {stage === 3 && <Button variant="primary" onClick={() => train('g')}>训练 G，观察生成点变化</Button>}
+          {stage === 1 && <Button variant="primary" onClick={() => train('d')}>回放 D 的变化</Button>}
+          {stage === 3 && <Button variant="primary" onClick={() => train('g')}>回放 G 的变化</Button>}
           <Typography variant="bodySmall" tone={retry ? 'warning' : 'success'} aria-live="polite">{feedback && retry ? `再想一想：${feedback}` : feedback}</Typography>
         </div>
         {stage >= 4 && <div className="vg-gan-game__controls">
-          <div><Button disabled={running} onClick={() => train('d')}>训练 D</Button><Button disabled={running} onClick={() => train('g')}>训练 G</Button><Button variant="primary" onClick={() => { setRunning((value) => !value); setFeedback(''); }}>{running ? '暂停训练' : '交替训练'}</Button></div>
+          <div><Button disabled={running} onClick={() => train('d')}>回放 D</Button><Button disabled={running} onClick={() => train('g')}>回放 G</Button><Button variant="primary" onClick={() => { setRunning((value) => !value); setFeedback(''); }}>{running ? '暂停回放' : '交替回放'}</Button></div>
           {stage === 4 && <Button disabled={model.gSteps <= 20 || model.dSteps <= 20} onClick={() => { setRunning(false); setStage(5); setFeedback(''); }}>检验我的理解 →</Button>}
         </div>}
       </div>
     </div>
     <footer className="vg-gan-game__footer">
-      <Button onClick={() => reset()}>重新训练</Button>
+      <Button onClick={() => reset()}>重新回放</Button>
     </footer>
   </ContentBlock>;
 }

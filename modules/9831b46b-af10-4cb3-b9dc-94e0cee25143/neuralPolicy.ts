@@ -1,3 +1,6 @@
+import type recordData from './assets/precomputed/neural.json';
+import {loadPrecomputed} from './precomputed';
+const record=await loadPrecomputed<typeof recordData>('neural');
 import { DIRECTIONS, START, GOAL, transition, probabilities, random, returns, type Step } from './mazeModel';
 export interface Network { w1:number[][]; w2:number[][] }
 export interface NeuralRun { network:Network; seed:number; episodes:number; returns:number[]; last:Step[] }
@@ -13,7 +16,7 @@ export function gradient(m:Network,path:Step[]){const g:Network={w1:Array.from({
  path.forEach((step,t)=>{const {h,p}=forward(m,step.state);const a=DIRECTIONS.indexOf(step.action);loss-=gs[t]*Math.log(p[a]);const dz=p.map((v,j)=>gs[t]*(v-(j===a?1:0)));const dh=h.map((v,j)=>m.w2.reduce((sum,row,k)=>sum+row[j]*dz[k],0)*(1-v*v));dz.forEach((v,k)=>{h.forEach((v2,j)=>g.w2[k][j]+=v*v2);});dh.forEach((v,j)=>{g.w1[j][step.state]+=v;});});return {g,loss};}
 export function updateNetwork(m:Network,path:Step[],rate=RATE){const {g,loss}=gradient(m,path);const after=copyNetwork(m);for(const key of ['w1','w2'] as const)after[key]=m[key].map((row,j)=>row.map((v,k)=>v-rate*g[key][j][k]));return {after,g,loss};}
 export function newNeuralRun(seed=123):NeuralRun{return {network:createNetwork(seed),seed:seed+100,episodes:0,returns:[],last:[]};}
-export function trainNeural(run:NeuralRun,count:number):NeuralRun{let {network,seed,last}=run;const scores=[...run.returns];for(let i=0;i<count;i++){[last,seed]=episode(network,seed);scores.push(returns(last)[0]);network=updateNetwork(network,last).after;}return {network,seed,last,returns:scores,episodes:run.episodes+count};}
+export function trainNeural(run:NeuralRun,count:number):NeuralRun { const frames=record.frames as unknown as NeuralRun[];const frame=frames.find(f=>f.episodes>=run.episodes+count)??frames.at(-1)!;return structuredClone(frame); }
 // Fixed draws deliberately select a simple successful example, not a training initializer.
 export const DEMO=createNetwork(123);
 export const DEMO_ACTIONS=[3,3,0,0,0,3];

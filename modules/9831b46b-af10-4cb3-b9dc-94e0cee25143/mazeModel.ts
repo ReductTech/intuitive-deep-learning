@@ -1,3 +1,6 @@
+import type recordData from './assets/precomputed/maze.json';
+import {loadPrecomputed} from './precomputed';
+const record=await loadPrecomputed<typeof recordData>('maze');
 /** Reproducible 4×4 maze and one-episode REINFORCE calculations. */
 export type Direction = 'U' | 'D' | 'L' | 'R';
 export type Policy = Record<number, number[]>;
@@ -81,14 +84,4 @@ export function sample(policy: Policy, seed: number, maxSteps = 30): [Step[], nu
   return [path, generator];
 }
 export function newTrain(seed = 123): TrainState { return { policy: initialPolicy(), seed, episodes: 0, returns: [], last: [] }; }
-export function train(run: TrainState, count: number): TrainState {
-  let policy = clonePolicy(run.policy), seed = run.seed, last: Step[] = [];
-  const observed = [...run.returns];
-  for (let index = 0; index < count; index++) {
-    [last, seed] = sample(policy, seed);
-    observed.push(last.reduce((sum, step) => sum + step.reward, 0));
-    const updates = mcUpdates(last, policy, .01);
-    if (updates.length) policy = updates.at(-1)!.after;
-  }
-  return { policy, seed, episodes: run.episodes + count, returns: observed, last };
-}
+export function train(run: TrainState, count: number): TrainState { const frames=record.frames as unknown as TrainState[];const frame=frames.find(f=>f.episodes>=run.episodes+count)??frames.at(-1)!;return structuredClone(frame); }

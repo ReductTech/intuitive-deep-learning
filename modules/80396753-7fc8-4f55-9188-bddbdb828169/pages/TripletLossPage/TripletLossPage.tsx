@@ -53,7 +53,7 @@ export function TripletLossPage(){
  {[a,p,n].map((pos,i)=><foreignObject key={i} x={pos.x-36} y={pos.y-36} width="72" height="72"><div className={`vfl-triplet-point point-${i}`}><Portrait index={i}/></div></foreignObject>)}
  </svg></div>
  <div className="vfl-triplet-playbar"><div className="vfl-triplet-stage" aria-live="polite"><Typography variant="bodySmall" tone="accent">{phases[phase]}</Typography></div>
- <div className="vfl-triplet-controls"><Button variant="primary" onClick={()=>{if(time>=10)setTime(0);setPlaying(v=>!v);}}>{playing?'暂停':'开始训练'}</Button><Button onClick={next} disabled={time>=10}>下一步</Button><Button onClick={()=>{setPlaying(false);setTime(0);}}>重播</Button></div>
+ <div className="vfl-triplet-controls"><Button variant="primary" onClick={()=>{if(time>=10)setTime(0);setPlaying(v=>!v);}}>{playing?'暂停':'播放缓存'}</Button><Button onClick={next} disabled={time>=10}>下一步</Button><Button onClick={()=>{setPlaying(false);setTime(0);}}>重播</Button></div>
  </div></section>
  <section className="vfl-triplet-calculation" aria-label="实时三元组损失">
  <div className="vfl-triplet-formula-panel"><Typography variant="h3" tone="accent">三元组损失</Typography><div className="vfl-triplet-formula-content">

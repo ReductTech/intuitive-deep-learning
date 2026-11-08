@@ -262,7 +262,7 @@ export function FixedDigitPage() {
               <span className="vfl-opening__probability-track relative block min-h-0 w-full flex-1 overflow-hidden"><i style={{ height: `${(probabilities?.[digit] ?? 0) * 100}%` }} /></span>
             </div>)}
           </div>
-          <Button variant="primary" loading={training} disabled={!hasInk} onClick={train} className="vfl-opening__train">{training ? '真实训练进行中…' : result ? '重新训练分类器' : '训练分类器 →'}</Button>
+          <Button variant="primary" loading={training} disabled={!hasInk} onClick={train} className="vfl-opening__train">{training ? '真实训练进行中…' : result ? '重新回放分类器' : '训练分类器 →'}</Button>
           {result && <Typography variant="bodySmall" tone="inherit" className="vfl-opening__metric">验证集准确率 {percent(result.val_accuracy)} · {result.val_count.toLocaleString()} 张</Typography>}
           {error && <Typography variant="bodySmall" tone="danger" className="vfl-opening__error" role="alert">{error}</Typography>}
         </section>

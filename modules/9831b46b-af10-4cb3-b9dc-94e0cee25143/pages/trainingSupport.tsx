@@ -1,3 +1,6 @@
+import type recordData from '../assets/precomputed/neural.json';
+import {loadPrecomputed} from '../precomputed';
+const record=await loadPrecomputed<typeof recordData>('neural');
 import { useState } from 'react';
 import { Button, RangeControl } from '../../shared/react';
 import { Page, T, H, F, Controls } from '../components/LessonVisuals';
@@ -14,7 +17,7 @@ export function TrainingProgress({active}:{active:number}){return <div className
 
 export function TrainingCurve({scores}:{scores:number[]}){if(!scores.length)return <div className="pg-tr-curve-empty"><T small tone="muted">训练后显示平均回报曲线</T></div>;const points:{x:number;y:number}[]=[];for(let end=1;end<=scores.length;end++){if(end!==1&&end%20!==0&&end!==scores.length)continue;const window=scores.slice(Math.max(0,end-100),end);const mean=window.reduce((a,b)=>a+b,0)/window.length;points.push({x:scores.length===1?0:(end-1)/Math.max(1,scores.length-1)*600,y:6+(5-mean)/35*62});}const d=points.map((p,i)=>`${i?'L':'M'}${p.x.toFixed(2)},${p.y.toFixed(2)}`).join(' ');return <div className="pg-tr-training-curve"><div><T small>+5</T><T small>−30</T></div>{scores.length?<div className="pg-tr-curve-plot"><svg viewBox="0 0 600 74" role="img" aria-label="真实训练记录的最近100局平均回报曲线；不足100局时使用已有局数"><path d="M0 6H600M0 68H600" fill="none" stroke="#c7d5df" strokeWidth="1"/><path d={d} fill="none" stroke="#315b7b" strokeWidth="3"/>{points.length===1&&<circle cx={points[0].x} cy={points[0].y} r="4" fill="#315b7b"/>}</svg><div className="pg-tr-curve-axis"><T small>第 1 局</T><T small>训练局数 → {scores.length}</T></div></div>:<T small tone="muted">训练后显示平均回报曲线</T>}</div>;}
 
-export function realEpisode(run:NeuralRun):{record:EpisodeRecord;run:NeuralRun}{const[path,seed]=episode(run.network,run.seed);const {after}=updateNetwork(run.network,path);return {record:{number:run.episodes+1,before:run.network,after,path,seed},run:{network:after,seed,episodes:run.episodes+1,returns:[...run.returns,returns(path)[0]],last:path}};}
+export function realEpisode(run:NeuralRun):{record:EpisodeRecord;run:NeuralRun} { const frames=record.frames as unknown as NeuralRun[];const next=structuredClone(frames.find(f=>f.episodes>run.episodes)??frames.at(-1)!);return {run:next,record:{number:next.episodes,before:(record.before as Record<string,Network>)[String(next.episodes)],after:next.network,path:next.last,seed:next.seed}}; }
 
 export function goalExample(actions:number[]):Step[]{let cell=START;return actions.map(a=>{const result=transition(cell,DIRECTIONS[a]);const step={state:cell,action:DIRECTIONS[a],probability:forward(DEMO,cell).p[a],...result};cell=result.next;return step;});}
 

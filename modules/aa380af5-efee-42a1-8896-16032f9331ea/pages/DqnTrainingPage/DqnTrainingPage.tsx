@@ -122,7 +122,7 @@ export function DqnTrainingPage() {
             <td className={index===best?'is-after':''}><Typography variant="bodySmall" tone={index===best?'success':'muted'}>{values[index].toFixed(2)}</Typography></td></tr>)}</tbody></table>
         <div className="vbrl-dqn__choices"><Typography variant="bodySmall" tone="warning">原选择 {arrows[oldBest]}</Typography><Typography variant="bodySmall" tone="muted">→</Typography><Typography variant="bodySmall" tone="success">新选择 {arrows[best]}</Typography></div>
         <Typography variant="bodySmall" tone="accent">参数共享，其他评分也可能变化。<br/>单次更新不保证更换动作。</Typography>
-        <div className="vbrl-dqn__controls"><Button variant="primary" onClick={()=>auto?setAuto(null):run('slow')}>{auto?'暂停训练':'连续训练'}</Button>
+        <div className="vbrl-dqn__controls"><Button variant="primary" onClick={()=>auto?setAuto(null):run('slow')}>{auto?'暂停回放':'连续训练'}</Button>
           <Button disabled={!!auto} onClick={()=>run('fast')}>训练 2000 步</Button><Button onClick={validate}>验证策略</Button><Button onClick={reset}>重置</Button></div>
         <Typography variant="bodySmall" tone="muted">采集 {state.collected} 步 · 更新 {state.updates} 次</Typography>
       </TeachingPanel>

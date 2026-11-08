@@ -1,3 +1,6 @@
+import type recordData from './assets/precomputed/dqn.json';
+import {loadPrecomputed} from './precomputed';
+const record=await loadPrecomputed<typeof recordData>('dqn');
 import { START, chooseAction, huber, keyOf, seededRandom, tdTarget, type Position } from './model';
 import { EPISODE_LIMIT, GAMMA, warehouseStep } from './pages/QLearningLoopPage/qLearningSimulation';
 import { collectReplayExperience, createReplaySimulation, type ReplayExperience } from './pages/ReplayBufferPage/replaySimulation';
@@ -136,14 +139,7 @@ export function updateDqnSimulation(state: DqnSimulation): DqnSimulation {
     target: sync ? trained.network.slice() : state.target, syncs: state.syncs + Number(sync), lastSync: sync ? updates : state.lastSync };
 }
 /** Bounded real collection. Two independent replay updates follow each collected transition once the pool is ready. */
-export function advanceDqnTraining(state: DqnSimulation, count: number): DqnSimulation {
-  let next = state;
-  for (let i = 0; i < count; i++) {
-    next = collectDqnExperience(next);
-    if (next.collected >= DQN_BATCH) for (let update = 0; update < 2; update++) next = updateDqnSimulation(sampleDqnBatch(next));
-  }
-  return next;
-}
+export function advanceDqnTraining(state: DqnSimulation, count: number): DqnSimulation { const frames=record.frames as unknown as DqnSimulation[];const frame=structuredClone(frames.find(f=>f.collected>=state.collected+count)??frames.at(-1)!);frame.online=Float64Array.from(frame.online);frame.target=Float64Array.from(frame.target);frame.optimizer.mean=Float64Array.from(frame.optimizer.mean);frame.optimizer.variance=Float64Array.from(frame.optimizer.variance);return frame; }
 export interface DqnEvaluation { route: Position[]; actions: number[]; rewards: number[]; outcome: 'delivered' | 'trap' | 'loop' | 'limit'; total: number; }
 /** Greedy, read-only verification with exploration disabled. Repeated state/action pairs end a deterministic loop. */
 export function evaluateDqn(network: DqnNetwork): DqnEvaluation {

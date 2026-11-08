@@ -1,3 +1,6 @@
+import type recordData from '../../assets/precomputed/titanic.json';
+import {loadPrecomputed} from '../../precomputed';
+const record=await loadPrecomputed<typeof recordData>('titanic');
 import records from '../RegressionClassificationPage/titanic-passengers.json';
 export const samples = records.filter((p): p is typeof p & { Age: number } => p.Age !== null);
 export type Inputs = { age: number; male: number; cabin: number; fare: number };
@@ -20,19 +23,4 @@ export function evaluate(w: number[]) {
 }
 export type Training = { weights:number[]; previous:number[]; iteration:number; history:[number,number][]; complete:boolean };
 export const initialTraining = (): Training => ({ weights:[0,0,0,0,0], previous:[0,0,0,0,0], iteration:0, history:[[0,.5]], complete:false });
-export function advance(state:Training, steps=1): Training {
-  if(state.complete) return state;
-  let weights=state.weights, previous=state.previous, iteration=state.iteration;
-  const history=[...state.history];
-  let complete=false;
-  for(let k=0;k<steps;k++) {
-    const before=evaluate(weights);
-    if(Math.max(...before.gradient.map(Math.abs))<.0001) { complete=true; break; }
-    previous=weights;
-    weights=weights.map((w,j)=>w-.4*before.gradient[j]);
-    iteration++;
-    history.push([iteration,evaluate(weights).mae]);
-    if(iteration>=6000) { complete=true; break; }
-  }
-  return {weights,previous,iteration,history,complete};
-}
+export function advance(state:Training, steps=1): Training { const index=Math.min(record.frames.length-1,Math.max(0,state.iteration+steps));const frame=record.frames[index];return {...frame,weights:[...frame.weights],previous:[...frame.previous],history:record.frames.slice(0,index+1).map(f=>[f.iteration,f.mae] as [number,number])}; }
