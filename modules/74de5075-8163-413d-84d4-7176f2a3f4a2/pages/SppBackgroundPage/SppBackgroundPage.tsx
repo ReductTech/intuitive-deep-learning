@@ -1,4 +1,5 @@
-import { moduleAssetUrl } from "@shuku/course-style/react";
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
+
 import { moduleIdentity } from '../../outlines.json';
 import './SppBackgroundPage.css';
 

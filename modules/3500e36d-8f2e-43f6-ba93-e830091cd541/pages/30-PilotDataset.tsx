@@ -1,4 +1,4 @@
-import {Typography} from "@shuku/course-style/react";
+import { Typography } from "@shuku/course-style/react";
 import {PilotStage,PT,PH} from '../components/PilotStage';
 import {imageUrl} from '../components/Stage';
 import './PilotDatasetPage.css';

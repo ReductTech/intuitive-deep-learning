@@ -1,4 +1,5 @@
-import { ContentBlock, moduleAssetUrl, Typography } from "@shuku/course-style/react";
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
+import { ContentBlock, Typography } from "@shuku/course-style/react";
 import './BiologicalNeuronPage.css';
 
 const moduleAssetId = '9acfbca1-b881-457e-add6-21e0b6b855a0';

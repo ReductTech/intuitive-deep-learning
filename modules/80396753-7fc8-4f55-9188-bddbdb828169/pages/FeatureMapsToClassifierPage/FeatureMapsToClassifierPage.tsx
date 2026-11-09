@@ -1,6 +1,7 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { AtlasImage } from '../../components/AtlasImage';
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from 'react';
-import { Button, ContentBlock, Typography, moduleAssetUrl } from "@shuku/course-style/react";
+import { Button, ContentBlock, Typography } from "@shuku/course-style/react";
 import { flattenResponses, flattenDisplay } from '../../services/lessonData';
 import { atlasIndex } from '../../services/imageAtlas';
 import { withAssetResources } from "@shuku/course-style/react/withAssetResources";

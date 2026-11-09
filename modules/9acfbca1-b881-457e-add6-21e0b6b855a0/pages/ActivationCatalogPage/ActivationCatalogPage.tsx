@@ -1,3 +1,4 @@
+import { currentCourseId, readCourseState, writeCourseState } from '@shuku/course-runtime/react/courseState';
 import {
   useCallback,
   useEffect,
@@ -7,23 +8,7 @@ import {
   type MutableRefObject,
   type ReactNode,
 } from 'react';
-import {
-  ContentBlock,
-  FormulaBlock,
-  FormulaTerm,
-  FunctionPlot,
-  PlotlyChart,
-  Typography,
-  currentModuleId,
-  getTelemetryState,
-  emitTelemetry,
-  type PlotlyChartProps,
-  type PlotlyGraph,
-  type PlotlyLayout,
-  type FunctionGuide,
-  type FunctionSeries,
-  type TelemetryStateEntry,
-} from "@shuku/course-style/react";
+import { ContentBlock, FormulaBlock, FormulaTerm, FunctionPlot, PlotlyChart, Typography, type PlotlyChartProps, type PlotlyGraph, type PlotlyLayout, type FunctionGuide, type FunctionSeries } from "@shuku/course-style/react";
 import "./ActivationCatalogPage.css";
 
 const activations = [
@@ -688,7 +673,7 @@ export interface PersistedActivityResult<T> {
 const initializationEvents = new Set<string>();
 
 type ActivityStateLoad<T> =
-  | { ok: true; entry: TelemetryStateEntry<T> | null }
+  | { ok: true; entry: T | null }
   | { ok: false };
 
 async function loadActivityState<T>(
@@ -696,7 +681,7 @@ async function loadActivityState<T>(
   moduleId: string,
 ): Promise<ActivityStateLoad<T>> {
   try {
-    return {ok:true,entry:await getTelemetryState<T>(stateKey,moduleId)};
+    return {ok:true,entry:await Promise.resolve(moduleId === currentCourseId() ? readCourseState<T>(stateKey) : null)};
   } catch { return {ok:false}; }
 }
 
@@ -711,18 +696,15 @@ function resolveUpdate<T>(
 }
 
 /**
- * Module-private SQLite-backed state adapter.
+ * Course activity state stored through the platform runtime.
  *
- * Hydration never emits telemetry. A UI operation should call `commit` once with
- * its semantic event name; the emitted event always carries the complete state
- * snapshot under the stable `stateKey`. If the saved state cannot be read or
- * normalized, the activity uses a fresh in-memory state and `commit` remains
- * local until the page is refreshed.
+ * Restores and saves complete activity snapshots through the platform runtime.
+ * Invalid saved data starts a fresh in-memory activity.
  */
 export function usePersistedActivity<T>({
   stateKey,
   createInitial,
-  moduleId = currentModuleId(),
+  moduleId = currentCourseId(),
   initEvent,
   initProperties,
   normalizeState,
@@ -768,8 +750,8 @@ export function usePersistedActivity<T>({
       if (entry !== null) {
         try {
           restored = normalizeStateRef.current
-            ? normalizeStateRef.current(entry.state)
-            : (entry.state as T);
+            ? normalizeStateRef.current(entry)
+            : (entry as T);
           normalizationFailed = restored === null;
         } catch {
           normalizationFailed = true;
@@ -798,11 +780,7 @@ export function usePersistedActivity<T>({
       const additional = typeof initPropertiesRef.current === 'function'
         ? initPropertiesRef.current(next)
         : initPropertiesRef.current;
-      emitTelemetry(initEvent, getElementRef.current?.() ?? null, {
-        ...additional,
-        state_key: stateKey,
-        state: next,
-      });
+      writeCourseState(stateKey, next);
     });
 
     return () => {
@@ -832,11 +810,7 @@ export function usePersistedActivity<T>({
     stateRef.current = next;
     setState(next);
     if (persistenceAvailable === true) {
-      emitTelemetry(eventName, getElementRef.current?.() ?? null, {
-        ...properties,
-        state_key: stateKey,
-        state: next,
-      });
+      writeCourseState(stateKey, next);
     }
     return next;
   }, [hydrated, persistenceAvailable, stateKey]);
@@ -1024,7 +998,7 @@ function layoutWithView(
  */
 export function PersistedPlotlyChart({
   persistenceKey,
-  moduleId = currentModuleId(),
+  moduleId = currentCourseId(),
   layout,
   debounceMs = 180,
   onGraphReady,
@@ -1167,7 +1141,6 @@ export function PersistedPlotlyChart({
         className={['shared-plotly', className].filter(Boolean).join(' ')}
         style={{ minHeight, ...style }}
         data-state-key={stateKey}
-        data-telemetry-manual
         aria-busy="true"
         aria-label={chartProps['aria-label']}
       />
@@ -1176,7 +1149,7 @@ export function PersistedPlotlyChart({
 
   // The chart is teaching content, so a temporary viewport-state outage must
   // not hide it. In fallback mode the adapter keeps view changes in memory
-  // without emitting Telemetry events.
+  // without saving an intermediate state.
   return (
     <PlotlyChart
       {...chartProps}
@@ -1186,7 +1159,6 @@ export function PersistedPlotlyChart({
       layout={restoredLayout}
       onGraphReady={handleGraphReady}
       data-state-key={stateKey}
-      data-telemetry-manual
     />
   );
 }

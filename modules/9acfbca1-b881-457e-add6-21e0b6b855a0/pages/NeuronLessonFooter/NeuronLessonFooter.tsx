@@ -1,5 +1,6 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { createElement, useEffect, useState } from 'react';
-import { ContentBlock, CourseEndingPage, moduleAssetUrl, Typography } from "@shuku/course-style/react";
+import { ContentBlock, CourseEndingPage, Typography } from "@shuku/course-style/react";
 import './NeuronLessonFooter.css';
 
 const videos = [

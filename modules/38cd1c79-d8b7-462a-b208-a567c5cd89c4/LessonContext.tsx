@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from 'react';
-import { emitTelemetry } from "@shuku/course-style/react";
+
 import {
   BLACK,
   BOARD_SIZE,
@@ -149,14 +149,6 @@ export function GomokuLessonProvider({ children }: { children: ReactNode }) {
     setStored(normalized);
     writeStoredKernel(null);
     setDesignedKernel(null);
-    if (!normalized) return;
-    emitTelemetry('gomoku_outcome_recorded', null, {
-      state_key: STATE_KEY,
-      source: normalized.source,
-      winner: normalized.winner,
-      move_count: normalized.moveCount,
-      win_line: normalized.winLine,
-    });
   }, []);
 
   const recordDesignedKernel = useCallback((next: LessonKernel | null) => {

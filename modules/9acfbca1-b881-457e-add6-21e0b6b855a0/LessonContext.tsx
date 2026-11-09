@@ -1,3 +1,4 @@
+import { writeCourseState, readCourseState, currentCourseId } from '@shuku/course-runtime/react/courseState';
 import {
   createContext,
   useContext,
@@ -7,7 +8,7 @@ import {
   useState,
   type ReactNode,
 } from 'react';
-import { emitTelemetry, getTelemetryState } from "@shuku/course-style/react";
+
 import type { DecisionAnalysis } from './services/decisionAnalysis';
 
 interface LessonState {
@@ -97,7 +98,7 @@ function writeLocalState(localStateKey: string, state: LessonState) {
   try {
     window.localStorage.setItem(localStateKey, JSON.stringify(state));
   } catch {
-    // Storage can be unavailable in privacy-restricted embeds; telemetry remains the fallback.
+    // Storage can be unavailable in privacy-restricted embeds; the current in-memory state remains usable.
   }
 }
 
@@ -130,16 +131,16 @@ export function LessonProvider({ children, moduleId, stateKey, events }: LessonP
     const signature = stateSignature(next);
     if (!hydrated || signature === lastCommittedRef.current) return;
     lastCommittedRef.current = signature;
-    emitTelemetry(eventName, null, { ...properties, state_key: stateKey, state: next });
+    writeCourseState(stateKey, next);
   };
 
   useEffect(() => {
     let active = true;
-    void getTelemetryState<unknown>(stateKey, moduleId).then((entry) => {
+    void Promise.resolve(moduleId === currentCourseId() ? readCourseState<unknown>(stateKey) : null).then((entry) => {
       if (!active) return;
       // PPT pages are separate iframe navigations. Prefer the latest synchronous
-      // browser state so a previous slide's choice is not replaced by stale telemetry.
-      const restored = readLocalState(localStateKey) ?? normalizeState(entry?.state) ?? initialState();
+      // browser state so a previous slide's choice is not replaced by stale saved state.
+      const restored = readLocalState(localStateKey) ?? normalizeState(entry) ?? initialState();
       lastCommittedRef.current = stateSignature(restored);
       replaceState(restored);
       setHydrated(true);
@@ -179,7 +180,7 @@ export function LessonProvider({ children, moduleId, stateKey, events }: LessonP
       const signature = stateSignature(next);
       if (!hydrated || signature === lastCommittedRef.current) return;
       lastCommittedRef.current = signature;
-      emitTelemetry(events.inputValueChanged, null, { touched_count: next.touched.filter(Boolean).length, state_key: stateKey, state: next });
+      writeCourseState(stateKey, next);
     },
   }), [events.decisionAnalyzed, events.importanceAccepted, events.inputValueChanged, hydrated, scenario, state, stateKey]);
 

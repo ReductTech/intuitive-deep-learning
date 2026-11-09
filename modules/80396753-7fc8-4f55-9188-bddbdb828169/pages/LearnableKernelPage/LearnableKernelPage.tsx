@@ -1,5 +1,6 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Button, ContentBlock, MathFormulaBlock, moduleAssetUrl, Typography } from "@shuku/course-style/react";
+import { Button, ContentBlock, MathFormulaBlock, Typography } from "@shuku/course-style/react";
 import { DIGITS, IMAGE_SIZE, initialModel, makeSample, predict, trainOnLabel, classActivationMap, type KernelModel, type LabeledDigit } from '../../services/learnableKernelDemo';
 import './LearnableKernelPage.css';
 
@@ -22,7 +23,7 @@ export function LearnableKernelPage() {
   const [labelError, setLabelError] = useState(false);
   const [rejectedLabel, setRejectedLabel] = useState<number | null>(null);
   const [rejectionAttempt, setRejectionAttempt] = useState(0);
-  
+
   const [lastUpdate, setLastUpdate] = useState<number | null>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);

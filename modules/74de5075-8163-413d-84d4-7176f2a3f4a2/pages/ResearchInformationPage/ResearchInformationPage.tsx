@@ -1,5 +1,6 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { useEffect, useRef, useState } from 'react';
-import { Button, ContentBlock, Typography, moduleAssetUrl } from "@shuku/course-style/react";
+import { Button, ContentBlock, Typography } from "@shuku/course-style/react";
 import outline from '../../outlines.json';
 import submissions from './neuripsSubmissions.json';
 import './ResearchInformationPage.css';

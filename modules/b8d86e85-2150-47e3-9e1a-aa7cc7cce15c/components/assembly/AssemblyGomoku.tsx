@@ -1,3 +1,4 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import {
   useCallback,
   useEffect,
@@ -8,7 +9,7 @@ import {
   type KeyboardEvent as ReactKeyboardEvent,
   type PointerEvent as ReactPointerEvent,
 } from 'react';
-import { Button, ContentBlock, moduleAssetUrl, Typography } from "@shuku/course-style/react";
+import { Button, ContentBlock, Typography } from "@shuku/course-style/react";
 import {
   BLACK,
   BOARD_SIZE,

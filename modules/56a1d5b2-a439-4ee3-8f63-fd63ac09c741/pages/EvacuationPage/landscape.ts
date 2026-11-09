@@ -1,6 +1,7 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import { moduleAssetUrl } from "@shuku/course-style/react";
+
 import { EXIT, START, PICKUPS, BRIDGES, WORLD_WIDTH, WORLD_DEPTH, landHeight, terrainHeight, riverX, distance, forest, type Point } from '../../model';
 
 const clock = { value: 0 };

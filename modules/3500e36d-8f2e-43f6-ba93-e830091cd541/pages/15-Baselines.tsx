@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {Button,Typography} from "@shuku/course-style/react";
+import { Button, Typography } from "@shuku/course-style/react";
 import {T,H} from '../components/Stage';
 import {RefinedStage} from '../components/RefinedStage';
 import './BaselinesPage.css';

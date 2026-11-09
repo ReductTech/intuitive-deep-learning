@@ -1,6 +1,7 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { useEffect, useId, useRef, useState, type CSSProperties } from 'react';
 import { BrainCircuit } from 'lucide-react';
-import { Typography, moduleAssetUrl } from "@shuku/course-style/react";
+import { Typography } from "@shuku/course-style/react";
 import outline from '../../outlines.json';
 import './PdfVisualExtractionPage.css';
 import { useRecordingDemo } from '../../components/RecordingDemo';

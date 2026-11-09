@@ -1,5 +1,6 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Button, ContentBlock, RangeControl, Typography, moduleAssetUrl } from "@shuku/course-style/react";
+import { Button, ContentBlock, RangeControl, Typography } from "@shuku/course-style/react";
 import { blurChannel } from './blurModel';
 import './ColorImageBlurPage.css';
 const N = 240;

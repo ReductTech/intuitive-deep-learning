@@ -1,5 +1,5 @@
 import {useEffect,useRef,useState} from 'react';
-import {Button,ContentBlock,ExplainPanelButton,MathFormulaBlock,MathFormulaStatic,RangeControl,Select,Typography} from "@shuku/course-style/react";
+import { Button, ContentBlock, ExplainPanelButton, MathFormulaBlock, MathFormulaStatic, RangeControl, Select, Typography } from "@shuku/course-style/react";
 import {loadTsneRecord,tsneLearningRates,tsneBatchSizes,type TsneRecord} from '../../services/digitTsneRecord';
 import {digitColors,FeatureScatter} from './FeatureScatter';
 import {MetricChart} from './MetricChart';

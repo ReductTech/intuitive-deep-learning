@@ -11,7 +11,7 @@ function Catalog() {
   const visible = courses.filter(course => `${course.title} ${course.id}`.toLowerCase().includes(search.toLowerCase()));
   return <main className="preview-catalog">
     <header><span className="preview-eyebrow">术库 / 本地开发</span><h1>课程播放器预览</h1>
-      <p>选择本地课程查看效果。课程与素材直接读取上级目录，播放器使用本目录中的副本。</p>
+      <p>选择本地课程查看效果。课程与素材读取 IDL 的 modules 目录，播放器使用本目录中的副本。</p>
       <a className="preview-demo" href="?demo=1">打开播放器交互演示 →</a>
     </header>
     <label className="preview-search">查找课程<input type="search" value={search} onChange={event => setSearch(event.target.value)} placeholder="输入课程名称或 UUID" /></label>

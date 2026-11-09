@@ -1,5 +1,6 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { useEffect,useMemo,useRef,useState,type MouseEvent } from 'react';
-import { Button,ContentBlock,Switch,Typography,moduleAssetUrl } from "@shuku/course-style/react";
+import { Button, ContentBlock, Switch, Typography } from "@shuku/course-style/react";
 import outline from '../../outlines.json';
 import { analyzeHistogram } from '../OtsuThresholdPage/otsuModel';
 import { diagonalExample,filteredMask,neighbors,traceComponents,type Connectivity } from './connectedModel';

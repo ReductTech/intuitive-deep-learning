@@ -1,5 +1,6 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
-import { Button, Typography, moduleAssetUrl } from "@shuku/course-style/react";
+import { Button, Typography } from "@shuku/course-style/react";
 import outline from '../../outlines.json';
 import { allocatePaperStacks, readerPose } from './paperStacks';
 import { projectPaperPage } from './paperPerspective';

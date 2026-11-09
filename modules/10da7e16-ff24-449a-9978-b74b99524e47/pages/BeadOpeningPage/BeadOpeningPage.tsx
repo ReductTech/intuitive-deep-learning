@@ -1,5 +1,6 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type PointerEvent } from 'react';
-import { Button, ContentBlock, moduleAssetUrl, Typography } from "@shuku/course-style/react";
+import { Button, ContentBlock, Typography } from "@shuku/course-style/react";
 import { drawBeads, makePalette, photographCanvas, sampleBeads, type BeadGrid } from './beadModel';
 import './BeadStudio.css';
 

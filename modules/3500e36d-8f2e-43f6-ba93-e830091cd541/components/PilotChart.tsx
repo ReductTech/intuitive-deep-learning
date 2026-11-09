@@ -1,5 +1,5 @@
 import {useLayoutEffect,useRef,useState,useMemo} from 'react';
-import {Typography,EChartsChart,type EChartsOption} from "@shuku/course-style/react";
+import { Typography, EChartsChart, type EChartsOption } from "@shuku/course-style/react";
 import './PilotChart.css';
 export function PilotChart({option,label,light=true}:{option:EChartsOption;label:string;light?:boolean}){
  const probe=useRef<HTMLParagraphElement>(null);

@@ -1,5 +1,6 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { useState, type CSSProperties } from 'react';
-import { ContentBlock, ExplainPanelButton, moduleAssetUrl, Typography } from "@shuku/course-style/react";
+import { ContentBlock, ExplainPanelButton, Typography } from "@shuku/course-style/react";
 import statistics from './statistics.json';
 import './FeatureStatisticsPage.css';
 

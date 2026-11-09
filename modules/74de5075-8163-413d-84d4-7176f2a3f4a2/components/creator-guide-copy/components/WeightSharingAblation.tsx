@@ -1,6 +1,7 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { creatorGuideAssetUrl } from '../creatorGuideAssets';
 import { useEffect, useRef } from 'react';
-import { Typography, moduleAssetUrl } from "@shuku/course-style/react";
+import { Typography } from "@shuku/course-style/react";
 import outline from '../outlines.json';
 import './WeightSharingAblation.css';
 const generatedImages = ['without-structure-v2.jpg','without-interaction-v2.jpg','without-visual-v2.jpg','without-format-v2.jpg'].map(name=>creatorGuideAssetUrl(outline.moduleIdentity.id, `images/skill-ablation/${name}`));

@@ -1,5 +1,7 @@
+import {emitCourseEvent} from '@shuku/course-runtime/react/courseRequests';
+import { writeCourseState } from '@shuku/course-runtime/react/courseState';
 import { useLayoutEffect, useRef, useState, type ReactNode } from 'react';
-import { emitTelemetry, LessonFlow, ModuleShell, type LessonFlowStep } from "@shuku/course-style/react";
+import { LessonFlow, ModuleShell, type LessonFlowStep } from "@shuku/course-style/react";
 import "@shuku/course-style/react/styles.css";
 import "@shuku/course-style/react/ui-kit.css";
 import "@shuku/course-style/react/presentation.css";
@@ -50,7 +52,8 @@ export function GuidePage() {
         localStorage.setItem(key, JSON.stringify(state));
         // The study host scopes storage and derives its current page from this
         // public event. Reconcile it before LessonFlow reads the restored seed.
-        emitTelemetry('lesson_progress', flowRef.current, { state_key: key, state });
+        writeCourseState(key, state);
+        emitCourseEvent('lesson_progress', {state_key: key, state});
       }
     } catch { /* A new lesson remains available when storage is unavailable. */ }
     const frame = requestAnimationFrame(() => setFlowReady(true));

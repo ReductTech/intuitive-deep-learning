@@ -1,6 +1,7 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { useRef, useState } from 'react';
 import { BookOpen, Search, Grid2X2, Brain, Image, Sparkles, Bookmark, Play, X, ArrowLeft } from 'lucide-react';
-import { Typography, moduleAssetUrl } from "@shuku/course-style/react";
+import { Typography } from "@shuku/course-style/react";
 import { moduleIdentity } from '../../outlines.json';
 import { useRecordingDemo } from '../../components/RecordingDemo';
 import { shukuScrollAt } from './shukuNarration';

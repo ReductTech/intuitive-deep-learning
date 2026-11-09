@@ -1,6 +1,7 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { Check } from 'lucide-react';
-import { Typography, moduleAssetUrl } from "@shuku/course-style/react";
+import { Typography } from "@shuku/course-style/react";
 import { moduleIdentity } from '../../outlines.json';
 import { useRecordingDemo } from '../../components/RecordingDemo';
 import { elements, PAPER_PAGES, SELECTED_PAGES, pageDuration } from './paperFilmData';

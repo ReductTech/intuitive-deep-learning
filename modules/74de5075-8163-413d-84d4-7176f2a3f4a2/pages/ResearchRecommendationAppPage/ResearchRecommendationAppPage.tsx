@@ -1,5 +1,6 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { ArrowUpRight, Telescope, Target, MonitorSmartphone } from 'lucide-react';
-import { Typography, moduleAssetUrl } from "@shuku/course-style/react";
+import { Typography } from "@shuku/course-style/react";
 import outline from '../../outlines.json';
 import './ResearchRecommendationAppPage.css';
 import { ResearchWebMonitor } from './ResearchWebMonitor';

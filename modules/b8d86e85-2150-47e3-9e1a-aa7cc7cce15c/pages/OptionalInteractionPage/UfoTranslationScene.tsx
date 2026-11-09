@@ -1,6 +1,7 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 // Scene assets, compositing, pointer control and idle trajectory copied from the original module.
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from 'react';
-import { moduleAssetUrl, Typography } from "@shuku/course-style/react";
+import { Typography } from "@shuku/course-style/react";
 import { DesignComparisonArrow } from '../../components/DesignComparisonHeader';
 import outline from '../../outlines.json';
 import { MAP_WIDTH, MAP_HEIGHT, loadImage, renderResponse, type Position, type SceneImages } from './laplacianResponse';

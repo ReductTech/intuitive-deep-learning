@@ -1,4 +1,5 @@
-import { ContentBlock, moduleAssetUrl, Typography } from "@shuku/course-style/react";
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
+import { ContentBlock, Typography } from "@shuku/course-style/react";
 import './FaceFeatureComplexityPage.css';
 
 const ASSET_ID = '80396753-7fc8-4f55-9188-bddbdb828169';

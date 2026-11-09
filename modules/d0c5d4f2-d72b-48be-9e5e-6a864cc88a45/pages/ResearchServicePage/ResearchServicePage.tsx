@@ -1,6 +1,7 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { useEffect, useRef, useState } from 'react';
 import { ChartNoAxesColumnIncreasing, FileText, CircleCheck, LoaderCircle } from 'lucide-react';
-import { ContentBlock, TextInput, Typography, moduleAssetUrl } from "@shuku/course-style/react";
+import { ContentBlock, TextInput, Typography } from "@shuku/course-style/react";
 import outline from '../../outlines.json';
 import predictionSnapshots from './predictionSnapshots.json';
 import './ResearchServicePage.css';

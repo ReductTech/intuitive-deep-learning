@@ -1,7 +1,8 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { Star } from '@icon-park/react';
 import { ELEPHANT_KG, TARGET_DEPTH_CM } from '../CaoChongPage/experiment';
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type PointerEvent } from 'react';
-import { Button, ContentBlock, EChartsChart, Typography, moduleAssetUrl } from "@shuku/course-style/react";
+import { Button, ContentBlock, EChartsChart, Typography } from "@shuku/course-style/react";
 import { getManualFit, saveManualFit, useRecordedData } from '../../showcaseRegressionData';
 import './EstimateWeightPage.css';
 

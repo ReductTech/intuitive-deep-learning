@@ -1,5 +1,6 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { Fragment, useState } from 'react';
-import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, moduleAssetUrl, Typography } from "@shuku/course-style/react";
+import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import { channelAt, channelColors, channelNames, demosaic, SIDE, useSensorSamples } from './sensorModel';
 import './CameraOpeningPage.css';
 

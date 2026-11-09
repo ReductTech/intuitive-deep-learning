@@ -1,5 +1,6 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { useState } from 'react';
-import { Button, Typography, moduleAssetUrl } from "@shuku/course-style/react";
+import { Button, Typography } from "@shuku/course-style/react";
 import { moduleIdentity } from '../outlines.json';
 import './CourseMaterialImage.css';
 type Frame = {columns:number;rows:number;column:number;row:number};

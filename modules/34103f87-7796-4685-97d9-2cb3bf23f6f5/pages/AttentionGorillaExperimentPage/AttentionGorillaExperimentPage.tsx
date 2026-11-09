@@ -1,5 +1,6 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { Button, TextInput, Typography, moduleAssetUrl } from "@shuku/course-style/react";
+import { Button, TextInput, Typography } from "@shuku/course-style/react";
 import { moduleIdentity } from '../../outlines.json';
 import { ObservationVideo } from './ObservationVideo';
 import { writeObservationRecord, freshObservationRecord, readObservationRecord, type ObservationRecord } from './observationRecord';

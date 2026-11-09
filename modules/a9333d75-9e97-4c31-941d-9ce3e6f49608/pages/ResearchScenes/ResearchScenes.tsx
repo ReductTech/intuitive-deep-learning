@@ -1,5 +1,6 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import {useEffect, useState, type ReactNode} from 'react';
-import {Button, Typography, moduleAssetUrl} from "@shuku/course-style/react";
+import { Button, Typography } from "@shuku/course-style/react";
 import {moduleIdentity} from '../../outlines.json';
 import {acceptanceSuite, fixedProgram, newClock, startClock, pauseClock, tickClock, finishClock, clockText, type Regression} from '../../model/labModel';
 import './ResearchScenes.css';

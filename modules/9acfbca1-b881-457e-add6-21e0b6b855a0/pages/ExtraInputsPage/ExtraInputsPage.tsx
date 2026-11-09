@@ -1,5 +1,6 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { useState, type CSSProperties } from 'react';
-import { ContentBlock, ExplainPanelButton, moduleAssetUrl, RangeControl, Typography } from "@shuku/course-style/react";
+import { ContentBlock, ExplainPanelButton, RangeControl, Typography } from "@shuku/course-style/react";
 import "./ExtraInputsPage.css";
 import {
   effectiveInput,

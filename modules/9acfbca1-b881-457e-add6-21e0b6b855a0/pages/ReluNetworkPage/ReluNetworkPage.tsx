@@ -174,7 +174,6 @@ export function ReluNetworkPage({ onComplete }: ReluNetworkPageProps) {
       className="ngtw-activation-network-lab ngtw-relu-network"
       title="组合多个带有 ReLU 的神经元，曲线继续弯折"
       subtitle="每个神经元有自己的 w 和 b，会在不同的 x 位置由抑制切换为激活；再加一个神经元，曲线就多一个折点。"
-      data-telemetry-manual
       aria-busy={!hydrated}
     >
       {!state ? (

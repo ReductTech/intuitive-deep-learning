@@ -1,6 +1,7 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import type { ReactNode } from 'react';
 import { ChevronRight, Download, Grid2X2, Home, Info, Minus, MousePointer2, Search, ShoppingBag, Square, UserRound, X } from 'lucide-react';
-import { Typography, moduleAssetUrl } from "@shuku/course-style/react";
+import { Typography } from "@shuku/course-style/react";
 import { moduleIdentity } from '../../outlines.json';
 import './ToolOverviewPage.css';
 

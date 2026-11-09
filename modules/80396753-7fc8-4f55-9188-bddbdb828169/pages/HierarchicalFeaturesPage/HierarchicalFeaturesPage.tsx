@@ -1,6 +1,7 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { AtlasImage } from '../../components/AtlasImage';
 import { useState, useLayoutEffect, useRef } from 'react';
-import { Button, ContentBlock, ExplainPanelButton, Typography, moduleAssetUrl } from "@shuku/course-style/react";
+import { Button, ContentBlock, ExplainPanelButton, Typography } from "@shuku/course-style/react";
 import { hierarchyManifest, hierarchyChannels } from '../../services/lessonData';
 import { atlasIndex } from '../../services/imageAtlas';
 import { withAssetResources } from "@shuku/course-style/react/withAssetResources";

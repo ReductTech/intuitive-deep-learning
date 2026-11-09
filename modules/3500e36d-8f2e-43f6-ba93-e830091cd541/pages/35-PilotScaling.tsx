@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {Button} from "@shuku/course-style/react";
+import { Button } from "@shuku/course-style/react";
 import {PilotStage,PT,PH,Panel} from '../components/PilotStage';
 import {PilotChart} from '../components/PilotChart';
 import data from '../components/pilotScaleData.json';

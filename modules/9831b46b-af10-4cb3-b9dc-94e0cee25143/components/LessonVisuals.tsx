@@ -1,5 +1,6 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import type { ReactNode, CSSProperties } from 'react';
-import { ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography, moduleAssetUrl } from "@shuku/course-style/react";
+import { ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import '../policy.css';
 
 // Render mathematical notation in prose through the same LaTeX renderer as display equations.

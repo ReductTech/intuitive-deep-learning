@@ -1,6 +1,7 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { creatorGuideAssetUrl } from '../../creatorGuideAssets';
 import { useEffect, useRef } from 'react';
-import { Typography, moduleAssetUrl } from "@shuku/course-style/react";
+import { Typography } from "@shuku/course-style/react";
 import { CopiedCoursePreview } from './CopiedCoursePreview';
 import { conventionalOutline, simulationOutline, simulationPages, type WalkthroughView } from './simulation';
 import outline from '../../outlines.json';

@@ -1,5 +1,6 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Button, ContentBlock, moduleAssetUrl, Typography } from "@shuku/course-style/react";
+import { Button, ContentBlock, Typography } from "@shuku/course-style/react";
 import { WormholeIcon } from '../../components/WormholeLessonFrame';
 import outline from '../../outlines.json';
 import {

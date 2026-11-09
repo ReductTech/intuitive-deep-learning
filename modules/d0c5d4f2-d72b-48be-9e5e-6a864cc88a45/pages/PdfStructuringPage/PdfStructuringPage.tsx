@@ -1,5 +1,6 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { ArrowRight, FileText, Image as ImageIcon, ListTree, ScanText, Users, Check } from 'lucide-react';
-import { ContentBlock, Typography, moduleAssetUrl } from "@shuku/course-style/react";
+import { ContentBlock, Typography } from "@shuku/course-style/react";
 import outline from '../../outlines.json';
 import './PdfStructuringPage.css';
 

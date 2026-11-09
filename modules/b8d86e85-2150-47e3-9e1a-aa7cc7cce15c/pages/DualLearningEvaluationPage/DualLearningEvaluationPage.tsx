@@ -1,6 +1,7 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { useEffect, useRef, useState } from 'react';
 import { Bot, UserRound, UsersRound } from 'lucide-react';
-import { ContentBlock, Typography, moduleAssetUrl } from "@shuku/course-style/react";
+import { ContentBlock, Typography } from "@shuku/course-style/react";
 import outline from '../../outlines.json';
 import './DualLearningEvaluationPage.css';
 

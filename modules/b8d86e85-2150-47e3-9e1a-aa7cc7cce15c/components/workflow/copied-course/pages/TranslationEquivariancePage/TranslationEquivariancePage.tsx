@@ -1,5 +1,6 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from 'react';
-import { ContentBlock, moduleAssetUrl, Typography } from "@shuku/course-style/react";
+import { ContentBlock, Typography } from "@shuku/course-style/react";
 import './TranslationEquivariancePage.css';
 
 const moduleAssetId = 'b8d86e85-2150-47e3-9e1a-aa7cc7cce15c';

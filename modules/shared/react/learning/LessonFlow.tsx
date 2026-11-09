@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
-import {arrangeCoursePages} from '../pageCatalog';
+import {arrangeCoursePages} from "@shuku/course-runtime/react/pageCatalog";
 import { classNames } from '../utils';
-import {emitCourseEvent} from '../courseRequests';
-import {readCourseState,writeCourseState} from '../courseState';
+import {emitCourseEvent} from "@shuku/course-runtime/react/courseRequests";
+import {readCourseState,writeCourseState} from "@shuku/course-runtime/react/courseState";
 import { ScrollCue } from './ScrollCue';
 
 export type LessonFlowRevealMode = 'immediate' | 'scroll' | 'cue';

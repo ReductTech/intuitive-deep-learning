@@ -51,18 +51,20 @@ function harness(mode) {
     return tree;
   }
   const shared = Object.fromEntries(['Button', 'ContentBlock', 'NoticeStrip', 'Typography'].map(name => [name, () => null]));
-  // Use the real Shared Question implementation; only external telemetry and non-question presentation are stubbed.
+  // Use the real Shared Question implementation; only platform services and non-question presentation are stubbed.
   const { Question } = load(path.resolve(__dirname, '../../../shared/react/learning/Question.tsx'), {
     '../controls/Button': { Button: shared.Button }, '../feedback/Feedback': { Feedback: () => null },
     '../typography/Typography': { Typography: shared.Typography },
     '../utils': { classNames: (...parts) => parts.filter(Boolean).join(' ') },
-    '../telemetry': { emitTelemetry() {}, getTelemetryState: async () => null },
+    '@shuku/course-runtime/react/courseRequests': {emitCourseEvent() {}},
+    '@shuku/course-runtime/react/courseState': {readCourseState: () => null, writeCourseState() {}},
     './QuestionMode': { useQuestionMode: () => mode }, './reviewShortAnswer': { reviewShortAnswer() { throw Error('Prediction must not request LLM review'); } },
   });
   shared.Question = Question;
   const hook = load(path.resolve(__dirname, '../../hooks/useCompleteOnce.ts'));
   const { DegradationProblemPage } = load(path.join(__dirname, 'DegradationProblemPage.tsx'), {
-    '../../../shared/react': shared, '../../hooks/useCompleteOnce': hook,
+    '@shuku/course-runtime/react/assets': {moduleAssetUrl: value => '/assets/' + value},
+    '@shuku/course-style/react': shared, '../../hooks/useCompleteOnce': hook,
   });
   const parent = frame();
   let child, childKey, calls = 0;

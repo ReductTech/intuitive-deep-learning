@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {RangeControl,Typography} from "@shuku/course-style/react";
+import { RangeControl, Typography } from "@shuku/course-style/react";
 import {PilotStage,PT,PH,Eq} from '../components/PilotStage';
 import './PilotTradeoffPage.css';
 function Route({fast}:{fast:boolean}){return <svg viewBox="0 0 220 135" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M8 20H48L65 37V112H8ZM48 20V37H65M20 56H50M20 72H50M20 88H42M80 65H115M104 54L115 65L104 76"/><rect x="130" y="28" width="82" height="78" rx="10"/>{fast?<g><path d="M146 78H196M153 64V76M170 51V76M187 42V76"/></g>:<g><path d="M145 49H195M145 65H186M145 81H195"/></g>}</svg>}

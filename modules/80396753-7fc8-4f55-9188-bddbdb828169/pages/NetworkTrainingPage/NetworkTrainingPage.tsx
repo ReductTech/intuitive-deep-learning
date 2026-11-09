@@ -1,4 +1,4 @@
-import {ContentBlock} from "@shuku/course-style/react";
+import { ContentBlock } from "@shuku/course-style/react";
 import {NetworkScene} from './NetworkScene';
 import './NetworkTrainingPage.css';
 

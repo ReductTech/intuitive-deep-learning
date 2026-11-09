@@ -1,10 +1,6 @@
 import { useRef, type CSSProperties, type FormEvent } from 'react';
 import "./ReluIntroPage.css";
-import {
-  ContentBlock,
-  NoticeStrip,
-  Typography,
-} from "@shuku/course-style/react";
+import { ContentBlock, NoticeStrip, Typography } from "@shuku/course-style/react";
 import {
   formatNumber,
   RELU_INTRO_MAX_X,
@@ -104,7 +100,6 @@ export function ReluIntroPage({ onComplete }: ReluIntroPageProps) {
       className="ngtw-activation-network-lab ngtw-activation-relu-intro"
       title="从线性计算到非线性响应"
       subtitle="加权结果 z 越过 0 之前，输出一直是 0；越过之后才开始增长。这条规则就是激活函数。"
-      data-telemetry-manual
       aria-busy={!hydrated}
     >
       {!state ? (

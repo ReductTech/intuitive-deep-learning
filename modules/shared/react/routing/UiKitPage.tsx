@@ -136,7 +136,7 @@ export function UiKitPage() {
   }, [category, query]);
 
   async function copyExample(item: (typeof componentReferences)[number]) {
-    const snippet = `import { ${(item.imports ?? [item.name]).join(', ')} } from "../../../shared/react";\n\n${item.example}`;
+    const snippet = `import { ${(item.imports ?? [item.name]).join(', ')} } from "@shuku/course-style/react";\n\n${item.example}`;
     try {
       await navigator.clipboard.writeText(snippet);
       setCopiedName(item.name);
@@ -165,7 +165,7 @@ export function UiKitPage() {
           ))}
           {filteredReferences.length === 0 && <p className="kit-reference-empty">没有匹配的组件。</p>}
         </div>
-        <p className="kit-reference-import">页面目录下的组件通常从 <code>../../../shared/react</code> 导入；组件详细属性以右侧源码路径和 TypeScript Props 为准。</p>
+        <p className="kit-reference-import">页面目录下的组件通常从 <code>@shuku/course-style/react</code> 导入；组件详细属性以右侧源码路径和 TypeScript Props 为准。</p>
       </section>
     <section className="kit-section" aria-labelledby="theme-title">
       <header className="kit-section-head"><h2 id="theme-title">Shared 默认主题色</h2><p>{defaultTheme.description} 所有 Shared 组件默认使用这套语义颜色。</p></header>

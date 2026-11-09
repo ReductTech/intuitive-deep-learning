@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
 import { Button, ModuleShell, PageRating, Question, RangeControl, Switch, Typography, type QuestionCheckResult } from "@shuku/course-style/react";
 import { moduleAssetUrl } from "@shuku/course-runtime/react/assets";
-import { bridgeStatus, listMemory, makeEvent, MEMORY_MODULE_ID, MEMORY_SKILL_ID, reportEvent, type MemoryEvent } from './memoryBridge';
+import { bridgeStatus, makeEvent, reportEvent, type CourseTestEvent } from './courseEvents';
 import './MemoryTest.css';
 
 const VIDEO_URL = moduleAssetUrl('memory-test.mp4');
 
-type LogEntry = { event: MemoryEvent; status: '等待' | '成功' | '失败'; detail?: string };
+type LogEntry = { event: CourseTestEvent; status: '等待' | '成功' | '失败'; detail?: string };
 type RecordEvent = (pageId: string, eventName: string, properties?: Record<string, unknown>) => void;
 
 function TestQuestionPair({ pageId, record, choiceTitle, choiceOptions, choiceAnswer, shortTitle }: {
@@ -42,7 +42,7 @@ function Canvas({ pageId, index, title, description, children }: { pageId: strin
   return <div ref={frameRef} className="mt-frame" style={{ height: 900 * scale }}>
     <section className="mt-canvas" data-page-id={pageId} style={{ transform: `scale(${scale})` }}>
       <header className="mt-canvas-head">
-        <Typography as="span" variant="bodySmall" tone="accent">MEMORY TEST / {String(index + 1).padStart(2, '0')}</Typography>
+        <Typography as="span" variant="bodySmall" tone="accent">COURSE INTERACTION TEST / {String(index + 1).padStart(2, '0')}</Typography>
         <Typography as="h2" variant="display">{title}</Typography>
         <Typography as="p" variant="subtitle" tone="muted">{description}</Typography>
       </header>
@@ -62,19 +62,19 @@ function ConnectionPanel({ logs, onRefresh, onList, onAuth, queryOptions, setQue
   bridgeMessage: string;
 }) {
   const status = bridgeStatus();
-  return <aside className="mt-panel" aria-label="技能记忆接口状态">
+  return <aside className="mt-panel" aria-label="课程事件接口状态">
     <div className="mt-panel-top">
-      <div><Typography as="h2" variant="h3">接口状态</Typography><Typography as="p" variant="bodySmall" tone="muted">写入直接走宿主 JS 桥接；记录中不传用户 ID。</Typography></div>
+      <div><Typography as="h2" variant="h3">接口状态</Typography><Typography as="p" variant="bodySmall" tone="muted">操作记录通过平台课程接口提交；用户身份由平台处理。</Typography></div>
       <div className="mt-panel-actions">
         <Button type="button" onClick={onRefresh}>重新检测</Button>
-        <Button type="button" onClick={onAuth}>检查登录</Button>
+        <Button type="button" onClick={onAuth}>查看说明</Button>
       </div>
     </div>
-    <div className="mt-flags"><span>页面：{status.embedded ? '嵌入' : '独立'}</span><span>reportSkillMemory：{status.report ? '可用' : '未找到'}</span><span>skillMemoryList：{status.list ? '可用' : '未找到'}</span><span>checkAuthSession：{status.auth ? '可用' : '未找到'}</span></div>
+    <div className="mt-flags"><span>页面：{status.embedded ? '嵌入' : '独立'}</span><span>平台事件接口：{status.report ? '已嵌入，提交后确认' : '请在平台学习页测试'}</span></div>
     {bridgeMessage && <Typography as="p" variant="bodySmall" tone="muted" role="status">{bridgeMessage}</Typography>}
     <div className="mt-panel-grid">
       <section><Typography as="h3" variant="body" >最近写入</Typography><ol className="mt-log">{logs.length ? logs.slice(0, 6).map(({ event, status: result, detail }) => <li key={event.event_id}><code>{event.event_name}</code><span>{event.page_id}</span><strong data-status={result}>{result}</strong>{detail && <small title={detail}>{detail}</small>}</li>) : <li>完成下方操作后显示结果。</li>}</ol></section>
-      <section><Typography as="h3" variant="body">读取验证</Typography><label className="mt-query-label" htmlFor="mt-query">skillMemoryList 参数 JSON（接口参数未在本仓库定义，可修改）</label><textarea id="mt-query" value={queryOptions} onChange={(event) => setQueryOptions(event.target.value)} rows={2} /><Button type="button" variant="primary" onClick={onList}>调用 skillMemoryList</Button><pre className="mt-query-result">{queryResult || '点击后显示原始返回值。'}</pre></section>
+      <section><Typography as="h3" variant="body">本页记录</Typography><label className="mt-query-label" htmlFor="mt-query">显示条数 JSON（填写 limit 属性）</label><textarea id="mt-query" value={queryOptions} onChange={(event) => setQueryOptions(event.target.value)} rows={2} /><Button type="button" variant="primary" onClick={onList}>查看本页记录</Button><pre className="mt-query-result">{queryResult || '仅显示本页本次测试记录，不代表服务端查询结果。'}</pre></section>
     </div>
   </aside>;
 }
@@ -83,7 +83,7 @@ export function GuidePage() {
   const [page, setPage] = useState(0);
   const [logs, setLogs] = useState<LogEntry[]>([]);
   const [bridgeMessage, setBridgeMessage] = useState('');
-  const [queryOptions, setQueryOptions] = useState(JSON.stringify({ skill_id: MEMORY_SKILL_ID, page: 1, page_size: 20 }));
+  const [queryOptions, setQueryOptions] = useState(JSON.stringify({ limit: 20 }));
   const [queryResult, setQueryResult] = useState('');
   const [slider, setSlider] = useState(40);
   const [enabled, setEnabled] = useState(false);
@@ -116,16 +116,11 @@ export function GuidePage() {
 
   const refreshBridge = () => {
     const status = bridgeStatus();
-    setBridgeMessage(status.report ? '写入桥接已就绪。实际用户归属需要在宿主登录环境验证。' : '当前课程页没有写入桥接。若这是 iframe，请确认桥接脚本运行在 iframe 自己的 window 中。');
+    setBridgeMessage(status.report ? '当前页面已嵌入。请提交一个操作，以平台实际返回结果为准。' : '本地独立预览可以体验控件，事件提交需要在平台学习页测试。');
   };
 
   const checkAuth = async () => {
-    const ipc = window.__growAgentIpc;
-    if (typeof ipc?.checkAuthSession !== 'function') { setBridgeMessage('当前页面没有 checkAuthSession。'); return; }
-    try {
-      const result = await ipc.checkAuthSession();
-      setBridgeMessage(`登录接口已返回；ok=${String((result as { ok?: unknown } | null)?.ok ?? '未提供')}。`);
-    } catch (error) { setBridgeMessage(`登录检查失败：${String(error)}`); }
+    setBridgeMessage('课程不读取账号或登录凭据。平台学习页负责身份校验；本页只提交课程交互事件。');
   };
 
   const query = async () => {
@@ -133,15 +128,16 @@ export function GuidePage() {
       const parsed: unknown = JSON.parse(queryOptions);
       if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) throw new Error('参数必须是 JSON 对象');
       setQueryResult('正在查询…');
-      const result = await listMemory(parsed as Record<string, unknown>);
+      const limit = Math.min(30, Math.max(1, Number((parsed as {limit?: unknown}).limit) || 20));
+      const result = {scope:'本页本次测试', records:logs.slice(0, limit)};
       setQueryResult(JSON.stringify(result, null, 2));
     } catch (error) { setQueryResult(`查询失败：${String(error)}`); }
   };
 
-  return <ModuleShell title="Memory Test" subtitle="在嵌入式课程里验证技能记忆写入、读取与交互采集。" badge="测试模块" shellClassName="mt-shell" data-telemetry-manual>
+  return <ModuleShell title="课程交互联调" subtitle="验证平台事件提交、题目、控件和本页操作记录。" badge="测试模块" shellClassName="mt-shell">
     <ConnectionPanel logs={logs} onRefresh={refreshBridge} onList={() => void query()} onAuth={() => void checkAuth()} queryOptions={queryOptions} setQueryOptions={setQueryOptions} queryResult={queryResult} bridgeMessage={bridgeMessage} />
-    {page === 0 && <Canvas pageId={pageIds[0]} index={0} title="选择，然后留下一个回答" description="先完成两道题，再点按钮。每次提交都会直接写入技能记忆。">
-      <TestQuestionPair pageId={pageIds[0]} record={record} choiceTitle="这次测试的写入由哪个接口完成？" choiceOptions={[{ value: 'reportSkillMemory', label: 'reportSkillMemory' }, { value: 'skillMemoryList', label: 'skillMemoryList' }, { value: 'localStorage', label: 'localStorage' }]} choiceAnswer="reportSkillMemory" shortTitle="用一句话描述你希望记住的学习行为。" />
+    {page === 0 && <Canvas pageId={pageIds[0]} index={0} title="选择，然后留下一个回答" description="先完成两道题，再点按钮。每次提交都会直接写入课程事件。">
+      <TestQuestionPair pageId={pageIds[0]} record={record} choiceTitle="这次测试的写入由哪个接口完成？" choiceOptions={[{ value: 'courseEvent', label: '平台课程事件接口' }, { value: 'localLog', label: '本页记录列表' }, { value: 'localStorage', label: 'localStorage' }]} choiceAnswer="courseEvent" shortTitle="用一句话描述你希望记住的学习行为。" />
       <div className="mt-action-row"><Button variant="primary" onClick={() => record(pageIds[0], 'button_click', { button_id: 'primary-test' })}>主按钮测试</Button><Button onClick={() => record(pageIds[0], 'button_click', { button_id: 'secondary-test' })}>次按钮测试</Button></div>
     </Canvas>}
     {page === 1 && <Canvas pageId={pageIds[1]} index={1} title="连续输入也能被记录" description="拖动滑块、切换开关，再提交选择与简答。">
@@ -153,8 +149,8 @@ export function GuidePage() {
       <TestQuestionPair pageId={pageIds[2]} record={record} choiceTitle="一条测试事件是否应该带上用户 ID？" choiceOptions={[{ value: 'no', label: '不用；由宿主登录态归属' }, { value: 'yes', label: '必须由页面自己填写' }]} choiceAnswer="no" shortTitle="如果写入失败，你想从页面上看到什么提示？" />
     </Canvas>}
     {page === 3 && <Canvas pageId={pageIds[3]} index={3} title="测试结束" description="播放一段本地测试视频，再给本页打星。最后使用上方查询按钮核对记录。">
-      <div className="mt-ending"><div className="mt-video-wrap"><video controls preload="metadata" src={VIDEO_URL} onPlay={() => { if (!videoPlayed) { setVideoPlayed(true); record(pageIds[3], 'video_play', { video_id: 'memory-test-video' }); } }} onEnded={() => record(pageIds[3], 'video_complete', { video_id: 'memory-test-video' })} /><Typography as="p" variant="bodySmall" tone="muted">本地生成的短视频，只用于验证播放操作。</Typography></div><div className="mt-rating"><Typography as="h3" variant="h2">给这次体验打分</Typography><div onClickCapture={(event) => { const target = event.target instanceof Element ? event.target.closest('.edu-page-rating-stars button') : null; if (target) { const match = target.getAttribute('aria-label')?.match(/(\d)/); if (match) record(pageIds[3], 'page_rating', { rating: Number(match[1]), page_key: 'memory-test-ending' }); } }}><PageRating pageKey="memory-test-ending" /></div><Typography as="p" variant="bodySmall" tone="muted">评分后，上方“最近写入”会显示桥接结果。</Typography></div></div>
+      <div className="mt-ending"><div className="mt-video-wrap"><video controls preload="metadata" src={VIDEO_URL} onPlay={() => { if (!videoPlayed) { setVideoPlayed(true); record(pageIds[3], 'video_play', { video_id: 'memory-test-video' }); } }} onEnded={() => record(pageIds[3], 'video_complete', { video_id: 'memory-test-video' })} /><Typography as="p" variant="bodySmall" tone="muted">本地生成的短视频，只用于验证播放操作。</Typography></div><div className="mt-rating"><Typography as="h3" variant="h2">给这次体验打分</Typography><div onClickCapture={(event) => { const target = event.target instanceof Element ? event.target.closest('.edu-page-rating-stars button') : null; if (target) { const match = target.getAttribute('aria-label')?.match(/(\d)/); if (match) record(pageIds[3], 'page_rating', { rating: Number(match[1]), page_key: 'memory-test-ending' }); } }}><PageRating pageKey="memory-test-ending" /></div><Typography as="p" variant="bodySmall" tone="muted">评分后，上方“最近写入”会显示提交结果。</Typography></div></div>
     </Canvas>}
-    <nav className="mt-navigation" aria-label="测试页面导航"><Button disabled={page === 0} onClick={() => changePage(page - 1)}>上一页</Button><Typography as="span" variant="bodySmall" tone="muted">{page + 1} / 4 · {MEMORY_MODULE_ID}</Typography><Button variant="primary" disabled={page === 3} onClick={() => changePage(page + 1)}>下一页</Button></nav>
+    <nav className="mt-navigation" aria-label="测试页面导航"><Button disabled={page === 0} onClick={() => changePage(page - 1)}>上一页</Button><Typography as="span" variant="bodySmall" tone="muted">{page + 1} / 4 · {'f1751a2d-ea22-4f92-9fa4-32b506c011de'}</Typography><Button variant="primary" disabled={page === 3} onClick={() => changePage(page + 1)}>下一页</Button></nav>
   </ModuleShell>;
 }

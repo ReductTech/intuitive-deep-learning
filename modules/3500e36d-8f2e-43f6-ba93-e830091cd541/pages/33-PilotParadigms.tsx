@@ -1,5 +1,5 @@
 import {useMemo,useState} from 'react';
-import {RangeControl,Typography} from "@shuku/course-style/react";
+import { RangeControl, Typography } from "@shuku/course-style/react";
 import {PilotStage,PT,PH,Eq,Table} from '../components/PilotStage';
 import {PilotChart} from '../components/PilotChart';
 import './PilotInteractions.css';

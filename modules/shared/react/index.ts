@@ -36,11 +36,5 @@ export * from './visuals/EChartsChart';
 export * from './visuals/PlotlyChart';
 export * from './visuals/plotSampling';
 export * from './visuals/FunctionPlot';
-export * from './telemetry';
-export * from './assets';
 export * from './theme';
 export * from './presentation';
-
-export * from './courseRequests';
-export * from './courseState';
-export * from './moduleJson';

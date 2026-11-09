@@ -1,4 +1,4 @@
-import type { CourseEndingResource } from "@shuku/course-style/react";
+import { CourseEndingResource } from "@shuku/course-style/react";
 
 // Titles, authors, durations and player IDs checked against Bilibili on 2026-10-17.
 export const endingResources = [

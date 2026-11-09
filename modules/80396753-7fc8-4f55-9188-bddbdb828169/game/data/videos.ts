@@ -1,4 +1,4 @@
-import type { RelatedVideo } from "@shuku/course-style/react";
+import { RelatedVideo } from "@shuku/course-style/react";
 
 export const gameRelatedVideos: RelatedVideo[] = [
   { title: '人脸识别：你的脸是如何被识别出来的？', embed: '<iframe src="https://player.bilibili.com/player.html?isOutside=true&aid=877347877&bvid=BV1UN4y1h71g&cid=1367812704&p=1" allowfullscreen></iframe>' },

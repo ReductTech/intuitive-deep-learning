@@ -1,8 +1,9 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { atlasCropUrl } from '../../services/imageAtlas';
 import {useEffect,useRef,useState} from 'react';
 import * as THREE from 'three';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
-import {Button,Typography,moduleAssetUrl} from "@shuku/course-style/react";
+import { Button, Typography } from "@shuku/course-style/react";
 
 type Tile=THREE.Mesh<THREE.BoxGeometry,THREE.MeshStandardMaterial>;
 type Feature={group:THREE.Group;tiles:Tile[][];side:number;face:number;channels:number};

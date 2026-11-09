@@ -1,5 +1,6 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { useCallback, useEffect, useMemo, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';
-import { Button, ContentBlock, moduleAssetUrl, Typography } from "@shuku/course-style/react";
+import { Button, ContentBlock, Typography } from "@shuku/course-style/react";
 import './FixedDigitPage.css';
 import { trainFixedDigitClassifier, type Classifier, type KernelId, type TrainResult } from '../../services/fixedDigitClassifier';
 
@@ -78,8 +79,8 @@ function ClassifierDiagram({ dimension }: { dimension: number }) {
       {outputY.map((y, index) => <circle key={`o-${index}`} cx="265" cy={y} r="8" fill="#fff0e8" stroke="#ee7742" strokeWidth="2" />)}
       <circle cx="55" cy="229" r="2" fill="#355a8b" />
       <circle cx="55" cy="237" r="2" fill="#355a8b" />
-      
-      
+
+
     </svg>
     <div className="flex justify-between gap-[8px]">
       <Typography as="span" variant="bodySmall" tone="accent">输入</Typography>
@@ -269,15 +270,15 @@ export function FixedDigitPage() {
           <span className="vfl-fixed-arrow" aria-hidden="true"/>
           <div className="vfl-fixed-object">
             <FeaturePile cards={displayKernels.map(kernel=><KernelCard key={kernel.id} kernel={kernel}/>)} count={selected.length} onTurn={turnPile} turn={pileTurn} label="卷积核卡堆；滚轮或上下方向键切换"><KernelCard kernel={activeKernel}/><Typography variant="bodySmall" tone="accent">{activeKernel.name}</Typography></FeaturePile>
-            
+
           </div>
           <span className="vfl-fixed-arrow" aria-hidden="true"/>
           <div className="vfl-fixed-object">
             <FeaturePile cards={displayKernels.map(kernel=><MapCard key={kernel.id} map={maps[kernel.id]} label={kernel.name}/>)} count={selected.length} onTurn={turnPile} turn={pileTurn} label="特征图卡堆；滚轮或上下方向键切换"><MapCard map={activeMap} label={activeKernel.name}/><Typography variant="bodySmall" tone="accent">{activeKernel.name}</Typography></FeaturePile>
-            
+
           </div>
         </div>
-        
+
       </section>
       <span className="vfl-fixed-arrow" aria-hidden="true"/>
       <section className="vfl-fixed-stage vfl-fixed-classifier" aria-label="后端分类器"><div className="vfl-fixed-heading"><Typography as="span" variant="bodySmall" tone="inherit">2</Typography><Typography as="h2" variant="h3" tone="accent">分类器</Typography></div><div className="vfl-fixed-diagram"><ClassifierDiagram dimension={dimension}/></div></section>

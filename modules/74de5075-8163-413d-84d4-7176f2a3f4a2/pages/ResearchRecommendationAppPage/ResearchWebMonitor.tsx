@@ -1,6 +1,7 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import {useRef,useState} from 'react';
 import {ArrowLeft,Bookmark,Heart,Search,X,Star,BookOpen} from 'lucide-react';
-import {Typography,moduleAssetUrl} from "@shuku/course-style/react";
+import { Typography } from "@shuku/course-style/react";
 import outline from '../../outlines.json';
 import papers from './webPapers.json';
 import './ResearchWebMonitor.css';

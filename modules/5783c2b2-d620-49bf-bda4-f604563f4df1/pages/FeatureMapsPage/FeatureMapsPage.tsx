@@ -8,13 +8,7 @@ import {
   type KeyboardEvent as ReactKeyboardEvent,
   type PointerEvent as ReactPointerEvent,
 } from 'react';
-import {
-  Button,
-  Callout,
-  ContentBlock,
-  NoticeStrip,
-  Typography,
-} from "@shuku/course-style/react";
+import { Button, Callout, ContentBlock, NoticeStrip, Typography } from "@shuku/course-style/react";
 const bottleFront = moduleAssetUrl("recycling/camera-views/bottle-front.jpg");
 import './FeatureMapsPage.css';
 

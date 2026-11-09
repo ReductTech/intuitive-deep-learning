@@ -1,6 +1,7 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { useEffect, useRef, useState, type ChangeEvent } from 'react';
 import { Down, Up, UploadPicture } from '@icon-park/react';
-import { ContentBlock, MathFormulaStatic, moduleAssetUrl, Typography } from "@shuku/course-style/react";
+import { ContentBlock, MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import './CommonKernelsPage.css';
 
 const moduleAssetId = '38cd1c79-d8b7-462a-b208-a567c5cd89c4';

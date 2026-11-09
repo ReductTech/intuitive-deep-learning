@@ -1,4 +1,4 @@
-import {Typography} from "@shuku/course-style/react";
+import { Typography } from "@shuku/course-style/react";
 import {RefinedStage} from '../components/RefinedStage';
 import {Photo} from '../components/Stage';
 import './FrontierPage.css';

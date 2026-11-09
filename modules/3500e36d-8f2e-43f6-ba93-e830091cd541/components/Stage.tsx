@@ -1,6 +1,7 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { sourcePageIds } from '../pageIds';
 import type { ReactNode } from 'react';
-import { ContentBlock, Typography, MathFormulaBlock, MathFormulaStatic, moduleAssetUrl } from "@shuku/course-style/react";
+import { ContentBlock, Typography, MathFormulaBlock, MathFormulaStatic } from "@shuku/course-style/react";
 import outline from '../outlines.json';
 import '../styles.css';
 export const imageUrl=(name:string)=>moduleAssetUrl(name);

@@ -1,6 +1,7 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { useEffect, useState, type CSSProperties } from 'react';
 import { Activity, ArrowRight, BookOpen, Check, ChevronLeft, ChevronRight, Database, FileText, GitBranch, Home, Image as ImageIcon, ListTree, Pause, Play, RotateCcw, Search, Settings, ShieldCheck, Users } from 'lucide-react';
-import { Button, RangeControl, Typography, moduleAssetUrl } from "@shuku/course-style/react";
+import { Button, RangeControl, Typography } from "@shuku/course-style/react";
 import outline from '../../outlines.json';
 import { PIPELINE_DURATION, pipelineChapters, usePipelinePlayback } from './usePipelinePlayback';
 import './LiteratureServicePage.css';

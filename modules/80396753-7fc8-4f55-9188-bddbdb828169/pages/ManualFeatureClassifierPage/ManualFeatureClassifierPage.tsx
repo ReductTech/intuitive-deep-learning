@@ -1,5 +1,6 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { useEffect, useMemo, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';
-import { Button, ContentBlock, Typography, moduleAssetUrl } from "@shuku/course-style/react";
+import { Button, ContentBlock, Typography } from "@shuku/course-style/react";
 import './ManualFeatureClassifierPage.css';
 import { ManualClassifierNetwork } from '../../components/ManualClassifierNetwork';
 import { nineGridCounts, readNineGridPixels } from '../../services/nineGridDigit';

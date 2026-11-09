@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import {Brain,ChartLine,Bookshelf} from '@icon-park/react';
-import {Button,Typography} from "@shuku/course-style/react";
+import { Button, Typography } from "@shuku/course-style/react";
 import {RefinedStage} from '../components/RefinedStage';
 import {imageUrl} from '../components/Stage';
 import './AgentPage.css';

@@ -1,5 +1,6 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { useEffect, useRef, useState } from 'react';
-import { Button, Typography, moduleAssetUrl } from "@shuku/course-style/react";
+import { Button, Typography } from "@shuku/course-style/react";
 import { A, cellName, DIRECTIONS, DIR_LABEL, GOAL, START, transition, WALLS, type Direction, type Step } from '../mazeModel';
 import '../reinforce.css';
 

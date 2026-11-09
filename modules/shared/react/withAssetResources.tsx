@@ -1,6 +1,6 @@
 import { useEffect, useState, type ComponentType } from 'react';
 import { Typography } from './typography';
-import type { JsonAsset } from './moduleJson';
+import type { JsonAsset } from "@shuku/course-runtime/react/moduleJson";
 
 /** Keep lesson state unmounted until required data is ready; retry failed requests. */
 export function withAssetResources<P extends object>(Lesson: ComponentType<P>, resources: readonly JsonAsset<unknown>[]) {

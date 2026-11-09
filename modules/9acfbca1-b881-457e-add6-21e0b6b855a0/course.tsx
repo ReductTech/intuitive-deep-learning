@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { LessonFlowRevealMode, LessonStepContext } from "@shuku/course-style/react";
+import { LessonFlowRevealMode, LessonStepContext } from "@shuku/course-style/react";
 import { BiologicalNeuronPage } from './pages/BiologicalNeuronPage/BiologicalNeuronPage';
 import { ExtraInputsPage } from './pages/ExtraInputsPage/ExtraInputsPage';
 import { NematodeResponsePage } from './pages/NematodeResponsePage/NematodeResponsePage';

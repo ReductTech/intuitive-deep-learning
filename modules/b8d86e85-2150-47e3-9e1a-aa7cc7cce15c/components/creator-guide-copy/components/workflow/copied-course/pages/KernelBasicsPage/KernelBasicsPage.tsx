@@ -1,6 +1,7 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { creatorGuideAssetUrl } from '../../../../../creatorGuideAssets';
 import { useEffect, useRef, useState } from 'react';
-import { ContentBlock, moduleAssetUrl, Typography } from "@shuku/course-style/react";
+import { ContentBlock, Typography } from "@shuku/course-style/react";
 import { useGomokuOutcome } from '../../LessonContext';
 import './KernelBasicsPage.css';
 

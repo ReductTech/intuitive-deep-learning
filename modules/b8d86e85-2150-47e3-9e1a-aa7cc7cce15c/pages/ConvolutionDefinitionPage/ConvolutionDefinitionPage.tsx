@@ -1,5 +1,6 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { useEffect, useRef, useState } from 'react';
-import { ContentBlock, MathFormulaBlock, MathFormulaStatic, moduleAssetUrl, Typography } from "@shuku/course-style/react";
+import { ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import { WormholeBenefit } from '../../components/WormholeLessonFrame';
 import { IMAGE_SIZE, KERNELS, rgbaToGray } from '../ConvolutionObservationPage/convolutionModel';
 import outline from '../../outlines.json';

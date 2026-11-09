@@ -1,5 +1,6 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
-import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, RangeControl, Typography, moduleAssetUrl } from "@shuku/course-style/react";
+import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, RangeControl, Typography } from "@shuku/course-style/react";
 import './VideoFramesPage.css';
 
 const ASSET_ID = '10da7e16-ff24-449a-9978-b74b99524e47';

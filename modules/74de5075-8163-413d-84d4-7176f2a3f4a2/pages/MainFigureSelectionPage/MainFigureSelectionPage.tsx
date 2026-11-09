@@ -1,6 +1,7 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { Check } from 'lucide-react';
-import { ContentBlock, Typography, moduleAssetUrl } from "@shuku/course-style/react";
+import { ContentBlock, Typography } from "@shuku/course-style/react";
 import outline, { moduleIdentity } from '../../outlines.json';
 import { useClickSteps } from '../../components/useClickSteps';
 import { elements, PAPER_PAGES, SELECTED_PAGES, pageDuration } from './paperFilmData';

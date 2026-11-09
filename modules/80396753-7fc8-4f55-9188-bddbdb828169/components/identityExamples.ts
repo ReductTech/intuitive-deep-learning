@@ -1,4 +1,5 @@
-import { moduleAssetUrl } from "@shuku/course-style/react";
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
+
 
 /** Keep the verification pair, triplet cards and animated points on the same identities. */
 export const identityExamples = [

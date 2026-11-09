@@ -1,6 +1,7 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { RotateCcw, StepForward } from 'lucide-react';
-import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, moduleAssetUrl, Typography } from "@shuku/course-style/react";
+import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import { WormholeBenefit } from '../../components/WormholeLessonFrame';
 import { IMAGE_EXAMPLES } from '../ConvolutionObservationPage/convolutionModel';
 import { correlate, frameAt, INPUT_SIZE, KERNELS, LOCAL_COUNT, type KernelDirection, SLOW_DURATIONS, SLOW_MS, ZOOM_MS, FAST_MS } from './walkthroughModel';

@@ -1,5 +1,6 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { useEffect, useId, useState, type CSSProperties } from 'react';
-import { Button, ContentBlock, Typography, moduleAssetUrl } from "@shuku/course-style/react";
+import { Button, ContentBlock, Typography } from "@shuku/course-style/react";
 import outline from '../../outlines.json';
 import { WishfulBridgeScene } from './WishfulBridgeScene';
 import './ImplementationBarrierPage.css';

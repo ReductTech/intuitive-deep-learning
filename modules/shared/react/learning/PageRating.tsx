@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import {emitCourseEvent} from '../courseRequests';
-import {readCourseState,writeCourseState} from '../courseState';
+import {emitCourseEvent} from "@shuku/course-runtime/react/courseRequests";
+import {readCourseState,writeCourseState} from "@shuku/course-runtime/react/courseState";
 import { Typography } from '../typography/Typography';
 
 export type PageRatingValue = 1 | 2 | 3 | 4 | 5;

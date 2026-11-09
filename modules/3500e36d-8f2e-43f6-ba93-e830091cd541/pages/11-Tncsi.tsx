@@ -1,5 +1,5 @@
 import {useMemo,useState} from 'react';
-import {Button,RangeControl,Typography} from "@shuku/course-style/react";
+import { Button, RangeControl, Typography } from "@shuku/course-style/react";
 import {RefinedStage} from '../components/RefinedStage';
 import {Formula} from '../components/Stage';
 import {PilotChart} from '../components/PilotChart';

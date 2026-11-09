@@ -1,5 +1,5 @@
 import { useEffect,useMemo,useState } from 'react';
-import { Button,ContentBlock,Typography } from "@shuku/course-style/react";
+import { Button, ContentBlock, Typography } from "@shuku/course-style/react";
 import { H,W,initialShape,makePasses,type MorphMode } from './morphologyAnimationModel';
 import './MorphologyOperationsPage.css';
 const modes:[MorphMode,string][]=[['erode','腐蚀'],['dilate','膨胀'],['open','开运算'],['close','闭运算']];

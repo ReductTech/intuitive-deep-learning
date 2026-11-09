@@ -1,5 +1,5 @@
 import type {ReactNode} from 'react';
-import {Typography,MathFormulaBlock,MathFormulaStatic} from "@shuku/course-style/react";
+import { Typography, MathFormulaBlock, MathFormulaStatic } from "@shuku/course-style/react";
 import {RefinedStage} from './RefinedStage';
 import './PilotStage.css';
 export function PilotStage({title,subtitle,children,className=''}:{title:string;subtitle?:string;children:ReactNode;className?:string}){return <RefinedStage title={title} subtitle={subtitle} className={'naipv2-stage '+className}>{children}</RefinedStage>}

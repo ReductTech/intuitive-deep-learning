@@ -1,4 +1,5 @@
-import { moduleAssetUrl } from "@shuku/course-style/react";
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
+
 import { MNIST_INK_THRESHOLD } from './mnistFeatures';
 
 export const NINE_GRID_IMAGE_SIZE = 28;

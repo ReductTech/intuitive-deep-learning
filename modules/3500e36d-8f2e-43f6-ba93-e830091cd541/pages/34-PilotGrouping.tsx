@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {Button,Typography} from "@shuku/course-style/react";
+import { Button, Typography } from "@shuku/course-style/react";
 import {PilotStage,PT,PH,Panel,Table} from '../components/PilotStage';
 import './PilotInteractions.css';
 const vectors=[["BGE-M3",'.774','.769','.417'],['Qwen3-emb','.782','.771','.432']];

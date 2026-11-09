@@ -1,5 +1,5 @@
 import {useEffect,useState,type ReactNode} from 'react';
-import {Button,Typography} from "@shuku/course-style/react";
+import { Button, Typography } from "@shuku/course-style/react";
 import {acceptanceSuite, fixedProgram} from '../model/labModel';
 import './WorkflowTheatre.css';
 

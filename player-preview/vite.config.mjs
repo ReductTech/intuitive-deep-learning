@@ -7,32 +7,33 @@ import tailwind from '@tailwindcss/vite';
 import {readCourses, entryExport} from './scripts/courses.mjs';
 
 const root = fileURLToPath(new URL('.', import.meta.url));
-const coursesRoot = path.resolve(root, '..');
+const coursesRoot = path.resolve(root, '../modules');
 
 export default defineConfig(({mode}) => {
   const env = {...loadEnv(mode, root, ''), ...process.env};
-  const shukuRoot = path.resolve(root, env.SHUKU_ROOT || '../../../Shuku');
+  const shukuRoot = path.resolve(root, env.SHUKU_ROOT || '../../Shuku');
   const runtime = path.join(shukuRoot, 'packages/course-runtime');
-  if (!fs.existsSync(path.join(runtime, 'react/presentation/SceneDeck.tsx'))) {
+  const style = path.join(coursesRoot, 'shared');
+  if (!fs.existsSync(path.join(runtime, 'react/index.ts')) || !fs.existsSync(path.join(style, 'react/presentation/SceneDeck.tsx'))) {
     throw Error(`未找到 Shuku 课程运行时：${runtime}。请在 .env.local 设置 SHUKU_ROOT。`);
   }
   const courses = readCourses(coursesRoot);
   const localPlayer = normalizePath(path.join(root, 'src/index.ts'));
-  const runtimeReact = normalizePath(path.join(runtime, 'react'));
+  const runtimeReact = normalizePath(path.join(style, 'react'));
   const sharedRoot = normalizePath(path.join(coursesRoot, 'shared'));
   const plugin = {
     name: 'local-course-preview', enforce: 'pre',
     async resolveId(id, importer) {
       if (id.startsWith('virtual:preview-')) return '\0' + id;
       if (id === 'virtual:creator-skill-documents') return '\0preview-documents';
-      if (id === '@preview/runtime') return path.join(runtime, 'react/presentation/index.ts');
+      if (id === '@preview/runtime') return path.join(style, 'react/presentation/index.ts');
       if (importer && (id.startsWith('.') || path.isAbsolute(id))) {
         const target = normalizePath(path.resolve(path.dirname(importer.split('?')[0]), id));
         // Reuse platform course components, but always use the player copied into this folder.
         if (target === normalizePath(path.join(shukuRoot, 'packages/player/src')) ||
             target === normalizePath(path.join(shukuRoot, 'packages/player/src/index.ts'))) return localPlayer;
         if (target === sharedRoot || target.startsWith(sharedRoot + '/')) {
-          return this.resolve(normalizePath(runtime) + target.slice(sharedRoot.length), importer, {skipSelf: true});
+          return this.resolve(target, importer, {skipSelf: true});
         }
       }
       // Courses and the external runtime must resolve packages from this project's node_modules.
@@ -100,8 +101,11 @@ export default defineConfig(({mode}) => {
     resolve: {
       dedupe: ['react', 'react-dom', 'lucide-react'],
       alias: [
+        {find: '@shuku/course-runtime', replacement: normalizePath(runtime)},
+        {find: '@shuku/course-style', replacement: normalizePath(style)},
+        {find: '@shuku/player', replacement: localPlayer},
         {find: '@preview/runtime', replacement: runtimeReact + '/presentation/index.ts'},
-        {find: '@preview/runtime-styles', replacement: normalizePath(path.join(runtime, 'vendor/mathlive/mathlive-fonts.css'))},
+        {find: '@preview/runtime-styles', replacement: normalizePath(path.join(style, 'vendor/mathlive/mathlive-fonts.css'))},
       ],
     },
     define: {

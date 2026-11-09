@@ -89,7 +89,7 @@ export function AttentionMechanismPage() {
       localStorage.setItem(progressKey, JSON.stringify({ completedIds: [], visibleCount: 1, completed: false }));
       setGuideProgressKey(GUIDE_PROGRESS_ID);
     } catch {
-      // With storage disabled, isolate this run from old telemetry progress too.
+      // With storage disabled, isolate this run from old saved progress too.
       setGuideProgressKey(`${GUIDE_PROGRESS_ID}-run-${crypto.randomUUID()}`);
     }
   }, []);

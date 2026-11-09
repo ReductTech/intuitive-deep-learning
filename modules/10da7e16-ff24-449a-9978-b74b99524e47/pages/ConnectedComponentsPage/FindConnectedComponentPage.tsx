@@ -1,5 +1,5 @@
 import { useEffect,useMemo,useState } from 'react';
-import { Button,ContentBlock,Typography } from "@shuku/course-style/react";
+import { Button, ContentBlock, Typography } from "@shuku/course-style/react";
 import { neighbors,type Connectivity } from './connectedModel';
 import { floodFrom,GRID_H,GRID_W,makeTeachingShape } from './floodModel';
 import './FindConnectedComponentPage.css';

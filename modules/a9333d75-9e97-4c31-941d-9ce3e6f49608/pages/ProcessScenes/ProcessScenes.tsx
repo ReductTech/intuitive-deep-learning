@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {Button, Typography} from "@shuku/course-style/react";
+import { Button, Typography } from "@shuku/course-style/react";
 import {Text,Code,Dial,Controls,useSteps} from '../ResearchScenes/ResearchScenes';
 import {pauseProbe,brokenProgram,fixedProgram,acceptanceSuite} from '../../model/labModel';
 import './ProcessScenes.css';

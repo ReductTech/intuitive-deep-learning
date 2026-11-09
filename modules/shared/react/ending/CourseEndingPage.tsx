@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { PageRating } from '../learning/PageRating';
 import { LessonDevelopers } from '../learning/LessonDevelopers';
 import { Typography } from '../typography/Typography';
-import {emitCourseEvent} from '../courseRequests';
+import {emitCourseEvent} from "@shuku/course-runtime/react/courseRequests";
 import './CourseEndingPage.css';
 
 export interface CourseEndingResource {

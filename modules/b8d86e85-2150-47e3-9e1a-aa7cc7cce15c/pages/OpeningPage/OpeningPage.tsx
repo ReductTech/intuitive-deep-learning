@@ -1,4 +1,5 @@
-import { moduleAssetUrl, Typography } from "@shuku/course-style/react";
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
+import { Typography } from "@shuku/course-style/react";
 import { moduleIdentity } from '../../outlines.json';
 import './OpeningPage.css';
 

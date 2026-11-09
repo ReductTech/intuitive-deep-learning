@@ -1,4 +1,5 @@
-import { ContentBlock, Typography, moduleAssetUrl } from "@shuku/course-style/react";
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
+import { ContentBlock, Typography } from "@shuku/course-style/react";
 import outline from '../../outlines.json';
 import './FlexibleTeachingModesPage.css';
 

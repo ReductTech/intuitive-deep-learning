@@ -1,8 +1,8 @@
 import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from 'react';
 import { Feedback } from '../feedback/Feedback';
 import { Button } from '../controls/Button';
-import {emitCourseEvent} from '../courseRequests';
-import {readCourseState,writeCourseState} from '../courseState';
+import {emitCourseEvent} from "@shuku/course-runtime/react/courseRequests";
+import {readCourseState,writeCourseState} from "@shuku/course-runtime/react/courseState";
 import { Typography, type TypographyVariant } from '../typography/Typography';
 import { classNames } from '../utils';
 import { useQuestionMode } from './QuestionMode';

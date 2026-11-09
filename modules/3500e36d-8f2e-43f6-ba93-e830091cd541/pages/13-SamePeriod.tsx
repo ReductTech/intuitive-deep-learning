@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {Button,Typography} from "@shuku/course-style/react";
+import { Button, Typography } from "@shuku/course-style/react";
 import {RefinedStage} from '../components/RefinedStage';
 import {DataTable} from '../components/DataTable';
 import './SamePeriodPage.css';

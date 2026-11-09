@@ -1,6 +1,7 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { useEffect, useState, type ReactNode } from 'react';
 import { Light, Picture } from '@icon-park/react';
-import { ContentBlock, MathFormulaBlock, MathFormulaStatic, moduleAssetUrl, Typography } from "@shuku/course-style/react";
+import { ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import './GradientPage.css';
 
 const buildingImage = moduleAssetUrl('workflow/convolution-course/xiandaijianzhu.jpg');

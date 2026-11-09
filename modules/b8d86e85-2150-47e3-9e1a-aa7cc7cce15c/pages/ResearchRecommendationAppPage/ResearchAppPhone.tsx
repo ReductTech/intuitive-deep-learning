@@ -1,6 +1,7 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { Menu, Search, ThumbsUp, Star, MessageSquare, Share2, ChevronLeft, X, SlidersHorizontal, Wifi, Signal, BatteryMedium, Bell, UserRound, Users, Newspaper, BookOpen, Check, ArrowUpRight } from 'lucide-react';
-import { Typography, moduleAssetUrl } from "@shuku/course-style/react";
+import { Typography } from "@shuku/course-style/react";
 import outline from '../../outlines.json';
 import { papers, type Paper } from './paperFeedData';
 import './ResearchRecommendationAppPage.css';

@@ -1,5 +1,6 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import outline from './outlines.json';
-import { moduleAssetUrl } from "@shuku/course-style/react";
+
 
 export const assetId = outline.moduleIdentity.id;
 export const photoUrl = (file: string) => moduleAssetUrl(file);

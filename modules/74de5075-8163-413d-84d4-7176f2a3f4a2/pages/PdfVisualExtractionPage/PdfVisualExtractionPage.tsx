@@ -1,6 +1,7 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { useId, useRef, useState, type CSSProperties } from 'react';
 import { BrainCircuit } from 'lucide-react';
-import { ContentBlock, Typography, moduleAssetUrl } from "@shuku/course-style/react";
+import { ContentBlock, Typography } from "@shuku/course-style/react";
 import outline from '../../outlines.json';
 import './PdfVisualExtractionPage.css';
 import { useClickSteps } from '../../components/useClickSteps';

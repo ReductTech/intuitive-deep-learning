@@ -1,6 +1,7 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { moduleJson } from "@shuku/course-runtime/react/moduleJson";
 export const atlasIndex = moduleJson<Record<string, AtlasRegion>>('image-atlases/index.json');
-import { moduleAssetUrl } from "@shuku/course-style/react";
+
 export type AtlasRegion = {sheet:string;x:number;y:number;width:number;height:number;sheetWidth:number;sheetHeight:number};
 let regions: Map<string, AtlasRegion> | undefined;
 export const atlasRegion = (src:string) => {

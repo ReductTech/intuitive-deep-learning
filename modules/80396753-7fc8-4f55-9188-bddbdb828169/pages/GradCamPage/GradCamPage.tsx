@@ -1,6 +1,7 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { AtlasImage } from '../../components/AtlasImage';
 import {useEffect, useState} from 'react';
-import {Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, Typography, moduleAssetUrl} from "@shuku/course-style/react";
+import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, Typography } from "@shuku/course-style/react";
 import './GradCamPage.css';
 
 type Mode = 'classification' | 'recognition';

@@ -1,5 +1,6 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { useLayoutEffect, useRef, useState } from 'react';
-import { Button, Typography, moduleAssetUrl } from "@shuku/course-style/react";
+import { Button, Typography } from "@shuku/course-style/react";
 import { moduleIdentity } from '../outlines.json';
 import { deformableDemo, type DeformableTarget } from '../model/deformableDemo';
 import './PassingGridScene.css';

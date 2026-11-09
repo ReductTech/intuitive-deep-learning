@@ -18,7 +18,7 @@ import { AttentionRedistributionPage } from './pages/AttentionRedistributionPage
 import { AttentionScalingPage } from './pages/AttentionScalingPage/AttentionScalingPage';
 import { AttentionSoftmaxPage } from './pages/AttentionSoftmaxPage/AttentionSoftmaxPage';
 import type { ReactNode } from 'react';
-import type { LessonFlowRevealMode, LessonStepContext } from "@shuku/course-style/react";
+import { LessonFlowRevealMode, LessonStepContext } from "@shuku/course-style/react";
 import { AttentionObservationCoverPage } from './pages/AttentionObservationCoverPage/AttentionObservationCoverPage';
 import { AttentionGorillaExperimentPage } from './pages/AttentionGorillaExperimentPage/AttentionGorillaExperimentPage';
 import { AttentionQueryPage } from './pages/AttentionQueryPage/AttentionQueryPage';

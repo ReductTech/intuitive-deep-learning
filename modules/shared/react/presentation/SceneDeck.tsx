@@ -1,13 +1,13 @@
 import {useEffect,useState} from 'react';
 import {QuestionModeProvider} from '../learning/QuestionMode';
 import {PptPlayer} from '@shuku/player';
-import type {SceneDeckProps,SceneDefinition,LessonContext} from './types';
-import {CourseErrorBoundary} from '../reliability/CourseErrorBoundary';
+import type {SceneDeckProps,SceneDefinition,LessonContext} from "@shuku/course-runtime/react/presentation/types";
+import {CourseErrorBoundary} from "@shuku/course-runtime/react/reliability/CourseErrorBoundary";
 import {useCoursePlayback} from '@shuku/course-runtime/react/presentation/useCoursePlayback';
 import '../styles.css';
 import '../presentation.css';
 import './workspace/NativePlayer.css';
-export type {DeckDefinition,LessonContext,SceneDeckProps,SceneDefinition,SpeakerNote} from './types';
+export type {DeckDefinition,LessonContext,SceneDeckProps,SceneDefinition,SpeakerNote} from '@shuku/course-runtime/react/presentation/types';
 
 function SceneContent({scene,context}:{scene:SceneDefinition;context:LessonContext}){return <>{scene.render(context)}</>;}
 

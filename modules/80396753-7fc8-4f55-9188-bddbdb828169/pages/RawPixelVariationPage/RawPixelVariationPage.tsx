@@ -1,5 +1,6 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { useEffect, useRef, useState, type PointerEvent } from 'react';
-import { ContentBlock, moduleAssetUrl, Typography } from "@shuku/course-style/react";
+import { ContentBlock, Typography } from "@shuku/course-style/react";
 import { measureMnistImage, MNIST_INK_THRESHOLD } from '../../services/mnistFeatures';
 import './RawPixelVariationPage.css';
 

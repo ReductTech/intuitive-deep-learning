@@ -1,6 +1,7 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { useEffect, useState, type ReactNode } from 'react';
 import { Light } from '@icon-park/react';
-import { ContentBlock, MathFormulaStatic, moduleAssetUrl, Typography } from "@shuku/course-style/react";
+import { ContentBlock, MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import './LaplacianConstructionPage.css';
 
 const buildingImage = moduleAssetUrl('xiandaijianzhu.jpg');

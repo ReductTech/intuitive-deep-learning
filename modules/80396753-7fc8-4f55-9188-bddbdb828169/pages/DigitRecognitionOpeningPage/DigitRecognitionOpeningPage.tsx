@@ -1,5 +1,6 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { useLayoutEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';
-import { Button, moduleAssetUrl, Typography } from "@shuku/course-style/react";
+import { Button, Typography } from "@shuku/course-style/react";
 import { recognizeEmnistDigit } from '../../services/emnistDigitRecognizer';
 import { recognizedAmountWords } from './amountWords';
 import './DigitRecognitionOpeningPage.css';

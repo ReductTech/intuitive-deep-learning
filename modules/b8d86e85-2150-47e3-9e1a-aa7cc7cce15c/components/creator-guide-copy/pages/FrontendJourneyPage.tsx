@@ -1,5 +1,6 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { creatorGuideAssetUrl } from '../creatorGuideAssets';
-import { Typography, moduleAssetUrl } from "@shuku/course-style/react";
+import { Typography } from "@shuku/course-style/react";
 import outline from '../outlines.json';
 import './FrontendJourneyPage.css';
 

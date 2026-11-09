@@ -1,6 +1,7 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import type { CSSProperties } from 'react';
 import { ArrowRight } from '@icon-park/react';
-import { ContentBlock, MathFormulaBlock, MathFormulaTerm, Typography, moduleAssetUrl } from "@shuku/course-style/react";
+import { ContentBlock, MathFormulaBlock, MathFormulaTerm, Typography } from "@shuku/course-style/react";
 import passengers from './titanic-passengers.json';
 import './RegressionClassificationPage.css';
 

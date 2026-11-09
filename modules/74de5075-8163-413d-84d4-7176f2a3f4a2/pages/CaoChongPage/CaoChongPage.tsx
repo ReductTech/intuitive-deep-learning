@@ -1,7 +1,8 @@
+import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import { saveRecordedData } from '../../showcaseRegressionData';
 import { Forbid } from '@icon-park/react';
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
-import { Button, EChartsChart, Typography, moduleAssetUrl } from "@shuku/course-style/react";
+import { Button, EChartsChart, Typography } from "@shuku/course-style/react";
 import { depthForMass, MAX_STONES, createStoneWeights, resetElephantMeasurement, stonePositions, TARGET_DEPTH_CM, type Observation } from './experiment';
 import './CaoChongPage.css';
 

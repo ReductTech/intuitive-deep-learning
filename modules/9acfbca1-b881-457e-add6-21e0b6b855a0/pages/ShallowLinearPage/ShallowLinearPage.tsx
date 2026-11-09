@@ -222,7 +222,6 @@ export function ShallowLinearPage({ onComplete }: ShallowLinearPageProps) {
       className="ngtw-activation-network-lab ngtw-shallow-linear"
       title="线性神经元的组合仍然是线性的"
       subtitle="把多个线性神经元并行连接，观察它们的输出如何汇合成一个函数。"
-      data-telemetry-manual
       aria-busy={!hydrated}
     >
       {!model ? (
