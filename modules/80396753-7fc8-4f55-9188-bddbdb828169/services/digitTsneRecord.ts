@@ -1,3 +1,4 @@
+import {requestCourse} from '@shuku/course-runtime/react/courseRequests';
 import type {ProjectionSample} from './digitNetworkTraining';
 
 export const tsneCourseId='80396753-7fc8-4f55-9188-bddbdb828169';
@@ -11,9 +12,8 @@ const records=new Map<string,TsneRecord>();
 export async function loadTsneRecord(learningRate:number,batchSize:number,signal:AbortSignal):Promise<TsneRecord>{
  const key=`${learningRate}:${batchSize}`;
  const cached=records.get(key);if(cached)return cached;
- const response=await fetch(`/api/courses/${tsneCourseId}/records/digit-tsne`,{method:'POST',headers:{'Content-Type':'application/json'},credentials:'same-origin',body:JSON.stringify({learning_rate:learningRate,batch_size:batchSize}),signal});
- const body=await response.json();
- if(!response.ok||!body.ok)throw new Error(typeof body.detail==='string'?body.detail:'训练记录暂不可用，请稍后重试。');
+ const body=await requestCourse<{ok:boolean;result:TsneRecord;error?:string}>({action:'record',name:'digit-tsne',payload:{learning_rate:learningRate,batch_size:batchSize}},signal);
+ if(!body.ok)throw new Error(body.error||'训练记录暂不可用，请稍后重试。');
  const record=body.result as TsneRecord;
  if(record.recording?.epochs!==tsneEpochs||record.recording.learning_rate!==learningRate||record.recording.batch_size!==batchSize||record.frames?.length!==tsneEpochs+1)throw new Error('训练记录与所选参数不匹配。');
  records.set(key,record);return record;
