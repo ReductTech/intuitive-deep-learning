@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { ContentBlock, Typography } from '../../shared/react';
+import { ContentBlock, Typography } from "@shuku/course-style/react";
 import outline from '../outlines.json';
 import './LessonPage.css';
 import { coursePosition } from './coursePosition';

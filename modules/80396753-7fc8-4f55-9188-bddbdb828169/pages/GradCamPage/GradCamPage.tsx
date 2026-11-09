@@ -1,13 +1,13 @@
 import { AtlasImage } from '../../components/AtlasImage';
 import {useEffect, useState} from 'react';
-import {Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, Typography, moduleAssetUrl} from '../../../shared/react';
+import {Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, Typography, moduleAssetUrl} from "@shuku/course-style/react";
 import './GradCamPage.css';
 
 type Mode = 'classification' | 'recognition';
 type Result = {heat: string; hasPositiveSupport: boolean; channels: {index: number; alpha: number; image: string}[]};
 type Sample = {id: string; name: string; input: string; classification: Result; recognition: Result};
 type RecordData = {samples: Sample[]};
-const asset = (path: string) => moduleAssetUrl('80396753-7fc8-4f55-9188-bddbdb828169', `gradcam/${path}`);
+const asset = (path: string) => moduleAssetUrl(`gradcam/${path}`);
 
 export function GradCamPage() {
   const [record, setRecord] = useState<RecordData | null>(null);

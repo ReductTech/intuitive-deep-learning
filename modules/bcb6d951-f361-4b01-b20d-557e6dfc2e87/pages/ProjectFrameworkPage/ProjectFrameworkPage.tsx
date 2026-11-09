@@ -1,5 +1,5 @@
 import { Atom, Code2, Pencil, Zap, ArrowRight, FileCode2, Braces } from 'lucide-react';
-import { ContentBlock, Typography } from '../../../shared/react';
+import { ContentBlock, Typography } from "@shuku/course-style/react";
 import outline from '../../outlines.json';
 import './ProjectFrameworkPage.css';
 

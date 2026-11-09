@@ -1,5 +1,5 @@
 import { useLayoutEffect, useRef, type KeyboardEvent } from 'react';
-import { Button, Typography } from '../../shared/react';
+import { Button, Typography } from "@shuku/course-style/react";
 import { ChoiceButtons } from './AttentionActivity';
 import { useTranslationExperiment, type TranslationExperimentView } from '../model/TranslationExperimentContext';
 import './TranslationExperimentControls.css';

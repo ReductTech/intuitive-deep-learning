@@ -1,6 +1,6 @@
 import { useRef, useState, type KeyboardEvent, type PointerEvent } from 'react';
-import { Button } from '../../../shared/react/controls/Button';
-import { Typography } from '../../../shared/react/typography/Typography';
+import { Button } from "@shuku/course-style/react/controls/Button";
+import { Typography } from "@shuku/course-style/react/typography/Typography";
 import { ReferenceVisual, Text } from '../../components/Diagrams';
 import { RefBox, ReferenceCanvas, ReferenceControls } from '../../components/ReferenceCanvas';
 const side = 16;

@@ -1,7 +1,7 @@
 import { EmbeddingExperiment, AttentionExperiment } from "./VitExperiments";
 import { vitPaperImage as paperFigure, spatialComparisonImage as spatial, catContextImage, pairedSourceImage } from '../media';
 import { ContextComparison, RelationsComparison } from "./SourceComparisons";
-import { Typography } from "../../shared/react";
+import { Typography } from "@shuku/course-style/react";
 import { StepSequenceControl, useStepSequence, Equation, Heading, PatchGrid, Photo, Text } from "../components/LessonVisuals";
 import { Patch, Features, SourceCrop } from "../components/TeachingVisuals";
 import { patchStats } from "../model/teachingMath";

@@ -1,13 +1,13 @@
-import { moduleJson } from '../../shared/react/moduleJson';
+import { moduleJson } from "@shuku/course-runtime/react/moduleJson";
 const id = '80396753-7fc8-4f55-9188-bddbdb828169';
 type Feature = { channel: number; image: string };
 type Features = Record<string, Feature[]>;
 export const hierarchyManifest = moduleJson<{
   stages: Record<string, { shapeCHW: number[] }>;
   samples: { id: string; dataset: string; label: string; input: string; features: Features }[];
-}>(id, 'feature-hierarchy/mobilenet-v3-small/manifest.json');
-export const hierarchyChannels = moduleJson<{ samples: Record<string, Features> }>(id, 'feature-hierarchy/mobilenet-v3-small/lesson-channels.json');
-export const flattenResponses = moduleJson<{ samples: { inputSize: number; mapSize: number; input: string; values: number[][] }[] }>(id, 'flatten-interface/responses.json');
+}>('feature-hierarchy/mobilenet-v3-small/manifest.json');
+export const hierarchyChannels = moduleJson<{ samples: Record<string, Features> }>('feature-hierarchy/mobilenet-v3-small/lesson-channels.json');
+export const flattenResponses = moduleJson<{ samples: { inputSize: number; mapSize: number; input: string; values: number[][] }[] }>('flatten-interface/responses.json');
 
 let display: { RANGES: number[][]; CHANNELS: number[] } | undefined;
 export function flattenDisplay() {

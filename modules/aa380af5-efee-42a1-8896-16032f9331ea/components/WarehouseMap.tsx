@@ -1,6 +1,6 @@
 import { valueBasedRlAssetUrl } from '../assetUrls';
 import { useId, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react';
-import { Button, Typography } from '../../shared/react';
+import { Button, Typography } from "@shuku/course-style/react";
 import { BLOCKED, GOAL, GRID, START, keyOf, type Position } from '../model';
 import './WarehouseMap.css';
 

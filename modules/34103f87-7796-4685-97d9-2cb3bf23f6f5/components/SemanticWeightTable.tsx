@@ -1,4 +1,4 @@
-import { Button, MathFormulaStatic, Typography } from '../../shared/react';
+import { Button, MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import { SEMANTIC_ITEMS } from '../model/semanticScoring';
 import { numberText } from './AttentionActivity';
 import './SemanticWeightTable.css';

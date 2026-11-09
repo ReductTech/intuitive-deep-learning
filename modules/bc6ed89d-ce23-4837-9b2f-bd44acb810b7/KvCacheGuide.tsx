@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useRef, useState } from 'react';
-import { ModuleShell } from '../shared/react';
+import { ModuleShell } from "@shuku/course-style/react";
 import { COURSE_TOPICS } from './pages/CourseCoverPage';
 import { courseScenes } from './course';
 import outline from './outlines.json';

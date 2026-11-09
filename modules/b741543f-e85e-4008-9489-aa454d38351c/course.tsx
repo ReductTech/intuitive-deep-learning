@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { LessonFlowRevealMode, LessonStepContext } from '../shared/react';
+import type { LessonFlowRevealMode, LessonStepContext } from "@shuku/course-style/react";
 import { RNNMemoryPage } from './pages/RNN/RNNMemoryPage';
 import { RNNMarkovPage } from './pages/RNN/RNNMarkovPage';
 import { RNNMarkovFormulaPage } from './pages/RNN/RNNMarkovFormulaPage';

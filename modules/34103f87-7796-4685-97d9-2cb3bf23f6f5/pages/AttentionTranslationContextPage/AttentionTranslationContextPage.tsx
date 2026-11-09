@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react';
-import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from '../../../shared/react';
+import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import { ChoiceButtons, useActivityState, type ActivityProps } from '../../components/AttentionActivity';
 import { useTranslationPage } from '../../components/useTranslationPage';
 import { getTranslationTeachingStep, TRANSLATION_TEACHING_ROWS } from '../../model/translationTeaching';

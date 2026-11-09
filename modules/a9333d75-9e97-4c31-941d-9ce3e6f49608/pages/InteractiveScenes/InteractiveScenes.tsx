@@ -1,5 +1,5 @@
 import { useEffect, useState, type ReactNode } from 'react';
-import { Button, Typography } from '../../../shared/react';
+import { Button, Typography } from "@shuku/course-style/react";
 
 const Text = ({ children, tone = 'main', variant = 'body', className = '' }: { children: ReactNode; tone?: 'main'|'muted'|'accent'|'success'|'danger'|'warning'; variant?: 'body'|'bodySmall'|'h3'; className?: string }) => <Typography as="div" tone={tone} variant={variant} className={className}>{children}</Typography>;
 

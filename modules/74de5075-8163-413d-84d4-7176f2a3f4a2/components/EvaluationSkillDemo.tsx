@@ -1,5 +1,5 @@
 import { useEffect, useState, type CSSProperties } from 'react';
-import { Button, RangeControl, Typography } from '../../shared/react';
+import { Button, RangeControl, Typography } from "@shuku/course-style/react";
 import './EvaluationSkillDemo.css';
 
 const DURATION = 22000;

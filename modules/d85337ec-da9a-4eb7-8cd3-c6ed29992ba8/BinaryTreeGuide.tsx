@@ -1,7 +1,7 @@
 import { useRef } from 'react';
-import { useSceneScale } from '../shared/react/presentation/canvas';
-import '../shared/react/styles.css';
-import '../shared/react/presentation.css';
+import { useSceneScale } from "@shuku/course-style/react/presentation/canvas";
+import "@shuku/course-style/react/styles.css";
+import "@shuku/course-style/react/presentation.css";
 import { EverydayChoice } from './pages/everyday-choice-cover/EverydayChoice';
 
 export function BinaryTreeGuide() {

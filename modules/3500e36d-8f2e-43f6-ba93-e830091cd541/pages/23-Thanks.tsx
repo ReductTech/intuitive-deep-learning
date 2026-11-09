@@ -1,4 +1,4 @@
-import {Button,Typography} from '../../shared/react';
+import {Button,Typography} from "@shuku/course-style/react";
 import {imageUrl} from '../components/Stage';
 import {RefinedStage} from '../components/RefinedStage';
 import './ThanksPage.css';

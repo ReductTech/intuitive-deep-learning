@@ -8,7 +8,7 @@ import {
   type KeyboardEvent as ReactKeyboardEvent,
   type PointerEvent as ReactPointerEvent,
 } from 'react';
-import { Button, ContentBlock, moduleAssetUrl, Typography } from '../../../../../../shared/react';
+import { Button, ContentBlock, moduleAssetUrl, Typography } from "@shuku/course-style/react";
 import { useGomokuOutcome } from '../../LessonContext';
 import {
   BLACK,
@@ -28,7 +28,7 @@ import {
 } from '../../gomokuEngine';
 import './GomokuPlayPage.css';
 
-const bgVideo = moduleAssetUrl('444f8951-dd2e-42dc-94e5-c5a878618631', 'workflow/convolution-course/bg_video.mp4');
+const bgVideo = moduleAssetUrl('workflow/convolution-course/bg_video.mp4');
 
 const HUMAN = BLACK;
 const COMPUTER = WHITE;

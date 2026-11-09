@@ -1,4 +1,4 @@
-import { ContentBlock, Typography } from '../../shared/react';
+import { ContentBlock, Typography } from "@shuku/course-style/react";
 import type { ReactNode } from 'react';
 import './WormholePages.css';
 

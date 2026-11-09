@@ -11,7 +11,7 @@ import { MsePage } from './pages/MsePage/MsePage';
 import { MaePage } from './pages/MaePage/MaePage';
 import { PredictionErrorPage } from './pages/PredictionErrorPage/PredictionErrorPage';
 import { ResidualCancellationPage } from './pages/ResidualCancellationPage/ResidualCancellationPage';
-import { SceneDeck, type DeckDefinition } from '../shared/react/presentation';
+import { SceneDeck, type DeckDefinition } from "@shuku/course-style/react/presentation";
 import { notesForScene } from './speakerNotes';
 import { CaoChongPage } from './pages/CaoChongPage/CaoChongPage';
 import { LinearRegressionPage } from './pages/LinearRegressionPage/LinearRegressionPage';

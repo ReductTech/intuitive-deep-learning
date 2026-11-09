@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef } from 'react';
-import { Button, Typography } from '../../../shared/react';
+import { Button, Typography } from "@shuku/course-style/react";
 import { INPUT_SIZE, KERNELS, LOCAL_COUNT, OUTPUT_SIZE, patchAt, type KernelDirection, type frameAt } from './walkthroughModel';
 
 export type ZoomSample = { gray: number[]; responses: number[]; seed: number };

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Button, ContentBlock, EChartsChart, NoticeStrip, Typography } from '../../../shared/react';
+import { Button, ContentBlock, EChartsChart, NoticeStrip, Typography } from "@shuku/course-style/react";
 import { useCompleteOnce } from '../../hooks/useCompleteOnce';
 import { buildComparisonChart } from './comparisonChart';
 import './OverfittingDegradationPage.css';

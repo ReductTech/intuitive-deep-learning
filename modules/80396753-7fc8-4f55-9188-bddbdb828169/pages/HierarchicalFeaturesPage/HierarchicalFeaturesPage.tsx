@@ -1,14 +1,14 @@
 import { AtlasImage } from '../../components/AtlasImage';
 import { useState, useLayoutEffect, useRef } from 'react';
-import { Button, ContentBlock, ExplainPanelButton, Typography, moduleAssetUrl } from '../../../shared/react';
+import { Button, ContentBlock, ExplainPanelButton, Typography, moduleAssetUrl } from "@shuku/course-style/react";
 import { hierarchyManifest, hierarchyChannels } from '../../services/lessonData';
 import { atlasIndex } from '../../services/imageAtlas';
-import { withAssetResources } from '../../../shared/react/withAssetResources';
+import { withAssetResources } from "@shuku/course-style/react/withAssetResources";
 import './HierarchicalFeaturesPage.css';
 
 const ASSET_ID = '80396753-7fc8-4f55-9188-bddbdb828169';
 const PREFIX = 'feature-hierarchy/mobilenet-v3-small/';
-const asset = (path: string) => moduleAssetUrl(ASSET_ID, PREFIX + path);
+const asset = (path: string) => moduleAssetUrl(PREFIX + path);
 const LEVELS = [
   { key: 'deep', label: '深层', description: '更有语义的特征' },
   { key: 'middle', label: '中间层', description: '组合更复杂的局部模式' },

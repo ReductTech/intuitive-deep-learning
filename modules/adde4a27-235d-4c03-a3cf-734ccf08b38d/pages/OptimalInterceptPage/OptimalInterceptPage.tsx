@@ -1,6 +1,6 @@
 import { UpAndDown } from '@icon-park/react';
 import { useLayoutEffect, useMemo, useRef, useState, type PointerEvent } from 'react';
-import { ContentBlock, EChartsChart, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, Typography } from '../../../shared/react';
+import { ContentBlock, EChartsChart, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, Typography } from "@shuku/course-style/react";
 import { useRecordedData } from '../../regressionData';
 import { InterceptLossPlot } from './InterceptLossPlot';
 import './OptimalInterceptPage.css';

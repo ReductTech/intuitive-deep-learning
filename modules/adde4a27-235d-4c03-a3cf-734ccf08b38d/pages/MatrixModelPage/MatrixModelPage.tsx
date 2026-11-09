@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { ContentBlock, EChartsChart, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, Typography } from '../../../shared/react';
+import { ContentBlock, EChartsChart, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, Typography } from "@shuku/course-style/react";
 import { useRecordedData } from '../../regressionData';
 import './MatrixModelPage.css';
 

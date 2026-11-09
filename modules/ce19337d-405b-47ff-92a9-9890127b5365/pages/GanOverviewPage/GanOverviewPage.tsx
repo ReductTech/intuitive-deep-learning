@@ -1,4 +1,4 @@
-import { ContentBlock, Typography } from '../../../shared/react';
+import { ContentBlock, Typography } from "@shuku/course-style/react";
 import { useLecturePlayback } from '../../components/LecturePlayback';
 import { useEffect, useId, useMemo, useRef } from 'react';
 import { useDiagramAsset } from '../../components/useDiagramAsset';

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { RotateCcw, StepForward } from 'lucide-react';
-import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, moduleAssetUrl, Typography } from '../../../shared/react';
+import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, moduleAssetUrl, Typography } from "@shuku/course-style/react";
 import { WormholeBenefit } from '../../components/WormholeLessonFrame';
 import { IMAGE_EXAMPLES } from '../ConvolutionObservationPage/convolutionModel';
 import { correlate, frameAt, INPUT_SIZE, KERNELS, LOCAL_COUNT, type KernelDirection, SLOW_DURATIONS, SLOW_MS, ZOOM_MS, FAST_MS } from './walkthroughModel';
@@ -17,7 +17,7 @@ const lectureStops = SLOW_DURATIONS.map((duration, index) =>
 async function loadSample(file: string): Promise<Sample> {
   const image = new Image();
   image.crossOrigin = 'anonymous';
-  image.src = moduleAssetUrl(outline.moduleIdentity.id, `images/edge-examples/${file}`);
+  image.src = moduleAssetUrl(`images/edge-examples/${file}`);
   await image.decode();
   const canvas = document.createElement('canvas'); canvas.width = canvas.height = INPUT_SIZE;
   const context = canvas.getContext('2d', { willReadFrequently: true });

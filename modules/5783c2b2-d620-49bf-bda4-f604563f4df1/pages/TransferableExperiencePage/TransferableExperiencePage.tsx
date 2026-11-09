@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, ContentBlock, NoticeStrip, Typography, type QuestionCheckResult } from '../../../shared/react';
+import { Button, ContentBlock, NoticeStrip, Typography, type QuestionCheckResult } from "@shuku/course-style/react";
 import { useCompleteOnce } from '../../hooks/useCompleteOnce';
 import { classificationFeedback, TRANSFER_CLUES, type ClueChoice } from './classification';
 import { TransferCheckPanel } from './TransferCheckPanel';

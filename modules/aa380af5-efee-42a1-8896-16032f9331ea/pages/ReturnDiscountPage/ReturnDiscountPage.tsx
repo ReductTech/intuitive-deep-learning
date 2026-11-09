@@ -1,6 +1,6 @@
 import { valueBasedRlAssetUrl } from '../../assetUrls';
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
-import { Button, RangeControl, Typography } from '../../../shared/react';
+import { Button, RangeControl, Typography } from "@shuku/course-style/react";
 import { LessonPage, Formula } from '../../components/LessonPrimitives';
 import { TeachingPanel } from '../../components/TeachingPanel';
 import { WarehouseMap } from '../../components/WarehouseMap';

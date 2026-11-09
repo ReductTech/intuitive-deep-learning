@@ -35,7 +35,6 @@ export default defineConfig({
     },
   }],
   publicDir: false,
-  define: { 'import.meta.env.VITE_ASSET_BASE_URL': JSON.stringify('/') },
   server: { host: '127.0.0.1', port: 5184, strictPort: true },
   build: {
     copyPublicDir: false,

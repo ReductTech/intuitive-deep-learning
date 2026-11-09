@@ -1,4 +1,4 @@
-import { Typography } from '../../shared/react';
+import { Typography } from "@shuku/course-style/react";
 import './DesignComparisonHeader.css';
 
 export function DesignComparisonHeader({ ours = false, description }: { ours?: boolean; description: string }) {

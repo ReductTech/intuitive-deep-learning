@@ -1,8 +1,8 @@
 import { useLayoutEffect, useRef, useState, type ReactNode } from 'react';
-import { LessonFlow, ModuleShell, type LessonFlowStep } from '../shared/react';
-import '../shared/react/styles.css';
-import '../shared/react/ui-kit.css';
-import '../shared/react/presentation.css';
+import { LessonFlow, ModuleShell, type LessonFlowStep } from "@shuku/course-style/react";
+import "@shuku/course-style/react/styles.css";
+import "@shuku/course-style/react/ui-kit.css";
+import "@shuku/course-style/react/presentation.css";
 import { naiveRnnCourse } from './course';
 
 function BlogLessonCanvas({ children }: { children: ReactNode }) {

@@ -1,12 +1,12 @@
 // @refresh reset
 import { useEffect, useState } from 'react';
-import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography, type QuestionCheckResult } from '../../../shared/react';
+import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography, type QuestionCheckResult } from "@shuku/course-style/react";
 import { RtgQuestion } from '../../components/RtgQuestion/RtgQuestion';
 import { useCompleteOnce } from '../../hooks/useCompleteOnce';
 import { useTeachingPlayback } from '../../hooks/useTeachingPlayback';
 import { neighborsFor, getQuerySamples, startingFrames, type StartingSample } from './model';
 import './StartingPointsPage.css';
-import { withAssetResources } from '../../../shared/react/withAssetResources';
+import { withAssetResources } from "@shuku/course-style/react/withAssetResources";
 
 export interface StartingPointsPageProps { onComplete?: () => void; }
 function SamplePicture({ sample, className = '' }: { sample: StartingSample; className?: string }) {

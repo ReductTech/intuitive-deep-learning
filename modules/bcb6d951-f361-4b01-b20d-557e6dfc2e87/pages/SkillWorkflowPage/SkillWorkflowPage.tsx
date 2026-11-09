@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { BookOpen, ChevronDown, ChevronRight, FileText, Folder, Image, Wrench } from 'lucide-react';
-import { ContentBlock, Typography } from '../../../shared/react';
+import { ContentBlock, Typography } from "@shuku/course-style/react";
 
 import './SkillWorkflowPage.css';
 

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Pause, Play, RotateCcw, ChevronLeft, ChevronRight } from 'lucide-react';
-import { Button, Typography } from '../shared/react';
+import { Button, Typography } from "@shuku/course-style/react";
 
 /** Presentation-owned timeline: finite, pausable and safe to reset. */
 export function usePlayback(count: number, delay = 3200) {

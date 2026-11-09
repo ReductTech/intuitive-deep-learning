@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "id": "76018445-20ab-4dd9-9543-385d177eb159",
+  "name": "术库默认风格",
+  "protocol": 1,
+  "bootstrap": "bootstrap.ts",
+  "presentation": "react/presentation/index.ts"
+}

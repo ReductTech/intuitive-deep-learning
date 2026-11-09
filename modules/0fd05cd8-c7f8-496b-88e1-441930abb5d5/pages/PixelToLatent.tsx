@@ -1,6 +1,6 @@
 import { useId, useState } from 'react';
-import { Button } from '../../shared/react/controls/Button';
-import { RangeControl } from '../../shared/react/controls/RangeControl';
+import { Button } from "@shuku/course-style/react/controls/Button";
+import { RangeControl } from "@shuku/course-style/react/controls/RangeControl";
 import { courseAssetUrl } from '../assets';
 import { Formula, Frame, Photo, Text } from '../components/Diagrams';
 import { Readout } from '../components/Story';

@@ -1,4 +1,4 @@
-import { CourseEndingPage } from '../../../shared/react';
+import { CourseEndingPage } from "@shuku/course-style/react";
 import { endingResources } from './endingResources';
 import './CourseMapPage.css';
 

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
-import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from '../../../shared/react';
+import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import { useCompleteOnce } from '../../hooks/useCompleteOnce';
 import { calculateResponse, nextUnwritten, INPUT, INPUT_SIZE, KERNEL, KERNEL_SIZE, OUTPUT_SIZE } from './convolution';
 import './ConvolutionFeatureMapPage.css';

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { RangeControl, Typography } from '../../shared/react';
+import { RangeControl, Typography } from "@shuku/course-style/react";
 import './AttentionMemoryBridgePage.css';
 
 const CONTEXT_MARKS = [4, 6, 8, 10, 12, 14, 16] as const;

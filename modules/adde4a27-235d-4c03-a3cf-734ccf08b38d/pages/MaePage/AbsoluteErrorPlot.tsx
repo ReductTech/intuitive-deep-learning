@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type PointerEvent } from 'react';
-import { PlotlyChart, MathFormulaBlock, MathFormulaStatic, type PlotlyGraph } from '../../../shared/react';
+import { PlotlyChart, MathFormulaBlock, MathFormulaStatic, type PlotlyGraph } from "@shuku/course-style/react";
 type Axis = { _offset: number; l2p:(v:number)=>number; p2l:(v:number)=>number; range:number[] };
 type Host = HTMLDivElement & { data?:unknown[]; _fullLayout?:{xaxis:Axis;yaxis:Axis} };
 export function AbsoluteErrorPlot({error,onChange}:{error:number;onChange:(value:number)=>void}) {

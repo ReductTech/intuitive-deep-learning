@@ -1,4 +1,4 @@
-import { SceneDeck, type DeckDefinition, type SceneDefinition, type SpeakerNote } from '../shared/react/presentation';
+import { SceneDeck, type DeckDefinition, type SceneDefinition, type SpeakerNote } from "@shuku/course-style/react/presentation";
 import { AttentionLessonProvider } from './model/AttentionLessonContext';
 import { ATTENTION_MODULE_ID, ATTENTION_PROGRESS_ID, attentionCourse } from './course';
 import outlines from './outlines.json';

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, ContentBlock, Typography } from '../../../shared/react';
+import { Button, ContentBlock, Typography } from "@shuku/course-style/react";
 import { ChoiceButtons, useActivityState, type ActivityProps } from '../../components/AttentionActivity';
 import { useRegressionPage as useAttentionPage } from '../../components/useRegressionPage';
 import { TranslationCheckpointTimeline } from '../../components/TranslationExperimentControls';

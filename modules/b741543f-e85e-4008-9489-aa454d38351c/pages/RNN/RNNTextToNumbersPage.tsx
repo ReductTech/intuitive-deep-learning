@@ -1,8 +1,8 @@
 import { moduleIdentity } from '../../outlines.json';
-import { moduleAssetUrl } from '../../../shared/react/assets';
+import { moduleAssetUrl } from "@shuku/course-runtime/react/assets";
 import { Fragment, useRef, useState, useEffect, type CSSProperties } from 'react';
-import { Button, ContentBlock, Typography } from '../../../shared/react';
-const senderAvatar = moduleAssetUrl(moduleIdentity.id, "sender-avatar.jpg");
+import { Button, ContentBlock, Typography } from "@shuku/course-style/react";
+const senderAvatar = moduleAssetUrl("sender-avatar.jpg");
 import './RNNTextToNumbersPage.css';
 
 export interface RNNTextToNumbersPageProps {

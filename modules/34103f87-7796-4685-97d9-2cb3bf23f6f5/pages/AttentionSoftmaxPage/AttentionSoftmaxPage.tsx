@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from '../../../shared/react';
+import { ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import { LessonCheck, useActivityState, type ActivityProps } from '../../components/AttentionActivity';
 import { SemanticWeightTable } from '../../components/SemanticWeightTable';
 import { computeSemanticSoftmax, SEMANTIC_ITEMS } from '../../model/semanticScoring';

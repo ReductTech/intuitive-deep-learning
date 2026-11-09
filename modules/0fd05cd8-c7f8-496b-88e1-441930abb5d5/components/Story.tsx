@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
-import { Typography } from '../../shared/react/typography/Typography';
+import { Typography } from "@shuku/course-style/react/typography/Typography";
 import './Story.css';
 
 export function useStory(steps: readonly string[], dwell = 850) {

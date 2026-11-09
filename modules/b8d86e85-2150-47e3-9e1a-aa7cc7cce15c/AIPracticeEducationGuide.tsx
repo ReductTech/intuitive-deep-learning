@@ -1,9 +1,9 @@
 import { useRef, useState, type ReactNode } from 'react';
-import { useSceneScale } from '../shared/react/presentation/canvas';
-import { Typography } from '../shared/react';
-import '../shared/react/styles.css';
-import '../shared/react/ui-kit.css';
-import '../shared/react/presentation.css';
+import { useSceneScale } from "@shuku/course-style/react/presentation/canvas";
+import { Typography } from "@shuku/course-style/react";
+import "@shuku/course-style/react/styles.css";
+import "@shuku/course-style/react/ui-kit.css";
+import "@shuku/course-style/react/presentation.css";
 import { NativeStudyPreview } from './components/NativeStudyPreview';
 import { NativeStudyPreview as CreatorGuideStudyPreview } from './components/creator-guide-copy/components/NativeStudyPreview';
 import { deck, getPptNotes } from './course';

@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from 'react';
-import { emitTelemetry } from '../../../../../../shared/react';
+import { emitTelemetry } from "@shuku/course-style/react";
 import {
   BLACK,
   BOARD_SIZE,

@@ -1,5 +1,5 @@
 import moduleAssetOutline from '../../outlines.json';
-import { moduleAssetUrl } from '../../../shared/react/assets';
+import { moduleAssetUrl } from "@shuku/course-runtime/react/assets";
 import {
   useRef,
   useState,
@@ -7,18 +7,18 @@ import {
   type KeyboardEvent,
   type PointerEvent as ReactPointerEvent,
 } from 'react';
-import { ContentBlock, Typography } from '../../../shared/react';
+import { ContentBlock, Typography } from "@shuku/course-style/react";
 import './DistributionViewPage.css';
 
-const faceOne = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/distribution-modeling/face-1.jpg');
-const faceTwo = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/distribution-modeling/face-2.jpg');
-const faceThree = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/distribution-modeling/face-3.jpg');
-const faceFour = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/distribution-modeling/face-4.jpg');
-const faceFive = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/distribution-modeling/face-5.jpg');
-const faceSix = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/distribution-modeling/face-6.jpg');
-const anomalyThreeEyes = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/distribution-modeling/anomaly-three-eyes.jpg');
-const anomalyRandomFeatures = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/distribution-modeling/anomaly-random-features.jpg');
-const anomalyFaceCar = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/distribution-modeling/anomaly-face-car.jpg');
+const faceOne = moduleAssetUrl('images/distribution-modeling/face-1.jpg');
+const faceTwo = moduleAssetUrl('images/distribution-modeling/face-2.jpg');
+const faceThree = moduleAssetUrl('images/distribution-modeling/face-3.jpg');
+const faceFour = moduleAssetUrl('images/distribution-modeling/face-4.jpg');
+const faceFive = moduleAssetUrl('images/distribution-modeling/face-5.jpg');
+const faceSix = moduleAssetUrl('images/distribution-modeling/face-6.jpg');
+const anomalyThreeEyes = moduleAssetUrl('images/distribution-modeling/anomaly-three-eyes.jpg');
+const anomalyRandomFeatures = moduleAssetUrl('images/distribution-modeling/anomaly-random-features.jpg');
+const anomalyFaceCar = moduleAssetUrl('images/distribution-modeling/anomaly-face-car.jpg');
 
 interface Point {
   x: number;

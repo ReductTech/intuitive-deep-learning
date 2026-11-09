@@ -1,5 +1,5 @@
 import type { KeyboardEvent, MouseEvent } from 'react';
-import { MathFormulaStatic, Typography } from '../../shared/react';
+import { MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import {
   ATTENTION_DATASET,
   attentionAverage,

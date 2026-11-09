@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Button, ContentBlock, EChartsChart, MathFormulaBlock, MathFormulaStatic, Question, Typography } from '../../../shared/react';
+import { Button, ContentBlock, EChartsChart, MathFormulaBlock, MathFormulaStatic, Question, Typography } from "@shuku/course-style/react";
 import { ChoiceButtons, numberText, useActivityState, type ActivityProps } from '../../components/AttentionActivity';
 import { RegressionPlot } from '../../components/RegressionPlot';
 import { useRegressionPage } from '../../components/useRegressionPage';

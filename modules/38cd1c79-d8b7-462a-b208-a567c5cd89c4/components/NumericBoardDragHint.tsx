@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Hand } from 'lucide-react';
-import { Typography } from '../../shared/react';
+import { Typography } from "@shuku/course-style/react";
 import './NumericBoardDragHint.css';
 
 /** A gesture preview only: never changes the window or the matching score. */

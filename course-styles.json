@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "default_style": "76018445-20ab-4dd9-9543-385d177eb159",
+  "styles": [
+    {
+      "id": "76018445-20ab-4dd9-9543-385d177eb159",
+      "path": "modules/shared"
+    }
+  ]
+}

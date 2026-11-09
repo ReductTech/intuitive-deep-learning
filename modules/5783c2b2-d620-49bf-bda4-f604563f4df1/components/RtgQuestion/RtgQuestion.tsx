@@ -1,4 +1,4 @@
-import { Question, type QuestionProps } from '../../../shared/react';
+import { Question, type QuestionProps } from "@shuku/course-style/react";
 import './RtgQuestion.css';
 
 const PAGE_LOAD_ID = typeof performance !== 'undefined' ? String(performance.timeOrigin) : String(Date.now());

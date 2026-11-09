@@ -1,4 +1,4 @@
-import { Typography } from '../../shared/react';
+import { Typography } from "@shuku/course-style/react";
 import { StepSequenceControl, useStepSequence, Equation, Heading, rainImage } from '../components/LessonVisuals';
 import { ImageFocus } from '../components/TeachingVisuals';
 import { projectPatch, attentionDemo } from '../model/teachingMath';

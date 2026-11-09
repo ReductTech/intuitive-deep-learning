@@ -1,9 +1,9 @@
 import { useEffect, useState, type ReactNode } from 'react';
 import { Light, Picture } from '@icon-park/react';
-import { ContentBlock, MathFormulaBlock, MathFormulaStatic, moduleAssetUrl, Typography } from '../../../../../../shared/react';
+import { ContentBlock, MathFormulaBlock, MathFormulaStatic, moduleAssetUrl, Typography } from "@shuku/course-style/react";
 import './GradientPage.css';
 
-const buildingImage = moduleAssetUrl('74de5075-8163-413d-84d4-7176f2a3f4a2', 'workflow/convolution-course/xiandaijianzhu.jpg');
+const buildingImage = moduleAssetUrl('workflow/convolution-course/xiandaijianzhu.jpg');
 
 interface GradientImages { horizontal: string; vertical: string; magnitude: string; }
 

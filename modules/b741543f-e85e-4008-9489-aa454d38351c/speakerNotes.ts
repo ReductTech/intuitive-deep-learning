@@ -1,5 +1,5 @@
-import type { SpeakerNote } from '../shared/react/presentation/types';
-export type { SpeakerNote } from '../shared/react/presentation/types';
+import type { SpeakerNote } from "@shuku/course-runtime/react/presentation/types";
+export type { SpeakerNote } from "@shuku/course-runtime/react/presentation/types";
 
 export const naiveRnnSpeakerNotes: Record<string, SpeakerNote[]> = {
   '748895e3-eeb1-4c03-b24c-9e6ae6c32bfd': [

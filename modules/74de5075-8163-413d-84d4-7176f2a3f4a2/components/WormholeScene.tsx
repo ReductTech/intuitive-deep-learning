@@ -1,7 +1,7 @@
 import { useEffect, useId, useRef, useState, type ReactNode } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { Typography } from '../../shared/react';
+import { Typography } from "@shuku/course-style/react";
 import { ENDPOINT_X, SPACE_HALF_HEIGHT, METRES_PER_UNIT, PLAYBACK_RATE, TRAVEL_SPEED, matterProfile, pathDistances, type ModelPaths, type SpatialPoint } from './wormholeMatter';
 
 interface WormholeSceneProps { throat: number; ratio: number; valid: boolean; paths: ModelPaths; interactive?: boolean; animate?: boolean; routeMode?: 'compare' | 'available'; throatDetails?: ReactNode; }

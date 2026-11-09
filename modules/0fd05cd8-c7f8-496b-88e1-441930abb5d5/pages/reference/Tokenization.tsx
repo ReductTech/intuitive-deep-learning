@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button } from '../../../shared/react/controls/Button';
+import { Button } from "@shuku/course-style/react/controls/Button";
 import { Formula, Text } from '../../components/Diagrams';
 import { RefBox, ReferenceCanvas, ReferenceControls, referenceAsset } from '../../components/ReferenceCanvas';
 

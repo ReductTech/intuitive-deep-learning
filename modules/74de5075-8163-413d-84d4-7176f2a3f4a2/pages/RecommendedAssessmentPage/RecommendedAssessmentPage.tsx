@@ -1,4 +1,4 @@
-import { ContentBlock, Typography, moduleAssetUrl } from '../../../shared/react';
+import { ContentBlock, Typography, moduleAssetUrl } from "@shuku/course-style/react";
 import outline from '../../outlines.json';
 import './RecommendedAssessmentPage.css';
 
@@ -8,7 +8,7 @@ const advantages = [
   { title: '积累学习资源', detail: '供同学学习复用', image: 'assessment-resource-icon-v5.jpg' },
 ] as const;
 
-const asset = (file: string) => moduleAssetUrl(outline.moduleIdentity.id, `images/assessment/${file}`);
+const asset = (file: string) => moduleAssetUrl(`images/assessment/${file}`);
 
 export function RecommendedAssessmentPage() {
   return <ContentBlock title="课后专题研究考核模式"

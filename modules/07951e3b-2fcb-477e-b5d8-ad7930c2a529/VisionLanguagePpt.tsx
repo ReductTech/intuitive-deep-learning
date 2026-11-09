@@ -1,4 +1,4 @@
-import { SceneDeck, type DeckDefinition, type SpeakerNote } from '../shared/react/presentation';
+import { SceneDeck, type DeckDefinition, type SpeakerNote } from "@shuku/course-style/react/presentation";
 import { visionLanguageCourse } from './course';
 import { lessonNotes } from './speakerNotes';
 import { moduleAssetId } from './media';

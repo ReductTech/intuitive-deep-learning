@@ -1,5 +1,5 @@
 import {useId,useState,type ReactNode} from 'react';
-import {Typography} from '../../../../shared/react';
+import {Typography} from "@shuku/course-style/react";
 import './ShukuIntroPages.css';
 
 function Copy({children,className=''}:{children:ReactNode;className?:string}){

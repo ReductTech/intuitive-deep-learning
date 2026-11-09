@@ -1,6 +1,6 @@
 import { creatorGuideAssetUrl } from '../creatorGuideAssets';
 import { useState, type CSSProperties } from 'react';
-import { Button, Typography, moduleAssetUrl } from '../../../../shared/react';
+import { Button, Typography, moduleAssetUrl } from "@shuku/course-style/react";
 import outline from '../outlines.json';
 import type { WorkflowArtifact } from './workflowDemo';
 

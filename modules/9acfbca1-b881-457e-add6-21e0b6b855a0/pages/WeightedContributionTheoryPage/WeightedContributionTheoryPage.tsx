@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { ContentBlock, FormulaBlock, FormulaTerm, Typography } from '../../../shared/react';
+import { ContentBlock, FormulaBlock, FormulaTerm, Typography } from "@shuku/course-style/react";
 import "./WeightedContributionTheoryPage.css";
 import { effectiveInput, formatScore, normalizedWeight, useLesson, weightedSum } from '../../LessonContext';
 

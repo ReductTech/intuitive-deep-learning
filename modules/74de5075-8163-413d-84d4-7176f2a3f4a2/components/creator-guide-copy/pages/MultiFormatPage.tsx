@@ -1,8 +1,8 @@
 import { creatorGuideAssetUrl } from '../creatorGuideAssets';
 import moduleAssetOutline from '../outlines.json';
-import { moduleAssetUrl } from '../../../../shared/react/assets';
+import { moduleAssetUrl } from "@shuku/course-runtime/react/assets";
 import { useEffect, useRef, useState, type ReactNode, type MouseEvent } from 'react';
-import { Button, ContentBlock, Typography } from '../../../../shared/react';
+import { Button, ContentBlock, Typography } from "@shuku/course-style/react";
 import { NativeStudyPreview } from '../components/NativeStudyPreview';
 import './MultiFormatPage.css';
 

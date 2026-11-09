@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ContentBlock, Typography } from '../../../shared/react';
+import { ContentBlock, Typography } from "@shuku/course-style/react";
 import { ReceptiveFieldScene, type CellSelection } from './ReceptiveFieldScene';
 import './ReceptiveFieldPage.css';
 

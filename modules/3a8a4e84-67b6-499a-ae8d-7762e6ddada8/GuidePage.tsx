@@ -1,4 +1,4 @@
-import { LessonFlow, ModuleShell } from '../shared/react';
+import { LessonFlow, ModuleShell } from "@shuku/course-style/react";
 import { transformerLessonSteps } from './course';
 
 export function GuidePage() {

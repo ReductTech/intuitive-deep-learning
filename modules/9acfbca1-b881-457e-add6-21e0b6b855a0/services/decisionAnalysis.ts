@@ -1,15 +1,8 @@
 import moduleOutline from '../outlines.json';
 
-const INTAKE_ENDPOINT = `${(import.meta.env.VITE_LLM_SERVICE_URL || 'http://127.0.0.1:28432').replace(/\/$/, '')}/decision/intake`;
-const EXTRA_FACTORS_ENDPOINT = `${(import.meta.env.VITE_LLM_SERVICE_URL || 'http://127.0.0.1:28432').replace(/\/$/, '')}/decision/extra-factors`;
-
-/** 课程标识取自模块根目录的 outlines.json，云端按它分组每门课的缓存。 */
-const COURSE_ID = moduleOutline.id;
-
-const REQUEST_HEADERS = {
-  'Content-Type': 'application/json',
-  'X-Course-ID': COURSE_ID,
-};
+import {requestCourse} from '@shuku/course-runtime/react/courseRequests';
+const INTAKE_ENDPOINT='/decision/intake';
+const EXTRA_FACTORS_ENDPOINT='/decision/extra-factors';
 
 export interface DecisionAnalysisFactor {
   name: string;
@@ -83,20 +76,8 @@ function normalizeFactor(value: unknown): DecisionAnalysisFactor {
 }
 
 async function post(endpoint: string, payload: Record<string, unknown>): Promise<Record<string, unknown>> {
-  let response: Response;
-  try {
-    response = await fetch(endpoint, {
-      method: 'POST',
-      headers: REQUEST_HEADERS,
-      body: JSON.stringify(payload),
-    });
-  } catch {
-    throw new Error('决策分析服务未启动或无法连接，请先启动课程后台服务。');
-  }
-  const envelope = await response.json().catch(() => ({})) as ServiceEnvelope;
-  if (!response.ok || envelope.ok !== true) {
-    throw new Error(typeof envelope.error === 'string' ? envelope.error : '决策分析服务暂时不可用。');
-  }
+  const envelope=await requestCourse<ServiceEnvelope>({action:'compute',endpoint,payload});
+  if(envelope.ok!==true)throw new Error(typeof envelope.error==='string'?envelope.error:'决策分析服务暂时不可用。');
   if (envelope.structured !== true || !envelope.result) {
     throw new Error(typeof envelope.warning?.message === 'string' ? envelope.warning.message : '服务返回内容无法解析，请重试。');
   }

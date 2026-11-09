@@ -1,4 +1,4 @@
-import type { SceneDefinition } from '../shared/react/presentation';
+import type { SceneDefinition } from "@shuku/course-style/react/presentation";
 import { InputBridgePage } from './pages/InputBridgePage';
 import { LongRangePage } from './pages/LongRangePage';
 import { Page } from './components/LessonVisuals';
@@ -43,7 +43,7 @@ export const visionLanguageCourse: SceneDefinition[] = [{
   render: (context) => <LongRangePage context={context} />,
 }, ...definitions.map(([id,title,definition], index) => ({
   id, title, section: index < 8 ? 'ViT' : index < 15 ? 'CLIP' : 'VLM',
-  render: (context: import('../shared/react/presentation').LessonContext) => { const Body = definition.Body; return <Page number={index + 3} title={title} mission={'mission' in definition ? definition.mission : undefined} takeaway={definition.takeaway} note={'note' in definition ? definition.note : undefined} resettable={'resettable' in definition && definition.resettable === true} context={context}><Body /></Page>; },
+  render: (context: import("@shuku/course-style/react/presentation").LessonContext) => { const Body = definition.Body; return <Page number={index + 3} title={title} mission={'mission' in definition ? definition.mission : undefined} takeaway={definition.takeaway} note={'note' in definition ? definition.note : undefined} resettable={'resettable' in definition && definition.resettable === true} context={context}><Body /></Page>; },
 }))];
 
 

@@ -1,6 +1,6 @@
 import { creatorGuideAssetUrl } from '../creatorGuideAssets';
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
-import { ContentBlock, Typography } from '../../../../shared/react';
+import { ContentBlock, Typography } from "@shuku/course-style/react";
 import outline from '../outlines.json';
 import './PresentationComparisonPage.css';
 

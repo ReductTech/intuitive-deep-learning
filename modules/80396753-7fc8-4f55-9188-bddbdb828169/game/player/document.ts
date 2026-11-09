@@ -1,5 +1,5 @@
 import { documentSetup, inlineScript, moduleAssetRoot, renderDocument } from './html';
-import phaserUrl from '../../../shared/vendor/phaser/3.90.0/phaser.min.js?url';
+import phaserUrl from "@shuku/course-style/vendor/phaser/3.90.0/phaser.min.js?url";
 import level from '../data/level.js?raw';
 import story from '../data/story.js?raw';
 import core from '../runtime/core.js?raw';

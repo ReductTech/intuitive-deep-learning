@@ -1,8 +1,8 @@
 import { useLayoutEffect, useRef, useState } from 'react';
 import { EvacuationPage } from './pages/EvacuationPage/EvacuationPage';
-import '../shared/react/styles.css';
-import '../shared/react/ui-kit.css';
-import '../shared/react/presentation.css';
+import "@shuku/course-style/react/styles.css";
+import "@shuku/course-style/react/ui-kit.css";
+import "@shuku/course-style/react/presentation.css";
 import './guide.css';
 
 export function GuidePage() {

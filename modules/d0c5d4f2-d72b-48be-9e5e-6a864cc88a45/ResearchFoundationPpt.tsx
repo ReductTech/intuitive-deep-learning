@@ -1,6 +1,6 @@
-import { SceneDeck, type DeckDefinition, type SpeakerNote } from '../shared/react/presentation';
-import '../shared/react/styles.css';
-import '../shared/react/presentation.css';
+import { SceneDeck, type DeckDefinition, type SpeakerNote } from "@shuku/course-style/react/presentation";
+import "@shuku/course-style/react/styles.css";
+import "@shuku/course-style/react/presentation.css";
 import './ResearchFoundation.css';
 import outline from './outlines.json';
 import { FoundationOneTitlePage } from './pages/FoundationOneTitlePage/FoundationOneTitlePage';

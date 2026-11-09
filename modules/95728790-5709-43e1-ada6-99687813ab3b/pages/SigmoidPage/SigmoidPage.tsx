@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Tips } from '@icon-park/react';
-import { Button, ContentBlock, MathFormulaBlock, MathFormulaTerm, Typography } from '../../../shared/react';
+import { Button, ContentBlock, MathFormulaBlock, MathFormulaTerm, Typography } from "@shuku/course-style/react";
 import { SigmoidPlot } from './SigmoidPlot';
 import './SigmoidPage.css';
 

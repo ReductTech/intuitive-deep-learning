@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { ContentBlock, NoticeStrip, Typography, type QuestionCheckResult } from '../../../shared/react';
+import { ContentBlock, NoticeStrip, Typography, type QuestionCheckResult } from "@shuku/course-style/react";
 import { RtgQuestion } from '../../components/RtgQuestion/RtgQuestion';
 import { useCompleteOnce } from '../../hooks/useCompleteOnce';
 import './ResidualLearningPage.css';

@@ -4,9 +4,9 @@ import { ProbabilityLogOddsPage } from './pages/ProbabilityLogOddsPage/Probabili
 import { SigmoidPage } from './pages/SigmoidPage/SigmoidPage';
 import { TitanicTrainingPage } from './pages/TitanicTrainingPage/TitanicTrainingPage';
 import { useLayoutEffect, useRef, useState } from 'react';
-import { ModuleShell } from '../shared/react';
-import '../shared/react/styles.css';
-import '../shared/react/presentation.css';
+import { ModuleShell } from "@shuku/course-style/react";
+import "@shuku/course-style/react/styles.css";
+import "@shuku/course-style/react/presentation.css";
 export function GuidePage() {
   const ref=useRef<HTMLDivElement>(null);
   const [scale,setScale]=useState(1);

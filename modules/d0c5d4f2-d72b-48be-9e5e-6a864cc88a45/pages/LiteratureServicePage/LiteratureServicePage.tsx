@@ -1,6 +1,6 @@
 import { useEffect, useState, type CSSProperties } from 'react';
 import { Activity, ArrowRight, BookOpen, Check, ChevronLeft, ChevronRight, Database, FileText, GitBranch, Home, Image as ImageIcon, ListTree, Pause, Play, RotateCcw, Search, Settings, ShieldCheck, Users } from 'lucide-react';
-import { Button, RangeControl, Typography, moduleAssetUrl } from '../../../shared/react';
+import { Button, RangeControl, Typography, moduleAssetUrl } from "@shuku/course-style/react";
 import outline from '../../outlines.json';
 import { PIPELINE_DURATION, pipelineChapters, usePipelinePlayback } from './usePipelinePlayback';
 import './LiteratureServicePage.css';
@@ -24,7 +24,7 @@ function Pinwheel(){return <span className="rf-af-logo" aria-label="Airflow"><i/
 function FigureCrop({table=false}:{table?:boolean}){
  const crop=table?[60,4455,1009,380]:[60,1280,1009,340];
  const [x,y,w,h]=crop;
- return <div className="rf-af-figure-crop" data-ppt-viewport="原有论文示例配图裁切" style={{aspectRatio:`${w}/${h}`}}><img src={moduleAssetUrl(outline.moduleIdentity.id,'images/recommendation-app/feed-reference.jpg')} alt={table?'论文图表内容示例':'论文方法图视觉元素示例'} draggable={false} style={{width:`${1129/w*100}%`,left:`${-x/w*100}%`,top:`${-y/h*100}%`}}/></div>;
+ return <div className="rf-af-figure-crop" data-ppt-viewport="原有论文示例配图裁切" style={{aspectRatio:`${w}/${h}`}}><img src={moduleAssetUrl('images/recommendation-app/feed-reference.jpg')} alt={table?'论文图表内容示例':'论文方法图视觉元素示例'} draggable={false} style={{width:`${1129/w*100}%`,left:`${-x/w*100}%`,top:`${-y/h*100}%`}}/></div>;
 }
 function PdfPaper({phase,elapsed}:{phase:number;elapsed:number}){
  return <div className={`rf-af-paper is-phase-${phase}`} aria-label="PDF 解析示例">

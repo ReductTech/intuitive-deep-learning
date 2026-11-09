@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState, type ChangeEvent } from 'react';
 import { Down, Up, UploadPicture } from '@icon-park/react';
-import { ContentBlock, MathFormulaStatic, moduleAssetUrl, Typography } from '../../../../../../shared/react';
+import { ContentBlock, MathFormulaStatic, moduleAssetUrl, Typography } from "@shuku/course-style/react";
 import './CommonKernelsPage.css';
 
 const moduleAssetId = '74de5075-8163-413d-84d4-7176f2a3f4a2';
-const buildingImage = moduleAssetUrl(moduleAssetId, 'workflow/convolution-course/xiandaijianzhu.jpg');
-const bridgeImage = moduleAssetUrl(moduleAssetId, 'workflow/convolution-course/xielaqiao.jpg');
-const mountainImage = moduleAssetUrl(moduleAssetId, 'workflow/convolution-course/caiermate.jpg');
-const zebraImage = moduleAssetUrl(moduleAssetId, 'workflow/convolution-course/zebra.jpg');
-const pineappleImage = moduleAssetUrl(moduleAssetId, 'workflow/convolution-course/pineapple.jpg');
-const cityImage = moduleAssetUrl(moduleAssetId, 'workflow/convolution-course/be_city.jpg');
+const buildingImage = moduleAssetUrl('workflow/convolution-course/xiandaijianzhu.jpg');
+const bridgeImage = moduleAssetUrl('workflow/convolution-course/xielaqiao.jpg');
+const mountainImage = moduleAssetUrl('workflow/convolution-course/caiermate.jpg');
+const zebraImage = moduleAssetUrl('workflow/convolution-course/zebra.jpg');
+const pineappleImage = moduleAssetUrl('workflow/convolution-course/pineapple.jpg');
+const cityImage = moduleAssetUrl('workflow/convolution-course/be_city.jpg');
 
 type Matrix3 = readonly [readonly [number, number, number], readonly [number, number, number], readonly [number, number, number]];
 type ViewMode = 'gray' | 'edge' | 'signed';

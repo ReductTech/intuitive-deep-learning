@@ -1,8 +1,8 @@
-import { ContentBlock, moduleAssetUrl, Typography } from '../../../shared/react';
+import { ContentBlock, moduleAssetUrl, Typography } from "@shuku/course-style/react";
 import "./WeightedSumPage.css";
 import { effectiveInput, useLesson } from '../../LessonContext';
 
-const teacherVideo = moduleAssetUrl('9acfbca1-b881-457e-add6-21e0b6b855a0', 'teacher_female_10s_wb.mp4');
+const teacherVideo = moduleAssetUrl('teacher_female_10s_wb.mp4');
 
 export interface WeightedSumPageProps {
   onComplete: () => void;

@@ -1,5 +1,5 @@
 import { useRef, useState, type PointerEvent } from 'react';
-import { Button } from '../../../shared/react/controls/Button';
+import { Button } from "@shuku/course-style/react/controls/Button";
 import { LessonPageFrame } from '../LessonPageFrame';
 import './MaskTrainingBridgeCard.css';
 const inputs = ['〈开始〉', '我', '爱', '深度', '学习'];

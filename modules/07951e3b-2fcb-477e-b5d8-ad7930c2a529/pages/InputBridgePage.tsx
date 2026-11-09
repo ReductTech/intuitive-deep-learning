@@ -1,5 +1,5 @@
 import { useId, type CSSProperties } from 'react';
-import { Button, Typography, type LessonStepContext } from '../../shared/react';
+import { Button, Typography, type LessonStepContext } from "@shuku/course-style/react";
 import { StepSequenceControl, useStepSequence } from '../components/LessonVisuals';
 import { rainImage as sourceImage } from '../media';
 import './InputBridgePage.css';

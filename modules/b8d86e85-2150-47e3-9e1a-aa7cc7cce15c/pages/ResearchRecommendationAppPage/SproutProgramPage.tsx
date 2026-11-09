@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { ChevronDown, Search, UserRound } from 'lucide-react';
-import { Typography, moduleAssetUrl } from '../../../shared/react';
+import { Typography, moduleAssetUrl } from "@shuku/course-style/react";
 import outline from '../../outlines.json';
 import './SproutProgramPage.css';
 
@@ -54,11 +54,11 @@ export function SproutProgramPage({autoPlay=false}:{autoPlay?:boolean}) {
  const filtered=schools.map(s=>({...s,groups:s.groups.filter(g=>!submitted||(field==='学校'?s.name:field==='课题组'?g.name:g.people.join(' ')).includes(submitted))})).filter(s=>s.groups.length);
  return <div ref={root} className="ra-sprout" data-sprout-program data-phase="intro" data-playing="false">
   <div ref={viewport} className="ra-sprout-scroll" data-ppt-viewport="新芽训练营滚动页面：简介、阶段、奖励、案例及默认虚拟头像导师目录">
-   <div className="ra-sprout-banner" data-sprout-section="intro"><img src={moduleAssetUrl(outline.moduleIdentity.id,'images/recommendation-app/sprout-banner.jpg')} alt="新芽训练营"/></div>
+   <div className="ra-sprout-banner" data-sprout-section="intro"><img src={moduleAssetUrl('images/recommendation-app/sprout-banner.jpg')} alt="新芽训练营"/></div>
    <section className="ra-sprout-section"><Typography as="h3" variant="h3">简介</Typography><Typography variant="bodySmall">新芽训练营是一项连接科研训练与升学、职业发展的长期服务项目，现已正式升级为付费项目。本训练营面向有保研、考研及就业发展需求的学员，提供系统、持续的科研训练与资源对接服务。</Typography><div className="ra-sprout-intro-list"><Typography variant="bodySmall">在这里，您可以：</Typography><ol><li>接触智能体时代的科研学习与知识循环模式；</li><li>提升使用 AI 开展科研、解决实际问题的能力；</li><li>培养动手实践及知识成果表达、传播能力；</li><li>有机会接受心仪导师（组）的指导。</li></ol></div></section>
    <section className="ra-sprout-section" data-sprout-section="stages"><Typography as="h3" variant="h3">新芽阶段</Typography><div className="ra-sprout-timeline">{[{title:'播种期',lines:['夯实基础、主题选择、持之以恒']},{title:'培育期',lines:['基础拔高、主题实现、开源复现']},{title:'成长期',lines:['多维选择（AI竞赛、科研成果等）','入组培养（对接主题关联课题组）','成功收获（竞赛获奖、论文发表）']}].map(p=><div key={p.title}><Typography variant="body"><strong>{p.title}</strong></Typography>{p.lines.map(line=><Typography key={line} variant="bodySmall">{line}</Typography>)}</div>)}</div></section>
    <section className="ra-sprout-section" data-sprout-section="rewards"><Typography as="h3" variant="h3">新芽奖励</Typography><Typography variant="bodySmall">新芽培育期间获得优秀的同学，可获得包括国内多个顶尖课题组的直通保研面试最终轮的绿色通道。目前战略合作及认可院校涵盖：清华大学、上海交通大学、南开大学、天津大学、中山大学、国防科技大学、西北工业大学、四川大学、西安交通大学、华东师范大学、中国农业大学、北京邮电大学等。</Typography></section>
-   <section className="ra-sprout-section" data-sprout-section="cases"><Typography as="h3" variant="h3">新芽优秀案例</Typography><div className="ra-sprout-case"><img src={moduleAssetUrl(outline.moduleIdentity.id,'images/recommendation-app/sprout-case-paper.jpg')} alt="截图中的新芽优秀论文案例 K-LoRA"/><div className="ra-sprout-case-dots" aria-hidden="true"><i/><i/><i/><i/></div></div>
+   <section className="ra-sprout-section" data-sprout-section="cases"><Typography as="h3" variant="h3">新芽优秀案例</Typography><div className="ra-sprout-case"><img src={moduleAssetUrl('images/recommendation-app/sprout-case-paper.jpg')} alt="截图中的新芽优秀论文案例 K-LoRA"/><div className="ra-sprout-case-dots" aria-hidden="true"><i/><i/><i/><i/></div></div>
 
    </section>
    <form className="ra-sprout-filter" onSubmit={e=>{e.preventDefault();setSubmitted(query.trim())}}><label><select aria-label="导师筛选类型" value={field} onChange={e=>setField(e.target.value)}>{['学校','课题组','导师'].map(v=><option key={v}>{v}</option>)}</select><ChevronDown/></label><input aria-label="搜索新芽导师" placeholder="请输入" value={query} onChange={e=>{setQuery(e.target.value);if(!e.target.value)setSubmitted('')}}/><button type="submit">搜索</button></form>

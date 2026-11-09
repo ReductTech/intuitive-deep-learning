@@ -1,12 +1,12 @@
 import { saveRecordedData } from '../../regressionData';
 import { Forbid } from '@icon-park/react';
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
-import { Button, EChartsChart, Typography, moduleAssetUrl } from '../../../shared/react';
+import { Button, EChartsChart, Typography, moduleAssetUrl } from "@shuku/course-style/react";
 import { depthForMass, MAX_STONES, createStoneWeights, resetElephantMeasurement, stonePositions, TARGET_DEPTH_CM, type Observation } from './experiment';
 import './CaoChongPage.css';
 
 const assetId = 'adde4a27-235d-4c03-a3cf-734ccf08b38d';
-const asset = (name: string) => moduleAssetUrl(assetId, `cao-chong/${name}`);
+const asset = (name: string) => moduleAssetUrl(`cao-chong/${name}`);
 const stoneAssets = ['rock.png', 'rock-slate.png', 'rock-basalt.png', 'rock-sandstone.png'];
 const stoneAsset = (index: number) => asset(stoneAssets[index % stoneAssets.length]);
 type Phase = 'idle' | 'falling' | 'settling';

@@ -1,6 +1,6 @@
 import { ATTENTION_PAGE_COUNT, formatCoursePageNumber } from '../model/coursePageNumber';
 import { useEffect, useLayoutEffect, useRef, useState, type ReactNode, type Dispatch, type SetStateAction } from 'react';
-import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, Question, Typography, type QuestionOption } from '../../shared/react';
+import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, Question, Typography, type QuestionOption } from "@shuku/course-style/react";
 import './AttentionActivity.css';
 export type ActivityProps = { onComplete: () => void; isComplete: boolean };
 export const numberText = (n: number, digits = 3) => (Math.abs(n) < 1e-9 ? 0 : n).toFixed(digits).replace('-', '−');

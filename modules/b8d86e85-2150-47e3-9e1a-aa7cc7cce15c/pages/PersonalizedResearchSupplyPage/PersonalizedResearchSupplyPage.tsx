@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { ArrowDown, UserRound } from './SupplyIcons';
-import { ContentBlock, Typography, moduleAssetUrl } from '../../../shared/react';
+import { ContentBlock, Typography, moduleAssetUrl } from "@shuku/course-style/react";
 import outline from '../../outlines.json';
 import { FLOW_DURATION, PAPER_COUNT, flightKeyframes, flowPaperTransform, paperFlight } from './paperFlow';
 import './PersonalizedResearchSupplyPage.css';
 
 const textures=['paper-top-single-a','paper-top-double-a','paper-top-single-figure','paper-top-double-table'] as const;
-const textureUrl=(i:number)=>moduleAssetUrl(outline.moduleIdentity.id,'images/paper-relief/'+textures[i%textures.length]+'.png');
+const textureUrl=(i:number)=>moduleAssetUrl('images/paper-relief/'+textures[i%textures.length]+'.png');
 const flights=Array.from({length:PAPER_COUNT},(_,id)=>paperFlight(id));
 const sourcePapers=Array.from({length:23},(_,i)=>({
   x:35+(i%5)*62+(Math.floor(i/5)%2)*19,

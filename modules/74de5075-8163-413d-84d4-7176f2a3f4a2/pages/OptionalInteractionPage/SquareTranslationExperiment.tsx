@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Button, RangeControl, Typography } from '../../../shared/react';
+import { Button, RangeControl, Typography } from "@shuku/course-style/react";
 import { MAP_WIDTH as W, MAP_HEIGHT as H, LAPLACIAN_KERNEL, heatColor } from './laplacianResponse';
 import { DesignComparisonArrow } from '../../components/DesignComparisonHeader';
 

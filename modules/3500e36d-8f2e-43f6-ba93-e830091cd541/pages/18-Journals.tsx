@@ -1,4 +1,4 @@
-import {Typography,type EChartsOption} from '../../shared/react';
+import {Typography,type EChartsOption} from "@shuku/course-style/react";
 import {RefinedStage} from '../components/RefinedStage';
 import {PilotChart} from '../components/PilotChart';
 import './JournalsPage.css';

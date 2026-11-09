@@ -1,5 +1,5 @@
 import { useState, type CSSProperties } from 'react';
-import { ContentBlock, ExplainPanelButton, moduleAssetUrl, RangeControl, Typography } from '../../../shared/react';
+import { ContentBlock, ExplainPanelButton, moduleAssetUrl, RangeControl, Typography } from "@shuku/course-style/react";
 import "./ExtraInputsPage.css";
 import {
   effectiveInput,
@@ -9,7 +9,7 @@ import {
   useLesson,
 } from '../../LessonContext';
 
-const teacherVideo = moduleAssetUrl('9acfbca1-b881-457e-add6-21e0b6b855a0', 'teacher_male_10s_wb.mp4');
+const teacherVideo = moduleAssetUrl('teacher_male_10s_wb.mp4');
 
 const subscripts = ['₁', '₂', '₃'] as const;
 

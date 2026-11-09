@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { Button, Typography } from '../../../../../shared/react';
+import { Button, Typography } from "@shuku/course-style/react";
 import { UIKitCatalog } from './UIKitCatalog';
 import { AssemblyGomoku } from './AssemblyGomoku';
 import { playAssemblyTimeline } from './assemblyTimeline';

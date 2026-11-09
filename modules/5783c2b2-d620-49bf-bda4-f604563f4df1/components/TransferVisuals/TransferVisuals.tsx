@@ -1,9 +1,9 @@
 import { moduleIdentity } from '../../outlines.json';
-import { moduleAssetUrl } from '../../../shared/react/assets';
-import { MathFormulaBlock, MathFormulaStatic, Typography } from '../../../shared/react';
-const bottle = moduleAssetUrl(moduleIdentity.id, "recycling/intro-samples/bottle-tall.jpg");
-const can = moduleAssetUrl(moduleIdentity.id, "recycling/intro-samples/can-red.jpg");
-const carton = moduleAssetUrl(moduleIdentity.id, "recycling/intro-samples/carton-sealed.jpg");
+import { moduleAssetUrl } from "@shuku/course-runtime/react/assets";
+import { MathFormulaBlock, MathFormulaStatic, Typography } from "@shuku/course-style/react";
+const bottle = moduleAssetUrl("recycling/intro-samples/bottle-tall.jpg");
+const can = moduleAssetUrl("recycling/intro-samples/can-red.jpg");
+const carton = moduleAssetUrl("recycling/intro-samples/carton-sealed.jpg");
 import './TransferVisuals.css';
 
 export const TRANSFER_SAMPLES = [

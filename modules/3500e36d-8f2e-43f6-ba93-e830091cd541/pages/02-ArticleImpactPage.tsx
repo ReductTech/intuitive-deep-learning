@@ -1,6 +1,6 @@
 import { ArrowRight, Bookshelf, BuildingFour, ChartLine, DegreeHat, FileEditing } from '@icon-park/react';
 import { useState, type ReactNode } from 'react';
-import { Button, Typography } from '../../shared/react';
+import { Button, Typography } from "@shuku/course-style/react";
 import { RefinedStage } from '../components/RefinedStage';
 import './ArticleImpactPage.css';
 function Feature({children,label,detail}:{children:ReactNode;label:string;detail?:string}){

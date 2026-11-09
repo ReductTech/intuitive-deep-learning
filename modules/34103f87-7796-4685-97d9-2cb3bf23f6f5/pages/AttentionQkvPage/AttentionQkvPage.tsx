@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from '../../../shared/react';
+import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import { useActivityState, type ActivityProps } from '../../components/AttentionActivity';
 import { useAttentionLesson } from '../../model/AttentionLessonContext';
 import { QKV_TASKS, type QkvTask } from '../../model/qkvRole';

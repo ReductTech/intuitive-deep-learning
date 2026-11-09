@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { LessonFlow } from '../../shared/react';
+import { LessonFlow } from "@shuku/course-style/react";
 import { convolutionLessonSteps } from './workflow/copied-course/GuidePage';
 import { GomokuLessonProvider } from './workflow/copied-course/LessonContext';
 import './NativeStudyPreview.css';

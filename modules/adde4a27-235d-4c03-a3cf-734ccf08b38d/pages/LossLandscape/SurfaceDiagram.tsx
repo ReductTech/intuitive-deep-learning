@@ -1,5 +1,5 @@
 import { useMemo, useRef, useState, useEffect, type ReactNode } from 'react';
-import { Button, MathFormulaBlock, MathFormulaStatic, Typography } from '../../../shared/react';
+import { Button, MathFormulaBlock, MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import './SurfaceDiagram.css';
 
 export type Landmark = { x:number; y:number; value:number; kind:'global'|'local'|'saddle'|'maximum' };

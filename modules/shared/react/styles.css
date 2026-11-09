@@ -425,3 +425,5 @@ svg .edu-attention-hint { fill: none; stroke: rgba(var(--attention-hint-rgb), .5
 .edu-replayable-callout-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 .shared-function-grid { stroke: #dfe6f1; stroke-width: 1; }
 .shared-function-axis { stroke: #68778f; stroke-width: 1.3; }
+
+body{font-family:"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}

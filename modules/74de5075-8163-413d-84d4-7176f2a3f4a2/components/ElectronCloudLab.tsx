@@ -1,5 +1,5 @@
 import { useState, type CSSProperties } from 'react';
-import { Button, Switch, RangeControl, MathFormulaBlock, MathFormulaStatic, Typography } from '../../shared/react';
+import { Button, Switch, RangeControl, MathFormulaBlock, MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import { ElectronCloudScene } from './ElectronCloudScene';
 import './ElectronCloudLab.css';
 import { orbitals, radialDensity, radialProbability, type Orbital } from './hydrogenOrbitals';

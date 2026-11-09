@@ -1,6 +1,6 @@
 import { useRef, useState, type KeyboardEvent, type PointerEvent } from 'react';
-import { Button } from '../../shared/react/controls/Button';
-import { Typography } from '../../shared/react/typography/Typography';
+import { Button } from "@shuku/course-style/react/controls/Button";
+import { Typography } from "@shuku/course-style/react/typography/Typography";
 import { Frame, ReferenceVisual, Text } from '../components/Diagrams';
 import { LessonSplit, TeachingPanel } from '../components/TeachingPanel';
 import './TextCrossAttention.css';

@@ -1,9 +1,9 @@
 import { useEffect, useState, type ReactNode } from 'react';
 import { Light } from '@icon-park/react';
-import { ContentBlock, MathFormulaStatic, moduleAssetUrl, Typography } from '../../../shared/react';
+import { ContentBlock, MathFormulaStatic, moduleAssetUrl, Typography } from "@shuku/course-style/react";
 import './LaplacianConstructionPage.css';
 
-const buildingImage = moduleAssetUrl('38cd1c79-d8b7-462a-b208-a567c5cd89c4', 'xiandaijianzhu.jpg');
+const buildingImage = moduleAssetUrl('xiandaijianzhu.jpg');
 
 const SECOND_X = [[0, 0, 0], [1, -2, 1], [0, 0, 0]];
 const SECOND_Y = [[0, 1, 0], [0, -2, 0], [0, 1, 0]];

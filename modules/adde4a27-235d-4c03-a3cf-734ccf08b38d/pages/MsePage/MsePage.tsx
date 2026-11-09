@@ -1,6 +1,6 @@
 import { useRecordedData, examplePrediction } from '../../regressionData';
 import { useEffect, useMemo, useState } from 'react';
-import { ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from '../../../shared/react';
+import { ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import '../MaePage/MaePage.css';
 import '../MaePage/MergedMaePage.css';
 import { MergedAbsoluteErrorPlot, type MaeStage } from '../MaePage/MergedAbsoluteErrorPlot';

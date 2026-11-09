@@ -1,6 +1,6 @@
 import { useEffect, type CSSProperties, type PointerEvent, type RefObject } from 'react';
 import { Plus, ArrowUp } from 'lucide-react';
-import { Button, Typography } from '../../../shared/react';
+import { Button, Typography } from "@shuku/course-style/react";
 import { convId, graphNodes, connectionError, receptiveFieldPath, type Connection } from './res2netGraph';
 
 type Point = { x: number; y: number };

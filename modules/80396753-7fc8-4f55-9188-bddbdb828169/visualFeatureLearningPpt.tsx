@@ -6,10 +6,10 @@ import { DisguiseVerificationPage } from './pages/DisguiseVerificationPage/Disgu
 import { TrainingFeatureTsnePage } from './pages/TrainingFeatureTsnePage/TrainingFeatureTsnePage';
 import { NetworkTrainingPage } from './pages/NetworkTrainingPage/NetworkTrainingPage';
 import { GlobalAveragePoolingPage } from './pages/GlobalAveragePoolingPage/GlobalAveragePoolingPage';
-import { SceneDeck, type DeckDefinition, type SpeakerNote } from '../shared/react/presentation';
-import '../shared/react/styles.css';
-import '../shared/react/ui-kit.css';
-import '../shared/react/presentation.css';
+import { SceneDeck, type DeckDefinition, type SpeakerNote } from "@shuku/course-style/react/presentation";
+import "@shuku/course-style/react/styles.css";
+import "@shuku/course-style/react/ui-kit.css";
+import "@shuku/course-style/react/presentation.css";
 import './tailwind.css';
 import outlines from './outlines.json';
 import { DigitRecognitionOpeningPage } from './pages/DigitRecognitionOpeningPage/DigitRecognitionOpeningPage';

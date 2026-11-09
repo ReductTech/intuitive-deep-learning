@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Button, ContentBlock, EChartsChart, MathFormulaBlock, MathFormulaTerm, TextInput, Typography } from '../../../shared/react';
+import { Button, ContentBlock, EChartsChart, MathFormulaBlock, MathFormulaTerm, TextInput, Typography } from "@shuku/course-style/react";
 import { advance, encode, evaluate, initialTraining, passengerInputs, samples, score, sigmoid, type Inputs } from './model';
 import './TitanicTrainingPage.css';
 const names=['年龄','性别','舱位','票价'];

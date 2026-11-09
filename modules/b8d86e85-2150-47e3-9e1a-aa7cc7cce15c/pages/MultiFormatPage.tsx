@@ -1,11 +1,11 @@
 import moduleAssetOutline from '../outlines.json';
-import { moduleAssetUrl } from '../../shared/react/assets';
+import { moduleAssetUrl } from "@shuku/course-runtime/react/assets";
 import { useEffect, useRef, useState, type ReactNode, type MouseEvent } from 'react';
-import { Button, ContentBlock, Typography } from '../../shared/react';
+import { Button, ContentBlock, Typography } from "@shuku/course-style/react";
 import { NativeStudyPreview } from '../components/NativeStudyPreview';
 import './MultiFormatPage.css';
 
-const lessonImage = (id: string) => moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, `images/multi-format/convolution/${id}.jpg`);
+const lessonImage = (id: string) => moduleAssetUrl(`images/multi-format/convolution/${id}.jpg`);
 const lessons = [
   { title: '从五子棋开始认识卷积核', image: lessonImage('gomoku-play'), steps: [
     { title: '先下一局', text: '先与 AI 下一局五子棋，从熟悉的棋盘和局部棋形开始。', box: [1, 3, 25, 90] },

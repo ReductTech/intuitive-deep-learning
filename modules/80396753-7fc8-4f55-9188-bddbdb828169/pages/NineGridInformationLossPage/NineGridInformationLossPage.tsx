@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Button, ContentBlock, Typography } from '../../../shared/react';
+import { Button, ContentBlock, Typography } from "@shuku/course-style/react";
 import { NINE_GRID_EDGES, NINE_GRID_IMAGE_SIZE, NINE_GRID_IMAGE_URL, nineGridCounts, readNineGridPixels } from '../../services/nineGridDigit';
 import { ManualClassifierNetwork } from '../../components/ManualClassifierNetwork';
 import { getLatestManualClassifier, subscribeManualClassifier, predictManualDigit, trainManualClassifier, type ManualTrainingResult } from '../../services/manualFeatureClassifier';

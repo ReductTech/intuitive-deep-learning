@@ -1,5 +1,5 @@
-import type { SpeakerNote } from '../shared/react/presentation/types';
-export type { SpeakerNote } from '../shared/react/presentation/types';
+import type { SpeakerNote } from "@shuku/course-runtime/react/presentation/types";
+export type { SpeakerNote } from "@shuku/course-runtime/react/presentation/types";
 
 /** Runtime-only narration layer. Pages do not import or reference this file. */
 export const neuronSpeakerNotes: Record<string, SpeakerNote[]> = {

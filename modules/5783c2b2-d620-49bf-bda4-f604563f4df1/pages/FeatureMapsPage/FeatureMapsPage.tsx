@@ -1,5 +1,5 @@
 import { moduleIdentity } from '../../outlines.json';
-import { moduleAssetUrl } from '../../../shared/react/assets';
+import { moduleAssetUrl } from "@shuku/course-runtime/react/assets";
 import {
   useEffect,
   useMemo,
@@ -14,8 +14,8 @@ import {
   ContentBlock,
   NoticeStrip,
   Typography,
-} from '../../../shared/react';
-const bottleFront = moduleAssetUrl(moduleIdentity.id, "recycling/camera-views/bottle-front.jpg");
+} from "@shuku/course-style/react";
+const bottleFront = moduleAssetUrl("recycling/camera-views/bottle-front.jpg");
 import './FeatureMapsPage.css';
 
 type FeatureId = 'edge' | 'texture' | 'shape';

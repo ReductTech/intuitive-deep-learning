@@ -1,7 +1,7 @@
 import { useRecordedData } from '../../regressionData';
 import { useMemo, useRef, useState, type PointerEvent } from 'react';
-import type { EChartsEvent, EChartsInstance } from '../../../shared/react/visuals/EChartsChart';
-import { ContentBlock, EChartsChart, Typography } from '../../../shared/react';
+import type { EChartsEvent, EChartsInstance } from "@shuku/course-style/react/visuals/EChartsChart";
+import { ContentBlock, EChartsChart, Typography } from "@shuku/course-style/react";
 import './ResidualCancellationPage.css';
 
 const positive = '#e87c59';

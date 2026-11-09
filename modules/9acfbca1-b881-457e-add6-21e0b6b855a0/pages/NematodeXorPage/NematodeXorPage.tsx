@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { ContentBlock, moduleAssetUrl, Typography } from '../../../shared/react';
+import { ContentBlock, moduleAssetUrl, Typography } from "@shuku/course-style/react";
 import './NematodeXorPage.css';
 
 const moduleAssetId = '9acfbca1-b881-457e-add6-21e0b6b855a0';
-const wormStill = moduleAssetUrl(moduleAssetId, 'worm_1.png');
-const wormTurn = moduleAssetUrl(moduleAssetId, 'worm_2.png');
+const wormStill = moduleAssetUrl('worm_1.png');
+const wormTurn = moduleAssetUrl('worm_2.png');
 
 interface NematodeXorPageProps { onComplete?: () => void; }
 

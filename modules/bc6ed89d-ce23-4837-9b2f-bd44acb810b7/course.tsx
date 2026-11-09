@@ -1,4 +1,4 @@
-import type { SceneDefinition } from '../shared/react/presentation';
+import type { SceneDefinition } from "@shuku/course-style/react/presentation";
 import { CourseCoverPage } from './pages/CourseCoverPage';
 import outline from './outlines.json';
 import { PrefillPage } from './pages/PrefillPage';

@@ -15,7 +15,7 @@ import { PointOperationsPage } from './pages/PointOperationsPage/PointOperations
 import { ColorSpacePage } from './pages/ColorSpacePage/ColorSpacePage';
 import { ImageMemoryPage } from './pages/ImageMemoryPage/ImageMemoryPage';
 import { PixelTypesPage } from './pages/PixelTypesPage/PixelTypesPage';
-import { SceneDeck, type DeckDefinition } from '../shared/react/presentation';
+import { SceneDeck, type DeckDefinition } from "@shuku/course-style/react/presentation";
 import { BeadOpeningPage } from './pages/BeadOpeningPage/BeadOpeningPage';
 import { DigitizationPipelinePage } from './pages/DigitizationPipelinePage/DigitizationPipelinePage';
 import { SamplingResolutionPage, QuantizationDepthPage } from './pages/SamplingQuantizationPage/SamplingQuantizationPage';

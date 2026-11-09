@@ -1,7 +1,7 @@
-import { Button, ModuleShell, LessonFlow } from '../shared/react';
+import { Button, ModuleShell, LessonFlow } from "@shuku/course-style/react";
 import { scenes } from './course';
 import { GuideCanvas } from './components/GuideCanvas';
-import '../shared/react/presentation.css';
+import "@shuku/course-style/react/presentation.css";
 import './valueBasedRl.css';
 const steps = scenes.map((scene, index) => ({
   id: scene.id, completesLesson: index === scenes.length - 1,

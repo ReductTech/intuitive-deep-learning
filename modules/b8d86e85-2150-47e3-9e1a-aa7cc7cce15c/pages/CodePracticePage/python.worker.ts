@@ -3,7 +3,7 @@ import metadata from 'pyodide/package.json';
 import type { PyodideInterface } from 'pyodide';
 
 const runtimeBase = import.meta.env.PROD
-  ? `${(import.meta.env.VITE_ASSET_BASE_URL?.trim() || 'https://image.reduct.cn/cloud-IDL/assets').replace(/\/+$/, '')}/`
+  ? `${'https://image.reduct.cn/cloud-IDL/assets'.replace(/\/+$/, '')}/`
   : new URL(import.meta.env.BASE_URL, self.location.origin).href;
 const runtimeURL = `${runtimeBase}python-runtime/${metadata.version}/`;
 let python: PyodideInterface;

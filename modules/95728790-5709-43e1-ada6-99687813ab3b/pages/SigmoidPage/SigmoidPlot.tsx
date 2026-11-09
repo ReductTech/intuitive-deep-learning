@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Button, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, Typography, PlotlyChart, type PlotlyGraph } from '../../../shared/react';
+import { Button, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, Typography, PlotlyChart, type PlotlyGraph } from "@shuku/course-style/react";
 export const sigmoid = (z: number) => z >= 0 ? 1/(1+Math.exp(-z)) : Math.exp(z)/(1+Math.exp(z));
 type Axis = { _offset:number; l2p:(v:number)=>number; p2l:(v:number)=>number; range:number[] };
 type Host = HTMLDivElement & { _fullLayout?:{xaxis:Axis;yaxis:Axis} };

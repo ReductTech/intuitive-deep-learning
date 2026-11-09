@@ -1,6 +1,6 @@
 import { useId, type ReactNode } from 'react';
 import { UsersRound, Landmark, Network, Database, FileText, ChartNoAxesColumnIncreasing, Star, Check, TriangleAlert, ArrowUpRight } from 'lucide-react';
-import { ContentBlock, Typography } from '../../../shared/react';
+import { ContentBlock, Typography } from "@shuku/course-style/react";
 import outline from '../../outlines.json';
 import './PaperQualityPage.css';
 

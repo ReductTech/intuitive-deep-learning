@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Button, ContentBlock, MathFormulaBlock, moduleAssetUrl, Typography } from '../../../shared/react';
+import { Button, ContentBlock, MathFormulaBlock, moduleAssetUrl, Typography } from "@shuku/course-style/react";
 import { DIGITS, IMAGE_SIZE, initialModel, makeSample, predict, trainOnLabel, classActivationMap, type KernelModel, type LabeledDigit } from '../../services/learnableKernelDemo';
 import './LearnableKernelPage.css';
 
@@ -43,7 +43,7 @@ export function LearnableKernelPage() {
         resolve(Array.from({ length: IMAGE_SIZE * IMAGE_SIZE }, (_, index) => rgba[index * 4] / 255));
       };
       image.onerror = () => reject(new Error(`MNIST image unavailable: ${digit.file}`));
-      image.src = moduleAssetUrl(ASSET_ID, `mnist/${digit.file}`);
+      image.src = moduleAssetUrl(`mnist/${digit.file}`);
     }))).then(data => { if (active) setImages(data); }).catch(() => { if (active) setLoadingError(true); });
     return () => { active = false; if (timer.current) clearTimeout(timer.current); };
   }, []);

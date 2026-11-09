@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Button, TextInput, Typography } from '../../../../shared/react';
+import { Button, TextInput, Typography } from "@shuku/course-style/react";
 import { WorkflowSimulationPreview } from '../components/workflow/WorkflowSimulationPreview';
 import { simulationOutline, walkthroughTurns } from '../components/workflow/simulation';
 import { GomokuLessonProvider } from '../components/workflow/copied-course/LessonContext';

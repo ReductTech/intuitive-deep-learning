@@ -1,10 +1,10 @@
 import { useEffect, useRef } from 'react';
-import { Typography, moduleAssetUrl } from '../../../shared/react';
+import { Typography, moduleAssetUrl } from "@shuku/course-style/react";
 import { CopiedCoursePreview } from './CopiedCoursePreview';
 import { conventionalOutline, simulationOutline, simulationPages, type WalkthroughView } from './simulation';
 import outline from '../../outlines.json';
 
-const asset = (name: string) => moduleAssetUrl(outline.moduleIdentity.id, `workflow/${name}`);
+const asset = (name: string) => moduleAssetUrl(`workflow/${name}`);
 export function WorkflowSimulationPreview({ view, page, reviewed, browsing }: { view: WalkthroughView; page: number; reviewed: boolean; browsing: boolean }) {
   const outlineRef = useRef<HTMLDivElement>(null);
   useEffect(() => {

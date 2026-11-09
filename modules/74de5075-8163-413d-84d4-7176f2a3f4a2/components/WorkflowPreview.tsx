@@ -1,9 +1,9 @@
 import { useState, type CSSProperties } from 'react';
-import { Button, Typography, moduleAssetUrl } from '../../shared/react';
+import { Button, Typography, moduleAssetUrl } from "@shuku/course-style/react";
 import outline from '../outlines.json';
 import type { WorkflowArtifact } from './workflowDemo';
 
-const asset = (name: string) => moduleAssetUrl(outline.moduleIdentity.id, `workflow/${name}`);
+const asset = (name: string) => moduleAssetUrl(`workflow/${name}`);
 
 export function CaoChongPreview({ firstDesign = false, interactive = false, fixed = true }: { firstDesign?: boolean; interactive?: boolean; fixed?: boolean }) {
   const [phase, setPhase] = useState<'start' | 'stones'>('start');

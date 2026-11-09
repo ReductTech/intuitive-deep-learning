@@ -6,7 +6,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { Line2 } from 'three/addons/lines/Line2.js';
 import { LineGeometry } from 'three/addons/lines/LineGeometry.js';
 import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
-import { Button } from '../../../shared/react/controls/Button';
+import { Button } from "@shuku/course-style/react/controls/Button";
 import { LessonStage } from '../LessonStage';
 import './EmbeddingRelationCard.css';
 const EMBEDDING_SIZE = 50;

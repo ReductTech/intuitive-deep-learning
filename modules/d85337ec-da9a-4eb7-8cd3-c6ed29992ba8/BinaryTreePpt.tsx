@@ -1,4 +1,4 @@
-import { SceneDeck, type DeckDefinition } from '../shared/react/presentation';
+import { SceneDeck, type DeckDefinition } from "@shuku/course-style/react/presentation";
 import { EverydayChoice } from './pages/everyday-choice-cover/EverydayChoice';
 import outline from './outlines.json';
 

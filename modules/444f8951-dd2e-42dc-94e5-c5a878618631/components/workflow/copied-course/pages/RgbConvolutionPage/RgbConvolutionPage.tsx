@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ContentBlock, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, Typography } from '../../../../../../shared/react';
+import { ContentBlock, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, Typography } from "@shuku/course-style/react";
 import { RgbConvolutionScene, type RgbPosition } from './RgbConvolutionScene';
 import './RgbConvolutionPage.css';
 

@@ -2,7 +2,7 @@ import { atlasCropUrl } from '../../services/imageAtlas';
 import {useEffect,useRef,useState} from 'react';
 import * as THREE from 'three';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
-import {Button,Typography,moduleAssetUrl} from '../../../shared/react';
+import {Button,Typography,moduleAssetUrl} from "@shuku/course-style/react";
 
 type Tile=THREE.Mesh<THREE.BoxGeometry,THREE.MeshStandardMaterial>;
 type Feature={group:THREE.Group;tiles:Tile[][];side:number;face:number;channels:number};
@@ -187,7 +187,7 @@ export function NetworkScene(){
    });
   });
   let alive=true;
-  atlasCropUrl(moduleAssetUrl('80396753-7fc8-4f55-9188-bddbdb828169','flatten-interface/input-32.png')).then(url => new THREE.TextureLoader().load(url,texture=>{
+  atlasCropUrl(moduleAssetUrl('flatten-interface/input-32.png')).then(url => new THREE.TextureLoader().load(url,texture=>{
    if(!alive){texture.dispose();return;}
    const canvas=document.createElement('canvas');canvas.width=canvas.height=8;const context=canvas.getContext('2d')!;context.drawImage(texture.image,0,0,8,8);
    const pixels=context.getImageData(0,0,8,8).data,inputMap=Array.from({length:64},(_,index)=>pixels[index*4]/255);

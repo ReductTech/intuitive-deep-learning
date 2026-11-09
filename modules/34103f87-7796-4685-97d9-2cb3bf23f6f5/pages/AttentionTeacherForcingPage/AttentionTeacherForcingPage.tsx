@@ -1,4 +1,4 @@
-import { Button, ContentBlock, Typography } from '../../../shared/react';
+import { Button, ContentBlock, Typography } from "@shuku/course-style/react";
 import { useActivityState, type ActivityProps } from '../../components/AttentionActivity';
 import { useRegressionPage as useAttentionPage } from '../../components/useRegressionPage';
 import { TRANSLATION_TRAINING_SET } from '../../model/attentionTranslationExperiment';

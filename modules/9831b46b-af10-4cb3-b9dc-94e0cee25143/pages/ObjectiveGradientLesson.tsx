@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, RangeControl } from '../../shared/react';
+import { Button, RangeControl } from "@shuku/course-style/react";
 import { Page, T, H, F, Controls } from '../components/LessonVisuals';
 import { MazeBoard, ARROW } from '../components/ReinforceMaze';
 import { A, START, GOAL, DIRECTIONS, DIR_LABEL, returns, transition, random, type Step } from '../mazeModel';

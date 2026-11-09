@@ -7,7 +7,7 @@ import weight_sharingAsset5 from '../assets/videos/weight-sharing.mp4';
 import demoPoster from '../assets/images/weight-sharing/demo-poster.jpg';
 const generatedImages = [version_1Asset0, version_2Asset1, version_3Asset2, version_4Asset3, version_5Asset4];
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
-import { ContentBlock, Typography } from '../../shared/react';
+import { ContentBlock, Typography } from "@shuku/course-style/react";
 import './PresentationComparisonPage.css';
 
 const slots = [

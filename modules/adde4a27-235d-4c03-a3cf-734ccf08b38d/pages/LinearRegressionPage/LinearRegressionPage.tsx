@@ -1,5 +1,5 @@
 import { useLayoutEffect, useMemo, useRef, useState, type PointerEvent } from 'react';
-import { Button, ContentBlock, EChartsChart, MathFormulaBlock, MathFormulaStatic, RangeControl, Typography } from '../../../shared/react';
+import { Button, ContentBlock, EChartsChart, MathFormulaBlock, MathFormulaStatic, RangeControl, Typography } from "@shuku/course-style/react";
 import { useRecordedData } from '../../regressionData';
 import './LinearRegressionPage.css';
 

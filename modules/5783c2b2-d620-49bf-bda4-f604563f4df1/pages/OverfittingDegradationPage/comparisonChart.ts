@@ -1,4 +1,4 @@
-import { defaultTheme, type EChartsOption } from '../../../shared/react';
+import { defaultTheme, type EChartsOption } from "@shuku/course-style/react";
 
 function themeColor(token: string) {
   const color = defaultTheme.colors.find(item => item.token === token);

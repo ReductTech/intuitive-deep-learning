@@ -1,5 +1,5 @@
 import { moduleIdentity } from './outlines.json';
-import { SceneDeck, type DeckDefinition, type SceneDefinition } from '../shared/react/presentation';
+import { SceneDeck, type DeckDefinition, type SceneDefinition } from "@shuku/course-style/react/presentation";
 import { resNetTransferCourse } from './course';
 
 const scenes: SceneDefinition[] = resNetTransferCourse.map(({ id, title, section, component }) => ({

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button } from '../../shared/react/controls/Button';
+import { Button } from "@shuku/course-style/react/controls/Button";
 import { Frame, Note } from '../components/Diagrams';
 import { NetworkLab } from '../components/NetworkLab';
 import { StoryCaption, useStory } from '../components/Story';

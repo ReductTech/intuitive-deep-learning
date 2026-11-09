@@ -1,4 +1,4 @@
-import { MathFormulaBlock, MathFormulaStatic, Typography } from '../../shared/react';
+import { MathFormulaBlock, MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import { WormholeBenefit, WormholeLessonFrame } from '../components/WormholeLessonFrame';
 import './ProfessionalEducationPage.css';
 

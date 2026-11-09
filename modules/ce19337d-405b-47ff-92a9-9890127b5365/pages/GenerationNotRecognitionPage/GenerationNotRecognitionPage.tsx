@@ -1,14 +1,14 @@
 import moduleAssetOutline from '../../outlines.json';
-import { moduleAssetUrl } from '../../../shared/react/assets';
+import { moduleAssetUrl } from "@shuku/course-runtime/react/assets";
 import { type CSSProperties } from 'react';
-import { ContentBlock, Typography } from '../../../shared/react';
+import { ContentBlock, Typography } from "@shuku/course-style/react";
 import './GenerationNotRecognitionPage.css';
 
-const visualGenerationOverview = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/00visual-generation.svg');
-const resultOne = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/00result-01.svg');
-const resultTwo = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/00result-02.svg');
-const resultThree = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/00result-03.svg');
-const resultFour = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/00result-04.svg');
+const visualGenerationOverview = moduleAssetUrl('images/00visual-generation.svg');
+const resultOne = moduleAssetUrl('images/00result-01.svg');
+const resultTwo = moduleAssetUrl('images/00result-02.svg');
+const resultThree = moduleAssetUrl('images/00result-03.svg');
+const resultFour = moduleAssetUrl('images/00result-04.svg');
 
 const resultMasks = [
   { x: 1197, y: 480, width: 399, height: 234 },

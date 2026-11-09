@@ -1,8 +1,8 @@
-import { SceneDeck, type DeckDefinition, type SceneDefinition, type SpeakerNote } from '../shared/react/presentation';
+import { SceneDeck, type DeckDefinition, type SceneDefinition, type SpeakerNote } from "@shuku/course-style/react/presentation";
 import './tailwind.css';
-import '../shared/react/styles.css';
-import '../shared/react/ui-kit.css';
-import '../shared/react/presentation.css';
+import "@shuku/course-style/react/styles.css";
+import "@shuku/course-style/react/ui-kit.css";
+import "@shuku/course-style/react/presentation.css";
 import { convolutionCourse } from './course';
 import { GomokuLessonProvider } from './LessonContext';
 import outlines from './outlines.json';

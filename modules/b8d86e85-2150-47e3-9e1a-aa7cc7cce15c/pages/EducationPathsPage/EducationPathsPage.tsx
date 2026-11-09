@@ -1,5 +1,5 @@
 import outline from '../../outlines.json';
-import { Typography } from '../../../shared/react';
+import { Typography } from "@shuku/course-style/react";
 import { KnowledgeIcebergScene } from './KnowledgeIcebergScene';
 import './EducationPathsPage.css';
 

@@ -1,5 +1,5 @@
 import { useEffect, useId, useRef, useState } from 'react';
-import { ContentBlock, Typography } from '../../../shared/react';
+import { ContentBlock, Typography } from "@shuku/course-style/react";
 import { CodeEditor } from './CodeEditor';
 import { NUMPY_INITIAL_CODE, PythonRunner, type PythonGraph, type PythonNode, type PythonOutput } from './pythonRuntime';
 import './CodePracticePage.css';

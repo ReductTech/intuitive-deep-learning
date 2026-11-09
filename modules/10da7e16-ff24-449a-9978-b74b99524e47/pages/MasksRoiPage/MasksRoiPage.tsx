@@ -1,11 +1,11 @@
 import moduleAssetOutline from '../../outlines.json';
-import { moduleAssetUrl } from '../../../shared/react/assets';
+import { moduleAssetUrl } from "@shuku/course-runtime/react/assets";
 import { useEffect, useRef, useState } from 'react';
-import { ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from '../../../shared/react';
+import { ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import { applyMask, defaults, HEIGHT, WIDTH, type Operation } from './maskModel';
 import './MasksRoiPage.css';
-const background = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/roi-fruit-background.jpg');
-const applePhoto = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/roi-apple-cutout.png');
+const background = moduleAssetUrl('images/roi-fruit-background.jpg');
+const applePhoto = moduleAssetUrl('images/roi-apple-cutout.png');
 const modes: [Operation, string][] = [['brightness', '亮度'], ['contrast', '对比度'], ['gamma', 'Gamma'], ['threshold', '阈值']];
 const settings: Record<Operation, { label: string; min: number; max: number; step: number }> = {
   brightness: { label: '亮度调整', min: -100, max: 100, step: 1 },

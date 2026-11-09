@@ -1,6 +1,6 @@
 import { valueBasedRlAssetUrl } from '../../assetUrls';
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
-import { Button, Typography } from '../../../shared/react';
+import { Button, Typography } from "@shuku/course-style/react";
 import { LessonPage, Formula } from '../../components/LessonPrimitives';
 import { WarehouseMap } from '../../components/WarehouseMap';
 import { ACTIONS, START, keyOf, type Position } from '../../model';

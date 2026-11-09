@@ -1,10 +1,10 @@
-import { ContentBlock, moduleAssetUrl, Typography } from '../../../shared/react';
+import { ContentBlock, moduleAssetUrl, Typography } from "@shuku/course-style/react";
 import "./NematodeResponsePage.css";
 import type { CSSProperties } from 'react';
 
 const moduleAssetId = '9acfbca1-b881-457e-add6-21e0b6b855a0';
-const nematodeVideo = moduleAssetUrl(moduleAssetId, 'video.mp4');
-const nematodeVideoPoster = moduleAssetUrl(moduleAssetId, 'video-poster.jpg');
+const nematodeVideo = moduleAssetUrl('video.mp4');
+const nematodeVideoPoster = moduleAssetUrl('video-poster.jpg');
 
 const abilities = [
   { name: '触碰', detail: '触觉神经元感受到身体接触，再通过神经回路触发后退或转向。', group: '感知' },

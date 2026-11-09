@@ -1,6 +1,6 @@
 import { transformerAsset } from '../../assetUrls';
 import { useEffect, useId, useState } from 'react';
-import { Button } from '../../../shared/react/controls/Button';
+import { Button } from "@shuku/course-style/react/controls/Button";
 import { LessonStage } from '../LessonStage';
 import { SvgPathTraveler } from './SvgPathTraveler';
 import './ResidualLessonCards.css';

@@ -1,4 +1,4 @@
-import { ContentBlock, Typography, moduleAssetUrl } from '../../../shared/react';
+import { ContentBlock, Typography, moduleAssetUrl } from "@shuku/course-style/react";
 import outline from '../../outlines.json';
 import './ShukuCommunityEvolutionPage.css';
 
@@ -8,7 +8,7 @@ const stages = [
   { id: 'review', title: '审核改进', description: '核验内容，共同完善', image: 'review.jpg' },
   { id: 'publish', title: '发布新版', description: '更新课程，供大家使用', image: 'publish.jpg' },
 ] as const;
-const asset = (name: string) => moduleAssetUrl(outline.moduleIdentity.id, `images/shuku-community/${name}`);
+const asset = (name: string) => moduleAssetUrl(`images/shuku-community/${name}`);
 
 export function ShukuCommunityEvolutionPage() {
   return <ContentBlock title="Shuku（术库）：让课程在共创中持续进化，形成知识循环"

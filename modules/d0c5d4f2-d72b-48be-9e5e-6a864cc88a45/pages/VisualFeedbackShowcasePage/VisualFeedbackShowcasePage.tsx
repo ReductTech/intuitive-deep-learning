@@ -1,4 +1,4 @@
-import { ContentBlock, Typography } from '../../../shared/react';
+import { ContentBlock, Typography } from "@shuku/course-style/react";
 import { UfoTranslationScene } from '../../../b8d86e85-2150-47e3-9e1a-aa7cc7cce15c/pages/OptionalInteractionPage/UfoTranslationScene';
 import '../../../b8d86e85-2150-47e3-9e1a-aa7cc7cce15c/pages/OptionalInteractionPage/OptionalInteractionPage.css';
 import '../../components/InteractionShowcase.css';

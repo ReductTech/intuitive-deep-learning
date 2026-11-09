@@ -1,9 +1,9 @@
 import {useId,type MouseEvent} from 'react';
-import { moduleAssetUrl } from '../../../shared/react/assets';
+import { moduleAssetUrl } from "@shuku/course-runtime/react/assets";
 import { moduleIdentity } from '../../outlines.json';
-const surface = moduleAssetUrl(moduleIdentity.id, 'images/shuku-co-creation/gradient-surface.png');
-const noise = moduleAssetUrl(moduleIdentity.id, 'images/shuku-co-creation/noise.png');
-const cat = moduleAssetUrl(moduleIdentity.id, 'images/shuku-co-creation/cat.png');
+const surface = moduleAssetUrl('images/shuku-co-creation/gradient-surface.jpg');
+const noise = moduleAssetUrl('images/shuku-co-creation/noise.jpg');
+const cat = moduleAssetUrl('images/shuku-co-creation/cat.jpg');
 import './LoopArtwork.css';
 
 export type LoopPanel = 'classroom'|'creation'|'review'|'release'|'course';

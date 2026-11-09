@@ -1,4 +1,4 @@
-import { Typography } from '../../shared/react';
+import { Typography } from "@shuku/course-style/react";
 import { StepSequenceControl, useStepSequence, Equation, Heading, Text } from '../components/LessonVisuals';
 import { SourceCrop, ImageFocus } from '../components/TeachingVisuals';
 import { ensemble, initialToyEncoders, normalize, toyEncoderLoss, toyEncoderScores, toyEncoderStep, dot, softmax, encoderParameterProbe } from '../model/teachingMath';

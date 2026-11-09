@@ -1,5 +1,5 @@
 import type { HTMLAttributes, ReactNode } from 'react';
-import { Typography } from '../../shared/react/typography/Typography';
+import { Typography } from "@shuku/course-style/react/typography/Typography";
 
 interface LessonStageProps extends Omit<HTMLAttributes<HTMLElement>, 'title'> {
   kicker?: ReactNode;

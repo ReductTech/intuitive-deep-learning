@@ -1,14 +1,14 @@
 import { useEffect, useMemo, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';
-import { Button, ContentBlock, Typography, moduleAssetUrl } from '../../../shared/react';
+import { Button, ContentBlock, Typography, moduleAssetUrl } from "@shuku/course-style/react";
 import './ManualFeatureClassifierPage.css';
 import { ManualClassifierNetwork } from '../../components/ManualClassifierNetwork';
 import { nineGridCounts, readNineGridPixels } from '../../services/nineGridDigit';
 import { MANUAL_FEATURE_EPOCHS, predictManualDigit, trainManualClassifier, type ManualTrainingResult } from '../../services/manualFeatureClassifier';
 
 const samples = [
-  { label: 2, file: 'mnist/2/60035.png' },
-  { label: 6, file: 'mnist/6/60011.png' },
-  { label: 3, file: 'mnist/3/60018.png' },
+  { label: 2, file: 'mnist/2/60035.jpg' },
+  { label: 6, file: 'mnist/6/60011.jpg' },
+  { label: 3, file: 'mnist/3/60018.jpg' },
 ] as const;
 const assetId = '80396753-7fc8-4f55-9188-bddbdb828169';
 export function ManualFeatureClassifierPage() {
@@ -29,7 +29,7 @@ export function ManualFeatureClassifierPage() {
   const pending = useRef(false);
   useEffect(() => () => controller.current?.abort(), []);
   const sample = samples[sampleIndex];
-  const imageUrl = moduleAssetUrl(assetId, sample.file);
+  const imageUrl = moduleAssetUrl(sample.file);
 
   useEffect(() => {
     if (mode !== 'sample') return;

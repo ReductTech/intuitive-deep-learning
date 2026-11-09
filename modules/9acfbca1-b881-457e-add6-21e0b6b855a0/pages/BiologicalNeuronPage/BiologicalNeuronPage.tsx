@@ -1,11 +1,11 @@
-import { ContentBlock, moduleAssetUrl, Typography } from '../../../shared/react';
+import { ContentBlock, moduleAssetUrl, Typography } from "@shuku/course-style/react";
 import './BiologicalNeuronPage.css';
 
 const moduleAssetId = '9acfbca1-b881-457e-add6-21e0b6b855a0';
-const dendriteImage = moduleAssetUrl(moduleAssetId, '1.png');
-const synapseImage = moduleAssetUrl(moduleAssetId, '2.png');
-const somaImage = moduleAssetUrl(moduleAssetId, '3.png');
-const axonImage = moduleAssetUrl(moduleAssetId, '4.png');
+const dendriteImage = moduleAssetUrl('1.png');
+const synapseImage = moduleAssetUrl('2.png');
+const somaImage = moduleAssetUrl('3.png');
+const axonImage = moduleAssetUrl('4.png');
 
 const abstractions = [
   { index: '1', tone: 'blue', structure: '树突', biology: '接收信号', math: '输入', symbol: 'x₁, x₂, …, xₙ', image: dendriteImage },

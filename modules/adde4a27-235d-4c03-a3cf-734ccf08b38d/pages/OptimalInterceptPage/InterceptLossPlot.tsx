@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type PointerEvent } from 'react';
-import { Button, PlotlyChart, type PlotlyGraph } from '../../../shared/react';
+import { Button, PlotlyChart, type PlotlyGraph } from "@shuku/course-style/react";
 
 type Axis = { _offset: number; l2p: (v: number) => number; p2l: (v: number) => number; range: number[] };
 type Host = HTMLDivElement & { data?: unknown[]; _fullLayout?: { xaxis: Axis; yaxis: Axis } };

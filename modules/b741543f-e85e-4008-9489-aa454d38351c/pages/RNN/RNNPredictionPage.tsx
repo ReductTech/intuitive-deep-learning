@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { ContentBlock, Question, Typography, type QuestionCheckResult } from '../../../shared/react';
+import { ContentBlock, Question, Typography, type QuestionCheckResult } from "@shuku/course-style/react";
 import './RNNPredictionPage.css';
 
 export interface RNNPredictionPageProps {

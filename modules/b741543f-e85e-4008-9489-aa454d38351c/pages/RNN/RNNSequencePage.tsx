@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { ContentBlock, Typography } from '../../../shared/react';
+import { ContentBlock, Typography } from "@shuku/course-style/react";
 import { DishIcon, type DishId } from './DishIcon';
 import { RNNImageSlices } from './RNNImageSlices';
 import './RNNSequencePage.css';

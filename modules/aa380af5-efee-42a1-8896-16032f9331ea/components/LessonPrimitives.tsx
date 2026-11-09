@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from '../../shared/react';
+import { ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import './LessonPrimitives.css';
 import './CoursePolish.css';
 

@@ -1,14 +1,14 @@
 import moduleAssetOutline from '../../outlines.json';
-import { moduleAssetUrl } from '../../../shared/react/assets';
+import { moduleAssetUrl } from "@shuku/course-runtime/react/assets";
 import { useLecturePlayback } from '../../components/LecturePlayback';
 import { useEffect, useRef } from 'react';
-import { ContentBlock, Typography } from '../../../shared/react';
+import { ContentBlock, Typography } from "@shuku/course-style/react";
 import './TwoProcessesPage.css';
 
-const x0 = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/two-processes/x0.jpg');
-const x1 = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/two-processes/x1.jpg');
-const xt = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/two-processes/xt.jpg');
-const xT = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/two-processes/xt.jpg');
+const x0 = moduleAssetUrl('images/two-processes/x0.jpg');
+const x1 = moduleAssetUrl('images/two-processes/x1.jpg');
+const xt = moduleAssetUrl('images/two-processes/xt.jpg');
+const xT = moduleAssetUrl('images/two-processes/xt.jpg');
 
 type Phase = 'ready' | 'forward' | 'forward-done' | 'reverse' | 'complete';
 

@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
-import { Button, ContentBlock, EChartsChart, NoticeStrip, RangeControl, Typography } from '../../../shared/react';
+import { Button, ContentBlock, EChartsChart, NoticeStrip, RangeControl, Typography } from "@shuku/course-style/react";
 import { UpdateStateIcon } from '../../components/ParameterRange/ParameterRange';
 import { WeightCheckpoint } from '../../components/TransferVisuals/TransferVisuals';
 import { useCompleteOnce } from '../../hooks/useCompleteOnce';
 import { demoData } from '../../services/recyclingData';
 import { recyclingDataset } from '../../services/recyclingDataset';
-import { withAssetResources } from '../../../shared/react/withAssetResources';
+import { withAssetResources } from "@shuku/course-style/react/withAssetResources";
 import { evaluateRecyclingHead, loadRecyclingBackbone, replaceRecyclingHead, trainRecyclingHead,
   type BackboneSession, type NewHeadSession, type HeadEpoch, type HeadTestResult, type HeadTrainingResult } from '../../services/recyclingTraining';
 import './RealHeadTrainingPage.css';

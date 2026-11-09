@@ -1,4 +1,4 @@
-import { Typography } from '../../shared/react';
+import { Typography } from "@shuku/course-style/react";
 import './TitlePage.css';
 
 /** Fine contour lines form a continuous ribbon: loose ideas gathering into structure. */

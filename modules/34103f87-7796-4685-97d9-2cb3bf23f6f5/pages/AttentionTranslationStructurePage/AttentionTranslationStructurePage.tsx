@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useId, useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react';
-import { Button, ContentBlock, MathFormulaStatic, Typography } from '../../../shared/react';
+import { Button, ContentBlock, MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import { ChoiceButtons, useActivityState, type ActivityProps } from '../../components/AttentionActivity';
 import { TRANSLATION_TRAINING_SET, TRANSLATION_STRUCTURE_EPOCH, inspectStructureTranslationStep, type TranslationStepInspection } from '../../model/attentionTranslationExperiment';
 import './AttentionTranslationStructurePage.css';

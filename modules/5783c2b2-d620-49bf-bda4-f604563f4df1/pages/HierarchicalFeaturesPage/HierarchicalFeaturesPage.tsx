@@ -1,5 +1,5 @@
 import { moduleIdentity } from '../../outlines.json';
-import { moduleAssetUrl } from '../../../shared/react/assets';
+import { moduleAssetUrl } from "@shuku/course-runtime/react/assets";
 import { useEffect, useRef, useState } from 'react';
 import {
   Button,
@@ -9,8 +9,8 @@ import {
   Question,
   Typography,
   type QuestionCheckResult,
-} from '../../../shared/react';
-const bottleFront = moduleAssetUrl(moduleIdentity.id, "recycling/camera-views/bottle-front.jpg");
+} from "@shuku/course-style/react";
+const bottleFront = moduleAssetUrl("recycling/camera-views/bottle-front.jpg");
 import './HierarchicalFeaturesPage.css';
 
 type LayerIndex = 0 | 1 | 2;

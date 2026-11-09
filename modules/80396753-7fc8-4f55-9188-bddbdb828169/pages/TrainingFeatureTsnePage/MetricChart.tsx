@@ -1,5 +1,5 @@
 import {useMemo} from 'react';
-import {PlotlyChart,Typography,type PlotlyTrace,type PlotlyLayout} from '../../../shared/react';
+import {PlotlyChart,Typography,type PlotlyTrace,type PlotlyLayout} from "@shuku/course-style/react";
 import type {TsneFrame} from '../../services/digitTsneRecord';
 import {TrainingIcon} from './TrainingIcon';
 

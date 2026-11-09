@@ -1,4 +1,4 @@
-import { SceneDeck } from '../shared/react/presentation';
+import { SceneDeck } from "@shuku/course-style/react/presentation";
 import { deck, getPptNotes } from './course';
 import outline from './outlines.json';
 export { deck, getPptNotes } from './course';

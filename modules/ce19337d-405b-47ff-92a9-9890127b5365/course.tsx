@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { LessonFlowRevealMode, LessonStepContext } from '../shared/react';
+import type { LessonFlowRevealMode, LessonStepContext } from "@shuku/course-style/react";
 import { PhotoStudioOpeningPage } from './pages/PhotoStudioOpeningPage/PhotoStudioOpeningPage';
 import { GenerationNotRecognitionPage } from './pages/GenerationNotRecognitionPage/GenerationNotRecognitionPage';
 import { DistributionViewPage } from './pages/DistributionViewPage/DistributionViewPage';

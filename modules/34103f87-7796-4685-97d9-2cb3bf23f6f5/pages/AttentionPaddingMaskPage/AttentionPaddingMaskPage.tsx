@@ -1,4 +1,4 @@
-import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, Question, Typography } from '../../../shared/react';
+import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, Question, Typography } from "@shuku/course-style/react";
 import { LessonCheck, useActivityState, type ActivityProps } from '../../components/AttentionActivity';
 import { useTranslationPage } from '../../components/useTranslationPage';
 import { computeTranslationPaddingMask, TRANSLATION_MASK_BATCH_SLICES } from '../../model/translationTeaching';

@@ -1,5 +1,5 @@
 import { valueBasedRlAssetUrl } from '../../assetUrls';
-import { Typography } from '../../../shared/react';
+import { Typography } from "@shuku/course-style/react";
 import { LessonPage, Formula } from '../../components/LessonPrimitives';
 import { TeachingPanel } from '../../components/TeachingPanel';
 import './BellmanPage.css';

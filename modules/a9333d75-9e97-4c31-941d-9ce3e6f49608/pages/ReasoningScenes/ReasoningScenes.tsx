@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Button, Question, RangeControl, Typography } from '../../../shared/react';
+import { Button, Question, RangeControl, Typography } from "@shuku/course-style/react";
 import { ClockDial, CodeLines, LabStatus, LabText as T } from '../../components/LabAtoms';
 import { acceptanceSuite, brokenProgram, clockText, fixedProgram, newClock, PATCHES, pauseClock, pauseProbe, startClock, tickClock, type PatchOp, type Regression } from '../../model/labModel';
 import { updateLab, useLabMemory } from '../../model/labMemory';

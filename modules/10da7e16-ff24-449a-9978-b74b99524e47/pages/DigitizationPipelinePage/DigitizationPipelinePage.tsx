@@ -1,11 +1,11 @@
 import moduleAssetOutline from '../../outlines.json';
-import { moduleAssetUrl } from '../../../shared/react/assets';
+import { moduleAssetUrl } from "@shuku/course-runtime/react/assets";
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { ContentBlock, Typography } from '../../../shared/react';
+import { ContentBlock, Typography } from "@shuku/course-style/react";
 import './DigitizationPipelinePage.css';
 
 const SIDE = 20;
-const photo = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/digital-image-cat-scene.jpg');
+const photo = moduleAssetUrl('images/digital-image-cat-scene.jpg');
 type RGB = [number, number, number];
 const tuple = (rgb: RGB) => `[${rgb.join(',')}]`;
 

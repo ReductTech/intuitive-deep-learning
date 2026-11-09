@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Typography } from '../../../shared/react';
+import { Button, Typography } from "@shuku/course-style/react";
 import { LessonPage } from '../../components/LessonPage';
 import { PhotoStage, BoxOverlay } from '../../components/PhotoStage';
 import { sceneBoxes, appleSceneOutline, pearSceneOutline, polygonPath } from '../../data';

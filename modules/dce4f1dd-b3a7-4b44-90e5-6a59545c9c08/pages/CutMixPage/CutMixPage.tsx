@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { RangeControl, Typography } from '../../../shared/react';
+import { RangeControl, Typography } from "@shuku/course-style/react";
 import { LessonPage } from '../../components/LessonPage';
 import { RegionAugmentation } from '../../components/RegionAugmentation';
 import { TargetWeights } from '../../components/TargetWeights';

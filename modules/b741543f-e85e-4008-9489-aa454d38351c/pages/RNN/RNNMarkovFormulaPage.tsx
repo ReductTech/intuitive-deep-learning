@@ -1,5 +1,5 @@
 import { Fragment, useRef, useState, type ReactNode } from 'react';
-import { ContentBlock, Typography } from '../../../shared/react';
+import { ContentBlock, Typography } from "@shuku/course-style/react";
 import { DishIcon, type DishId } from './DishIcon';
 import { InlineAnswer } from './InlineAnswer';
 import './RNNMarkovFormulaPage.css';

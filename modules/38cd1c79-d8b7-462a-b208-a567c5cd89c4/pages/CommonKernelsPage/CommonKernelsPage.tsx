@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState, type ChangeEvent } from 'react';
 import { Down, Up, UploadPicture } from '@icon-park/react';
-import { ContentBlock, MathFormulaStatic, moduleAssetUrl, Typography } from '../../../shared/react';
+import { ContentBlock, MathFormulaStatic, moduleAssetUrl, Typography } from "@shuku/course-style/react";
 import './CommonKernelsPage.css';
 
 const moduleAssetId = '38cd1c79-d8b7-462a-b208-a567c5cd89c4';
-const buildingImage = moduleAssetUrl(moduleAssetId, 'xiandaijianzhu.jpg');
-const bridgeImage = moduleAssetUrl(moduleAssetId, 'xielaqiao.jpg');
-const mountainImage = moduleAssetUrl(moduleAssetId, 'caiermate.jpg');
-const zebraImage = moduleAssetUrl(moduleAssetId, 'zebra.jpg');
-const pineappleImage = moduleAssetUrl(moduleAssetId, 'pineapple.jpg');
-const cityImage = moduleAssetUrl(moduleAssetId, 'be_city.jpg');
+const buildingImage = moduleAssetUrl('xiandaijianzhu.jpg');
+const bridgeImage = moduleAssetUrl('xielaqiao.jpg');
+const mountainImage = moduleAssetUrl('caiermate.jpg');
+const zebraImage = moduleAssetUrl('zebra.jpg');
+const pineappleImage = moduleAssetUrl('pineapple.jpg');
+const cityImage = moduleAssetUrl('be_city.jpg');
 
 type Matrix3 = readonly [readonly [number, number, number], readonly [number, number, number], readonly [number, number, number]];
 type ViewMode = 'gray' | 'edge' | 'signed';

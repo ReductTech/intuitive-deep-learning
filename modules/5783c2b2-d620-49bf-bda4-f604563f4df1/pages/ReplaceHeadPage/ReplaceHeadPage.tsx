@@ -1,13 +1,13 @@
 import { moduleIdentity } from '../../outlines.json';
-import { moduleAssetUrl } from '../../../shared/react/assets';
+import { moduleAssetUrl } from "@shuku/course-runtime/react/assets";
 import { useEffect, useRef, useState } from 'react';
-import { Button, ContentBlock, NoticeStrip, Typography, type QuestionCheckResult } from '../../../shared/react';
+import { Button, ContentBlock, NoticeStrip, Typography, type QuestionCheckResult } from "@shuku/course-style/react";
 import { RtgQuestion } from '../../components/RtgQuestion/RtgQuestion';
 import { useCompleteOnce } from '../../hooks/useCompleteOnce';
 import { useTeachingPlayback } from '../../hooks/useTeachingPlayback';
-const bottle = moduleAssetUrl(moduleIdentity.id, "recycling/bottle-upright.jpg");
-const can = moduleAssetUrl(moduleIdentity.id, "recycling/can-upright.jpg");
-const carton = moduleAssetUrl(moduleIdentity.id, "recycling/carton-upright.jpg");
+const bottle = moduleAssetUrl("recycling/bottle-upright.jpg");
+const can = moduleAssetUrl("recycling/can-upright.jpg");
+const carton = moduleAssetUrl("recycling/carton-upright.jpg");
 import './ReplaceHeadPage.css';
 
 const samples = [

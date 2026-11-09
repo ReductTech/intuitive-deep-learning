@@ -1,10 +1,10 @@
 import { moduleIdentity } from '../../outlines.json';
-import { moduleAssetUrl } from '../../../shared/react/assets';
+import { moduleAssetUrl } from "@shuku/course-runtime/react/assets";
 // @refresh reset
 import { useEffect, useRef, useState } from 'react';
-import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from '../../../shared/react';
+import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import { useCompleteOnce } from '../../hooks/useCompleteOnce';
-const bottle = moduleAssetUrl(moduleIdentity.id, "recycling/camera-views/bottle-front.jpg");
+const bottle = moduleAssetUrl("recycling/camera-views/bottle-front.jpg");
 import { canVerify, constructedOutput, initialConstruction, originalRoute, transitionConstruction,
   type ConstructionAction, type LayerIndex } from './identityConstruction';
 import './IdentityRoutePage.css';

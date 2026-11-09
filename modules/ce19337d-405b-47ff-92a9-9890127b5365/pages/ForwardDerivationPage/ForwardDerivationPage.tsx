@@ -1,14 +1,14 @@
 import moduleAssetOutline from '../../outlines.json';
-import { moduleAssetUrl } from '../../../shared/react/assets';
+import { moduleAssetUrl } from "@shuku/course-runtime/react/assets";
 import { useEffect, useRef, type ReactNode } from 'react';
-import { ContentBlock, MathFormulaStatic, Typography } from '../../../shared/react';
+import { ContentBlock, MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import { useLecturePlayback } from '../../components/LecturePlayback';
 import './ForwardDerivationPage.css';
 
-const x0 = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/forward-derivation/x0.jpg');
-const x1 = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/forward-derivation/x1.jpg');
-const x2 = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/forward-derivation/x2.jpg');
-const xt = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/forward-derivation/xt.jpg');
+const x0 = moduleAssetUrl('images/forward-derivation/x0.jpg');
+const x1 = moduleAssetUrl('images/forward-derivation/x1.jpg');
+const x2 = moduleAssetUrl('images/forward-derivation/x2.jpg');
+const xt = moduleAssetUrl('images/forward-derivation/xt.jpg');
 
 type Mode = 'two-step' | 'merge' | 'direct';
 export interface ForwardDerivationPageProps { onComplete?: () => void; }

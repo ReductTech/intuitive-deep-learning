@@ -1,5 +1,5 @@
 import { useEffect, useId, useState } from 'react';
-import { ContentBlock, Typography, moduleAssetUrl } from '../../../shared/react';
+import { ContentBlock, Typography, moduleAssetUrl } from "@shuku/course-style/react";
 import outline from '../../outlines.json';
 import './ImplementationBarrierPage.css';
 
@@ -21,7 +21,7 @@ export function ImplementationBarrierPage() {
   }, [removed]);
   return (
     <ContentBlock title={outline.pages.find(page => page.id === 'e0595adb-7c6e-466b-ab08-4129d9a2b04c')!.title} subtitle="从想到，到做到，中间还有一段路" headingLevel={1} className="rie-barrier" data-scene-id="e0595adb-7c6e-466b-ab08-4129d9a2b04c">
-      <img className="rie-bridge-islands" src={moduleAssetUrl(outline.moduleIdentity.id, 'images/idea-bridge-islands-v1.jpg')} alt="两端分离的平台，左侧是代表想法的灯泡，右侧是代表成果的文稿" />
+      <img className="rie-bridge-islands" src={moduleAssetUrl('images/idea-bridge-islands-v1.jpg')} alt="两端分离的平台，左侧是代表想法的灯泡，右侧是代表成果的文稿" />
       <div className="rie-bridge-scene" data-ppt-viewport="桥块坠落动画视窗，坠落后离开桥面" data-bridge-state={collapsed ? 'collapsed' : 'intact'}>
         <Typography variant="h2" tone="accent" className="rie-bridge-start">有一个想法</Typography>
         <Typography variant="h2" tone="accent" className="rie-bridge-end">把它做出来</Typography>

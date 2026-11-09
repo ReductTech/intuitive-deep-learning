@@ -8,7 +8,7 @@ import {
   type KeyboardEvent as ReactKeyboardEvent,
   type PointerEvent as ReactPointerEvent,
 } from 'react';
-import { Button, ContentBlock, moduleAssetUrl, Typography } from '../../../shared/react';
+import { Button, ContentBlock, moduleAssetUrl, Typography } from "@shuku/course-style/react";
 import { useGomokuOutcome } from '../../LessonContext';
 import {
   BLACK,
@@ -28,7 +28,7 @@ import {
 } from '../../gomokuEngine';
 import './GomokuPlayPage.css';
 
-const bgVideo = moduleAssetUrl('38cd1c79-d8b7-462a-b208-a567c5cd89c4', 'bg_video.mp4');
+const bgVideo = moduleAssetUrl('bg_video.mp4');
 
 const HUMAN = BLACK;
 const COMPUTER = WHITE;

@@ -1,7 +1,7 @@
 import { GomokuLessonProvider } from '../ShowcaseGomokuContext';
 import { GomokuPlayPage } from '../pages/GomokuPlayPage/GomokuPlayPage';
 import { WindowScanPage } from '../pages/WindowScanPage/WindowScanPage';
-import { Typography } from '../../shared/react';
+import { Typography } from "@shuku/course-style/react";
 import './ShowcaseGomokuPage.css';
 
 const complete = () => {};

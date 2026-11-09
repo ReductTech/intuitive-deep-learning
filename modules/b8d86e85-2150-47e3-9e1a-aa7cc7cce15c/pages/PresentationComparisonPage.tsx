@@ -1,5 +1,5 @@
 import { useEffect, useReducer, useRef, useState, type CSSProperties } from 'react';
-import { Button, Typography, moduleAssetUrl } from '../../shared/react';
+import { Button, Typography, moduleAssetUrl } from "@shuku/course-style/react";
 import outline from '../outlines.json';
 import './PresentationComparisonPage.css';
 
@@ -30,7 +30,7 @@ function reducer(state: Demo, action: 'tick' | 'start' | 'settle'): Demo {
   const updated = { ...state, elapsed: state.elapsed + 40 };
   return updated.elapsed >= durations[state.phase] ? advance(updated) : updated;
 }
-const asset = (path: string) => moduleAssetUrl(outline.moduleIdentity.id, path);
+const asset = (path: string) => moduleAssetUrl(path);
 const slots = [
   { x: 334, y: 0, width: 260, height: 147, angle: 5, z: 1 },
   { x: 202, y: 86, width: 286, height: 161, angle: 4, z: 2 },

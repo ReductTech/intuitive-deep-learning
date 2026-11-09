@@ -1,11 +1,11 @@
 import { useLayoutEffect, useRef, useState } from 'react';
-import { Button, Typography, moduleAssetUrl } from '../../shared/react';
+import { Button, Typography, moduleAssetUrl } from "@shuku/course-style/react";
 import { moduleIdentity } from '../outlines.json';
 import { deformableDemo, type DeformableTarget } from '../model/deformableDemo';
 import './PassingGridScene.css';
 export type PassingMode='full'|'window'|'shift'|'deform';
 export const PASSING_IMAGE_SIZE=[1672,941] as const;
-const [W,H]=PASSING_IMAGE_SIZE;const asset=moduleAssetUrl(moduleIdentity.id,'observation/passing-poster.png');
+const [W,H]=PASSING_IMAGE_SIZE;const asset=moduleAssetUrl('observation/passing-poster.png');
 export const passingWindowOrigin=(target:DeformableTarget,shift=false)=>{const c=deformableDemo(target).cell;return shift?[Math.floor((c[0]-1)/2)*2+1,Math.floor((c[1]-1)/2)*2+1]:[Math.floor(c[0]/2)*2,Math.floor(c[1]/2)*2];};
 export function PassingGridScene({mode,target='black-ball',selected=0,onTarget,onSelect}:{mode:PassingMode;target?:DeformableTarget;selected?:number;onTarget?:(t:DeformableTarget)=>void;onSelect?:(i:number)=>void}){
  const outer=useRef<HTMLDivElement>(null);const [size,setSize]=useState([0,0]);const [loaded,setLoaded]=useState(false);const [failed,setFailed]=useState(false);const [attempt,setAttempt]=useState(0);const data=deformableDemo(target);const p=data.reference;const window=passingWindowOrigin(target,mode==='shift');

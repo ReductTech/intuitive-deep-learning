@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button } from '../../shared/react';
+import { Button } from "@shuku/course-style/react";
 import { Controls, H, Page, T } from '../components/LessonVisuals';
 import { ARROW, MazeBoard, MazeGame } from '../components/ReinforceMaze';
 import { DIRECTIONS, DIR_LABEL, GOAL, START, WALLS, probabilities, transition, type Direction } from '../mazeModel';

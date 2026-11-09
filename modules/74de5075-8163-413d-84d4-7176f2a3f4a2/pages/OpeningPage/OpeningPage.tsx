@@ -1,4 +1,4 @@
-import { moduleAssetUrl, Typography } from '../../../shared/react';
+import { moduleAssetUrl, Typography } from "@shuku/course-style/react";
 import { moduleIdentity } from '../../outlines.json';
 import './OpeningPage.css';
 
@@ -7,10 +7,10 @@ const speaker = { name: '赵鹏海', affiliation: '南开国际先进研究院�
 export function OpeningPage() {
   return (
     <section className="llmpe-opening llmpe-spp-opening" aria-label="大模型驱动的实践能力培养体系与平台，CCF SPP第193期">
-      <img className="llmpe-spp-network" src={moduleAssetUrl(moduleIdentity.id, 'images/spp/cover-network-background.svg')} alt="" aria-hidden="true" draggable={false}/>
+      <img className="llmpe-spp-network" src={moduleAssetUrl('images/spp/cover-network-background.svg')} alt="" aria-hidden="true" draggable={false}/>
       <div className="llmpe-spp-brand" aria-label="CCF SPP，第193期">
-        <img className="llmpe-spp-logo" src={moduleAssetUrl(moduleIdentity.id, 'images/spp/ccf-official-logo.png')} alt="中国计算机学会 CCF" draggable={false}/>
-        <span className="llmpe-spp-pilot-logo" role="img" aria-label="CCF 学生领航计划 SPP" style={{ backgroundImage: `url("${moduleAssetUrl(moduleIdentity.id, 'images/spp/spp-official-banner.jpg')}")` }}/>
+        <img className="llmpe-spp-logo" src={moduleAssetUrl('images/spp/ccf-official-logo.png')} alt="中国计算机学会 CCF" draggable={false}/>
+        <span className="llmpe-spp-pilot-logo" role="img" aria-label="CCF 学生领航计划 SPP" style={{ backgroundImage: `url("${moduleAssetUrl('images/spp/spp-official-banner.jpg')}")` }}/>
         <span className="llmpe-spp-brand-divider" aria-hidden="true"/>
         <div className="llmpe-spp-wordmark">
           <Typography as="span" variant="h2" tone="accent">CCF SPP</Typography>

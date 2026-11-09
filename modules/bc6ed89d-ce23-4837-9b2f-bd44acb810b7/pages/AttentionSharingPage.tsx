@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Typography } from '../../shared/react';
+import { Button, Typography } from "@shuku/course-style/react";
 import './AttentionSharingPage.css';
 
 const STRUCTURES = [

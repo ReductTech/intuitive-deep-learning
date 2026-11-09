@@ -1,5 +1,5 @@
 import { useEffect, useId, useState, type ReactNode } from 'react';
-import { Button, Typography } from '../../shared/react';
+import { Button, Typography } from "@shuku/course-style/react";
 import { brokenProgram, clockText, newClock, pauseClock, startClock, tickClock, type ClockState, type Program } from '../model/labModel';
 
 export function LabText({children, variant = 'body', tone = 'main', className = ''}: {

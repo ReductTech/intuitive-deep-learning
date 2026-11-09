@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Button, ContentBlock, Typography } from '../../../shared/react';
+import { Button, ContentBlock, Typography } from "@shuku/course-style/react";
 import { GanModel, type Distribution, type Point } from './ganModel';
 import './GanPlaygroundPage.css';
 

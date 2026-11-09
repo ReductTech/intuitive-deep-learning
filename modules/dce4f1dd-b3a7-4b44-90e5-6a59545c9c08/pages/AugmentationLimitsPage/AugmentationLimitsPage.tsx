@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, RangeControl, Typography } from '../../../shared/react';
+import { Button, RangeControl, Typography } from "@shuku/course-style/react";
 import { LessonPage } from '../../components/LessonPage';
 import { AugmentedFruitView } from '../../components/AugmentedFruitView';
 import { photoUrl } from '../../data';

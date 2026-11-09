@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Button, Typography } from '../../shared/react';
+import { Button, Typography } from "@shuku/course-style/react";
 import './RepeatedWorkPage.css';
 
 // 固定续写只用于展示依赖关系；这些字和预测结果不是模型实测。

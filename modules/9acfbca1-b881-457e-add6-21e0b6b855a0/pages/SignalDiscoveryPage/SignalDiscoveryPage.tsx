@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react';
 import "./SignalDiscoveryPage.css";
-import { Button, ContentBlock, NoticeStrip, TextInput, Typography } from '../../../shared/react';
+import { Button, ContentBlock, NoticeStrip, TextInput, Typography } from "@shuku/course-style/react";
 import { useLesson } from '../../LessonContext';
 import { analyzeDecision } from '../../services/decisionAnalysis';
 import candidateData from '../../data/decisionCandidates.json';

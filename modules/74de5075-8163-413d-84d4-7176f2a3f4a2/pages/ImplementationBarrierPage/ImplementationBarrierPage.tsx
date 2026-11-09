@@ -1,5 +1,5 @@
 import { useEffect, useId, useState, type CSSProperties } from 'react';
-import { Button, ContentBlock, Typography, moduleAssetUrl } from '../../../shared/react';
+import { Button, ContentBlock, Typography, moduleAssetUrl } from "@shuku/course-style/react";
 import outline from '../../outlines.json';
 import { WishfulBridgeScene } from './WishfulBridgeScene';
 import './ImplementationBarrierPage.css';
@@ -39,7 +39,7 @@ export function ImplementationBarrierPage() {
   function reset(){setRemoved(null);setPhase('intact');setAttempt(v=>v+1);}
   function toggle(){reset();setAiEnabled(v=>!v);}
   return <ContentBlock title="AI 正在改变研究想法的实现方式" subtitle={aiEnabled?'AI 参与知识获取、动手实践与任务协作':'一个想法落地，需要知识储备、动手能力和人力资源'} headingLevel={1} className="rie-barrier" data-scene-id="aee1a1a1-9e6c-4d7c-90e3-25d418c52c4f" data-ai-enabled={aiEnabled} data-bridge-state={phase} data-capture-ready={aiEnabled||phase!=='falling'}>
-    <img className="rie-bridge-islands" src={moduleAssetUrl(outline.moduleIdentity.id,'images/research-background/idea-bridge-islands-v1.jpg')} alt="左岸的想法灯泡与右岸的结果文稿，由研究过程连接"/>
+    <img className="rie-bridge-islands" src={moduleAssetUrl('images/research-background/idea-bridge-islands-v1.jpg')} alt="左岸的想法灯泡与右岸的结果文稿，由研究过程连接"/>
     <div className="rie-ai-controls">
       <Button className="rie-ai-toggle" role="switch" aria-checked={aiEnabled} aria-label="AI 协作" onClick={toggle}><Typography as="span" variant="h3" tone="accent">{aiEnabled?'关闭 AI 协作':'开启 AI 协作'}</Typography><span className="rie-ai-switch-track" aria-hidden="true"><span/></span></Button>
       <div className="rie-ai-controls-hint"><Typography variant="bodySmall" tone="muted">{aiEnabled?'对话修改示意':'点击桥块，观察缺少条件的影响'}</Typography><Button className="rie-bridge-reset" onClick={reset} aria-label={aiEnabled?'重新演示 AI 协作':'恢复完整桥面'}>{aiEnabled?'重播':'重置'}</Button></div>

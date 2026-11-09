@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Menu, Search, ThumbsUp, Star, MessageSquare, Share2, ChevronLeft, X, SlidersHorizontal, Wifi, Signal, BatteryMedium, Bell, UserRound, Users, Newspaper, BookOpen, Check, ArrowUpRight } from 'lucide-react';
-import { Typography, moduleAssetUrl } from '../../../shared/react';
+import { Typography, moduleAssetUrl } from "@shuku/course-style/react";
 import outline from '../../outlines.json';
 import { papers, type Paper } from './paperFeedData';
 import './ResearchPhone.css';
@@ -9,7 +9,7 @@ import './ResearchPhone.css';
 // Reuse only paper figures from the supplied screenshot; feed text and controls remain interactive DOM.
 function Figure({paper}:{paper:Paper}) {
  const [x,y,w,h]=paper.crop;
- return <div className="rf-app-figure" data-ppt-viewport="论文配图裁切窗口" style={{aspectRatio:`${w}/${h}`}}><img alt={`${paper.title} 论文配图`} draggable={false} src={moduleAssetUrl(outline.moduleIdentity.id,'images/recommendation-app/feed-reference.jpg')} style={{width:`${1129/w*100}%`,left:`${-x/w*100}%`,top:`${-y/h*100}%`}}/></div>;
+ return <div className="rf-app-figure" data-ppt-viewport="论文配图裁切窗口" style={{aspectRatio:`${w}/${h}`}}><img alt={`${paper.title} 论文配图`} draggable={false} src={moduleAssetUrl('images/recommendation-app/feed-reference.jpg')} style={{width:`${1129/w*100}%`,left:`${-x/w*100}%`,top:`${-y/h*100}%`}}/></div>;
 }
 function browserTime() {
  const now=new Date();
@@ -73,7 +73,7 @@ export function ResearchPhone({ demoStep }: { demoStep: number }){
     <div ref={feed} className="rf-app-feed" data-ppt-viewport="手机内可滚动论文推荐流">
      {nav==='消息'?<div className="rf-app-empty"><Bell/><Typography variant="h3">消息</Typography><Typography variant="bodySmall">暂无新消息</Typography></div>:nav==='社区'?<div className="rf-app-empty"><Users/><Typography variant="h3">一起读论文</Typography><Typography variant="bodySmall">打开论文卡片，留下你的思考。</Typography><button className="rf-app-primary" onClick={()=>{setNav('科技');setTab('发现')}}>去发现论文</button></div>:<>{visible.map(card)}{!visible.length&&<div className="rf-app-empty"><Star/><Typography variant="h3">{nav==='我的'?'还没有收藏论文':tab==='关注'?'发现你的研究兴趣':'没有找到相关论文'}</Typography><Typography variant="bodySmall">{nav==='我的'?'点击论文下方的星标，即可在这里回看。':'试试调整关键词，或关注感兴趣的领域。'}</Typography><button className="rf-app-primary" onClick={()=>{setNav('科技');setTab('发现');setQuery('')}}>浏览推荐</button></div>}<Typography className="rf-app-feed-end" variant="bodySmall" align="center" tone="muted">已展示全部示例论文</Typography></>}
     </div>
-    <nav className="rf-app-bottom" aria-label="应用导航">{[{name:'科技',icon:Newspaper},{name:'社区',icon:Users},{name:'发现论文',icon:BookOpen},{name:'消息',icon:Bell},{name:'我的',icon:UserRound}].map(({name,icon:Icon},i)=><button key={name} aria-label={name} className={`${nav===name?'active':''} ${i===2?'rf-app-brand':''}`} onClick={()=>{setNav(i===2?'科技':name);if(i===2)setTab('发现');setQuery('');setSearching(false);resetFeed()}}><>{i===2?<span className="rf-app-brand-mark"><img src={moduleAssetUrl(outline.moduleIdentity.id,'images/recommendation-app/reduct-mark-white.svg')} alt="减论"/></span>:<Icon/>}</><Typography as="span" variant="bodySmall" tone="inherit">{i===2?'':name}</Typography>{name==='消息'&&<i/>}</button>)}</nav>
+    <nav className="rf-app-bottom" aria-label="应用导航">{[{name:'科技',icon:Newspaper},{name:'社区',icon:Users},{name:'发现论文',icon:BookOpen},{name:'消息',icon:Bell},{name:'我的',icon:UserRound}].map(({name,icon:Icon},i)=><button key={name} aria-label={name} className={`${nav===name?'active':''} ${i===2?'rf-app-brand':''}`} onClick={()=>{setNav(i===2?'科技':name);if(i===2)setTab('发现');setQuery('');setSearching(false);resetFeed()}}><>{i===2?<span className="rf-app-brand-mark"><img src={moduleAssetUrl('images/recommendation-app/reduct-mark-white.svg')} alt="减论"/></span>:<Icon/>}</><Typography as="span" variant="bodySmall" tone="inherit">{i===2?'':name}</Typography>{name==='消息'&&<i/>}</button>)}</nav>
     <div className="rf-app-home"><i/></div>
     {sheet&&<div className="rf-app-sheet" role="dialog" aria-label={sheet==='filter'?'关注领域':sheet==='menu'?'应用菜单':detail?.title}>
      <div className="rf-app-sheet-header"><button aria-label="返回推荐流" onClick={()=>{setSheet('');setComment('')}}><ChevronLeft/></button><Typography variant="body" tone="inherit">{sheet==='filter'?'我的关注':sheet==='menu'?'研究助手':sheet==='comments'?'论文讨论':sheet==='figure'?'论文配图':'论文速读'}</Typography><button aria-label="关闭详情" onClick={()=>setSheet('')}><X size={19}/></button></div>

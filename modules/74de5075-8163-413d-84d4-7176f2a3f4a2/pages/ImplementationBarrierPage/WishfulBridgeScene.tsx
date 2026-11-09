@@ -1,5 +1,5 @@
 import { useEffect, useId, useState, type CSSProperties } from 'react';
-import { Button, TextInput, Typography } from '../../../shared/react';
+import { Button, TextInput, Typography } from "@shuku/course-style/react";
 
 type Stage = 'idle' | 'building' | 'review' | 'adjusting';
 const segments = Array.from({ length: 9 }, (_, index) => {

@@ -1,6 +1,6 @@
 import { creatorGuideAssetUrl } from '../../../../../creatorGuideAssets';
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from 'react';
-import { ContentBlock, moduleAssetUrl, Typography } from '../../../../../../../../shared/react';
+import { ContentBlock, moduleAssetUrl, Typography } from "@shuku/course-style/react";
 import './TranslationEquivariancePage.css';
 
 const moduleAssetId = '444f8951-dd2e-42dc-94e5-c5a878618631';

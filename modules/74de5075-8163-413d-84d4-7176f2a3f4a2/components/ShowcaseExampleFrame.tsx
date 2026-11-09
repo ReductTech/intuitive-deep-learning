@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { Typography } from '../../shared/react';
+import { Typography } from "@shuku/course-style/react";
 import './ShowcaseGomokuPage.css';
 
 export function ShowcaseExampleFrame({ title, children }: { title: string; children: ReactNode }) {

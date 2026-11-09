@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { Typography } from '../../shared/react/typography/Typography';
+import { Typography } from "@shuku/course-style/react/typography/Typography";
 
 /** Course-specific composition following Value-Based-RL's teaching workspaces. */
 export function TeachingPanel({ title, aside, children, className = '' }: { title: string; aside?: ReactNode; children: ReactNode; className?: string }) {

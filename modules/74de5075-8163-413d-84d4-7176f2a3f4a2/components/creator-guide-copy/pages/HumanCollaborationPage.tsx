@@ -1,5 +1,5 @@
 import { creatorGuideAssetUrl } from '../creatorGuideAssets';
-import { Typography, moduleAssetUrl } from '../../../../shared/react';
+import { Typography, moduleAssetUrl } from "@shuku/course-style/react";
 import outline from '../outlines.json';
 import './HumanCollaborationPage.css';
 

@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { Button, ContentBlock, Typography } from '../../../shared/react';
+import { Button, ContentBlock, Typography } from "@shuku/course-style/react";
 import { OBSERVATION_RECORD_EVENT, OBSERVATION_RECORD_KEY, readObservationRecord } from '../AttentionGorillaExperimentPage/observationRecord';
 import { CourseMaterialImage } from '../../components/CourseMaterialImage';
 import './AttentionObservationCoverPage.css';

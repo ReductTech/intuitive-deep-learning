@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
-import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography, moduleAssetUrl } from '../../../shared/react';
+import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography, moduleAssetUrl } from "@shuku/course-style/react";
 import './ConvolutionUnitPage.css';
 
 const KERNELS = [
@@ -49,7 +49,7 @@ export function ConvolutionUnitPage() {
       if (active) setPixels(Array.from({ length: 784 }, (_, i) => rgba[i * 4] / 255));
     };
     image.onerror = () => { if (active) setError(true); };
-    image.src = moduleAssetUrl('80396753-7fc8-4f55-9188-bddbdb828169', 'mnist/5/60015.jpg');
+    image.src = moduleAssetUrl('mnist/5/60015.jpg');
     return () => { active = false; };
   }, []);
   const maps = useMemo(() => pixels ? KERNELS.map(kernel => {

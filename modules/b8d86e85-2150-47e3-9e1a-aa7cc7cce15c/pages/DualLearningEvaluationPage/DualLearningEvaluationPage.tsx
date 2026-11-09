@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Bot, UserRound, UsersRound } from 'lucide-react';
-import { ContentBlock, Typography, moduleAssetUrl } from '../../../shared/react';
+import { ContentBlock, Typography, moduleAssetUrl } from "@shuku/course-style/react";
 import outline from '../../outlines.json';
 import './DualLearningEvaluationPage.css';
 
@@ -81,7 +81,7 @@ export function DualLearningEvaluationPage() {
           <Typography as="h2" variant="h2" tone="accent" id="aipe-dual-evaluation-work-title">学生实践成果</Typography>
           <Typography as="p" variant="bodySmall" tone="muted" className="aipe-dual-evaluation-evidence">知识呈现作品 + 课后专题实践内容</Typography>
           <figure className="aipe-dual-evaluation-stack" data-expanded={expanded} aria-label="三张实践成果示例，由叠放展开为扇形">
-            {thumbnails.map((thumbnail, index) => <img key={thumbnail.file} className={`aipe-dual-evaluation-thumbnail aipe-dual-evaluation-thumbnail--${index}`} src={moduleAssetUrl(outline.moduleIdentity.id, `workflow/course-thumbnails/${thumbnail.file}`)} width="400" height="225" alt={thumbnail.label} draggable={false} />)}
+            {thumbnails.map((thumbnail, index) => <img key={thumbnail.file} className={`aipe-dual-evaluation-thumbnail aipe-dual-evaluation-thumbnail--${index}`} src={moduleAssetUrl(`workflow/course-thumbnails/${thumbnail.file}`)} width="400" height="225" alt={thumbnail.label} draggable={false} />)}
             <Typography as="figcaption" variant="bodySmall" tone="muted">知识呈现 · Jittor 复现 · 实验分析</Typography>
           </figure>
         </section>

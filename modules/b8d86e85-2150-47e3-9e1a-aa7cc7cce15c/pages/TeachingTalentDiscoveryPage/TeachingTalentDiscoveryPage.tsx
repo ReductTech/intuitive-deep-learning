@@ -1,4 +1,4 @@
-import { ContentBlock, Typography, moduleAssetUrl } from '../../../shared/react';
+import { ContentBlock, Typography, moduleAssetUrl } from "@shuku/course-style/react";
 import outline from '../../outlines.json';
 import './TeachingTalentDiscoveryPage.css';
 
@@ -7,7 +7,7 @@ const stages = [
   { title: '带领学生深入科研', detail: '围绕研究方向，持续指导与协作' },
   { title: '师生共同产出成果', detail: '推进研究，形成有影响力的成果' },
 ] as const;
-const asset = (name: string) => moduleAssetUrl(outline.moduleIdentity.id, `images/talent/${name}`);
+const asset = (name: string) => moduleAssetUrl(`images/talent/${name}`);
 
 export function TeachingTalentDiscoveryPage() {
   return <ContentBlock title="在教学中发现人才，在科研中共同成长"

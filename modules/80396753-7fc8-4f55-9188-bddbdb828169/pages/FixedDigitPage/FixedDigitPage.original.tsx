@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent } from 'react';
-import { Button, ContentBlock, moduleAssetUrl, Typography } from '../../../shared/react';
+import { Button, ContentBlock, moduleAssetUrl, Typography } from "@shuku/course-style/react";
 import { trainFixedDigitClassifier, type Classifier, type KernelId, type TrainResult } from '../../services/fixedDigitClassifier';
 import './FixedDigitPage.css';
 
@@ -20,9 +20,9 @@ const KERNELS: Kernel[] = [
 ];
 
 const SAMPLES = [
-  { label: '6', src: moduleAssetUrl(ASSET_ID, 'digits/6.png') },
-  { label: '2', src: moduleAssetUrl(ASSET_ID, 'digits/2.png') },
-  { label: '8', src: moduleAssetUrl(ASSET_ID, 'digits/8.png') },
+  { label: '6', src: moduleAssetUrl('digits/6.jpg') },
+  { label: '2', src: moduleAssetUrl('digits/2.jpg') },
+  { label: '8', src: moduleAssetUrl('digits/8.jpg') },
 ];
 
 const emptyPixels = (): Pixels => Array.from({ length: SIZE }, () => Array(SIZE).fill(0) as number[]);

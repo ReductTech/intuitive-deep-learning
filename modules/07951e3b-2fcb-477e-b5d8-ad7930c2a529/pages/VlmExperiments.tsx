@@ -1,5 +1,5 @@
 import { type CSSProperties } from 'react';
-import { Typography } from '../../shared/react';
+import { Typography } from "@shuku/course-style/react";
 import { StepSequenceControl, Heading, Text, Tokens, useStepSequence } from '../components/LessonVisuals';
 import { Features, ImageFocus } from '../components/TeachingVisuals';
 import { jointConnectorStep } from '../model/teachingMath';

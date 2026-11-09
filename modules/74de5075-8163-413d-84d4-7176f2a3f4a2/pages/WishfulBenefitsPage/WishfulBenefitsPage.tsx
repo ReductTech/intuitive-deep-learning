@@ -1,4 +1,4 @@
-import { ContentBlock, Typography, moduleAssetUrl } from '../../../shared/react';
+import { ContentBlock, Typography, moduleAssetUrl } from "@shuku/course-style/react";
 import outline from '../../outlines.json';
 import './WishfulBenefitsPage.css';
 
@@ -12,7 +12,7 @@ const benefits = [
 export function WishfulBenefitsPage() {
   return (
     <ContentBlock title={outline.pages.find(page => page.id === 'spp-research-wishful-benefits')!.title} headingLevel={1} className="rie-benefits" data-scene-id="spp-research-wishful-benefits">
-      <img className="rie-benefits-art" src={moduleAssetUrl(outline.moduleIdentity.id, 'images/research-background/wishful-benefits-art-v1.jpg')} alt="降低的台阶、进入实践的想法、尝试反馈的循环，以及留给思考的笔记本" />
+      <img className="rie-benefits-art" src={moduleAssetUrl('images/research-background/wishful-benefits-art-v1.jpg')} alt="降低的台阶、进入实践的想法、尝试反馈的循环，以及留给思考的笔记本" />
       <div className="rie-benefits-grid">
         {benefits.map(([title, description]) => (
           <div key={title} className="rie-benefits-copy">

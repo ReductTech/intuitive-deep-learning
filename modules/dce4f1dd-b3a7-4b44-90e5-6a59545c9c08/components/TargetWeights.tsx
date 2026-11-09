@@ -1,4 +1,4 @@
-import { defaultTheme, EChartsChart, Typography } from '../../shared/react';
+import { defaultTheme, EChartsChart, Typography } from "@shuku/course-style/react";
 import './TargetWeights.css';
 
 export function TargetWeights({apple}:{apple:number}) {

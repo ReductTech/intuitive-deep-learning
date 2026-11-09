@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { Button, ContentBlock, MathFormulaBlock, MathFormulaTerm, Typography } from '../../../shared/react';
+import { Button, ContentBlock, MathFormulaBlock, MathFormulaTerm, Typography } from "@shuku/course-style/react";
 import './OptimizationIntroPage.css';
 import { SurfaceDiagram, type Landmark } from '../LossLandscape/SurfaceDiagram';
 import catalog from '../LossLandscape/landscapes.json';

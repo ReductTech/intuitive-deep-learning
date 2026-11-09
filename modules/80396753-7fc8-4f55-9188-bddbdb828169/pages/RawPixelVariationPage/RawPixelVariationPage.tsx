@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type PointerEvent } from 'react';
-import { ContentBlock, moduleAssetUrl, Typography } from '../../../shared/react';
+import { ContentBlock, moduleAssetUrl, Typography } from "@shuku/course-style/react";
 import { measureMnistImage, MNIST_INK_THRESHOLD } from '../../services/mnistFeatures';
 import './RawPixelVariationPage.css';
 
@@ -13,7 +13,7 @@ function loadSample(file: string): Promise<HTMLImageElement> {
     const image = new Image();
     image.onload = () => resolve(image);
     image.onerror = () => reject(new Error('无法加载 MNIST 样本'));
-    image.src = moduleAssetUrl(ASSET_ID, file);
+    image.src = moduleAssetUrl(file);
   });
 }
 export function RawPixelVariationPage() {

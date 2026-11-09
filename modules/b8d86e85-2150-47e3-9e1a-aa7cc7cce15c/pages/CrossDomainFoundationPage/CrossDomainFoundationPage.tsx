@@ -1,4 +1,4 @@
-import { ContentBlock, Typography, moduleAssetUrl } from '../../../shared/react';
+import { ContentBlock, Typography, moduleAssetUrl } from "@shuku/course-style/react";
 import outline from '../../outlines.json';
 import './CrossDomainFoundationPage.css';
 
@@ -10,9 +10,9 @@ const needs=[
 export function CrossDomainFoundationPage(){
  return <ContentBlock className="aipe-knowledge-entry-page" title={outline.pages.find(page => page.id === '43fb0e5e-348b-4f16-9f3a-b65843674b9b')!.title} headingLevel={1}
   bodyClassName="aipe-knowledge-entry-body">
-  <img className="aipe-knowledge-entry-background" src={moduleAssetUrl(outline.moduleIdentity.id,'images/beginner-library-background-v2.jpg')} alt="四位学习者一起走进开放的大学图书馆" draggable={false}/>
+  <img className="aipe-knowledge-entry-background" src={moduleAssetUrl('images/beginner-library-background-v2.jpg')} alt="四位学习者一起走进开放的大学图书馆" draggable={false}/>
   <div className="aipe-knowledge-entry-needs">{needs.map(need=><section className="aipe-knowledge-entry-need" key={need.id}>
-   <img className="aipe-knowledge-entry-icon" src={moduleAssetUrl(outline.moduleIdentity.id,`images/beginner-${need.id}-v2.png`)} alt="" aria-hidden="true" draggable={false}/>
+   <img className="aipe-knowledge-entry-icon" src={moduleAssetUrl(`images/beginner-${need.id}-v2.png`)} alt="" aria-hidden="true" draggable={false}/>
    <Typography as="h2" variant="h2" tone="accent">{need.title}</Typography>
   </section>)}</div>
  </ContentBlock>;

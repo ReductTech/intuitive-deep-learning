@@ -2,7 +2,7 @@ import type { KeyboardEvent as ReactKeyboardEvent } from 'react';
 import { NumericBoardDragHint } from '../../components/NumericBoardDragHint';
 import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent } from 'react';
 import { ClickTap, GridNine, Move } from '@icon-park/react';
-import { AttentionHint, ContentBlock, Typography } from '../../../shared/react';
+import { AttentionHint, ContentBlock, Typography } from "@shuku/course-style/react";
 import { useGomokuOutcome } from '../../ShowcaseGomokuContext';
 import { BOARD_SIZE, EMPTY, type Board, type Cell } from '../../showcaseGomokuEngine';
 import './KernelDesignPage.css';

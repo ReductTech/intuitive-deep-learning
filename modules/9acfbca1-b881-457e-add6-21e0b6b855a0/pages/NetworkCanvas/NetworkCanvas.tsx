@@ -7,7 +7,7 @@ import {
   type KeyboardEvent,
   type ReactNode,
 } from 'react';
-import { Typography } from '../../../shared/react';
+import { Typography } from "@shuku/course-style/react";
 import './NetworkCanvas.css';
 
 export type NetworkNodeTone = 'input' | 'hidden' | 'output' | 'relu' | 'neutral';

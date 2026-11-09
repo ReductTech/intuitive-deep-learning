@@ -1,9 +1,8 @@
-import { ContentBlock, Typography, moduleAssetUrl } from '../../../shared/react';
+import { ContentBlock, Typography, moduleAssetUrl } from "@shuku/course-style/react";
 import outline from '../../outlines.json';
 import './FlexibleTeachingModesPage.css';
 
 const illustration = (name: string) => moduleAssetUrl(
-  outline.moduleIdentity.id,
   `images/teaching-mode/${name}-cartoon-v1.jpg`,
 );
 

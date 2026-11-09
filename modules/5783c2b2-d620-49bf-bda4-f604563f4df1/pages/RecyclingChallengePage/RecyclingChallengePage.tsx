@@ -1,11 +1,11 @@
 import { moduleIdentity } from '../../outlines.json';
-import { moduleAssetUrl } from '../../../shared/react/assets';
+import { moduleAssetUrl } from "@shuku/course-runtime/react/assets";
 import { useRef, useState, type DragEvent } from 'react';
-import { Button, ContentBlock, NoticeStrip, Typography } from '../../../shared/react';
-const bottleUpright = moduleAssetUrl(moduleIdentity.id, "recycling/bottle-upright.jpg");
-const bottleCrushed = moduleAssetUrl(moduleIdentity.id, "recycling/bottle-crushed.jpg");
-const canUpright = moduleAssetUrl(moduleIdentity.id, "recycling/can-upright.jpg");
-const cartonUpright = moduleAssetUrl(moduleIdentity.id, "recycling/carton-upright.jpg");
+import { Button, ContentBlock, NoticeStrip, Typography } from "@shuku/course-style/react";
+const bottleUpright = moduleAssetUrl("recycling/bottle-upright.jpg");
+const bottleCrushed = moduleAssetUrl("recycling/bottle-crushed.jpg");
+const canUpright = moduleAssetUrl("recycling/can-upright.jpg");
+const cartonUpright = moduleAssetUrl("recycling/carton-upright.jpg");
 import './RecyclingChallengePage.css';
 
 type CategoryId = 'bottle' | 'can' | 'carton';

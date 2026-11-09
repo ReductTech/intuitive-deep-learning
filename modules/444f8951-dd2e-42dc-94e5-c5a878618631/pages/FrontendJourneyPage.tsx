@@ -1,5 +1,5 @@
 import creator_equal_ascent_clean_backgroundAsset0 from '../assets/images/creator-equal-ascent-clean-background.jpg';
-import { Typography } from '../../shared/react';
+import { Typography } from "@shuku/course-style/react";
 import './FrontendJourneyPage.css';
 
 const stairLabels = [

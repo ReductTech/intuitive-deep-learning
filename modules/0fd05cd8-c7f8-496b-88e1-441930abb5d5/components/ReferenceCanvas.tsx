@@ -1,6 +1,6 @@
 import { createContext, useContext, useLayoutEffect, useRef, useState, type CSSProperties, type HTMLAttributes, type ReactNode } from 'react';
-import { ContentBlock } from '../../shared/react/layout/ContentBlock';
-import { Typography } from '../../shared/react/typography/Typography';
+import { ContentBlock } from "@shuku/course-style/react/layout/ContentBlock";
+import { Typography } from "@shuku/course-style/react/typography/Typography";
 import { courseAssetUrl } from '../assets';
 import outline from '../outlines.json';
 import { architectureLessonIds } from '../lessonIds';

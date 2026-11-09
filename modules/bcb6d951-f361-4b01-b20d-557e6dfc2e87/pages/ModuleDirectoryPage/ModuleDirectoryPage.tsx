@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ChevronDown, FileJson, FileCode2, Folder, Image, MonitorPlay, BookOpen, Layers, SlidersHorizontal } from 'lucide-react';
-import { ContentBlock, Typography } from '../../../shared/react';
+import { ContentBlock, Typography } from "@shuku/course-style/react";
 import './ModuleDirectoryPage.css';
 
 const items = [

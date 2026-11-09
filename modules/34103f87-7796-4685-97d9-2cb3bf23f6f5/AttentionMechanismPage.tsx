@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, type ReactNode, type SyntheticEvent } from 'react';
-import { LessonFlow, ModuleShell, Typography, type LessonFlowStep, type LessonStepContext } from '../shared/react';
-import '../shared/react/styles.css';
-import '../shared/react/ui-kit.css';
-import '../shared/react/presentation.css';
+import { LessonFlow, ModuleShell, Typography, type LessonFlowStep, type LessonStepContext } from "@shuku/course-style/react";
+import "@shuku/course-style/react/styles.css";
+import "@shuku/course-style/react/ui-kit.css";
+import "@shuku/course-style/react/presentation.css";
 import { AttentionLessonProvider } from './model/AttentionLessonContext';
 import { ATTENTION_PROGRESS_ID, attentionCourse } from './course';
 import './AttentionMechanismPage.css';

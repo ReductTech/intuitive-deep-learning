@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { LessonFlowRevealMode, LessonStepContext } from '../shared/react';
+import type { LessonFlowRevealMode, LessonStepContext } from "@shuku/course-style/react";
 import { GeneralizationIntroPage } from './pages/GeneralizationIntroPage/GeneralizationIntroPage';
 import { ImageNumbersPage } from './pages/ImageNumbersPage/ImageNumbersPage';
 import { PixelRepresentationPage } from './pages/PixelRepresentationPage/PixelRepresentationPage';

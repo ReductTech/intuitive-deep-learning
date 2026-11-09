@@ -1,4 +1,4 @@
-import { ContentBlock, Typography } from '../../../shared/react';
+import { ContentBlock, Typography } from "@shuku/course-style/react";
 import { WeightSharingScene } from '../../../38cd1c79-d8b7-462a-b208-a567c5cd89c4/pages/WeightSharingPage/WeightSharingScene';
 import '../../../38cd1c79-d8b7-462a-b208-a567c5cd89c4/pages/WeightSharingPage/WeightSharingPage.css';
 import '../../components/InteractionShowcase.css';

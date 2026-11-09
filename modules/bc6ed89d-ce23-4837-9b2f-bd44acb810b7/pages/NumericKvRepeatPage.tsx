@@ -1,5 +1,5 @@
 import { useEffect, useState, type CSSProperties } from 'react';
-import { Button, MathFormulaStatic, Typography } from '../../shared/react';
+import { Button, MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import './NumericKvRepeatPage.css';
 
 // A two-dimensional projection example, not activations sampled from an LLM.

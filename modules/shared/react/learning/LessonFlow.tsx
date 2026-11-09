@@ -1,6 +1,8 @@
-import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import {arrangeCoursePages} from '../pageCatalog';
 import { classNames } from '../utils';
-import { emitTelemetry, getTelemetryState } from '../telemetry';
+import {emitCourseEvent} from '../courseRequests';
+import {readCourseState,writeCourseState} from '../courseState';
 import { ScrollCue } from './ScrollCue';
 
 export type LessonFlowRevealMode = 'immediate' | 'scroll' | 'cue';
@@ -31,31 +33,15 @@ export interface LessonFlowProps {
 
 interface LessonProgressState { completedIds?: string[]; visibleCount?: number; completed?: boolean; }
 
-function readLocalProgress(progressKey: string): LessonProgressState | null {
-  try {
-    const value = window.localStorage.getItem(progressKey);
-    return value ? JSON.parse(value) as LessonProgressState : null;
-  } catch {
-    return null;
-  }
-}
-
-function writeLocalProgress(progressKey: string, state: LessonProgressState) {
-  try {
-    window.localStorage.setItem(progressKey, JSON.stringify(state));
-  } catch {
-    // Telemetry remains the fallback when storage is unavailable.
-  }
-}
-
 /** Manages lesson-step visibility; individual blocks only report their own completion. */
 export function LessonFlow({
-  steps,
+  steps: sourceSteps,
   className,
   cueText = '下一段内容已经准备好，向下滚动继续学习',
   persistenceKey,
   initialVisibleCount = 1,
 }: LessonFlowProps) {
+  const steps = useMemo(() => arrangeCoursePages(sourceSteps), [sourceSteps]);
   const moduleKey = persistenceKey || 'lesson';
   const progressKey = `lesson-flow:${moduleKey}`;
   const initialCount = Math.min(steps.length, Math.max(1, Number.isFinite(initialVisibleCount) ? Math.floor(initialVisibleCount) : 1));
@@ -78,8 +64,8 @@ export function LessonFlow({
     setVisibleCount(initialCount);
     setRevealedIndex(null);
     setCueIndex(null);
-    writeLocalProgress(progressKey, { completedIds: [], visibleCount: initialCount, completed: false });
-    emitTelemetry('lesson_reset', rootRef.current, { state_key: progressKey, state: { completedIds: [], visibleCount: initialCount, completed: false } });
+    writeCourseState(progressKey, { completedIds: [], visibleCount: initialCount, completed: false });
+    emitCourseEvent('lesson_reset', { state_key: progressKey, state: { completedIds: [], visibleCount: initialCount, completed: false } });
   }, [progressKey, initialCount]);
 
   const complete = useCallback((id: string) => {
@@ -92,9 +78,9 @@ export function LessonFlow({
     completedIdsRef.current = nextCompleted;
     visibleCountRef.current = nextVisibleCount;
     setCompletedIds(nextCompleted);
-    writeLocalProgress(progressKey, { completedIds: nextCompleted, visibleCount: nextVisibleCount, completed: lessonCompleted });
-    emitTelemetry('lesson_progress', rootRef.current, { state_key: progressKey, state: { completedIds: nextCompleted, visibleCount: nextVisibleCount, completed: lessonCompleted } });
-    if (lessonCompleted) emitTelemetry('module_complete', rootRef.current, { state_key: `module:${moduleKey}`, state: { completed: true, completedIds: nextCompleted } });
+    writeCourseState(progressKey, { completedIds: nextCompleted, visibleCount: nextVisibleCount, completed: lessonCompleted });
+    emitCourseEvent('lesson_progress', { state_key: progressKey, state: { completedIds: nextCompleted, visibleCount: nextVisibleCount, completed: lessonCompleted } });
+    if (lessonCompleted) emitCourseEvent('module_complete', { state_key: `module:${moduleKey}`, state: { completed: true, completedIds: nextCompleted } });
     if (nextIndex < steps.length) {
       setVisibleCount(nextVisibleCount);
       setRevealedIndex(nextIndex);
@@ -115,26 +101,15 @@ export function LessonFlow({
   }, [revealedIndex, steps]);
 
   useEffect(() => {
-    let active = true;
-    void getTelemetryState<LessonProgressState>(progressKey, moduleKey).then((entry) => {
-      if (!active) return;
-      const restoredState = readLocalProgress(progressKey) ?? entry?.state;
-      if (!restoredState) {
-        hydratedRef.current = true;
-        setHydrated(true);
-        return;
-      }
-      const restoredIds = Array.isArray(restoredState.completedIds) ? restoredState.completedIds.filter((id) => steps.some((step) => step.id === id)) : [];
-      const restoredVisible = Number(restoredState.visibleCount);
-      const nextVisibleCount = Math.min(steps.length, Math.max(initialCount, Number.isFinite(restoredVisible) ? restoredVisible : restoredIds.length + 1));
-      completedIdsRef.current = restoredIds;
-      visibleCountRef.current = nextVisibleCount;
-      setCompletedIds(restoredIds);
-      setVisibleCount(nextVisibleCount);
-      hydratedRef.current = true;
-      setHydrated(true);
-    });
-    return () => { active = false; };
+    const restoredState=readCourseState<LessonProgressState>(progressKey);
+    if(restoredState){
+      const restoredIds=Array.isArray(restoredState.completedIds)?restoredState.completedIds.filter(id=>steps.some(step=>step.id===id)):[];
+      const restoredVisible=Number(restoredState.visibleCount);
+      const count=Math.min(steps.length,Math.max(initialCount,Number.isFinite(restoredVisible)?restoredVisible:initialCount));
+      completedIdsRef.current=restoredIds;visibleCountRef.current=count;
+      setCompletedIds(restoredIds);setVisibleCount(count);
+    }
+    hydratedRef.current=true;setHydrated(true);
   }, [moduleKey, progressKey, steps, initialCount]);
 
   return (

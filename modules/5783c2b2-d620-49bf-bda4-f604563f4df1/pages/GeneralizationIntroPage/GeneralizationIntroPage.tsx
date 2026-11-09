@@ -1,14 +1,14 @@
 import { moduleIdentity } from '../../outlines.json';
-import { moduleAssetUrl } from '../../../shared/react/assets';
+import { moduleAssetUrl } from "@shuku/course-runtime/react/assets";
 import { useRef, useState, type CSSProperties, type MouseEvent } from 'react';
-import { ContentBlock, Typography } from '../../../shared/react';
+import { ContentBlock, Typography } from "@shuku/course-style/react";
 import { useCompleteOnce } from '../../hooks/useCompleteOnce';
-const bottleTall = moduleAssetUrl(moduleIdentity.id, "recycling/intro-samples/bottle-tall.jpg");
-const bottleCrumpled = moduleAssetUrl(moduleIdentity.id, "recycling/intro-samples/bottle-crumpled.jpg");
-const canRed = moduleAssetUrl(moduleIdentity.id, "recycling/intro-samples/can-red.jpg");
-const canFlattened = moduleAssetUrl(moduleIdentity.id, "recycling/intro-samples/can-flattened.jpg");
-const cartonSealed = moduleAssetUrl(moduleIdentity.id, "recycling/intro-samples/carton-sealed.jpg");
-const cartonDented = moduleAssetUrl(moduleIdentity.id, "recycling/intro-samples/carton-dented.jpg");
+const bottleTall = moduleAssetUrl("recycling/intro-samples/bottle-tall.jpg");
+const bottleCrumpled = moduleAssetUrl("recycling/intro-samples/bottle-crumpled.jpg");
+const canRed = moduleAssetUrl("recycling/intro-samples/can-red.jpg");
+const canFlattened = moduleAssetUrl("recycling/intro-samples/can-flattened.jpg");
+const cartonSealed = moduleAssetUrl("recycling/intro-samples/carton-sealed.jpg");
+const cartonDented = moduleAssetUrl("recycling/intro-samples/carton-dented.jpg");
 import './GeneralizationIntroPage.css';
 
 // Appearance examples, not a recording of one physical object being crushed.

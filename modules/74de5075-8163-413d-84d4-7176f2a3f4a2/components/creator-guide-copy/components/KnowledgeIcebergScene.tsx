@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
-import { Typography } from '../../../../shared/react';
+import { Typography } from "@shuku/course-style/react";
 
 // Closed, faceted geometry: the initial elevation and every rotated view are
 // rendered from the same vertices, rather than switching between pictures.

@@ -1,5 +1,5 @@
 import { transformerAsset } from '../../assetUrls';
-import { Button, Typography } from '../../../shared/react';
+import { Button, Typography } from "@shuku/course-style/react";
 import { LessonPageFrame } from '../../components/LessonPageFrame';
 import './TranslationOpeningPage.css';
 export function TranslationOpeningPage({ onComplete }: {

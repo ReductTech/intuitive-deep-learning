@@ -1,8 +1,8 @@
-import { moduleAssetUrl } from '../../../shared/react/assets';
+import { courseAssetDirectory } from "@shuku/course-runtime/react/assets";
 import outlines from '../../outlines.json';
 
 export function moduleAssetRoot() {
-  return new URL(moduleAssetUrl(outlines.moduleIdentity.id, 'yuhuanong') + '/', window.location.href).href;
+  return courseAssetDirectory('yuhuanong');
 }
 
 export function inlineScript(source: string) {

@@ -1,4 +1,4 @@
-import { Typography } from '../../shared/react';
+import { Typography } from "@shuku/course-style/react";
 import outline from '../outlines.json';
 import './CourseCoverPage.css';
 

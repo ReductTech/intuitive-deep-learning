@@ -1,23 +1,23 @@
 import { moduleIdentity } from '../../outlines.json';
-import { moduleAssetUrl } from '../../../shared/react/assets';
-const bottle = moduleAssetUrl(moduleIdentity.id, "pretraining/bottle-white-cap-hd.jpg");
-const bottleBlue = moduleAssetUrl(moduleIdentity.id, "starting-points/bottle-blue.jpg");
-const bottleLabel = moduleAssetUrl(moduleIdentity.id, "starting-points/bottle-label.jpg");
-const bottleBent = moduleAssetUrl(moduleIdentity.id, "starting-points/bottle-bent.jpg");
-const bottleFlatGreen = moduleAssetUrl(moduleIdentity.id, "starting-points/bottle-flat-green.jpg");
-const canRed = moduleAssetUrl(moduleIdentity.id, "starting-points/can-red.jpg");
-const canSilver = moduleAssetUrl(moduleIdentity.id, "starting-points/can-silver.jpg");
-const canFlatYellow = moduleAssetUrl(moduleIdentity.id, "starting-points/can-flat-yellow.jpg");
-const canFlatRed = moduleAssetUrl(moduleIdentity.id, "starting-points/can-flat-red.jpg");
-const cartonOpen = moduleAssetUrl(moduleIdentity.id, "starting-points/carton-open.jpg");
-const cartonSealed = moduleAssetUrl(moduleIdentity.id, "starting-points/carton-sealed.jpg");
-const cartonDented = moduleAssetUrl(moduleIdentity.id, "starting-points/carton-dented.jpg");
-const cartonFlat = moduleAssetUrl(moduleIdentity.id, "starting-points/carton-flat.jpg");
-const queryBottleFlat = moduleAssetUrl(moduleIdentity.id, "starting-points/query-bottle-flat.jpg");
-const queryCan = moduleAssetUrl(moduleIdentity.id, "starting-points/query-can.jpg");
-const queryCarton = moduleAssetUrl(moduleIdentity.id, "starting-points/query-carton.jpg");
-import { moduleJson } from '../../../shared/react/moduleJson';
-export const startingFrames = moduleJson<Record<string, {width:number;height:number;viewBox:string}>>(moduleIdentity.id, 'starting-points/images.json');
+import { moduleAssetUrl } from "@shuku/course-runtime/react/assets";
+const bottle = moduleAssetUrl("pretraining/bottle-white-cap-hd.jpg");
+const bottleBlue = moduleAssetUrl("starting-points/bottle-blue.jpg");
+const bottleLabel = moduleAssetUrl("starting-points/bottle-label.jpg");
+const bottleBent = moduleAssetUrl("starting-points/bottle-bent.jpg");
+const bottleFlatGreen = moduleAssetUrl("starting-points/bottle-flat-green.jpg");
+const canRed = moduleAssetUrl("starting-points/can-red.jpg");
+const canSilver = moduleAssetUrl("starting-points/can-silver.jpg");
+const canFlatYellow = moduleAssetUrl("starting-points/can-flat-yellow.jpg");
+const canFlatRed = moduleAssetUrl("starting-points/can-flat-red.jpg");
+const cartonOpen = moduleAssetUrl("starting-points/carton-open.jpg");
+const cartonSealed = moduleAssetUrl("starting-points/carton-sealed.jpg");
+const cartonDented = moduleAssetUrl("starting-points/carton-dented.jpg");
+const cartonFlat = moduleAssetUrl("starting-points/carton-flat.jpg");
+const queryBottleFlat = moduleAssetUrl("starting-points/query-bottle-flat.jpg");
+const queryCan = moduleAssetUrl("starting-points/query-can.jpg");
+const queryCarton = moduleAssetUrl("starting-points/query-carton.jpg");
+import { moduleJson } from "@shuku/course-runtime/react/moduleJson";
+export const startingFrames = moduleJson<Record<string, {width:number;height:number;viewBox:string}>>('starting-points/images.json');
 
 export interface StartingSample { id: string; image: string; label: string; category: number; width: number; height: number; viewBox: string; }
 function sample(id: string, image: string, label: string, category: number): StartingSample {

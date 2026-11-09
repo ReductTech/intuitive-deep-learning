@@ -1,0 +1,4 @@
+.scenedeck-capture{position:relative;width:1600px;height:900px;overflow:hidden;background:#fff}
+.scenedeck-capture .scenedeck-stage{position:absolute;inset:0;width:1600px;height:900px;transform:none;transform-origin:top left;border-radius:0;box-shadow:none}
+.ppt-native-surface{position:relative;width:1600px;height:900px;overflow:hidden;container:lesson-slide / inline-size}
+.ppt-native-surface>.course-page-surface{width:100%;height:100%}

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, ContentBlock, Typography } from '../../../shared/react';
+import { Button, ContentBlock, Typography } from "@shuku/course-style/react";
 import { Formula } from '../../components/LessonPrimitives';
 import { ExperienceMap, ReturnDistribution, displayReturn } from '../../components/PolicyExperience';
 import { usePolicyExperience } from '../../components/usePolicyExperience';

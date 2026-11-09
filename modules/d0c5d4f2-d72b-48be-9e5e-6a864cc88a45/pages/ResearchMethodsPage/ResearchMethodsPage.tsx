@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
-import { Typography, moduleAssetUrl } from '../../../shared/react';
+import { Typography, moduleAssetUrl } from "@shuku/course-style/react";
 import outline from '../../outlines.json';
 import sourcePapers from './papers.json';
 import './ResearchMethodsPage.css';
@@ -15,7 +15,7 @@ const ease = (value: number) => { const t = clamp(value); return t * t * t * (t 
 function PaperImage({ paper }: { paper: typeof papers[number] }) {
   return paper.id === 'tokens'
     ? <div className="rf-research-specimen"><Typography variant="bodySmall">International Journal of Computer Vision</Typography><Typography variant="h2">{paper.title}</Typography><Typography variant="bodySmall">2026 · 持续学习</Typography></div>
-    : <img draggable={false} src={moduleAssetUrl(outline.moduleIdentity.id, `research-papers/${paper.id}.jpg`)} alt={`${paper.name} 论文原稿首页`} />;
+    : <img draggable={false} src={moduleAssetUrl(`research-papers/${paper.id}.jpg`)} alt={`${paper.name} 论文原稿首页`} />;
 }
 
 export function ResearchMethodsPage() {

@@ -1,7 +1,7 @@
 import { Star } from '@icon-park/react';
 import { ELEPHANT_KG, TARGET_DEPTH_CM } from '../CaoChongPage/experiment';
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type PointerEvent } from 'react';
-import { Button, ContentBlock, EChartsChart, Typography, moduleAssetUrl } from '../../../../../shared/react';
+import { Button, ContentBlock, EChartsChart, Typography, moduleAssetUrl } from "@shuku/course-style/react";
 import { getManualFit, saveManualFit, useRecordedData } from '../../regressionData';
 import './EstimateWeightPage.css';
 
@@ -50,7 +50,7 @@ export function EstimateWeightPage({ showLoss = false }: { showLoss?: boolean } 
   }), [slope, endpointX, endpointY, inRange, mass, calibration, showLoss, TARGET_DEPTH_CM]);
   if(!calibration.length)return <ContentBlock title="请先完成称象记录" subtitle="本页使用第一页投石时实际记录的数据。" />;
   return <ContentBlock headingLevel={1} title={showLoss ? "调整直线，估计象重" : "石头不足，如何估计象重？"} subtitle={showLoss ? "让直线贴近观测，观察损失与象重估计的变化。" : "根据已有观测，选择一条直线进行估计。"} className={`spp-regression-estimate-page${showLoss ? ' spp-regression-estimate-challenge-page' : ''}`}
-    style={{ '--spp-regression-est-background': `url("${moduleAssetUrl('74de5075-8163-413d-84d4-7176f2a3f4a2', 'regression-loss-copy/cao-chong/estimate-background.jpg')}")` } as CSSProperties}>
+    style={{ '--spp-regression-est-background': `url("${moduleAssetUrl('regression-loss-copy/cao-chong/estimate-background.jpg')}")` } as CSSProperties}>
     <div className={`spp-regression-estimate-content${showLoss ? ' spp-regression-estimate-content--loss' : ''}`}>
     <div className="spp-regression-estimate-layout">
       <section className="spp-regression-estimate-plot" aria-label="调整直线并根据大象水位估计重量">

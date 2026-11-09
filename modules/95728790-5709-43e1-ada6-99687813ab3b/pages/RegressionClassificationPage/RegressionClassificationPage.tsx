@@ -1,10 +1,10 @@
 import type { CSSProperties } from 'react';
 import { ArrowRight } from '@icon-park/react';
-import { ContentBlock, MathFormulaBlock, MathFormulaTerm, Typography, moduleAssetUrl } from '../../../shared/react';
+import { ContentBlock, MathFormulaBlock, MathFormulaTerm, Typography, moduleAssetUrl } from "@shuku/course-style/react";
 import passengers from './titanic-passengers.json';
 import './RegressionClassificationPage.css';
 
-const ship = moduleAssetUrl('95728790-5709-43e1-ada6-99687813ab3b', 'titanic/atlantic-liner.jpg');
+const ship = moduleAssetUrl('titanic/atlantic-liner.jpg');
 const classes = ['一等舱', '二等舱', '三等舱'];
 const exampleProbability = .92;
 const outputValue = exampleProbability.toFixed(2);

@@ -1,5 +1,5 @@
 import { moduleIdentity } from './outlines.json';
-import { SceneDeck, type DeckDefinition } from '../shared/react/presentation';
+import { SceneDeck, type DeckDefinition } from "@shuku/course-style/react/presentation";
 import { transformerLessonSteps, transformerStyleSlides } from './course';
 import { sectionNames, slideTitles } from './data/slideMetadata';
 import './TransformerSceneDeckPage.css';

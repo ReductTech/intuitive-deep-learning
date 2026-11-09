@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { BookOpen, Search, Grid2X2, Brain, Image, Sparkles, Bookmark, Play, X, ArrowLeft } from 'lucide-react';
-import { Typography, moduleAssetUrl } from '../../../shared/react';
+import { Typography, moduleAssetUrl } from "@shuku/course-style/react";
 import { moduleIdentity } from '../../outlines.json';
 import { useRecordingDemo } from '../../components/RecordingDemo';
 import { shukuScrollAt } from './shukuNarration';
@@ -15,7 +15,7 @@ const courses = [
  {title:'视觉生成：从噪声到图像',topic:'生成模型',level:'进阶',pages:31,description:'从 GAN 到 Diffusion，探索一张图像如何被生成。'},
 ];
 const topics=[{name:'全部课程',Icon:Grid2X2},{name:'神经网络',Icon:Brain},{name:'计算机视觉',Icon:Image},{name:'数学与优化',Icon:Sparkles},{name:'生成模型',Icon:Sparkles}];
-const cover=(index:number)=>moduleAssetUrl(moduleIdentity.id,`showcase/library-covers/course-${index+1}.jpg`);
+const cover=(index:number)=>moduleAssetUrl(`showcase/library-covers/course-${index+1}.jpg`);
 
 /** Lightweight local library simulation: no iframe, app bootstrap, API, or live course player. */
 export function ShukuWebsiteShowcasePage() {

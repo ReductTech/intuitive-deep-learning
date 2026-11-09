@@ -1,5 +1,5 @@
-import { Button } from '../../shared/react/controls/Button';
-import { Typography } from '../../shared/react/typography/Typography';
+import { Button } from "@shuku/course-style/react/controls/Button";
+import { Typography } from "@shuku/course-style/react/typography/Typography";
 import { Feature, ReferenceVisual, Text } from './Diagrams';
 import { Signal } from './Story';
 

@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
-import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, RangeControl, Typography, moduleAssetUrl } from '../../../shared/react';
+import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, RangeControl, Typography, moduleAssetUrl } from "@shuku/course-style/react";
 import './VideoFramesPage.css';
 
 const ASSET_ID = '10da7e16-ff24-449a-9978-b74b99524e47';
 const FPS = 24, T = 121, INITIAL_FRAME = 0;
 const PREVIEWS = Array.from({ length: 9 }, (_, i) => Math.round(i * T / 9));
-const videoUrl = moduleAssetUrl(ASSET_ID, 'videos/video_1791531788070.mp4');
-const frameUrl = (t: number) => moduleAssetUrl(ASSET_ID, `videos/video-frames/${String(t).padStart(3, '0')}.jpg`);
+const videoUrl = moduleAssetUrl('videos/video_1791531788070.mp4');
+const frameUrl = (t: number) => moduleAssetUrl(`videos/video-frames/${String(t).padStart(3, '0')}.jpg`);
 
 export function VideoFramesPage() {
   const videoRef = useRef<HTMLVideoElement>(null);

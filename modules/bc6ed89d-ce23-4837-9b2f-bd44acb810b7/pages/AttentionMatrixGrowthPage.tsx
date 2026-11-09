@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { RangeControl, Typography } from '../../shared/react';
+import { RangeControl, Typography } from "@shuku/course-style/react";
 import './AttentionMatrixGrowthPage.css';
 
 const LENGTHS = [4, 8, 16, 32] as const;

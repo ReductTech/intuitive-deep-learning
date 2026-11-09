@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Button } from '../../../shared/react/controls/Button';
-import { RangeControl } from '../../../shared/react/controls/RangeControl';
-import { Typography } from '../../../shared/react/typography/Typography';
+import { Button } from "@shuku/course-style/react/controls/Button";
+import { RangeControl } from "@shuku/course-style/react/controls/RangeControl";
+import { Typography } from "@shuku/course-style/react/typography/Typography";
 import { Text, ReferenceVisual } from '../../components/Diagrams';
 import { Cover, RefBox, ReferenceCanvas, ReferenceControls, ReferencePaths, ReferenceStory, type Rect } from '../../components/ReferenceCanvas';
 import { useStory } from '../../components/Story';

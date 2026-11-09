@@ -1,10 +1,10 @@
 import type { ReactNode } from 'react';
 import { ChevronRight, Download, Grid2X2, Home, Info, Minus, MousePointer2, Search, ShoppingBag, Square, UserRound, X } from 'lucide-react';
-import { Typography, moduleAssetUrl } from '../../../shared/react';
+import { Typography, moduleAssetUrl } from "@shuku/course-style/react";
 import { moduleIdentity } from '../../outlines.json';
 import './ToolOverviewPage.css';
 
-const iconUrl = (name: string) => moduleAssetUrl(moduleIdentity.id, `icons/${name}.svg`);
+const iconUrl = (name: string) => moduleAssetUrl(`icons/${name}.svg`);
 const Text = ({ children, className = '' }: { children: ReactNode; className?: string }) =>
   <Typography variant="bodySmall" tone="inherit" className={className}>{children}</Typography>;
 

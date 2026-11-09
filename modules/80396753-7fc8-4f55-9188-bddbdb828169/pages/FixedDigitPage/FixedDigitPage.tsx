@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';
-import { Button, ContentBlock, moduleAssetUrl, Typography } from '../../../shared/react';
+import { Button, ContentBlock, moduleAssetUrl, Typography } from "@shuku/course-style/react";
 import './FixedDigitPage.css';
 import { trainFixedDigitClassifier, type Classifier, type KernelId, type TrainResult } from '../../services/fixedDigitClassifier';
 
@@ -16,9 +16,9 @@ const KERNELS: Kernel[] = [
   { id: 'corner', name: '角点检测', matrix: [[1, -2, 1], [-2, 4, -2], [1, -2, 1]] },
 ];
 const SAMPLES = [
-  { label: '7', src: moduleAssetUrl(ASSET_ID, 'mnist/7/60000.png') },
-  { label: '2', src: moduleAssetUrl(ASSET_ID, 'mnist/2/60035.png') },
-  { label: '6', src: moduleAssetUrl(ASSET_ID, 'mnist/6/60011.png') },
+  { label: '7', src: moduleAssetUrl('mnist/7/60000.jpg') },
+  { label: '2', src: moduleAssetUrl('mnist/2/60035.jpg') },
+  { label: '6', src: moduleAssetUrl('mnist/6/60011.jpg') },
 ];
 const emptyPixels = (): Pixels => Array.from({ length: SIZE }, () => Array(SIZE).fill(0) as number[]);
 const percent = (value: number) => `${(value * 100).toFixed(1)}%`;

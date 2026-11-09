@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Typography } from '../../../shared/react';
+import { Button, Typography } from "@shuku/course-style/react";
 import { LessonPage, Formula } from '../../components/LessonPrimitives';
 import { TeachingPanel } from '../../components/TeachingPanel';
 import { PositionQNetwork } from '../../components/PositionQNetwork';

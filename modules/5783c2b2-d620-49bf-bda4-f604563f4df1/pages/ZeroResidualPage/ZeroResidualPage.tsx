@@ -1,5 +1,5 @@
 import { useState, type KeyboardEvent } from 'react';
-import { ContentBlock, RangeControl, Typography, type QuestionCheckResult } from '../../../shared/react';
+import { ContentBlock, RangeControl, Typography, type QuestionCheckResult } from "@shuku/course-style/react";
 import { RtgQuestion } from '../../components/RtgQuestion/RtgQuestion';
 import { useCompleteOnce } from '../../hooks/useCompleteOnce';
 import './ZeroResidualPage.css';

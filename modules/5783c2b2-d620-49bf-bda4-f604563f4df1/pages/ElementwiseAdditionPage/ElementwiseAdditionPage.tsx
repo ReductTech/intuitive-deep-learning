@@ -1,6 +1,6 @@
 // @refresh reset
 import { useEffect, useState } from 'react';
-import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, NoticeStrip, TextInput, Typography, type QuestionCheckResult } from '../../../shared/react';
+import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, NoticeStrip, TextInput, Typography, type QuestionCheckResult } from "@shuku/course-style/react";
 import { RtgQuestion } from '../../components/RtgQuestion/RtgQuestion';
 import { useCompleteOnce } from '../../hooks/useCompleteOnce';
 import './ElementwiseAdditionPage.css';

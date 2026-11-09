@@ -1,7 +1,7 @@
 import { valueBasedRlAssetUrl } from '../../assetUrls';
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react';
 import { Refresh } from '@icon-park/react';
-import { Button, ContentBlock, Typography } from '../../../shared/react';
+import { Button, ContentBlock, Typography } from "@shuku/course-style/react";
 import { WarehouseMap } from '../../components/WarehouseMap';
 import { GOAL, START, keyOf, type Position } from '../../model';
 import { TRAP, warehouseStep } from '../QLearningLoopPage/qLearningSimulation';

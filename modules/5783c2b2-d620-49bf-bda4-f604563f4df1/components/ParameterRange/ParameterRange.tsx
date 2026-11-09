@@ -1,4 +1,4 @@
-import { Typography } from '../../../shared/react';
+import { Typography } from "@shuku/course-style/react";
 import './ParameterRange.css';
 
 export const PARAMETER_GROUPS = ['Stem', 'Stage 1', 'Stage 2', 'Stage 3', 'Stage 4', '新分类头'] as const;

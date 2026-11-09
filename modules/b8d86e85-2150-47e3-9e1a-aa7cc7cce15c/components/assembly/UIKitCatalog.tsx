@@ -1,5 +1,5 @@
 import { useId, useState, type CSSProperties } from 'react';
-import { ContentBlock, Typography, defaultTheme, TextInput, Select, Switch, RangeControl, type TypographyTone } from '../../../shared/react';
+import { ContentBlock, Typography, defaultTheme, TextInput, Select, Switch, RangeControl, type TypographyTone } from "@shuku/course-style/react";
 import '../../pages/UIKitPage.css';
 
 const tones: [TypographyTone,string,string][] = [['main','主要文字','默认正文'],['muted','弱化文字','辅助说明'],['light','轻量文字','次要信息'],['accent','强调文字','主要概念'],['success','成功文字','正确与完成'],['warning','警告文字','注意与提醒'],['danger','危险文字','错误与风险'],['inherit','继承颜色','由父组件决定']];

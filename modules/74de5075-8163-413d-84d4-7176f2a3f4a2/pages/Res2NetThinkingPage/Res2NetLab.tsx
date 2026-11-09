@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type PointerEvent, type CSSProperties } from 'react';
 import { GripVertical, Link2, RotateCcw, Undo2, ArrowRight, Columns3, Info, X, Plus, Check, Hand, Target, PartyPopper } from 'lucide-react';
-import { Button, ContentBlock, Typography } from '../../../shared/react';
+import { Button, ContentBlock, Typography } from "@shuku/course-style/react";
 import { convId, graphNodes, connectionError, parameterWeights, type Connection } from './res2netGraph';
 import { NetworkStage } from './NetworkStage';
 import './NetworkStudio.css';

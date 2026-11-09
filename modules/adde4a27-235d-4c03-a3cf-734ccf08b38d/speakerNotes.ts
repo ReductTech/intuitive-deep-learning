@@ -1,4 +1,4 @@
-import type { SpeakerNote } from '../shared/react/presentation/types';
+import type { SpeakerNote } from "@shuku/course-runtime/react/presentation/types";
 
 /** Presenter narration lives beside the deck; teaching pages do not depend on it. */
 export const regressionSpeakerNotes: Record<string, SpeakerNote[]> = {

@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { Typography } from '../../shared/react';
+import { Typography } from "@shuku/course-style/react";
 import './TeachingPanel.css';
 
 export function TeachingHeading({ children, aside }: { children: ReactNode; aside?: ReactNode }) {

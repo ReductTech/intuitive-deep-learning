@@ -1,12 +1,12 @@
 import moduleAssetOutline from '../../outlines.json';
-import { moduleAssetUrl } from '../../../shared/react/assets';
+import { moduleAssetUrl } from "@shuku/course-runtime/react/assets";
 import { useState } from 'react';
-import { Button, ContentBlock, Typography } from '../../../shared/react';
+import { Button, ContentBlock, Typography } from "@shuku/course-style/react";
 import './PhotoStudioOpeningPage.css';
 
-const catOne = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/photo-studio-opening/cat-photo-01.jpg');
-const catTwo = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/photo-studio-opening/cat-photo-02.jpg');
-const catThree = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/photo-studio-opening/cat-photo-03.jpg');
+const catOne = moduleAssetUrl('images/photo-studio-opening/cat-photo-01.jpg');
+const catTwo = moduleAssetUrl('images/photo-studio-opening/cat-photo-02.jpg');
+const catThree = moduleAssetUrl('images/photo-studio-opening/cat-photo-03.jpg');
 
 const photos = [
   { src: catOne, alt: '戴红围巾的橘猫坐在木窗边，面向镜头。' },

@@ -1,4 +1,4 @@
-import { Typography } from '../../shared/react';
+import { Typography } from "@shuku/course-style/react";
 import { WormholeLab } from '../components/WormholeLab';
 import { WormholeBenefit, WormholeLessonFrame } from '../components/WormholeLessonFrame';
 import './IntuitiveLearningPage.css';

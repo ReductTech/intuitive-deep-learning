@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type PointerEvent } from 'react';
-import { Button, ContentBlock, moduleAssetUrl, Typography } from '../../../shared/react';
+import { Button, ContentBlock, moduleAssetUrl, Typography } from "@shuku/course-style/react";
 import { drawBeads, makePalette, photographCanvas, sampleBeads, type BeadGrid } from './beadModel';
 import './BeadStudio.css';
 
-const asset = (name: string) => moduleAssetUrl('10da7e16-ff24-449a-9978-b74b99524e47', `images/${name}`);
+const asset = (name: string) => moduleAssetUrl(`images/${name}`);
 type Position = { x: number; y: number; columns: number; rows: number } | null;
 const densities = [[48, 64], [24, 32], [16, 22]];
 const labels = ['原图', '细密拼豆', '简化拼豆', '极简拼豆'];

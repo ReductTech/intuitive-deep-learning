@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { ContentBlock, MathFormulaBlock, MathFormulaStatic, moduleAssetUrl, Typography } from '../../../shared/react';
+import { ContentBlock, MathFormulaBlock, MathFormulaStatic, moduleAssetUrl, Typography } from "@shuku/course-style/react";
 import { WormholeBenefit } from '../../components/WormholeLessonFrame';
 import { IMAGE_SIZE, KERNELS, rgbaToGray } from '../ConvolutionObservationPage/convolutionModel';
 import outline from '../../outlines.json';
@@ -19,7 +19,7 @@ function SobelFigure() {
     async function draw() {
       const image = new Image();
       image.crossOrigin = 'anonymous';
-      image.src = moduleAssetUrl(outline.moduleIdentity.id, 'images/edge-examples/building.jpg');
+      image.src = moduleAssetUrl('images/edge-examples/building.jpg');
       await image.decode(); if (cancelled) return;
       const source = document.createElement('canvas'); source.width = source.height = IMAGE_SIZE;
       const context = source.getContext('2d', { willReadFrequently: true });

@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { Typography } from '../../shared/react';
+import { Typography } from "@shuku/course-style/react";
 import './FoundationChapter.css';
 
 type Props = { number: '一' | '二' | '三' | '四' | '五'; index: string; title: string; description: string; topics: string[]; onComplete?: () => void };

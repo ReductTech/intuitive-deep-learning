@@ -1,13 +1,13 @@
-import { moduleJson } from '../../shared/react/moduleJson';
-export const atlasIndex = moduleJson<Record<string, AtlasRegion>>('80396753-7fc8-4f55-9188-bddbdb828169', 'image-atlases/index.json');
-import { moduleAssetUrl } from '../../shared/react';
+import { moduleJson } from "@shuku/course-runtime/react/moduleJson";
+export const atlasIndex = moduleJson<Record<string, AtlasRegion>>('image-atlases/index.json');
+import { moduleAssetUrl } from "@shuku/course-style/react";
 export type AtlasRegion = {sheet:string;x:number;y:number;width:number;height:number;sheetWidth:number;sheetHeight:number};
 let regions: Map<string, AtlasRegion> | undefined;
 export const atlasRegion = (src:string) => {
- if(!regions)regions=new Map(Object.entries(atlasIndex.read()).map(([path, region]) => [moduleAssetUrl('80396753-7fc8-4f55-9188-bddbdb828169',path),region]));
+ if(!regions)regions=new Map(Object.entries(atlasIndex.read()).map(([path, region]) => [moduleAssetUrl(path),region]));
  return regions.get(src);
 };
-export const atlasSheetUrl = (region:AtlasRegion) => moduleAssetUrl('80396753-7fc8-4f55-9188-bddbdb828169',region.sheet);
+export const atlasSheetUrl = (region:AtlasRegion) => moduleAssetUrl(region.sheet);
 const sheets = new Map<string,Promise<HTMLImageElement>>();
 const crops = new Map<string,Promise<string>>();
 /** Canvas/WebGL consumers receive the exact original-size pixels, without another HTTP request. */

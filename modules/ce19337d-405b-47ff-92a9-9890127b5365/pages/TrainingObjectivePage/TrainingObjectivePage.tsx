@@ -1,18 +1,18 @@
 import moduleAssetOutline from '../../outlines.json';
-import { moduleAssetUrl } from '../../../shared/react/assets';
+import { moduleAssetUrl } from "@shuku/course-runtime/react/assets";
 import { useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
-import { Button, ContentBlock, RangeControl, Typography } from '../../../shared/react';
+import { Button, ContentBlock, RangeControl, Typography } from "@shuku/course-style/react";
 import './TrainingObjectivePage.css';
 
-const bird = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/training-objective/bird.jpg');
-const car = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/training-objective/car.jpg');
-const cat = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/training-objective/cat.jpg');
-const city = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/training-objective/city.jpg');
-const dog = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/training-objective/dog.jpg');
-const mountain = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/training-objective/mountain.jpg');
-const room = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/training-objective/room.jpg');
-const sunset = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/training-objective/sunset.jpg');
-const waterfall = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/training-objective/waterfall.jpg');
+const bird = moduleAssetUrl('images/training-objective/bird.jpg');
+const car = moduleAssetUrl('images/training-objective/car.jpg');
+const cat = moduleAssetUrl('images/training-objective/cat.jpg');
+const city = moduleAssetUrl('images/training-objective/city.jpg');
+const dog = moduleAssetUrl('images/training-objective/dog.jpg');
+const mountain = moduleAssetUrl('images/training-objective/mountain.jpg');
+const room = moduleAssetUrl('images/training-objective/room.jpg');
+const sunset = moduleAssetUrl('images/training-objective/sunset.jpg');
+const waterfall = moduleAssetUrl('images/training-objective/waterfall.jpg');
 
 const realImages = [
   { src: mountain, alt: '山脉图片', x: 18, y: 29 },

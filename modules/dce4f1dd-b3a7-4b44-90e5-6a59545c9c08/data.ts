@@ -1,8 +1,8 @@
 import outline from './outlines.json';
-import { moduleAssetUrl } from '../shared/react';
+import { moduleAssetUrl } from "@shuku/course-style/react";
 
 export const assetId = outline.moduleIdentity.id;
-export const photoUrl = (file: string) => moduleAssetUrl(assetId, file);
+export const photoUrl = (file: string) => moduleAssetUrl(file);
 export const fruitFiles = ['01-fuji-apple.jpg', '02-bartlett-pear.jpg', '03-granny-smith-apple.jpg', '04-bosc-pear.jpg', '05-golden-delicious-apple.jpg', '06-asian-pear.jpg'];
 export const appleBox = { x1: .25, y1: .08, x2: .77, y2: .89 };
 export type Box = typeof appleBox;

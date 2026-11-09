@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Button, ContentBlock, moduleAssetUrl, Typography } from '../../../shared/react';
+import { Button, ContentBlock, moduleAssetUrl, Typography } from "@shuku/course-style/react";
 import { WormholeIcon } from '../../components/WormholeLessonFrame';
 import outline from '../../outlines.json';
 import {
@@ -14,7 +14,7 @@ type ScanFrame = { pattern: number; tiles: number; phase: 'scanning' | 'holding'
 async function loadSample(file: string): Promise<Sample> {
   const image = new Image();
   image.crossOrigin = 'anonymous';
-  image.src = moduleAssetUrl(outline.moduleIdentity.id, `images/edge-examples/${file}`);
+  image.src = moduleAssetUrl(`images/edge-examples/${file}`);
   await image.decode();
   const canvas = document.createElement('canvas');
   canvas.width = canvas.height = IMAGE_SIZE;

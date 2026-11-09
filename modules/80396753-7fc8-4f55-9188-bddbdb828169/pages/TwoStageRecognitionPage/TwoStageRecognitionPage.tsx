@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from '../../../shared/react';
+import { ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import './TwoStageRecognitionPage.css';
 import { exampleDigit, horizontalResponse } from '../../services/horizontalKernelExample';
 

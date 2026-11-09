@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Button, Typography } from '../../shared/react';
+import { Button, Typography } from "@shuku/course-style/react";
 import './FlashNormalizePage.css';
 
 const CAPTIONS = ['沿用上一页的四块 S', '先遮住未来的位置', 'S₁₁：形成上三行的权重', 'S₁₂ 全部被遮罩，权重不变', 'S₂₁：先得到暂时的权重', '加入 S₂₂：更新 P₂₁，形成 P₂₂'] as const;

@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react';
-import { Button, MathFormulaBlock, MathFormulaStatic, Typography } from '../../shared/react';
+import { Button, MathFormulaBlock, MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import './KernelGradientVisuals.css';
 
 export const trainingInput = [1, 0, 1, 0, 1, 0, 1, 0, 1];

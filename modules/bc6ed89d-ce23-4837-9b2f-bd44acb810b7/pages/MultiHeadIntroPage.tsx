@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { Button, Typography } from '../../shared/react';
+import { Button, Typography } from "@shuku/course-style/react";
 import './MultiHeadIntroPage.css';
 
 const TOKENS = ['我', '爱', '学', '习'] as const;

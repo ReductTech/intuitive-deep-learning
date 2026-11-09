@@ -1,14 +1,14 @@
 // Scene assets, compositing, pointer control and idle trajectory copied from the original module.
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from 'react';
-import { moduleAssetUrl, Typography } from '../../../shared/react';
+import { moduleAssetUrl, Typography } from "@shuku/course-style/react";
 import { DesignComparisonArrow } from '../../components/DesignComparisonHeader';
 import outline from '../../outlines.json';
 import { MAP_WIDTH, MAP_HEIGHT, loadImage, renderResponse, type Position, type SceneImages } from './laplacianResponse';
 const moduleAssetId = outline.moduleIdentity.id;
-const backgroundUrl = moduleAssetUrl(moduleAssetId, 'images/translation-example/bg.jpg');
-const ufoUrl = moduleAssetUrl(moduleAssetId, 'images/translation-example/ufo.png');
-const pillarUrl = moduleAssetUrl(moduleAssetId, 'images/translation-example/pillar.png');
-const foliageUrl = moduleAssetUrl(moduleAssetId, 'images/translation-example/dark_foliage.png');
+const backgroundUrl = moduleAssetUrl('images/translation-example/bg.jpg');
+const ufoUrl = moduleAssetUrl('images/translation-example/ufo.png');
+const pillarUrl = moduleAssetUrl('images/translation-example/pillar.png');
+const foliageUrl = moduleAssetUrl('images/translation-example/dark_foliage.png');
 
 export function UfoTranslationScene() {
   const sceneRef = useRef<HTMLDivElement>(null);

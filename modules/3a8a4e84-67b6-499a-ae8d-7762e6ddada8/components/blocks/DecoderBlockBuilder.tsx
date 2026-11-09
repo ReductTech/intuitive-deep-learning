@@ -2,7 +2,7 @@ import { transformerAsset } from '../../assetUrls';
 import { AssemblyFeedbackBody } from './AssemblyFeedbackBody';
 import { useEffect, useId, useMemo, useRef, useState, type CSSProperties, type PointerEvent } from 'react';
 import { createPortal } from 'react-dom';
-import { Button } from '../../../shared/react/controls/Button';
+import { Button } from "@shuku/course-style/react/controls/Button";
 import { LessonStage } from '../LessonStage';
 import { SvgPathTraveler } from './SvgPathTraveler';
 import { decoderAssemblyFeedback } from '../../domain/assemblyFeedback';

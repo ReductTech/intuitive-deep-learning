@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ContentBlock, moduleAssetUrl, Typography } from '../../../shared/react';
+import { ContentBlock, moduleAssetUrl, Typography } from "@shuku/course-style/react";
 import { measureMnistImage, type MnistFeatures } from '../../services/mnistFeatures';
 import './SimpleFeatureLimitsPage.css';
 
@@ -47,7 +47,7 @@ export function SimpleFeatureLimitsPage() {
         const features = measureMnistImage(image);
         setMeasured((current) => ({ ...current, [example.digit]: features }));
       };
-      image.src = moduleAssetUrl(ASSET_ID, example.file);
+      image.src = moduleAssetUrl(example.file);
       return image;
     });
     return () => {
@@ -64,12 +64,12 @@ export function SimpleFeatureLimitsPage() {
   >
     <div className="vfl-simple-limit__hero" aria-label="真实的 MNIST 数字 3 与数字 5">
       <figure className="vfl-simple-limit__digit">
-        <img src={moduleAssetUrl(ASSET_ID, examples[0].file)} alt="MNIST 数据集中的手写数字 3" />
+        <img src={moduleAssetUrl(examples[0].file)} alt="MNIST 数据集中的手写数字 3" />
         <figcaption><Typography as="span" variant="h3" tone="accent">数字 3</Typography></figcaption>
       </figure>
       <Typography as="span" variant="display" tone="warning" className="vfl-simple-limit__symbol" aria-label="不等于">≠</Typography>
       <figure className="vfl-simple-limit__digit">
-        <img src={moduleAssetUrl(ASSET_ID, examples[1].file)} alt="MNIST 数据集中的手写数字 5" />
+        <img src={moduleAssetUrl(examples[1].file)} alt="MNIST 数据集中的手写数字 5" />
         <figcaption><Typography as="span" variant="h3" tone="accent">数字 5</Typography></figcaption>
       </figure>
     </div>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Typography } from '../../shared/react';
+import { Typography } from "@shuku/course-style/react";
 import './EvolutionSkillDemo.css';
 const DURATION = 22000;
 const typing = (text: string, t: number, start: number, duration: number) => text.slice(0, Math.max(0, Math.floor((t - start) / duration * text.length)));

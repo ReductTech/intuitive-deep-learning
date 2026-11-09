@@ -1,7 +1,7 @@
 import { useRef, type ReactNode } from 'react';
-import { useSceneScale } from '../shared/react/presentation/canvas';
-import '../shared/react/styles.css';
-import '../shared/react/presentation.css';
+import { useSceneScale } from "@shuku/course-style/react/presentation/canvas";
+import "@shuku/course-style/react/styles.css";
+import "@shuku/course-style/react/presentation.css";
 import { ToolOverviewPage } from './pages/ToolOverviewPage/ToolOverviewPage';
 import { LearnByExplainingPage } from './pages/LearnByExplainingPage/LearnByExplainingPage';
 import { EngineeringCollaborationPage } from './pages/EngineeringCollaborationPage/EngineeringCollaborationPage';

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react';
-import { Button, ContentBlock, Typography } from '../../../shared/react';
+import { Button, ContentBlock, Typography } from "@shuku/course-style/react";
 import { ChoiceButtons, useActivityState, type ActivityProps } from '../../components/AttentionActivity';
 import { DECODING_STEP_SNAPSHOT as snapshot } from '../../model/decodingStepSnapshot';
 import './AttentionDecodingStepPage.css';

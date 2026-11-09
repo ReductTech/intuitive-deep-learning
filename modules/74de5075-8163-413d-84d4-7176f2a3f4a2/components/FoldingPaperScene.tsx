@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { Typography } from '../../shared/react';
+import { Typography } from "@shuku/course-style/react";
 
 const PANEL = 4;
 const BEND = Math.PI * 1.15;

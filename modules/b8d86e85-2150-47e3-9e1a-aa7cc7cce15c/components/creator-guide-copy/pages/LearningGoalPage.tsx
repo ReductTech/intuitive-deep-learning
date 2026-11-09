@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react';
-import { Typography } from '../../../../shared/react';
+import { Typography } from "@shuku/course-style/react";
 import './LearningGoalPage.css';
 
 type Kind = 'book' | 'cap' | 'gear' | 'light' | 'search' | 'rocket' | 'refresh';

@@ -1,4 +1,4 @@
-import { Typography } from '../../shared/react';
+import { Typography } from "@shuku/course-style/react";
 import './AttentionReadingFlow.css';
 export function AttentionReadingFlow({active='all'}:{active?:'score'|'weight'|'all'}) {
   const steps=[{id:'score',label:'Q、K → 匹配分数 s'},{id:'weight',label:'分数 s → 权重 w → 汇聚 V → 结果 r'}];

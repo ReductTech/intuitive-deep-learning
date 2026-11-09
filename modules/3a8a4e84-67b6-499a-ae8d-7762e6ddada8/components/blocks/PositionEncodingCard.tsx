@@ -1,5 +1,5 @@
 import { Fragment, useState } from 'react';
-import { Button, Typography } from '../../../shared/react';
+import { Button, Typography } from "@shuku/course-style/react";
 import { LessonPageFrame } from '../LessonPageFrame';
 import './PositionEncodingCard.css';
 interface PositionEncodingCardProps {

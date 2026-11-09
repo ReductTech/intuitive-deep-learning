@@ -1,5 +1,5 @@
 import { useState, type CSSProperties } from 'react';
-import { ContentBlock, ExplainPanelButton, moduleAssetUrl, Typography } from '../../../shared/react';
+import { ContentBlock, ExplainPanelButton, moduleAssetUrl, Typography } from "@shuku/course-style/react";
 import statistics from './statistics.json';
 import './FeatureStatisticsPage.css';
 
@@ -43,7 +43,7 @@ function DistributionPlot({ feature, domain, ticks, active, select, compact = fa
 
 function FeatureIllustration({ feature }: { feature: 'width' | 'height' | 'ink' | 'centroid' }) {
   return <div className="vfl-stats__illustration">
-    <img src={moduleAssetUrl(ASSET_ID, statistics.classes[8].samples[0].file)} alt="示意统计位置的 MNIST 数字 8" />
+    <img src={moduleAssetUrl(statistics.classes[8].samples[0].file)} alt="示意统计位置的 MNIST 数字 8" />
     <svg viewBox="0 0 80 80" aria-hidden="true">
       {feature === 'width' && <><path d="M10 8H70M10 8l6-4M10 8l6 4M70 8l-6-4M70 8l-6 4" /></>}
       {feature === 'height' && <path d="M72 14V70M72 14l-4 6M72 14l4 6M72 70l-4-6M72 70l4-6" />}

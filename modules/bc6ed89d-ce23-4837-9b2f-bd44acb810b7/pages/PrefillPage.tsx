@@ -1,4 +1,4 @@
-import { Typography } from '../../shared/react';
+import { Typography } from "@shuku/course-style/react";
 import './PrefillPage.css';
 
 const TOKENS = ['我', '爱', '学', '习'] as const;

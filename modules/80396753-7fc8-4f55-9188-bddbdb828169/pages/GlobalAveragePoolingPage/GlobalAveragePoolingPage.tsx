@@ -1,9 +1,9 @@
 import { AtlasImage } from '../../components/AtlasImage';
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from 'react';
-import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography, moduleAssetUrl } from '../../../shared/react';
+import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography, moduleAssetUrl } from "@shuku/course-style/react";
 import { flattenResponses, flattenDisplay } from '../../services/lessonData';
 import { atlasIndex } from '../../services/imageAtlas';
-import { withAssetResources } from '../../../shared/react/withAssetResources';
+import { withAssetResources } from "@shuku/course-style/react/withAssetResources";
 import './GlobalAveragePoolingPage.css';
 function Texture({values,size,channel}:{values:number[];size:number;channel:number}){
   const { RANGES } = flattenDisplay();
@@ -31,7 +31,7 @@ function GlobalAveragePoolingPageContent(){
     <div ref={scene} className={`vfl-gap-scene ${matched?'is-matched':'is-mismatched'}`}>
       <section className="vfl-gap-stage vfl-gap-input">
         <div className="vfl-gap-heading"><Typography as="h2" variant="h3" tone="accent">输入图像</Typography><Typography variant="bodySmall" tone="muted">{size} × {size}</Typography></div>
-        <div className="vfl-gap-visual vfl-gap-image-zone"><div className="vfl-gap-image" style={{width:size*4.5,height:size*4.5}}><AtlasImage src={moduleAssetUrl('80396753-7fc8-4f55-9188-bddbdb828169',`flatten-interface/${sample.input}`)} alt={`数字7，${size}×${size}输入`} onError={()=>setFailed(true)}/><Button className="vfl-gap-handle" role="slider" aria-label="拖动放大或缩小输入图像" aria-valuemin={20} aria-valuemax={40} aria-valuenow={size} aria-valuetext={`${size}×${size}`} onPointerDown={start} onPointerMove={move} onPointerUp={()=>{drag.current=null;}} onPointerCancel={()=>{drag.current=null;}} onKeyDown={e=>{if(['ArrowLeft','ArrowDown','ArrowRight','ArrowUp','Home','End'].includes(e.key)){e.preventDefault();change(e.key==='Home'?20:e.key==='End'?40:size+(['ArrowLeft','ArrowDown'].includes(e.key)?-4:4));}}}><span aria-hidden="true"/></Button></div></div>
+        <div className="vfl-gap-visual vfl-gap-image-zone"><div className="vfl-gap-image" style={{width:size*4.5,height:size*4.5}}><AtlasImage src={moduleAssetUrl(`flatten-interface/${sample.input}`)} alt={`数字7，${size}×${size}输入`} onError={()=>setFailed(true)}/><Button className="vfl-gap-handle" role="slider" aria-label="拖动放大或缩小输入图像" aria-valuemin={20} aria-valuemax={40} aria-valuenow={size} aria-valuetext={`${size}×${size}`} onPointerDown={start} onPointerMove={move} onPointerUp={()=>{drag.current=null;}} onPointerCancel={()=>{drag.current=null;}} onKeyDown={e=>{if(['ArrowLeft','ArrowDown','ArrowRight','ArrowUp','Home','End'].includes(e.key)){e.preventDefault();change(e.key==='Home'?20:e.key==='End'?40:size+(['ArrowLeft','ArrowDown'].includes(e.key)?-4:4));}}}><span aria-hidden="true"/></Button></div></div>
       </section>
       <span className="vfl-gap-arrow" aria-hidden="true">→</span>
       <section className="vfl-gap-stage vfl-gap-maps">

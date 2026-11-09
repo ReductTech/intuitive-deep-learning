@@ -1,6 +1,6 @@
 import { useMemo, useRef } from 'react';
 import "./ReluNetworkPage.css";
-import { Button, ContentBlock, NoticeStrip, Typography } from '../../../shared/react';
+import { Button, ContentBlock, NoticeStrip, Typography } from "@shuku/course-style/react";
 import { ReluNetworkPlot, usePersistedActivity } from '../ActivationCatalogPage/ActivationCatalogPage';
 import {
   NetworkCanvas,

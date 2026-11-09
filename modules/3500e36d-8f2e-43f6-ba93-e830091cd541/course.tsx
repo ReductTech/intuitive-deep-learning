@@ -1,6 +1,6 @@
 import { sourcePageIds, pilotPageIds } from './pageIds';
 import type { ComponentType } from 'react';
-import type { DeckDefinition, SpeakerNote } from '../shared/react/presentation';
+import type { DeckDefinition, SpeakerNote } from "@shuku/course-style/react/presentation";
 import outline from './outlines.json';
 const files=import.meta.glob('./pages/[0-9]*.tsx',{eager:true}) as Record<string,{Page:ComponentType}>;
 export const course=outline.pages.map(page=>{

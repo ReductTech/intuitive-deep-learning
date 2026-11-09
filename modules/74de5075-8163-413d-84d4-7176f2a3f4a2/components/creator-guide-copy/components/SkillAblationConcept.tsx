@@ -1,4 +1,4 @@
-import { Typography } from '../../../../shared/react';
+import { Typography } from "@shuku/course-style/react";
 import { EvaluationSkillDemo } from './EvaluationSkillDemo';
 import { EvolutionSkillDemo } from './EvolutionSkillDemo';
 import './SkillAblationConcept.css';

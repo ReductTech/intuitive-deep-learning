@@ -1,8 +1,8 @@
 import { useEffect, useState, type ReactNode } from 'react';
-import { ContentBlock, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, moduleAssetUrl, Typography } from '../../../shared/react';
+import { ContentBlock, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, moduleAssetUrl, Typography } from "@shuku/course-style/react";
 import './SecondDifferencePage.css';
 
-const zermattImage = moduleAssetUrl('38cd1c79-d8b7-462a-b208-a567c5cd89c4', 'caiermate.jpg');
+const zermattImage = moduleAssetUrl('caiermate.jpg');
 
 interface DifferenceImages {
   input: string;

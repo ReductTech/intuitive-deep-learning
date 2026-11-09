@@ -1,6 +1,6 @@
 import { ATTENTION_PAGE_COUNT } from '../../model/coursePageNumber';
 import { useEffect, useLayoutEffect, useRef } from 'react';
-import { ContentBlock, Button, Feedback, Question, Typography, type QuestionCheckResult } from '../../../shared/react';
+import { ContentBlock, Button, Feedback, Question, Typography, type QuestionCheckResult } from "@shuku/course-style/react";
 import { DeskVectorScene } from '../../components/DeskVectorScene';
 import { useAttentionLesson } from '../../model/AttentionLessonContext';
 import './AttentionObservationPage.css';

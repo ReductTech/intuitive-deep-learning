@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Question, Typography } from '../../../shared/react';
+import { Button, Question, Typography } from "@shuku/course-style/react";
 import { LessonPage } from '../../components/LessonPage';
 import { TurnSign } from '../../components/TurnSign';
 const correct=['明确任务','制定标注规范','标注与质检','按来源分组切分','只在训练分支增广','验证对照与最终测试'];

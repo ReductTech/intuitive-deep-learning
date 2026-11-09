@@ -1,4 +1,4 @@
-import { MathFormulaBlock, MathFormulaStatic } from '../../../shared/react';
+import { MathFormulaBlock, MathFormulaStatic } from "@shuku/course-style/react";
 export function SaddleDiagram() {
   const project=(x:number,y:number)=>({x:150+(x-y)*50,y:65+(x+y)*18-(x*x-y*y)*32});
   const faces=Array.from({length:144},(_,i)=>{const x=-1+(i%12)/6,y=-1+Math.floor(i/12)/6;return {x,y,depth:x+y};}).sort((a,b)=>a.depth-b.depth);

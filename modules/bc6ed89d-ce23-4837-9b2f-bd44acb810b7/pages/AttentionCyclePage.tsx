@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from 'react';
-import { Button, Typography } from '../../shared/react';
+import { Button, Typography } from "@shuku/course-style/react";
 import { FlowMatrix } from '../components/FlowMatrix';
 import './AttentionCyclePage.css';
 

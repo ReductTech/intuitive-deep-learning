@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {Button,Typography} from '../../shared/react';
+import {Button,Typography} from "@shuku/course-style/react";
 import './PilotInteractions.css';
 import {PilotStage,PT,Table} from '../components/PilotStage';
 const rows=[['下界','随机','.514','.410','.527','.525','.002'],['上界','信息泄漏','.819','.757','.894','.995','.984'],['API','ChatGPT · 单篇','.644','.427','.654','.702','.315'],['API','ChatGPT · 成对','.658','.448','.655','.686','.297'],['API','AgentReview · Gemini','.424','.424','—','—','.097'],['API','AI Scientist · Gemini','.614','.481','—','—','.120'],['自回归','SEA-EA（7B）','.582','.563','—','—','—'],['自回归','CycleReviewer（8B）','.678','.559','—','—','.279'],['自回归','CycleReviewer（70B）','.678','.574','—','—','.267'],['自回归','DeepReview（14B）','.689','.623','—','—','.405'],['回归','NAIPv1（8B）','.545','.472','.605','.629','.183'],['回归','NAIPv2（8B）','.706','.609','.782','.771','.432']];

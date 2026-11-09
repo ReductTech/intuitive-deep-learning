@@ -1,4 +1,4 @@
-import type { SpeakerNote } from "../shared/react/presentation";
+import type { SpeakerNote } from "@shuku/course-style/react/presentation";
 
 const vit = "https://arxiv.org/abs/2010.11929";
 const clip = "https://arxiv.org/abs/2103.00020";

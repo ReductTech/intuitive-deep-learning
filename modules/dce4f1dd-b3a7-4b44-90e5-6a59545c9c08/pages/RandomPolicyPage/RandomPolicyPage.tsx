@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, RangeControl, Typography } from '../../../shared/react';
+import { Button, RangeControl, Typography } from "@shuku/course-style/react";
 import { LessonPage } from '../../components/LessonPage';
 import { photoUrl } from '../../data';
 function randomViews(seed:number,p:number){let v=seed;const rand=()=>{v=(Math.imul(v,1664525)+1013904223)>>>0;return v/4294967296;};return Array.from({length:3},()=>{const flip=rand()<p;const brightness=.7+rand()*.6;return {flip,brightness};});}

@@ -1,6 +1,6 @@
 // @refresh reset
 import { useEffect, useState } from 'react';
-import { Button, ContentBlock, Typography } from '../../../shared/react';
+import { Button, ContentBlock, Typography } from "@shuku/course-style/react";
 import { ParameterRange } from '../../components/ParameterRange/ParameterRange';
 import { DatasetSplit, PhotoStack, TransferArrow, TransferLock, TransferSlabs, ValidationPaths, WeightCheckpoint } from '../../components/TransferVisuals/TransferVisuals';
 import { useTeachingPlayback } from '../../hooks/useTeachingPlayback';

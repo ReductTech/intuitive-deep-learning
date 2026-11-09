@@ -1,5 +1,5 @@
 import { useRef, useState, type PointerEvent } from 'react';
-import { RangeControl, Typography } from '../../../shared/react';
+import { RangeControl, Typography } from "@shuku/course-style/react";
 import { LessonPage } from '../../components/LessonPage';
 import { PhotoStage, BoxOverlay } from '../../components/PhotoStage';
 import { appleBox, photoUrl } from '../../data';

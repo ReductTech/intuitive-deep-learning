@@ -1,5 +1,5 @@
 import { Fragment, useRef, type CSSProperties, type MouseEvent, type PointerEvent } from 'react';
-import { Typography } from '../../../shared/react';
+import { Typography } from "@shuku/course-style/react";
 import './RNNImageSlices.css';
 
 export interface RNNImageSlicesProps {

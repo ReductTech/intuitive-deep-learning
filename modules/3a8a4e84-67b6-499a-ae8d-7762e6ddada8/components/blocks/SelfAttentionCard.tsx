@@ -1,7 +1,7 @@
 import { useState, type CSSProperties } from 'react';
-import { Button } from '../../../shared/react/controls/Button';
+import { Button } from "@shuku/course-style/react/controls/Button";
 import { LessonStage } from '../LessonStage';
-import { Typography } from '../../../shared/react/typography/Typography';
+import { Typography } from "@shuku/course-style/react/typography/Typography";
 import { multiply } from '../../domain/math';
 import './SelfAttentionCard.css';
 interface CompleteProps {

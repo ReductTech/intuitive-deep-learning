@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Question, Typography } from '../../../shared/react';
+import { Button, Question, Typography } from "@shuku/course-style/react";
 import { LessonPage } from '../../components/LessonPage';
 import { PhotoStage } from '../../components/PhotoStage';
 const cases=[{name:'合理色偏',style:{filter:'hue-rotate(25deg)'},answer:'keep',why:'本任务判断水果类别，合理色偏仍支持苹果标签；它帮助削弱颜色捷径。'},{name:'目标被裁掉',style:{clipPath:'inset(0 80% 0 0)'},answer:'remove',why:'苹果已经不在可见区域，不能继续沿用苹果标签。'},{name:'严重过曝',style:{filter:'brightness(8)'},answer:'judge',why:'如果判别信息被破坏，需要重新判断是否还能使用这个样本。'}];

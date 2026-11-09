@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { courseAssetUrl } from '../assets';
-import { Button } from '../../shared/react/controls/Button';
-import { Typography } from '../../shared/react/typography/Typography';
+import { Button } from "@shuku/course-style/react/controls/Button";
+import { Typography } from "@shuku/course-style/react/typography/Typography";
 import { Arrow, Flow, Formula, Frame, ReferenceVisual, Text, Tokens } from '../components/Diagrams';
 import { Readout } from '../components/Story';
 import { LessonSplit, TeachingPanel } from '../components/TeachingPanel';

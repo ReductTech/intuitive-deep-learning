@@ -1,7 +1,8 @@
 import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from 'react';
 import { Feedback } from '../feedback/Feedback';
 import { Button } from '../controls/Button';
-import { emitTelemetry, getTelemetryState } from '../telemetry';
+import {emitCourseEvent} from '../courseRequests';
+import {readCourseState,writeCourseState} from '../courseState';
 import { Typography, type TypographyVariant } from '../typography/Typography';
 import { classNames } from '../utils';
 import { useQuestionMode } from './QuestionMode';
@@ -41,12 +42,10 @@ interface PersistedQuestionResult {
   message?: string;
 }
 
-interface PersistedQuestionState {
-  selected_values?: string[];
-  answer_fields?: Array<{ value?: unknown }>;
-  correct?: boolean | null;
-  submitted?: boolean;
-  result?: PersistedQuestionResult | null;
+interface QuestionState {
+  selectedValues: string[];
+  answerFields: string[];
+  result: PersistedQuestionResult | null;
 }
 
 export interface QuestionProps {
@@ -54,10 +53,8 @@ export interface QuestionProps {
   title: ReactNode;
   options?: QuestionOption[];
   answer?: string | string[];
-  /** PPT reveals this text; Guide uses it for automatic LLM review. For short questions, answer may also supply it. */
+  /** PPT reveals this text; Guide uses it for automatic LLM review. Short questions must supply referenceAnswer. */
   referenceAnswer?: string;
-  /** Optional legacy question-bank ID; new questions only need title and referenceAnswer. */
-  taskId?: string;
   multiple?: boolean;
   blanks?: Array<{ label?: ReactNode; placeholder?: string }>;
   rows?: number;
@@ -71,7 +68,7 @@ export interface QuestionProps {
   onCheck?: (result: QuestionCheckResult) => void;
   /** 简答题的真实异步评阅服务；未提供时仅作本地提交，不冒充评阅。 */
   review?: (answers: string[]) => Promise<ShortAnswerReview>;
-  /** Stable key used to restore the latest answer from telemetry SQLite. */
+  /** Stable key for current, course-scoped browser question state. */
   persistenceKey?: string;
   showFeedback?: boolean;
 }
@@ -137,7 +134,6 @@ export function Question({
   options = [],
   answer,
   referenceAnswer,
-  taskId,
   multiple = type === 'multiple',
   blanks = [],
   rows = 5,
@@ -166,119 +162,41 @@ export function Question({
   const answerValues = normalizedType === 'choice' || normalizedType === 'judgement' ? selected : fields;
   const inlineBlanks = normalizedType === 'fill' ? inlineBlankCount(title) : 0;
   const pptShort = normalizedType === 'short' && questionMode === 'ppt';
-  const shortReference = referenceAnswer ?? (typeof answer === 'string' ? answer : '');
+  const shortReference = referenceAnswer ?? '';
   // The full canonical content makes new short-answer state keys stable and collision-free
   // without asking authors to manage IDs. Explicit persistenceKey still takes precedence.
   const automaticKey = normalizedType === 'short' && typeof title === 'string' && shortReference.trim()
     ? `inline:${JSON.stringify([title, shortReference])}`
     : generatedStateId;
   const stateKey = `question:${persistenceKey || automaticKey}`;
-  const reviewAnswer = review ?? (normalizedType === 'short' && (taskId || (typeof title === 'string' && shortReference.trim()))
+  const reviewAnswer = review ?? (normalizedType === 'short' && (typeof title === 'string' && shortReference.trim())
     ? (answers: string[]) => reviewShortAnswer({
-      taskId,
       question: typeof title === 'string' ? title : '',
       referenceAnswer: shortReference,
       answer: answers[0] ?? '',
     })
     : undefined);
 
-  function emitAnswer(eventName: 'answer_select' | 'answer_submit' | 'answer_change' | 'question_state_restore', answers: string[], checked: QuestionCheckResult | null) {
-    const selectedValues = normalizedType === 'choice' || normalizedType === 'judgement' ? answers : selected;
-    const answerFields = normalizedType === 'fill' || normalizedType === 'short'
-      ? answers.map((value) => ({ value, length: Array.from(value).length, empty: !value.trim() }))
-      : fields.map((value) => ({ value, length: Array.from(value).length, empty: !value.trim() }));
-    const persistedResult: PersistedQuestionResult | null = checked ? {
-      ok: checked.ok,
-      empty: checked.empty,
-      answer: checked.answer,
-      tone: checked.tone,
-      message: persistableMessage(checked.message),
-    } : null;
-    emitTelemetry(eventName, rootRef.current, {
-      state_key: stateKey,
-      question_type: normalizedType,
-      selected_values: selectedValues,
-      answer_fields: answerFields,
-      correct: checked?.ok ?? null,
-      submitted: checked !== null,
-      result: persistedResult,
-      state: {
-        selected_values: selectedValues,
-        answer_fields: answerFields,
-        correct: checked?.ok ?? null,
-        submitted: checked !== null,
-        result: persistedResult,
-      },
-    });
+  function emitAnswer(eventName: 'answer_select' | 'answer_submit' | 'answer_change', answers: string[], checked: QuestionCheckResult | null) {
+    const state:QuestionState={
+      selectedValues:normalizedType==='choice'||normalizedType==='judgement'?answers:selected,
+      answerFields:normalizedType==='fill'||normalizedType==='short'?answers:fields,
+      result:checked?{ok:checked.ok,empty:checked.empty,answer:checked.answer,tone:checked.tone,message:persistableMessage(checked.message)}:null,
+    };
+    writeCourseState(stateKey,state);
+    emitCourseEvent(eventName,{key:stateKey,questionType:normalizedType,state});
   }
 
-  useEffect(() => {
-    if (!stateKey || pptShort) return;
-    let active = true;
-    void getTelemetryState<PersistedQuestionState>(stateKey).then(async (entry) => {
-      if (!active || !entry?.state) return;
-      const restoredSelected = Array.isArray(entry.state.selected_values) ? entry.state.selected_values.filter((value): value is string => typeof value === 'string') : [];
-      const restoredFields = Array.isArray(entry.state.answer_fields) ? entry.state.answer_fields.map((field) => String(field?.value ?? '')) : [];
-      if (restoredSelected.length) setSelected(restoredSelected);
-      if (restoredFields.length) setFields(restoredFields);
-      const restoredAnswers = restoredSelected.length ? restoredSelected : restoredFields;
-      const wasSubmitted = entry.state.submitted ?? (entry.event_name === 'answer_submit' || (instant && entry.event_name === 'answer_select'));
-      const storedResult = entry.state.result;
-      if (wasSubmitted && storedResult) {
-        const restoredResult: QuestionCheckResult = {
-          ok: storedResult.ok === true,
-          empty: storedResult.empty,
-          answer: Array.isArray(storedResult.answer) ? storedResult.answer.map(String) : restoredAnswers,
-          tone: storedResult.tone,
-          message: storedResult.message ?? (storedResult.ok ? feedback.correct ?? '回答正确。' : optionFeedback(options, restoredAnswers, expected, multiple, feedback.wrong ?? '再检查一下。', textVariant)),
-        };
-        setResult(restoredResult);
-        onCheck?.(restoredResult);
-        return;
-      }
-
-      const restoredEmpty = restoredAnswers.every((value) => !value.trim());
-      if (wasSubmitted && normalizedType === 'short') {
-        const submittedResult: QuestionCheckResult = { ok: false, empty: restoredEmpty, answer: restoredAnswers, tone: 'hint' };
-        onCheck?.(submittedResult);
-        if (!restoredEmpty && reviewAnswer) {
-          setIsReviewing(true);
-          try {
-            const reviewed = await reviewAnswer(restoredAnswers);
-            if (!active) return;
-            const repairedResult: QuestionCheckResult = { ok: reviewed.ok, empty: false, answer: restoredAnswers, tone: reviewed.tone, message: reviewed.message };
-            setResult(repairedResult);
-            onCheck?.(repairedResult);
-            emitAnswer('question_state_restore', restoredAnswers, repairedResult);
-          } catch {
-            if (!active) return;
-            setResult({ ok: false, empty: false, answer: restoredAnswers, tone: 'wrong', message: '此前的评阅结果没有被旧版本保存，评阅服务目前也不可用。' });
-          } finally {
-            if (active) setIsReviewing(false);
-          }
-        }
-        return;
-      }
-
-      const normalizedRestored = restoredAnswers.map(normalize);
-      const locallyCorrect = multiple
-          ? normalizedRestored.filter(Boolean).sort().join('|') === expected.slice().sort().join('|')
-          : normalizedRestored.length === expected.length && normalizedRestored.every((value, index) => value === expected[index]);
-      const restoredCorrect = entry.state.correct ?? (wasSubmitted ? locallyCorrect : null);
-      if (wasSubmitted || restoredCorrect !== null) {
-        const restoredResult: QuestionCheckResult = {
-          ok: restoredCorrect === true,
-          empty: restoredEmpty,
-          answer: restoredAnswers,
-          tone: restoredCorrect ? 'correct' : normalizedType === 'short' ? 'hint' : 'wrong',
-          message: restoredCorrect ? feedback.correct ?? '回答正确。' : optionFeedback(options, restoredAnswers, expected, multiple, feedback.wrong ?? '再检查一下。', textVariant),
-        };
-        setResult(restoredResult);
-        onCheck?.(restoredResult);
-      }
-    });
-    return () => { active = false; };
-  }, [stateKey, pptShort]);
+  useEffect(()=>{
+    if(pptShort)return;
+    const state=readCourseState<QuestionState>(stateKey);
+    if(!state||!Array.isArray(state.selectedValues)||!state.selectedValues.every(value=>typeof value==='string')||
+       !Array.isArray(state.answerFields)||!state.answerFields.every(value=>typeof value==='string'))return;
+    setSelected(state.selectedValues);setFields(state.answerFields);
+    if(state.result&&typeof state.result.ok==='boolean'&&Array.isArray(state.result.answer)){
+      setResult(state.result);onCheck?.(state.result);
+    }
+  },[stateKey,pptShort]);
 
   async function check(candidateAnswers: string[] = answerValues) {
     const normalizedAnswers = candidateAnswers.map(normalize);
@@ -353,7 +271,6 @@ export function Question({
       data-submit-mode={instant ? 'instant' : 'manual'}
       data-question-mode={normalizedType === 'short' ? pptShort ? 'ppt-reveal' : 'guide-submit' : undefined}
       data-state-key={stateKey}
-      data-telemetry-manual
       onBlurCapture={(event) => {
         const target = event.target;
         if (pptShort || !(target instanceof Element) || !target.matches('[data-role="question-answer"]') || result) return;

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, ContentBlock, Typography } from '../../shared/react';
+import { Button, ContentBlock, Typography } from "@shuku/course-style/react";
 import { SHARED_WINDOW_UPDATE, SINGLE_WINDOW_UPDATE, UPDATE_KERNEL, UPDATE_RATE, UPDATE_TARGET, traceKernelUpdate } from '../services/convolutionUpdateWalkthrough';
 import '../pages/ConvolutionBackpropPage/ConvolutionBackpropPage.css';
 

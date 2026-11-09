@@ -1,5 +1,5 @@
 import { useMemo, useRef, type CSSProperties, type PointerEvent } from 'react';
-import { Button, EChartsChart, Typography } from '../../../shared/react';
+import { Button, EChartsChart, Typography } from "@shuku/course-style/react";
 import { EPSILON_FLOOR, SCHEDULE_EPISODES, epsilonAt, normalizeSchedule, rollingReturns, type EpsilonSchedule, type ScheduleRun } from './epsilonSimulation';
 
 const GRID = { left: 64, right: 28, top: 20, bottom: 36 };

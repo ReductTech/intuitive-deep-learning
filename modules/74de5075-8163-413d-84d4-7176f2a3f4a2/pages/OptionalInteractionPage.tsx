@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Typography, MathFormulaBlock, MathFormulaStatic } from '../../shared/react';
+import { Typography, MathFormulaBlock, MathFormulaStatic } from "@shuku/course-style/react";
 import './OptionalInteractionPage.css';
 
 function Weight({ index }: { index:number }) { return <Typography as="span" variant="h2" tone="inherit" className="cg-optional-weight"><i>w</i><sub>{index+1}</sub></Typography>; }

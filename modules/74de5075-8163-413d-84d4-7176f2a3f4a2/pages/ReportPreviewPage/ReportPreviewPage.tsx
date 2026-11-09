@@ -1,5 +1,5 @@
 import { ArrowRight } from 'lucide-react';
-import { ContentBlock, Typography } from '../../../shared/react';
+import { ContentBlock, Typography } from "@shuku/course-style/react";
 import outline from '../../outlines.json';
 import './ReportPreviewPage.css';
 

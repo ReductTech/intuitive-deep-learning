@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react';
-import { withAssetResources } from '../../shared/react/withAssetResources';
+import { withAssetResources } from "@shuku/course-style/react/withAssetResources";
 import { atlasRegion, atlasSheetUrl, atlasIndex } from '../services/imageAtlas';
 type Props={src:string;alt:string;className?:string;style?:CSSProperties;onError?:()=>void};
 /** SVG viewBox crops a shared sheet without resampling the source pixels. */

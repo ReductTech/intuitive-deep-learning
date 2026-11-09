@@ -3,7 +3,7 @@ import ufoAsset1 from '../../../../../assets/workflow/convolution-course/layerd_
 import pillarAsset2 from '../../../../../assets/workflow/convolution-course/layerd_scene/pillar.png';
 import dark_foliageAsset3 from '../../../../../assets/workflow/convolution-course/layerd_scene/dark_foliage.png';
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from 'react';
-import { ContentBlock, Typography } from '../../../../../../shared/react';
+import { ContentBlock, Typography } from "@shuku/course-style/react";
 import './TranslationEquivariancePage.css';
 
 const backgroundUrl = bgAsset0;

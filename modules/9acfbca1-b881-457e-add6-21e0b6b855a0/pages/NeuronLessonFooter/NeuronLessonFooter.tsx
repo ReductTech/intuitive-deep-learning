@@ -1,5 +1,5 @@
 import { createElement, useEffect, useState } from 'react';
-import { ContentBlock, CourseEndingPage, moduleAssetUrl, Typography } from '../../../shared/react';
+import { ContentBlock, CourseEndingPage, moduleAssetUrl, Typography } from "@shuku/course-style/react";
 import './NeuronLessonFooter.css';
 
 const videos = [
@@ -46,8 +46,8 @@ export function NeuronLessonFooter() {
   );
 }
 
-const neuronModelUrl = moduleAssetUrl('9acfbca1-b881-457e-add6-21e0b6b855a0', 'multipolar_neuron.glb');
-const modelViewerModuleUrl = new URL('../../../shared/vendor/model-viewer/3.5.0/model-viewer.min.js', import.meta.url).href;
+const neuronModelUrl = moduleAssetUrl('multipolar_neuron.glb');
+const modelViewerModuleUrl = new URL("@shuku/course-style/vendor/model-viewer/3.5.0/model-viewer.min.js", import.meta.url).href;
 
 export function NeuronModelViewer() {
   const [failed, setFailed] = useState(false);

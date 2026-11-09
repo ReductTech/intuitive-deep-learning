@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
-import { ContentBlock, moduleAssetUrl, Typography } from '../../../shared/react';
+import { ContentBlock, moduleAssetUrl, Typography } from "@shuku/course-style/react";
 import { useGomokuOutcome } from '../../LessonContext';
 import './KernelBasicsPage.css';
 
 const moduleAssetId = '38cd1c79-d8b7-462a-b208-a567c5cd89c4';
-const cityImage = moduleAssetUrl(moduleAssetId, 'mengdelian.jpg');
-const bridgeImage = moduleAssetUrl(moduleAssetId, 'xielaqiao.jpg');
+const cityImage = moduleAssetUrl('mengdelian.jpg');
+const bridgeImage = moduleAssetUrl('xielaqiao.jpg');
 
 const GRID_WIDTH = 16;
 const GRID_HEIGHT = 9;

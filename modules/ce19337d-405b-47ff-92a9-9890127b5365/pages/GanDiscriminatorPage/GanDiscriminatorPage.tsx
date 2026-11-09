@@ -1,6 +1,6 @@
 import { useLecturePlayback } from '../../components/LecturePlayback';
 import { useEffect, useId, useMemo, useRef } from 'react';
-import { ContentBlock, Typography } from '../../../shared/react';
+import { ContentBlock, Typography } from "@shuku/course-style/react";
 import { useDiagramAsset } from '../../components/useDiagramAsset';
 import '../GanOverviewPage/GanOverviewPage.css';
 import './GanDiscriminatorPage.css';

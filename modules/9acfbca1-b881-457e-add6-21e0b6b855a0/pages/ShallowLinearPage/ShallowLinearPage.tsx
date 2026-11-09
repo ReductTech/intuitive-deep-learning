@@ -1,6 +1,6 @@
 import { useMemo, useRef, useState } from 'react';
 import "./ShallowLinearPage.css";
-import { Button, ContentBlock, NoticeStrip, Typography } from '../../../shared/react';
+import { Button, ContentBlock, NoticeStrip, Typography } from "@shuku/course-style/react";
 import {
   SHALLOW_SERIES_COLORS,
   ShallowOutputPlot,

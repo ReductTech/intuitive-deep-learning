@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Button, ContentBlock, Select, Typography } from '../../shared/react';
+import { Button, ContentBlock, Select, Typography } from "@shuku/course-style/react";
 import { DesignComparisonHeader } from '../components/DesignComparisonHeader';
 import { correlate, formatResponse, initialSettings, inputPattern, kernels, type Settings } from '../components/disclosure/convolutionExperiment';
 import './ProgressiveDisclosurePage.css';

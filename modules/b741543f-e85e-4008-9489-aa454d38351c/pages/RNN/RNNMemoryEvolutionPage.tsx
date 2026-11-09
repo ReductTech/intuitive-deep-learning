@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { Button, ContentBlock, Typography } from '../../../shared/react';
+import { Button, ContentBlock, Typography } from "@shuku/course-style/react";
 import { RNNMemory3DEvolution } from './RNNMemory3DEvolution';
 import './RNNMemoryEvolutionPage.css';
 

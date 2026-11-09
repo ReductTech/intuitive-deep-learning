@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { Button, ContentBlock, TextInput, Typography } from '../../../shared/react';
+import { Button, ContentBlock, TextInput, Typography } from "@shuku/course-style/react";
 import { DishIcon, type DishId } from './DishIcon';
 import { WeatherIcon, type WeatherId } from './WeatherIcon';
 import './RNNMatrixComputationPage.css';

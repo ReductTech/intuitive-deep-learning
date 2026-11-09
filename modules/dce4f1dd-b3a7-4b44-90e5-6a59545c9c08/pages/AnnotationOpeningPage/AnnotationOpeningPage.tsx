@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Question, Typography } from '../../../shared/react';
+import { Button, Question, Typography } from "@shuku/course-style/react";
 import './AnnotationOpeningPage.css';
 import outline from '../../outlines.json';
 import { photoUrl } from '../../data';

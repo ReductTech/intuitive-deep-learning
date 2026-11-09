@@ -1,5 +1,5 @@
 import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
-import { ContentBlock, Button, MathFormulaBlock, MathFormulaStatic, RangeControl, Typography } from '../../../shared/react';
+import { ContentBlock, Button, MathFormulaBlock, MathFormulaStatic, RangeControl, Typography } from "@shuku/course-style/react";
 import { useAttentionLesson } from '../../model/AttentionLessonContext';
 import { computeDotProduct, hasCompletedDotProduct, type DotProductAction } from '../../model/dotProduct';
 import { QKV_TASKS } from '../../model/qkvRole';

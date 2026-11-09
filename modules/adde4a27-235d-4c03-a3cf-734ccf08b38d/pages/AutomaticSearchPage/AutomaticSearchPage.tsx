@@ -1,6 +1,6 @@
 import { ArrowRight, CheckOne } from '@icon-park/react';
 import { useEffect, useMemo, useState } from 'react';
-import { Button, ContentBlock, EChartsChart, MathFormulaBlock, MathFormulaStatic, Typography } from '../../../shared/react';
+import { Button, ContentBlock, EChartsChart, MathFormulaBlock, MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import { useRecordedData, type RecordedObservation } from '../../regressionData';
 import './AutomaticSearchPage.css';
 

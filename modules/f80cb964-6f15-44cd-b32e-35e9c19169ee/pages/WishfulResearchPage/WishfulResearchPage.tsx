@@ -1,5 +1,5 @@
 import { useId } from 'react';
-import { ContentBlock, Typography, moduleAssetUrl } from '../../../shared/react';
+import { ContentBlock, Typography, moduleAssetUrl } from "@shuku/course-style/react";
 import outline from '../../outlines.json';
 import './WishfulResearchPage.css';
 
@@ -7,7 +7,7 @@ export function WishfulResearchPage() {
   const marker = useId().replaceAll(':', '');
   return (
     <ContentBlock title={outline.pages.find(page => page.id === 'd98982d4-186a-4307-93c4-d5a1e2be2625')!.title} subtitle="提出研究目标，期待 AI 推进研究过程" headingLevel={1} className="rie-wishful" data-scene-id="d98982d4-186a-4307-93c4-d5a1e2be2625">
-      <img className="rie-wishful-art" src={moduleAssetUrl(outline.moduleIdentity.id, 'images/wishful-research-art-v1.jpg')} alt="左侧的想法笔记，中间整合的文献与研究计划，右侧的结果报告" />
+      <img className="rie-wishful-art" src={moduleAssetUrl('images/wishful-research-art-v1.jpg')} alt="左侧的想法笔记，中间整合的文献与研究计划，右侧的结果报告" />
       <svg className="rie-wishful-connections" viewBox="0 0 1600 900" aria-hidden="true">
         <defs><marker id={`${marker}-arrow`} viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#27446e" /></marker></defs>
         {['M476 480h40', 'M1138 480h54'].map(path => <path key={path} d={path} fill="none" stroke="#27446e" strokeWidth="4" markerEnd={`url(#${marker}-arrow)`} />)}

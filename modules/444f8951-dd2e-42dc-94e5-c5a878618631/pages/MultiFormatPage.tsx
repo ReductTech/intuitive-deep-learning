@@ -3,7 +3,7 @@ import board_as_numbersAsset1 from '../assets/images/multi-format/convolution/bo
 import window_scanAsset2 from '../assets/images/multi-format/convolution/window-scan.jpg';
 import kernel_designAsset3 from '../assets/images/multi-format/convolution/kernel-design.jpg';
 import { useEffect, useRef, useState, type ReactNode, type MouseEvent } from 'react';
-import { Button, ContentBlock, Typography } from '../../shared/react';
+import { Button, ContentBlock, Typography } from "@shuku/course-style/react";
 import { NativeStudyPreview } from '../components/NativeStudyPreview';
 import './MultiFormatPage.css';
 

@@ -1,5 +1,5 @@
 import { useState, type CSSProperties, type ReactNode } from 'react';
-import { Button } from '../../../shared/react/controls/Button';
+import { Button } from "@shuku/course-style/react/controls/Button";
 import { LessonPageFrame } from '../LessonPageFrame';
 import './DecoderVocabularyCard.css';
 interface CompleteProps {

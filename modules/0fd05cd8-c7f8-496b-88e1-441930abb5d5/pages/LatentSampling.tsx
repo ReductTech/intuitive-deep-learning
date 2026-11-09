@@ -1,4 +1,4 @@
-import { Typography } from '../../shared/react/typography/Typography';
+import { Typography } from "@shuku/course-style/react/typography/Typography";
 import { Arrow, Flow, Frame, Latent, Photo, ReferenceVisual, Text } from '../components/Diagrams';
 import { Mission, StoryCaption, useStory } from '../components/Story';
 import { LessonSplit, TeachingPanel } from '../components/TeachingPanel';

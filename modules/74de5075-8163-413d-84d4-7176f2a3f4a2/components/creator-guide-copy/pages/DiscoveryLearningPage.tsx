@@ -1,5 +1,5 @@
 import { useId } from 'react';
-import { Typography, MathFormulaBlock, MathFormulaStatic } from '../../../../shared/react';
+import { Typography, MathFormulaBlock, MathFormulaStatic } from "@shuku/course-style/react";
 import './DiscoveryLearningPage.css';
 function Formula({latex,label}:{latex:string;label:string}){return <MathFormulaBlock appearance="plain" ariaLabel={label}><MathFormulaStatic latex={latex}/></MathFormulaBlock>;}
 function ResidualDiagram({teal=false}:{teal?:boolean}){

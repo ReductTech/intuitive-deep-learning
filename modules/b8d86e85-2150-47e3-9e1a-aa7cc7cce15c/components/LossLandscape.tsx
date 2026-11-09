@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { Button, Typography } from '../../shared/react';
+import { Button, Typography } from "@shuku/course-style/react";
 
 export type LossPoint = { w: number; b: number };
 export const lossAt = ({ w, b }: LossPoint) => .7 * w * w + .4 * w * b + 1.2 * b * b;

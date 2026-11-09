@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
-import { ContentBlock, moduleAssetUrl, Typography } from '../../../../../../shared/react';
+import { ContentBlock, moduleAssetUrl, Typography } from "@shuku/course-style/react";
 import { useGomokuOutcome } from '../../LessonContext';
 import {
   BLACK,
@@ -21,7 +21,7 @@ const BOARD_PAD_RATIO = 0.075;
 /** 棋盘上的星位：天元与四个星点。 */
 const STAR_POINTS: ReadonlyArray<readonly [number, number]> = [[3, 3], [3, 11], [7, 7], [11, 3], [11, 11]];
 const boardBackgroundStyle = {
-  '--spp-copy-numbers-background': `url("${moduleAssetUrl('74de5075-8163-413d-84d4-7176f2a3f4a2', 'workflow/convolution-course/bg1.jpg')}")`,
+  '--spp-copy-numbers-background': `url("${moduleAssetUrl('workflow/convolution-course/bg1.jpg')}")`,
 } as CSSProperties;
 
 /** 棋盘坐标轴：列用 A–O，行用 1–15，和右边矩阵的行列索引一致。 */

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, RangeControl, Question, Typography } from '../../../shared/react';
+import { Button, RangeControl, Question, Typography } from "@shuku/course-style/react";
 import { LessonPage } from '../../components/LessonPage';
 import { NoisyPhoto } from '../../components/NoisyPhoto';
 import './AppearanceAugmentationPage.css';

@@ -1,6 +1,6 @@
 import { memo, useEffect, useRef, useState, type CSSProperties } from 'react';
 import { BookOpen, FileText, MessageSquare } from 'lucide-react';
-import { Typography } from '../../../shared/react';
+import { Typography } from "@shuku/course-style/react";
 import './UserFoundationPage.css';
 
 const END = 7200;

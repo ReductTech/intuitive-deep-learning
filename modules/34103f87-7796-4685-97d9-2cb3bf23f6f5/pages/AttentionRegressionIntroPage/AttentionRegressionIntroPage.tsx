@@ -1,5 +1,5 @@
 import { useLayoutEffect, useRef, useState } from 'react';
-import { Button, ContentBlock, Feedback, MathFormulaStatic, Question, RangeControl, Typography, type QuestionCheckResult } from '../../../shared/react';
+import { Button, ContentBlock, Feedback, MathFormulaStatic, Question, RangeControl, Typography, type QuestionCheckResult } from "@shuku/course-style/react";
 import { useActivityState, type ActivityProps } from '../../components/AttentionActivity';
 import { useRegressionPage } from '../../components/useRegressionPage';
 import { RegressionPlot } from '../../components/RegressionPlot';

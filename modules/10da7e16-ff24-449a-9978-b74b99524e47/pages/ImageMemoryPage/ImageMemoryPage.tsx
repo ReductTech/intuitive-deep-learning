@@ -1,10 +1,10 @@
 import moduleAssetOutline from '../../outlines.json';
-import { moduleAssetUrl } from '../../../shared/react/assets';
+import { moduleAssetUrl } from "@shuku/course-runtime/react/assets";
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { ContentBlock, Typography } from '../../../shared/react';
+import { ContentBlock, Typography } from "@shuku/course-style/react";
 import './ImageMemoryPage.css';
 
-const photo = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/digital-image-cat-scene.jpg');
+const photo = moduleAssetUrl('images/digital-image-cat-scene.jpg');
 const WIDTH = 600, HEIGHT = 450, COLS = 6, ROWS = 4;
 const clamp = (v: number, max: number) => Math.max(0, Math.min(max - 1, v));
 type Point = { x: number; y: number };

@@ -1,7 +1,7 @@
 import { useId, type CSSProperties, type ReactNode } from 'react';
-import { ContentBlock } from '../../shared/react/layout/ContentBlock';
-import { Typography } from '../../shared/react/typography/Typography';
-import { MathFormulaBlock, MathFormulaStatic } from '../../shared/react/learning/MathFormulaBlock';
+import { ContentBlock } from "@shuku/course-style/react/layout/ContentBlock";
+import { Typography } from "@shuku/course-style/react/typography/Typography";
+import { MathFormulaBlock, MathFormulaStatic } from "@shuku/course-style/react/learning/MathFormulaBlock";
 import { courseAssetUrl } from '../assets';
 import outline from '../outlines.json';
 import './Diagrams.css';

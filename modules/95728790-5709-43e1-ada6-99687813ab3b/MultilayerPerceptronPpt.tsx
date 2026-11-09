@@ -3,7 +3,7 @@ import { ProbabilityMappingPage } from './pages/ProbabilityMappingPage/Probabili
 import { ProbabilityLogOddsPage } from './pages/ProbabilityLogOddsPage/ProbabilityLogOddsPage';
 import { SigmoidPage } from './pages/SigmoidPage/SigmoidPage';
 import { TitanicTrainingPage } from './pages/TitanicTrainingPage/TitanicTrainingPage';
-import { SceneDeck, type DeckDefinition } from '../shared/react/presentation';
+import { SceneDeck, type DeckDefinition } from "@shuku/course-style/react/presentation";
 import outline from './outlines.json';
 export const deck: DeckDefinition = {
   id:'multilayer-perceptron', title:'多层感知机', subtitle:'分类概率与参数学习 · 当前展示5页',

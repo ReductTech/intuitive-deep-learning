@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import { moduleAssetUrl } from '../../../shared/react';
+import { moduleAssetUrl } from "@shuku/course-style/react";
 import { EXIT, START, PICKUPS, BRIDGES, WORLD_WIDTH, WORLD_DEPTH, landHeight, terrainHeight, riverX, distance, forest, type Point } from '../../model';
 
 const clock = { value: 0 };
@@ -50,7 +50,7 @@ function ruin(parent:THREE.Object3D,x:number,z:number,angle:number) {
 type Placement={id?:string;x:number;z:number;height:number;angle:number;tint?:THREE.Color};
 async function instances(parent:THREE.Object3D,name:string,ext:string,items:Placement[],nature=false, refs?:Map<string,{batch:THREE.InstancedMesh;index:number;matrix:THREE.Matrix4}[]>) {
  if(!items.length)return;
- const gltf=await new GLTFLoader().loadAsync(moduleAssetUrl(uuid,`evacuation/models/${name}.${ext}`));const source=gltf.scene;source.updateMatrixWorld(true);
+ const gltf=await new GLTFLoader().loadAsync(moduleAssetUrl(`evacuation/models/${name}.${ext}`));const source=gltf.scene;source.updateMatrixWorld(true);
  const bounds=new THREE.Box3().setFromObject(source),size=bounds.getSize(new THREE.Vector3()),center=bounds.getCenter(new THREE.Vector3());
  const normalize=new THREE.Matrix4().makeTranslation(-center.x,-bounds.min.y,-center.z);const dummy=new THREE.Object3D();
  source.traverse(object=>{if(!(object instanceof THREE.Mesh))return;const geometry=object.geometry.clone();geometry.applyMatrix4(object.matrixWorld);geometry.applyMatrix4(normalize);

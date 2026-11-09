@@ -1,15 +1,15 @@
 import moduleAssetOutline from '../../outlines.json';
-import { moduleAssetUrl } from '../../../shared/react/assets';
+import { moduleAssetUrl } from "@shuku/course-runtime/react/assets";
 import { useMemo, useRef, useState } from 'react';
-import { Button, ContentBlock, Typography } from '../../../shared/react';
+import { Button, ContentBlock, Typography } from "@shuku/course-style/react";
 import './ConditionalSamplingPage.css';
 
-const sampleOne = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/conditional-sampling/sample-1.jpg');
-const sampleTwo = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/conditional-sampling/sample-2.jpg');
-const sampleThree = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/conditional-sampling/sample-3.jpg');
-const sampleFour = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/conditional-sampling/sample-4.jpg');
-const sampleFive = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/conditional-sampling/sample-5.jpg');
-const sampleSix = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/conditional-sampling/sample-6.jpg');
+const sampleOne = moduleAssetUrl('images/conditional-sampling/sample-1.jpg');
+const sampleTwo = moduleAssetUrl('images/conditional-sampling/sample-2.jpg');
+const sampleThree = moduleAssetUrl('images/conditional-sampling/sample-3.jpg');
+const sampleFour = moduleAssetUrl('images/conditional-sampling/sample-4.jpg');
+const sampleFive = moduleAssetUrl('images/conditional-sampling/sample-5.jpg');
+const sampleSix = moduleAssetUrl('images/conditional-sampling/sample-6.jpg');
 
 type ConditionId = 'grass' | 'small' | 'fluffy';
 

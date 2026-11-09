@@ -1,4 +1,4 @@
-import {Typography} from '../../shared/react';
+import {Typography} from "@shuku/course-style/react";
 import {RefinedStage} from '../components/RefinedStage';
 import {DataTable} from '../components/DataTable';
 import './LlmPage.css';

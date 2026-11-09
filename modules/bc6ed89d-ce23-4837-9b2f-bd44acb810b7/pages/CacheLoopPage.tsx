@@ -1,5 +1,5 @@
 import { useEffect, useId, useState } from 'react';
-import { Button, Typography } from '../../shared/react';
+import { Button, Typography } from "@shuku/course-style/react";
 import './CacheLoopPage.css';
 
 const TOKENS = ['我', '爱', '学', '习', '新'];

@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { Button, TextInput, Typography, moduleAssetUrl } from '../../../shared/react';
+import { Button, TextInput, Typography, moduleAssetUrl } from "@shuku/course-style/react";
 import { moduleIdentity } from '../../outlines.json';
 import { ObservationVideo } from './ObservationVideo';
 import { writeObservationRecord, freshObservationRecord, readObservationRecord, type ObservationRecord } from './observationRecord';
 import './AttentionGorillaExperimentPage.css';
 
-const posterUrl = moduleAssetUrl(moduleIdentity.id, 'observation/passing-poster.png');
+const posterUrl = moduleAssetUrl('observation/passing-poster.png');
 // Verified against the author's upload on 2026-11-04. The count answer starts at
 // 41s, and the explicit reveal is at 45s; stop BEFORE both, then unmount the player.
 const CLIP_START = 12;

@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
-import { emitTelemetry, getTelemetryState } from '../telemetry';
+import {emitCourseEvent} from '../courseRequests';
+import {readCourseState,writeCourseState} from '../courseState';
 import { Typography } from '../typography/Typography';
 
 export type PageRatingValue = 1 | 2 | 3 | 4 | 5;
 
 export interface PageRatingProps {
-  pageKey?: string;
+  pageKey: string;
 }
 
 /** A compact end-of-page signal. The submitted choice is also emitted as `page_rating`. */
@@ -13,24 +14,21 @@ export function PageRating({ pageKey }: PageRatingProps) {
   const rootRef = useRef<HTMLElement>(null);
   const [rating, setRating] = useState<PageRatingValue | null>(null);
   const [preview, setPreview] = useState<PageRatingValue | null>(null);
-  const stateKey = `page-rating:${pageKey || window.location.pathname}`;
+  const stateKey = `page-rating:${pageKey}`;
 
   useEffect(() => {
-    let active = true;
-    void getTelemetryState<{ rating?: number }>(stateKey).then((entry) => {
-      const restored = Number(entry?.state?.rating);
-      if (active && restored >= 1 && restored <= 5) setRating(restored as PageRatingValue);
-    });
-    return () => { active = false; };
+    const restored=readCourseState<{rating:number}>(stateKey)?.rating;
+    if(typeof restored==='number'&&Number.isInteger(restored)&&restored>=1&&restored<=5)setRating(restored as PageRatingValue);
   }, [stateKey]);
 
   const submit = (value: PageRatingValue) => {
     if (rating) return;
     setRating(value);
-    emitTelemetry('page_rating', rootRef.current, {
+    writeCourseState(stateKey,{rating:value});
+    emitCourseEvent('page_rating', {
       state_key: stateKey,
       state: { rating: value },
-      page_key: pageKey || window.location.pathname,
+      page_key: pageKey,
       rating: value,
     });
   };
@@ -50,7 +48,6 @@ export function PageRating({ pageKey }: PageRatingProps) {
                 role="radio"
                 aria-checked="false"
                 aria-label={`${value} 星评分`}
-                data-telemetry-manual
                 key={value}
                 onPointerEnter={() => setPreview(value)}
                 onPointerLeave={() => setPreview(null)}

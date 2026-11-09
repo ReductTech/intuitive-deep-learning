@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { ContentBlock, MathFormulaBlock, MathFormulaTerm, Typography } from '../../../shared/react';
+import { ContentBlock, MathFormulaBlock, MathFormulaTerm, Typography } from "@shuku/course-style/react";
 import { at, components, HEIGHT, makeSource, morph, transform, WIDTH, type Operation } from './morphologyModel';
 import './MorphologyComponentsPage.css';
 const modes:[Operation,string][]=[['erode','腐蚀'],['dilate','膨胀'],['open','开运算'],['close','闭运算']];

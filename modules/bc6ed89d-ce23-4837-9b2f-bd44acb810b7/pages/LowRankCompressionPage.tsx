@@ -1,5 +1,5 @@
 import { useRef, useState, type ReactNode } from 'react';
-import { Button, MathFormulaStatic, Typography } from '../../shared/react';
+import { Button, MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import './LowRankCompressionPage.css';
 import './GuidedLowRankPage.css';
 

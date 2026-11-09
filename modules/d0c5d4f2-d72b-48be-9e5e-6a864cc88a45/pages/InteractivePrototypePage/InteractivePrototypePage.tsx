@@ -1,4 +1,4 @@
-import { ContentBlock, MathFormulaStatic, RangeControl, Typography } from '../../../shared/react';
+import { ContentBlock, MathFormulaStatic, RangeControl, Typography } from "@shuku/course-style/react";
 import outline from '../../outlines.json';
 import { PlaybackBar, usePlayback } from '../../Playback';
 import { WeightSharingScene } from './WeightSharingScene';

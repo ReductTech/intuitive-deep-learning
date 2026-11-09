@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { CourseEndingPage, type LessonFlowRevealMode, type LessonStepContext } from '../../../../../../shared/react';
+import { CourseEndingPage, type LessonFlowRevealMode, type LessonStepContext } from "@shuku/course-style/react";
 import { GomokuPlayPage } from './pages/GomokuPlayPage/GomokuPlayPage';
 import { BoardAsNumbersPage } from './pages/BoardAsNumbersPage/BoardAsNumbersPage';
 import { WindowScanPage } from './pages/WindowScanPage/WindowScanPage';

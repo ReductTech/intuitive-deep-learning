@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Button, Typography } from '../../shared/react';
+import { Button, Typography } from "@shuku/course-style/react";
 
 /** Time advances the explanation; scrolling only determines whether it is being read. */
 export function useLecturePlayback(count: number, dwell = 1000, waitAt?: number) {

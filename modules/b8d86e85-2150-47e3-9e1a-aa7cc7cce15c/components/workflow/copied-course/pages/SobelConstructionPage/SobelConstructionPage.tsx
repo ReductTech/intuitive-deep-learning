@@ -1,6 +1,6 @@
 import { useEffect, useState, type ReactNode } from 'react';
 import { Light } from '@icon-park/react';
-import { ContentBlock, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, Switch, Typography } from '../../../../../../shared/react';
+import { ContentBlock, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, Switch, Typography } from "@shuku/course-style/react";
 import './SobelConstructionPage.css';
 
 const SOBEL_X = [[-1, 0, 1], [-2, 0, 2], [-1, 0, 1]];

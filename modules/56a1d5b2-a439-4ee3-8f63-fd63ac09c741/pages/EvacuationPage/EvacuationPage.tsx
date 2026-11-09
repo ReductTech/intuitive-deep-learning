@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState, type KeyboardEvent } from 'react';
-import { Button, Typography } from '../../../shared/react';
+import { Button, Typography } from "@shuku/course-style/react";
 import { canRescue, distance, advanceGame, nearbyLoot, startSearch, toggleScan, shockwave, requestRescue, MAX_JUMP, movePlayer, newGame, PICKUPS, radiation, saveRun, type GameState, type Point } from '../../model';
 import { createScene, type SceneAPI } from './scene';
 import { GameAudio } from './audio';

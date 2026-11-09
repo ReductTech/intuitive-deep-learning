@@ -1,5 +1,5 @@
 import { useState, type CSSProperties } from 'react';
-import { ContentBlock, MathFormulaStatic, Typography } from '../../../../../../shared/react';
+import { ContentBlock, MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import './WeightedKernelPage.css';
 
 const KERNEL = [[1, -1], [1, -1]];

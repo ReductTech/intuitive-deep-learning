@@ -1,6 +1,6 @@
 import { useEffect, useId, useRef, useState, type CSSProperties } from 'react';
 import { BrainCircuit } from 'lucide-react';
-import { Typography, moduleAssetUrl } from '../../../shared/react';
+import { Typography, moduleAssetUrl } from "@shuku/course-style/react";
 import outline from '../../outlines.json';
 import './PdfVisualExtractionPage.css';
 import { useRecordingDemo } from '../../components/RecordingDemo';
@@ -14,7 +14,7 @@ const crops=[
 export function Figure({index}:{index:number}){
  const clipId=useId();
  const [x,y,w,h]=crops[index];
- return <div className="rf-pve-figure" data-ppt-viewport="候选论文图表示例裁切" style={{aspectRatio:`${w}/${h}`}}><svg width="100%" height="100%" viewBox={`${x} ${y} ${w} ${h}`} role="img" aria-label={`候选图表 ${index+1} 示例`}><defs><clipPath id={clipId}><rect x={x} y={y} width={w} height={h}/></clipPath></defs><image clipPath={`url(#${clipId})`} href={moduleAssetUrl(outline.moduleIdentity.id,'images/recommendation-app/feed-reference.jpg')} width="1129" height="9064"/></svg></div>;
+ return <div className="rf-pve-figure" data-ppt-viewport="候选论文图表示例裁切" style={{aspectRatio:`${w}/${h}`}}><svg width="100%" height="100%" viewBox={`${x} ${y} ${w} ${h}`} role="img" aria-label={`候选图表 ${index+1} 示例`}><defs><clipPath id={clipId}><rect x={x} y={y} width={w} height={h}/></clipPath></defs><image clipPath={`url(#${clipId})`} href={moduleAssetUrl('images/recommendation-app/feed-reference.jpg')} width="1129" height="9064"/></svg></div>;
 }
 export function Lines(){return <div className="rf-pve-lines" aria-hidden="true"><i/><i/><i/><i/></div>}
 const fields=['正文与章节','作者与机构','关键词','文章总结'];

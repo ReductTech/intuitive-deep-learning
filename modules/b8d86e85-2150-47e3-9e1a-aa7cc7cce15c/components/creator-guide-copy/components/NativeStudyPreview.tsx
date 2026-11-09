@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
-import { LessonFlow, type LessonFlowStep, type LessonStepContext } from '../../../../shared/react';
+import { LessonFlow, type LessonFlowStep, type LessonStepContext } from "@shuku/course-style/react";
 import { creatorGuideAssetUrl } from '../creatorGuideAssets';
 import { demoOutcome, GomokuLessonProvider, useGomokuOutcome } from './workflow/copied-course/LessonContext';
 import { BoardAsNumbersPage } from './workflow/copied-course/pages/BoardAsNumbersPage/BoardAsNumbersPage';

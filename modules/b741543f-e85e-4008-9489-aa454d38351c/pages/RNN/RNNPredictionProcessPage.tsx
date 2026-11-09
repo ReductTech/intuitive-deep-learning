@@ -1,5 +1,5 @@
 import { type ReactNode, useEffect, useRef, useState } from 'react';
-import { Button, ContentBlock, Typography } from '../../../shared/react';
+import { Button, ContentBlock, Typography } from "@shuku/course-style/react";
 import { DishIcon, type DishId } from './DishIcon';
 import { WeatherIcon } from './WeatherIcon';
 import { ReluGlyph } from './CellChain';

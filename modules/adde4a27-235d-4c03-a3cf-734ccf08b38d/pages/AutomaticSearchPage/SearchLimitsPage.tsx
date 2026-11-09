@@ -1,5 +1,5 @@
 import { useEffect, useId, useMemo, useRef, useState, type PointerEvent } from 'react';
-import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from '../../../shared/react';
+import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import { createSearchSpace, lossColor, SEARCH_STEP_MS, VALUES_PER_PARAMETER, type SearchDimension } from './searchSpace';
 import './SearchLimitsPage.css';
 

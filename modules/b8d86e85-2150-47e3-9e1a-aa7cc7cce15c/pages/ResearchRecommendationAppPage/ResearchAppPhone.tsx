@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { Menu, Search, ThumbsUp, Star, MessageSquare, Share2, ChevronLeft, X, SlidersHorizontal, Wifi, Signal, BatteryMedium, Bell, UserRound, Users, Newspaper, BookOpen, Check, ArrowUpRight } from 'lucide-react';
-import { Typography, moduleAssetUrl } from '../../../shared/react';
+import { Typography, moduleAssetUrl } from "@shuku/course-style/react";
 import outline from '../../outlines.json';
 import { papers, type Paper } from './paperFeedData';
 import './ResearchRecommendationAppPage.css';
@@ -9,7 +9,7 @@ import {useAmbientFeedScroll} from './useAmbientFeedScroll';
 // Reuse only paper figures from the supplied screenshot; feed text and controls remain interactive DOM.
 function Figure({paper}:{paper:Paper}) {
  const [x,y,w,h]=paper.crop;
- return <div className="ra-figure" data-ppt-viewport="论文配图裁切窗口" style={{aspectRatio:`${w}/${h}`}}><img alt={`${paper.title} 论文配图`} draggable={false} src={moduleAssetUrl(outline.moduleIdentity.id,'images/recommendation-app/feed-reference.jpg')} style={{width:`${1129/w*100}%`,left:`${-x/w*100}%`,top:`${-y/h*100}%`}}/></div>;
+ return <div className="ra-figure" data-ppt-viewport="论文配图裁切窗口" style={{aspectRatio:`${w}/${h}`}}><img alt={`${paper.title} 论文配图`} draggable={false} src={moduleAssetUrl('images/recommendation-app/feed-reference.jpg')} style={{width:`${1129/w*100}%`,left:`${-x/w*100}%`,top:`${-y/h*100}%`}}/></div>;
 }
 function browserTime() {
  const now=new Date();
@@ -75,7 +75,7 @@ export function ResearchAppPhone({ initialEntry='research', autoPlaySprout=true 
  </article>}
  return (
   <div className="ra-phone ra-phone--photo" data-app-entry={entry} data-app-area={area} onWheel={e=>e.stopPropagation()} onPointerDown={e=>e.stopPropagation()} onKeyDown={e=>e.stopPropagation()}>
-   <img className="ra-device-photo" src={moduleAssetUrl(outline.moduleIdentity.id,'images/recommendation-app/phone-photoreal.png')} alt="" draggable={false} aria-hidden="true"/>
+   <img className="ra-device-photo" src={moduleAssetUrl('images/recommendation-app/phone-photoreal.png')} alt="" draggable={false} aria-hidden="true"/>
    <div className="ra-screen" data-feed-screen="phone">
     <div className="ra-status"><PhoneTime/><div className="ra-island"/><div className="ra-status-icons"><Signal/><Wifi/><BatteryMedium/></div></div>
     <header className="ra-header"><button aria-label="打开菜单" onClick={()=>setSheet('menu')}><Menu/></button><div className="ra-tabs">{(area==='community'?['发现','关注','新芽','会议']:['热点','发现','关注']).map(t=><button key={t} className={(area==='community'?communityTab===t:tab===t)?'active':''} onClick={()=>{setSheet('');setSearching(false);if(area==='community'){setCommunityTab(t);setEntry(t==='新芽'?'sprout':'research');setNav(t==='会议'?'会议':'社区')}else{setEntry('research');setTab(t);setNav('科技');resetFeed()}}}><Typography as="span" variant="body" tone="inherit">{t}</Typography></button>)}</div><button aria-label="搜索论文" onClick={()=>{setArea('research');setEntry('research');setSearching(!searching)}}><Search/></button></header>
@@ -93,7 +93,7 @@ export function ResearchAppPhone({ initialEntry='research', autoPlaySprout=true 
      </div>
     </div>}
     {toast&&<div className="ra-toast" role="status"><Typography variant="bodySmall" tone="inherit">{toast}</Typography></div>}
-    <nav className="ra-bottom" aria-label="应用导航">{[{name:'科技',icon:Newspaper},{name:'社区',icon:Users},{name:'发现论文',icon:BookOpen},{name:'消息',icon:Bell},{name:'我的',icon:UserRound}].map(({name,icon:Icon},i)=><button key={name} aria-label={name} className={`${(area==='community'?name==='社区':nav===name)?'active':''} ${i===2?'ra-brand':''}`} onClick={()=>{setSheet('');setQuery('');setSearching(false);if(name==='社区'){setArea('community');setCommunityTab('新芽');setEntry('sprout');setNav('社区')}else{setArea('research');setEntry('research');setNav(i===2?'科技':name);if(i===0||i===2)setTab('发现');resetFeed()}}}><>{i===2?<span className="ra-brand-mark"><img src={moduleAssetUrl(outline.moduleIdentity.id,'images/recommendation-app/reduct-mark-white.svg')} alt="减论"/></span>:<Icon/>}</><Typography as="span" variant="bodySmall" tone="inherit">{i===2?'':name}</Typography>{name==='消息'&&<i/>}</button>)}</nav>
+    <nav className="ra-bottom" aria-label="应用导航">{[{name:'科技',icon:Newspaper},{name:'社区',icon:Users},{name:'发现论文',icon:BookOpen},{name:'消息',icon:Bell},{name:'我的',icon:UserRound}].map(({name,icon:Icon},i)=><button key={name} aria-label={name} className={`${(area==='community'?name==='社区':nav===name)?'active':''} ${i===2?'ra-brand':''}`} onClick={()=>{setSheet('');setQuery('');setSearching(false);if(name==='社区'){setArea('community');setCommunityTab('新芽');setEntry('sprout');setNav('社区')}else{setArea('research');setEntry('research');setNav(i===2?'科技':name);if(i===0||i===2)setTab('发现');resetFeed()}}}><>{i===2?<span className="ra-brand-mark"><img src={moduleAssetUrl('images/recommendation-app/reduct-mark-white.svg')} alt="减论"/></span>:<Icon/>}</><Typography as="span" variant="bodySmall" tone="inherit">{i===2?'':name}</Typography>{name==='消息'&&<i/>}</button>)}</nav>
     <div className="ra-home"><i/></div>
    </div>
   </div>

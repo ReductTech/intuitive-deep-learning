@@ -1,5 +1,5 @@
 import { useLayoutEffect, useRef, useState, type PointerEvent } from 'react';
-import { Typography } from '../../../shared/react';
+import { Typography } from "@shuku/course-style/react";
 
 export type MaeStage = 0 | 1 | 2;
 type Frame = { absolute: number; bars: number; mean: number };

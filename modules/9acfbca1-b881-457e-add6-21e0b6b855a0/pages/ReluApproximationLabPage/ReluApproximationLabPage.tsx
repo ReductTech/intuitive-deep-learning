@@ -7,7 +7,7 @@ import {
   type PointerEvent as ReactPointerEvent,
 } from 'react';
 import "./ReluApproximationLabPage.css";
-import { Button, ContentBlock, RangeControl, Typography } from '../../../shared/react';
+import { Button, ContentBlock, RangeControl, Typography } from "@shuku/course-style/react";
 
 interface Point {
   x: number;

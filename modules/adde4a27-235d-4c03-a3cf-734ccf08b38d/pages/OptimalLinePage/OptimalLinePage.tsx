@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { ContentBlock, EChartsChart, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, Typography } from '../../../shared/react';
+import { ContentBlock, EChartsChart, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, Typography } from "@shuku/course-style/react";
 import { useManualFit, useRecordedData } from '../../regressionData';
 import './OptimalLinePage.css';
 

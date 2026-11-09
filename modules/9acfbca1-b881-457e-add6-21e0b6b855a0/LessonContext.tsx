@@ -7,7 +7,7 @@ import {
   useState,
   type ReactNode,
 } from 'react';
-import { emitTelemetry, getTelemetryState } from '../shared/react';
+import { emitTelemetry, getTelemetryState } from "@shuku/course-style/react";
 import type { DecisionAnalysis } from './services/decisionAnalysis';
 
 interface LessonState {

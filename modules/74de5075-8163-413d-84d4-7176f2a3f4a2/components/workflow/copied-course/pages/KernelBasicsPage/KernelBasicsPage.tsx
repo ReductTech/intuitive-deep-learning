@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
-import { ContentBlock, moduleAssetUrl, Typography } from '../../../../../../shared/react';
+import { ContentBlock, moduleAssetUrl, Typography } from "@shuku/course-style/react";
 import { useGomokuOutcome } from '../../LessonContext';
 import './KernelBasicsPage.css';
 
 const moduleAssetId = '74de5075-8163-413d-84d4-7176f2a3f4a2';
-const cityImage = moduleAssetUrl(moduleAssetId, 'workflow/convolution-course/mengdelian.jpg');
-const bridgeImage = moduleAssetUrl(moduleAssetId, 'workflow/convolution-course/xielaqiao.jpg');
+const cityImage = moduleAssetUrl('workflow/convolution-course/mengdelian.jpg');
+const bridgeImage = moduleAssetUrl('workflow/convolution-course/xielaqiao.jpg');
 
 const GRID_WIDTH = 16;
 const GRID_HEIGHT = 9;

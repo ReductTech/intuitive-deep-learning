@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Bike, BusFront, Footprints, RotateCcw, MapPin } from 'lucide-react';
-import { Button, Typography } from '../../../shared/react';
+import { Button, Typography } from "@shuku/course-style/react";
 import './EverydayChoice.css';
 
 type Answer = 'yes' | 'no' | null;

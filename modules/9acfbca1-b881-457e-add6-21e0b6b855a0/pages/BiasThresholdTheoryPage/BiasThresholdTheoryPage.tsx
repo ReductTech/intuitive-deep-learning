@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState, type CSSProperties, type KeyboardEvent as ReactKeyboardEvent, type PointerEvent as ReactPointerEvent } from 'react';
 import './BiasThresholdTheoryPage.css';
-import { ContentBlock, Question, Typography, type QuestionCheckResult } from '../../../shared/react';
+import { ContentBlock, Question, Typography, type QuestionCheckResult } from "@shuku/course-style/react";
 import { formatScore, useLesson, weightedSum } from '../../LessonContext';
 
 const RANGE_MIN = 0;

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
-import { Button, NoticeStrip, TextInput, Typography, type QuestionCheckResult } from '../../../shared/react';
+import { Button, NoticeStrip, TextInput, Typography, type QuestionCheckResult } from "@shuku/course-style/react";
 import { RtgQuestion } from '../../components/RtgQuestion/RtgQuestion';
 import { evaluateAiShortAnswer, type AiShortAnswerEvaluation } from '../../services/aiShortAnswer';
 import './TransferCheckPanel.css';

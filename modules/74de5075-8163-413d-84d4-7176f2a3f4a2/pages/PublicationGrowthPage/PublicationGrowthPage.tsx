@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Button, ContentBlock, RangeControl, Typography } from '../../../shared/react';
+import { Button, ContentBlock, RangeControl, Typography } from "@shuku/course-style/react";
 import outline from '../../outlines.json';
 import { formatSubmissionCount, iclrSubmissions } from './iclrSubmissions';
 import { PaperReliefScene } from './PaperReliefScene';

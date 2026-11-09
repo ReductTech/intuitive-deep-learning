@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from 'react';
-import { ContentBlock, moduleAssetUrl, Typography } from '../../../../../../shared/react';
+import { ContentBlock, moduleAssetUrl, Typography } from "@shuku/course-style/react";
 import './TranslationEquivariancePage.css';
 
 const moduleAssetId = 'b8d86e85-2150-47e3-9e1a-aa7cc7cce15c';
-const backgroundUrl = moduleAssetUrl(moduleAssetId, 'workflow/convolution-course/layerd_scene/bg.jpg');
-const ufoUrl = moduleAssetUrl(moduleAssetId, 'workflow/convolution-course/layerd_scene/ufo.png');
-const pillarUrl = moduleAssetUrl(moduleAssetId, 'workflow/convolution-course/layerd_scene/pillar.png');
-const foliageUrl = moduleAssetUrl(moduleAssetId, 'workflow/convolution-course/layerd_scene/dark_foliage.png');
+const backgroundUrl = moduleAssetUrl('workflow/convolution-course/layerd_scene/bg.jpg');
+const ufoUrl = moduleAssetUrl('workflow/convolution-course/layerd_scene/ufo.png');
+const pillarUrl = moduleAssetUrl('workflow/convolution-course/layerd_scene/pillar.png');
+const foliageUrl = moduleAssetUrl('workflow/convolution-course/layerd_scene/dark_foliage.png');
 
 const MAP_WIDTH = 80;
 const MAP_HEIGHT = 58;

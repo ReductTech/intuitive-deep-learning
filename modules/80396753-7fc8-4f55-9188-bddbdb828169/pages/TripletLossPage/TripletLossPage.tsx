@@ -1,5 +1,5 @@
 import {useEffect,useState} from 'react';
-import {Button,ContentBlock,MathFormulaBlock,MathFormulaStatic,Typography} from '../../../shared/react';
+import {Button,ContentBlock,MathFormulaBlock,MathFormulaStatic,Typography} from "@shuku/course-style/react";
 import {identityExamples,identityPhotoUrl} from '../../components/identityExamples';
 import './TripletLossPage.css';
 

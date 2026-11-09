@@ -1,10 +1,10 @@
 import { moduleIdentity } from '../../outlines.json';
-import { moduleAssetUrl } from '../../../shared/react/assets';
+import { moduleAssetUrl } from "@shuku/course-runtime/react/assets";
 import { useRef, useState } from 'react';
-import { Button, ContentBlock, TextInput, Typography } from '../../../shared/react';
-const appleFruit = moduleAssetUrl(moduleIdentity.id, "apple-fruit.jpg");
-const iphone18Pro = moduleAssetUrl(moduleIdentity.id, "iphone-18-pro.svg");
-const senderAvatar = moduleAssetUrl(moduleIdentity.id, "sender-avatar.jpg");
+import { Button, ContentBlock, TextInput, Typography } from "@shuku/course-style/react";
+const appleFruit = moduleAssetUrl("apple-fruit.jpg");
+const iphone18Pro = moduleAssetUrl("iphone-18-pro.svg");
+const senderAvatar = moduleAssetUrl("sender-avatar.jpg");
 import './RNNMemoryPage.css';
 
 export interface RNNMemoryPageProps {

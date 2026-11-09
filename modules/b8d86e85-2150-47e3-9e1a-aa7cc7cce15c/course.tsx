@@ -23,7 +23,7 @@ import { ConvolutionObservationPage } from './pages/ConvolutionObservationPage/C
 import { ConvolutionDefinitionPage } from './pages/ConvolutionDefinitionPage/ConvolutionDefinitionPage';
 import { ConvolutionWalkthroughPage } from './pages/ConvolutionWalkthroughPage/ConvolutionWalkthroughPage';
 import { CodePracticePage } from './pages/CodePracticePage/CodePracticePage';
-import type { DeckDefinition, SpeakerNote } from '../shared/react/presentation';
+import type { DeckDefinition, SpeakerNote } from "@shuku/course-style/react/presentation";
 import outline from './outlines.json';
 import './CreatorTypography.css';
 import './CourseTypography.css';

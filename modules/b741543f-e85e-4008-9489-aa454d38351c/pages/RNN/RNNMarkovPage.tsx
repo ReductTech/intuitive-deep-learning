@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { Button, ContentBlock, Typography } from '../../../shared/react';
+import { Button, ContentBlock, Typography } from "@shuku/course-style/react";
 import { DishIcon, type DishId } from './DishIcon';
 import './RNNMarkovPage.css';
 

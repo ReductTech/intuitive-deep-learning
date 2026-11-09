@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
-import { Button, Typography, moduleAssetUrl } from '../../../shared/react';
+import { Button, Typography, moduleAssetUrl } from "@shuku/course-style/react";
 import outline from '../../outlines.json';
 import { allocatePaperStacks, readerPose } from './paperStacks';
 import { projectPaperPage } from './paperPerspective';
@@ -8,7 +8,7 @@ const topSheets = ['paper-top-single-a', 'paper-top-double-a',
   'paper-top-single-figure', 'paper-top-double-table'] as const;
 const assets = ['room','desk',...topSheets,'calendar-stand','reader-relaxed','reader-focused','reader-defeated'] as const;
 type Asset = typeof assets[number];
-const image = (name: Asset) => moduleAssetUrl(outline.moduleIdentity.id, `images/research-background/paper-relief/${name === 'room' ? 'room-calm' : name}.png`);
+const image = (name: Asset) => moduleAssetUrl(`images/research-background/paper-relief/${name === 'room' ? 'room-calm' : name}.png`);
 const poseLabels = { relaxed:'挠着后脑勺靠在椅子上', focused:'认真地俯身写字', defeated:'无奈地瘫在椅子上，放弃抵抗' };
 
 export function PaperReliefScene({year,previousYear,count,onReadyChange}:{year:number;previousYear:number|null;count:number;onReadyChange:(ready:boolean)=>void}) {

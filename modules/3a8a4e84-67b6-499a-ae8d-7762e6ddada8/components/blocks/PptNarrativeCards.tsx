@@ -1,6 +1,6 @@
 import { transformerAsset } from '../../assetUrls';
 import { useEffect, useState } from 'react';
-import { Button } from '../../../shared/react/controls/Button';
+import { Button } from "@shuku/course-style/react/controls/Button";
 import { LessonStage } from '../LessonStage';
 import './PptNarrativeCards.css';
 import './PptReviewRefinements.css';

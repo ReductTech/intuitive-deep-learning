@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import "./NeuronDecisionBridgePage.css";
-import { ContentBlock, Typography } from '../../../shared/react';
+import { ContentBlock, Typography } from "@shuku/course-style/react";
 
 const neurons = [
   { label: '发现食物', short: '食物', x: 14, y: 18 },

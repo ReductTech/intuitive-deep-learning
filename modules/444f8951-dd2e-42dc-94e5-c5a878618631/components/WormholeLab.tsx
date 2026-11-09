@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { ExplainPanelButton, MathFormulaBlock, MathFormulaStatic, RangeControl, Typography } from '../../shared/react';
+import { ExplainPanelButton, MathFormulaBlock, MathFormulaStatic, RangeControl, Typography } from "@shuku/course-style/react";
 import { WormholeScene } from './WormholeScene';
 import { PLAYBACK_RATE, TRAVEL_SPEED, matterModel, travelComparison } from './wormholeMatter';
 import './WormholeLab.css';

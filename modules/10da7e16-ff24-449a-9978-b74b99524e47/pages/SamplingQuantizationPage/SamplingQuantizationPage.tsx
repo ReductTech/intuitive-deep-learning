@@ -1,10 +1,10 @@
 import moduleAssetOutline from '../../outlines.json';
-import { moduleAssetUrl } from '../../../shared/react/assets';
+import { moduleAssetUrl } from "@shuku/course-runtime/react/assets";
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { ContentBlock, Typography } from '../../../shared/react';
+import { ContentBlock, Typography } from "@shuku/course-style/react";
 import './SamplingQuantizationPage.css';
 
-const photo = moduleAssetUrl(moduleAssetOutline.moduleIdentity.id, 'images/digital-image-cat-scene.jpg');
+const photo = moduleAssetUrl('images/digital-image-cat-scene.jpg');
 type Raster = { width: number; height: number; data: Uint8ClampedArray };
 type Point = { x: number; y: number };
 type Mode = 'sampling' | 'quantization';

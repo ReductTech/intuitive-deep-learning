@@ -1,5 +1,5 @@
 import { Bean, Sprout, TreeDeciduous } from 'lucide-react';
-import { Typography } from '../../../shared/react';
+import { Typography } from "@shuku/course-style/react";
 import { ResearchAppPhone } from '../../../b8d86e85-2150-47e3-9e1a-aa7cc7cce15c/pages/ResearchRecommendationAppPage/ResearchAppPhone';
 import './SproutLearningPage.css';
 

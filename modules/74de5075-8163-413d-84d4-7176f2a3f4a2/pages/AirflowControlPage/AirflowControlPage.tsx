@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { ArrowRight, Database, GitBranch, Home, Settings } from 'lucide-react';
-import { Typography } from '../../../shared/react';
+import { Typography } from "@shuku/course-style/react";
 import './AirflowControlPage.css';
 import { useClickSteps } from '../../components/useClickSteps';
 

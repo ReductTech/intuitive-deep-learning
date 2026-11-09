@@ -1,4 +1,4 @@
-import { moduleAssetUrl } from '../../../shared/react';
+import { moduleAssetUrl } from "@shuku/course-style/react";
 import { moduleIdentity } from '../../outlines.json';
 import './SppBackgroundPage.css';
 
@@ -11,6 +11,6 @@ const slides = {
 
 export function SppBackgroundPage({ slide }: { slide: keyof typeof slides }) {
   return <section className="spp-background-page" aria-label={slides[slide]}>
-    <img src={moduleAssetUrl(moduleIdentity.id, `images/spp/background/${slide}.jpg`)} alt={slides[slide]} draggable={false}/>
+    <img src={moduleAssetUrl(`images/spp/background/${slide}.jpg`)} alt={slides[slide]} draggable={false}/>
   </section>;
 }

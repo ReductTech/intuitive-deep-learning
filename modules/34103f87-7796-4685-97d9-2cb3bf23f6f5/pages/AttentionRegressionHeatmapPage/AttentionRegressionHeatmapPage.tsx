@@ -1,4 +1,4 @@
-import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, RangeControl, Typography } from '../../../shared/react';
+import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, RangeControl, Typography } from "@shuku/course-style/react";
 import { LessonCheck, useActivityState, type ActivityProps } from '../../components/AttentionActivity';
 import { AttentionHeatmap, WeightStrip } from '../../components/AttentionHeatmap';
 import { useRegressionPage } from '../../components/useRegressionPage';

@@ -6,7 +6,7 @@ import pineappleAsset4 from '../../../../../assets/workflow/convolution-course/p
 import be_cityAsset5 from '../../../../../assets/workflow/convolution-course/be_city.jpg';
 import { useEffect, useRef, useState, type ChangeEvent } from 'react';
 import { Down, Up, UploadPicture } from '@icon-park/react';
-import { ContentBlock, MathFormulaStatic, Typography } from '../../../../../../shared/react';
+import { ContentBlock, MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import './CommonKernelsPage.css';
 
 const buildingImage = xiandaijianzhuAsset0;

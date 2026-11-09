@@ -1,4 +1,4 @@
-import { ContentBlock, Typography } from '../../../shared/react';
+import { ContentBlock, Typography } from "@shuku/course-style/react";
 import { SquareTranslationExperiment } from './SquareTranslationExperiment';
 import { UfoTranslationScene } from './UfoTranslationScene';
 import { DesignComparisonHeader } from '../../components/DesignComparisonHeader';

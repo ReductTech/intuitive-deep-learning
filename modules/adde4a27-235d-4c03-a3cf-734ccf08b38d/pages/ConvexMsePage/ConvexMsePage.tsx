@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { ContentBlock, MathFormulaBlock, MathFormulaTerm, Typography } from '../../../shared/react';
+import { ContentBlock, MathFormulaBlock, MathFormulaTerm, Typography } from "@shuku/course-style/react";
 import { useRecordedData } from '../../regressionData';
 import { MseBowlDiagram } from './MseBowlDiagram';
 import './ConvexMsePage.css';

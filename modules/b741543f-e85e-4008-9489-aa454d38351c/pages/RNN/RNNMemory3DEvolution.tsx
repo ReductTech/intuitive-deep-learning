@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 interface RNNMemory3DEvolutionProps { phase: number; }
 type ThreeApi = Record<string, any>;
 
-const threeModuleUrl = new URL('../../../shared/vendor/three/0.148.0/three.min.js', import.meta.url).href;
+const threeModuleUrl = new URL("@shuku/course-style/vendor/three/0.148.0/three.min.js", import.meta.url).href;
 
 function getThree() { return (window as Window & { THREE?: ThreeApi }).THREE ?? null; }
 

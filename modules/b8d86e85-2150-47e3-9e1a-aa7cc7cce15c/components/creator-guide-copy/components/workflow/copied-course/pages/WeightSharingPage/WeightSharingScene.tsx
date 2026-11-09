@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { Typography } from '../../../../../../../../shared/react';
+import { Typography } from "@shuku/course-style/react";
 
 export type SharingKind = 'independent' | 'shared';
 type Tile = THREE.Mesh<THREE.BoxGeometry, THREE.MeshStandardMaterial>;

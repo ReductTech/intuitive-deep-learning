@@ -1,4 +1,4 @@
-import { ContentBlock, Typography } from '../../../shared/react';
+import { ContentBlock, Typography } from "@shuku/course-style/react";
 import { CodeEditor } from '../../../b8d86e85-2150-47e3-9e1a-aa7cc7cce15c/pages/CodePracticePage/CodeEditor';
 import outline from '../../outlines.json';
 import '../../../b8d86e85-2150-47e3-9e1a-aa7cc7cce15c/pages/CodePracticePage/CodePracticePage.css';

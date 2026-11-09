@@ -1,4 +1,4 @@
-import { SceneDeck, type DeckDefinition } from '../shared/react/presentation';
+import { SceneDeck, type DeckDefinition } from "@shuku/course-style/react/presentation";
 import { course } from './course';
 import { assetId } from './data';
 import outline from './outlines.json';

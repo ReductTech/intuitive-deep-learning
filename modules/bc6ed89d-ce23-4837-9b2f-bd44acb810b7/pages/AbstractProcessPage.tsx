@@ -1,5 +1,5 @@
 import { useLayoutEffect, useRef, useState } from 'react';
-import { Button, Typography } from '../../shared/react';
+import { Button, Typography } from "@shuku/course-style/react";
 import './AbstractProcessPage.css';
 
 const TOKENS = ['我', '爱', '学', '习'];

@@ -1,5 +1,5 @@
 import { useId, type CSSProperties } from 'react';
-import { MathFormulaStatic, Typography } from '../../shared/react';
+import { MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import { FlowMatrix } from '../components/FlowMatrix';
 import './RopePlacementPage.css';
 

@@ -1,5 +1,5 @@
 import { useEffect, useId, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
-import { Button, Typography } from '../../../../shared/react';
+import { Button, Typography } from "@shuku/course-style/react";
 
 type Point = { x: number; y: number };
 export type DiagramView = Point & { scale: number };

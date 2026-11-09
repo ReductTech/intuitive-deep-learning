@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Button, ExplainPanelButton, ContentBlock, EChartsChart, MathFormulaBlock, MathFormulaStatic, Typography } from '../../../shared/react';
+import { Button, ExplainPanelButton, ContentBlock, EChartsChart, MathFormulaBlock, MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import { useRecordedData } from '../../regressionData';
 import './PredictionErrorPage.css';
 

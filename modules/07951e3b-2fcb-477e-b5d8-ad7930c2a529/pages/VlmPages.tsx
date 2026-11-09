@@ -3,7 +3,7 @@ import { SourceTasks } from "./SourceTasks";
 import { EvidenceComparison } from "./VlmEvidence";
 import { useState } from "react";
 
-import { Typography } from "../../shared/react";
+import { Typography } from "@shuku/course-style/react";
 import { Action, Equation, Heading, PatchGrid, Photo, Text, useStepSequence, StepSequenceControl } from "../components/LessonVisuals";
 import { Features, ImageFocus } from "../components/TeachingVisuals";
 import { queryAggregation } from "../model/teachingMath";

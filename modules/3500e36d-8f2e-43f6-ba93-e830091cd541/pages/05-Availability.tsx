@@ -1,5 +1,5 @@
 import { useId } from 'react';
-import { Typography } from '../../shared/react';
+import { Typography } from "@shuku/course-style/react";
 import { RefinedStage } from '../components/RefinedStage';
 import './AvailabilityPage.css';
 const papers=['高斯掩码自编码器','视觉语言模型评测中的多项选择题生成','面向医学影像分割的高效模型调优','小样本点云分类方法'];

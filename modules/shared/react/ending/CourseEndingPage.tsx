@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { PageRating } from '../learning/PageRating';
 import { LessonDevelopers } from '../learning/LessonDevelopers';
 import { Typography } from '../typography/Typography';
-import { emitTelemetry } from '../telemetry';
+import {emitCourseEvent} from '../courseRequests';
 import './CourseEndingPage.css';
 
 export interface CourseEndingResource {
@@ -63,7 +63,7 @@ export function CourseEndingPage({
     const formData = new FormData(event.currentTarget);
     const message = String(formData.get('feedback') ?? '').trim();
     if (!message) return;
-    emitTelemetry('course_ending_feedback', feedbackDialogRef.current, {
+    emitCourseEvent('course_ending_feedback', {
       page_key: pageKey,
       feedback: message,
     });

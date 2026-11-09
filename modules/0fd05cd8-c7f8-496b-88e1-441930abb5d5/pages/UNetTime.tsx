@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { RangeControl } from '../../shared/react/controls/RangeControl';
-import { Typography } from '../../shared/react/typography/Typography';
+import { RangeControl } from "@shuku/course-style/react/controls/RangeControl";
+import { Typography } from "@shuku/course-style/react/typography/Typography";
 import { Arrow, Feature, Flow, Formula, Frame, Photo, Text } from '../components/Diagrams';
 import { Readout } from '../components/Story';
 import { VectorBars } from '../components/VectorBars';

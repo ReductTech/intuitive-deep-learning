@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Button } from '../../../shared/react/controls/Button';
+import { Button } from "@shuku/course-style/react/controls/Button";
 import { LessonPageFrame } from '../LessonPageFrame';
 import { MaskParallelTransition } from './MaskParallelTransition';
 import './MaskedTrainingCard.css';

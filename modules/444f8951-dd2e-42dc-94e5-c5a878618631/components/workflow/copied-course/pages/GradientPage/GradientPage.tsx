@@ -1,7 +1,7 @@
 import xiandaijianzhuAsset0 from '../../../../../assets/workflow/convolution-course/xiandaijianzhu.jpg';
 import { useEffect, useState, type ReactNode } from 'react';
 import { Light, Picture } from '@icon-park/react';
-import { ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from '../../../../../../shared/react';
+import { ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import './GradientPage.css';
 
 const buildingImage = xiandaijianzhuAsset0;

@@ -40,3 +40,7 @@ export * from './telemetry';
 export * from './assets';
 export * from './theme';
 export * from './presentation';
+
+export * from './courseRequests';
+export * from './courseState';
+export * from './moduleJson';

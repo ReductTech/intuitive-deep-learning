@@ -4,7 +4,7 @@ import {
   ContentBlock,
   NoticeStrip,
   Typography,
-} from '../../../shared/react';
+} from "@shuku/course-style/react";
 import {
   formatNumber,
   RELU_INTRO_MAX_X,

@@ -1,4 +1,4 @@
-import { Typography } from '../../shared/react';
+import { Typography } from "@shuku/course-style/react";
 import './FlashAdvantagesPage.css';
 
 function Matrix({ small = false, active = false }: { small?: boolean; active?: boolean }) {

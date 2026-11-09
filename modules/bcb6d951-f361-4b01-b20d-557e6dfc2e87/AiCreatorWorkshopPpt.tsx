@@ -1,4 +1,4 @@
-import { SceneDeck, type DeckDefinition } from '../shared/react/presentation';
+import { SceneDeck, type DeckDefinition } from "@shuku/course-style/react/presentation";
 import { ToolOverviewPage } from './pages/ToolOverviewPage/ToolOverviewPage';
 import { LearnByExplainingPage } from './pages/LearnByExplainingPage/LearnByExplainingPage';
 import { EngineeringCollaborationPage } from './pages/EngineeringCollaborationPage/EngineeringCollaborationPage';

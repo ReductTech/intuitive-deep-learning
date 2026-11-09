@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Button } from '../../../shared/react/controls/Button';
-import { Typography } from '../../../shared/react/typography/Typography';
+import { Button } from "@shuku/course-style/react/controls/Button";
+import { Typography } from "@shuku/course-style/react/typography/Typography";
 import { Arrow, ReferenceVisual, Text } from '../../components/Diagrams';
 import { RefBox, ReferenceCanvas } from '../../components/ReferenceCanvas';
 const systems = [{ id:'pixel-unet',title:'Pixel × U-Net',details:'像素状态直接进入多尺度 U-Net，采样完成后得到像素图像。' },{ id:'latent-unet',title:'Latent × U-Net',details:'在压缩表示中用 U-Net 预测；循环完成后再由 Decoder 解码。' },{ id:'pixel-transformer',title:'Pixel × Transformer',details:'像素状态切成 tokens，用 Transformer 预测，再恢复空间排列。' },{ id:'latent-transformer',title:'Latent × Transformer',details:'latent 切成 tokens，用 Transformer 预测；最终 latent 由 Decoder 解码。' }];

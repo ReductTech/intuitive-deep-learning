@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Button } from '../../shared/react/controls/Button';
-import { Typography } from '../../shared/react/typography/Typography';
+import { Button } from "@shuku/course-style/react/controls/Button";
+import { Typography } from "@shuku/course-style/react/typography/Typography";
 import { Feature, Formula, Frame, Latent, ReferenceVisual, Text, Tokens } from '../components/Diagrams';
 import { NetworkLab } from '../components/NetworkLab';
 import { Reveal, StoryCaption, useStory } from '../components/Story';

@@ -3,7 +3,7 @@ import boat_rectangularAsset1 from '../assets/workflow/boat-rectangular.png';
 import elephantAsset2 from '../assets/workflow/elephant.png';
 import rockAsset3 from '../assets/workflow/rock.png';
 import { useState, type CSSProperties } from 'react';
-import { Button, Typography } from '../../shared/react';
+import { Button, Typography } from "@shuku/course-style/react";
 import outline from '../outlines.json';
 import type { WorkflowArtifact } from './workflowDemo';
 

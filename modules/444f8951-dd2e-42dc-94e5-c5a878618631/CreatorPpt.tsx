@@ -2,7 +2,7 @@ import {ShukuCoCreationLoop} from './pages/ShukuCoCreationLoop';
 import {ShukuWhyPage,ShukuParticipationPage,ShukuReviewPage,ShukuGrowthPage} from './pages/ShukuIntroPages';
 import './CreatorTypography.css';
 import { TitlePage } from './pages/TitlePage';
-import { SceneDeck, type DeckDefinition } from '../shared/react/presentation';
+import { SceneDeck, type DeckDefinition } from "@shuku/course-style/react/presentation";
 import { LearningGoalPage } from './pages/LearningGoalPage';
 import { EducationPathsPage } from './pages/EducationPathsPage';
 import { PopularSciencePage } from './pages/PopularSciencePage';

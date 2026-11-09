@@ -1,4 +1,4 @@
-import { moduleAssetUrl, Typography } from '../../../shared/react';
+import { moduleAssetUrl, Typography } from "@shuku/course-style/react";
 import { moduleIdentity } from '../../outlines.json';
 import './OpeningPage.css';
 
@@ -16,7 +16,7 @@ export function OpeningPage() {
       </header>
       <img
         className="llmpe-opening-illustration"
-        src={moduleAssetUrl(moduleIdentity.id, 'images/opening-illustration-v1.png')}
+        src={moduleAssetUrl('images/opening-illustration-v1.png')}
         alt="论文资料、知识图示与编程实验面板"
         draggable={false}
       />

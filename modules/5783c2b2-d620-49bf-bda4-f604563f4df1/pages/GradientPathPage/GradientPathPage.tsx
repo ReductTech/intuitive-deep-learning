@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, ContentBlock, NoticeStrip, Typography } from '../../../shared/react';
+import { Button, ContentBlock, NoticeStrip, Typography } from "@shuku/course-style/react";
 import { useCompleteOnce } from '../../hooks/useCompleteOnce';
 import './GradientPathPage.css';
 

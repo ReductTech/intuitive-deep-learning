@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
-import { Button, ModuleShell, PageRating, Question, RangeControl, Switch, Typography, type QuestionCheckResult } from '../shared/react';
-import { moduleAssetUrl } from '../shared/react/assets';
+import { Button, ModuleShell, PageRating, Question, RangeControl, Switch, Typography, type QuestionCheckResult } from "@shuku/course-style/react";
+import { moduleAssetUrl } from "@shuku/course-runtime/react/assets";
 import { bridgeStatus, listMemory, makeEvent, MEMORY_MODULE_ID, MEMORY_SKILL_ID, reportEvent, type MemoryEvent } from './memoryBridge';
 import './MemoryTest.css';
 
-const VIDEO_URL = moduleAssetUrl('f1751a2d-ea22-4f92-9fa4-32b506c011de', 'memory-test.mp4');
+const VIDEO_URL = moduleAssetUrl('memory-test.mp4');
 
 type LogEntry = { event: MemoryEvent; status: '等待' | '成功' | '失败'; detail?: string };
 type RecordEvent = (pageId: string, eventName: string, properties?: Record<string, unknown>) => void;

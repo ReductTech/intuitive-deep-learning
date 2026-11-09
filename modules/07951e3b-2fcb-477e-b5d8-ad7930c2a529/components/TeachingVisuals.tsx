@@ -1,5 +1,5 @@
 import type { CSSProperties, ReactNode } from "react";
-import { Typography } from "../../shared/react";
+import { Typography } from "@shuku/course-style/react";
 import { Text, rainImage } from "./LessonVisuals";
 import "./TeachingVisuals.css";
 

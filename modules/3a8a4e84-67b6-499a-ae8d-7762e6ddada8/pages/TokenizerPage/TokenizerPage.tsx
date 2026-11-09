@@ -1,6 +1,6 @@
 import { transformerAsset } from '../../assetUrls';
 import { useState } from 'react';
-import { Button, Typography } from '../../../shared/react';
+import { Button, Typography } from "@shuku/course-style/react";
 import { LessonPageFrame } from '../../components/LessonPageFrame';
 import { embedWithGlove, tokenizeForGlove, DISPLAY_EMBEDDING_DIMENSIONS, type GloveTokenEmbedding } from '../../domain/gloveEmbedding';
 import './TokenizerPage.css';

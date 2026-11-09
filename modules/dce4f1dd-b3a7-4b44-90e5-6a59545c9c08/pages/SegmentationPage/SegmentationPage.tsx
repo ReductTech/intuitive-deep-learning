@@ -1,5 +1,5 @@
 import { useId, useMemo, useRef, useState, type PointerEvent } from 'react';
-import { Button, Typography } from '../../../shared/react';
+import { Button, Typography } from "@shuku/course-style/react";
 import { LessonPage } from '../../components/LessonPage';
 import { PhotoStage } from '../../components/PhotoStage';
 import { appleOutline, polygonPath } from '../../data';

@@ -1,5 +1,5 @@
 import { useId } from 'react';
-import { ContentBlock, moduleAssetUrl, Typography } from '../../../shared/react';
+import { ContentBlock, moduleAssetUrl, Typography } from "@shuku/course-style/react";
 import outline from '../../outlines.json';
 import './FoundationFrontierPage.css';
 
@@ -20,7 +20,7 @@ export function FoundationFrontierPage() {
       </svg>
       <div className="aipe-ff-hub"><Typography as="h2" variant="h1" tone="inherit">知识<br/>探索者</Typography></div>
       <Typography as="p" variant="subtitle" tone="muted" className="aipe-ff-hub-caption">理解与应用</Typography>
-      <img className="aipe-ff-materials" src={moduleAssetUrl(outline.moduleIdentity.id,'images/foundation-frontier-materials-v2.png')}
+      <img className="aipe-ff-materials" src={moduleAssetUrl('images/foundation-frontier-materials-v2.png')}
         alt="研究论文与系统教材，分别承载前沿跟踪与知识体系学习" draggable={false}/>
       <section className="aipe-ff-branch aipe-ff-frontier">
         <Typography as="h2" variant="h1" tone="inherit">持续追踪前沿</Typography>

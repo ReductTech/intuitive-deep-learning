@@ -1,5 +1,5 @@
 import { useEffect, useId, useRef, useState, type KeyboardEvent, type CSSProperties } from 'react';
-import { ContentBlock, Typography } from '../../../shared/react';
+import { ContentBlock, Typography } from "@shuku/course-style/react";
 import outline from '../../outlines.json';
 import { PlatformCapabilityIcon, PlatformLearnerIcon } from './PlatformCapabilityIcons';
 import './PlatformPositioningPage.css';

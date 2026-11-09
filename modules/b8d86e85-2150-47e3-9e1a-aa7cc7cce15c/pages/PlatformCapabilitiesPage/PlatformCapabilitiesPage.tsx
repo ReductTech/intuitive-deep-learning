@@ -1,4 +1,4 @@
-import { ContentBlock, Typography } from '../../../shared/react';
+import { ContentBlock, Typography } from "@shuku/course-style/react";
 import outline from '../../outlines.json';
 import './PlatformCapabilitiesPage.css';
 const capabilities=[['科研信息获取','看什么','与目标相关的研究'],['学习内容生成','怎么学','可交互、可渐进的内容'],['编程实践','怎么练','实现、运行与实验'],['学习评价','学得怎样','任务表现与针对性反馈']];

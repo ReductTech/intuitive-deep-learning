@@ -1,10 +1,10 @@
 import { moduleIdentity } from '../../outlines.json';
-import { moduleAssetUrl } from '../../../shared/react/assets';
+import { moduleAssetUrl } from "@shuku/course-runtime/react/assets";
 // @refresh reset
 import { useState } from 'react';
-import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from '../../../shared/react';
+import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import { useCompleteOnce } from '../../hooks/useCompleteOnce';
-const bottle = moduleAssetUrl(moduleIdentity.id, "pretraining/bottle-white-cap-hd.jpg");
+const bottle = moduleAssetUrl("pretraining/bottle-white-cap-hd.jpg");
 import './PretrainingPage.css';
 
 export const PRETRAINING_CUES = [

@@ -1,4 +1,4 @@
-import { ContentBlock, Typography } from '../../../shared/react';
+import { ContentBlock, Typography } from "@shuku/course-style/react";
 import { ChoiceButtons, LessonCheck, useActivityState, type ActivityProps } from '../../components/AttentionActivity';
 import { useRegressionPage as useAttentionPage } from '../../components/useRegressionPage';
 import { CAMPUS_RECORD_TASKS } from '../../model/campusRecord';

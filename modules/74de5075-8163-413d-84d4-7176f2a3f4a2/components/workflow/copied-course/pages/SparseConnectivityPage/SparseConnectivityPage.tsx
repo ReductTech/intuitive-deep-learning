@@ -1,4 +1,4 @@
-import { ContentBlock, MathFormulaStatic, Typography } from '../../../../../../shared/react';
+import { ContentBlock, MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import { ConnectionScene, type ConnectionKind } from './ConnectionScene';
 import './SparseConnectivityPage.css';
 

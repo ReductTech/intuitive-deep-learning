@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, RangeControl, Typography } from '../../../shared/react';
+import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, RangeControl, Typography } from "@shuku/course-style/react";
 import './LogOddsPage.css';
 
 export function LogOddsPage() {

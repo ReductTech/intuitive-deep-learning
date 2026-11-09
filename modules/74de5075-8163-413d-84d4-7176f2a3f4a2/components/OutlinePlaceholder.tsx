@@ -1,4 +1,4 @@
-import { ContentBlock, Typography } from '../../shared/react';
+import { ContentBlock, Typography } from "@shuku/course-style/react";
 import './OutlinePlaceholder.css';
 export interface OutlinePlaceholderProps { title: string; lead: string; points: readonly (readonly [string,string])[]; references?: readonly (readonly [string,string])[]; }
 export function OutlinePlaceholder({title,lead,points,references=[]}: OutlinePlaceholderProps) {

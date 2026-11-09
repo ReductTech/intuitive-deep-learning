@@ -1,5 +1,5 @@
 import { useRef, useState, type CSSProperties, type PointerEvent } from 'react';
-import { Button } from '../../../shared/react/controls/Button';
+import { Button } from "@shuku/course-style/react/controls/Button";
 import { LessonPageFrame } from '../LessonPageFrame';
 import './CrossAttentionMatrixCard.css';
 interface CrossAttentionMatrixCardProps {

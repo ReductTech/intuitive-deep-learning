@@ -8,7 +8,7 @@ import {
   type KeyboardEvent as ReactKeyboardEvent,
   type PointerEvent as ReactPointerEvent,
 } from 'react';
-import { Button, ContentBlock, moduleAssetUrl, Typography } from '../../../shared/react';
+import { Button, ContentBlock, moduleAssetUrl, Typography } from "@shuku/course-style/react";
 import {
   BLACK,
   BOARD_SIZE,
@@ -28,7 +28,7 @@ import {
 import './AssemblyGomoku.css';
 import outline from '../../outlines.json';
 
-const bgVideo = moduleAssetUrl(outline.moduleIdentity.id, 'assembly/gomoku-bg.mp4');
+const bgVideo = moduleAssetUrl('assembly/gomoku-bg.mp4');
 
 const HUMAN = BLACK;
 const COMPUTER = WHITE;

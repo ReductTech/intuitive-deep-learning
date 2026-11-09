@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Button, Typography } from '../../shared/react';
+import { Button, Typography } from "@shuku/course-style/react";
 import { acceptanceSuite, fixedProgram, brokenProgram } from '../model/labModel';
 import './WorkflowLab.css';
 

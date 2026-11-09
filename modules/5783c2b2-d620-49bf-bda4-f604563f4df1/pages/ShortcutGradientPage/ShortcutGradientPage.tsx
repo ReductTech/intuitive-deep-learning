@@ -1,6 +1,6 @@
 // @refresh reset
 import { Fragment, useEffect, useRef, useState } from 'react';
-import { ContentBlock, NoticeStrip, Typography, MathFormulaBlock, MathFormulaTerm, MathFormulaStatic } from '../../../shared/react';
+import { ContentBlock, NoticeStrip, Typography, MathFormulaBlock, MathFormulaTerm, MathFormulaStatic } from "@shuku/course-style/react";
 import { useCompleteOnce } from '../../hooks/useCompleteOnce';
 import './ShortcutGradientPage.css';
 

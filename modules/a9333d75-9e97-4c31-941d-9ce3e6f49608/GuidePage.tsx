@@ -1,4 +1,4 @@
-import { ModuleShell } from '../shared/react';
+import { ModuleShell } from "@shuku/course-style/react";
 import { LessonSlide } from './pages/LessonSlide/LessonSlide';
 import outline from './outlines.json';
 import './pages/LessonSlide/LessonSlide.css';

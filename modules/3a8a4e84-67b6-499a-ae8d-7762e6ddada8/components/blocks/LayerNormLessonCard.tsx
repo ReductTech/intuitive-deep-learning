@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Button } from '../../../shared/react/controls/Button';
+import { Button } from "@shuku/course-style/react/controls/Button";
 import './LayerNormLessonCard.css';
 const TOKENS = [
     { name: 'Token 1', mean: 20, std: 40, color: '#258398' },

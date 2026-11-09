@@ -1,5 +1,5 @@
 import { useId, useRef, type KeyboardEvent } from 'react';
-import { Typography } from '../../shared/react';
+import { Typography } from "@shuku/course-style/react";
 import './AttentionHeatmap.css';
 
 export interface AttentionHeatmapProps {

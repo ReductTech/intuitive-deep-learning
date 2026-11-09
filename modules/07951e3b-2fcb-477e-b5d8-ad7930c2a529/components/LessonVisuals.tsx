@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useId, useRef, useState, type CSSProperties, type ReactNode } from 'react';
-import { Button, MathFormulaBlock, MathFormulaStatic, Typography, type LessonStepContext } from '../../shared/react';
+import { Button, MathFormulaBlock, MathFormulaStatic, Typography, type LessonStepContext } from "@shuku/course-style/react";
 import { rainImage } from '../media';
 import './LessonVisuals.css';
 

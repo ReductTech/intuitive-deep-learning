@@ -7,10 +7,10 @@ import { TrainingFeatureTsnePage } from './pages/TrainingFeatureTsnePage/Trainin
 import { NetworkTrainingPage } from './pages/NetworkTrainingPage/NetworkTrainingPage';
 import { GlobalAveragePoolingPage } from './pages/GlobalAveragePoolingPage/GlobalAveragePoolingPage';
 import { useLayoutEffect, useRef, useState, type ReactNode } from 'react';
-import { ModuleShell } from '../shared/react';
-import '../shared/react/styles.css';
-import '../shared/react/ui-kit.css';
-import '../shared/react/presentation.css';
+import { ModuleShell } from "@shuku/course-style/react";
+import "@shuku/course-style/react/styles.css";
+import "@shuku/course-style/react/ui-kit.css";
+import "@shuku/course-style/react/presentation.css";
 import './tailwind.css';
 import { DigitRecognitionOpeningPage } from './pages/DigitRecognitionOpeningPage/DigitRecognitionOpeningPage';
 import { DigitDifferencesPage } from './pages/DigitDifferencesPage/DigitDifferencesPage';

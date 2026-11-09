@@ -1,7 +1,7 @@
 import mengdelianAsset0 from '../../../../../assets/workflow/convolution-course/mengdelian.jpg';
 import xielaqiaoAsset1 from '../../../../../assets/workflow/convolution-course/xielaqiao.jpg';
 import { useEffect, useRef, useState } from 'react';
-import { ContentBlock, Typography } from '../../../../../../shared/react';
+import { ContentBlock, Typography } from "@shuku/course-style/react";
 import { useGomokuOutcome } from '../../LessonContext';
 import './KernelBasicsPage.css';
 

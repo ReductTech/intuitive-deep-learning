@@ -1,4 +1,4 @@
-import { type LessonFlowStep } from '../shared/react/learning/LessonFlow';
+import { type LessonFlowStep } from "@shuku/course-style/react/learning/LessonFlow";
 import { MultiHeadCard } from './components/blocks/MultiHeadCard';
 import { MultiHeadAnimationCard } from './components/blocks/MultiHeadAnimationCard';
 import { MultiHeadOverviewCard } from './components/blocks/MultiHeadOverviewCard';
@@ -71,4 +71,5 @@ export const transformerLessonSteps: LessonFlowStep[] = [
 const establishedStyleOrder = [1, 2, 7, 8, 9, 21, 10, 11, 12, 13, 14, 3, 4, 5, 6, 15, 16, 17, 18, 19, 20];
 export const transformerSlideOrder = [32, 1, 2, 33, 34, 35, 7, 8, 10, 11, 22, 23, 24, 25, 3, 28, 4, 5, 31, 6, 29, 30, 12, 26, 13, 27, 14, 15, 16, 17, 18, 36, 19, 20] as const;
 // Preserve the existing per-page layout rules when new teaching pages are inserted.
-export const transformerStyleSlides = transformerSlideOrder.map(number => number === 36 ? 19 : number === 32 ? 1 : number === 33 ? 2 : number === 31 ? 14 : number === 28 ? 12 : number === 29 || number === 30 ? 15 : number === 27 ? 10 : number === 26 ? 9 : number > 21 ? 8 : establishedStyleOrder.indexOf(number) + 1);
+export const transformerStyleSlides = transformerSlideOrder.map(number => number === 36 ? 19 : number === 32 ? 1 : number === 33 ? 2 : number === 31 ? 14 : number === 28 ? 12 : number === 29 || number === 30 ? 15 : number === 27 ? 10 : number === 26 ? 9 : number > 21 ? 8 : establishedStyleOrder.indexOf(number) + 1);
+

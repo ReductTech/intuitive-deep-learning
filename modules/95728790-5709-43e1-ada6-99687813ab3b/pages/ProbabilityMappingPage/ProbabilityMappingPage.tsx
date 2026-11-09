@@ -1,6 +1,6 @@
 import { useRef, useState, type KeyboardEvent, type PointerEvent } from 'react';
 import { ChartHistogram, ChartLine, Tips, Setting, Shield } from '@icon-park/react';
-import { Button, ContentBlock, MathFormulaBlock, MathFormulaTerm, Typography } from '../../../shared/react';
+import { Button, ContentBlock, MathFormulaBlock, MathFormulaTerm, Typography } from "@shuku/course-style/react";
 import { sigmoid } from '../SigmoidPage/SigmoidPlot';
 import './ProbabilityMappingPage.css';
 

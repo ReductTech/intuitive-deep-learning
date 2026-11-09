@@ -1,4 +1,4 @@
-import { Typography } from '../../shared/react';
+import { Typography } from "@shuku/course-style/react";
 import { Photo } from '../components/Stage';
 import { RefinedStage } from '../components/RefinedStage';
 import './BelousovPage.css';

@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { ContentBlock, EChartsChart, MathFormulaBlock, MathFormulaStatic, Typography } from '../../../shared/react';
+import { ContentBlock, EChartsChart, MathFormulaBlock, MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import { ChoiceButtons, LessonCheck, useActivityState, type ActivityProps } from '../../components/AttentionActivity';
 import { computeScaledDot, type ScaledDotDimension } from '../../model/semanticScoring';
 import './AttentionScalingPage.css';

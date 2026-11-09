@@ -15,6 +15,7 @@ import {
   PlotlyChart,
   Typography,
   currentModuleId,
+  getTelemetryState,
   emitTelemetry,
   type PlotlyChartProps,
   type PlotlyGraph,
@@ -22,7 +23,7 @@ import {
   type FunctionGuide,
   type FunctionSeries,
   type TelemetryStateEntry,
-} from '../../../shared/react';
+} from "@shuku/course-style/react";
 import "./ActivationCatalogPage.css";
 
 const activations = [
@@ -694,21 +695,9 @@ async function loadActivityState<T>(
   stateKey: string,
   moduleId: string,
 ): Promise<ActivityStateLoad<T>> {
-  const telemetry = window.__DL_TELEMETRY__;
-  if (!telemetry?.getModuleState) return { ok: false };
-
   try {
-    const document = await telemetry.getModuleState(moduleId);
-    if (!document || document.ok !== true) return { ok: false };
-    return {
-      ok: true,
-      entry: (
-        document.states?.[stateKey] as TelemetryStateEntry<T> | undefined
-      ) ?? null,
-    };
-  } catch {
-    return { ok: false };
-  }
+    return {ok:true,entry:await getTelemetryState<T>(stateKey,moduleId)};
+  } catch { return {ok:false}; }
 }
 
 function resolveUpdate<T>(

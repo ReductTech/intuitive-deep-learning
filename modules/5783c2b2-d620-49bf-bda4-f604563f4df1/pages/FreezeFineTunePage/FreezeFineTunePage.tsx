@@ -1,6 +1,6 @@
 // @refresh reset
 import { useState } from 'react';
-import { Button, ContentBlock, Typography } from '../../../shared/react';
+import { Button, ContentBlock, Typography } from "@shuku/course-style/react";
 import { ParameterRange } from '../../components/ParameterRange/ParameterRange';
 import { useCompleteOnce } from '../../hooks/useCompleteOnce';
 import './FreezeFineTunePage.css';

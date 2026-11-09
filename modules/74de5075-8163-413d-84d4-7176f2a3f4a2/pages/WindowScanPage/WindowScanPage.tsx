@@ -10,7 +10,7 @@ import {
   type PointerEvent as ReactPointerEvent,
 } from 'react';
 import { Asterisk, GridFour, Move, Picture, Tips } from '@icon-park/react';
-import { ContentBlock, ExplainPanelButton, Typography } from '../../../shared/react';
+import { ContentBlock, ExplainPanelButton, Typography } from "@shuku/course-style/react";
 import { useGomokuOutcome } from '../../ShowcaseGomokuContext';
 import { BOARD_SIZE, EMPTY, type Board, type Cell } from '../../showcaseGomokuEngine';
 import './WindowScanPage.css';

@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef } from 'react';
-import { EChartsChart, type EChartsChartProps, type EChartsOption } from '../../shared/react';
+import { EChartsChart, type EChartsChartProps, type EChartsOption } from "@shuku/course-style/react";
 
 interface ExistingChart {
   setOption(option: EChartsOption): void;

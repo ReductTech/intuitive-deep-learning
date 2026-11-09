@@ -1,14 +1,14 @@
 import { moduleIdentity } from '../../outlines.json';
-import { moduleAssetUrl } from '../../../shared/react/assets';
+import { moduleAssetUrl } from "@shuku/course-runtime/react/assets";
 import { useState, type AnimationEvent } from 'react';
-import { Button, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, NoticeStrip, Typography } from '../../../shared/react';
+import { Button, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, NoticeStrip, Typography } from "@shuku/course-style/react";
 import { useCompleteOnce } from '../../hooks/useCompleteOnce';
-const bottle = moduleAssetUrl(moduleIdentity.id, "head-replacement/bottle-normal.jpg");
-const bottleCrushed = moduleAssetUrl(moduleIdentity.id, "head-replacement/bottle-deformed.jpg");
-const can = moduleAssetUrl(moduleIdentity.id, "head-replacement/can-normal.jpg");
-const canCrushed = moduleAssetUrl(moduleIdentity.id, "head-replacement/can-deformed.jpg");
-const carton = moduleAssetUrl(moduleIdentity.id, "head-replacement/carton-normal.jpg");
-const cartonCrushed = moduleAssetUrl(moduleIdentity.id, "head-replacement/carton-deformed.jpg");
+const bottle = moduleAssetUrl("head-replacement/bottle-normal.jpg");
+const bottleCrushed = moduleAssetUrl("head-replacement/bottle-deformed.jpg");
+const can = moduleAssetUrl("head-replacement/can-normal.jpg");
+const canCrushed = moduleAssetUrl("head-replacement/can-deformed.jpg");
+const carton = moduleAssetUrl("head-replacement/carton-normal.jpg");
+const cartonCrushed = moduleAssetUrl("head-replacement/carton-deformed.jpg");
 import './HeadReplacementLab.css';
 
 type Task = 'category' | 'appearance';

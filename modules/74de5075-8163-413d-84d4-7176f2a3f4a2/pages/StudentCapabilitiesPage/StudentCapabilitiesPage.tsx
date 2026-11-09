@@ -1,5 +1,5 @@
 import { useState, type CSSProperties, type KeyboardEvent } from 'react';
-import { ContentBlock, Typography, moduleAssetUrl } from '../../../shared/react';
+import { ContentBlock, Typography, moduleAssetUrl } from "@shuku/course-style/react";
 import outline from '../../outlines.json';
 import './StudentCapabilitiesPage.css';
 
@@ -11,7 +11,7 @@ const capabilities = [
   { id: 'innovation', title: '批判思考与创新能力', detail: '独立判断　提出新解', sprite: 'right', x: 1405, y: 285, archX: 1210, archY: 398, archW: 205, archH: 244, line: '1405,410 1300,419' },
 ] as const;
 
-const asset = (file: string) => moduleAssetUrl(outline.moduleIdentity.id, `images/student-capabilities/${file}`);
+const asset = (file: string) => moduleAssetUrl(`images/student-capabilities/${file}`);
 
 // Trace each front arch in the background's coordinate space. The side arches
 // have different spring heights because the pavilion recedes in perspective.

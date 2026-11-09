@@ -1,5 +1,5 @@
 import type { ComponentType } from 'react';
-import type { SceneDefinition } from '../shared/react/presentation';
+import type { SceneDefinition } from "@shuku/course-style/react/presentation";
 import outlines from './outlines.json';
 import { DeliveryTaskPage } from './pages/DeliveryTaskPage/DeliveryTaskPage';
 import { StateDesignPage } from './pages/StateDesignPage/StateDesignPage';

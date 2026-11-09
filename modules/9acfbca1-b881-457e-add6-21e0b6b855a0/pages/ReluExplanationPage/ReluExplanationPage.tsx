@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 import "./ReluExplanationPage.css";
-import { Button, ContentBlock, FunctionPlot, MathFormulaBlock, MathFormulaStatic, Typography } from '../../../shared/react';
+import { Button, ContentBlock, FunctionPlot, MathFormulaBlock, MathFormulaStatic, Typography } from "@shuku/course-style/react";
 
 interface ReluInputParameters {
   a: number;

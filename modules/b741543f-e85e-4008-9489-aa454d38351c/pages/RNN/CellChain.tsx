@@ -1,4 +1,4 @@
-import { Typography } from '../../../shared/react';
+import { Typography } from "@shuku/course-style/react";
 import './CellChain.css';
 
 /** 一格里的哪一段需要高亮：梯度公式的每一项都对应其中一段。 */

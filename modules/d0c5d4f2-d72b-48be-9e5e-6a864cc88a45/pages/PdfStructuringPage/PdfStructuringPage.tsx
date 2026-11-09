@@ -1,9 +1,9 @@
 import { ArrowRight, FileText, Image as ImageIcon, ListTree, ScanText, Users, Check } from 'lucide-react';
-import { ContentBlock, Typography, moduleAssetUrl } from '../../../shared/react';
+import { ContentBlock, Typography, moduleAssetUrl } from "@shuku/course-style/react";
 import outline from '../../outlines.json';
 import './PdfStructuringPage.css';
 
-function Figure(){return <div className="rf-pdf-flow-figure" data-ppt-viewport="复用论文配图作为代表图表识别示例"><img src={moduleAssetUrl(outline.moduleIdentity.id,'images/recommendation-app/feed-reference.jpg')} alt="论文图表视觉元素示例" style={{width:`${1129/1009*100}%`,left:`${-60/1009*100}%`,top:`${-1280/340*100}%`}}/></div>}
+function Figure(){return <div className="rf-pdf-flow-figure" data-ppt-viewport="复用论文配图作为代表图表识别示例"><img src={moduleAssetUrl('images/recommendation-app/feed-reference.jpg')} alt="论文图表视觉元素示例" style={{width:`${1129/1009*100}%`,left:`${-60/1009*100}%`,top:`${-1280/340*100}%`}}/></div>}
 function TextLines(){return <div className="rf-pdf-flow-lines" aria-hidden="true"><i/><i/><i/><i/></div>}
 export function PdfStructuringPage(){
  return <ContentBlock className="rf-page rf-pdf-flow" title="把海量论文 PDF，转成结构化研究材料">

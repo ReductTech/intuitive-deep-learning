@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from 'react';
-import { Button, Feedback, Typography, type FeedbackStatus } from '../../../shared/react';
+import { Button, Feedback, Typography, type FeedbackStatus } from "@shuku/course-style/react";
 import './InlineAnswer.css';
 
 export interface InlineAnswerProps {

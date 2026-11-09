@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Button } from '../../shared/react/controls/Button';
-import { ContentBlock } from '../../shared/react/layout/ContentBlock';
-import { Typography } from '../../shared/react/typography/Typography';
+import { Button } from "@shuku/course-style/react/controls/Button";
+import { ContentBlock } from "@shuku/course-style/react/layout/ContentBlock";
+import { Typography } from "@shuku/course-style/react/typography/Typography";
 import { ReferenceVisual } from '../components/Diagrams';
 import { useStory } from '../components/Story';
 import outline from '../outlines.json';

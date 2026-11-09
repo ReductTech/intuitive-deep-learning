@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
-import { Button, ContentBlock, Typography, moduleAssetUrl } from '../../../shared/react';
+import { Button, ContentBlock, Typography, moduleAssetUrl } from "@shuku/course-style/react";
 import outline from '../../outlines.json';
 import submissions from './neuripsSubmissions.json';
 import './ResearchInformationPage.css';
 
 const format = (count: number) => count.toLocaleString('en-US');
 const ceiling = 33000;
-const readingScene = moduleAssetUrl(outline.moduleIdentity.id, 'research-information/reading-still-life.jpg');
+const readingScene = moduleAssetUrl('research-information/reading-still-life.jpg');
 
 export function ResearchInformationPage() {
   const root = useRef<HTMLElement>(null);

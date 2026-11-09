@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Button, ContentBlock, ExplainPanelButton, MathFormulaBlock, MathFormulaStatic, Typography } from '../../../shared/react';
+import { Button, ContentBlock, ExplainPanelButton, MathFormulaBlock, MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import './NineGridFeaturePage.css';
 import { NINE_GRID_EDGES, NINE_GRID_IMAGE_URL, nineGridCounts, nineGridRegionCells, readNineGridPixels } from '../../services/nineGridDigit';
 

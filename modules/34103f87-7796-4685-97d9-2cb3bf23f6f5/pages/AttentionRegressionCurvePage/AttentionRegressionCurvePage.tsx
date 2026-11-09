@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, RangeControl, Typography } from '../../../shared/react';
+import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, RangeControl, Typography } from "@shuku/course-style/react";
 import { ChoiceButtons, useActivityState, type ActivityProps } from '../../components/AttentionActivity';
 import { RegressionPlot } from '../../components/RegressionPlot';
 import { useRegressionPage } from '../../components/useRegressionPage';

@@ -1,5 +1,5 @@
 import { useId, useState } from 'react';
-import { ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from '../../../shared/react';
+import { ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import './GeometricTransformsPage.css';
 type Mode = 'translate' | 'scale' | 'rotate' | 'shear' | 'flip';
 const modes: [Mode, string][] = [['translate','平移'],['scale','缩放'],['rotate','旋转'],['shear','错切'],['flip','翻转']];

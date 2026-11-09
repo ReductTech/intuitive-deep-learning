@@ -1,9 +1,9 @@
-import { moduleAssetUrl } from '../shared/react/assets';
+import { moduleAssetUrl } from "@shuku/course-runtime/react/assets";
 import outline from './outlines.json';
 
 export const moduleAssetId = outline.moduleIdentity.id;
 
-const image = (filename: string) => moduleAssetUrl(moduleAssetId, `images/${filename}`);
+const image = (filename: string) => moduleAssetUrl(`images/${filename}`);
 
 export const rainImage = image('rain-scene.jpeg');
 export const catContextImage = image('cat-context.jpg');

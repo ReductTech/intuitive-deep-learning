@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button } from '../../../shared/react/controls/Button';
+import { Button } from "@shuku/course-style/react/controls/Button";
 import { LessonPageFrame } from '../LessonPageFrame';
 import './DecoderGenerationCard.css';
 interface CompleteProps {

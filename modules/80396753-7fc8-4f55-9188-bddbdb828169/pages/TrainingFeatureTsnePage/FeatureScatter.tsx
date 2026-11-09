@@ -1,5 +1,5 @@
 import {useEffect,useRef,useState} from 'react';
-import {Typography} from '../../../shared/react';
+import {Typography} from "@shuku/course-style/react";
 import type {ProjectionSample} from '../../services/digitNetworkTraining';
 
 export const digitColors=['#4388db','#ed9845','#65b66d','#e45f69','#9b72c8','#9c725c','#786ace','#ec85aa','#bfab35','#39adb4'];

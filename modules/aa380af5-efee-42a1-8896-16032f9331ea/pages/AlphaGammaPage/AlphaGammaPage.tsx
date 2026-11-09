@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { RangeControl, Typography } from '../../../shared/react';
+import { RangeControl, Typography } from "@shuku/course-style/react";
 import { LessonPage, Formula } from '../../components/LessonPrimitives';
 import { TeachingPanel } from '../../components/TeachingPanel';
 import { tdTarget, updateQ } from '../../model';

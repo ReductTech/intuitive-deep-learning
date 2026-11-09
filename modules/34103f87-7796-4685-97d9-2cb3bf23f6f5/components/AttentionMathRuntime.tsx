@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Button, Typography } from '../../shared/react';
+import { Button, Typography } from "@shuku/course-style/react";
 import './AttentionMathRuntime.css';
 
 /** Keep a failed lazy formula import from exposing raw LaTeX as lesson content. */
@@ -10,7 +10,7 @@ export function AttentionMathRuntime() {
     const timeout = window.setTimeout(() => {
       if (active && !customElements.get('math-field')) setFailed(true);
     }, 8000);
-    import('../../shared/vendor/mathlive/mathlive.min.mjs')
+    import("@shuku/course-style/vendor/mathlive/mathlive.min.mjs")
       .then(() => { if (active) setFailed(false); })
       .catch(() => { if (active) setFailed(true); });
     return () => { active = false; window.clearTimeout(timeout); };

@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { Check } from 'lucide-react';
-import { ContentBlock, Typography, moduleAssetUrl } from '../../../shared/react';
+import { ContentBlock, Typography, moduleAssetUrl } from "@shuku/course-style/react";
 import outline, { moduleIdentity } from '../../outlines.json';
 import { useClickSteps } from '../../components/useClickSteps';
 import { elements, PAPER_PAGES, SELECTED_PAGES, pageDuration } from './paperFilmData';
 import './MainFigureSelectionPage.css';
 
 type Stage='pages'|'assemble'|'detect'|'confirm'|'focus'|'result'|'complete';
-const asset=(file:string)=>moduleAssetUrl(moduleIdentity.id,`research-foundation/research-papers/dinov3/${file}`);
+const asset=(file:string)=>moduleAssetUrl(`research-foundation/research-papers/dinov3/${file}`);
 const pageAsset=(index:number)=>asset(`pages/page-${String(SELECTED_PAGES[index]).padStart(2,'0')}.jpg`);
 const copy={
  pages:['图表检测与提取','逐页定位论文中的图与表'],

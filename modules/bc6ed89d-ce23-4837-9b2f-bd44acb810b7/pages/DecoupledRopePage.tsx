@@ -1,5 +1,5 @@
 import { useId, useRef, useState, type CSSProperties } from 'react';
-import { Button, MathFormulaStatic, Typography } from '../../shared/react';
+import { Button, MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import './DecoupledRopePage.css';
 
 const STATES = [

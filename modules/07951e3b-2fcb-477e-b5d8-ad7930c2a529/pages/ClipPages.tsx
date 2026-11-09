@@ -2,7 +2,7 @@ import { ContrastiveExperiment, EnsembleExperiment } from "./ClipExperiments";
 import { PairedSupervision, ZeroShotPipeline, ClipCandidateComparison, ClipTextVector } from "./SourceAlignment";
 import { TrainingObjectiveComparison } from "./SourceComparisons";
 
-import { Typography } from '../../shared/react';
+import { Typography } from "@shuku/course-style/react";
 
 import { Heading, Text, useStepSequence, StepSequenceControl } from "../components/LessonVisuals";
 import { ImageFocus } from "../components/TeachingVisuals";

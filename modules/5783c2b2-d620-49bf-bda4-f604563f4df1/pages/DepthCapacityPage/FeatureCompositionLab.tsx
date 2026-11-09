@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react';
-import { Button, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, Typography } from '../../../shared/react';
+import { Button, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, Typography } from "@shuku/course-style/react";
 import { CLUES, CLUE_LABELS, calculateComposition, cluePosition, compositionInsight, nextCompositionAction,
   type ClueId, type CompositionAction, type CompositionState } from './compositionModel';
 import './FeatureCompositionLab.css';

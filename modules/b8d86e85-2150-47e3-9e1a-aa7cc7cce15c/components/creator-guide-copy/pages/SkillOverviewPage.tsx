@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, RangeControl, Select, Typography } from '../../../../shared/react';
+import { Button, RangeControl, Select, Typography } from "@shuku/course-style/react";
 import './SkillOverviewPage.css';
 
 type IconKind = 'file' | 'cursor' | 'palette' | 'layout' | 'cube' | 'code' | 'folder' | 'layers' | 'bolt';

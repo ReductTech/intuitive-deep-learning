@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { ContentBlock, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, Typography } from '../../../shared/react';
+import { ContentBlock, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, Typography } from "@shuku/course-style/react";
 import { color, GAP, HEIGHT, interpolate, order, source, SOURCE_HEIGHT, SOURCE_WIDTH, WIDTH } from './interpolationModel';
 import './ImageInterpolationPage.css';
 const CW=1500, CH=480, CELL=8;

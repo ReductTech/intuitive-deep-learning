@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Typography } from "../../shared/react";
+import { Typography } from "@shuku/course-style/react";
 import { Heading, Text, useStepSequence, StepSequenceControl } from "../components/LessonVisuals";
 import {
   Features,

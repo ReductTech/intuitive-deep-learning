@@ -1,3 +1,4 @@
+import type {} from '../../types/math-field';
 import { useEffect, useRef, type HTMLAttributes, type ReactNode } from 'react';
 import { classNames } from '../utils';
 

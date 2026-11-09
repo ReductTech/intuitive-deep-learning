@@ -1,4 +1,4 @@
-import { ContentBlock, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, Typography } from '../../../shared/react';
+import { ContentBlock, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, Typography } from "@shuku/course-style/react";
 import './ProbabilityLogOddsPage.css';
 
 function Range({ latex, description }: { latex: string; description: string }) {

@@ -1,6 +1,6 @@
-import { moduleAssetUrl } from '../shared/react/assets';
+import { moduleAssetUrl } from "@shuku/course-runtime/react/assets";
 import { moduleIdentity } from './outlines.json';
-const clipUrl = moduleAssetUrl(moduleIdentity.id, 'speech-i-like-learning.m4a');
+const clipUrl = moduleAssetUrl('speech-i-like-learning.m4a');
 
 export interface VoiceSyllable {
   character: string;

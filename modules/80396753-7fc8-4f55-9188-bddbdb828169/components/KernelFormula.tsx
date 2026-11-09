@@ -1,4 +1,4 @@
-import { MathFormulaBlock, MathFormulaStatic, MathFormulaTerm } from '../../shared/react';
+import { MathFormulaBlock, MathFormulaStatic, MathFormulaTerm } from "@shuku/course-style/react";
 
 // Only the notation used by these two convolution lessons is recognized here.
 // Fractions and indexed symbols stay intact as semantic terms, preserving MathLive layout.

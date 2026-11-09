@@ -1,4 +1,4 @@
-import { Typography } from '../../../shared/react';
+import { Typography } from "@shuku/course-style/react";
 import { AttentionActivity, LessonCheck, useActivityState, type ActivityProps } from '../../components/AttentionActivity';
 import { TRANSLATION_TRAINING_SET, TRANSLATION_VALIDATION_SET } from '../../model/attentionTranslationExperiment';
 import './AttentionTranslationDatasetPage.css';

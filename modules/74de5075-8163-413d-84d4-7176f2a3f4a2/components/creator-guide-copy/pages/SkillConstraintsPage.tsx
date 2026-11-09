@@ -1,5 +1,5 @@
 import { useEffect, useId, useRef, useState, type CSSProperties } from 'react';
-import { Button, Typography } from '../../../../shared/react';
+import { Button, Typography } from "@shuku/course-style/react";
 import { WeightSharingAblation } from '../components/WeightSharingAblation';
 import { SkillAblationConcept } from '../components/SkillAblationConcept';
 import './SkillConstraintsPage.css';

@@ -1,6 +1,6 @@
 import {useRef,useState} from 'react';
 import {ArrowLeft,Bookmark,Heart,Search,X,Star,BookOpen} from 'lucide-react';
-import {Typography,moduleAssetUrl} from '../../../shared/react';
+import {Typography,moduleAssetUrl} from "@shuku/course-style/react";
 import outline from '../../outlines.json';
 import papers from './webPapers.json';
 import './ResearchWebMonitor.css';
@@ -18,12 +18,12 @@ export function ResearchWebMonitor(){
  const visible=papers.filter(p=>(tab!=='论文收藏'||saved.includes(p.id))&&`${p.title} ${p.abstract} ${p.category}`.toLowerCase().includes(query.toLowerCase()));
  function open(p:WebPaper){setDetail(p);viewport.current?.scrollTo({top:0})}
  return <div className="rw-monitor" aria-label="网页版科研信息服务演示" onWheel={e=>e.stopPropagation()} onPointerDown={e=>e.stopPropagation()} onKeyDown={e=>e.stopPropagation()}>
-  <img className="rw-device-photo" src={moduleAssetUrl(outline.moduleIdentity.id,'images/recommendation-app/monitor-photoreal.png')} alt="" draggable={false} aria-hidden="true"/>
+  <img className="rw-device-photo" src={moduleAssetUrl('images/recommendation-app/monitor-photoreal.png')} alt="" draggable={false} aria-hidden="true"/>
   <div className="rw-case"><i className="rw-camera"/>
    <div className="rw-display" data-feed-screen="desktop" data-ppt-viewport="电脑内的本地网站视口">
     <div className="rw-website">
      <header className="rw-nav">
-      <button className="rw-logo" aria-label="网站首页" onClick={()=>changeTab('首页')}><img src={moduleAssetUrl(outline.moduleIdentity.id,'images/recommendation-app/reduct-official-logo.png')} alt="减论科技"/></button>
+      <button className="rw-logo" aria-label="网站首页" onClick={()=>changeTab('首页')}><img src={moduleAssetUrl('images/recommendation-app/reduct-official-logo.png')} alt="减论科技"/></button>
       <nav aria-label="网页版导航">{['首页','热点','论文收藏'].map(t=><button key={t} className={tab===t?'active':''} onClick={()=>changeTab(t)}><Typography as="span" variant="bodySmall" tone="inherit">{t}</Typography></button>)}<button onClick={()=>setNotice('新芽计划：连接科研学习、实践培养与导师指导。')}>新芽计划⌄</button><button onClick={()=>setNotice('优博之路：关注科研成长与学术交流。')}>优博之路⌄</button></nav>
       <button className="rw-login" onClick={()=>setNotice('当前展示论文发现与阅读体验，可直接浏览和收藏。')}>登录</button>
      </header>
@@ -35,14 +35,14 @@ export function ResearchWebMonitor(){
        <Typography className="rw-authors" variant="bodySmall" tone="inherit">{detail.authors}</Typography>
        <div className="rw-detail-meta"><Typography variant="bodySmall" tone="inherit">{detail.category} · {detail.date}</Typography><button className={saved.includes(detail.id)?'chosen':''} onClick={()=>toggle(detail.id,saved,setSaved)}><Bookmark size={17}/>{saved.includes(detail.id)?'已收藏':'收藏论文'}</button></div>
        <Typography variant="h3" tone="inherit">研究概览</Typography><Typography variant="body" tone="inherit">{detail.abstract}</Typography>
-       <img className="rw-detail-image" src={moduleAssetUrl(outline.moduleIdentity.id,detail.image)} alt={`${detail.title} 论文配图`}/>
+       <img className="rw-detail-image" src={moduleAssetUrl(detail.image)} alt={`${detail.title} 论文配图`}/>
        <Typography variant="bodySmall" tone="muted">结合论文图文概览，了解研究问题、方法与主要内容。</Typography>
       </div>:<>
        <div className="rw-page-heading"><Typography variant="h2" tone="inherit">{tab==='论文收藏'?'我的论文收藏':tab==='热点'?'全球科研热点':'今日减论热点'}</Typography><Typography variant="bodySmall" tone="inherit">{tab==='论文收藏'?'Saved Papers':'Global Trending Research'}</Typography></div>
        <label className="rw-search"><Search size={16}/><input aria-label="网页版搜索论文" placeholder="搜索论文或研究关键词" value={query} onChange={e=>setQuery(e.target.value)}/>{query&&<button aria-label="清空网站搜索" onClick={()=>setQuery('')}><X size={15}/></button>}</label>
        <div className="rw-paper-list">{visible.map((p,i)=><article className="rw-paper" key={p.id}>
         <Typography className={`rw-rank rw-rank-${Math.min(i,2)}`} variant="h2" tone="inherit">{String(i+1).padStart(2,'0')}</Typography>
-        <button className="rw-thumb" aria-label={`网页版查看配图 ${p.id}`} onClick={()=>open(p)}><img src={moduleAssetUrl(outline.moduleIdentity.id,p.image)} alt={`${p.title} 论文配图`}/></button>
+        <button className="rw-thumb" aria-label={`网页版查看配图 ${p.id}`} onClick={()=>open(p)}><img src={moduleAssetUrl(p.image)} alt={`${p.title} 论文配图`}/></button>
         <div className="rw-paper-content">
          <button className="rw-title" aria-label={`网页版阅读 ${p.id}`} onClick={()=>open(p)}><Typography variant="h3" tone="inherit">{p.title}</Typography></button>
          <Typography className="rw-authors" variant="bodySmall" tone="inherit">{p.authors}</Typography>

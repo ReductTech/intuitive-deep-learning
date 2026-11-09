@@ -1,4 +1,4 @@
-import { MathFormulaStatic, Typography } from '../../shared/react';
+import { MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import './MLASummaryPage.css';
 
 // DeepSeek-V2 §2.1.2–2.1.3: https://arxiv.org/html/2405.04434v5

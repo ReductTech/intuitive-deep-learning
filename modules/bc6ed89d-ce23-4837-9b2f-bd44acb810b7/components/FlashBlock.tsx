@@ -1,4 +1,4 @@
-import { Typography } from '../../shared/react';
+import { Typography } from "@shuku/course-style/react";
 import './FlashBlock.css';
 
 export type ScorePosition = '11' | '12' | '21' | '22';

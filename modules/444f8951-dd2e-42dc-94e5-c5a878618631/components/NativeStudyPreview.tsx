@@ -1,7 +1,7 @@
 import gomoku_play_completedAsset0 from '../assets/images/multi-format/convolution/gomoku-play-completed.jpg';
 import gomoku_playAsset1 from '../assets/images/multi-format/convolution/gomoku-play.jpg';
 import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
-import { LessonFlow, type LessonFlowStep, type LessonStepContext } from '../../shared/react';
+import { LessonFlow, type LessonFlowStep, type LessonStepContext } from "@shuku/course-style/react";
 import { demoOutcome, GomokuLessonProvider, useGomokuOutcome } from './workflow/copied-course/LessonContext';
 import { BoardAsNumbersPage } from './workflow/copied-course/pages/BoardAsNumbersPage/BoardAsNumbersPage';
 import { WindowScanPage } from './workflow/copied-course/pages/WindowScanPage/WindowScanPage';

@@ -1,5 +1,5 @@
 import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
-import { ContentBlock, Button, Typography } from '../../../shared/react';
+import { ContentBlock, Button, Typography } from "@shuku/course-style/react";
 import { useAttentionLesson, type QueryTask } from '../../model/AttentionLessonContext';
 import { QUERY_TASKS, hasCompletedQueryExploration } from '../../model/queryExploration';
 import { CAMPUS_RECORD_TASKS, CAMPUS_RECORD_TEXT } from '../../model/campusRecord';

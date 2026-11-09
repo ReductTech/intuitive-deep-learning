@@ -1,6 +1,6 @@
 import { valueBasedRlAssetUrl } from '../../assetUrls';
 import { useState } from 'react';
-import { Typography } from '../../../shared/react';
+import { Typography } from "@shuku/course-style/react";
 import { LessonPage } from '../../components/LessonPrimitives';
 import { TeachingPanel } from '../../components/TeachingPanel';
 import { WarehouseMap } from '../../components/WarehouseMap';

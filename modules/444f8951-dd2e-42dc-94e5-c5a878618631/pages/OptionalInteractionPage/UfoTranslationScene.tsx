@@ -4,7 +4,7 @@ import pillarAsset2 from '../../assets/images/translation-example/pillar.png';
 import dark_foliageAsset3 from '../../assets/images/translation-example/dark_foliage.png';
 // Scene assets, compositing, pointer control and idle trajectory copied from the original module.
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from 'react';
-import { Typography } from '../../../shared/react';
+import { Typography } from "@shuku/course-style/react";
 import { DesignComparisonArrow } from '../../components/DesignComparisonHeader';
 import { MAP_WIDTH, MAP_HEIGHT, loadImage, renderResponse, type Position, type SceneImages } from './laplacianResponse';
 const backgroundUrl = bgAsset0;
