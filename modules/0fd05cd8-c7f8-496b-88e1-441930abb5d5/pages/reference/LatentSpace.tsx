@@ -13,7 +13,7 @@ export function PixelToLatent() {
   const progress=currentStep/steps, positions=resolution**2*steps;
   return <ReferenceCanvas index={5} source="12">
     <RefBox rect={[1115,310,530,293]}><LatentNoise progress={progress}/></RefBox>
-    <RefBox rect={[98,275,417,384]} className="vgr-image-stack"><ReferenceVisual name="noise-prediction" style={{opacity:1-progress}}/></RefBox>
+    <RefBox rect={[98,275,417,384]} className="vgr-image-stack"><ReferenceVisual file="visuals/noise-prediction.jpg" style={{opacity:1-progress}}/></RefBox>
     {resolution!==512 && <><RefBox rect={[274,228,100,42]} className="vgr-white vgr-center"><Text>{resolution}</Text></RefBox><RefBox rect={[19,449,79,44]} className="vgr-white vgr-center"><Text>{resolution}</Text></RefBox><RefBox rect={[825,539,140,44]} className="vgr-white vgr-center"><Text>{resolution/8} × {resolution/8}</Text></RefBox></>}
     <RefBox rect={[67,665,475,71]} className="vgr-white vgr-center"><Formula latex={`${resolution}\\times${resolution}\\times3`}/><Text muted>单步 {(resolution**2).toLocaleString()} 个空间位置</Text></RefBox>
     <RefBox rect={[1170,645,460,91]} className="vgr-white vgr-center"><Formula latex={`${resolution/8}\\times${resolution/8}\\times4`}/><Text muted>单步 {(resolution**2/64).toLocaleString()} 个空间位置</Text></RefBox>
@@ -30,11 +30,11 @@ function BridgeRoute({ generated }: { generated:boolean }) {
   const story=useStory(['起点','形成 latent','同一 Decoder 解码','图像输出']);
   return <>
     {generated && <>
-      <RefBox rect={[39,268,347,377]} className="vgr-white vgr-generation-origin"><Typography variant="body" tone="accent">随机 latent 噪声</Typography><ReferenceVisual name="latent-noisy"/><Text muted>无需输入原图</Text></RefBox>
+      <RefBox rect={[39,268,347,377]} className="vgr-white vgr-generation-origin"><Typography variant="body" tone="accent">随机 latent 噪声</Typography><ReferenceVisual file="visuals/latent-noisy.png"/><Text muted>无需输入原图</Text></RefBox>
       <RefBox rect={[444,370,195,204]} className="vgr-encoder-replacement"><Typography variant="h3" tone="accent">扩散采样</Typography><Text>反复去噪</Text></RefBox>
       <RefBox rect={[430,588,225,54]} className="vgr-white vgr-center"><Text>从噪声生成特征</Text></RefBox>
       <RefBox rect={[705,311,270,55]} className="vgr-white vgr-center"><Typography variant="body" tone="accent">生成 latent z</Typography></RefBox>
-      <RefBox rect={[700,366,263,220]} className="vgr-white"><ReferenceVisual name={story.step<1?'latent-noisy':'latent-denoised'} /></RefBox>
+      <RefBox rect={[700,366,263,220]} className="vgr-white"><ReferenceVisual file={story.step<1?'visuals/latent-noisy.png':'visuals/latent-denoised.png'} /></RefBox>
       <RefBox rect={[445,704,785,50]} className="vgr-white vgr-center"><Text>Diffusion 生成 · VAE Decoder 解码</Text></RefBox>
       <RefBox rect={[1295,270,330,49]} className="vgr-white vgr-center"><Typography variant="body" tone="accent">新图像（示意）</Typography></RefBox>
     </>}

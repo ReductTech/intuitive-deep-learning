@@ -8,7 +8,7 @@ import './CaoChongPage.css';
 
 const assetId = 'b8d86e85-2150-47e3-9e1a-aa7cc7cce15c';
 const asset = (name: string) => moduleAssetUrl(`cao-chong/${name}`);
-const stoneAssets = ['rock.png', 'roaipe-showcase-ck-slate.png', 'roaipe-showcase-ck-basalt.png', 'roaipe-showcase-ck-sandstone.png'];
+const stoneAssets = ['rock.png', 'rock-slate.png', 'rock-basalt.png', 'rock-sandstone.png'];
 const stoneAsset = (index: number) => asset(stoneAssets[index % stoneAssets.length]);
 type Phase = 'idle' | 'falling' | 'settling';
 type StoryPhase = 'before-elephant' | 'loading-elephant' | 'elephant' | 'unloading-elephant' | 'stones';

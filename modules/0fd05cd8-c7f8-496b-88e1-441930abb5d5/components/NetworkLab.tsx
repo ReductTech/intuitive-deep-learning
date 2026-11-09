@@ -24,8 +24,8 @@ export function NetworkLab({ stage = 6, skip = true, playing = false, onSelect, 
         {onSelect ? <Button aria-label={`观察 ${node.label}`} onClick={() => onSelect(index + 1)}>{graphic}</Button> : <div className="vga-point-static">{graphic}</div>}
       </div>;
     })}
-    <div className="vga-network-terminal"><ReferenceVisual name="noisy-cat" alt="带噪状态" /><Text>带噪状态</Text></div>
-    <div className="vga-network-terminal is-output"><ReferenceVisual name="noise-prediction" alt="预测噪声" /><Text>预测结果</Text></div>
+    <div className="vga-network-terminal"><ReferenceVisual file="visuals/noisy-cat.jpg" alt="带噪状态" /><Text>带噪状态</Text></div>
+    <div className="vga-network-terminal is-output"><ReferenceVisual file="visuals/noise-prediction.jpg" alt="预测噪声" /><Text>预测结果</Text></div>
     <div className="vga-network-skip-label"><Text>{skip ? 'Skip · 对应尺度直接传回' : 'Skip · 已断开'}</Text></div>
   </div>;
 }

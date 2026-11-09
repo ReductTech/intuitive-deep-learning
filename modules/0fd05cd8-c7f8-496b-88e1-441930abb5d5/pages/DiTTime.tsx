@@ -19,7 +19,7 @@ export function DiTTime() {
   return <Frame index={11} subtitle="时间不只是一个标签：它可以缩放和平移块内的特征" takeaway="AdaLN 用条件生成的参数调制归一化特征；图与数值应随同一次操作变化。">
     <LessonSplit>
       <TeachingPanel title="① 时间条件与调制参数" className="vga-sidebar">
-        <ReferenceVisual name="transformer-block" alt="AdaLN 所在的 DiT block" style={{width: 285,height: 170}} />
+        <ReferenceVisual file="visuals/transformer-block.png" alt="AdaLN 所在的 DiT block" style={{width: 285,height: 170}} />
         <RangeControl label="时间条件" value={time} min={0} max={1000} step={100} onChange={e => setTime(Number(e.target.value))} />
         <Formula latex={`\\gamma=${gamma.toFixed(2)},\\quad\\beta=${beta.toFixed(2)}`} />
         <Button active={!enabled} onClick={() => setEnabled(false)}>只做归一化</Button>

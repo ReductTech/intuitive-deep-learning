@@ -6,8 +6,8 @@ import outline from '../../outlines.json';
 import { FLOW_DURATION, PAPER_COUNT, flightKeyframes, flowPaperTransform, paperFlight } from './paperFlow';
 import './PersonalizedResearchSupplyPage.css';
 
-const textures=['paper-top-single-a','paper-top-double-a','paper-top-single-figure','paper-top-double-table'] as const;
-const textureUrl=(i:number)=>moduleAssetUrl('images/paper-relief/'+textures[i%textures.length]+'.png');
+const textures=['images/paper-relief/paper-top-single-a.jpg','images/paper-relief/paper-top-double-a.jpg','images/paper-relief/paper-top-single-figure.jpg','images/paper-relief/paper-top-double-table.jpg'] as const;
+const textureUrl=(i:number)=>moduleAssetUrl(textures[i%textures.length]);
 const flights=Array.from({length:PAPER_COUNT},(_,id)=>paperFlight(id));
 const sourcePapers=Array.from({length:23},(_,i)=>({
   x:35+(i%5)*62+(Math.floor(i/5)%2)*19,

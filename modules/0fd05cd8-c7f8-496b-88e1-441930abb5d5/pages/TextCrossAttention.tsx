@@ -60,7 +60,7 @@ export function TextCrossAttention() {
           onPointerMove={event => { if (pointer.current === event.pointerId) locate(event); }}
           onPointerUp={event => { if (pointer.current === event.pointerId) locate(event); release(event); }}
           onPointerCancel={release} onLostPointerCapture={() => {pointer.current = null; setDragging(false);}} onKeyDown={moveWithKeys}>
-          <ReferenceVisual name="attention-feature" alt="小猫与书本的视觉特征图，原图中的橙框是参考区域" />
+          <ReferenceVisual file="visuals/attention-feature.jpg" alt="小猫与书本的视觉特征图，原图中的橙框是参考区域" />
           <div className="vga-query-marker" data-testid="query-marker" style={{left: `${query.col / side * 100}%`, top: `${query.row / side * 100}%`}} aria-hidden="true" />
           <div className="vga-query-tag" style={{left: `${Math.min(query.col, 13) / side * 100}%`, top: `${(query.row >= 2 ? query.row - 2 : query.row + 1) / side * 100}%`}} aria-hidden="true"><Typography as="span" variant="bodySmall" tone="inherit">Q</Typography></div>
         </div>

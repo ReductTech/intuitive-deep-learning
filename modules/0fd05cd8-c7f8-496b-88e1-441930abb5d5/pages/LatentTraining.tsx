@@ -14,7 +14,7 @@ export function LatentTraining() {
   return <Frame index={7} subtitle="让画师练习：加进去的噪声是已知的，预测偏差可以直接计算" takeaway="训练用已知噪声监督预测；减小预测误差，才能学会处理带噪状态。">
     <LessonSplit equal>
       <TeachingPanel title="① 已知噪声 → 主干预测" className="vga-training-input">
-        <Flow><div className="vga-center"><Latent small variant="noisy" /><Text>构造带噪样本</Text></div><Arrow /><div className="vga-center"><ReferenceVisual name="unet-mini" alt="预测主干" style={{width: 190,height: 100}} /><Text>去噪主干预测</Text></div></Flow>
+        <Flow><div className="vga-center"><Latent small variant="noisy" /><Text>构造带噪样本</Text></div><Arrow /><div className="vga-center"><ReferenceVisual file="visuals/unet-mini.png" alt="预测主干" style={{width: 190,height: 100}} /><Text>去噪主干预测</Text></div></Flow>
         <div className="vga-metric-row"><Readout label="已知目标" value="−0.40" /><Readout label="当前预测" value={prediction.toFixed(3)} /><Readout label="平方误差" value={<span data-testid="training-loss">{loss.toFixed(4)}</span>} warm /></div>
         <Formula latex={`\\mathcal{L}=(${prediction.toFixed(5)}-(-0.4))^2\\approx ${loss.toFixed(4)}`} />
         <div className="vga-stage-tabs"><Button variant="primary" data-testid="train-update" disabled={history.length>=10} onClick={update}>更新一次参数</Button><Button onClick={reset}>重新练习</Button></div>

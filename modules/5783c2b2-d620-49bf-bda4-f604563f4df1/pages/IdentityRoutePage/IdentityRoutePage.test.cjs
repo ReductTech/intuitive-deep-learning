@@ -49,7 +49,7 @@ function harness() {
   const hook = load(path.resolve(__dirname, '../../hooks/useCompleteOnce.ts'), { react });
   const page = load(path.join(__dirname, 'IdentityRoutePage.tsx'), {
     react, '../../../shared/react': shared, '../../hooks/useCompleteOnce': hook, './identityConstruction': model,
-    '../../assets/recycling/camera-views/bottle-front.png': { default: '/lesson-assets/bottle-upright.png' },
+    '../../assets/recycling/camera-views/bottle-front.jpg': { default: '/lesson-assets/bottle-upright.png' },
   });
   const onComplete = () => calls++;
   return { get calls() { return calls; }, render() {
@@ -179,7 +179,7 @@ test('page is after the overfitting comparison, old numeric lesson is replaced, 
   assert.ok(css.includes('prefers-reduced-motion')); assert.ok(css.includes('minmax(0,'));
   assert.ok(!/HAND_SET_LAYERS|trainingCurve|Question|localStorage|modules-legacy/.test(source));
   for (const match of css.matchAll(/\.rtg-identity-route__([a-z-]+)/g)) assert.ok(source.includes("'" + match[1] + "'"), 'unused CSS class: ' + match[1]);
-  assert.ok(fs.existsSync(path.join(root, 'assets/recycling/camera-views/bottle-front.png')));
+  assert.ok(fs.existsSync(path.join(root, 'assets/recycling/camera-views/bottle-front.jpg')));
 });
 
 

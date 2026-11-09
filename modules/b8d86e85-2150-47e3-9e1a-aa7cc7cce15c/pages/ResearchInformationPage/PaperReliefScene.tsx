@@ -5,11 +5,11 @@ import outline from '../../outlines.json';
 import { allocatePaperStacks, readerPose } from './paperStacks';
 import { projectPaperPage } from './paperPerspective';
 
-const topSheets = ['paper-top-single-a', 'paper-top-double-a',
-  'paper-top-single-figure', 'paper-top-double-table'] as const;
-const assets = ['room','desk',...topSheets,'calendar-stand','reader-relaxed','reader-focused','reader-defeated'] as const;
+const topSheets = ['images/paper-relief/paper-top-single-a.jpg', 'images/paper-relief/paper-top-double-a.jpg',
+  'images/paper-relief/paper-top-single-figure.jpg', 'images/paper-relief/paper-top-double-table.jpg'] as const;
+const assets = ['images/paper-relief/room-calm.jpg','images/paper-relief/desk.png',...topSheets,'images/paper-relief/calendar-stand.png','images/paper-relief/reader-relaxed.png','images/paper-relief/reader-focused.png','images/paper-relief/reader-defeated.png'] as const;
 type Asset = typeof assets[number];
-const image = (name: Asset) => moduleAssetUrl(`images/paper-relief/${name === 'room' ? 'room-calm' : name}.png`);
+const image = (file: Asset) => moduleAssetUrl(file);
 const poseLabels = { relaxed:'挠着后脑勺靠在椅子上', focused:'认真地俯身写字', defeated:'无奈地瘫在椅子上，放弃抵抗' };
 
 export function PaperReliefScene({year,previousYear,count,onReadyChange}:{year:number;previousYear:number|null;count:number;onReadyChange:(ready:boolean)=>void}) {
@@ -34,7 +34,7 @@ export function PaperReliefScene({year,previousYear,count,onReadyChange}:{year:n
 
   return <div ref={roomRef} className="aipe-paper-room" data-pose={pose} data-paper-count={count} aria-busy={!ready && !failed.size}>
     {assets.map(name => <img key={`${name}-${retry}`} src={image(name)}
-      className={`aipe-paper-asset aipe-paper-${name === 'room' ? 'background' : name.startsWith('paper-top-') ? 'texture' : name}${name === `reader-${pose}` ? ' is-active' : ''}`}
+      className={`aipe-paper-asset aipe-paper-${name === 'images/paper-relief/room-calm.jpg' ? 'background' : name.includes('/paper-top-') ? 'texture' : name.split('/').pop()!.replace(/\.[^.]+$/, '')}${name === `images/paper-relief/reader-${pose}.png` ? ' is-active' : ''}`}
       alt="" aria-hidden="true" draggable={false}
       onLoad={event => {
         const node = event.currentTarget;
@@ -51,7 +51,7 @@ export function PaperReliefScene({year,previousYear,count,onReadyChange}:{year:n
         size.width / 2, -size.height * .79);
       const topSheet = topSheets[(stackIndex * 3 + Math.floor(stackIndex / topSheets.length)) % topSheets.length];
       return <div key={slot.id} className={`aipe-paper-pile${plane.showsLeftSide ? ' shows-left-side' : ''}`}
-      data-stack-id={slot.id} data-surface={slot.surface} data-papers={slot.papers} data-height={slot.height} data-top-sheet={topSheet}
+      data-stack-id={slot.id} data-surface={slot.surface} data-papers={slot.papers} data-height={slot.height} data-top-sheet={topSheet.split('/').pop()!.replace(/\.[^.]+$/, '')}
       aria-hidden="true" style={{
         left:`${slot.x}%`, bottom:`${100-slot.y}%`, width:`${slot.width}%`,
         zIndex:slot.layer, opacity:slot.papers > 0 ? 1 : 0,
@@ -65,7 +65,7 @@ export function PaperReliefScene({year,previousYear,count,onReadyChange}:{year:n
         transform:plane.transform,backgroundImage:`url("${image(topSheet)}")`}} />
     </div>;})}
     {size && <div className="aipe-paper-reading-page" aria-hidden="true">
-      {(['paper-top-double-a','paper-top-single-figure'] as const).map((sheet,i) => {
+      {(['images/paper-relief/paper-top-double-a.jpg','images/paper-relief/paper-top-single-figure.jpg'] as const).map((sheet,i) => {
         const plane = projectPaperPage(size.width * .075, size.width * (.465 + i * .075),
           size.height * .43, size.width / 2, -size.height * .79);
         return <div key={sheet} className="aipe-paper-reading-sheet" style={{left:`${i*50}%`,

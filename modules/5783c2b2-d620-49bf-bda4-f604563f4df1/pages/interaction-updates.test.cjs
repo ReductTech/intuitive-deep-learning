@@ -807,9 +807,18 @@ test('the course-local range component uses labels, lock/update icons and dashed
 
 test('page21 uses the same high-resolution photo for crops and highlights, with a connected path and a high-contrast weight file', () => {
   const app=harness('PretrainingPage');let tree=app.render();
-  const asset=path.resolve(__dirname,'../assets/pretraining/bottle-white-cap-hd.png');
-  const bytes=fs.readFileSync(asset);assert.equal(bytes.toString('ascii',1,4),'PNG');
-  assert.equal(bytes.readUInt32BE(16),1024);assert.equal(bytes.readUInt32BE(20),1536);
+  const asset=path.resolve(__dirname,'../assets/pretraining/bottle-white-cap-hd.jpg');
+  const bytes=fs.readFileSync(asset);assert.equal(bytes.readUInt16BE(0),0xffd8);
+  let dimensions;
+  for(let offset=2;offset+4<bytes.length;){
+    assert.equal(bytes[offset],0xff);
+    const marker=bytes[offset+1],length=bytes.readUInt16BE(offset+2);
+    if([0xc0,0xc1,0xc2].includes(marker)){
+      dimensions={width:bytes.readUInt16BE(offset+7),height:bytes.readUInt16BE(offset+5)};break;
+    }
+    offset+=2+length;
+  }
+  assert.deepEqual(dimensions,{width:600,height:900});
   const source=elements(tree).find(node=>node.type==='img').props.src;
   const crops=elements(tree).filter(node=>node.type==='image');assert.equal(crops.length,3);
   assert.ok(crops.every(node=>node.props.href===source));

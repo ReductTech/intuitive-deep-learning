@@ -25,7 +25,7 @@ export function ArchitectureCover() {
           <span className={'vgr-cover-snapshot'+(flipped?' is-flipped':'')} data-side={flipped?'back':'front'}>
             <span className="vgr-cover-photo-front" aria-hidden={flipped}>
               <span className={'vgr-cover-photo-image'+(developed?' is-developed':'')}>
-                <ReferenceVisual name="cat" alt="情景中的交付图像：橘猫正趴在打开的书本上"/>
+                <ReferenceVisual file="visuals/cat.jpg" alt="情景中的交付图像：橘猫正趴在打开的书本上"/>
                 {!developed && <span className="vgr-cover-empty-paper"><Typography as="span" variant="h3" tone="muted">?</Typography></span>}
               </span>
               <Typography as="span" variant="bodySmall" tone="muted">{developed?'一张没人拍过的照片':'一张空白相纸'}</Typography>

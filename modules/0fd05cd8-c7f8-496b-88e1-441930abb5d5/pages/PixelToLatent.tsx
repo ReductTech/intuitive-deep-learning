@@ -11,7 +11,7 @@ import './PixelToLatent.css';
 // These are not intermediate tensors produced by a trained diffusion model.
 function SamplingLatent({ progress }: { progress: number }) {
   const id = useId().replaceAll(':', '');
-  const asset = (name: string) => courseAssetUrl(`visuals/${name}.png`);
+  const asset = (file: string) => courseAssetUrl(file);
   const planes = [
     '395,9 522,44 522,238 433,212 433,50 395,39',
     '273,17 423,58 423,257 318,228 318,67 273,55',
@@ -21,9 +21,9 @@ function SamplingLatent({ progress }: { progress: number }) {
   return <div className="vga-sampling-latent" data-testid="sampling-latent" data-progress={progress}>
     <svg viewBox="0 0 530 293" role="img" aria-label={`latent 去噪示意，已完成 ${Math.round(progress * 100)}%`}>
       <defs>{planes.map((points, i) => <clipPath key={i} id={`${id}-${i}`}><polygon points={points} /></clipPath>)}</defs>
-      <image href={asset('latent-color')} width="530" height="293" />
+      <image href={asset('visuals/latent-color.png')} width="530" height="293" />
       {planes.map((_, i) => <g key={i} clipPath={`url(#${id}-${i})`} opacity={1 - progress}>
-        <image href={asset('noise-prediction')} x={i * 17 - 20} y={-i * 11} width="570" height="330" preserveAspectRatio="none" />
+        <image href={asset('visuals/noise-prediction.jpg')} x={i * 17 - 20} y={-i * 11} width="570" height="330" preserveAspectRatio="none" />
       </g>)}
     </svg>
     <Text muted>去噪状态示意 · 固定初始噪声</Text>

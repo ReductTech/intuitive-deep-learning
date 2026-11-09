@@ -27,27 +27,27 @@ export function Flow({ children, className = '' }: { children: ReactNode; classN
 export function Block({ title, detail, warm = false, children }: { title: string; detail?: string; warm?: boolean; children?: ReactNode }) {
   return <div className={'vga-block' + (warm ? ' vga-block--warm' : '')}>{children}<Typography variant="h3" tone="accent">{title}</Typography>{detail && <Text muted>{detail}</Text>}</div>;
 }
-export function ReferenceVisual({ name, alt = '', className = '', style }: { name: string; alt?: string; className?: string; style?: CSSProperties }) {
-  return <img className={`vga-reference-visual ${className}`} src={courseAssetUrl(`visuals/${name}.png`)} alt={alt} style={style} draggable={false} data-reference-visual={name} />;
+export function ReferenceVisual({ file, alt = '', className = '', style }: { file: string; alt?: string; className?: string; style?: CSSProperties }) {
+  return <img className={`vga-reference-visual ${className}`} src={courseAssetUrl(file)} alt={alt} style={style} draggable={false} data-reference-visual={file} />;
 }
-const featureNames = ['feature-fine', 'feature-coarse', 'feature-mid', 'feature-up-coarse', 'feature-up-fine'];
+const featureFiles = ['visuals/feature-fine.png', 'visuals/feature-coarse.png', 'visuals/feature-mid.png', 'visuals/feature-up-coarse.png', 'visuals/feature-up-fine.png'];
 export function Feature({ size = 120, seed = 0, warm = false, level }: { size?: number; seed?: number; warm?: boolean; level?: number }) {
   const index = level ?? ((Math.floor(seed) % 5 + 5) % 5);
-  return <div className={'vga-feature' + (warm ? ' is-highlighted' : '')} style={{ width: size, height: size }}><ReferenceVisual name={featureNames[index]} alt="参考图中的透视特征图：小猫与书本的空间纹理（教学示意）" /></div>;
+  return <div className={'vga-feature' + (warm ? ' is-highlighted' : '')} style={{ width: size, height: size }}><ReferenceVisual file={featureFiles[index]} alt="参考图中的透视特征图：小猫与书本的空间纹理（教学示意）" /></div>;
 }
 export function Latent({ small = false, phase = 0, variant = 'encoded' }: { small?: boolean; phase?: number; variant?: 'encoded' | 'noisy' | 'denoised' | 'color' }) {
-  return <div className={'vga-latent' + (small ? ' vga-latent--small' : '')} data-latent-phase={phase}><ReferenceVisual name={`latent-${variant}`} alt="参考图中的多通道 latent 透视堆叠（教学示意）" /></div>;
+  return <div className={'vga-latent' + (small ? ' vga-latent--small' : '')} data-latent-phase={phase}><ReferenceVisual file={`visuals/latent-${variant}.png`} alt="参考图中的多通道 latent 透视堆叠（教学示意）" /></div>;
 }
 export function Photo({ noise = 0, label = '一个正在学习的小猫', small = false, feature = false }: { noise?: number; label?: string; small?: boolean; feature?: boolean }) {
   return <div className={'vga-photo-wrap' + (small ? ' vga-photo-wrap--small' : '')}>
     <div className="vga-photo" role="img" aria-label={label}>
-      <ReferenceVisual name={feature ? 'attention-feature' : 'cat'} />
-      <ReferenceVisual name="noise-prediction" className="vga-noise-overlay" style={{ opacity: noise }} />
+      <ReferenceVisual file={feature ? 'visuals/attention-feature.jpg' : 'visuals/cat.jpg'} />
+      <ReferenceVisual file="visuals/noise-prediction.jpg" className="vga-noise-overlay" style={{ opacity: noise }} />
     </div><Text muted>{label}</Text>
   </div>;
 }
 export function Tokens({ warm = false, count = 8 }: { warm?: boolean; count?: number }) {
-  return <div className={'vga-tokens' + (warm ? ' vga-tokens--warm' : '')} aria-label={warm ? '文本 tokens 示意' : '视觉 tokens 示意'}>{Array.from({ length: count }, (_, i) => <ReferenceVisual key={i} name={warm ? 'token-modulated' : 'token-blue'} style={{ filter: `brightness(${1 + (i % 3) * .06})` }} />)}</div>;
+  return <div className={'vga-tokens' + (warm ? ' vga-tokens--warm' : '')} aria-label={warm ? '文本 tokens 示意' : '视觉 tokens 示意'}>{Array.from({ length: count }, (_, i) => <ReferenceVisual key={i} file={warm ? 'visuals/token-modulated.jpg' : 'visuals/token-blue.jpg'} style={{ filter: `brightness(${1 + (i % 3) * .06})` }} />)}</div>;
 }
 export function Note({ children, warm = false }: { children: ReactNode; warm?: boolean }) {
   return <div className={'vga-note' + (warm ? ' vga-note--warm' : '')}><Text>{children}</Text></div>;
