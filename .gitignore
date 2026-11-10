@@ -11,3 +11,4 @@ __pycache__/
 **/_scratchpad/
 .DS_Store
 Thumbs.db
+*.zip
