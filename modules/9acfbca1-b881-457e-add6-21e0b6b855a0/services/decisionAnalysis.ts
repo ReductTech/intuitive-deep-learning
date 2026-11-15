@@ -1,5 +1,3 @@
-import moduleOutline from '../outlines.json';
-
 import {requestCourse} from '@shuku/course-runtime/react/courseRequests';
 const INTAKE_ENDPOINT='/decision/intake';
 const EXTRA_FACTORS_ENDPOINT='/decision/extra-factors';
@@ -58,10 +56,13 @@ function normalizeFactor(value: unknown): DecisionAnalysisFactor {
   if (!Number.isFinite(importance) || importance < 0 || importance > 1) {
     throw new Error('服务返回了无效的建议权重。');
   }
-  const transform = factor.value_transform ?? factor.valueTransform;
+  // Older cached results carry direction but omit the derived display transform.
+  const directionTransform = factor.direction === 'positive' ? 'direct' : factor.direction === 'negative' ? 'inverse' : undefined;
+  const transform = factor.value_transform ?? factor.valueTransform ?? directionTransform;
   if (transform !== 'direct' && transform !== 'inverse') {
     throw new Error('服务返回了无效的因素方向。');
   }
+  if (directionTransform && transform !== directionTransform) throw new Error('服务返回的因素方向与评分方式不一致，请重试。');
   const legacyScale = splitLegacyScale(requiredText(factor.value_question ?? factor.valueQuestion, '服务返回的评分问题为空。'));
   return {
     name: requiredText(factor.name, '服务返回的因素名称为空。'),
@@ -76,12 +77,17 @@ function normalizeFactor(value: unknown): DecisionAnalysisFactor {
 }
 
 async function post(endpoint: string, payload: Record<string, unknown>): Promise<Record<string, unknown>> {
+  const stage = endpoint === INTAKE_ENDPOINT ? '理解决策与提取主要因素' : '补充两个影响因素';
+  try {
   const envelope=await requestCourse<ServiceEnvelope>({action:'compute',endpoint,payload});
   if(envelope.ok!==true)throw new Error(typeof envelope.error==='string'?envelope.error:'决策分析服务暂时不可用。');
   if (envelope.structured !== true || !envelope.result) {
     throw new Error(typeof envelope.warning?.message === 'string' ? envelope.warning.message : '服务返回内容无法解析，请重试。');
   }
   return asObject(envelope.result, '服务没有返回有效结果。');
+  } catch (error) {
+    throw new Error(`${stage}未完成：${error instanceof Error ? error.message : '请求失败，请重试。'}`);
+  }
 }
 
 export async function analyzeDecision(decision: string): Promise<DecisionAnalysis> {

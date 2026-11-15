@@ -150,14 +150,8 @@
     return 0xc9483c;
   }
 
-  function clampSimilarityPercent(percent) {
-    var value = Number(percent);
-    if (!Number.isFinite(value)) value = 60;
-    return Math.max(40, Math.min(60, value));
-  }
-
   function disguiseProgress(percent) {
-    return (60 - clampSimilarityPercent(percent)) / 20 * 100;
+    return game.similarity.disguiseProgress(percent);
   }
 
   function createSimilarityMeter(scene, x, y, width) {

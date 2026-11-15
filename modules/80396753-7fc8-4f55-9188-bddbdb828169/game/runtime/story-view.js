@@ -412,8 +412,8 @@
     var graphics = scene.add.graphics();
     addTeachingBox(graphics, 164, 740, 1120, 126, 0.72);
     var threshold = DISGUISE_PASS_THRESHOLD;
-    var valueX = 288 + Math.max(0, Math.min(1, percent / 100)) * 420;
-    var thresholdX = 288 + (threshold / 100) * 420;
+    var valueX = 288 + game.similarity.displayRatio(percent) * 420;
+    var thresholdX = 288 + game.similarity.displayRatio(threshold) * 420;
     var lineY = 810;
     graphics.lineStyle(8, 0x296f2e, 0.9);
     graphics.beginPath();
@@ -432,18 +432,18 @@
     graphics.strokePath();
     graphics.fillStyle(passed ? 0x72d476 : 0xff7770, 0.98);
     graphics.fillTriangle(valueX, lineY - 24, valueX - 11, lineY - 4, valueX + 11, lineY - 4);
-    var thresholdText = scene.add.text(thresholdX, lineY - 46, '阈值 ' + (threshold / 100).toFixed(1), {
+    var thresholdText = scene.add.text(thresholdX, lineY - 46, '阈值 ' + (threshold / 100).toFixed(2), {
       fontFamily: 'Microsoft YaHei, sans-serif',
       fontSize: '18px',
       color: '#f7d68a',
       fontStyle: 'bold'
     }).setOrigin(0.5);
-    var leftText = scene.add.text(286, lineY + 34, '0', {
+    var leftText = scene.add.text(286, lineY + 34, (constants.SIMILARITY_DISPLAY_MIN / 100).toFixed(2), {
       fontFamily: 'Microsoft YaHei, sans-serif',
       fontSize: '18px',
       color: '#dff4d6'
     }).setOrigin(0.5);
-    var rightText = scene.add.text(708, lineY + 34, '1', {
+    var rightText = scene.add.text(708, lineY + 34, (constants.SIMILARITY_DISPLAY_MAX / 100).toFixed(2), {
       fontFamily: 'Microsoft YaHei, sans-serif',
       fontSize: '18px',
       color: '#ffd0ca'
@@ -523,7 +523,7 @@
     }
     var percent = Number(result.similarityPercent);
     if (!Number.isFinite(percent)) throw new Error('Invalid disguise similarity');
-    var passed = percent < DISGUISE_PASS_THRESHOLD;
+    var passed = game.similarity.passes(percent);
 
     var anchorKey = refreshTeachingTexture(scene, 'act3-teach-anchor', 'anchorFace', []);
     var disguiseKey = refreshTeachingTexture(scene, 'act3-teach-disguise', faceTexture, marks);

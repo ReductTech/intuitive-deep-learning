@@ -232,10 +232,20 @@ export function DigitRecognitionOpeningPage() {
           <span className="vfl-check-opening__caret" aria-hidden="true" />
         </div>
         <div className="vfl-check-opening__terminal-foot flex items-center justify-between gap-[5px]">
-          <Typography as="span" variant="bodySmall" tone="muted" title={error ?? undefined}>{error ? '识别失败：连接异常' : reading ? '正在识别手写数字…' : completed === 0 ? '请在支票金额格中手写' : `已书写 ${completed} / ${BOX_COUNT} 格`}</Typography>
+          <Typography as="span" variant="bodySmall" tone="muted">{error ? '识别未完成，请查看下方原因' : reading ? '正在识别手写数字…' : completed === 0 ? '请在支票金额格中手写' : `已书写 ${completed} / ${BOX_COUNT} 格`}</Typography>
           <button type="button" onClick={clear} disabled={completed === 0} aria-label="清空支票上的手写数字">清空</button>
         </div>
       </div>
     </section>
+    {error && <aside className="vfl-check-opening__error" role="alert">
+      <Typography as="p" variant="bodySmall" tone="inherit">{error}</Typography>
+      <Typography as="p" variant="bodySmall" tone="inherit">已保留笔迹，可以重试，无需重新书写。</Typography>
+      <Button disabled={reading} onClick={() => {
+        written.forEach((value, index) => {
+          const canvas = canvases.current[index];
+          if (value && predictions[index] === null && canvas) recognize(index, canvas);
+        });
+      }}>重新识别</Button>
+    </aside>}
   </main>;
 }

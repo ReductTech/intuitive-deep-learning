@@ -50,7 +50,7 @@ export function AttentionTranslationResultsPage(props: ActivityProps) {
     <figure className="attn-trans-result-scene">
       <Typography as="figcaption" variant="h3" tone="accent">待配讲解片段</Typography>
       <div className="attn-trans-result-scene-image">
-        <CourseMaterialImage path="observation/passing-poster.png" alt="短片的体育馆传球场景示意，三名白衣队员、三名黑衣队员，两只橙色篮球。"/>
+        <CourseMaterialImage path="observation/passing-poster.webp" alt="短片的体育馆传球场景示意，三名白衣队员、三名黑衣队员，两只橙色篮球。"/>
       </div>
     </figure>
     </div>

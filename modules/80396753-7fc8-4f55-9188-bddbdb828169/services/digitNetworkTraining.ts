@@ -1,4 +1,5 @@
 import {loadRecord} from './precomputedRecord';
+import {randomUuid} from '@shuku/course-runtime/react/uuid';
 export interface Layer {id:string;kind:'conv'|'pool';out_channels:number;kernel_size:number;stride:number;padding:number;pool_type:'max'|'avg'}
 export interface Shape {h:number;w:number;c:number}
 export interface Epoch {epoch:number;loss:number;train_accuracy:number;val_accuracy:number}
@@ -14,7 +15,7 @@ const jobs = new Map<string,Job>();
 export async function startDigitTraining(architecture:Layer[],epochs:number,signal:AbortSignal,featureProjection=false){
  lastArchitecture=architecture.map(l=>({...l}));
  const result=await loadRecord<TrainingResult>('visual-feature-learning.digit-train',{architecture,epochs,feature_projection:featureProjection},signal);
- const job:Job={job_id:crypto.randomUUID(),status:'complete',progress:100,message:'预计算演示缓存',result,history:result.history,projection:result.projection};
+ const job:Job={job_id:randomUuid(),status:'complete',progress:100,message:'预计算演示缓存',result,history:result.history,projection:result.projection};
  jobs.set(job.job_id,job);return job;
 }
 export async function readDigitTraining(id:string,signal:AbortSignal){signal.throwIfAborted();const job=jobs.get(id);if(!job)throw new Error('演示缓存已关闭，请重新打开。');return job;}

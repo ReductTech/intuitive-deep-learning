@@ -11,7 +11,7 @@ export function inlineScript(source: string) {
 
 export function documentSetup(assetRoot: string, configSource?: string) {
   return inlineScript('window.VFL_GAME_ASSET_ROOT=' + JSON.stringify(assetRoot) + ';' +
-    (import.meta.env.DEV ? 'window.VFL_GAME_EMBEDDING_SIMILARITY_URL="/__local-vision/face-recog/embedding-similarity";' : '') +
+    'window.VFL_GAME_REFERENCE_ASSET=' + JSON.stringify('assets/' + outlines.id + '/yuhuanong/anchor_face.jpg') + ';' +
     (configSource === undefined ? '' : 'window.VFL_GAME_CONFIG_SOURCE=' + JSON.stringify(configSource) + ';'));
 }
 

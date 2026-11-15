@@ -40,3 +40,6 @@
 
 .vfl-check-opening__story { margin-top: 22px; }
 .vfl-check-opening__story > span { display: block; }
+
+.vfl-check-opening__error { position: absolute; right: 31px; top: 685px; z-index: 4; width: 354px; max-height: 195px; overflow: auto; box-sizing: border-box; padding: 12px 16px; border: 2px solid #a64034; border-radius: 10px; background: #fff0d8; color: #7a3028; overflow-wrap: anywhere; }
+.vfl-check-opening__error p { margin: 0 0 8px; }

@@ -7,7 +7,7 @@ import { CourseMaterialImage } from '../../components/CourseMaterialImage';
 import './AttentionReviewPage.css';
 const trajectoryPreview = Array.from({length:51},(_,i)=>{const x=i/10;return (10+x*22)+','+(62-(attentionPrediction(x,ATTENTION_DATASET.train,REGRESSION_EXPLORATION_W)-2)*15);}).join(' ');
 function MaterialPreview({kind}:{kind:'record'|'trajectory'|'bilingual'|'scene'}) {
- if(kind==='scene')return <div className="attn-review-material-preview"><CourseMaterialImage path="observation/passing-poster.png" alt="同一张体育馆传球场景示意"/></div>;
+ if(kind==='scene')return <div className="attn-review-material-preview"><CourseMaterialImage path="observation/passing-poster.webp" alt="同一张体育馆传球场景示意"/></div>;
  if(kind==='bilingual')return <div className="attn-review-material-preview attn-review-bilingual-script">
   <Typography variant="bodySmall">The white team passes here.</Typography>
   <Typography variant="bodySmall" tone="accent">白衣队在这里传球。</Typography>

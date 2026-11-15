@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react';
+import { useState } from 'react';
 import "./SignalDiscoveryPage.css";
 import { Button, ContentBlock, NoticeStrip, TextInput, Typography } from "@shuku/course-style/react";
 import { useLesson } from '../../LessonContext';
@@ -26,10 +26,9 @@ export function SignalDiscoveryPage({ onComplete }: SignalDiscoveryPageProps) {
     setError('');
   };
 
-  const submit = async (event: FormEvent) => {
-    event.preventDefault();
+  const submit = async () => {
     const value = decision.trim();
-    if (!value || loading) return;
+    if (!hydrated || !value || loading) return;
     setLoading(true);
     setError('');
     try {
@@ -54,7 +53,7 @@ export function SignalDiscoveryPage({ onComplete }: SignalDiscoveryPageProps) {
       title="让神经元帮你做一次判断"
       subtitle="输入一个正在权衡的问题，看看哪些因素正在共同推动你的决定。"
     >
-      <form className="ngtw-decision-composer grid gap-[18px] p-[22px_24px]" onSubmit={submit}>
+      <div className="ngtw-decision-composer grid gap-[18px] p-[22px_24px]">
         <div className="ngtw-decision-composer__main grid gap-[9px]">
           <Typography variant="body" tone="warning">给出一个需要权衡的决定</Typography>
           <div className="ngtw-decision-composer__action grid grid-cols-[minmax(0,_1fr)_auto] items-stretch gap-[12px]">
@@ -67,9 +66,14 @@ export function SignalDiscoveryPage({ onComplete }: SignalDiscoveryPageProps) {
                 placeholder="例如：换工作、开始存钱、搬去新的城市"
                 aria-label="写下你正在考虑的事情"
                 onChange={(event) => selectDecision(event.currentTarget.value)}
+                onKeyDown={(event) => {
+                  if (event.key !== 'Enter' || event.nativeEvent.isComposing || event.nativeEvent.keyCode === 229) return;
+                  event.preventDefault();
+                  void submit();
+                }}
               />
             </div>
-            <Button type="submit" variant="primary" loading={loading} disabled={!hydrated || !decision.trim()}>
+            <Button type="button" onClick={() => void submit()} variant="primary" loading={loading} disabled={!hydrated || !decision.trim()}>
               {loading ? '正在分析影响因素' : '分解复杂决策'}
             </Button>
           </div>
@@ -84,7 +88,7 @@ export function SignalDiscoveryPage({ onComplete }: SignalDiscoveryPageProps) {
             <Typography as="span" variant="body" tone="inherit">{error}</Typography>
           </NoticeStrip>
         )}
-      </form>
+      </div>
 
       <section className="ngtw-decision-result relative grid gap-0 bg-[transparent] p-[18px_0_0]" aria-live="polite">
           <div className={`ngtw-decision-result__factors grid grid-cols-[repeat(3,_minmax(0,_1fr))] gap-[16px]${resultVisible && state.analysis && !loading ? '' : ' is-empty'}`}>

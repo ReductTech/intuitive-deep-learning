@@ -6,7 +6,6 @@
   var SCENE_WIDTH = 1448;
   var SCENE_HEIGHT = 1086;
   var ASSET_ROOT = global.VFL_GAME_ASSET_ROOT;
-  var EMBEDDING_SIMILARITY_URL = global.VFL_GAME_EMBEDDING_SIMILARITY_URL || 'http://127.0.0.1:28431/face-recog/embedding-similarity';
   var OVERLAY_ASSET = 'overlay_layer.png';
   var PLAYER_ACTOR = 'balujun';
   var PLAYER_SPEED = 260;
@@ -24,7 +23,9 @@
   var FACE_SAMPLE_WIDTH = 256;
   var FACE_SAMPLE_HEIGHT = 256;
   var EDIT_IMAGE_BOX = 360;
-  var DISGUISE_PASS_THRESHOLD = 50;
+  var DISGUISE_PASS_THRESHOLD = 40;
+  var SIMILARITY_DISPLAY_MIN = 15;
+  var SIMILARITY_DISPLAY_MAX = 65;
   var DRESSER_TRIGGER = { x: 278, y: 408, radius: 86 };
   var DISGUISE_ICON_ROOT = 'logo_svg/';
 
@@ -32,7 +33,6 @@
     SCENE_WIDTH: SCENE_WIDTH,
     SCENE_HEIGHT: SCENE_HEIGHT,
     ASSET_ROOT: ASSET_ROOT,
-    EMBEDDING_SIMILARITY_URL: EMBEDDING_SIMILARITY_URL,
     OVERLAY_ASSET: OVERLAY_ASSET,
     PLAYER_ACTOR: PLAYER_ACTOR,
     PLAYER_SPEED: PLAYER_SPEED,
@@ -51,9 +51,22 @@
     FACE_SAMPLE_HEIGHT: FACE_SAMPLE_HEIGHT,
     EDIT_IMAGE_BOX: EDIT_IMAGE_BOX,
     DISGUISE_PASS_THRESHOLD: DISGUISE_PASS_THRESHOLD,
+    SIMILARITY_DISPLAY_MIN: SIMILARITY_DISPLAY_MIN,
+    SIMILARITY_DISPLAY_MAX: SIMILARITY_DISPLAY_MAX,
     DRESSER_TRIGGER: DRESSER_TRIGGER,
     DISGUISE_ICON_ROOT: DISGUISE_ICON_ROOT
   };
+  function displayRatio(value) {
+    value = Number(value);
+    if (!Number.isFinite(value)) return 1;
+    return Math.max(0, Math.min(1, (value - SIMILARITY_DISPLAY_MIN) / (SIMILARITY_DISPLAY_MAX - SIMILARITY_DISPLAY_MIN)));
+  }
+  game.similarity = {
+    displayRatio: displayRatio,
+    disguiseProgress: function (value) { return (1 - displayRatio(value)) * 100; },
+    passes: function (value) { return Number.isFinite(Number(value)) && Number(value) < DISGUISE_PASS_THRESHOLD; }
+  };
+
 }(window));
 
 (function (global) {

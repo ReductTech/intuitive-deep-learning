@@ -32,6 +32,7 @@ async function openCourse(id: string) {
   if (!course) throw Error('没有找到课程：' + id);
   document.title = course.title + ' · 本地预览';
   Reflect.set(globalThis, '__SHUKU_COURSE_ID__', course.assetId);
+  Reflect.set(globalThis, '__SHUKU_ASSET_BASE__', location.origin + '/');
   Reflect.set(globalThis, '__SHUKU_PAGE_CATALOG__', course);
   // Load only the selected course. Full page navigation keeps course CSS and state isolated.
   const module = await import(/* @vite-ignore */ `/@id/__x00__virtual:preview-course:${course.id}`);

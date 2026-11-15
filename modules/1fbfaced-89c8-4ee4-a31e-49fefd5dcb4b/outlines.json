@@ -1,0 +1,25 @@
+{
+  "id": "1fbfaced-89c8-4ee4-a31e-49fefd5dcb4b",
+  "title": "GeoAgent：看图定位的训练方法",
+  "description": "一页可交互演示，讲清 GeoAgent 的任务、专家示范与地理奖励训练。",
+  "path": "/modules/1fbfaced-89c8-4ee4-a31e-49fefd5dcb4b",
+  "pages": [
+    {
+      "id": "fbbab320-fc95-4b1f-9c74-bc6434754c5d",
+      "title": "给一张照片，推断拍摄地点",
+      "snippet": "给模型一张街景图，让它判断拍摄地点，并说明依据。GeoAgent 先用一万条专家与资深玩家的推理示范做监督微调，建立从线索到地点的推理框架。再用两万张定位图像做 GRPO 强化学习，综合空间接近、地名语义接近和推理一致性三项奖励。另一个模型只读推理、重建地点，帮助检查推理与答案的一致性。在 GeoSeek-Val 上，误差不超过七百五十公里的比例从百分之四十七点一二提高到百分之六十点三七。最值得记住的是按照任务的特点设计训练奖励。页面中的合成街景、地图和分析为教学示意，统计数据来自论文表三。"
+    }
+  ],
+  "moduleIdentity": {
+    "version": 1,
+    "id": "1fbfaced-89c8-4ee4-a31e-49fefd5dcb4b"
+  },
+  "alias": "geoagent-takeaway",
+  "entry": "GuidePage.tsx",
+  "ppt": {
+    "entry": "GeoAgentPpt.tsx",
+    "path": "/scenedeck/",
+    "player": true
+  },
+  "style_id": "76018445-20ab-4dd9-9543-385d177eb159"
+}

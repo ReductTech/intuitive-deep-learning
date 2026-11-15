@@ -12,9 +12,9 @@ const reviewers = [
 ] as const;
 const average = reviewers.reduce((sum, reviewer) => sum + reviewer.score, 0) / reviewers.length;
 const thumbnails = [
-  { file: 'weight-sharing.jpg', label: '权重共享：同一套权重反复使用' },
-  { file: 'window-scan.jpg', label: '棋形的局部匹配' },
-  { file: 'kernel-basics.jpg', label: '卷积核：输入图像、卷积核与输出特征图' },
+  { path: "workflow/course-thumbnails/weight-sharing.webp", label: '权重共享：同一套权重反复使用' },
+  { path: "workflow/course-thumbnails/window-scan.webp", label: '棋形的局部匹配' },
+  { path: "workflow/course-thumbnails/kernel-basics.webp", label: '卷积核：输入图像、卷积核与输出特征图' },
 ] as const;
 
 const eightStroke = 'M83 17C57 8 35 24 38 46C41 64 64 77 86 91C112 107 115 130 100 149C86 166 48 169 33 148C15 122 43 96 68 79C92 64 113 43 101 26C97 20 91 18 83 17';
@@ -82,7 +82,7 @@ export function DualLearningEvaluationPage() {
           <Typography as="h2" variant="h2" tone="accent" id="aipe-dual-evaluation-work-title">学生实践成果</Typography>
           <Typography as="p" variant="bodySmall" tone="muted" className="aipe-dual-evaluation-evidence">知识呈现作品 + 课后专题实践内容</Typography>
           <figure className="aipe-dual-evaluation-stack" data-expanded={expanded} aria-label="三张实践成果示例，由叠放展开为扇形">
-            {thumbnails.map((thumbnail, index) => <img key={thumbnail.file} className={`aipe-dual-evaluation-thumbnail aipe-dual-evaluation-thumbnail--${index}`} src={moduleAssetUrl(`workflow/course-thumbnails/${thumbnail.file}`)} width="400" height="225" alt={thumbnail.label} draggable={false} />)}
+            {thumbnails.map((thumbnail, index) => <img key={thumbnail.path} className={`aipe-dual-evaluation-thumbnail aipe-dual-evaluation-thumbnail--${index}`} src={moduleAssetUrl(thumbnail.path)} width="400" height="225" alt={thumbnail.label} draggable={false} />)}
             <Typography as="figcaption" variant="bodySmall" tone="muted">知识呈现 · Jittor 复现 · 实验分析</Typography>
           </figure>
         </section>

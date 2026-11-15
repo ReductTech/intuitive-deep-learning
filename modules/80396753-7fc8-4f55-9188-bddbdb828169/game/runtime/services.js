@@ -28,6 +28,41 @@
     }, 180);
   }
 
+  function courseCompute(payload, signal) {
+    return new Promise(function (resolve, reject) {
+      if (global.parent === global) { reject(new Error('请在术库学习页面中使用人脸比较。')); return; }
+      if (signal.aborted) { reject(new DOMException('Cancelled', 'AbortError')); return; }
+      var bytes = crypto.getRandomValues(new Uint8Array(16));
+      var id = Array.from(bytes, function (value) { return value.toString(16).padStart(2, '0'); }).join('');
+      function cleanup() { global.removeEventListener('message', receive); signal.removeEventListener('abort', abort); }
+      function abort() { cleanup(); reject(new DOMException('Cancelled', 'AbortError')); }
+      function receive(event) {
+        var data = event.data;
+        if (event.source !== global.parent || !data || data.channel !== 'shuku-course-v1' || data.id !== id) return;
+        cleanup();
+        if (typeof data.status !== 'number' || data.status < 200 || data.status >= 300) {
+          reject(new Error(data.body && data.body.error || '人脸比较请求失败')); return;
+        }
+        resolve(data.body);
+      }
+      global.addEventListener('message', receive); signal.addEventListener('abort', abort, { once: true });
+      global.parent.postMessage({ channel: 'shuku-course-v1', id: id, action: 'compute',
+        endpoint: '/face-recog/embedding-similarity', payload: payload }, '*');
+    });
+  }
+
+  function compressedFace(scene, textureKey, marks) {
+    var canvas = renderer.drawFaceCanvas(scene, textureKey, marks);
+    var context = canvas.getContext('2d', { willReadFrequently: true });
+    var pixels = context.getImageData(0, 0, canvas.width, canvas.height);
+    for (var i = 0; i < pixels.data.length; i += 4) {
+      var gray = Math.round(0.299 * pixels.data[i] + 0.587 * pixels.data[i + 1] + 0.114 * pixels.data[i + 2]);
+      pixels.data[i] = pixels.data[i + 1] = pixels.data[i + 2] = gray;
+    }
+    context.putImageData(pixels, 0, 0);
+    return canvas.toDataURL('image/jpeg', 0.30);
+  }
+
   async function requestDisguiseSimilarity(scene, textureKey, marks, signal) {
     var controller = new AbortController();
     var sceneSignal = lifecycle.signal(scene);
@@ -35,19 +70,15 @@
     sceneSignal.addEventListener('abort', abort, { once: true });
     if (signal) signal.addEventListener('abort', abort, { once: true });
     if (sceneSignal.aborted || (signal && signal.aborted)) abort();
-    var timeout = window.setTimeout(abort, 15000);
+    var timeout = window.setTimeout(abort, 60000);
     try {
-      var response = await fetch(game.constants.EMBEDDING_SIMILARITY_URL, {
-        method: 'POST', signal: controller.signal,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          left: renderer.textureToFaceSample(scene, 'anchorFace', []),
-          right: renderer.textureToFaceSample(scene, textureKey, marks)
-        })
-      });
-      var data = await response.json();
+      var data = await courseCompute({
+        image: compressedFace(scene, textureKey, marks),
+        encoding: 'gray-jpeg-q30-v1',
+        reference_asset: global.VFL_GAME_REFERENCE_ASSET
+      }, controller.signal);
       if (controller.signal.aborted) throw new DOMException('Similarity request cancelled', 'AbortError');
-      if (!response.ok || !data.ok) throw new Error(data.error || 'embedding service failed');
+      if (!data || !data.ok) throw new Error(data && data.error || '人脸比较失败');
       var result = data.result || {};
       var value = result.correlation == null ? result.similarity : result.correlation;
       var correlation = Number(value);
@@ -84,6 +115,7 @@
   }
 
   game.systems.similarity = {
+    compressedFace: compressedFace,
     cancelSimilarityUpdate: cancelSimilarityUpdate,
     scheduleSimilarityUpdate: scheduleSimilarityUpdate,
     requestDisguiseSimilarity: requestDisguiseSimilarity,

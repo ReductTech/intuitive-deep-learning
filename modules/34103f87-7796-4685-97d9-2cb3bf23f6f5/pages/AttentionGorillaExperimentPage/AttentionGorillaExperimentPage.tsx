@@ -6,7 +6,7 @@ import { ObservationVideo } from './ObservationVideo';
 import { writeObservationRecord, freshObservationRecord, readObservationRecord, type ObservationRecord } from './observationRecord';
 import './AttentionGorillaExperimentPage.css';
 
-const posterUrl = moduleAssetUrl('observation/passing-poster.png');
+const posterUrl = moduleAssetUrl("observation/passing-poster.webp");
 // Verified against the author's upload on 2026-11-04. The count answer starts at
 // 41s, and the explicit reveal is at 45s; stop BEFORE both, then unmount the player.
 const CLIP_START = 12;
