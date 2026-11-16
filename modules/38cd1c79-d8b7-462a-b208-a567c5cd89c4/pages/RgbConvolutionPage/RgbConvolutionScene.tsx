@@ -52,10 +52,10 @@ function outputColor(filterIndex: number, response: number, strength: number) {
 }
 
 function Fallback({ selected, onSelect, kernelCount }: { selected: RgbPosition; onSelect: (value: RgbPosition) => void; kernelCount: KernelCount }) {
-  return <div className="ck-rgb__fallback">
-    <div className="ck-rgb__fallback-input">{['R', 'G', 'B'].map((channel) => <div key={channel} className={`ck-rgb__fallback-plane is-${channel.toLowerCase()}`}>{Array.from({ length: SIZE * SIZE }, (_, index) => { const row = Math.floor(index / SIZE), col = index % SIZE; return <button key={index} type="button" className={row >= selected.row && row < selected.row + KERNEL_SIZE && col >= selected.col && col < selected.col + KERNEL_SIZE ? 'is-selected' : ''} onClick={() => onSelect({ row: Math.max(0, Math.min(OUTPUT_SIZE - 1, row - 1)), col: Math.max(0, Math.min(OUTPUT_SIZE - 1, col - 1)) })} aria-label={`${channel}通道第${row + 1}行第${col + 1}列`} />; })}</div>)}</div>
-    <span aria-hidden="true">→</span>
-    <div className="ck-rgb__fallback-output-stack">{Array.from({ length: kernelCount }, (_, filterIndex) => <div key={filterIndex} className="ck-rgb__fallback-output" style={{ transform: `translateX(${(filterIndex - (kernelCount - 1) / 2) * 14}px)` }}>{Array.from({ length: OUTPUT_SIZE * OUTPUT_SIZE }, (_, index) => <button key={index} type="button" className={Math.floor(index / OUTPUT_SIZE) === selected.row && index % OUTPUT_SIZE === selected.col ? 'is-selected' : ''} onClick={() => onSelect({ row: Math.floor(index / OUTPUT_SIZE), col: index % OUTPUT_SIZE })} aria-label={`第${filterIndex + 1}张输出特征图第${Math.floor(index / OUTPUT_SIZE) + 1}行第${index % OUTPUT_SIZE + 1}列`} />)}</div>)}</div>
+  return <div shuku-edit-id="e-e1a74df9-89e9-41fa-88ff-d8c3ab573cd1" className="ck-rgb__fallback">
+    <div shuku-edit-id="e-f2c8e904-7872-4b0a-87ec-b5c373a478aa" className="ck-rgb__fallback-input">{['R', 'G', 'B'].map((channel) => <div shuku-edit-id="e-cb3a5c27-e0ac-4aeb-9eb3-14a2b92e424e" key={channel} className={`ck-rgb__fallback-plane is-${channel.toLowerCase()}`}>{Array.from({ length: SIZE * SIZE }, (_, index) => { const row = Math.floor(index / SIZE), col = index % SIZE; return <button shuku-edit-id="e-3a4eeb03-a2a4-476c-b368-6f007f845e26" key={index} type="button" className={row >= selected.row && row < selected.row + KERNEL_SIZE && col >= selected.col && col < selected.col + KERNEL_SIZE ? 'is-selected' : ''} onClick={() => onSelect({ row: Math.max(0, Math.min(OUTPUT_SIZE - 1, row - 1)), col: Math.max(0, Math.min(OUTPUT_SIZE - 1, col - 1)) })} aria-label={`${channel}通道第${row + 1}行第${col + 1}列`} />; })}</div>)}</div>
+    <span shuku-edit-id="e-1d91e12c-33d0-4130-b4f8-61f8041aded6" aria-hidden="true">→</span>
+    <div shuku-edit-id="e-ddbfd82b-435b-48dc-b4cf-78b1a91963c7" className="ck-rgb__fallback-output-stack">{Array.from({ length: kernelCount }, (_, filterIndex) => <div shuku-edit-id="e-2ac3f71f-4ec5-4f11-b89e-d366529c00ee" key={filterIndex} className="ck-rgb__fallback-output" style={{ transform: `translateX(${(filterIndex - (kernelCount - 1) / 2) * 14}px)` }}>{Array.from({ length: OUTPUT_SIZE * OUTPUT_SIZE }, (_, index) => <button shuku-edit-id="e-678d5466-535e-49a1-96bf-927838a448d1" key={index} type="button" className={Math.floor(index / OUTPUT_SIZE) === selected.row && index % OUTPUT_SIZE === selected.col ? 'is-selected' : ''} onClick={() => onSelect({ row: Math.floor(index / OUTPUT_SIZE), col: index % OUTPUT_SIZE })} aria-label={`第${filterIndex + 1}张输出特征图第${Math.floor(index / OUTPUT_SIZE) + 1}行第${index % OUTPUT_SIZE + 1}列`} />)}</div>)}</div>
   </div>;
 }
 
@@ -394,7 +394,7 @@ export function RgbConvolutionScene({ selected, onSelect, kernelCount = 1 }: { s
     };
   }, [kernelCount]);
 
-  return <div ref={mountRef} className="ck-rgb__scene" role="img" aria-label={`三维 RGB 通道卷积，当前选中第${selected.row + 1}行第${selected.col + 1}列；拖动可旋转，滚轮可缩放，点击格子可观察响应`}>
+  return <div shuku-edit-id="e-19b0d39e-655f-4524-97d3-b98583d89242" ref={mountRef} className="ck-rgb__scene" role="img" aria-label={`三维 RGB 通道卷积，当前选中第${selected.row + 1}行第${selected.col + 1}列；拖动可旋转，滚轮可缩放，点击格子可观察响应`}>
     {fallback && <Fallback selected={selected} onSelect={onSelect} kernelCount={kernelCount} />}
   </div>;
 }

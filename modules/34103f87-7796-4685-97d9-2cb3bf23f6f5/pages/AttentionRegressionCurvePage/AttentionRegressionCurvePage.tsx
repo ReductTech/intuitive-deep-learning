@@ -93,18 +93,18 @@ export function AttentionRegressionCurvePage(props: ActivityProps) {
   };
   const reset = () => { if (canInteract()) { stopScanning(); setState(createRegressionCurveState()); } };
   const isMean = state.mode === 'mean';
-  return <ContentBlock ref={root} title="同一批记录，怎样补全整段轨迹" headingLevel={1}
+  return <ContentBlock shuku-edit-id="e-3f623a37-4f3d-4594-97fd-14bb8527929e" ref={root} title="同一批记录，怎样补全整段轨迹" headingLevel={1}
     subtitle="同一批记录，比较两种读取方法。"
     className="attn-reg-curve-page" bodyClassName="attn-reg-curve-body"
     data-activity="C14" data-activity-complete={done} data-capture-ready={mathReady} aria-busy={!mathReady}
     onKeyDown={event => { if ([' ', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'].includes(event.key)) event.stopPropagation(); }}>
-    <div className="attn-reg-curve-main" data-regression-curve-mode={state.mode} data-regression-curve-query={state.q}
+    <div shuku-edit-id="e-e9702565-32a6-4ac8-8e28-c7032c9a740c" className="attn-reg-curve-main" data-regression-curve-mode={state.mode} data-regression-curve-query={state.q}
       data-regression-scanning={running} data-regression-prediction={prediction}>
-      <div className="attn-reg-curve-visual">
+      <div shuku-edit-id="e-9a5c4d75-b7d5-418f-90e4-274a767c831b" className="attn-reg-curve-visual">
         <RegressionPlot q={state.q} w={REGRESSION_EXPLORATION_W} mode={state.mode} showCurve showPrediction showWeights />
       </div>
-      <aside className={'attn-reg-curve-readout' + (isMean ? ' is-mean' : '')} aria-label="当前重建结果">
-        <Typography variant="h3" tone={isMean ? 'muted' : 'accent'}>{isMean ? '普通平均' : '注意力加权'}</Typography>
+      <aside shuku-edit-id="e-500fdec8-dfa7-41d6-aaa4-d312bada19b4" className={'attn-reg-curve-readout' + (isMean ? ' is-mean' : '')} aria-label="当前重建结果">
+        <Typography shuku-edit-id="e-2ae31201-1be4-4706-aa22-18f82b0ff7fe" variant="h3" tone={isMean ? 'muted' : 'accent'}>{isMean ? '普通平均' : '注意力加权'}</Typography>
         <MathFormulaBlock appearance="plain" className="attn-reg-curve-formula"
           ariaLabel={isMean ? '五十条位置记录的普通平均' : '根据当前查询时刻加权全部五十条位置记录'}>
           <MathFormulaStatic latex={isMean ? '\\bar{p}=\\frac{1}{50}\\sum_{i=1}^{50}p_i' : '\\hat{p}(q)=\\sum_{i=1}^{50}\\alpha_i(q)p_i'} />
@@ -112,27 +112,27 @@ export function AttentionRegressionCurvePage(props: ActivityProps) {
         <MathFormulaBlock appearance="plain" ariaLabel={`重建位置${prediction.toFixed(2)}米`}>
           <MathFormulaStatic latex={(isMean ? '\\bar{p}' : '\\hat{p}('+state.q.toFixed(1)+')')+'='+prediction.toFixed(2)+'\\,\\mathrm{m}'} />
         </MathFormulaBlock>
-        <Typography variant="bodySmall" tone="muted">{isMean ? '每条份额相同。' : '时刻越近，份额越大。'}</Typography>
-        <Typography variant="bodySmall" tone="muted">同一批 50 条合成记录</Typography>
+        <Typography shuku-edit-id="e-d08f5205-b9b9-41f0-b196-e77d6a4d544b" variant="bodySmall" tone="muted">{isMean ? '每条份额相同。' : '时刻越近，份额越大。'}</Typography>
+        <Typography shuku-edit-id="e-5540c8f8-dcc4-41ea-a0ee-38dc2140b036" variant="bodySmall" tone="muted">同一批 50 条合成记录</Typography>
       </aside>
     </div>
-    <footer className="attn-reg-curve-footer">
-      <div className="attn-reg-curve-controls">
-        <div className="attn-reg-curve-mode">
+    <footer shuku-edit-id="e-3728e101-5e0e-4f5b-98f2-91aa142d2a20" className="attn-reg-curve-footer">
+      <div shuku-edit-id="e-3880881b-49a6-468a-9fe0-757678b8e0c9" className="attn-reg-curve-controls">
+        <div shuku-edit-id="e-375b047a-a68a-4a2f-bf28-81c8778439b8" className="attn-reg-curve-mode">
           <ChoiceButtons label="切换重建方法" value={state.mode} onChange={changeMode}
             options={[{ value: 'mean', label: '普通平均' }, { value: 'attention', label: '注意力' }]} />
-          <div className="attn-reg-curve-actions">
+          <div shuku-edit-id="e-4feb2dc6-97c9-4427-97cf-d495ef310357" className="attn-reg-curve-actions">
             <Button data-scan-recording active={running} aria-pressed={running} onClick={toggleScanning}>
-              <Typography as="span" variant="bodySmall" tone="inherit">{running ? '停止扫描' : '扫描已录制片段'}</Typography>
+              <Typography shuku-edit-id="e-29c6a694-43ca-4f45-83d3-971a555ecd15" as="span" variant="bodySmall" tone="inherit">{running ? '停止扫描' : '扫描已录制片段'}</Typography>
             </Button>
-            <Button onClick={reset}><Typography as="span" variant="bodySmall" tone="inherit">重新比较</Typography></Button>
+            <Button onClick={reset}><Typography shuku-edit-id="e-d9ca630d-c156-4870-92dc-8b16b7b786e5" as="span" variant="bodySmall" tone="inherit">重新比较</Typography></Button>
           </div>
         </div>
-        <div className="attn-reg-curve-query">
+        <div shuku-edit-id="e-26e507af-8a11-420f-ac50-953b47b95946" className="attn-reg-curve-query">
           <RangeControl label="待重建时刻 Q（s）" aria-label="待重建时刻 Q，单位秒" value={state.q}
             min={0} max={4.9} step={0.1} digits={1} scale={['0', '4.9']}
             onChange={(event) => changeQuery(event.currentTarget.valueAsNumber)} />
-          <Typography variant="bodySmall" tone="muted">{done ? 'Q 改变比例，记录不变。'
+          <Typography shuku-edit-id="e-433486bf-38df-4e31-909a-e4b4844d0d0c" variant="bodySmall" tone="muted">{done ? 'Q 改变比例，记录不变。'
             : !state.manuallyMoved ? '切换方法，移动 Q。' : '再切换方法比较。'}</Typography>
         </div>
       </div>

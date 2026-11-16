@@ -21,8 +21,8 @@ function BlogLessonCanvas({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <div ref={frameRef} className="lesson-canvas-frame" style={{ height: 900 * scale }}>
-      <div className="course-page-surface course-shell" style={{ transform: `scale(${scale})` }}>
+    <div shuku-edit-id="e-f4fa86a5-c150-4fa9-b7e9-3d4e22d4a538" ref={frameRef} className="lesson-canvas-frame" style={{ height: 900 * scale }}>
+      <div shuku-edit-id="e-775f1bf3-be39-49da-84d2-b33dc1e51fd7" className="course-page-surface course-shell" style={{ transform: `scale(${scale})` }}>
         {children}
       </div>
     </div>
@@ -48,9 +48,9 @@ export function GuidePage() {
     subtitle="从多种合理答案出发，先理解 GAN 的对抗生成，再认识 Diffusion 的加噪与去噪。"
     shellClassName="course-shell course-blog-shell"
   >
-    <div className="edu-lesson-flow" data-state-key={progressKey}>
+    <div shuku-edit-id="e-40362f2d-da94-423a-befc-00cdaf699fa7" className="edu-lesson-flow" data-state-key={progressKey}>
     {visualGenerationCourse.filter(item => item.showInBlog !== false).map(item =>
-      <section key={item.id} data-step-id={item.id}>
+      <section shuku-edit-id="e-00e0a426-0536-418c-b0fc-0de3106f2655" key={item.id} data-step-id={item.id}>
         <BlogLessonCanvas>{item.component({ complete: () => complete(item.id), reset: () => {}, isComplete: completedIds.includes(item.id) })}</BlogLessonCanvas>
       </section>
     )}

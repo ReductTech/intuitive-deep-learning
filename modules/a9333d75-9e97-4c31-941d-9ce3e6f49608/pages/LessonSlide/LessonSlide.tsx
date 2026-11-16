@@ -10,15 +10,15 @@ import {WorkflowEntry,WorkflowGate,FailureCloseup,TimeoutCloseup,MechanismChoice
 import './LessonSlide.css';
 import './layout.css';
 
-const T = ({ children, tone = 'main', variant = 'body', className = '' }: {children: ReactNode; tone?: 'main'|'muted'|'success'|'danger'|'accent'|'warning'; variant?: 'body'|'bodySmall'|'h3'|'subtitle'; className?: string}) => <Typography as="div" tone={tone} variant={variant} className={className}>{children}</Typography>;
+const T = ({ children, tone = 'main', variant = 'body', className = '' }: {children: ReactNode; tone?: 'main'|'muted'|'success'|'danger'|'accent'|'warning'; variant?: 'body'|'bodySmall'|'h3'|'subtitle'; className?: string}) => <Typography shuku-edit-id="e-62aed4cc-afc4-41a1-89f7-27baaf08d55d" as="div" tone={tone} variant={variant} className={className}>{children}</Typography>;
 const Choice = ({ value, selected, onClick }: {value: string; selected: boolean; onClick: () => void}) => <Button className="act-choice" active={selected} onClick={onClick}>{value}</Button>;
 
 function Quiz({ question, options, correct, explanation }: {question: string; options: string[]; correct: number; explanation: string}) {
   const [selected, setSelected] = useState<number | null>(null);
   const [checked, setChecked] = useState(false);
-  return <div className="act-quiz">
+  return <div shuku-edit-id="e-030bc693-6c80-479a-a649-f3a8be306877" className="act-quiz">
     <T variant="h3">{question}</T>
-    <div className="act-choice-list">{options.map((option, i) => <Choice key={option} value={`${'ABC'[i]}  ${option}`} selected={selected === i} onClick={() => { setSelected(i); setChecked(false); }} />)}</div>
+    <div shuku-edit-id="e-7294ff37-bb82-447f-8b86-9fb1241cd77f" className="act-choice-list">{options.map((option, i) => <Choice key={option} value={`${'ABC'[i]}  ${option}`} selected={selected === i} onClick={() => { setSelected(i); setChecked(false); }} />)}</div>
     <Button variant="primary" disabled={selected === null} onClick={() => setChecked(true)}>检查答案</Button>
     {checked && <T tone={selected === correct ? 'success' : 'warning'}>{selected === correct ? '正确。' : '再看一次证据。'}{explanation}</T>}
   </div>;
@@ -70,12 +70,14 @@ function Visual({ id }: {id: string}) {
   }
 }
 
-export function LessonSlide({ index }: {index: number}) {
-  const page = outline.pages[index];
-  return <article className={`act-slide ${index < 19 ? 'is-lab' : ''}`}>
-    <ContentBlock title={page.title} subtitle={page.goal}>
-      <div className="act-main"><Visual key={page.id} id={page.id}/></div>
-      <div className="act-footer"><T variant="bodySmall" tone="muted">{outline.title}</T><T variant="bodySmall" tone="muted">{String(index+1).padStart(2,'0')} / {outline.pages.length}</T></div>
+export function LessonSlide({ pageId }: {pageId: string}) {
+  const page = outline.pages.find(page => page.id === pageId);
+  if (!page) return null;
+  const index = outline.pages.findIndex(page => page.id === pageId);
+  return <article shuku-edit-id="e-505858c4-6fd5-4c06-91c7-736db8d5ffab" className={`act-slide ${index < 19 ? 'is-lab' : ''}`}>
+    <ContentBlock shuku-edit-id="e-dd19d153-ee81-4dae-a025-f1133a2fe013" title={page.title} subtitle={page.goal}>
+      <div shuku-edit-id="e-2b47292c-ea3b-49af-b487-52197b6befad" className="act-main"><Visual key={page.id} id={page.id}/></div>
+      <div shuku-edit-id="e-96f34b2e-5df0-47c5-bb64-8d924e3a1a2a" className="act-footer"><T variant="bodySmall" tone="muted">{outline.title}</T></div>
     </ContentBlock>
   </article>;
 }

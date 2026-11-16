@@ -226,51 +226,51 @@ export function CaoChongPage() {
       markLine: { silent: true, symbol: ['none', 'none'], label: { show: false }, lineStyle: { color: '#c07100', type: 'dashed' }, data: targetRecorded ? [{ yAxis: TARGET_DEPTH_CM }] : [] } }],
   }), [records, targetRecorded]);
 
-  return <section className="aipe-showcase-rl-cao-page" aria-labelledby="aipe-showcase-rl-cao-title">
-    <div className="aipe-showcase-rl-cao-world" style={{ '--aipe-showcase-rl-landscape': `url("${asset('river-video-poster.jpg')}")`, '--aipe-showcase-rl-sink': `${sink}px` } as CSSProperties} data-phase={phase} data-count={count}>
-      <video ref={videoRef} className="aipe-showcase-rl-cao-scenery" src={asset('river-motion.mp4')} poster={asset('river-video-poster.jpg')} autoPlay loop muted playsInline preload="auto" aria-hidden="true" />
-      <div className="aipe-showcase-rl-cao-atmosphere" aria-hidden="true" />
-      <header className="aipe-showcase-rl-cao-hero">
-        <Typography as="h1" variant="display" tone="inherit" className="aipe-showcase-rl-cao-title" id="aipe-showcase-rl-cao-title">曹冲称象</Typography>
-        <Typography as="p" variant="bodySmall" tone="inherit" className="aipe-showcase-rl-cao-subtitle">曹操想知道大象有多重，曹冲便让大象上船，在船身刻下水位。再换上石头，装到同一水位时，石头的总重就是象重。</Typography>
+  return <section shuku-edit-id="e-9a543270-7b53-4704-afc8-d0c53cdcbc78" className="aipe-showcase-rl-cao-page" aria-labelledby="aipe-showcase-rl-cao-title">
+    <div shuku-edit-id="e-f6ec54fc-da5d-4f20-92a5-d02b2dbe2537" className="aipe-showcase-rl-cao-world" style={{ '--aipe-showcase-rl-landscape': `url("${asset('river-video-poster.jpg')}")`, '--aipe-showcase-rl-sink': `${sink}px` } as CSSProperties} data-phase={phase} data-count={count}>
+      <video shuku-edit-id="e-f0d1e5b6-2eb9-4951-892e-91d589a6d563" ref={videoRef} className="aipe-showcase-rl-cao-scenery" src={asset('river-motion.mp4')} poster={asset('river-video-poster.jpg')} autoPlay loop muted playsInline preload="auto" aria-hidden="true" />
+      <div shuku-edit-id="e-c3436232-de42-495d-9a1e-e3511da5c8f1" className="aipe-showcase-rl-cao-atmosphere" aria-hidden="true" />
+      <header shuku-edit-id="e-61799df2-8cfd-427d-a7b2-38fbea1de716" className="aipe-showcase-rl-cao-hero">
+        <Typography shuku-edit-id="e-45b4ce40-491b-4f72-9753-d8234fbae76a" as="h1" variant="display" tone="inherit" className="aipe-showcase-rl-cao-title" id="aipe-showcase-rl-cao-title">曹冲称象</Typography>
+        <Typography shuku-edit-id="e-b580ca96-c597-456e-866f-b88c23c528cd" as="p" variant="bodySmall" tone="inherit" className="aipe-showcase-rl-cao-subtitle">曹操想知道大象有多重，曹冲便让大象上船，在船身刻下水位。再换上石头，装到同一水位时，石头的总重就是象重。</Typography>
       </header>
-      <div className="aipe-showcase-rl-cao-scene" aria-label="称象实验：船随石重下沉，水面保持固定">
-        <div className="aipe-showcase-rl-cao-water-back" aria-hidden="true" />
-        <div className="aipe-showcase-rl-cao-reflection" aria-hidden="true" />
-        <div className="aipe-showcase-rl-cao-boat-motion" data-testid="boat" style={{ transform: `translateY(${sink}px)`, transition: storyPhase !== 'before-elephant' ? 'none' : undefined }}>
-          <img className="aipe-showcase-rl-cao-boat-back" src={asset('boat-rectangular.png')} alt="直壁平底、船上无人的长方体木船" draggable={false} />
-          <img className="aipe-showcase-rl-cao-elephant" data-aboard={elephantAboard} src={asset('elephant.png')} alt={elephantAboard ? '上船称重的大象' : ''} aria-hidden={!elephantAboard} draggable={false} />
-          <div className="aipe-showcase-rl-cao-cargo" aria-hidden="true">
-            {stonePositions.slice(0, count).map(([x, y], index) => <img key={index} className="aipe-showcase-rl-cao-loaded-rock" src={stoneAsset(index)} draggable={false}
+      <div shuku-edit-id="e-d2ecc604-d430-4452-90b4-806266edb00b" className="aipe-showcase-rl-cao-scene" aria-label="称象实验：船随石重下沉，水面保持固定">
+        <div shuku-edit-id="e-a56995fd-544f-4923-ab30-be0548a63806" className="aipe-showcase-rl-cao-water-back" aria-hidden="true" />
+        <div shuku-edit-id="e-774cb13f-4eb3-4bd5-8dca-e4b04540929a" className="aipe-showcase-rl-cao-reflection" aria-hidden="true" />
+        <div shuku-edit-id="e-a4f51d26-9dde-485e-86cf-9ddcb47291fd" className="aipe-showcase-rl-cao-boat-motion" data-testid="boat" style={{ transform: `translateY(${sink}px)`, transition: storyPhase !== 'before-elephant' ? 'none' : undefined }}>
+          <img shuku-edit-id="e-c99b8e6a-5f87-4132-bd8c-c973f49db748" className="aipe-showcase-rl-cao-boat-back" src={asset('boat-rectangular.png')} alt="直壁平底、船上无人的长方体木船" draggable={false} />
+          <img shuku-edit-id="e-1223a7e0-9a7e-4691-8bfd-335ce18a78f7" className="aipe-showcase-rl-cao-elephant" data-aboard={elephantAboard} src={asset('elephant.png')} alt={elephantAboard ? '上船称重的大象' : ''} aria-hidden={!elephantAboard} draggable={false} />
+          <div shuku-edit-id="e-0a52676c-d200-4ce0-b4f9-7f06ebdbeea0" className="aipe-showcase-rl-cao-cargo" aria-hidden="true">
+            {stonePositions.slice(0, count).map(([x, y], index) => <img shuku-edit-id="e-863e6a7f-1d97-4bea-a46c-0d3d2786c6dc" key={index} className="aipe-showcase-rl-cao-loaded-rock" src={stoneAsset(index)} draggable={false}
               style={{ left: `${x}%`, top: `${y}%`, rotate: `${(index % 5 - 2) * 13}deg`, width: `${6.6+(weights[index]-100)*.035}%`, zIndex: Math.round(y*10) }} alt="" />)}
           </div>
-          <img className="aipe-showcase-rl-cao-boat-front" src={asset('boat-rectangular.png')} alt="" aria-hidden="true" draggable={false} />
-          <svg className="aipe-showcase-rl-cao-hull-ruler" viewBox="0 0 32 120" aria-hidden="true"><path d="M6 1V119" />{Array.from({ length: 13 }, (_, i) => <path key={i} d={`M6 ${i * 9 + 5}h${i % 3 === 0 ? 22 : 12}`} />)}</svg>
+          <img shuku-edit-id="e-f4119978-e780-4892-bba5-134b98852b6b" className="aipe-showcase-rl-cao-boat-front" src={asset('boat-rectangular.png')} alt="" aria-hidden="true" draggable={false} />
+          <svg shuku-edit-id="e-a24deb34-345f-4de0-87a6-8d0d150e15bd" className="aipe-showcase-rl-cao-hull-ruler" viewBox="0 0 32 120" aria-hidden="true"><path shuku-edit-id="e-239fde8d-5f56-4263-ab85-edaf2be8df9c" d="M6 1V119" />{Array.from({ length: 13 }, (_, i) => <path shuku-edit-id="e-a9a60a8a-2511-4a60-9dca-e76543f9bb25" key={i} d={`M6 ${i * 9 + 5}h${i % 3 === 0 ? 22 : 12}`} />)}</svg>
         </div>
-        {flying.map((index,i)=><div key={index} className="aipe-showcase-rl-cao-flight" style={{ '--aipe-showcase-rl-landing-x': `${20 + stonePositions[index][0] * 9.7 - 179}px`, '--aipe-showcase-rl-landing-y': `${360 + stonePositions[index][1] * 3.5 + sink - 15}px`, animationDelay: `${(index-flightStart.current)*80}ms` } as CSSProperties} aria-hidden="true"><img src={stoneAsset(index)} alt="" /></div>)}
-        <div className="aipe-showcase-rl-cao-water-front" aria-hidden="true"><canvas ref={waterRef} width={1000} height={900} className="aipe-showcase-rl-cao-water-texture" /><div className="aipe-showcase-rl-cao-water-rim" /></div>
-        {targetRecorded && <div className="aipe-showcase-rl-cao-target" style={{ top: targetY, transition: storyPhase !== 'before-elephant' ? 'none' : undefined }} title="大象上船时留下的刻痕"><i /><Typography variant="bodySmall" as="span" tone="inherit">{`大象水位 · 下沉 ${TARGET_DEPTH_CM.toFixed(1)} 厘米`}</Typography></div>}
-        <div className="aipe-showcase-rl-cao-empty-mark" aria-hidden="true" style={{ top: 610 + sink, transition: storyPhase !== 'before-elephant' ? 'none' : undefined }} />
-        {phase === 'settling' && <div key={count} className="aipe-showcase-rl-cao-ripple" aria-hidden="true"><i /><i /><i /></div>}
-        <div className="aipe-showcase-rl-cao-depth"><Typography variant="body" tone="inherit">{`下沉 ${depth.toFixed(1)} 厘米`}</Typography></div>
-        <div className="aipe-showcase-rl-cao-stone-control">
+        {flying.map((index,i)=><div shuku-edit-id="e-50bf9107-0c91-4461-ad84-698d8d8acf44" key={index} className="aipe-showcase-rl-cao-flight" style={{ '--aipe-showcase-rl-landing-x': `${20 + stonePositions[index][0] * 9.7 - 179}px`, '--aipe-showcase-rl-landing-y': `${360 + stonePositions[index][1] * 3.5 + sink - 15}px`, animationDelay: `${(index-flightStart.current)*80}ms` } as CSSProperties} aria-hidden="true"><img shuku-edit-id="e-64068c36-8c19-47f0-8e85-594438e88cd9" src={stoneAsset(index)} alt="" /></div>)}
+        <div shuku-edit-id="e-1fad1526-28d6-4bbb-ade0-8157de35bf49" className="aipe-showcase-rl-cao-water-front" aria-hidden="true"><canvas shuku-edit-id="e-7ecd5c63-5e08-4c5b-ba8b-ec27f23ac2cc" ref={waterRef} width={1000} height={900} className="aipe-showcase-rl-cao-water-texture" /><div shuku-edit-id="e-8e8ba956-13e6-4249-9514-767fc4068c0a" className="aipe-showcase-rl-cao-water-rim" /></div>
+        {targetRecorded && <div shuku-edit-id="e-ba504c0a-8bf4-44d2-bb2a-6721fc259313" className="aipe-showcase-rl-cao-target" style={{ top: targetY, transition: storyPhase !== 'before-elephant' ? 'none' : undefined }} title="大象上船时留下的刻痕"><i shuku-edit-id="e-04b931ba-a587-43cb-aa1b-8d32bcf94ec3" /><Typography shuku-edit-id="e-7ceceb05-c907-43d7-b6eb-2b6b65121155" variant="bodySmall" as="span" tone="inherit">{`大象水位 · 下沉 ${TARGET_DEPTH_CM.toFixed(1)} 厘米`}</Typography></div>}
+        <div shuku-edit-id="e-8178bdfb-e625-4ec0-894e-8a62f19d90e5" className="aipe-showcase-rl-cao-empty-mark" aria-hidden="true" style={{ top: 610 + sink, transition: storyPhase !== 'before-elephant' ? 'none' : undefined }} />
+        {phase === 'settling' && <div shuku-edit-id="e-46b7f763-b14d-4715-bdc1-df5f29942789" key={count} className="aipe-showcase-rl-cao-ripple" aria-hidden="true"><i shuku-edit-id="e-b47d34ea-e5c1-4259-b587-500031083b15" /><i shuku-edit-id="e-c2e4e83b-f80c-4126-8ead-0460afb02bd5" /><i shuku-edit-id="e-8056e96b-bd22-49c8-84f5-9d1c677e75a3" /></div>}
+        <div shuku-edit-id="e-87db4b45-ffce-4e01-9ae2-52681c36eebc" className="aipe-showcase-rl-cao-depth"><Typography shuku-edit-id="e-50e0705a-45cf-41e8-91c8-b08704e464a3" variant="body" tone="inherit">{`下沉 ${depth.toFixed(1)} 厘米`}</Typography></div>
+        <div shuku-edit-id="e-5dfa73b5-9135-4820-b6ff-4e9427150919" className="aipe-showcase-rl-cao-stone-control">
           <Button className="aipe-showcase-rl-cao-stone-button" onClick={storyPhase === 'before-elephant' ? loadElephant : dropStone} disabled={phase !== 'idle' || completed} aria-label={completed ? '石头用完了' : storyPhase === 'before-elephant' ? '点击称重' : storyPhase === 'stones' ? `投放${batchSize}块石头，共${nextBatchMass}千克` : '称重中'}>
-            <img src={storyPhase === 'stones' ? stoneAsset(completed ? MAX_STONES - 1 : count) : asset('elephant.png')} alt="" draggable={false} />
-            {completed && <span className="aipe-showcase-rl-cao-stone-forbid" aria-hidden="true"><Forbid theme="outline" size={142} fill="#ff715e" strokeWidth={3} /></span>}
-            {!completed && <Typography as="span" variant="h3" tone="inherit">{storyPhase === 'before-elephant' ? '点击称重' : storyPhase === 'unloading-elephant' ? '自动下船…' : storyPhase !== 'stones' ? '称重中…' : phase === 'falling' ? '石头落下…' : phase === 'settling' ? '记录水位…' : `投放 ${batchSize} 块`}</Typography>}
-            {!completed && <Typography as="span" variant="body" tone="inherit">{storyPhase === 'stones' ? `本次 ${nextBatchMass} 千克` : targetRecorded ? `已记下 ${TARGET_DEPTH_CM.toFixed(1)} 厘米` : '自动记录水位'}</Typography>}
-            {storyPhase === 'stones' && !completed && <Typography as="span" variant="body" tone="inherit">剩余 {MAX_STONES - count} 块</Typography>}
+            <img shuku-edit-id="e-ce369ef7-914c-4f18-8d39-3e4bc23192f8" src={storyPhase === 'stones' ? stoneAsset(completed ? MAX_STONES - 1 : count) : asset('elephant.png')} alt="" draggable={false} />
+            {completed && <span shuku-edit-id="e-467bf261-2599-4ea8-bbd3-3272ebd69552" className="aipe-showcase-rl-cao-stone-forbid" aria-hidden="true"><Forbid theme="outline" size={142} fill="#ff715e" strokeWidth={3} /></span>}
+            {!completed && <Typography shuku-edit-id="e-2b3101ee-4fc8-4dfb-8d3f-ebfc50a673b5" as="span" variant="h3" tone="inherit">{storyPhase === 'before-elephant' ? '点击称重' : storyPhase === 'unloading-elephant' ? '自动下船…' : storyPhase !== 'stones' ? '称重中…' : phase === 'falling' ? '石头落下…' : phase === 'settling' ? '记录水位…' : `投放 ${batchSize} 块`}</Typography>}
+            {!completed && <Typography shuku-edit-id="e-d276f836-6d67-4c78-b438-ff5dda6fd3d7" as="span" variant="body" tone="inherit">{storyPhase === 'stones' ? `本次 ${nextBatchMass} 千克` : targetRecorded ? `已记下 ${TARGET_DEPTH_CM.toFixed(1)} 厘米` : '自动记录水位'}</Typography>}
+            {storyPhase === 'stones' && !completed && <Typography shuku-edit-id="e-60cf3f76-909d-4484-b915-ea158183b6c2" as="span" variant="body" tone="inherit">剩余 {MAX_STONES - count} 块</Typography>}
           </Button>
         </div>
-        {completed && <div className="aipe-showcase-rl-cao-result" role="status"><Typography variant="h3" tone="inherit">石头用完了</Typography><Typography variant="body" tone="inherit">1500 千克，仍没到刻痕。</Typography><Typography variant="body" tone="inherit">能估出象重吗？</Typography></div>}
+        {completed && <div shuku-edit-id="e-89477188-7d3b-4b33-a496-c37005d744b3" className="aipe-showcase-rl-cao-result" role="status"><Typography shuku-edit-id="e-c05de652-8586-40ba-8eae-2d40d2829f26" variant="h3" tone="inherit">石头用完了</Typography><Typography shuku-edit-id="e-1522e6a6-f72d-4585-a6c4-f85b509c9930" variant="body" tone="inherit">1500 千克，仍没到刻痕。</Typography><Typography shuku-edit-id="e-09eaa1aa-f0fb-4396-8022-eed73c210198" variant="body" tone="inherit">能估出象重吗？</Typography></div>}
       </div>
 
-      <section className="aipe-showcase-rl-cao-notebook" aria-label="称象实验记录本">
-        <div className="aipe-showcase-rl-cao-book-binding" aria-hidden="true"><i /><i /><i /></div>
-        <div className="aipe-showcase-rl-cao-book-header"><Typography variant="h3" tone="accent">投石手记</Typography><Typography variant="bodySmall" tone="muted">{records.length} 条记录</Typography></div>
-        <Typography variant="bodySmall" tone={targetRecorded ? 'accent' : 'muted'} className="aipe-showcase-rl-cao-elephant-record">{targetRecorded ? `大象水位：${TARGET_DEPTH_CM.toFixed(1)} 厘米` : '大象水位：待记录'}</Typography>
+      <section shuku-edit-id="e-35304fb4-465a-438b-b381-fbdc896efa76" className="aipe-showcase-rl-cao-notebook" aria-label="称象实验记录本">
+        <div shuku-edit-id="e-97e1ad74-e908-44dd-b797-aa41391387e8" className="aipe-showcase-rl-cao-book-binding" aria-hidden="true"><i shuku-edit-id="e-887206dd-9a59-4d5a-8701-9dfc6edabbda" /><i shuku-edit-id="e-49e5f954-a9e7-4a5e-b3ed-c1d6831530c4" /><i shuku-edit-id="e-7aa47952-857f-4e30-87d9-cccbfb8bbaa9" /></div>
+        <div shuku-edit-id="e-1ee08864-5dfe-4f26-9222-bd43bc2b7680" className="aipe-showcase-rl-cao-book-header"><Typography shuku-edit-id="e-884a666e-2b98-4774-b632-b95de1402508" variant="h3" tone="accent">投石手记</Typography><Typography shuku-edit-id="e-1d83dc82-dcb9-41df-9f03-3f37525e3074" variant="bodySmall" tone="muted">{records.length} 条记录</Typography></div>
+        <Typography shuku-edit-id="e-489e6b26-4f9c-4139-bee1-acbc43f8a73b" variant="bodySmall" tone={targetRecorded ? 'accent' : 'muted'} className="aipe-showcase-rl-cao-elephant-record">{targetRecorded ? `大象水位：${TARGET_DEPTH_CM.toFixed(1)} 厘米` : '大象水位：待记录'}</Typography>
         <EChartsChart className="aipe-showcase-rl-cao-chart" option={option} minHeight={0} aria-label={`石重与下沉深度散点图，共${records.length}个点`} />
-        <div className="aipe-showcase-rl-cao-book-footer"><Button onClick={reset}>重新开始</Button></div>
+        <div shuku-edit-id="e-58558d34-960c-4faf-b98c-422c85925e22" className="aipe-showcase-rl-cao-book-footer"><Button onClick={reset}>重新开始</Button></div>
       </section>
     </div>
   </section>;

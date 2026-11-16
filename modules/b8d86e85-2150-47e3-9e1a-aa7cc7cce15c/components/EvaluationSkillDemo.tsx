@@ -63,40 +63,40 @@ export function EvaluationSkillDemo() {
   const stage = !enabled ? '初稿：面板操作' : reviewing ? 'AI 多维评价' : phase === 'enabled' ? '启用 AI 评估' : phase === 'revision' ? '按建议改进中' : '成品：直接操纵';
   const caption = !enabled ? '未启用：用滑杆和按钮间接控制混色。' : reviewing || phase === 'enabled' ? 'AI 依据 Creator Skill 评价，再给出改进建议。' : phase === 'revision' ? '保留知识内容，精简控件，重排交互。' : '已启用：直接拖动颜料，混色即时响应。';
 
-  return <div className="cg-eval-demo" data-evaluation-phase={phase} data-evaluation-enabled={enabled} data-evaluation-time={Math.floor(time)}>
-    <div className="cg-eval-toolbar">
-      <label className="edu-check cg-eval-autotoggle"><input type="checkbox" checked={enabled} readOnly tabIndex={-1}/><Typography as="span" variant="body" tone="inherit">启用 AI 评估</Typography></label>
-      <Typography variant="bodySmall" tone="inherit" className="cg-eval-stage-name">{stage}</Typography>
+  return <div shuku-edit-id="e-cf9d432d-cb7c-4fc4-b255-db0e13c79e6c" className="cg-eval-demo" data-evaluation-phase={phase} data-evaluation-enabled={enabled} data-evaluation-time={Math.floor(time)}>
+    <div shuku-edit-id="e-7235e9f8-10f3-4a33-bedf-dfe95626e269" className="cg-eval-toolbar">
+      <label shuku-edit-id="e-96e7b3a5-c8a3-433f-8056-3cc4f525a2fd" className="edu-check cg-eval-autotoggle"><input shuku-edit-id="e-92795e50-80f0-4ea3-b06a-da65a5b74e59" type="checkbox" checked={enabled} readOnly tabIndex={-1}/><Typography shuku-edit-id="e-effa0157-47d9-41a0-8f24-9922ba17f833" as="span" variant="body" tone="inherit">启用 AI 评估</Typography></label>
+      <Typography shuku-edit-id="e-084a85fd-9d43-4d9f-bbff-2f98ef958953" variant="bodySmall" tone="inherit" className="cg-eval-stage-name">{stage}</Typography>
     </div>
-    <div className="cg-mix-stage" role="group" aria-label={`颜色混合知识呈现作品自动演示：${stage}`} style={{ '--upgrade': upgrade } as CSSProperties}>
-      <div className={`cg-mix-content${reviewing ? ' is-under-review' : ''}`}>
-        <Typography variant="h3" tone="inherit" className="cg-mix-title">颜色混合</Typography>
-        <div className="cg-mix-instruction"><Typography variant="body" tone="muted" style={{ opacity: 1 - upgrade }}>调节比例，点击混合。</Typography><Typography variant="body" tone="inherit" style={{ opacity: upgrade }}>拖动颜料，直接观察颜色变化。</Typography></div>
-        <div className="cg-mix-controls" style={{ opacity: 1 - upgrade, transform: `translateY(${-12 * upgrade}px)`, visibility: upgrade === 1 ? 'hidden' : 'visible' }}>
-          <RangeControl label={<Typography as="span" variant="bodySmall" tone="inherit">红黄比例</Typography>} min={0} max={100} value={Math.round(slider * 100)} readOnly tabIndex={-1} formatValue={() => '红色  /  黄色'} controlClassName="cg-mix-ratio"/>
-          <Button className={`cg-mix-start${pressed ? ' is-pressed' : ''}`} tabIndex={-1}><Typography as="span" variant="body" tone="inherit">开始混合</Typography></Button>
-          <Button className="cg-mix-reset" tabIndex={-1}><Typography as="span" variant="body" tone="inherit">重置</Typography></Button>
+    <div shuku-edit-id="e-45acbcac-9478-4f21-9219-9ee6debbd7bb" className="cg-mix-stage" role="group" aria-label={`颜色混合知识呈现作品自动演示：${stage}`} style={{ '--upgrade': upgrade } as CSSProperties}>
+      <div shuku-edit-id="e-fdf0a6e9-5843-4f39-b3e7-accc120f4b70" className={`cg-mix-content${reviewing ? ' is-under-review' : ''}`}>
+        <Typography shuku-edit-id="e-d256a48c-8328-4b65-8a40-1d81a3a9ca81" variant="h3" tone="inherit" className="cg-mix-title">颜色混合</Typography>
+        <div shuku-edit-id="e-0d5e459f-dbfe-47a4-ada4-8f648794ba07" className="cg-mix-instruction"><Typography shuku-edit-id="e-eb6591bc-09a5-4587-b055-5ecd5f5c0fe3" variant="body" tone="muted" style={{ opacity: 1 - upgrade }}>调节比例，点击混合。</Typography><Typography shuku-edit-id="e-4a448c58-9069-454e-ba67-482a5c4b8e38" variant="body" tone="inherit" style={{ opacity: upgrade }}>拖动颜料，直接观察颜色变化。</Typography></div>
+        <div shuku-edit-id="e-bcaffd73-3a8e-4fcb-9514-b27b143ff863" className="cg-mix-controls" style={{ opacity: 1 - upgrade, transform: `translateY(${-12 * upgrade}px)`, visibility: upgrade === 1 ? 'hidden' : 'visible' }}>
+          <RangeControl label={<Typography shuku-edit-id="e-5cf9a41a-450c-486a-86af-2c3d72cdef20" as="span" variant="bodySmall" tone="inherit">红黄比例</Typography>} min={0} max={100} value={Math.round(slider * 100)} readOnly tabIndex={-1} formatValue={() => '红色  /  黄色'} controlClassName="cg-mix-ratio"/>
+          <Button className={`cg-mix-start${pressed ? ' is-pressed' : ''}`} tabIndex={-1}><Typography shuku-edit-id="e-328bd382-b568-4b55-b154-435b5abf0800" as="span" variant="body" tone="inherit">开始混合</Typography></Button>
+          <Button className="cg-mix-reset" tabIndex={-1}><Typography shuku-edit-id="e-10228058-e05f-4979-8b9b-2431ae9db308" as="span" variant="body" tone="inherit">重置</Typography></Button>
         </div>
-        <div className="cg-mix-source is-red" style={{ left: `${lerp(23, 18, upgrade)}%`, top: `${lerp(286, 180, upgrade)}px` }}><div className="cg-paint-pot"><span/></div><Typography variant="body" tone="inherit">红色颜料</Typography></div>
-        <div className="cg-mix-source is-yellow" style={{ left: `${lerp(46, 82, upgrade)}%`, top: `${lerp(286, 180, upgrade)}px` }}><div className="cg-paint-pot"><span/></div><Typography variant="body" tone="inherit">黄色颜料</Typography></div>
-        <Typography as="span" variant="h2" tone="muted" className="cg-mix-symbol is-plus" style={{ opacity: 1 - upgrade }}>＋</Typography>
-        <Typography as="span" variant="h2" tone="muted" className="cg-mix-symbol is-arrow" style={{ opacity: 1 - upgrade }}>→</Typography>
-        <div className="cg-mix-palette-object" style={{ left: `${lerp(77, 50, upgrade)}%`, top: `${lerp(286, 302, upgrade)}px`, width: `${lerp(240, 336, upgrade)}px` }}>
-          <div className={`cg-mix-palette${redDrag || yellowDrag ? ' is-targeted' : ''}`} style={{ height: `${lerp(126, 154, upgrade)}px` }}><i className="cg-mix-palette-hole"/><div className="cg-mix-pool" style={{ opacity: fill, '--mix-hue': hue, width: `${lerp(53, 66, yellowFill)}%` } as CSSProperties}><span/><i/></div></div>
-          <Typography variant="body" tone="inherit">{fill > .5 ? '混合后的颜色' : '调色盘'}</Typography>
+        <div shuku-edit-id="e-b3c7f496-8eb8-43f6-98c3-851f24b65965" className="cg-mix-source is-red" style={{ left: `${lerp(23, 18, upgrade)}%`, top: `${lerp(286, 180, upgrade)}px` }}><div shuku-edit-id="e-b05ef357-cf2b-418c-bf4d-c424758e5856" className="cg-paint-pot"><span shuku-edit-id="e-3b439d4d-fecc-427c-a5c7-53a9fca80f50"/></div><Typography shuku-edit-id="e-ced7ea89-e899-4b08-8c83-2dd606a7cd8a" variant="body" tone="inherit">红色颜料</Typography></div>
+        <div shuku-edit-id="e-a0f93ffa-f9c2-4964-af95-379228301c66" className="cg-mix-source is-yellow" style={{ left: `${lerp(46, 82, upgrade)}%`, top: `${lerp(286, 180, upgrade)}px` }}><div shuku-edit-id="e-33053c5c-f789-4903-8cc8-0592cac6ef4d" className="cg-paint-pot"><span shuku-edit-id="e-89cbeb1a-0ffc-4fd0-b2ff-c10e72688659"/></div><Typography shuku-edit-id="e-de48c80b-da82-46ed-98cd-b19112cd81c4" variant="body" tone="inherit">黄色颜料</Typography></div>
+        <Typography shuku-edit-id="e-22264c2f-bd84-44d2-976c-476403a340ed" as="span" variant="h2" tone="muted" className="cg-mix-symbol is-plus" style={{ opacity: 1 - upgrade }}>＋</Typography>
+        <Typography shuku-edit-id="e-3a953acf-cbd1-4da5-8bb4-19684e384125" as="span" variant="h2" tone="muted" className="cg-mix-symbol is-arrow" style={{ opacity: 1 - upgrade }}>→</Typography>
+        <div shuku-edit-id="e-3d9528bf-bd12-4f60-93d8-a0ee9c35f411" className="cg-mix-palette-object" style={{ left: `${lerp(77, 50, upgrade)}%`, top: `${lerp(286, 302, upgrade)}px`, width: `${lerp(240, 336, upgrade)}px` }}>
+          <div shuku-edit-id="e-31617b23-7606-4185-abda-b8d0d9c60f68" className={`cg-mix-palette${redDrag || yellowDrag ? ' is-targeted' : ''}`} style={{ height: `${lerp(126, 154, upgrade)}px` }}><i shuku-edit-id="e-d0adbfc9-06da-4b9e-b3f3-232feacee6f0" className="cg-mix-palette-hole"/><div shuku-edit-id="e-4c47c716-7003-417a-bafd-2b4416b38e90" className="cg-mix-pool" style={{ opacity: fill, '--mix-hue': hue, width: `${lerp(53, 66, yellowFill)}%` } as CSSProperties}><span shuku-edit-id="e-5c968048-2260-4ce8-ae17-770d85e442ee"/><i shuku-edit-id="e-d08a546f-f8b5-450f-8739-250fa1283c00"/></div></div>
+          <Typography shuku-edit-id="e-b5848507-a3c6-41f3-aa66-148757458162" variant="body" tone="inherit">{fill > .5 ? '混合后的颜色' : '调色盘'}</Typography>
         </div>
-        <div className="cg-mix-revision-label" style={{ opacity: upgrade > .02 && upgrade < .99 ? 1 : 0 }}><span/><Typography variant="body" tone="inherit">精简面板 · 直接操作颜料</Typography></div>
+        <div shuku-edit-id="e-744dbd00-d3b7-42c4-b995-68502c3ba9aa" className="cg-mix-revision-label" style={{ opacity: upgrade > .02 && upgrade < .99 ? 1 : 0 }}><span shuku-edit-id="e-c2ac8aab-49fa-4a60-b8f9-020811596697"/><Typography shuku-edit-id="e-a2f4574f-a397-419d-93d2-de5def8b565a" variant="body" tone="inherit">精简面板 · 直接操作颜料</Typography></div>
       </div>
-      {reviewing && <div className="cg-eval-review-overlay" style={{ opacity: modalOpacity }}>
-        <div className="cg-eval-review-sheet">
-          <div className="cg-eval-review-heading"><span className="cg-eval-chip"><Typography as="span" variant="bodySmall" tone="inherit">AI</Typography></span><Typography variant="h3" tone="inherit">AI 评估</Typography><Typography variant="bodySmall" tone="muted">依据 Creator Skill</Typography></div>
-          <div className="cg-eval-review-rows">{reviews.map((review, index) => <div key={review.title} className={`${index <= activeReview ? 'is-revealed' : ''}${index === activeReview ? ' is-active' : ''}`}><Typography variant="body" tone="inherit">{review.title}</Typography><Typography variant="bodySmall" tone="inherit">{review.text}</Typography><Typography variant="bodySmall" tone="inherit">{review.result}</Typography></div>)}</div>
-          <Typography variant="body" tone="inherit" className="cg-eval-recommendation">建议：直接拖动颜料，混色即时响应。</Typography>
+      {reviewing && <div shuku-edit-id="e-87272865-c15a-4362-8da5-04849681f508" className="cg-eval-review-overlay" style={{ opacity: modalOpacity }}>
+        <div shuku-edit-id="e-10b6b286-4efd-4721-97f7-809f2d9a9b22" className="cg-eval-review-sheet">
+          <div shuku-edit-id="e-db09dfc4-e503-466e-a508-4e484c8df971" className="cg-eval-review-heading"><span shuku-edit-id="e-ff436bc5-f388-4e49-b978-49cbcb2053df" className="cg-eval-chip"><Typography shuku-edit-id="e-2e1bf89b-838a-49c4-ac94-85a1140b03ac" as="span" variant="bodySmall" tone="inherit">AI</Typography></span><Typography shuku-edit-id="e-97aeaaf7-7b19-4f6c-a701-c039f1879867" variant="h3" tone="inherit">AI 评估</Typography><Typography shuku-edit-id="e-45657c4f-88a5-4530-9f09-1693e529487a" variant="bodySmall" tone="muted">依据 Creator Skill</Typography></div>
+          <div shuku-edit-id="e-36ca398d-ac01-4ae4-ab0b-5aaaaa676652" className="cg-eval-review-rows">{reviews.map((review, index) => <div shuku-edit-id="e-1bd6d414-9e1a-4927-bdf3-d5e503498332" key={review.title} className={`${index <= activeReview ? 'is-revealed' : ''}${index === activeReview ? ' is-active' : ''}`}><Typography shuku-edit-id="e-29413fa6-6e54-4337-9b7b-32c906ae7a4a" variant="body" tone="inherit">{review.title}</Typography><Typography shuku-edit-id="e-bb5dab81-e560-4481-bef4-be66c2fc7cf7" variant="bodySmall" tone="inherit">{review.text}</Typography><Typography shuku-edit-id="e-a06807a6-6e64-47df-bf94-ccc8ef7d6313" variant="bodySmall" tone="inherit">{review.result}</Typography></div>)}</div>
+          <Typography shuku-edit-id="e-364d23cb-31c0-4bb1-94a7-537f612863dd" variant="body" tone="inherit" className="cg-eval-recommendation">建议：直接拖动颜料，混色即时响应。</Typography>
         </div>
       </div>}
     </div>
-    <div className="cg-eval-caption"><Typography variant="body" tone="inherit">{caption}</Typography></div>
-    <div className={`cg-eval-virtual-cursor${pressed || (time >= 4720 && time < 4900) || redDrag || yellowDrag ? ' is-pressing' : ''}`} style={{ left: `${pointer.x}%`, top: pointer.y, opacity: pointerOpacity }} aria-hidden="true"><span/><svg viewBox="0 0 32 40" fill="white" stroke="#253758" strokeWidth="2.2" strokeLinejoin="round"><path d="M4 2v29l8-7 6 13 6-3-6-12 11-1Z"/></svg></div>
-    {(redDrag || yellowDrag) && <div className={`cg-eval-drag-paint${yellowDrag ? ' is-yellow' : ''}`} style={{ left: `${pointer.x}%`, top: pointer.y }} aria-hidden="true"/>}
+    <div shuku-edit-id="e-e806b372-ec2a-4a71-9b22-2396d0eb8857" className="cg-eval-caption"><Typography shuku-edit-id="e-a88e3456-caab-4723-a5dd-e10e30f93b86" variant="body" tone="inherit">{caption}</Typography></div>
+    <div shuku-edit-id="e-7accd251-790d-4c23-a1d7-56136361ffd7" className={`cg-eval-virtual-cursor${pressed || (time >= 4720 && time < 4900) || redDrag || yellowDrag ? ' is-pressing' : ''}`} style={{ left: `${pointer.x}%`, top: pointer.y, opacity: pointerOpacity }} aria-hidden="true"><span shuku-edit-id="e-821bb24e-6feb-4b26-8733-53e6c1500446"/><svg shuku-edit-id="e-a918fe01-5ac1-49c7-a60d-b9c5bf490d92" viewBox="0 0 32 40" fill="white" stroke="#253758" strokeWidth="2.2" strokeLinejoin="round"><path shuku-edit-id="e-5f760293-47d6-4f26-9a3c-19334a8ff21f" d="M4 2v29l8-7 6 13 6-3-6-12 11-1Z"/></svg></div>
+    {(redDrag || yellowDrag) && <div shuku-edit-id="e-03ab03f1-e1c1-4f6a-a943-c05267825a5c" className={`cg-eval-drag-paint${yellowDrag ? ' is-yellow' : ''}`} style={{ left: `${pointer.x}%`, top: pointer.y }} aria-hidden="true"/>}
   </div>;
 }

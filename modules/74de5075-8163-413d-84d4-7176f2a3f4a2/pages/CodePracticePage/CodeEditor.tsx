@@ -98,6 +98,6 @@ export function CodeEditor({ value, onChange, onCursor, selectedLine, selectedRa
     const line = errorLine && errorLine <= editor.state.doc.lines ? editor.state.doc.line(errorLine) : undefined;
     editor.dispatch(setDiagnostics(editor.state, line ? [{ from: line.from, to: line.to, severity: 'error', message: errorMessage || 'Python 执行错误，请查看控制台。' }] : []));
   }, [errorLine, errorMessage, value]);
-  return <div className="code-lab-editor-host" ref={host}/>;
+  return <div shuku-edit-id="e-0a41e5df-5f74-4ca5-a502-c097df87c2ab" className="code-lab-editor-host" ref={host}/>;
 }
 

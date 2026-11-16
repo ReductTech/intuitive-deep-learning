@@ -140,19 +140,19 @@ export function ConditionalSamplingPage({ onComplete }: ConditionalSamplingPageP
       : `p(x | ${selectedLabels.join(', ')})`;
 
   return (
-    <ContentBlock
+    <ContentBlock shuku-edit-id="e-79f31c72-267a-4cdf-80e4-227c003a1403"
       headingLevel={1}
       className="vg-shared-page vg-conditional-page"
       bodyClassName="vg-conditional-page__body"
       title="条件如何改变生成结果的概率分布？"
       subtitle="切换条件，直接观察像素分布的形状如何改变；图像只是从这个分布中取出的样本。"
     >
-      <div className="vg-conditional-page__controls" aria-label="选择生成条件">
-        <div className="vg-conditional-page__control-copy">
-          <Typography as="strong" variant="body" tone="main">给“奔跑的狗”增加条件</Typography>
-          <Typography as="span" variant="bodySmall" tone="muted">最多选择两个；每种条件对应不同的分布形状。</Typography>
+      <div shuku-edit-id="e-43b53db7-e7a1-4930-b520-eb85407fdeda" className="vg-conditional-page__controls" aria-label="选择生成条件">
+        <div shuku-edit-id="e-3af8e78f-9487-4165-b548-92ebe774ceb6" className="vg-conditional-page__control-copy">
+          <Typography shuku-edit-id="e-817df9c7-9798-46f3-b4a8-79bc7d2fdfa4" as="strong" variant="body" tone="main">给“奔跑的狗”增加条件</Typography>
+          <Typography shuku-edit-id="e-42b31536-a36e-4944-a6de-72b6131db3e0" as="span" variant="bodySmall" tone="muted">最多选择两个；每种条件对应不同的分布形状。</Typography>
         </div>
-        <div className="vg-conditional-page__condition-buttons">
+        <div shuku-edit-id="e-d03a4aa8-9669-40c8-9042-b5efd405a907" className="vg-conditional-page__condition-buttons">
           {conditions.map((condition) => {
             const active = selected.includes(condition.id);
             return (
@@ -170,101 +170,101 @@ export function ConditionalSamplingPage({ onComplete }: ConditionalSamplingPageP
             );
           })}
         </div>
-        <div className="vg-conditional-page__formula" aria-live="polite">
-          <Typography as="span" variant="bodySmall" tone="muted">当前条件分布</Typography>
-          <Typography as="strong" variant="h3" tone="accent">{formula}</Typography>
+        <div shuku-edit-id="e-5ebd4d98-c630-42b9-aac9-8361fb76c97e" className="vg-conditional-page__formula" aria-live="polite">
+          <Typography shuku-edit-id="e-0b42f330-5b1e-4dfa-bc3e-41d8b3425c7b" as="span" variant="bodySmall" tone="muted">当前条件分布</Typography>
+          <Typography shuku-edit-id="e-cb02ad94-2f25-4e0c-88f5-24a8dc2ad971" as="strong" variant="h3" tone="accent">{formula}</Typography>
         </div>
       </div>
 
-      <section className={`vg-conditional-page__distribution${selected.length === 2 ? ' is-combined' : ''}`} aria-label="条件像素分布示意图">
-        <div className="vg-conditional-page__distribution-head">
-          <div>
-            <Typography as="strong" variant="body" tone="main">像素空间中的高概率区域</Typography>
-            <Typography variant="bodySmall" tone="muted">{activeShape.label}</Typography>
+      <section shuku-edit-id="e-793a4ab3-be48-4a40-ae39-14d4449ccf43" className={`vg-conditional-page__distribution${selected.length === 2 ? ' is-combined' : ''}`} aria-label="条件像素分布示意图">
+        <div shuku-edit-id="e-48d2997b-6991-4bab-b338-8d56e658e6bb" className="vg-conditional-page__distribution-head">
+          <div shuku-edit-id="e-1f2ba833-b19c-4e96-aaf4-453aa0b258a0">
+            <Typography shuku-edit-id="e-edf3340e-bcf0-47e8-a231-4318ad782956" as="strong" variant="body" tone="main">像素空间中的高概率区域</Typography>
+            <Typography shuku-edit-id="e-30a8ac23-f5bb-4d12-9e2b-46807d782a39" variant="bodySmall" tone="muted">{activeShape.label}</Typography>
           </div>
           <Button className="vg-conditional-page__resample" onClick={() => setSampleOffset((offset) => offset + 1)}>
             再次采样
           </Button>
         </div>
 
-        <svg
+        <svg shuku-edit-id="e-e54e421a-7149-49c5-b36d-2531c0c56ad4"
           className="vg-conditional-page__distribution-svg"
           viewBox="0 0 1000 520"
           preserveAspectRatio="xMidYMid meet"
           role="img"
           aria-label={`${activeShape.label}。轮廓内颜色越深表示概率越高。`}
         >
-          <defs>
-            <linearGradient id="vg-conditional-fill" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stopColor="#d9efcf" />
-              <stop offset="0.52" stopColor="#aad69f" />
-              <stop offset="1" stopColor="#75b58c" />
+          <defs shuku-edit-id="e-cc6f8aa6-451c-4811-ae84-54d13a88a234">
+            <linearGradient shuku-edit-id="e-9eb2c9c0-9957-4e26-8d4f-9832b9758905" id="vg-conditional-fill" x1="0" y1="0" x2="1" y2="1">
+              <stop shuku-edit-id="e-be832530-2cfd-42f7-bca4-cc118325cddd" offset="0" stopColor="#d9efcf" />
+              <stop shuku-edit-id="e-f828560e-81a4-4072-8125-ef10214e2a6a" offset="0.52" stopColor="#aad69f" />
+              <stop shuku-edit-id="e-ee8acfec-980c-46ef-8471-b8342483655c" offset="1" stopColor="#75b58c" />
             </linearGradient>
-            <clipPath id="vg-conditional-clip">
-              <path d={activeShape.path} />
+            <clipPath shuku-edit-id="e-7050026a-49a1-4a93-8af9-54e69c54d2fa" id="vg-conditional-clip">
+              <path shuku-edit-id="e-a91ce9ac-6acc-48ab-b60c-984fbdc26b4e" d={activeShape.path} />
             </clipPath>
           </defs>
 
           {selected.length === 2 && activeDefinitions.map((condition) => (
-            <path
+            <path shuku-edit-id="e-ab1e77be-b164-476e-a9ee-ad75d156b871"
               key={condition.id}
               className={`vg-conditional-page__source-shape is-${condition.id}`}
               d={distributionShapes[condition.id].path}
             />
           ))}
 
-          <g className="vg-conditional-page__shape-layer" key={activeKey}>
-            <path className="vg-conditional-page__shape" d={activeShape.path} />
-            <path className="vg-conditional-page__contour vg-conditional-page__contour--outer" d={activeShape.path} transform="translate(85 44) scale(.83)" />
-            <path className="vg-conditional-page__contour vg-conditional-page__contour--inner" d={activeShape.path} transform="translate(185 96) scale(.63)" />
-            <g clipPath="url(#vg-conditional-clip)" className="vg-conditional-page__density-dots">
-              {densityDots.map(([cx, cy, radius], index) => <circle key={index} cx={cx} cy={cy} r={radius} />)}
+          <g shuku-edit-id="e-8ff27576-7702-42d8-9574-53a7ad6e83ff" className="vg-conditional-page__shape-layer" key={activeKey}>
+            <path shuku-edit-id="e-d272ab98-21b8-4afb-b8f3-91307f41e005" className="vg-conditional-page__shape" d={activeShape.path} />
+            <path shuku-edit-id="e-c50017f2-40e8-4891-8eb1-63a8f6fdaf3e" className="vg-conditional-page__contour vg-conditional-page__contour--outer" d={activeShape.path} transform="translate(85 44) scale(.83)" />
+            <path shuku-edit-id="e-15302990-9106-4fcb-b251-81745b45be36" className="vg-conditional-page__contour vg-conditional-page__contour--inner" d={activeShape.path} transform="translate(185 96) scale(.63)" />
+            <g shuku-edit-id="e-7f7f70ea-77c4-4973-abf2-7225b262dddd" clipPath="url(#vg-conditional-clip)" className="vg-conditional-page__density-dots">
+              {densityDots.map(([cx, cy, radius], index) => <circle shuku-edit-id="e-25295904-4911-4bcc-8232-a8f407ff3a48" key={index} cx={cx} cy={cy} r={radius} />)}
             </g>
           </g>
         </svg>
 
-        <div className="vg-conditional-page__distribution-label" aria-live="polite">
-          <Typography as="strong" variant="h2" tone="inherit">x</Typography>
-          <Typography as="span" variant="bodySmall" tone="inherit">{formula} 中的高概率图像</Typography>
+        <div shuku-edit-id="e-5ddbb251-ddb0-4579-860e-5f9b1985b59e" className="vg-conditional-page__distribution-label" aria-live="polite">
+          <Typography shuku-edit-id="e-d40617ed-bb70-4e81-9113-d73979cb3d12" as="strong" variant="h2" tone="inherit">x</Typography>
+          <Typography shuku-edit-id="e-31d8e99a-1e84-4b56-99b1-519b3fb9f039" as="span" variant="bodySmall" tone="inherit">{formula} 中的高概率图像</Typography>
         </div>
 
-        <div className="vg-conditional-page__sample-orbit" key={`${activeKey}-${sampleOffset}`}>
+        <div shuku-edit-id="e-e1653cc8-c0b3-4419-89bd-733355fceab8" className="vg-conditional-page__sample-orbit" key={`${activeKey}-${sampleOffset}`}>
           {visibleSampleIndexes.map((sampleIndex, index) => (
-            <figure className={`vg-conditional-page__sample vg-conditional-page__sample--${index + 1}`} key={`${sampleIndex}-${index}`}>
-              <img src={samples[sampleIndex].src} alt={samples[sampleIndex].alt} draggable={false} />
-              <figcaption>
-                <Typography as="span" variant="bodySmall" tone="inherit">样本 {index + 1}</Typography>
+            <figure shuku-edit-id="e-e8ebc7a8-10e8-41b5-8f30-0439d5d3f3d8" className={`vg-conditional-page__sample vg-conditional-page__sample--${index + 1}`} key={`${sampleIndex}-${index}`}>
+              <img shuku-edit-id="e-26146323-2825-4443-9b43-f21ed9ec3b70" src={samples[sampleIndex].src} alt={samples[sampleIndex].alt} draggable={false} />
+              <figcaption shuku-edit-id="e-f79c855b-2b90-4aa9-8ffe-243c4e0a8120">
+                <Typography shuku-edit-id="e-4fbeeffb-2259-4e60-9fcd-54fe1568f866" as="span" variant="bodySmall" tone="inherit">样本 {index + 1}</Typography>
               </figcaption>
             </figure>
           ))}
         </div>
 
         {selected.length === 2 && (
-          <div className="vg-conditional-page__overlap-note">
-            <span className="vg-conditional-page__overlap-line" aria-hidden="true" />
-            <Typography as="span" variant="bodySmall" tone="success">实线区域：同时满足两个条件</Typography>
+          <div shuku-edit-id="e-66e7b618-01cb-4689-a883-b856a782954d" className="vg-conditional-page__overlap-note">
+            <span shuku-edit-id="e-4a062034-36fc-42fd-bebd-27b307c8f8cc" className="vg-conditional-page__overlap-line" aria-hidden="true" />
+            <Typography shuku-edit-id="e-9bcc3f44-298a-4c4a-8fcd-031bd0905d66" as="span" variant="bodySmall" tone="success">实线区域：同时满足两个条件</Typography>
           </div>
         )}
       </section>
 
-      <footer className={`vg-conditional-page__insight${complete ? ' is-complete' : ''}`} aria-live="polite">
-        <div>
-          <Typography as="strong" variant="h3" tone={complete ? 'success' : 'accent'}>
+      <footer shuku-edit-id="e-c9b79945-8f87-4c36-8093-8d3f37e44756" className={`vg-conditional-page__insight${complete ? ' is-complete' : ''}`} aria-live="polite">
+        <div shuku-edit-id="e-1e41bc14-e8dd-4b93-a862-c1c29efe8073">
+          <Typography shuku-edit-id="e-31c89c88-1ea8-440b-b17a-b0552d704b34" as="strong" variant="h3" tone={complete ? 'success' : 'accent'}>
             {complete
               ? '条件改变的是像素分布，而不是指定某一张图片。'
               : selected.length === 0
                 ? '先选择一个条件，观察绿色分布怎样改变形状。'
                 : '再叠加一个条件，观察可接受的分布如何收窄。'}
           </Typography>
-          <Typography variant="bodySmall" tone="muted">
+          <Typography shuku-edit-id="e-64ac266d-b091-491b-9b98-15b6b04308a0" variant="bodySmall" tone="muted">
             {complete
               ? '分布的形状决定哪些像素组合更可能；从同一分布采样，仍会得到多个不同但合理的结果。'
               : '绿色区域表示当前条件下更可能出现的像素组合，旁边的图片是从中取出的样本。'}
           </Typography>
         </div>
-        <div className="vg-conditional-page__progress" aria-label="探索进度">
-          <Typography as="span" variant="bodySmall" tone={hasSeenSingle ? 'success' : 'muted'}>{hasSeenSingle ? '✓' : '○'} 分布变形</Typography>
-          <Typography as="span" variant="bodySmall" tone={hasCombined ? 'success' : 'muted'}>{hasCombined ? '✓' : '○'} 条件叠加</Typography>
+        <div shuku-edit-id="e-cfffc570-da6d-4017-8ca4-dbdd3cafc1d4" className="vg-conditional-page__progress" aria-label="探索进度">
+          <Typography shuku-edit-id="e-73b6f4c2-d82e-42c1-b775-bbc6ce353584" as="span" variant="bodySmall" tone={hasSeenSingle ? 'success' : 'muted'}>{hasSeenSingle ? '✓' : '○'} 分布变形</Typography>
+          <Typography shuku-edit-id="e-7c49dab9-0e4e-4863-99b0-82564e282a59" as="span" variant="bodySmall" tone={hasCombined ? 'success' : 'muted'}>{hasCombined ? '✓' : '○'} 条件叠加</Typography>
         </div>
       </footer>
     </ContentBlock>

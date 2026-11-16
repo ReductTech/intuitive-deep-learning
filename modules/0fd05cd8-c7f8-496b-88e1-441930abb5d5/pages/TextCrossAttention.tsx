@@ -55,23 +55,23 @@ export function TextCrossAttention() {
   return <Frame index={3} subtitle="移动特征图上的 Query，观察它从文字中读取什么" takeaway="视觉位置提供 Query，文本提供 Key / Value；每个位置可以读取不同的文本信息。">
     <LessonSplit equal className="vga-attention-layout">
       <TeachingPanel title="① 移动视觉位置 · Query" className="vga-query-panel">
-        <div className={'vga-query-surface' + (dragging ? ' is-dragging' : '')} role="group" tabIndex={0} aria-label="视觉特征图，点击或拖动移动 Query，也可用方向键逐格移动" aria-keyshortcuts="ArrowUp ArrowDown ArrowLeft ArrowRight Home End" data-testid="query-surface" data-query-col={query.col} data-query-row={query.row}
+        <div shuku-edit-id="e-6a6afd09-e867-442f-ae03-17d725197d99" className={'vga-query-surface' + (dragging ? ' is-dragging' : '')} role="group" tabIndex={0} aria-label="视觉特征图，点击或拖动移动 Query，也可用方向键逐格移动" aria-keyshortcuts="ArrowUp ArrowDown ArrowLeft ArrowRight Home End" data-testid="query-surface" data-query-col={query.col} data-query-row={query.row}
           onPointerDown={event => { if (!event.isPrimary || event.button !== 0) return; event.preventDefault(); event.currentTarget.focus({preventScroll: true}); pointer.current = event.pointerId; event.currentTarget.setPointerCapture(event.pointerId); setDragging(true); locate(event); }}
           onPointerMove={event => { if (pointer.current === event.pointerId) locate(event); }}
           onPointerUp={event => { if (pointer.current === event.pointerId) locate(event); release(event); }}
           onPointerCancel={release} onLostPointerCapture={() => {pointer.current = null; setDragging(false);}} onKeyDown={moveWithKeys}>
           <ReferenceVisual file="visuals/attention-feature.jpg" alt="小猫与书本的视觉特征图，原图中的橙框是参考区域" />
-          <div className="vga-query-marker" data-testid="query-marker" style={{left: `${query.col / side * 100}%`, top: `${query.row / side * 100}%`}} aria-hidden="true" />
-          <div className="vga-query-tag" style={{left: `${Math.min(query.col, 13) / side * 100}%`, top: `${(query.row >= 2 ? query.row - 2 : query.row + 1) / side * 100}%`}} aria-hidden="true"><Typography as="span" variant="bodySmall" tone="inherit">Q</Typography></div>
+          <div shuku-edit-id="e-5c99e79f-335e-4e9b-9b54-3b93f0ede03d" className="vga-query-marker" data-testid="query-marker" style={{left: `${query.col / side * 100}%`, top: `${query.row / side * 100}%`}} aria-hidden="true" />
+          <div shuku-edit-id="e-2b6c0b29-1544-4fd8-9fc5-e27d4ff435de" className="vga-query-tag" style={{left: `${Math.min(query.col, 13) / side * 100}%`, top: `${(query.row >= 2 ? query.row - 2 : query.row + 1) / side * 100}%`}} aria-hidden="true"><Typography as="span" variant="bodySmall" tone="inherit">Q</Typography></div>
         </div>
         <Typography variant="bodySmall" tone="accent" data-testid="query-position">Query · 第 {query.row + 1} 行，第 {query.col + 1} 列</Typography>
-        <div className="vga-stage-tabs">{regions.map(r => <Button key={r.id} data-testid={`region-${r.id}`} active={query.col === r.col && query.row === r.row} aria-pressed={query.col === r.col && query.row === r.row} aria-label={`定位到${r.label}`} onClick={() => setQuery({col: r.col, row: r.row})}>{r.label}</Button>)}</div>
+        <div shuku-edit-id="e-9d7455fd-5fae-493d-b9b2-033cea644038" className="vga-stage-tabs">{regions.map(r => <Button key={r.id} data-testid={`region-${r.id}`} active={query.col === r.col && query.row === r.row} aria-pressed={query.col === r.col && query.row === r.row} aria-label={`定位到${r.label}`} onClick={() => setQuery({col: r.col, row: r.row})}>{r.label}</Button>)}</div>
         <Text muted>点击定位，拖动或用方向键移动。</Text>
       </TeachingPanel>
       <TeachingPanel title="② 读取文本信息 · Key / Value" className="vga-text-panel">
         <Typography variant="h3" tone="accent">{current.label}正在读取文本</Typography>
-        <div className="vga-weights">{['小猫','学习','书本'].map((w,i) => <div className="vga-weight-row" key={w}><Button active={word === i} onClick={() => setWord(i)}>{w}</Button><div className="vga-weight-track"><div style={{ width: `${current.weights[i]}%` }} /></div><Typography variant="bodySmall" data-testid={`query-weight-${i}`}>{current.weights[i]}%</Typography></div>)}</div>
-        <div className="vga-panel-callout"><Text>当前位置 → {['小猫','学习','书本'][word]}：{current.weights[word]}%</Text><Text muted>Query 移动，文本关联随之变化。</Text></div>
+        <div shuku-edit-id="e-f1275c6b-e9c7-4408-996c-fd322b3f808b" className="vga-weights">{['小猫','学习','书本'].map((w,i) => <div shuku-edit-id="e-eb5c0673-2c95-4b52-ae70-94c04609ccac" className="vga-weight-row" key={w}><Button active={word === i} onClick={() => setWord(i)}>{w}</Button><div shuku-edit-id="e-64c86797-9083-44f6-a75d-fd315cf2dc76" className="vga-weight-track"><div shuku-edit-id="e-d860e40c-d204-4139-99ac-e58f9db1bd3c" style={{ width: `${current.weights[i]}%` }} /></div><Typography variant="bodySmall" data-testid={`query-weight-${i}`}>{current.weights[i]}%</Typography></div>)}</div>
+        <div shuku-edit-id="e-32ed05fa-dd80-4710-9821-de2d638e4aaa" className="vga-panel-callout"><Text>当前位置 → {['小猫','学习','书本'][word]}：{current.weights[word]}%</Text><Text muted>Query 移动，文本关联随之变化。</Text></div>
         <Text muted>16 × 16 位置网格与权重插值为教学示意，合计 100%；不执行真实模型。</Text>
       </TeachingPanel>
     </LessonSplit>

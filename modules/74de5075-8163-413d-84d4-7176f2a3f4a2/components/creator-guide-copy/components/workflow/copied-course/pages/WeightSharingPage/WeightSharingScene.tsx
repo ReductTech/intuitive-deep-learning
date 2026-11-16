@@ -11,12 +11,12 @@ const KERNEL_COLORS = [0x3d7de0, 0x8169dd, 0x18a0a1, 0xe49b46, 0x3868c8, 0xba6aa
 function Fallback({ kind, active }: { kind: SharingKind; active: number }) {
   const row = Math.floor(active / 3);
   const col = active % 3;
-  return <div className="aipe-replay-cg-copy-ck-share__fallback">
-    <div className="aipe-replay-cg-copy-ck-share__fallbaaipe-replay-cg-copy-ck-grid is-input">{Array.from({ length: 25 }, (_, index) => <span key={index} className={Math.floor(index / 5) >= row && Math.floor(index / 5) < row + 3 && index % 5 >= col && index % 5 < col + 3 ? 'is-active' : ''} />)}</div>
-    <Typography as="span" variant="h3" tone="accent" className="aipe-replay-cg-copy-ck-share__fallbaaipe-replay-cg-copy-ck-arrow">→</Typography>
-    <div className="aipe-replay-cg-copy-ck-share__fallbaaipe-replay-cg-copy-ck-grid is-kernel">{Array.from({ length: 9 }, (_, index) => <span key={index} className={kind === 'independent' ? `is-version-${active % 3}` : ''} />)}</div>
-    <Typography as="span" variant="h3" tone="accent" className="aipe-replay-cg-copy-ck-share__fallbaaipe-replay-cg-copy-ck-arrow">→</Typography>
-    <div className="aipe-replay-cg-copy-ck-share__fallbaaipe-replay-cg-copy-ck-grid is-output">{Array.from({ length: 9 }, (_, index) => <span key={index} className={index === active ? 'is-active' : ''} />)}</div>
+  return <div shuku-edit-id="e-4edb2220-b885-400d-8bef-f2ffd7a9aa08" className="aipe-replay-cg-copy-ck-share__fallback">
+    <div shuku-edit-id="e-33bc85de-b7bc-4f2d-96e4-2b8f5d5c44dd" className="aipe-replay-cg-copy-ck-share__fallbaaipe-replay-cg-copy-ck-grid is-input">{Array.from({ length: 25 }, (_, index) => <span shuku-edit-id="e-9fe7ed38-1c81-493e-9ddb-22e96e0b537b" key={index} className={Math.floor(index / 5) >= row && Math.floor(index / 5) < row + 3 && index % 5 >= col && index % 5 < col + 3 ? 'is-active' : ''} />)}</div>
+    <Typography shuku-edit-id="e-b51ab9a3-16c3-46cf-8f06-24e4f67367b7" as="span" variant="h3" tone="accent" className="aipe-replay-cg-copy-ck-share__fallbaaipe-replay-cg-copy-ck-arrow">→</Typography>
+    <div shuku-edit-id="e-47d7bf3c-0417-43ed-a441-d223b8da5b3f" className="aipe-replay-cg-copy-ck-share__fallbaaipe-replay-cg-copy-ck-grid is-kernel">{Array.from({ length: 9 }, (_, index) => <span shuku-edit-id="e-bf21f7de-a760-4a3e-a795-3e872b8d8dbd" key={index} className={kind === 'independent' ? `is-version-${active % 3}` : ''} />)}</div>
+    <Typography shuku-edit-id="e-d3ce1a4d-e283-4bf8-b3df-a42ef7c49ee2" as="span" variant="h3" tone="accent" className="aipe-replay-cg-copy-ck-share__fallbaaipe-replay-cg-copy-ck-arrow">→</Typography>
+    <div shuku-edit-id="e-4beeeaa4-dd98-4af8-90dd-8e7e2f482ece" className="aipe-replay-cg-copy-ck-share__fallbaaipe-replay-cg-copy-ck-grid is-output">{Array.from({ length: 9 }, (_, index) => <span shuku-edit-id="e-1007ed62-710d-4d42-9096-33d72afc83da" key={index} className={index === active ? 'is-active' : ''} />)}</div>
   </div>;
 }
 
@@ -214,8 +214,8 @@ export function WeightSharingScene({ kind }: { kind: SharingKind }) {
     };
   }, [kind]);
 
-  return <div className="aipe-replay-cg-copy-ck-share__scene" ref={mountRef} role="img" aria-label={kind === 'shared' ? '同一个三乘三卷积核不断移动并用于所有输出位置' : '每个输出位置使用另一套三乘三局部权重'}>
-    <div className="aipe-replay-cg-copy-ck-share__scene-labels"><Typography variant="bodySmall" tone="accent">输入 5 × 5</Typography><Typography variant="bodySmall" tone="accent">{kind === 'shared' ? '同一套 K' : `第 ${active + 1} 套 K`}</Typography><Typography variant="bodySmall" tone="accent">输出 3 × 3</Typography></div>
+  return <div shuku-edit-id="e-4d4eec39-bd13-416a-bbfb-3cc08aff97d3" className="aipe-replay-cg-copy-ck-share__scene" ref={mountRef} role="img" aria-label={kind === 'shared' ? '同一个三乘三卷积核不断移动并用于所有输出位置' : '每个输出位置使用另一套三乘三局部权重'}>
+    <div shuku-edit-id="e-7fae870c-00a6-4b78-81be-dd625a76c579" className="aipe-replay-cg-copy-ck-share__scene-labels"><Typography shuku-edit-id="e-5249033c-902e-4987-bf71-772a8850ee15" variant="bodySmall" tone="accent">输入 5 × 5</Typography><Typography shuku-edit-id="e-04c76114-20d1-4124-9848-459446bcda92" variant="bodySmall" tone="accent">{kind === 'shared' ? '同一套 K' : `第 ${active + 1} 套 K`}</Typography><Typography shuku-edit-id="e-3b0114cf-b2a3-4e69-a06b-8ccf11a8fc7a" variant="bodySmall" tone="accent">输出 3 × 3</Typography></div>
     {fallback && <Fallback kind={kind} active={active} />}
   </div>;
 }

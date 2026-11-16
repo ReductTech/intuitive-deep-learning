@@ -52,35 +52,35 @@ export function PresentationComparisonPage() {
     return () => window.clearInterval(timer);
   }, [visible, foreground, reducedMotion, stackHovered, stackFocused]);
 
-  return <ContentBlock ref={root} className="aipe-replay-cg-case-page aipe-replay-cg-creator-typography"
+  return <ContentBlock shuku-edit-id="e-a444dc92-4776-49f4-a0fc-4835a01cc938" ref={root} className="aipe-replay-cg-case-page aipe-replay-cg-creator-typography"
     title="既然允许 AI 参与制作，怎样看出学生的理解？"
     subtitle="看学生怎样提出设计要求、解释视觉含义，并核验结果。"
     headingLevel={1} bodyClassName="aipe-replay-cg-case-body">
-    <Typography as="h2" variant="h3" tone="accent" className="aipe-replay-cg-case-heading aipe-replay-cg-case-heading-left">只给主题的生成结果</Typography>
-    <Typography as="h2" variant="h3" tone="accent" className="aipe-replay-cg-case-heading aipe-replay-cg-case-heading-right">融入学生的理解</Typography>
-    <section className="aipe-replay-cg-case-stack" aria-label="五张图示依次切换，悬停暂停，可点击查看" data-active-version={active}
+    <Typography shuku-edit-id="e-65684209-c78f-4bac-9710-e6ace8ebcf49" as="h2" variant="h3" tone="accent" className="aipe-replay-cg-case-heading aipe-replay-cg-case-heading-left">只给主题的生成结果</Typography>
+    <Typography shuku-edit-id="e-b3b44de7-739d-4ca0-bdfa-8d195d4e51bc" as="h2" variant="h3" tone="accent" className="aipe-replay-cg-case-heading aipe-replay-cg-case-heading-right">融入学生的理解</Typography>
+    <section shuku-edit-id="e-cadf92ce-bbe4-4600-9aff-ed8f15a54502" className="aipe-replay-cg-case-stack" aria-label="五张图示依次切换，悬停暂停，可点击查看" data-active-version={active}
       onPointerEnter={() => setStackHovered(true)} onPointerLeave={() => setStackHovered(false)}
       onFocusCapture={() => setStackFocused(true)}
       onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) setStackFocused(false); }}>
-      {[1,2,3,4,5].map(version => <button type="button" className="aipe-replay-cg-case-stack-card" key={version}
+      {[1,2,3,4,5].map(version => <button shuku-edit-id="e-d9328cf9-e759-4323-a1cc-61312ef4c46b" type="button" className="aipe-replay-cg-case-stack-card" key={version}
         style={stackStyle((version - active + 7) % 5)} aria-label={`查看生成方案 ${version}`} aria-pressed={active === version}
         onFocus={() => setActive(version)} onClick={() => setActive(version)}>
-        <img src={asset(`images/weight-sharing/version-${version}.jpg`)} alt={`权重共享图示方案 ${version}`} draggable={false}/>
+        <img shuku-edit-id="e-9482db99-b18a-400e-911b-315592d5c364" src={asset(`images/weight-sharing/version-${version}.jpg`)} alt={`权重共享图示方案 ${version}`} draggable={false}/>
       </button>)}
     </section>
-    <section className="aipe-replay-cg-case-result" aria-label="加入具体设计要求后的知识呈现作品效果">
-      <video ref={video} src={asset('videos/weight-sharing.mp4')}
+    <section shuku-edit-id="e-cbb4ec3f-ed2c-494b-a7a3-cadf83a240da" className="aipe-replay-cg-case-result" aria-label="加入具体设计要求后的知识呈现作品效果">
+      <video shuku-edit-id="e-bcd9c4f3-4630-40c0-975b-9ec79075baff" ref={video} src={asset('videos/weight-sharing.mp4')}
         muted loop playsInline preload="auto" disablePictureInPicture disableRemotePlayback
         aria-label="权重共享知识呈现作品：窗口同步滑动，对比不同位置使用的权重"/>
     </section>
-    <div className="aipe-replay-cg-case-prompts">
-      <section className="aipe-replay-cg-case-prompt" aria-label="只给主题的设计要求">
-        <Typography variant="bodySmall" tone="muted">设计要求（Prompt）</Typography>
-        <Typography variant="bodySmall" tone="accent">给我做一页 PPT，讲讲卷积里的权重共享。</Typography>
+    <div shuku-edit-id="e-c202a09c-8f8a-4d4b-9155-01f0a233c8a2" className="aipe-replay-cg-case-prompts">
+      <section shuku-edit-id="e-1b33705e-9b11-4c64-affc-f99e80cbdf57" className="aipe-replay-cg-case-prompt" aria-label="只给主题的设计要求">
+        <Typography shuku-edit-id="e-94385ccf-f49a-496b-ace6-003477164ae3" variant="bodySmall" tone="muted">设计要求（Prompt）</Typography>
+        <Typography shuku-edit-id="e-bfccad6b-2387-40bf-b895-922e2b7e61bc" variant="bodySmall" tone="accent">给我做一页 PPT，讲讲卷积里的权重共享。</Typography>
       </section>
-      <section className="aipe-replay-cg-case-prompt aipe-replay-cg-case-prompt-specific" aria-label="融入教学设计的具体要求">
-        <Typography variant="bodySmall" tone="muted">设计要求（Prompt）</Typography>
-        <Typography variant="bodySmall" tone="accent"><span className="aipe-replay-cg-case-emphasis">左右对比</span>，窗口<span className="aipe-replay-cg-case-emphasis">同步滑动</span>；左边每到新位置<span className="aipe-replay-cg-case-emphasis-warm">换颜色</span>，右边<span className="aipe-replay-cg-case-emphasis-warm">保持不变</span>，表示复用同一套权重。</Typography>
+      <section shuku-edit-id="e-3725f972-5c68-47ba-a8ee-6065e9711328" className="aipe-replay-cg-case-prompt aipe-replay-cg-case-prompt-specific" aria-label="融入教学设计的具体要求">
+        <Typography shuku-edit-id="e-99bde91b-20af-44b1-aca2-97866f6c3aff" variant="bodySmall" tone="muted">设计要求（Prompt）</Typography>
+        <Typography shuku-edit-id="e-b6d33982-aecb-47d8-823a-30afb533ac17" variant="bodySmall" tone="accent"><span shuku-edit-id="e-9fa9b9f2-c207-4860-b0d2-2365f30e03ad" className="aipe-replay-cg-case-emphasis">左右对比</span>，窗口<span shuku-edit-id="e-51000896-c763-4905-ae89-549f31495c7d" className="aipe-replay-cg-case-emphasis">同步滑动</span>；左边每到新位置<span shuku-edit-id="e-9f857dc3-48e8-4f5c-95f5-fa1578a3fadf" className="aipe-replay-cg-case-emphasis-warm">换颜色</span>，右边<span shuku-edit-id="e-de41a4d5-4ca0-4923-a80a-6576ddd0203a" className="aipe-replay-cg-case-emphasis-warm">保持不变</span>，表示复用同一套权重。</Typography>
       </section>
     </div>
   </ContentBlock>;

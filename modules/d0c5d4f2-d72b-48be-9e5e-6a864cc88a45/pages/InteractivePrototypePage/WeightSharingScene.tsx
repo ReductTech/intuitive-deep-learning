@@ -11,12 +11,12 @@ const KERNEL_COLORS = [0x3d7de0, 0x8169dd, 0x18a0a1, 0xe49b46, 0x3868c8, 0xba6aa
 function Fallback({ kind, active }: { kind: SharingKind; active: number }) {
   const row = Math.floor(active / 3);
   const col = active % 3;
-  return <div className="rf-share__fallback">
-    <div className="rf-share__fallback-grid is-input">{Array.from({ length: 25 }, (_, index) => <span key={index} className={Math.floor(index / 5) >= row && Math.floor(index / 5) < row + 3 && index % 5 >= col && index % 5 < col + 3 ? 'is-active' : ''} />)}</div>
-    <Typography as="span" variant="h3" tone="accent" className="rf-share__fallback-arrow">→</Typography>
-    <div className="rf-share__fallback-grid is-kernel">{Array.from({ length: 9 }, (_, index) => <span key={index} className={kind === 'independent' ? `is-version-${active % 3}` : ''} />)}</div>
-    <Typography as="span" variant="h3" tone="accent" className="rf-share__fallback-arrow">→</Typography>
-    <div className="rf-share__fallback-grid is-output">{Array.from({ length: 9 }, (_, index) => <span key={index} className={index === active ? 'is-active' : ''} />)}</div>
+  return <div shuku-edit-id="e-21a0c27e-3c9c-4549-9aa7-a3da3d492502" className="rf-share__fallback">
+    <div shuku-edit-id="e-c9ee8296-de00-4e0e-94b4-d049fa4a22e0" className="rf-share__fallback-grid is-input">{Array.from({ length: 25 }, (_, index) => <span shuku-edit-id="e-f40523ed-0614-4191-9985-f48b3f9526b2" key={index} className={Math.floor(index / 5) >= row && Math.floor(index / 5) < row + 3 && index % 5 >= col && index % 5 < col + 3 ? 'is-active' : ''} />)}</div>
+    <Typography shuku-edit-id="e-096b519f-c183-4288-a243-419be033e3e8" as="span" variant="h3" tone="accent" className="rf-share__fallback-arrow">→</Typography>
+    <div shuku-edit-id="e-663820ed-9138-4775-a789-642ea5a79b4f" className="rf-share__fallback-grid is-kernel">{Array.from({ length: 9 }, (_, index) => <span shuku-edit-id="e-2a948c77-29ee-4508-9cfd-731159182651" key={index} className={kind === 'independent' ? `is-version-${active % 3}` : ''} />)}</div>
+    <Typography shuku-edit-id="e-a1510a13-b448-42d5-aa24-9ab77df50ec7" as="span" variant="h3" tone="accent" className="rf-share__fallback-arrow">→</Typography>
+    <div shuku-edit-id="e-23f150bf-3e8d-497e-b0e4-54f2ae4e09b0" className="rf-share__fallback-grid is-output">{Array.from({ length: 9 }, (_, index) => <span shuku-edit-id="e-1418e0eb-d333-4959-b275-024d81f384a2" key={index} className={index === active ? 'is-active' : ''} />)}</div>
   </div>;
 }
 
@@ -216,8 +216,8 @@ export function WeightSharingScene({ kind, position, playing }: { kind: SharingK
     };
   }, [kind]);
 
-  return <div className="rf-share__scene" ref={mountRef} role="img" aria-label={kind === 'shared' ? '同一个三乘三卷积核不断移动并用于所有输出位置' : '每个输出位置使用另一套三乘三局部权重'}>
-    <div className="rf-share__scene-labels"><Typography variant="bodySmall" tone="accent">输入 5 × 5</Typography><Typography variant="bodySmall" tone="accent">{kind === 'shared' ? '同一套 K' : `第 ${active + 1} 套 K`}</Typography><Typography variant="bodySmall" tone="accent">输出 3 × 3</Typography></div>
+  return <div shuku-edit-id="e-e01db8ae-4658-4a7b-8af9-e586d292d77d" className="rf-share__scene" ref={mountRef} role="img" aria-label={kind === 'shared' ? '同一个三乘三卷积核不断移动并用于所有输出位置' : '每个输出位置使用另一套三乘三局部权重'}>
+    <div shuku-edit-id="e-60e95a8d-6589-4cad-b0e0-59e335d541e5" className="rf-share__scene-labels"><Typography shuku-edit-id="e-6808b989-35f3-4fb4-b059-fde3658a6fdd" variant="bodySmall" tone="accent">输入 5 × 5</Typography><Typography shuku-edit-id="e-91ed0750-4343-425c-9bcc-a72c1de1a3b4" variant="bodySmall" tone="accent">{kind === 'shared' ? '同一套 K' : `第 ${active + 1} 套 K`}</Typography><Typography shuku-edit-id="e-a7c15052-8466-402c-8a9e-09eb8f70f1c7" variant="bodySmall" tone="accent">输出 3 × 3</Typography></div>
     {fallback && <Fallback kind={kind} active={active} />}
   </div>;
 }

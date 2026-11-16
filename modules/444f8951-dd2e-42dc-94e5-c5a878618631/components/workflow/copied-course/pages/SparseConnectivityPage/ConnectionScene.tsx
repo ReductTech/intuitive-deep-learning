@@ -10,10 +10,10 @@ const SCAN_ORDER = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 function Fallback({ kind }: { kind: ConnectionKind }) {
   const input = Array.from({ length: 25 }, (_, index) => ({ x: 45 + (index % 5) * 36, y: 50 + Math.floor(index / 5) * 36, index }));
   const sources = kind === 'dense' ? input : input.filter(({ index }) => Math.floor(index / 5) >= 1 && Math.floor(index / 5) <= 3 && index % 5 >= 1 && index % 5 <= 3);
-  return <svg className="cg-copy-ck-sparse__fallback" viewBox="0 0 620 280" role="img" aria-label={kind === 'dense' ? '全部二十五个输入连接一个输出' : '局部九个输入连接一个输出'}>
-    {sources.map((point) => <line key={point.index} x1={point.x + 15} y1={point.y + 15} x2="499" y2="147" />)}
-    {input.map((point) => <rect key={point.index} className={sources.includes(point) ? 'is-active' : ''} x={point.x} y={point.y} width="30" height="30" rx="4" />)}
-    {Array.from({ length: 9 }, (_, index) => <rect key={index} className={index === 4 ? 'is-selected' : ''} x={448 + index % 3 * 36} y={96 + Math.floor(index / 3) * 36} width="30" height="30" rx="4" />)}
+  return <svg shuku-edit-id="e-cd70fcf4-c64a-4dd8-b03a-866c38095f5c" className="cg-copy-ck-sparse__fallback" viewBox="0 0 620 280" role="img" aria-label={kind === 'dense' ? '全部二十五个输入连接一个输出' : '局部九个输入连接一个输出'}>
+    {sources.map((point) => <line shuku-edit-id="e-9b81d2f9-344d-406f-9aaf-13c54ef0d200" key={point.index} x1={point.x + 15} y1={point.y + 15} x2="499" y2="147" />)}
+    {input.map((point) => <rect shuku-edit-id="e-eeea95ef-e675-41fb-825f-3110d92e425a" key={point.index} className={sources.includes(point) ? 'is-active' : ''} x={point.x} y={point.y} width="30" height="30" rx="4" />)}
+    {Array.from({ length: 9 }, (_, index) => <rect shuku-edit-id="e-6bdd2528-4c4a-48d1-9f94-a47a18aa8897" key={index} className={index === 4 ? 'is-selected' : ''} x={448 + index % 3 * 36} y={96 + Math.floor(index / 3) * 36} width="30" height="30" rx="4" />)}
   </svg>;
 }
 
@@ -177,8 +177,8 @@ export function ConnectionScene({ kind }: { kind: ConnectionKind }) {
     };
   }, [kind]);
 
-  return <div className="cg-copy-ck-sparse__scene" ref={mountRef} role="img" aria-label={kind === 'dense' ? '立体网格持续扫描：每个输出与全部二十五个输入相连' : '立体网格持续扫描：每个输出只与对应的九个输入相连'}>
-    <div className="cg-copy-ck-sparse__scene-labels"><Typography variant="bodySmall" tone="accent">输入 5 × 5</Typography><Typography variant="bodySmall" tone="accent">输出 3 × 3</Typography></div>
+  return <div shuku-edit-id="e-1e415569-695e-43df-8306-d1f1769cb663" className="cg-copy-ck-sparse__scene" ref={mountRef} role="img" aria-label={kind === 'dense' ? '立体网格持续扫描：每个输出与全部二十五个输入相连' : '立体网格持续扫描：每个输出只与对应的九个输入相连'}>
+    <div shuku-edit-id="e-4e02da74-2168-4323-b47f-5114a72cabcb" className="cg-copy-ck-sparse__scene-labels"><Typography shuku-edit-id="e-c098593d-936a-42f2-ac61-45b35252f71c" variant="bodySmall" tone="accent">输入 5 × 5</Typography><Typography shuku-edit-id="e-f789db50-c5a6-4bfe-8cfa-29df3a4f011f" variant="bodySmall" tone="accent">输出 3 × 3</Typography></div>
     {fallback && <Fallback kind={kind} />}
   </div>;
 }

@@ -14,7 +14,7 @@ const groups = [
 ];
 function ConstraintIcon({kind}:{kind:string}) {
   const paths:Record<string,string>={check:'M14 8h30v48H14ZM23 24l5 5 12-13M23 42h14',document:'M16 7h19l13 13v37H16ZM35 7v15h13M24 32h16M24 41h16M24 50h10',cursor:'M14 8l37 29-20 1-9 17ZM31 38l10 18',palette:'M32 8C17 8 7 19 7 33s11 24 24 24c7 0 10-4 7-9-4-6 1-10 9-9 8 0 11-5 10-12C55 15 44 8 32 8ZM21 22h.1M34 17h.1M46 25h.1M17 36h.1',layout:'M10 12h44v40H10ZM10 32h44M29 32v20',evolve:'M49 22A21 21 0 0 0 14 17l-5 8M9 12v13h13M15 42a21 21 0 0 0 35 5l5-8M55 52V39H42M25 33l5 5 10-12'};
-  return <svg viewBox="0 0 64 64" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"><path d={paths[kind]}/></svg>;
+  return <svg shuku-edit-id="e-51a778b7-bb7d-4e1a-8eb2-12474138e3e9" viewBox="0 0 64 64" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"><path shuku-edit-id="e-0e49831f-1292-435e-bd3f-07d56a6b978f" d={paths[kind]}/></svg>;
 }
 export function SkillConstraintsPage(){
   const [active, setActive] = useState(0);
@@ -42,40 +42,40 @@ export function SkillConstraintsPage(){
     { x: -565, y: -45, scale: .84, turn: 18, depth: 3 },
     { x: -295, y: -12, scale: .92, turn: 12, depth: 4 },
   ];
-  return <article className="cg-constraints-page cg-creator-typography" aria-labelledby="cg-constraints-title" onKeyDown={event => {
+  return <article shuku-edit-id="e-75275b33-9075-48c8-8c33-61e25c372024" className="cg-constraints-page cg-creator-typography" aria-labelledby="cg-constraints-title" onKeyDown={event => {
     if (event.key === 'Escape' && preview !== null) { event.stopPropagation(); cancelClose(); setPreview(null); }
     if (event.target instanceof Element && event.target.closest('.cg-constraints-carousel') && ['ArrowLeft', 'ArrowRight', 'Home', 'End', ' '].includes(event.key)) {
       event.stopPropagation();
       if (event.key !== ' ') { event.preventDefault(); selectSkill(event.key === 'Home' ? 0 : event.key === 'End' ? 4 : active + (event.key === 'ArrowLeft' ? -1 : 1)); }
     }
   }}>
-    <header><Typography as="h1" id="cg-constraints-title" variant="display" tone="inherit">创作指导：五类技能协同参与知识呈现设计</Typography><Typography variant="bodySmall" tone="inherit">围绕教学、交互与表达，提供设计方法、规范与反馈。</Typography></header>
-    <section className="cg-constraints-detail" aria-label="当前技能说明" style={{ '--skill-color': selected.color, '--skill-background': selected.background } as CSSProperties}>
-      <div className="cg-constraints-detail-icon"><ConstraintIcon kind={selected.icon}/></div>
-      <div className="cg-constraints-detail-copy"><Typography as="h2" variant="h2" tone="inherit">{selected.title}</Typography><Typography variant="bodySmall" tone="muted">{selected.description}</Typography></div>
-      <div className="cg-constraints-checks">{selected.items.map(item => <div key={item}><span aria-hidden="true">✓</span><Typography variant="bodySmall" tone="inherit">{item}</Typography></div>)}</div>
+    <header shuku-edit-id="e-69700577-aba8-45aa-8894-0cdb33907ec3"><Typography shuku-edit-id="e-985d6dff-1d7d-46cc-bd91-2eb2394a6b74" as="h1" id="cg-constraints-title" variant="display" tone="inherit">创作指导：五类技能协同参与知识呈现设计</Typography><Typography shuku-edit-id="e-1b2d3504-6386-4c1d-91a0-d9580a183701" variant="bodySmall" tone="inherit">围绕教学、交互与表达，提供设计方法、规范与反馈。</Typography></header>
+    <section shuku-edit-id="e-8e9831db-8338-4c8d-9359-106ccde5ad6f" className="cg-constraints-detail" aria-label="当前技能说明" style={{ '--skill-color': selected.color, '--skill-background': selected.background } as CSSProperties}>
+      <div shuku-edit-id="e-44b7d16e-0b06-4ad1-959b-8f69c63f2a5e" className="cg-constraints-detail-icon"><ConstraintIcon kind={selected.icon}/></div>
+      <div shuku-edit-id="e-26bbf1ec-9f08-4565-8c78-7c11eb9f9fa1" className="cg-constraints-detail-copy"><Typography shuku-edit-id="e-1d58f697-d254-40f0-9660-7ac02622cab5" as="h2" variant="h2" tone="inherit">{selected.title}</Typography><Typography shuku-edit-id="e-ff1f019b-0129-41e0-a7e5-b6dfcdb516a0" variant="bodySmall" tone="muted">{selected.description}</Typography></div>
+      <div shuku-edit-id="e-94ed8d86-caff-490b-b15a-87e182c8797e" className="cg-constraints-checks">{selected.items.map(item => <div shuku-edit-id="e-fe82c516-1624-4b92-8520-e425fc7fd63e" key={item}><span shuku-edit-id="e-1dcc3120-c30b-4d7f-9ab5-68242a472be7" aria-hidden="true">✓</span><Typography shuku-edit-id="e-fc07bbb8-2458-433b-84f7-508a00f85422" variant="bodySmall" tone="inherit">{item}</Typography></div>)}</div>
     </section>
-    <div className="cg-constraints-connector" aria-hidden="true"/>
-    <section className="cg-constraints-carousel" aria-label="五类技能转盘" aria-roledescription="轮播">
-      <div className="cg-constraints-platform" aria-hidden="true"/>
-      <div className="cg-constraints-orbit" aria-hidden="true"/>
+    <div shuku-edit-id="e-568e4467-3b30-4ec2-bd59-55920e1150e6" className="cg-constraints-connector" aria-hidden="true"/>
+    <section shuku-edit-id="e-3fb86e7b-ef9a-4d69-b44c-ebed0550abe4" className="cg-constraints-carousel" aria-label="五类技能转盘" aria-roledescription="轮播">
+      <div shuku-edit-id="e-0417cc23-b4b5-4e09-abdc-235d05f20b20" className="cg-constraints-platform" aria-hidden="true"/>
+      <div shuku-edit-id="e-cf4ace27-767d-4182-9576-1d09ba12f218" className="cg-constraints-orbit" aria-hidden="true"/>
       {groups.map((g, index) => {
         const position = positions[(index - active + groups.length) % groups.length];
-        return <section key={g.title} className={'cg-constraints-card' + (index === active ? ' is-active' : '')} aria-label={g.title} style={{ '--skill-color': g.color, '--skill-background': g.background, '--card-x': `${position.x}px`, '--card-y': `${position.y}px`, '--card-scale': position.scale, '--card-turn': `${position.turn}deg`, zIndex: position.depth } as CSSProperties}>
+        return <section shuku-edit-id="e-e322c76e-eb5b-4885-84c9-a03be07bb8be" key={g.title} className={'cg-constraints-card' + (index === active ? ' is-active' : '')} aria-label={g.title} style={{ '--skill-color': g.color, '--skill-background': g.background, '--card-x': `${position.x}px`, '--card-y': `${position.y}px`, '--card-scale': position.scale, '--card-turn': `${position.turn}deg`, zIndex: position.depth } as CSSProperties}>
           <Button className="cg-constraints-card-select" aria-label={`选择${g.title}`} aria-pressed={index === active} onClick={() => selectSkill(index)}>
-            <span className="cg-constraints-icon"><ConstraintIcon kind={g.icon}/></span>
-            <Typography as="span" variant="h3" tone="inherit">{g.title}</Typography>
-            <Typography as="span" variant="bodySmall" tone="inherit">{cardDescriptions[index]}</Typography>
+            <span shuku-edit-id="e-16dcfe86-0a54-4c10-b9f4-64e584b61e63" className="cg-constraints-icon"><ConstraintIcon kind={g.icon}/></span>
+            <Typography shuku-edit-id="e-f8af1bb5-7286-4ef9-9dcd-0b5d225bbfbd" as="span" variant="h3" tone="inherit">{g.title}</Typography>
+            <Typography shuku-edit-id="e-2fd2f8e0-8c50-4e95-8ccc-ef6da121985e" as="span" variant="bodySmall" tone="inherit">{cardDescriptions[index]}</Typography>
           </Button>
-          <Button className="cg-constraints-example-button" aria-label={`查看${g.title}示例`} aria-expanded={preview === index} aria-controls={preview === index ? previewId : undefined} onMouseEnter={() => showPreview(index)} onMouseLeave={closePreview} onFocus={() => showPreview(index)} onBlur={event => { if (event.relatedTarget instanceof Element && event.relatedTarget.closest('.cg-constraints-preview')) cancelClose(); else closePreview(); }} onClick={() => showPreview(index)}><Typography as="span" variant="bodySmall" tone="inherit">{g.example}</Typography></Button>
+          <Button className="cg-constraints-example-button" aria-label={`查看${g.title}示例`} aria-expanded={preview === index} aria-controls={preview === index ? previewId : undefined} onMouseEnter={() => showPreview(index)} onMouseLeave={closePreview} onFocus={() => showPreview(index)} onBlur={event => { if (event.relatedTarget instanceof Element && event.relatedTarget.closest('.cg-constraints-preview')) cancelClose(); else closePreview(); }} onClick={() => showPreview(index)}><Typography shuku-edit-id="e-0560a390-7a4f-4c9a-9334-1515d96a9fcf" as="span" variant="bodySmall" tone="inherit">{g.example}</Typography></Button>
         </section>;
       })}
-      <Button className="cg-constraints-rotate is-previous" aria-label="上一个技能" onClick={() => selectSkill(active - 1)}><Typography as="span" variant="h3" tone="inherit">‹</Typography></Button>
-      <Button className="cg-constraints-rotate is-next" aria-label="下一个技能" onClick={() => selectSkill(active + 1)}><Typography as="span" variant="h3" tone="inherit">›</Typography></Button>
+      <Button className="cg-constraints-rotate is-previous" aria-label="上一个技能" onClick={() => selectSkill(active - 1)}><Typography shuku-edit-id="e-ee7b44e3-bbf9-4c51-8758-c1ba8f86f619" as="span" variant="h3" tone="inherit">‹</Typography></Button>
+      <Button className="cg-constraints-rotate is-next" aria-label="下一个技能" onClick={() => selectSkill(active + 1)}><Typography shuku-edit-id="e-f845ee79-56db-48de-8839-cebacb5e2242" as="span" variant="h3" tone="inherit">›</Typography></Button>
     </section>
-    <Typography className="cg-constraints-hint" variant="bodySmall" tone="muted" align="center">点击技能切换 · 悬停按钮查看效果</Typography>
-  {preview !== null && <aside id={previewId} className={`cg-constraints-preview${preview === 1 ? ' cg-route-preview' : preview === 2 ? ' cg-eval-preview' : preview === 3 ? ' cg-evolution-preview' : preview === 0 ? ' cg-visual-preview cg-design-preview' : ' cg-visual-preview cg-format-preview'}`} role="region" aria-label={`${groups[preview].title}消融示例`} onMouseEnter={cancelClose} onMouseLeave={closePreview} onFocusCapture={cancelClose} onBlurCapture={event => { if (!(event.relatedTarget instanceof Element) || !event.currentTarget.contains(event.relatedTarget)) closePreview(); }}>
-    <div className="cg-constraints-preview-heading"><Typography as="h2" variant="h3" tone="accent">{preview === 1 ? '路由技能：按需加载' : preview === 2 ? '评估技能：AI 评估如何改变知识呈现作品' : preview === 3 ? '自进化：使用习惯能否留下来？' : `${groups[preview].title} · 效果对比`}</Typography><Button className="cg-constraints-preview-close" aria-label="关闭技能示例" onClick={() => { cancelClose(); setPreview(null); }}>×</Button></div>
+    <Typography shuku-edit-id="e-e307d218-2854-400a-8c06-1bc8c1b11c63" className="cg-constraints-hint" variant="bodySmall" tone="muted" align="center">点击技能切换 · 悬停按钮查看效果</Typography>
+  {preview !== null && <aside shuku-edit-id="e-a4762719-d079-4dbf-ac31-24b68cad1059" id={previewId} className={`cg-constraints-preview${preview === 1 ? ' cg-route-preview' : preview === 2 ? ' cg-eval-preview' : preview === 3 ? ' cg-evolution-preview' : preview === 0 ? ' cg-visual-preview cg-design-preview' : ' cg-visual-preview cg-format-preview'}`} role="region" aria-label={`${groups[preview].title}消融示例`} onMouseEnter={cancelClose} onMouseLeave={closePreview} onFocusCapture={cancelClose} onBlurCapture={event => { if (!(event.relatedTarget instanceof Element) || !event.currentTarget.contains(event.relatedTarget)) closePreview(); }}>
+    <div shuku-edit-id="e-c83d840a-1e87-42a7-b468-3ca091c5be6d" className="cg-constraints-preview-heading"><Typography shuku-edit-id="e-4290bfe3-2dd0-4b75-b7d9-d2256e573b26" as="h2" variant="h3" tone="accent">{preview === 1 ? '路由技能：按需加载' : preview === 2 ? '评估技能：AI 评估如何改变知识呈现作品' : preview === 3 ? '自进化：使用习惯能否留下来？' : `${groups[preview].title} · 效果对比`}</Typography><Button className="cg-constraints-preview-close" aria-label="关闭技能示例" onClick={() => { cancelClose(); setPreview(null); }}>×</Button></div>
     {preview === 0 || preview === 4 ? <>
       <WeightSharingAblation key={preview} category={preview === 4 ? 3 : 1}/>
     </> : <SkillAblationConcept key={preview} kind={preview === 1 ? 'route' : preview === 2 ? 'evaluation' : 'evolution'}/>}

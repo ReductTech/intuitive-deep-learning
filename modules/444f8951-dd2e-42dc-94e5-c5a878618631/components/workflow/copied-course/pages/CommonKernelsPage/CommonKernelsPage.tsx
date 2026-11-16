@@ -94,13 +94,13 @@ function computeConvolution(image: HTMLImageElement, kernel: KernelDefinition) {
 }
 
 function Matrix({ values, mini = false }: { values: Matrix3; mini?: boolean }) {
-  return <div className={`cg-copy-ck-common__matrix ${mini ? 'is-mini' : ''}`} role="img" aria-label={values.map((row) => row.join('，')).join('；')}>
-    {values.flatMap((row, y) => row.map((value, x) => <span key={`${y}-${x}`} className={value < 0 ? 'is-negative' : value > 0 ? 'is-positive' : 'is-zero'}><MathFormulaStatic latex={String(value)} /></span>))}
+  return <div shuku-edit-id="e-d2f43216-ebe5-482a-bf46-4b5c87ac86c3" className={`cg-copy-ck-common__matrix ${mini ? 'is-mini' : ''}`} role="img" aria-label={values.map((row) => row.join('，')).join('；')}>
+    {values.flatMap((row, y) => row.map((value, x) => <span shuku-edit-id="e-5e9e711a-a3f5-4f45-8031-5bd1a511d1f5" key={`${y}-${x}`} className={value < 0 ? 'is-negative' : value > 0 ? 'is-positive' : 'is-zero'}><MathFormulaStatic latex={String(value)} /></span>))}
   </div>;
 }
 
 function StageHeader({ number, title }: { number: string; title: string }) {
-  return <header className="cg-copy-ck-common__stage-header"><span className="cg-copy-ck-common__stage-number"><Typography as="span" variant="h3" tone="light">{number}</Typography></span><Typography as="h2" variant="h3" tone="accent">{title}</Typography></header>;
+  return <header shuku-edit-id="e-95e0df18-d107-4b2b-bd27-86e36c8bb3cd" className="cg-copy-ck-common__stage-header"><span shuku-edit-id="e-596032e9-c1f1-4e27-86e3-afcd2cd979b2" className="cg-copy-ck-common__stage-number"><Typography shuku-edit-id="e-818a8444-105d-4cef-baa8-388f3eb98140" as="span" variant="h3" tone="light">{number}</Typography></span><Typography shuku-edit-id="e-3c489772-030a-4095-ba1b-abe00f19bd06" as="h2" variant="h3" tone="accent">{title}</Typography></header>;
 }
 
 export function CommonKernelsPage() {
@@ -188,27 +188,27 @@ export function CommonKernelsPage() {
     setError('');
   }
 
-  return <ContentBlock headingLevel={1} className="cg-copy-ck-common" title="卷积核工作台" subtitle="选择图像与卷积核，实时观察不同算子产生的真实卷积输出。">
-    <div className="cg-copy-ck-common__workspace">
-      <section className="cg-copy-ck-common__stage cg-copy-ck-common__stage--images" aria-label="选择图像"><StageHeader number="1" title="选择图像" />
-        <div className="cg-copy-ck-common__image-selector" ref={imageSelectorRef}>
-          <button className="cg-copy-ck-common__arrow-button" type="button" aria-label="上一张图像" onClick={() => { setImageDirection('up'); setImageIndex(wrap(imageIndex - 1, images.length)); }}><Up theme="outline" size="30" /></button>
-          <div className="cg-copy-ck-common__image-stack"><img className="cg-copy-ck-common__image-ghost is-before" src={previousImage.src} alt="" aria-hidden="true" /><div key={selectedImage.src} className={`cg-copy-ck-common__active-image is-from-${imageDirection}`}><img src={selectedImage.src} alt={`${selectedImage.name}输入图像`} /><Typography as="span" variant="bodySmall" tone="light">{selectedImage.name}</Typography></div><img className="cg-copy-ck-common__image-ghost is-after" src={nextImage.src} alt="" aria-hidden="true" /></div>
-          <button className="cg-copy-ck-common__arrow-button" type="button" aria-label="下一张图像" onClick={() => { setImageDirection('down'); setImageIndex(wrap(imageIndex + 1, images.length)); }}><Down theme="outline" size="30" /></button>
+  return <ContentBlock shuku-edit-id="e-adfc72f6-d451-4a92-8662-8d8d1ae62989" headingLevel={1} className="cg-copy-ck-common" title="卷积核工作台" subtitle="选择图像与卷积核，实时观察不同算子产生的真实卷积输出。">
+    <div shuku-edit-id="e-48c686fb-dd12-41d2-b09a-9a1c6d38d7b1" className="cg-copy-ck-common__workspace">
+      <section shuku-edit-id="e-4611ac2d-42a1-477a-a1de-982ad8edca80" className="cg-copy-ck-common__stage cg-copy-ck-common__stage--images" aria-label="选择图像"><StageHeader number="1" title="选择图像" />
+        <div shuku-edit-id="e-dd73569f-b373-4947-b2d2-dc5128b1873e" className="cg-copy-ck-common__image-selector" ref={imageSelectorRef}>
+          <button shuku-edit-id="e-668afa11-edea-4432-b800-0e7f14a94ea8" className="cg-copy-ck-common__arrow-button" type="button" aria-label="上一张图像" onClick={() => { setImageDirection('up'); setImageIndex(wrap(imageIndex - 1, images.length)); }}><Up theme="outline" size="30" /></button>
+          <div shuku-edit-id="e-38ef057c-3a41-4637-a556-54f01a3c0b2b" className="cg-copy-ck-common__image-stack"><img shuku-edit-id="e-7dfdb66b-8eb8-41bc-aa2f-56d7552fbcf5" className="cg-copy-ck-common__image-ghost is-before" src={previousImage.src} alt="" aria-hidden="true" /><div shuku-edit-id="e-b4e95ae6-3da9-490b-a4f0-c44ddc093db2" key={selectedImage.src} className={`cg-copy-ck-common__active-image is-from-${imageDirection}`}><img shuku-edit-id="e-78f10550-974c-4512-b4e8-3685630e2b1b" src={selectedImage.src} alt={`${selectedImage.name}输入图像`} /><Typography shuku-edit-id="e-a38d852b-81ee-461b-9af3-aa566405e430" as="span" variant="bodySmall" tone="light">{selectedImage.name}</Typography></div><img shuku-edit-id="e-9be847f7-4bba-4efe-8f33-eba50eb1dc66" className="cg-copy-ck-common__image-ghost is-after" src={nextImage.src} alt="" aria-hidden="true" /></div>
+          <button shuku-edit-id="e-ef16b470-898f-4718-91cb-2eccac19f0a1" className="cg-copy-ck-common__arrow-button" type="button" aria-label="下一张图像" onClick={() => { setImageDirection('down'); setImageIndex(wrap(imageIndex + 1, images.length)); }}><Down theme="outline" size="30" /></button>
         </div>
-        <input ref={uploadRef} className="cg-copy-ck-common__file-input" type="file" accept="image/*" onChange={handleUpload} aria-label="上传图像" />
-        <button className="cg-copy-ck-common__upload" type="button" onClick={() => uploadRef.current?.click()}><UploadPicture theme="outline" size="23" /><Typography as="span" variant="bodySmall" tone="inherit">上传图片</Typography></button>
+        <input shuku-edit-id="e-54706b65-2cdc-4469-a197-36fc27156f0f" ref={uploadRef} className="cg-copy-ck-common__file-input" type="file" accept="image/*" onChange={handleUpload} aria-label="上传图像" />
+        <button shuku-edit-id="e-da5e9a49-79d6-4c28-92e4-2f19e6a2ab69" className="cg-copy-ck-common__upload" type="button" onClick={() => uploadRef.current?.click()}><UploadPicture theme="outline" size="23" /><Typography shuku-edit-id="e-c29deccb-7375-43db-bdfd-9adb10d5de06" as="span" variant="bodySmall" tone="inherit">上传图片</Typography></button>
       </section>
-      <section className="cg-copy-ck-common__stage cg-copy-ck-common__stage--kernels" aria-label="选择卷积核"><StageHeader number="2" title="选择卷积核" />
-        <div className="cg-copy-ck-common__kernel-selector" ref={kernelSelectorRef}>
-          <button className="cg-copy-ck-common__arrow-button" type="button" aria-label="上一个卷积核" onClick={() => setKernelIndex(wrap(kernelIndex - 1, KERNELS.length))}><Up theme="outline" size="30" /></button>
-          <div className="cg-copy-ck-common__kernel-stack"><div className="cg-copy-ck-common__kernel-ghost is-before"><Matrix values={previousKernel.matrix} mini /><Typography variant="bodySmall" tone="muted">{previousKernel.name}</Typography></div><div className="cg-copy-ck-common__active-kernel"><Matrix values={selectedKernel.matrix} /><Typography as="h3" variant="h3" tone="accent">{selectedKernel.name}</Typography><Typography variant="bodySmall" tone="muted">{selectedKernel.note}</Typography></div><div className="cg-copy-ck-common__kernel-ghost is-after"><Matrix values={nextKernel.matrix} mini /><Typography variant="bodySmall" tone="muted">{nextKernel.name}</Typography></div></div>
-          <button className="cg-copy-ck-common__arrow-button" type="button" aria-label="下一个卷积核" onClick={() => setKernelIndex(wrap(kernelIndex + 1, KERNELS.length))}><Down theme="outline" size="30" /></button>
+      <section shuku-edit-id="e-6072afa2-9c36-404c-85b5-7f4ffa1910e3" className="cg-copy-ck-common__stage cg-copy-ck-common__stage--kernels" aria-label="选择卷积核"><StageHeader number="2" title="选择卷积核" />
+        <div shuku-edit-id="e-1f4a25c2-3403-454f-986c-53ba7267044e" className="cg-copy-ck-common__kernel-selector" ref={kernelSelectorRef}>
+          <button shuku-edit-id="e-113c37db-8400-49ae-842b-bb641d5ab84a" className="cg-copy-ck-common__arrow-button" type="button" aria-label="上一个卷积核" onClick={() => setKernelIndex(wrap(kernelIndex - 1, KERNELS.length))}><Up theme="outline" size="30" /></button>
+          <div shuku-edit-id="e-7dc8d818-b405-4fd2-bc5f-a8ec5677d7ca" className="cg-copy-ck-common__kernel-stack"><div shuku-edit-id="e-355b15bf-d709-4b89-aae3-48de0944baef" className="cg-copy-ck-common__kernel-ghost is-before"><Matrix values={previousKernel.matrix} mini /><Typography shuku-edit-id="e-d810c773-cda8-41ca-8e96-7494110f4a3e" variant="bodySmall" tone="muted">{previousKernel.name}</Typography></div><div shuku-edit-id="e-778e7b6b-6155-45a1-a612-73305322a5b6" className="cg-copy-ck-common__active-kernel"><Matrix values={selectedKernel.matrix} /><Typography shuku-edit-id="e-008d2613-1e6d-4241-84e3-982e9e6b5ba5" as="h3" variant="h3" tone="accent">{selectedKernel.name}</Typography><Typography shuku-edit-id="e-f7c9505c-3894-4e3d-ae61-c87893775a92" variant="bodySmall" tone="muted">{selectedKernel.note}</Typography></div><div shuku-edit-id="e-dafb50a4-5904-42a1-99e2-3277a09eb74d" className="cg-copy-ck-common__kernel-ghost is-after"><Matrix values={nextKernel.matrix} mini /><Typography shuku-edit-id="e-a463f9e4-50bf-4e03-8448-4f9693f466c1" variant="bodySmall" tone="muted">{nextKernel.name}</Typography></div></div>
+          <button shuku-edit-id="e-43abae19-b1b3-4a72-91ae-e87266f078a9" className="cg-copy-ck-common__arrow-button" type="button" aria-label="下一个卷积核" onClick={() => setKernelIndex(wrap(kernelIndex + 1, KERNELS.length))}><Down theme="outline" size="30" /></button>
         </div>
       </section>
-      <section className="cg-copy-ck-common__stage cg-copy-ck-common__stage--result" aria-label="卷积运算结果"><StageHeader number="3" title="卷积运算结果" />
-        <div className="cg-copy-ck-common__result-frame">{result ? <img src={result} alt={`${selectedImage.name}经过${selectedKernel.name}处理后的真实卷积输出`} /> : <Typography variant="body" tone="muted">{error || '正在计算…'}</Typography>}</div>
-        <Typography variant="bodySmall" tone="muted" className="cg-copy-ck-common__result-note">{selectedKernel.mode === 'gray' ? '灰度值表示输出亮度' : selectedKernel.mode === 'signed' ? '中灰为零；明暗分别表示正、负响应' : '亮度表示响应幅值，正负响应合并显示'}</Typography>
+      <section shuku-edit-id="e-068adbc6-db2e-4d90-b72d-d881dd5cdb4f" className="cg-copy-ck-common__stage cg-copy-ck-common__stage--result" aria-label="卷积运算结果"><StageHeader number="3" title="卷积运算结果" />
+        <div shuku-edit-id="e-b07b07e0-55e0-421a-a251-0cc51b6c80c5" className="cg-copy-ck-common__result-frame">{result ? <img shuku-edit-id="e-fc72e0e0-2728-4779-ba05-198d80ff8958" src={result} alt={`${selectedImage.name}经过${selectedKernel.name}处理后的真实卷积输出`} /> : <Typography shuku-edit-id="e-01b9e1f7-31da-4537-a7d1-cdf95d2a7875" variant="body" tone="muted">{error || '正在计算…'}</Typography>}</div>
+        <Typography shuku-edit-id="e-4b5ea0a8-ea91-40f9-b46f-7e5ea69f0a16" variant="bodySmall" tone="muted" className="cg-copy-ck-common__result-note">{selectedKernel.mode === 'gray' ? '灰度值表示输出亮度' : selectedKernel.mode === 'signed' ? '中灰为零；明暗分别表示正、负响应' : '亮度表示响应幅值，正负响应合并显示'}</Typography>
       </section>
     </div>
   </ContentBlock>;

@@ -4,6 +4,6 @@ import './ShowcaseDigitNetworkPage.css';
 
 export function ShowcaseDigitNetworkPage() {
   return <ShowcaseExampleFrame title="数字识别网络的前馈过程">
-    <div className="course-shell spp-digit-network-page"><NetworkTrainingPage /></div>
+    <div shuku-edit-id="e-b107ec7a-b167-472f-97db-e6745c4e8dd8" className="course-shell spp-digit-network-page"><NetworkTrainingPage /></div>
   </ShowcaseExampleFrame>;
 }

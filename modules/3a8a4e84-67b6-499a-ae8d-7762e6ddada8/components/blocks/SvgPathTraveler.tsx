@@ -33,7 +33,7 @@ export function SvgPathTraveler({ path, durationMs, className, children }: SvgPa
         return () => window.cancelAnimationFrame(frame);
     }, [path, durationMs]);
     return <>
-    <path ref={guideRef} d={path} style={{ fill: 'none', stroke: 'none', pointerEvents: 'none' }}/>
-    <g ref={travelerRef} className={className}>{children}</g>
+    <path shuku-edit-id="e-ac8509f3-78b0-4c4c-a7bb-4e35e50f1991" ref={guideRef} d={path} style={{ fill: 'none', stroke: 'none', pointerEvents: 'none' }}/>
+    <g shuku-edit-id="e-299ed1e3-42ba-4aa3-8d7e-1476f7f7435d" ref={travelerRef} className={className}>{children}</g>
   </>;
 }

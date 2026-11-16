@@ -159,20 +159,20 @@ export function KnowledgeIcebergScene() {
   }, []);
 
   return <>
-    <div ref={host} className="llmpe-cg-education-scene" tabIndex={0} role="group"
+    <div shuku-edit-id="e-853f0ac1-c81e-4074-8bc1-e7298b998317" ref={host} className="llmpe-cg-education-scene" tabIndex={0} role="group"
       aria-label="知识冰山：拖动观察立体结构，也可使用方向键旋转，Home恢复正面">
-      {failed && <Typography className="llmpe-cg-education-render-error" variant="body" tone="muted">暂时无法显示三维冰山，请刷新页面重试。</Typography>}
-      <svg className="llmpe-cg-education-annotations" viewBox="0 0 1280 570" aria-hidden="true">
-        <path ref={popularLine} fill="none" stroke="#eaa027" strokeWidth="2.5" />
-        <g ref={lens}>
-          <circle r="49" fill="#fff" fillOpacity=".08" stroke="#eaa027" strokeWidth="6" />
-          <path d="M-38 36l-42 35" stroke="#eaa027" strokeWidth="15" strokeLinecap="round" />
+      {failed && <Typography shuku-edit-id="e-d7a46c6f-425e-4c66-8226-f3053b670829" className="llmpe-cg-education-render-error" variant="body" tone="muted">暂时无法显示三维冰山，请刷新页面重试。</Typography>}
+      <svg shuku-edit-id="e-3a2a9b1e-2c94-4ea6-81f7-216e90a41959" className="llmpe-cg-education-annotations" viewBox="0 0 1280 570" aria-hidden="true">
+        <path shuku-edit-id="e-79198d56-d85e-473c-a128-6b5e72580a8c" ref={popularLine} fill="none" stroke="#eaa027" strokeWidth="2.5" />
+        <g shuku-edit-id="e-66f062e1-8115-4d48-98c8-3198255813d3" ref={lens}>
+          <circle shuku-edit-id="e-2026efb8-0f63-4daa-9a65-364c457b581b" r="49" fill="#fff" fillOpacity=".08" stroke="#eaa027" strokeWidth="6" />
+          <path shuku-edit-id="e-42c406d8-8f0c-41d7-906f-79c5101c16cf" d="M-38 36l-42 35" stroke="#eaa027" strokeWidth="15" strokeLinecap="round" />
         </g>
-        <path ref={professionalLine} fill="none" stroke="#2862d9" strokeWidth="3" />
-        <circle ref={professionalDot} r="6" fill="#2862d9" />
+        <path shuku-edit-id="e-fb6d36a0-e335-4406-946f-6c045ea9f190" ref={professionalLine} fill="none" stroke="#2862d9" strokeWidth="3" />
+        <circle shuku-edit-id="e-1ed73c3d-ee05-4d50-a92f-6c277fb9a0f6" ref={professionalDot} r="6" fill="#2862d9" />
       </svg>
-      <div className="llmpe-cg-education-scene-label llmpe-cg-education-scene-label--popular"><Typography as="h2" variant="h3" tone="inherit">科普式了解</Typography></div>
-      <div className="llmpe-cg-education-scene-label llmpe-cg-education-scene-label--professional"><Typography as="h2" variant="h3" tone="inherit">专业式学习</Typography></div>
+      <div shuku-edit-id="e-4acd0608-f75f-402b-bc00-3db3ab15058a" className="llmpe-cg-education-scene-label llmpe-cg-education-scene-label--popular"><Typography shuku-edit-id="e-ae5c3b4f-f7d8-4521-b25e-0333f3820f2e" as="h2" variant="h3" tone="inherit">科普式了解</Typography></div>
+      <div shuku-edit-id="e-7b30a6cd-436c-41ed-8758-937e52726063" className="llmpe-cg-education-scene-label llmpe-cg-education-scene-label--professional"><Typography shuku-edit-id="e-d556fb0e-90ba-438a-8702-1d5befc827aa" as="h2" variant="h3" tone="inherit">专业式学习</Typography></div>
     </div>
   </>;
 }

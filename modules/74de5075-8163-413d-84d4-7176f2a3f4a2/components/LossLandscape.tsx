@@ -114,10 +114,10 @@ export function LossLandscapeScene({ point, trail, interactive = true }: { point
     };
   }, [interactive]);
   useEffect(() => { update.current?.(point, trail); }, [point, trail]);
-  return <div className="cg-loss-scene" role="img" aria-label={`三维损失地形，横轴w与b，纵轴Loss；当前位置w=${point.w.toFixed(2)}，b=${point.b.toFixed(2)}，损失${lossAt(point).toFixed(3)}`}>
-    <div className="cg-loss-mount" ref={mount}/>
-    {labels.map(label => <Typography as="span" key={label.text} variant="bodySmall" tone="inherit" className={`cg-loss-axis${label.text.startsWith('最低点') ? ' cg-loss-minimum' : ''}`} style={{ left: label.x, top: label.y }}>{label.text}</Typography>)}
-    {failed && <Typography variant="bodySmall" tone="muted">当前浏览器无法显示3D地形。</Typography>}
+  return <div shuku-edit-id="e-bfbb49b3-a438-49ee-ae5c-687250abf71b" className="cg-loss-scene" role="img" aria-label={`三维损失地形，横轴w与b，纵轴Loss；当前位置w=${point.w.toFixed(2)}，b=${point.b.toFixed(2)}，损失${lossAt(point).toFixed(3)}`}>
+    <div shuku-edit-id="e-0f91b0c6-3e87-47bb-be93-86e39fa9129f" className="cg-loss-mount" ref={mount}/>
+    {labels.map(label => <Typography shuku-edit-id="e-8854ddd9-110e-412b-97cf-a1988bc3e071" as="span" key={label.text} variant="bodySmall" tone="inherit" className={`cg-loss-axis${label.text.startsWith('最低点') ? ' cg-loss-minimum' : ''}`} style={{ left: label.x, top: label.y }}>{label.text}</Typography>)}
+    {failed && <Typography shuku-edit-id="e-cffb4808-3a54-4156-88a1-0428a4b9b69f" variant="bodySmall" tone="muted">当前浏览器无法显示3D地形。</Typography>}
   </div>;
 }
 
@@ -143,10 +143,10 @@ export function LossLandscape() {
     return () => window.clearTimeout(timer);
   }, [playing, visible, path, point, rate]);
   function changeRate(value: number) { setRate(value); setPath([initial]); setPlaying(true); }
-  return <div ref={root} className="cg-loss-lab" data-loss={lossAt(point)} data-w={point.w} data-b={point.b} data-rate={rate} data-step={path.length - 1}>
+  return <div shuku-edit-id="e-4ad700f1-0f3e-45ee-8881-cd4bec94bfff" ref={root} className="cg-loss-lab" data-loss={lossAt(point)} data-w={point.w} data-b={point.b} data-rate={rate} data-step={path.length - 1}>
     <LossLandscapeScene point={point} trail={path}/>
-    <div className="cg-loss-readout"><Typography variant="bodySmall" tone="accent">w {point.w.toFixed(2)}　 b {point.b.toFixed(2)}</Typography><Typography variant="bodySmall" tone="accent">Loss {lossAt(point).toFixed(3)}</Typography></div>
-    <div className="cg-loss-sliders"><label><Typography as="span" variant="bodySmall" tone="inherit">学习率 η</Typography><input aria-label="学习率" type="range" min="0.02" max="0.78" step=".01" value={rate} onChange={event => changeRate(Number(event.target.value))}/><Typography as="span" variant="bodySmall" tone="accent">{rate.toFixed(2)}</Typography></label></div>
-    <div className="cg-loss-actions"><Button active={playing} onClick={() => { if (lossAt(point) < .0001 || path.length >= 90) setPath([initial]); setPlaying(value => !value); }}>{playing ? '暂停' : '梯度下降'}</Button><Button onClick={() => { setPlaying(false); setPath([initial]); }}>重置</Button><Typography variant="bodySmall" tone={rate >= .4 ? 'warning' : 'muted'}>{rate < .12 ? '小步缓慢下降' : rate < .4 ? '平稳靠近最低点' : '大步来回震荡'}</Typography></div>
+    <div shuku-edit-id="e-82954431-3cba-4824-97d0-3fc9fdd8a2cf" className="cg-loss-readout"><Typography shuku-edit-id="e-db50998b-993e-45e3-ae0b-a1d735e75731" variant="bodySmall" tone="accent">w {point.w.toFixed(2)}　 b {point.b.toFixed(2)}</Typography><Typography shuku-edit-id="e-3f92e9d0-a6ff-43c9-8573-56c0007453f0" variant="bodySmall" tone="accent">Loss {lossAt(point).toFixed(3)}</Typography></div>
+    <div shuku-edit-id="e-e4390c43-8087-48b3-b09c-61c39e96714d" className="cg-loss-sliders"><label shuku-edit-id="e-71e36fb2-577e-4145-9946-024a6e3a73b1"><Typography shuku-edit-id="e-e05baf3d-b389-43bd-9af1-c1b11fe1ffc7" as="span" variant="bodySmall" tone="inherit">学习率 η</Typography><input shuku-edit-id="e-a2d68b94-b5f4-4e4e-a4ee-3e24a705df20" aria-label="学习率" type="range" min="0.02" max="0.78" step=".01" value={rate} onChange={event => changeRate(Number(event.target.value))}/><Typography shuku-edit-id="e-13723e31-6c60-4e8f-bc67-f09e039b75ac" as="span" variant="bodySmall" tone="accent">{rate.toFixed(2)}</Typography></label></div>
+    <div shuku-edit-id="e-72afbf5d-b1a9-4ba9-8646-7bcf054881e4" className="cg-loss-actions"><Button active={playing} onClick={() => { if (lossAt(point) < .0001 || path.length >= 90) setPath([initial]); setPlaying(value => !value); }}>{playing ? '暂停' : '梯度下降'}</Button><Button onClick={() => { setPlaying(false); setPath([initial]); }}>重置</Button><Typography shuku-edit-id="e-86153576-5fff-4d86-b408-2bcf3849b8be" variant="bodySmall" tone={rate >= .4 ? 'warning' : 'muted'}>{rate < .12 ? '小步缓慢下降' : rate < .4 ? '平稳靠近最低点' : '大步来回震荡'}</Typography></div>
   </div>;
 }

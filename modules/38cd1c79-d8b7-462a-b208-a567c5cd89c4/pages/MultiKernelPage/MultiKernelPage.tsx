@@ -10,18 +10,18 @@ export function MultiKernelPage() {
   const [selected, setSelected] = useState<RgbPosition>({ row: 0, col: 0 });
   const [kernelCount, setKernelCount] = useState<KernelCount>(2);
 
-  return <ContentBlock headingLevel={1} className="ck-rgb ck-multi-replica" title="多核卷积：卷积核数量决定输出深度" subtitle="每个 3 × 3 × 3 卷积核都覆盖三个输入通道；选择 1、2 或 4 个核，观察输出特征图的深度如何变化。">
-    <div className="ck-rgb__stage">
-      <div className="ck-rgb__scene-wrap">
+  return <ContentBlock shuku-edit-id="e-227ed1ae-5941-47d6-a750-bbb6eef7bd45" headingLevel={1} className="ck-rgb ck-multi-replica" title="多核卷积：卷积核数量决定输出深度" subtitle="每个 3 × 3 × 3 卷积核都覆盖三个输入通道；选择 1、2 或 4 个核，观察输出特征图的深度如何变化。">
+    <div shuku-edit-id="e-4d02f0d3-b7c4-437d-8ee8-408182f7ec66" className="ck-rgb__stage">
+      <div shuku-edit-id="e-fd832756-e71c-46fb-949e-81ce785e0f46" className="ck-rgb__scene-wrap">
         <RgbConvolutionScene selected={selected} onSelect={setSelected} kernelCount={kernelCount} />
-        <div className="ck-rgb__hint"><Typography variant="bodySmall" tone="muted">卷积核依次读取输入 · 点击格子暂停观察 · 拖动旋转 · 滚轮缩放</Typography></div>
-        <div className="ck-multi-replica__selector" role="group" aria-label="选择卷积核数量">
-          {KERNEL_COUNTS.map((count) => <button key={count} type="button" aria-pressed={kernelCount === count} className={kernelCount === count ? 'is-selected' : ''} onClick={() => setKernelCount(count)}><Typography as="span" variant="bodySmall" tone="inherit">{count} 个核</Typography></button>)}
+        <div shuku-edit-id="e-5ede6763-153b-48cf-844c-819aa3ce0130" className="ck-rgb__hint"><Typography shuku-edit-id="e-37411962-6336-4670-8aa7-4d0053f1ef4b" variant="bodySmall" tone="muted">卷积核依次读取输入 · 点击格子暂停观察 · 拖动旋转 · 滚轮缩放</Typography></div>
+        <div shuku-edit-id="e-89b1dad9-02c8-40a6-b33c-752b13e2b88d" className="ck-multi-replica__selector" role="group" aria-label="选择卷积核数量">
+          {KERNEL_COUNTS.map((count) => <button shuku-edit-id="e-aad966c6-3035-438b-8bc0-6fe3ae03d7e3" key={count} type="button" aria-pressed={kernelCount === count} className={kernelCount === count ? 'is-selected' : ''} onClick={() => setKernelCount(count)}><Typography shuku-edit-id="e-8220eebc-eb51-4600-879e-97f5b535c510" as="span" variant="bodySmall" tone="inherit">{count} 个核</Typography></button>)}
         </div>
       </div>
-      <div className="ck-rgb__channel-key" aria-label="输入通道颜色"><Typography as="span" variant="bodySmall" tone="accent">R 红色通道</Typography><Typography as="span" variant="bodySmall" tone="accent">G 绿色通道</Typography><Typography as="span" variant="bodySmall" tone="accent">B 蓝色通道</Typography></div>
+      <div shuku-edit-id="e-e635d715-cd91-431f-8e49-2de14c9abbe1" className="ck-rgb__channel-key" aria-label="输入通道颜色"><Typography shuku-edit-id="e-bc52a82e-e2ee-4644-adfd-24faf213ae34" as="span" variant="bodySmall" tone="accent">R 红色通道</Typography><Typography shuku-edit-id="e-8f7bdd09-e7f3-48c3-be55-6b74352540f2" as="span" variant="bodySmall" tone="accent">G 绿色通道</Typography><Typography shuku-edit-id="e-41158456-6c57-4e96-83b6-e3c9a4b9d729" as="span" variant="bodySmall" tone="accent">B 蓝色通道</Typography></div>
     </div>
-    <div className="ck-rgb__footer">
+    <div shuku-edit-id="e-a08790e2-df9e-42fc-a63c-6a630aa1e4f2" className="ck-rgb__footer">
       <MathFormulaBlock ariaLabel="第 f 个卷积核产生第 f 个输出通道；悬浮在公式符号上可查看解释" className="ck-rgb__formula">
         <MathFormulaTerm latex="Y_f" tooltip="Y₍f₎：第 f 个输出特征图；一个卷积核对应一个输出通道。" /><MathFormulaStatic latex="(" /><MathFormulaTerm latex="i" tooltip="i：输出位置的行索引。" /><MathFormulaStatic latex="," /><MathFormulaTerm latex="j" tooltip="j：输出位置的列索引。" /><MathFormulaStatic latex=")=" />
         <MathFormulaTerm latex={String.raw`\sum_{c\in\{R,G,B\}}`} tooltip="对 R、G、B 三个输入通道求和；每个卷积核都覆盖全部输入通道。" />

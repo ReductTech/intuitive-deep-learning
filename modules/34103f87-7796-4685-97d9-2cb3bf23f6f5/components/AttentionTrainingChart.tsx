@@ -65,7 +65,7 @@ export function AttentionTrainingChart({ option, ...props }: EChartsChartProps) 
     };
   }, []);
 
-  return <div ref={root} style={{ width: '100%', height: '100%', minWidth: 0, minHeight: 0 }}>
+  return <div shuku-edit-id="e-cf327365-fea2-41d8-b0e5-5990dc394eb5" ref={root} style={{ width: '100%', height: '100%', minWidth: 0, minHeight: 0 }}>
     <EChartsChart {...props} option={initialOption.current}/>
   </div>;
 }

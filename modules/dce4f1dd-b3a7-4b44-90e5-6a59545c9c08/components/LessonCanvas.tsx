@@ -10,7 +10,7 @@ export function LessonCanvas({ children, id, fitHeight = false }: { children: Re
     window.addEventListener('resize', resize); resize();
     return () => { observer.disconnect(); window.removeEventListener('resize', resize); };
   }, [fitHeight]);
-  return <div className="daa-canvas-frame" ref={frame} id={id} style={{ height: 900 * scale }}>
-    <div className="course-page-surface daa-slide-surface" style={{ transform: `scale(${scale})` }}>{children}</div>
+  return <div shuku-edit-id="e-dde33fea-401a-4187-b8b0-35971bc7653d" className="daa-canvas-frame" ref={frame} id={id} style={{ height: 900 * scale }}>
+    <div shuku-edit-id="e-178c2758-8b03-4312-8dc3-c765626ca8b9" className="course-page-surface daa-slide-surface" style={{ transform: `scale(${scale})` }}>{children}</div>
   </div>;
 }

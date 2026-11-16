@@ -37,7 +37,7 @@ inlineNotation['θnew']=String.raw`\theta_{\mathrm{new}}`;
 const latinNotation:Record<string,string>={s:'s',a:'a',t:'t',x:'x',h:'h',z:'z',G:'G',Q:'Q',V:'V',R:'R',J:'J',L:'L',E:String.raw`\mathbb E`,T:'T',P:'P',C:'C',w:'w',q:'q',y:'y',log:String.raw`\log`};
 const notationPattern=new RegExp(Object.keys(inlineNotation).sort((a,b)=>b.length-a.length).map(v=>v.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|')+'|\\b(?:'+Object.keys(latinNotation).join('|')+')\\b','g');
 export function mathText(value:ReactNode):ReactNode{
- if(Array.isArray(value))return value.map((v,i)=><span key={i}>{mathText(v)}</span>);
+ if(Array.isArray(value))return value.map((v,i)=><span shuku-edit-id="e-d04da9f3-c575-4790-b5f0-29bee21029d1" key={i}>{mathText(v)}</span>);
  if(typeof value!=='string')return value;
  let cursor=0;const parts:ReactNode[]=[];
  for(const match of value.matchAll(notationPattern)){
@@ -47,10 +47,10 @@ export function mathText(value:ReactNode):ReactNode{
  if(cursor<value.length)parts.push(value.slice(cursor));return parts.length?parts:value;
 }
 
-export function Page({title,subtitle,children,takeaway,scene=false}:{title:string;subtitle:string;children:ReactNode;takeaway?:ReactNode;scene?:boolean}){return <ContentBlock title={mathText(title)} subtitle={mathText(subtitle)} headingLevel={1} className={`pg-page${scene ? ' pg-forest-page' : ''}`} style={scene ? {'--pg-scene-background':`url(${moduleAssetUrl('forest-clearing.jpg')})`} as CSSProperties : undefined}><div className="pg-main">{children}</div>{takeaway&&<div className="pg-takeaway"><Typography variant="body" tone="accent">{mathText(takeaway)}</Typography></div>}</ContentBlock>}
-export function T({children,small=false,tone='main'}:{children:ReactNode;small?:boolean;tone?:'main'|'muted'|'accent'|'warning'|'success'|'danger'}){return <Typography variant={small?'bodySmall':'body'} tone={tone}>{mathText(children)}</Typography>}
-export function H({children}:{children:ReactNode}){return <Typography variant="h3" tone="accent">{mathText(children)}</Typography>}
+export function Page({title,subtitle,children,takeaway,scene=false}:{title:string;subtitle:string;children:ReactNode;takeaway?:ReactNode;scene?:boolean}){return <ContentBlock shuku-edit-id="e-e1f7d92d-4bc6-4a23-a7b6-d02c7506251a" title={mathText(title)} subtitle={mathText(subtitle)} headingLevel={1} className={`pg-page${scene ? ' pg-forest-page' : ''}`} style={scene ? {'--pg-scene-background':`url(${moduleAssetUrl('forest-clearing.jpg')})`} as CSSProperties : undefined}><div shuku-edit-id="e-7ad5ac2e-b345-4e8e-b5d1-c4777cde4912" className="pg-main">{children}</div>{takeaway&&<div shuku-edit-id="e-d0a9c878-7f00-4a76-b506-91c581742f97" className="pg-takeaway"><Typography shuku-edit-id="e-7593dc70-35fc-4505-88cf-c14557b624c0" variant="body" tone="accent">{mathText(takeaway)}</Typography></div>}</ContentBlock>}
+export function T({children,small=false,tone='main'}:{children:ReactNode;small?:boolean;tone?:'main'|'muted'|'accent'|'warning'|'success'|'danger'}){return <Typography shuku-edit-id="e-5886f851-81d3-4af3-8249-c8441f059bb3" variant={small?'bodySmall':'body'} tone={tone}>{mathText(children)}</Typography>}
+export function H({children}:{children:ReactNode}){return <Typography shuku-edit-id="e-4587290e-b5b3-4f80-b732-06c2caf3cdca" variant="h3" tone="accent">{mathText(children)}</Typography>}
 export function F({latex}:{latex:string}){return <MathFormulaBlock appearance="plain" onPointerDownCapture={event=>event.preventDefault()} onClickCapture={event=>event.stopPropagation()}><MathFormulaStatic latex={latex}/></MathFormulaBlock>}
-export function Controls({children}:{children:ReactNode}){return <div className="pg-controls">{children}</div>}
+export function Controls({children}:{children:ReactNode}){return <div shuku-edit-id="e-55f9d05f-cb39-438a-819d-13ba44c61052" className="pg-controls">{children}</div>}
 
 export function InlineMath({latex}:{latex:string}){return <MathFormulaStatic className="pg-inline-math" latex={String.raw`\textstyle `+latex}/>;}

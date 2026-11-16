@@ -37,43 +37,43 @@ export function StudentCapabilitiesPage() {
     buttons?.[next]?.focus();
   }
 
-  return <ContentBlock className="aipe-capabilities-page" headingLevel={1} title="学生能力培养目标" subtitle="系统掌握知识，持续追踪前沿" bodyClassName="aipe-capabilities-body">
-    <div className="aipe-capability-hall" data-facing={capabilities[active].sprite}
+  return <ContentBlock shuku-edit-id="e-9f6aa62e-89da-4895-a893-1b29aac5bf2e" className="aipe-capabilities-page" headingLevel={1} title="学生能力培养目标" subtitle="系统掌握知识，持续追踪前沿" bodyClassName="aipe-capabilities-body">
+    <div shuku-edit-id="e-c618dcbd-c070-45e3-8645-55605c4659a4" className="aipe-capability-hall" data-facing={capabilities[active].sprite}
       onPointerLeave={() => setActive(2)}
       onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget)) setActive(2); }}>
-      <div className="aipe-capability-scenery">
-        <img className="aipe-capability-background" src={asset('hall-background.jpg')} alt="五座相连的拱门构成能力殿堂，分别呈现文献、知识联系、表达、实践和创新" draggable={false}/>
-        {capabilities.map((capability, index) => <button key={capability.id} type="button"
+      <div shuku-edit-id="e-a247c352-b005-4e1d-b04f-296e257eda34" className="aipe-capability-scenery">
+        <img shuku-edit-id="e-29cd583c-cf1d-4878-96e1-95a1f47cbaac" className="aipe-capability-background" src={asset('hall-background.jpg')} alt="五座相连的拱门构成能力殿堂，分别呈现文献、知识联系、表达、实践和创新" draggable={false}/>
+        {capabilities.map((capability, index) => <button shuku-edit-id="e-3f05c8f0-51fb-48f0-8b8b-7715603e4004" key={capability.id} type="button"
           className="aipe-capability-arch" data-capability={capability.id} data-active={active === index}
           aria-labelledby={`aipe-capability-${capability.id}`} aria-pressed={active === index}
           style={{ left: capability.archX, top: capability.archY, width: capability.archW, height: capability.archH,
             clipPath: `path('${archContours[index]} Z')` } as CSSProperties}
           onPointerEnter={() => setActive(index)} onFocus={() => setActive(index)}
           onClick={() => setActive(index)} onKeyDown={event => moveFocus(event, index)}>
-          <svg className="aipe-capability-arch-outline" viewBox={`-3 -3 ${capability.archW + 6} ${capability.archH + 6}`} aria-hidden="true">
-            <path d={archContours[index]}/>
+          <svg shuku-edit-id="e-1ad72716-f95a-4a4a-b83b-444b4886baab" className="aipe-capability-arch-outline" viewBox={`-3 -3 ${capability.archW + 6} ${capability.archH + 6}`} aria-hidden="true">
+            <path shuku-edit-id="e-13b152c6-9047-4618-b760-95cd71c2ab9e" d={archContours[index]}/>
           </svg>
         </button>) }
       </div>
-      <svg className="aipe-capability-leaders" viewBox="0 0 1600 900" aria-hidden="true">
-        {capabilities.map((capability, index) => <g key={capability.id} data-active={active === index}>
-          <polyline points={capability.line}/>
-          {capability.line.split(' ').map((point, i) => { const [cx, cy] = point.split(','); return <circle key={i} cx={cx} cy={cy} r="3"/>; })}
+      <svg shuku-edit-id="e-24757c4f-dd64-4677-b698-e09c51737d77" className="aipe-capability-leaders" viewBox="0 0 1600 900" aria-hidden="true">
+        {capabilities.map((capability, index) => <g shuku-edit-id="e-cfe71b9e-38d5-48cd-9083-159807fdb218" key={capability.id} data-active={active === index}>
+          <polyline shuku-edit-id="e-0bb85ccf-184a-41b6-b679-00df01b213f8" points={capability.line}/>
+          {capability.line.split(' ').map((point, i) => { const [cx, cy] = point.split(','); return <circle shuku-edit-id="e-6c9e5380-b9c1-497d-99e4-bb940792c4b7" key={i} cx={cx} cy={cy} r="3"/>; })}
         </g>)}
       </svg>
-      {capabilities.map((capability, index) => <div key={capability.id}
+      {capabilities.map((capability, index) => <div shuku-edit-id="e-bad11a49-b72c-4cf1-8742-49755cb794ba" key={capability.id}
         className="aipe-capability-label" data-active={active === index}
         style={{ left: capability.x, top: capability.y }} onPointerEnter={() => setActive(index)}>
-        <Typography as="h2" id={`aipe-capability-${capability.id}`} variant="subtitle" tone="accent">{capability.title}</Typography>
-        <Typography as="p" variant="body" tone="muted">{capability.detail}</Typography>
+        <Typography shuku-edit-id="e-e5f7bbce-fb01-4948-82d6-156faf87672e" as="h2" id={`aipe-capability-${capability.id}`} variant="subtitle" tone="accent">{capability.title}</Typography>
+        <Typography shuku-edit-id="e-041f0c16-0438-497b-a935-ecf3e1dcfba6" as="p" variant="body" tone="muted">{capability.detail}</Typography>
       </div>)}
-      <div className="aipe-capability-student" role="img" aria-label={`知识探索者面向${capabilities[active].title}`}>
-        <span className="aipe-capability-student-shadow"/>
-        {capabilities.map((capability, index) => <img key={capability.id}
+      <div shuku-edit-id="e-b3877f0c-390c-40d3-a64e-856125deabcb" className="aipe-capability-student" role="img" aria-label={`知识探索者面向${capabilities[active].title}`}>
+        <span shuku-edit-id="e-1212676c-f674-4ff7-95dd-52ee84e2d160" className="aipe-capability-student-shadow"/>
+        {capabilities.map((capability, index) => <img shuku-edit-id="e-30361605-65b3-4e8d-a5bd-1b992feae1cf" key={capability.id}
           className="aipe-capability-sprite" src={asset(`student-${capability.sprite}-stylized-v2.png`)} alt="" aria-hidden="true"
           data-active={active === index} draggable={false} decoding="async"/>) }
       </div>
-      <Typography as="p" variant="h3" tone="accent" className="aipe-capability-explorer">知识探索者</Typography>
+      <Typography shuku-edit-id="e-f8dbdc44-372d-419a-bb3d-b3347387606c" as="p" variant="h3" tone="accent" className="aipe-capability-explorer">知识探索者</Typography>
     </div>
   </ContentBlock>;
 }

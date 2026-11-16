@@ -17,5 +17,5 @@ export function RegressionFitShowcasePage() {
     const reveal=Array.from(root.current!.querySelectorAll('button')).find(button=>button.textContent?.includes('揭晓真实象重'))!;
     await demo.click(reveal,600);await demo.wait(1800);
   });
-  return <section ref={root} className="rf-page rf-interaction-showcase rf-regression-showcase rf-recording-demo" aria-label="交互教学：线性拟合与损失"><EstimateWeightPage showLoss /></section>;
+  return <section shuku-edit-id="e-f93d22c2-04d4-4b95-87cb-9fd4c11f2e44" ref={root} className="rf-page rf-interaction-showcase rf-regression-showcase rf-recording-demo" aria-label="交互教学：线性拟合与损失"><EstimateWeightPage showLoss /></section>;
 }

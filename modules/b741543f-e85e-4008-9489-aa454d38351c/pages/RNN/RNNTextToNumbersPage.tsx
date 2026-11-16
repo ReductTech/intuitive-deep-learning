@@ -108,34 +108,34 @@ export function RNNTextToNumbersPage({ onComplete }: RNNTextToNumbersPageProps) 
   const stationIndex = isFinalized ? 2 : cutCount > 0 ? 1 : 0;
 
   return (
-    <ContentBlock
+    <ContentBlock shuku-edit-id="e-27ffb34c-271d-433b-a956-fc3b1a7f6981"
       headingLevel={1}
       className="nrnn-text-to-numbers"
       title="文本预处理：机器怎样“读懂”一段文本？"
       subtitle="机器看不见文字，只认数字。先把句子切成token，再把每个token换成词表编号。"
     >
       {/* 顶部三步站点 */}
-      <ol className="nrnn-text-to-numbers__stations">
+      <ol shuku-edit-id="e-6da0cf53-6b1d-4ae8-a700-0e980702b981" className="nrnn-text-to-numbers__stations">
         {['原始文本', '词元化', '词表映射'].map((label, index) => (
-          <li
+          <li shuku-edit-id="e-1d18549c-6916-4b24-8bbc-39996e1c898a"
             key={label}
             className={`nrnn-text-to-numbers__station${index === stationIndex ? ' is-current' : ''}${index < stationIndex ? ' is-done' : ''}`}
           >
-            <span className="nrnn-text-to-numbers__station-index">
-              <Typography as="span" variant="bodySmall" tone="inherit">{index + 1}</Typography>
+            <span shuku-edit-id="e-daab58ec-a48b-48a1-a9e0-00fe05cf37d7" className="nrnn-text-to-numbers__station-index">
+              <Typography shuku-edit-id="e-23b97d3a-f6cf-4bf7-b9de-d0fa9a2cc7db" as="span" variant="bodySmall" tone="inherit">{index + 1}</Typography>
             </span>
-            <Typography as="span" variant="body" tone="inherit">{label}</Typography>
+            <Typography shuku-edit-id="e-cc9719ff-a562-4f95-a9e6-5198781e1d51" as="span" variant="body" tone="inherit">{label}</Typography>
           </li>
         ))}
       </ol>
 
       {/* 句带：切词展示区 */}
-      <section className="nrnn-text-to-numbers__band" aria-label="原始文本与切分">
-        <header className="nrnn-text-to-numbers__band-head">
-          <Typography as="span" variant="bodySmall" tone="warning">
+      <section shuku-edit-id="e-69f57ebb-441d-4d9e-9c35-fa9f206f5ae4" className="nrnn-text-to-numbers__band" aria-label="原始文本与切分">
+        <header shuku-edit-id="e-9ed7cefb-d8c8-4db4-aaf6-4ab57ea1f6f5" className="nrnn-text-to-numbers__band-head">
+          <Typography shuku-edit-id="e-8c369968-8fda-4012-9335-79d7e2a688cf" as="span" variant="bodySmall" tone="warning">
             {isFinalized ? '最小词元 (字级 Token)' : '自由切词区域'}
           </Typography>
-          <Typography as="span" variant="bodySmall" tone="muted">
+          <Typography shuku-edit-id="e-510cc8af-02e1-4018-b8cb-56d52c1ecad7" as="span" variant="bodySmall" tone="muted">
             {isFinalized
               ? '已拆解为最小单位 · 8 个字级 token'
               : cutCount === 0
@@ -144,7 +144,7 @@ export function RNNTextToNumbersPage({ onComplete }: RNNTextToNumbersPageProps) 
           </Typography>
         </header>
 
-        <div className={`nrnn-text-to-numbers__cells ${isFinalized ? 'is-finalized' : ''}`}>
+        <div shuku-edit-id="e-0a8e52fe-da72-469d-8631-a74f67af2b19" className={`nrnn-text-to-numbers__cells ${isFinalized ? 'is-finalized' : ''}`}>
           {characters.map((character, index) => {
             const token = tokenForCharIndex(index);
             const tokenText = token ? token.text : character;
@@ -160,7 +160,7 @@ export function RNNTextToNumbersPage({ onComplete }: RNNTextToNumbersPageProps) 
             return (
               <Fragment key={`${character}-${index}`}>
                 {index > 0 && (
-                  <button
+                  <button shuku-edit-id="e-d6f19778-8972-4548-aced-fdc1def96c7f"
                     type="button"
                     className={`nrnn-text-to-numbers__seam${cuts[index - 1] ? ' is-cut' : ''}${isAnimating ? ' is-animating' : ''}`}
                     disabled={isFinalized || isAnimating}
@@ -169,11 +169,11 @@ export function RNNTextToNumbersPage({ onComplete }: RNNTextToNumbersPageProps) 
                     onClick={() => toggleSeam(index - 1)}
                   />
                 )}
-                <div
+                <div shuku-edit-id="e-c86122fb-4e52-43a9-9545-3d6e4f15ac90"
                   className={`nrnn-text-to-numbers__cell${isSingle || isFinalized ? ' is-token' : ' is-chunk'}${isGroupStart ? ' is-group-start' : ''}${isGroupEnd ? ' is-group-end' : ''}`}
                   style={{ '--code-delay': `${index * 0.05}s` } as CSSProperties}
                 >
-                  <Typography
+                  <Typography shuku-edit-id="e-5c02bc12-3c82-47e1-9868-8f9d099d0f78"
                     as="span"
                     variant="display"
                     tone={isFinalized ? 'light' : 'main'}
@@ -183,9 +183,9 @@ export function RNNTextToNumbersPage({ onComplete }: RNNTextToNumbersPageProps) 
                   </Typography>
 
                   {/* 映射编号实时展示 */}
-                  <span className={`nrnn-text-to-numbers__code${repeatedChars.has(character) && isFinalized ? ' is-repeat' : ''}`}>
+                  <span shuku-edit-id="e-55846f54-1bfc-46c5-ab99-c7c7a089fb92" className={`nrnn-text-to-numbers__code${repeatedChars.has(character) && isFinalized ? ' is-repeat' : ''}`}>
                     {cutCount > 0 || isFinalized ? (
-                      <Typography as="span" variant="h1" tone="inherit">
+                      <Typography shuku-edit-id="e-f4f2946b-ec29-48f9-9377-609bd6d6311d" as="span" variant="h1" tone="inherit">
                         {assignedCode ?? '?'}
                       </Typography>
                     ) : null}
@@ -198,27 +198,27 @@ export function RNNTextToNumbersPage({ onComplete }: RNNTextToNumbersPageProps) 
       </section>
 
       {/* 词表映射区域 */}
-      <section className="nrnn-text-to-numbers__vocabulary" aria-label="词表">
-        <header className="nrnn-text-to-numbers__vocabulary-head">
-          <Typography as="span" variant="bodySmall" tone="warning">③ 词表映射</Typography>
-          <Typography as="span" variant="bodySmall" tone="muted">
+      <section shuku-edit-id="e-3d83477a-e727-41b3-9814-c22a129c7f1c" className="nrnn-text-to-numbers__vocabulary" aria-label="词表">
+        <header shuku-edit-id="e-8802e81e-5438-4da1-91c5-028cb5c49e89" className="nrnn-text-to-numbers__vocabulary-head">
+          <Typography shuku-edit-id="e-74773a4c-e3c7-4b3e-b1d8-bf568ac28669" as="span" variant="bodySmall" tone="warning">③ 词表映射</Typography>
+          <Typography shuku-edit-id="e-838769f5-ea20-4a7d-8e9d-a5edc8ba0bf6" as="span" variant="bodySmall" tone="muted">
             {isFinalized
               ? '字级词表：无论上下文，「开」都被固定映射为 3。单凭静态数字无法区分词义，因此记忆上文至关重要。'
               : '词表根据上方当前切分出的 token 实时映射'}
           </Typography>
         </header>
 
-        <ol className="nrnn-text-to-numbers__entries">
+        <ol shuku-edit-id="e-c7120a7a-f071-4d98-a88a-fe2f849461f6" className="nrnn-text-to-numbers__entries">
           {(isFinalized ? finalVocabulary : currentVocab).map((item, index) => {
             const isRepeat = repeatedChars.has(item) && isFinalized;
             return (
-              <li
+              <li shuku-edit-id="e-e3689672-b635-4034-8021-a91db5d11d22"
                 key={`${item}-${index}`}
                 className={`nrnn-text-to-numbers__entry is-confirmed${isFinalized ? ' is-mapped' : ''}${isRepeat ? ' is-repeat' : ''}`}
               >
-                <Typography as="span" variant="h3" tone="inherit">{item}</Typography>
-                <Typography as="span" variant="bodySmall" tone="inherit" className="nrnn-text-to-numbers__entry-arrow">→</Typography>
-                <Typography as="span" variant="h3" tone="inherit">{index + 1}</Typography>
+                <Typography shuku-edit-id="e-2ef84ae2-05b5-4524-bbbc-5de1438d1f26" as="span" variant="h3" tone="inherit">{item}</Typography>
+                <Typography shuku-edit-id="e-0892f333-cbd7-49cc-9ca4-ebf491103702" as="span" variant="bodySmall" tone="inherit" className="nrnn-text-to-numbers__entry-arrow">→</Typography>
+                <Typography shuku-edit-id="e-13dd42f2-c0fa-4b9d-95e6-912d51db5d5f" as="span" variant="h3" tone="inherit">{index + 1}</Typography>
               </li>
             );
           })}
@@ -226,26 +226,26 @@ export function RNNTextToNumbersPage({ onComplete }: RNNTextToNumbersPageProps) 
       </section>
 
       {/* 底部小提示（参考 WeightedSumPage 布局设计） */}
-      <div className={`nrnn-text-to-numbers__tip${isFinalized ? ' is-finalized' : ''}`}>
-        <div className="nrnn-text-to-numbers__tip-video">
-          <img src={senderAvatar} alt="提示头像" />
+      <div shuku-edit-id="e-f475a96a-038a-44de-bd62-984a8145c94a" className={`nrnn-text-to-numbers__tip${isFinalized ? ' is-finalized' : ''}`}>
+        <div shuku-edit-id="e-52a9b8f9-0b25-4e4d-9da7-443a1eff06e5" className="nrnn-text-to-numbers__tip-video">
+          <img shuku-edit-id="e-e370e245-027f-4c30-8422-0de32be82a36" src={senderAvatar} alt="提示头像" />
         </div>
-        <div className="nrnn-text-to-numbers__tip-copy">
-          <div className="nrnn-text-to-numbers__tip-header">
-            <Typography as="strong" variant="h3" tone="accent">小提示</Typography>
+        <div shuku-edit-id="e-f83d8041-0198-462e-80a2-b69da758aafa" className="nrnn-text-to-numbers__tip-copy">
+          <div shuku-edit-id="e-23779afb-26d9-4be5-bed4-dbadce6e1e68" className="nrnn-text-to-numbers__tip-header">
+            <Typography shuku-edit-id="e-3a6c2baa-2dc8-4a65-871a-9e0011bbf8b7" as="strong" variant="h3" tone="accent">小提示</Typography>
             {!isFinalized && cutCount > 0 && (
               <Button
                 className="nrnn-text-to-numbers__min-btn"
                 disabled={isAnimating}
                 onClick={handleSplitToMinUnits}
               >
-                <Typography as="span" variant="bodySmall" tone="inherit">
+                <Typography shuku-edit-id="e-edb15c72-b28e-4fad-9111-95423501e243" as="span" variant="bodySmall" tone="inherit">
                   {isAnimating ? '正在拆分中...' : '⚡ 切分为最小单位'}
                 </Typography>
               </Button>
             )}
           </div>
-          <Typography as="p" variant="body" tone="muted">
+          <Typography shuku-edit-id="e-9a11efc2-bbeb-4d83-8329-a5325b2aa984" as="p" variant="body" tone="muted">
             {isFinalized
               ? '✨ 拆分完成！注意「开」两次都被映射成了数字 3。但在「打开」和「开始」中含义截然不同——模型只看数字 3 无法分辨，因此必须依靠 RNN 携带前文的隐状态记忆，才能准确理解！'
               : cutCount === 0

@@ -4,6 +4,6 @@ import './ShowcaseOpenIdentityPage.css';
 
 export function ShowcaseOpenIdentityPage() {
   return <ShowcaseExampleFrame title="从人脸验证，理解特征距离">
-    <div className="course-shell spp-open-identity-page"><OpenIdentityPage /></div>
+    <div shuku-edit-id="e-c6fd0768-efc8-4bc3-a131-bbcbaf2fe116" className="course-shell spp-open-identity-page"><OpenIdentityPage /></div>
   </ShowcaseExampleFrame>;
 }

@@ -296,19 +296,19 @@ export function WormholeScene(props: WormholeSceneProps) {
     };
   }, []);
 
-  return <div ref={host} className="cg-wormhole-scene" onKeyDown={event => {
+  return <div shuku-edit-id="e-8ffedd00-6bc2-4822-9bf7-fa27d2b8741d" ref={host} className="cg-wormhole-scene" onKeyDown={event => {
     if (event.key === 'Escape') { clearTimeout(closeTimer.current); setFormulaOpen(false); event.stopPropagation(); }
   }}>
-    {failed ? <Typography variant="bodySmall" tone="muted" className="cg-wormhole-fallback">当前浏览器无法启动三维显示。</Typography> : props.valid && (props.throatDetails ?
-      <button ref={el => { labels.current[0] = el; }} type="button" className="cg-wormhole-scene-label cg-wormhole-throat-trigger"
+    {failed ? <Typography shuku-edit-id="e-f1d93796-e3e8-4792-8a96-33b79665a387" variant="bodySmall" tone="muted" className="cg-wormhole-fallback">当前浏览器无法启动三维显示。</Typography> : props.valid && (props.throatDetails ?
+      <button shuku-edit-id="e-b1022969-f01c-4de8-86a8-d443572e56cf" ref={el => { labels.current[0] = el; }} type="button" className="cg-wormhole-scene-label cg-wormhole-throat-trigger"
         aria-label="喉部：查看计算公式" aria-describedby={formulaOpen ? formulaId : undefined}
         onMouseEnter={openFormula} onMouseLeave={closeFormula} onFocus={openFormula} onBlur={closeFormula} onClick={openFormula}>
-        <Typography as="span" variant="bodySmall" tone="warning">喉部</Typography>
-      </button> : <Typography ref={el => { labels.current[0] = el; }} as="span" variant="bodySmall" tone="warning" className="cg-wormhole-scene-label">喉部</Typography>)}
-    {!failed && props.valid && formulaOpen && props.throatDetails && <div ref={formulaBox} id={formulaId} role="tooltip" className="cg-wormhole-formula-popover"
+        <Typography shuku-edit-id="e-86962b33-e625-4411-8322-ddd457d93114" as="span" variant="bodySmall" tone="warning">喉部</Typography>
+      </button> : <Typography shuku-edit-id="e-1337ed8b-8aa5-48a9-99cd-1b5ed56c394f" ref={el => { labels.current[0] = el; }} as="span" variant="bodySmall" tone="warning" className="cg-wormhole-scene-label">喉部</Typography>)}
+    {!failed && props.valid && formulaOpen && props.throatDetails && <div shuku-edit-id="e-6ecd5a49-c504-42ca-a0ee-75362f24412b" ref={formulaBox} id={formulaId} role="tooltip" className="cg-wormhole-formula-popover"
       onMouseEnter={openFormula} onMouseLeave={closeFormula}>
       {props.throatDetails}
     </div>}
-    {!failed && <><Typography ref={el => { labels.current[1] = el; }} as="span" variant="bodySmall" tone="accent" className="cg-wormhole-scene-label">A</Typography><Typography ref={el => { labels.current[2] = el; }} as="span" variant="bodySmall" tone="accent" className="cg-wormhole-scene-label">B</Typography></>}
+    {!failed && <><Typography shuku-edit-id="e-6df7c151-ec67-44c4-ba17-a51585dacd35" ref={el => { labels.current[1] = el; }} as="span" variant="bodySmall" tone="accent" className="cg-wormhole-scene-label">A</Typography><Typography shuku-edit-id="e-2863ce8c-62c7-47c4-989c-27bd13949209" ref={el => { labels.current[2] = el; }} as="span" variant="bodySmall" tone="accent" className="cg-wormhole-scene-label">B</Typography></>}
   </div>;
 }

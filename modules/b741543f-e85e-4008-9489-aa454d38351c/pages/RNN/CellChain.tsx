@@ -18,9 +18,9 @@ export interface CellChainProps {
 
 export function ReluGlyph() {
   return (
-    <svg className="nrnn-cell-chain__relu" viewBox="0 0 64 44" aria-hidden="true">
-      <path d="M6 38 H58 M20 6 V40" fill="none" stroke="#C7D1E0" strokeWidth="2" />
-      <path d="M20 36 H38 L56 8" fill="none" stroke="#6FA84A" strokeLinecap="round" strokeWidth="4" />
+    <svg shuku-edit-id="e-3ab58137-0a75-4ca4-9e94-2808f9597214" className="nrnn-cell-chain__relu" viewBox="0 0 64 44" aria-hidden="true">
+      <path shuku-edit-id="e-69c2578b-b400-48c3-be88-ad874e98a0c6" d="M6 38 H58 M20 6 V40" fill="none" stroke="#C7D1E0" strokeWidth="2" />
+      <path shuku-edit-id="e-5a78beee-b8c8-4d7c-8d3c-f4b0a92de987" d="M20 36 H38 L56 8" fill="none" stroke="#6FA84A" strokeLinecap="round" strokeWidth="4" />
     </svg>
   );
 }
@@ -44,15 +44,15 @@ export function CellChain({ input, activation, output = null, highlight = null, 
   ];
 
   return (
-    <div className={className ? `nrnn-cell-chain ${className}` : 'nrnn-cell-chain'}>
+    <div shuku-edit-id="e-451d5fc5-ef28-48be-88bb-0845dd567d6a" className={className ? `nrnn-cell-chain ${className}` : 'nrnn-cell-chain'}>
       {boxes.map((box, index) => (
-        <div className="nrnn-cell-chain__unit" key={box.part}>
-          {index > 0 && <Typography as="span" variant="h3" tone="light" className="nrnn-cell-chain__arrow">→</Typography>}
-          <div className={`nrnn-cell-chain__box is-${box.part}${highlight === box.part ? ' is-highlighted' : ''}`}>
-            <Typography as="span" variant="bodySmall" tone="muted">{box.label}</Typography>
+        <div shuku-edit-id="e-ce85206f-52a5-47af-aab3-712b4e948890" className="nrnn-cell-chain__unit" key={box.part}>
+          {index > 0 && <Typography shuku-edit-id="e-6957b557-27c4-400b-9f14-e54ac6d46673" as="span" variant="h3" tone="light" className="nrnn-cell-chain__arrow">→</Typography>}
+          <div shuku-edit-id="e-8e74fc72-01f5-4d5b-9425-21eb865a3007" className={`nrnn-cell-chain__box is-${box.part}${highlight === box.part ? ' is-highlighted' : ''}`}>
+            <Typography shuku-edit-id="e-b1943148-9341-49c9-af49-6047a4d6fc5d" as="span" variant="bodySmall" tone="muted">{box.label}</Typography>
             {box.glyph
               ? <ReluGlyph />
-              : <Typography as="strong" variant="h3" tone="main">{box.value}</Typography>}
+              : <Typography shuku-edit-id="e-c1bbb699-f3ad-47e6-b722-f88a9887034e" as="strong" variant="h3" tone="main">{box.value}</Typography>}
           </div>
         </div>
       ))}

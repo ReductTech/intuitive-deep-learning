@@ -52,10 +52,10 @@ function outputColor(filterIndex: number, response: number, strength: number) {
 }
 
 function Fallback({ selected, onSelect, kernelCount }: { selected: RgbPosition; onSelect: (value: RgbPosition) => void; kernelCount: KernelCount }) {
-  return <div className="cg-copy-ck-rgb__fallback">
-    <div className="cg-copy-ck-rgb__fallbacg-copy-ck-input">{['R', 'G', 'B'].map((channel) => <div key={channel} className={`cg-copy-ck-rgb__fallbacg-copy-ck-plane is-${channel.toLowerCase()}`}>{Array.from({ length: SIZE * SIZE }, (_, index) => { const row = Math.floor(index / SIZE), col = index % SIZE; return <button key={index} type="button" className={row >= selected.row && row < selected.row + KERNEL_SIZE && col >= selected.col && col < selected.col + KERNEL_SIZE ? 'is-selected' : ''} onClick={() => onSelect({ row: Math.max(0, Math.min(OUTPUT_SIZE - 1, row - 1)), col: Math.max(0, Math.min(OUTPUT_SIZE - 1, col - 1)) })} aria-label={`${channel}通道第${row + 1}行第${col + 1}列`} />; })}</div>)}</div>
-    <span aria-hidden="true">→</span>
-    <div className="cg-copy-ck-rgb__fallbacg-copy-ck-output-stack">{Array.from({ length: kernelCount }, (_, filterIndex) => <div key={filterIndex} className="cg-copy-ck-rgb__fallbacg-copy-ck-output" style={{ transform: `translateX(${(filterIndex - (kernelCount - 1) / 2) * 14}px)` }}>{Array.from({ length: OUTPUT_SIZE * OUTPUT_SIZE }, (_, index) => <button key={index} type="button" className={Math.floor(index / OUTPUT_SIZE) === selected.row && index % OUTPUT_SIZE === selected.col ? 'is-selected' : ''} onClick={() => onSelect({ row: Math.floor(index / OUTPUT_SIZE), col: index % OUTPUT_SIZE })} aria-label={`第${filterIndex + 1}张输出特征图第${Math.floor(index / OUTPUT_SIZE) + 1}行第${index % OUTPUT_SIZE + 1}列`} />)}</div>)}</div>
+  return <div shuku-edit-id="e-4e609aa8-0c28-433c-ad4f-b998ac7cba5b" className="cg-copy-ck-rgb__fallback">
+    <div shuku-edit-id="e-8db0c5a0-bee5-47f1-be9f-6337648765ff" className="cg-copy-ck-rgb__fallbacg-copy-ck-input">{['R', 'G', 'B'].map((channel) => <div shuku-edit-id="e-bffb778d-d02a-4b11-aacc-3e44748ca214" key={channel} className={`cg-copy-ck-rgb__fallbacg-copy-ck-plane is-${channel.toLowerCase()}`}>{Array.from({ length: SIZE * SIZE }, (_, index) => { const row = Math.floor(index / SIZE), col = index % SIZE; return <button shuku-edit-id="e-1acaa2f0-76e2-4887-a997-3041d042ed8f" key={index} type="button" className={row >= selected.row && row < selected.row + KERNEL_SIZE && col >= selected.col && col < selected.col + KERNEL_SIZE ? 'is-selected' : ''} onClick={() => onSelect({ row: Math.max(0, Math.min(OUTPUT_SIZE - 1, row - 1)), col: Math.max(0, Math.min(OUTPUT_SIZE - 1, col - 1)) })} aria-label={`${channel}通道第${row + 1}行第${col + 1}列`} />; })}</div>)}</div>
+    <span shuku-edit-id="e-cfd4924f-af37-4cd6-9cff-bf8ce307888a" aria-hidden="true">→</span>
+    <div shuku-edit-id="e-e2ca71e9-994a-4178-a24f-11cf07ff3243" className="cg-copy-ck-rgb__fallbacg-copy-ck-output-stack">{Array.from({ length: kernelCount }, (_, filterIndex) => <div shuku-edit-id="e-32188aec-e69b-43bf-bf05-2f55d5ee7c65" key={filterIndex} className="cg-copy-ck-rgb__fallbacg-copy-ck-output" style={{ transform: `translateX(${(filterIndex - (kernelCount - 1) / 2) * 14}px)` }}>{Array.from({ length: OUTPUT_SIZE * OUTPUT_SIZE }, (_, index) => <button shuku-edit-id="e-b51383a2-aaf6-422f-b6e6-13f9de45939e" key={index} type="button" className={Math.floor(index / OUTPUT_SIZE) === selected.row && index % OUTPUT_SIZE === selected.col ? 'is-selected' : ''} onClick={() => onSelect({ row: Math.floor(index / OUTPUT_SIZE), col: index % OUTPUT_SIZE })} aria-label={`第${filterIndex + 1}张输出特征图第${Math.floor(index / OUTPUT_SIZE) + 1}行第${index % OUTPUT_SIZE + 1}列`} />)}</div>)}</div>
   </div>;
 }
 
@@ -394,7 +394,7 @@ export function RgbConvolutionScene({ selected, onSelect, kernelCount = 1 }: { s
     };
   }, [kernelCount]);
 
-  return <div ref={mountRef} className="cg-copy-ck-rgb__scene" role="img" aria-label={`三维 RGB 通道卷积，当前选中第${selected.row + 1}行第${selected.col + 1}列；拖动可旋转，滚轮可缩放，点击格子可观察响应`}>
+  return <div shuku-edit-id="e-63232f60-78d3-439b-8b33-39a69da54c7b" ref={mountRef} className="cg-copy-ck-rgb__scene" role="img" aria-label={`三维 RGB 通道卷积，当前选中第${selected.row + 1}行第${selected.col + 1}列；拖动可旋转，滚轮可缩放，点击格子可观察响应`}>
     {fallback && <Fallback selected={selected} onSelect={onSelect} kernelCount={kernelCount} />}
   </div>;
 }

@@ -40,13 +40,13 @@ function routeGroupConnection(source: Point, target: Point): Point[] {
 
 /** New native DOM scene: every operator and connector has its own geometry and hit area. */
 function Connector({ points, kind = '', label, onSelect, arrow = true, disabled = false }: { points: Point[]; kind?: string; label?: string; onSelect?: () => void; arrow?: boolean; disabled?: boolean }) {
-  return <div className={`r2-studio-connector ${kind}`} role={onSelect ? 'group' : undefined} aria-label={label}>
+  return <div shuku-edit-id="e-8646113b-e81e-462d-90b3-4303caa2ab8b" className={`r2-studio-connector ${kind}`} role={onSelect ? 'group' : undefined} aria-label={label}>
     {points.slice(1).map((point, i) => {
       const start = points[i], dx = point.x - start.x, dy = point.y - start.y;
       if (Math.hypot(dx, dy) < .1) return null;
       const style: CSSProperties = { left: start.x, top: start.y, width: Math.hypot(dx, dy), transform: `rotate(${Math.atan2(dy, dx)}rad)` };
-      const content = <span className={`r2-studio-stroke ${arrow && i === points.length - 2 ? 'has-arrow' : ''}`}/>;
-      return onSelect ? <button key={i} type="button" disabled={disabled} className="r2-studio-edge-segment" style={style} aria-label={label} onClick={onSelect}>{content}</button> : <span key={i} className="r2-studio-edge-segment" style={style}>{content}</span>;
+      const content = <span shuku-edit-id="e-d224aa13-0ab8-4dce-a962-e5a6d5876bbf" className={`r2-studio-stroke ${arrow && i === points.length - 2 ? 'has-arrow' : ''}`}/>;
+      return onSelect ? <button shuku-edit-id="e-74dc38ec-b0b2-4621-812e-5f957c438585" key={i} type="button" disabled={disabled} className="r2-studio-edge-segment" style={style} aria-label={label} onClick={onSelect}>{content}</button> : <span shuku-edit-id="e-a6036284-d5cd-42f3-b602-c7a71ceb118c" key={i} className="r2-studio-edge-segment" style={style}>{content}</span>;
     })}
   </div>;
 }
@@ -101,39 +101,39 @@ export function NetworkStage(props: StageProps) {
   if (grouped) connectors.push({ points: [{ x: 228, y: center }, { x: 264, y: center }, { x: 264, y: 102 }, { x: junctionX, y: 102 }, { x: junctionX, y: center }, { x: fusionX-48, y: center }],kind:highlight(false) });
   const draftSource = props.draft && tileById.get(props.draft.from);
   const draftStart = draftSource && startPort(draftSource);
-  return <div className={`r2-studio-stage ${phase==='compact'?'is-compact':''} ${props.wiring ? 'is-wiring' : ''} ${props.readOnly?'is-readonly':''} ${inspectingScale?'is-rf-inspecting':''}`} inert={props.readOnly} ref={props.boardRef} aria-label="可编辑残差网络" data-ppt-viewport="可横向浏览自由搭建的网络"><div className="r2-studio-scene" style={{width:sceneWidth}}>
-    <div className="r2-studio-links" aria-label="网络连接">{connectors.map((edge, i) => <Connector key={i} {...edge}/>)}
+  return <div shuku-edit-id="e-56996be6-fe41-4a76-9304-42daf737538d" className={`r2-studio-stage ${phase==='compact'?'is-compact':''} ${props.wiring ? 'is-wiring' : ''} ${props.readOnly?'is-readonly':''} ${inspectingScale?'is-rf-inspecting':''}`} inert={props.readOnly} ref={props.boardRef} aria-label="可编辑残差网络" data-ppt-viewport="可横向浏览自由搭建的网络"><div shuku-edit-id="e-71aea0b4-5fb9-430c-9ff3-b677e594a02c" className="r2-studio-scene" style={{width:sceneWidth}}>
+    <div shuku-edit-id="e-a7eecb96-70fa-4ef0-9771-ab2b4c63bd78" className="r2-studio-links" aria-label="网络连接">{connectors.map((edge, i) => <Connector key={i} {...edge}/>)}
       {connections.map(edge => {
         const source = startPort(tileById.get(edge.from)!), target = endPort(tileById.get(edge.to)!);
         return <Connector key={`${edge.from}>${edge.to}`} points={routeGroupConnection(source,target)} kind={`is-jump ${highlight(pathEdge(edge.from,edge.to))} ${props.selectedEdge === `${edge.from}>${edge.to}` ? 'is-selected' : ''}`} label={`选择连接：${edgeName(edge.from)}到${edgeName(edge.to)}`} disabled={props.readOnly} onSelect={() => props.onSelectEdge(`${edge.from}>${edge.to}`)}/>;
       })}
       {draftStart && props.draft && <Connector kind={props.invalid ? 'is-draft is-invalid' : 'is-draft'} points={routeGroupConnection(draftStart,props.draft)}/>}
     </div>
-    <Typography className="r2-studio-diagram-caption" variant="body" tone={props.wiring?'accent':'muted'} style={place({ x: 470, y: multi ? 25 : 127 })}>{props.wiring?props.wireSource?'再选另一组亮起的加号，完成相加':'先选一个亮起的输出点':grouped ? `总宽 D · ${groups}组，每组 D/${groups}` : multi ? '每条分支 D 通道' : '恒等映射 · 总宽 D 不变'}</Typography>
-    {grouped && <Button className={`r2-studio-observe ${props.selectedGroup === -1 ? 'is-selected' : ''}`} style={place({ x: 480, y: 102 })} aria-label="观察第1组输入直通" disabled={props.readOnly} onClick={() => props.onObserve(-1)}><Typography variant="body" tone="inherit">直通 · D/{groups}</Typography></Button>}
+    <Typography shuku-edit-id="e-37e6c067-3aad-4062-97ed-9bbf872f90cd" className="r2-studio-diagram-caption" variant="body" tone={props.wiring?'accent':'muted'} style={place({ x: 470, y: multi ? 25 : 127 })}>{props.wiring?props.wireSource?'再选另一组亮起的加号，完成相加':'先选一个亮起的输出点':grouped ? `总宽 D · ${groups}组，每组 D/${groups}` : multi ? '每条分支 D 通道' : '恒等映射 · 总宽 D 不变'}</Typography>
+    {grouped && <Button className={`r2-studio-observe ${props.selectedGroup === -1 ? 'is-selected' : ''}`} style={place({ x: 480, y: 102 })} aria-label="观察第1组输入直通" disabled={props.readOnly} onClick={() => props.onObserve(-1)}><Typography shuku-edit-id="e-0ac533fc-0633-4b4a-9567-28276f5f6d5f" variant="body" tone="inherit">直通 · D/{groups}</Typography></Button>}
     {tiles.map(tile => {
       const canReceive = Boolean(props.wiring&&!props.readOnly&&props.wireSource&&!connectionError(lengths,connections,props.wireSource,tile.id));
       const canStart = props.wiring&&!props.readOnly&&!props.wireSource;
       const capturing = props.wireDragging&&props.draft?.from===tile.id;
       const observable = tile.kind==='conv'&&!props.wiring;
-      return <div key={tile.id}>
-      <div className={`r2-studio-tile is-${tile.kind} ${tile.kind==='conv'?nodeHighlight(tile.id):highlight(true)} ${props.overInput === tile.id ? props.invalid ? 'is-invalid-target' : 'is-wire-target' : ''}`} style={{ ...place(tile), width: tile.width }} data-r2-node={tile.kind === 'conv' ? tile.id : undefined} role={observable?'button':undefined} aria-disabled={observable?props.readOnly:undefined} tabIndex={observable?(props.readOnly?-1:0):undefined} aria-label={observable?`观察${edgeName(tile.id)}`:undefined} onClick={()=>{if(tile.branch!==undefined&&!props.wiring)props.onObserve(tile.branch);}} onKeyDown={e=>{if(observable&&tile.branch!==undefined&&e.key==='Enter')props.onObserve(tile.branch);}}>
-        {tile.kind === 'sum' ? <Plus/> : <><Typography variant="body" tone="inherit">{tile.label}</Typography>{tile.detail&&<Typography variant="body" tone="inherit">{tile.detail}</Typography>}</>}
+      return <div shuku-edit-id="e-b10f2334-b782-4dd9-a3c1-749d52b9c47f" key={tile.id}>
+      <div shuku-edit-id="e-ea0941cb-50ba-410a-9089-71cfda21e353" className={`r2-studio-tile is-${tile.kind} ${tile.kind==='conv'?nodeHighlight(tile.id):highlight(true)} ${props.overInput === tile.id ? props.invalid ? 'is-invalid-target' : 'is-wire-target' : ''}`} style={{ ...place(tile), width: tile.width }} data-r2-node={tile.kind === 'conv' ? tile.id : undefined} role={observable?'button':undefined} aria-disabled={observable?props.readOnly:undefined} tabIndex={observable?(props.readOnly?-1:0):undefined} aria-label={observable?`观察${edgeName(tile.id)}`:undefined} onClick={()=>{if(tile.branch!==undefined&&!props.wiring)props.onObserve(tile.branch);}} onKeyDown={e=>{if(observable&&tile.branch!==undefined&&e.key==='Enter')props.onObserve(tile.branch);}}>
+        {tile.kind === 'sum' ? <Plus/> : <><Typography shuku-edit-id="e-8c6f7e64-483c-49dd-9e00-0e9a70c0f4b2" variant="body" tone="inherit">{tile.label}</Typography>{tile.detail&&<Typography shuku-edit-id="e-d7139d69-b8dd-4db4-9253-8afa7f499e6a" variant="body" tone="inherit">{tile.detail}</Typography>}</>}
       </div>
-      {tile.kind === 'conv' && (!multi ? <Typography className="r2-studio-dimension" variant="body" tone="accent" style={place({ x: tile.x, y: tile.y + 82 })}>D → D</Typography> : null)}
+      {tile.kind === 'conv' && (!multi ? <Typography shuku-edit-id="e-58538824-5ace-484f-92b9-1bd7ca7b770f" className="r2-studio-dimension" variant="body" tone="accent" style={place({ x: tile.x, y: tile.y + 82 })}>D → D</Typography> : null)}
       {tile.kind === 'conv' && grouped && modules.length > 1 && <>
         {(props.wiring||connections.some(edge=>edge.to===tile.id))&&<Button className={`r2-studio-port is-input is-sum ${nodeHighlight(tile.id)} ${canReceive?'is-available':'is-muted'} ${props.overInput === tile.id ? props.invalid ? 'is-invalid' : 'is-over' : ''}`} style={place(endPort(tile))} data-r2-input={tile.id} disabled={!canReceive} aria-label={`连接到${edgeName(tile.id)}输入加号`} onClick={() => props.onInput(tile.id)}><Plus/></Button>}
-        {props.wiring&&<Button className={`r2-studio-port is-output ${canStart?'is-available':'is-muted'}`} disabled={!canStart&&!capturing} aria-disabled={!canStart} style={place(startPort(tile))} data-r2-output={tile.id} aria-label={`从${edgeName(tile.id)}输出连线`} onPointerDown={e => props.onStartWire(e, tile.id)} onPointerMove={props.onMove} onPointerUp={props.onFinish} onPointerCancel={props.onCancel} onClick={e => { if (e.detail === 0) props.onSelectSource(tile.id); }}><span/></Button>}
+        {props.wiring&&<Button className={`r2-studio-port is-output ${canStart?'is-available':'is-muted'}`} disabled={!canStart&&!capturing} aria-disabled={!canStart} style={place(startPort(tile))} data-r2-output={tile.id} aria-label={`从${edgeName(tile.id)}输出连线`} onPointerDown={e => props.onStartWire(e, tile.id)} onPointerMove={props.onMove} onPointerUp={props.onFinish} onPointerCancel={props.onCancel} onClick={e => { if (e.detail === 0) props.onSelectSource(tile.id); }}><span shuku-edit-id="e-2ee8e9a3-c59d-4554-b32a-f91345b6bfe6"/></Button>}
       </>}
     </div>;})}
     {lengths.map((count, branch) => {
       const last = tileById.get(convId(branch, count - 1));
       const slot = { x: column(last ? (last.x - column(0)) / 144 + 1 : 0), y: row(branch) };
-      return <div key={branch}>
-        {props.canAdd(branch) && <Button className={`r2-studio-drop ${props.over === branch ? 'is-over' : ''} ${props.guideDrop?'is-guided':''}`} style={place(slot)} data-r2-target={branch} data-r2-kind="conv" aria-label={`在第${branch + 1}条分支增加卷积`} disabled={props.readOnly} onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); props.onAdd(branch); } }}><Typography variant="body" tone="inherit">{props.over === branch ? '松开吸附' : '拖入卷积'}</Typography></Button>}
+      return <div shuku-edit-id="e-f2b2f434-792d-479a-b21b-b9b3fbb16be3" key={branch}>
+        {props.canAdd(branch) && <Button className={`r2-studio-drop ${props.over === branch ? 'is-over' : ''} ${props.guideDrop?'is-guided':''}`} style={place(slot)} data-r2-target={branch} data-r2-kind="conv" aria-label={`在第${branch + 1}条分支增加卷积`} disabled={props.readOnly} onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); props.onAdd(branch); } }}><Typography shuku-edit-id="e-fc8aeada-77b3-4247-8840-d89a6fb8f88b" variant="body" tone="inherit">{props.over === branch ? '松开吸附' : '拖入卷积'}</Typography></Button>}
       </div>;
     })}
-    {!multi && props.canAdd(0) && <div className="r2-studio-slot-hint" style={place({ x: column(lengths[0]), y: center + 140 })}><ArrowUp/><Typography variant="body" tone="muted">拖入后，覆盖范围会怎样变化？</Typography></div>}
-    {multi && <Typography className="r2-studio-dimension" variant="body" tone="muted" style={place({ x: fusionX, y: center + 87 })}>{grouped ? '拼接融合' : `${lengths.length}D → D`}</Typography>}
+    {!multi && props.canAdd(0) && <div shuku-edit-id="e-075eae25-5d1f-416d-b870-764446507629" className="r2-studio-slot-hint" style={place({ x: column(lengths[0]), y: center + 140 })}><ArrowUp/><Typography shuku-edit-id="e-b414e19e-b831-46d6-b175-81c1e77c71c2" variant="body" tone="muted">拖入后，覆盖范围会怎样变化？</Typography></div>}
+    {multi && <Typography shuku-edit-id="e-ef4d0e8d-ebfd-498f-95e7-e1dff2460f07" className="r2-studio-dimension" variant="body" tone="muted" style={place({ x: fusionX, y: center + 87 })}>{grouped ? '拼接融合' : `${lengths.length}D → D`}</Typography>}
   </div></div>;
 }

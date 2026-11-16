@@ -13,10 +13,10 @@ export function ConditionedUNet() {
   return <Frame index={4} subtitle="把画师、时钟和委托内容连接到同一张网络图" takeaway="三个输入各有职责：视觉状态、噪声阶段、生成内容。">
     <LessonSplit>
       <TeachingPanel title="① 三条输入路径" className="vga-sidebar">
-        <div className="vga-input-state is-on"><Text>视觉状态</Text><Text muted>当前带噪特征</Text></div>
-        <div className={'vga-input-state' + (time ? ' is-on' : '')}><Text>时间条件</Text><Text muted>{time ? '已接通 · 当前噪声阶段' : '等待接入'}</Text></div>
-        <div className={'vga-input-state' + (text ? ' is-on' : '')}><Text>文本条件</Text><Text muted>{text ? '已接通 · 本次生成内容' : '等待接入'}</Text></div>
-        <div className="vga-stack">{[['time','切断时间'],['text','切断文本']].map(([id,label]) => <Button key={id} active={cut === id} onClick={() => { story.go(3); setCut(cut === id ? null : id); }}>{cut === id ? '重新接通' : label}</Button>)}</div>
+        <div shuku-edit-id="e-ea0fbccb-47df-462f-a25e-b56b4e3ce9e0" className="vga-input-state is-on"><Text>视觉状态</Text><Text muted>当前带噪特征</Text></div>
+        <div shuku-edit-id="e-aea3107c-f149-439d-808f-040eaff7a818" className={'vga-input-state' + (time ? ' is-on' : '')}><Text>时间条件</Text><Text muted>{time ? '已接通 · 当前噪声阶段' : '等待接入'}</Text></div>
+        <div shuku-edit-id="e-9723501c-e53e-496d-8bf8-abd619c137cd" className={'vga-input-state' + (text ? ' is-on' : '')}><Text>文本条件</Text><Text muted>{text ? '已接通 · 本次生成内容' : '等待接入'}</Text></div>
+        <div shuku-edit-id="e-3c6f1008-0db8-4052-b0fc-c54b498e7dfd" className="vga-stack">{[['time','切断时间'],['text','切断文本']].map(([id,label]) => <Button key={id} active={cut === id} onClick={() => { story.go(3); setCut(cut === id ? null : id); }}>{cut === id ? '重新接通' : label}</Button>)}</div>
       </TeachingPanel>
       <TeachingPanel title="② 汇入同一个 U-Net" className="vga-network-panel">
         <NetworkLab stage={6} playing={story.playing} time={time} text={text} />

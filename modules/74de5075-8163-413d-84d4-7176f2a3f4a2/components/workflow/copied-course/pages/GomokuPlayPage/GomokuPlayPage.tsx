@@ -284,11 +284,11 @@ function PlayBoard({
   }, [board, interactive]);
 
   return (
-    <div
+    <div shuku-edit-id="e-30b12eaa-386d-4c43-baa0-ff118a0dc2f6"
       className={interactive ? 'cg-copy-ck-gomoku-play__board is-interactive' : 'cg-copy-ck-gomoku-play__board'}
       ref={frameRef}
     >
-      <canvas
+      <canvas shuku-edit-id="e-00a64deb-6d68-4134-8826-c37f0a3394f2"
         ref={canvasRef}
         className="cg-copy-ck-gomoku-play__board-canvas"
         tabIndex={0}
@@ -303,19 +303,19 @@ function PlayBoard({
         onBlur={() => onFocusChange(false)}
         onKeyDown={onKeyDown}
       />
-      <span ref={previewRef} className="cg-copy-ck-gomoku-play__hover-stone" aria-hidden="true" />
-      {interactive && hint && <span className="cg-copy-ck-gomoku-play__hint-stone" style={{ left: `${(BOARD_PAD_RATIO + hint.col * (1 - 2 * BOARD_PAD_RATIO) / (BOARD_SIZE - 1)) * 100}%`, top: `${(BOARD_PAD_RATIO + hint.row * (1 - 2 * BOARD_PAD_RATIO) / (BOARD_SIZE - 1)) * 100}%` }} aria-hidden="true" />}
-      <div className="cg-copy-ck-gomoku-play__board-axis" aria-hidden="true">
-        <div className="cg-copy-ck-gomoku-play__board-axis-cols">
+      <span shuku-edit-id="e-fbfa9195-0a01-420b-a6e6-5d162cf38e28" ref={previewRef} className="cg-copy-ck-gomoku-play__hover-stone" aria-hidden="true" />
+      {interactive && hint && <span shuku-edit-id="e-8d74e4f9-c936-43ce-b6e8-aaf87c29093c" className="cg-copy-ck-gomoku-play__hint-stone" style={{ left: `${(BOARD_PAD_RATIO + hint.col * (1 - 2 * BOARD_PAD_RATIO) / (BOARD_SIZE - 1)) * 100}%`, top: `${(BOARD_PAD_RATIO + hint.row * (1 - 2 * BOARD_PAD_RATIO) / (BOARD_SIZE - 1)) * 100}%` }} aria-hidden="true" />}
+      <div shuku-edit-id="e-e10af596-6b47-4399-9322-333d0ea817bc" className="cg-copy-ck-gomoku-play__board-axis" aria-hidden="true">
+        <div shuku-edit-id="e-d55aebc8-fa66-42dc-9b49-9b1a344a06fc" className="cg-copy-ck-gomoku-play__board-axis-cols">
           {COLUMN_LABELS.map((text, index) => (
-            <Typography key={text} as="span" variant="body" style={{ left: `${(index / (BOARD_SIZE - 1)) * 100}%` }}>
+            <Typography shuku-edit-id="e-784c2ff1-dfab-4ced-9631-efb238be1532" key={text} as="span" variant="body" style={{ left: `${(index / (BOARD_SIZE - 1)) * 100}%` }}>
               {text}
             </Typography>
           ))}
         </div>
-        <div className="cg-copy-ck-gomoku-play__board-axis-rows">
+        <div shuku-edit-id="e-dbe79333-5ef8-4ad2-b60c-c3fdcc1c7d9d" className="cg-copy-ck-gomoku-play__board-axis-rows">
           {ROW_LABELS.map((text, index) => (
-            <Typography key={text} as="span" variant="body" style={{ top: `${(index / (BOARD_SIZE - 1)) * 100}%` }}>
+            <Typography shuku-edit-id="e-e5f7aedf-93ae-4943-976e-a6db6177d1a8" key={text} as="span" variant="body" style={{ top: `${(index / (BOARD_SIZE - 1)) * 100}%` }}>
               {text}
             </Typography>
           ))}
@@ -328,29 +328,29 @@ function PlayBoard({
 /** 对局面板按钮图标：跟随按钮文字颜色，尺寸相对按钮字号。 */
 function RestartIcon() {
   return (
-    <svg className="cg-copy-ck-gomoku-play__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">
-      <polyline points="23 4 23 10 17 10" />
-      <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
+    <svg shuku-edit-id="e-5bbd84b2-6fb3-4937-bd42-34b9de766230" className="cg-copy-ck-gomoku-play__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">
+      <polyline shuku-edit-id="e-4e78f447-3d66-48fa-8ed7-9cbcf3b8546d" points="23 4 23 10 17 10" />
+      <path shuku-edit-id="e-a5a505e9-c283-42b7-adb8-5cb58f4e05bd" d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
     </svg>
   );
 }
 
 function UndoIcon() {
   return (
-    <svg className="cg-copy-ck-gomoku-play__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">
-      <polyline points="9 14 4 9 9 4" />
-      <path d="M4 9h11.5A4.5 4.5 0 0 1 20 13.5V20" />
+    <svg shuku-edit-id="e-6b1ca542-aef4-4b98-8d4d-ed5a884a0576" className="cg-copy-ck-gomoku-play__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">
+      <polyline shuku-edit-id="e-4c7d710a-23ef-43a8-badc-7460be64b60f" points="9 14 4 9 9 4" />
+      <path shuku-edit-id="e-6cfcca27-2fbb-487a-a805-5ff77b8470c1" d="M4 9h11.5A4.5 4.5 0 0 1 20 13.5V20" />
     </svg>
   );
 }
 
 function ExampleIcon() {
   return (
-    <svg className="cg-copy-ck-gomoku-play__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">
-      <path d="M9 6h11M9 12h11M9 18h11" />
-      <circle cx="4.4" cy="6" r="1.3" />
-      <circle cx="4.4" cy="12" r="1.3" />
-      <circle cx="4.4" cy="18" r="1.3" />
+    <svg shuku-edit-id="e-75e7e512-50ab-497c-92b1-2e0362595524" className="cg-copy-ck-gomoku-play__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">
+      <path shuku-edit-id="e-3ba77647-d778-456e-abf2-d2c20f2ef909" d="M9 6h11M9 12h11M9 18h11" />
+      <circle shuku-edit-id="e-1315b205-5108-4a38-8f2b-aa8e4c565f46" cx="4.4" cy="6" r="1.3" />
+      <circle shuku-edit-id="e-1a39e67b-3438-4322-90a3-ea7382072cf2" cx="4.4" cy="12" r="1.3" />
+      <circle shuku-edit-id="e-a4756df3-075d-4157-8f6c-b45b51f1ad3d" cx="4.4" cy="18" r="1.3" />
     </svg>
   );
 }
@@ -539,43 +539,43 @@ export function GomokuPlayPage({ onComplete }: GomokuPlayPageProps) {
     : null;
 
   return (
-    <ContentBlock className="cg-copy-ck-gomoku-play" aria-label="十五路五子棋对局：你执黑，AI 执白">
-      <video className="cg-copy-ck-gomoku-play__background-video" autoPlay muted loop playsInline aria-hidden="true">
-        <source src={bgVideo} type="video/mp4" />
+    <ContentBlock shuku-edit-id="e-9f34c6e3-f27c-4b8e-8ae7-939d17d350b5" className="cg-copy-ck-gomoku-play" aria-label="十五路五子棋对局：你执黑，AI 执白">
+      <video shuku-edit-id="e-395c51f4-0de2-41e2-bab6-7e693cefc0b2" className="cg-copy-ck-gomoku-play__background-video" autoPlay muted loop playsInline aria-hidden="true">
+        <source shuku-edit-id="e-86dd048f-d419-4e41-af28-8259eb7cc4f6" src={bgVideo} type="video/mp4" />
       </video>
-      <div className="cg-copy-ck-gomoku-play__layout">
-        <aside className="cg-copy-ck-gomoku-play__rail">
-          <div className="cg-copy-ck-gomoku-play__intro">
-            <Typography as="h1" variant="h1" tone="accent">从五子棋开始<br />认识卷积核</Typography>
+      <div shuku-edit-id="e-ebe864ec-31cc-4f56-826f-a111c8f4f579" className="cg-copy-ck-gomoku-play__layout">
+        <aside shuku-edit-id="e-c12a9599-9fd4-4e42-a38f-43cc1ed5e06c" className="cg-copy-ck-gomoku-play__rail">
+          <div shuku-edit-id="e-dd234a2d-7f69-4a87-8045-9f8aa2fd8ab7" className="cg-copy-ck-gomoku-play__intro">
+            <Typography shuku-edit-id="e-9fc98735-332b-418f-9140-bae63ba18efd" as="h1" variant="h1" tone="accent">从五子棋开始<br shuku-edit-id="e-5a8b0183-d16e-4ec0-a700-dd78481287e6" />认识卷积核</Typography>
           </div>
-          <div className="cg-copy-ck-gomoku-play__brief">
-            <Typography as="p" variant="subtitle" tone="main">先来下一局五子棋。</Typography>
-            <Typography as="p" variant="subtitle" tone="main">你执黑，与 AI 对弈。</Typography>
+          <div shuku-edit-id="e-f4266bb2-61d4-4eb2-b31e-8d14a9ab19d7" className="cg-copy-ck-gomoku-play__brief">
+            <Typography shuku-edit-id="e-2a97948f-4f8e-4050-9c32-2d55e234ee16" as="p" variant="subtitle" tone="main">先来下一局五子棋。</Typography>
+            <Typography shuku-edit-id="e-2e1ffd4b-9a43-4373-ac69-9376b74986fc" as="p" variant="subtitle" tone="main">你执黑，与 AI 对弈。</Typography>
           </div>
         </aside>
 
-        <div className="cg-copy-ck-gomoku-play__main">
-          <div className="cg-copy-ck-gomoku-play__status" aria-live="polite">
-            <div className="cg-copy-ck-gomoku-play__panel-heading"><Typography as="span" variant="bodySmall" tone="muted">对局面板</Typography><span aria-hidden="true" className="cg-copy-ck-gomoku-play__panel-line" /></div>
-            <div className="cg-copy-ck-gomoku-play__status-player"><span className={`cg-copy-ck-gomoku-play__turn cg-copy-ck-gomoku-play__turn--${status.stone}`} aria-hidden="true" /><Typography as="strong" variant="body" tone={status.accent ? 'accent' : 'main'}>{status.text}</Typography></div>
-            <div className="cg-copy-ck-gomoku-play__status-situation">{situation ? <span className={`cg-copy-ck-gomoku-play__lamp cg-copy-ck-gomoku-play__lamp--${situation.tone}`} aria-hidden="true" /> : <span className="cg-copy-ck-gomoku-play__lamp cg-copy-ck-gomoku-play__lamp--off" aria-hidden="true" />}<Typography as="strong" variant="body" tone={situation ? 'accent' : 'muted'}>{situation?.label ?? (difficulty !== 'easy' ? '提示已关闭' : game.turn === 'computer' ? '等待 AI 落子' : game.turn === 'over' ? '对局结束' : '思考下一手')}</Typography></div>
-            <div className="cg-copy-ck-gomoku-play__controls">
-              <div className="cg-copy-ck-gomoku-play__difficulty">
-                <div className="cg-copy-ck-gomoku-play__control-heading"><Typography as="strong" variant="body" tone="accent">对弈难度</Typography></div>
-                <div className="cg-copy-ck-gomoku-play__difficulty-options" role="group" aria-label="选择 AI 难度">
-                  {([['easy', '简单'], ['medium', '中等'], ['hard', '困难']] as const).map(([value, label]) => <button key={value} type="button" className={difficulty === value ? 'is-active' : ''} aria-pressed={difficulty === value} onClick={() => changeDifficulty(value)}><Typography as="span" variant="body" tone="inherit">{label}</Typography></button>)}
+        <div shuku-edit-id="e-38a4fd82-a7ed-4940-8e35-87c64d6ffcae" className="cg-copy-ck-gomoku-play__main">
+          <div shuku-edit-id="e-33ac08e8-dcf6-4605-b004-85f4693f3185" className="cg-copy-ck-gomoku-play__status" aria-live="polite">
+            <div shuku-edit-id="e-94102fac-bc13-48da-8c62-fc233830f82d" className="cg-copy-ck-gomoku-play__panel-heading"><Typography shuku-edit-id="e-de74d4ba-1273-4bfc-9b6c-60eacab63c7b" as="span" variant="bodySmall" tone="muted">对局面板</Typography><span shuku-edit-id="e-23d275bd-bfe6-46e7-88ad-f664e9a8b971" aria-hidden="true" className="cg-copy-ck-gomoku-play__panel-line" /></div>
+            <div shuku-edit-id="e-8064424f-cdfa-4a29-b0eb-baa19e32f411" className="cg-copy-ck-gomoku-play__status-player"><span shuku-edit-id="e-f1c59fdb-1f7b-498f-af8d-5beb44ca00c6" className={`cg-copy-ck-gomoku-play__turn cg-copy-ck-gomoku-play__turn--${status.stone}`} aria-hidden="true" /><Typography shuku-edit-id="e-a1be6ed5-627e-43f4-8780-21aa371b7f80" as="strong" variant="body" tone={status.accent ? 'accent' : 'main'}>{status.text}</Typography></div>
+            <div shuku-edit-id="e-9a757ee5-49a8-4556-ba09-04881c337a58" className="cg-copy-ck-gomoku-play__status-situation">{situation ? <span shuku-edit-id="e-845cc90d-ec69-4c39-a339-75a12cac68ff" className={`cg-copy-ck-gomoku-play__lamp cg-copy-ck-gomoku-play__lamp--${situation.tone}`} aria-hidden="true" /> : <span shuku-edit-id="e-b5d42943-a37d-440f-8d1e-ff99bd2d40c9" className="cg-copy-ck-gomoku-play__lamp cg-copy-ck-gomoku-play__lamp--off" aria-hidden="true" />}<Typography shuku-edit-id="e-b68e0876-fb78-487a-82e1-393ebfc81df2" as="strong" variant="body" tone={situation ? 'accent' : 'muted'}>{situation?.label ?? (difficulty !== 'easy' ? '提示已关闭' : game.turn === 'computer' ? '等待 AI 落子' : game.turn === 'over' ? '对局结束' : '思考下一手')}</Typography></div>
+            <div shuku-edit-id="e-75f56315-c1ba-4ef1-8996-f9a2e6d28e7f" className="cg-copy-ck-gomoku-play__controls">
+              <div shuku-edit-id="e-470b7672-9dfb-4601-b0ed-628a0c53206d" className="cg-copy-ck-gomoku-play__difficulty">
+                <div shuku-edit-id="e-52c92d59-52db-46eb-82aa-517f2f15cec2" className="cg-copy-ck-gomoku-play__control-heading"><Typography shuku-edit-id="e-1becccbe-ee68-4efd-91e4-348bf05a9468" as="strong" variant="body" tone="accent">对弈难度</Typography></div>
+                <div shuku-edit-id="e-e26e46a2-cad5-4a15-a69b-ee92d1b92a71" className="cg-copy-ck-gomoku-play__difficulty-options" role="group" aria-label="选择 AI 难度">
+                  {([['easy', '简单'], ['medium', '中等'], ['hard', '困难']] as const).map(([value, label]) => <button shuku-edit-id="e-c0275826-24a9-4458-880c-fc0a82c92102" key={value} type="button" className={difficulty === value ? 'is-active' : ''} aria-pressed={difficulty === value} onClick={() => changeDifficulty(value)}><Typography shuku-edit-id="e-e6a6ed40-1359-429b-b7e9-cc7253a9fbae" as="span" variant="body" tone="inherit">{label}</Typography></button>)}
                 </div>
-                <Typography as="p" variant="bodySmall" tone="muted">{difficulty === 'easy' ? '轻松的体验' : difficulty === 'medium' ? '势均力敌' : '棋逢强敌'}</Typography>
+                <Typography shuku-edit-id="e-a61a3059-3210-42da-b3ae-c543016ad3ad" as="p" variant="bodySmall" tone="muted">{difficulty === 'easy' ? '轻松的体验' : difficulty === 'medium' ? '势均力敌' : '棋逢强敌'}</Typography>
               </div>
-              <div className="cg-copy-ck-gomoku-play__actions">
-                <Typography as="strong" variant="body" tone="accent">棋局操作</Typography>
+              <div shuku-edit-id="e-f8f83715-bef7-4fa4-8ca9-e7e1137e465d" className="cg-copy-ck-gomoku-play__actions">
+                <Typography shuku-edit-id="e-40e15cf2-f0dc-40e6-9ba7-9869a0fe8c95" as="strong" variant="body" tone="accent">棋局操作</Typography>
                 <Button variant="primary" onClick={undoMove} disabled={difficulty === 'hard' || game.turn === 'over' || game.history.length === 0}><UndoIcon />悔一步</Button>
                 <Button onClick={resetGame}><RestartIcon />重新开始</Button>
                 <Button onClick={playDemo}><ExampleIcon />示例棋局</Button>
               </div>
             </div>
           </div>
-          <div className="cg-copy-ck-gomoku-play__board-stage">
+          <div shuku-edit-id="e-2bcd4726-5d0d-473b-b839-55b402ae3e4b" className="cg-copy-ck-gomoku-play__board-stage">
             <PlayBoard
               board={game.board}
               lastMove={game.lastMove}

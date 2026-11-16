@@ -44,8 +44,8 @@ function LessonCanvas({ children }: { children: ReactNode }) {
     return () => observer.disconnect();
   }, []);
 
-  return <div className="lesson-canvas-frame" ref={frameRef} style={{ height: 900 * scale }}>
-    <div className="course-page-surface course-shell" style={{ transform: `scale(${scale})` }}>{children}</div>
+  return <div shuku-edit-id="e-b67d3044-6c1f-45c1-8a11-d57ae8f71233" className="lesson-canvas-frame" ref={frameRef} style={{ height: 900 * scale }}>
+    <div shuku-edit-id="e-3a26eec5-e978-4983-972c-c10a7895c867" className="course-page-surface course-shell" style={{ transform: `scale(${scale})` }}>{children}</div>
   </div>;
 }
 

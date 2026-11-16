@@ -59,13 +59,13 @@ export function InlineAnswer({
   };
 
   return (
-    <section className={className ? `nrnn-inline-answer ${className}` : 'nrnn-inline-answer'}>
-      <header className="nrnn-inline-answer__head">
-        <Typography as="span" variant="body" tone="accent">{typeLabel}</Typography>
-        <div className="nrnn-inline-answer__row">
-          <Typography as="strong" variant="body" tone="main" className="nrnn-inline-answer__stem">
+    <section shuku-edit-id="e-3f13e0ed-5660-46da-90eb-6cce29f2edf4" className={className ? `nrnn-inline-answer ${className}` : 'nrnn-inline-answer'}>
+      <header shuku-edit-id="e-f4a4433e-6c87-475b-ba70-e048fe17c4d9" className="nrnn-inline-answer__head">
+        <Typography shuku-edit-id="e-9fe215a3-6eba-4bdb-b223-3273a958123a" as="span" variant="body" tone="accent">{typeLabel}</Typography>
+        <div shuku-edit-id="e-6375566e-3f78-49e1-8789-ede8b0a4bf57" className="nrnn-inline-answer__row">
+          <Typography shuku-edit-id="e-c1dd3f3e-ba9d-42e2-b7d4-f79e929ee422" as="strong" variant="body" tone="main" className="nrnn-inline-answer__stem">
             {stem}
-            <input
+            <input shuku-edit-id="e-79d8d10b-cdb1-4767-96fc-ca7e5e437e0d"
               className="dl-inline-blank"
               type="text"
               value={value}
@@ -87,7 +87,7 @@ export function InlineAnswer({
           </Typography>
           {!solved && (
             <Button variant="primary" disabled={!value.trim()} onClick={check}>
-              <Typography as="span" variant="body" tone="inherit">检查答案</Typography>
+              <Typography shuku-edit-id="e-8cd7298b-4f9e-4e8c-8f6b-22de00160fd2" as="span" variant="body" tone="inherit">检查答案</Typography>
             </Button>
           )}
         </div>

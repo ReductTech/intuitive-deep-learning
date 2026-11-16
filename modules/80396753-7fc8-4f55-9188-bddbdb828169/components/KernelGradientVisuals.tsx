@@ -20,18 +20,18 @@ export function KernelMatrix({ values, size = 3, selected, onSelect, label, comp
   label: string; compact?: boolean; marked?: number[]; success?: boolean; formatValue?: (value: number) => string; cellStyle?: (value: number) => CSSProperties;
 }) {
   return <MathFormulaBlock ariaLabel={label} className={`vfl-gradient-matrix ${compact ? 'vfl-gradient-matrix--compact' : ''} ${success ? 'vfl-gradient-matrix--success' : ''}`}>
-    <div className="vfl-gradient-matrix__grid" style={{ '--vfl-gradient-size': size } as CSSProperties}>
+    <div shuku-edit-id="e-5e466d26-abf7-4418-8408-3999de24511a" className="vfl-gradient-matrix__grid" style={{ '--vfl-gradient-size': size } as CSSProperties}>
       {values.map((value, index) => {
         const className = `vfl-gradient-matrix__cell ${value === 0 ? 'is-zero' : ''} ${selected === index ? 'is-traced' : ''} ${marked.includes(index) ? 'is-window' : ''}`;
         const number = <MathFormulaStatic latex={formatValue(value)} />;
         return onSelect
           ? <Button key={index} className={className} style={cellStyle?.(value)} aria-label={`${label}，第 ${Math.floor(index / size) + 1} 行第 ${index % size + 1} 列`} aria-pressed={selected === index} onClick={() => onSelect(index)}>{number}</Button>
-          : <div key={index} className={className} style={cellStyle?.(value)}>{number}</div>;
+          : <div shuku-edit-id="e-9cca722e-da73-467e-a330-20dbfd42da0a" key={index} className={className} style={cellStyle?.(value)}>{number}</div>;
       })}
     </div>
   </MathFormulaBlock>;
 }
 
 export function KernelArrow({ reverse = false }: { reverse?: boolean }) {
-  return <Typography as="span" variant="h2" tone={reverse ? 'warning' : 'muted'} className="vfl-gradient-arrow" aria-hidden="true">{reverse ? '←' : '→'}</Typography>;
+  return <Typography shuku-edit-id="e-e7518811-9790-4c19-bbd2-8d176a607a95" as="span" variant="h2" tone={reverse ? 'warning' : 'muted'} className="vfl-gradient-arrow" aria-hidden="true">{reverse ? '←' : '→'}</Typography>;
 }

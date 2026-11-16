@@ -206,69 +206,69 @@ export function FixedDigitPage() {
   };
 
   return (
-    <ContentBlock className="vfl-opening relative grid h-full min-h-0 min-w-0 grid-rows-[auto_minmax(0,1fr)] gap-[14px] overflow-hidden border-t-4 border-t-lesson-accent px-[34px] pb-[24px] pt-[30px]" headingLevel={1} title="固定特征的数字分类" subtitle="如果卷积核一笔都不改，机器还能学会辨认你的手写数字吗？">
-      <div className="vfl-opening__stage grid min-h-0 min-w-0 grid-cols-[minmax(0,400px)_minmax(0,1fr)_minmax(0,340px)] overflow-hidden rounded-[22px] border">
-        <section className="vfl-opening__ink relative flex min-h-0 min-w-0 flex-col items-stretch px-[22px] pb-[20px] pt-[18px]" aria-label="手写数字输入">
-          <div className="vfl-opening__section-head flex min-h-[37px] items-center justify-between gap-[8px]">
-            <Typography as="span" variant="bodySmall" tone="inherit">01 / 输入</Typography>
-            <Typography as="span" variant="bodySmall" tone="inherit">28 × 28 像素</Typography>
+    <ContentBlock shuku-edit-id="e-cb0eb956-bcb4-433a-98b4-2e5f224fd551" className="vfl-opening relative grid h-full min-h-0 min-w-0 grid-rows-[auto_minmax(0,1fr)] gap-[14px] overflow-hidden border-t-4 border-t-lesson-accent px-[34px] pb-[24px] pt-[30px]" headingLevel={1} title="固定特征的数字分类" subtitle="如果卷积核一笔都不改，机器还能学会辨认你的手写数字吗？">
+      <div shuku-edit-id="e-3a828a02-7b17-431c-b6c8-2db6f35add51" className="vfl-opening__stage grid min-h-0 min-w-0 grid-cols-[minmax(0,400px)_minmax(0,1fr)_minmax(0,340px)] overflow-hidden rounded-[22px] border">
+        <section shuku-edit-id="e-27341c84-2a21-4829-b091-222d87b38e19" className="vfl-opening__ink relative flex min-h-0 min-w-0 flex-col items-stretch px-[22px] pb-[20px] pt-[18px]" aria-label="手写数字输入">
+          <div shuku-edit-id="e-d75f5035-fc27-4dfa-bd47-cf20bcc0c974" className="vfl-opening__section-head flex min-h-[37px] items-center justify-between gap-[8px]">
+            <Typography shuku-edit-id="e-95ba8682-b46d-404e-9156-93eea76944c6" as="span" variant="bodySmall" tone="inherit">01 / 输入</Typography>
+            <Typography shuku-edit-id="e-8f55b322-7313-4e17-8091-f82ec56bbd39" as="span" variant="bodySmall" tone="inherit">28 × 28 像素</Typography>
           </div>
-          <div className="vfl-opening__drawing-frame relative my-auto aspect-square w-[min(100%,336px)] self-center rounded-[16px] border">
-            <canvas className="relative block h-full w-full touch-none rounded-[16px]" ref={canvasRef} width={DRAW_SIZE} height={DRAW_SIZE} aria-label="手写数字画布；按住鼠标或触屏书写" onPointerDown={beginDrawing} onPointerMove={continueDrawing} onPointerUp={stopDrawing} onPointerCancel={stopDrawing} />
-            <span className="vfl-opening__corner vfl-opening__corner--tl" aria-hidden="true" />
-            <span className="vfl-opening__corner vfl-opening__corner--br" aria-hidden="true" />
+          <div shuku-edit-id="e-1f4231a2-78a2-437a-aba5-5fa0b29b399b" className="vfl-opening__drawing-frame relative my-auto aspect-square w-[min(100%,336px)] self-center rounded-[16px] border">
+            <canvas shuku-edit-id="e-add82e81-fc50-4372-970f-63be430acb6f" className="relative block h-full w-full touch-none rounded-[16px]" ref={canvasRef} width={DRAW_SIZE} height={DRAW_SIZE} aria-label="手写数字画布；按住鼠标或触屏书写" onPointerDown={beginDrawing} onPointerMove={continueDrawing} onPointerUp={stopDrawing} onPointerCancel={stopDrawing} />
+            <span shuku-edit-id="e-88e7cf6b-9340-4b66-8531-8b7b2053ff65" className="vfl-opening__corner vfl-opening__corner--tl" aria-hidden="true" />
+            <span shuku-edit-id="e-49a43811-363b-4706-a91f-ee3c14cb5631" className="vfl-opening__corner vfl-opening__corner--br" aria-hidden="true" />
           </div>
-          <div className="vfl-opening__sample-row grid gap-[8px]">
-            <Typography as="span" variant="bodySmall" tone="inherit">试试这些真实笔迹</Typography>
-            <div className="vfl-opening__sample-buttons flex gap-[8px]" role="group" aria-label="手写数字样本">
+          <div shuku-edit-id="e-c0285e84-2760-472d-bf07-f788927ed925" className="vfl-opening__sample-row grid gap-[8px]">
+            <Typography shuku-edit-id="e-3183846d-598e-4b73-b4f9-ae332f98864a" as="span" variant="bodySmall" tone="inherit">试试这些真实笔迹</Typography>
+            <div shuku-edit-id="e-7fdb987f-126b-41a0-b2ea-22ec5c610925" className="vfl-opening__sample-buttons flex gap-[8px]" role="group" aria-label="手写数字样本">
               {SAMPLES.map((digit) => <Button key={digit.label} active={sample === digit.label} onClick={() => loadSample(digit)} aria-label={`查看数字 ${digit.label} 的真实手写样本`}>{digit.label}</Button>)}
               <Button onClick={clearDrawing}>自己写</Button>
             </div>
           </div>
         </section>
 
-        <section className="vfl-opening__features relative flex min-h-0 min-w-0 flex-col gap-[10px] px-[24px] pb-[20px] pt-[18px]" aria-label="固定卷积核与特征图">
-          <div className="vfl-opening__section-head flex min-h-[37px] items-center justify-between gap-[8px]">
-            <Typography as="span" variant="bodySmall" tone="accent">02 / 固定的眼睛</Typography>
-            <span className="vfl-opening__lock" aria-hidden="true">◆</span>
+        <section shuku-edit-id="e-2148c424-f6c5-435c-ae4a-a6a0f0cb73ff" className="vfl-opening__features relative flex min-h-0 min-w-0 flex-col gap-[10px] px-[24px] pb-[20px] pt-[18px]" aria-label="固定卷积核与特征图">
+          <div shuku-edit-id="e-6cc9ffa9-9908-4c55-a0e4-7410b8d5d42d" className="vfl-opening__section-head flex min-h-[37px] items-center justify-between gap-[8px]">
+            <Typography shuku-edit-id="e-c1de6f25-d200-44b3-8ff6-2df07a6e12d2" as="span" variant="bodySmall" tone="accent">02 / 固定的眼睛</Typography>
+            <span shuku-edit-id="e-23b4802c-dd44-44b3-931d-ee4630b8d330" className="vfl-opening__lock" aria-hidden="true">◆</span>
           </div>
-          <Typography as="h2" variant="h3" tone="accent">同一张图，六种看法</Typography>
-          <Typography variant="bodySmall" tone="muted">选择参与训练的卷积核。亮起的位置，是它们从笔画中提取的响应。</Typography>
-          <div className="vfl-opening__maps my-[2px] grid min-h-0 min-w-0 flex-1 grid-cols-3 grid-rows-2 gap-[10px]">
+          <Typography shuku-edit-id="e-097979cf-d29e-4812-aac2-f99dc40e330f" as="h2" variant="h3" tone="accent">同一张图，六种看法</Typography>
+          <Typography shuku-edit-id="e-d35d2aab-d304-4d65-bfd8-9a304b61a7d3" variant="bodySmall" tone="muted">选择参与训练的卷积核。亮起的位置，是它们从笔画中提取的响应。</Typography>
+          <div shuku-edit-id="e-14dfb026-a132-48f1-a880-5b61d07ba3d6" className="vfl-opening__maps my-[2px] grid min-h-0 min-w-0 flex-1 grid-cols-3 grid-rows-2 gap-[10px]">
             {KERNELS.map((kernel) => {
               const active = selected.includes(kernel.id);
               const map = maps[kernel.id];
               const maximum = Math.max(0.001, ...map.flat());
-              return <button key={kernel.id} type="button" className={`vfl-opening__map grid min-h-0 min-w-0 cursor-pointer grid-rows-[auto_minmax(0,1fr)] gap-[5px] rounded-[12px] border px-[10px] py-[8px]${active ? ' is-selected' : ''}`} aria-pressed={active} onClick={() => toggleKernel(kernel.id)}>
-                <span className="vfl-opening__map-top flex min-w-0 items-center justify-between gap-[2px]"><Typography as="span" variant="bodySmall" tone="inherit">{kernel.name}</Typography><span className="vfl-opening__map-mark grid h-[22px] w-[22px] flex-none place-items-center rounded-full" aria-hidden="true">{active ? '✓' : '+'}</span></span>
-                <span className="vfl-opening__map-grid grid aspect-square w-[min(100%,112px)] grid-cols-8 grid-rows-8 justify-self-center self-center gap-px rounded-[4px] border p-[3px]" aria-hidden="true">{map.flat().map((value, index) => <i key={index} style={{ '--vfl-cell': (value / maximum).toFixed(3) } as CSSProperties} />)}</span>
+              return <button shuku-edit-id="e-c948227e-cfec-436a-8af7-25f4834829e2" key={kernel.id} type="button" className={`vfl-opening__map grid min-h-0 min-w-0 cursor-pointer grid-rows-[auto_minmax(0,1fr)] gap-[5px] rounded-[12px] border px-[10px] py-[8px]${active ? ' is-selected' : ''}`} aria-pressed={active} onClick={() => toggleKernel(kernel.id)}>
+                <span shuku-edit-id="e-f879b1b5-4b18-4b60-be91-d66508a81d53" className="vfl-opening__map-top flex min-w-0 items-center justify-between gap-[2px]"><Typography shuku-edit-id="e-d8dd255f-f527-46b3-ab50-7b5e238dba53" as="span" variant="bodySmall" tone="inherit">{kernel.name}</Typography><span shuku-edit-id="e-a0824db4-ff46-4d52-9eaa-545bc1d0cc8e" className="vfl-opening__map-mark grid h-[22px] w-[22px] flex-none place-items-center rounded-full" aria-hidden="true">{active ? '✓' : '+'}</span></span>
+                <span shuku-edit-id="e-3ba4a835-db4a-47ea-8cfc-eb527d44adb4" className="vfl-opening__map-grid grid aspect-square w-[min(100%,112px)] grid-cols-8 grid-rows-8 justify-self-center self-center gap-px rounded-[4px] border p-[3px]" aria-hidden="true">{map.flat().map((value, index) => <i shuku-edit-id="e-3a96d293-e51d-40df-af93-e2505dd5bf8b" key={index} style={{ '--vfl-cell': (value / maximum).toFixed(3) } as CSSProperties} />)}</span>
               </button>;
             })}
           </div>
-          <div className="vfl-opening__fixed-note flex min-h-[38px] items-center justify-center gap-[12px] border-t"><Typography as="span" variant="bodySmall" tone="accent">卷积核数值固定</Typography><span aria-hidden="true" /><Typography as="span" variant="bodySmall" tone="muted">训练时不会更新</Typography></div>
+          <div shuku-edit-id="e-9138d064-66af-4b26-9ebc-bbd30d2ff472" className="vfl-opening__fixed-note flex min-h-[38px] items-center justify-center gap-[12px] border-t"><Typography shuku-edit-id="e-2f1db601-89f4-4501-babc-9792eea47b40" as="span" variant="bodySmall" tone="accent">卷积核数值固定</Typography><span shuku-edit-id="e-c5d03286-1821-4670-a4f6-3f367eac620d" aria-hidden="true" /><Typography shuku-edit-id="e-0ba4bf14-9a98-465b-98a2-d99951b49650" as="span" variant="bodySmall" tone="muted">训练时不会更新</Typography></div>
         </section>
 
-        <section className="vfl-opening__decision relative flex min-h-0 min-w-0 flex-col gap-[7px] px-[20px] pb-[20px] pt-[18px]" aria-label="分类器训练与结果">
-          <div className="vfl-opening__section-head flex min-h-[37px] items-center justify-between gap-[8px]"><Typography as="span" variant="bodySmall" tone="inherit">03 / 学习判断</Typography></div>
-          <Typography as="h2" variant="h3" tone="inherit">只训练分类器</Typography>
-          <Typography variant="bodySmall" tone="inherit">让它学习如何组合左边的固定特征。</Typography>
-          <div className="vfl-opening__prediction mt-auto grid min-h-[123px] content-center justify-items-center gap-0 rounded-[16px] border" aria-live="polite">
-            <Typography as="span" variant="bodySmall" tone="inherit">当前预测</Typography>
-            <Typography as="strong" variant="display" tone="inherit">{prediction < 0 ? '？' : prediction === 10 ? '拒识' : prediction}</Typography>
-            <Typography as="span" variant="bodySmall" tone="inherit">{prediction < 0 ? '等待训练' : `该结果的概率 ${percent(bestProbability)}`}</Typography>
+        <section shuku-edit-id="e-df43eef0-63ee-4fa4-b860-ddcc3e466d38" className="vfl-opening__decision relative flex min-h-0 min-w-0 flex-col gap-[7px] px-[20px] pb-[20px] pt-[18px]" aria-label="分类器训练与结果">
+          <div shuku-edit-id="e-50123ccc-cc52-459b-8d98-a31e28ce3f5f" className="vfl-opening__section-head flex min-h-[37px] items-center justify-between gap-[8px]"><Typography shuku-edit-id="e-3162d850-c3c6-4f8a-82fc-df0c1db5d424" as="span" variant="bodySmall" tone="inherit">03 / 学习判断</Typography></div>
+          <Typography shuku-edit-id="e-59e65494-656e-4aae-bc86-cb9aebfe4c13" as="h2" variant="h3" tone="inherit">只训练分类器</Typography>
+          <Typography shuku-edit-id="e-937e0f9b-be43-4beb-8fc5-980f434facec" variant="bodySmall" tone="inherit">让它学习如何组合左边的固定特征。</Typography>
+          <div shuku-edit-id="e-33fc9250-39ae-4e41-8967-02266f85013f" className="vfl-opening__prediction mt-auto grid min-h-[123px] content-center justify-items-center gap-0 rounded-[16px] border" aria-live="polite">
+            <Typography shuku-edit-id="e-bdc5d9e3-327a-43ea-b091-f7c00d5a66df" as="span" variant="bodySmall" tone="inherit">当前预测</Typography>
+            <Typography shuku-edit-id="e-41c878ec-f5d0-462c-a52d-61f8374f522b" as="strong" variant="display" tone="inherit">{prediction < 0 ? '？' : prediction === 10 ? '拒识' : prediction}</Typography>
+            <Typography shuku-edit-id="e-4aa4bf71-284d-4ded-b2a2-89b13ccc3247" as="span" variant="bodySmall" tone="inherit">{prediction < 0 ? '等待训练' : `该结果的概率 ${percent(bestProbability)}`}</Typography>
           </div>
-          <div className="vfl-opening__probabilities flex min-h-[125px] items-stretch gap-[4px] pt-[6px]" aria-label="各类别概率">
-            {Array.from({ length: 11 }, (_, digit) => <div className={`vfl-opening__probability flex min-w-0 flex-1 flex-col-reverse items-center${prediction === digit ? ' is-top' : ''}`} key={digit}>
-              <Typography as="span" variant="bodySmall" tone="inherit">{digit === 10 ? '—' : digit}</Typography>
-              <span className="vfl-opening__probability-track relative block min-h-0 w-full flex-1 overflow-hidden"><i style={{ height: `${(probabilities?.[digit] ?? 0) * 100}%` }} /></span>
+          <div shuku-edit-id="e-40acd7cb-799a-454a-9f98-9c993a58f5d7" className="vfl-opening__probabilities flex min-h-[125px] items-stretch gap-[4px] pt-[6px]" aria-label="各类别概率">
+            {Array.from({ length: 11 }, (_, digit) => <div shuku-edit-id="e-b0b037ca-b2b0-46ed-887c-a414491f1c97" className={`vfl-opening__probability flex min-w-0 flex-1 flex-col-reverse items-center${prediction === digit ? ' is-top' : ''}`} key={digit}>
+              <Typography shuku-edit-id="e-813db240-3d42-492a-87fc-e5fba22c3213" as="span" variant="bodySmall" tone="inherit">{digit === 10 ? '—' : digit}</Typography>
+              <span shuku-edit-id="e-5ee3fab9-e090-47f8-9412-4b43c0f69d3c" className="vfl-opening__probability-track relative block min-h-0 w-full flex-1 overflow-hidden"><i shuku-edit-id="e-70bc0c8b-008b-4079-b82a-b7fd36144fe1" style={{ height: `${(probabilities?.[digit] ?? 0) * 100}%` }} /></span>
             </div>)}
           </div>
           <Button variant="primary" loading={training} disabled={!hasInk} onClick={train} className="vfl-opening__train">{training ? '真实训练进行中…' : result ? '重新回放分类器' : '训练分类器 →'}</Button>
-          {result && <Typography variant="bodySmall" tone="inherit" className="vfl-opening__metric">验证集准确率 {percent(result.val_accuracy)} · {result.val_count.toLocaleString()} 张</Typography>}
-          {error && <Typography variant="bodySmall" tone="danger" className="vfl-opening__error" role="alert">{error}</Typography>}
+          {result && <Typography shuku-edit-id="e-bdb7e05b-53ea-476d-85d6-705819978fa9" variant="bodySmall" tone="inherit" className="vfl-opening__metric">验证集准确率 {percent(result.val_accuracy)} · {result.val_count.toLocaleString()} 张</Typography>}
+          {error && <Typography shuku-edit-id="e-b8123360-186c-4f83-8058-ee31bf01378f" variant="bodySmall" tone="danger" className="vfl-opening__error" role="alert">{error}</Typography>}
         </section>
       </div>
-      <div className="vfl-opening__takeaway flex min-h-[52px] min-w-0 items-center justify-between gap-[18px] px-[10px]"><span className="vfl-opening__takeaway-line w-[4px] flex-none self-stretch rounded-[4px]" aria-hidden="true" /><Typography as="p" variant="body" tone="accent">固定卷积核负责看，分类器负责学。</Typography><Typography as="span" variant="bodySmall" tone="muted">下一步：当“看”的方式不合适，会发生什么？</Typography></div>
+      <div shuku-edit-id="e-91cb447e-e695-448d-94d4-ffa3ce4530f9" className="vfl-opening__takeaway flex min-h-[52px] min-w-0 items-center justify-between gap-[18px] px-[10px]"><span shuku-edit-id="e-d7bec89d-a6a5-419b-b78c-b5b4fe56ebe6" className="vfl-opening__takeaway-line w-[4px] flex-none self-stretch rounded-[4px]" aria-hidden="true" /><Typography shuku-edit-id="e-54e35e05-ab38-4f16-b20f-fcf1fdb740e5" as="p" variant="body" tone="accent">固定卷积核负责看，分类器负责学。</Typography><Typography shuku-edit-id="e-ec140299-209f-4f35-9061-681d032145b9" as="span" variant="bodySmall" tone="muted">下一步：当“看”的方式不合适，会发生什么？</Typography></div>
     </ContentBlock>
   );
 }

@@ -229,15 +229,15 @@ export function WindowScanPage({ onComplete }: WindowScanPageProps) {
   ].filter(Boolean).join(' ');
 
   return (
-    <ContentBlock
+    <ContentBlock shuku-edit-id="e-e2149c3b-2c98-4c13-b731-f5a05ee5da2a"
       headingLevel={1}
       className="spp-showcase-window-scan"
       title="棋形的局部匹配"
       subtitle="移动一个 5 × 5 模板，比较它与棋盘不同区域的匹配程度。"
     >
-      <div className="spp-showcase-window-scan__layout">
-        <div className="spp-showcase-window-scan__board-slot">
-          <div
+      <div shuku-edit-id="e-b273241d-7036-4def-99f5-9e8ec2837879" className="spp-showcase-window-scan__layout">
+        <div shuku-edit-id="e-4b1cbba9-e85a-45eb-822b-b8bbd74cca88" className="spp-showcase-window-scan__board-slot">
+          <div shuku-edit-id="e-2f19e9b5-33e2-4f86-94a1-a5b542be6941"
             ref={boardRef}
             className="spp-showcase-window-scan__board" data-numeric-board="spp" tabIndex={0} onKeyDown={handleBoardKeyDown} data-window-row={topLeft.row} data-window-col={topLeft.col}
             role="group"
@@ -263,42 +263,42 @@ export function WindowScanPage({ onComplete }: WindowScanPageProps) {
                 hit ? 'spp-showcase-window-scan__cell--hit' : '',
               ].filter(Boolean).join(' ');
               return (
-                <div key={cellKey(row, col)} className={classes}>
-                  {cell !== EMPTY && <Typography as="span" variant="h3" tone="inherit" aria-hidden="true">{cell === 1 ? '1' : '-1'}</Typography>}
+                <div shuku-edit-id="e-abaf03cb-f612-4df6-9e36-6515bcba3668" key={cellKey(row, col)} className={classes}>
+                  {cell !== EMPTY && <Typography shuku-edit-id="e-dd24434e-29d3-4c7b-90ab-134cc18eea12" as="span" variant="h3" tone="inherit" aria-hidden="true">{cell === 1 ? '1' : '-1'}</Typography>}
                 </div>
               );
             }))}
 
             {!hasMoved && !dragging && <NumericBoardDragHint />}
-            <div className={windowClasses} style={windowStyle} aria-hidden="true">
-              <span className="spp-showcase-window-scan__grip">
-                <i /><i /><i />
+            <div shuku-edit-id="e-c5404b0f-9082-4bdc-aa46-0142223b4694" className={windowClasses} style={windowStyle} aria-hidden="true">
+              <span shuku-edit-id="e-556ee126-e9a7-42f3-9e25-b6267ab2d8e6" className="spp-showcase-window-scan__grip">
+                <i shuku-edit-id="e-5b184e8e-00ef-420f-8fd8-9a30c9269230" /><i shuku-edit-id="e-9ce8b26f-3c4e-481b-b973-5406a37651f1" /><i shuku-edit-id="e-363fbbec-7683-4bf5-87e3-ebe19ee55aed" />
               </span>
             </div>
           </div>
 
-          <ul className="spp-showcase-window-scan__key">
-            <li className="spp-showcase-window-scan__key-item">
-              <span className="spp-showcase-window-scan__key-chip spp-showcase-window-scan__key-chip--one" aria-hidden="true" />
-              <Typography as="span" variant="body" tone="muted">橙色＝赢方棋子（1）</Typography>
+          <ul shuku-edit-id="e-d5567aa8-7251-4747-8843-080695e15f99" className="spp-showcase-window-scan__key">
+            <li shuku-edit-id="e-65fc4458-ab47-4d6d-9bb3-2a40934990c6" className="spp-showcase-window-scan__key-item">
+              <span shuku-edit-id="e-aaef4d09-c79f-4ba6-ae73-5a632a88ea2d" className="spp-showcase-window-scan__key-chip spp-showcase-window-scan__key-chip--one" aria-hidden="true" />
+              <Typography shuku-edit-id="e-1859740c-734f-4111-b9b2-db2e153dd0e0" as="span" variant="body" tone="muted">橙色＝赢方棋子（1）</Typography>
             </li>
-            <li className="spp-showcase-window-scan__key-item">
-              <span className="spp-showcase-window-scan__key-chip spp-showcase-window-scan__key-chip--minus" aria-hidden="true" />
-              <Typography as="span" variant="body" tone="muted">蓝色＝败方棋子（−1）</Typography>
+            <li shuku-edit-id="e-96f4b1b4-0ac6-4c2f-a8fc-8754a051c19d" className="spp-showcase-window-scan__key-item">
+              <span shuku-edit-id="e-0c630502-aca3-4dce-a0ff-3a48d6b3f8ff" className="spp-showcase-window-scan__key-chip spp-showcase-window-scan__key-chip--minus" aria-hidden="true" />
+              <Typography shuku-edit-id="e-9da98085-8579-405d-a960-7dbc25d34d8f" as="span" variant="body" tone="muted">蓝色＝败方棋子（−1）</Typography>
             </li>
           </ul>
         </div>
 
-        <div className="spp-showcase-window-scan__panel">
-          <div className="spp-showcase-window-scan__compare">
-            <div className="spp-showcase-window-scan__operand">
-              <div className="spp-showcase-window-scan__operand-heading">
-                <span className="spp-showcase-window-scan__operand-icon" aria-hidden="true"><Picture size="25" strokeWidth={4} strokeLinecap="round" strokeLinejoin="round" theme="multi-color" fill={['#5B8DE8', '#E7EFFF', '#FFFFFF', '#5B8DE8']} /></span>
-                <div>
-                  <Typography as="strong" variant="h3" tone="main">当前区域</Typography>
+        <div shuku-edit-id="e-49e93814-343c-4d05-8ca1-0764a45cf634" className="spp-showcase-window-scan__panel">
+          <div shuku-edit-id="e-6d26dec8-5613-47d5-bc22-6c7e230afdc4" className="spp-showcase-window-scan__compare">
+            <div shuku-edit-id="e-a20e53a6-9530-43fc-8d5c-c8dca983be9a" className="spp-showcase-window-scan__operand">
+              <div shuku-edit-id="e-de906962-4cd6-4cac-bac0-75829c249081" className="spp-showcase-window-scan__operand-heading">
+                <span shuku-edit-id="e-2bde1eaf-316d-4d6f-84b6-f62f275ff722" className="spp-showcase-window-scan__operand-icon" aria-hidden="true"><Picture size="25" strokeWidth={4} strokeLinecap="round" strokeLinejoin="round" theme="multi-color" fill={['#5B8DE8', '#E7EFFF', '#FFFFFF', '#5B8DE8']} /></span>
+                <div shuku-edit-id="e-d63d4d5a-1e70-4a8e-b057-943754dbefc3">
+                  <Typography shuku-edit-id="e-36b054ea-1b19-4e5c-b500-8b6012582dc6" as="strong" variant="h3" tone="main">当前区域</Typography>
                 </div>
               </div>
-              <div
+              <div shuku-edit-id="e-d2a0a052-24db-40d9-9f10-a10f50126c14"
                 className="spp-showcase-window-scan__grid"
                 role="group"
                 aria-label="当前区域的 5 × 5 数值，橙色轮廓标出目标模板中的 1 对应的位置。"
@@ -315,8 +315,8 @@ export function WindowScanPage({ onComplete }: WindowScanPageProps) {
                     hit ? 'spp-showcase-window-scan__grid-cell--hit' : '',
                   ].filter(Boolean).join(' ');
                   return (
-                    <div key={cellKey(row, col)} className={classes}>
-                      <Typography as="span" variant="h3" tone={cell === 0 ? 'muted' : 'inherit'} aria-hidden="true">
+                    <div shuku-edit-id="e-0fdc0c46-9a08-448d-ab56-35e70bb7c589" key={cellKey(row, col)} className={classes}>
+                      <Typography shuku-edit-id="e-b8ded25e-bbcf-42ee-a6cc-2f56a489485d" as="span" variant="h3" tone={cell === 0 ? 'muted' : 'inherit'} aria-hidden="true">
                         {cell}
                       </Typography>
                     </div>
@@ -325,19 +325,19 @@ export function WindowScanPage({ onComplete }: WindowScanPageProps) {
               </div>
             </div>
 
-            <div className="spp-showcase-window-scan__operator-wrap">
-              <Typography as="span" role="img" aria-label="卷积运算符" variant="h2" tone="main" className="spp-showcase-window-scan__operator is-ready"><Asterisk size="28" strokeWidth={4} strokeLinecap="round" strokeLinejoin="round" theme="outline" fill="#173B7A" /></Typography>
-              <Typography as="span" variant="bodySmall" tone="muted" className="spp-showcase-window-scan__operator-note">对应位置相乘<br />并求和</Typography>
+            <div shuku-edit-id="e-9898dcba-8f8e-420a-a4cb-077dba722f30" className="spp-showcase-window-scan__operator-wrap">
+              <Typography shuku-edit-id="e-e26ee850-ed64-4aff-8c90-dc3d1304de83" as="span" role="img" aria-label="卷积运算符" variant="h2" tone="main" className="spp-showcase-window-scan__operator is-ready"><Asterisk size="28" strokeWidth={4} strokeLinecap="round" strokeLinejoin="round" theme="outline" fill="#173B7A" /></Typography>
+              <Typography shuku-edit-id="e-bab1014f-bf0c-4163-b919-49b632e32850" as="span" variant="bodySmall" tone="muted" className="spp-showcase-window-scan__operator-note">对应位置相乘<br shuku-edit-id="e-5603ea6a-57c2-4ad4-9ca1-c58c0b3b9a23" />并求和</Typography>
             </div>
 
-            <div className="spp-showcase-window-scan__operand">
-              <div className="spp-showcase-window-scan__operand-heading">
-                <span className="spp-showcase-window-scan__operand-icon" aria-hidden="true"><GridFour size="25" strokeWidth={4} strokeLinecap="round" strokeLinejoin="round" theme="multi-color" fill={['#5B8DE8', '#E7EFFF', '#FFFFFF', '#5B8DE8']} /></span>
-                <div>
-                  <Typography as="strong" variant="h3" tone="main">目标模板</Typography>
+            <div shuku-edit-id="e-280514a3-0d3d-4f90-89d5-bbf74b62d15f" className="spp-showcase-window-scan__operand">
+              <div shuku-edit-id="e-759ba442-904a-4fd6-a97e-2b53cda026c9" className="spp-showcase-window-scan__operand-heading">
+                <span shuku-edit-id="e-3c8f53c4-dce6-4e3a-891b-e1c552b27ddb" className="spp-showcase-window-scan__operand-icon" aria-hidden="true"><GridFour size="25" strokeWidth={4} strokeLinecap="round" strokeLinejoin="round" theme="multi-color" fill={['#5B8DE8', '#E7EFFF', '#FFFFFF', '#5B8DE8']} /></span>
+                <div shuku-edit-id="e-2648a16c-b30a-4891-b3aa-5cd0f1aa4f6c">
+                  <Typography shuku-edit-id="e-2f0e00eb-307f-405b-a839-6653e7231ae3" as="strong" variant="h3" tone="main">目标模板</Typography>
                 </div>
               </div>
-              <div
+              <div shuku-edit-id="e-4b2be71c-374c-404c-ac91-9498238dd781"
                 className="spp-showcase-window-scan__grid"
                 role="group"
                 aria-label="五乘五目标模板：五格连成一线的地方是 1，其余是 0。"
@@ -345,8 +345,8 @@ export function WindowScanPage({ onComplete }: WindowScanPageProps) {
                 {KERNEL_INDEX.map((row) => KERNEL_INDEX.map((col) => {
                   const cell = kernel[row][col];
                   return (
-                    <div key={cellKey(row, col)} className={cell === 1 ? 'spp-showcase-window-scan__grid-cell spp-showcase-window-scan__grid-cell--one' : 'spp-showcase-window-scan__grid-cell'}>
-                      <Typography as="span" variant="h3" tone={cell === 0 ? 'muted' : 'inherit'} aria-hidden="true">
+                    <div shuku-edit-id="e-b07ebdab-5ccd-475c-b890-29a9770ccb1a" key={cellKey(row, col)} className={cell === 1 ? 'spp-showcase-window-scan__grid-cell spp-showcase-window-scan__grid-cell--one' : 'spp-showcase-window-scan__grid-cell'}>
+                      <Typography shuku-edit-id="e-4191ebcb-1e8d-45be-a974-0ae75202a4ef" as="span" variant="h3" tone={cell === 0 ? 'muted' : 'inherit'} aria-hidden="true">
                         {cell}
                       </Typography>
                     </div>
@@ -356,38 +356,38 @@ export function WindowScanPage({ onComplete }: WindowScanPageProps) {
             </div>
           </div>
 
-          <div className="spp-showcase-window-scan__result spp-showcase-window-scan__result-card">
-            <div className="spp-showcase-window-scan__result-heading">
-              <Typography as="span" variant="body" tone="muted">当前区域的得分</Typography>
+          <div shuku-edit-id="e-a9f2f75f-0bf8-4388-830c-61a8fbadf2c0" className="spp-showcase-window-scan__result spp-showcase-window-scan__result-card">
+            <div shuku-edit-id="e-6a1a3a8b-ed68-4f97-bb06-1822500ca7e3" className="spp-showcase-window-scan__result-heading">
+              <Typography shuku-edit-id="e-f1cab895-2793-48a0-a224-d90198d40200" as="span" variant="body" tone="muted">当前区域的得分</Typography>
             </div>
-            <div className="spp-showcase-window-scan__score-row">
-              <div className="spp-showcase-window-scan__activation-box">
-                <Typography as="strong" variant="display" tone={found ? 'success' : 'main'}>{value < 0 ? `−${Math.abs(value)}` : value}</Typography>
+            <div shuku-edit-id="e-72bb17db-a2b4-4519-9c1a-05a104e1b4c9" className="spp-showcase-window-scan__score-row">
+              <div shuku-edit-id="e-94cc1c3c-5cdf-40da-87c7-327aa9fa549b" className="spp-showcase-window-scan__activation-box">
+                <Typography shuku-edit-id="e-5a83034b-2fd3-4847-b693-d7e06542e19d" as="strong" variant="display" tone={found ? 'success' : 'main'}>{value < 0 ? `−${Math.abs(value)}` : value}</Typography>
                 <ExplainPanelButton label="查看匹配得分的计算过程" triggerText="?">
-                    <Typography as="strong" variant="bodySmall" tone="accent">匹配得分怎么得到？</Typography>
-                    <Typography variant="bodySmall" tone="muted">当前区域与目标模板对应位置相乘，再把 25 个乘积相加。</Typography>
-                    <div className="spp-showcase-window-scan__multiply" role="grid" aria-label="当前窗口与卷积核的逐项乘积">
+                    <Typography shuku-edit-id="e-8d6058ff-e361-42d8-a927-c77d49f7bdb6" as="strong" variant="bodySmall" tone="accent">匹配得分怎么得到？</Typography>
+                    <Typography shuku-edit-id="e-40cbe7ca-60a8-4f56-b185-bbf24a53747e" variant="bodySmall" tone="muted">当前区域与目标模板对应位置相乘，再把 25 个乘积相加。</Typography>
+                    <div shuku-edit-id="e-616f16bf-0327-4257-b14b-317ff0484fa1" className="spp-showcase-window-scan__multiply" role="grid" aria-label="当前窗口与卷积核的逐项乘积">
                       {KERNEL_INDEX.flatMap((row) => KERNEL_INDEX.map((col) => {
                         const product = kernel[row][col] * patch[row][col];
                         return (
-                          <span className={`spp-showcase-window-scan__multiply-cell${product !== 0 ? ' is-active' : ''}`} role="gridcell" key={cellKey(row, col)}>
-                            <Typography as="strong" variant="bodySmall" tone={product !== 0 ? 'success' : 'muted'}>{product}</Typography>
-                            <Typography as="span" variant="bodySmall" tone="muted">{`${kernel[row][col]} × ${patch[row][col]}`}</Typography>
+                          <span shuku-edit-id="e-2dbe999d-758d-4989-968e-a27d77442cd3" className={`spp-showcase-window-scan__multiply-cell${product !== 0 ? ' is-active' : ''}`} role="gridcell" key={cellKey(row, col)}>
+                            <Typography shuku-edit-id="e-146ed6cb-aed8-4816-9095-291ac3f03584" as="strong" variant="bodySmall" tone={product !== 0 ? 'success' : 'muted'}>{product}</Typography>
+                            <Typography shuku-edit-id="e-7f98661d-6e5b-4c5d-b2ce-32ef74e86d2d" as="span" variant="bodySmall" tone="muted">{`${kernel[row][col]} × ${patch[row][col]}`}</Typography>
                           </span>
                         );
                       }))}
                     </div>
-                    <div className="spp-showcase-window-scan__sum-line" aria-label={`所有乘积相加等于 ${value}`}>
-                      <Typography as="span" variant="bodySmall" tone="accent">{`Σ（模板值 × 区域值）= ${value < 0 ? `−${Math.abs(value)}` : value}`}</Typography>
+                    <div shuku-edit-id="e-ca8b2d4a-ee4c-491d-bc19-aab67fa1188c" className="spp-showcase-window-scan__sum-line" aria-label={`所有乘积相加等于 ${value}`}>
+                      <Typography shuku-edit-id="e-cb25065c-cf44-4a36-80e3-a3d52590a9ba" as="span" variant="bodySmall" tone="accent">{`Σ（模板值 × 区域值）= ${value < 0 ? `−${Math.abs(value)}` : value}`}</Typography>
                     </div>
                 </ExplainPanelButton>
               </div>
-              <Typography variant="bodySmall" tone="muted" className="spp-showcase-window-scan__result-caption"><Tips size="36" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round" theme="multi-color" fill={['#EFA94B', '#FFF1D9', '#EFA94B']} /><span>得分越高，<br />当前位置越符合目标棋形。</span></Typography>
+              <Typography shuku-edit-id="e-78e1681f-b868-49ef-b474-43eeec9b108d" variant="bodySmall" tone="muted" className="spp-showcase-window-scan__result-caption"><Tips size="36" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round" theme="multi-color" fill={['#EFA94B', '#FFF1D9', '#EFA94B']} /><span shuku-edit-id="e-01579b9d-25d6-4263-a81b-895e46c57999">得分越高，<br shuku-edit-id="e-63a50653-82aa-4791-80d4-7536797023fd" />当前位置越符合目标棋形。</span></Typography>
             </div>
           </div>
-          <div className="spp-showcase-window-scan__instruction" role="status">
-            <span className="spp-showcase-window-scan__instruction-icon" aria-hidden="true"><Move size="27" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round" theme="multi-color" fill={['#5B8DE8', '#E7EFFF']} /></span>
-            <Typography as="span" variant="body" tone="muted">拖动左侧窗口，寻找匹配得分最高的位置。</Typography>
+          <div shuku-edit-id="e-205de7ac-e2be-4354-a4d9-465812f13eb7" className="spp-showcase-window-scan__instruction" role="status">
+            <span shuku-edit-id="e-cba7bc00-f4bc-4c41-aa13-ddda6f2c7034" className="spp-showcase-window-scan__instruction-icon" aria-hidden="true"><Move size="27" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round" theme="multi-color" fill={['#5B8DE8', '#E7EFFF']} /></span>
+            <Typography shuku-edit-id="e-fa5bb698-e861-437b-97f1-bdbddc44d48f" as="span" variant="body" tone="muted">拖动左侧窗口，寻找匹配得分最高的位置。</Typography>
           </div>
         </div>
       </div>

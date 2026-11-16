@@ -26,12 +26,12 @@ export function SquareTranslationExperiment() {
     target.putImageData(result, 0, 0);
   }, [dx, dy]);
   return <>
-    <div className="cg-translation-pair cg-translation-square">
-      <figure><Typography variant="bodySmall" tone="muted">输入图像</Typography><canvas ref={input} width={W} height={H} role="img" aria-label="可水平和垂直平移的深色方块" /></figure>
+    <div shuku-edit-id="e-f6fbc5d7-23e6-4043-9ade-a87029164c07" className="cg-translation-pair cg-translation-square">
+      <figure shuku-edit-id="e-fb72aa58-07d2-4ccf-bbb8-8f7ae9ab6e8d"><Typography shuku-edit-id="e-17684f1a-abc6-4a8f-a33f-5bbb16c334b9" variant="bodySmall" tone="muted">输入图像</Typography><canvas shuku-edit-id="e-92e6c374-0f85-41f3-8393-cd9cb15210ff" ref={input} width={W} height={H} role="img" aria-label="可水平和垂直平移的深色方块" /></figure>
       <DesignComparisonArrow />
-      <figure><Typography variant="bodySmall" tone="muted">边缘响应</Typography><canvas ref={output} width={W} height={H} role="img" aria-label="与方块位置同步变化的拉普拉斯边缘响应" /></figure>
+      <figure shuku-edit-id="e-44970b4e-0f98-405c-af04-9b6bda03e12b"><Typography shuku-edit-id="e-7b15df49-a7d2-4020-b44a-2d13cc73f396" variant="bodySmall" tone="muted">边缘响应</Typography><canvas shuku-edit-id="e-ee410139-06e2-4dbb-9c4b-fa30d6a59874" ref={output} width={W} height={H} role="img" aria-label="与方块位置同步变化的拉普拉斯边缘响应" /></figure>
     </div>
-    <div className="cg-translation-controls">
+    <div shuku-edit-id="e-0afd4dcb-a6e3-43a5-8b6e-8804ecfb8054" className="cg-translation-controls">
       <RangeControl label="水平位移" min={-26} max={26} step={1} value={dx} onChange={event => setDx(Number(event.target.value))} />
       <RangeControl label="垂直位移" min={-15} max={15} step={1} value={dy} onChange={event => setDy(Number(event.target.value))} />
       <Button onClick={() => { setDx(0); setDy(0); }}>重置</Button>

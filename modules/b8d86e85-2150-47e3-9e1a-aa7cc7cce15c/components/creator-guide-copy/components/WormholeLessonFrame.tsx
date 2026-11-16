@@ -11,18 +11,18 @@ export function WormholeIcon({ kind }: { kind: 'light' | 'book' | 'heart' | 'eye
     ring: 'M1 14a15 7 0 1 0 30 0 15 7 0 1 0-30 0ZM1 14v5a15 7 0 0 0 30 0v-5M5 14a11 4 0 1 0 22 0 11 4 0 1 0-22 0Z',
     formula: 'M3 3h26v26H3ZM9 11h14M9 21h14M16 7v8M13 18l6 6M19 18l-6 6',
   };
-  return <svg viewBox="-4 -4 40 40" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d={paths[kind]} /></svg>;
+  return <svg shuku-edit-id="e-49d0a1c8-0a1f-4b2f-b925-b1d66179d4f2" viewBox="-4 -4 40 40" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path shuku-edit-id="e-1c3c8a24-5db9-47bf-80fb-1a6ca69e0881" d={paths[kind]} /></svg>;
 }
 
 export function WormholeBenefit({ kind, title, children }: { kind: Parameters<typeof WormholeIcon>[0]['kind']; title: string; children: ReactNode }) {
-  return <div className="aipe-replay-cg-wormhole-benefit"><span className="aipe-replay-cg-wormhole-icon"><WormholeIcon kind={kind} /></span><div><Typography as="h3" variant="h3" tone="accent">{title}</Typography><Typography variant="bodySmall" tone="muted">{children}</Typography></div></div>;
+  return <div shuku-edit-id="e-313697bc-1352-4ea3-a659-37904c3d2cc7" className="aipe-replay-cg-wormhole-benefit"><span shuku-edit-id="e-95caf6ac-84d6-4774-a7c3-a86d4a7d290c" className="aipe-replay-cg-wormhole-icon"><WormholeIcon kind={kind} /></span><div shuku-edit-id="e-cc9aee21-62f6-4cc1-961e-d9bce66bd778"><Typography shuku-edit-id="e-98a861c4-9019-4850-b15d-22d2b8c34bf4" as="h3" variant="h3" tone="accent">{title}</Typography><Typography shuku-edit-id="e-dfda10f1-8b46-4fff-bebc-a09f5347c16a" variant="bodySmall" tone="muted">{children}</Typography></div></div>;
 }
 
 export function WormholeLessonFrame({ className, title, subtitle, children, sidebar, conclusion }: {
   className: string; title: string; subtitle: string; children: ReactNode; sidebar: ReactNode; conclusion: string;
 }) {
-  return <ContentBlock className={`aipe-replay-cg-wormhole-page aipe-replay-cg-creator-typography ${className}`} headingLevel={1} title={title} subtitle={subtitle} bodyClassName="aipe-replay-cg-wormhole-body">
-    <div className="aipe-replay-cg-wormhole-content"><section className="aipe-replay-cg-wormhole-example">{children}</section><aside className="aipe-replay-cg-wormhole-sidebar">{sidebar}</aside></div>
-    <div className="aipe-replay-cg-wormhole-conclusion"><Typography variant="body" tone="accent">{conclusion}</Typography></div>
+  return <ContentBlock shuku-edit-id="e-95b3b476-468e-4498-acb3-fe849346ff17" className={`aipe-replay-cg-wormhole-page aipe-replay-cg-creator-typography ${className}`} headingLevel={1} title={title} subtitle={subtitle} bodyClassName="aipe-replay-cg-wormhole-body">
+    <div shuku-edit-id="e-bc6f4a5f-e4f0-44dc-aaaf-9c32b34bb6d9" className="aipe-replay-cg-wormhole-content"><section shuku-edit-id="e-4e04a164-746a-4f76-bc68-6fe11f55f124" className="aipe-replay-cg-wormhole-example">{children}</section><aside shuku-edit-id="e-8b6c6ffc-2482-41a2-90ec-2565ca3b92e4" className="aipe-replay-cg-wormhole-sidebar">{sidebar}</aside></div>
+    <div shuku-edit-id="e-248f7ba8-0912-414f-8dec-1312bf7d373f" className="aipe-replay-cg-wormhole-conclusion"><Typography shuku-edit-id="e-4bd84c49-37b1-42ce-86f5-1034904d60e6" variant="body" tone="accent">{conclusion}</Typography></div>
   </ContentBlock>;
 }

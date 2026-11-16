@@ -156,7 +156,7 @@ export function KnowledgeDiagramViewport({ children, note, renderLabels }: {
   const noteLeft = anchor ? Math.max(12, Math.min(anchor.x - noteWidth + 24, size.width - noteWidth - 12)) : 0;
   const noteTop = anchor ? Math.max(8, Math.min(anchor.y + 32, size.height - noteHeight - 8)) : 0;
 
-  return <div ref={surface} className="cg-k-viewport" data-scale={view.scale.toFixed(3)} data-zoomed={view.scale > 1.5} data-dragging={dragging}
+  return <div shuku-edit-id="e-3e091e5b-78d6-4796-983d-663edd40de23" ref={surface} className="cg-k-viewport" data-scale={view.scale.toFixed(3)} data-zoomed={view.scale > 1.5} data-dragging={dragging}
       tabIndex={0} role="group" aria-label="可拖拽缩放的知识图" aria-describedby={descriptionId}
       onDoubleClick={event => { event.preventDefault(); event.stopPropagation(); }}
       onKeyDown={event => {
@@ -168,27 +168,27 @@ export function KnowledgeDiagramViewport({ children, note, renderLabels }: {
         else if (event.key === '0' || event.key === 'Home') { event.preventDefault(); reset(); }
         else if (pan[event.key]) { event.preventDefault(); commit({ ...current.current, x: current.current.x + pan[event.key].x, y: current.current.y + pan[event.key].y }); }
       }}>
-    <svg ref={svg} className="cg-k-growth-circle" viewBox="-25 -50 700 650" role="img"
+    <svg shuku-edit-id="e-e4773bff-b34a-4381-8b29-d004336a4e00" ref={svg} className="cg-k-growth-circle" viewBox="-25 -50 700 650" role="img"
       aria-label="蓝色为个人已理解的知识，橙色为新的贡献">
-      <desc id={descriptionId}>按住鼠标左键拖动，滚轮缩放。也可使用方向键平移，加减键缩放，零键复位。切换时代保留当前视角。</desc>
-      <rect x="-25" y="-50" width="700" height="650" fill="transparent" pointerEvents="all" />
-      <g className="cg-k-diagram-world" pointerEvents="none" transform={`translate(${view.x} ${view.y}) scale(${view.scale})`}>{children}</g>
+      <desc shuku-edit-id="e-04078b41-05ef-4d40-86bc-9dcce12fb063" id={descriptionId}>按住鼠标左键拖动，滚轮缩放。也可使用方向键平移，加减键缩放，零键复位。切换时代保留当前视角。</desc>
+      <rect shuku-edit-id="e-bf9b2980-5479-47ce-84ef-51097d98a3cb" x="-25" y="-50" width="700" height="650" fill="transparent" pointerEvents="all" />
+      <g shuku-edit-id="e-d4740c11-7f77-47a4-a7db-d0e3e71892b6" className="cg-k-diagram-world" pointerEvents="none" transform={`translate(${view.x} ${view.y}) scale(${view.scale})`}>{children}</g>
       {renderLabels?.(view)}
     </svg>
-    {note && anchor && noteVisible && <div data-diagram-note className="cg-k-tip-note" style={{ left: anchor.x, top: anchor.y }}
+    {note && anchor && noteVisible && <div shuku-edit-id="e-eccf61e5-f422-45c2-b8e7-ed16e7ccb7d0" data-diagram-note className="cg-k-tip-note" style={{ left: anchor.x, top: anchor.y }}
       onMouseEnter={() => setNoteOpen(true)} onMouseLeave={() => setNoteOpen(false)}
       onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget)) setNoteOpen(false); }}
       onKeyDown={event => { if (event.key === 'Escape') { setNoteOpen(false); event.stopPropagation(); } }}>
       <Button className="cg-k-tip-question" aria-label="为什么可能难以抵达知识前沿？" aria-describedby={noteOpen ? noteId : undefined}
         onFocus={() => setNoteOpen(true)} onClick={() => setNoteOpen(true)}>
-        <svg className="cg-k-tip-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-          <path d="M5 5a3 3 0 0 1 6 0c0 2-3 2-3 4" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
-          <circle cx="8" cy="12" r="1" fill="currentColor" />
+        <svg shuku-edit-id="e-586ada9c-d096-4556-bf7a-31c36a3b1490" className="cg-k-tip-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+          <path shuku-edit-id="e-f61fe8fe-2e18-4151-89f1-c8c52353cc2b" d="M5 5a3 3 0 0 1 6 0c0 2-3 2-3 4" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
+          <circle shuku-edit-id="e-d9bbb277-fcaf-4931-b9e7-19bd9e363868" cx="8" cy="12" r="1" fill="currentColor" />
         </svg>
       </Button>
-      {noteOpen && <div ref={noteBox} id={noteId} role="tooltip" className="cg-k-tip-popover"
+      {noteOpen && <div shuku-edit-id="e-08ea8d7d-b1ff-496e-a59c-47585f9a4b05" ref={noteBox} id={noteId} role="tooltip" className="cg-k-tip-popover"
         style={{ width: noteWidth, left: noteLeft - anchor.x, top: noteTop - anchor.y }}>
-        <Typography variant="bodySmall">{note.text}</Typography>
+        <Typography shuku-edit-id="e-0359f3e5-be67-4f74-a0bd-1a61c05d45a6" variant="bodySmall">{note.text}</Typography>
       </div>}
     </div>}
   </div>;

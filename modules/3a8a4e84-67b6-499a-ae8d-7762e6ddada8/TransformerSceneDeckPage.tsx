@@ -12,7 +12,7 @@ export const deck: DeckDefinition = {
     id: step.id,
     title: slideTitles[index],
     section: sectionNames[index],
-    render: (context) => <div className="tr-ppt-content" data-slide={transformerStyleSlides[index]} data-page={index + 1} key={step.id}>
+    render: (context) => <div shuku-edit-id="e-f599855f-4c9b-488a-814f-0f6d368e5a7d" className="tr-ppt-content" data-slide={transformerStyleSlides[index]} data-page={index + 1} key={step.id}>
       {step.render(context)}
     </div>,
   })),

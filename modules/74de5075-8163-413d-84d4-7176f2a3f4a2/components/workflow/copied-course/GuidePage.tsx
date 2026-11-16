@@ -54,12 +54,12 @@ function LectureAdvanceCue({ children, complete, onContinue, label = '读完了�
   }, [advance, complete]);
 
   return (
-    <div className="lesson-step">
+    <div shuku-edit-id="e-ed0505d5-a456-4222-81f9-5fab209c5e0e" className="lesson-step">
       {children}
       {!complete && (
-        <button type="button" className="edu-scroll-cue" onClick={advance} aria-label={label}>
-          <Typography as="span" variant="bodySmall" tone="inherit" className="edu-scroll-cue-arrow" aria-hidden="true">↓</Typography>
-          <Typography as="span" variant="bodySmall" tone="inherit">{label}</Typography>
+        <button shuku-edit-id="e-c8f98fbe-6b17-41e6-b3f8-1f578486e605" type="button" className="edu-scroll-cue" onClick={advance} aria-label={label}>
+          <Typography shuku-edit-id="e-c218ca61-5aae-44c4-9b4d-b9ac0c2f678a" as="span" variant="bodySmall" tone="inherit" className="edu-scroll-cue-arrow" aria-hidden="true">↓</Typography>
+          <Typography shuku-edit-id="e-78c4ea79-c265-40d1-97a5-8feda130e8cb" as="span" variant="bodySmall" tone="inherit">{label}</Typography>
         </button>
       )}
     </div>
@@ -81,8 +81,8 @@ function BlogLessonCanvas({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <div ref={frameRef} className="lesson-canvas-frame relative w-full overflow-hidden" style={{ height: 900 * scale }}>
-      <div className="course-page-surface cg-copy-course-shell cg-copy-tw-canvas origin-top-left" style={{ transform: `scale(${scale})` }}>
+    <div shuku-edit-id="e-3eaa4003-b689-4c04-a227-977dccce3e20" ref={frameRef} className="lesson-canvas-frame relative w-full overflow-hidden" style={{ height: 900 * scale }}>
+      <div shuku-edit-id="e-bed28f44-ba83-48d3-90e1-ace646fc1534" className="course-page-surface cg-copy-course-shell cg-copy-tw-canvas origin-top-left" style={{ transform: `scale(${scale})` }}>
         {children}
       </div>
     </div>

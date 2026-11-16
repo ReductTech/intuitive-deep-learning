@@ -261,15 +261,15 @@ export function ReluApproximationLabPage({ onComplete }: ReluApproximationLabPag
   const predictionPath = pathFor(prediction);
 
   return (
-    <ContentBlock
+    <ContentBlock shuku-edit-id="e-f4959eea-dc60-468f-8eb8-604ff91a5b48"
       headingLevel={1}
       className="ngtw-relu-approximation-lab"
       title="足够多带有 ReLU 的神经元，就能逼近任意曲线"
       subtitle="在画布上画出一条目标曲线，再让浏览器直接训练一个由 ReLU 神经元组成的小网络。"
     >
-      <section className="ngtw-relu-drawing-panel grid min-w-0 max-w-full grid-rows-[auto_minmax(0,_1fr)] gap-[10px] bg-[#fff] p-[12px]">
-        <header className="ngtw-relu-drawing-toolbar grid min-w-0 max-w-full items-center grid-cols-[auto_minmax(360px,_1fr)_minmax(210px,_auto)_auto] gap-[16px] min-h-[54px] bg-[var(--ui-surface-soft)] p-[6px_10px]">
-          <Typography as="strong" variant="body" tone="main" wrap="nowrap">绘制目标曲线</Typography>
+      <section shuku-edit-id="e-fd31a0f0-56cf-4f39-88bd-f0bc2e521285" className="ngtw-relu-drawing-panel grid min-w-0 max-w-full grid-rows-[auto_minmax(0,_1fr)] gap-[10px] bg-[#fff] p-[12px]">
+        <header shuku-edit-id="e-aa937b77-bf26-46ef-8916-5d7711c08888" className="ngtw-relu-drawing-toolbar grid min-w-0 max-w-full items-center grid-cols-[auto_minmax(360px,_1fr)_minmax(210px,_auto)_auto] gap-[16px] min-h-[54px] bg-[var(--ui-surface-soft)] p-[6px_10px]">
+          <Typography shuku-edit-id="e-c15da7e8-1fad-4217-9e1c-5d0914b73236" as="strong" variant="body" tone="main" wrap="nowrap">绘制目标曲线</Typography>
           <RangeControl
             label="ReLU 神经元"
             min={4}
@@ -279,27 +279,27 @@ export function ReluApproximationLabPage({ onComplete }: ReluApproximationLabPag
             suffix=" 个"
             onChange={(event) => changeNeuronCount(Number(event.currentTarget.value))}
           />
-          <Typography className="ngtw-relu-drawing-toolbar__status" variant="bodySmall" tone="muted" wrap="nowrap">
+          <Typography shuku-edit-id="e-81f4d27e-55da-4dc6-9f60-26c2a62db273" className="ngtw-relu-drawing-toolbar__status" variant="bodySmall" tone="muted" wrap="nowrap">
             {!target.length
               ? '拖动画布开始绘制'
               : loss === null
                 ? '目标已记录，可以开始训练'
                 : `进度 ${epoch}%，误差 ${loss.toFixed(4)}`}
           </Typography>
-          <div className="ngtw-activation-actions flex flex-wrap gap-[8px]">
+          <div shuku-edit-id="e-96c2ea8f-a14f-428c-a8fc-054e36999cbd" className="ngtw-activation-actions flex flex-wrap gap-[8px]">
             <Button variant="primary" disabled={!target.length || training} onClick={train}>{training ? '训练中…' : '训练网络'}</Button>
             <Button disabled={!target.length && !raw.length} onClick={clear}>重新绘制</Button>
           </div>
         </header>
-        <div className="ngtw-relu-drawing-board relative min-w-0 w-full max-w-full overflow-hidden bg-[#fbfdff]">
-          <div className="ngtw-relu-drawing-panel__legend absolute top-[14px] right-[16px] flex items-center gap-[16px] bg-[rgba(251,_253,_255,_.92)] p-[6px_10px]" aria-label="图例">
-            <Typography as="span" variant="bodySmall" tone="accent">目标曲线</Typography>
-            <Typography as="span" variant="bodySmall" tone="warning">模型输出</Typography>
+        <div shuku-edit-id="e-f1184390-532c-40de-90af-dc145726dd6f" className="ngtw-relu-drawing-board relative min-w-0 w-full max-w-full overflow-hidden bg-[#fbfdff]">
+          <div shuku-edit-id="e-155055d1-2ad3-47e0-b5bb-c41c01867d7a" className="ngtw-relu-drawing-panel__legend absolute top-[14px] right-[16px] flex items-center gap-[16px] bg-[rgba(251,_253,_255,_.92)] p-[6px_10px]" aria-label="图例">
+            <Typography shuku-edit-id="e-3bd3fa16-1a7f-4095-a38f-9d248750452e" as="span" variant="bodySmall" tone="accent">目标曲线</Typography>
+            <Typography shuku-edit-id="e-6cd10a61-5bdf-4d74-bd3e-613824684455" as="span" variant="bodySmall" tone="warning">模型输出</Typography>
           </div>
           {!target.length && !raw.length && (
-            <Typography className="ngtw-relu-drawing-board__prompt" variant="subtitle" tone="muted">在画布上拖动，画出任意曲线</Typography>
+            <Typography shuku-edit-id="e-ac1d76e3-8a41-4365-a947-b4facf25d7cd" className="ngtw-relu-drawing-board__prompt" variant="subtitle" tone="muted">在画布上拖动，画出任意曲线</Typography>
           )}
-          <svg
+          <svg shuku-edit-id="e-f780813a-5b5f-4954-91e2-4589fcd21dc3"
             ref={svgRef}
             className="ngtw-relu-drawing-board__svg block w-full h-full max-w-full"
             viewBox={`0 0 ${VIEW_WIDTH} ${VIEW_HEIGHT}`}
@@ -311,14 +311,14 @@ export function ReluApproximationLabPage({ onComplete }: ReluApproximationLabPag
             onPointerUp={finishDrawing}
             onPointerCancel={finishDrawing}
           >
-            <g className="ngtw-relu-drawing-board__grid" aria-hidden="true">
-              {[.2, .4, .6, .8].map((ratio) => <line key={`v-${ratio}`} x1={VIEW_WIDTH * ratio} x2={VIEW_WIDTH * ratio} y1="0" y2={VIEW_HEIGHT} />)}
-              {[.2, .4, .6, .8].map((ratio) => <line key={`h-${ratio}`} x1="0" x2={VIEW_WIDTH} y1={VIEW_HEIGHT * ratio} y2={VIEW_HEIGHT * ratio} />)}
-              <line className="is-axis" x1={VIEW_WIDTH / 2} x2={VIEW_WIDTH / 2} y1="0" y2={VIEW_HEIGHT} />
-              <line className="is-axis" x1="0" x2={VIEW_WIDTH} y1={VIEW_HEIGHT / 2} y2={VIEW_HEIGHT / 2} />
+            <g shuku-edit-id="e-fcbe6868-df70-49fe-b8e0-a78417b62689" className="ngtw-relu-drawing-board__grid" aria-hidden="true">
+              {[.2, .4, .6, .8].map((ratio) => <line shuku-edit-id="e-97634f51-e098-40ae-b2e6-93ab859478b4" key={`v-${ratio}`} x1={VIEW_WIDTH * ratio} x2={VIEW_WIDTH * ratio} y1="0" y2={VIEW_HEIGHT} />)}
+              {[.2, .4, .6, .8].map((ratio) => <line shuku-edit-id="e-b485bc07-7e26-4171-bb1e-0d80c0b46ede" key={`h-${ratio}`} x1="0" x2={VIEW_WIDTH} y1={VIEW_HEIGHT * ratio} y2={VIEW_HEIGHT * ratio} />)}
+              <line shuku-edit-id="e-bbe0bc82-daf0-44b6-9f4d-566130ac3948" className="is-axis" x1={VIEW_WIDTH / 2} x2={VIEW_WIDTH / 2} y1="0" y2={VIEW_HEIGHT} />
+              <line shuku-edit-id="e-95ba1a15-78d4-4c17-851d-93f64b1f5502" className="is-axis" x1="0" x2={VIEW_WIDTH} y1={VIEW_HEIGHT / 2} y2={VIEW_HEIGHT / 2} />
             </g>
-            {targetPath && <path className="ngtw-relu-drawing-board__target" d={targetPath} />}
-            {predictionPath && <path className="ngtw-relu-drawing-board__prediction" d={predictionPath} />}
+            {targetPath && <path shuku-edit-id="e-b6a44761-d494-4b9d-95f4-53b77f8c0285" className="ngtw-relu-drawing-board__target" d={targetPath} />}
+            {predictionPath && <path shuku-edit-id="e-2ff52220-78cd-4a39-ab7c-255101a70127" className="ngtw-relu-drawing-board__prediction" d={predictionPath} />}
           </svg>
         </div>
       </section>

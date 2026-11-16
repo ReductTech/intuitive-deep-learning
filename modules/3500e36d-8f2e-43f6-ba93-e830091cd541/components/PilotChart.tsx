@@ -11,5 +11,5 @@ export function PilotChart({option,label,light=true}:{option:EChartsOption;label
   const axis=(v:unknown)=>{const a=(v??{}) as Record<string,unknown>;return {...a,axisLabel:{color:ink,...font,...(a.axisLabel as object??{})},nameTextStyle:{color:ink,...font},axisLine:{lineStyle:{color:'#718099'}},splitLine:{lineStyle:{color:grid}}}};
   return {...option,textStyle:{color:light?'#21324a':'#f0f4fa',...font},xAxis:axes(option.xAxis),yAxis:axes(option.yAxis),legend:{...(option.legend as object??{}),textStyle:{color:ink,...font}},tooltip:{...(option.tooltip as object??{}),textStyle:font}};
  },[font,option,light]);
- return <div className="naipv2-chart" role="img" aria-label={label}><Typography ref={probe} variant="bodySmall" className="naipv2-chart-probe" aria-hidden="true">0</Typography><EChartsChart option={styled} minHeight={0} style={{width:'100%',height:'100%'}}/></div>;
+ return <div shuku-edit-id="e-d9d39c1f-ee5a-40a8-aa1c-e374998c10b4" className="naipv2-chart" role="img" aria-label={label}><Typography shuku-edit-id="e-cae4901a-ca2e-4664-8374-6af765c266ce" ref={probe} variant="bodySmall" className="naipv2-chart-probe" aria-hidden="true">0</Typography><EChartsChart option={styled} minHeight={0} style={{width:'100%',height:'100%'}}/></div>;
 }

@@ -294,21 +294,21 @@ export function FeatureMapsPage({ onComplete }: FeatureMapsPageProps) {
   };
 
   return (
-    <ContentBlock
+    <ContentBlock shuku-edit-id="e-fdd7a4cd-fc8d-46eb-a3b2-e0398904f30e"
       headingLevel={1}
       className="rtg-feature-maps"
       title="特征图里存的是什么？"
       subtitle="移动同一个观察点，比较不同通道对轮廓、纹理和局部形状的响应。"
     >
-      <div className="rtg-feature-maps__experiment">
-        <section className="rtg-feature-maps__source-stage" aria-labelledby="rtg-feature-source-title">
-          <header className="rtg-feature-maps__section-head">
-            <Typography as="span" variant="bodySmall" tone="warning">输入图像</Typography>
-            <Typography as="h2" variant="h3" tone="accent" id="rtg-feature-source-title">把探针放到不同位置</Typography>
+      <div shuku-edit-id="e-f456325b-9752-477a-b84a-0234e39ce608" className="rtg-feature-maps__experiment">
+        <section shuku-edit-id="e-a46ad6c7-1a25-4461-86ae-2e4d262db69d" className="rtg-feature-maps__source-stage" aria-labelledby="rtg-feature-source-title">
+          <header shuku-edit-id="e-c0bf3e0e-37b7-4cec-a36e-4a11cf001372" className="rtg-feature-maps__section-head">
+            <Typography shuku-edit-id="e-4b5c4a3e-499b-4817-8c09-84159cf67b0b" as="span" variant="bodySmall" tone="warning">输入图像</Typography>
+            <Typography shuku-edit-id="e-e0aa7eee-5ffb-46a1-a09c-650ef88d1cda" as="h2" variant="h3" tone="accent" id="rtg-feature-source-title">把探针放到不同位置</Typography>
           </header>
 
-          <div className="rtg-feature-maps__source-photo">
-            <div
+          <div shuku-edit-id="e-97c16e7d-e334-4558-88dd-5e82c3c7838b" className="rtg-feature-maps__source-photo">
+            <div shuku-edit-id="e-864f595b-361a-45d8-bb23-ee9e3594da08"
               className="rtg-feature-maps__source-frame"
               role="button"
               tabIndex={0}
@@ -317,8 +317,8 @@ export function FeatureMapsPage({ onComplete }: FeatureMapsPageProps) {
               onPointerMove={handlePointerMove}
               onKeyDown={handleKeyDown}
             >
-              <img src={bottleFront} alt="统一背景下的透明塑料瓶正面照片" />
-              <span
+              <img shuku-edit-id="e-934b7d5b-96df-450f-b201-b99bcb36b626" src={bottleFront} alt="统一背景下的透明塑料瓶正面照片" />
+              <span shuku-edit-id="e-e191f121-e15b-478f-b806-32c13d47f154"
                 className="rtg-feature-maps__source-probe"
                 style={{ left: probePoint.x * 100 + '%', top: probePoint.y * 100 + '%' }}
                 aria-hidden="true"
@@ -326,7 +326,7 @@ export function FeatureMapsPage({ onComplete }: FeatureMapsPageProps) {
             </div>
           </div>
 
-          <div className="rtg-feature-maps__hotspots" role="group" aria-label="推荐观察位置">
+          <div shuku-edit-id="e-822fd232-9d92-420a-9d9c-0b0d85619734" className="rtg-feature-maps__hotspots" role="group" aria-label="推荐观察位置">
             {hotspots.map((hotspot, index) => {
               const active = Math.hypot(probePoint.x - hotspot.point.x, probePoint.y - hotspot.point.y) < .035;
               const checked = visited.has(hotspot.id);
@@ -340,62 +340,62 @@ export function FeatureMapsPage({ onComplete }: FeatureMapsPageProps) {
                   aria-pressed={active}
                   onClick={() => setProbe(hotspot.point)}
                 >
-                  <span className="rtg-feature-maps__hotspot-dot" aria-hidden="true" />
-                  <Typography as="strong" variant="bodySmall" tone="inherit">{hotspot.label}</Typography>
+                  <span shuku-edit-id="e-1becf393-d3c7-49c0-b3f3-cd385cbefab9" className="rtg-feature-maps__hotspot-dot" aria-hidden="true" />
+                  <Typography shuku-edit-id="e-f9f78759-2056-4f95-add4-b21b3f99eae9" as="strong" variant="bodySmall" tone="inherit">{hotspot.label}</Typography>
                 </Button>
               );
             })}
           </div>
         </section>
 
-        <div className="rtg-feature-maps__transform" aria-label="卷积加激活生成多个特征通道">
-          <div className="rtg-feature-maps__transform-arrow" aria-hidden="true" />
-          <div className="rtg-feature-maps__filter-stack" aria-hidden="true">
-            <span />
-            <span />
-            <span />
+        <div shuku-edit-id="e-062f35a6-7eb5-4e73-87f9-06df784b4c32" className="rtg-feature-maps__transform" aria-label="卷积加激活生成多个特征通道">
+          <div shuku-edit-id="e-40e479b6-7dec-45db-a298-14db0783fffe" className="rtg-feature-maps__transform-arrow" aria-hidden="true" />
+          <div shuku-edit-id="e-c1b04498-0a84-489b-8ee4-6e485a3b7d76" className="rtg-feature-maps__filter-stack" aria-hidden="true">
+            <span shuku-edit-id="e-a57e3c37-be31-4d52-aa6f-4721ff1bccd1" />
+            <span shuku-edit-id="e-e90ea27a-e189-4622-a4b3-c4c4f36ebae8" />
+            <span shuku-edit-id="e-5376f484-eb45-4b00-86f1-7da1a8f83acc" />
           </div>
-          <Typography as="strong" variant="body" tone="accent">卷积＋激活</Typography>
-          <Typography variant="bodySmall" tone="muted">不同卷积核关注不同线索</Typography>
-          <div className="rtg-feature-maps__transform-arrow" aria-hidden="true" />
+          <Typography shuku-edit-id="e-161e2668-0173-42d5-ad39-c3fd8f8a05bc" as="strong" variant="body" tone="accent">卷积＋激活</Typography>
+          <Typography shuku-edit-id="e-abab0a4b-3326-4164-ab0e-4e3906a09ceb" variant="bodySmall" tone="muted">不同卷积核关注不同线索</Typography>
+          <div shuku-edit-id="e-66b51cea-d5e1-4126-9f32-f1edd6cd74b3" className="rtg-feature-maps__transform-arrow" aria-hidden="true" />
         </div>
 
-        <section className="rtg-feature-maps__maps-stage" aria-labelledby="rtg-feature-maps-title">
-          <header className="rtg-feature-maps__section-head">
-            <Typography as="span" variant="bodySmall" tone="warning">中间表示</Typography>
-            <Typography as="h2" variant="h3" tone="accent" id="rtg-feature-maps-title">同一位置，多个通道</Typography>
+        <section shuku-edit-id="e-2810466a-cb91-4aef-a9a7-8a8c89d1b05f" className="rtg-feature-maps__maps-stage" aria-labelledby="rtg-feature-maps-title">
+          <header shuku-edit-id="e-ad5aed8b-1869-4219-8b3b-79e3f7af9a00" className="rtg-feature-maps__section-head">
+            <Typography shuku-edit-id="e-6098b524-27d3-4615-8d3e-98278423449b" as="span" variant="bodySmall" tone="warning">中间表示</Typography>
+            <Typography shuku-edit-id="e-8c083b99-8948-4953-a577-0b9cb06c1cdc" as="h2" variant="h3" tone="accent" id="rtg-feature-maps-title">同一位置，多个通道</Typography>
           </header>
 
-          <div className="rtg-feature-maps__maps-grid">
+          <div shuku-edit-id="e-c0f396ff-1984-4384-b1c3-058de22e5402" className="rtg-feature-maps__maps-grid">
             {featureSpecs.map((spec, index) => (
-              <article
+              <article shuku-edit-id="e-6b748bb4-3584-46a4-a16a-690b447d299e"
                 key={spec.id}
                 className={'rtg-feature-maps__map-card rtg-feature-maps__map-card--' + spec.id + (strongestIndex === index ? ' is-strongest' : '')}
               >
-                <header>
-                  <Typography as="span" variant="bodySmall" tone="muted">{spec.channel}</Typography>
-                  <Typography as="h3" variant="body" tone="accent">{spec.label}</Typography>
+                <header shuku-edit-id="e-8c10dd4a-77f9-466f-b615-081e40d001e6">
+                  <Typography shuku-edit-id="e-e597eb16-8964-4389-957c-a8df42f95cf2" as="span" variant="bodySmall" tone="muted">{spec.channel}</Typography>
+                  <Typography shuku-edit-id="e-a98725f6-50e1-44d8-9585-27670bb39f59" as="h3" variant="body" tone="accent">{spec.label}</Typography>
                 </header>
-                <div className="rtg-feature-maps__map-frame">
-                  <canvas
+                <div shuku-edit-id="e-8bb8be3d-0070-4ef7-8f36-880cebd46bfa" className="rtg-feature-maps__map-frame">
+                  <canvas shuku-edit-id="e-d5ede155-0191-469e-ae82-22050d181cd7"
                     ref={(canvas) => { canvasRefs.current[index] = canvas; }}
                     width={MAP_WIDTH}
                     height={MAP_HEIGHT}
                     aria-label={spec.label + '的卷积响应示意图'}
                   />
-                  <span
+                  <span shuku-edit-id="e-5a943674-0feb-46bc-ae3d-d0b6c06b2a7a"
                     className="rtg-feature-maps__map-probe"
                     style={{ left: probePoint.x * 100 + '%', top: probePoint.y * 100 + '%' }}
                     aria-hidden="true"
                   />
                 </div>
-                <div className="rtg-feature-maps__response">
-                  <Typography variant="bodySmall" tone="muted">当前位置响应</Typography>
-                  <Typography as="output" variant="h3" tone={strongestIndex === index ? 'warning' : 'accent'}>
+                <div shuku-edit-id="e-ad7c8965-1508-4a2e-a9ec-8818ac4438fd" className="rtg-feature-maps__response">
+                  <Typography shuku-edit-id="e-4673a3ea-80f2-46ff-b625-5d85be883c7b" variant="bodySmall" tone="muted">当前位置响应</Typography>
+                  <Typography shuku-edit-id="e-c6c26b3d-b3ca-4f04-be34-b34456f86b5f" as="output" variant="h3" tone={strongestIndex === index ? 'warning' : 'accent'}>
                     {Math.round(responses[index] * 100)}
                   </Typography>
                 </div>
-                <Typography variant="bodySmall" tone="muted">{spec.description}</Typography>
+                <Typography shuku-edit-id="e-6900641b-a762-436b-9444-cff572a4712c" variant="bodySmall" tone="muted">{spec.description}</Typography>
               </article>
             ))}
           </div>
@@ -410,13 +410,13 @@ export function FeatureMapsPage({ onComplete }: FeatureMapsPageProps) {
 
       {completed ? (
         <NoticeStrip tone="green" role="status" aria-live="polite">
-          <Typography variant="body" tone="inherit">
+          <Typography shuku-edit-id="e-7b3f4599-2d80-4143-9f94-e4e8d517062a" variant="body" tone="inherit">
             一张特征图记录一种视觉线索在各个位置的响应。多个通道合在一起，组成网络当前的中间表示。
           </Typography>
         </NoticeStrip>
       ) : (
         <NoticeStrip tone="blue" role="status" aria-live="polite">
-          <Typography variant="body" tone="inherit">
+          <Typography shuku-edit-id="e-93f7eff2-b7dd-47e2-9ea9-513d762f38da" variant="body" tone="inherit">
             已检查 {visited.size} / {hotspots.length} 个位置。依次查看瓶盖、瓶身边缘和标签区域。
           </Typography>
         </NoticeStrip>

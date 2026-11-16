@@ -296,19 +296,19 @@ export function WormholeScene(props: WormholeSceneProps) {
     };
   }, []);
 
-  return <div ref={host} className="aipe-replay-cg-wormhole-scene" onKeyDown={event => {
+  return <div shuku-edit-id="e-7bb8aa9b-e971-40bd-84d2-51161ffafb4f" ref={host} className="aipe-replay-cg-wormhole-scene" onKeyDown={event => {
     if (event.key === 'Escape') { clearTimeout(closeTimer.current); setFormulaOpen(false); event.stopPropagation(); }
   }}>
-    {failed ? <Typography variant="bodySmall" tone="muted" className="aipe-replay-cg-wormhole-fallback">当前浏览器无法启动三维显示。</Typography> : props.valid && (props.throatDetails ?
-      <button ref={el => { labels.current[0] = el; }} type="button" className="aipe-replay-cg-wormhole-scene-label aipe-replay-cg-wormhole-throat-trigger"
+    {failed ? <Typography shuku-edit-id="e-aa2828f4-ac58-4995-829a-afacea75f57a" variant="bodySmall" tone="muted" className="aipe-replay-cg-wormhole-fallback">当前浏览器无法启动三维显示。</Typography> : props.valid && (props.throatDetails ?
+      <button shuku-edit-id="e-dc8a2176-71da-464b-93be-49fd780f3ace" ref={el => { labels.current[0] = el; }} type="button" className="aipe-replay-cg-wormhole-scene-label aipe-replay-cg-wormhole-throat-trigger"
         aria-label="喉部：查看计算公式" aria-describedby={formulaOpen ? formulaId : undefined}
         onMouseEnter={openFormula} onMouseLeave={closeFormula} onFocus={openFormula} onBlur={closeFormula} onClick={openFormula}>
-        <Typography as="span" variant="bodySmall" tone="warning">喉部</Typography>
-      </button> : <Typography ref={el => { labels.current[0] = el; }} as="span" variant="bodySmall" tone="warning" className="aipe-replay-cg-wormhole-scene-label">喉部</Typography>)}
-    {!failed && props.valid && formulaOpen && props.throatDetails && <div ref={formulaBox} id={formulaId} role="tooltip" className="aipe-replay-cg-wormhole-formula-popover"
+        <Typography shuku-edit-id="e-c28a5731-a2ca-46c4-9f22-83466e375a76" as="span" variant="bodySmall" tone="warning">喉部</Typography>
+      </button> : <Typography shuku-edit-id="e-ae8b5c33-5d00-4c8d-b04f-435d5c184780" ref={el => { labels.current[0] = el; }} as="span" variant="bodySmall" tone="warning" className="aipe-replay-cg-wormhole-scene-label">喉部</Typography>)}
+    {!failed && props.valid && formulaOpen && props.throatDetails && <div shuku-edit-id="e-459547ff-3941-4b51-9d7f-4c883ad4f020" ref={formulaBox} id={formulaId} role="tooltip" className="aipe-replay-cg-wormhole-formula-popover"
       onMouseEnter={openFormula} onMouseLeave={closeFormula}>
       {props.throatDetails}
     </div>}
-    {!failed && <><Typography ref={el => { labels.current[1] = el; }} as="span" variant="bodySmall" tone="accent" className="aipe-replay-cg-wormhole-scene-label">A</Typography><Typography ref={el => { labels.current[2] = el; }} as="span" variant="bodySmall" tone="accent" className="aipe-replay-cg-wormhole-scene-label">B</Typography></>}
+    {!failed && <><Typography shuku-edit-id="e-8d066249-b69c-44a8-bfb0-d822efe810e1" ref={el => { labels.current[1] = el; }} as="span" variant="bodySmall" tone="accent" className="aipe-replay-cg-wormhole-scene-label">A</Typography><Typography shuku-edit-id="e-9133aab1-6007-46b5-8f97-3b1a4741d998" ref={el => { labels.current[2] = el; }} as="span" variant="bodySmall" tone="accent" className="aipe-replay-cg-wormhole-scene-label">B</Typography></>}
   </div>;
 }

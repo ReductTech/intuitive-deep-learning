@@ -14,15 +14,15 @@ export function LatentTraining() {
   return <Frame index={7} subtitle="让画师练习：加进去的噪声是已知的，预测偏差可以直接计算" takeaway="训练用已知噪声监督预测；减小预测误差，才能学会处理带噪状态。">
     <LessonSplit equal>
       <TeachingPanel title="① 已知噪声 → 主干预测" className="vga-training-input">
-        <Flow><div className="vga-center"><Latent small variant="noisy" /><Text>构造带噪样本</Text></div><Arrow /><div className="vga-center"><ReferenceVisual file="visuals/unet-mini.png" alt="预测主干" style={{width: 190,height: 100}} /><Text>去噪主干预测</Text></div></Flow>
-        <div className="vga-metric-row"><Readout label="已知目标" value="−0.40" /><Readout label="当前预测" value={prediction.toFixed(3)} /><Readout label="平方误差" value={<span data-testid="training-loss">{loss.toFixed(4)}</span>} warm /></div>
+        <Flow><div shuku-edit-id="e-b1980687-b00b-4ac0-a12b-f2b6638c4241" className="vga-center"><Latent small variant="noisy" /><Text>构造带噪样本</Text></div><Arrow /><div shuku-edit-id="e-a094c460-63a0-4afd-9d7e-ca762a19da45" className="vga-center"><ReferenceVisual file="visuals/unet-mini.png" alt="预测主干" style={{width: 190,height: 100}} /><Text>去噪主干预测</Text></div></Flow>
+        <div shuku-edit-id="e-47558949-9584-4411-9d90-1a4906a97d17" className="vga-metric-row"><Readout label="已知目标" value="−0.40" /><Readout label="当前预测" value={prediction.toFixed(3)} /><Readout label="平方误差" value={<span shuku-edit-id="e-881fecbd-931f-4fef-bfd7-e1a69162c892" data-testid="training-loss">{loss.toFixed(4)}</span>} warm /></div>
         <Formula latex={`\\mathcal{L}=(${prediction.toFixed(5)}-(-0.4))^2\\approx ${loss.toFixed(4)}`} />
-        <div className="vga-stage-tabs"><Button variant="primary" data-testid="train-update" disabled={history.length>=10} onClick={update}>更新一次参数</Button><Button onClick={reset}>重新练习</Button></div>
+        <div shuku-edit-id="e-dbd7eccf-2ac0-4617-b90a-60d615f9d189" className="vga-stage-tabs"><Button variant="primary" data-testid="train-update" disabled={history.length>=10} onClick={update}>更新一次参数</Button><Button onClick={reset}>重新练习</Button></div>
       </TeachingPanel>
       <TeachingPanel title="② 更新后，误差如何变化？" className="vga-training-chart">
         <Typography variant="h3" tone="accent">损失轨迹</Typography>
-        <svg className="vga-loss-chart" viewBox="0 0 600 220" aria-label="一维训练示例的损失轨迹"><path d="M25 10V195H580M25 95H580" fill="none" stroke="var(--ui-border)" /><polyline points={history.map((v,i) => `${35+i*57},${190-v/1.69*155}`).join(' ')} fill="none" stroke="currentColor" strokeWidth="4" />{history.map((v,i) => <circle key={i} cx={35+i*57} cy={190-v/1.69*155} r="6" fill="currentColor" />)}</svg>
-        <div className="vga-panel-callout"><Text>{history.length === 1 ? '点击左侧按钮，记录第一次更新。' : `已更新 ${history.length-1} 次；误差从 1.69 降到 ${loss.toFixed(4)}。`}</Text></div>
+        <svg shuku-edit-id="e-d6822a7b-06b4-4807-8551-d25c6e55d4d2" className="vga-loss-chart" viewBox="0 0 600 220" aria-label="一维训练示例的损失轨迹"><path shuku-edit-id="e-cf0eebbe-9b48-444e-a879-de88acfc928e" d="M25 10V195H580M25 95H580" fill="none" stroke="var(--ui-border)" /><polyline shuku-edit-id="e-a54085d7-4eb2-4d5f-a975-b75ca0eaf02e" points={history.map((v,i) => `${35+i*57},${190-v/1.69*155}`).join(' ')} fill="none" stroke="currentColor" strokeWidth="4" />{history.map((v,i) => <circle shuku-edit-id="e-a2fae429-58b1-483c-8c7b-b4765e061a04" key={i} cx={35+i*57} cy={190-v/1.69*155} r="6" fill="currentColor" />)}</svg>
+        <div shuku-edit-id="e-f1b7a39d-571a-4035-9a5e-b7b218b95ac0" className="vga-panel-callout"><Text>{history.length === 1 ? '点击左侧按钮，记录第一次更新。' : `已更新 ${history.length-1} 次；误差从 1.69 降到 ${loss.toFixed(4)}。`}</Text></div>
         <Text muted>预测值等于一维参数 w，用已知噪声监督更新；此处不训练真实模型。</Text>
       </TeachingPanel>
     </LessonSplit>

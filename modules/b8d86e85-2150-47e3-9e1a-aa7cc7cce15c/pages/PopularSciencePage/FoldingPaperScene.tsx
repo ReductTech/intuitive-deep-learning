@@ -190,11 +190,11 @@ export function FoldingPaperScene({ mode, elapsed, resetVersion }: { mode: 'flat
       geometries.forEach(geometry => geometry.dispose()); materials.forEach(material => material.dispose()); renderer.dispose(); renderer.domElement.remove();
     };
   }, []);
-  return <div ref={host} className="llmpe-cg-folding-scene">
-    {failed ? <Typography variant="bodySmall" tone="muted">当前浏览器无法启动三维显示。</Typography> : <>
-      <Typography ref={el => { labels.current[0] = el; }} as="span" variant="bodySmall" tone="accent" className="llmpe-cg-folding-label">A</Typography>
-      <Typography ref={el => { labels.current[1] = el; }} as="span" variant="bodySmall" tone="accent" className="llmpe-cg-folding-label">B</Typography>
-      <Typography as="span" variant="bodySmall" tone="muted" className="llmpe-cg-folding-gesture">拖动旋转 · 滚轮缩放</Typography>
+  return <div shuku-edit-id="e-44de02f5-cc62-4786-b2cf-8061e311939c" ref={host} className="llmpe-cg-folding-scene">
+    {failed ? <Typography shuku-edit-id="e-c15fc1a4-a37d-4448-80b3-c19786f49010" variant="bodySmall" tone="muted">当前浏览器无法启动三维显示。</Typography> : <>
+      <Typography shuku-edit-id="e-80dba915-08e2-4f21-9888-50a70a330ac1" ref={el => { labels.current[0] = el; }} as="span" variant="bodySmall" tone="accent" className="llmpe-cg-folding-label">A</Typography>
+      <Typography shuku-edit-id="e-83034417-8561-4eff-bbf2-b0d1fc441e5f" ref={el => { labels.current[1] = el; }} as="span" variant="bodySmall" tone="accent" className="llmpe-cg-folding-label">B</Typography>
+      <Typography shuku-edit-id="e-e6be80b4-c858-43b3-bb34-b9f564e88e61" as="span" variant="bodySmall" tone="muted" className="llmpe-cg-folding-gesture">拖动旋转 · 滚轮缩放</Typography>
     </>}
   </div>;
 }

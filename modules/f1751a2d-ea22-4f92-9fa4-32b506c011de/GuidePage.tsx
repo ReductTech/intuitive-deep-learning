@@ -21,7 +21,7 @@ function TestQuestionPair({ pageId, record, choiceTitle, choiceOptions, choiceAn
     if (result.empty) return;
     record(pageId, 'answer_submit', { question_id: questionId, question_type: kind, answer: result.answer, correct: kind === 'choice' ? result.ok : null });
   };
-  return <div className="mt-questions">
+  return <div shuku-edit-id="e-7e25c678-9b9b-4fc1-be8d-bf38617a646d" className="mt-questions">
     <Question type="choice" instant={false} title={choiceTitle} options={choiceOptions} answer={choiceAnswer} persistenceKey={`memory-test:${pageId}:choice`} onCheck={(result) => reportAnswer(`${pageId}:choice`, 'choice', result)} />
     <Question type="short" title={shortTitle} rows={3} persistenceKey={`memory-test:${pageId}:short`} feedback={{ sample: '测试题只记录回答，不进行 AI 评分。' }} onCheck={(result) => reportAnswer(`${pageId}:short`, 'short', result)} />
   </div>;
@@ -39,12 +39,12 @@ function Canvas({ pageId, index, title, description, children }: { pageId: strin
     observer.observe(frame);
     return () => observer.disconnect();
   }, []);
-  return <div ref={frameRef} className="mt-frame" style={{ height: 900 * scale }}>
-    <section className="mt-canvas" data-page-id={pageId} style={{ transform: `scale(${scale})` }}>
-      <header className="mt-canvas-head">
-        <Typography as="span" variant="bodySmall" tone="accent">COURSE INTERACTION TEST / {String(index + 1).padStart(2, '0')}</Typography>
-        <Typography as="h2" variant="display">{title}</Typography>
-        <Typography as="p" variant="subtitle" tone="muted">{description}</Typography>
+  return <div shuku-edit-id="e-df398e3c-e1f9-46ba-b83f-207396e63745" ref={frameRef} className="mt-frame" style={{ height: 900 * scale }}>
+    <section shuku-edit-id="e-19306294-aba9-49be-b424-2b73353181a6" className="mt-canvas" data-page-id={pageId} style={{ transform: `scale(${scale})` }}>
+      <header shuku-edit-id="e-be4b049e-8d60-4867-ab59-45e6d374e854" className="mt-canvas-head">
+        <Typography shuku-edit-id="e-b26c3d5c-ae8f-4b61-899d-c45dd6b8ffce" as="span" variant="bodySmall" tone="accent">COURSE INTERACTION TEST / {String(index + 1).padStart(2, '0')}</Typography>
+        <Typography shuku-edit-id="e-0f9b5cf2-b07a-440c-afe6-5a1c492e9f79" as="h2" variant="display">{title}</Typography>
+        <Typography shuku-edit-id="e-84e17860-e34c-4b1d-b59b-2432812803e1" as="p" variant="subtitle" tone="muted">{description}</Typography>
       </header>
       {children}
     </section>
@@ -62,19 +62,19 @@ function ConnectionPanel({ logs, onRefresh, onList, onAuth, queryOptions, setQue
   bridgeMessage: string;
 }) {
   const status = bridgeStatus();
-  return <aside className="mt-panel" aria-label="课程事件接口状态">
-    <div className="mt-panel-top">
-      <div><Typography as="h2" variant="h3">接口状态</Typography><Typography as="p" variant="bodySmall" tone="muted">操作记录通过平台课程接口提交；用户身份由平台处理。</Typography></div>
-      <div className="mt-panel-actions">
+  return <aside shuku-edit-id="e-fd7d488b-45b4-4e4e-8a9e-99630e0643d1" className="mt-panel" aria-label="课程事件接口状态">
+    <div shuku-edit-id="e-a3d0ca67-9f21-46c4-ac59-843e14132e5d" className="mt-panel-top">
+      <div shuku-edit-id="e-e84ede67-7f8e-4ebf-bf3b-eaae34e44ebf"><Typography shuku-edit-id="e-15569a53-9c54-4686-9fc7-2d80a0e5fd1f" as="h2" variant="h3">接口状态</Typography><Typography shuku-edit-id="e-a1ad18d3-d918-4295-befc-21d1e947f181" as="p" variant="bodySmall" tone="muted">操作记录通过平台课程接口提交；用户身份由平台处理。</Typography></div>
+      <div shuku-edit-id="e-809e397f-0ba3-4557-8556-f6aa1d18e853" className="mt-panel-actions">
         <Button type="button" onClick={onRefresh}>重新检测</Button>
         <Button type="button" onClick={onAuth}>查看说明</Button>
       </div>
     </div>
-    <div className="mt-flags"><span>页面：{status.embedded ? '嵌入' : '独立'}</span><span>平台事件接口：{status.report ? '已嵌入，提交后确认' : '请在平台学习页测试'}</span></div>
-    {bridgeMessage && <Typography as="p" variant="bodySmall" tone="muted" role="status">{bridgeMessage}</Typography>}
-    <div className="mt-panel-grid">
-      <section><Typography as="h3" variant="body" >最近写入</Typography><ol className="mt-log">{logs.length ? logs.slice(0, 6).map(({ event, status: result, detail }) => <li key={event.event_id}><code>{event.event_name}</code><span>{event.page_id}</span><strong data-status={result}>{result}</strong>{detail && <small title={detail}>{detail}</small>}</li>) : <li>完成下方操作后显示结果。</li>}</ol></section>
-      <section><Typography as="h3" variant="body">本页记录</Typography><label className="mt-query-label" htmlFor="mt-query">显示条数 JSON（填写 limit 属性）</label><textarea id="mt-query" value={queryOptions} onChange={(event) => setQueryOptions(event.target.value)} rows={2} /><Button type="button" variant="primary" onClick={onList}>查看本页记录</Button><pre className="mt-query-result">{queryResult || '仅显示本页本次测试记录，不代表服务端查询结果。'}</pre></section>
+    <div shuku-edit-id="e-09770875-82b4-448f-a1ba-7cfb556cb16a" className="mt-flags"><span shuku-edit-id="e-0d0d614e-58ac-4110-b90e-2ab496561b48">页面：{status.embedded ? '嵌入' : '独立'}</span><span shuku-edit-id="e-647f6c4f-6a5e-421e-8152-ad2ced6f654c">平台事件接口：{status.report ? '已嵌入，提交后确认' : '请在平台学习页测试'}</span></div>
+    {bridgeMessage && <Typography shuku-edit-id="e-bd115188-c409-4b33-86ec-9aba093ef8aa" as="p" variant="bodySmall" tone="muted" role="status">{bridgeMessage}</Typography>}
+    <div shuku-edit-id="e-16501a10-e647-48e5-bd4a-5d756196b031" className="mt-panel-grid">
+      <section shuku-edit-id="e-4a8f888e-6685-4ee9-aa25-251ea70bf1a8"><Typography shuku-edit-id="e-be0123b8-6900-4951-8463-ae4694bba360" as="h3" variant="body" >最近写入</Typography><ol shuku-edit-id="e-900f6fcf-a664-40f6-a453-a61eeb9ec96b" className="mt-log">{logs.length ? logs.slice(0, 6).map(({ event, status: result, detail }) => <li shuku-edit-id="e-d4912f0b-eef5-40fd-9c69-26cbbb148da1" key={event.event_id}><code shuku-edit-id="e-0fa87afb-2edb-4f12-894c-4f0b977687b0">{event.event_name}</code><span shuku-edit-id="e-ea6032fc-7dce-4942-bb3a-04eaa92912c2">{event.page_id}</span><strong shuku-edit-id="e-f3d16b08-0e92-4c7e-b275-3e8fcca72131" data-status={result}>{result}</strong>{detail && <small shuku-edit-id="e-660c610f-6e26-4969-af19-aad1d1e29bd8" title={detail}>{detail}</small>}</li>) : <li shuku-edit-id="e-1b4fc7f3-fff4-491b-a22b-0582598dc9e7">完成下方操作后显示结果。</li>}</ol></section>
+      <section shuku-edit-id="e-91e3c345-4e39-4015-ba22-bc338e58df65"><Typography shuku-edit-id="e-86d19a6d-033f-4dfd-9e02-874bf4b07790" as="h3" variant="body">本页记录</Typography><label shuku-edit-id="e-a0a59b75-05a4-4cc7-a9b6-301d1f68d7f6" className="mt-query-label" htmlFor="mt-query">显示条数 JSON（填写 limit 属性）</label><textarea shuku-edit-id="e-e09b022d-1f86-46a9-b072-7b4c377a29eb" id="mt-query" value={queryOptions} onChange={(event) => setQueryOptions(event.target.value)} rows={2} /><Button type="button" variant="primary" onClick={onList}>查看本页记录</Button><pre shuku-edit-id="e-f844ba68-9ba4-48c5-8df6-a782680425f0" className="mt-query-result">{queryResult || '仅显示本页本次测试记录，不代表服务端查询结果。'}</pre></section>
     </div>
   </aside>;
 }
@@ -138,19 +138,19 @@ export function GuidePage() {
     <ConnectionPanel logs={logs} onRefresh={refreshBridge} onList={() => void query()} onAuth={() => void checkAuth()} queryOptions={queryOptions} setQueryOptions={setQueryOptions} queryResult={queryResult} bridgeMessage={bridgeMessage} />
     {page === 0 && <Canvas pageId={pageIds[0]} index={0} title="选择，然后留下一个回答" description="先完成两道题，再点按钮。每次提交都会直接写入课程事件。">
       <TestQuestionPair pageId={pageIds[0]} record={record} choiceTitle="这次测试的写入由哪个接口完成？" choiceOptions={[{ value: 'courseEvent', label: '平台课程事件接口' }, { value: 'localLog', label: '本页记录列表' }, { value: 'localStorage', label: 'localStorage' }]} choiceAnswer="courseEvent" shortTitle="用一句话描述你希望记住的学习行为。" />
-      <div className="mt-action-row"><Button variant="primary" onClick={() => record(pageIds[0], 'button_click', { button_id: 'primary-test' })}>主按钮测试</Button><Button onClick={() => record(pageIds[0], 'button_click', { button_id: 'secondary-test' })}>次按钮测试</Button></div>
+      <div shuku-edit-id="e-abb207f8-bb51-4fc0-b697-30119ed416cc" className="mt-action-row"><Button variant="primary" onClick={() => record(pageIds[0], 'button_click', { button_id: 'primary-test' })}>主按钮测试</Button><Button onClick={() => record(pageIds[0], 'button_click', { button_id: 'secondary-test' })}>次按钮测试</Button></div>
     </Canvas>}
     {page === 1 && <Canvas pageId={pageIds[1]} index={1} title="连续输入也能被记录" description="拖动滑块、切换开关，再提交选择与简答。">
-      <div className="mt-controls"><RangeControl label="学习信心" min={0} max={100} step={1} value={slider} suffix="%" onChange={(event) => setSlider(Number(event.currentTarget.value))} onPointerUp={(event) => record(pageIds[1], 'slider_commit', { control_id: 'confidence', value: Number(event.currentTarget.value) })} onKeyUp={(event) => record(pageIds[1], 'slider_commit', { control_id: 'confidence', value: Number(event.currentTarget.value) })} /><Switch label={enabled ? '练习模式：开' : '练习模式：关'} checked={enabled} onChange={(event) => { const next = event.currentTarget.checked; setEnabled(next); record(pageIds[1], 'toggle_change', { control_id: 'practice-mode', enabled: next }); }} /></div>
+      <div shuku-edit-id="e-3f62399d-a27e-4873-9ab5-e6c3c3e07918" className="mt-controls"><RangeControl label="学习信心" min={0} max={100} step={1} value={slider} suffix="%" onChange={(event) => setSlider(Number(event.currentTarget.value))} onPointerUp={(event) => record(pageIds[1], 'slider_commit', { control_id: 'confidence', value: Number(event.currentTarget.value) })} onKeyUp={(event) => record(pageIds[1], 'slider_commit', { control_id: 'confidence', value: Number(event.currentTarget.value) })} /><Switch label={enabled ? '练习模式：开' : '练习模式：关'} checked={enabled} onChange={(event) => { const next = event.currentTarget.checked; setEnabled(next); record(pageIds[1], 'toggle_change', { control_id: 'practice-mode', enabled: next }); }} /></div>
       <TestQuestionPair pageId={pageIds[1]} record={record} choiceTitle="滑块应在什么时机上报最终值？" choiceOptions={[{ value: 'commit', label: '用户结束拖动时' }, { value: 'every-frame', label: '每一帧都上报' }, { value: 'never', label: '永不上报' }]} choiceAnswer="commit" shortTitle="滑块的变化可以帮助你观察什么？" />
     </Canvas>}
     {page === 2 && <Canvas pageId={pageIds[2]} index={2} title="再做一组组合操作" description="用计数按钮和重置按钮制造连续事件，再完成两道题。">
-      <div className="mt-action-row"><Button variant="primary" onClick={() => { const next = counter + 1; setCounter(next); record(pageIds[2], 'counter_increment', { value: next }); }}>点击计数：{counter}</Button><Button onClick={() => { setCounter(0); record(pageIds[2], 'counter_reset', { previous_value: counter }); }}>重置计数</Button></div>
+      <div shuku-edit-id="e-866737d7-a7dc-413e-a19c-24c10a68c089" className="mt-action-row"><Button variant="primary" onClick={() => { const next = counter + 1; setCounter(next); record(pageIds[2], 'counter_increment', { value: next }); }}>点击计数：{counter}</Button><Button onClick={() => { setCounter(0); record(pageIds[2], 'counter_reset', { previous_value: counter }); }}>重置计数</Button></div>
       <TestQuestionPair pageId={pageIds[2]} record={record} choiceTitle="一条测试事件是否应该带上用户 ID？" choiceOptions={[{ value: 'no', label: '不用；由宿主登录态归属' }, { value: 'yes', label: '必须由页面自己填写' }]} choiceAnswer="no" shortTitle="如果写入失败，你想从页面上看到什么提示？" />
     </Canvas>}
     {page === 3 && <Canvas pageId={pageIds[3]} index={3} title="测试结束" description="播放一段本地测试视频，再给本页打星。最后使用上方查询按钮核对记录。">
-      <div className="mt-ending"><div className="mt-video-wrap"><video controls preload="metadata" src={VIDEO_URL} onPlay={() => { if (!videoPlayed) { setVideoPlayed(true); record(pageIds[3], 'video_play', { video_id: 'memory-test-video' }); } }} onEnded={() => record(pageIds[3], 'video_complete', { video_id: 'memory-test-video' })} /><Typography as="p" variant="bodySmall" tone="muted">本地生成的短视频，只用于验证播放操作。</Typography></div><div className="mt-rating"><Typography as="h3" variant="h2">给这次体验打分</Typography><div onClickCapture={(event) => { const target = event.target instanceof Element ? event.target.closest('.edu-page-rating-stars button') : null; if (target) { const match = target.getAttribute('aria-label')?.match(/(\d)/); if (match) record(pageIds[3], 'page_rating', { rating: Number(match[1]), page_key: 'memory-test-ending' }); } }}><PageRating pageKey="memory-test-ending" /></div><Typography as="p" variant="bodySmall" tone="muted">评分后，上方“最近写入”会显示提交结果。</Typography></div></div>
+      <div shuku-edit-id="e-f9508953-2296-49b7-8b70-9e116ee832bb" className="mt-ending"><div shuku-edit-id="e-83c9d090-11c6-46eb-9633-63d4fbaf4066" className="mt-video-wrap"><video shuku-edit-id="e-3f0fd50a-e683-4f40-80ed-83f920bbf854" controls preload="metadata" src={VIDEO_URL} onPlay={() => { if (!videoPlayed) { setVideoPlayed(true); record(pageIds[3], 'video_play', { video_id: 'memory-test-video' }); } }} onEnded={() => record(pageIds[3], 'video_complete', { video_id: 'memory-test-video' })} /><Typography shuku-edit-id="e-3e346c99-cf3a-4e56-b41e-365041a0fb17" as="p" variant="bodySmall" tone="muted">本地生成的短视频，只用于验证播放操作。</Typography></div><div shuku-edit-id="e-ac7b091d-e6f3-42a3-ade4-fe69e3ffe8b0" className="mt-rating"><Typography shuku-edit-id="e-5c7b396c-c047-43d5-ab44-960621bc6bbb" as="h3" variant="h2">给这次体验打分</Typography><div shuku-edit-id="e-57c6abac-c013-449b-a3ff-84b7cbe3be71" onClickCapture={(event) => { const target = event.target instanceof Element ? event.target.closest('.edu-page-rating-stars button') : null; if (target) { const match = target.getAttribute('aria-label')?.match(/(\d)/); if (match) record(pageIds[3], 'page_rating', { rating: Number(match[1]), page_key: 'memory-test-ending' }); } }}><PageRating pageKey="memory-test-ending" /></div><Typography shuku-edit-id="e-eb5ee981-f2c0-4916-9f3c-eb8c36937f0c" as="p" variant="bodySmall" tone="muted">评分后，上方“最近写入”会显示提交结果。</Typography></div></div>
     </Canvas>}
-    <nav className="mt-navigation" aria-label="测试页面导航"><Button disabled={page === 0} onClick={() => changePage(page - 1)}>上一页</Button><Typography as="span" variant="bodySmall" tone="muted">{page + 1} / 4 · {'f1751a2d-ea22-4f92-9fa4-32b506c011de'}</Typography><Button variant="primary" disabled={page === 3} onClick={() => changePage(page + 1)}>下一页</Button></nav>
+    <nav shuku-edit-id="e-bedbe655-0aaf-4abf-836d-dd97734d3273" className="mt-navigation" aria-label="测试页面导航"><Button disabled={page === 0} onClick={() => changePage(page - 1)}>上一页</Button><Typography shuku-edit-id="e-255932df-78a9-4f6e-9d07-2e2bf03e2d67" as="span" variant="bodySmall" tone="muted">{page + 1} / 4 · {'f1751a2d-ea22-4f92-9fa4-32b506c011de'}</Typography><Button variant="primary" disabled={page === 3} onClick={() => changePage(page + 1)}>下一页</Button></nav>
   </ModuleShell>;
 }

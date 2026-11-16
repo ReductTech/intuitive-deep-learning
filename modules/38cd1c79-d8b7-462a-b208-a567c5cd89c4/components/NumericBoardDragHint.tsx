@@ -15,8 +15,8 @@ export function NumericBoardDragHint() {
     document.addEventListener('visibilitychange', sync);
     return () => { observer.disconnect(); document.removeEventListener('visibilitychange', sync); };
   }, []);
-  return <div ref={host} className="cki-board-hint" data-active={active} aria-label="操作提示：按住窗口，向右下方拖动">
-    <Typography className="cki-board-hint-label" variant="bodySmall" tone="inherit">按住窗口，向右下方拖动</Typography>
-    <div className="cki-board-hint-path" aria-hidden="true"><span className="cki-board-hint-hand"><Hand /></span></div>
+  return <div shuku-edit-id="e-4f52e5b3-a94c-49f0-8976-6fd7e16ffdad" ref={host} className="cki-board-hint" data-active={active} aria-label="操作提示：按住窗口，向右下方拖动">
+    <Typography shuku-edit-id="e-0d958076-b09d-426c-95f2-7456f7b1e469" className="cki-board-hint-label" variant="bodySmall" tone="inherit">按住窗口，向右下方拖动</Typography>
+    <div shuku-edit-id="e-805a5bc2-36c0-45ff-b9e4-d9e024733d5a" className="cki-board-hint-path" aria-hidden="true"><span shuku-edit-id="e-4e24d13d-ce7c-4387-8cf9-e6d939bad6be" className="cki-board-hint-hand"><Hand /></span></div>
   </div>;
 }

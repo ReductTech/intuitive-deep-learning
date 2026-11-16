@@ -23,8 +23,8 @@ function BlogLessonCanvas({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <div ref={frameRef} className="lesson-canvas-frame" style={{ height: 900 * scale }}>
-      <div className="course-page-surface course-shell" style={{ transform: 'scale(' + scale + ')' }}>
+    <div shuku-edit-id="e-8f14fc21-17c7-4ae6-a145-d1bfc9c8fb24" ref={frameRef} className="lesson-canvas-frame" style={{ height: 900 * scale }}>
+      <div shuku-edit-id="e-f8228ee2-6546-40c3-996a-5b435a3cd685" className="course-page-surface course-shell" style={{ transform: 'scale(' + scale + ')' }}>
         {children}
       </div>
     </div>
@@ -88,7 +88,7 @@ export function GuidePage() {
       subtitle="从 300 张可回收物照片出发，逐步理解 ResNet、预训练与迁移学习。"
       shellClassName="course-shell course-blog-shell"
     >
-      <div ref={flowRef}>
+      <div shuku-edit-id="e-bf488785-da76-4236-b397-4ad08f405ac3" ref={flowRef}>
         {flowReady && <LessonFlow steps={lessonSteps} persistenceKey="resnet-transfer-guide-v1" />}
       </div>
     </ModuleShell>

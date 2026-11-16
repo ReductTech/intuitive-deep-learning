@@ -1,10 +1,10 @@
 export function TrainingIcon({kind}:{kind:'settings'|'metrics'|'features'|'play'|'pause'|'pointer'}){
- return <svg className="vfl-tsne-icon" viewBox="0 0 24 24" aria-hidden="true">
-  {kind==='settings'?<g fill="none" stroke="currentColor" strokeWidth="2"><path d="m10 3 4 0 .6 2.4 2 .9 2.2-.8 2 3.5-1.7 1.6v2.3l1.7 1.6-2 3.5-2.2-.8-2 .9L14 21h-4l-.6-2.4-2-.9-2.2.8-2-3.5 1.7-1.6v-2.3L3.2 9.5l2-3.5 2.2.8 2-.9Z"/><circle cx="12" cy="12" r="3"/></g>:null}
-  {kind==='metrics'?<g fill="currentColor"><rect x="3" y="11" width="4" height="10" rx="2"/><rect x="10" y="3" width="4" height="18" rx="2"/><rect x="17" y="7" width="4" height="14" rx="2"/></g>:null}
-  {kind==='features'?<g fill="currentColor">{[[5,18],[12,18],[19,18],[12,11],[19,11],[19,4]].map(([cx,cy])=><circle key={`${cx}-${cy}`} cx={cx} cy={cy} r="2.5"/>)}</g>:null}
-  {kind==='play'?<path fill="currentColor" d="M7 3.5a1 1 0 0 1 1.5-.8l12 8.5a1 1 0 0 1 0 1.6l-12 8.5a1 1 0 0 1-1.5-.8Z"/>:null}
-  {kind==='pause'?<g fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></g>:null}
-  {kind==='pointer'?<path fill="currentColor" d="M5 2v18l5-5 3 7 3-1-3-7h7Z"/>:null}
+ return <svg shuku-edit-id="e-b46f18de-5edb-40db-b085-8921d897d332" className="vfl-tsne-icon" viewBox="0 0 24 24" aria-hidden="true">
+  {kind==='settings'?<g shuku-edit-id="e-f40be740-72d4-4292-87af-26cedd272f73" fill="none" stroke="currentColor" strokeWidth="2"><path shuku-edit-id="e-67684abc-d069-4bdd-8a70-63c27fc8365c" d="m10 3 4 0 .6 2.4 2 .9 2.2-.8 2 3.5-1.7 1.6v2.3l1.7 1.6-2 3.5-2.2-.8-2 .9L14 21h-4l-.6-2.4-2-.9-2.2.8-2-3.5 1.7-1.6v-2.3L3.2 9.5l2-3.5 2.2.8 2-.9Z"/><circle shuku-edit-id="e-5c16f4de-4e3f-471f-ba07-68ab91eaa031" cx="12" cy="12" r="3"/></g>:null}
+  {kind==='metrics'?<g shuku-edit-id="e-b62d6ab6-5f83-4a9c-9fdf-92554ba7e861" fill="currentColor"><rect shuku-edit-id="e-191e37be-59c5-48e6-a54f-f9a229d76953" x="3" y="11" width="4" height="10" rx="2"/><rect shuku-edit-id="e-618b53f7-df35-42a6-8a14-ca56e6d96f16" x="10" y="3" width="4" height="18" rx="2"/><rect shuku-edit-id="e-de0cfa01-549b-4515-b2e7-ae130d403740" x="17" y="7" width="4" height="14" rx="2"/></g>:null}
+  {kind==='features'?<g shuku-edit-id="e-3e9d8a04-4151-416c-9fc2-e01d3bdf8739" fill="currentColor">{[[5,18],[12,18],[19,18],[12,11],[19,11],[19,4]].map(([cx,cy])=><circle shuku-edit-id="e-8688bb9c-ff22-43d9-861e-dca625e5c2d2" key={`${cx}-${cy}`} cx={cx} cy={cy} r="2.5"/>)}</g>:null}
+  {kind==='play'?<path shuku-edit-id="e-0fd18949-1b3a-4c32-a9d7-0388bd870b93" fill="currentColor" d="M7 3.5a1 1 0 0 1 1.5-.8l12 8.5a1 1 0 0 1 0 1.6l-12 8.5a1 1 0 0 1-1.5-.8Z"/>:null}
+  {kind==='pause'?<g shuku-edit-id="e-ea1b9dc3-b817-436c-b813-02bfcfb33dfa" fill="currentColor"><rect shuku-edit-id="e-f0c7a389-d9ed-4caf-948c-8fc28d6a8d39" x="6" y="4" width="4" height="16" rx="1"/><rect shuku-edit-id="e-e681ba59-6bb8-4cc9-a3a1-093537bee380" x="14" y="4" width="4" height="16" rx="1"/></g>:null}
+  {kind==='pointer'?<path shuku-edit-id="e-bf0e98d4-558f-49f1-8e3e-775655ccde92" fill="currentColor" d="M5 2v18l5-5 3 7 3-1-3-7h7Z"/>:null}
  </svg>;
 }

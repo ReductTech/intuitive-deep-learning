@@ -156,7 +156,7 @@ export function KnowledgeDiagramViewport({ children, note, renderLabels }: {
   const noteLeft = anchor ? Math.max(12, Math.min(anchor.x - noteWidth + 24, size.width - noteWidth - 12)) : 0;
   const noteTop = anchor ? Math.max(8, Math.min(anchor.y + 32, size.height - noteHeight - 8)) : 0;
 
-  return <div ref={surface} className="aipe-replay-cg-k-viewport" data-scale={view.scale.toFixed(3)} data-zoomed={view.scale > 1.5} data-dragging={dragging}
+  return <div shuku-edit-id="e-27c87601-9e86-4e7c-9c9d-a422364e5371" ref={surface} className="aipe-replay-cg-k-viewport" data-scale={view.scale.toFixed(3)} data-zoomed={view.scale > 1.5} data-dragging={dragging}
       tabIndex={0} role="group" aria-label="可拖拽缩放的知识图" aria-describedby={descriptionId}
       onDoubleClick={event => { event.preventDefault(); event.stopPropagation(); }}
       onKeyDown={event => {
@@ -168,27 +168,27 @@ export function KnowledgeDiagramViewport({ children, note, renderLabels }: {
         else if (event.key === '0' || event.key === 'Home') { event.preventDefault(); reset(); }
         else if (pan[event.key]) { event.preventDefault(); commit({ ...current.current, x: current.current.x + pan[event.key].x, y: current.current.y + pan[event.key].y }); }
       }}>
-    <svg ref={svg} className="aipe-replay-cg-k-growth-circle" viewBox="-25 -50 700 650" role="img"
+    <svg shuku-edit-id="e-48d553a6-6bc1-4941-a8a1-2891226c0a60" ref={svg} className="aipe-replay-cg-k-growth-circle" viewBox="-25 -50 700 650" role="img"
       aria-label="蓝色为个人已理解的知识，橙色为新的贡献">
-      <desc id={descriptionId}>按住鼠标左键拖动，滚轮缩放。也可使用方向键平移，加减键缩放，零键复位。切换时代保留当前视角。</desc>
-      <rect x="-25" y="-50" width="700" height="650" fill="transparent" pointerEvents="all" />
-      <g className="aipe-replay-cg-k-diagram-world" pointerEvents="none" transform={`translate(${view.x} ${view.y}) scale(${view.scale})`}>{children}</g>
+      <desc shuku-edit-id="e-9f7d2ee4-fb32-4dcc-a678-93a22cb9c439" id={descriptionId}>按住鼠标左键拖动，滚轮缩放。也可使用方向键平移，加减键缩放，零键复位。切换时代保留当前视角。</desc>
+      <rect shuku-edit-id="e-1142b687-3807-4b67-9604-77582b6878cf" x="-25" y="-50" width="700" height="650" fill="transparent" pointerEvents="all" />
+      <g shuku-edit-id="e-d82331e3-f870-4249-a24b-dd076da54c81" className="aipe-replay-cg-k-diagram-world" pointerEvents="none" transform={`translate(${view.x} ${view.y}) scale(${view.scale})`}>{children}</g>
       {renderLabels?.(view)}
     </svg>
-    {note && anchor && noteVisible && <div data-diagram-note className="aipe-replay-cg-k-tip-note" style={{ left: anchor.x, top: anchor.y }}
+    {note && anchor && noteVisible && <div shuku-edit-id="e-37d8ccf3-b69f-423d-8838-d77c51291362" data-diagram-note className="aipe-replay-cg-k-tip-note" style={{ left: anchor.x, top: anchor.y }}
       onMouseEnter={() => setNoteOpen(true)} onMouseLeave={() => setNoteOpen(false)}
       onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget)) setNoteOpen(false); }}
       onKeyDown={event => { if (event.key === 'Escape') { setNoteOpen(false); event.stopPropagation(); } }}>
       <Button className="aipe-replay-cg-k-tip-question" aria-label="为什么可能难以抵达知识前沿？" aria-describedby={noteOpen ? noteId : undefined}
         onFocus={() => setNoteOpen(true)} onClick={() => setNoteOpen(true)}>
-        <svg className="aipe-replay-cg-k-tip-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-          <path d="M5 5a3 3 0 0 1 6 0c0 2-3 2-3 4" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
-          <circle cx="8" cy="12" r="1" fill="currentColor" />
+        <svg shuku-edit-id="e-fb7e2aeb-19a9-4959-b04a-e32cb274e59a" className="aipe-replay-cg-k-tip-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+          <path shuku-edit-id="e-60c42748-5376-46bc-966d-af313fbb9cd7" d="M5 5a3 3 0 0 1 6 0c0 2-3 2-3 4" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
+          <circle shuku-edit-id="e-27e62983-195e-4e9f-823e-fb17729c0785" cx="8" cy="12" r="1" fill="currentColor" />
         </svg>
       </Button>
-      {noteOpen && <div ref={noteBox} id={noteId} role="tooltip" className="aipe-replay-cg-k-tip-popover"
+      {noteOpen && <div shuku-edit-id="e-240bbbaa-ea74-4cc3-ae9a-906d21fb752d" ref={noteBox} id={noteId} role="tooltip" className="aipe-replay-cg-k-tip-popover"
         style={{ width: noteWidth, left: noteLeft - anchor.x, top: noteTop - anchor.y }}>
-        <Typography variant="bodySmall">{note.text}</Typography>
+        <Typography shuku-edit-id="e-c80cefec-a8ef-4ff8-9e71-21d73762a12a" variant="bodySmall">{note.text}</Typography>
       </div>}
     </div>}
   </div>;

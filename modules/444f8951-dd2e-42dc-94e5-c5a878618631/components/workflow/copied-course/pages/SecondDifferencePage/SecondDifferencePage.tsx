@@ -95,25 +95,25 @@ function useDifferenceImages() {
 
 function StepHeader({ number, children }: { number: string; children: ReactNode }) {
   return (
-    <header className="cg-copy-ck-second__step-header">
-      <Typography as="span" variant="h3" tone="light" className="cg-copy-ck-second__step-number">{number}</Typography>
-      <Typography as="h2" variant="h3" tone="accent">{children}</Typography>
+    <header shuku-edit-id="e-69bada57-ce30-4835-aeb3-2d8c91090dce" className="cg-copy-ck-second__step-header">
+      <Typography shuku-edit-id="e-1a1871e0-b4ce-4830-9a3a-cf858c18f8ac" as="span" variant="h3" tone="light" className="cg-copy-ck-second__step-number">{number}</Typography>
+      <Typography shuku-edit-id="e-53194d6a-0ba1-4c50-985e-c3d32635d7d7" as="h2" variant="h3" tone="accent">{children}</Typography>
     </header>
   );
 }
 
 function Signal({ values, tone = '' }: { values: string[]; tone?: string }) {
   return (
-    <div className={`cg-copy-ck-second__signal ${tone}`} role="img" aria-label={values.join('，')}>
-      {values.map((value, index) => <Typography as="span" variant="bodySmall" tone="accent" key={`${value}-${index}`}>{value}</Typography>)}
+    <div shuku-edit-id="e-d340ba7b-41f2-43bd-973c-64b0a89a518d" className={`cg-copy-ck-second__signal ${tone}`} role="img" aria-label={values.join('，')}>
+      {values.map((value, index) => <Typography shuku-edit-id="e-70032611-83ca-4bfc-8716-d17bd0d6e65a" as="span" variant="bodySmall" tone="accent" key={`${value}-${index}`}>{value}</Typography>)}
     </div>
   );
 }
 
 function DifferenceImage({ src, alt, className = '' }: { src?: string; alt: string; className?: string }) {
   return src
-    ? <img className={`cg-copy-ck-second__image ${className}`} src={src} alt={alt} />
-    : <div className={`cg-copy-ck-second__image-loading ${className}`} role="img" aria-label={`${alt}正在计算`} />;
+    ? <img shuku-edit-id="e-034c3d5c-f64c-4fea-9508-bb2bf8de48ca" className={`cg-copy-ck-second__image ${className}`} src={src} alt={alt} />
+    : <div shuku-edit-id="e-0933b3c2-6ee5-45e0-9a2b-15ffe41771da" className={`cg-copy-ck-second__image-loading ${className}`} role="img" aria-label={`${alt}正在计算`} />;
 }
 
 function DifferenceFormula({ order }: { order: 1 | 2 }) {
@@ -135,40 +135,40 @@ function DifferenceFormula({ order }: { order: 1 | 2 }) {
 export function SecondDifferencePage() {
   const images = useDifferenceImages();
   return (
-    <ContentBlock headingLevel={1} className="cg-copy-ck-second" title="二阶差分：变化如何继续变化" subtitle="一阶差分描述局部变化，二阶差分进一步描述变化率是否发生突变。">
-      <div className="cg-copy-ck-second__layout">
-        <article className="cg-copy-ck-second__panel cg-copy-ck-second__panel--input">
+    <ContentBlock shuku-edit-id="e-724999af-be2b-4be0-81ed-9325564c0ac3" headingLevel={1} className="cg-copy-ck-second" title="二阶差分：变化如何继续变化" subtitle="一阶差分描述局部变化，二阶差分进一步描述变化率是否发生突变。">
+      <div shuku-edit-id="e-f90cde72-7094-4ebb-bbee-0f534b570ce7" className="cg-copy-ck-second__layout">
+        <article shuku-edit-id="e-2b513dbc-ea0a-4cfb-af08-a65e39d872eb" className="cg-copy-ck-second__panel cg-copy-ck-second__panel--input">
           <StepHeader number="1">原图 <MathFormulaStatic latex="I" /></StepHeader>
           <DifferenceImage src={images?.input} alt="采尔马特山间建筑的灰度原图" className="cg-copy-ck-second__image--input" />
-          <div className="cg-copy-ck-second__explanation"><Typography variant="body" tone="accent">像素值本身</Typography><Typography variant="body" tone="accent">不直接表示变化</Typography></div>
+          <div shuku-edit-id="e-4250baa2-a6d5-4ea9-b71b-1e09286ecd91" className="cg-copy-ck-second__explanation"><Typography shuku-edit-id="e-aa008316-2bd8-4f80-ac07-905ec2c495fc" variant="body" tone="accent">像素值本身</Typography><Typography shuku-edit-id="e-d7c700c9-1316-4006-8a2e-86d28cb4f015" variant="body" tone="accent">不直接表示变化</Typography></div>
         </article>
-        <Typography as="span" variant="h1" tone="accent" className="cg-copy-ck-second__arrow" aria-hidden="true">→</Typography>
-        <article className="cg-copy-ck-second__panel cg-copy-ck-second__panel--difference">
+        <Typography shuku-edit-id="e-276d27a4-0ae5-4fbe-b8dc-738fce36ea16" as="span" variant="h1" tone="accent" className="cg-copy-ck-second__arrow" aria-hidden="true">→</Typography>
+        <article shuku-edit-id="e-d69fb690-91b3-49c3-ae64-e4ec13d1e2ab" className="cg-copy-ck-second__panel cg-copy-ck-second__panel--difference">
           <StepHeader number="2">一阶差分</StepHeader>
           <DifferenceFormula order={1} />
           <DifferenceImage src={images?.first} alt="采尔马特建筑局部的一阶差分图" className="cg-copy-ck-second__image--first" />
-          <div className="cg-copy-ck-second__explanation"><Typography variant="body" tone="accent">比较相邻像素，描述变化强弱；<br />常突出边缘。</Typography></div>
+          <div shuku-edit-id="e-74bf302d-6c54-441d-9cdf-4be431264a5d" className="cg-copy-ck-second__explanation"><Typography shuku-edit-id="e-38861758-e6e6-469f-b945-3babe2724f36" variant="body" tone="accent">比较相邻像素，描述变化强弱；<br shuku-edit-id="e-7ef1e918-4981-4881-8c13-77299c3d7d30" />常突出边缘。</Typography></div>
         </article>
-        <Typography as="span" variant="h1" tone="accent" className="cg-copy-ck-second__arrow" aria-hidden="true">→</Typography>
-        <article className="cg-copy-ck-second__panel cg-copy-ck-second__panel--difference">
+        <Typography shuku-edit-id="e-06d064d1-d77c-4681-a6fe-3a2ae30f9869" as="span" variant="h1" tone="accent" className="cg-copy-ck-second__arrow" aria-hidden="true">→</Typography>
+        <article shuku-edit-id="e-d6b8e2ad-9389-4f7f-80f9-00994cdfbded" className="cg-copy-ck-second__panel cg-copy-ck-second__panel--difference">
           <StepHeader number="3">二阶差分</StepHeader>
           <DifferenceFormula order={2} />
           <DifferenceImage src={images?.second} alt="采尔马特建筑局部的二阶差分图" className="cg-copy-ck-second__image--second" />
-          <div className="cg-copy-ck-second__explanation"><Typography variant="body" tone="accent">再次求差，观察变化率突变；<br />对尖锐边缘更敏感。</Typography></div>
+          <div shuku-edit-id="e-11818e0d-4cd1-43d6-b423-65a1bfa4e0f1" className="cg-copy-ck-second__explanation"><Typography shuku-edit-id="e-678d84b7-664c-4301-82c1-828d2dfb6dfe" variant="body" tone="accent">再次求差，观察变化率突变；<br shuku-edit-id="e-8b80caf4-a69b-42c5-b260-53337391a849" />对尖锐边缘更敏感。</Typography></div>
         </article>
       </div>
-      <section className="cg-copy-ck-second__example" aria-label="一维信号的两次差分示例">
-        <Typography variant="h3" tone="light" className="cg-copy-ck-second__example-badge">一维示例</Typography>
-        <div className="cg-copy-ck-second__example-signals">
-          <div><Typography variant="bodySmall" tone="accent">原始信号 <MathFormulaStatic latex="f(x)" />：</Typography><Signal values={['2', '2', '2', '8', '8', '8']} /></div>
-          <div><Typography variant="bodySmall" tone="accent">一阶差分 <MathFormulaStatic latex="D^{(1)}" />：</Typography><Signal values={['0', '0', '+6', '0', '0']} tone="is-first" /></div>
-          <div><Typography variant="bodySmall" tone="accent">二阶差分 <MathFormulaStatic latex="D^{(2)}" />：</Typography><Signal values={['0', '+6', '−6', '0']} tone="is-second" /></div>
+      <section shuku-edit-id="e-e0ae1563-f0a2-41f3-8151-9dd948e6e3f3" className="cg-copy-ck-second__example" aria-label="一维信号的两次差分示例">
+        <Typography shuku-edit-id="e-a3aad6c1-381a-4975-91ba-adc728ca36af" variant="h3" tone="light" className="cg-copy-ck-second__example-badge">一维示例</Typography>
+        <div shuku-edit-id="e-d04f5a85-979a-4307-ab74-59a63ebd8ae1" className="cg-copy-ck-second__example-signals">
+          <div shuku-edit-id="e-81648ae7-517e-4421-a714-46f3abfeae98"><Typography shuku-edit-id="e-7c967837-ab3b-43b2-818e-daf86362e8e2" variant="bodySmall" tone="accent">原始信号 <MathFormulaStatic latex="f(x)" />：</Typography><Signal values={['2', '2', '2', '8', '8', '8']} /></div>
+          <div shuku-edit-id="e-e5077957-21a1-40c5-94b0-239f3e1cdada"><Typography shuku-edit-id="e-9657152b-001b-4ba6-8fd1-78519e4c0d4a" variant="bodySmall" tone="accent">一阶差分 <MathFormulaStatic latex="D^{(1)}" />：</Typography><Signal values={['0', '0', '+6', '0', '0']} tone="is-first" /></div>
+          <div shuku-edit-id="e-dbe5fbfb-0a21-44ca-b308-d0d7947dfa39"><Typography shuku-edit-id="e-dff87979-3272-43b1-9f39-6ee6df79a680" variant="bodySmall" tone="accent">二阶差分 <MathFormulaStatic latex="D^{(2)}" />：</Typography><Signal values={['0', '+6', '−6', '0']} tone="is-second" /></div>
         </div>
-        <div className="cg-copy-ck-second__example-takeaway"><Typography variant="body" tone="accent">一阶差分找哪里<strong>开始变</strong>，</Typography><Typography variant="body" tone="accent">二阶差分看变化在哪里<strong>突然发生</strong>。</Typography></div>
+        <div shuku-edit-id="e-0e755069-ab00-4f20-9946-0d5e3af3cc2e" className="cg-copy-ck-second__example-takeaway"><Typography shuku-edit-id="e-a365605f-bdd7-4959-9587-571d0eded29e" variant="body" tone="accent">一阶差分找哪里<strong shuku-edit-id="e-da376508-6a57-474c-b9b8-9646030d3dd4">开始变</strong>，</Typography><Typography shuku-edit-id="e-bc561151-7040-4b4a-89e5-2cc634b3e2cb" variant="body" tone="accent">二阶差分看变化在哪里<strong shuku-edit-id="e-eca608d1-d43b-4875-a20c-340946764ca9">突然发生</strong>。</Typography></div>
       </section>
-      <footer className="cg-copy-ck-second__summary">
-        <Typography as="span" variant="h3" tone="accent">总结：</Typography>
-        <Typography variant="body">一阶差分看局部变化，二阶差分看变化率如何变化。前者强调“有没有变化”，后者强调“变化是否突变”。</Typography>
+      <footer shuku-edit-id="e-a24a069f-05e4-44e3-b46c-efd2e924e482" className="cg-copy-ck-second__summary">
+        <Typography shuku-edit-id="e-73a4f3f9-25dc-41e6-af6f-228bece7b7e2" as="span" variant="h3" tone="accent">总结：</Typography>
+        <Typography shuku-edit-id="e-1c34ff98-1e9f-4052-afc3-10d8dc48feb7" variant="body">一阶差分看局部变化，二阶差分看变化率如何变化。前者强调“有没有变化”，后者强调“变化是否突变”。</Typography>
       </footer>
     </ContentBlock>
   );

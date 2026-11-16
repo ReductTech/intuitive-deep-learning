@@ -10,10 +10,10 @@ const SCAN_ORDER = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 function Fallback({ kind }: { kind: ConnectionKind }) {
   const input = Array.from({ length: 25 }, (_, index) => ({ x: 45 + (index % 5) * 36, y: 50 + Math.floor(index / 5) * 36, index }));
   const sources = kind === 'dense' ? input : input.filter(({ index }) => Math.floor(index / 5) >= 1 && Math.floor(index / 5) <= 3 && index % 5 >= 1 && index % 5 <= 3);
-  return <svg className="aipe-replay-cg-copy-ck-sparse__fallback" viewBox="0 0 620 280" role="img" aria-label={kind === 'dense' ? '全部二十五个输入连接一个输出' : '局部九个输入连接一个输出'}>
-    {sources.map((point) => <line key={point.index} x1={point.x + 15} y1={point.y + 15} x2="499" y2="147" />)}
-    {input.map((point) => <rect key={point.index} className={sources.includes(point) ? 'is-active' : ''} x={point.x} y={point.y} width="30" height="30" rx="4" />)}
-    {Array.from({ length: 9 }, (_, index) => <rect key={index} className={index === 4 ? 'is-selected' : ''} x={448 + index % 3 * 36} y={96 + Math.floor(index / 3) * 36} width="30" height="30" rx="4" />)}
+  return <svg shuku-edit-id="e-06d89147-b8e8-4310-89da-f1b8da390b03" className="aipe-replay-cg-copy-ck-sparse__fallback" viewBox="0 0 620 280" role="img" aria-label={kind === 'dense' ? '全部二十五个输入连接一个输出' : '局部九个输入连接一个输出'}>
+    {sources.map((point) => <line shuku-edit-id="e-78c289ab-af38-4f81-a5c0-4c2937305e00" key={point.index} x1={point.x + 15} y1={point.y + 15} x2="499" y2="147" />)}
+    {input.map((point) => <rect shuku-edit-id="e-0c2526bd-654b-4879-af63-cabc63cc2e33" key={point.index} className={sources.includes(point) ? 'is-active' : ''} x={point.x} y={point.y} width="30" height="30" rx="4" />)}
+    {Array.from({ length: 9 }, (_, index) => <rect shuku-edit-id="e-e7b44c48-9606-4061-b16f-2e5f3c5009e7" key={index} className={index === 4 ? 'is-selected' : ''} x={448 + index % 3 * 36} y={96 + Math.floor(index / 3) * 36} width="30" height="30" rx="4" />)}
   </svg>;
 }
 
@@ -177,8 +177,8 @@ export function ConnectionScene({ kind }: { kind: ConnectionKind }) {
     };
   }, [kind]);
 
-  return <div className="aipe-replay-cg-copy-ck-sparse__scene" ref={mountRef} role="img" aria-label={kind === 'dense' ? '立体网格持续扫描：每个输出与全部二十五个输入相连' : '立体网格持续扫描：每个输出只与对应的九个输入相连'}>
-    <div className="aipe-replay-cg-copy-ck-sparse__scene-labels"><Typography variant="bodySmall" tone="accent">输入 5 × 5</Typography><Typography variant="bodySmall" tone="accent">输出 3 × 3</Typography></div>
+  return <div shuku-edit-id="e-e6bd4d1c-30d7-43be-817c-8e5dfbfc1401" className="aipe-replay-cg-copy-ck-sparse__scene" ref={mountRef} role="img" aria-label={kind === 'dense' ? '立体网格持续扫描：每个输出与全部二十五个输入相连' : '立体网格持续扫描：每个输出只与对应的九个输入相连'}>
+    <div shuku-edit-id="e-807fbd0e-83a6-4f7a-b95b-90f76823ae55" className="aipe-replay-cg-copy-ck-sparse__scene-labels"><Typography shuku-edit-id="e-8dcec515-8eea-4284-9682-066c92bbddf9" variant="bodySmall" tone="accent">输入 5 × 5</Typography><Typography shuku-edit-id="e-3e858845-991e-4b17-aae0-2da8cc91cd1b" variant="bodySmall" tone="accent">输出 3 × 3</Typography></div>
     {fallback && <Fallback kind={kind} />}
   </div>;
 }

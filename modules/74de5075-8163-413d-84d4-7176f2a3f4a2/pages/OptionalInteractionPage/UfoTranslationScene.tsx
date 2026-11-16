@@ -69,16 +69,16 @@ export function UfoTranslationScene() {
   };
   const ufoStyle = { left: `${position.x * 100}%`, top: `${position.y * 100}%` } as CSSProperties;
 
-  return <div className="aipe-translation-pair" aria-busy={!ready}>
-    <figure><Typography variant="bodySmall" tone="muted">输入场景</Typography>
-      <div className="aipe-translation-scene" ref={sceneRef} onPointerEnter={(event) => { pointerInsideRef.current = true; moveUfo(event); }} onPointerMove={moveUfo} onPointerLeave={() => { pointerInsideRef.current = false; }} aria-label="移动鼠标控制 UFO，离开后自动飞行；柱子与树叶可遮挡目标">
-        <img className="aipe-translation-background" src={backgroundUrl} alt="夜晚的城堡和桥梁背景" draggable="false" />
-        <img className="aipe-translation-ufo" src={ufoUrl} alt="可随鼠标平移的 UFO" style={ufoStyle} draggable="false" />
-        <img className="aipe-translation-pillar" src={pillarUrl} alt="前景柱子" draggable="false" />
-        <img className="aipe-translation-foliage" src={foliageUrl} alt="前景树叶" draggable="false" />
+  return <div shuku-edit-id="e-2ddb72cf-aef3-40c6-8cb2-e54331230ea6" className="aipe-translation-pair" aria-busy={!ready}>
+    <figure shuku-edit-id="e-b9f905a4-4735-41f6-80b5-adc5ac1518e1"><Typography shuku-edit-id="e-543c2caa-1b98-4ec2-b3cc-1fcae7d23258" variant="bodySmall" tone="muted">输入场景</Typography>
+      <div shuku-edit-id="e-ea4c765d-a179-48c3-a52f-715000529aad" className="aipe-translation-scene" ref={sceneRef} onPointerEnter={(event) => { pointerInsideRef.current = true; moveUfo(event); }} onPointerMove={moveUfo} onPointerLeave={() => { pointerInsideRef.current = false; }} aria-label="移动鼠标控制 UFO，离开后自动飞行；柱子与树叶可遮挡目标">
+        <img shuku-edit-id="e-67bb504a-ac05-44c6-9520-0e25ced1be59" className="aipe-translation-background" src={backgroundUrl} alt="夜晚的城堡和桥梁背景" draggable="false" />
+        <img shuku-edit-id="e-584a4818-22a7-4074-a913-e19c37b6f015" className="aipe-translation-ufo" src={ufoUrl} alt="可随鼠标平移的 UFO" style={ufoStyle} draggable="false" />
+        <img shuku-edit-id="e-4f091ce9-3a32-4a17-8871-93f7d0e5e0f3" className="aipe-translation-pillar" src={pillarUrl} alt="前景柱子" draggable="false" />
+        <img shuku-edit-id="e-af63055e-2b98-41d1-b120-fe585836b5c4" className="aipe-translation-foliage" src={foliageUrl} alt="前景树叶" draggable="false" />
       </div>
     </figure>
     <DesignComparisonArrow />
-    <figure><Typography variant="bodySmall" tone="muted">边缘响应</Typography><canvas ref={heatmapRef} width={MAP_WIDTH} height={MAP_HEIGHT} role="img" aria-label="当前可见场景经拉普拉斯算子计算的实时边缘响应" /></figure>
+    <figure shuku-edit-id="e-9a4f35d1-b137-477b-a3a0-6570530cc841"><Typography shuku-edit-id="e-fa77be7b-2072-4d21-bfae-29eca18b99d2" variant="bodySmall" tone="muted">边缘响应</Typography><canvas shuku-edit-id="e-f7c61963-c139-42ff-9da2-a8d24826cfc8" ref={heatmapRef} width={MAP_WIDTH} height={MAP_HEIGHT} role="img" aria-label="当前可见场景经拉普拉斯算子计算的实时边缘响应" /></figure>
   </div>;
 }

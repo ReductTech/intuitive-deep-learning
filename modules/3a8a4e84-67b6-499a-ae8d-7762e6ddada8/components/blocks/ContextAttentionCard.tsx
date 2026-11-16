@@ -61,13 +61,13 @@ function SentenceCard({ index, phase, selected, onSelect }: {
         observer.observe(element);
         return () => observer.disconnect();
     }, [example, index]);
-    return <button type="button" className={`tr-bank-sentence ${selected ? 'is-selected' : ''} ${phase !== 'initial' ? 'has-context' : ''} ${phase === 'scanning' ? 'is-scanning' : ''}`} style={{ '--sense': example.color, '--sense-pale': example.pale } as CSSProperties} onClick={onSelect} aria-pressed={selected} aria-label={`${example.chinese}，高亮对应向量`}>
-    <span className="tr-bank-sentence__number">0{index + 1}</span>
-    <div className="tr-bank-sentence__english" ref={row}>
-      <div className="tr-bank-sentence__words">{example.words.map((word, i) => <span key={i} data-word className={word.toLowerCase().replace('.', '') === 'bank' ? 'is-bank' : ''}>{word}</span>)}</div>
-      <svg className="tr-bank-arcs" aria-hidden="true">{arcs.map((arc, i) => <g key={i} style={{ '--delay': `${arc.delay}s` } as CSSProperties} className={arc.clue ? 'is-clue' : ''}><path className="tr-bank-arc-outline" d={arc.d}/><path className="tr-bank-arc" d={arc.d}/><path className="tr-bank-flow" d={arc.d}/></g>)}</svg>
+    return <button shuku-edit-id="e-7caef576-4cee-4687-92a4-d95e19e01751" type="button" className={`tr-bank-sentence ${selected ? 'is-selected' : ''} ${phase !== 'initial' ? 'has-context' : ''} ${phase === 'scanning' ? 'is-scanning' : ''}`} style={{ '--sense': example.color, '--sense-pale': example.pale } as CSSProperties} onClick={onSelect} aria-pressed={selected} aria-label={`${example.chinese}，高亮对应向量`}>
+    <span shuku-edit-id="e-d73bde16-9574-4947-b737-73203b068034" className="tr-bank-sentence__number">0{index + 1}</span>
+    <div shuku-edit-id="e-38386d83-7b58-4adf-b7be-e9450149a282" className="tr-bank-sentence__english" ref={row}>
+      <div shuku-edit-id="e-77ff8c1f-04a5-4b44-9f81-fd67752d5d7b" className="tr-bank-sentence__words">{example.words.map((word, i) => <span shuku-edit-id="e-b762b6d1-1dd7-4539-9e28-b288849f49f5" key={i} data-word className={word.toLowerCase().replace('.', '') === 'bank' ? 'is-bank' : ''}>{word}</span>)}</div>
+      <svg shuku-edit-id="e-f5028451-067b-440a-9806-a344eeaa360e" className="tr-bank-arcs" aria-hidden="true">{arcs.map((arc, i) => <g shuku-edit-id="e-27581700-e5c5-4bb5-b939-e1c620510445" key={i} style={{ '--delay': `${arc.delay}s` } as CSSProperties} className={arc.clue ? 'is-clue' : ''}><path shuku-edit-id="e-9482dc7b-112f-4760-85cb-250408aed14b" className="tr-bank-arc-outline" d={arc.d}/><path shuku-edit-id="e-615bf2b5-75f8-496d-8699-3b4986cb9694" className="tr-bank-arc" d={arc.d}/><path shuku-edit-id="e-88c0fd68-effa-44a9-8bd3-0c8361ea702c" className="tr-bank-flow" d={arc.d}/></g>)}</svg>
     </div>
-    <span className="tr-bank-sentence__chinese">{chineseBefore}<strong className="is-bank-translation">{chineseBank}</strong>{chineseAfter}</span>
+    <span shuku-edit-id="e-57b27726-8e72-406a-8881-8eef38650cd6" className="tr-bank-sentence__chinese">{chineseBefore}<strong shuku-edit-id="e-84f26752-e71f-4e68-b29c-f807e6c3aff9" className="is-bank-translation">{chineseBank}</strong>{chineseAfter}</span>
   </button>;
 }
 function ContextSpace({ phase, selected }: {
@@ -209,7 +209,7 @@ function ContextSpace({ phase, selected }: {
             labels.domElement.remove();
         };
     }, []);
-    return <div className={`tr-bank-space ${phase === 'initial' ? 'has-initial-note' : ''}`} role="group" aria-label={phase === 'resolved' ? '四种语境对应四个不同的示意向量，可拖动旋转' : '四句话中的 bank 共用一个初始词向量，可拖动旋转'}><div className="tr-bank-space__viewport" ref={host}><button type="button" className="tr-bank-reset" onClick={() => reset.current()}>重置视角</button></div>{phase === 'initial' && <div className="tr-bank-space__initial"><strong>bank</strong><span>四句话，共用一个初始向量</span></div>}</div>;
+    return <div shuku-edit-id="e-c8f7b1d1-4a3b-4208-b6e4-477f622c7c1d" className={`tr-bank-space ${phase === 'initial' ? 'has-initial-note' : ''}`} role="group" aria-label={phase === 'resolved' ? '四种语境对应四个不同的示意向量，可拖动旋转' : '四句话中的 bank 共用一个初始词向量，可拖动旋转'}><div shuku-edit-id="e-6fb12264-6ff5-45fd-a614-a88342552ffe" className="tr-bank-space__viewport" ref={host}><button shuku-edit-id="e-d8fddb65-b907-47d6-bfbb-1a5761896685" type="button" className="tr-bank-reset" onClick={() => reset.current()}>重置视角</button></div>{phase === 'initial' && <div shuku-edit-id="e-5902a2b9-c1a2-44d6-a52c-c53bae10394f" className="tr-bank-space__initial"><strong shuku-edit-id="e-bfda30b2-e685-41a2-a16b-afee92144c44">bank</strong><span shuku-edit-id="e-54e77ac8-aace-4a25-835f-3302c559a6f3">四句话，共用一个初始向量</span></div>}</div>;
 }
 export function ContextAttentionCard({ onComplete }: {
     onComplete: () => void;
@@ -223,20 +223,20 @@ export function ContextAttentionCard({ onComplete }: {
         return () => window.clearTimeout(timer);
     }, [phase]);
     const start = () => { setSelected(null); setPhase('scanning'); };
-    return <section className="tr-bank-page" aria-labelledby="tr-bank-title">
-    <header className="tr-lesson-header"><h1 id="tr-bank-title">自注意力：结合上下文理解词义</h1><p>{phase === 'initial' ? '点击“加入自注意力”，观察四个句子中的 bank 向量怎样变化。' : phase === 'scanning' ? '留意各句的上下文线索，观察 bank 的向量逐渐改变。' : '点击不同例句，对照它们的上下文和 bank 的向量方向。'}</p></header>
-    <main className="tr-bank-layout">
-      <section className="tr-bank-examples" aria-label="bank 的四种语境"><div>{EXAMPLES.map((_, index) => <SentenceCard key={index} index={index} phase={phase} selected={selected === index} onSelect={() => setSelected(current => current === index ? null : index)}/>)}</div></section>
-      <section className={`tr-bank-visual is-${phase}`} aria-label="自注意力语境演示">
-        <div className="tr-bank-visual__head"><h2>{phase === 'initial' ? '句子不同，初始向量相同' : phase === 'scanning' ? '让 bank 联系各句的上下文' : '结合上下文，形成不同表示'}</h2><span>{phase === 'initial' ? '初始嵌入' : phase === 'scanning' ? '汇聚线索中…' : '语境表示'}</span></div>
+    return <section shuku-edit-id="e-ba77360e-550c-49ed-9c1f-1cdbe8cc36b3" className="tr-bank-page" aria-labelledby="tr-bank-title">
+    <header shuku-edit-id="e-acdfd94f-6726-4dd6-9007-0773198b081c" className="tr-lesson-header"><h1 shuku-edit-id="e-09a7f57b-0a7d-455d-9fff-4f86fefdf5e3" id="tr-bank-title">自注意力：结合上下文理解词义</h1><p shuku-edit-id="e-cd3cf9eb-a5f8-401c-9d4c-78c5ba4dcd78">{phase === 'initial' ? '点击“加入自注意力”，观察四个句子中的 bank 向量怎样变化。' : phase === 'scanning' ? '留意各句的上下文线索，观察 bank 的向量逐渐改变。' : '点击不同例句，对照它们的上下文和 bank 的向量方向。'}</p></header>
+    <main shuku-edit-id="e-48a6b5ee-8bff-4a57-87f6-47c68d12b2a4" className="tr-bank-layout">
+      <section shuku-edit-id="e-43d0fe1e-2130-4112-aca0-b4ab5f1196fa" className="tr-bank-examples" aria-label="bank 的四种语境"><div shuku-edit-id="e-b1331e5f-401c-483d-90a2-557b77e2bde3">{EXAMPLES.map((_, index) => <SentenceCard key={index} index={index} phase={phase} selected={selected === index} onSelect={() => setSelected(current => current === index ? null : index)}/>)}</div></section>
+      <section shuku-edit-id="e-edb4cff0-8645-4365-a61b-a3e390cdd77a" className={`tr-bank-visual is-${phase}`} aria-label="自注意力语境演示">
+        <div shuku-edit-id="e-711f9d9c-416b-4258-867a-97142999190b" className="tr-bank-visual__head"><h2 shuku-edit-id="e-d4e03e4a-f903-4846-a51a-3d466e05b364">{phase === 'initial' ? '句子不同，初始向量相同' : phase === 'scanning' ? '让 bank 联系各句的上下文' : '结合上下文，形成不同表示'}</h2><span shuku-edit-id="e-7f942333-fd6f-4f6e-ae4b-2906438e4f31">{phase === 'initial' ? '初始嵌入' : phase === 'scanning' ? '汇聚线索中…' : '语境表示'}</span></div>
         <ContextSpace phase={phase} selected={selected}/>
-        <div className="tr-bank-explanation" aria-live="polite">
-          <h3>{phase === 'initial' ? '初始嵌入，还没有读懂语境' : '自注意力是一种根据上下文更新词向量的机制'}</h3>
-          <div className="tr-bank-explanation__flow">{phase === 'initial' ? <><strong>同一个 bank</strong><span aria-hidden="true">→</span><strong>相同的初始向量</strong><em>尚未结合上下文</em></> : <><strong>所在句子的上下文</strong><span aria-hidden="true">→</span><strong>更新 bank 的表示</strong><em>帮助区分词义</em></>}</div>
-          <p className="tr-bank-demo-note"><b>教学示意</b>连线与方向由人为设计，并非真实模型的计算结果。</p>
+        <div shuku-edit-id="e-76f14200-40d5-4e66-b010-0c616cf28d7a" className="tr-bank-explanation" aria-live="polite">
+          <h3 shuku-edit-id="e-20755825-90ed-40b4-a391-754b2f2cb56f">{phase === 'initial' ? '初始嵌入，还没有读懂语境' : '自注意力是一种根据上下文更新词向量的机制'}</h3>
+          <div shuku-edit-id="e-ae996942-f958-4ac9-a261-6f3a2e711845" className="tr-bank-explanation__flow">{phase === 'initial' ? <><strong shuku-edit-id="e-dc37d62a-1e73-445f-b0ef-ae5e6604596a">同一个 bank</strong><span shuku-edit-id="e-01b09fa2-e2ca-4e72-8bf6-231230fd46f8" aria-hidden="true">→</span><strong shuku-edit-id="e-f32b01c3-5d7b-4508-b5ea-5dc9b3709da4">相同的初始向量</strong><em shuku-edit-id="e-8448388f-9224-4833-ad84-78a760557d2b">尚未结合上下文</em></> : <><strong shuku-edit-id="e-c3c9e19a-b726-42fa-94aa-bfc99b1d02ca">所在句子的上下文</strong><span shuku-edit-id="e-8e324c8d-2db5-4065-9209-6c089397a432" aria-hidden="true">→</span><strong shuku-edit-id="e-60a08cfa-ddde-4444-92e6-9c78ed73be58">更新 bank 的表示</strong><em shuku-edit-id="e-0b50a4a9-340b-4b95-bd13-1415d13fbb99">帮助区分词义</em></>}</div>
+          <p shuku-edit-id="e-4122432e-fb08-4e60-9415-dc034a45bdc3" className="tr-bank-demo-note"><b shuku-edit-id="e-26c139b8-6b3f-48c2-ab6d-52c2d59a9fea">教学示意</b>连线与方向由人为设计，并非真实模型的计算结果。</p>
         </div>
       </section>
     </main>
-    <footer><span>{phase === 'resolved' ? '点击例句，高亮对应向量。' : ''}</span><div><button className="tr-bank-action" type="button" disabled={phase === 'scanning'} onClick={start}>{phase === 'initial' ? '加入自注意力 →' : phase === 'scanning' ? '正在汇聚上下文…' : '↻ 重播注意力'}</button>{phase === 'resolved' && <button className="tr-bank-next" type="button" onClick={onComplete}>继续探索 →</button>}</div></footer>
+    <footer shuku-edit-id="e-a1d7079f-df2e-46c2-834c-ca091142729a"><span shuku-edit-id="e-edb0a0a2-6c0d-4a66-81f6-405c0d2b55cc">{phase === 'resolved' ? '点击例句，高亮对应向量。' : ''}</span><div shuku-edit-id="e-0a924f7e-a53e-43d4-bbc9-285f7641a029"><button shuku-edit-id="e-7501c3d9-6c30-43f4-b0d4-267cbe8f6296" className="tr-bank-action" type="button" disabled={phase === 'scanning'} onClick={start}>{phase === 'initial' ? '加入自注意力 →' : phase === 'scanning' ? '正在汇聚上下文…' : '↻ 重播注意力'}</button>{phase === 'resolved' && <button shuku-edit-id="e-2d78ce76-7255-479e-8ddd-ea10f25a0837" className="tr-bank-next" type="button" onClick={onComplete}>继续探索 →</button>}</div></footer>
   </section>;
 }

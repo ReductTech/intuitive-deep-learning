@@ -26,13 +26,13 @@ export function FoundationChapter({ number, index, title, description, topics, o
     observer.observe(element); document.addEventListener('visibilitychange', update);
     return () => { stop(); observer.disconnect(); document.removeEventListener('visibilitychange', update); };
   }, []);
-  return <section ref={root} className="rf-page rf-chapter" aria-label={`研究基础${number}：${title}`} data-chapter={index}>
-    <div className="rf-chapter-copy">
-      <Typography variant="subtitle" className="rf-chapter-label">研究基础{number}</Typography>
-      <Typography as="h1" variant="display" className="rf-chapter-title">{title}</Typography>
-      <Typography variant="subtitle" className="rf-chapter-description">{description}</Typography>
+  return <section shuku-edit-id="e-53db392a-a649-486b-8d3a-55986e4cfe66" ref={root} className="rf-page rf-chapter" aria-label={`研究基础${number}：${title}`} data-chapter={index}>
+    <div shuku-edit-id="e-b89b8623-ad49-4a16-a880-c1ef0aaa9178" className="rf-chapter-copy">
+      <Typography shuku-edit-id="e-1037bd61-0aca-4a06-a116-bab974d8f864" variant="subtitle" className="rf-chapter-label">研究基础{number}</Typography>
+      <Typography shuku-edit-id="e-3eb65089-ce1c-4dbb-9a67-35704dd589bf" as="h1" variant="display" className="rf-chapter-title">{title}</Typography>
+      <Typography shuku-edit-id="e-de1d68d0-91af-40ae-8e9c-e30140a8a2e6" variant="subtitle" className="rf-chapter-description">{description}</Typography>
     </div>
-    <Typography as="span" variant="display" className="rf-chapter-index" aria-hidden="true">{index}</Typography>
-    <div className="rf-chapter-topics" aria-label="本章内容">{topics.map(topic => <Typography key={topic} variant="body" className="rf-chapter-topic">{topic}</Typography>)}</div>
+    <Typography shuku-edit-id="e-c56f8973-9130-46a0-8774-03d4d8383817" as="span" variant="display" className="rf-chapter-index" aria-hidden="true">{index}</Typography>
+    <div shuku-edit-id="e-da162000-e040-4d48-a9d4-c515e5dba0a1" className="rf-chapter-topics" aria-label="本章内容">{topics.map(topic => <Typography shuku-edit-id="e-17a58bee-e5cc-4880-b059-435087a4cc37" key={topic} variant="body" className="rf-chapter-topic">{topic}</Typography>)}</div>
   </section>;
 }

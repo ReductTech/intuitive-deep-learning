@@ -53,31 +53,31 @@ export function ModuleDirectoryPage() {
   const row = (id: ItemId, depth = 0) => {
     const entry = items.find(candidate => candidate.id === id)!;
     const Icon = entry.icon;
-    return <button key={id} type="button" className={`acw-directory-row ${selected === id ? 'is-selected' : ''}`} style={{ paddingLeft: 20 + depth * 24 }} onClick={() => setSelected(id)} aria-pressed={selected === id} data-directory-item={id}><Icon size={24} /><Typography as="code" variant="bodySmall">{entry.name}</Typography></button>;
+    return <button shuku-edit-id="e-f05aeec8-ddb2-402b-b60c-e77933adccfe" key={id} type="button" className={`acw-directory-row ${selected === id ? 'is-selected' : ''}`} style={{ paddingLeft: 20 + depth * 24 }} onClick={() => setSelected(id)} aria-pressed={selected === id} data-directory-item={id}><Icon size={24} /><Typography shuku-edit-id="e-9fe62653-2171-4ffe-980b-6d6324d25ddc" as="code" variant="bodySmall">{entry.name}</Typography></button>;
   };
-  return <ContentBlock className="acw-directory-page" data-scene-id="17ce6165-3c41-4d34-80da-f07dbf3debbd" title="模块目录地图：要改什么，去哪里找" subtitle="看懂文件的职责，也知道改名会影响哪里" bodyClassName="acw-directory-body">
-    <div className="acw-directory-editor">
-      <div className="acw-directory-toolbar"><Folder size={24} /><Typography variant="bodySmall">Example / 模块结构示意</Typography><Typography variant="bodySmall" tone="muted">点击文件，查看说明</Typography></div>
-      <div className="acw-directory-workspace">
-        <nav className="acw-directory-sidebar" aria-label="模块大纲">
-          <div className="acw-directory-folder"><ChevronDown size={18} /><Folder size={23} /><Typography as="code" variant="bodySmall">modules/</Typography></div>
+  return <ContentBlock shuku-edit-id="e-af0d6c5f-9c45-4855-b7a0-595350ffe907" className="acw-directory-page" data-scene-id="17ce6165-3c41-4d34-80da-f07dbf3debbd" title="模块目录地图：要改什么，去哪里找" subtitle="看懂文件的职责，也知道改名会影响哪里" bodyClassName="acw-directory-body">
+    <div shuku-edit-id="e-6567b530-5592-4d38-9b00-984be5a1c9c7" className="acw-directory-editor">
+      <div shuku-edit-id="e-c3559564-961d-47fe-a731-7a6e893ad36d" className="acw-directory-toolbar"><Folder size={24} /><Typography shuku-edit-id="e-d7b37838-97ed-48e1-a9f8-186185c4addb" variant="bodySmall">Example / 模块结构示意</Typography><Typography shuku-edit-id="e-a4aeb0fe-0215-4531-8a25-7e471e4eab42" variant="bodySmall" tone="muted">点击文件，查看说明</Typography></div>
+      <div shuku-edit-id="e-529c19ec-e91b-4eb9-8507-4b214e69a560" className="acw-directory-workspace">
+        <nav shuku-edit-id="e-77460c39-548e-4c24-a77f-89a8fd54366a" className="acw-directory-sidebar" aria-label="模块大纲">
+          <div shuku-edit-id="e-26c34f0f-fcc5-46c4-a19b-a1a6f5761818" className="acw-directory-folder"><ChevronDown size={18} /><Folder size={23} /><Typography shuku-edit-id="e-a826a532-6659-42f2-90d5-3c184ef899dc" as="code" variant="bodySmall">modules/</Typography></div>
           {row('shared', 1)}
-          <div className="acw-directory-folder acw-directory-indent"><ChevronDown size={18} /><Folder size={23} /><Typography as="code" variant="bodySmall">Example/</Typography></div>
+          <div shuku-edit-id="e-07df475b-a6e1-45ec-9e07-e78a43efe0bc" className="acw-directory-folder acw-directory-indent"><ChevronDown size={18} /><Folder size={23} /><Typography shuku-edit-id="e-77f9bdcf-a827-406f-b31a-2b7de4c8539d" as="code" variant="bodySmall">Example/</Typography></div>
           {row('outline', 2)}{row('guide', 2)}{row('ppt', 2)}
           {row('pages', 2)}{row('pageFolder', 3)}
           {row('page', 4)}{row('css', 4)}{row('pageScratch', 4)}
           {row('components', 2)}{row('assets', 2)}{row('scratch', 2)}
         </nav>
-        <section className="acw-directory-preview" aria-label="文件用途" aria-live="polite">
-          <div className="acw-directory-preview-content" key={selected}>
-            <div className="acw-directory-file-heading"><item.icon size={28} /><Typography as="code" variant="body">{item.name}</Typography><Typography variant="bodySmall" className={`acw-directory-rename-badge ${rule.fixed ? 'is-fixed' : ''}`} data-rename-policy={rule.fixed ? 'fixed' : 'renameable'}>{rule.fixed ? '禁止改名' : '可以改名 · 需同步引用'}</Typography></div>
-            <Typography variant="h3" className="acw-directory-purpose">{item.purpose}</Typography>
-            <div className="acw-directory-responsibility"><Typography variant="body" tone="accent">负责什么</Typography><Typography variant="body" className="acw-directory-description">{descriptions[selected]}</Typography></div>
-            <div className="acw-directory-rename-panel"><Typography variant="body" className="acw-directory-rename-label">如果改名</Typography><Typography variant="body">{rule.action}</Typography><Typography variant="bodySmall" className="acw-directory-rename-consequence">{rule.consequence}</Typography></div>
+        <section shuku-edit-id="e-a2418950-82fb-451d-b98e-568550fc3cfb" className="acw-directory-preview" aria-label="文件用途" aria-live="polite">
+          <div shuku-edit-id="e-eea9e253-a883-4802-a037-aff69554fd54" className="acw-directory-preview-content" key={selected}>
+            <div shuku-edit-id="e-952501bc-01c9-45ed-9410-21ee9c864d00" className="acw-directory-file-heading"><item.icon size={28} /><Typography shuku-edit-id="e-6b6696f1-df8c-427c-aaef-a82d3d73ef8b" as="code" variant="body">{item.name}</Typography><Typography shuku-edit-id="e-b3424462-ea5a-4b0a-9e73-092352cbdb71" variant="bodySmall" className={`acw-directory-rename-badge ${rule.fixed ? 'is-fixed' : ''}`} data-rename-policy={rule.fixed ? 'fixed' : 'renameable'}>{rule.fixed ? '禁止改名' : '可以改名 · 需同步引用'}</Typography></div>
+            <Typography shuku-edit-id="e-3e3d871d-9b5d-4619-86c3-f3a7bfe53381" variant="h3" className="acw-directory-purpose">{item.purpose}</Typography>
+            <div shuku-edit-id="e-4ee5aa2c-ea4d-4449-a390-452ca9cf4827" className="acw-directory-responsibility"><Typography shuku-edit-id="e-51ffcb5a-bfe9-413c-a7bc-d72cb498e31f" variant="body" tone="accent">负责什么</Typography><Typography shuku-edit-id="e-dbec0ac0-4169-440c-8597-8e60eb2bf458" variant="body" className="acw-directory-description">{descriptions[selected]}</Typography></div>
+            <div shuku-edit-id="e-3ee706cb-6abe-44b6-a9df-20ea815c9bcc" className="acw-directory-rename-panel"><Typography shuku-edit-id="e-1fc7480c-cdfe-425a-aefd-f1a3fc5ca724" variant="body" className="acw-directory-rename-label">如果改名</Typography><Typography shuku-edit-id="e-b69a8ae3-ee7e-4651-893d-93d27d411a2e" variant="body">{rule.action}</Typography><Typography shuku-edit-id="e-810f30ec-45d6-4f74-b472-f6bf43035a3f" variant="bodySmall" className="acw-directory-rename-consequence">{rule.consequence}</Typography></div>
           </div>
         </section>
       </div>
-      <div className="acw-directory-status"><Typography variant="bodySmall" tone="muted">文件名有约定；改名时同步检查声明、引用与工具配置</Typography></div>
+      <div shuku-edit-id="e-216abed6-0e25-4f9d-97a8-c5cf6bd5d893" className="acw-directory-status"><Typography shuku-edit-id="e-df965dde-dae1-461d-b12c-9df70406def2" variant="bodySmall" tone="muted">文件名有约定；改名时同步检查声明、引用与工具配置</Typography></div>
     </div>
   </ContentBlock>;
 }

@@ -34,44 +34,44 @@ const activations = [
 
 export function ActivationCatalogPage() {
   return (
-    <ContentBlock
+    <ContentBlock shuku-edit-id="e-ba2aed82-19b9-4a9c-bd4a-d896271cc13d"
       headingLevel={1}
       className="ngtw-activation-catalog"
       title="认识这些被广泛使用的激活函数"
       subtitle="激活函数有不同形状，也会给网络带来不同的数值特性；它们共同完成同一件事：打破纯线性叠加。"
     >
-      <div className="ngtw-activation-catalog__grid grid min-w-0 max-w-full grid-cols-[repeat(3,_minmax(0,_1fr))] gap-[12px]">
+      <div shuku-edit-id="e-0b09e673-d1a9-476b-8c03-1c7a06420db7" className="ngtw-activation-catalog__grid grid min-w-0 max-w-full grid-cols-[repeat(3,_minmax(0,_1fr))] gap-[12px]">
         {activations.map((activation) => (
-            <article className={`ngtw-activation-catalog__card relative grid min-w-0 max-w-full grid-rows-[minmax(150px,_1fr)_auto_auto_auto] content-start gap-[5px] bg-[#fff] p-[10px] ngtw-activation-catalog__card--${activation.type}`} key={activation.type}>
+            <article shuku-edit-id="e-10505ed9-43aa-4ea9-85cc-73881b68c578" className={`ngtw-activation-catalog__card relative grid min-w-0 max-w-full grid-rows-[minmax(150px,_1fr)_auto_auto_auto] content-start gap-[5px] bg-[#fff] p-[10px] ngtw-activation-catalog__card--${activation.type}`} key={activation.type}>
             <ActivationFunctionPlot type={activation.type} />
-            <Typography as="h3" variant="subtitle" tone="accent">{activation.name}</Typography>
+            <Typography shuku-edit-id="e-99013d26-cc4b-47c3-8d70-4ed164e99dc6" as="h3" variant="subtitle" tone="accent">{activation.name}</Typography>
             <FormulaBlock
               className="ngtw-activation-catalog__formula min-h-[92px] w-full p-[12px]"
               ariaLabel={`${activation.name} 的数学表达式`}
             >
               <ActivationFormula type={activation.type} />
             </FormulaBlock>
-            <Typography variant="bodySmall" tone="muted">{activation.description}</Typography>
+            <Typography shuku-edit-id="e-005f73f2-e30f-414c-afca-a9110758139d" variant="bodySmall" tone="muted">{activation.description}</Typography>
           </article>
         ))}
       </div>
-      <section className="ngtw-activation-catalog__properties grid min-w-0 max-w-full grid-cols-[minmax(210px,_.72fr)_minmax(0,_1.6fr)] items-center gap-[22px] p-[18px_6px_4px]" aria-label="激活函数的数学性质">
-        <div className="ngtw-activation-catalog__properties-head">
-          <Typography as="h2" variant="subtitle" tone="accent">激活函数的数学性质</Typography>
-          <Typography variant="bodySmall" tone="muted">三者都把线性输入变成可学习的非线性输出。</Typography>
+      <section shuku-edit-id="e-da73d823-9a81-4beb-8e26-175225f26df9" className="ngtw-activation-catalog__properties grid min-w-0 max-w-full grid-cols-[minmax(210px,_.72fr)_minmax(0,_1.6fr)] items-center gap-[22px] p-[18px_6px_4px]" aria-label="激活函数的数学性质">
+        <div shuku-edit-id="e-1403d96a-29ed-434a-8458-270184220daa" className="ngtw-activation-catalog__properties-head">
+          <Typography shuku-edit-id="e-ab3c2099-cd34-4e7d-b9a6-63d9d04f8f0e" as="h2" variant="subtitle" tone="accent">激活函数的数学性质</Typography>
+          <Typography shuku-edit-id="e-db60036b-875d-4494-8918-5fcdbff0b513" variant="bodySmall" tone="muted">三者都把线性输入变成可学习的非线性输出。</Typography>
         </div>
-        <div className="ngtw-activation-catalog__properties-grid grid min-w-0 grid-cols-[repeat(3,_minmax(0,_1fr))] gap-[18px]">
-          <div>
-            <Typography as="strong" variant="body" tone="main">定义域</Typography>
-            <Typography variant="bodySmall" tone="muted">通常对整个实数域有定义。</Typography>
+        <div shuku-edit-id="e-0097f058-dd77-45b2-9ee5-dd2ee1c29646" className="ngtw-activation-catalog__properties-grid grid min-w-0 grid-cols-[repeat(3,_minmax(0,_1fr))] gap-[18px]">
+          <div shuku-edit-id="e-61789150-1334-426a-b1a1-d8b9ebb2cc09">
+            <Typography shuku-edit-id="e-a70b2fe2-2591-46ab-8c23-dcd5b2a30f09" as="strong" variant="body" tone="main">定义域</Typography>
+            <Typography shuku-edit-id="e-863fc1bd-4f16-406c-91e6-ba9c82bec8ab" variant="bodySmall" tone="muted">通常对整个实数域有定义。</Typography>
           </div>
-          <div>
-            <Typography as="strong" variant="body" tone="main">连续性</Typography>
-            <Typography variant="bodySmall" tone="muted">通常保持连续，输入变化时输出不会跳变。</Typography>
+          <div shuku-edit-id="e-9f4e0153-bcad-43d6-b1f6-3cab2c6550ca">
+            <Typography shuku-edit-id="e-f8f366c7-3e11-400e-bca5-8ae8f55803a8" as="strong" variant="body" tone="main">连续性</Typography>
+            <Typography shuku-edit-id="e-0a29c7b0-a813-4be7-a927-fec91c235bf3" variant="bodySmall" tone="muted">通常保持连续，输入变化时输出不会跳变。</Typography>
           </div>
-          <div>
-            <Typography as="strong" variant="body" tone="main">可导性</Typography>
-            <Typography variant="bodySmall" tone="muted">大多处处可导，少数边界点需特殊处理。</Typography>
+          <div shuku-edit-id="e-1b828b51-b8a6-4095-8125-b319cb854245">
+            <Typography shuku-edit-id="e-a5beaeb1-e563-4f9a-87ad-f250cdba28d5" as="strong" variant="body" tone="main">可导性</Typography>
+            <Typography shuku-edit-id="e-48920df2-28b7-4998-988b-b30d28da222e" variant="bodySmall" tone="muted">大多处处可导，少数边界点需特殊处理。</Typography>
           </div>
         </div>
       </section>
@@ -280,11 +280,11 @@ function ActivationFormula({ type }: { type: ActivationFunctionType }): ReactNod
     return (
       <>
         <FormulaTerm tooltip="max 取两个输入中的较大值。" ariaLabel="max，取较大值">max</FormulaTerm>
-        <span>(</span>
+        <span shuku-edit-id="e-0568a5e6-7789-431d-bfc4-906797653bc5">(</span>
         <FormulaTerm tooltip="负值区域保留 0.1 倍斜率，使梯度仍可传递。" ariaLabel="0.1x，负侧的小斜率">0.1x</FormulaTerm>
-        <span>, </span>
+        <span shuku-edit-id="e-12b1fa4d-5204-4c45-923a-e612ffb49546">, </span>
         <FormulaTerm tooltip="正值区域保持原始输入。" ariaLabel="x，正侧的原始输入">x</FormulaTerm>
-        <span>)</span>
+        <span shuku-edit-id="e-a1f879b4-bbfb-449d-9dbf-b10c5506bfe5">)</span>
       </>
     );
   }
@@ -292,7 +292,7 @@ function ActivationFormula({ type }: { type: ActivationFunctionType }): ReactNod
     return (
       <>
         <FormulaTerm tooltip="x 是神经元接收到的线性输入。" ariaLabel="x，线性输入">x</FormulaTerm>
-        <span> · </span>
+        <span shuku-edit-id="e-3804eb1b-a667-4777-b167-7b3e948f22ed"> · </span>
         <FormulaTerm tooltip="Φ(x) 是标准正态分布的累积分布函数，用来平滑调节通过比例。" ariaLabel="Phi of x，标准正态分布累积分布函数">Φ(x)</FormulaTerm>
       </>
     );
@@ -1136,7 +1136,7 @@ export function PersistedPlotlyChart({
 
   if (!activity.hydrated) {
     return (
-      <div
+      <div shuku-edit-id="e-682c60b7-1d78-4a46-bd0b-3a830d6f6012"
         ref={hostRef}
         className={['shared-plotly', className].filter(Boolean).join(' ')}
         style={{ minHeight, ...style }}

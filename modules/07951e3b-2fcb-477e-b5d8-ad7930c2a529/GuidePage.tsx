@@ -17,7 +17,7 @@ function GuideCanvas({ children }: { children: ReactNode }) {
     observer.observe(element);
     return () => observer.disconnect();
   }, []);
-  return <div ref={frame} className="vlm-guide-frame" style={{ height: scale * 900 }}><div className="vlm-guide-surface" style={{ transform: `scale(${scale})` }}>{children}</div></div>;
+  return <div shuku-edit-id="e-b7f99b54-55fd-4c45-ac59-8e450deb2e39" ref={frame} className="vlm-guide-frame" style={{ height: scale * 900 }}><div shuku-edit-id="e-0fa4d229-4727-4389-8730-403f8690f437" className="vlm-guide-surface" style={{ transform: `scale(${scale})` }}>{children}</div></div>;
 }
 const steps: LessonFlowStep[] = visionLanguageCourse.map((scene, index) => ({ id: scene.id, revealMode: 'scroll', completesLesson: index === visionLanguageCourse.length - 1, render: context => <GuideCanvas>{scene.render(context)}</GuideCanvas> }));
 export function GuidePage() {

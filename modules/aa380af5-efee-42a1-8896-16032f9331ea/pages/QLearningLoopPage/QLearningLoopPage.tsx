@@ -29,29 +29,29 @@ function UpdateExplanation({ update }: { update: LearningUpdate | null }) {
   const updateFormula = update
     ? `\\begin{aligned}\\Delta Q&=${number(ALPHA)}\\times[${number(update.target)}-(${number(before[update.action])})]\\\\Q_{\\mathrm{new}}&=${number(before[update.action])}+(${number(after[update.action] - before[update.action])})=${number(after[update.action])}\\end{aligned}`
     : String.raw`Q_{\mathrm{new}}=Q_{\mathrm{old}}+\alpha(y-Q_{\mathrm{old}})`;
-  return <section className="vbrl-cycle__explanation" aria-label="本次经历与局部更新">
+  return <section shuku-edit-id="e-e6f70d6f-23a2-431b-9126-34453c540819" className="vbrl-cycle__explanation" aria-label="本次经历与局部更新">
     <TeachingHeading>{update ? `${cellLabel(update.from)} → ${ACTIONS[update.action]} → ${cellLabel(update.next)}` : '一次经历，一处更新'}</TeachingHeading>
-    <div className="vbrl-cycle__experience">
-      <Typography variant="bodySmall" tone={update?.trapped ? 'danger' : update?.done ? 'success' : 'muted'}>
+    <div shuku-edit-id="e-33d438d7-9fd8-4dd7-bda3-66393e54a354" className="vbrl-cycle__experience">
+      <Typography shuku-edit-id="e-3d0b3d50-8599-452c-977b-da6e8cc02a50" variant="bodySmall" tone={update?.trapped ? 'danger' : update?.done ? 'success' : 'muted'}>
         {!update ? '移动 −1 · 碰撞 −3 · 送达 +10 · 陷阱 −10'
           : `即时奖励 ${update.reward > 0 ? '+' : ''}${update.reward} · ${update.trapped ? '踩中陷阱，本回合结束' : update.done ? '成功送达，本回合结束' : update.hit ? '碰到障碍，位置不变' : update.truncated ? '达到 80 步，下一步重新出发' : '继续从下一状态学习'}`}
       </Typography>
     </div>
-    <div className="vbrl-cycle__calculation">
+    <div shuku-edit-id="e-91b5f9ed-86b3-4503-9abf-fd1e1cb910b8" className="vbrl-cycle__calculation">
       <Formula latex={targetFormula} />
-      <Typography className="vbrl-cycle__target-note" variant="bodySmall" tone={update?.done ? 'warning' : 'muted'}>
+      <Typography shuku-edit-id="e-9fee0159-0acc-4bd8-90d9-73e5c74cccbd" className="vbrl-cycle__target-note" variant="bodySmall" tone={update?.done ? 'warning' : 'muted'}>
         {update?.done ? '回合已终止，目标只包含这一步的奖励。' : '未终止时接上未来价值；终止时只取这一步的奖励。'}
       </Typography>
       <Formula latex={updateFormula} />
     </div>
-    <div className="vbrl-cycle__table-section">
-      <Typography variant="bodySmall" tone="accent">{update ? `${cellLabel(update.from)} 的四个 Q 值` : '起点的四个 Q 值'}</Typography>
-      <table className="vbrl-cycle__q-table" aria-label="本次更新前后的四个 Q 值">
-        <thead><tr><th><Typography variant="bodySmall" tone="muted">动作</Typography></th>{ACTIONS.map((action, index) =>
-          <th key={action} className={update?.action === index ? 'is-selected' : undefined}><Typography variant="bodySmall" tone={update?.action === index ? 'warning' : 'accent'}>{action}</Typography></th>)}</tr></thead>
-        <tbody>{[before, after].map((row, rowIndex) => <tr key={rowIndex}>
-          <th><Typography variant="bodySmall" tone="muted">{rowIndex ? '更新后' : '更新前'}</Typography></th>
-          {row.map((value, action) => <td key={action} data-action={action} data-q={value} className={update?.action === action ? rowIndex ? 'is-updated' : 'is-selected' : undefined}><Typography variant="bodySmall" tone={update?.action === action ? 'warning' : 'accent'}>{number(value)}</Typography></td>)}
+    <div shuku-edit-id="e-31bd1bb2-3f8d-45d1-8f11-d107ccf1361c" className="vbrl-cycle__table-section">
+      <Typography shuku-edit-id="e-95d81233-1a4b-4d65-9e1d-79c0a4cf83ab" variant="bodySmall" tone="accent">{update ? `${cellLabel(update.from)} 的四个 Q 值` : '起点的四个 Q 值'}</Typography>
+      <table shuku-edit-id="e-60eb2ac5-8c4d-4964-ab64-ac64f119249b" className="vbrl-cycle__q-table" aria-label="本次更新前后的四个 Q 值">
+        <thead shuku-edit-id="e-0d114d77-2658-4965-907c-6fa30891498c"><tr shuku-edit-id="e-24b8763d-491f-40cc-890b-1ec949cac3f4"><th shuku-edit-id="e-7e52f178-f16d-4148-b62f-1d3cd3f3daf8"><Typography shuku-edit-id="e-93d4ec6c-1e73-46d2-96ad-8947a7c47041" variant="bodySmall" tone="muted">动作</Typography></th>{ACTIONS.map((action, index) =>
+          <th shuku-edit-id="e-f3744de7-0323-442f-b3d0-741719656a4d" key={action} className={update?.action === index ? 'is-selected' : undefined}><Typography shuku-edit-id="e-84fca4ba-8c8c-4b8b-8f14-81ea2613d98b" variant="bodySmall" tone={update?.action === index ? 'warning' : 'accent'}>{action}</Typography></th>)}</tr></thead>
+        <tbody shuku-edit-id="e-b687d9d5-1493-4daa-9bc3-bfea02e7f5d6">{[before, after].map((row, rowIndex) => <tr shuku-edit-id="e-85f29bbd-b77e-4a52-b143-1516b084d97e" key={rowIndex}>
+          <th shuku-edit-id="e-75cbe528-cf10-43ef-add0-dea564fcf015"><Typography shuku-edit-id="e-45d6344b-d108-4a82-8d36-a42a7d978200" variant="bodySmall" tone="muted">{rowIndex ? '更新后' : '更新前'}</Typography></th>
+          {row.map((value, action) => <td shuku-edit-id="e-35d9d436-9c6c-458a-9ae3-6a4b26f1f244" key={action} data-action={action} data-q={value} className={update?.action === action ? rowIndex ? 'is-updated' : 'is-selected' : undefined}><Typography shuku-edit-id="e-b22a5586-7116-49e2-aa13-b808073494c8" variant="bodySmall" tone={update?.action === action ? 'warning' : 'accent'}>{number(value)}</Typography></td>)}
         </tr>)}</tbody>
       </table>
     </div>
@@ -106,40 +106,40 @@ export function QLearningLoopPage() {
 
   return <LessonPage className="vbrl-cycle-page" title="Q-learning：边走边更新整张表"
     subtitle="Q-learning 通过反复交互，用即时奖励和下一状态的最大 Q 值更新当前估计。"
-    footer={<div className="vbrl-cycle__footer">
-      <Typography className="vbrl-cycle__status" variant="bodySmall" tone={evaluation ? evaluation.outcome === 'delivered' ? 'success' : 'danger' : 'muted'} role="status">
+    footer={<div shuku-edit-id="e-4c58e19f-24af-42f3-832b-e705f1a22c72" className="vbrl-cycle__footer">
+      <Typography shuku-edit-id="e-ca053d52-7fb1-4e07-934e-26affcbf968e" className="vbrl-cycle__status" variant="bodySmall" tone={evaluation ? evaluation.outcome === 'delivered' ? 'success' : 'danger' : 'muted'} role="status">
         {evaluationLabel ?? '橙色：本次更新 · 绿色：最大 Q · 灰色：并列'}
       </Typography>
-      <Typography variant="bodySmall" tone="accent">一次经历只改写一个 Q 值，回合结束后保留 Q 表。</Typography>
+      <Typography shuku-edit-id="e-ec4eeb95-8615-4191-ab2e-b7d4824bb73a" variant="bodySmall" tone="accent">一次经历只改写一个 Q 值，回合结束后保留 Q 表。</Typography>
     </div>}>
-    <div className="vbrl-cycle" ref={rootRef} data-updates={simulation.updates} data-episodes={simulation.episodes}
+    <div shuku-edit-id="e-d4ce79fb-bba9-48a7-9784-15965e126433" className="vbrl-cycle" ref={rootRef} data-updates={simulation.updates} data-episodes={simulation.episodes}
       data-deliveries={simulation.deliveries} data-traps={simulation.traps} data-playing={playing}
       data-position={keyOf(simulation.position)} data-last-state={last ? keyOf(last.from) : undefined}
       data-last-action={last?.action} data-terminal={last?.done}>
-      <div className="vbrl-cycle__toolbar">
-        <div className="vbrl-controls">
+      <div shuku-edit-id="e-a805f564-7853-47a5-9e14-0ced8a1be1fc" className="vbrl-cycle__toolbar">
+        <div shuku-edit-id="e-0078e9e3-1842-4c10-b525-bb9e64b63ae0" className="vbrl-controls">
           <Button variant="primary" onClick={step}>单步学习</Button>
           <Button variant={playing ? 'warn' : 'default'} onClick={togglePlayback} aria-pressed={playing}>{playing ? '暂停' : '连续播放'}</Button>
           <Button active={fast} aria-pressed={fast} onClick={() => setFast(value => !value)}>加速训练</Button>
           <Button onClick={() => { pause(); setEvaluation(traceGreedyPolicy(simulation.q)); }}>试走当前策略</Button>
           <Button onClick={() => { pause(); setEvaluation(null); setInspected(null); setSimulation(createSimulation()); }}>重置</Button>
         </div>
-        <Typography variant="bodySmall" tone="muted">更新 {simulation.updates} 次 · 回合 {simulation.episodes} · 送达 {simulation.deliveries} 次 · 陷阱 {simulation.traps} 次</Typography>
+        <Typography shuku-edit-id="e-54b9fbe2-f9fe-47de-ab10-59013ea973f9" variant="bodySmall" tone="muted">更新 {simulation.updates} 次 · 回合 {simulation.episodes} · 送达 {simulation.deliveries} 次 · 陷阱 {simulation.traps} 次</Typography>
       </div>
-      <div className="vbrl-cycle__stage">
-        <div className="vbrl-cycle__warehouse">
+      <div shuku-edit-id="e-19ce9708-8d2f-4446-9e93-2645eacbf16a" className="vbrl-cycle__stage">
+        <div shuku-edit-id="e-e23d7b12-b2ab-4289-8bbe-fa386e704a6a" className="vbrl-cycle__warehouse">
           <TeachingHeading>反复尝试，逐渐形成策略</TeachingHeading>
-          <div className="vbrl-cycle__map-area">
+          <div shuku-edit-id="e-dd21ce67-7ff5-47c6-b7b5-cf5e4eba0aad" className="vbrl-cycle__map-area">
             <WarehouseMap className="vbrl-cycle__map" coordinates robot={robot} values={values} policy={policy} showValueLabels={false}
               selected={inspected ?? undefined} onSelect={position => setInspected(position)} markers={{ [keyOf(TRAP)]: '!' }}
               goalArt={keyOf(robot) === keyOf(GOAL) ? loadedStationArt : emptyStationArt} dangerArt={pitArt}
               update={last && !evaluation ? { position: last.from, action: last.action } : undefined}
               trails={[{ points: evaluation?.route ?? simulation.route, color: evaluation ? evaluation.outcome === 'delivered' ? 'var(--ui-success)' : 'var(--ui-danger)' : 'var(--ui-border)', dashed: !evaluation }]}
             />
-            <div className="vbrl-cycle__value-inspector" data-inspected-state={keyOf(inspectedState)} data-q={inspectedValue}>
-              <Typography variant="bodySmall" tone="accent">({inspectedState.row + 1},{inspectedState.col + 1})</Typography>
-              <Typography variant="bodySmall" tone="muted">{inspectedTerminal ? '终止价值' : inspected ? '最大 Q' : '点格查看 Q'}</Typography>
-              <Typography variant="bodySmall" tone={inspectedValue < 0 ? 'danger' : inspectedValue > 0 ? 'success' : 'muted'}>{number(inspectedValue)}</Typography>
+            <div shuku-edit-id="e-4f512bb0-33de-434d-9b3f-0f5bdf2266f3" className="vbrl-cycle__value-inspector" data-inspected-state={keyOf(inspectedState)} data-q={inspectedValue}>
+              <Typography shuku-edit-id="e-04239abe-7613-4e86-92a9-1bac76944305" variant="bodySmall" tone="accent">({inspectedState.row + 1},{inspectedState.col + 1})</Typography>
+              <Typography shuku-edit-id="e-1c89498c-700c-4d1c-a1cb-a270db44630b" variant="bodySmall" tone="muted">{inspectedTerminal ? '终止价值' : inspected ? '最大 Q' : '点格查看 Q'}</Typography>
+              <Typography shuku-edit-id="e-b02c456e-82b6-48f1-91ce-a1c3cb69276b" variant="bodySmall" tone={inspectedValue < 0 ? 'danger' : inspectedValue > 0 ? 'success' : 'muted'}>{number(inspectedValue)}</Typography>
             </div>
           </div>
         </div>

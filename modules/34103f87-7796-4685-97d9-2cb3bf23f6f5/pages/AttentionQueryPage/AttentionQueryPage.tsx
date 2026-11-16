@@ -71,17 +71,17 @@ export function AttentionQueryPage({ onComplete, isComplete }: { onComplete: () 
   };
   const phrase = (task: QueryTask) => {
     const item = tasks.find(({ id }) => id === task)!;
-    return <span ref={element => { if (element) phrases.current[task] = element; }}
+    return <span shuku-edit-id="e-75366568-8751-474f-905a-a387c11fe567" ref={element => { if (element) phrases.current[task] = element; }}
       className={'attn-query-phrase' + (query.task === task ? ' is-highlighted' : '')}
       id={markerId + '-phrase-' + task} data-query-phrase={task}>{item.content}</span>;
   };
 
-  return <ContentBlock ref={root} title="同一份记录，问题不同、关注不同" headingLevel={1}
+  return <ContentBlock shuku-edit-id="e-96dcf47a-45fe-4e7a-afd8-e682e25049ef" ref={root} title="同一份记录，问题不同、关注不同" headingLevel={1}
     subtitle="换个问题，观察高亮。"
     className="attn-query-page" bodyClassName="attn-query-body"
     data-query-task={query.task} data-query-complete={done} data-capture-ready={Boolean(connector)}>
-    <div ref={visual} className="attn-query-visual">
-      <div className="attn-query-questions" role="group" aria-label="选择一个问题" onKeyDown={event => {
+    <div shuku-edit-id="e-6959211b-0526-4669-abc1-dc6182890bd1" ref={visual} className="attn-query-visual">
+      <div shuku-edit-id="e-65abbe0a-09f7-46ed-976e-ed96dd74990f" className="attn-query-questions" role="group" aria-label="选择一个问题" onKeyDown={event => {
         if ([' ', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) event.stopPropagation();
         if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
         event.preventDefault();
@@ -94,24 +94,24 @@ export function AttentionQueryPage({ onComplete, isComplete }: { onComplete: () 
         {tasks.map(({ id, question }) => <Button key={id}
           className="attn-query-question" active={query.task === id} aria-pressed={query.task === id}
           aria-label={question} aria-describedby={markerId + '-phrase-' + id} data-query-option={id} onClick={() => chooseTask(id)}>
-          <Typography as="span" variant="h3" tone="inherit">{question}</Typography>
-          <Typography as="span" variant="bodySmall" tone="inherit" className="attn-query-visited" aria-hidden="true">
+          <Typography shuku-edit-id="e-fa554408-07d2-4cd0-83cb-5d0a34882c1d" as="span" variant="h3" tone="inherit">{question}</Typography>
+          <Typography shuku-edit-id="e-485eb37a-985d-4cdd-b9ab-74e2a50abd50" as="span" variant="bodySmall" tone="inherit" className="attn-query-visited" aria-hidden="true">
             {query.visited.includes(id) ? '✓' : ''}
           </Typography>
         </Button>)}
       </div>
-      <svg className="attn-query-connector" viewBox="0 0 1000 1000" preserveAspectRatio="none" aria-hidden="true">
-        <defs><marker id={markerId} markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M 1 1 L 6 4 L 1 7" /></marker></defs>
-        {connector && <path d={connector} markerEnd={'url(#' + markerId + ')'} vectorEffect="non-scaling-stroke" />}
+      <svg shuku-edit-id="e-46b8039a-f830-44e5-8e3c-7105526f781a" className="attn-query-connector" viewBox="0 0 1000 1000" preserveAspectRatio="none" aria-hidden="true">
+        <defs shuku-edit-id="e-f9a88b41-36b4-4cbd-9b51-5186b8074ada"><marker shuku-edit-id="e-513e03c2-28c6-4282-a329-3b37c867c5bf" id={markerId} markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path shuku-edit-id="e-26c5d16d-f26e-40d2-bc80-f5ffadd96930" d="M 1 1 L 6 4 L 1 7" /></marker></defs>
+        {connector && <path shuku-edit-id="e-ec830ae1-5473-4c18-a3ae-9885d09684f4" d={connector} markerEnd={'url(#' + markerId + ')'} vectorEffect="non-scaling-stroke" />}
       </svg>
-      <div className="attn-query-story">
-        <Typography as="p" variant="h2" className="attn-query-sentence" aria-label={CAMPUS_RECORD_TEXT}>
+      <div shuku-edit-id="e-8dddb92d-9404-4bee-8500-388179fdaa6d" className="attn-query-story">
+        <Typography shuku-edit-id="e-41788e64-ab4c-4e11-bccb-b5abdb1177b1" as="p" variant="h2" className="attn-query-sentence" aria-label={CAMPUS_RECORD_TEXT}>
           小明为了{phrase('why')}，在{phrase('where')}录下了{phrase('what')}。
         </Typography>
       </div>
     </div>
-    <footer className="attn-query-footer">
-      <Typography variant="bodySmall" tone="muted">预设高亮；下一步用权重表示。</Typography>
+    <footer shuku-edit-id="e-80a31632-8101-4854-90f0-6c36de061990" className="attn-query-footer">
+      <Typography shuku-edit-id="e-c9f60030-8da5-4def-88ba-6dc511fdac4a" variant="bodySmall" tone="muted">预设高亮；下一步用权重表示。</Typography>
     </footer>
   </ContentBlock>;
 }

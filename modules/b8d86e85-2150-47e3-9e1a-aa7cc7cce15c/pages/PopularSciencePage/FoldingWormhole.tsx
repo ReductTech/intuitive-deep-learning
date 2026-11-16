@@ -37,8 +37,8 @@ export function FoldingWormhole() {
   const stage = mode === 'flat' ? (travel < 1 ? '先沿纸面，从 A 走到 B' : '走到了 B；点击“折叠”试试捷径') : elapsed < 1900 ? '纸面正在对折' : elapsed < 2750 ? '虫洞通道张开' : travel < 1 ? '沿虫洞曲面，从 A 经喉部走到 B' : '沿虫洞曲面，到达了 B';
   const foldPaper = () => { setElapsed(0); setMode('folded'); setReplay(value => value + 1); };
   const restart = () => { setElapsed(0); setMode('flat'); setReplay(value => value + 1); };
-  return <div className="llmpe-cg-folding-wormhole" ref={host}>
+  return <div shuku-edit-id="e-60f5c05b-941e-4cd0-a05a-2a9f241d8308" className="llmpe-cg-folding-wormhole" ref={host}>
     <FoldingPaperScene mode={mode} elapsed={elapsed} resetVersion={replay} />
-    <div className="llmpe-cg-folding-footer"><Typography variant="bodySmall" tone="accent">{stage}</Typography><div className="llmpe-cg-folding-actions">{mode === 'flat' ? <Button variant="primary" disabled={travel < 1} onClick={foldPaper}><Typography as="span" variant="bodySmall" tone="inherit">折叠</Typography></Button> : <Button disabled={elapsed < 4100} onClick={restart}><Typography as="span" variant="bodySmall" tone="inherit">展开重来</Typography></Button>}</div></div>
+    <div shuku-edit-id="e-1748868f-d4e2-4f96-b1e6-a2d3fcabaa43" className="llmpe-cg-folding-footer"><Typography shuku-edit-id="e-4e2510e0-2ae8-4c96-848c-90c0ec5335ad" variant="bodySmall" tone="accent">{stage}</Typography><div shuku-edit-id="e-6eea72ed-7a6b-4900-8f98-decfbe80e2df" className="llmpe-cg-folding-actions">{mode === 'flat' ? <Button variant="primary" disabled={travel < 1} onClick={foldPaper}><Typography shuku-edit-id="e-e69bb46d-d048-4eec-99ae-39461cb9c589" as="span" variant="bodySmall" tone="inherit">折叠</Typography></Button> : <Button disabled={elapsed < 4100} onClick={restart}><Typography shuku-edit-id="e-a8529ac6-133e-4398-b3b7-0e3e26f3b537" as="span" variant="bodySmall" tone="inherit">展开重来</Typography></Button>}</div></div>
   </div>;
 }

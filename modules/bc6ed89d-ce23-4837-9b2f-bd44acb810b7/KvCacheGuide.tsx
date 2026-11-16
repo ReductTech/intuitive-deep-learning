@@ -25,8 +25,8 @@ export function KvCacheGuide() {
     badge="Blog / Guide"
     shellClassName="kvc-guide-shell"
   >
-    <div ref={frameRef} className="kvc-guide-frame" style={{ height: 900 * scale * outline.pages.length }}>
-      <div className="kvc-guide-surface" style={{ transform: `scale(${scale})` }}>{courseScenes.map(scene => <Fragment key={scene.id}>{scene.render({ complete: () => undefined, reset: () => undefined, isComplete: false })}</Fragment>)}</div>
+    <div shuku-edit-id="e-827ca8c2-e315-47d0-b837-c2f04f0bf584" ref={frameRef} className="kvc-guide-frame" style={{ height: 900 * scale * outline.pages.length }}>
+      <div shuku-edit-id="e-2329fc2c-5013-4d7d-824e-a41ad9e166d4" className="kvc-guide-surface" style={{ transform: `scale(${scale})` }}>{courseScenes.map(scene => <Fragment key={scene.id}>{scene.render({ complete: () => undefined, reset: () => undefined, isComplete: false })}</Fragment>)}</div>
     </div>
   </ModuleShell>;
 }

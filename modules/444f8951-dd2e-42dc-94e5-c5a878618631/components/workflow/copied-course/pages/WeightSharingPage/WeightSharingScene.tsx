@@ -11,12 +11,12 @@ const KERNEL_COLORS = [0x3d7de0, 0x8169dd, 0x18a0a1, 0xe49b46, 0x3868c8, 0xba6aa
 function Fallback({ kind, active }: { kind: SharingKind; active: number }) {
   const row = Math.floor(active / 3);
   const col = active % 3;
-  return <div className="cg-copy-ck-share__fallback">
-    <div className="cg-copy-ck-share__fallbacg-copy-ck-grid is-input">{Array.from({ length: 25 }, (_, index) => <span key={index} className={Math.floor(index / 5) >= row && Math.floor(index / 5) < row + 3 && index % 5 >= col && index % 5 < col + 3 ? 'is-active' : ''} />)}</div>
-    <Typography as="span" variant="h3" tone="accent" className="cg-copy-ck-share__fallbacg-copy-ck-arrow">→</Typography>
-    <div className="cg-copy-ck-share__fallbacg-copy-ck-grid is-kernel">{Array.from({ length: 9 }, (_, index) => <span key={index} className={kind === 'independent' ? `is-version-${active % 3}` : ''} />)}</div>
-    <Typography as="span" variant="h3" tone="accent" className="cg-copy-ck-share__fallbacg-copy-ck-arrow">→</Typography>
-    <div className="cg-copy-ck-share__fallbacg-copy-ck-grid is-output">{Array.from({ length: 9 }, (_, index) => <span key={index} className={index === active ? 'is-active' : ''} />)}</div>
+  return <div shuku-edit-id="e-79b7ea07-0b5d-4014-9b42-6ac5d45fd373" className="cg-copy-ck-share__fallback">
+    <div shuku-edit-id="e-7fcaf6c6-15f0-47b2-a59e-e59f98d749d4" className="cg-copy-ck-share__fallbacg-copy-ck-grid is-input">{Array.from({ length: 25 }, (_, index) => <span shuku-edit-id="e-914c4c62-0ad4-4bad-b418-6111c79dd02d" key={index} className={Math.floor(index / 5) >= row && Math.floor(index / 5) < row + 3 && index % 5 >= col && index % 5 < col + 3 ? 'is-active' : ''} />)}</div>
+    <Typography shuku-edit-id="e-05db9f01-73ba-4233-bce6-8c09de0b0aa0" as="span" variant="h3" tone="accent" className="cg-copy-ck-share__fallbacg-copy-ck-arrow">→</Typography>
+    <div shuku-edit-id="e-f9729e75-c3f3-4710-b2c4-1bac17314600" className="cg-copy-ck-share__fallbacg-copy-ck-grid is-kernel">{Array.from({ length: 9 }, (_, index) => <span shuku-edit-id="e-5e3c716c-cbde-4bd6-857b-1f6a0cae3526" key={index} className={kind === 'independent' ? `is-version-${active % 3}` : ''} />)}</div>
+    <Typography shuku-edit-id="e-5b52c178-c44a-4b4d-bb84-e11a9d01431e" as="span" variant="h3" tone="accent" className="cg-copy-ck-share__fallbacg-copy-ck-arrow">→</Typography>
+    <div shuku-edit-id="e-ed32b8fa-ce14-4ee2-a0f7-913871d81029" className="cg-copy-ck-share__fallbacg-copy-ck-grid is-output">{Array.from({ length: 9 }, (_, index) => <span shuku-edit-id="e-fd494b76-8af8-4f84-b3ad-8b221ca269d5" key={index} className={index === active ? 'is-active' : ''} />)}</div>
   </div>;
 }
 
@@ -214,8 +214,8 @@ export function WeightSharingScene({ kind }: { kind: SharingKind }) {
     };
   }, [kind]);
 
-  return <div className="cg-copy-ck-share__scene" ref={mountRef} role="img" aria-label={kind === 'shared' ? '同一个三乘三卷积核不断移动并用于所有输出位置' : '每个输出位置使用另一套三乘三局部权重'}>
-    <div className="cg-copy-ck-share__scene-labels"><Typography variant="bodySmall" tone="accent">输入 5 × 5</Typography><Typography variant="bodySmall" tone="accent">{kind === 'shared' ? '同一套 K' : `第 ${active + 1} 套 K`}</Typography><Typography variant="bodySmall" tone="accent">输出 3 × 3</Typography></div>
+  return <div shuku-edit-id="e-4bd8fcc1-0779-4c50-8642-b0b5ede86e73" className="cg-copy-ck-share__scene" ref={mountRef} role="img" aria-label={kind === 'shared' ? '同一个三乘三卷积核不断移动并用于所有输出位置' : '每个输出位置使用另一套三乘三局部权重'}>
+    <div shuku-edit-id="e-487c6c1b-412f-49e6-b605-0536845dd5f0" className="cg-copy-ck-share__scene-labels"><Typography shuku-edit-id="e-aeabe625-e51c-4673-9b1c-460a77a74340" variant="bodySmall" tone="accent">输入 5 × 5</Typography><Typography shuku-edit-id="e-bd84f0df-59fe-4e0d-a7f6-269fcde01044" variant="bodySmall" tone="accent">{kind === 'shared' ? '同一套 K' : `第 ${active + 1} 套 K`}</Typography><Typography shuku-edit-id="e-4a920515-18bd-43fc-ba16-62faab1a0f4f" variant="bodySmall" tone="accent">输出 3 × 3</Typography></div>
     {fallback && <Fallback kind={kind} active={active} />}
   </div>;
 }

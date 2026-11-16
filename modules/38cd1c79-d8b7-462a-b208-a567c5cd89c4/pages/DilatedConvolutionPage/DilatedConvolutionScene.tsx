@@ -15,7 +15,7 @@ function Fallback({ rate, selected }: { rate: DilationRate; selected: OutputCell
     { size: outputSize, active: (row: number, col: number) => row === selected.row && col === selected.col },
     { size: INPUT_SIZE, active: (row: number, col: number) => row >= selected.row && row < selected.row + effectiveSize && col >= selected.col && col < selected.col + effectiveSize && (row - selected.row) % rate === 0 && (col - selected.col) % rate === 0 },
   ];
-  return <div className="ck-dilate__fallback">{grids.map(({ size, active }, level) => <div key={level} className="ck-dilate__fallback-grid" style={{ gridTemplateColumns: `repeat(${size},minmax(0,1fr))` }}>{Array.from({ length: size * size }, (_, index) => <span key={index} className={active(Math.floor(index / size), index % size) ? 'is-active' : ''} />)}</div>)}</div>;
+  return <div shuku-edit-id="e-089b4c98-46c7-41a6-b5c0-f91ca988d6f8" className="ck-dilate__fallback">{grids.map(({ size, active }, level) => <div shuku-edit-id="e-f5f82be8-9122-4f42-92f7-09772792a169" key={level} className="ck-dilate__fallback-grid" style={{ gridTemplateColumns: `repeat(${size},minmax(0,1fr))` }}>{Array.from({ length: size * size }, (_, index) => <span shuku-edit-id="e-87d3025d-c29f-4d38-9731-134a668bbce0" key={index} className={active(Math.floor(index / size), index % size) ? 'is-active' : ''} />)}</div>)}</div>;
 }
 
 export function DilatedConvolutionScene({ rate, selected, onSelect }: { rate: DilationRate; selected: OutputCell; onSelect: (cell: OutputCell) => void }) {
@@ -200,7 +200,7 @@ export function DilatedConvolutionScene({ rate, selected, onSelect }: { rate: Di
     };
   }, [rate]);
 
-  return <div ref={mountRef} className="ck-dilate__scene" role="img" aria-label={`空洞率 ${rate} 的双层模型：9 乘 9 输入上标出 9 个间隔采样点，${INPUT_SIZE - 2 * rate} 乘 ${INPUT_SIZE - 2 * rate} 输出；当前选择输出第 ${selected.row + 1} 行第 ${selected.col + 1} 列`}>
+  return <div shuku-edit-id="e-e5ef3565-62cb-4644-bc23-eaeda6f80cd4" ref={mountRef} className="ck-dilate__scene" role="img" aria-label={`空洞率 ${rate} 的双层模型：9 乘 9 输入上标出 9 个间隔采样点，${INPUT_SIZE - 2 * rate} 乘 ${INPUT_SIZE - 2 * rate} 输出；当前选择输出第 ${selected.row + 1} 行第 ${selected.col + 1} 列`}>
     {fallback && <Fallback rate={rate} selected={selected} />}
   </div>;
 }

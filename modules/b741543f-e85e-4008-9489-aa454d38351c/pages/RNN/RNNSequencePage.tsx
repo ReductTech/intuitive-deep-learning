@@ -130,66 +130,66 @@ export function RNNSequencePage({ onComplete }: RNNSequencePageProps) {
   })();
 
   return (
-    <ContentBlock
+    <ContentBlock shuku-edit-id="e-d7358cb0-8625-4b51-8aa3-ea569106de35"
       headingLevel={1}
       className="nrnn-sequence"
       title="记忆的研究对象：序列"
       subtitle="处理当前信息时，往往需要记住此前发生了什么。文字、图像和事件，都可以按顺序成为序列。"
     >
-      <ol className="nrnn-sequence__modalities">
+      <ol shuku-edit-id="e-6eb2a2d4-66ab-4940-8ff7-9465a9cdcb3e" className="nrnn-sequence__modalities">
         {modalities.map((item, index) => (
-          <li key={item.id}>
-            <button
+          <li shuku-edit-id="e-ff69e991-e8b2-4047-bfd6-68caac38c5ef" key={item.id}>
+            <button shuku-edit-id="e-fd974f30-a1df-43d5-9690-e9df82d6eca7"
               type="button"
               className={`nrnn-sequence__modality${item.id === modality ? ' is-active' : ''}${done[item.id] ? ' is-done' : ''}`}
               aria-pressed={item.id === modality}
               onClick={() => switchModality(item.id)}
             >
-              <span className="nrnn-sequence__modality-index">
-                <Typography as="span" variant="bodySmall" tone="inherit">{done[item.id] ? '✓' : index + 1}</Typography>
+              <span shuku-edit-id="e-932bc143-f99b-47e6-afd5-a60048fabe91" className="nrnn-sequence__modality-index">
+                <Typography shuku-edit-id="e-0c369007-e0b0-4716-a53b-0895a6a2231c" as="span" variant="bodySmall" tone="inherit">{done[item.id] ? '✓' : index + 1}</Typography>
               </span>
-              <span className="nrnn-sequence__modality-copy">
-                <Typography as="span" variant="body" tone="inherit">{item.name}</Typography>
-                <Typography as="span" variant="bodySmall" tone="inherit">{item.caption}</Typography>
+              <span shuku-edit-id="e-94b47d28-d9d2-4db7-bd08-b77e8287f924" className="nrnn-sequence__modality-copy">
+                <Typography shuku-edit-id="e-752bf5d6-2085-44ec-b400-001ff6f656fd" as="span" variant="body" tone="inherit">{item.name}</Typography>
+                <Typography shuku-edit-id="e-6737db8e-850b-46cd-b686-e229c1fae063" as="span" variant="bodySmall" tone="inherit">{item.caption}</Typography>
               </span>
             </button>
           </li>
         ))}
       </ol>
 
-      <div className="nrnn-sequence__stage">
+      <div shuku-edit-id="e-72fb587e-157b-4c8a-9487-976ef5d6a56d" className="nrnn-sequence__stage">
         {modality === 'text' && (
-          <div className="nrnn-sequence__text">
-            <div className="nrnn-sequence__text-head">
-              <Typography as="span" variant="bodySmall" tone="warning">阅读顺序 → (自动循环播放)</Typography>
-              <Typography as="span" variant="bodySmall" tone="muted">字符从左到右依次到来，一次只到一份。</Typography>
+          <div shuku-edit-id="e-dbee4c03-54ec-411d-ac75-b267032dcf0c" className="nrnn-sequence__text">
+            <div shuku-edit-id="e-b15f9108-6ad7-4bb6-a771-b26fbaeeb117" className="nrnn-sequence__text-head">
+              <Typography shuku-edit-id="e-72ce811b-3fdb-4821-a9bf-f54c50f4fae1" as="span" variant="bodySmall" tone="warning">阅读顺序 → (自动循环播放)</Typography>
+              <Typography shuku-edit-id="e-45122239-83e1-4fca-a0bd-357a9c49ee4f" as="span" variant="bodySmall" tone="muted">字符从左到右依次到来，一次只到一份。</Typography>
             </div>
-            <div className="nrnn-sequence__cards">
+            <div shuku-edit-id="e-7398a295-2f53-452c-867c-2a8440b0f027" className="nrnn-sequence__cards">
               {textCharacters.map((character, index) => {
                 const currentDisplayStep = textStep >= textCharacters.length ? textCharacters.length : textStep;
                 return (
-                  <div
+                  <div shuku-edit-id="e-946908f6-f627-42dd-9125-2e123d1bc8aa"
                     key={`${character}-${index}`}
                     className={`nrnn-sequence__card${index < currentDisplayStep ? ' is-read' : ''}${index === currentDisplayStep ? ' is-current' : ''}`}
                   >
-                    <Typography as="span" variant="display" tone="inherit">{character}</Typography>
+                    <Typography shuku-edit-id="e-904c8daf-98a8-4ca2-b92f-024ca8c2d2cf" as="span" variant="display" tone="inherit">{character}</Typography>
                   </div>
                 );
               })}
             </div>
-            <div className="nrnn-sequence__memory">
-              <Typography as="span" variant="bodySmall" tone="muted" className="nrnn-sequence__memory-label">已经读进记忆</Typography>
-              <div className="nrnn-sequence__memory-chips">
+            <div shuku-edit-id="e-438677f1-7956-49c0-aba0-26ff9dfa0086" className="nrnn-sequence__memory">
+              <Typography shuku-edit-id="e-0bc2cb7d-ea88-44fd-a494-1e0cee1c1071" as="span" variant="bodySmall" tone="muted" className="nrnn-sequence__memory-label">已经读进记忆</Typography>
+              <div shuku-edit-id="e-75017ce8-e788-48f9-9858-9430e538ec61" className="nrnn-sequence__memory-chips">
                 {textCharacters.map((character, index) => {
                   const currentDisplayStep = textStep >= textCharacters.length ? textCharacters.length : textStep;
                   return (
-                    <span key={`${character}-memory-${index}`} className={`nrnn-sequence__memory-chip${index < currentDisplayStep ? '' : ' is-empty'}`}>
-                      <Typography as="span" variant="bodySmall" tone="inherit">{index < currentDisplayStep ? character : '·'}</Typography>
+                    <span shuku-edit-id="e-4c0aeccf-91b8-463f-b452-608a957c9b55" key={`${character}-memory-${index}`} className={`nrnn-sequence__memory-chip${index < currentDisplayStep ? '' : ' is-empty'}`}>
+                      <Typography shuku-edit-id="e-c2e52572-e92a-4064-b9cb-7123f7fa22ac" as="span" variant="bodySmall" tone="inherit">{index < currentDisplayStep ? character : '·'}</Typography>
                     </span>
                   );
                 })}
               </div>
-              <Typography as="span" variant="bodySmall" tone="muted">每读一个字，就保留在记忆里，供后续预测共同决策。</Typography>
+              <Typography shuku-edit-id="e-a1a3fab5-9c7d-4df9-a39e-970ae0bbed16" as="span" variant="bodySmall" tone="muted">每读一个字，就保留在记忆里，供后续预测共同决策。</Typography>
             </div>
           </div>
         )}
@@ -205,32 +205,32 @@ export function RNNSequencePage({ onComplete }: RNNSequencePageProps) {
         )}
 
         {modality === 'event' && (
-          <section className="nrnn-sequence__event" aria-label="根据昨天和今天预测明天的事件">
-            <header className="nrnn-sequence__event-head">
-              <Typography as="span" variant="bodySmall" tone="warning">事件按发生顺序进入记忆</Typography>
-              <Typography as="span" variant="bodySmall" tone="muted">观察过去，预测下一步</Typography>
+          <section shuku-edit-id="e-1b103c34-d988-4a3b-8f7a-0b404d8faf5f" className="nrnn-sequence__event" aria-label="根据昨天和今天预测明天的事件">
+            <header shuku-edit-id="e-708bc3b2-d9e0-4390-a2df-ac69f08a4cb5" className="nrnn-sequence__event-head">
+              <Typography shuku-edit-id="e-391acbb4-af1f-428d-a92e-f32778620d7a" as="span" variant="bodySmall" tone="warning">事件按发生顺序进入记忆</Typography>
+              <Typography shuku-edit-id="e-0b87c9d9-3278-4bed-89be-b08aebc163da" as="span" variant="bodySmall" tone="muted">观察过去，预测下一步</Typography>
             </header>
-            <div className="nrnn-sequence__event-line">
-              <div className={`nrnn-sequence__event-slot${eventStep >= 1 ? ' is-visible' : ''}`}>
-                <Typography as="span" variant="bodySmall" tone="muted">昨天</Typography>
-                <div className="nrnn-sequence__dish-card"><DishIcon dish="pie" label="苹果派" /></div>
+            <div shuku-edit-id="e-592f2816-ba48-4f0c-8488-57c6838829cb" className="nrnn-sequence__event-line">
+              <div shuku-edit-id="e-6b4e9713-5442-4637-a6ec-4b7baca7d3ce" className={`nrnn-sequence__event-slot${eventStep >= 1 ? ' is-visible' : ''}`}>
+                <Typography shuku-edit-id="e-819e5c80-0391-4415-a953-223465b3dcb6" as="span" variant="bodySmall" tone="muted">昨天</Typography>
+                <div shuku-edit-id="e-f70c2f0e-07c6-41e3-995a-d0a47c9e4013" className="nrnn-sequence__dish-card"><DishIcon dish="pie" label="苹果派" /></div>
               </div>
-              <Typography as="span" variant="h2" tone="light" className="nrnn-sequence__event-arrow">→</Typography>
-              <div className={`nrnn-sequence__event-slot${eventStep >= 2 ? ' is-visible' : ''}`}>
-                <Typography as="span" variant="bodySmall" tone="muted">今天</Typography>
-                <div className="nrnn-sequence__dish-card"><DishIcon dish="steak" label="牛排" /></div>
+              <Typography shuku-edit-id="e-52aa356a-1387-443d-a219-29fffe832ce9" as="span" variant="h2" tone="light" className="nrnn-sequence__event-arrow">→</Typography>
+              <div shuku-edit-id="e-f36975ac-830c-45e9-b1fa-bab91ab41e1b" className={`nrnn-sequence__event-slot${eventStep >= 2 ? ' is-visible' : ''}`}>
+                <Typography shuku-edit-id="e-88ae1b9a-1930-4431-a7a0-3ec5fa1de8c8" as="span" variant="bodySmall" tone="muted">今天</Typography>
+                <div shuku-edit-id="e-d6f77eea-4df1-41cf-a02b-e19c36f1ac78" className="nrnn-sequence__dish-card"><DishIcon dish="steak" label="牛排" /></div>
               </div>
-              <Typography as="span" variant="h2" tone="light" className="nrnn-sequence__event-arrow">→</Typography>
-              <div className={`nrnn-sequence__event-slot is-future${eventSolved ? ' is-solved' : ''}`}>
-                <Typography as="span" variant="bodySmall" tone="muted">明天</Typography>
-                <div className="nrnn-sequence__dish-card">
-                  {eventSolved ? <DishIcon dish="burger" label="汉堡" /> : <Typography as="span" variant="display" tone="light">?</Typography>}
+              <Typography shuku-edit-id="e-49af1306-9ed4-4e67-ac34-06556c03904e" as="span" variant="h2" tone="light" className="nrnn-sequence__event-arrow">→</Typography>
+              <div shuku-edit-id="e-e15ec71c-dd0a-4cae-9566-6d0514d982c9" className={`nrnn-sequence__event-slot is-future${eventSolved ? ' is-solved' : ''}`}>
+                <Typography shuku-edit-id="e-a3772692-2836-4400-b7af-7d174e2dab1b" as="span" variant="bodySmall" tone="muted">明天</Typography>
+                <div shuku-edit-id="e-31257bea-43bc-4c11-acfb-8c3f6dc8f86a" className="nrnn-sequence__dish-card">
+                  {eventSolved ? <DishIcon dish="burger" label="汉堡" /> : <Typography shuku-edit-id="e-06c33763-18cf-4cd7-8f1c-4390f3145fe6" as="span" variant="display" tone="light">?</Typography>}
                 </div>
               </div>
             </div>
-            <div className={`nrnn-sequence__event-choices${eventStep >= 2 && !eventSolved ? ' is-ready' : ''}`} aria-label="选择明天的菜品">
+            <div shuku-edit-id="e-9ed1c55b-9011-4a5d-94d4-55a1cc66bb53" className={`nrnn-sequence__event-choices${eventStep >= 2 && !eventSolved ? ' is-ready' : ''}`} aria-label="选择明天的菜品">
               {eventChoices.map((dish) => (
-                <button
+                <button shuku-edit-id="e-569c4bff-e11d-4030-8947-3fac81dc3816"
                   type="button"
                   key={dish}
                   aria-label={dishLabels[dish]}
@@ -246,8 +246,8 @@ export function RNNSequencePage({ onComplete }: RNNSequencePageProps) {
         )}
       </div>
 
-      <div className={`nrnn-sequence__status is-${status.tone}`}>
-        <Typography as="p" variant="body" tone="inherit">{status.text}</Typography>
+      <div shuku-edit-id="e-3574da9d-2d75-46a9-8182-ad28d9c9a0b2" className={`nrnn-sequence__status is-${status.tone}`}>
+        <Typography shuku-edit-id="e-376a9081-8cd3-4837-9fcf-83452d13ad8b" as="p" variant="body" tone="inherit">{status.text}</Typography>
       </div>
     </ContentBlock>
   );

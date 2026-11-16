@@ -48,14 +48,14 @@ export function AttentionQkvPage({ onComplete, isComplete }: ActivityProps) {
     setOperated(true);
   };
 
-  return <ContentBlock ref={root} title="用权重表示关注程度" headingLevel={1}
+  return <ContentBlock shuku-edit-id="e-80031d90-94b7-4fd2-85d5-573ea62098ff" ref={root} title="用权重表示关注程度" headingLevel={1}
     subtitle="记录不变，读取比例怎样变？"
     className="attn-weight-model-page" bodyClassName="attn-weight-model-body"
     data-activity="C03" data-activity-complete={operated} data-weight-task={current.id}
     data-capture-ready={mathReady} aria-busy={!mathReady}>
-    <div className="attn-weight-model-questions">
-      <Typography variant="bodySmall" tone="accent">问题 Q</Typography>
-      <div className="attn-weight-model-options" role="group" aria-label="问题 Q" onKeyDown={event => {
+    <div shuku-edit-id="e-39a943af-5638-486a-88da-89c4ec6dc681" className="attn-weight-model-questions">
+      <Typography shuku-edit-id="e-2158263c-61e4-4990-82e8-4f05dc27dd00" variant="bodySmall" tone="accent">问题 Q</Typography>
+      <div shuku-edit-id="e-25fa09c1-eb17-47cc-93bd-41276a7e94a5" className="attn-weight-model-options" role="group" aria-label="问题 Q" onKeyDown={event => {
         if ([' ', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) event.stopPropagation();
         if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
         event.preventDefault();
@@ -68,41 +68,41 @@ export function AttentionQkvPage({ onComplete, isComplete }: ActivityProps) {
         {QKV_TASKS.map(task => <Button key={task.id} active={current.id === task.id}
           aria-pressed={current.id === task.id} data-weight-option={task.id}
           aria-label={task.question} onClick={() => selectTask(task.id)}>
-          <Typography as="span" variant="body" tone="inherit">{task.question}</Typography>
+          <Typography shuku-edit-id="e-1c96f9c2-bd9e-4e25-a437-ed0c6a56656b" as="span" variant="body" tone="inherit">{task.question}</Typography>
         </Button>)}
       </div>
     </div>
-    <div className="attn-weight-model-values" role="group" aria-label="四项内容不变，权重随问题改变"
+    <div shuku-edit-id="e-40c8564d-3673-483d-b4c5-108cae7011fe" className="attn-weight-model-values" role="group" aria-label="四项内容不变，权重随问题改变"
       data-weight-sum={values.reduce((sum, value) => sum + value.weight, 0).toFixed(2)}>
-      {values.map((value, index) => <section key={value.id}
+      {values.map((value, index) => <section shuku-edit-id="e-c09dce8f-6419-4aee-bf31-ad70d714b1b3" key={value.id}
         className={value.id === current.id ? 'is-emphasized' : ''}
         data-weight-content={value.id} data-weight-value={value.weight.toFixed(2)}>
         <MathFormulaBlock appearance="plain" ariaLabel={'内容向量 v ' + (index + 1)}>
           <MathFormulaStatic latex={'v_' + (index + 1)} />
         </MathFormulaBlock>
-        <Typography variant="h3" tone="accent" className="attn-weight-model-content">{value.content}</Typography>
-        <div className="attn-weight-model-track" role="meter"
+        <Typography shuku-edit-id="e-73fa6eb0-5efe-4312-8005-4966b0511e28" variant="h3" tone="accent" className="attn-weight-model-content">{value.content}</Typography>
+        <div shuku-edit-id="e-b7c42ca3-4474-4563-af75-2a080ce8803c" className="attn-weight-model-track" role="meter"
           aria-label={value.content + '的示意权重'} aria-valuemin={0} aria-valuemax={1} aria-valuenow={value.weight}>
-          <div style={{ width: value.weight * 100 + '%' }} />
+          <div shuku-edit-id="e-aaa95c76-f8f9-43d9-8384-3a1053c28896" style={{ width: value.weight * 100 + '%' }} />
         </div>
         <MathFormulaBlock appearance="plain" ariaLabel={'权重 w ' + (index + 1) + ' 等于 ' + value.weight.toFixed(2)}>
           <MathFormulaStatic latex={'w_' + (index + 1) + '=' + value.weight.toFixed(2)} />
         </MathFormulaBlock>
       </section>)}
     </div>
-    <div className="attn-weight-model-result">
+    <div shuku-edit-id="e-e84e5254-0a2d-42c7-84f0-85b7f0f8655a" className="attn-weight-model-result">
       <MathFormulaBlock appearance="plain" className="attn-weight-model-result-formula" ariaLabel="读取结果 r 等于各内容向量乘以对应权重再求和">
         <MathFormulaStatic latex={'\\boldsymbol{r}=\\sum_i w_i\\boldsymbol{v}_i'} />
       </MathFormulaBlock>
-      <Typography variant="body" tone="accent" aria-live="polite">更关注「{current.content}」，仍读取全部。</Typography>
+      <Typography shuku-edit-id="e-7748f5cb-2973-4efc-be3a-2949e08ca6bc" variant="body" tone="accent" aria-live="polite">更关注「{current.content}」，仍读取全部。</Typography>
     </div>
-    <footer className="attn-weight-model-footer">
-      <div className="attn-weight-model-footer-top">
+    <footer shuku-edit-id="e-ca151091-02f9-4d29-9620-1e2835a4ab51" className="attn-weight-model-footer">
+      <div shuku-edit-id="e-35beae45-0d20-4ba5-a3de-6283f2b7faf7" className="attn-weight-model-footer-top">
         <MathFormulaBlock appearance="plain" ariaLabel="权重 w 是问题 q 与内容集合 V 的函数">
           <MathFormulaStatic latex={'\\boldsymbol{w}=f(\\boldsymbol{q},V)'} />
         </MathFormulaBlock>
       </div>
-      <Typography variant="bodySmall" tone="muted">手设权重，文字代表内容向量。</Typography>
+      <Typography shuku-edit-id="e-cc01dd04-4380-4fa5-a1b8-a73d280425dc" variant="bodySmall" tone="muted">手设权重，文字代表内容向量。</Typography>
     </footer>
   </ContentBlock>;
 }

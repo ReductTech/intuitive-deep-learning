@@ -3,7 +3,7 @@ import { endingResources } from './endingResources';
 import './CourseMapPage.css';
 
 export function CourseMapPage() {
-  return <div className="vbrl-ending-page">
+  return <div shuku-edit-id="e-417ae039-7c9c-49ac-aeec-0ccae3ef3315" className="vbrl-ending-page">
     <CourseEndingPage
       pageKey="value-based-rl-ending"
       developerIds={['jassary08']}

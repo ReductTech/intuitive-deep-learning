@@ -16,8 +16,8 @@ export function AttentionMathRuntime() {
     return () => { active = false; window.clearTimeout(timeout); };
   }, []);
   if (!failed) return null;
-  return <div className="attn-math-runtime-notice" role="alert">
-    <Typography variant="bodySmall">公式组件未能加载，请恢复连接后刷新。</Typography>
+  return <div shuku-edit-id="e-7e90fbec-9efc-4caf-bae0-fa8b27657a52" className="attn-math-runtime-notice" role="alert">
+    <Typography shuku-edit-id="e-87921c2f-a2bf-440e-92ad-f874eef7dfe8" variant="bodySmall">公式组件未能加载，请恢复连接后刷新。</Typography>
     <Button onClick={() => window.location.reload()}>重新加载</Button>
   </div>;
 }

@@ -96,9 +96,9 @@ function buildCanvas(
         details: {
           title: `h${index + 1} 的线性输出`,
           content: (
-            <Typography as="code" variant="body" tone="inherit" wrap="nowrap">
+            <Typography shuku-edit-id="e-e9ac7259-db7f-4d49-bf43-f4f9782c9295" as="code" variant="body" tone="inherit" wrap="nowrap">
               {`h${index + 1} = w${formatSubscript(index + 1)}x + b${formatSubscript(index + 1)}`}
-              <br />
+              <br shuku-edit-id="e-0d0de202-8e91-408e-8f1a-5da723928f93" />
               {`\u00A0\u00A0\u00A0= ${formatNumber(neuron.w)}x ${formatSigned(neuron.b)}`}
             </Typography>
           ),
@@ -115,7 +115,7 @@ function buildCanvas(
         details: {
           title: '输出 y',
           content: (
-            <Typography as="code" variant="body" tone="inherit" wrap="nowrap">
+            <Typography shuku-edit-id="e-9494e6a7-0c97-4077-8802-d8ab0af918c1" as="code" variant="body" tone="inherit" wrap="nowrap">
               y = Σ vᵢhᵢ {formatSigned(model.outputBias)}
             </Typography>
           ),
@@ -216,7 +216,7 @@ export function ShallowLinearPage({ onComplete }: ShallowLinearPageProps) {
       ? 'network-output'
       : null;
   return (
-    <ContentBlock
+    <ContentBlock shuku-edit-id="e-55144f4a-9d84-4c6f-b033-fc09123d726f"
       ref={rootRef}
       headingLevel={1}
       className="ngtw-activation-network-lab ngtw-shallow-linear"
@@ -226,18 +226,18 @@ export function ShallowLinearPage({ onComplete }: ShallowLinearPageProps) {
     >
       {!model ? (
         <NoticeStrip tone="blue">
-          <Typography variant="body" tone="inherit">正在恢复已保存的随机参数…</Typography>
+          <Typography shuku-edit-id="e-117d6b74-8cb0-4c51-b729-165ad0159053" variant="body" tone="inherit">正在恢复已保存的随机参数…</Typography>
         </NoticeStrip>
       ) : (
         <>
-          <div className="ngtw-shallow-toolbar flex min-w-0 items-center justify-between gap-[12px] min-h-[56px] p-[4px_8px_4px_12px]">
-            <div className="ngtw-shallow-toolbar__context flex min-w-0 max-w-full items-center gap-[6px]">
-              <Typography as="span" variant="body" tone="muted">当前结构：</Typography>
-              <Typography as="strong" variant="body" tone="accent">{count} 个线性神经元</Typography>
-              <Typography as="span" variant="body" tone="muted">汇合为</Typography>
-              <Typography as="strong" variant="body" tone="success">1 个输出</Typography>
+          <div shuku-edit-id="e-ec3a65ca-3dca-440d-ba41-641310a5ab46" className="ngtw-shallow-toolbar flex min-w-0 items-center justify-between gap-[12px] min-h-[56px] p-[4px_8px_4px_12px]">
+            <div shuku-edit-id="e-95791aea-ad6f-445e-a6a8-61487bb2fe73" className="ngtw-shallow-toolbar__context flex min-w-0 max-w-full items-center gap-[6px]">
+              <Typography shuku-edit-id="e-fbc0c9e2-996a-4412-b05a-a7216d65e2ce" as="span" variant="body" tone="muted">当前结构：</Typography>
+              <Typography shuku-edit-id="e-57015604-1b1a-495f-a6bf-badfbf3345da" as="strong" variant="body" tone="accent">{count} 个线性神经元</Typography>
+              <Typography shuku-edit-id="e-821f998c-4605-4b6a-86b6-378a3dabfecf" as="span" variant="body" tone="muted">汇合为</Typography>
+              <Typography shuku-edit-id="e-d99af680-b784-4172-bf43-60663c3938b0" as="strong" variant="body" tone="success">1 个输出</Typography>
             </div>
-            <div className="ngtw-activation-actions flex flex-wrap gap-[8px]" aria-label="调整网络结构">
+            <div shuku-edit-id="e-9fdde3f2-0424-495c-a44d-96baab54f201" className="ngtw-activation-actions flex flex-wrap gap-[8px]" aria-label="调整网络结构">
               <Button variant="primary" disabled={!hydrated || !model || count >= 3} onClick={addNeuron}>
                 添加
               </Button>
@@ -250,9 +250,9 @@ export function ShallowLinearPage({ onComplete }: ShallowLinearPageProps) {
             </div>
           </div>
 
-          <div className="ngtw-activation-network-stage grid grid-cols-[minmax(0,_.95fr)_minmax(0,_1.05fr)] items-stretch gap-[14px]">
-            <section className="ngtw-activation-network-panel relative flex min-w-0 min-h-[560px] flex-col bg-[#fff] p-[14px] ngtw-shallow-panel ngtw-shallow-panel--network" aria-label="网络结构">
-              <div className="ngtw-activation-visual-box relative min-h-[430px] overflow-hidden ngtw-activation-visual-box--model">
+          <div shuku-edit-id="e-cd6d0666-d751-49fe-8fe7-b43f05091a10" className="ngtw-activation-network-stage grid grid-cols-[minmax(0,_.95fr)_minmax(0,_1.05fr)] items-stretch gap-[14px]">
+            <section shuku-edit-id="e-e6330525-f720-4bd9-856c-66541cd23823" className="ngtw-activation-network-panel relative flex min-w-0 min-h-[560px] flex-col bg-[#fff] p-[14px] ngtw-shallow-panel ngtw-shallow-panel--network" aria-label="网络结构">
+              <div shuku-edit-id="e-d0a65635-936c-4bc5-bf61-5b68562b3143" className="ngtw-activation-visual-box relative min-h-[430px] overflow-hidden ngtw-activation-visual-box--model">
                 <NetworkCanvas
                   layers={canvas.layers}
                   connections={canvas.connections}
@@ -266,16 +266,16 @@ export function ShallowLinearPage({ onComplete }: ShallowLinearPageProps) {
               </div>
             </section>
 
-            <section className="ngtw-activation-network-panel relative flex min-w-0 min-h-[560px] flex-col bg-[#fff] p-[14px] ngtw-shallow-panel ngtw-shallow-panel--plot" aria-label="函数形状">
-              <div className="ngtw-activation-visual-box relative min-h-[430px] overflow-hidden">
+            <section shuku-edit-id="e-3dac4be7-fb41-40d9-97b1-d0e17665ac35" className="ngtw-activation-network-panel relative flex min-w-0 min-h-[560px] flex-col bg-[#fff] p-[14px] ngtw-shallow-panel ngtw-shallow-panel--plot" aria-label="函数形状">
+              <div shuku-edit-id="e-06cb7479-2432-4416-85ab-09c319703365" className="ngtw-activation-visual-box relative min-h-[430px] overflow-hidden">
                 <ShallowOutputPlot model={model} activeSeriesId={activeSeriesId} />
               </div>
             </section>
           </div>
 
-          <div className="ngtw-shallow-conclusion flex min-w-0 items-center gap-[12px] p-[10px_14px]">
-            <Typography as="strong" variant="subtitle" tone="success">结论</Typography>
-            <Typography variant="body" tone="main">多个线性函数的加权和，仍然可以合并成一个线性函数。</Typography>
+          <div shuku-edit-id="e-cf41cfb0-642f-4cfa-b9d5-1ea539d08f63" className="ngtw-shallow-conclusion flex min-w-0 items-center gap-[12px] p-[10px_14px]">
+            <Typography shuku-edit-id="e-cf78852e-33c6-41d5-be30-6d4a771b392a" as="strong" variant="subtitle" tone="success">结论</Typography>
+            <Typography shuku-edit-id="e-843675bd-ef08-4863-8a0c-dd7539d48572" variant="body" tone="main">多个线性函数的加权和，仍然可以合并成一个线性函数。</Typography>
           </div>
         </>
       )}

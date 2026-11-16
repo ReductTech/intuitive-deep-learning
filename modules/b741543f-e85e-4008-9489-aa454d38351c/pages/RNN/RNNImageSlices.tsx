@@ -77,8 +77,8 @@ const gridTemplate = glyphs
 
 function GlyphInk({ glyph }: { glyph: Glyph }) {
   return (
-    <svg className="nrnn-image-slices__ink" viewBox={glyph.viewBox} preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-      {glyph.paths.map((path) => <path key={path} d={path} />)}
+    <svg shuku-edit-id="e-64e2b4dc-513f-42fc-ac4f-c36c25a3f2b4" className="nrnn-image-slices__ink" viewBox={glyph.viewBox} preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+      {glyph.paths.map((path) => <path shuku-edit-id="e-1a67aaf0-5c64-4cb1-b173-38dfb31f088e" key={path} d={path} />)}
     </svg>
   );
 }
@@ -115,11 +115,11 @@ export function RNNImageSlices({ cuts, rejected, arrived, onToggleCut, onRejectC
   };
 
   return (
-    <div className="nrnn-image-slices">
-      <section className={`nrnn-image-slices__strip${rejected ? ' is-rejected' : ''}`} aria-label="手写算式 7 + 3">
-        <Typography as="span" variant="bodySmall" tone="warning">一张静态图片 · 7 + 3</Typography>
+    <div shuku-edit-id="e-8f1a1c99-f5b5-4e7e-aa64-d2f2d98c6a75" className="nrnn-image-slices">
+      <section shuku-edit-id="e-df42f124-68b9-429f-a9f2-490c4c64d980" className={`nrnn-image-slices__strip${rejected ? ' is-rejected' : ''}`} aria-label="手写算式 7 + 3">
+        <Typography shuku-edit-id="e-dc89f920-0035-4096-b1cd-c7409ffbfaed" as="span" variant="bodySmall" tone="warning">一张静态图片 · 7 + 3</Typography>
 
-        <div
+        <div shuku-edit-id="e-1345cd3a-35d1-436b-9008-42ee7fbd0bc0"
           className="nrnn-image-slices__track"
           ref={trackRef}
           role="group"
@@ -128,7 +128,7 @@ export function RNNImageSlices({ cuts, rejected, arrived, onToggleCut, onRejectC
           onPointerMove={handleMove}
           onClick={handleClick}
         >
-          <span className="nrnn-image-slices__cutter" aria-hidden="true" />
+          <span shuku-edit-id="e-1f1b0b21-0989-4d87-827d-3a6e8544c531" className="nrnn-image-slices__cutter" aria-hidden="true" />
           {glyphs.map((glyph, index) => {
             const state = !armed
               ? ''
@@ -139,14 +139,14 @@ export function RNNImageSlices({ cuts, rejected, arrived, onToggleCut, onRejectC
                   : '';
             return (
               <Fragment key={glyph.id}>
-                <div
+                <div shuku-edit-id="e-625ec874-81fe-4002-af31-1738ccdf9995"
                   className={`nrnn-image-slices__piece${state}${cuts.some(Boolean) ? ' is-split' : ''}`}
                   style={{ '--nrnn-shift': `${shiftOf(index)}px` } as CSSProperties}
                 >
                   <GlyphInk glyph={glyph} />
                 </div>
                 {index < glyphs.length - 1 && (
-                  <button
+                  <button shuku-edit-id="e-7d01b0a6-44bc-4fc5-820f-6ea4e0f4c390"
                     type="button"
                     className={`nrnn-image-slices__seam${cuts[index] ? ' is-cut' : ''}`}
                     aria-pressed={cuts[index]}
@@ -156,7 +156,7 @@ export function RNNImageSlices({ cuts, rejected, arrived, onToggleCut, onRejectC
                       onToggleCut(index);
                     }}
                   >
-                    <span aria-hidden="true" />
+                    <span shuku-edit-id="e-5cb44dd7-f6a2-4bba-8e25-22a33fa624aa" aria-hidden="true" />
                   </button>
                 )}
               </Fragment>
@@ -164,10 +164,10 @@ export function RNNImageSlices({ cuts, rejected, arrived, onToggleCut, onRejectC
           })}
         </div>
 
-        <div className="nrnn-image-slices__labels" style={{ gridTemplateColumns: gridTemplate } as CSSProperties} aria-hidden="true">
+        <div shuku-edit-id="e-032a9766-bbe5-421b-943d-45c220c2049c" className="nrnn-image-slices__labels" style={{ gridTemplateColumns: gridTemplate } as CSSProperties} aria-hidden="true">
           {glyphs.map((glyph, index) => (
             <Fragment key={glyph.id}>
-              <Typography
+              <Typography shuku-edit-id="e-2dde0b84-5716-4c6c-ace1-0f09bf6945f4"
                 as="span"
                 variant="bodySmall"
                 tone="inherit"
@@ -176,32 +176,32 @@ export function RNNImageSlices({ cuts, rejected, arrived, onToggleCut, onRejectC
               >
                 {glyph.label} = {glyph.character}
               </Typography>
-              {index < glyphs.length - 1 && <span />}
+              {index < glyphs.length - 1 && <span shuku-edit-id="e-8813e291-5316-4f1a-9563-72fe786f5d04" />}
             </Fragment>
           ))}
         </div>
       </section>
 
-      <section className="nrnn-image-slices__network" aria-label="切片依次进入循环网络">
-        <header className="nrnn-image-slices__network-head">
-          <Typography as="span" variant="bodySmall" tone="warning">切片按时间进入网络</Typography>
-          <Typography as="span" variant="bodySmall" tone="muted">同一个网络单元，在 t₁ / t₂ / t₃ 各读一次。</Typography>
+      <section shuku-edit-id="e-4185fc17-9017-4e4a-a4e6-352d6b799143" className="nrnn-image-slices__network" aria-label="切片依次进入循环网络">
+        <header shuku-edit-id="e-dfcdc369-2a38-43cd-bb0e-b70615e9aff3" className="nrnn-image-slices__network-head">
+          <Typography shuku-edit-id="e-02ccdd08-7cfe-4b6e-a59f-f4879b0f6731" as="span" variant="bodySmall" tone="warning">切片按时间进入网络</Typography>
+          <Typography shuku-edit-id="e-ff857eeb-8853-43e7-84b9-02e80b3a4f9a" as="span" variant="bodySmall" tone="muted">同一个网络单元，在 t₁ / t₂ / t₃ 各读一次。</Typography>
         </header>
 
-        <div className="nrnn-image-slices__slots">
+        <div shuku-edit-id="e-401e0bb6-10ac-4bc8-ace6-f59056cd449b" className="nrnn-image-slices__slots">
           {glyphs.map((glyph, index) => (
-            <div className={`nrnn-image-slices__slot${arrived > index ? ' is-filled' : ''}`} key={glyph.id}>
-              <Typography as="span" variant="bodySmall" tone="inherit">{glyph.label}</Typography>
-              <span className="nrnn-image-slices__slot-face">
+            <div shuku-edit-id="e-5c5219aa-0688-4611-b093-15c1dec4938b" className={`nrnn-image-slices__slot${arrived > index ? ' is-filled' : ''}`} key={glyph.id}>
+              <Typography shuku-edit-id="e-253ec94c-7137-4d0e-ab20-2996b152b49c" as="span" variant="bodySmall" tone="inherit">{glyph.label}</Typography>
+              <span shuku-edit-id="e-33b4f7c2-db8f-4c1b-8a2b-1e994b659f88" className="nrnn-image-slices__slot-face">
                 {arrived > index && <GlyphInk glyph={glyph} />}
               </span>
             </div>
           ))}
         </div>
 
-        <div className="nrnn-image-slices__unit">
-          <Typography as="strong" variant="h3" tone="inherit" className="nrnn-image-slices__unit-title">RNN</Typography>
-          <Typography as="span" variant="bodySmall" tone="inherit">每读入一段，就把当前状态带到下一段。</Typography>
+        <div shuku-edit-id="e-d598f3e7-1ebd-41f6-8e08-842d19433afc" className="nrnn-image-slices__unit">
+          <Typography shuku-edit-id="e-d941c83d-f290-4147-be4c-b430086a7e17" as="strong" variant="h3" tone="inherit" className="nrnn-image-slices__unit-title">RNN</Typography>
+          <Typography shuku-edit-id="e-dcd2f360-ad80-46c7-a2f1-f7119521d9de" as="span" variant="bodySmall" tone="inherit">每读入一段，就把当前状态带到下一段。</Typography>
         </div>
       </section>
     </div>

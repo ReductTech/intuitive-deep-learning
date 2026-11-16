@@ -57,35 +57,35 @@ export function PresentationComparisonPage() {
     return () => window.clearInterval(timer);
   }, [visible, foreground, reducedMotion, stackHovered, stackFocused]);
 
-  return <ContentBlock ref={root} className="cg-case-page cg-creator-typography"
+  return <ContentBlock shuku-edit-id="e-03025221-f1b9-4a33-b580-b7a044b24dd0" ref={root} className="cg-case-page cg-creator-typography"
     title="既然允许 AI 参与制作，怎样看出学生的理解？"
     subtitle="看学生怎样提出设计要求、解释视觉含义，并核验结果。"
     headingLevel={1} bodyClassName="cg-case-body">
-    <Typography as="h2" variant="h3" tone="accent" className="cg-case-heading cg-case-heading-left">只给主题的生成结果</Typography>
-    <Typography as="h2" variant="h3" tone="accent" className="cg-case-heading cg-case-heading-right">融入学生的理解</Typography>
-    <section className="cg-case-stack" aria-label="五张图示依次切换，悬停暂停，可点击查看" data-active-version={active}
+    <Typography shuku-edit-id="e-fc9406be-0d3d-4970-8ce9-47547bbab582" as="h2" variant="h3" tone="accent" className="cg-case-heading cg-case-heading-left">只给主题的生成结果</Typography>
+    <Typography shuku-edit-id="e-e73febf1-5a81-4017-8dba-855cf6cc95c6" as="h2" variant="h3" tone="accent" className="cg-case-heading cg-case-heading-right">融入学生的理解</Typography>
+    <section shuku-edit-id="e-33c8bc94-29c0-40d9-b381-dadb0090cbd2" className="cg-case-stack" aria-label="五张图示依次切换，悬停暂停，可点击查看" data-active-version={active}
       onPointerEnter={() => setStackHovered(true)} onPointerLeave={() => setStackHovered(false)}
       onFocusCapture={() => setStackFocused(true)}
       onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) setStackFocused(false); }}>
-      {[1,2,3,4,5].map(version => <button type="button" className="cg-case-stack-card" key={version}
+      {[1,2,3,4,5].map(version => <button shuku-edit-id="e-71a8b350-fccf-4d58-8b5e-52643a591b9d" type="button" className="cg-case-stack-card" key={version}
         style={stackStyle((version - active + 7) % 5)} aria-label={`查看生成方案 ${version}`} aria-pressed={active === version}
         onFocus={() => setActive(version)} onClick={() => setActive(version)}>
-        <img src={generatedImages[version - 1]} alt={`权重共享图示方案 ${version}`} draggable={false}/>
+        <img shuku-edit-id="e-96554dd4-2a9c-4b9c-9a22-c01798a8a826" src={generatedImages[version - 1]} alt={`权重共享图示方案 ${version}`} draggable={false}/>
       </button>)}
     </section>
-    <section className="cg-case-result" aria-label="加入具体设计要求后的知识呈现作品效果">
-      <video ref={video} src={weight_sharingAsset5} poster={demoPoster}
+    <section shuku-edit-id="e-faa1c17d-757d-4959-ac24-592ccec298f3" className="cg-case-result" aria-label="加入具体设计要求后的知识呈现作品效果">
+      <video shuku-edit-id="e-ee9f6ec3-f379-4ea6-8031-fb7bf67a863a" ref={video} src={weight_sharingAsset5} poster={demoPoster}
         muted loop playsInline preload="auto" disablePictureInPicture disableRemotePlayback
         aria-label="权重共享知识呈现作品：窗口同步滑动，对比不同位置使用的权重"/>
     </section>
-    <div className="cg-case-prompts">
-      <section className="cg-case-prompt" aria-label="只给主题的设计要求">
-        <Typography variant="bodySmall" tone="muted">设计要求（Prompt）</Typography>
-        <Typography variant="bodySmall" tone="accent">给我做一页 PPT，讲讲卷积里的权重共享。</Typography>
+    <div shuku-edit-id="e-5df934dd-6e5d-4f64-83c3-ee6108316353" className="cg-case-prompts">
+      <section shuku-edit-id="e-3619cb82-a114-425f-875e-f5c9af2c31c4" className="cg-case-prompt" aria-label="只给主题的设计要求">
+        <Typography shuku-edit-id="e-a210f312-f70e-4039-b8a7-db4f76a56f16" variant="bodySmall" tone="muted">设计要求（Prompt）</Typography>
+        <Typography shuku-edit-id="e-cd2d514c-abbc-4533-9a51-9f6f3c9d91cd" variant="bodySmall" tone="accent">给我做一页 PPT，讲讲卷积里的权重共享。</Typography>
       </section>
-      <section className="cg-case-prompt cg-case-prompt-specific" aria-label="融入教学设计的具体要求">
-        <Typography variant="bodySmall" tone="muted">设计要求（Prompt）</Typography>
-        <Typography variant="bodySmall" tone="accent"><span className="cg-case-emphasis">左右对比</span>，窗口<span className="cg-case-emphasis">同步滑动</span>；左边每到新位置<span className="cg-case-emphasis-warm">换颜色</span>，右边<span className="cg-case-emphasis-warm">保持不变</span>，表示复用同一套权重。</Typography>
+      <section shuku-edit-id="e-ee4f0af1-4692-439b-a72e-54f64706096d" className="cg-case-prompt cg-case-prompt-specific" aria-label="融入教学设计的具体要求">
+        <Typography shuku-edit-id="e-fc9173b1-92a3-4783-9670-5af876d996f5" variant="bodySmall" tone="muted">设计要求（Prompt）</Typography>
+        <Typography shuku-edit-id="e-5244d7ef-147a-4d4d-959a-e765ae4867fb" variant="bodySmall" tone="accent"><span shuku-edit-id="e-b3400541-c5b9-42e4-871a-eebd75832062" className="cg-case-emphasis">左右对比</span>，窗口<span shuku-edit-id="e-3bf4532f-5c8c-47d2-86a1-07273b471019" className="cg-case-emphasis">同步滑动</span>；左边每到新位置<span shuku-edit-id="e-bfd244f0-9f87-4e71-8599-7a6c6fd5a701" className="cg-case-emphasis-warm">换颜色</span>，右边<span shuku-edit-id="e-9bc25011-e585-419d-a006-7273a0a6ce73" className="cg-case-emphasis-warm">保持不变</span>，表示复用同一套权重。</Typography>
       </section>
     </div>
   </ContentBlock>;

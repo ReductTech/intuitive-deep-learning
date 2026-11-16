@@ -350,7 +350,7 @@ export function ObservationVideo({
     try { const frame = playerRef.current?.getIframe(); if (frame) frame.title = label; } catch { /* Loading. */ }
   }, [label]);
 
-  return <div ref={host} className="attn-video-player" aria-label={label}
+  return <div shuku-edit-id="e-8fb66067-9600-4b1f-be67-f65069d08238" ref={host} className="attn-video-player" aria-label={label}
     aria-busy={status === 'loading'} data-capture-ready={status !== 'loading'}
     data-video-status={status} style={{ width: '100%', height: '100%', minWidth: 0, maxWidth: '100%' }} />;
 }

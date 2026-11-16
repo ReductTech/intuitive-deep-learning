@@ -75,8 +75,8 @@ export function DeformableConvolutionPage() {
     y: ANCHOR_Y + (selectedPoint.row - 1) * SAMPLE_STEP,
   };
 
-  return <ContentBlock headingLevel={1} className="aipe-replay-cg-copy-ck-deform" title="可变形卷积" subtitle="权重不变，采样位置可偏移。">
-    <div className="aipe-replay-cg-copy-ck-deform__equation-row">
+  return <ContentBlock shuku-edit-id="e-9d106319-8f65-47ee-a2fa-7ffe15db0e71" headingLevel={1} className="aipe-replay-cg-copy-ck-deform" title="可变形卷积" subtitle="权重不变，采样位置可偏移。">
+    <div shuku-edit-id="e-d48d4e8e-1acd-44ee-80f2-69b787e39c0b" className="aipe-replay-cg-copy-ck-deform__equation-row">
     <MathFormulaBlock ariaLabel={mode === 'standard' ? '标准卷积在规则采样位置加权求和' : '可变形卷积在偏移后的采样位置加权求和'} className="aipe-replay-cg-copy-ck-deform__formula">
       <MathFormulaTerm latex="y(p_0)" tooltip="当前位置的输出响应。" /><MathFormulaStatic latex="=" />
       <MathFormulaTerm latex={String.raw`\sum_{n=1}^{9}`} tooltip="对卷积核的九个采样位置求和。" />
@@ -86,22 +86,22 @@ export function DeformableConvolutionPage() {
       <MathFormulaTerm latex="p_n" tooltip="普通三乘三卷积的规则采样偏移。" />
       {mode === 'deformable' && <><MathFormulaStatic latex="+" /><MathFormulaTerm latex={String.raw`\Delta p_n`} tooltip="第 n 个采样位置的额外二维偏移。" /></>}<MathFormulaStatic latex=")" />
     </MathFormulaBlock>
-    <div className="aipe-replay-cg-copy-ck-deform__mode" role="group" aria-label="切换卷积采样方式">
-      <button type="button" className={mode === 'standard' ? 'is-selected' : ''} aria-pressed={mode === 'standard'} onClick={() => setMode('standard')}><Typography as="span" variant="body" tone="inherit">标准卷积</Typography></button>
-      <button type="button" className={mode === 'deformable' ? 'is-selected' : ''} aria-pressed={mode === 'deformable'} onClick={() => setMode('deformable')}><Typography as="span" variant="body" tone="inherit">可变形卷积</Typography></button>
+    <div shuku-edit-id="e-aef6a27a-e7a4-49a2-aa59-e5072d827be0" className="aipe-replay-cg-copy-ck-deform__mode" role="group" aria-label="切换卷积采样方式">
+      <button shuku-edit-id="e-1412e9ee-a459-4c02-b73e-929a738d2123" type="button" className={mode === 'standard' ? 'is-selected' : ''} aria-pressed={mode === 'standard'} onClick={() => setMode('standard')}><Typography shuku-edit-id="e-de6066eb-082f-4c46-ac2f-02c38f538fe2" as="span" variant="body" tone="inherit">标准卷积</Typography></button>
+      <button shuku-edit-id="e-8d506955-5959-451c-bf9a-f61d9cb508e6" type="button" className={mode === 'deformable' ? 'is-selected' : ''} aria-pressed={mode === 'deformable'} onClick={() => setMode('deformable')}><Typography shuku-edit-id="e-3c51fdd3-6d8e-4804-814d-b95dfc792470" as="span" variant="body" tone="inherit">可变形卷积</Typography></button>
     </div>
     </div>
-    <div className="aipe-replay-cg-copy-ck-deform__workspace">
-      <section className="aipe-replay-cg-copy-ck-deform__panel aipe-replay-cg-copy-ck-deform__input" aria-label="输入特征图和采样位置">
-        <Typography as="h2" variant="h3" tone="accent">输入特征图 · 采样位置</Typography>
-        <div className="aipe-replay-cg-copy-ck-deform__image">
-          <canvas ref={inputCanvas} width={SIZE} height={SIZE} aria-label="弯曲的亮色带输入图像" />
-          <div className="aipe-replay-cg-copy-ck-deform__grid-lines" aria-hidden="true" />
+    <div shuku-edit-id="e-8e5bcc6e-98da-4e9f-9fa6-72d09a8c86c1" className="aipe-replay-cg-copy-ck-deform__workspace">
+      <section shuku-edit-id="e-ff59bff3-180b-42a1-ac85-7af3ec9e1f81" className="aipe-replay-cg-copy-ck-deform__panel aipe-replay-cg-copy-ck-deform__input" aria-label="输入特征图和采样位置">
+        <Typography shuku-edit-id="e-3bd98acf-3fd2-4cf4-8d11-64adf646dde3" as="h2" variant="h3" tone="accent">输入特征图 · 采样位置</Typography>
+        <div shuku-edit-id="e-ca86a96f-f4d2-4b0b-8cad-4d5049b821e1" className="aipe-replay-cg-copy-ck-deform__image">
+          <canvas shuku-edit-id="e-9f525339-b6e8-436e-b2f0-f12afc7e92fc" ref={inputCanvas} width={SIZE} height={SIZE} aria-label="弯曲的亮色带输入图像" />
+          <div shuku-edit-id="e-6970ee1b-614e-4f73-913e-0482cc6e0f3d" className="aipe-replay-cg-copy-ck-deform__grid-lines" aria-hidden="true" />
           {mode === 'deformable' && originalPoint && selectedOffset && <>
-            <svg className="aipe-replay-cg-copy-ck-deform__offset-guide" viewBox={`0 0 ${SIZE} ${SIZE}`} preserveAspectRatio="none" aria-hidden="true">
-              <line x1={originalPoint.x} y1={originalPoint.y} x2={originalPoint.x + selectedOffset.dx} y2={originalPoint.y + selectedOffset.dy} />
+            <svg shuku-edit-id="e-8de9d8c1-f656-4991-a851-218ae7c6ab48" className="aipe-replay-cg-copy-ck-deform__offset-guide" viewBox={`0 0 ${SIZE} ${SIZE}`} preserveAspectRatio="none" aria-hidden="true">
+              <line shuku-edit-id="e-5bc53d76-7e42-4f24-bd2c-00fade8f9aa8" x1={originalPoint.x} y1={originalPoint.y} x2={originalPoint.x + selectedOffset.dx} y2={originalPoint.y + selectedOffset.dy} />
             </svg>
-            <span className="aipe-replay-cg-copy-ck-deform__original-point" style={{ left: `${originalPoint.x / SIZE * 100}%`, top: `${originalPoint.y / SIZE * 100}%` }} aria-hidden="true" />
+            <span shuku-edit-id="e-4215f6c9-7767-489d-8ca4-9772046e41be" className="aipe-replay-cg-copy-ck-deform__original-point" style={{ left: `${originalPoint.x / SIZE * 100}%`, top: `${originalPoint.y / SIZE * 100}%` }} aria-hidden="true" />
           </>}
           {Array.from({ length: 9 }, (_, index) => {
             const row = Math.floor(index / 3), col = index % 3;
@@ -109,26 +109,26 @@ export function DeformableConvolutionPage() {
             const baseY = ANCHOR_Y + (row - 1) * SAMPLE_STEP;
             const offset = offsetAt(mode, ANCHOR_X, ANCHOR_Y, row, col);
             const style = { left: `${(baseX + offset.dx) / SIZE * 100}%`, top: `${(baseY + offset.dy) / SIZE * 100}%` } as CSSProperties;
-            return <button key={index} type="button" className={`aipe-replay-cg-copy-ck-deform__sample ${hovered === index ? 'is-hovered' : ''}`} style={style} onMouseEnter={() => setHovered(index)} onMouseLeave={() => setHovered(null)} onFocus={() => setHovered(index)} onBlur={() => setHovered(null)} aria-label={`第${row + 1}行第${col + 1}列采样点，权重${WEIGHTS[row][col]}/16，水平偏移${offset.dx.toFixed(1)}，垂直偏移${offset.dy.toFixed(1)}`} />;
+            return <button shuku-edit-id="e-531edf6f-6ff6-4bd3-9712-257f11fd4418" key={index} type="button" className={`aipe-replay-cg-copy-ck-deform__sample ${hovered === index ? 'is-hovered' : ''}`} style={style} onMouseEnter={() => setHovered(index)} onMouseLeave={() => setHovered(null)} onFocus={() => setHovered(index)} onBlur={() => setHovered(null)} aria-label={`第${row + 1}行第${col + 1}列采样点，权重${WEIGHTS[row][col]}/16，水平偏移${offset.dx.toFixed(1)}，垂直偏移${offset.dy.toFixed(1)}`} />;
           })}
         </div>
-        <Typography variant="bodySmall" tone="muted">{mode === 'deformable' ? '悬浮蓝点，对照原位。' : '切换模式，观察采样偏移。'}</Typography>
+        <Typography shuku-edit-id="e-3c8b0065-f545-4fba-b19f-ce9c587c607d" variant="bodySmall" tone="muted">{mode === 'deformable' ? '悬浮蓝点，对照原位。' : '切换模式，观察采样偏移。'}</Typography>
       </section>
-      <section className="aipe-replay-cg-copy-ck-deform__panel aipe-replay-cg-copy-ck-deform__kernel" aria-label="固定卷积核与采样偏移">
-        <Typography as="h2" variant="h3" tone="accent">权重固定 · 位置可变</Typography>
-        <div className="aipe-replay-cg-copy-ck-deform__kernel-grid" role="img" aria-label="三乘三卷积核，权重为一二一、二四二、一二一，整体除以十六">
-          {WEIGHTS.flat().map((weight, index) => <span key={index}>{weight}</span>)}
+      <section shuku-edit-id="e-12cc4060-ed4e-41b3-828f-e0d1ea140c52" className="aipe-replay-cg-copy-ck-deform__panel aipe-replay-cg-copy-ck-deform__kernel" aria-label="固定卷积核与采样偏移">
+        <Typography shuku-edit-id="e-f158ea8c-fee3-450e-b02f-2bcfe1c663e2" as="h2" variant="h3" tone="accent">权重固定 · 位置可变</Typography>
+        <div shuku-edit-id="e-f2ce2ffc-5b29-4056-bf2a-dd329ae79abc" className="aipe-replay-cg-copy-ck-deform__kernel-grid" role="img" aria-label="三乘三卷积核，权重为一二一、二四二、一二一，整体除以十六">
+          {WEIGHTS.flat().map((weight, index) => <span shuku-edit-id="e-f505a2b4-2792-472d-9f20-90a8c755db25" key={index}>{weight}</span>)}
         </div>
-        <div className="aipe-replay-cg-copy-ck-deform__point-info">
-          <Typography variant="body" tone="accent">{selectedPoint ? `采样点 ${selectedPoint.row + 1}, ${selectedPoint.col + 1}` : '采样位置'}</Typography>
-          <Typography variant="body" tone="muted">{selectedPoint && selectedOffset ? `w = ${WEIGHTS[selectedPoint.row][selectedPoint.col]}/16 · Δp = (${selectedOffset.dx.toFixed(1)}, ${selectedOffset.dy.toFixed(1)})` : mode === 'standard' ? '规则网格：Δp = (0, 0)' : '示意偏移：蓝点沿局部曲线移动'}</Typography>
+        <div shuku-edit-id="e-c82827f3-6cac-4206-97f5-b75d2e8a53f2" className="aipe-replay-cg-copy-ck-deform__point-info">
+          <Typography shuku-edit-id="e-ca07bab9-1a4e-48de-9770-6eb0313a858e" variant="body" tone="accent">{selectedPoint ? `采样点 ${selectedPoint.row + 1}, ${selectedPoint.col + 1}` : '采样位置'}</Typography>
+          <Typography shuku-edit-id="e-5f030377-a2ad-436c-8987-2a274b87add4" variant="body" tone="muted">{selectedPoint && selectedOffset ? `w = ${WEIGHTS[selectedPoint.row][selectedPoint.col]}/16 · Δp = (${selectedOffset.dx.toFixed(1)}, ${selectedOffset.dy.toFixed(1)})` : mode === 'standard' ? '规则网格：Δp = (0, 0)' : '示意偏移：蓝点沿局部曲线移动'}</Typography>
         </div>
-        <Typography variant="body" tone="muted">偏移由网络学习；图中为示意。</Typography>
+        <Typography shuku-edit-id="e-71176374-ae0d-4b8c-a8a6-2e619943b5f8" variant="body" tone="muted">偏移由网络学习；图中为示意。</Typography>
       </section>
-      <section className="aipe-replay-cg-copy-ck-deform__panel aipe-replay-cg-copy-ck-deform__output" aria-label="卷积输出响应图">
-        <Typography as="h2" variant="h3" tone="accent">输出响应图</Typography>
-        <div className="aipe-replay-cg-copy-ck-deform__image"><canvas ref={outputCanvas} width={SIZE} height={SIZE} aria-label={`${mode === 'standard' ? '标准' : '可变形'}卷积计算得到的响应图`} /></div>
-        <Typography variant="bodySmall" tone="muted">按当前采样位置计算。</Typography>
+      <section shuku-edit-id="e-02dd13d8-fd75-4935-a115-9a40e05560fe" className="aipe-replay-cg-copy-ck-deform__panel aipe-replay-cg-copy-ck-deform__output" aria-label="卷积输出响应图">
+        <Typography shuku-edit-id="e-c36f4618-9933-458d-bcc4-fa6ee8cf3377" as="h2" variant="h3" tone="accent">输出响应图</Typography>
+        <div shuku-edit-id="e-6a1e42c1-b1b9-49ea-bc0f-fbe028ff211c" className="aipe-replay-cg-copy-ck-deform__image"><canvas shuku-edit-id="e-9b5a3ddd-83a5-4d6a-b941-e58bf32d54ff" ref={outputCanvas} width={SIZE} height={SIZE} aria-label={`${mode === 'standard' ? '标准' : '可变形'}卷积计算得到的响应图`} /></div>
+        <Typography shuku-edit-id="e-7e663607-bb35-47de-9419-1e0fd7c53b23" variant="bodySmall" tone="muted">按当前采样位置计算。</Typography>
       </section>
     </div>
   </ContentBlock>;

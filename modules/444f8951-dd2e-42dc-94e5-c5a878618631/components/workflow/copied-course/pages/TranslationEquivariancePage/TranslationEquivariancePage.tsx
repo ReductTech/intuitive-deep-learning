@@ -132,35 +132,35 @@ export function TranslationEquivariancePage() {
   };
   const ufoStyle = { left: `${position.x * 100}%`, top: `${position.y * 100}%` } as CSSProperties;
 
-  return <ContentBlock headingLevel={1} className="cg-copy-ck-translation" title="平移等变性" subtitle="输入中的目标移到哪里，固定卷积核产生的对应响应也移到哪里。">
-    <div className="cg-copy-ck-translation__workspace">
-      <section className="cg-copy-ck-translation__panel cg-copy-ck-translation__input-panel">
-        <header><Typography as="h2" variant="h3" tone="accent">1　输入场景</Typography></header>
-        <div className="cg-copy-ck-translation__scene" ref={sceneRef} onPointerEnter={(event) => { pointerInsideRef.current = true; moveUfo(event); }} onPointerMove={moveUfo} onPointerLeave={() => { pointerInsideRef.current = false; }} aria-label="UFO 自动绕圈飞行；移动鼠标可接管轨迹，离开后继续绕圈，前景柱子和树叶会遮挡它">
-          <img className="cg-copy-ck-translation__background" src={backgroundUrl} alt="夜晚的城堡和桥梁背景" draggable="false" />
-          <img className="cg-copy-ck-translation__ufo" src={ufoUrl} alt="可随鼠标平移的 UFO" style={ufoStyle} draggable="false" />
-          <img className="cg-copy-ck-translation__pillar" src={pillarUrl} alt="前景柱子" draggable="false" />
-          <img className="cg-copy-ck-translation__foliage" src={foliageUrl} alt="前景树叶" draggable="false" />
+  return <ContentBlock shuku-edit-id="e-c56f3a9a-7257-4a84-af2d-7c1dd973da60" headingLevel={1} className="cg-copy-ck-translation" title="平移等变性" subtitle="输入中的目标移到哪里，固定卷积核产生的对应响应也移到哪里。">
+    <div shuku-edit-id="e-095b4a1e-9260-4c1b-a770-1bb61b028a71" className="cg-copy-ck-translation__workspace">
+      <section shuku-edit-id="e-9d0d03bb-9a40-4731-b1b9-8fa8febe63d9" className="cg-copy-ck-translation__panel cg-copy-ck-translation__input-panel">
+        <header shuku-edit-id="e-871724d1-06b8-418a-be6f-621838b65228"><Typography shuku-edit-id="e-f141333a-43a8-4e81-9b2c-c9a97e199204" as="h2" variant="h3" tone="accent">1　输入场景</Typography></header>
+        <div shuku-edit-id="e-3572f662-129b-4c80-b037-3da52b7dc82f" className="cg-copy-ck-translation__scene" ref={sceneRef} onPointerEnter={(event) => { pointerInsideRef.current = true; moveUfo(event); }} onPointerMove={moveUfo} onPointerLeave={() => { pointerInsideRef.current = false; }} aria-label="UFO 自动绕圈飞行；移动鼠标可接管轨迹，离开后继续绕圈，前景柱子和树叶会遮挡它">
+          <img shuku-edit-id="e-96113d4e-c14f-45aa-9406-c3d9c876d694" className="cg-copy-ck-translation__background" src={backgroundUrl} alt="夜晚的城堡和桥梁背景" draggable="false" />
+          <img shuku-edit-id="e-7a3d6ae9-1029-4568-99d3-3da692609783" className="cg-copy-ck-translation__ufo" src={ufoUrl} alt="可随鼠标平移的 UFO" style={ufoStyle} draggable="false" />
+          <img shuku-edit-id="e-6c6e06da-02c3-416a-952d-70fd85cbf9a0" className="cg-copy-ck-translation__pillar" src={pillarUrl} alt="前景柱子" draggable="false" />
+          <img shuku-edit-id="e-0ccd39b3-eca3-49d2-8403-3b42a5eabe76" className="cg-copy-ck-translation__foliage" src={foliageUrl} alt="前景树叶" draggable="false" />
         </div>
-        <Typography variant="body" tone="muted">移动鼠标控制 UFO</Typography>
+        <Typography shuku-edit-id="e-4ed19aa9-bddc-4589-b6bb-ef41480198b8" variant="body" tone="muted">移动鼠标控制 UFO</Typography>
       </section>
-      <section className="cg-copy-ck-translation__panel cg-copy-ck-translation__kernel-panel">
-        <header><Typography as="h2" variant="h3" tone="accent">2　固定卷积核</Typography></header>
-        <div className="cg-copy-ck-translation__kernel" role="img" aria-label="四邻域 Laplacian 卷积核，中心为负四，上下左右为一，四角为零">
-          {LAPLACIAN_KERNEL.flatMap((row, rowIndex) => row.map((value, colIndex) => <span className={value > 0 ? 'is-positive' : value < 0 ? 'is-negative' : 'is-zero'} key={`${rowIndex}-${colIndex}`}><Typography as="span" variant="body" tone="inherit">{value}</Typography></span>))}
+      <section shuku-edit-id="e-d5b5d550-570e-4648-bc1c-dcd598887a9b" className="cg-copy-ck-translation__panel cg-copy-ck-translation__kernel-panel">
+        <header shuku-edit-id="e-b62eda91-be0a-461b-923b-8b326513a99d"><Typography shuku-edit-id="e-214919e5-ecc2-4f01-b0bc-71068982a4b9" as="h2" variant="h3" tone="accent">2　固定卷积核</Typography></header>
+        <div shuku-edit-id="e-03c78ae0-f87c-4400-ac40-7ffe77adc623" className="cg-copy-ck-translation__kernel" role="img" aria-label="四邻域 Laplacian 卷积核，中心为负四，上下左右为一，四角为零">
+          {LAPLACIAN_KERNEL.flatMap((row, rowIndex) => row.map((value, colIndex) => <span shuku-edit-id="e-1f34a821-09e0-4f06-86ad-0cc0c829fecb" className={value > 0 ? 'is-positive' : value < 0 ? 'is-negative' : 'is-zero'} key={`${rowIndex}-${colIndex}`}><Typography shuku-edit-id="e-2cb4f7c2-a954-4836-9ca7-8a95811beb5c" as="span" variant="body" tone="inherit">{value}</Typography></span>))}
         </div>
-        <div className="cg-copy-ck-translation__kernel-note"><Typography variant="bodySmall" tone="accent">Laplacian · 检测亮度边界</Typography><Typography variant="bodySmall" tone="muted">同一组权重在整张图上滑动。</Typography></div>
+        <div shuku-edit-id="e-a3d03eb7-b207-49c9-b65c-2e8f4ad7d793" className="cg-copy-ck-translation__kernel-note"><Typography shuku-edit-id="e-f73d639d-58f0-4e06-8175-73ae4d99efc8" variant="bodySmall" tone="accent">Laplacian · 检测亮度边界</Typography><Typography shuku-edit-id="e-80ead38b-ee2a-443b-a1a8-a6e49e035761" variant="bodySmall" tone="muted">同一组权重在整张图上滑动。</Typography></div>
       </section>
-      <section className="cg-copy-ck-translation__panel cg-copy-ck-translation__output-panel">
-        <header><Typography as="h2" variant="h3" tone="accent">3　输出特征图</Typography></header>
-        <div className="cg-copy-ck-translation__heatmap-frame">
-          <canvas ref={heatmapRef} className="cg-copy-ck-translation__heatmap" width={MAP_WIDTH} height={MAP_HEIGHT} role="img" aria-label="当前可见场景的灰度图经过 Laplacian 卷积得到的实时边界响应强度图" />
-          <span className="cg-copy-ck-translation__heatmap-badge" tabIndex={0} aria-describedby="cg-copy-ck-translation-heatmap-tip">热力图</span>
-          <span className="cg-copy-ck-translation__heatmap-tooltip" id="cg-copy-ck-translation-heatmap-tip" role="tooltip">颜色表示响应强度，越暖越强。</span>
+      <section shuku-edit-id="e-4cf72d4d-21ae-4d75-9c80-de4e95d9a356" className="cg-copy-ck-translation__panel cg-copy-ck-translation__output-panel">
+        <header shuku-edit-id="e-697deaa5-55f6-42ea-b163-1b80baac4586"><Typography shuku-edit-id="e-adf5b8bd-b6f5-42fc-a010-84d7d690a966" as="h2" variant="h3" tone="accent">3　输出特征图</Typography></header>
+        <div shuku-edit-id="e-8bc4b38b-1826-496d-b462-cce880094646" className="cg-copy-ck-translation__heatmap-frame">
+          <canvas shuku-edit-id="e-4bb244bd-c850-44f4-b3ee-c879df07d99b" ref={heatmapRef} className="cg-copy-ck-translation__heatmap" width={MAP_WIDTH} height={MAP_HEIGHT} role="img" aria-label="当前可见场景的灰度图经过 Laplacian 卷积得到的实时边界响应强度图" />
+          <span shuku-edit-id="e-10d80cae-e9bb-4ec4-82f2-07370e0d9d5d" className="cg-copy-ck-translation__heatmap-badge" tabIndex={0} aria-describedby="cg-copy-ck-translation-heatmap-tip">热力图</span>
+          <span shuku-edit-id="e-bef65d00-f06d-4814-94d8-8dae63903a1a" className="cg-copy-ck-translation__heatmap-tooltip" id="cg-copy-ck-translation-heatmap-tip" role="tooltip">颜色表示响应强度，越暖越强。</span>
         </div>
-        <Typography variant="body" tone="muted">更亮的区域意味着更强的局部特征响应</Typography>
+        <Typography shuku-edit-id="e-46e7a14e-c67c-44ff-8fd1-22c758815104" variant="body" tone="muted">更亮的区域意味着更强的局部特征响应</Typography>
       </section>
     </div>
-    <div className="cg-copy-ck-translation__summary"><Typography as="strong" variant="h3" tone="accent">结论</Typography><Typography variant="body" tone="accent">UFO 平移时，响应位置随之平移；进入前景遮挡区域时，响应可能减弱。</Typography></div>
+    <div shuku-edit-id="e-58d2e3a2-b7cb-42d4-8865-e2173372f751" className="cg-copy-ck-translation__summary"><Typography shuku-edit-id="e-d86f466f-3090-42bd-ae4f-4b7ca93a32ec" as="strong" variant="h3" tone="accent">结论</Typography><Typography shuku-edit-id="e-6b1d92df-dfcb-4f11-90eb-656cc615861d" variant="body" tone="accent">UFO 平移时，响应位置随之平移；进入前景遮挡区域时，响应可能减弱。</Typography></div>
   </ContentBlock>;
 }

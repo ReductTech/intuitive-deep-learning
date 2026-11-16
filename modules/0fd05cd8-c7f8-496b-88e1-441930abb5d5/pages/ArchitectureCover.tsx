@@ -13,36 +13,36 @@ export function ArchitectureCover() {
   const [flipped,setFlipped] = useState(false);
   const developed = story.step>=2;
   return <ContentBlock className="vgr-page vgr-cover-page" headingLevel={1} title={page.title} subtitle="想象一下：你收到一封奇怪的摄影委托。" bodyClassName="vga-content vgr-cover-body" data-lesson={page.id}>
-    <div className="vgr-cover-scene">
-      <div className="vgr-cover-letter">
-        <div className="vgr-cover-letterhead"><Typography variant="bodySmall" tone="muted">今天的委托</Typography><Typography variant="bodySmall" tone="warning">急件</Typography></div>
-        <Typography variant="h3" tone="accent">请拍一张<br/>小猫认真复习的照片。</Typography>
-        <div className="vgr-cover-postscript"><Typography variant="bodySmall" tone="muted">备注</Typography><Typography variant="body" tone="accent">相机？没有。<br/>小猫？也没来。</Typography></div>
+    <div shuku-edit-id="e-d8280f09-f461-412e-a7a0-7ba3dcf518cc" className="vgr-cover-scene">
+      <div shuku-edit-id="e-e6c5d4cd-47c9-4de6-95dc-7c9aa546c6ee" className="vgr-cover-letter">
+        <div shuku-edit-id="e-d8267e0a-f009-4a09-b43e-ff544e876c95" className="vgr-cover-letterhead"><Typography variant="bodySmall" tone="muted">今天的委托</Typography><Typography variant="bodySmall" tone="warning">急件</Typography></div>
+        <Typography variant="h3" tone="accent">请拍一张<br shuku-edit-id="e-e26c06ea-ed5a-4d6d-a706-426634c5f689"/>小猫认真复习的照片。</Typography>
+        <div shuku-edit-id="e-188037cc-8ac6-4286-b876-3376123bbb68" className="vgr-cover-postscript"><Typography variant="bodySmall" tone="muted">备注</Typography><Typography variant="body" tone="accent">相机？没有。<br shuku-edit-id="e-95f90640-3065-47de-b1b7-3a1c03e9c54d"/>小猫？也没来。</Typography></div>
         <Typography variant="bodySmall" tone="muted">但客户已经在等交片了。</Typography>
       </div>
-      <div className="vgr-cover-photo-area">
+      <div shuku-edit-id="e-2f57c48a-5c45-4ad5-9130-2b2eb03610ea" className="vgr-cover-photo-area">
         <Button className="vgr-cover-photo-button" data-testid="cover-photo" aria-label={flipped?'翻回照片正面':'翻看照片背面的线索'} aria-pressed={flipped} disabled={!developed} onClick={()=>setFlipped(value=>!value)}>
-          <span className={'vgr-cover-snapshot'+(flipped?' is-flipped':'')} data-side={flipped?'back':'front'}>
-            <span className="vgr-cover-photo-front" aria-hidden={flipped}>
-              <span className={'vgr-cover-photo-image'+(developed?' is-developed':'')}>
+          <span shuku-edit-id="e-ff65a2c0-ea22-411c-8c1d-c7a40a04bc07" className={'vgr-cover-snapshot'+(flipped?' is-flipped':'')} data-side={flipped?'back':'front'}>
+            <span shuku-edit-id="e-11cb233e-a567-48e7-a181-1e509cad2fac" className="vgr-cover-photo-front" aria-hidden={flipped}>
+              <span shuku-edit-id="e-a00f2891-f731-4ef4-81ca-47b91af5afa4" className={'vgr-cover-photo-image'+(developed?' is-developed':'')}>
                 <ReferenceVisual file="visuals/cat.jpg" alt="情景中的交付图像：橘猫正趴在打开的书本上"/>
-                {!developed && <span className="vgr-cover-empty-paper"><Typography as="span" variant="h3" tone="muted">?</Typography></span>}
+                {!developed && <span shuku-edit-id="e-9d90984e-140b-47e1-80ad-0ad99ae3801a" className="vgr-cover-empty-paper"><Typography as="span" variant="h3" tone="muted">?</Typography></span>}
               </span>
               <Typography as="span" variant="bodySmall" tone="muted">{developed?'一张没人拍过的照片':'一张空白相纸'}</Typography>
             </span>
-            <span className="vgr-cover-photo-back" aria-hidden={!flipped}>
+            <span shuku-edit-id="e-0f77ce9e-ffbf-489f-b4d1-9fbcf5ce710d" className="vgr-cover-photo-back" aria-hidden={!flipped}>
               <Typography as="span" variant="bodySmall" tone="warning">照片背面的线索</Typography>
               <Typography as="span" variant="h3" tone="accent">快门次数：0</Typography>
-              <Typography as="span" variant="body" tone="accent">没有拍摄现场。<br/>起点，只有那一句话。</Typography>
+              <Typography as="span" variant="body" tone="accent">没有拍摄现场。<br shuku-edit-id="e-513036db-7a74-4735-b181-9f83eafdbf6b"/>起点，只有那一句话。</Typography>
               <Typography as="span" variant="bodySmall" tone="muted">再点一下，翻回照片。</Typography>
             </span>
           </span>
         </Button>
-        <div className={'vgr-cover-stamp'+(story.step>=3?' is-visible':'')} aria-hidden={story.step<3}><Typography variant="h3" tone="warning">已交片</Typography></div>
-        <div className={'vgr-cover-photo-hint'+(story.step>=3?' is-visible':'')}><Typography variant="bodySmall" tone="muted">点照片，找找背面的线索。</Typography></div>
+        <div shuku-edit-id="e-69dff340-16ef-46ed-b6ef-fb9a1385b47f" className={'vgr-cover-stamp'+(story.step>=3?' is-visible':'')} aria-hidden={story.step<3}><Typography variant="h3" tone="warning">已交片</Typography></div>
+        <div shuku-edit-id="e-c3b3c365-f71b-4ffb-909c-53863ea1d7a1" className={'vgr-cover-photo-hint'+(story.step>=3?' is-visible':'')}><Typography variant="bodySmall" tone="muted">点照片，找找背面的线索。</Typography></div>
       </div>
     </div>
-    <footer className="vgr-cover-invitation" data-testid="cover-invitation"><Typography variant="h3" tone="accent">没有按过快门，这张照片是怎么来的？</Typography></footer>
-    <div ref={story.anchor} className="vgr-cover-story vgr-story-anchor" data-story-step={story.step} data-story-playing={story.playing} data-story-complete={story.step===3}/>
+    <footer shuku-edit-id="e-7a5807f0-6781-42f0-9bd6-ca66cf7da739" className="vgr-cover-invitation" data-testid="cover-invitation"><Typography variant="h3" tone="accent">没有按过快门，这张照片是怎么来的？</Typography></footer>
+    <div shuku-edit-id="e-5d71522c-d3e9-4673-a4ee-d209030f51cf" ref={story.anchor} className="vgr-cover-story vgr-story-anchor" data-story-step={story.step} data-story-playing={story.playing} data-story-complete={story.step===3}/>
   </ContentBlock>;
 }

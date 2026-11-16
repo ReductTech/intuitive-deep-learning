@@ -90,13 +90,13 @@ function computeConvolution(image: HTMLImageElement, kernel: KernelDefinition) {
 }
 
 function Matrix({ values, mini = false }: { values: Matrix3; mini?: boolean }) {
-  return <div className={`ck-common__matrix ${mini ? 'is-mini' : ''}`} role="img" aria-label={values.map((row) => row.join('，')).join('；')}>
-    {values.flatMap((row, y) => row.map((value, x) => <span key={`${y}-${x}`} className={value < 0 ? 'is-negative' : value > 0 ? 'is-positive' : 'is-zero'}><MathFormulaStatic latex={String(value)} /></span>))}
+  return <div shuku-edit-id="e-763121b5-0a86-460c-a06c-b17c238a6406" className={`ck-common__matrix ${mini ? 'is-mini' : ''}`} role="img" aria-label={values.map((row) => row.join('，')).join('；')}>
+    {values.flatMap((row, y) => row.map((value, x) => <span shuku-edit-id="e-d772a021-09c2-48a6-a3f6-26bc8c0ebd91" key={`${y}-${x}`} className={value < 0 ? 'is-negative' : value > 0 ? 'is-positive' : 'is-zero'}><MathFormulaStatic latex={String(value)} /></span>))}
   </div>;
 }
 
 function StageHeader({ number, title }: { number: string; title: string }) {
-  return <header className="ck-common__stage-header"><span className="ck-common__stage-number"><Typography as="span" variant="h3" tone="light">{number}</Typography></span><Typography as="h2" variant="h3" tone="accent">{title}</Typography></header>;
+  return <header shuku-edit-id="e-f9d526a6-c740-44e2-bef1-9f4792d3ab10" className="ck-common__stage-header"><span shuku-edit-id="e-8833d124-7476-4777-8000-bef780c1790a" className="ck-common__stage-number"><Typography shuku-edit-id="e-41ecca73-76fd-4373-ac27-cd99524a627d" as="span" variant="h3" tone="light">{number}</Typography></span><Typography shuku-edit-id="e-0a5d2826-824b-48c9-9dfb-28d16fc46511" as="h2" variant="h3" tone="accent">{title}</Typography></header>;
 }
 
 export function CommonKernelsPage() {
@@ -183,27 +183,27 @@ export function CommonKernelsPage() {
     setError('');
   }
 
-  return <ContentBlock headingLevel={1} className="ck-common" title="卷积核工作台" subtitle="选择图像与卷积核，实时观察不同算子产生的真实卷积输出。">
-    <div className="ck-common__workspace">
-      <section className="ck-common__stage ck-common__stage--images" aria-label="选择图像"><StageHeader number="1" title="选择图像" />
-        <div className="ck-common__image-selector" ref={imageSelectorRef}>
-          <button className="ck-common__arrow-button" type="button" aria-label="上一张图像" onClick={() => { setImageDirection('up'); setImageIndex(wrap(imageIndex - 1, images.length)); }}><Up theme="outline" size="30" /></button>
-          <div className="ck-common__image-stack"><img className="ck-common__image-ghost is-before" src={previousImage.src} alt="" aria-hidden="true" /><div key={selectedImage.src} className={`ck-common__active-image is-from-${imageDirection}`}><img src={selectedImage.src} alt={`${selectedImage.name}输入图像`} /><Typography as="span" variant="bodySmall" tone="light">{selectedImage.name}</Typography></div><img className="ck-common__image-ghost is-after" src={nextImage.src} alt="" aria-hidden="true" /></div>
-          <button className="ck-common__arrow-button" type="button" aria-label="下一张图像" onClick={() => { setImageDirection('down'); setImageIndex(wrap(imageIndex + 1, images.length)); }}><Down theme="outline" size="30" /></button>
+  return <ContentBlock shuku-edit-id="e-2418d839-af69-4c6a-a3a4-632c90558a29" headingLevel={1} className="ck-common" title="卷积核工作台" subtitle="选择图像与卷积核，实时观察不同算子产生的真实卷积输出。">
+    <div shuku-edit-id="e-3d16f2b5-09ec-4203-9efa-dc9679f065f3" className="ck-common__workspace">
+      <section shuku-edit-id="e-131da64e-69b5-476a-bfed-900c2761548e" className="ck-common__stage ck-common__stage--images" aria-label="选择图像"><StageHeader number="1" title="选择图像" />
+        <div shuku-edit-id="e-591c4f68-8f86-49b9-a55c-540235d51262" className="ck-common__image-selector" ref={imageSelectorRef}>
+          <button shuku-edit-id="e-b8be02bf-1171-46a8-ba50-d6fd60adc993" className="ck-common__arrow-button" type="button" aria-label="上一张图像" onClick={() => { setImageDirection('up'); setImageIndex(wrap(imageIndex - 1, images.length)); }}><Up theme="outline" size="30" /></button>
+          <div shuku-edit-id="e-d1c6dc95-b55b-43a5-9998-0b45523d55e3" className="ck-common__image-stack"><img shuku-edit-id="e-3c686609-8ab5-4e98-81a1-2d22a4517974" className="ck-common__image-ghost is-before" src={previousImage.src} alt="" aria-hidden="true" /><div shuku-edit-id="e-2cd90e03-22ad-434e-8193-493a8ba46287" key={selectedImage.src} className={`ck-common__active-image is-from-${imageDirection}`}><img shuku-edit-id="e-4444701a-2573-4efa-b1e5-e32dd26d8d08" src={selectedImage.src} alt={`${selectedImage.name}输入图像`} /><Typography shuku-edit-id="e-0ddb9995-415c-49a0-9527-f2d9c4629d58" as="span" variant="bodySmall" tone="light">{selectedImage.name}</Typography></div><img shuku-edit-id="e-ba12665e-c493-4e61-958f-18a800d3bac5" className="ck-common__image-ghost is-after" src={nextImage.src} alt="" aria-hidden="true" /></div>
+          <button shuku-edit-id="e-fe8229ba-5dc7-4da3-91b4-14eca6067c92" className="ck-common__arrow-button" type="button" aria-label="下一张图像" onClick={() => { setImageDirection('down'); setImageIndex(wrap(imageIndex + 1, images.length)); }}><Down theme="outline" size="30" /></button>
         </div>
-        <input ref={uploadRef} className="ck-common__file-input" type="file" accept="image/*" onChange={handleUpload} aria-label="上传图像" />
-        <button className="ck-common__upload" type="button" onClick={() => uploadRef.current?.click()}><UploadPicture theme="outline" size="23" /><Typography as="span" variant="bodySmall" tone="inherit">上传图片</Typography></button>
+        <input shuku-edit-id="e-7884fe92-cd72-41b0-b054-fbe39cd16789" ref={uploadRef} className="ck-common__file-input" type="file" accept="image/*" onChange={handleUpload} aria-label="上传图像" />
+        <button shuku-edit-id="e-70625c54-69e3-4f14-88f8-f4a7725f2471" className="ck-common__upload" type="button" onClick={() => uploadRef.current?.click()}><UploadPicture theme="outline" size="23" /><Typography shuku-edit-id="e-fd01c44a-6743-4e8f-a104-18d7c647e0ba" as="span" variant="bodySmall" tone="inherit">上传图片</Typography></button>
       </section>
-      <section className="ck-common__stage ck-common__stage--kernels" aria-label="选择卷积核"><StageHeader number="2" title="选择卷积核" />
-        <div className="ck-common__kernel-selector" ref={kernelSelectorRef}>
-          <button className="ck-common__arrow-button" type="button" aria-label="上一个卷积核" onClick={() => setKernelIndex(wrap(kernelIndex - 1, KERNELS.length))}><Up theme="outline" size="30" /></button>
-          <div className="ck-common__kernel-stack"><div className="ck-common__kernel-ghost is-before"><Matrix values={previousKernel.matrix} mini /><Typography variant="bodySmall" tone="muted">{previousKernel.name}</Typography></div><div className="ck-common__active-kernel"><Matrix values={selectedKernel.matrix} /><Typography as="h3" variant="h3" tone="accent">{selectedKernel.name}</Typography><Typography variant="bodySmall" tone="muted">{selectedKernel.note}</Typography></div><div className="ck-common__kernel-ghost is-after"><Matrix values={nextKernel.matrix} mini /><Typography variant="bodySmall" tone="muted">{nextKernel.name}</Typography></div></div>
-          <button className="ck-common__arrow-button" type="button" aria-label="下一个卷积核" onClick={() => setKernelIndex(wrap(kernelIndex + 1, KERNELS.length))}><Down theme="outline" size="30" /></button>
+      <section shuku-edit-id="e-20a2f8b3-21dd-4bc1-8960-2a5332b2e028" className="ck-common__stage ck-common__stage--kernels" aria-label="选择卷积核"><StageHeader number="2" title="选择卷积核" />
+        <div shuku-edit-id="e-88bec07c-e427-45a9-bedd-47501be22925" className="ck-common__kernel-selector" ref={kernelSelectorRef}>
+          <button shuku-edit-id="e-0d81fc28-7681-4201-88cc-8e26405688d0" className="ck-common__arrow-button" type="button" aria-label="上一个卷积核" onClick={() => setKernelIndex(wrap(kernelIndex - 1, KERNELS.length))}><Up theme="outline" size="30" /></button>
+          <div shuku-edit-id="e-0f828fb7-d612-40ea-949a-85ae1cdb0ffc" className="ck-common__kernel-stack"><div shuku-edit-id="e-fe35a290-9ea6-492c-a29c-8a0aa40112f1" className="ck-common__kernel-ghost is-before"><Matrix values={previousKernel.matrix} mini /><Typography shuku-edit-id="e-75a29239-07f9-4e15-8da6-77a02c2e84b4" variant="bodySmall" tone="muted">{previousKernel.name}</Typography></div><div shuku-edit-id="e-853796ad-9de1-441a-9719-3cc85c6dee6f" className="ck-common__active-kernel"><Matrix values={selectedKernel.matrix} /><Typography shuku-edit-id="e-f1a25011-4f2b-4812-8af8-928ec8bb5dec" as="h3" variant="h3" tone="accent">{selectedKernel.name}</Typography><Typography shuku-edit-id="e-8ad13b96-e2f9-4b01-9051-79e084e6bf10" variant="bodySmall" tone="muted">{selectedKernel.note}</Typography></div><div shuku-edit-id="e-7f8c7fab-2b34-4265-9cca-123d920ae315" className="ck-common__kernel-ghost is-after"><Matrix values={nextKernel.matrix} mini /><Typography shuku-edit-id="e-9831e2b4-3605-40d7-947d-47b24ff3ff75" variant="bodySmall" tone="muted">{nextKernel.name}</Typography></div></div>
+          <button shuku-edit-id="e-84cd122e-bc08-4ec0-878d-cfc93512de1c" className="ck-common__arrow-button" type="button" aria-label="下一个卷积核" onClick={() => setKernelIndex(wrap(kernelIndex + 1, KERNELS.length))}><Down theme="outline" size="30" /></button>
         </div>
       </section>
-      <section className="ck-common__stage ck-common__stage--result" aria-label="卷积运算结果"><StageHeader number="3" title="卷积运算结果" />
-        <div className="ck-common__result-frame">{result ? <img src={result} alt={`${selectedImage.name}经过${selectedKernel.name}处理后的真实卷积输出`} /> : <Typography variant="body" tone="muted">{error || '正在计算…'}</Typography>}</div>
-        <Typography variant="bodySmall" tone="muted" className="ck-common__result-note">{selectedKernel.mode === 'gray' ? '灰度值表示输出亮度' : selectedKernel.mode === 'signed' ? '中灰为零；明暗分别表示正、负响应' : '亮度表示响应幅值，正负响应合并显示'}</Typography>
+      <section shuku-edit-id="e-10575b1c-8fd4-49e5-aab2-c23d6e461927" className="ck-common__stage ck-common__stage--result" aria-label="卷积运算结果"><StageHeader number="3" title="卷积运算结果" />
+        <div shuku-edit-id="e-a9827a7f-46b4-4951-a696-50fc6fa0800c" className="ck-common__result-frame">{result ? <img shuku-edit-id="e-33148399-96c5-403c-b2bf-8fcc321366ff" src={result} alt={`${selectedImage.name}经过${selectedKernel.name}处理后的真实卷积输出`} /> : <Typography shuku-edit-id="e-a8d1ec31-71a8-43ce-a0e5-26f061fd2ef2" variant="body" tone="muted">{error || '正在计算…'}</Typography>}</div>
+        <Typography shuku-edit-id="e-1b5f5658-647a-4a47-b29a-3e00dd2e73e7" variant="bodySmall" tone="muted" className="ck-common__result-note">{selectedKernel.mode === 'gray' ? '灰度值表示输出亮度' : selectedKernel.mode === 'signed' ? '中灰为零；明暗分别表示正、负响应' : '亮度表示响应幅值，正负响应合并显示'}</Typography>
       </section>
     </div>
   </ContentBlock>;

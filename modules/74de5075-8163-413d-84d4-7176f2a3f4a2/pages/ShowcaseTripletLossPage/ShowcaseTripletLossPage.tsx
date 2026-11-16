@@ -4,6 +4,6 @@ import './ShowcaseTripletLossPage.css';
 
 export function ShowcaseTripletLossPage() {
   return <ShowcaseExampleFrame title="从人脸验证，理解特征距离">
-    <div className="course-shell spp-triplet-loss-page"><TripletLossPage /></div>
+    <div shuku-edit-id="e-c4ec9011-5319-4a31-8659-29be6a5ed6fa" className="course-shell spp-triplet-loss-page"><TripletLossPage /></div>
   </ShowcaseExampleFrame>;
 }

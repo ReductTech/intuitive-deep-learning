@@ -10,5 +10,5 @@ const page = course.find(page => page.id === params.get('slide')) ?? course[0];
 const view = params.get('view');
 const Component = page.Component;
 createRoot(document.getElementById('root')!).render(<StrictMode>
-  {view === 'ppt' ? <DataAnnotationPpt /> : view === 'page' ? <main className="daa-preview"><LessonCanvas fitHeight><Component /></LessonCanvas></main> : <GuidePage />}
+  {view === 'ppt' ? <DataAnnotationPpt /> : view === 'page' ? <main shuku-edit-id="e-a5846ecf-5303-415e-997a-965f28edce3c" className="daa-preview"><LessonCanvas fitHeight><Component /></LessonCanvas></main> : <GuidePage />}
 </StrictMode>);

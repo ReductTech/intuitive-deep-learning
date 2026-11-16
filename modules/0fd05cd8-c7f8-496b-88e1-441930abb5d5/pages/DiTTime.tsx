@@ -26,8 +26,8 @@ export function DiTTime() {
         <Button active={enabled} data-testid="enable-adaln" onClick={() => setEnabled(true)}>加入时间调制</Button>
       </TeachingPanel>
       <TeachingPanel title="② 同一份特征 · 调制前后对照" className="vga-adaln-panel">
-        <div className="vga-two"><div className="vga-stack"><Typography variant="h3" tone="accent">归一化后</Typography><VectorBars values={normalized} /></div><div className="vga-stack"><Typography variant="h3" tone="warning">时间调制后</Typography><VectorBars values={output} warm /></div></div>
-        <div className="vga-panel-callout"><Formula latex={'y=\\gamma\\odot\\mathrm{LN}(h)+\\beta'} /><Text>缩放 γ 与平移 β，改变各维特征的处理方式。</Text></div>
+        <div shuku-edit-id="e-f060924c-da8f-4ee6-a860-670219c7de05" className="vga-two"><div shuku-edit-id="e-f3dec393-9723-44d8-a997-7613252446d7" className="vga-stack"><Typography variant="h3" tone="accent">归一化后</Typography><VectorBars values={normalized} /></div><div shuku-edit-id="e-d3d0f610-77c4-4538-9675-ddb4cc303265" className="vga-stack"><Typography variant="h3" tone="warning">时间调制后</Typography><VectorBars values={output} warm /></div></div>
+        <div shuku-edit-id="e-850cbb02-bc30-4253-b0fc-11f2654e4e07" className="vga-panel-callout"><Formula latex={'y=\\gamma\\odot\\mathrm{LN}(h)+\\beta'} /><Text>缩放 γ 与平移 β，改变各维特征的处理方式。</Text></div>
         <Text muted>四维数值使用教学映射；真实调制参数由训练学习。</Text>
       </TeachingPanel>
     </LessonSplit>

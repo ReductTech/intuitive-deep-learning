@@ -31,13 +31,13 @@ function AttentionGuideCanvas({ id, children, onInteract }: { id: string; childr
   }, []);
 
   return (
-    <div
+    <div shuku-edit-id="e-02da12c4-6396-49cb-81e5-5a5cc61ed3bf"
       ref={frameRef}
       id={id}
       className="lesson-canvas-frame attention-guide-canvas"
       style={{ height: CANVAS_HEIGHT * scale }}
     >
-      <div className="course-page-surface course-shell" style={{ transform: `scale(${scale})` }} onClickCapture={onInteract} onChangeCapture={onInteract}>
+      <div shuku-edit-id="e-88361b24-da25-4b0f-97be-b6551b62d9ef" className="course-page-surface course-shell" style={{ transform: `scale(${scale})` }} onClickCapture={onInteract} onChangeCapture={onInteract}>
         {children}
       </div>
     </div>
@@ -54,7 +54,7 @@ function AttentionGuideStep({ id, component, context, hasNext }: { id: string; c
   const onInteract=(event:SyntheticEvent)=>{
     if(event.target instanceof Element && event.target.closest('button,input,select,[role="slider"],[role="button"]'))setInteracted(true);
   };
-  return <><AttentionGuideCanvas id={id} onInteract={onInteract}>{component({...context,complete})}</AttentionGuideCanvas>{context.isComplete && hasNext && <div className="attention-guide-next" role="status"><Typography variant="bodySmall" tone="accent">下一页已展开，向下继续阅读 ↓</Typography></div>}</>;
+  return <><AttentionGuideCanvas id={id} onInteract={onInteract}>{component({...context,complete})}</AttentionGuideCanvas>{context.isComplete && hasNext && <div shuku-edit-id="e-72597c4e-0790-46cb-ba08-059d65fd0653" className="attention-guide-next" role="status"><Typography shuku-edit-id="e-8a929279-5e66-4e3b-a0af-bcdf68149e76" variant="bodySmall" tone="accent">下一页已展开，向下继续阅读 ↓</Typography></div>}</>;
 }
 
 export const attentionGuideLessonSteps: LessonFlowStep[] = attentionCourse.map(

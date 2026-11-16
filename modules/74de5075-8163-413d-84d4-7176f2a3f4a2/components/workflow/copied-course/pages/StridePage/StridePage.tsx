@@ -11,19 +11,19 @@ function InputGrid({ stride, step, outputSize }: { stride: Stride; step: number;
   const activeIndex = Math.min(step, outputSize * outputSize - 1);
   const top = Math.floor(activeIndex / outputSize) * stride;
   const left = activeIndex % outputSize * stride;
-  return <div className="cg-copy-ck-stride__input-grid" role="img" aria-label={`7 乘 7 输入网格，卷积窗口位于第 ${top + 1} 行、第 ${left + 1} 列`}>
+  return <div shuku-edit-id="e-ea375941-d246-4690-9650-09e002e77fe1" className="cg-copy-ck-stride__input-grid" role="img" aria-label={`7 乘 7 输入网格，卷积窗口位于第 ${top + 1} 行、第 ${left + 1} 列`}>
     {Array.from({ length: INPUT_SIZE * INPUT_SIZE }, (_, index) => {
       const row = Math.floor(index / INPUT_SIZE), col = index % INPUT_SIZE;
-      return <span key={index} className={row >= top && row < top + KERNEL_SIZE && col >= left && col < left + KERNEL_SIZE ? 'is-window' : ''} />;
+      return <span shuku-edit-id="e-36284fc0-6c42-4496-8b1b-416974442126" key={index} className={row >= top && row < top + KERNEL_SIZE && col >= left && col < left + KERNEL_SIZE ? 'is-window' : ''} />;
     })}
-    <div className="cg-copy-ck-stride__window" style={{ left: `${left / INPUT_SIZE * 100}%`, top: `${top / INPUT_SIZE * 100}%`, width: `${KERNEL_SIZE / INPUT_SIZE * 100}%`, height: `${KERNEL_SIZE / INPUT_SIZE * 100}%` }} />
+    <div shuku-edit-id="e-ad320ac9-fb7b-4b3a-9975-65ae2039d9e9" className="cg-copy-ck-stride__window" style={{ left: `${left / INPUT_SIZE * 100}%`, top: `${top / INPUT_SIZE * 100}%`, width: `${KERNEL_SIZE / INPUT_SIZE * 100}%`, height: `${KERNEL_SIZE / INPUT_SIZE * 100}%` }} />
   </div>;
 }
 
 function OutputGrid({ size, step }: { size: number; step: number }) {
   const total = size * size;
-  return <div className="cg-copy-ck-stride__output-grid" style={{ '--output-size': size } as CSSProperties} role="img" aria-label={`${size} 乘 ${size} 输出特征图，共 ${total} 个位置，已扫描 ${Math.min(step, total)} 个`}>
-    {Array.from({ length: total }, (_, index) => <span key={index} className={index === step && step < total ? 'is-current' : index < step ? 'is-complete' : ''} />)}
+  return <div shuku-edit-id="e-906f17b3-a7a8-440e-aa4b-809a433140ca" className="cg-copy-ck-stride__output-grid" style={{ '--output-size': size } as CSSProperties} role="img" aria-label={`${size} 乘 ${size} 输出特征图，共 ${total} 个位置，已扫描 ${Math.min(step, total)} 个`}>
+    {Array.from({ length: total }, (_, index) => <span shuku-edit-id="e-98392e75-3c70-49e1-a32c-081f95ee9a0f" key={index} className={index === step && step < total ? 'is-current' : index < step ? 'is-complete' : ''} />)}
   </div>;
 }
 
@@ -41,30 +41,30 @@ export function StridePage() {
 
   const chooseStride = (value: Stride) => { setStride(value); setStep(0); };
 
-  return <ContentBlock headingLevel={1} className="cg-copy-ck-stride" title="卷积步长" subtitle="固定 7 × 7 输入、3 × 3 卷积核与 Valid；步长决定相邻窗口的移动间隔。">
-    <div className="cg-copy-ck-stride__workspace">
-      <section className="cg-copy-ck-stride__picker" aria-label="选择卷积步长">
-        <Typography as="h2" variant="h3" tone="accent">步长 S</Typography>
-        <div className="cg-copy-ck-stride__choices" role="group" aria-label="卷积步长">
-          {STRIDES.map((value) => <button key={value} type="button" className={stride === value ? 'is-selected' : ''} aria-pressed={stride === value} onClick={() => chooseStride(value)}><Typography as="span" variant="h2" tone="inherit">{value}</Typography></button>)}
+  return <ContentBlock shuku-edit-id="e-85aacd2b-2cd7-4b6d-9a21-5b9fab838c04" headingLevel={1} className="cg-copy-ck-stride" title="卷积步长" subtitle="固定 7 × 7 输入、3 × 3 卷积核与 Valid；步长决定相邻窗口的移动间隔。">
+    <div shuku-edit-id="e-588cf231-0fd0-45a4-9600-2fd6c350c0ac" className="cg-copy-ck-stride__workspace">
+      <section shuku-edit-id="e-0642751d-1746-4afd-8cdb-051efbe8b7ee" className="cg-copy-ck-stride__picker" aria-label="选择卷积步长">
+        <Typography shuku-edit-id="e-dec26394-ed3c-45d2-a2df-6e5d91a605ec" as="h2" variant="h3" tone="accent">步长 S</Typography>
+        <div shuku-edit-id="e-9fda9662-2e37-4efb-9616-e063adf8e542" className="cg-copy-ck-stride__choices" role="group" aria-label="卷积步长">
+          {STRIDES.map((value) => <button shuku-edit-id="e-1b285014-b75b-4cde-a9df-ef590fc7fed5" key={value} type="button" className={stride === value ? 'is-selected' : ''} aria-pressed={stride === value} onClick={() => chooseStride(value)}><Typography shuku-edit-id="e-6929a3a4-baa9-43f4-9ec0-35c25d4884e2" as="span" variant="h2" tone="inherit">{value}</Typography></button>)}
         </div>
-        <Typography variant="bodySmall" tone="muted">步长越大，输出位置越少。</Typography>
+        <Typography shuku-edit-id="e-e97e8f99-a8ae-4985-98d2-bdffd4a1064a" variant="bodySmall" tone="muted">步长越大，输出位置越少。</Typography>
       </section>
-      <section className="cg-copy-ck-stride__input-stage" aria-label="输入网格与当前卷积窗口">
-        <Typography as="h2" variant="h3" tone="accent">输入网格 7 × 7</Typography>
+      <section shuku-edit-id="e-9b60f62f-5396-4f5f-a4f3-408bc3f86170" className="cg-copy-ck-stride__input-stage" aria-label="输入网格与当前卷积窗口">
+        <Typography shuku-edit-id="e-c3bbc69b-400a-41bd-95f8-57483496076d" as="h2" variant="h3" tone="accent">输入网格 7 × 7</Typography>
         <InputGrid stride={stride} step={step} outputSize={outputSize} />
-        <Typography variant="bodySmall" tone="accent">3 × 3 窗口每次移动 {stride} 格</Typography>
+        <Typography shuku-edit-id="e-53c3cce6-a9ef-4f0b-8b74-617e21b20d02" variant="bodySmall" tone="accent">3 × 3 窗口每次移动 {stride} 格</Typography>
       </section>
-      <div className="cg-copy-ck-stride__right">
-        <section className="cg-copy-ck-stride__output-stage" aria-label="输出特征图">
-          <Typography as="h2" variant="h3" tone="accent">输出特征图 {outputSize} × {outputSize}</Typography>
+      <div shuku-edit-id="e-29f24cbc-515d-48a3-8c9f-49e9401768a2" className="cg-copy-ck-stride__right">
+        <section shuku-edit-id="e-f84ea6c5-4043-4c83-9581-e89630ac7098" className="cg-copy-ck-stride__output-stage" aria-label="输出特征图">
+          <Typography shuku-edit-id="e-e0a01cec-3dbe-404c-9f86-1f2d41d5897e" as="h2" variant="h3" tone="accent">输出特征图 {outputSize} × {outputSize}</Typography>
           <OutputGrid size={outputSize} step={step} />
-          <Typography variant="bodySmall" tone="muted">每放置一次窗口，生成一个输出位置。</Typography>
+          <Typography shuku-edit-id="e-96d963f3-370f-4335-8cea-b924afe2cc7b" variant="bodySmall" tone="muted">每放置一次窗口，生成一个输出位置。</Typography>
         </section>
-        <section className="cg-copy-ck-stride__formula-panel" aria-label="输出尺寸计算">
-          <Typography as="h2" variant="h3" tone="accent">输出尺寸</Typography>
+        <section shuku-edit-id="e-c8c4f1df-4d6b-4cd7-bc96-65320937792f" className="cg-copy-ck-stride__formula-panel" aria-label="输出尺寸计算">
+          <Typography shuku-edit-id="e-ff0b344f-9f93-45ca-ac17-ea66dc333553" as="h2" variant="h3" tone="accent">输出尺寸</Typography>
           <MathFormulaBlock ariaLabel="不填充时，输出边长等于输入边长减卷积核边长，除以步长后向下取整再加一"><MathFormulaStatic latex={String.raw`N_{\mathrm{out}}=\left\lfloor\frac{N_{\mathrm{in}}-K}{S}\right\rfloor+1`} /></MathFormulaBlock>
-          <Typography variant="bodySmall" tone="muted">Valid：不填充 · 步长为 S</Typography>
+          <Typography shuku-edit-id="e-4489f3c6-c635-45d1-9099-a07934cfee07" variant="bodySmall" tone="muted">Valid：不填充 · 步长为 S</Typography>
         </section>
       </div>
     </div>

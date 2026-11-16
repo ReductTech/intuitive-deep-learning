@@ -12,7 +12,7 @@ const plotStyle: CSSProperties = { left: GRID.left, right: GRID.right, top: GRID
 
 function EpisodePicker({ selected, onSelect }: { selected: number; onSelect: (episode: number) => void }) {
   return <>
-    <div className="vbrl-epsilon__cursor" style={{ left: position(selected) + '%' }} aria-hidden="true" />
+    <div shuku-edit-id="e-4707dc97-b58a-4379-b52d-a68e89c0fc14" className="vbrl-epsilon__cursor" style={{ left: position(selected) + '%' }} aria-hidden="true" />
     <Button className="vbrl-epsilon__episode-picker" role="slider" aria-label="选择查看的训练回合" aria-valuemin={1} aria-valuemax={SCHEDULE_EPISODES}
       aria-valuenow={selected} aria-valuetext={'第 ' + selected + ' 回合'} onClick={event => {
         if (!event.detail) return;
@@ -44,12 +44,12 @@ export function ScheduleCurve({ schedule, ghost, selected, disabled, onChange, o
     const bounds = plotRef.current.getBoundingClientRect();
     change(drag.current, Math.round((event.clientX - bounds.left) / bounds.width * (SCHEDULE_EPISODES - 1)) + 1);
   }
-  return <div className="vbrl-epsilon__chart vbrl-epsilon__curve" aria-label="可直接拖动转折点的探索率曲线">
+  return <div shuku-edit-id="e-c9e39334-db8f-48a7-a325-119178ad6c73" className="vbrl-epsilon__chart vbrl-epsilon__curve" aria-label="可直接拖动转折点的探索率曲线">
     <EChartsChart option={epsilonAxes} minHeight={185} style={{ height: 185 }} aria-label="探索率百分比与训练回合坐标轴" />
-    <div className="vbrl-epsilon__plot" ref={plotRef} style={plotStyle}>
-      <svg viewBox="0 0 1000 1000" preserveAspectRatio="none" aria-hidden="true">
-        {ghost && <polyline className="is-ghost" points={points(ghost)} />}
-        <polyline points={points(schedule)} />
+    <div shuku-edit-id="e-c148b178-af08-415f-b9bd-8184fd36d801" className="vbrl-epsilon__plot" ref={plotRef} style={plotStyle}>
+      <svg shuku-edit-id="e-442ce43d-15ee-4ca6-aba2-e4de931b871e" viewBox="0 0 1000 1000" preserveAspectRatio="none" aria-hidden="true">
+        {ghost && <polyline shuku-edit-id="e-8f51ed04-cf40-42da-9ef8-7da3b98fb56e" className="is-ghost" points={points(ghost)} />}
+        <polyline shuku-edit-id="e-9e04a9d1-ab0a-4aa8-8cf9-22a7e0eda12c" points={points(schedule)} />
       </svg>
       <EpisodePicker selected={selected} onSelect={onSelect} />
       {(['start', 'end'] as const).map(point => <Button key={point} className="vbrl-epsilon__handle" role="slider" disabled={disabled}
@@ -83,13 +83,13 @@ export function ReturnCurve({ run, previous, selected, onSelect, stale = false }
       series: series.map(item => ({ name: item.name, type: 'line', data: item.data.map((value, index) => [index + 1, value]), showSymbol: false,
         lineStyle: { color: item.color, width: item.name === '上次训练' ? 2 : 3, type: item.name === '上次训练' ? 'dashed' : 'solid' } })) };
   }, [run, previous, stale]);
-  return <div className="vbrl-epsilon__chart vbrl-epsilon__return">
+  return <div shuku-edit-id="e-4007333c-0da8-45e7-83e0-7e8f82e75d0b" className="vbrl-epsilon__chart vbrl-epsilon__return">
     <EChartsChart option={option} minHeight={165} style={{ height: 165 }} aria-label="最近十五回合平均回报，点击选择回合" />
-    <div className="vbrl-epsilon__plot" style={plotStyle}><EpisodePicker selected={selected} onSelect={onSelect} /></div>
+    <div shuku-edit-id="e-9f8135fb-9d90-4f44-b090-4882c392526c" className="vbrl-epsilon__plot" style={plotStyle}><EpisodePicker selected={selected} onSelect={onSelect} /></div>
   </div>;
 }
 
 export function CurveLegend({ previous, stale = false }: { previous: boolean; stale?: boolean }) {
-  return <div className="vbrl-epsilon__legend">{[[stale ? '上次训练' : '训练中', stale ? 'previous' : 'training'], [stale ? '上次验证' : '关探索', stale ? 'stale-greedy' : 'greedy'], ...(previous ? [['上次训练', 'previous']] : [])].map(([label, id]) =>
-    <Typography key={id} variant="bodySmall" tone="muted"><i className={'is-' + id} aria-hidden="true" />{label}</Typography>)}</div>;
+  return <div shuku-edit-id="e-1d67253e-9bb2-425c-9648-d05a5bfbd4ce" className="vbrl-epsilon__legend">{[[stale ? '上次训练' : '训练中', stale ? 'previous' : 'training'], [stale ? '上次验证' : '关探索', stale ? 'stale-greedy' : 'greedy'], ...(previous ? [['上次训练', 'previous']] : [])].map(([label, id]) =>
+    <Typography shuku-edit-id="e-793ac3e2-66cc-466e-a6c7-a780fcfd9f6d" key={id} variant="bodySmall" tone="muted"><i shuku-edit-id="e-04cd4d34-4280-4bb5-a93e-4dd67bc1e051" className={'is-' + id} aria-hidden="true" />{label}</Typography>)}</div>;
 }

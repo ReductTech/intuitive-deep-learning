@@ -409,10 +409,10 @@ function VectorPlot3D({ words, points }: PlotProps) {
             renderer.domElement.remove();
         };
     }, [points, words]);
-    return <div className="tr-embedding-plot" ref={host} role="group" aria-label="可旋转的四个高维词向量三维投影图">
-    <div className="tr-embedding-plot__legend" aria-label="图例">
-      <span><i className="is-word-vector"/>词向量</span>
-      <span><i className="is-relation-vector"/>差向量</span>
+    return <div shuku-edit-id="e-187bde1e-ec14-4939-9cc3-51f2ec030ebc" className="tr-embedding-plot" ref={host} role="group" aria-label="可旋转的四个高维词向量三维投影图">
+    <div shuku-edit-id="e-6c25568f-b5d0-4901-b2e2-a695bc3677c7" className="tr-embedding-plot__legend" aria-label="图例">
+      <span shuku-edit-id="e-810dccce-2fd5-4a2a-a28d-36cdb538eb5d"><i shuku-edit-id="e-3a527060-4ee5-4311-bcda-d3b88ba61c8c" className="is-word-vector"/>词向量</span>
+      <span shuku-edit-id="e-b4fad407-bc1a-4337-89dc-6bfbe2c44943"><i shuku-edit-id="e-fe82e749-f95c-4093-804e-92f02c8d23fb" className="is-relation-vector"/>差向量</span>
     </div>
   </div>;
 }
@@ -493,50 +493,50 @@ export function EmbeddingRelationCard({ onComplete }: EmbeddingRelationCardProps
     const activePreset = PRESETS.find(preset => matchesWords(words, preset.words));
     const explanation = activePreset?.explanation ?? (matchesWords(words, DEFAULT_WORDS) ? FAMILY_EXPLANATION : CUSTOM_EXPLANATION);
     return <LessonStage kicker="第一幕 · 装备二" title="从几何角度理解词嵌入" description="切换词组或输入四个英文词，比较两组差向量的方向与余弦相似度。" className="tr-stage tr-embedding-relation">
-    <div className="tr-embedding-relation__layout">
-      <section className="tr-embedding-relation__panel tr-embedding-relation__inputs" aria-label="词语向量配对实验">
-        <div className="tr-embedding-relation__panel-head">
-          <span>输入 4 个英文词，比较两组词的差向量方向</span>
-          <div className="tr-embedding-relation__presets" aria-label="示例关系">
-            {PRESETS.map(preset => <button type="button" key={preset.label} title={preset.words.join(' → ')} aria-pressed={activePreset === preset} onClick={() => choosePreset(preset.words)}>
-              <span aria-hidden="true">{preset.icon}</span>{preset.label}
+    <div shuku-edit-id="e-bad12d3f-36d8-4bb3-aec4-feea77dc0d45" className="tr-embedding-relation__layout">
+      <section shuku-edit-id="e-4c34c811-2398-43d5-9b37-c72babdb06e1" className="tr-embedding-relation__panel tr-embedding-relation__inputs" aria-label="词语向量配对实验">
+        <div shuku-edit-id="e-36bfb202-9193-48f5-8718-ca789b469f37" className="tr-embedding-relation__panel-head">
+          <span shuku-edit-id="e-3c97e2cd-a41e-4177-b109-71cf40c8e0c8">输入 4 个英文词，比较两组词的差向量方向</span>
+          <div shuku-edit-id="e-a9ad98ba-ac56-45d3-966b-59854bab70c1" className="tr-embedding-relation__presets" aria-label="示例关系">
+            {PRESETS.map(preset => <button shuku-edit-id="e-7d65c163-f075-4f20-8aea-da03ee88088a" type="button" key={preset.label} title={preset.words.join(' → ')} aria-pressed={activePreset === preset} onClick={() => choosePreset(preset.words)}>
+              <span shuku-edit-id="e-ffc0bfc6-7452-4161-a321-facddf705a3d" aria-hidden="true">{preset.icon}</span>{preset.label}
             </button>)}
           </div>
         </div>
-        <div className="tr-embedding-relation__pairs">
-          {[0, 1].map(relation => <div className="tr-relation-input" key={relation}>
-            <div className="tr-relation-input__label">{relation === 0 ? '词组 A' : '词组 B'}</div>
-            <label className="tr-relation-input__field"><input aria-label={`关系${relation === 0 ? 'A' : 'B'}起点词`} aria-invalid={Boolean(wordErrors[relation * 2])} aria-describedby={wordErrors[relation * 2] ? `tr-word-error-${relation * 2}` : undefined} placeholder="输入英文词" value={words[relation * 2]} maxLength={24} autoComplete="off" spellCheck={false} onChange={event => updateWord(relation * 2, event.currentTarget.value)}/>{wordErrors[relation * 2] && <span id={`tr-word-error-${relation * 2}`} role="alert">{wordErrors[relation * 2]}</span>}</label>
-            <b aria-hidden="true">→</b>
-            <label className="tr-relation-input__field"><input aria-label={`关系${relation === 0 ? 'A' : 'B'}终点词`} aria-invalid={Boolean(wordErrors[relation * 2 + 1])} aria-describedby={wordErrors[relation * 2 + 1] ? `tr-word-error-${relation * 2 + 1}` : undefined} placeholder="输入英文词" value={words[relation * 2 + 1]} maxLength={24} autoComplete="off" spellCheck={false} onChange={event => updateWord(relation * 2 + 1, event.currentTarget.value)}/>{wordErrors[relation * 2 + 1] && <span id={`tr-word-error-${relation * 2 + 1}`} role="alert">{wordErrors[relation * 2 + 1]}</span>}</label>
+        <div shuku-edit-id="e-ca3816ec-85a3-47a7-b571-e57240938810" className="tr-embedding-relation__pairs">
+          {[0, 1].map(relation => <div shuku-edit-id="e-90d5d70d-9bdf-436d-8713-aa026e205128" className="tr-relation-input" key={relation}>
+            <div shuku-edit-id="e-34a59d03-77bf-4182-8bc4-f21d2f99550e" className="tr-relation-input__label">{relation === 0 ? '词组 A' : '词组 B'}</div>
+            <label shuku-edit-id="e-5b52c4d9-79f8-465a-947f-e2edee114b10" className="tr-relation-input__field"><input shuku-edit-id="e-5f3d2b41-a593-4619-964d-4bc3f6bdf6cd" aria-label={`关系${relation === 0 ? 'A' : 'B'}起点词`} aria-invalid={Boolean(wordErrors[relation * 2])} aria-describedby={wordErrors[relation * 2] ? `tr-word-error-${relation * 2}` : undefined} placeholder="输入英文词" value={words[relation * 2]} maxLength={24} autoComplete="off" spellCheck={false} onChange={event => updateWord(relation * 2, event.currentTarget.value)}/>{wordErrors[relation * 2] && <span shuku-edit-id="e-aad7a65f-8f04-4663-95de-249937611439" id={`tr-word-error-${relation * 2}`} role="alert">{wordErrors[relation * 2]}</span>}</label>
+            <b shuku-edit-id="e-f8959f0e-aec1-4af5-98bf-c6c6b8ef4791" aria-hidden="true">→</b>
+            <label shuku-edit-id="e-81798a78-8e88-4d11-b78e-2a6630ee0de3" className="tr-relation-input__field"><input shuku-edit-id="e-628f8775-5ac4-41b7-a77c-51d46dc6c56b" aria-label={`关系${relation === 0 ? 'A' : 'B'}终点词`} aria-invalid={Boolean(wordErrors[relation * 2 + 1])} aria-describedby={wordErrors[relation * 2 + 1] ? `tr-word-error-${relation * 2 + 1}` : undefined} placeholder="输入英文词" value={words[relation * 2 + 1]} maxLength={24} autoComplete="off" spellCheck={false} onChange={event => updateWord(relation * 2 + 1, event.currentTarget.value)}/>{wordErrors[relation * 2 + 1] && <span shuku-edit-id="e-3da7bec2-490d-473d-8110-874dc2bfc98b" id={`tr-word-error-${relation * 2 + 1}`} role="alert">{wordErrors[relation * 2 + 1]}</span>}</label>
           </div>)}
         </div>
       </section>
 
-      <section className="tr-embedding-relation__panel tr-embedding-relation__visual" aria-label="词向量三维投影">
-        <div className="tr-embedding-relation__panel-head">
-          <span>用 PCA 将高维词向量投影到三维空间</span><p className="tr-relation-model-note">使用预训练 GloVe Wiki-Gigaword 50维词向量演示；三维投影仅用于理解，并不意味着每个方向都能解释成人类可理解的语义。</p>
+      <section shuku-edit-id="e-3ea156cd-cf47-4094-a0bd-7a3300005a2c" className="tr-embedding-relation__panel tr-embedding-relation__visual" aria-label="词向量三维投影">
+        <div shuku-edit-id="e-ecf3d6a2-ee19-4d12-93be-3b2a39d75da8" className="tr-embedding-relation__panel-head">
+          <span shuku-edit-id="e-14647926-3609-45bb-be4f-008be58be5a4">用 PCA 将高维词向量投影到三维空间</span><p shuku-edit-id="e-7203c5bd-cdda-4b58-9368-fafc3a08a23b" className="tr-relation-model-note">使用预训练 GloVe Wiki-Gigaword 50维词向量演示；三维投影仅用于理解，并不意味着每个方向都能解释成人类可理解的语义。</p>
         </div>
-        <div className="tr-embedding-relation__visual-body">
-          <div className="tr-embedding-relation__plot-wrap">
-            {projection ? <VectorPlot3D words={words} points={projection.points}/> : <div className="tr-embedding-relation__empty" role="status">
-              <strong>{isLoading ? '正在读取向量…' : serviceUnavailable ? '本地词向量服务暂不可用' : wordErrors.some(Boolean) ? '请修改上方标出的单词' : '等待四个词向量'}</strong>{serviceUnavailable && !isLoading && <><small>请重新运行课程 CMD，或点击下面重试。</small><Button onClick={() => refreshAll(words)}>重新连接模型</Button></>}
+        <div shuku-edit-id="e-4e213f68-0a46-46c1-aa66-3605f8fa259a" className="tr-embedding-relation__visual-body">
+          <div shuku-edit-id="e-25e91257-62f5-4d40-8db9-6b6067816dae" className="tr-embedding-relation__plot-wrap">
+            {projection ? <VectorPlot3D words={words} points={projection.points}/> : <div shuku-edit-id="e-4ac5010a-cb9e-42e3-bd13-44a6c07b9a39" className="tr-embedding-relation__empty" role="status">
+              <strong shuku-edit-id="e-9f368245-a20b-4785-b00b-cad2c6d78717">{isLoading ? '正在读取向量…' : serviceUnavailable ? '本地词向量服务暂不可用' : wordErrors.some(Boolean) ? '请修改上方标出的单词' : '等待四个词向量'}</strong>{serviceUnavailable && !isLoading && <><small shuku-edit-id="e-55edae51-cf4e-4b7b-ac13-1b57b310f9ff">请重新运行课程 CMD，或点击下面重试。</small><Button onClick={() => refreshAll(words)}>重新连接模型</Button></>}
             </div>}
-            {projection && <aside className="tr-direction-note" aria-label="当前例子的方向说明" aria-live="polite">
-              <div className="tr-direction-note__head"><span aria-hidden="true">{explanation.icon}</span><strong>{explanation.title}</strong></div>
-              {explanation.pairs.length > 0 && <div className="tr-direction-note__pairs">{explanation.pairs.map(pair => <div key={pair}>{pair}</div>)}</div>}
-              <p>相近方向可能承载<strong>{explanation.meaning}</strong>的信息。{explanation.caveat}</p>
+            {projection && <aside shuku-edit-id="e-bdbf14f5-593e-4014-a63c-e275b1864831" className="tr-direction-note" aria-label="当前例子的方向说明" aria-live="polite">
+              <div shuku-edit-id="e-24fa4b92-75a0-4d07-b344-cd5be89aa4f0" className="tr-direction-note__head"><span shuku-edit-id="e-3ddf2bca-7c15-40f7-9de8-8fdd46b8ed69" aria-hidden="true">{explanation.icon}</span><strong shuku-edit-id="e-b72f0e52-4a3f-4d82-adff-415f8cb3fdb2">{explanation.title}</strong></div>
+              {explanation.pairs.length > 0 && <div shuku-edit-id="e-cedc8199-e124-4e6c-ad46-1ff5db74c0e9" className="tr-direction-note__pairs">{explanation.pairs.map(pair => <div shuku-edit-id="e-f7a580d2-1bb8-412a-8bc3-8f6a310f6fe0" key={pair}>{pair}</div>)}</div>}
+              <p shuku-edit-id="e-0dd1e729-039d-4896-b5ff-5c6f1de5188b">相近方向可能承载<strong shuku-edit-id="e-279284ca-cd8a-47f6-a6b3-f828638129f3">{explanation.meaning}</strong>的信息。{explanation.caveat}</p>
             </aside>}
           </div>
-          <div className="tr-relation-metric" aria-live="polite">
-            <div className="tr-relation-metric__readout" title="用原始词向量的两条差向量计算，与三维视角无关"><span>原始空间的余弦相似度</span><strong>{cosine === null ? '—' : cosine.toFixed(3)}</strong></div>
+          <div shuku-edit-id="e-e75f02f7-857b-4f57-99ba-e620004b9a0d" className="tr-relation-metric" aria-live="polite">
+            <div shuku-edit-id="e-c73594f6-aac2-4f01-87ab-cbc505ab8170" className="tr-relation-metric__readout" title="用原始词向量的两条差向量计算，与三维视角无关"><span shuku-edit-id="e-35034623-c28d-49a0-a246-2e4a9a4a37fb">原始空间的余弦相似度</span><strong shuku-edit-id="e-5d5a846a-5626-4541-a4ab-bce6dbbe89a5">{cosine === null ? '—' : cosine.toFixed(3)}</strong></div>
             {cosine !== null && <>
-              <div className="tr-relation-metric__scale" role="img" aria-label={`余弦相似度 ${cosine.toFixed(3)}，范围负一到正一`}>
-                <span className="tr-relation-metric__zero"/><i style={{ left: `${similarityPosition}%` }}/>
+              <div shuku-edit-id="e-fbb20ec5-ce1f-4faf-92ca-80bd7b71c298" className="tr-relation-metric__scale" role="img" aria-label={`余弦相似度 ${cosine.toFixed(3)}，范围负一到正一`}>
+                <span shuku-edit-id="e-d406c6df-b384-4929-bc3c-6c130a90f061" className="tr-relation-metric__zero"/><i shuku-edit-id="e-e53d1516-21c2-4dac-9475-ce0a0462a550" style={{ left: `${similarityPosition}%` }}/>
               </div>
-              <div className="tr-relation-metric__ends"><span>方向相反</span><span>垂直</span><span>方向相同</span></div>
+              <div shuku-edit-id="e-dc18c866-b671-4fc6-a94a-3b6689f18372" className="tr-relation-metric__ends"><span shuku-edit-id="e-4cf6f88f-9931-48e5-b85d-d6921315454a">方向相反</span><span shuku-edit-id="e-2ddabea6-b64a-40fc-b2af-37a426034c0d">垂直</span><span shuku-edit-id="e-8c075782-8375-407d-9b6e-10b72b774ef9">方向相同</span></div>
             </>}
-            {rows && cosine === null && <span className="tr-relation-metric__undefined">有一组变化为零，方向无法比较</span>}
+            {rows && cosine === null && <span shuku-edit-id="e-388c9aab-1da3-45e8-aea2-2bac721749d7" className="tr-relation-metric__undefined">有一组变化为零，方向无法比较</span>}
             <Button className="tr-relation-next" variant="primary" disabled={!rows} onClick={onComplete}>继续：词义进入语境</Button>
           </div>
         </div>

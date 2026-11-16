@@ -20,8 +20,8 @@ function BlogLessonCanvas({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <div ref={frameRef} className="lesson-canvas-frame" style={{ height: 900 * scale }}>
-      <div className="course-page-surface course-shell" style={{ transform: `scale(${scale})` }}>
+    <div shuku-edit-id="e-f29fa1d0-07a5-4bf5-93a3-9fb21de4cb64" ref={frameRef} className="lesson-canvas-frame" style={{ height: 900 * scale }}>
+      <div shuku-edit-id="e-b5388b93-d5ad-4f91-8c56-a57ef5ccca83" className="course-page-surface course-shell" style={{ transform: `scale(${scale})` }}>
         {children}
       </div>
     </div>

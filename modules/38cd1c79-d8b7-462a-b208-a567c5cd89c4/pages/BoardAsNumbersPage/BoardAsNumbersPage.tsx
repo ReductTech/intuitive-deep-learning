@@ -228,19 +228,19 @@ function NumbersBoard({ board, winLine, spotlight, label, origin }: NumbersBoard
   }, [size, board, winLine, spotlight, origin]);
 
   return (
-    <div className="cki-numbers__board" ref={frameRef}>
-      <canvas ref={canvasRef} className="cki-numbers__board-canvas" role="img" aria-label={label} />
-      <div className="cki-numbers__board-axis" aria-hidden="true">
-        <div className="cki-numbers__board-axis-cols">
+    <div shuku-edit-id="e-0b17cc7a-ad7c-415a-beee-e760d16e46b4" className="cki-numbers__board" ref={frameRef}>
+      <canvas shuku-edit-id="e-d07bd0b8-9e12-4334-94dc-aede3f6ec92c" ref={canvasRef} className="cki-numbers__board-canvas" role="img" aria-label={label} />
+      <div shuku-edit-id="e-9820cd2c-6be5-4ba2-b69d-eb91bf8e8f68" className="cki-numbers__board-axis" aria-hidden="true">
+        <div shuku-edit-id="e-64c1b33f-7394-4911-91c6-9d7f4c512116" className="cki-numbers__board-axis-cols">
           {Array.from({ length: WINDOW_SIZE }, (_, index) => COLUMN_LABELS[origin.col + index]).map((text, index) => (
-              <Typography key={text} as="span" variant="body" style={{ left: `${(index / (WINDOW_SIZE - 1)) * 100}%` }}>
+              <Typography shuku-edit-id="e-52e44b05-7fb9-4091-94ea-3c7b3e3fe5a1" key={text} as="span" variant="body" style={{ left: `${(index / (WINDOW_SIZE - 1)) * 100}%` }}>
               {text}
             </Typography>
           ))}
         </div>
-        <div className="cki-numbers__board-axis-rows">
+        <div shuku-edit-id="e-4d668019-1bfc-4cfe-ad8d-035621a8cf05" className="cki-numbers__board-axis-rows">
           {Array.from({ length: WINDOW_SIZE }, (_, index) => ROW_LABELS[origin.row + index]).map((text, index) => (
-              <Typography key={text} as="span" variant="body" style={{ top: `${(index / (WINDOW_SIZE - 1)) * 100}%` }}>
+              <Typography shuku-edit-id="e-5673ba74-a209-4825-a256-b4c2b98e1384" key={text} as="span" variant="body" style={{ top: `${(index / (WINDOW_SIZE - 1)) * 100}%` }}>
               {text}
             </Typography>
           ))}
@@ -264,8 +264,8 @@ interface MapTile {
  */
 function FlowArrow() {
   return (
-    <span className="cki-numbers__arrow-slot" aria-hidden="true">
-      <span className="cki-numbers__arrow" />
+    <span shuku-edit-id="e-92d7c007-4a6b-47c0-999c-2cf6d8bcb48a" className="cki-numbers__arrow-slot" aria-hidden="true">
+      <span shuku-edit-id="e-1f0fda2f-96ee-482a-b735-7c7243957178" className="cki-numbers__arrow" />
     </span>
   );
 }
@@ -316,37 +316,37 @@ export function BoardAsNumbersPage({ onComplete }: BoardAsNumbersPageProps) {
   const onHoverCell = useCallback((cell: Cell | null) => setFocus(cell), []);
 
   return (
-    <ContentBlock
+    <ContentBlock shuku-edit-id="e-35fdaf06-1d53-4170-9df6-cf30c1e05605"
       headingLevel={1}
       className="cki-numbers"
       style={boardBackgroundStyle}
       title="棋盘局部区域的数值表示"
       subtitle="将棋子与空位映射为数值，得到对应的局部矩阵。"
     >
-      <div className="cki-numbers__layout">
-        <div className="cki-numbers__stage">
-          <div className="cki-numbers__step-heading"><span>1</span><div><Typography as="h2" variant="h3" tone="accent">局部区域选取</Typography><Typography variant="bodySmall" tone="muted">选取五子连线附近的局部棋盘。</Typography></div></div>
+      <div shuku-edit-id="e-70152d02-ed89-4d05-bbe9-93c6f5ea84cc" className="cki-numbers__layout">
+        <div shuku-edit-id="e-42337eb2-97e0-42aa-b2fb-3ec35f2a725d" className="cki-numbers__stage">
+          <div shuku-edit-id="e-b2942373-ed71-44ba-8abc-46a867925f5a" className="cki-numbers__step-heading"><span shuku-edit-id="e-1dfcc730-b74b-4930-a477-a08b5acf13fa">1</span><div shuku-edit-id="e-24332dff-e3b5-4755-8568-783369f8f27b"><Typography shuku-edit-id="e-43b0e697-1c70-4289-bbcd-59e84e5ffe1c" as="h2" variant="h3" tone="accent">局部区域选取</Typography><Typography shuku-edit-id="e-db597c42-a39f-4ee2-96d9-fcc4b7bfe19f" variant="bodySmall" tone="muted">选取五子连线附近的局部棋盘。</Typography></div></div>
           <NumbersBoard board={board} winLine={outcome.winLine} spotlight={focus} origin={zoom.origin} label={boardLabel} />
         </div>
 
         <FlowArrow />
 
-        <div className="cki-numbers__map">
-          <div className="cki-numbers__step-heading"><span>2</span><div><Typography as="h2" variant="h3" tone="accent">数值编码规则</Typography><Typography variant="bodySmall" tone="muted">目标棋子记为 1，对手棋子记为 −1，空位记为 0。</Typography></div></div>
-          <div className="cki-numbers__map-tiles">
+        <div shuku-edit-id="e-8f110d2f-a757-47cf-a73f-646142e03913" className="cki-numbers__map">
+          <div shuku-edit-id="e-cb351acf-bbb7-4115-a829-a34917b0c2dd" className="cki-numbers__step-heading"><span shuku-edit-id="e-243191f0-555a-4dd4-b8a4-9d7705de409e">2</span><div shuku-edit-id="e-9fa064e5-d6d4-4afe-ab21-2db2ebca5ad2"><Typography shuku-edit-id="e-623cb330-1c43-4f6b-91fe-0decc2a9da6f" as="h2" variant="h3" tone="accent">数值编码规则</Typography><Typography shuku-edit-id="e-2fa0115f-1713-48f6-a064-1f1e7716ce0a" variant="bodySmall" tone="muted">目标棋子记为 1，对手棋子记为 −1，空位记为 0。</Typography></div></div>
+          <div shuku-edit-id="e-4f44002c-668f-4f74-9f5b-3407cb512111" className="cki-numbers__map-tiles">
             {tiles.map((tile) => {
               const kind = tile.value === 1 ? 'one' : tile.value === -1 ? 'minus' : 'zero';
               return (
-                <div key={tile.key} className={`cki-numbers__map-tile cki-numbers__map-tile--${kind}`}>
-                  <div className="cki-numbers__map-face">
-                    <Typography as="span" variant="body" tone="muted">{tile.label}</Typography>
-                    <span
+                <div shuku-edit-id="e-d03d2bb6-81f4-467c-b703-db4cbcab4f56" key={tile.key} className={`cki-numbers__map-tile cki-numbers__map-tile--${kind}`}>
+                  <div shuku-edit-id="e-ce46a113-62ae-4ec1-abdc-ca1cd30e055a" className="cki-numbers__map-face">
+                    <Typography shuku-edit-id="e-c9b36db8-f8a0-4839-98f8-b2226bb025db" as="span" variant="body" tone="muted">{tile.label}</Typography>
+                    <span shuku-edit-id="e-dfd17e2a-788c-4219-a133-e3ec99e851d1"
                       className={`cki-numbers__map-icon cki-numbers__map-icon--${tile.icon}`}
                       aria-hidden="true"
                     />
                   </div>
-                  <div className="cki-numbers__map-value">
-                    <Typography as="span" variant="h2" tone="inherit">
+                  <div shuku-edit-id="e-346aedfc-6bd6-4418-9aca-c549e7ccb142" className="cki-numbers__map-value">
+                    <Typography shuku-edit-id="e-c587b99e-7304-4ac2-8267-3013ad925b1a" as="span" variant="h2" tone="inherit">
                       {tile.value}
                     </Typography>
                   </div>
@@ -358,14 +358,14 @@ export function BoardAsNumbersPage({ onComplete }: BoardAsNumbersPageProps) {
 
         <FlowArrow />
 
-        <div className="cki-numbers__panel">
-          <div className="cki-numbers__step-heading"><span>3</span><div><Typography as="h2" variant="h3" tone="accent">局部矩阵表示</Typography><Typography variant="bodySmall" tone="muted">按照相同的空间位置排列对应数值。</Typography></div></div>
-          <div className="cki-numbers__matrix">
-            <div className="cki-numbers__matrix-corner" aria-hidden="true" />
+        <div shuku-edit-id="e-a026435a-010c-408c-a880-41a3c2153e65" className="cki-numbers__panel">
+          <div shuku-edit-id="e-9b8e47b0-5246-4a33-8ec8-4e1523a5f97d" className="cki-numbers__step-heading"><span shuku-edit-id="e-79094c6b-ea41-458d-8dbf-29229bb01fc6">3</span><div shuku-edit-id="e-be5677a6-fd18-4107-8ed4-498afa7462eb"><Typography shuku-edit-id="e-d48abbe1-8b5e-480a-8fbb-4586b15ab0eb" as="h2" variant="h3" tone="accent">局部矩阵表示</Typography><Typography shuku-edit-id="e-456f4473-285b-4023-b820-d2f6ee2f2471" variant="bodySmall" tone="muted">按照相同的空间位置排列对应数值。</Typography></div></div>
+          <div shuku-edit-id="e-94c15915-a316-4e20-9992-e5fc5a8f394b" className="cki-numbers__matrix">
+            <div shuku-edit-id="e-12a81b7b-14f1-4923-aaf1-0ae5446e0a6b" className="cki-numbers__matrix-corner" aria-hidden="true" />
 
-            <div className="cki-numbers__matrix-cols" aria-hidden="true">
+            <div shuku-edit-id="e-5315e825-aaf6-4e64-9ffc-04f479e03881" className="cki-numbers__matrix-cols" aria-hidden="true">
               {matrixCols.map((col) => (
-                <Typography
+                <Typography shuku-edit-id="e-23d8e9a4-8c74-47f9-b033-0efc0a7e816e"
                   key={col}
                   as="span"
                   variant="body"
@@ -376,9 +376,9 @@ export function BoardAsNumbersPage({ onComplete }: BoardAsNumbersPageProps) {
               ))}
             </div>
 
-            <div className="cki-numbers__matrix-rows" aria-hidden="true">
+            <div shuku-edit-id="e-80fca4b0-25bc-49dd-9afe-8cea902c8c3a" className="cki-numbers__matrix-rows" aria-hidden="true">
               {matrixRows.map((row) => (
-                <Typography
+                <Typography shuku-edit-id="e-5e5f15b0-0c11-4df4-8374-6476c361b7e7"
                   key={row}
                   as="span"
                   variant="body"
@@ -389,7 +389,7 @@ export function BoardAsNumbersPage({ onComplete }: BoardAsNumbersPageProps) {
               ))}
             </div>
 
-            <div
+            <div shuku-edit-id="e-fde3b10f-a6b6-41b3-9486-43ad58a989b0"
               className="cki-numbers__matrix-grid"
               role="group"
               aria-label={matrixLabel}
@@ -409,14 +409,14 @@ export function BoardAsNumbersPage({ onComplete }: BoardAsNumbersPageProps) {
                   focus && focus.row === row && focus.col === col ? 'is-hovered' : '',
                 ].filter(Boolean).join(' ');
                 return (
-                  <div
+                  <div shuku-edit-id="e-4998c79f-f555-479f-89e3-1cfe8b152ce8"
                     key={cellKey(row, col)}
                     className={classes}
                     data-cell={cellKey(row, col)}
                     onPointerEnter={onHoverCell.bind(null, { row, col })}
                     onPointerDown={onHoverCell.bind(null, { row, col })}
                   >
-                    <Typography
+                    <Typography shuku-edit-id="e-1dad64cb-07e2-4da0-8f35-2353df943e2a"
                       as="span"
                       variant="h2"
                       tone={value === 0 ? 'muted' : 'inherit'}

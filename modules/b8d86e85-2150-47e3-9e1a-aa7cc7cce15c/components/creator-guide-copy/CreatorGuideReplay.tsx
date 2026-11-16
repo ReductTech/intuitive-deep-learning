@@ -27,5 +27,5 @@ const pages={
 };
 export function CreatorGuideReplay({page}:{page:keyof typeof pages}){
  const Page=pages[page];
- return <div className="aipe-creator-guide-replay aipe-replay-cg-creator-typography"><Page/></div>;
+ return <div shuku-edit-id="e-76f96396-349b-47b3-907d-1f11c0b6c570" className="aipe-creator-guide-replay aipe-replay-cg-creator-typography"><Page/></div>;
 }

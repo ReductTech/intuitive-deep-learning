@@ -135,5 +135,5 @@ export function ElectronCloudScene({ scale, radiusNm, orbital, slice }: CloudSce
       renderer.dispose();renderer.domElement.remove();
     };
   }, []);
-  return <div className="aipe-replay-cg-lab-scene" ref={host}>{failed&&<Typography className="aipe-replay-cg-lab-failed" variant="bodySmall" tone="inherit">当前浏览器无法启动 WebGL，请开启硬件加速。</Typography>}<Typography ref={radiusLabel} as="span" variant="bodySmall" tone="inherit" className="aipe-replay-cg-lab-radius-label">r</Typography><Typography as="span" variant="bodySmall" tone="inherit" className="aipe-replay-cg-lab-nucleus-label">原子核</Typography></div>;
+  return <div shuku-edit-id="e-8be1efa6-705b-412e-b4ca-f57d4ab697e1" className="aipe-replay-cg-lab-scene" ref={host}>{failed&&<Typography shuku-edit-id="e-425f510b-5c7d-4e4a-b31a-337ec47625b4" className="aipe-replay-cg-lab-failed" variant="bodySmall" tone="inherit">当前浏览器无法启动 WebGL，请开启硬件加速。</Typography>}<Typography shuku-edit-id="e-55a60c08-d9b3-4ac7-baf8-e61097c5659b" ref={radiusLabel} as="span" variant="bodySmall" tone="inherit" className="aipe-replay-cg-lab-radius-label">r</Typography><Typography shuku-edit-id="e-e66609bb-66d1-4d9d-8297-63533ddad1a5" as="span" variant="bodySmall" tone="inherit" className="aipe-replay-cg-lab-nucleus-label">原子核</Typography></div>;
 }

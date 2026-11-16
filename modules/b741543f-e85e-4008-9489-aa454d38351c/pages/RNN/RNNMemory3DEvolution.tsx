@@ -785,5 +785,5 @@ export function RNNMemory3DEvolution({ phase }: RNNMemory3DEvolutionProps) {
     return () => { disposed = true; dispose(); };
   }, []);
 
-  return <div ref={hostRef} className="nrnn-memory-3d" aria-label="从神经网络到循环神经网络的三维动画，可拖拽旋转" />;
+  return <div shuku-edit-id="e-992f7008-9102-46df-a644-2f144cb23b95" ref={hostRef} className="nrnn-memory-3d" aria-label="从神经网络到循环神经网络的三维动画，可拖拽旋转" />;
 }

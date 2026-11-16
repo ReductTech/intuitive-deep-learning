@@ -67,17 +67,17 @@ function GrowthMountain({ position, climb }: { position: number; climb: number }
       climberRef.current?.setAttribute('cy', String(point.y));
     }
   }, [path, climb]);
-  return <div className="llmpe-kg-k-mountain" data-growth={position.toFixed(3)}>
-    <svg viewBox="0 0 900 600" role="img" aria-label="同一座知识山随时代逐层升高，抵达前沿的攀登路径逐渐延长">
-      {[index, index + 1].map((stage, layer) => <foreignObject key={stage} x="0" y="0" width="900" height="600" opacity={layer ? t : 1 - t}>
-        <div className="llmpe-kg-k-mountain-layer" style={{ backgroundImage: `url("${mountainStages}")`, backgroundPosition: `${(stage % 2) * 100}% ${Math.floor(stage / 2) * 100}%` }} />
+  return <div shuku-edit-id="e-cec6107e-c916-4916-8d34-c8f4cfd9ec66" className="llmpe-kg-k-mountain" data-growth={position.toFixed(3)}>
+    <svg shuku-edit-id="e-14d2ebd5-0352-4ab6-9975-b7ebc7d7fab2" viewBox="0 0 900 600" role="img" aria-label="同一座知识山随时代逐层升高，抵达前沿的攀登路径逐渐延长">
+      {[index, index + 1].map((stage, layer) => <foreignObject shuku-edit-id="e-39b166bd-ad6c-4de9-8573-aa3a02d22c82" key={stage} x="0" y="0" width="900" height="600" opacity={layer ? t : 1 - t}>
+        <div shuku-edit-id="e-601819be-1d61-46e9-a35f-16e9b58fa347" className="llmpe-kg-k-mountain-layer" style={{ backgroundImage: `url("${mountainStages}")`, backgroundPosition: `${(stage % 2) * 100}% ${Math.floor(stage / 2) * 100}%` }} />
       </foreignObject>)}
-      <path d={path} fill="none" stroke="var(--ui-bg-card)" strokeWidth="8" strokeLinecap="round" opacity=".8" />
-      <path d={path} fill="none" stroke="var(--ui-accent)" strokeWidth="2" opacity=".25" />
-      <path ref={pathRef} d={path} pathLength="1" strokeDasharray={`${clamp(climb)} 1`} fill="none" stroke="var(--ui-accent)" strokeWidth="3.5" strokeLinecap="round" />
-      <circle ref={climberRef} cx="130" cy="532" r="7" fill="var(--ui-accent-alt)" stroke="var(--ui-bg-card)" strokeWidth="3" />
-      <path d={`M${peakX} ${peakY + 6} v-22`} stroke="var(--ui-accent-alt)" strokeWidth="2" />
-      <circle cx={peakX} cy={peakY - 16} r="6" fill="var(--ui-accent-alt)" />
+      <path shuku-edit-id="e-9a645fe5-ee17-44aa-9fee-28db4cd4432e" d={path} fill="none" stroke="var(--ui-bg-card)" strokeWidth="8" strokeLinecap="round" opacity=".8" />
+      <path shuku-edit-id="e-8e3f1e1d-3c2f-4ba1-b3cb-f35b4778fbdd" d={path} fill="none" stroke="var(--ui-accent)" strokeWidth="2" opacity=".25" />
+      <path shuku-edit-id="e-c484c6f0-cf46-4eee-90d9-f1ced322d0f4" ref={pathRef} d={path} pathLength="1" strokeDasharray={`${clamp(climb)} 1`} fill="none" stroke="var(--ui-accent)" strokeWidth="3.5" strokeLinecap="round" />
+      <circle shuku-edit-id="e-ca9cc74f-aae2-4c32-bfee-5708504e0aa4" ref={climberRef} cx="130" cy="532" r="7" fill="var(--ui-accent-alt)" stroke="var(--ui-bg-card)" strokeWidth="3" />
+      <path shuku-edit-id="e-1a076f38-e8b5-4906-b95c-97c21faf62e7" d={`M${peakX} ${peakY + 6} v-22`} stroke="var(--ui-accent-alt)" strokeWidth="2" />
+      <circle shuku-edit-id="e-470564c9-6b01-4932-9ec8-2158c1d80e40" cx={peakX} cy={peakY - 16} r="6" fill="var(--ui-accent-alt)" />
     </svg>
   </div>;
 }
@@ -161,7 +161,7 @@ function KnowledgeLabels({ stage, foundation, depth, view }: {
     labels.push({ kind: 'contribution', text: '新发现', x: 432, y: 145, width: 206, start: { x: 432, y: 172 },
       preferred: outlinePoint((frontierRadius(stage, angle) + growingRadius(stage, angle, foundation, depth)) / 2, angle) });
   }
-  return <g className="llmpe-kg-k-diagram-labels" pointerEvents="none">
+  return <g shuku-edit-id="e-6b3da817-98da-4468-a28a-3532ee89dc5a" className="llmpe-kg-k-diagram-labels" pointerEvents="none">
     {labels.map(label => {
       const preferred = project(label.preferred);
       const options = candidates[label.kind];
@@ -171,11 +171,11 @@ function KnowledgeLabels({ stage, foundation, depth, view }: {
       const outside = !target;
       const end = target ?? { x: Math.max(12, Math.min(638, preferred.x)), y: Math.max(12, Math.min(538, preferred.y)) };
       const color = label.kind === 'contribution' ? 'var(--ui-accent-alt)' : label.kind === 'personal' ? 'var(--ui-accent)' : 'var(--ui-border-strong)';
-      return <g key={label.kind} data-label-kind={label.kind} data-offscreen={outside} data-target-x={end.x} data-target-y={end.y}>
-        <path d={`M${label.start.x} ${label.start.y} L${end.x} ${end.y}`} fill="none" stroke={color} strokeWidth="1.5" strokeDasharray={outside ? '4 4' : undefined} />
-        <circle cx={end.x} cy={end.y} r="2.5" fill={color} />
-        <foreignObject className={`llmpe-kg-k-diagram-label${label.kind === 'contribution' ? ' llmpe-kg-k-label-new' : ''}`} x={label.x} y={label.y} width={label.width} height="80">
-          <Typography variant="bodySmall" tone={label.kind === 'contribution' ? 'inherit' : label.kind === 'unknown' ? 'muted' : 'accent'}>{label.text}{outside ? ' · 视野外' : ''}</Typography>
+      return <g shuku-edit-id="e-fb227378-49b8-47b5-9a77-91691098962f" key={label.kind} data-label-kind={label.kind} data-offscreen={outside} data-target-x={end.x} data-target-y={end.y}>
+        <path shuku-edit-id="e-4bca3a0d-f3c4-4323-beab-2fea55b6f716" d={`M${label.start.x} ${label.start.y} L${end.x} ${end.y}`} fill="none" stroke={color} strokeWidth="1.5" strokeDasharray={outside ? '4 4' : undefined} />
+        <circle shuku-edit-id="e-a9cdd408-e7cc-457b-b329-fb7936d3a4d9" cx={end.x} cy={end.y} r="2.5" fill={color} />
+        <foreignObject shuku-edit-id="e-8932d1ce-9406-49bf-bb52-2df47d6ec13c" className={`llmpe-kg-k-diagram-label${label.kind === 'contribution' ? ' llmpe-kg-k-label-new' : ''}`} x={label.x} y={label.y} width={label.width} height="80">
+          <Typography shuku-edit-id="e-751ea5fd-0635-4a89-bffa-14f6c9707ae2" variant="bodySmall" tone={label.kind === 'contribution' ? 'inherit' : label.kind === 'unknown' ? 'muted' : 'accent'}>{label.text}{outside ? ' · 视野外' : ''}</Typography>
         </foreignObject>
       </g>;
     })}
@@ -186,31 +186,31 @@ function GrowthCircle({ position, foundation, depth }: { position: number; found
   const id = useId().replaceAll(':', '');
   const index = Math.min(2, Math.floor(position));
   const t = ease(position - index);
-  return <div className="llmpe-kg-k-knowledge" data-transition="continuous-front" data-fields={fieldDirections[Math.round(position)].length}>
+  return <div shuku-edit-id="e-0f6af5e1-e07a-468a-99e5-267f7df143e1" className="llmpe-kg-k-knowledge" data-transition="continuous-front" data-fields={fieldDirections[Math.round(position)].length}>
     <KnowledgeDiagramViewport note={position === 3 ? {
       point: outlinePoint(growingRadius(3, fieldDirections[3][0], foundation, depth), fieldDirections[3][0]),
       text: '知识疆域不断扩展，而人的寿命、精力与认知带宽有限。仅抵达一个方向的前沿，就可能耗去数十年积累；留给原创探索的时间，还要与持续追赶分享。',
     } : undefined} renderLabels={view => <KnowledgeLabels stage={Math.round(position)} foundation={foundation} depth={depth} view={view} />}>
       {[index, index + 1].map((stage, layer) => {
         const understanding = polarOutline(angle => growingRadius(stage, angle, foundation, depth), 960, fieldDirections[stage]);
-        return <g key={stage} className="llmpe-kg-k-knowledge-stage" data-stage={stage} opacity={layer ? t : 1 - t}>
-        <defs>
-          <clipPath id={`${id}-known-${stage}`}><path d={knowledgeShapes[stage].frontier} /></clipPath>
-          <mask id={`${id}-difference-${stage}`} maskUnits="userSpaceOnUse" x="0" y="0" width="650" height="550">
-            <rect x="0" y="0" width="650" height="550" fill="white" />
-            <path d={knowledgeShapes[stage].frontier} fill="black" />
+        return <g shuku-edit-id="e-4cf5bb69-267b-42c8-8dd1-4d56c384b77f" key={stage} className="llmpe-kg-k-knowledge-stage" data-stage={stage} opacity={layer ? t : 1 - t}>
+        <defs shuku-edit-id="e-b5c27cdc-2a41-43ef-849c-78904b0d8418">
+          <clipPath shuku-edit-id="e-565b8adb-55ee-4d96-99dc-c13c8f22c969" id={`${id}-known-${stage}`}><path shuku-edit-id="e-da2ba76d-4995-4ac0-b24f-396c285699c7" d={knowledgeShapes[stage].frontier} /></clipPath>
+          <mask shuku-edit-id="e-3a97175b-9bf4-484f-b0ef-6ca1b8388f81" id={`${id}-difference-${stage}`} maskUnits="userSpaceOnUse" x="0" y="0" width="650" height="550">
+            <rect shuku-edit-id="e-5f460c2f-6899-4585-8ebd-483f71682d9f" x="0" y="0" width="650" height="550" fill="white" />
+            <path shuku-edit-id="e-a032f935-0b1c-4b4d-b045-8d3d3bfa7f82" d={knowledgeShapes[stage].frontier} fill="black" />
           </mask>
         </defs>
-        <path className="llmpe-kg-k-frontier-shape" d={knowledgeShapes[stage].frontier} fill="var(--ui-bg-soft)" />
-        <path className="llmpe-kg-k-understanding-shape" d={understanding} fill="var(--ui-accent)" clipPath={`url(#${id}-known-${stage})`} />
-        <path className="llmpe-kg-k-contribution-shape" d={understanding} fill="var(--ui-accent-alt)" mask={`url(#${id}-difference-${stage})`} />
-        <path d={knowledgeShapes[stage].frontier} fill="none" stroke="var(--ui-border-strong)" strokeWidth="1.5" />
+        <path shuku-edit-id="e-d9c88c5c-8057-465b-982a-e0f43974eeda" className="llmpe-kg-k-frontier-shape" d={knowledgeShapes[stage].frontier} fill="var(--ui-bg-soft)" />
+        <path shuku-edit-id="e-fcd7d865-d71b-4780-b82e-c613e6e89e49" className="llmpe-kg-k-understanding-shape" d={understanding} fill="var(--ui-accent)" clipPath={`url(#${id}-known-${stage})`} />
+        <path shuku-edit-id="e-cf5adcbf-2b9b-4930-af6d-937ea50f0b42" className="llmpe-kg-k-contribution-shape" d={understanding} fill="var(--ui-accent-alt)" mask={`url(#${id}-difference-${stage})`} />
+        <path shuku-edit-id="e-33928a24-e20b-4d42-a8a9-7f38a9ef8877" d={knowledgeShapes[stage].frontier} fill="none" stroke="var(--ui-border-strong)" strokeWidth="1.5" />
       </g>; })}
     </KnowledgeDiagramViewport>
-    <div className="llmpe-kg-k-legend" aria-label="颜色含义">
-      <Typography variant="bodySmall" tone="muted"><i className="llmpe-kg-k-total"/>已有知识</Typography>
-      <Typography variant="bodySmall" tone="muted"><i className="llmpe-kg-k-personal"/>个人积累</Typography>
-      <Typography variant="bodySmall" tone="muted"><i className="llmpe-kg-k-new"/>新贡献</Typography>
+    <div shuku-edit-id="e-38cf4711-7129-4f0e-984e-3e46472d9248" className="llmpe-kg-k-legend" aria-label="颜色含义">
+      <Typography shuku-edit-id="e-5e4f63bb-bed2-4c08-9ec7-4cddbff39059" variant="bodySmall" tone="muted"><i shuku-edit-id="e-a57af173-3b77-4433-9193-0916149f5589" className="llmpe-kg-k-total"/>已有知识</Typography>
+      <Typography shuku-edit-id="e-64e0cee9-f26a-4526-a2f2-b063db9df250" variant="bodySmall" tone="muted"><i shuku-edit-id="e-95f295c0-8f33-4ad9-aa5f-7cf34a549ebd" className="llmpe-kg-k-personal"/>个人积累</Typography>
+      <Typography shuku-edit-id="e-86a4bcef-5c32-40ee-8264-04e90b8f2140" variant="bodySmall" tone="muted"><i shuku-edit-id="e-ffa25f52-4b9d-40f9-9c71-099a75bfeb88" className="llmpe-kg-k-new"/>新贡献</Typography>
     </div>
   </div>;
 }
@@ -221,18 +221,18 @@ export function KnowledgeGrowthPage() {
   const position = target;
   const active = Math.min(3, Math.round(target));
   const journey = useLearningJourney(active, replay, container);
-  return <article ref={container} className="llmpe-kg-knowledge-page llmpe-kg-creator-typography" aria-label="知识增长与有限的个人积累" data-era={active} data-progress={position.toFixed(3)} data-learning-step={journey.step} data-learning-depth={journey.depth.toFixed(3)} data-learning-complete={journey.done}>
-    <ContentBlock className="llmpe-kg-k-content" headingLevel={1}
+  return <article shuku-edit-id="e-34a6a27a-3fba-4072-9c1c-7ce2cf775196" ref={container} className="llmpe-kg-knowledge-page llmpe-kg-creator-typography" aria-label="知识增长与有限的个人积累" data-era={active} data-progress={position.toFixed(3)} data-learning-step={journey.step} data-learning-depth={journey.depth.toFixed(3)} data-learning-complete={journey.done}>
+    <ContentBlock shuku-edit-id="e-aa1ab46c-b115-40de-a3f5-b15275cf89a8" className="llmpe-kg-k-content" headingLevel={1}
       title="我们追赶的知识前沿，正在加速远离我们"
       subtitle="抵达前沿需要长期积累，留在前沿还要持续追赶">
-      <section className="llmpe-kg-k-scene" aria-label="随时代同步变化的山景与知识圆">
+      <section shuku-edit-id="e-99320017-5a4a-4775-8d32-67770ad25cdf" className="llmpe-kg-k-scene" aria-label="随时代同步变化的山景与知识圆">
         <GrowthMountain position={position} climb={journey.climb} />
         <GrowthCircle position={position} foundation={journey.foundation} depth={journey.depth} />
       </section>
-      <section className="llmpe-kg-k-era-options" aria-label="选择所处时代">
+      <section shuku-edit-id="e-009587e1-7e1e-4f8b-b13c-edb124e21627" className="llmpe-kg-k-era-options" aria-label="选择所处时代">
         {eras.map((era, i) => <Button key={era.name} className={`llmpe-kg-k-era-option${active === i ? ' is-selected' : ''}`} aria-label={`${era.name}，播放积累过程`} aria-pressed={active === i} onClick={() => setSelection(previous => ({ target: i, replay: previous.replay + 1 }))}>
-          <Typography as="span" variant="h3" tone="inherit" className="llmpe-kg-k-era-name">{i === 0 ? <><span>亚里士多德</span><span>时期</span></> : era.name}</Typography>
-          <span className="llmpe-kg-k-era-portrait" aria-hidden="true" style={{ backgroundImage: `url("${eraPortraits}")`, backgroundPosition: `${(i % 2) * 100}% ${Math.floor(i / 2) * 100}%` }} />
+          <Typography shuku-edit-id="e-aa65646d-ee58-4c6a-adfa-c6656c256dde" as="span" variant="h3" tone="inherit" className="llmpe-kg-k-era-name">{i === 0 ? <><span shuku-edit-id="e-d92b3c78-1511-49b8-b68f-d6ab89101f72">亚里士多德</span><span shuku-edit-id="e-2de28270-03ea-464e-b2e5-66bbe8bc28c8">时期</span></> : era.name}</Typography>
+          <span shuku-edit-id="e-c41448cc-3862-44d6-8fba-49c76f966cfd" className="llmpe-kg-k-era-portrait" aria-hidden="true" style={{ backgroundImage: `url("${eraPortraits}")`, backgroundPosition: `${(i % 2) * 100}% ${Math.floor(i / 2) * 100}%` }} />
         </Button>)}
       </section>
     </ContentBlock>

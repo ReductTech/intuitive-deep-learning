@@ -241,11 +241,11 @@ export function NetworkScene(){
    renderer.dispose();renderer.domElement.remove();
   };
  },[]);
- return <div className="vfl-train-stage">
-  <div className="vfl-train-animation-toolbar"><Button className="vfl-train-reset-view" onClick={()=>reset.current?.()}>恢复视角</Button></div>
-  <div className="vfl-train-diagram"><div className="vfl-train-model-area"><div ref={host} className="vfl-train-webgl" aria-label="单层卷积、ReLU、池化、GAP 与全连接的前馈动画"/>{error&&<Typography className="vfl-train-error" variant="bodySmall" tone="warning">{error}</Typography>}</div>
-   <div className="vfl-train-object-labels">{names.map(([name,detail],index)=><div key={name+index} ref={element=>{labels.current[index]=element;}}><Typography variant="bodySmall" tone="accent">{name}</Typography>{detail&&<Typography variant="bodySmall" tone="muted">{detail}</Typography>}</div>)}</div>
+ return <div shuku-edit-id="e-e776300f-018d-419e-9342-7a6fe6a31bcf" className="vfl-train-stage">
+  <div shuku-edit-id="e-87dfd45e-d74f-477c-b349-f017c480749e" className="vfl-train-animation-toolbar"><Button className="vfl-train-reset-view" onClick={()=>reset.current?.()}>恢复视角</Button></div>
+  <div shuku-edit-id="e-a6c92408-9cba-4b9c-88c8-63c9a5825489" className="vfl-train-diagram"><div shuku-edit-id="e-3499c319-4d33-4557-a59b-528a7652a50d" className="vfl-train-model-area"><div shuku-edit-id="e-3d01fb45-0bf5-4110-a738-ee381348f6f8" ref={host} className="vfl-train-webgl" aria-label="单层卷积、ReLU、池化、GAP 与全连接的前馈动画"/>{error&&<Typography shuku-edit-id="e-e85e9129-81b3-4115-bb59-536233b3f8be" className="vfl-train-error" variant="bodySmall" tone="warning">{error}</Typography>}</div>
+   <div shuku-edit-id="e-06646e78-e5a4-4d02-ad87-a3530fef87db" className="vfl-train-object-labels">{names.map(([name,detail],index)=><div shuku-edit-id="e-a4db7e9a-97ba-4a1d-b68e-1e28c614424b" key={name+index} ref={element=>{labels.current[index]=element;}}><Typography shuku-edit-id="e-7ef2c8c9-7774-4af8-bc20-32829c6ce1aa" variant="bodySmall" tone="accent">{name}</Typography>{detail&&<Typography shuku-edit-id="e-e52fe58e-1c9f-47dc-a319-46a6fcfb8da6" variant="bodySmall" tone="muted">{detail}</Typography>}</div>)}</div>
   </div>
-  <Typography className="vfl-train-scene-footer" variant="bodySmall" tone="muted">拖动旋转 · 滚轮缩放 · 右键拖动平移</Typography>
+  <Typography shuku-edit-id="e-4aab0435-41df-4da8-856c-372729bd6684" className="vfl-train-scene-footer" variant="bodySmall" tone="muted">拖动旋转 · 滚轮缩放 · 右键拖动平移</Typography>
  </div>;
 }

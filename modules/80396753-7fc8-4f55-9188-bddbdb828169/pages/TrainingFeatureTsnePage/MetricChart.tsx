@@ -31,8 +31,8 @@ export function MetricChart({frames,index}:{frames:TsneFrame[];index:number}){
   yaxis:{title:{text:'交叉熵损失',font:{size:24,color:lossColor}},range:[0,Math.max(2.5,...frames.flatMap(frame=>[frame.train_loss,frame.val_loss]))*1.05],gridcolor:'#dfe6f1',zerolinecolor:'#68778f',linecolor:'#9fb0c8',showline:true,fixedrange:true},
   yaxis2:{title:{text:'准确率',font:{size:24,color:accuracyColor}},overlaying:'y',side:'right',range:[0,1],dtick:0.2,tickformat:'.0%',showgrid:false,zeroline:false,linecolor:'#9fb0c8',showline:true,fixedrange:true},
  }),[frames]);
- return <section className="vfl-tsne-metric">
-  <div className="vfl-tsne-panel-title"><span className="vfl-tsne-icon-tile"><TrainingIcon kind="metrics"/></span><Typography variant="h3" tone="accent">训练指标</Typography></div>
+ return <section shuku-edit-id="e-a06037d3-b4d5-40a4-a19b-1e0c49a44d16" className="vfl-tsne-metric">
+  <div shuku-edit-id="e-ce822189-ca52-492a-b0bb-c0e56f8f871a" className="vfl-tsne-panel-title"><span shuku-edit-id="e-0a3ad910-9f96-4080-ada8-3744309dc320" className="vfl-tsne-icon-tile"><TrainingIcon kind="metrics"/></span><Typography shuku-edit-id="e-3ebf05a2-2240-4fe2-acf8-e25778a92a60" variant="h3" tone="accent">训练指标</Typography></div>
   <PlotlyChart data={data} layout={layout} config={chartConfig} minHeight={0} aria-label="损失和准确率随训练轮次变化，左轴为损失，右轴为准确率"/>
  </section>;
 }

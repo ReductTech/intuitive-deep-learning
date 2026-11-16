@@ -2,11 +2,11 @@ import { SceneDeck, type DeckDefinition, type SceneDefinition, type SpeakerNote 
 import { LessonSlide } from './pages/LessonSlide/LessonSlide';
 import outline from './outlines.json';
 
-const scenes: SceneDefinition[] = outline.pages.map((page, index) => ({
+const scenes: SceneDefinition[] = outline.pages.map(page => ({
   id: page.id,
   title: page.title,
   section: page.section,
-  render: () => <LessonSlide index={index} />,
+  render: () => <LessonSlide pageId={page.id} />,
 }));
 
 export const deck: DeckDefinition = {
@@ -18,7 +18,7 @@ export const deck: DeckDefinition = {
 
 export function getPptNotes(sceneId: string): SpeakerNote[] {
   const page = outline.pages.find((item) => item.id === sceneId);
-  return page ? [{ text: `${page.snippet}\n教学目标：${page.goal}\n交互：${page.interaction}`, selectors: [] }] : [];
+  return page ? [{ text: page.snippet, selectors: [] }] : [];
 }
 
 export function AgentPpt() {

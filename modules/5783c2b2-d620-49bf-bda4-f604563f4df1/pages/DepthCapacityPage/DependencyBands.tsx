@@ -47,9 +47,9 @@ export function DependencyBands({ hostRef, inputRef, previousRef, outputRef, dep
   if (!layout) return null;
   const polygons = dependencyPolygons(layout.boxes, depth, cell);
   const middle = gridRegionRect(layout.boxes[1], layerSize((depth - 1) as 0 | 1 | 2), 4, traceReceptiveField(depth, cell).previous);
-  return <svg className="rtg-depth-capacity__dependency-bands"
+  return <svg shuku-edit-id="e-8582f17f-46ef-491a-a121-1e5796a6bf33" className="rtg-depth-capacity__dependency-bands"
     viewBox={'0 0 ' + layout.width + ' ' + layout.height} preserveAspectRatio="none" aria-hidden="true">
-    {polygons.map((points, index) => <polygon key={index} points={points} />)}
-    <rect x={middle.left} y={middle.top} width={middle.width} height={middle.height} />
+    {polygons.map((points, index) => <polygon shuku-edit-id="e-59587e85-2ece-416c-a754-7f11fe6ca88b" key={index} points={points} />)}
+    <rect shuku-edit-id="e-53a45e16-b655-40d4-acce-7da1f2db243e" x={middle.left} y={middle.top} width={middle.width} height={middle.height} />
   </svg>;
 }

@@ -9,18 +9,18 @@ const SIZES = [9, 7, 5, 3, 1];
 const CELL = .52;
 
 function Fallback({ layers, selected, onSelect }: { layers: number; selected: CellSelection; onSelect: (cell: CellSelection) => void }) {
-  return <div className="aipe-replay-cg-copy-ck-field__fallback">
+  return <div shuku-edit-id="e-ec84e19c-f906-4721-8e46-702a538705f2" className="aipe-replay-cg-copy-ck-field__fallback">
     {Array.from({ length: layers + 1 }, (_, reverseIndex) => {
       const level = layers - reverseIndex;
       const size = SIZES[level];
       const reach = selected.level - level;
-      return <div className="aipe-replay-cg-copy-ck-field__fallbaaipe-replay-cg-copy-ck-layer" key={level}>
-        <Typography variant="bodySmall" tone="accent">{level === 0 ? '输入图像' : `第 ${level} 层`} · {size} × {size}</Typography>
-        <div className="aipe-replay-cg-copy-ck-field__fallbaaipe-replay-cg-copy-ck-grid" style={{ gridTemplateColumns: `repeat(${size},minmax(0,1fr))` }}>
+      return <div shuku-edit-id="e-b5396fcc-4168-420b-9940-95d08ae775df" className="aipe-replay-cg-copy-ck-field__fallbaaipe-replay-cg-copy-ck-layer" key={level}>
+        <Typography shuku-edit-id="e-5b3a89a4-200c-45b1-a3ff-dfa7ba1897c6" variant="bodySmall" tone="accent">{level === 0 ? '输入图像' : `第 ${level} 层`} · {size} × {size}</Typography>
+        <div shuku-edit-id="e-a3101bd3-c194-4662-bcb7-0912e033c7a3" className="aipe-replay-cg-copy-ck-field__fallbaaipe-replay-cg-copy-ck-grid" style={{ gridTemplateColumns: `repeat(${size},minmax(0,1fr))` }}>
           {Array.from({ length: size * size }, (_, index) => {
             const row = Math.floor(index / size), col = index % size;
             const active = reach >= 0 && row >= selected.row && row < selected.row + 1 + 2 * reach && col >= selected.col && col < selected.col + 1 + 2 * reach;
-            return <button key={index} type="button" className={active ? 'is-active' : ''} aria-label={`${level === 0 ? '输入' : `第${level}层`}第${row + 1}行第${col + 1}列`} onClick={() => onSelect({ level, row, col })} />;
+            return <button shuku-edit-id="e-bc07a145-6183-4bd3-9bb7-f67247657041" key={index} type="button" className={active ? 'is-active' : ''} aria-label={`${level === 0 ? '输入' : `第${level}层`}第${row + 1}行第${col + 1}列`} onClick={() => onSelect({ level, row, col })} />;
           })}
         </div>
       </div>;
@@ -246,7 +246,7 @@ export function ReceptiveFieldScene({ layers, selected, onSelect, resetViewToken
     };
   }, []);
 
-  return <div ref={mountRef} className="aipe-replay-cg-copy-ck-field__scene" role="img" aria-label={`可旋转缩放的卷积层叠模型，当前选中${selected.level === 0 ? '输入图像' : `第${selected.level}层特征图`}第${selected.row + 1}行第${selected.col + 1}列，点击任一网格位置查看各下层感受野`}>
+  return <div shuku-edit-id="e-dcaea31e-3ba2-4ffc-bf03-f23abcbfe7bf" ref={mountRef} className="aipe-replay-cg-copy-ck-field__scene" role="img" aria-label={`可旋转缩放的卷积层叠模型，当前选中${selected.level === 0 ? '输入图像' : `第${selected.level}层特征图`}第${selected.row + 1}行第${selected.col + 1}列，点击任一网格位置查看各下层感受野`}>
     {fallback && <Fallback layers={layers} selected={selected} onSelect={onSelect} />}
   </div>;
 }

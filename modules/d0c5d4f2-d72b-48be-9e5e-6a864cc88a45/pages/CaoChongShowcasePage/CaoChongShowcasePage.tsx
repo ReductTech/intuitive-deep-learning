@@ -15,5 +15,5 @@ export function CaoChongShowcasePage() {
     }
     await demo.move(root.current!.querySelector('.rl-cao-chart')!,650);await demo.wait(1300);
   },{ready:()=>Array.from(root.current?.querySelectorAll('img')??[]).every(image=>image.complete)});
-  return <section ref={root} className="rf-page rf-interaction-showcase rf-regression-showcase rf-recording-demo" aria-label="交互教学：曹冲称象实验"><CaoChongPage /></section>;
+  return <section shuku-edit-id="e-18cf8b07-bf30-448f-9f09-f29196ebacb4" ref={root} className="rf-page rf-interaction-showcase rf-regression-showcase rf-recording-demo" aria-label="交互教学：曹冲称象实验"><CaoChongPage /></section>;
 }

@@ -30,21 +30,21 @@ export function TransferCheckPanel({ hidden = false, attempt = 0, onCheck }: Tra
     }
   }
 
-  return <div className="rtg-transfer-check" hidden={hidden} aria-label="理解与应用">
-    <section className="rtg-transfer-check__question" aria-label="迁移理解检查">
+  return <div shuku-edit-id="e-f944e758-e214-420b-b89f-92ac81f27492" className="rtg-transfer-check" hidden={hidden} aria-label="理解与应用">
+    <section shuku-edit-id="e-23c6d065-67d4-4b13-a5dc-0b0ff4fba445" className="rtg-transfer-check__question" aria-label="迁移理解检查">
       <RtgQuestion pageId={'22-transferable-experience:attempt-' + attempt} questionId="why-backbone" type="choice" typeLabel="迁移检查" title="为什么通常保留特征提取器，而不是直接保留旧分类答案？" answer="representation" options={[
         { value: 'representation', label: '边缘、纹理和形状等表示可服务于多个视觉任务' },
         { value: 'same-labels', label: '所有视觉任务使用完全相同的类别名称', wrongFeedback: '新任务的类别空间通常不同。' },
         { value: 'no-training', label: '保留骨干后不再需要任何训练', wrongFeedback: '新分类头通常仍需训练，骨干也可能需要微调。' },
       ]} feedback={{ correct: '通用视觉表示可以复用，旧分类答案则往往需要替换。' }} onCheck={onCheck} />
     </section>
-    <section className="rtg-transfer-check__reflection" aria-label="AI延伸点评">
-      <Typography as="h2" variant="h2" tone="accent">举例说明</Typography>
-      <Typography variant="bodySmall" tone="muted">举出一个能迁移到可回收物分类的视觉线索，并说明原因。</Typography>
-      {aiResult || aiError ? <div className="rtg-transfer-check__response" aria-live="polite">
-        <NoticeStrip tone={aiError ? 'orange' : aiResult?.isCorrect ? 'green' : 'blue'}><Typography variant="bodySmall" tone="inherit">{aiError || `${aiResult?.verdict}：${aiResult?.explanation}`}</Typography></NoticeStrip>
+    <section shuku-edit-id="e-5fcd7171-a4a6-435d-bfb6-b714973555be" className="rtg-transfer-check__reflection" aria-label="AI延伸点评">
+      <Typography shuku-edit-id="e-8807aadc-2945-4191-8c70-3553d66549ae" as="h2" variant="h2" tone="accent">举例说明</Typography>
+      <Typography shuku-edit-id="e-ae7b6506-456e-47e8-8ba8-acb254d76e05" variant="bodySmall" tone="muted">举出一个能迁移到可回收物分类的视觉线索，并说明原因。</Typography>
+      {aiResult || aiError ? <div shuku-edit-id="e-23ba243b-d8b0-422f-b7df-7eae0b3d93f9" className="rtg-transfer-check__response" aria-live="polite">
+        <NoticeStrip tone={aiError ? 'orange' : aiResult?.isCorrect ? 'green' : 'blue'}><Typography shuku-edit-id="e-c1c458f7-8d08-432b-ad4d-5fb1e4f61727" variant="bodySmall" tone="inherit">{aiError || `${aiResult?.verdict}：${aiResult?.explanation}`}</Typography></NoticeStrip>
         <Button data-edit-reflection onClick={() => { setAiResult(null); setAiError(''); }}>修改回答</Button>
-      </div> : <form onSubmit={askAi}>
+      </div> : <form shuku-edit-id="e-4e0c00c5-c295-4793-a70d-b682fdd1fb12" onSubmit={askAi}>
         <TextInput className="ui-typography ui-typography--bodySmall" aria-label="可迁移视觉线索及原因" value={reflection} multiline rows={3} disabled={aiLoading} placeholder="例如：瓶口的圆形边缘，因为……" onChange={event => setReflection(event.currentTarget.value)} />
         <Button data-ask-ai type="submit" variant="primary" loading={aiLoading} disabled={!reflection.trim()}>{aiLoading ? '正在点评…' : 'AI 点评'}</Button>
       </form>}

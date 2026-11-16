@@ -19,5 +19,5 @@ export function FruitMixCanvas({weight}:{weight:number}) {
     });
     return ()=>{active=false;};
   },[weight]);
-  return <canvas ref={ref} width={600} height={400} aria-label="按权重逐像素混合的苹果和梨" style={{width:'min(100%,600px)',height:'auto',borderRadius:'var(--ui-radius-md)'}}/>;
+  return <canvas shuku-edit-id="e-2cadaca9-f466-459b-95d7-b08df2e9d905" ref={ref} width={600} height={400} aria-label="按权重逐像素混合的苹果和梨" style={{width:'min(100%,600px)',height:'auto',borderRadius:'var(--ui-radius-md)'}}/>;
 }

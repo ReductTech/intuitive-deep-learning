@@ -15,7 +15,7 @@ function Fallback({ rate, selected }: { rate: DilationRate; selected: OutputCell
     { size: outputSize, active: (row: number, col: number) => row === selected.row && col === selected.col },
     { size: INPUT_SIZE, active: (row: number, col: number) => row >= selected.row && row < selected.row + effectiveSize && col >= selected.col && col < selected.col + effectiveSize && (row - selected.row) % rate === 0 && (col - selected.col) % rate === 0 },
   ];
-  return <div className="cg-copy-ck-dilate__fallback">{grids.map(({ size, active }, level) => <div key={level} className="cg-copy-ck-dilate__fallbacg-copy-ck-grid" style={{ gridTemplateColumns: `repeat(${size},minmax(0,1fr))` }}>{Array.from({ length: size * size }, (_, index) => <span key={index} className={active(Math.floor(index / size), index % size) ? 'is-active' : ''} />)}</div>)}</div>;
+  return <div shuku-edit-id="e-14c2036c-6de7-44c4-9cfe-c2cbdd9ae908" className="cg-copy-ck-dilate__fallback">{grids.map(({ size, active }, level) => <div shuku-edit-id="e-8c4eca9c-e8e9-4d75-ab64-46e1a920bc99" key={level} className="cg-copy-ck-dilate__fallbacg-copy-ck-grid" style={{ gridTemplateColumns: `repeat(${size},minmax(0,1fr))` }}>{Array.from({ length: size * size }, (_, index) => <span shuku-edit-id="e-64fb6012-926b-44a2-afb6-c84dd3966b03" key={index} className={active(Math.floor(index / size), index % size) ? 'is-active' : ''} />)}</div>)}</div>;
 }
 
 export function DilatedConvolutionScene({ rate, selected, onSelect }: { rate: DilationRate; selected: OutputCell; onSelect: (cell: OutputCell) => void }) {
@@ -200,7 +200,7 @@ export function DilatedConvolutionScene({ rate, selected, onSelect }: { rate: Di
     };
   }, [rate]);
 
-  return <div ref={mountRef} className="cg-copy-ck-dilate__scene" role="img" aria-label={`空洞率 ${rate} 的双层模型：9 乘 9 输入上标出 9 个间隔采样点，${INPUT_SIZE - 2 * rate} 乘 ${INPUT_SIZE - 2 * rate} 输出；当前选择输出第 ${selected.row + 1} 行第 ${selected.col + 1} 列`}>
+  return <div shuku-edit-id="e-644d38d7-91c8-4795-9956-c6f256c495a2" ref={mountRef} className="cg-copy-ck-dilate__scene" role="img" aria-label={`空洞率 ${rate} 的双层模型：9 乘 9 输入上标出 9 个间隔采样点，${INPUT_SIZE - 2 * rate} 乘 ${INPUT_SIZE - 2 * rate} 输出；当前选择输出第 ${selected.row + 1} 行第 ${selected.col + 1} 列`}>
     {fallback && <Fallback rate={rate} selected={selected} />}
   </div>;
 }

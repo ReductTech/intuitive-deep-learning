@@ -13,16 +13,16 @@ import "./ClipFeedback.css";
 function FixedClassesBody() {
 
   return (
-    <div className="vlm-two">
-      <div className="vlm-stack">
+    <div shuku-edit-id="e-29ed6c7e-0234-45f8-9f41-f8a3c805675e" className="vlm-two">
+      <div shuku-edit-id="e-62e3e0e6-7e15-4fc9-82ad-eed1ba0e74de" className="vlm-stack">
         <Heading>测试时：图中出现“龙猫角色”</Heading>
         <ImageFocus region={{ x: 49, y: 7, w: 31, h: 85 }} />
       </div>
-      <div className="vlm-stack clip-fixed-right">
+      <div shuku-edit-id="e-e4e0ac39-5525-4d10-a47c-0104cb744dbf" className="vlm-stack clip-fixed-right">
         <Heading>训练时：分类头只学了 3 类</Heading>
-        <div className="clip-head clip-fixed-head">
+        <div shuku-edit-id="e-347924f1-b253-4905-8e43-279548ccda9f" className="clip-head clip-fixed-head">
           {["猫", "狗", "汽车"].map((label, i) => (
-            <div className="clip-weight-row" key={label}>
+            <div shuku-edit-id="e-85179a43-cc1b-4633-8126-6354e2599be8" className="clip-weight-row" key={label}>
               <Text>{label}</Text>
               <Text>第 {i + 1} 组分类权重</Text>
             </div>
@@ -30,7 +30,7 @@ function FixedClassesBody() {
 
         </div>
         <Text>分类头只有这三个输出通道。</Text>
-        <Typography variant="body" tone="accent">类别表外：龙猫角色，没有对应分类权重。</Typography>
+        <Typography shuku-edit-id="e-449dbfab-db70-486b-84f3-126f9be0b21c" variant="body" tone="accent">类别表外：龙猫角色，没有对应分类权重。</Typography>
       </div>
     </div>
   );
@@ -38,13 +38,13 @@ function FixedClassesBody() {
 
 function DynamicClassifierBody() {
   const sequence=useStepSequence(3), stage=sequence.step;
-  return <div className="clip-feedback-inference" data-clip-stage={stage} ref={sequence.hostRef}>
-    <div className="clip-inference-main">
-      <section className="clip-caption-source"><Heading>已有的配对 Caption</Heading><div className="clip-caption-photo"><ImageFocus/></div><Text>女孩撑着红伞，与龙猫站在雨中。</Text><div className="clip-caption-encoding"><Typography variant="bodySmall" tone="accent">文本编码器 → 一个文本向量</Typography><ClipTextVector seed={1}/></div></section>
-      <section className="clip-feedback-candidates"><Heading>匹配时提供的开放文本</Heading><Typography variant="bodySmall" tone="muted">{stage===0?'① 提供候选描述。':'② 同一个已训练文本编码器：每段文字 → 一个向量。'}</Typography><ClipCandidateComparison vectors={stage>=1}/><Typography variant="h3" tone="accent" className={stage<2?'clip-feedback-hidden':''}>保留 T1、T2、T3，下一页加入 I</Typography></section>
+  return <div shuku-edit-id="e-1ec9e449-46bf-4d31-b498-ce5da94ff261" className="clip-feedback-inference" data-clip-stage={stage} ref={sequence.hostRef}>
+    <div shuku-edit-id="e-9a8fe72c-aafa-4c72-a2fc-2c3166d2bc8e" className="clip-inference-main">
+      <section shuku-edit-id="e-99393327-7dec-4deb-8366-3f6bfabb7ef0" className="clip-caption-source"><Heading>已有的配对 Caption</Heading><div shuku-edit-id="e-a5f1768f-54af-4929-b2f3-23ff81a61a54" className="clip-caption-photo"><ImageFocus/></div><Text>女孩撑着红伞，与龙猫站在雨中。</Text><div shuku-edit-id="e-1b26ae43-ffb9-4c52-9985-8fc2cb19da00" className="clip-caption-encoding"><Typography shuku-edit-id="e-2ffbf0ee-1591-485c-b46f-9fa620b1db7a" variant="bodySmall" tone="accent">文本编码器 → 一个文本向量</Typography><ClipTextVector seed={1}/></div></section>
+      <section shuku-edit-id="e-defdff13-3a80-4a71-b405-ef5a634c66c8" className="clip-feedback-candidates"><Heading>匹配时提供的开放文本</Heading><Typography shuku-edit-id="e-21fe6ea0-9ece-49d9-ab76-dfa19f3296f5" variant="bodySmall" tone="muted">{stage===0?'① 提供候选描述。':'② 同一个已训练文本编码器：每段文字 → 一个向量。'}</Typography><ClipCandidateComparison vectors={stage>=1}/><Typography shuku-edit-id="e-162529f9-fc45-490f-9fcc-8a7acef01efa" variant="h3" tone="accent" className={stage<2?'clip-feedback-hidden':''}>保留 T1、T2、T3，下一页加入 I</Typography></section>
     </div>
-    <div className="clip-feedback-check"><Typography variant="bodySmall" tone="muted">左侧 Caption 来自训练配对；右侧候选由使用者提供。色块只示意向量结构。</Typography></div>
-    <div className="clip-feedback-bottom"><Typography variant="bodySmall" tone="muted">保持编码器参数不变，把开放文字变为可比较的向量。</Typography><StepSequenceControl step={sequence.step} steps={sequence.steps} onPrevious={sequence.previous} onNext={sequence.next} label="候选 → 编码 → 保留"/></div>
+    <div shuku-edit-id="e-db0d15c6-c143-46fb-8010-333f198811c8" className="clip-feedback-check"><Typography shuku-edit-id="e-45b10a12-ea39-4736-a91a-7c28982a3833" variant="bodySmall" tone="muted">左侧 Caption 来自训练配对；右侧候选由使用者提供。色块只示意向量结构。</Typography></div>
+    <div shuku-edit-id="e-ac0ca3ec-7897-44b5-ad5d-66bf50fe9467" className="clip-feedback-bottom"><Typography shuku-edit-id="e-74fc9962-ae52-4be4-a364-2d52443836a7" variant="bodySmall" tone="muted">保持编码器参数不变，把开放文字变为可比较的向量。</Typography><StepSequenceControl step={sequence.step} steps={sequence.steps} onPrevious={sequence.previous} onNext={sequence.next} label="候选 → 编码 → 保留"/></div>
   </div>;
 }
 export const clipLessons = {

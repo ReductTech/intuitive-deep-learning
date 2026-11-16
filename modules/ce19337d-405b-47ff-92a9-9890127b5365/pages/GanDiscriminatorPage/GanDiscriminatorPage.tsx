@@ -38,19 +38,19 @@ export function GanDiscriminatorPage({ onComplete }: { onComplete?: () => void }
     onComplete?.();
   }, [onComplete, stage]);
 
-  return <ContentBlock headingLevel={1} title="GAN 判别器：图像真假判断流程" subtitle="图像经过特征提取，得到判别器对真实程度的评分。" bodyClassName="vg-gan__layout" className="vg-shared-page vg-gan vg-gan-discriminator" aria-label="GAN 判别器：图像真假判断流程" data-stage={stage}>
-    <div className="vg-gan__body">
-      <div className="vg-gan__canvas">
-        {diagramFailed ? <Typography role="alert" variant="bodySmall">图示加载失败，请刷新页面重试。</Typography> : <div className="vg-gan__diagram" dangerouslySetInnerHTML={{ __html: diagram }} />}
-        {stage >= 1 && <Typography as="span" variant="bodySmall" tone="muted" className="vg-gan-discriminator__model-label">判别器 D</Typography>}
-        <div className="vg-gan__explanation" aria-live="polite" aria-atomic="true">
-          <Typography as="strong" variant="body" tone="accent">{stages[stage].title}</Typography>
-          <Typography variant="bodySmall" tone="main">{stages[stage].explanation}</Typography>
+  return <ContentBlock shuku-edit-id="e-3ad4f9b7-6199-40e8-8364-82a56471b01e" headingLevel={1} title="GAN 判别器：图像真假判断流程" subtitle="图像经过特征提取，得到判别器对真实程度的评分。" bodyClassName="vg-gan__layout" className="vg-shared-page vg-gan vg-gan-discriminator" aria-label="GAN 判别器：图像真假判断流程" data-stage={stage}>
+    <div shuku-edit-id="e-b50430dc-4d7e-42f0-90f4-45bf0ce1b2cb" className="vg-gan__body">
+      <div shuku-edit-id="e-217ed120-9610-4ace-bda9-4dbe8d66aacc" className="vg-gan__canvas">
+        {diagramFailed ? <Typography shuku-edit-id="e-92397305-eebf-49bc-8049-231bac3c2f9b" role="alert" variant="bodySmall">图示加载失败，请刷新页面重试。</Typography> : <div shuku-edit-id="e-105cd622-0891-48fe-871d-194e7c52170f" className="vg-gan__diagram" dangerouslySetInnerHTML={{ __html: diagram }} />}
+        {stage >= 1 && <Typography shuku-edit-id="e-c5ee39c4-74df-4ff0-9488-627a22d3c6d7" as="span" variant="bodySmall" tone="muted" className="vg-gan-discriminator__model-label">判别器 D</Typography>}
+        <div shuku-edit-id="e-0b955a6c-1a9f-4a20-a480-4e6aff59242e" className="vg-gan__explanation" aria-live="polite" aria-atomic="true">
+          <Typography shuku-edit-id="e-8940b7a5-f077-40e3-a587-3365e911a4c8" as="strong" variant="body" tone="accent">{stages[stage].title}</Typography>
+          <Typography shuku-edit-id="e-f73f269a-a8be-4b85-a045-a5b174aaafdc" variant="bodySmall" tone="main">{stages[stage].explanation}</Typography>
         </div>
       </div>
     </div>
-    <footer className="vg-gan__footer">
-      <div className="vg-gan__actions">
+    <footer shuku-edit-id="e-4ec4cab8-7a26-4524-b07a-ed26f9447748" className="vg-gan__footer">
+      <div shuku-edit-id="e-776daef0-72b2-4a82-b4f8-a478032d7d4b" className="vg-gan__actions">
         {controls}
       </div>
     </footer>

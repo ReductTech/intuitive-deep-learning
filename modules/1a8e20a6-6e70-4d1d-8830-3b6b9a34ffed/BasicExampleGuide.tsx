@@ -9,9 +9,9 @@ export function BasicExampleGuide() {
   const frame = useRef<HTMLDivElement>(null);
   const scale = useSceneScale(frame);
   return (
-    <main className="be-guide">
-      <div ref={frame} id={outline.pages.find(page => page.id === 'f44e1a4d-1b51-4732-89ac-338e08d2ef97')!.id} className="be-guide-frame">
-        <div className="course-page-surface" style={{ transform: `scale(${scale})` }}>
+    <main shuku-edit-id="e-4bf5e941-adea-4609-b9af-c4bf1c8ae553" className="be-guide">
+      <div shuku-edit-id="e-6518dddc-f6e5-49b6-a5ea-63569e8f9ed9" ref={frame} id={outline.pages.find(page => page.id === 'f44e1a4d-1b51-4732-89ac-338e08d2ef97')!.id} className="be-guide-frame">
+        <div shuku-edit-id="e-23f05ba1-8ed0-421c-9b85-0abf25846e16" className="course-page-surface" style={{ transform: `scale(${scale})` }}>
           <CreatorSkillIntro />
         </div>
       </div>

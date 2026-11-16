@@ -27,8 +27,8 @@ export function useLecturePlayback(count: number, dwell = 1000, waitAt?: number)
   useEffect(() => {
     if (stage >= count - 1) setFinished(true);
   }, [stage, count]);
-  const controls = <div ref={anchor} data-playback-mode={finished ? 'review' : 'auto'} style={{ display: 'flex', gap: 12, minWidth: 0, maxWidth: '100%' }}>
-    {waiting && <Typography as="span" variant="bodySmall" tone="muted">拖动滑块，比较两个分布</Typography>}
+  const controls = <div shuku-edit-id="e-8df98e11-b51f-4c72-80bf-7ca8b0fddf3f" ref={anchor} data-playback-mode={finished ? 'review' : 'auto'} style={{ display: 'flex', gap: 12, minWidth: 0, maxWidth: '100%' }}>
+    {waiting && <Typography shuku-edit-id="e-a7e9a32c-2175-4069-a040-110eee12d554" as="span" variant="bodySmall" tone="muted">拖动滑块，比较两个分布</Typography>}
     {finished && <>
       <Button disabled={stage === 0} onClick={() => setStage(value => Math.max(0, value - 1))}>上一段</Button>
       <Button variant="primary" disabled={stage >= count - 1} onClick={() => setStage(value => Math.min(count - 1, value + 1))}>下一段</Button>

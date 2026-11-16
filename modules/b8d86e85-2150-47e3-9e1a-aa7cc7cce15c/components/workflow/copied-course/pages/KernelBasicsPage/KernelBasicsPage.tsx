@@ -130,10 +130,10 @@ function useConvolutionData(imageSource: string, kernel: number[][]): Convolutio
 
 function Matrix({ values, label, className = '' }: { values: number[][]; label: string; className?: string }) {
   return (
-    <div className={`cg-copy-ck-convolution__matrix ${className}`} role="img" aria-label={label} style={{ gridTemplateColumns: `repeat(${values[0].length}, minmax(0, 1fr))` }}>
+    <div shuku-edit-id="e-fccff5a7-c2d3-46a7-af7c-611cb3ca18b4" className={`cg-copy-ck-convolution__matrix ${className}`} role="img" aria-label={label} style={{ gridTemplateColumns: `repeat(${values[0].length}, minmax(0, 1fr))` }}>
       {values.flatMap((row, rowIndex) => row.map((value, colIndex) => (
-        <div key={`${rowIndex}-${colIndex}`} className={`cg-copy-ck-convolution__matrix-cell ${value < 0 ? 'is-negative' : ''} ${value > 0 ? 'is-positive' : ''}`}>
-          <Typography as="span" variant="bodySmall" tone={value === 0 ? 'muted' : 'inherit'} aria-hidden="true">{value}</Typography>
+        <div shuku-edit-id="e-fa8ee1d2-56e8-4e61-ac4e-aab35d4143a6" key={`${rowIndex}-${colIndex}`} className={`cg-copy-ck-convolution__matrix-cell ${value < 0 ? 'is-negative' : ''} ${value > 0 ? 'is-positive' : ''}`}>
+          <Typography shuku-edit-id="e-5f7f9381-74f9-49c1-b605-dae67b4d21b2" as="span" variant="bodySmall" tone={value === 0 ? 'muted' : 'inherit'} aria-hidden="true">{value}</Typography>
         </div>
       )))}
     </div>
@@ -150,10 +150,10 @@ function InputImage({ selected, imageSrc, data, onHover }: { selected: { row: nu
     height: `${(rows.end - rows.start + KERNEL_SIZE - 1) / data.inputHeight * 100}%`,
   } : undefined;
   return (
-    <div className="cg-copy-ck-convolution__image-frame" style={data ? { aspectRatio: `${data.inputWidth} / ${data.inputHeight}` } : undefined}>
-      <img src={imageSrc} alt="缩小后的灰度图，用于卷积演示" />
-      {patchStyle && <div className="cg-copy-ck-convolution__patch" style={patchStyle} aria-hidden="true" />}
-      <div
+    <div shuku-edit-id="e-7add9211-221a-4c72-821f-7e59412c73d3" className="cg-copy-ck-convolution__image-frame" style={data ? { aspectRatio: `${data.inputWidth} / ${data.inputHeight}` } : undefined}>
+      <img shuku-edit-id="e-5e779bdf-8a61-4bfa-85cb-040b59a355c3" src={imageSrc} alt="缩小后的灰度图，用于卷积演示" />
+      {patchStyle && <div shuku-edit-id="e-65ead801-2080-4610-90d5-a1c676a68249" className="cg-copy-ck-convolution__patch" style={patchStyle} aria-hidden="true" />}
+      <div shuku-edit-id="e-60c96b68-d916-42ca-bcfe-5f67a0cd2490"
         className="cg-copy-ck-convolution__image-hover-target"
         aria-hidden="true"
         onPointerMove={(event) => {
@@ -197,7 +197,7 @@ function ResponseCanvas({ output, width, height }: { output: Float32Array; width
     context.putImageData(pixels, 0, 0);
   }, [output, width, height]);
 
-  return <canvas ref={canvasRef} className="cg-copy-ck-convolution__output-canvas" aria-hidden="true" />;
+  return <canvas shuku-edit-id="e-71bd0e5b-5c5e-4130-9dfb-55ab40397eb5" ref={canvasRef} className="cg-copy-ck-convolution__output-canvas" aria-hidden="true" />;
 }
 
 function OutputMap({ data, selected, onSelect }: { data: ConvolutionData; selected: { row: number; col: number }; onSelect: (position: { row: number; col: number }) => void }) {
@@ -213,16 +213,16 @@ function OutputMap({ data, selected, onSelect }: { data: ConvolutionData; select
     return total / ((rows.end - rows.start) * (cols.end - cols.start));
   };
   return (
-    <div className="cg-copy-ck-convolution__output-map" style={{ aspectRatio: `${data.outputWidth} / ${data.outputHeight}` }}>
+    <div shuku-edit-id="e-24fda562-841b-49c9-babf-4b3d9c178e2b" className="cg-copy-ck-convolution__output-map" style={{ aspectRatio: `${data.outputWidth} / ${data.outputHeight}` }}>
       <ResponseCanvas output={data.output} width={data.outputWidth} height={data.outputHeight} />
-      <div className="cg-copy-ck-convolution__output-grid" role="grid" aria-label="卷积输出特征图，点击任意区域查看其中的平均响应" style={{ gridTemplateColumns: `repeat(${PREVIEW_WIDTH}, minmax(0, 1fr))`, gridTemplateRows: `repeat(${PREVIEW_HEIGHT}, minmax(0, 1fr))` }}>
+      <div shuku-edit-id="e-31f8e9c6-2c74-4650-a0ec-484fb94fc5fc" className="cg-copy-ck-convolution__output-grid" role="grid" aria-label="卷积输出特征图，点击任意区域查看其中的平均响应" style={{ gridTemplateColumns: `repeat(${PREVIEW_WIDTH}, minmax(0, 1fr))`, gridTemplateRows: `repeat(${PREVIEW_HEIGHT}, minmax(0, 1fr))` }}>
         {Array.from({ length: PREVIEW_WIDTH * PREVIEW_HEIGHT }, (_, index) => {
           const rowIndex = Math.floor(index / PREVIEW_WIDTH);
           const colIndex = index % PREVIEW_WIDTH;
           const value = averageAt(rowIndex, colIndex);
           const isSelected = selected.row === rowIndex && selected.col === colIndex;
           return (
-            <button
+            <button shuku-edit-id="e-54297efd-d6d9-46e4-9595-7e8b2ed3c7cf"
               type="button"
               key={`${rowIndex}-${colIndex}`}
               className={`cg-copy-ck-convolution__output-cell ${isSelected ? 'is-selected' : ''}`}
@@ -257,39 +257,39 @@ export function KernelBasicsPage({ onComplete }: KernelBasicsPageProps) {
   };
 
   return (
-    <ContentBlock
+    <ContentBlock shuku-edit-id="e-8f99dcf1-77ba-4ced-8349-e7f573eb313c"
       headingLevel={1}
       className="cg-copy-ck-convolution"
       title="卷积核"
       subtitle="卷积核在输入图像的局部区域上计算响应，并逐位置生成输出特征图。"
     >
-      <div className="cg-copy-ck-convolution__workspace">
-        <section className="cg-copy-ck-convolution__flow" aria-label="输入图像、卷积核与输出特征图">
-          <div className="cg-copy-ck-convolution__stage">
-            <Typography as="h2" variant="h3" tone="accent">输入图像 X</Typography>
+      <div shuku-edit-id="e-b47b2b72-0688-4226-94d4-8893ad97ed6d" className="cg-copy-ck-convolution__workspace">
+        <section shuku-edit-id="e-4803b303-a506-41e8-a5e8-925d6e64ca0b" className="cg-copy-ck-convolution__flow" aria-label="输入图像、卷积核与输出特征图">
+          <div shuku-edit-id="e-b02f168c-1a63-4b1e-9842-b68fc1ac8ca4" className="cg-copy-ck-convolution__stage">
+            <Typography shuku-edit-id="e-789dcab9-0724-49b6-9f75-173c8349c50f" as="h2" variant="h3" tone="accent">输入图像 X</Typography>
             <InputImage selected={selected} imageSrc={data?.inputImageUrl ?? filter.image} data={data} onHover={selectOutput} />
-            <Typography variant="bodySmall" tone="muted" className="cg-copy-ck-convolution__stage-note">蓝框表示当前参与计算的局部窗口</Typography>
+            <Typography shuku-edit-id="e-8bb57051-44fd-4a07-9ecb-b416222639c0" variant="bodySmall" tone="muted" className="cg-copy-ck-convolution__stage-note">蓝框表示当前参与计算的局部窗口</Typography>
           </div>
 
-          <div className="cg-copy-ck-convolution__flow-arrow" aria-hidden="true"><Typography as="span" variant="h2" tone="accent">→</Typography></div>
+          <div shuku-edit-id="e-73584195-92f3-40cd-9277-6a62b97639de" className="cg-copy-ck-convolution__flow-arrow" aria-hidden="true"><Typography shuku-edit-id="e-3417a136-b451-4d45-b338-84a123226644" as="span" variant="h2" tone="accent">→</Typography></div>
 
-          <div className="cg-copy-ck-convolution__kernel-stage">
-            <Typography as="h2" variant="h3" tone="accent">卷积核 W</Typography>
+          <div shuku-edit-id="e-c8d5ad0f-f0a3-45b0-9de0-1ed8e604134b" className="cg-copy-ck-convolution__kernel-stage">
+            <Typography shuku-edit-id="e-0ee6dfc6-a022-457d-90cb-164b4521270a" as="h2" variant="h3" tone="accent">卷积核 W</Typography>
             <Matrix values={filter.kernel} label={`${filter.name}`} className="cg-copy-ck-convolution__kernel-matrix" />
-            <Typography variant="bodySmall" tone="muted">在局部窗口上逐元素相乘并求和</Typography>
+            <Typography shuku-edit-id="e-ec8b3d1d-7b39-4d1f-a04f-db403735bb61" variant="bodySmall" tone="muted">在局部窗口上逐元素相乘并求和</Typography>
           </div>
 
-          <div className="cg-copy-ck-convolution__flow-arrow" aria-hidden="true"><Typography as="span" variant="h2" tone="accent">→</Typography></div>
+          <div shuku-edit-id="e-f2e476d3-683c-4b95-925d-ef520f82ca77" className="cg-copy-ck-convolution__flow-arrow" aria-hidden="true"><Typography shuku-edit-id="e-4d08741c-5ee6-480a-a038-c94e4b0a5181" as="span" variant="h2" tone="accent">→</Typography></div>
 
-          <div className="cg-copy-ck-convolution__stage">
-            <Typography as="h2" variant="h3" tone="accent">输出特征图 Y</Typography>
-            {data ? <OutputMap data={data} selected={selected} onSelect={selectOutput} /> : <div className="cg-copy-ck-convolution__loading"><Typography variant="bodySmall" tone="muted">正在读取图像…</Typography></div>}
-            <Typography variant="bodySmall" tone="muted" className="cg-copy-ck-convolution__stage-note">一个局部窗口对应一个输出位置</Typography>
+          <div shuku-edit-id="e-2367496b-e4d1-44a6-9c8f-5caee048619c" className="cg-copy-ck-convolution__stage">
+            <Typography shuku-edit-id="e-9128cf78-5ce8-40f1-9f51-98d31dc4b673" as="h2" variant="h3" tone="accent">输出特征图 Y</Typography>
+            {data ? <OutputMap data={data} selected={selected} onSelect={selectOutput} /> : <div shuku-edit-id="e-0d1f5cc1-a567-4b6b-aed9-1c9a59599f0d" className="cg-copy-ck-convolution__loading"><Typography shuku-edit-id="e-95dab26a-0ae0-46b7-a9a3-0f8e332059d5" variant="bodySmall" tone="muted">正在读取图像…</Typography></div>}
+            <Typography shuku-edit-id="e-fcb5f440-a76c-492a-bc00-ae263348513a" variant="bodySmall" tone="muted" className="cg-copy-ck-convolution__stage-note">一个局部窗口对应一个输出位置</Typography>
           </div>
         </section>
       </div>
 
-      <div className="cg-copy-ck-convolution__explanation"><Typography variant="body" tone="accent">局部窗口经过卷积核计算得到<strong>一个响应值</strong>；窗口在输入图像上滑动后，所有响应共同组成<strong>输出特征图</strong>。</Typography></div>
+      <div shuku-edit-id="e-dbe971ed-ca39-4975-92cd-c7cafba8cb64" className="cg-copy-ck-convolution__explanation"><Typography shuku-edit-id="e-7837f337-7145-403f-a629-2f875123038c" variant="body" tone="accent">局部窗口经过卷积核计算得到<strong shuku-edit-id="e-dc79e656-0494-4a6f-bae8-3e9ddf9b0ce1">一个响应值</strong>；窗口在输入图像上滑动后，所有响应共同组成<strong shuku-edit-id="e-92389ad8-8819-4353-9b8e-b7532e3070f2">输出特征图</strong>。</Typography></div>
     </ContentBlock>
   );
 }

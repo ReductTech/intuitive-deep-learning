@@ -135,5 +135,5 @@ export function ElectronCloudScene({ scale, radiusNm, orbital, slice }: CloudSce
       renderer.dispose();renderer.domElement.remove();
     };
   }, []);
-  return <div className="cg-lab-scene" ref={host}>{failed&&<Typography className="cg-lab-failed" variant="bodySmall" tone="inherit">当前浏览器无法启动 WebGL，请开启硬件加速。</Typography>}<Typography ref={radiusLabel} as="span" variant="bodySmall" tone="inherit" className="cg-lab-radius-label">r</Typography><Typography as="span" variant="bodySmall" tone="inherit" className="cg-lab-nucleus-label">原子核</Typography></div>;
+  return <div shuku-edit-id="e-49a1b8fa-c3a9-479e-969b-c8064b4a53e7" className="cg-lab-scene" ref={host}>{failed&&<Typography shuku-edit-id="e-f78351de-c883-455d-9a22-9608617b8048" className="cg-lab-failed" variant="bodySmall" tone="inherit">当前浏览器无法启动 WebGL，请开启硬件加速。</Typography>}<Typography shuku-edit-id="e-c7e42993-3c32-4259-a097-2951e0de2382" ref={radiusLabel} as="span" variant="bodySmall" tone="inherit" className="cg-lab-radius-label">r</Typography><Typography shuku-edit-id="e-6e245daa-e743-409d-b09d-ba0193b415a2" as="span" variant="bodySmall" tone="inherit" className="cg-lab-nucleus-label">原子核</Typography></div>;
 }

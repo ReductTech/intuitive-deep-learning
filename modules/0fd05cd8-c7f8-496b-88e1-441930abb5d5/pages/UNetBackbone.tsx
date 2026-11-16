@@ -13,7 +13,7 @@ export function UNetBackbone() {
     <LessonSplit>
       <TeachingPanel title="① 输入与观察" className="vga-sidebar">
         <Photo small noise={.55} label="带噪输入示意" />
-        <div className="vga-panel-callout"><Text>点击特征图，观察阶段。</Text></div>
+        <div shuku-edit-id="e-cf2de1af-0e6c-46ab-94d6-a74a436735c5" className="vga-panel-callout"><Text>点击特征图，观察阶段。</Text></div>
         <Text muted>兼顾整体布局与爪子的位置。</Text>
         <Button data-testid="skip-toggle" active={!skip} aria-pressed={!skip} onClick={() => { setSkip(!skip); story.go(6); }}>{skip ? '切断 Skip，比较通路' : '重新接通 Skip'}</Button>
       </TeachingPanel>

@@ -229,19 +229,19 @@ function NumbersBoard({ board, winLine, spotlight, label, origin }: NumbersBoard
   }, [size, board, winLine, spotlight, origin]);
 
   return (
-    <div className="aipe-replay-cg-copy-ck-numbers__board" ref={frameRef}>
-      <canvas ref={canvasRef} className="aipe-replay-cg-copy-ck-numbers__board-canvas" role="img" aria-label={label} />
-      <div className="aipe-replay-cg-copy-ck-numbers__board-axis" aria-hidden="true">
-        <div className="aipe-replay-cg-copy-ck-numbers__board-axis-cols">
+    <div shuku-edit-id="e-325e0a55-24ca-4fd3-83e4-c305149441c2" className="aipe-replay-cg-copy-ck-numbers__board" ref={frameRef}>
+      <canvas shuku-edit-id="e-a9423da7-2135-4c65-9d91-f615c7ad8e71" ref={canvasRef} className="aipe-replay-cg-copy-ck-numbers__board-canvas" role="img" aria-label={label} />
+      <div shuku-edit-id="e-804f7b4f-a806-4bae-b5d2-cac5a1f402e3" className="aipe-replay-cg-copy-ck-numbers__board-axis" aria-hidden="true">
+        <div shuku-edit-id="e-54e26661-9694-4100-af62-ce353348b27e" className="aipe-replay-cg-copy-ck-numbers__board-axis-cols">
           {Array.from({ length: WINDOW_SIZE }, (_, index) => COLUMN_LABELS[origin.col + index]).map((text, index) => (
-              <Typography key={text} as="span" variant="body" style={{ left: `${(index / (WINDOW_SIZE - 1)) * 100}%` }}>
+              <Typography shuku-edit-id="e-9912ea34-7e6e-4373-8072-6759bd79b4ff" key={text} as="span" variant="body" style={{ left: `${(index / (WINDOW_SIZE - 1)) * 100}%` }}>
               {text}
             </Typography>
           ))}
         </div>
-        <div className="aipe-replay-cg-copy-ck-numbers__board-axis-rows">
+        <div shuku-edit-id="e-f029b366-7a83-452a-b591-01700c83c161" className="aipe-replay-cg-copy-ck-numbers__board-axis-rows">
           {Array.from({ length: WINDOW_SIZE }, (_, index) => ROW_LABELS[origin.row + index]).map((text, index) => (
-              <Typography key={text} as="span" variant="body" style={{ top: `${(index / (WINDOW_SIZE - 1)) * 100}%` }}>
+              <Typography shuku-edit-id="e-5b6b6211-19cf-4774-af07-eaf646edda3e" key={text} as="span" variant="body" style={{ top: `${(index / (WINDOW_SIZE - 1)) * 100}%` }}>
               {text}
             </Typography>
           ))}
@@ -265,8 +265,8 @@ interface MapTile {
  */
 function FlowArrow() {
   return (
-    <span className="aipe-replay-cg-copy-ck-numbers__arrow-slot" aria-hidden="true">
-      <span className="aipe-replay-cg-copy-ck-numbers__arrow" />
+    <span shuku-edit-id="e-60142978-b7e7-4d88-a9ed-fd0c62af309f" className="aipe-replay-cg-copy-ck-numbers__arrow-slot" aria-hidden="true">
+      <span shuku-edit-id="e-2c9ab425-60b1-4469-834e-518663927c7d" className="aipe-replay-cg-copy-ck-numbers__arrow" />
     </span>
   );
 }
@@ -324,37 +324,37 @@ export function BoardAsNumbersPage({ onComplete, clarifyOrigin = false, autoDemo
   const onHoverCell = useCallback((cell: Cell | null) => setFocus(cell), []);
 
   return (
-    <ContentBlock
+    <ContentBlock shuku-edit-id="e-2b51bc49-43e4-4db6-894f-011e7ff05116"
       headingLevel={1}
       className="aipe-replay-cg-copy-ck-numbers"
       style={boardBackgroundStyle}
       title="棋盘局部区域的数值表示"
       subtitle={clarifyOrigin ? '这些数字对应上一页的棋盘位置。将棋子与空位映射为数值，得到对应的局部矩阵。' : '将棋子与空位映射为数值，得到对应的局部矩阵。'}
     >
-      <div className="aipe-replay-cg-copy-ck-numbers__layout">
-        <div className="aipe-replay-cg-copy-ck-numbers__stage">
-          <div className="aipe-replay-cg-copy-ck-numbers__step-heading"><span>1</span><div><Typography as="h2" variant="h3" tone="accent">局部区域选取</Typography><Typography variant="bodySmall" tone="muted">选取五子连线附近的局部棋盘。</Typography></div></div>
+      <div shuku-edit-id="e-474d629b-28af-415c-a01f-3bca51166830" className="aipe-replay-cg-copy-ck-numbers__layout">
+        <div shuku-edit-id="e-d9f8170c-dbcc-4f2e-acff-2bdc42241886" className="aipe-replay-cg-copy-ck-numbers__stage">
+          <div shuku-edit-id="e-0354b3e1-4e34-47b4-885f-3589fe894eae" className="aipe-replay-cg-copy-ck-numbers__step-heading"><span shuku-edit-id="e-1fafc7bd-c145-4756-a818-4f0324652543">1</span><div shuku-edit-id="e-3bea8db5-bc59-46ee-b7e0-6ef9aae71b8f"><Typography shuku-edit-id="e-2d3a3e13-ef8c-424c-a795-8cb6c7176051" as="h2" variant="h3" tone="accent">局部区域选取</Typography><Typography shuku-edit-id="e-d966e355-8449-45f4-9153-eab2b9dd75aa" variant="bodySmall" tone="muted">选取五子连线附近的局部棋盘。</Typography></div></div>
           <NumbersBoard board={board} winLine={outcome.winLine} spotlight={focus} origin={zoom.origin} label={boardLabel} />
         </div>
 
         <FlowArrow />
 
-        <div className="aipe-replay-cg-copy-ck-numbers__map">
-          <div className="aipe-replay-cg-copy-ck-numbers__step-heading"><span>2</span><div><Typography as="h2" variant="h3" tone="accent">数值编码规则</Typography><Typography variant="bodySmall" tone="muted">目标棋子记为 1，对手棋子记为 −1，空位记为 0。</Typography></div></div>
-          <div className="aipe-replay-cg-copy-ck-numbers__map-tiles">
+        <div shuku-edit-id="e-18b46291-98db-45e4-a8b4-1825f6df67e4" className="aipe-replay-cg-copy-ck-numbers__map">
+          <div shuku-edit-id="e-43790c8e-df4d-4afc-815f-454429922231" className="aipe-replay-cg-copy-ck-numbers__step-heading"><span shuku-edit-id="e-1f9a0cca-b923-4012-8a99-fa7587545edf">2</span><div shuku-edit-id="e-3c6dca3c-2a0b-4bbf-9250-38366e0051ce"><Typography shuku-edit-id="e-8338a8d8-fdef-44af-a6ae-f9602964edc5" as="h2" variant="h3" tone="accent">数值编码规则</Typography><Typography shuku-edit-id="e-7c5f422f-0596-431c-99ed-7932432e0129" variant="bodySmall" tone="muted">目标棋子记为 1，对手棋子记为 −1，空位记为 0。</Typography></div></div>
+          <div shuku-edit-id="e-5bd8a233-b4cd-46ee-adc2-e94ef4ad9cdf" className="aipe-replay-cg-copy-ck-numbers__map-tiles">
             {tiles.map((tile) => {
               const kind = tile.value === 1 ? 'one' : tile.value === -1 ? 'minus' : 'zero';
               return (
-                <div key={tile.key} className={`aipe-replay-cg-copy-ck-numbers__map-tile aipe-replay-cg-copy-ck-numbers__map-tile--${kind}`}>
-                  <div className="aipe-replay-cg-copy-ck-numbers__map-face">
-                    <Typography as="span" variant="body" tone="muted">{tile.label}</Typography>
-                    <span
+                <div shuku-edit-id="e-0ead6b81-4755-47df-8958-8b9275a5858e" key={tile.key} className={`aipe-replay-cg-copy-ck-numbers__map-tile aipe-replay-cg-copy-ck-numbers__map-tile--${kind}`}>
+                  <div shuku-edit-id="e-b8317a51-8cf4-4d9a-8569-4d4412bfaad9" className="aipe-replay-cg-copy-ck-numbers__map-face">
+                    <Typography shuku-edit-id="e-0abc03f9-a156-4220-81ce-9c3caf6c39f4" as="span" variant="body" tone="muted">{tile.label}</Typography>
+                    <span shuku-edit-id="e-6e098771-6438-432e-81f2-917afba6649b"
                       className={`aipe-replay-cg-copy-ck-numbers__map-icon aipe-replay-cg-copy-ck-numbers__map-icon--${tile.icon}`}
                       aria-hidden="true"
                     />
                   </div>
-                  <div className="aipe-replay-cg-copy-ck-numbers__map-value">
-                    <Typography as="span" variant="h2" tone="inherit">
+                  <div shuku-edit-id="e-dfd5d683-8f51-4de3-9940-ea25c5303d02" className="aipe-replay-cg-copy-ck-numbers__map-value">
+                    <Typography shuku-edit-id="e-3e6843cd-7c49-447d-a591-d693cf23d421" as="span" variant="h2" tone="inherit">
                       {tile.value}
                     </Typography>
                   </div>
@@ -366,14 +366,14 @@ export function BoardAsNumbersPage({ onComplete, clarifyOrigin = false, autoDemo
 
         <FlowArrow />
 
-        <div className="aipe-replay-cg-copy-ck-numbers__panel">
-          <div className="aipe-replay-cg-copy-ck-numbers__step-heading"><span>3</span><div><Typography as="h2" variant="h3" tone="accent">局部矩阵表示</Typography><Typography variant="bodySmall" tone="muted">按照相同的空间位置排列对应数值。</Typography></div></div>
-          <div className="aipe-replay-cg-copy-ck-numbers__matrix">
-            <div className="aipe-replay-cg-copy-ck-numbers__matrix-corner" aria-hidden="true" />
+        <div shuku-edit-id="e-00ef88c6-f6eb-48a3-ba2c-8a011d2ca42d" className="aipe-replay-cg-copy-ck-numbers__panel">
+          <div shuku-edit-id="e-8ad771a5-dc6a-45be-b47f-64adab2d2422" className="aipe-replay-cg-copy-ck-numbers__step-heading"><span shuku-edit-id="e-d0baae6f-4129-4b77-a398-e4a588e497a2">3</span><div shuku-edit-id="e-49e09070-cc3f-4ac4-b40e-1a26d2f12656"><Typography shuku-edit-id="e-c9a817d2-d7b4-4ba6-98dd-49171fe7176d" as="h2" variant="h3" tone="accent">局部矩阵表示</Typography><Typography shuku-edit-id="e-8121f8c5-2a28-4a19-b665-3e1dec2e2c12" variant="bodySmall" tone="muted">按照相同的空间位置排列对应数值。</Typography></div></div>
+          <div shuku-edit-id="e-d56aa0e4-439b-4138-9e6a-2d003e105942" className="aipe-replay-cg-copy-ck-numbers__matrix">
+            <div shuku-edit-id="e-21419b06-e349-4314-9fcf-98ed069e2c29" className="aipe-replay-cg-copy-ck-numbers__matrix-corner" aria-hidden="true" />
 
-            <div className="aipe-replay-cg-copy-ck-numbers__matrix-cols" aria-hidden="true">
+            <div shuku-edit-id="e-82cfed0e-a080-45a7-8680-f2ba33099bfe" className="aipe-replay-cg-copy-ck-numbers__matrix-cols" aria-hidden="true">
               {matrixCols.map((col) => (
-                <Typography
+                <Typography shuku-edit-id="e-e6a0c7ad-074d-4636-b04f-5f809dce4813"
                   key={col}
                   as="span"
                   variant="body"
@@ -384,9 +384,9 @@ export function BoardAsNumbersPage({ onComplete, clarifyOrigin = false, autoDemo
               ))}
             </div>
 
-            <div className="aipe-replay-cg-copy-ck-numbers__matrix-rows" aria-hidden="true">
+            <div shuku-edit-id="e-5d9c1173-0fb9-4973-a844-f7fbe1d80e74" className="aipe-replay-cg-copy-ck-numbers__matrix-rows" aria-hidden="true">
               {matrixRows.map((row) => (
-                <Typography
+                <Typography shuku-edit-id="e-93507135-a06b-47b8-85ee-a21f0ef2a0c4"
                   key={row}
                   as="span"
                   variant="body"
@@ -397,7 +397,7 @@ export function BoardAsNumbersPage({ onComplete, clarifyOrigin = false, autoDemo
               ))}
             </div>
 
-            <div
+            <div shuku-edit-id="e-a491e900-b769-4e40-9942-1286003648ed"
               className="aipe-replay-cg-copy-ck-numbers__matrix-grid"
               role="group"
               aria-label={matrixLabel}
@@ -417,14 +417,14 @@ export function BoardAsNumbersPage({ onComplete, clarifyOrigin = false, autoDemo
                   focus && focus.row === row && focus.col === col ? 'is-hovered' : '',
                 ].filter(Boolean).join(' ');
                 return (
-                  <div
+                  <div shuku-edit-id="e-35347ccb-3545-4747-8fe1-a09478d1294c"
                     key={cellKey(row, col)}
                     className={classes}
                     data-cell={cellKey(row, col)}
                     onPointerEnter={onHoverCell.bind(null, { row, col })}
                     onPointerDown={onHoverCell.bind(null, { row, col })}
                   >
-                    <Typography
+                    <Typography shuku-edit-id="e-e283a1cc-7681-4986-8e82-cd697ce30903"
                       as="span"
                       variant="h2"
                       tone={value === 0 ? 'muted' : 'inherit'}

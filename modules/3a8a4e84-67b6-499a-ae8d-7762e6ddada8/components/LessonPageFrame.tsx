@@ -16,8 +16,8 @@ export function LessonPageFrame({ children }: LessonPageFrameProps) {
         observer.observe(frame);
         return () => observer.disconnect();
     }, []);
-    return (<div ref={frameRef} className="tr-page-frame" style={{ height: 900 * scale }}>
-      <div className="tr-page-canvas" style={{ transform: 'scale(' + scale + ')' }}>
+    return (<div shuku-edit-id="e-0eb1735c-776a-4ee1-9fcf-0c54670adc5a" ref={frameRef} className="tr-page-frame" style={{ height: 900 * scale }}>
+      <div shuku-edit-id="e-379ee440-8792-4e4f-bafe-e470b2dd146f" className="tr-page-canvas" style={{ transform: 'scale(' + scale + ')' }}>
         {children}
       </div>
     </div>);

@@ -15,7 +15,7 @@ function Fallback({ rate, selected }: { rate: DilationRate; selected: OutputCell
     { size: outputSize, active: (row: number, col: number) => row === selected.row && col === selected.col },
     { size: INPUT_SIZE, active: (row: number, col: number) => row >= selected.row && row < selected.row + effectiveSize && col >= selected.col && col < selected.col + effectiveSize && (row - selected.row) % rate === 0 && (col - selected.col) % rate === 0 },
   ];
-  return <div className="aipe-replay-cg-copy-ck-dilate__fallback">{grids.map(({ size, active }, level) => <div key={level} className="aipe-replay-cg-copy-ck-dilate__fallbaaipe-replay-cg-copy-ck-grid" style={{ gridTemplateColumns: `repeat(${size},minmax(0,1fr))` }}>{Array.from({ length: size * size }, (_, index) => <span key={index} className={active(Math.floor(index / size), index % size) ? 'is-active' : ''} />)}</div>)}</div>;
+  return <div shuku-edit-id="e-1b7575e4-f792-4a5c-a8de-5bf1327b71a5" className="aipe-replay-cg-copy-ck-dilate__fallback">{grids.map(({ size, active }, level) => <div shuku-edit-id="e-4f08f705-250a-48aa-9c75-b63885051721" key={level} className="aipe-replay-cg-copy-ck-dilate__fallbaaipe-replay-cg-copy-ck-grid" style={{ gridTemplateColumns: `repeat(${size},minmax(0,1fr))` }}>{Array.from({ length: size * size }, (_, index) => <span shuku-edit-id="e-71619dd4-6018-453e-9410-1d7859a538cf" key={index} className={active(Math.floor(index / size), index % size) ? 'is-active' : ''} />)}</div>)}</div>;
 }
 
 export function DilatedConvolutionScene({ rate, selected, onSelect }: { rate: DilationRate; selected: OutputCell; onSelect: (cell: OutputCell) => void }) {
@@ -200,7 +200,7 @@ export function DilatedConvolutionScene({ rate, selected, onSelect }: { rate: Di
     };
   }, [rate]);
 
-  return <div ref={mountRef} className="aipe-replay-cg-copy-ck-dilate__scene" role="img" aria-label={`空洞率 ${rate} 的双层模型：9 乘 9 输入上标出 9 个间隔采样点，${INPUT_SIZE - 2 * rate} 乘 ${INPUT_SIZE - 2 * rate} 输出；当前选择输出第 ${selected.row + 1} 行第 ${selected.col + 1} 列`}>
+  return <div shuku-edit-id="e-866e1ca4-1bc3-4e6a-8f13-f820f9c7d489" ref={mountRef} className="aipe-replay-cg-copy-ck-dilate__scene" role="img" aria-label={`空洞率 ${rate} 的双层模型：9 乘 9 输入上标出 9 个间隔采样点，${INPUT_SIZE - 2 * rate} 乘 ${INPUT_SIZE - 2 * rate} 输出；当前选择输出第 ${selected.row + 1} 行第 ${selected.col + 1} 列`}>
     {fallback && <Fallback rate={rate} selected={selected} />}
   </div>;
 }

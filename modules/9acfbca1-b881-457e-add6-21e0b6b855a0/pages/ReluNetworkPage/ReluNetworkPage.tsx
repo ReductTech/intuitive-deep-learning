@@ -93,9 +93,9 @@ function buildCanvas(count: number, allNeurons: readonly ShallowNeuron[]): { lay
         details: {
           title: `h${index + 1} 的 ReLU 输出`,
           content: (
-            <Typography as="code" variant="body" tone="inherit" wrap="nowrap">
+            <Typography shuku-edit-id="e-9b2951c3-be70-449b-b043-db58153b71c3" as="code" variant="body" tone="inherit" wrap="nowrap">
               {`h${index + 1} = ReLU(w${formatSubscript(index + 1)}x + b${formatSubscript(index + 1)})`}
-              <br />
+              <br shuku-edit-id="e-7c846db2-346d-459e-be04-00fe1708942e" />
               {`\u00A0\u00A0\u00A0= ReLU(${formatNumber(neuron.w)}x ${formatSigned(neuron.b)})`}
             </Typography>
           ),
@@ -111,7 +111,7 @@ function buildCanvas(count: number, allNeurons: readonly ShallowNeuron[]): { lay
         details: {
           title: '最终输出 y',
           content: (
-            <Typography as="code" variant="body" tone="inherit" wrap="nowrap">
+            <Typography shuku-edit-id="e-9c56545e-8034-464d-b9a7-0a3a60f2ef19" as="code" variant="body" tone="inherit" wrap="nowrap">
               y = Σ vᵢhᵢ {formatSigned(RELU_OUTPUT_BIAS)}
             </Typography>
           ),
@@ -168,7 +168,7 @@ export function ReluNetworkPage({ onComplete }: ReluNetworkPageProps) {
   };
 
   return (
-    <ContentBlock
+    <ContentBlock shuku-edit-id="e-745d5995-92d3-47a1-8659-d218fc2cecb3"
       ref={rootRef}
       headingLevel={1}
       className="ngtw-activation-network-lab ngtw-relu-network"
@@ -177,17 +177,17 @@ export function ReluNetworkPage({ onComplete }: ReluNetworkPageProps) {
       aria-busy={!hydrated}
     >
       {!state ? (
-        <NoticeStrip tone="blue"><Typography variant="body" tone="inherit">正在恢复神经元数量…</Typography></NoticeStrip>
+        <NoticeStrip tone="blue"><Typography shuku-edit-id="e-77fa6453-1540-4639-9ffd-6f058264915e" variant="body" tone="inherit">正在恢复神经元数量…</Typography></NoticeStrip>
       ) : (
         <>
-          <div className="ngtw-relu-toolbar flex min-w-0 max-w-full items-center justify-between gap-[12px] min-h-[56px] p-[4px_8px_4px_12px]">
-            <div className="ngtw-relu-toolbar__context flex min-w-0 max-w-full items-center gap-[6px]">
-              <Typography as="span" variant="body" tone="muted">当前结构：</Typography>
-              <Typography as="strong" variant="body" tone="accent">{count} 个 ReLU 神经元</Typography>
-              <Typography as="span" variant="body" tone="muted">汇合为</Typography>
-              <Typography as="strong" variant="body" tone="success">1 个输出</Typography>
+          <div shuku-edit-id="e-96d0c865-c61f-4996-aded-ecd31850e5a4" className="ngtw-relu-toolbar flex min-w-0 max-w-full items-center justify-between gap-[12px] min-h-[56px] p-[4px_8px_4px_12px]">
+            <div shuku-edit-id="e-2ac698c9-f0d1-4e5d-84f1-b10078dcf02f" className="ngtw-relu-toolbar__context flex min-w-0 max-w-full items-center gap-[6px]">
+              <Typography shuku-edit-id="e-25c4b4bd-1ead-4042-988b-8d9c3972b264" as="span" variant="body" tone="muted">当前结构：</Typography>
+              <Typography shuku-edit-id="e-588ba8e5-b891-4bb3-8a7e-a55a2286a4ee" as="strong" variant="body" tone="accent">{count} 个 ReLU 神经元</Typography>
+              <Typography shuku-edit-id="e-18779430-7466-4896-8753-7933820a7137" as="span" variant="body" tone="muted">汇合为</Typography>
+              <Typography shuku-edit-id="e-05fd8e0c-7dd0-45ea-aacd-73e9ad03a2dd" as="strong" variant="body" tone="success">1 个输出</Typography>
             </div>
-            <div className="ngtw-activation-actions flex flex-wrap gap-[8px]" aria-label="调整网络结构">
+            <div shuku-edit-id="e-4c82be6c-dd82-4ba8-b79c-f7e82c5f753d" className="ngtw-activation-actions flex flex-wrap gap-[8px]" aria-label="调整网络结构">
               <Button variant="primary" disabled={!hydrated || count >= MAX_RELU_NEURON_COUNT} onClick={() => changeCount(count + 1, 'add')}>
                 添加神经元
               </Button>
@@ -198,13 +198,13 @@ export function ReluNetworkPage({ onComplete }: ReluNetworkPageProps) {
             </div>
           </div>
 
-          <div className="ngtw-activation-network-stage grid grid-cols-[minmax(0,_.95fr)_minmax(0,_1.05fr)] items-stretch gap-[14px]">
-            <section className="ngtw-activation-network-panel relative flex min-w-0 min-h-[560px] flex-col bg-[#fff] p-[14px] ngtw-relu-panel ngtw-relu-panel--network" aria-label="网络结构">
-              <header className="ngtw-activation-panel-head flex items-baseline justify-between gap-[12px] mb-[10px]">
-                <Typography as="h3" variant="subtitle" tone="main">把多个 ReLU 神经元组合起来</Typography>
-                <Typography as="span" variant="bodySmall" tone="muted">hᵢ = ReLU(wᵢx + bᵢ)</Typography>
+          <div shuku-edit-id="e-9c9ee633-727e-4001-aed3-987ad8b9bf4f" className="ngtw-activation-network-stage grid grid-cols-[minmax(0,_.95fr)_minmax(0,_1.05fr)] items-stretch gap-[14px]">
+            <section shuku-edit-id="e-b1c993fd-2ad2-4aa0-80d8-bf6d16e90b88" className="ngtw-activation-network-panel relative flex min-w-0 min-h-[560px] flex-col bg-[#fff] p-[14px] ngtw-relu-panel ngtw-relu-panel--network" aria-label="网络结构">
+              <header shuku-edit-id="e-a7163853-550e-4d42-a17b-10a6d844809a" className="ngtw-activation-panel-head flex items-baseline justify-between gap-[12px] mb-[10px]">
+                <Typography shuku-edit-id="e-17a96ece-fbee-4d64-95bb-cc73dfd167c9" as="h3" variant="subtitle" tone="main">把多个 ReLU 神经元组合起来</Typography>
+                <Typography shuku-edit-id="e-33076775-a78d-4250-a24b-99e97ce5d1c1" as="span" variant="bodySmall" tone="muted">hᵢ = ReLU(wᵢx + bᵢ)</Typography>
               </header>
-              <div className="ngtw-activation-visual-box relative min-h-[430px] overflow-hidden ngtw-activation-visual-box--model">
+              <div shuku-edit-id="e-f4db4de3-562e-4674-9b40-463cb37a9b21" className="ngtw-activation-visual-box relative min-h-[430px] overflow-hidden ngtw-activation-visual-box--model">
                 <NetworkCanvas
                   layers={canvas.layers}
                   connections={canvas.connections}
@@ -216,20 +216,20 @@ export function ReluNetworkPage({ onComplete }: ReluNetworkPageProps) {
               </div>
             </section>
 
-            <section className="ngtw-activation-network-panel relative flex min-w-0 min-h-[560px] flex-col bg-[#fff] p-[14px] ngtw-relu-panel ngtw-relu-panel--plot" aria-label="输出曲线">
-              <header className="ngtw-activation-panel-head flex items-baseline justify-between gap-[12px] mb-[10px]">
-                <Typography as="h3" variant="subtitle" tone="main">从一个折点到多个折点</Typography>
-                <Typography as="span" variant="bodySmall" tone="muted">虚线对应每个神经元的响应起点</Typography>
+            <section shuku-edit-id="e-6898adbd-b881-41c5-84cb-f61809daebd6" className="ngtw-activation-network-panel relative flex min-w-0 min-h-[560px] flex-col bg-[#fff] p-[14px] ngtw-relu-panel ngtw-relu-panel--plot" aria-label="输出曲线">
+              <header shuku-edit-id="e-ea1340f3-1e0f-4c94-a376-67a1c264709f" className="ngtw-activation-panel-head flex items-baseline justify-between gap-[12px] mb-[10px]">
+                <Typography shuku-edit-id="e-d143a43b-6274-4de1-961c-d9673c568e88" as="h3" variant="subtitle" tone="main">从一个折点到多个折点</Typography>
+                <Typography shuku-edit-id="e-aa47a7d7-b0ef-4b3b-b1b7-a67c0c8e4aa0" as="span" variant="bodySmall" tone="muted">虚线对应每个神经元的响应起点</Typography>
               </header>
-              <div className="ngtw-activation-visual-box relative min-h-[430px] overflow-hidden">
+              <div shuku-edit-id="e-31c6a87d-80b2-4f9e-a0a5-f62bb96e2d97" className="ngtw-activation-visual-box relative min-h-[430px] overflow-hidden">
                 <ReluNetworkPlot count={count} neurons={state.neurons} />
               </div>
             </section>
           </div>
 
-          <div className="ngtw-relu-conclusion flex min-w-0 max-w-full items-center gap-[12px] p-[10px_14px]">
-            <Typography as="strong" variant="subtitle" tone="success">结论</Typography>
-            <Typography variant="body" tone="main">每个 ReLU 神经元贡献一个折点，折点越多，输出越接近任意曲线。</Typography>
+          <div shuku-edit-id="e-63dfa845-e3c5-456a-b65a-df992a7f61a6" className="ngtw-relu-conclusion flex min-w-0 max-w-full items-center gap-[12px] p-[10px_14px]">
+            <Typography shuku-edit-id="e-483dacbe-8895-48e7-a904-e5bed85387ca" as="strong" variant="subtitle" tone="success">结论</Typography>
+            <Typography shuku-edit-id="e-352534d5-8656-487c-83db-7271cf54275c" variant="body" tone="main">每个 ReLU 神经元贡献一个折点，折点越多，输出越接近任意曲线。</Typography>
           </div>
         </>
       )}

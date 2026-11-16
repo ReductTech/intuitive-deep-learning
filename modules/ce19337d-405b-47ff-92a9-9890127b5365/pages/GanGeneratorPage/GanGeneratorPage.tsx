@@ -53,24 +53,24 @@ export function GanGeneratorPage({ onComplete }: { onComplete?: () => void }) {
     onComplete?.();
   }, [onComplete, stage]);
 
-  return <ContentBlock headingLevel={1} title="GAN 生成器：从随机噪声到人脸" subtitle="从简单的随机向量出发，逐层学习图像的结构与细节。" bodyClassName="vg-gan__layout" className="vg-shared-page vg-gan vg-gan-generator" aria-label="GAN 生成器：从随机噪声到人脸" data-stage={stage}>
-    <div className="vg-gan__body">
-      <div className="vg-gan__canvas">
-        {diagramFailed ? <Typography role="alert" variant="bodySmall">图示加载失败，请刷新页面重试。</Typography> : <div className="vg-gan__diagram" dangerouslySetInnerHTML={{ __html: diagram }} />}
-        {stage < explanations.length && <div className="vg-gan-generator__detail" aria-live="polite" aria-atomic="true">
-          <Typography as="strong" variant="body" tone="accent">{explanations[stage].title}</Typography>
-          <Typography variant="body" tone="main">{explanations[stage].text}</Typography>
+  return <ContentBlock shuku-edit-id="e-1ebcfe93-742f-40f3-aa55-1bb0d6a56830" headingLevel={1} title="GAN 生成器：从随机噪声到人脸" subtitle="从简单的随机向量出发，逐层学习图像的结构与细节。" bodyClassName="vg-gan__layout" className="vg-shared-page vg-gan vg-gan-generator" aria-label="GAN 生成器：从随机噪声到人脸" data-stage={stage}>
+    <div shuku-edit-id="e-2b034c18-7a5d-4809-9a03-6fb3b87629d9" className="vg-gan__body">
+      <div shuku-edit-id="e-0bb5a256-9f9e-4251-87c8-1a8d4fadf296" className="vg-gan__canvas">
+        {diagramFailed ? <Typography shuku-edit-id="e-cb3a0df5-7dfc-4a7f-820b-4d5377d6582f" role="alert" variant="bodySmall">图示加载失败，请刷新页面重试。</Typography> : <div shuku-edit-id="e-2c819d8f-ba1f-40a6-a6e5-ecbfc83ae52c" className="vg-gan__diagram" dangerouslySetInnerHTML={{ __html: diagram }} />}
+        {stage < explanations.length && <div shuku-edit-id="e-e85a05c2-ca8b-4aca-bcf2-f428492e8800" className="vg-gan-generator__detail" aria-live="polite" aria-atomic="true">
+          <Typography shuku-edit-id="e-72aa0814-fa2a-4618-9b61-4872275eab00" as="strong" variant="body" tone="accent">{explanations[stage].title}</Typography>
+          <Typography shuku-edit-id="e-f05b8c70-6695-4046-b125-76a639da5df7" variant="body" tone="main">{explanations[stage].text}</Typography>
         </div>}
-        {compactCaptions.map(caption => stage > caption.after && <Typography key={caption.after}
+        {compactCaptions.map(caption => stage > caption.after && <Typography shuku-edit-id="e-5769a44f-e0d3-4051-ae35-bf9a6700f1d2" key={caption.after}
           variant="bodySmall" tone="main" className="vg-gan-generator__caption"
           style={{ left: caption.left, width: caption.width }}>{caption.text}</Typography>)}
-        {stage >= 7 && <Typography variant="bodySmall" tone="main" className="vg-gan-generator__feature-note">
+        {stage >= 7 && <Typography shuku-edit-id="e-cb95c49a-f4c8-4eec-8afd-91ae15ce579d" variant="bodySmall" tone="main" className="vg-gan-generator__feature-note">
           方块表示内部特征，不是照片。
         </Typography>}
       </div>
     </div>
-    <footer className="vg-gan__footer">
-      <div className="vg-gan__actions">
+    <footer shuku-edit-id="e-b4ed325e-b50e-414d-8369-3f51389eb88f" className="vg-gan__footer">
+      <div shuku-edit-id="e-7893a12f-3d29-4911-85ec-737f38a7cd3f" className="vg-gan__actions">
         {controls}
       </div>
     </footer>

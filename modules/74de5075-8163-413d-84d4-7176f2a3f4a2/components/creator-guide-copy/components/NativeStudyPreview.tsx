@@ -24,9 +24,9 @@ function ExampleGomokuStep({ complete, isComplete, autoDemo }: LessonStepContext
     recordOutcome(demoOutcome());
     complete();
   }
-  return <div className="aipe-replay-cg-study-demo" data-preview-scene={isComplete ? 'gomoku-example' : 'gomoku-play'}>
-    <img src={image(isComplete)} alt={isComplete ? '示例棋局：五子连线' : '从五子棋开始认识卷积核'} draggable={false}/>
-    <button ref={button} className="aipe-replay-cg-study-example" aria-label="示例棋局" onClick={showExample}/>
+  return <div shuku-edit-id="e-32304c14-3ef3-403e-b3f5-61d7e488707a" className="aipe-replay-cg-study-demo" data-preview-scene={isComplete ? 'gomoku-example' : 'gomoku-play'}>
+    <img shuku-edit-id="e-82c37d97-2653-461e-8be0-48d771080c24" src={image(isComplete)} alt={isComplete ? '示例棋局：五子连线' : '从五子棋开始认识卷积核'} draggable={false}/>
+    <button shuku-edit-id="e-be59b67f-750b-47ca-9802-1d6d908064d0" ref={button} className="aipe-replay-cg-study-example" aria-label="示例棋局" onClick={showExample}/>
   </div>;
 }
 
@@ -34,8 +34,8 @@ const PlaybackContext = createContext(false);
 
 // The embedded reader is fixed at 1600px; no resize measurements are needed.
 function PreviewCanvas({ children }: { children: ReactNode }) {
-  return <div className="lesson-canvas-frame relative w-full overflow-hidden" style={{ width: 1600, height: 900, maxWidth: 'none', flexShrink: 0 }}>
-    <div className="course-page-surface aipe-replay-cg-copy-course-shell aipe-replay-cg-copy-tw-canvas origin-top-left" style={{ width: 1600, minWidth: 1600, maxWidth: 'none', height: 900, position: 'relative', transform: 'scale(1)', transformOrigin: 'top left' }}>{children}</div>
+  return <div shuku-edit-id="e-8d5e66b9-b093-4ae8-81c5-c72ec4db1cd8" className="lesson-canvas-frame relative w-full overflow-hidden" style={{ width: 1600, height: 900, maxWidth: 'none', flexShrink: 0 }}>
+    <div shuku-edit-id="e-d589548a-04ed-451e-8a49-26366b001164" className="course-page-surface aipe-replay-cg-copy-course-shell aipe-replay-cg-copy-tw-canvas origin-top-left" style={{ width: 1600, minWidth: 1600, maxWidth: 'none', height: 900, position: 'relative', transform: 'scale(1)', transformOrigin: 'top left' }}>{children}</div>
   </div>;
 }
 
@@ -55,7 +55,7 @@ function AutoStep({ completed, children }: { completed: boolean; children: (acti
     }, 250);
     return () => clearTimeout(timer);
   }, [active]);
-  return <div ref={root}>{children(active)}</div>;
+  return <div shuku-edit-id="e-674643e3-80d3-4cbf-bb06-65ce04377014" ref={root}>{children(active)}</div>;
 }
 
 const previewSteps: LessonFlowStep[] = [
@@ -77,7 +77,7 @@ export function NativeStudyPreview() {
     document.addEventListener('visibilitychange', update);
     return () => { observer.disconnect(); document.removeEventListener('visibilitychange', update); };
   }, []);
-  return <main ref={root} className="aipe-replay-cg-study-embedded aipe-replay-cg-copy-course-shell aipe-replay-cg-copy-tw-root">
+  return <main shuku-edit-id="e-c7f03e42-92b6-416a-8895-eec6c2f9d227" ref={root} className="aipe-replay-cg-study-embedded aipe-replay-cg-copy-course-shell aipe-replay-cg-copy-tw-root">
     <PlaybackContext.Provider value={running}><GomokuLessonProvider><LessonFlow steps={previewSteps} persistenceKey={progressKey}/></GomokuLessonProvider></PlaybackContext.Provider>
   </main>;
 }

@@ -35,30 +35,30 @@ export function SkillWorkflowPage() {
   const row = (item: typeof entries[number], nested = false) => {
     const hasChildren = childEntries.some(child => child.parent === item.id);
     const Arrow = expanded === item.id ? ChevronDown : ChevronRight;
-    return <button key={item.id} type="button" className={`acw-skill-browser-row ${selected === item.id ? 'is-selected' : ''}`} style={{ paddingLeft: nested ? 77 : 25 }} aria-pressed={selected === item.id} aria-expanded={hasChildren ? expanded === item.id : undefined} data-skill-item={item.id} onClick={() => { setSelected(item.id); if (hasChildren) setExpanded(expanded === item.id ? null : item.id); }}>
-      {hasChildren ? <Arrow size={16} /> : <span className="acw-skill-tree-spacer" />}<item.icon size={23} /><Typography as="code" variant="bodySmall">{item.name}</Typography>
+    return <button shuku-edit-id="e-d868c6b2-07e3-4f66-9e6c-97723a8997cb" key={item.id} type="button" className={`acw-skill-browser-row ${selected === item.id ? 'is-selected' : ''}`} style={{ paddingLeft: nested ? 77 : 25 }} aria-pressed={selected === item.id} aria-expanded={hasChildren ? expanded === item.id : undefined} data-skill-item={item.id} onClick={() => { setSelected(item.id); if (hasChildren) setExpanded(expanded === item.id ? null : item.id); }}>
+      {hasChildren ? <Arrow size={16} /> : <span shuku-edit-id="e-6563214b-6b19-4357-a805-a557609ee6d3" className="acw-skill-tree-spacer" />}<item.icon size={23} /><Typography shuku-edit-id="e-16a5d846-2823-4a06-9556-a0ede14ff254" as="code" variant="bodySmall">{item.name}</Typography>
     </button>;
   };
-  return <ContentBlock className="acw-skill-browser-page acw-skill-page" data-scene-id="6589da25-0890-4bc3-8359-dfccecbe8f9e" title="Skill：把创作方法变成可复用的工作流程" subtitle="左侧选择文件，右侧了解它怎样帮助 AI 工作" bodyClassName="acw-skill-browser-body">
-    <div className="acw-skill-browser-editor">
-      <div className="acw-skill-browser-toolbar"><Folder size={24} /><Typography variant="bodySmall">creator-skill / 创作方法与配套资源</Typography><Typography variant="bodySmall" tone="muted">点击左侧条目，查看用途</Typography></div>
-      <div className="acw-skill-browser-workspace">
-        <nav className="acw-skill-browser-sidebar" aria-label="Skill 结构">
-          <Typography variant="bodySmall" tone="muted" className="acw-skill-browser-sidebar-label">Skill 目录</Typography>
-          <div className="acw-skill-browser-folder"><ChevronDown size={18} /><Folder size={23} /><Typography as="code" variant="bodySmall">creator-skill/</Typography></div>
-          {entries.map(item => <div key={item.id}>{row(item)}{expanded === item.id && childEntries.filter(child => child.parent === item.id).map(child => row(child, true))}</div>)}
+  return <ContentBlock shuku-edit-id="e-cbc0c2e5-c5dc-4561-8ccc-545d333a18df" className="acw-skill-browser-page acw-skill-page" data-scene-id="6589da25-0890-4bc3-8359-dfccecbe8f9e" title="Skill：把创作方法变成可复用的工作流程" subtitle="左侧选择文件，右侧了解它怎样帮助 AI 工作" bodyClassName="acw-skill-browser-body">
+    <div shuku-edit-id="e-6464bd38-2dfd-44b3-ad69-c993de2edb2a" className="acw-skill-browser-editor">
+      <div shuku-edit-id="e-13ac1b96-6354-4df0-8dea-f1ab7b8e5686" className="acw-skill-browser-toolbar"><Folder size={24} /><Typography shuku-edit-id="e-5205ebf5-9044-4ffd-842f-e1ce0b40ccab" variant="bodySmall">creator-skill / 创作方法与配套资源</Typography><Typography shuku-edit-id="e-51eabf73-0a30-4402-8058-3b13df94fe4c" variant="bodySmall" tone="muted">点击左侧条目，查看用途</Typography></div>
+      <div shuku-edit-id="e-d80e17f4-d262-47e9-8e4c-360f968b9545" className="acw-skill-browser-workspace">
+        <nav shuku-edit-id="e-3232f5e2-d6dc-4496-80af-87f341459c13" className="acw-skill-browser-sidebar" aria-label="Skill 结构">
+          <Typography shuku-edit-id="e-1e7556bc-9500-4e31-8c91-aa04a7aff922" variant="bodySmall" tone="muted" className="acw-skill-browser-sidebar-label">Skill 目录</Typography>
+          <div shuku-edit-id="e-d60a86b5-857a-4b07-8ec6-8f786035f11f" className="acw-skill-browser-folder"><ChevronDown size={18} /><Folder size={23} /><Typography shuku-edit-id="e-3f4ef835-72b5-476c-a139-eb07fae2ba5e" as="code" variant="bodySmall">creator-skill/</Typography></div>
+          {entries.map(item => <div shuku-edit-id="e-3294f811-da68-4641-99c3-d32372f20a5a" key={item.id}>{row(item)}{expanded === item.id && childEntries.filter(child => child.parent === item.id).map(child => row(child, true))}</div>)}
         </nav>
-        <section className="acw-skill-browser-preview" aria-label="Skill 文件用途" aria-live="polite">
-          <div className="acw-skill-browser-preview-tab"><Icon size={23} /><Typography as="code" variant="bodySmall">{entry.name}</Typography><Typography variant="bodySmall" tone="muted">文件用途</Typography></div>
-          <div className="acw-skill-browser-preview-content" key={selected}>
-            <div className="acw-skill-browser-preview-heading"><Typography variant="h3">{entry.title}</Typography><Typography variant="bodySmall" tone="muted">{entry.path}</Typography></div>
-            <Typography variant="subtitle" className="acw-skill-browser-description">{entry.description}</Typography>
-            <Typography variant="bodySmall" tone="muted" className="acw-skill-example">{entry.example}</Typography>
-            {selected === 'skill' && <div className="acw-skill-instruction"><Typography variant="bodySmall" tone="accent">开工时可以这样说</Typography><Typography variant="bodySmall">请先阅读 creator-skill/SKILL.md，按项目规范帮我制作课件。</Typography></div>}
+        <section shuku-edit-id="e-5febd312-7a27-450a-b2ed-097e72ddaa58" className="acw-skill-browser-preview" aria-label="Skill 文件用途" aria-live="polite">
+          <div shuku-edit-id="e-1d823d47-6013-40be-ab3a-f95979ccea03" className="acw-skill-browser-preview-tab"><Icon size={23} /><Typography shuku-edit-id="e-6afe6662-53a7-43de-8f1e-695b69cb3293" as="code" variant="bodySmall">{entry.name}</Typography><Typography shuku-edit-id="e-ccb8e540-32fc-4078-ad51-495ccfea63a2" variant="bodySmall" tone="muted">文件用途</Typography></div>
+          <div shuku-edit-id="e-fe6bf36c-ade5-4dba-93d9-2592374fb20b" className="acw-skill-browser-preview-content" key={selected}>
+            <div shuku-edit-id="e-60fa7c7e-ac2a-4cfd-9920-99ab9001842d" className="acw-skill-browser-preview-heading"><Typography shuku-edit-id="e-22670b10-6fa0-4676-8dae-6798e45a35af" variant="h3">{entry.title}</Typography><Typography shuku-edit-id="e-716a18f8-4562-474b-ae13-58fa92695f2c" variant="bodySmall" tone="muted">{entry.path}</Typography></div>
+            <Typography shuku-edit-id="e-ebe2c790-927c-446f-987c-d0ad05d70831" variant="subtitle" className="acw-skill-browser-description">{entry.description}</Typography>
+            <Typography shuku-edit-id="e-ea5bf284-601c-4bd2-b3e4-72730857d574" variant="bodySmall" tone="muted" className="acw-skill-example">{entry.example}</Typography>
+            {selected === 'skill' && <div shuku-edit-id="e-f2ee161b-2941-4eea-91cf-afe8d4486711" className="acw-skill-instruction"><Typography shuku-edit-id="e-ae32a108-c1e9-40ed-9343-c72cce5b4161" variant="bodySmall" tone="accent">开工时可以这样说</Typography><Typography shuku-edit-id="e-9562b879-3b96-4426-b7e6-af743e1aeb16" variant="bodySmall">请先阅读 creator-skill/SKILL.md，按项目规范帮我制作课件。</Typography></div>}
           </div>
         </section>
       </div>
-      <div className="acw-skill-browser-status"><Typography variant="bodySmall" tone="muted">以本项目为例 · 配套目录按需组织 · Skill 不能替代你的判断</Typography><Typography variant="bodySmall" tone="accent">交互式结构示意</Typography></div>
+      <div shuku-edit-id="e-2a13c671-a7e8-448e-90c0-d79d77082662" className="acw-skill-browser-status"><Typography shuku-edit-id="e-2bb6618d-84d8-4809-9feb-869ebf13f11b" variant="bodySmall" tone="muted">以本项目为例 · 配套目录按需组织 · Skill 不能替代你的判断</Typography><Typography shuku-edit-id="e-904fdc21-6a58-411a-b58c-8e56443344e5" variant="bodySmall" tone="accent">交互式结构示意</Typography></div>
     </div>
   </ContentBlock>;
 }

@@ -54,12 +54,12 @@ export function ReferenceCanvas({ index, source, children, title, subtitle, summ
     return () => observer.disconnect();
   }, [canvasHeight]);
   return <ContentBlock className="vgr-page" headingLevel={1} title={title ?? page.title} subtitle={subtitle ?? subtitles[index]} bodyClassName="vgr-canvas" data-lesson={page.id}>
-    <div ref={viewport} className="vgr-viewport">
+    <div shuku-edit-id="e-f48f8272-9958-4ed1-98b1-ec358a26a34f" ref={viewport} className="vgr-viewport">
     <CropContext.Provider value={top}>
-    <div className="vga-content vgr-contents" data-reference-body-top={top} style={{width:1600,height:canvasHeight,left:layout.left,top:layout.top,transform:`scale(${layout.scale})`}}>
-      {source && <img className="vgr-plate" src={referenceAsset(`visuals/reference-body-${source}.jpg`)} alt={`${page.title}：参考图内容区的原始图形与流程`} draggable={false} data-reference-plate={source} />}
+    <div shuku-edit-id="e-d05d17ae-ee30-4ad8-948b-f01f7a077fc3" className="vga-content vgr-contents" data-reference-body-top={top} style={{width:1600,height:canvasHeight,left:layout.left,top:layout.top,transform:`scale(${layout.scale})`}}>
+      {source && <img shuku-edit-id="e-41fe426a-5452-441a-8169-b69dc276910b" className="vgr-plate" src={referenceAsset(`visuals/reference-body-${source}.jpg`)} alt={`${page.title}：参考图内容区的原始图形与流程`} draggable={false} data-reference-plate={source} />}
       {children}
-      {!source && <div className="vgr-native-summary"><Typography variant="h3" tone="accent">{summary}</Typography></div>}
+      {!source && <div shuku-edit-id="e-be9e2855-f210-490c-bd95-d7f8d6561b49" className="vgr-native-summary"><Typography variant="h3" tone="accent">{summary}</Typography></div>}
     </div>
     </CropContext.Provider>
     </div>
@@ -69,7 +69,7 @@ export function ReferenceCanvas({ index, source, children, title, subtitle, summ
 /** Diagram paths use the same cropped source coordinates as image overlays. */
 export function ReferencePaths({children}: {children: ReactNode}) {
   const top = useContext(CropContext);
-  return <svg className="vgr-path-overlay" viewBox={`0 ${top} 1672 ${941-top}`} aria-hidden="true">{children}</svg>;
+  return <svg shuku-edit-id="e-a89fdcdd-f9fe-476a-b9fd-e553a08c22a8" className="vgr-path-overlay" viewBox={`0 ${top} 1672 ${941-top}`} aria-hidden="true">{children}</svg>;
 }
 
 export function ReferenceControls({ children, rect = [40, 778, 1592, 54], className = '' }: { children: ReactNode; rect?: Rect; className?: string }) {
@@ -77,7 +77,7 @@ export function ReferenceControls({ children, rect = [40, 778, 1592, 54], classN
 }
 
 export function ReferenceStory({ story }: { story: StoryState }) {
-  return <div ref={story.anchor} className="vgr-story-anchor" data-story-step={story.step} data-story-playing={story.playing} data-story-complete={story.step === story.total - 1} />;
+  return <div shuku-edit-id="e-6325b8ee-fc7d-40e7-97e8-d524ead90482" ref={story.anchor} className="vgr-story-anchor" data-story-step={story.step} data-story-playing={story.playing} data-story-complete={story.step === story.total - 1} />;
 }
 
 export function Cover({ rect, visible }: { rect: Rect; visible: boolean }) {
@@ -86,7 +86,7 @@ export function Cover({ rect, visible }: { rect: Rect; visible: boolean }) {
 
 export function LatentNoise({ progress }: { progress: number }) {
   const planes = ['395,9 522,44 522,238 433,212 433,50 395,39','273,17 423,58 423,257 318,228 318,67 273,55','142,26 306,72 306,266 203,237 203,76 142,59','9,37 190,86 190,278 9,239'];
-  return <svg viewBox="0 0 530 293" className="vgr-latent-noise" data-testid="sampling-latent" data-progress={progress} role="img" aria-label={`去噪进度示意 ${Math.round(progress * 100)}%`}>
-    {planes.map(points => <image key={points} href={referenceAsset('visuals/noise-prediction.jpg')} x="0" y="0" width="530" height="293" preserveAspectRatio="none" style={{clipPath: `polygon(${points.split(' ').map(p => {const [x,y] = p.split(',').map(Number);return `${x/5.3}% ${y/2.93}%`;}).join(',')})`}} opacity={1-progress} />)}
+  return <svg shuku-edit-id="e-70430934-b347-4c1d-a7ca-7076e8a05b42" viewBox="0 0 530 293" className="vgr-latent-noise" data-testid="sampling-latent" data-progress={progress} role="img" aria-label={`去噪进度示意 ${Math.round(progress * 100)}%`}>
+    {planes.map(points => <image shuku-edit-id="e-d6e2d008-e9ba-4321-8b5f-7ac8d74f3b07" key={points} href={referenceAsset('visuals/noise-prediction.jpg')} x="0" y="0" width="530" height="293" preserveAspectRatio="none" style={{clipPath: `polygon(${points.split(' ').map(p => {const [x,y] = p.split(',').map(Number);return `${x/5.3}% ${y/2.93}%`;}).join(',')})`}} opacity={1-progress} />)}
   </svg>;
 }
