@@ -5,9 +5,9 @@ import { keyOf } from '../../model';
 import { type DqnEvaluation } from '../../dqnSimulation';
 import { TRAP } from '../QLearningLoopPage/qLearningSimulation';
 
-const emptyStation = valueBasedRlAssetUrl('cover-v2/receiving-station-empty.png');
-const loadedStation = valueBasedRlAssetUrl('cover-v2/receiving-station-loaded.png');
-const pitArt = valueBasedRlAssetUrl('cover-v2/maintenance-pit.png');
+const emptyStation = valueBasedRlAssetUrl("cover-v2/receiving-station-empty.webp");
+const loadedStation = valueBasedRlAssetUrl("cover-v2/receiving-station-loaded.webp");
+const pitArt = valueBasedRlAssetUrl("cover-v2/maintenance-pit.webp");
 
 export function DqnValidationMap({ result, index, before }: { result: DqnEvaluation; index: number; before: DqnEvaluation }) {
   const id = useId().replace(/:/g, ''), color = result.outcome === 'delivered' ? 'var(--ui-success)' : 'var(--ui-accent-alt)';

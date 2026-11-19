@@ -65,7 +65,7 @@ export function PresentationComparisonPage() {
       {[1,2,3,4,5].map(version => <button shuku-edit-id="e-38cadc3a-6636-4d20-90e9-63b694f12783" type="button" className="aipe-replay-cg-case-stack-card" key={version}
         style={stackStyle((version - active + 7) % 5)} aria-label={`查看生成方案 ${version}`} aria-pressed={active === version}
         onFocus={() => setActive(version)} onClick={() => setActive(version)}>
-        <img shuku-edit-id="e-c51ed031-4ad0-46e6-8ef4-7c894121c948" src={asset(`images/weight-sharing/version-${version}.jpg`)} alt={`权重共享图示方案 ${version}`} draggable={false}/>
+        <img shuku-edit-id="e-c51ed031-4ad0-46e6-8ef4-7c894121c948" src={asset(`images/weight-sharing/version-${version}.webp`)} alt={`权重共享图示方案 ${version}`} draggable={false}/>
       </button>)}
     </section>
     <section shuku-edit-id="e-a4257398-a228-49e7-b3d8-003dbe271aa6" className="aipe-replay-cg-case-result" aria-label="加入具体设计要求后的知识呈现作品效果">

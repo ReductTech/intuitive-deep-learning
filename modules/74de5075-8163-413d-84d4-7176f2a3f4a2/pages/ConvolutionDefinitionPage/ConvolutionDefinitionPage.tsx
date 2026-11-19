@@ -20,7 +20,7 @@ function SobelFigure() {
     async function draw() {
       const image = new Image();
       image.crossOrigin = 'anonymous';
-      image.src = moduleAssetUrl('images/edge-examples/building.jpg');
+      image.src = moduleAssetUrl("images/edge-examples/building.webp");
       await image.decode(); if (cancelled) return;
       const source = document.createElement('canvas'); source.width = source.height = IMAGE_SIZE;
       const context = source.getContext('2d', { willReadFrequently: true });

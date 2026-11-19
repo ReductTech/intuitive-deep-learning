@@ -16,7 +16,7 @@ const ease = (value: number) => { const t = clamp(value); return t * t * t * (t 
 function PaperImage({ paper }: { paper: typeof papers[number] }) {
   return paper.id === 'tokens'
     ? <div shuku-edit-id="e-1579510b-7c45-4f6f-b18f-e81aa389fa56" className="rf-research-specimen"><Typography shuku-edit-id="e-73d0d278-55f1-48cc-946c-7c26f73fcd31" variant="bodySmall">International Journal of Computer Vision</Typography><Typography shuku-edit-id="e-bbb400f0-37b8-49f2-91ff-89d9f346308e" variant="h2">{paper.title}</Typography><Typography shuku-edit-id="e-4b15f839-6af0-48ef-90f0-cbbdce463d88" variant="bodySmall">2026 · 持续学习</Typography></div>
-    : <img shuku-edit-id="e-bfe93520-d9e9-42ad-8960-975918bfa861" draggable={false} src={moduleAssetUrl(`research-papers/${paper.id}.jpg`)} alt={`${paper.name} 论文原稿首页`} />;
+    : <img shuku-edit-id="e-bfe93520-d9e9-42ad-8960-975918bfa861" draggable={false} src={moduleAssetUrl(`research-papers/${paper.id}.webp`)} alt={`${paper.name} 论文原稿首页`} />;
 }
 
 export function ResearchMethodsPage() {

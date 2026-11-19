@@ -1,7 +1,7 @@
-import bgAsset0 from '../../../../../assets/workflow/convolution-course/layerd_scene/bg.jpg';
-import ufoAsset1 from '../../../../../assets/workflow/convolution-course/layerd_scene/ufo.png';
-import pillarAsset2 from '../../../../../assets/workflow/convolution-course/layerd_scene/pillar.png';
-import dark_foliageAsset3 from '../../../../../assets/workflow/convolution-course/layerd_scene/dark_foliage.png';
+import bgAsset0 from "../../../../../assets/workflow/convolution-course/layerd_scene/bg.webp";
+import ufoAsset1 from "../../../../../assets/workflow/convolution-course/layerd_scene/ufo.webp";
+import pillarAsset2 from "../../../../../assets/workflow/convolution-course/layerd_scene/pillar.webp";
+import dark_foliageAsset3 from "../../../../../assets/workflow/convolution-course/layerd_scene/dark_foliage.webp";
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from 'react';
 import { ContentBlock, Typography } from "@shuku/course-style/react";
 import './TranslationEquivariancePage.css';

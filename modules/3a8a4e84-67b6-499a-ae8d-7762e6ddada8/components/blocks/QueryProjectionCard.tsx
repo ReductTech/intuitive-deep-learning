@@ -4,7 +4,7 @@ import './QueryProjectionCard.css';
 const WORDS = ['She', 'deposited', 'money', 'in', 'the', 'bank'];
 const GLOSSES = ['她', '存入', '钱', '在……里', '定冠词', '银行'];
 function BankCharacter() {
-    return <img shuku-edit-id="e-728d1c6d-0ff5-4812-a8ab-76a96c17a749" className="tr-query-boy" src={transformerAsset("03_自注意力/Q_信息需求.png")} alt="小男孩托着下巴，看向左侧词语思考"/>;
+    return <img shuku-edit-id="e-728d1c6d-0ff5-4812-a8ab-76a96c17a749" className="tr-query-boy" src={transformerAsset("03_自注意力/Q_信息需求.webp")} alt="小男孩托着下巴，看向左侧词语思考"/>;
 }
 function VectorRibbon({ row, query = false }: {
     row: number;

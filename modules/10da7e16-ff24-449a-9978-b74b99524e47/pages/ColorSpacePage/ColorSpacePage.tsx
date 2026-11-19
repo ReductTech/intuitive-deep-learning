@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { ContentBlock, Typography } from "@shuku/course-style/react";
 import { adjust, defaults, fromRgb, toRgb, type Space, type Triple } from './colorModel';
 import './ColorSpacePage.css';
-const photo = moduleAssetUrl('images/color-space-macaw.jpg');
+const photo = moduleAssetUrl("images/color-space-macaw.webp");
 const WIDTH = 720, HEIGHT = 540;
 const spaces: Space[] = ['RGB', 'HSV', 'YCbCr', 'Lab'];
 const labels: Record<Space, [string, string, string][]> = {

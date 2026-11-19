@@ -2,11 +2,11 @@ import { useEffect, useRef, useState } from 'react';
 import { Button, Typography } from "@shuku/course-style/react";
 
 /** Time advances the explanation; scrolling only determines whether it is being read. */
-export function useLecturePlayback(count: number, dwell = 1000, waitAt?: number) {
-  const [stage, setStage] = useState(0);
+export function useLecturePlayback(count: number, dwell = 1000, waitAt?: number, initialStage = 0, autoplay = true) {
+  const [stage, setStage] = useState(() => Math.max(0, Math.min(count - 1, initialStage)));
   const [interacted, setInteracted] = useState(false);
   const waiting = stage === waitAt && !interacted;
-  const [finished, setFinished] = useState(false);
+  const [finished, setFinished] = useState(!autoplay);
   const [visible, setVisible] = useState(false);
   const [foreground, setForeground] = useState(!document.hidden);
   const anchor = useRef<HTMLDivElement>(null);

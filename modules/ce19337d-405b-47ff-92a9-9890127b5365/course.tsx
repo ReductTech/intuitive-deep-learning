@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import outline from './outlines.json';
 import { LessonFlowRevealMode, LessonStepContext } from "@shuku/course-style/react";
 import { PhotoStudioOpeningPage } from './pages/PhotoStudioOpeningPage/PhotoStudioOpeningPage';
 import { GenerationNotRecognitionPage } from './pages/GenerationNotRecognitionPage/GenerationNotRecognitionPage';
@@ -174,3 +175,27 @@ export const visualGenerationCourse: VisualGenerationCourseItem[] = [
     component: (context) => <DiffusionPlaygroundPage onComplete={context.complete} />,
   },
 ];
+
+// Each expanded outline page reuses its existing worked diagram at a fixed stage.
+// UUIDs remain the metadata keys; stage numbers only choose the diagram state.
+const expandedPages = [
+  { id: '95db06dc-b34c-4ee0-9ec0-e33c2c91face', kind: 'training', stage: 0 },
+  { id: 'c089d963-c718-4fb8-88ab-7840c7f2d2a9', kind: 'training', stage: 1 },
+  { id: '0b9e884b-8a0c-482b-a4c1-663bb2a45e98', kind: 'training', stage: 2 },
+  { id: '204ad2cf-1c99-4920-9c31-5aa8c2238f57', kind: 'training', stage: 3 },
+  { id: '4cc48d68-d7d0-4a96-bd5f-7327ef18de20', kind: 'training', stage: 4 },
+  { id: 'd78af9eb-d811-4fa8-b9fb-b9a78405babb', kind: 'training', stage: 5 },
+  { id: 'b9ec9ed1-18b9-4d62-be85-54204d1e3562', kind: 'training', stage: 6 },
+  { id: '9ed744a5-3339-4ff5-b787-508193f1c512', kind: 'inference', stage: 4 },
+  { id: '0e544350-643d-4db5-b132-db07382ad470', kind: 'inference', stage: 5 },
+  { id: 'cafcdab8-867b-41ea-8f8a-b9c52ba0e8fb', kind: 'inference', stage: 6 },
+  { id: '19ab8750-8a3f-42b3-9c06-74067c832193', kind: 'inference', stage: 9 },
+] as const;
+for (const { id, kind, stage } of expandedPages) {
+  const page = outline.pages.find(page => page.id === id)!;
+  visualGenerationCourse.push({ id, title: page.title, section: 'Diffusion 逐步推导', revealMode: 'cue',
+    component: context => kind === 'training'
+      ? <ReverseTrainingPathPage title={page.title} initialStage={stage} autoplay={false} onComplete={context.complete} />
+      : <ReverseInferencePage title={page.title} initialStage={stage} autoplay={false} onComplete={context.complete} />,
+  });
+}

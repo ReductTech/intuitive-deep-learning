@@ -5,9 +5,9 @@ import { Button, ContentBlock, NoticeStrip, Typography, type QuestionCheckResult
 import { RtgQuestion } from '../../components/RtgQuestion/RtgQuestion';
 import { useCompleteOnce } from '../../hooks/useCompleteOnce';
 import { useTeachingPlayback } from '../../hooks/useTeachingPlayback';
-const bottle = moduleAssetUrl("recycling/bottle-upright.jpg");
-const can = moduleAssetUrl("recycling/can-upright.jpg");
-const carton = moduleAssetUrl("recycling/carton-upright.jpg");
+const bottle = moduleAssetUrl("recycling/bottle-upright.webp");
+const can = moduleAssetUrl("recycling/can-upright.webp");
+const carton = moduleAssetUrl("recycling/carton-upright.webp");
 import './ReplaceHeadPage.css';
 
 const samples = [

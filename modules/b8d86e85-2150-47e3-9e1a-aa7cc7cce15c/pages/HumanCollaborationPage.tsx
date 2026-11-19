@@ -39,7 +39,7 @@ function WeightSets({ shared }: { shared: boolean }) {
 
 export function HumanCollaborationPage() {
   return <article shuku-edit-id="e-d3418667-2b55-44b2-9870-bf6bfccec9f4" className="cg-human-page cg-creator-typography" aria-labelledby="cg-human-title">
-    <img shuku-edit-id="e-72be4f45-5f6b-43cf-b7ff-0e8620572d2b" className="cg-human-art" src={moduleAssetUrl('images/human-collaboration-blank-pads.jpg')} alt="同一位深蓝色上衣的创作者与机器人，在三个阶段使用同款空白平板协作"/>
+    <img shuku-edit-id="e-72be4f45-5f6b-43cf-b7ff-0e8620572d2b" className="cg-human-art" src={moduleAssetUrl("images/human-collaboration-blank-pads.webp")} alt="同一位深蓝色上衣的创作者与机器人，在三个阶段使用同款空白平板协作"/>
     <header shuku-edit-id="e-bfd1ed27-f870-42c9-9fa0-f0236174c8e7"><Typography shuku-edit-id="e-2056a390-23e1-4c72-b6d4-aab4b7190f70" as="h1" variant="display" tone="inherit" id="cg-human-title">制作交互直觉作品，人的作用是什么？</Typography></header>
     {stages.map((stage, i) => <section shuku-edit-id="e-0ea00a07-b4b6-4097-a324-83efa4c0f58f" className={`cg-human-stage cg-human-stage-${i + 1}`} key={stage.title} aria-labelledby={`cg-human-stage-title-${i}`}>
       <div shuku-edit-id="e-7dcf971e-a919-46d4-898c-e114e4493b15" className="cg-human-stage-heading"><Typography shuku-edit-id="e-ad1745bf-f791-4135-ae49-2ab1b1049fd8" as="span" variant="body" tone="inherit" className="cg-human-number">{i + 1}</Typography><div shuku-edit-id="e-e1ba6516-05e0-4ae1-870d-a68436f5489e" className="cg-human-heading-copy"><Typography shuku-edit-id="e-c92c57b6-a2bf-4913-af5f-7ee8d230bdbd" as="h2" variant="h3" tone="inherit" wrap="nowrap" id={`cg-human-stage-title-${i}`}>{stage.title}</Typography></div></div>

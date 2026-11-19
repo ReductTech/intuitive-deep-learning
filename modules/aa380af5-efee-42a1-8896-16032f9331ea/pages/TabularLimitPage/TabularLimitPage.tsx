@@ -8,11 +8,11 @@ import { BLOCKED, GRID, START, keyOf } from '../../model';
 import { TRAP } from '../QLearningLoopPage/qLearningSimulation';
 import './TabularLimitPage.css';
 
-const emptyStationArt = valueBasedRlAssetUrl('cover-v2/receiving-station-empty.png');
-const pitArt = valueBasedRlAssetUrl('cover-v2/maintenance-pit.png');
-const directionKeycap = valueBasedRlAssetUrl('cover-v2/direction-keycap.png');
-const expandedWarehouse = valueBasedRlAssetUrl('tabular-limit/expanded-warehouse.png');
-const qTableGrowth = valueBasedRlAssetUrl('tabular-limit/q-table-growth.png');
+const emptyStationArt = valueBasedRlAssetUrl("cover-v2/receiving-station-empty.webp");
+const pitArt = valueBasedRlAssetUrl("cover-v2/maintenance-pit.webp");
+const directionKeycap = valueBasedRlAssetUrl("cover-v2/direction-keycap.webp");
+const expandedWarehouse = valueBasedRlAssetUrl("tabular-limit/expanded-warehouse.webp");
+const qTableGrowth = valueBasedRlAssetUrl("tabular-limit/q-table-growth.webp");
 
 const VARIABLES = [
   { name: '朝向', count: 4, latex: '4' },

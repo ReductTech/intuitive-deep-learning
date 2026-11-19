@@ -2,10 +2,10 @@ import { moduleIdentity } from '../../outlines.json';
 import { moduleAssetUrl } from "@shuku/course-runtime/react/assets";
 import { useRef, useState } from 'react';
 import { Button, ContentBlock, NoticeStrip, Typography } from "@shuku/course-style/react";
-const bottleUpright = moduleAssetUrl("recycling/bottle-upright.jpg");
-const bottleCrushedSevere = moduleAssetUrl("recycling/bottle-crushed-severe.jpg");
-const canUpright = moduleAssetUrl("recycling/can-upright.jpg");
-const canCrushed = moduleAssetUrl("recycling/can-crushed.jpg");
+const bottleUpright = moduleAssetUrl("recycling/bottle-upright.webp");
+const bottleCrushedSevere = moduleAssetUrl("recycling/bottle-crushed-severe.webp");
+const canUpright = moduleAssetUrl("recycling/can-upright.webp");
+const canCrushed = moduleAssetUrl("recycling/can-crushed.webp");
 import './DeformationCluesPage.css';
 
 type Decision = 'changed' | 'same';

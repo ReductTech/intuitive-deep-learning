@@ -92,17 +92,17 @@
 		{
 			"mimeType":"image/png",
 			"name":"Bark_NormalTree_Normal",
-			"uri":"Bark_NormalTree_Normal.jpg"
+			"uri":"Bark_NormalTree_Normal.webp"
 		},
 		{
 			"mimeType":"image/png",
 			"name":"Bark_NormalTree",
-			"uri":"Bark_NormalTree.jpg"
+			"uri":"Bark_NormalTree.webp"
 		},
 		{
 			"mimeType":"image/png",
 			"name":"Leaf_Pine_C",
-			"uri":"Leaf_Pine_C.png"
+			"uri":"Leaf_Pine_C.webp"
 		}
 	],
 	"accessors":[

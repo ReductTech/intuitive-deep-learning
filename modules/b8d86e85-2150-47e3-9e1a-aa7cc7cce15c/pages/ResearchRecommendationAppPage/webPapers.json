@@ -10,7 +10,7 @@
     "stars": "2.3k",
     "likes": 3,
     "saves": 1,
-    "image": "images/recommendation-web/paper-1.jpg"
+    "image": "images/recommendation-web/paper-1.webp"
   },
   {
     "id": "web-2",
@@ -23,7 +23,7 @@
     "stars": "7.2k",
     "likes": 1,
     "saves": 0,
-    "image": "images/recommendation-web/paper-2.jpg"
+    "image": "images/recommendation-web/paper-2.webp"
   },
   {
     "id": "web-3",
@@ -36,7 +36,7 @@
     "stars": "2.2k",
     "likes": 1,
     "saves": 0,
-    "image": "images/recommendation-web/paper-3.jpg"
+    "image": "images/recommendation-web/paper-3.webp"
   },
   {
     "id": "web-4",
@@ -49,7 +49,7 @@
     "stars": "38",
     "likes": 1,
     "saves": 0,
-    "image": "images/recommendation-web/paper-4.jpg"
+    "image": "images/recommendation-web/paper-4.webp"
   },
   {
     "id": "web-5",
@@ -62,7 +62,7 @@
     "stars": "11",
     "likes": 2,
     "saves": 1,
-    "image": "images/recommendation-web/paper-5.jpg"
+    "image": "images/recommendation-web/paper-5.webp"
   },
   {
     "id": "web-6",
@@ -75,6 +75,6 @@
     "stars": "318",
     "likes": 2,
     "saves": 0,
-    "image": "images/recommendation-web/paper-6.jpg"
+    "image": "images/recommendation-web/paper-6.webp"
   }
 ]

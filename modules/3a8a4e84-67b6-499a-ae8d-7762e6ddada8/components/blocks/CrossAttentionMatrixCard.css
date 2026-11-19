@@ -118,3 +118,6 @@
 .tr-cross17-sum{margin-top:15px;font-size:29px;gap:25px}
 .tr-cross17-footer{justify-content:flex-end;border-top:0;padding-top:0}
 .tr-cross17-panel{height:447px}.tr-cross17-panel-note{min-height:74px;padding:9px 17px 11px}
+
+/* Preserve the full content inside the 1600 × 900 playback canvas. */
+.tr-cross17-workspace { padding-bottom:8px; }

@@ -5,10 +5,10 @@ import { ContentBlock, MathFormulaStatic, Typography } from "@shuku/course-style
 import { useLecturePlayback } from '../../components/LecturePlayback';
 import './ForwardDerivationPage.css';
 
-const x0 = moduleAssetUrl('images/forward-derivation/x0.jpg');
-const x1 = moduleAssetUrl('images/forward-derivation/x1.jpg');
-const x2 = moduleAssetUrl('images/forward-derivation/x2.jpg');
-const xt = moduleAssetUrl('images/forward-derivation/xt.jpg');
+const x0 = moduleAssetUrl("images/forward-derivation/x0.webp");
+const x1 = moduleAssetUrl("images/forward-derivation/x1.webp");
+const x2 = moduleAssetUrl("images/forward-derivation/x2.webp");
+const xt = moduleAssetUrl("images/forward-derivation/xt.webp");
 
 type Mode = 'two-step' | 'merge' | 'direct';
 export interface ForwardDerivationPageProps { onComplete?: () => void; }

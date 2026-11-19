@@ -10,7 +10,7 @@ const scenes: SceneDefinition[] = resNetTransferCourse.map(({ id, title, section
 }));
 
 export const deck: DeckDefinition = {
-  id: 'resnet-transfer-guide',
+  id: moduleIdentity.id,
   title: '深层网络与表示学习',
   subtitle: 'ResNet、预训练与迁移学习 · ' + scenes.length + ' 页',
   scenes,
@@ -22,7 +22,7 @@ export function ResNetTransferPpt() {
   return (
     <SceneDeck
       catalog={catalog}
-      moduleId="resnet-transfer-guide"
+      moduleId={moduleIdentity.id}
       assetId={moduleIdentity.id}
       progressKey="lesson-flow:resnet-transfer-guide-v1"
     />

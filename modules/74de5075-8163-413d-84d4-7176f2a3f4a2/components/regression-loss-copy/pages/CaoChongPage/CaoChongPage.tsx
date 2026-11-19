@@ -8,7 +8,7 @@ import './CaoChongPage.css';
 
 const assetId = '74de5075-8163-413d-84d4-7176f2a3f4a2';
 const asset = (name: string) => moduleAssetUrl(`regression-loss-copy/cao-chong/${name}`);
-const stoneAssets = ['rock.png', 'rock-slate.png', 'rock-basalt.png', 'rock-sandstone.png'];
+const stoneAssets = ['rock.webp', 'rock-slate.webp', 'rock-basalt.webp', 'rock-sandstone.webp'];
 const stoneAsset = (index: number) => asset(stoneAssets[index % stoneAssets.length]);
 type Phase = 'idle' | 'falling' | 'settling';
 type StoryPhase = 'before-elephant' | 'loading-elephant' | 'elephant' | 'unloading-elephant' | 'stones';
@@ -227,8 +227,8 @@ export function CaoChongPage() {
   }), [records, targetRecorded]);
 
   return <section shuku-edit-id="e-c9425fac-673b-4875-b3b4-c7439de0ff7d" className="spp-regression-cao-page" aria-labelledby="spp-regression-cao-title">
-    <div shuku-edit-id="e-53410503-172f-480d-a699-890f1bdc6e64" className="spp-regression-cao-world" style={{ '--spp-regression-landscape': `url("${asset('river-video-poster.jpg')}")`, '--spp-regression-sink': `${sink}px` } as CSSProperties} data-phase={phase} data-count={count}>
-      <video shuku-edit-id="e-9c01d324-79a4-446a-b127-959de26c7ae7" ref={videoRef} className="spp-regression-cao-scenery" src={asset('river-motion.mp4')} poster={asset('river-video-poster.jpg')} autoPlay loop muted playsInline preload="auto" aria-hidden="true" />
+    <div shuku-edit-id="e-53410503-172f-480d-a699-890f1bdc6e64" className="spp-regression-cao-world" style={{ '--spp-regression-landscape': `url("${asset('river-video-poster.webp')}")`, '--spp-regression-sink': `${sink}px` } as CSSProperties} data-phase={phase} data-count={count}>
+      <video shuku-edit-id="e-9c01d324-79a4-446a-b127-959de26c7ae7" ref={videoRef} className="spp-regression-cao-scenery" src={asset('river-motion.mp4')} poster={asset('river-video-poster.webp')} autoPlay loop muted playsInline preload="auto" aria-hidden="true" />
       <div shuku-edit-id="e-cc0d4539-da00-4a57-ad4a-685450adf8a8" className="spp-regression-cao-atmosphere" aria-hidden="true" />
       <header shuku-edit-id="e-3f624a4e-57d8-4cf2-8e5e-862e2efd38a7" className="spp-regression-cao-hero">
         <Typography shuku-edit-id="e-b7552b96-6e15-4f7c-9afe-d087060ba0c9" as="h1" variant="display" tone="inherit" className="spp-regression-cao-title" id="spp-regression-cao-title">曹冲称象</Typography>
@@ -238,13 +238,13 @@ export function CaoChongPage() {
         <div shuku-edit-id="e-7b686e7a-09f7-4103-855e-eba45ab95bd6" className="spp-regression-cao-water-back" aria-hidden="true" />
         <div shuku-edit-id="e-5eaaef8f-017e-47c9-9ec8-a2146410d3bb" className="spp-regression-cao-reflection" aria-hidden="true" />
         <div shuku-edit-id="e-0f751a9f-613b-428d-b6a1-c15c0d36439a" className="spp-regression-cao-boat-motion" data-testid="boat" style={{ transform: `translateY(${sink}px)`, transition: storyPhase !== 'before-elephant' ? 'none' : undefined }}>
-          <img shuku-edit-id="e-028e8ba6-655b-4ab8-b404-aa3a8afbed1a" className="spp-regression-cao-boat-back" src={asset('boat-rectangular.png')} alt="直壁平底、船上无人的长方体木船" draggable={false} />
-          <img shuku-edit-id="e-c83749a0-ba0e-4207-be5a-2ca63a3cba61" className="spp-regression-cao-elephant" data-aboard={elephantAboard} src={asset('elephant.png')} alt={elephantAboard ? '上船称重的大象' : ''} aria-hidden={!elephantAboard} draggable={false} />
+          <img shuku-edit-id="e-028e8ba6-655b-4ab8-b404-aa3a8afbed1a" className="spp-regression-cao-boat-back" src={asset('boat-rectangular.webp')} alt="直壁平底、船上无人的长方体木船" draggable={false} />
+          <img shuku-edit-id="e-c83749a0-ba0e-4207-be5a-2ca63a3cba61" className="spp-regression-cao-elephant" data-aboard={elephantAboard} src={asset('elephant.webp')} alt={elephantAboard ? '上船称重的大象' : ''} aria-hidden={!elephantAboard} draggable={false} />
           <div shuku-edit-id="e-1d5bcd85-85df-4ec1-9463-65cc79ac8a35" className="spp-regression-cao-cargo" aria-hidden="true">
             {stonePositions.slice(0, count).map(([x, y], index) => <img shuku-edit-id="e-466348f7-03d5-4ebb-b872-1fa56942e7b9" key={index} className="spp-regression-cao-loaded-rock" src={stoneAsset(index)} draggable={false}
               style={{ left: `${x}%`, top: `${y}%`, rotate: `${(index % 5 - 2) * 13}deg`, width: `${6.6+(weights[index]-100)*.035}%`, zIndex: Math.round(y*10) }} alt="" />)}
           </div>
-          <img shuku-edit-id="e-5724c45d-53cd-4397-995a-bc1d88bf1d48" className="spp-regression-cao-boat-front" src={asset('boat-rectangular.png')} alt="" aria-hidden="true" draggable={false} />
+          <img shuku-edit-id="e-5724c45d-53cd-4397-995a-bc1d88bf1d48" className="spp-regression-cao-boat-front" src={asset('boat-rectangular.webp')} alt="" aria-hidden="true" draggable={false} />
           <svg shuku-edit-id="e-aae79060-38f9-4973-971f-b96cf53ca0a9" className="spp-regression-cao-hull-ruler" viewBox="0 0 32 120" aria-hidden="true"><path shuku-edit-id="e-89ad3c6f-9043-46e2-aef9-527fafabbc36" d="M6 1V119" />{Array.from({ length: 13 }, (_, i) => <path shuku-edit-id="e-c0830da8-c4a1-4f69-bb4d-bf263b209a37" key={i} d={`M6 ${i * 9 + 5}h${i % 3 === 0 ? 22 : 12}`} />)}</svg>
         </div>
         {flying.map((index,i)=><div shuku-edit-id="e-34c91cef-3606-4301-83d0-1bbfcbdf5ff1" key={index} className="spp-regression-cao-flight" style={{ '--spp-regression-landing-x': `${20 + stonePositions[index][0] * 9.7 - 179}px`, '--spp-regression-landing-y': `${360 + stonePositions[index][1] * 3.5 + sink - 15}px`, animationDelay: `${(index-flightStart.current)*80}ms` } as CSSProperties} aria-hidden="true"><img shuku-edit-id="e-c6b33335-ded3-4e58-afec-69280a352d64" src={stoneAsset(index)} alt="" /></div>)}
@@ -255,7 +255,7 @@ export function CaoChongPage() {
         <div shuku-edit-id="e-8086de9b-2406-4cb5-a112-6e2d28867c3e" className="spp-regression-cao-depth"><Typography shuku-edit-id="e-a792f209-41ac-489c-b59a-6ad41b0211a8" variant="body" tone="inherit">{`下沉 ${depth.toFixed(1)} 厘米`}</Typography></div>
         <div shuku-edit-id="e-1158da1c-06b2-4aec-8ed1-121b0f287da2" className="spp-regression-cao-stone-control">
           <Button className="spp-regression-cao-stone-button" onClick={storyPhase === 'before-elephant' ? loadElephant : dropStone} disabled={phase !== 'idle' || completed} aria-label={completed ? '石头用完了' : storyPhase === 'before-elephant' ? '点击称重' : storyPhase === 'stones' ? `投放${batchSize}块石头，共${nextBatchMass}千克` : '称重中'}>
-            <img shuku-edit-id="e-b04c4a2f-0aa0-4527-bf32-f800ff16cc8c" src={storyPhase === 'stones' ? stoneAsset(completed ? MAX_STONES - 1 : count) : asset('elephant.png')} alt="" draggable={false} />
+            <img shuku-edit-id="e-b04c4a2f-0aa0-4527-bf32-f800ff16cc8c" src={storyPhase === 'stones' ? stoneAsset(completed ? MAX_STONES - 1 : count) : asset('elephant.webp')} alt="" draggable={false} />
             {completed && <span shuku-edit-id="e-c2e46d6a-baea-4159-b807-727fd55e0e33" className="spp-regression-cao-stone-forbid" aria-hidden="true"><Forbid theme="outline" size={142} fill="#ff715e" strokeWidth={3} /></span>}
             {!completed && <Typography shuku-edit-id="e-c82687df-dd33-46bb-8f3a-a0369849f75c" as="span" variant="h3" tone="inherit">{storyPhase === 'before-elephant' ? '点击称重' : storyPhase === 'unloading-elephant' ? '自动下船…' : storyPhase !== 'stones' ? '称重中…' : phase === 'falling' ? '石头落下…' : phase === 'settling' ? '记录水位…' : `投放 ${batchSize} 块`}</Typography>}
             {!completed && <Typography shuku-edit-id="e-538c3785-b310-41a6-981c-66b68d1bd646" as="span" variant="body" tone="inherit">{storyPhase === 'stones' ? `本次 ${nextBatchMass} 千克` : targetRecorded ? `已记下 ${TARGET_DEPTH_CM.toFixed(1)} 厘米` : '自动记录水位'}</Typography>}

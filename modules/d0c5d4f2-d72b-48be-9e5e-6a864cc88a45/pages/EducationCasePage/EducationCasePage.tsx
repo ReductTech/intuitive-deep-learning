@@ -12,7 +12,7 @@ export function EducationCasePage() {
    <span shuku-edit-id="e-b293242d-9f15-46de-acce-4f79654ac2f4" className="rf-case-accent" aria-hidden="true"/>
   </header>
   <figure shuku-edit-id="e-482c2977-0e04-4808-9125-aa2e154405ba" className="rf-case-document">
-   <div shuku-edit-id="e-b52d8ae0-d63c-40be-8d5d-a11a594298a9" className="rf-case-document-image"><img shuku-edit-id="e-cdd26939-d0ac-440d-883f-5f22442e570c" src={moduleAssetUrl('evidence/education-case-list-2026.jpg')} alt="2026年天津市人工智能加研究生教育典型案例名单：首项为南开大学个人智能体重构人才培养范式，负责人程明明"/><span shuku-edit-id="e-2fb1c417-dd04-4f26-9a05-24987c0c38d2" className="rf-case-first-row" aria-hidden="true"/></div>
+   <div shuku-edit-id="e-b52d8ae0-d63c-40be-8d5d-a11a594298a9" className="rf-case-document-image"><img shuku-edit-id="e-cdd26939-d0ac-440d-883f-5f22442e570c" src={moduleAssetUrl("evidence/education-case-list-2026.webp")} alt="2026年天津市人工智能加研究生教育典型案例名单：首项为南开大学个人智能体重构人才培养范式，负责人程明明"/><span shuku-edit-id="e-2fb1c417-dd04-4f26-9a05-24987c0c38d2" className="rf-case-first-row" aria-hidden="true"/></div>
   </figure>
  </section>;
 }

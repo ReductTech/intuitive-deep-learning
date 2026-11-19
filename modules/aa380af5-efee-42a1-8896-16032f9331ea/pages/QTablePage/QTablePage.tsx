@@ -9,8 +9,8 @@ import { TRAP } from '../QLearningLoopPage/qLearningSimulation';
 import snapshot from './qTableSnapshot.json';
 import './QTablePage.css';
 
-const emptyStationArt = valueBasedRlAssetUrl('cover-v2/receiving-station-empty.png');
-const pitArt = valueBasedRlAssetUrl('cover-v2/maintenance-pit.png');
+const emptyStationArt = valueBasedRlAssetUrl("cover-v2/receiving-station-empty.webp");
+const pitArt = valueBasedRlAssetUrl("cover-v2/maintenance-pit.webp");
 
 const isTerminal = (position: Position) => [keyOf(GOAL), keyOf(TRAP)].includes(keyOf(position));
 const coordinates = (position: Position) => `(${position.row + 1},${position.col + 1})`;

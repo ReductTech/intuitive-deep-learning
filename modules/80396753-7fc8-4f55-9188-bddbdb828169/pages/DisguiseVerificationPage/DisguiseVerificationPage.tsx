@@ -52,7 +52,7 @@ export function DisguiseVerificationPage({ onComplete, onReset }: { onComplete?:
           </div>
         </div>
         <aside shuku-edit-id="e-9bce6c3f-8f7a-4d2a-9829-09a3fe82d4d2" className="vfl-disguise-details">
-          <img shuku-edit-id="e-9b0fcd8f-0317-4f54-8348-00505413e365" className="vfl-disguise-cover" src={moduleAssetUrl('yuhuanong/cover.jpg')} alt="雨花弄：变脸游戏封面" />
+          <img shuku-edit-id="e-9b0fcd8f-0317-4f54-8348-00505413e365" className="vfl-disguise-cover" src={moduleAssetUrl("yuhuanong/cover.webp")} alt="雨花弄：变脸游戏封面" />
           <Typography shuku-edit-id="e-1c4789e8-1925-43bb-af07-3aa8ba1e669c" variant="bodySmall" className="vfl-disguise-description">通缉画像上的人，正是你。搜查的脚步逼近，灯下只剩一面镜子。门开之前，你能换一张脸，逃过这一劫吗？</Typography>
           <dl shuku-edit-id="e-7fdafeb0-e157-45b8-ab42-61c324dbc23b" className="vfl-disguise-facts">
             <div shuku-edit-id="e-9ffa9f50-7b8e-4e10-999b-ee141f11df6c"><Typography shuku-edit-id="e-0d1b6cf2-34c5-4043-b142-f57d25d7b1bb" as="dt" variant="bodySmall">最近评测：</Typography><dd shuku-edit-id="e-c1d3b83b-da5c-4be7-b90a-e757174856fe"><ReviewButton /></dd></div>

@@ -5,10 +5,10 @@ import { useEffect, useRef } from 'react';
 import { ContentBlock, Typography } from "@shuku/course-style/react";
 import './TwoProcessesPage.css';
 
-const x0 = moduleAssetUrl('images/two-processes/x0.jpg');
-const x1 = moduleAssetUrl('images/two-processes/x1.jpg');
-const xt = moduleAssetUrl('images/two-processes/xt.jpg');
-const xT = moduleAssetUrl('images/two-processes/xt.jpg');
+const x0 = moduleAssetUrl("images/two-processes/x0.webp");
+const x1 = moduleAssetUrl("images/two-processes/x1.webp");
+const xt = moduleAssetUrl("images/two-processes/xt.webp");
+const xT = moduleAssetUrl("images/two-processes/xt.webp");
 
 type Phase = 'ready' | 'forward' | 'forward-done' | 'reverse' | 'complete';
 

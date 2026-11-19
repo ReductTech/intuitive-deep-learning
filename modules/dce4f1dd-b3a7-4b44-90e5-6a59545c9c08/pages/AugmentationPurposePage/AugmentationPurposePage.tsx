@@ -15,7 +15,7 @@ export function AugmentationPurposePage() {
     takeaway="目标是在未见样本上也能识别正确（泛化）。">
     <div shuku-edit-id="e-0f025105-eccb-41d9-b64b-dfbae22b5b50" className="daa-purpose-layout">
       <div shuku-edit-id="e-d79778aa-e548-43a9-9bde-8d0893e6a168" className="daa-purpose-views">{views.map((view,index)=><div shuku-edit-id="e-7c64435b-0687-4721-a2bf-91dc8d41845e" key={index}>
-        <div shuku-edit-id="e-9e9e202e-42b2-40a7-a320-65a04a94aed5" className="daa-purpose-image"><img shuku-edit-id="e-2ad302b2-c66f-4138-9805-16b6e7cc2213" src={photoUrl('01-fuji-apple.jpg')} alt={view.label} style={view.style}/>{augmented&&index===2&&<div shuku-edit-id="e-e769ff0c-d40e-448c-a44e-b467342d6678" className="daa-purpose-cutout"/>}</div>
+        <div shuku-edit-id="e-9e9e202e-42b2-40a7-a320-65a04a94aed5" className="daa-purpose-image"><img shuku-edit-id="e-2ad302b2-c66f-4138-9805-16b6e7cc2213" src={photoUrl("01-fuji-apple.webp")} alt={view.label} style={view.style}/>{augmented&&index===2&&<div shuku-edit-id="e-e769ff0c-d40e-448c-a44e-b467342d6678" className="daa-purpose-cutout"/>}</div>
         <Typography shuku-edit-id="e-daa5a49a-e2db-4290-944e-fc6711bd78c5" variant="bodySmall" align="center">{view.label}</Typography>
         <Typography shuku-edit-id="e-2274ff7f-d621-4722-888c-12a227b679b6" variant="body" tone="success" align="center">标签：苹果</Typography>
       </div>)}</div>

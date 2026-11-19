@@ -1,10 +1,10 @@
-import version_1Asset0 from '../assets/images/weight-sharing/version-1.jpg';
-import version_2Asset1 from '../assets/images/weight-sharing/version-2.jpg';
-import version_3Asset2 from '../assets/images/weight-sharing/version-3.jpg';
-import version_4Asset3 from '../assets/images/weight-sharing/version-4.jpg';
-import version_5Asset4 from '../assets/images/weight-sharing/version-5.jpg';
+import version_1Asset0 from "../assets/images/weight-sharing/version-1.webp";
+import version_2Asset1 from "../assets/images/weight-sharing/version-2.webp";
+import version_3Asset2 from "../assets/images/weight-sharing/version-3.webp";
+import version_4Asset3 from "../assets/images/weight-sharing/version-4.webp";
+import version_5Asset4 from "../assets/images/weight-sharing/version-5.webp";
 import weight_sharingAsset5 from '../assets/videos/weight-sharing.mp4';
-import demoPoster from '../assets/images/weight-sharing/demo-poster.jpg';
+import demoPoster from "../assets/images/weight-sharing/demo-poster.webp";
 const generatedImages = [version_1Asset0, version_2Asset1, version_3Asset2, version_4Asset3, version_5Asset4];
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { ContentBlock, Typography } from "@shuku/course-style/react";

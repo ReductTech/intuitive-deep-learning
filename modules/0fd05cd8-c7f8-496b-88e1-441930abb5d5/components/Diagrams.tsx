@@ -30,24 +30,24 @@ export function Block({ title, detail, warm = false, children }: { title: string
 export function ReferenceVisual({ file, alt = '', className = '', style }: { file: string; alt?: string; className?: string; style?: CSSProperties }) {
   return <img shuku-edit-id="e-dfc11c64-70e7-4356-8fe0-4d5006086984" className={`vga-reference-visual ${className}`} src={courseAssetUrl(file)} alt={alt} style={style} draggable={false} data-reference-visual={file} />;
 }
-const featureFiles = ['visuals/feature-fine.png', 'visuals/feature-coarse.png', 'visuals/feature-mid.png', 'visuals/feature-up-coarse.png', 'visuals/feature-up-fine.png'];
+const featureFiles = ["visuals/feature-fine.webp", "visuals/feature-coarse.webp", "visuals/feature-mid.webp", "visuals/feature-up-coarse.webp", "visuals/feature-up-fine.webp"];
 export function Feature({ size = 120, seed = 0, warm = false, level }: { size?: number; seed?: number; warm?: boolean; level?: number }) {
   const index = level ?? ((Math.floor(seed) % 5 + 5) % 5);
   return <div shuku-edit-id="e-63a6ea5a-bbd6-4ccb-b825-a7ae4bc36a45" className={'vga-feature' + (warm ? ' is-highlighted' : '')} style={{ width: size, height: size }}><ReferenceVisual file={featureFiles[index]} alt="参考图中的透视特征图：小猫与书本的空间纹理（教学示意）" /></div>;
 }
 export function Latent({ small = false, phase = 0, variant = 'encoded' }: { small?: boolean; phase?: number; variant?: 'encoded' | 'noisy' | 'denoised' | 'color' }) {
-  return <div shuku-edit-id="e-6b643dec-479e-486c-b939-bc1cc8f74acd" className={'vga-latent' + (small ? ' vga-latent--small' : '')} data-latent-phase={phase}><ReferenceVisual file={`visuals/latent-${variant}.png`} alt="参考图中的多通道 latent 透视堆叠（教学示意）" /></div>;
+  return <div shuku-edit-id="e-6b643dec-479e-486c-b939-bc1cc8f74acd" className={'vga-latent' + (small ? ' vga-latent--small' : '')} data-latent-phase={phase}><ReferenceVisual file={`visuals/latent-${variant}.webp`} alt="参考图中的多通道 latent 透视堆叠（教学示意）" /></div>;
 }
 export function Photo({ noise = 0, label = '一个正在学习的小猫', small = false, feature = false }: { noise?: number; label?: string; small?: boolean; feature?: boolean }) {
   return <div shuku-edit-id="e-0899ae76-1a3f-4413-b20c-55b676d99179" className={'vga-photo-wrap' + (small ? ' vga-photo-wrap--small' : '')}>
     <div shuku-edit-id="e-26b9f6b9-a41e-4197-9350-444d4eb93227" className="vga-photo" role="img" aria-label={label}>
-      <ReferenceVisual file={feature ? 'visuals/attention-feature.jpg' : 'visuals/cat.jpg'} />
-      <ReferenceVisual file="visuals/noise-prediction.jpg" className="vga-noise-overlay" style={{ opacity: noise }} />
+      <ReferenceVisual file={feature ? "visuals/attention-feature.webp" : "visuals/cat.webp"} />
+      <ReferenceVisual file="visuals/noise-prediction.webp" className="vga-noise-overlay" style={{ opacity: noise }} />
     </div><Text muted>{label}</Text>
   </div>;
 }
 export function Tokens({ warm = false, count = 8 }: { warm?: boolean; count?: number }) {
-  return <div shuku-edit-id="e-b23e21f8-9dc4-4ceb-ba7d-95d3fb1346e8" className={'vga-tokens' + (warm ? ' vga-tokens--warm' : '')} aria-label={warm ? '文本 tokens 示意' : '视觉 tokens 示意'}>{Array.from({ length: count }, (_, i) => <ReferenceVisual key={i} file={warm ? 'visuals/token-modulated.jpg' : 'visuals/token-blue.jpg'} style={{ filter: `brightness(${1 + (i % 3) * .06})` }} />)}</div>;
+  return <div shuku-edit-id="e-b23e21f8-9dc4-4ceb-ba7d-95d3fb1346e8" className={'vga-tokens' + (warm ? ' vga-tokens--warm' : '')} aria-label={warm ? '文本 tokens 示意' : '视觉 tokens 示意'}>{Array.from({ length: count }, (_, i) => <ReferenceVisual key={i} file={warm ? "visuals/token-modulated.webp" : "visuals/token-blue.webp"} style={{ filter: `brightness(${1 + (i % 3) * .06})` }} />)}</div>;
 }
 export function Note({ children, warm = false }: { children: ReactNode; warm?: boolean }) {
   return <div shuku-edit-id="e-55cf4fc0-b212-4357-95ea-02988d257edf" className={'vga-note' + (warm ? ' vga-note--warm' : '')}><Text>{children}</Text></div>;

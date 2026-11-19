@@ -6,7 +6,7 @@
   var SCENE_WIDTH = 1448;
   var SCENE_HEIGHT = 1086;
   var ASSET_ROOT = global.VFL_GAME_ASSET_ROOT;
-  var OVERLAY_ASSET = 'overlay_layer.png';
+  var OVERLAY_ASSET = "overlay_layer.webp";
   var PLAYER_ACTOR = 'balujun';
   var PLAYER_SPEED = 260;
   var OVERLAY_COLLISION_TILE = 16;
@@ -78,40 +78,40 @@
     normal: {
       label: '不变',
       textureKey: 'posFaceNormal',
-      asset: 'pos_face_normal.jpg',
+      asset: "pos_face_normal.webp",
       beard: {
-        h1: { textureKey: 'posFaceNormalH1', asset: 'pos_face_normal_h1.jpg' },
-        h2: { textureKey: 'posFaceNormalH2', asset: 'pos_face_h2.jpg' }
+        h1: { textureKey: 'posFaceNormalH1', asset: "pos_face_normal_h1.webp" },
+        h2: { textureKey: 'posFaceNormalH2', asset: "pos_face_h2.webp" }
       },
       actorKey: 'balujun'
     },
     farmer: {
       label: '农民',
       textureKey: 'posFaceFarmer',
-      asset: 'pos_face_farmer.jpg',
+      asset: "pos_face_farmer.webp",
       beard: {
-        h1: { textureKey: 'posFaceFarmerH1', asset: 'pos_face_farmer_h1.jpg' },
-        h2: { textureKey: 'posFaceFarmerH2', asset: 'pos_face_farmer_h2.jpg' }
+        h1: { textureKey: 'posFaceFarmerH1', asset: "pos_face_farmer_h1.webp" },
+        h2: { textureKey: 'posFaceFarmerH2', asset: "pos_face_farmer_h2.webp" }
       },
       actorKey: 'balujun'
     },
     trader: {
       label: '商人',
       textureKey: 'posFaceTrader',
-      asset: 'pos_face_trader.jpg',
+      asset: "pos_face_trader.webp",
       beard: {
-        h1: { textureKey: 'posFaceTraderH1', asset: 'pos_face_trader_h1.jpg' },
-        h2: { textureKey: 'posFaceTraderH2', asset: 'pos_face_trader_h2.jpg' }
+        h1: { textureKey: 'posFaceTraderH1', asset: "pos_face_trader_h1.webp" },
+        h2: { textureKey: 'posFaceTraderH2', asset: "pos_face_trader_h2.webp" }
       },
       actorKey: 'trader'
     },
     teacher: {
       label: '老师',
       textureKey: 'posFaceTeacher',
-      asset: 'pos_face_teacher.jpg',
+      asset: "pos_face_teacher.webp",
       beard: {
-        h1: { textureKey: 'posFaceTeacherH1', asset: 'pos_face_teacher_h1.jpg' },
-        h2: { textureKey: 'posFaceTeacherH2', asset: 'pos_face_teacher_h2.jpg' }
+        h1: { textureKey: 'posFaceTeacherH1', asset: "pos_face_teacher_h1.webp" },
+        h2: { textureKey: 'posFaceTeacherH2', asset: "pos_face_teacher_h2.webp" }
       },
       actorKey: 'teacher'
     }
@@ -130,12 +130,12 @@
     guideHand: { textureKey: 'act3GuideHand', asset: 'hand_thin_point.svg' }
   };
   var DISGUISE_DOTS = [
-    { textureKey: 'act3Dot1', asset: 'dots/ct1.png' },
-    { textureKey: 'act3Dot2', asset: 'dots/ct2.png' },
-    { textureKey: 'act3Dot3', asset: 'dots/ct3.png' },
-    { textureKey: 'act3Dot4', asset: 'dots/ct4.png' },
-    { textureKey: 'act3Dot5', asset: 'dots/ct5.png' },
-    { textureKey: 'act3Dot6', asset: 'dots/ct6.png' }
+    { textureKey: 'act3Dot1', asset: "dots/ct1.webp" },
+    { textureKey: 'act3Dot2', asset: "dots/ct2.webp" },
+    { textureKey: 'act3Dot3', asset: "dots/ct3.webp" },
+    { textureKey: 'act3Dot4', asset: "dots/ct4.webp" },
+    { textureKey: 'act3Dot5', asset: "dots/ct5.webp" },
+    { textureKey: 'act3Dot6', asset: "dots/ct6.webp" }
   ];
   var BRUSH_KINDS = [
     {
@@ -1132,32 +1132,32 @@ LEVEL_EDITOR_PROJECT_END */
   var INSPECTION_ACTOR_KEYS = ['jpOfficer', 'jpSoldierA', 'jpSoldierB', 'jpSoldierC'];
   var ACTORS = {
     balujun: {
-      asset: 'balujun_male_civ.png',
+      asset: "balujun_male_civ.webp",
       bounds: 'balujun_male_civ.bounds.json',
       scale: 1
     },
     civil1: {
-      asset: 'civil_2.png',
+      asset: "civil_2.webp",
       bounds: 'civil_2.bounds.json',
       scale: 1
     },
     jpOfficier: {
-      asset: 'jp_officier.png',
+      asset: "jp_officier.webp",
       bounds: 'jp_officier.bounds.json',
       scale: 1
     },
     jpSoldier: {
-      asset: 'jp_soldier_1.png',
+      asset: "jp_soldier_1.webp",
       bounds: 'jp_soldier_1.bounds.json',
       scale: 1
     },
     trader: {
-      asset: 'trader.png',
+      asset: "trader.webp",
       bounds: 'trader.bounds.json',
       scale: 1
     },
     teacher: {
-      asset: 'teacher.png',
+      asset: "teacher.webp",
       bounds: 'teacher.bounds.json',
       scale: 1
     }

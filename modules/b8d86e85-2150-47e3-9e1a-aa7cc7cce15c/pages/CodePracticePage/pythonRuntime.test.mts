@@ -7,7 +7,7 @@ import { PYTHON_INITIAL_CODE, NUMPY_INITIAL_CODE } from './pythonRuntime.ts';
 
 const root = new URL('../../../../', import.meta.url);
 const python = await loadPyodide({ indexURL: fileURLToPath(new URL('node_modules/pyodide/', root)) });
-const wheels = new URL('../../runtime/pyodide/', import.meta.url);
+const wheels = new URL('../../assets/runtime/pyodide/', import.meta.url);
 const wheel = (await readdir(wheels)).find(name => name.endsWith('.whl'))!;
 await python.loadPackage(fileURLToPath(new URL(wheel, wheels)).replaceAll('\\', '/'));
 await python.runPythonAsync(await readFile(new URL('./pythonPrelude.py', import.meta.url), 'utf8'));

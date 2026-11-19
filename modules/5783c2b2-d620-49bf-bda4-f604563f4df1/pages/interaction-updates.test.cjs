@@ -807,7 +807,7 @@ test('the course-local range component uses labels, lock/update icons and dashed
 
 test('page21 uses the same high-resolution photo for crops and highlights, with a connected path and a high-contrast weight file', () => {
   const app=harness('PretrainingPage');let tree=app.render();
-  const asset=path.resolve(__dirname,'../assets/pretraining/bottle-white-cap-hd.jpg');
+  const asset=path.resolve(__dirname,"../assets/pretraining/bottle-white-cap-hd.webp");
   const bytes=fs.readFileSync(asset);assert.equal(bytes.readUInt16BE(0),0xffd8);
   let dimensions;
   for(let offset=2;offset+4<bytes.length;){

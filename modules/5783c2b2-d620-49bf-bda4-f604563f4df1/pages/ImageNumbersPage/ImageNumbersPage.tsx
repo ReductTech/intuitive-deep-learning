@@ -3,7 +3,7 @@ import { moduleAssetUrl } from "@shuku/course-runtime/react/assets";
 import { useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties, type KeyboardEvent, type MouseEvent } from 'react';
 import { Button, ContentBlock, NoticeStrip, Typography } from "@shuku/course-style/react";
 import { useCompleteOnce } from '../../hooks/useCompleteOnce';
-const bottleImage = moduleAssetUrl("recycling/bottle-upright.jpg");
+const bottleImage = moduleAssetUrl("recycling/bottle-upright.webp");
 import './ImageNumbersPage.css';
 
 type Rgb = readonly [number, number, number];

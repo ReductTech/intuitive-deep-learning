@@ -8,10 +8,10 @@ import { TRAP } from '../pages/QLearningLoopPage/qLearningSimulation';
 import { EVALUATION_GAMMA, experienceMean, type DeliveryExperience } from './policyEvaluation';
 import './PolicyExperience.css';
 
-const robotArt = valueBasedRlAssetUrl('cover-v2/robot.png');
-const emptyStationArt = valueBasedRlAssetUrl('cover-v2/receiving-station-empty.png');
-const loadedStationArt = valueBasedRlAssetUrl('cover-v2/receiving-station-loaded.png');
-const pitArt = valueBasedRlAssetUrl('cover-v2/maintenance-pit.png');
+const robotArt = valueBasedRlAssetUrl("cover-v2/robot.webp");
+const emptyStationArt = valueBasedRlAssetUrl("cover-v2/receiving-station-empty.webp");
+const loadedStationArt = valueBasedRlAssetUrl("cover-v2/receiving-station-loaded.webp");
+const pitArt = valueBasedRlAssetUrl("cover-v2/maintenance-pit.webp");
 
 export const displayReturn = (value: number) => (value > 0 ? '+' : '') + value.toFixed(2);
 

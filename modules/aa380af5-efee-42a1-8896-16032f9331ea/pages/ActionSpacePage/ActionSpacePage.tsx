@@ -8,13 +8,13 @@ import { ACTIONS, DELTAS, START, keyOf, type Position } from '../../model';
 import { TRAP, warehouseStep } from '../QLearningLoopPage/qLearningSimulation';
 import './ActionSpacePage.css';
 
-const robotArt = valueBasedRlAssetUrl('cover-v2/robot.png');
-const receivingStation = valueBasedRlAssetUrl('cover-v2/receiving-station-empty.png');
-const maintenancePit = valueBasedRlAssetUrl('cover-v2/maintenance-pit.png');
-const warehouseScene = valueBasedRlAssetUrl('cover-v2/warehouse.jpg');
-const stateSpaceIcon = valueBasedRlAssetUrl('action-footer/state-space.png');
-const actionSpaceIcon = valueBasedRlAssetUrl('action-footer/action-space.png');
-const policyIcon = valueBasedRlAssetUrl('action-footer/policy.png');
+const robotArt = valueBasedRlAssetUrl("cover-v2/robot.webp");
+const receivingStation = valueBasedRlAssetUrl("cover-v2/receiving-station-empty.webp");
+const maintenancePit = valueBasedRlAssetUrl("cover-v2/maintenance-pit.webp");
+const warehouseScene = valueBasedRlAssetUrl("cover-v2/warehouse.webp");
+const stateSpaceIcon = valueBasedRlAssetUrl("action-footer/state-space.webp");
+const actionSpaceIcon = valueBasedRlAssetUrl("action-footer/action-space.webp");
+const policyIcon = valueBasedRlAssetUrl("action-footer/policy.webp");
 
 const CASES = [
   { id: 'move', from: START, title: '前方空地，成功移动', explanation: '选择向右后，到达新的位置。' },

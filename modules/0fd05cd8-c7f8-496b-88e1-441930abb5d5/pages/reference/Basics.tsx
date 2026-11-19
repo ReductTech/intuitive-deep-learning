@@ -41,10 +41,10 @@ export function UNetTime() {
   const [time,setTime]=useState(500);
   const vector=[Math.sin(time/120),Math.cos(time/120),Math.sin(time/400),Math.cos(time/400)];
   return <ReferenceCanvas index={2} source="05">
-    <RefBox rect={[153,187,270,263]} className="vgr-image-stack"><ReferenceVisual file="visuals/time-low.jpg"/><ReferenceVisual file="visuals/time-high.jpg" style={{opacity:time/1000}}/></RefBox>
+    <RefBox rect={[153,187,270,263]} className="vgr-image-stack"><ReferenceVisual file="visuals/time-low.webp"/><ReferenceVisual file="visuals/time-high.webp" style={{opacity:time/1000}}/></RefBox>
     <RefBox rect={[145,457,290,48]} className="vgr-white vgr-center"><Typography variant="body" tone="accent">当前带噪状态</Typography></RefBox>
     <RefBox rect={[65,615,242,86]} className="vgr-white vgr-center"><Typography variant="h3" tone="warning">t = {time}</Typography></RefBox>
-    <RefBox rect={[1268,638,295,44]} className="vgr-image-stack"><ReferenceVisual file="visuals/time-vector.jpg" style={{filter:`brightness(${.75+time/1600})`}}/></RefBox>
+    <RefBox rect={[1268,638,295,44]} className="vgr-image-stack"><ReferenceVisual file="visuals/time-vector.webp" style={{filter:`brightness(${.75+time/1600})`}}/></RefBox>
     <ReferenceControls rect={[50,768,1500,65]}><RangeControl label="时间步 t" min={0} max={1000} step={10} value={time} onChange={e=>setTime(Number(e.target.value))}/><Text muted>四维编码示意：{vector.map(v=>v.toFixed(2)).join('，')}</Text></ReferenceControls>
   </ReferenceCanvas>;
 }

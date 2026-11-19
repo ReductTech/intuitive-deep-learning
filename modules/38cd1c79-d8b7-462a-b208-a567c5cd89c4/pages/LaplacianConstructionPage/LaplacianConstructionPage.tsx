@@ -4,7 +4,7 @@ import { Light } from '@icon-park/react';
 import { ContentBlock, MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import './LaplacianConstructionPage.css';
 
-const buildingImage = moduleAssetUrl('xiandaijianzhu.jpg');
+const buildingImage = moduleAssetUrl("xiandaijianzhu.webp");
 
 const SECOND_X = [[0, 0, 0], [1, -2, 1], [0, 0, 0]];
 const SECOND_Y = [[0, 1, 0], [0, -2, 0], [0, 1, 0]];

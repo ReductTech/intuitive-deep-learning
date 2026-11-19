@@ -3,7 +3,6 @@ import { LessonFlow, ModuleShell, Typography, type LessonFlowStep } from "@shuku
 import "@shuku/course-style/react/styles.css";
 import "@shuku/course-style/react/ui-kit.css";
 import "@shuku/course-style/react/presentation.css";
-import './tailwind.css';
 import { LessonProvider } from './LessonContext';
 import { lessonContextOptions, neuronCourse } from './course';
 

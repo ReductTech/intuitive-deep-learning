@@ -2,9 +2,9 @@ import { moduleIdentity } from '../../outlines.json';
 import { moduleAssetUrl } from "@shuku/course-runtime/react/assets";
 import { useEffect, useRef, useState } from 'react';
 import { Button, ContentBlock, NoticeStrip, Question, Typography, type QuestionCheckResult } from "@shuku/course-style/react";
-const bottleFront = moduleAssetUrl("recycling/camera-views/bottle-front.jpg");
-const canUpright = moduleAssetUrl("recycling/can-upright.jpg");
-const cartonUpright = moduleAssetUrl("recycling/carton-upright.jpg");
+const bottleFront = moduleAssetUrl("recycling/camera-views/bottle-front.webp");
+const canUpright = moduleAssetUrl("recycling/can-upright.webp");
+const cartonUpright = moduleAssetUrl("recycling/carton-upright.webp");
 import './ExtractorAndHeadPage.css';
 
 type PipelineStage = 0 | 1 | 2;

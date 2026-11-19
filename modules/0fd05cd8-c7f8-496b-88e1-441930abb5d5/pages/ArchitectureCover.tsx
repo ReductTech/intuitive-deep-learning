@@ -25,7 +25,7 @@ export function ArchitectureCover() {
           <span shuku-edit-id="e-ff65a2c0-ea22-411c-8c1d-c7a40a04bc07" className={'vgr-cover-snapshot'+(flipped?' is-flipped':'')} data-side={flipped?'back':'front'}>
             <span shuku-edit-id="e-11cb233e-a567-48e7-a181-1e509cad2fac" className="vgr-cover-photo-front" aria-hidden={flipped}>
               <span shuku-edit-id="e-a00f2891-f731-4ef4-81ca-47b91af5afa4" className={'vgr-cover-photo-image'+(developed?' is-developed':'')}>
-                <ReferenceVisual file="visuals/cat.jpg" alt="情景中的交付图像：橘猫正趴在打开的书本上"/>
+                <ReferenceVisual file="visuals/cat.webp" alt="情景中的交付图像：橘猫正趴在打开的书本上"/>
                 {!developed && <span shuku-edit-id="e-9d90984e-140b-47e1-80ad-0ad99ae3801a" className="vgr-cover-empty-paper"><Typography as="span" variant="h3" tone="muted">?</Typography></span>}
               </span>
               <Typography as="span" variant="bodySmall" tone="muted">{developed?'一张没人拍过的照片':'一张空白相纸'}</Typography>

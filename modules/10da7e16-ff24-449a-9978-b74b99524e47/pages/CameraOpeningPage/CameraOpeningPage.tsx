@@ -4,7 +4,7 @@ import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography }
 import { channelAt, channelColors, channelNames, demosaic, SIDE, useSensorSamples } from './sensorModel';
 import './CameraOpeningPage.css';
 
-const imageUrl = moduleAssetUrl('images/cat-portrait.jpg');
+const imageUrl = moduleAssetUrl("images/cat-portrait.webp");
 const stages = ['世界中的光', 'Bayer 采样', '电信号', '二进制编码', 'RGB 重建', '屏幕发光'];
 const titles = ['从这张头像的拍摄开始', '每个位置，先只测一种颜色', '光变成了可以测量的电信号', '8 个二进制位，怎样得到 255？', '一个数，怎样变成三个数？', '数字让屏幕重新发出光'];
 const descriptions = [

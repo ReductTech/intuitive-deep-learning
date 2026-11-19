@@ -20,6 +20,7 @@ import { BeadOpeningPage } from './pages/BeadOpeningPage/BeadOpeningPage';
 import { DigitizationPipelinePage } from './pages/DigitizationPipelinePage/DigitizationPipelinePage';
 import { SamplingResolutionPage, QuantizationDepthPage } from './pages/SamplingQuantizationPage/SamplingQuantizationPage';
 import outline from './outlines.json';
+import { HistogramDistributionPage, NeighborhoodContextPage, ResamplingAliasingPage } from './pages/ImageStructurePages/ImageStructurePages';
 
 export const deck: DeckDefinition = {
   id: outline.id,
@@ -46,6 +47,9 @@ export const deck: DeckDefinition = {
     { id: outline.pages.find(page => page.id === 'c0d29c7c-868b-4c17-bd76-ff434a849b5e')!.id, title: outline.pages.find(page => page.id === 'c0d29c7c-868b-4c17-bd76-ff434a849b5e')!.title, section: '空间关系', render: () => <MorphologyOperationsPage /> },
     { id: outline.pages.find(page => page.id === 'f2c1e12e-3952-4c08-afe0-09c3365399b6')!.id, title: outline.pages.find(page => page.id === 'f2c1e12e-3952-4c08-afe0-09c3365399b6')!.title, section: '空间关系', render: () => <ColorImageBlurPage /> },
     { id: outline.pages.find(page => page.id === '772fe3b9-26b2-4bbb-9716-adf45a4f5f36')!.id, title: outline.pages.find(page => page.id === '772fe3b9-26b2-4bbb-9716-adf45a4f5f36')!.title, section: '视频与数字图像', render: () => <VideoFramesPage /> },
+    { id: 'f25337c1-ae0c-4e51-b616-d9d178d68a93', title: outline.pages.find(page => page.id === 'f25337c1-ae0c-4e51-b616-d9d178d68a93')!.title, section: '像素值操作', render: () => <HistogramDistributionPage /> },
+    { id: '564ac947-6134-4ee3-9e2f-f31fc9782d0c', title: outline.pages.find(page => page.id === '564ac947-6134-4ee3-9e2f-f31fc9782d0c')!.title, section: '空间关系', render: () => <NeighborhoodContextPage /> },
+    { id: '1da1b0a3-db77-4354-9a64-89fe2eda77cc', title: outline.pages.find(page => page.id === '1da1b0a3-db77-4354-9a64-89fe2eda77cc')!.title, section: '空间关系', render: () => <ResamplingAliasingPage /> },
   ],
 };
 export const getPptNotes = (sceneId: string) => (outline.pages.find(page => page.id === sceneId)?.snippet

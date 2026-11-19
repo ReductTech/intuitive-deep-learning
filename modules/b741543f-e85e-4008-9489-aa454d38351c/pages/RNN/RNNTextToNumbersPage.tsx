@@ -2,7 +2,7 @@ import { moduleIdentity } from '../../outlines.json';
 import { moduleAssetUrl } from "@shuku/course-runtime/react/assets";
 import { Fragment, useRef, useState, useEffect, type CSSProperties } from 'react';
 import { Button, ContentBlock, Typography } from "@shuku/course-style/react";
-const senderAvatar = moduleAssetUrl("sender-avatar.jpg");
+const senderAvatar = moduleAssetUrl("sender-avatar.webp");
 import './RNNTextToNumbersPage.css';
 
 export interface RNNTextToNumbersPageProps {

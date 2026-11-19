@@ -6,9 +6,9 @@ import { recognizedAmountWords } from './amountWords';
 import './DigitRecognitionOpeningPage.css';
 
 const ASSET_ID = '80396753-7fc8-4f55-9188-bddbdb828169';
-const background = moduleAssetUrl('1980_usa_bg.jpg');
-const cheque = moduleAssetUrl('cheque.png');
-const scanner = moduleAssetUrl('scanner_logo.png');
+const background = moduleAssetUrl("1980_usa_bg.webp");
+const cheque = moduleAssetUrl("cheque.webp");
+const scanner = moduleAssetUrl("scanner_logo.webp");
 const BOX_COUNT = 4;
 const CANVAS_SIZE = 180;
 

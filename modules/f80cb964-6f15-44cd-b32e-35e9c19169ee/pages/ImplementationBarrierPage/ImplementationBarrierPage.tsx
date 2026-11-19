@@ -22,7 +22,7 @@ export function ImplementationBarrierPage() {
   }, [removed]);
   return (
     <ContentBlock shuku-edit-id="e-122e75ad-7e14-4788-b32e-96f3467253f1" title={outline.pages.find(page => page.id === 'e0595adb-7c6e-466b-ab08-4129d9a2b04c')!.title} subtitle="从想到，到做到，中间还有一段路" headingLevel={1} className="rie-barrier" data-scene-id="e0595adb-7c6e-466b-ab08-4129d9a2b04c">
-      <img shuku-edit-id="e-7457498c-f62e-4e36-a0e2-10de3c83c687" className="rie-bridge-islands" src={moduleAssetUrl('images/idea-bridge-islands-v1.jpg')} alt="两端分离的平台，左侧是代表想法的灯泡，右侧是代表成果的文稿" />
+      <img shuku-edit-id="e-7457498c-f62e-4e36-a0e2-10de3c83c687" className="rie-bridge-islands" src={moduleAssetUrl("images/idea-bridge-islands-v1.webp")} alt="两端分离的平台，左侧是代表想法的灯泡，右侧是代表成果的文稿" />
       <div shuku-edit-id="e-f155434a-bbe9-46ce-b302-e206c7881f66" className="rie-bridge-scene" data-ppt-viewport="桥块坠落动画视窗，坠落后离开桥面" data-bridge-state={collapsed ? 'collapsed' : 'intact'}>
         <Typography shuku-edit-id="e-fded136b-3bed-42c1-bcd2-f19b5f8b597b" variant="h2" tone="accent" className="rie-bridge-start">有一个想法</Typography>
         <Typography shuku-edit-id="e-df2efd6b-0eec-4f6f-ae58-4bc1cce41363" variant="h2" tone="accent" className="rie-bridge-end">把它做出来</Typography>

@@ -8,9 +8,9 @@ import { GOAL, START, keyOf, type Position } from '../../model';
 import { TRAP } from '../QLearningLoopPage/qLearningSimulation';
 import './StateDesignPage.css';
 
-const robotArt = valueBasedRlAssetUrl('cover-v2/robot.png');
-const receivingStation = valueBasedRlAssetUrl('cover-v2/receiving-station-empty.png');
-const maintenancePit = valueBasedRlAssetUrl('cover-v2/maintenance-pit.png');
+const robotArt = valueBasedRlAssetUrl("cover-v2/robot.webp");
+const receivingStation = valueBasedRlAssetUrl("cover-v2/receiving-station-empty.webp");
+const maintenancePit = valueBasedRlAssetUrl("cover-v2/maintenance-pit.webp");
 
 const comparison = [
   { label: '含义', state: '环境的真实情况', observation: '机器人收到的信息' },

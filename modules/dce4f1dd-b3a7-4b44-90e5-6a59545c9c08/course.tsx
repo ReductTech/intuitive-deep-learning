@@ -1,5 +1,6 @@
 import type { ComponentType } from 'react';
 import outline from './outlines.json';
+import { stageTitle } from './components/coursePosition';
 import { AnnotationOpeningPage } from './pages/AnnotationOpeningPage/AnnotationOpeningPage';
 import { TaskLabelsPage } from './pages/TaskLabelsPage/TaskLabelsPage';
 import { LabelEncodingPage } from './pages/LabelEncodingPage/LabelEncodingPage';
@@ -51,4 +52,4 @@ const components: Record<string, ComponentType> = {
   '3fdc29d7-6a1b-4b25-99c8-245e114d4466': AugmentationLimitsPage,
   '59c770c4-ad8c-42f1-b573-1b28a38a0afe': TransferWorkflowPage,
 };
-export const course = outline.pages.map(page => ({ ...page, Component: components[page.id] }));
+export const course = outline.pages.map(page => ({ ...page, section: stageTitle(page.stage), Component: components[page.id] }));

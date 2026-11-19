@@ -96,7 +96,7 @@ export function GeoAgentTakeaway(){
     </nav>
     <section shuku-edit-id="e-5c5267c1-35d5-44b2-9589-11794fabccad" id="ga-content" role="tabpanel" aria-labelledby={`ga-tab-${stage}`} className="ga-content">
       <div shuku-edit-id="e-08b9adef-502f-44fa-bc1a-4b6f4e6c470d" className="ga-photo-column">
-        <div shuku-edit-id="e-b21b7b8f-617a-47cc-970c-021f26bd7519" className={`ga-photo ${phase>0&&phase<4?'ga-is-scanning':''}`}>
+        <div shuku-edit-id="e-b21b7b8f-617a-47cc-970c-021f26bd7519" data-ppt-viewport="从街景图集中裁切当前照片，叠加可见线索" className={`ga-photo ${phase>0&&phase<4?'ga-is-scanning':''}`}>
           <button shuku-edit-id="e-08f6dd8e-5341-446e-af9e-37ab027444ac" className="ga-photo-main" aria-label="分析街景照片" onClick={()=>{if(stage===0){setBasis(false);setRun(r=>r+1);}else if(stage===1)setClue(c=>c===null?0:(c+1)%3);else if(stage===2){setReward(0);setDetailOpen(true);}else setImproved(v=>!v);}}><img shuku-edit-id="e-914fc8b9-3cc7-404c-9490-113be95e4734" src={moduleAssetUrl("scene-atlas.webp")} alt="用于教学演示的合成街景，包含路牌、道路标线与行道树" draggable="false"/></button>
           {stage===1&&clues.map((c,n)=><button shuku-edit-id="e-372dc63f-20eb-4715-b30c-538f6676b80d" key={c.name} aria-label={`查看${c.name}线索`} className={`ga-hotspot ${clue===n?'is-active':''}`} style={{left:`${c.x}%`,top:`${c.y}%`,width:`${c.w}%`,height:`${c.h}%`}} onClick={()=>chooseClue(n)}><Typography shuku-edit-id="e-1000e61d-4e7e-4830-9573-ae5576613804" as="span" variant="bodySmall" tone="inherit">{c.name}</Typography></button>)}
           {stage===0&&phase>0&&phase<4&&<div shuku-edit-id="e-677b25c9-59ef-4651-8dae-8aff676f6004" className="ga-scan-line"/>}

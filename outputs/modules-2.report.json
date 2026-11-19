@@ -1,0 +1,1714 @@
+{
+  "status": "needs-setup",
+  "inputs": [
+    "C:\\Users\\Ocean\\Documents\\GitHub\\intuitive-deep-learning\\modules"
+  ],
+  "output": "C:\\Users\\Ocean\\Documents\\GitHub\\intuitive-deep-learning\\modules-2.zip",
+  "outputCreated": false,
+  "serverPending": [
+    "classification",
+    "security",
+    "admission",
+    "build",
+    "rendering"
+  ],
+  "startedAt": "2026-11-18T12:29:37.715086+00:00",
+  "stages": [
+    {
+      "name": "source-checks",
+      "status": "passed",
+      "elapsedSeconds": 3.522,
+      "moduleCount": 31,
+      "rejectedModuleCount": 0
+    }
+  ],
+  "issues": {
+    "serious": [],
+    "warnings": [
+      {
+        "code": "outline-only",
+        "path": "",
+        "message": "Source draft; server determines import eligibility",
+        "impact": "严重错误会阻止出包；提醒需由作者决定修复或继续提交。",
+        "repair": "按文件路径核对元数据、入口和引用，修复后重新运行 course.pack。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "kind": "outline-only",
+        "module": "0f7a1d06-ea17-4db8-83f4-a1e9aac506bc"
+      },
+      {
+        "code": "FILE_EXCLUDED",
+        "path": "modules/5783c2b2-d620-49bf-bda4-f604563f4df1/start-training.ps1",
+        "message": "黑名单文件已从交付清单排除，原文件未删除。",
+        "impact": "此类型不允许入包；继续打包，如课件依赖它，后续构建或运行可能失败。",
+        "repair": "检查课件是否依赖此文件；需要其数据时改为允许的静态资源。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "reason": "blocked-extension"
+      },
+      {
+        "code": "unverified-import",
+        "path": "pages/ShowcaseDigitNetworkPage/ShowcaseDigitNetworkPage.tsx",
+        "message": "源码检查问题",
+        "impact": "严重错误会阻止出包；提醒需由作者决定修复或继续提交。",
+        "repair": "按文件路径核对元数据、入口和引用，修复后重新运行 course.pack。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "kind": "unverified-import",
+        "module": "74de5075-8163-413d-84d4-7176f2a3f4a2",
+        "reference": "../../../80396753-7fc8-4f55-9188-bddbdb828169/pages/NetworkTrainingPage/NetworkTrainingPage"
+      },
+      {
+        "code": "unverified-import",
+        "path": "pages/ShowcaseDisguisePage/ShowcaseDisguisePage.tsx",
+        "message": "源码检查问题",
+        "impact": "严重错误会阻止出包；提醒需由作者决定修复或继续提交。",
+        "repair": "按文件路径核对元数据、入口和引用，修复后重新运行 course.pack。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "kind": "unverified-import",
+        "module": "74de5075-8163-413d-84d4-7176f2a3f4a2",
+        "reference": "../../../80396753-7fc8-4f55-9188-bddbdb828169/pages/DisguiseVerificationPage/DisguiseVerificationPage"
+      },
+      {
+        "code": "unverified-import",
+        "path": "pages/ShowcaseMultiKernelPage/ShowcaseMultiKernelPage.tsx",
+        "message": "源码检查问题",
+        "impact": "严重错误会阻止出包；提醒需由作者决定修复或继续提交。",
+        "repair": "按文件路径核对元数据、入口和引用，修复后重新运行 course.pack。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "kind": "unverified-import",
+        "module": "74de5075-8163-413d-84d4-7176f2a3f4a2",
+        "reference": "../../../38cd1c79-d8b7-462a-b208-a567c5cd89c4/pages/MultiKernelPage/MultiKernelPage"
+      },
+      {
+        "code": "unverified-import",
+        "path": "pages/ShowcaseOpenIdentityPage/ShowcaseOpenIdentityPage.tsx",
+        "message": "源码检查问题",
+        "impact": "严重错误会阻止出包；提醒需由作者决定修复或继续提交。",
+        "repair": "按文件路径核对元数据、入口和引用，修复后重新运行 course.pack。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "kind": "unverified-import",
+        "module": "74de5075-8163-413d-84d4-7176f2a3f4a2",
+        "reference": "../../../80396753-7fc8-4f55-9188-bddbdb828169/pages/OpenIdentityPage/OpenIdentityPage"
+      },
+      {
+        "code": "unverified-import",
+        "path": "pages/ShowcaseTripletLossPage/ShowcaseTripletLossPage.tsx",
+        "message": "源码检查问题",
+        "impact": "严重错误会阻止出包；提醒需由作者决定修复或继续提交。",
+        "repair": "按文件路径核对元数据、入口和引用，修复后重新运行 course.pack。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "kind": "unverified-import",
+        "module": "74de5075-8163-413d-84d4-7176f2a3f4a2",
+        "reference": "../../../80396753-7fc8-4f55-9188-bddbdb828169/pages/TripletLossPage/TripletLossPage"
+      },
+      {
+        "code": "unverified-import",
+        "path": "scripts/checkBellmanSimulation.mjs",
+        "message": "源码检查问题",
+        "impact": "严重错误会阻止出包；提醒需由作者决定修复或继续提交。",
+        "repair": "按文件路径核对元数据、入口和引用，修复后重新运行 course.pack。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "kind": "unverified-import",
+        "module": "aa380af5-efee-42a1-8896-16032f9331ea",
+        "reference": "../../model"
+      },
+      {
+        "code": "unverified-import",
+        "path": "scripts/checkBellmanSimulation.mjs",
+        "message": "源码检查问题",
+        "impact": "严重错误会阻止出包；提醒需由作者决定修复或继续提交。",
+        "repair": "按文件路径核对元数据、入口和引用，修复后重新运行 course.pack。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "kind": "unverified-import",
+        "module": "aa380af5-efee-42a1-8896-16032f9331ea",
+        "reference": "./model.mjs"
+      },
+      {
+        "code": "unverified-import",
+        "path": "scripts/checkBellmanSimulation.mjs",
+        "message": "源码检查问题",
+        "impact": "严重错误会阻止出包；提醒需由作者决定修复或继续提交。",
+        "repair": "按文件路径核对元数据、入口和引用，修复后重新运行 course.pack。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "kind": "unverified-import",
+        "module": "aa380af5-efee-42a1-8896-16032f9331ea",
+        "reference": "../QLearningLoopPage/qLearningSimulation"
+      },
+      {
+        "code": "unverified-import",
+        "path": "scripts/checkBellmanSimulation.mjs",
+        "message": "源码检查问题",
+        "impact": "严重错误会阻止出包；提醒需由作者决定修复或继续提交。",
+        "repair": "按文件路径核对元数据、入口和引用，修复后重新运行 course.pack。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "kind": "unverified-import",
+        "module": "aa380af5-efee-42a1-8896-16032f9331ea",
+        "reference": "./qLearningSimulation.mjs"
+      },
+      {
+        "code": "FILE_EXCLUDED",
+        "path": "modules/ce19337d-405b-47ff-92a9-9890127b5365/scripts/regenerate-result-svgs.ps1",
+        "message": "黑名单文件已从交付清单排除，原文件未删除。",
+        "impact": "此类型不允许入包；继续打包，如课件依赖它，后续构建或运行可能失败。",
+        "repair": "检查课件是否依赖此文件；需要其数据时改为允许的静态资源。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "reason": "blocked-extension"
+      },
+      {
+        "code": "unverified-import",
+        "path": "pages/CaoChongShowcasePage/CaoChongShowcasePage.tsx",
+        "message": "源码检查问题",
+        "impact": "严重错误会阻止出包；提醒需由作者决定修复或继续提交。",
+        "repair": "按文件路径核对元数据、入口和引用，修复后重新运行 course.pack。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "kind": "unverified-import",
+        "module": "d0c5d4f2-d72b-48be-9e5e-6a864cc88a45",
+        "reference": "../../../adde4a27-235d-4c03-a3cf-734ccf08b38d/pages/CaoChongPage/CaoChongPage"
+      },
+      {
+        "code": "unverified-import",
+        "path": "pages/CodeExecutionShowcasePage/CodeExecutionShowcasePage.tsx",
+        "message": "源码检查问题",
+        "impact": "严重错误会阻止出包；提醒需由作者决定修复或继续提交。",
+        "repair": "按文件路径核对元数据、入口和引用，修复后重新运行 course.pack。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "kind": "unverified-import",
+        "module": "d0c5d4f2-d72b-48be-9e5e-6a864cc88a45",
+        "reference": "../../../b8d86e85-2150-47e3-9e1a-aa7cc7cce15c/pages/CodePracticePage/CodeEditor"
+      },
+      {
+        "code": "unverified-import",
+        "path": "pages/CodeExecutionShowcasePage/CodeExecutionShowcasePage.tsx",
+        "message": "源码检查问题",
+        "impact": "严重错误会阻止出包；提醒需由作者决定修复或继续提交。",
+        "repair": "按文件路径核对元数据、入口和引用，修复后重新运行 course.pack。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "kind": "unverified-import",
+        "module": "d0c5d4f2-d72b-48be-9e5e-6a864cc88a45",
+        "reference": "../../../b8d86e85-2150-47e3-9e1a-aa7cc7cce15c/pages/CodePracticePage/CodePracticePage.css"
+      },
+      {
+        "code": "unverified-import",
+        "path": "pages/GameInteractionShowcasePage/GameInteractionShowcasePage.tsx",
+        "message": "源码检查问题",
+        "impact": "严重错误会阻止出包；提醒需由作者决定修复或继续提交。",
+        "repair": "按文件路径核对元数据、入口和引用，修复后重新运行 course.pack。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "kind": "unverified-import",
+        "module": "d0c5d4f2-d72b-48be-9e5e-6a864cc88a45",
+        "reference": "../../../38cd1c79-d8b7-462a-b208-a567c5cd89c4/LessonContext"
+      },
+      {
+        "code": "unverified-import",
+        "path": "pages/GameInteractionShowcasePage/GameInteractionShowcasePage.tsx",
+        "message": "源码检查问题",
+        "impact": "严重错误会阻止出包；提醒需由作者决定修复或继续提交。",
+        "repair": "按文件路径核对元数据、入口和引用，修复后重新运行 course.pack。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "kind": "unverified-import",
+        "module": "d0c5d4f2-d72b-48be-9e5e-6a864cc88a45",
+        "reference": "../../../38cd1c79-d8b7-462a-b208-a567c5cd89c4/pages/WindowScanPage/WindowScanPage"
+      },
+      {
+        "code": "unverified-import",
+        "path": "pages/PlatformFoundationPage/PlatformFoundationPage.tsx",
+        "message": "源码检查问题",
+        "impact": "严重错误会阻止出包；提醒需由作者决定修复或继续提交。",
+        "repair": "按文件路径核对元数据、入口和引用，修复后重新运行 course.pack。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "kind": "unverified-import",
+        "module": "d0c5d4f2-d72b-48be-9e5e-6a864cc88a45",
+        "reference": "../../../b8d86e85-2150-47e3-9e1a-aa7cc7cce15c/pages/ResearchRecommendationAppPage/ResearchRecommendationAppPage"
+      },
+      {
+        "code": "unverified-import",
+        "path": "pages/RegressionFitShowcasePage/RegressionFitShowcasePage.tsx",
+        "message": "源码检查问题",
+        "impact": "严重错误会阻止出包；提醒需由作者决定修复或继续提交。",
+        "repair": "按文件路径核对元数据、入口和引用，修复后重新运行 course.pack。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "kind": "unverified-import",
+        "module": "d0c5d4f2-d72b-48be-9e5e-6a864cc88a45",
+        "reference": "../../../adde4a27-235d-4c03-a3cf-734ccf08b38d/pages/EstimateWeightPage/EstimateWeightPage"
+      },
+      {
+        "code": "unverified-import",
+        "path": "pages/ShukuInteractionShowcasePage/ShukuInteractionShowcasePage.tsx",
+        "message": "源码检查问题",
+        "impact": "严重错误会阻止出包；提醒需由作者决定修复或继续提交。",
+        "repair": "按文件路径核对元数据、入口和引用，修复后重新运行 course.pack。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "kind": "unverified-import",
+        "module": "d0c5d4f2-d72b-48be-9e5e-6a864cc88a45",
+        "reference": "../../../444f8951-dd2e-42dc-94e5-c5a878618631/pages/ShukuCoCreationLoop/ShukuCoCreationLoop"
+      },
+      {
+        "code": "unverified-import",
+        "path": "pages/SproutLearningPage/SproutLearningPage.tsx",
+        "message": "源码检查问题",
+        "impact": "严重错误会阻止出包；提醒需由作者决定修复或继续提交。",
+        "repair": "按文件路径核对元数据、入口和引用，修复后重新运行 course.pack。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "kind": "unverified-import",
+        "module": "d0c5d4f2-d72b-48be-9e5e-6a864cc88a45",
+        "reference": "../../../b8d86e85-2150-47e3-9e1a-aa7cc7cce15c/pages/ResearchRecommendationAppPage/ResearchAppPhone"
+      },
+      {
+        "code": "unverified-import",
+        "path": "pages/ThreeDInteractionShowcasePage/ThreeDInteractionShowcasePage.tsx",
+        "message": "源码检查问题",
+        "impact": "严重错误会阻止出包；提醒需由作者决定修复或继续提交。",
+        "repair": "按文件路径核对元数据、入口和引用，修复后重新运行 course.pack。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "kind": "unverified-import",
+        "module": "d0c5d4f2-d72b-48be-9e5e-6a864cc88a45",
+        "reference": "../../../38cd1c79-d8b7-462a-b208-a567c5cd89c4/pages/WeightSharingPage/WeightSharingScene"
+      },
+      {
+        "code": "unverified-import",
+        "path": "pages/ThreeDInteractionShowcasePage/ThreeDInteractionShowcasePage.tsx",
+        "message": "源码检查问题",
+        "impact": "严重错误会阻止出包；提醒需由作者决定修复或继续提交。",
+        "repair": "按文件路径核对元数据、入口和引用，修复后重新运行 course.pack。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "kind": "unverified-import",
+        "module": "d0c5d4f2-d72b-48be-9e5e-6a864cc88a45",
+        "reference": "../../../38cd1c79-d8b7-462a-b208-a567c5cd89c4/pages/WeightSharingPage/WeightSharingPage.css"
+      },
+      {
+        "code": "unverified-import",
+        "path": "pages/VisualFeedbackShowcasePage/VisualFeedbackShowcasePage.tsx",
+        "message": "源码检查问题",
+        "impact": "严重错误会阻止出包；提醒需由作者决定修复或继续提交。",
+        "repair": "按文件路径核对元数据、入口和引用，修复后重新运行 course.pack。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "kind": "unverified-import",
+        "module": "d0c5d4f2-d72b-48be-9e5e-6a864cc88a45",
+        "reference": "../../../b8d86e85-2150-47e3-9e1a-aa7cc7cce15c/pages/OptionalInteractionPage/UfoTranslationScene"
+      },
+      {
+        "code": "unverified-import",
+        "path": "pages/VisualFeedbackShowcasePage/VisualFeedbackShowcasePage.tsx",
+        "message": "源码检查问题",
+        "impact": "严重错误会阻止出包；提醒需由作者决定修复或继续提交。",
+        "repair": "按文件路径核对元数据、入口和引用，修复后重新运行 course.pack。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "kind": "unverified-import",
+        "module": "d0c5d4f2-d72b-48be-9e5e-6a864cc88a45",
+        "reference": "../../../b8d86e85-2150-47e3-9e1a-aa7cc7cce15c/pages/OptionalInteractionPage/OptionalInteractionPage.css"
+      },
+      {
+        "code": "HIGH_RISK_FILE",
+        "path": "modules/0fd05cd8-c7f8-496b-88e1-441930abb5d5/scripts/extract-reference-scenes.py",
+        "message": "允许交付的高危文件：Python 源码或二进制数据。",
+        "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+        "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "riskLevel": "high",
+        "reason": "python-source"
+      },
+      {
+        "code": "HIGH_RISK_FILE",
+        "path": "modules/0fd05cd8-c7f8-496b-88e1-441930abb5d5/scripts/extract-reference-visuals.py",
+        "message": "允许交付的高危文件：Python 源码或二进制数据。",
+        "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+        "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "riskLevel": "high",
+        "reason": "python-source"
+      },
+      {
+        "code": "HIGH_RISK_FILE",
+        "path": "modules/0fd05cd8-c7f8-496b-88e1-441930abb5d5/scripts/sync-outline.py",
+        "message": "允许交付的高危文件：Python 源码或二进制数据。",
+        "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+        "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "riskLevel": "high",
+        "reason": "python-source"
+      },
+      {
+        "code": "HIGH_RISK_FILE",
+        "path": "modules/0fd05cd8-c7f8-496b-88e1-441930abb5d5/scripts/verify-browser.py",
+        "message": "允许交付的高危文件：Python 源码或二进制数据。",
+        "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+        "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "riskLevel": "high",
+        "reason": "python-source"
+      },
+      {
+        "code": "HIGH_RISK_FILE",
+        "path": "modules/0fd05cd8-c7f8-496b-88e1-441930abb5d5/scripts/verify-built-assets.py",
+        "message": "允许交付的高危文件：Python 源码或二进制数据。",
+        "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+        "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "riskLevel": "high",
+        "reason": "python-source"
+      },
+      {
+        "code": "HIGH_RISK_FILE",
+        "path": "modules/0fd05cd8-c7f8-496b-88e1-441930abb5d5/scripts/verify-query.py",
+        "message": "允许交付的高危文件：Python 源码或二进制数据。",
+        "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+        "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "riskLevel": "high",
+        "reason": "python-source"
+      },
+      {
+        "code": "HIGH_RISK_FILE",
+        "path": "modules/0fd05cd8-c7f8-496b-88e1-441930abb5d5/scripts/verify-reference-layout.py",
+        "message": "允许交付的高危文件：Python 源码或二进制数据。",
+        "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+        "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "riskLevel": "high",
+        "reason": "python-source"
+      },
+      {
+        "code": "HIGH_RISK_FILE",
+        "path": "modules/3a8a4e84-67b6-499a-ae8d-7762e6ddada8/backend/glove_service.py",
+        "message": "允许交付的高危文件：Python 源码或二进制数据。",
+        "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+        "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "riskLevel": "high",
+        "reason": "python-source"
+      },
+      {
+        "code": "HIGH_RISK_FILE",
+        "path": "modules/444f8951-dd2e-42dc-94e5-c5a878618631/pages/ShukuCoCreationLoop/verify_browser.py",
+        "message": "允许交付的高危文件：Python 源码或二进制数据。",
+        "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+        "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "riskLevel": "high",
+        "reason": "python-source"
+      },
+      {
+        "code": "HIGH_RISK_FILE",
+        "path": "modules/56a1d5b2-a439-4ee3-8f63-fd63ac09c741/assets/evacuation/models/Bush_Common.bin",
+        "message": "允许交付的高危文件：Python 源码或二进制数据。",
+        "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+        "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "riskLevel": "high",
+        "reason": "binary-data"
+      },
+      {
+        "code": "HIGH_RISK_FILE",
+        "path": "modules/56a1d5b2-a439-4ee3-8f63-fd63ac09c741/assets/evacuation/models/CommonTree_1.bin",
+        "message": "允许交付的高危文件：Python 源码或二进制数据。",
+        "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+        "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "riskLevel": "high",
+        "reason": "binary-data"
+      },
+      {
+        "code": "HIGH_RISK_FILE",
+        "path": "modules/56a1d5b2-a439-4ee3-8f63-fd63ac09c741/assets/evacuation/models/CommonTree_3.bin",
+        "message": "允许交付的高危文件：Python 源码或二进制数据。",
+        "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+        "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "riskLevel": "high",
+        "reason": "binary-data"
+      },
+      {
+        "code": "HIGH_RISK_FILE",
+        "path": "modules/56a1d5b2-a439-4ee3-8f63-fd63ac09c741/assets/evacuation/models/DeadTree_1.bin",
+        "message": "允许交付的高危文件：Python 源码或二进制数据。",
+        "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+        "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "riskLevel": "high",
+        "reason": "binary-data"
+      },
+      {
+        "code": "HIGH_RISK_FILE",
+        "path": "modules/56a1d5b2-a439-4ee3-8f63-fd63ac09c741/assets/evacuation/models/DeadTree_3.bin",
+        "message": "允许交付的高危文件：Python 源码或二进制数据。",
+        "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+        "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "riskLevel": "high",
+        "reason": "binary-data"
+      },
+      {
+        "code": "HIGH_RISK_FILE",
+        "path": "modules/56a1d5b2-a439-4ee3-8f63-fd63ac09c741/assets/evacuation/models/Fern_1.bin",
+        "message": "允许交付的高危文件：Python 源码或二进制数据。",
+        "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+        "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "riskLevel": "high",
+        "reason": "binary-data"
+      },
+      {
+        "code": "HIGH_RISK_FILE",
+        "path": "modules/56a1d5b2-a439-4ee3-8f63-fd63ac09c741/assets/evacuation/models/Flower_3_Group.bin",
+        "message": "允许交付的高危文件：Python 源码或二进制数据。",
+        "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+        "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "riskLevel": "high",
+        "reason": "binary-data"
+      },
+      {
+        "code": "HIGH_RISK_FILE",
+        "path": "modules/56a1d5b2-a439-4ee3-8f63-fd63ac09c741/assets/evacuation/models/Grass_Common_Short.bin",
+        "message": "允许交付的高危文件：Python 源码或二进制数据。",
+        "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+        "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "riskLevel": "high",
+        "reason": "binary-data"
+      },
+      {
+        "code": "HIGH_RISK_FILE",
+        "path": "modules/56a1d5b2-a439-4ee3-8f63-fd63ac09c741/assets/evacuation/models/Pine_1.bin",
+        "message": "允许交付的高危文件：Python 源码或二进制数据。",
+        "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+        "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "riskLevel": "high",
+        "reason": "binary-data"
+      },
+      {
+        "code": "HIGH_RISK_FILE",
+        "path": "modules/56a1d5b2-a439-4ee3-8f63-fd63ac09c741/assets/evacuation/models/Pine_2.bin",
+        "message": "允许交付的高危文件：Python 源码或二进制数据。",
+        "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+        "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "riskLevel": "high",
+        "reason": "binary-data"
+      },
+      {
+        "code": "HIGH_RISK_FILE",
+        "path": "modules/56a1d5b2-a439-4ee3-8f63-fd63ac09c741/assets/evacuation/models/Pine_3.bin",
+        "message": "允许交付的高危文件：Python 源码或二进制数据。",
+        "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+        "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "riskLevel": "high",
+        "reason": "binary-data"
+      },
+      {
+        "code": "HIGH_RISK_FILE",
+        "path": "modules/56a1d5b2-a439-4ee3-8f63-fd63ac09c741/assets/evacuation/models/Rock_Medium_1.bin",
+        "message": "允许交付的高危文件：Python 源码或二进制数据。",
+        "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+        "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "riskLevel": "high",
+        "reason": "binary-data"
+      },
+      {
+        "code": "HIGH_RISK_FILE",
+        "path": "modules/56a1d5b2-a439-4ee3-8f63-fd63ac09c741/assets/evacuation/models/Rock_Medium_2.bin",
+        "message": "允许交付的高危文件：Python 源码或二进制数据。",
+        "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+        "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "riskLevel": "high",
+        "reason": "binary-data"
+      },
+      {
+        "code": "HIGH_RISK_FILE",
+        "path": "modules/56a1d5b2-a439-4ee3-8f63-fd63ac09c741/assets/evacuation/models/Rock_Medium_3.bin",
+        "message": "允许交付的高危文件：Python 源码或二进制数据。",
+        "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+        "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "riskLevel": "high",
+        "reason": "binary-data"
+      },
+      {
+        "code": "HIGH_RISK_FILE",
+        "path": "modules/5783c2b2-d620-49bf-bda4-f604563f4df1/scripts/build_similarity_data.py",
+        "message": "允许交付的高危文件：Python 源码或二进制数据。",
+        "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+        "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "riskLevel": "high",
+        "reason": "python-source"
+      },
+      {
+        "code": "HIGH_RISK_FILE",
+        "path": "modules/74de5075-8163-413d-84d4-7176f2a3f4a2/pages/CodePracticePage/pythonPrelude.py",
+        "message": "允许交付的高危文件：Python 源码或二进制数据。",
+        "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+        "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "riskLevel": "high",
+        "reason": "python-source"
+      },
+      {
+        "code": "HIGH_RISK_FILE",
+        "path": "modules/80396753-7fc8-4f55-9188-bddbdb828169/assets/yuhuanong/extract_sprite_bounds.py",
+        "message": "允许交付的高危文件：Python 源码或二进制数据。",
+        "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+        "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "riskLevel": "high",
+        "reason": "python-source"
+      },
+      {
+        "code": "HIGH_RISK_FILE",
+        "path": "modules/80396753-7fc8-4f55-9188-bddbdb828169/pages/FeatureStatisticsPage/compute_statistics.py",
+        "message": "允许交付的高危文件：Python 源码或二进制数据。",
+        "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+        "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "riskLevel": "high",
+        "reason": "python-source"
+      },
+      {
+        "code": "HIGH_RISK_FILE",
+        "path": "modules/80396753-7fc8-4f55-9188-bddbdb828169/services/pack_image_atlases.py",
+        "message": "允许交付的高危文件：Python 源码或二进制数据。",
+        "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+        "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "riskLevel": "high",
+        "reason": "python-source"
+      },
+      {
+        "code": "HIGH_RISK_FILE",
+        "path": "modules/80396753-7fc8-4f55-9188-bddbdb828169/services/prepare_flatten_assets.py",
+        "message": "允许交付的高危文件：Python 源码或二进制数据。",
+        "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+        "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "riskLevel": "high",
+        "reason": "python-source"
+      },
+      {
+        "code": "HIGH_RISK_FILE",
+        "path": "modules/80396753-7fc8-4f55-9188-bddbdb828169/services/prepare_hierarchy_assets.py",
+        "message": "允许交付的高危文件：Python 源码或二进制数据。",
+        "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+        "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "riskLevel": "high",
+        "reason": "python-source"
+      },
+      {
+        "code": "HIGH_RISK_FILE",
+        "path": "modules/80396753-7fc8-4f55-9188-bddbdb828169/services/prepare_tsne_assets.py",
+        "message": "允许交付的高危文件：Python 源码或二进制数据。",
+        "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+        "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "riskLevel": "high",
+        "reason": "python-source"
+      },
+      {
+        "code": "HIGH_RISK_FILE",
+        "path": "modules/adde4a27-235d-4c03-a3cf-734ccf08b38d/pages/LossLandscape/generate_catalog.py",
+        "message": "允许交付的高危文件：Python 源码或二进制数据。",
+        "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+        "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "riskLevel": "high",
+        "reason": "python-source"
+      },
+      {
+        "code": "HIGH_RISK_FILE",
+        "path": "modules/b8d86e85-2150-47e3-9e1a-aa7cc7cce15c/pages/CodePracticePage/pythonPrelude.py",
+        "message": "允许交付的高危文件：Python 源码或二进制数据。",
+        "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+        "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+        "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+        "riskLevel": "high",
+        "reason": "python-source"
+      }
+    ]
+  },
+  "coverage": {
+    "sourceChecks": true,
+    "zipIntegrity": false,
+    "realBuild": false,
+    "rendering": false,
+    "securityReview": false,
+    "productionUpload": false
+  },
+  "context": {
+    "sessionId": "d72fcb85-46b5-49f5-b983-d53c0927708b",
+    "targetRoot": "C:\\Users\\Ocean\\Documents\\GitHub\\intuitive-deep-learning",
+    "module": null,
+    "shukuRoot": null
+  },
+  "modules": [
+    {
+      "id": "07951e3b-2fcb-477e-b5d8-ad7930c2a529",
+      "title": "视觉 Transformer 与视觉语言模型",
+      "pages": 27,
+      "files": 77,
+      "missingThumbnails": 0
+    },
+    {
+      "id": "0f7a1d06-ea17-4db8-83f4-a1e9aac506bc",
+      "title": "专业创作者指南",
+      "pages": 9,
+      "files": 1,
+      "missingThumbnails": 9
+    },
+    {
+      "id": "0fd05cd8-c7f8-496b-88e1-441930abb5d5",
+      "title": "视觉生成网络结构",
+      "pages": 15,
+      "files": 160,
+      "missingThumbnails": 0
+    },
+    {
+      "id": "10da7e16-ff24-449a-9978-b74b99524e47",
+      "title": "数字图像入门",
+      "pages": 24,
+      "files": 231,
+      "missingThumbnails": 3
+    },
+    {
+      "id": "1a8e20a6-6e70-4d1d-8830-3b6b9a34ffed",
+      "title": "基础示例：Creator Skill 是什么",
+      "pages": 1,
+      "files": 9,
+      "missingThumbnails": 0
+    },
+    {
+      "id": "1fbfaced-89c8-4ee4-a31e-49fefd5dcb4b",
+      "title": "GeoAgent：看图定位的训练方法",
+      "pages": 1,
+      "files": 12,
+      "missingThumbnails": 0
+    },
+    {
+      "id": "34103f87-7796-4685-97d9-2cb3bf23f6f5",
+      "title": "注意力机制",
+      "pages": 25,
+      "files": 191,
+      "missingThumbnails": 0
+    },
+    {
+      "id": "3500e36d-8f2e-43f6-ba93-e830091cd541",
+      "title": "从文字到价值：新生文章影响力预测",
+      "pages": 38,
+      "files": 155,
+      "missingThumbnails": 0
+    },
+    {
+      "id": "38cd1c79-d8b7-462a-b208-a567c5cd89c4",
+      "title": "卷积基础：从五子棋棋形到图像卷积",
+      "pages": 24,
+      "files": 115,
+      "missingThumbnails": 0
+    },
+    {
+      "id": "3a8a4e84-67b6-499a-ae8d-7762e6ddada8",
+      "title": "Transformer 入门",
+      "pages": 34,
+      "files": 158,
+      "missingThumbnails": 0
+    },
+    {
+      "id": "444f8951-dd2e-42dc-94e5-c5a878618631",
+      "title": "直觉式学习课件：理念、工具与创作方法",
+      "pages": 22,
+      "files": 347,
+      "missingThumbnails": 0
+    },
+    {
+      "id": "56a1d5b2-a439-4ee3-8f63-fd63ac09c741",
+      "title": "梯度下降、优化器与反向传播",
+      "pages": 1,
+      "files": 75,
+      "missingThumbnails": 1
+    },
+    {
+      "id": "5783c2b2-d620-49bf-bda4-f604563f4df1",
+      "title": "深层网络与表示学习",
+      "pages": 29,
+      "files": 541,
+      "missingThumbnails": 2
+    },
+    {
+      "id": "74de5075-8163-413d-84d4-7176f2a3f4a2",
+      "title": "大模型驱动的实践能力培养体系与平台 SPP",
+      "pages": 46,
+      "files": 1108,
+      "missingThumbnails": 0
+    },
+    {
+      "id": "80396753-7fc8-4f55-9188-bddbdb828169",
+      "title": "视觉特征学习",
+      "pages": 25,
+      "files": 495,
+      "missingThumbnails": 0
+    },
+    {
+      "id": "95728790-5709-43e1-ada6-99687813ab3b",
+      "title": "多层感知机",
+      "pages": 5,
+      "files": 35,
+      "missingThumbnails": 0
+    },
+    {
+      "id": "9831b46b-af10-4cb3-b9dc-94e0cee25143",
+      "title": "策略梯度入门",
+      "pages": 15,
+      "files": 117,
+      "missingThumbnails": 0
+    },
+    {
+      "id": "9acfbca1-b881-457e-add6-21e0b6b855a0",
+      "title": "认识人工神经元",
+      "pages": 18,
+      "files": 87,
+      "missingThumbnails": 0
+    },
+    {
+      "id": "a9333d75-9e97-4c31-941d-9ce3e6f49608",
+      "title": "智能体如何完成复杂任务",
+      "pages": 40,
+      "files": 70,
+      "missingThumbnails": 0
+    },
+    {
+      "id": "aa380af5-efee-42a1-8896-16032f9331ea",
+      "title": "Value-based 强化学习：机器人送货",
+      "pages": 22,
+      "files": 145,
+      "missingThumbnails": 0
+    },
+    {
+      "id": "adde4a27-235d-4c03-a3cf-734ccf08b38d",
+      "title": "回归与损失：模型怎样变准",
+      "pages": 18,
+      "files": 96,
+      "missingThumbnails": 0
+    },
+    {
+      "id": "b741543f-e85e-4008-9489-aa454d38351c",
+      "title": "朴素 RNN",
+      "pages": 13,
+      "files": 65,
+      "missingThumbnails": 0
+    },
+    {
+      "id": "b8d86e85-2150-47e3-9e1a-aa7cc7cce15c",
+      "title": "大模型驱动的实践能力培养体系与平台",
+      "pages": 34,
+      "files": 832,
+      "missingThumbnails": 0
+    },
+    {
+      "id": "bc6ed89d-ce23-4837-9b2f-bd44acb810b7",
+      "title": "大模型推理中的注意力优化",
+      "pages": 25,
+      "files": 85,
+      "missingThumbnails": 0
+    },
+    {
+      "id": "bcb6d951-f361-4b01-b20d-557e6dfc2e87",
+      "title": "AI 协同创作：从工具到作品",
+      "pages": 9,
+      "files": 46,
+      "missingThumbnails": 1
+    },
+    {
+      "id": "ce19337d-405b-47ff-92a9-9890127b5365",
+      "title": "视觉生成：从噪声到图像",
+      "pages": 31,
+      "files": 123,
+      "missingThumbnails": 11
+    },
+    {
+      "id": "d0c5d4f2-d72b-48be-9e5e-6a864cc88a45",
+      "title": "研究基础：算法、交互原型与平台实践",
+      "pages": 19,
+      "files": 237,
+      "missingThumbnails": 0
+    },
+    {
+      "id": "d85337ec-da9a-4eb7-8cd3-c6ed29992ba8",
+      "title": "二叉树：从生活中的选择开始",
+      "pages": 1,
+      "files": 13,
+      "missingThumbnails": 0
+    },
+    {
+      "id": "dce4f1dd-b3a7-4b44-90e5-6a59545c9c08",
+      "title": "数据标注与数据增广",
+      "pages": 24,
+      "files": 100,
+      "missingThumbnails": 0
+    },
+    {
+      "id": "f1751a2d-ea22-4f92-9fa4-32b506c011de",
+      "title": "课程交互联调模块",
+      "pages": 4,
+      "files": 6,
+      "missingThumbnails": 4
+    },
+    {
+      "id": "f80cb964-6f15-44cd-b32e-35e9c19169ee",
+      "title": "科研智能时代的机遇、挑战与探索",
+      "pages": 32,
+      "files": 73,
+      "missingThumbnails": 26
+    }
+  ],
+  "highRiskFiles": [
+    {
+      "path": "modules/0fd05cd8-c7f8-496b-88e1-441930abb5d5/scripts/extract-reference-scenes.py",
+      "riskLevel": "high",
+      "reason": "python-source"
+    },
+    {
+      "path": "modules/0fd05cd8-c7f8-496b-88e1-441930abb5d5/scripts/extract-reference-visuals.py",
+      "riskLevel": "high",
+      "reason": "python-source"
+    },
+    {
+      "path": "modules/0fd05cd8-c7f8-496b-88e1-441930abb5d5/scripts/sync-outline.py",
+      "riskLevel": "high",
+      "reason": "python-source"
+    },
+    {
+      "path": "modules/0fd05cd8-c7f8-496b-88e1-441930abb5d5/scripts/verify-browser.py",
+      "riskLevel": "high",
+      "reason": "python-source"
+    },
+    {
+      "path": "modules/0fd05cd8-c7f8-496b-88e1-441930abb5d5/scripts/verify-built-assets.py",
+      "riskLevel": "high",
+      "reason": "python-source"
+    },
+    {
+      "path": "modules/0fd05cd8-c7f8-496b-88e1-441930abb5d5/scripts/verify-query.py",
+      "riskLevel": "high",
+      "reason": "python-source"
+    },
+    {
+      "path": "modules/0fd05cd8-c7f8-496b-88e1-441930abb5d5/scripts/verify-reference-layout.py",
+      "riskLevel": "high",
+      "reason": "python-source"
+    },
+    {
+      "path": "modules/3a8a4e84-67b6-499a-ae8d-7762e6ddada8/backend/glove_service.py",
+      "riskLevel": "high",
+      "reason": "python-source"
+    },
+    {
+      "path": "modules/444f8951-dd2e-42dc-94e5-c5a878618631/pages/ShukuCoCreationLoop/verify_browser.py",
+      "riskLevel": "high",
+      "reason": "python-source"
+    },
+    {
+      "path": "modules/56a1d5b2-a439-4ee3-8f63-fd63ac09c741/assets/evacuation/models/Bush_Common.bin",
+      "riskLevel": "high",
+      "reason": "binary-data"
+    },
+    {
+      "path": "modules/56a1d5b2-a439-4ee3-8f63-fd63ac09c741/assets/evacuation/models/CommonTree_1.bin",
+      "riskLevel": "high",
+      "reason": "binary-data"
+    },
+    {
+      "path": "modules/56a1d5b2-a439-4ee3-8f63-fd63ac09c741/assets/evacuation/models/CommonTree_3.bin",
+      "riskLevel": "high",
+      "reason": "binary-data"
+    },
+    {
+      "path": "modules/56a1d5b2-a439-4ee3-8f63-fd63ac09c741/assets/evacuation/models/DeadTree_1.bin",
+      "riskLevel": "high",
+      "reason": "binary-data"
+    },
+    {
+      "path": "modules/56a1d5b2-a439-4ee3-8f63-fd63ac09c741/assets/evacuation/models/DeadTree_3.bin",
+      "riskLevel": "high",
+      "reason": "binary-data"
+    },
+    {
+      "path": "modules/56a1d5b2-a439-4ee3-8f63-fd63ac09c741/assets/evacuation/models/Fern_1.bin",
+      "riskLevel": "high",
+      "reason": "binary-data"
+    },
+    {
+      "path": "modules/56a1d5b2-a439-4ee3-8f63-fd63ac09c741/assets/evacuation/models/Flower_3_Group.bin",
+      "riskLevel": "high",
+      "reason": "binary-data"
+    },
+    {
+      "path": "modules/56a1d5b2-a439-4ee3-8f63-fd63ac09c741/assets/evacuation/models/Grass_Common_Short.bin",
+      "riskLevel": "high",
+      "reason": "binary-data"
+    },
+    {
+      "path": "modules/56a1d5b2-a439-4ee3-8f63-fd63ac09c741/assets/evacuation/models/Pine_1.bin",
+      "riskLevel": "high",
+      "reason": "binary-data"
+    },
+    {
+      "path": "modules/56a1d5b2-a439-4ee3-8f63-fd63ac09c741/assets/evacuation/models/Pine_2.bin",
+      "riskLevel": "high",
+      "reason": "binary-data"
+    },
+    {
+      "path": "modules/56a1d5b2-a439-4ee3-8f63-fd63ac09c741/assets/evacuation/models/Pine_3.bin",
+      "riskLevel": "high",
+      "reason": "binary-data"
+    },
+    {
+      "path": "modules/56a1d5b2-a439-4ee3-8f63-fd63ac09c741/assets/evacuation/models/Rock_Medium_1.bin",
+      "riskLevel": "high",
+      "reason": "binary-data"
+    },
+    {
+      "path": "modules/56a1d5b2-a439-4ee3-8f63-fd63ac09c741/assets/evacuation/models/Rock_Medium_2.bin",
+      "riskLevel": "high",
+      "reason": "binary-data"
+    },
+    {
+      "path": "modules/56a1d5b2-a439-4ee3-8f63-fd63ac09c741/assets/evacuation/models/Rock_Medium_3.bin",
+      "riskLevel": "high",
+      "reason": "binary-data"
+    },
+    {
+      "path": "modules/5783c2b2-d620-49bf-bda4-f604563f4df1/scripts/build_similarity_data.py",
+      "riskLevel": "high",
+      "reason": "python-source"
+    },
+    {
+      "path": "modules/74de5075-8163-413d-84d4-7176f2a3f4a2/pages/CodePracticePage/pythonPrelude.py",
+      "riskLevel": "high",
+      "reason": "python-source"
+    },
+    {
+      "path": "modules/80396753-7fc8-4f55-9188-bddbdb828169/assets/yuhuanong/extract_sprite_bounds.py",
+      "riskLevel": "high",
+      "reason": "python-source"
+    },
+    {
+      "path": "modules/80396753-7fc8-4f55-9188-bddbdb828169/pages/FeatureStatisticsPage/compute_statistics.py",
+      "riskLevel": "high",
+      "reason": "python-source"
+    },
+    {
+      "path": "modules/80396753-7fc8-4f55-9188-bddbdb828169/services/pack_image_atlases.py",
+      "riskLevel": "high",
+      "reason": "python-source"
+    },
+    {
+      "path": "modules/80396753-7fc8-4f55-9188-bddbdb828169/services/prepare_flatten_assets.py",
+      "riskLevel": "high",
+      "reason": "python-source"
+    },
+    {
+      "path": "modules/80396753-7fc8-4f55-9188-bddbdb828169/services/prepare_hierarchy_assets.py",
+      "riskLevel": "high",
+      "reason": "python-source"
+    },
+    {
+      "path": "modules/80396753-7fc8-4f55-9188-bddbdb828169/services/prepare_tsne_assets.py",
+      "riskLevel": "high",
+      "reason": "python-source"
+    },
+    {
+      "path": "modules/adde4a27-235d-4c03-a3cf-734ccf08b38d/pages/LossLandscape/generate_catalog.py",
+      "riskLevel": "high",
+      "reason": "python-source"
+    },
+    {
+      "path": "modules/b8d86e85-2150-47e3-9e1a-aa7cc7cce15c/pages/CodePracticePage/pythonPrelude.py",
+      "riskLevel": "high",
+      "reason": "python-source"
+    }
+  ],
+  "riskLevel": "high",
+  "moduleCount": 31,
+  "rejectedModuleCount": 0,
+  "rejectedModules": [],
+  "excludedShared": [
+    "C:\\Users\\Ocean\\Documents\\GitHub\\intuitive-deep-learning\\modules\\shared"
+  ],
+  "serious": [],
+  "excludedFiles": [
+    {
+      "module": "5783c2b2-d620-49bf-bda4-f604563f4df1",
+      "path": "start-training.ps1",
+      "reason": "blocked-extension"
+    },
+    {
+      "module": "ce19337d-405b-47ff-92a9-9890127b5365",
+      "path": "scripts/regenerate-result-svgs.ps1",
+      "reason": "blocked-extension"
+    }
+  ],
+  "passedCheckCount": 5836,
+  "styleRegistry": null,
+  "warningCount": 58,
+  "warnings": [
+    {
+      "code": "outline-only",
+      "path": "",
+      "message": "Source draft; server determines import eligibility",
+      "impact": "严重错误会阻止出包；提醒需由作者决定修复或继续提交。",
+      "repair": "按文件路径核对元数据、入口和引用，修复后重新运行 course.pack。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "kind": "outline-only",
+      "module": "0f7a1d06-ea17-4db8-83f4-a1e9aac506bc"
+    },
+    {
+      "code": "FILE_EXCLUDED",
+      "path": "modules/5783c2b2-d620-49bf-bda4-f604563f4df1/start-training.ps1",
+      "message": "黑名单文件已从交付清单排除，原文件未删除。",
+      "impact": "此类型不允许入包；继续打包，如课件依赖它，后续构建或运行可能失败。",
+      "repair": "检查课件是否依赖此文件；需要其数据时改为允许的静态资源。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "reason": "blocked-extension"
+    },
+    {
+      "code": "unverified-import",
+      "path": "pages/ShowcaseDigitNetworkPage/ShowcaseDigitNetworkPage.tsx",
+      "message": "源码检查问题",
+      "impact": "严重错误会阻止出包；提醒需由作者决定修复或继续提交。",
+      "repair": "按文件路径核对元数据、入口和引用，修复后重新运行 course.pack。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "kind": "unverified-import",
+      "module": "74de5075-8163-413d-84d4-7176f2a3f4a2",
+      "reference": "../../../80396753-7fc8-4f55-9188-bddbdb828169/pages/NetworkTrainingPage/NetworkTrainingPage"
+    },
+    {
+      "code": "unverified-import",
+      "path": "pages/ShowcaseDisguisePage/ShowcaseDisguisePage.tsx",
+      "message": "源码检查问题",
+      "impact": "严重错误会阻止出包；提醒需由作者决定修复或继续提交。",
+      "repair": "按文件路径核对元数据、入口和引用，修复后重新运行 course.pack。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "kind": "unverified-import",
+      "module": "74de5075-8163-413d-84d4-7176f2a3f4a2",
+      "reference": "../../../80396753-7fc8-4f55-9188-bddbdb828169/pages/DisguiseVerificationPage/DisguiseVerificationPage"
+    },
+    {
+      "code": "unverified-import",
+      "path": "pages/ShowcaseMultiKernelPage/ShowcaseMultiKernelPage.tsx",
+      "message": "源码检查问题",
+      "impact": "严重错误会阻止出包；提醒需由作者决定修复或继续提交。",
+      "repair": "按文件路径核对元数据、入口和引用，修复后重新运行 course.pack。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "kind": "unverified-import",
+      "module": "74de5075-8163-413d-84d4-7176f2a3f4a2",
+      "reference": "../../../38cd1c79-d8b7-462a-b208-a567c5cd89c4/pages/MultiKernelPage/MultiKernelPage"
+    },
+    {
+      "code": "unverified-import",
+      "path": "pages/ShowcaseOpenIdentityPage/ShowcaseOpenIdentityPage.tsx",
+      "message": "源码检查问题",
+      "impact": "严重错误会阻止出包；提醒需由作者决定修复或继续提交。",
+      "repair": "按文件路径核对元数据、入口和引用，修复后重新运行 course.pack。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "kind": "unverified-import",
+      "module": "74de5075-8163-413d-84d4-7176f2a3f4a2",
+      "reference": "../../../80396753-7fc8-4f55-9188-bddbdb828169/pages/OpenIdentityPage/OpenIdentityPage"
+    },
+    {
+      "code": "unverified-import",
+      "path": "pages/ShowcaseTripletLossPage/ShowcaseTripletLossPage.tsx",
+      "message": "源码检查问题",
+      "impact": "严重错误会阻止出包；提醒需由作者决定修复或继续提交。",
+      "repair": "按文件路径核对元数据、入口和引用，修复后重新运行 course.pack。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "kind": "unverified-import",
+      "module": "74de5075-8163-413d-84d4-7176f2a3f4a2",
+      "reference": "../../../80396753-7fc8-4f55-9188-bddbdb828169/pages/TripletLossPage/TripletLossPage"
+    },
+    {
+      "code": "unverified-import",
+      "path": "scripts/checkBellmanSimulation.mjs",
+      "message": "源码检查问题",
+      "impact": "严重错误会阻止出包；提醒需由作者决定修复或继续提交。",
+      "repair": "按文件路径核对元数据、入口和引用，修复后重新运行 course.pack。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "kind": "unverified-import",
+      "module": "aa380af5-efee-42a1-8896-16032f9331ea",
+      "reference": "../../model"
+    },
+    {
+      "code": "unverified-import",
+      "path": "scripts/checkBellmanSimulation.mjs",
+      "message": "源码检查问题",
+      "impact": "严重错误会阻止出包；提醒需由作者决定修复或继续提交。",
+      "repair": "按文件路径核对元数据、入口和引用，修复后重新运行 course.pack。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "kind": "unverified-import",
+      "module": "aa380af5-efee-42a1-8896-16032f9331ea",
+      "reference": "./model.mjs"
+    },
+    {
+      "code": "unverified-import",
+      "path": "scripts/checkBellmanSimulation.mjs",
+      "message": "源码检查问题",
+      "impact": "严重错误会阻止出包；提醒需由作者决定修复或继续提交。",
+      "repair": "按文件路径核对元数据、入口和引用，修复后重新运行 course.pack。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "kind": "unverified-import",
+      "module": "aa380af5-efee-42a1-8896-16032f9331ea",
+      "reference": "../QLearningLoopPage/qLearningSimulation"
+    },
+    {
+      "code": "unverified-import",
+      "path": "scripts/checkBellmanSimulation.mjs",
+      "message": "源码检查问题",
+      "impact": "严重错误会阻止出包；提醒需由作者决定修复或继续提交。",
+      "repair": "按文件路径核对元数据、入口和引用，修复后重新运行 course.pack。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "kind": "unverified-import",
+      "module": "aa380af5-efee-42a1-8896-16032f9331ea",
+      "reference": "./qLearningSimulation.mjs"
+    },
+    {
+      "code": "FILE_EXCLUDED",
+      "path": "modules/ce19337d-405b-47ff-92a9-9890127b5365/scripts/regenerate-result-svgs.ps1",
+      "message": "黑名单文件已从交付清单排除，原文件未删除。",
+      "impact": "此类型不允许入包；继续打包，如课件依赖它，后续构建或运行可能失败。",
+      "repair": "检查课件是否依赖此文件；需要其数据时改为允许的静态资源。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "reason": "blocked-extension"
+    },
+    {
+      "code": "unverified-import",
+      "path": "pages/CaoChongShowcasePage/CaoChongShowcasePage.tsx",
+      "message": "源码检查问题",
+      "impact": "严重错误会阻止出包；提醒需由作者决定修复或继续提交。",
+      "repair": "按文件路径核对元数据、入口和引用，修复后重新运行 course.pack。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "kind": "unverified-import",
+      "module": "d0c5d4f2-d72b-48be-9e5e-6a864cc88a45",
+      "reference": "../../../adde4a27-235d-4c03-a3cf-734ccf08b38d/pages/CaoChongPage/CaoChongPage"
+    },
+    {
+      "code": "unverified-import",
+      "path": "pages/CodeExecutionShowcasePage/CodeExecutionShowcasePage.tsx",
+      "message": "源码检查问题",
+      "impact": "严重错误会阻止出包；提醒需由作者决定修复或继续提交。",
+      "repair": "按文件路径核对元数据、入口和引用，修复后重新运行 course.pack。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "kind": "unverified-import",
+      "module": "d0c5d4f2-d72b-48be-9e5e-6a864cc88a45",
+      "reference": "../../../b8d86e85-2150-47e3-9e1a-aa7cc7cce15c/pages/CodePracticePage/CodeEditor"
+    },
+    {
+      "code": "unverified-import",
+      "path": "pages/CodeExecutionShowcasePage/CodeExecutionShowcasePage.tsx",
+      "message": "源码检查问题",
+      "impact": "严重错误会阻止出包；提醒需由作者决定修复或继续提交。",
+      "repair": "按文件路径核对元数据、入口和引用，修复后重新运行 course.pack。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "kind": "unverified-import",
+      "module": "d0c5d4f2-d72b-48be-9e5e-6a864cc88a45",
+      "reference": "../../../b8d86e85-2150-47e3-9e1a-aa7cc7cce15c/pages/CodePracticePage/CodePracticePage.css"
+    },
+    {
+      "code": "unverified-import",
+      "path": "pages/GameInteractionShowcasePage/GameInteractionShowcasePage.tsx",
+      "message": "源码检查问题",
+      "impact": "严重错误会阻止出包；提醒需由作者决定修复或继续提交。",
+      "repair": "按文件路径核对元数据、入口和引用，修复后重新运行 course.pack。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "kind": "unverified-import",
+      "module": "d0c5d4f2-d72b-48be-9e5e-6a864cc88a45",
+      "reference": "../../../38cd1c79-d8b7-462a-b208-a567c5cd89c4/LessonContext"
+    },
+    {
+      "code": "unverified-import",
+      "path": "pages/GameInteractionShowcasePage/GameInteractionShowcasePage.tsx",
+      "message": "源码检查问题",
+      "impact": "严重错误会阻止出包；提醒需由作者决定修复或继续提交。",
+      "repair": "按文件路径核对元数据、入口和引用，修复后重新运行 course.pack。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "kind": "unverified-import",
+      "module": "d0c5d4f2-d72b-48be-9e5e-6a864cc88a45",
+      "reference": "../../../38cd1c79-d8b7-462a-b208-a567c5cd89c4/pages/WindowScanPage/WindowScanPage"
+    },
+    {
+      "code": "unverified-import",
+      "path": "pages/PlatformFoundationPage/PlatformFoundationPage.tsx",
+      "message": "源码检查问题",
+      "impact": "严重错误会阻止出包；提醒需由作者决定修复或继续提交。",
+      "repair": "按文件路径核对元数据、入口和引用，修复后重新运行 course.pack。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "kind": "unverified-import",
+      "module": "d0c5d4f2-d72b-48be-9e5e-6a864cc88a45",
+      "reference": "../../../b8d86e85-2150-47e3-9e1a-aa7cc7cce15c/pages/ResearchRecommendationAppPage/ResearchRecommendationAppPage"
+    },
+    {
+      "code": "unverified-import",
+      "path": "pages/RegressionFitShowcasePage/RegressionFitShowcasePage.tsx",
+      "message": "源码检查问题",
+      "impact": "严重错误会阻止出包；提醒需由作者决定修复或继续提交。",
+      "repair": "按文件路径核对元数据、入口和引用，修复后重新运行 course.pack。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "kind": "unverified-import",
+      "module": "d0c5d4f2-d72b-48be-9e5e-6a864cc88a45",
+      "reference": "../../../adde4a27-235d-4c03-a3cf-734ccf08b38d/pages/EstimateWeightPage/EstimateWeightPage"
+    },
+    {
+      "code": "unverified-import",
+      "path": "pages/ShukuInteractionShowcasePage/ShukuInteractionShowcasePage.tsx",
+      "message": "源码检查问题",
+      "impact": "严重错误会阻止出包；提醒需由作者决定修复或继续提交。",
+      "repair": "按文件路径核对元数据、入口和引用，修复后重新运行 course.pack。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "kind": "unverified-import",
+      "module": "d0c5d4f2-d72b-48be-9e5e-6a864cc88a45",
+      "reference": "../../../444f8951-dd2e-42dc-94e5-c5a878618631/pages/ShukuCoCreationLoop/ShukuCoCreationLoop"
+    },
+    {
+      "code": "unverified-import",
+      "path": "pages/SproutLearningPage/SproutLearningPage.tsx",
+      "message": "源码检查问题",
+      "impact": "严重错误会阻止出包；提醒需由作者决定修复或继续提交。",
+      "repair": "按文件路径核对元数据、入口和引用，修复后重新运行 course.pack。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "kind": "unverified-import",
+      "module": "d0c5d4f2-d72b-48be-9e5e-6a864cc88a45",
+      "reference": "../../../b8d86e85-2150-47e3-9e1a-aa7cc7cce15c/pages/ResearchRecommendationAppPage/ResearchAppPhone"
+    },
+    {
+      "code": "unverified-import",
+      "path": "pages/ThreeDInteractionShowcasePage/ThreeDInteractionShowcasePage.tsx",
+      "message": "源码检查问题",
+      "impact": "严重错误会阻止出包；提醒需由作者决定修复或继续提交。",
+      "repair": "按文件路径核对元数据、入口和引用，修复后重新运行 course.pack。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "kind": "unverified-import",
+      "module": "d0c5d4f2-d72b-48be-9e5e-6a864cc88a45",
+      "reference": "../../../38cd1c79-d8b7-462a-b208-a567c5cd89c4/pages/WeightSharingPage/WeightSharingScene"
+    },
+    {
+      "code": "unverified-import",
+      "path": "pages/ThreeDInteractionShowcasePage/ThreeDInteractionShowcasePage.tsx",
+      "message": "源码检查问题",
+      "impact": "严重错误会阻止出包；提醒需由作者决定修复或继续提交。",
+      "repair": "按文件路径核对元数据、入口和引用，修复后重新运行 course.pack。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "kind": "unverified-import",
+      "module": "d0c5d4f2-d72b-48be-9e5e-6a864cc88a45",
+      "reference": "../../../38cd1c79-d8b7-462a-b208-a567c5cd89c4/pages/WeightSharingPage/WeightSharingPage.css"
+    },
+    {
+      "code": "unverified-import",
+      "path": "pages/VisualFeedbackShowcasePage/VisualFeedbackShowcasePage.tsx",
+      "message": "源码检查问题",
+      "impact": "严重错误会阻止出包；提醒需由作者决定修复或继续提交。",
+      "repair": "按文件路径核对元数据、入口和引用，修复后重新运行 course.pack。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "kind": "unverified-import",
+      "module": "d0c5d4f2-d72b-48be-9e5e-6a864cc88a45",
+      "reference": "../../../b8d86e85-2150-47e3-9e1a-aa7cc7cce15c/pages/OptionalInteractionPage/UfoTranslationScene"
+    },
+    {
+      "code": "unverified-import",
+      "path": "pages/VisualFeedbackShowcasePage/VisualFeedbackShowcasePage.tsx",
+      "message": "源码检查问题",
+      "impact": "严重错误会阻止出包；提醒需由作者决定修复或继续提交。",
+      "repair": "按文件路径核对元数据、入口和引用，修复后重新运行 course.pack。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "kind": "unverified-import",
+      "module": "d0c5d4f2-d72b-48be-9e5e-6a864cc88a45",
+      "reference": "../../../b8d86e85-2150-47e3-9e1a-aa7cc7cce15c/pages/OptionalInteractionPage/OptionalInteractionPage.css"
+    },
+    {
+      "code": "HIGH_RISK_FILE",
+      "path": "modules/0fd05cd8-c7f8-496b-88e1-441930abb5d5/scripts/extract-reference-scenes.py",
+      "message": "允许交付的高危文件：Python 源码或二进制数据。",
+      "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+      "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "riskLevel": "high",
+      "reason": "python-source"
+    },
+    {
+      "code": "HIGH_RISK_FILE",
+      "path": "modules/0fd05cd8-c7f8-496b-88e1-441930abb5d5/scripts/extract-reference-visuals.py",
+      "message": "允许交付的高危文件：Python 源码或二进制数据。",
+      "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+      "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "riskLevel": "high",
+      "reason": "python-source"
+    },
+    {
+      "code": "HIGH_RISK_FILE",
+      "path": "modules/0fd05cd8-c7f8-496b-88e1-441930abb5d5/scripts/sync-outline.py",
+      "message": "允许交付的高危文件：Python 源码或二进制数据。",
+      "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+      "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "riskLevel": "high",
+      "reason": "python-source"
+    },
+    {
+      "code": "HIGH_RISK_FILE",
+      "path": "modules/0fd05cd8-c7f8-496b-88e1-441930abb5d5/scripts/verify-browser.py",
+      "message": "允许交付的高危文件：Python 源码或二进制数据。",
+      "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+      "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "riskLevel": "high",
+      "reason": "python-source"
+    },
+    {
+      "code": "HIGH_RISK_FILE",
+      "path": "modules/0fd05cd8-c7f8-496b-88e1-441930abb5d5/scripts/verify-built-assets.py",
+      "message": "允许交付的高危文件：Python 源码或二进制数据。",
+      "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+      "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "riskLevel": "high",
+      "reason": "python-source"
+    },
+    {
+      "code": "HIGH_RISK_FILE",
+      "path": "modules/0fd05cd8-c7f8-496b-88e1-441930abb5d5/scripts/verify-query.py",
+      "message": "允许交付的高危文件：Python 源码或二进制数据。",
+      "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+      "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "riskLevel": "high",
+      "reason": "python-source"
+    },
+    {
+      "code": "HIGH_RISK_FILE",
+      "path": "modules/0fd05cd8-c7f8-496b-88e1-441930abb5d5/scripts/verify-reference-layout.py",
+      "message": "允许交付的高危文件：Python 源码或二进制数据。",
+      "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+      "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "riskLevel": "high",
+      "reason": "python-source"
+    },
+    {
+      "code": "HIGH_RISK_FILE",
+      "path": "modules/3a8a4e84-67b6-499a-ae8d-7762e6ddada8/backend/glove_service.py",
+      "message": "允许交付的高危文件：Python 源码或二进制数据。",
+      "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+      "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "riskLevel": "high",
+      "reason": "python-source"
+    },
+    {
+      "code": "HIGH_RISK_FILE",
+      "path": "modules/444f8951-dd2e-42dc-94e5-c5a878618631/pages/ShukuCoCreationLoop/verify_browser.py",
+      "message": "允许交付的高危文件：Python 源码或二进制数据。",
+      "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+      "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "riskLevel": "high",
+      "reason": "python-source"
+    },
+    {
+      "code": "HIGH_RISK_FILE",
+      "path": "modules/56a1d5b2-a439-4ee3-8f63-fd63ac09c741/assets/evacuation/models/Bush_Common.bin",
+      "message": "允许交付的高危文件：Python 源码或二进制数据。",
+      "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+      "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "riskLevel": "high",
+      "reason": "binary-data"
+    },
+    {
+      "code": "HIGH_RISK_FILE",
+      "path": "modules/56a1d5b2-a439-4ee3-8f63-fd63ac09c741/assets/evacuation/models/CommonTree_1.bin",
+      "message": "允许交付的高危文件：Python 源码或二进制数据。",
+      "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+      "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "riskLevel": "high",
+      "reason": "binary-data"
+    },
+    {
+      "code": "HIGH_RISK_FILE",
+      "path": "modules/56a1d5b2-a439-4ee3-8f63-fd63ac09c741/assets/evacuation/models/CommonTree_3.bin",
+      "message": "允许交付的高危文件：Python 源码或二进制数据。",
+      "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+      "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "riskLevel": "high",
+      "reason": "binary-data"
+    },
+    {
+      "code": "HIGH_RISK_FILE",
+      "path": "modules/56a1d5b2-a439-4ee3-8f63-fd63ac09c741/assets/evacuation/models/DeadTree_1.bin",
+      "message": "允许交付的高危文件：Python 源码或二进制数据。",
+      "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+      "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "riskLevel": "high",
+      "reason": "binary-data"
+    },
+    {
+      "code": "HIGH_RISK_FILE",
+      "path": "modules/56a1d5b2-a439-4ee3-8f63-fd63ac09c741/assets/evacuation/models/DeadTree_3.bin",
+      "message": "允许交付的高危文件：Python 源码或二进制数据。",
+      "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+      "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "riskLevel": "high",
+      "reason": "binary-data"
+    },
+    {
+      "code": "HIGH_RISK_FILE",
+      "path": "modules/56a1d5b2-a439-4ee3-8f63-fd63ac09c741/assets/evacuation/models/Fern_1.bin",
+      "message": "允许交付的高危文件：Python 源码或二进制数据。",
+      "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+      "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "riskLevel": "high",
+      "reason": "binary-data"
+    },
+    {
+      "code": "HIGH_RISK_FILE",
+      "path": "modules/56a1d5b2-a439-4ee3-8f63-fd63ac09c741/assets/evacuation/models/Flower_3_Group.bin",
+      "message": "允许交付的高危文件：Python 源码或二进制数据。",
+      "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+      "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "riskLevel": "high",
+      "reason": "binary-data"
+    },
+    {
+      "code": "HIGH_RISK_FILE",
+      "path": "modules/56a1d5b2-a439-4ee3-8f63-fd63ac09c741/assets/evacuation/models/Grass_Common_Short.bin",
+      "message": "允许交付的高危文件：Python 源码或二进制数据。",
+      "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+      "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "riskLevel": "high",
+      "reason": "binary-data"
+    },
+    {
+      "code": "HIGH_RISK_FILE",
+      "path": "modules/56a1d5b2-a439-4ee3-8f63-fd63ac09c741/assets/evacuation/models/Pine_1.bin",
+      "message": "允许交付的高危文件：Python 源码或二进制数据。",
+      "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+      "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "riskLevel": "high",
+      "reason": "binary-data"
+    },
+    {
+      "code": "HIGH_RISK_FILE",
+      "path": "modules/56a1d5b2-a439-4ee3-8f63-fd63ac09c741/assets/evacuation/models/Pine_2.bin",
+      "message": "允许交付的高危文件：Python 源码或二进制数据。",
+      "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+      "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "riskLevel": "high",
+      "reason": "binary-data"
+    },
+    {
+      "code": "HIGH_RISK_FILE",
+      "path": "modules/56a1d5b2-a439-4ee3-8f63-fd63ac09c741/assets/evacuation/models/Pine_3.bin",
+      "message": "允许交付的高危文件：Python 源码或二进制数据。",
+      "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+      "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "riskLevel": "high",
+      "reason": "binary-data"
+    },
+    {
+      "code": "HIGH_RISK_FILE",
+      "path": "modules/56a1d5b2-a439-4ee3-8f63-fd63ac09c741/assets/evacuation/models/Rock_Medium_1.bin",
+      "message": "允许交付的高危文件：Python 源码或二进制数据。",
+      "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+      "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "riskLevel": "high",
+      "reason": "binary-data"
+    },
+    {
+      "code": "HIGH_RISK_FILE",
+      "path": "modules/56a1d5b2-a439-4ee3-8f63-fd63ac09c741/assets/evacuation/models/Rock_Medium_2.bin",
+      "message": "允许交付的高危文件：Python 源码或二进制数据。",
+      "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+      "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "riskLevel": "high",
+      "reason": "binary-data"
+    },
+    {
+      "code": "HIGH_RISK_FILE",
+      "path": "modules/56a1d5b2-a439-4ee3-8f63-fd63ac09c741/assets/evacuation/models/Rock_Medium_3.bin",
+      "message": "允许交付的高危文件：Python 源码或二进制数据。",
+      "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+      "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "riskLevel": "high",
+      "reason": "binary-data"
+    },
+    {
+      "code": "HIGH_RISK_FILE",
+      "path": "modules/5783c2b2-d620-49bf-bda4-f604563f4df1/scripts/build_similarity_data.py",
+      "message": "允许交付的高危文件：Python 源码或二进制数据。",
+      "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+      "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "riskLevel": "high",
+      "reason": "python-source"
+    },
+    {
+      "code": "HIGH_RISK_FILE",
+      "path": "modules/74de5075-8163-413d-84d4-7176f2a3f4a2/pages/CodePracticePage/pythonPrelude.py",
+      "message": "允许交付的高危文件：Python 源码或二进制数据。",
+      "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+      "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "riskLevel": "high",
+      "reason": "python-source"
+    },
+    {
+      "code": "HIGH_RISK_FILE",
+      "path": "modules/80396753-7fc8-4f55-9188-bddbdb828169/assets/yuhuanong/extract_sprite_bounds.py",
+      "message": "允许交付的高危文件：Python 源码或二进制数据。",
+      "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+      "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "riskLevel": "high",
+      "reason": "python-source"
+    },
+    {
+      "code": "HIGH_RISK_FILE",
+      "path": "modules/80396753-7fc8-4f55-9188-bddbdb828169/pages/FeatureStatisticsPage/compute_statistics.py",
+      "message": "允许交付的高危文件：Python 源码或二进制数据。",
+      "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+      "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "riskLevel": "high",
+      "reason": "python-source"
+    },
+    {
+      "code": "HIGH_RISK_FILE",
+      "path": "modules/80396753-7fc8-4f55-9188-bddbdb828169/services/pack_image_atlases.py",
+      "message": "允许交付的高危文件：Python 源码或二进制数据。",
+      "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+      "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "riskLevel": "high",
+      "reason": "python-source"
+    },
+    {
+      "code": "HIGH_RISK_FILE",
+      "path": "modules/80396753-7fc8-4f55-9188-bddbdb828169/services/prepare_flatten_assets.py",
+      "message": "允许交付的高危文件：Python 源码或二进制数据。",
+      "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+      "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "riskLevel": "high",
+      "reason": "python-source"
+    },
+    {
+      "code": "HIGH_RISK_FILE",
+      "path": "modules/80396753-7fc8-4f55-9188-bddbdb828169/services/prepare_hierarchy_assets.py",
+      "message": "允许交付的高危文件：Python 源码或二进制数据。",
+      "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+      "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "riskLevel": "high",
+      "reason": "python-source"
+    },
+    {
+      "code": "HIGH_RISK_FILE",
+      "path": "modules/80396753-7fc8-4f55-9188-bddbdb828169/services/prepare_tsne_assets.py",
+      "message": "允许交付的高危文件：Python 源码或二进制数据。",
+      "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+      "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "riskLevel": "high",
+      "reason": "python-source"
+    },
+    {
+      "code": "HIGH_RISK_FILE",
+      "path": "modules/adde4a27-235d-4c03-a3cf-734ccf08b38d/pages/LossLandscape/generate_catalog.py",
+      "message": "允许交付的高危文件：Python 源码或二进制数据。",
+      "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+      "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "riskLevel": "high",
+      "reason": "python-source"
+    },
+    {
+      "code": "HIGH_RISK_FILE",
+      "path": "modules/b8d86e85-2150-47e3-9e1a-aa7cc7cce15c/pages/CodePracticePage/pythonPrelude.py",
+      "message": "允许交付的高危文件：Python 源码或二进制数据。",
+      "impact": "文件保留在包中；本地不执行，服务器必须独立进行安全审核。",
+      "repair": "确认该依赖确有必要；超过 100 KiB 必须放在所属课件或风格的 assets/。",
+      "recheck": "重新运行 course.pack，确认本项消失；服务器仍独立校验。",
+      "riskLevel": "high",
+      "reason": "python-source"
+    }
+  ],
+  "sourceCheckCoverage": "Metadata, declared local entries, UTF-8 and literal import hints; no JS parsing, build or security review",
+  "capabilities": {
+    "available": {
+      "node": true,
+      "typescript": true,
+      "preview": true,
+      "babel": true,
+      "runtime": true,
+      "build": true,
+      "browser": true,
+      "statistics": true,
+      "pillow": true,
+      "pythonAst": true,
+      "ffmpeg": false
+    },
+    "missing": [
+      "ffmpeg"
+    ],
+    "node": "C:\\Program Files\\nodejs\\node.EXE",
+    "shukuRoot": "C:\\Users\\Ocean\\Documents\\GitHub\\Shuku",
+    "configurationMissing": []
+  },
+  "dependencySetup": {
+    "policy": {
+      "installation": "allowed",
+      "updatedAt": "2026-11-17T16:46:22.513063+00:00",
+      "askUser": false,
+      "path": "C:\\Users\\Ocean\\AppData\\Local\\creator-skill\\dependency-preferences.json",
+      "question": null
+    },
+    "missing": [
+      "ffmpeg"
+    ],
+    "configurationMissing": [],
+    "blockedForSetup": true,
+    "nextAction": "install-authorized-dependencies-and-retry"
+  },
+  "elapsedSeconds": 4.005,
+  "seriousErrorCount": 0,
+  "uploadEligible": false,
+  "uploadAuthorized": false,
+  "requiresUserConfirmation": false,
+  "agentNextAction": "install-authorized-dependencies-and-retry",
+  "userOptions": [],
+  "userPrompt": "依赖安装意愿已保存；补齐授权依赖后重跑，不重复询问。",
+  "summary": {
+    "moduleCount": 31,
+    "rejectedModuleCount": 0,
+    "files": null,
+    "sourceBytes": null,
+    "zipBytes": null,
+    "passedCheckCount": 5836,
+    "seriousErrorCount": 0,
+    "warningCount": 58,
+    "elapsedSeconds": 4.005,
+    "uploadEligible": false
+  },
+  "reportPath": "C:\\Users\\Ocean\\Documents\\GitHub\\intuitive-deep-learning\\modules-2.report.json",
+  "readableReportPath": "C:\\Users\\Ocean\\Documents\\GitHub\\intuitive-deep-learning\\modules-2.report.md"
+}

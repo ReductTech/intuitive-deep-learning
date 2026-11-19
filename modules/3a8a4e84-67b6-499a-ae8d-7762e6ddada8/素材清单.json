@@ -3,77 +3,77 @@
   "media_count": 14,
   "media": [
     {
-      "file": "assets/01_翻译引入/翻译任务.jpg",
+      "file": "assets/01_翻译引入/翻译任务.webp",
       "pages": [
         1
       ],
       "purpose": "开场翻译场景"
     },
     {
-      "file": "assets/01_翻译引入/原文输入.png",
+      "file": "assets/01_翻译引入/原文输入.webp",
       "pages": [
         2
       ],
       "purpose": "原文端人物"
     },
     {
-      "file": "assets/01_翻译引入/译文生成.png",
+      "file": "assets/01_翻译引入/译文生成.webp",
       "pages": [
         2
       ],
       "purpose": "译文端机器人"
     },
     {
-      "file": "assets/02_分词与嵌入/分词.png",
+      "file": "assets/02_分词与嵌入/分词.webp",
       "pages": [
         3
       ],
       "purpose": "分词操作图标"
     },
     {
-      "file": "assets/02_分词与嵌入/词嵌入.png",
+      "file": "assets/02_分词与嵌入/词嵌入.webp",
       "pages": [
         3
       ],
       "purpose": "词嵌入查询图标"
     },
     {
-      "file": "assets/03_自注意力/Q_信息需求.png",
+      "file": "assets/03_自注意力/Q_信息需求.webp",
       "pages": [
         6
       ],
       "purpose": "Q信息需求引导"
     },
     {
-      "file": "assets/04_多头注意力/不同关注方式.png",
+      "file": "assets/04_多头注意力/不同关注方式.webp",
       "pages": [
         10
       ],
       "purpose": "多种关注方式的引入"
     },
     {
-      "file": "assets/04_多头注意力/八头专家.png",
+      "file": "assets/04_多头注意力/八头专家.webp",
       "pages": [
         11
       ],
       "purpose": "八个头的专家精灵图"
     },
     {
-      "file": "assets/05_前馈网络/注意力到逐位加工.jpg",
+      "file": "assets/05_前馈网络/注意力到逐位加工.webp",
       "pages": [
         23
       ],
       "purpose": "注意力与逐位加工的对照"
     },
     {
-      "file": "assets/06_残差连接/机器人双任务.png",
+      "file": "assets/06_残差连接/机器人双任务.webp",
       "pages": [
         25
       ],
       "purpose": "保留信息与学习关系的双任务"
     },
     {
-      "file": "assets/06_残差连接/梯度阶梯与电梯.png",
+      "file": "assets/06_残差连接/梯度阶梯与电梯.webp",
       "pages": [
         25,
         26

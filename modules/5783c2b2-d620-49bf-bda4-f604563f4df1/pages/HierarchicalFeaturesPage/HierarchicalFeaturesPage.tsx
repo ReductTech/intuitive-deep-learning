@@ -2,7 +2,7 @@ import { moduleIdentity } from '../../outlines.json';
 import { moduleAssetUrl } from "@shuku/course-runtime/react/assets";
 import { useEffect, useRef, useState } from 'react';
 import { Button, Callout, ContentBlock, NoticeStrip, Question, Typography, type QuestionCheckResult } from "@shuku/course-style/react";
-const bottleFront = moduleAssetUrl("recycling/camera-views/bottle-front.jpg");
+const bottleFront = moduleAssetUrl("recycling/camera-views/bottle-front.webp");
 import './HierarchicalFeaturesPage.css';
 
 type LayerIndex = 0 | 1 | 2;

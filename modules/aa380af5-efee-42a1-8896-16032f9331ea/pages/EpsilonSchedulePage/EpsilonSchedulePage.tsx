@@ -11,10 +11,10 @@ import { DEFAULT_SCHEDULE, SCHEDULE_EPISODES, SCHEDULE_PRESETS, createScheduleTr
   sameSchedule, trainSchedule, type EpsilonSchedule, type ScheduleRun, type ScheduleTrace } from './epsilonSimulation';
 import './EpsilonSchedulePage.css';
 
-const robotArt = valueBasedRlAssetUrl('cover-v2/robot.png');
-const emptyStationArt = valueBasedRlAssetUrl('cover-v2/receiving-station-empty.png');
-const loadedStationArt = valueBasedRlAssetUrl('cover-v2/receiving-station-loaded.png');
-const pitArt = valueBasedRlAssetUrl('cover-v2/maintenance-pit.png');
+const robotArt = valueBasedRlAssetUrl("cover-v2/robot.webp");
+const emptyStationArt = valueBasedRlAssetUrl("cover-v2/receiving-station-empty.webp");
+const loadedStationArt = valueBasedRlAssetUrl("cover-v2/receiving-station-loaded.webp");
+const pitArt = valueBasedRlAssetUrl("cover-v2/maintenance-pit.webp");
 
 const signed = (value: number) => (value > 0 ? '+' : '') + value.toFixed(2);
 const outcomes = { delivered: '送达', trap: '陷阱', limit: '截断' };

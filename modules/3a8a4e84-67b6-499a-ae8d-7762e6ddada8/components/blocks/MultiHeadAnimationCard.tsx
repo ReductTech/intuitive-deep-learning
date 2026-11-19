@@ -9,7 +9,7 @@ function Expert({ head, question = false }: {
     head: number;
     question?: boolean;
 }) {
-    return <div shuku-edit-id="e-eb5bc445-3733-4d56-8586-3b9ccce05028" className="tr-ma-expert">{question && <span shuku-edit-id="e-a46226e1-a9a8-4787-8336-cc39c6fd60a0" className="tr-ma-question">{HEAD_QUESTIONS[head]}</span>}<span shuku-edit-id="e-fb9119e4-9cb6-41da-b65c-68399bcc4410" role="img" aria-label={`第${head + 1}头的小专家`} className="tr-ma-person" style={{ backgroundImage: `url("${transformerAsset('04_多头注意力/八头专家.png')}")`, backgroundPosition: `${head * 100 / 7}% center` }}/></div>;
+    return <div shuku-edit-id="e-eb5bc445-3733-4d56-8586-3b9ccce05028" className="tr-ma-expert">{question && <span shuku-edit-id="e-a46226e1-a9a8-4787-8336-cc39c6fd60a0" className="tr-ma-question">{HEAD_QUESTIONS[head]}</span>}<span shuku-edit-id="e-fb9119e4-9cb6-41da-b65c-68399bcc4410" role="img" aria-label={`第${head + 1}头的小专家`} className="tr-ma-person" style={{ backgroundImage: `url("${transformerAsset("04_多头注意力/八头专家.webp")}")`, backgroundPosition: `${head * 100 / 7}% center` }}/></div>;
 }
 function ColorMatrix({ data, color, wide = false, reveal = false }: {
     data: number[][];

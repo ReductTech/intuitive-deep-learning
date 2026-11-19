@@ -6,8 +6,8 @@ import { KnowledgeDiagramViewport, type DiagramView } from './KnowledgeDiagramVi
 import './KnowledgeGrowthPage.css';
 import { fieldDirections, frontierRadius, growingRadius } from './knowledgeGrowthModel';
 
-const mountainStages = moduleAssetUrl('images/knowledge-mountain-stages.png');
-const eraPortraits = moduleAssetUrl('images/knowledge-era-portraits.jpg');
+const mountainStages = moduleAssetUrl("images/knowledge-mountain-stages.webp");
+const eraPortraits = moduleAssetUrl("images/knowledge-era-portraits.webp");
 
 const eras = [
   { name: '亚里士多德时期', message: '有限积累，覆盖较宽的知识范围。', peak: [540, 320] },

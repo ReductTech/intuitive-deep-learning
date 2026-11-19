@@ -4,7 +4,7 @@ import { ContentBlock, Typography } from "@shuku/course-style/react";
 import { measureMnistImage, type MnistFeatures } from '../../services/mnistFeatures';
 import './FeatureExtractionPage.css';
 
-const IMAGE_URL = moduleAssetUrl('mnist/3/60018.jpg');
+const IMAGE_URL = moduleAssetUrl("mnist/3/60018.webp");
 type FeatureKey = 'width' | 'height' | 'ink' | 'centroid';
 type DigitFeatures = MnistFeatures;
 

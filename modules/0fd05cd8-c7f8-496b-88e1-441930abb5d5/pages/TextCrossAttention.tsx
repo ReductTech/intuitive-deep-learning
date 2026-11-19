@@ -60,7 +60,7 @@ export function TextCrossAttention() {
           onPointerMove={event => { if (pointer.current === event.pointerId) locate(event); }}
           onPointerUp={event => { if (pointer.current === event.pointerId) locate(event); release(event); }}
           onPointerCancel={release} onLostPointerCapture={() => {pointer.current = null; setDragging(false);}} onKeyDown={moveWithKeys}>
-          <ReferenceVisual file="visuals/attention-feature.jpg" alt="小猫与书本的视觉特征图，原图中的橙框是参考区域" />
+          <ReferenceVisual file="visuals/attention-feature.webp" alt="小猫与书本的视觉特征图，原图中的橙框是参考区域" />
           <div shuku-edit-id="e-5c99e79f-335e-4e9b-9b54-3b93f0ede03d" className="vga-query-marker" data-testid="query-marker" style={{left: `${query.col / side * 100}%`, top: `${query.row / side * 100}%`}} aria-hidden="true" />
           <div shuku-edit-id="e-2b6c0b29-1544-4fd8-9fc5-e27d4ff435de" className="vga-query-tag" style={{left: `${Math.min(query.col, 13) / side * 100}%`, top: `${(query.row >= 2 ? query.row - 2 : query.row + 1) / side * 100}%`}} aria-hidden="true"><Typography as="span" variant="bodySmall" tone="inherit">Q</Typography></div>
         </div>

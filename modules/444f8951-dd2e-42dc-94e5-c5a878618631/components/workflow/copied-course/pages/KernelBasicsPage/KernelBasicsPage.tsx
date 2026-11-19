@@ -1,5 +1,5 @@
-import mengdelianAsset0 from '../../../../../assets/workflow/convolution-course/mengdelian.jpg';
-import xielaqiaoAsset1 from '../../../../../assets/workflow/convolution-course/xielaqiao.jpg';
+import mengdelianAsset0 from "../../../../../assets/workflow/convolution-course/mengdelian.webp";
+import xielaqiaoAsset1 from "../../../../../assets/workflow/convolution-course/xielaqiao.webp";
 import { useEffect, useRef, useState } from 'react';
 import { ContentBlock, Typography } from "@shuku/course-style/react";
 import { useGomokuOutcome } from '../../LessonContext';

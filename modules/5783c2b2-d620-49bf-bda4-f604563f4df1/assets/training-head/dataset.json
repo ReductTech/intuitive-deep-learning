@@ -31,7 +31,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "bottle-01",
-      "file": "images/bottle-01.jpg",
+      "file": "images/bottle-01.webp",
       "source_name": "瓶01_正常.jpg",
       "sha256": "b319a562751e0191fd56e46c0dd353ced75b767201ac7adeaa865b0c1adfda5a",
       "source": {
@@ -45,7 +45,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "red-can",
-      "file": "images/can-01.jpg",
+      "file": "images/can-01.webp",
       "source_name": "罐01_正常.jpg",
       "sha256": "a526e297c4cd376f6391a1e4b48773b67522a51c220f84fb907a293d105bbab0",
       "source": {
@@ -59,7 +59,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "box-01",
-      "file": "images/box-01.jpg",
+      "file": "images/box-01.webp",
       "source_name": "盒01_正常.jpg",
       "sha256": "d02cd79b3564e180d070b0b3889acce4a6fc0b58e5eb496126cfc2da2bf5ae9c",
       "source": {
@@ -73,7 +73,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "bottle-03",
-      "file": "images/bottle-03.jpg",
+      "file": "images/bottle-03.webp",
       "source_name": "瓶03_正常.jpg",
       "sha256": "e8ad0ed81a89142689f8b468711adfe3c0daf0b8686bf08fbc69e8a2b1095380",
       "source": {
@@ -87,7 +87,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "can-02",
-      "file": "images/can-02.jpg",
+      "file": "images/can-02.webp",
       "source_name": "罐02_正常.jpg",
       "sha256": "71f701ae32564516cd1279e0518d704a22b0c22d66bf7fbabef045b21e25925e",
       "source": {
@@ -101,7 +101,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "open-box",
-      "file": "images/box-02.jpg",
+      "file": "images/box-02.webp",
       "source_name": "盒02_正常.jpg",
       "sha256": "5ae488866c81172a305915dec750926cfd791f7f7cf6888b284f4d6582915224",
       "source": {
@@ -115,7 +115,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "blue-crushed-bottle",
-      "file": "images/bottle-05.jpg",
+      "file": "images/bottle-05.webp",
       "source_name": "瓶05_压扁.jpg",
       "sha256": "6e24a062d2172479862f6429f034954f4bcd27790b19e6bf2d2a4aa2aafb4745",
       "source": {
@@ -129,7 +129,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "can-05",
-      "file": "images/can-05.jpg",
+      "file": "images/can-05.webp",
       "source_name": "罐05_压扁.jpg",
       "sha256": "d91539f9471b82e1af1df2d6831269ad6d434be8aee59ea81f047bb80569086c",
       "source": {
@@ -143,7 +143,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "open-box",
-      "file": "images/box-04.jpg",
+      "file": "images/box-04.webp",
       "source_name": "盒04_正常.jpg",
       "sha256": "50893ebf94161c811b7f354bfd825fe6a43e769ccc708ac9bde26606500df997",
       "source": {
@@ -157,7 +157,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "blue-crushed-bottle",
-      "file": "images/bottle-07.jpg",
+      "file": "images/bottle-07.webp",
       "source_name": "瓶07_压扁.jpg",
       "sha256": "7bd2556b7f18214b3dc1d5e8b6c8c7078aa6a5d70e7fe058ecf03976a2bafacb",
       "source": {
@@ -171,7 +171,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "red-can",
-      "file": "images/can-07.jpg",
+      "file": "images/can-07.webp",
       "source_name": "罐07_压扁.jpg",
       "sha256": "b053d28d7b80adfab5b3ae494c76178547ebf6d3784c56e4f9535ce6b2c7efba",
       "source": {
@@ -185,7 +185,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "crushed-box",
-      "file": "images/box-06.jpg",
+      "file": "images/box-06.webp",
       "source_name": "盒06_压扁.jpg",
       "sha256": "50c5ae82d9be04be1de95265dc3a0cf544ca8858d31c3b0aaee6070addadcd49",
       "source": {
@@ -199,7 +199,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "bottle-09",
-      "file": "images/bottle-09.jpg",
+      "file": "images/bottle-09.webp",
       "source_name": "瓶09_压扁.jpg",
       "sha256": "b3f30b88384da3332e1ad82f74627b6fd7a38cbc23c173aadfed7d898093d3c1",
       "source": {
@@ -213,7 +213,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "red-can",
-      "file": "images/can-08.jpg",
+      "file": "images/can-08.webp",
       "source_name": "罐08_压扁.jpg",
       "sha256": "9eaa6e85f7108c779957d9b700340cc8cc31a228387534bd7874a78512bfd241",
       "source": {
@@ -227,7 +227,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "crushed-box",
-      "file": "images/box-07.jpg",
+      "file": "images/box-07.webp",
       "source_name": "盒07_压扁.jpg",
       "sha256": "1c159490d9ac3065d786626d85a72f0b16c612f1aeac61fb843080e7a44a965d",
       "source": {
@@ -241,7 +241,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-arrowhead-water",
-      "file": "images/trashnet-bottle-005.jpg",
+      "file": "images/trashnet-bottle-005.webp",
       "source_name": "plastic5.jpg",
       "sha256": "d85046400205055ef166783630adfb2df8399a67a8e8039cb203a1cd14e4b886",
       "source": {
@@ -258,7 +258,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-silver-gold-beer-can",
-      "file": "images/trashnet-can-003.jpg",
+      "file": "images/trashnet-can-003.webp",
       "source_name": "metal3.jpg",
       "sha256": "a8c75d9475f6d0dd16a6f68c800d37d8910e74f23240d0510e47532239027714",
       "source": {
@@ -275,7 +275,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-plain-open-carton",
-      "file": "images/trashnet-box-085.jpg",
+      "file": "images/trashnet-box-085.webp",
       "source_name": "cardboard85.jpg",
       "sha256": "c7497d10f2fb86d28e0cebbcecf9e8d8a971b5f932a8f9dff8b4f484962dbf4d",
       "source": {
@@ -292,7 +292,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-arrowhead-water",
-      "file": "images/trashnet-bottle-038.jpg",
+      "file": "images/trashnet-bottle-038.webp",
       "source_name": "plastic38.jpg",
       "sha256": "529699e12215ceff38270314eb2de1c8f1c52fb7513cae7c5576f70da13a5f50",
       "source": {
@@ -309,7 +309,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-silver-gold-beer-can",
-      "file": "images/trashnet-can-004.jpg",
+      "file": "images/trashnet-can-004.webp",
       "source_name": "metal4.jpg",
       "sha256": "89973ff7d5c5d42652431b11bf86c73c7dab04fcf49f7742d6f54d65984445be",
       "source": {
@@ -326,7 +326,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-plain-open-carton",
-      "file": "images/trashnet-box-109.jpg",
+      "file": "images/trashnet-box-109.webp",
       "source_name": "cardboard109.jpg",
       "sha256": "5c0111570535a620d024fe6acb97e12e6d82834c44076447ad50bb9e0ea31835",
       "source": {
@@ -343,7 +343,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-arrowhead-water",
-      "file": "images/trashnet-bottle-062.jpg",
+      "file": "images/trashnet-bottle-062.webp",
       "source_name": "plastic62.jpg",
       "sha256": "89727a52b4a17ae1508d41186ed38d03df84d0cf3b4ba2813cea9507d55e36e5",
       "source": {
@@ -360,7 +360,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-silver-gold-beer-can",
-      "file": "images/trashnet-can-154.jpg",
+      "file": "images/trashnet-can-154.webp",
       "source_name": "metal154.jpg",
       "sha256": "1bc190a99efaeaeb043af606f8597b42bb2c0563b94ac9a19f13fadd40eb27b6",
       "source": {
@@ -377,7 +377,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-plain-open-carton",
-      "file": "images/trashnet-box-146.jpg",
+      "file": "images/trashnet-box-146.webp",
       "source_name": "cardboard146.jpg",
       "sha256": "713e15013b9c91af101f879a8f92b4d24efb4f90820907768211d6d5d920bc3a",
       "source": {
@@ -394,7 +394,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-arrowhead-water",
-      "file": "images/trashnet-bottle-091.jpg",
+      "file": "images/trashnet-bottle-091.webp",
       "source_name": "plastic91.jpg",
       "sha256": "4c4b7514cd5e25ed6d878c1f657f520ff6b1d0337ad417ed1ea6b4e98a48bc75",
       "source": {
@@ -411,7 +411,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-silver-gold-beer-can",
-      "file": "images/trashnet-can-156.jpg",
+      "file": "images/trashnet-can-156.webp",
       "source_name": "metal156.jpg",
       "sha256": "c09910726706083dedfa7d1e13e7dfe2d05ce66c2f422648e52ed2890928cecd",
       "source": {
@@ -428,7 +428,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-plain-open-carton",
-      "file": "images/trashnet-box-147.jpg",
+      "file": "images/trashnet-box-147.webp",
       "source_name": "cardboard147.jpg",
       "sha256": "3fb80051a8aa0e7682187c6f9f806154eee6862d7cd1c596cf70c226ff7c03b7",
       "source": {
@@ -445,7 +445,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-arrowhead-water",
-      "file": "images/trashnet-bottle-096.jpg",
+      "file": "images/trashnet-bottle-096.webp",
       "source_name": "plastic96.jpg",
       "sha256": "d22ed88164908ca988680a02df3f580e439258df4b378901f25d83c1cd77bec1",
       "source": {
@@ -462,7 +462,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-silver-gold-beer-can",
-      "file": "images/trashnet-can-159.jpg",
+      "file": "images/trashnet-can-159.webp",
       "source_name": "metal159.jpg",
       "sha256": "2db6e692e6f70e497acd068167546bb14ee4b3e423e8c80deb5a35a7215c2453",
       "source": {
@@ -479,7 +479,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-plain-open-carton",
-      "file": "images/trashnet-box-148.jpg",
+      "file": "images/trashnet-box-148.webp",
       "source_name": "cardboard148.jpg",
       "sha256": "6df32df3445f1fd3a9d2163bce9cd36982d755abe5c635ed5548a82812e85631",
       "source": {
@@ -496,7 +496,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-arrowhead-water",
-      "file": "images/trashnet-bottle-122.jpg",
+      "file": "images/trashnet-bottle-122.webp",
       "source_name": "plastic122.jpg",
       "sha256": "54408331bae646ccabeb2e77330bc9430d6c6ea7440f294ab7aeed0c458b4add",
       "source": {
@@ -513,7 +513,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-silver-gold-beer-can",
-      "file": "images/trashnet-can-160.jpg",
+      "file": "images/trashnet-can-160.webp",
       "source_name": "metal160.jpg",
       "sha256": "5d943ddd4a73344e52aac08690ea1c93cbe1215c70621bbfd9aa13baf71446dc",
       "source": {
@@ -530,7 +530,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-plain-open-carton",
-      "file": "images/trashnet-box-149.jpg",
+      "file": "images/trashnet-box-149.webp",
       "source_name": "cardboard149.jpg",
       "sha256": "8bdd9137310a29365d06b152fc545355154bd24b457fea0398e41bd045b1ebf7",
       "source": {
@@ -547,7 +547,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-arrowhead-water",
-      "file": "images/trashnet-bottle-138.jpg",
+      "file": "images/trashnet-bottle-138.webp",
       "source_name": "plastic138.jpg",
       "sha256": "80c1dadce4be8f73ce9cc0f2cc8deded5d9c7781304e1d61fa2db9b50f7ce985",
       "source": {
@@ -564,7 +564,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-silver-gold-beer-can",
-      "file": "images/trashnet-can-178.jpg",
+      "file": "images/trashnet-can-178.webp",
       "source_name": "metal178.jpg",
       "sha256": "b965677ba10ae67f209b32ff2962a48ba593638ae142c854999b80bdac8ffe00",
       "source": {
@@ -581,7 +581,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-chobani-carton",
-      "file": "images/trashnet-box-160.jpg",
+      "file": "images/trashnet-box-160.webp",
       "source_name": "cardboard160.jpg",
       "sha256": "14d11e57928a1db1778bc6731d4fab8746cef8224fb13f95ced869e614c8f1e3",
       "source": {
@@ -598,7 +598,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-arrowhead-water",
-      "file": "images/trashnet-bottle-224.jpg",
+      "file": "images/trashnet-bottle-224.webp",
       "source_name": "plastic224.jpg",
       "sha256": "1bd51773840a0c85ba787d7a486edc9ccef32e782b31760c3d5324ac39042de8",
       "source": {
@@ -615,7 +615,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-silver-gold-beer-can",
-      "file": "images/trashnet-can-182.jpg",
+      "file": "images/trashnet-can-182.webp",
       "source_name": "metal182.jpg",
       "sha256": "71c725ceb62d1b259f2aa56272be8bb3b99828aa683720883967928c7c8965a4",
       "source": {
@@ -632,7 +632,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-chobani-carton",
-      "file": "images/trashnet-box-161.jpg",
+      "file": "images/trashnet-box-161.webp",
       "source_name": "cardboard161.jpg",
       "sha256": "5d2e969d3a067cf79834da828870e513a0e99428c6de513f14586c5d47a297de",
       "source": {
@@ -649,7 +649,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-arrowhead-water",
-      "file": "images/trashnet-bottle-230.jpg",
+      "file": "images/trashnet-bottle-230.webp",
       "source_name": "plastic230.jpg",
       "sha256": "16c0e9985f713cc81522592dc1d0a6fcc18019f222792b6045cbdb5c3d9ceb46",
       "source": {
@@ -666,7 +666,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-silver-gold-beer-can",
-      "file": "images/trashnet-can-183.jpg",
+      "file": "images/trashnet-can-183.webp",
       "source_name": "metal183.jpg",
       "sha256": "9813406c220078597003594411307c003455d981edb81aa299d5b993b268685e",
       "source": {
@@ -683,7 +683,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-chobani-carton",
-      "file": "images/trashnet-box-162.jpg",
+      "file": "images/trashnet-box-162.webp",
       "source_name": "cardboard162.jpg",
       "sha256": "d89184da82f070e7b41f440bf1998dcd79cf20f27de0fd5f48f92d89d71de15d",
       "source": {
@@ -700,7 +700,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-arrowhead-water",
-      "file": "images/trashnet-bottle-234.jpg",
+      "file": "images/trashnet-bottle-234.webp",
       "source_name": "plastic234.jpg",
       "sha256": "962e67cb1d4a3c65cbf713af1ae58897c60f8d0117c7ee36ac04a567da6cf8f3",
       "source": {
@@ -717,7 +717,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-silver-gold-beer-can",
-      "file": "images/trashnet-can-237.jpg",
+      "file": "images/trashnet-can-237.webp",
       "source_name": "metal237.jpg",
       "sha256": "8dd6f0654f96f64f90e22f54e3b1587814cb3eab5aa650debde6060e1838ac02",
       "source": {
@@ -734,7 +734,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-chobani-carton",
-      "file": "images/trashnet-box-163.jpg",
+      "file": "images/trashnet-box-163.webp",
       "source_name": "cardboard163.jpg",
       "sha256": "458ac3217efd4424d16c41de6cbc367124594a43c8c8d988f733b007c31a4455",
       "source": {
@@ -751,7 +751,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-arrowhead-water",
-      "file": "images/trashnet-bottle-235.jpg",
+      "file": "images/trashnet-bottle-235.webp",
       "source_name": "plastic235.jpg",
       "sha256": "b4eab673b773e0025ec0cc31b13705325713a712050c17b2eae710519f92aff8",
       "source": {
@@ -768,7 +768,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-silver-gold-beer-can",
-      "file": "images/trashnet-can-321.jpg",
+      "file": "images/trashnet-can-321.webp",
       "source_name": "metal321.jpg",
       "sha256": "d2dd71182401d8bf5435688d69f63b8f39180d5d8f30c1953bbd663f7a0ab011",
       "source": {
@@ -785,7 +785,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-chobani-carton",
-      "file": "images/trashnet-box-164.jpg",
+      "file": "images/trashnet-box-164.webp",
       "source_name": "cardboard164.jpg",
       "sha256": "446a1f224747b2056f5fe0bf50903519608e559fd1ce7ecad8aaf3ad7077bd97",
       "source": {
@@ -802,7 +802,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-arrowhead-water",
-      "file": "images/trashnet-bottle-251.jpg",
+      "file": "images/trashnet-bottle-251.webp",
       "source_name": "plastic251.jpg",
       "sha256": "8dbb1979032fb913540fbe907be48bf3559b594bcb5101e69ba6f6ac1e29baea",
       "source": {
@@ -819,7 +819,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-silver-gold-beer-can",
-      "file": "images/trashnet-can-386.jpg",
+      "file": "images/trashnet-can-386.webp",
       "source_name": "metal386.jpg",
       "sha256": "dc320bcd69c7c581537a18e08966424b5eca0f14a874deb70a764194fb14a6ce",
       "source": {
@@ -836,7 +836,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-silk-carton",
-      "file": "images/trashnet-box-165.jpg",
+      "file": "images/trashnet-box-165.webp",
       "source_name": "cardboard165.jpg",
       "sha256": "2e89f7e3c69e7520d2897fb65ae91e05969fa3e51b16f1eab01d1277edaa6a7d",
       "source": {
@@ -853,7 +853,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-arrowhead-water",
-      "file": "images/trashnet-bottle-276.jpg",
+      "file": "images/trashnet-bottle-276.webp",
       "source_name": "plastic276.jpg",
       "sha256": "bfdfbc629a84967c1dbfdc3e90275279a2a2760f9053750c64a3307db605f4d8",
       "source": {
@@ -870,7 +870,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-purple-drink-can",
-      "file": "images/trashnet-can-008.jpg",
+      "file": "images/trashnet-can-008.webp",
       "source_name": "metal8.jpg",
       "sha256": "27ba278703688aff66f44741d735886bbdbecfdc4d8749daa021004bc91c8cbb",
       "source": {
@@ -887,7 +887,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-silk-carton",
-      "file": "images/trashnet-box-166.jpg",
+      "file": "images/trashnet-box-166.webp",
       "source_name": "cardboard166.jpg",
       "sha256": "1a6498eb76db159d786146ea850b90b628d4dce34144e856863f804194ee6347",
       "source": {
@@ -904,7 +904,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-arrowhead-water",
-      "file": "images/trashnet-bottle-286.jpg",
+      "file": "images/trashnet-bottle-286.webp",
       "source_name": "plastic286.jpg",
       "sha256": "e78e85656429571b165f2034aab58e3be7219e70641da073fa582a6b11f8b547",
       "source": {
@@ -921,7 +921,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-purple-drink-can",
-      "file": "images/trashnet-can-009.jpg",
+      "file": "images/trashnet-can-009.webp",
       "source_name": "metal9.jpg",
       "sha256": "c80ce69fe45c0b22fcec94bb8a9e235f7b1eeb06e9f74c44a5016c6798d9a8c0",
       "source": {
@@ -938,7 +938,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-silk-carton",
-      "file": "images/trashnet-box-167.jpg",
+      "file": "images/trashnet-box-167.webp",
       "source_name": "cardboard167.jpg",
       "sha256": "aeef14b55de1b144084e8c760d2353476589ab96310af05ab3efc395eabf2fb4",
       "source": {
@@ -955,7 +955,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-arrowhead-water",
-      "file": "images/trashnet-bottle-335.jpg",
+      "file": "images/trashnet-bottle-335.webp",
       "source_name": "plastic335.jpg",
       "sha256": "3a8fdcb0c7b95bc9474fa8302f77da9eeb113aeb3bc3a1dbcd6f84d07161e748",
       "source": {
@@ -972,7 +972,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-purple-drink-can",
-      "file": "images/trashnet-can-090.jpg",
+      "file": "images/trashnet-can-090.webp",
       "source_name": "metal90.jpg",
       "sha256": "d0479555d7dcd71fdda3e7261513819c01c56987b680c74152de143d62cfb400",
       "source": {
@@ -989,7 +989,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-silk-carton",
-      "file": "images/trashnet-box-168.jpg",
+      "file": "images/trashnet-box-168.webp",
       "source_name": "cardboard168.jpg",
       "sha256": "c5adf70b3390c88d5799a29251d4d6ded545f8e9b2b27a11bf5defac377491d9",
       "source": {
@@ -1006,7 +1006,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-blue-label-water",
-      "file": "images/trashnet-bottle-014.jpg",
+      "file": "images/trashnet-bottle-014.webp",
       "source_name": "plastic14.jpg",
       "sha256": "3c1cc3b63ab1cdf605adfabb8fb059f2471645516fc99446a4c665d85f7541ff",
       "source": {
@@ -1023,7 +1023,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-purple-drink-can",
-      "file": "images/trashnet-can-149.jpg",
+      "file": "images/trashnet-can-149.webp",
       "source_name": "metal149.jpg",
       "sha256": "ea2588fc9bd2d5c9e9acf459e9b01c4649ae9e705d499a3c6c4a12df8a3d7857",
       "source": {
@@ -1040,7 +1040,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-silk-carton",
-      "file": "images/trashnet-box-174.jpg",
+      "file": "images/trashnet-box-174.webp",
       "source_name": "cardboard174.jpg",
       "sha256": "c00c0deac6ea17c761be9345f20b4d96f4c6c6c3818d55ce94af252aa4bc611e",
       "source": {
@@ -1057,7 +1057,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-blue-label-water",
-      "file": "images/trashnet-bottle-032.jpg",
+      "file": "images/trashnet-bottle-032.webp",
       "source_name": "plastic32.jpg",
       "sha256": "dd4b43a6ba69f04f3264f855f632f83f1cb5656b8bd47c08a958176662bcb27a",
       "source": {
@@ -1074,7 +1074,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-purple-drink-can",
-      "file": "images/trashnet-can-280.jpg",
+      "file": "images/trashnet-can-280.webp",
       "source_name": "metal280.jpg",
       "sha256": "2667ce6cb65c06bb6826444ffb2c2389042494b54c4a3cf0aee2a098d5a4220e",
       "source": {
@@ -1091,7 +1091,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-silk-carton",
-      "file": "images/trashnet-box-175.jpg",
+      "file": "images/trashnet-box-175.webp",
       "source_name": "cardboard175.jpg",
       "sha256": "d4af0e938445156556763cb843543edde80b739fbdececcca278c48dd9368d8b",
       "source": {
@@ -1108,7 +1108,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-blue-label-water",
-      "file": "images/trashnet-bottle-051.jpg",
+      "file": "images/trashnet-bottle-051.webp",
       "source_name": "plastic51.jpg",
       "sha256": "b683387e221e5b23286f1fb59da08a6d356676c52644cf42d75ddcf1cd346a62",
       "source": {
@@ -1125,7 +1125,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-purple-drink-can",
-      "file": "images/trashnet-can-291.jpg",
+      "file": "images/trashnet-can-291.webp",
       "source_name": "metal291.jpg",
       "sha256": "3fb7d5f244ca5b4d02832532530628fba9afa99efe8bf20de9b7c1bcc1f3604f",
       "source": {
@@ -1142,7 +1142,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-silk-carton",
-      "file": "images/trashnet-box-176.jpg",
+      "file": "images/trashnet-box-176.webp",
       "source_name": "cardboard176.jpg",
       "sha256": "9731e15505d08076b916b3ee126d4f834d151e0a258cc6f2113600a07aec2f8c",
       "source": {
@@ -1159,7 +1159,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-blue-label-water",
-      "file": "images/trashnet-bottle-057.jpg",
+      "file": "images/trashnet-bottle-057.webp",
       "source_name": "plastic57.jpg",
       "sha256": "4674e3d6eee6f7ed7b4e67e6b00d0ad920daca0b38b3b1031c36e5a17067da94",
       "source": {
@@ -1176,7 +1176,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-purple-drink-can",
-      "file": "images/trashnet-can-303.jpg",
+      "file": "images/trashnet-can-303.webp",
       "source_name": "metal303.jpg",
       "sha256": "ecadc879b646436b973b54fdd61e6ae8cb27a4a421090c3faaee8b701dbc503c",
       "source": {
@@ -1193,7 +1193,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-silk-carton",
-      "file": "images/trashnet-box-177.jpg",
+      "file": "images/trashnet-box-177.webp",
       "source_name": "cardboard177.jpg",
       "sha256": "8aa23475abf49b4b68b3f3b1c9d6baeabe834d4e90b37a63cecbecaf07776c36",
       "source": {
@@ -1210,7 +1210,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-blue-label-water",
-      "file": "images/trashnet-bottle-065.jpg",
+      "file": "images/trashnet-bottle-065.webp",
       "source_name": "plastic65.jpg",
       "sha256": "00fda87186fdaf0484e7e3e3c5a56a22556c6c12c1d042c65d19821cfa460bc2",
       "source": {
@@ -1227,7 +1227,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-purple-drink-can",
-      "file": "images/trashnet-can-371.jpg",
+      "file": "images/trashnet-can-371.webp",
       "source_name": "metal371.jpg",
       "sha256": "0240d79e364cd38b6b0ae37f8fa09d5121a65e2ba21eb4229f9931346aa460c6",
       "source": {
@@ -1244,7 +1244,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-silk-carton",
-      "file": "images/trashnet-box-178.jpg",
+      "file": "images/trashnet-box-178.webp",
       "source_name": "cardboard178.jpg",
       "sha256": "f903e09cdf3ea30285b007f53147a7b891f2277781a74bccc35b36568c892ee5",
       "source": {
@@ -1261,7 +1261,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-blue-label-water",
-      "file": "images/trashnet-bottle-073.jpg",
+      "file": "images/trashnet-bottle-073.webp",
       "source_name": "plastic73.jpg",
       "sha256": "8adfd45c91e59217eb86fbf17b7cc91ea7e3c5e72c9ff5c32d59d97b43766991",
       "source": {
@@ -1278,7 +1278,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-pabst-beer-can",
-      "file": "images/trashnet-can-018.jpg",
+      "file": "images/trashnet-can-018.webp",
       "source_name": "metal18.jpg",
       "sha256": "397b8780b62f129acddb0758d07f8570542427e97750f11f0bac39c8908ca55d",
       "source": {
@@ -1295,7 +1295,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-silk-carton",
-      "file": "images/trashnet-box-179.jpg",
+      "file": "images/trashnet-box-179.webp",
       "source_name": "cardboard179.jpg",
       "sha256": "be36636033d78b61ddbbbdecccfcb0537380e04eb84121289268018fb0827b9c",
       "source": {
@@ -1312,7 +1312,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-blue-label-water",
-      "file": "images/trashnet-bottle-075.jpg",
+      "file": "images/trashnet-bottle-075.webp",
       "source_name": "plastic75.jpg",
       "sha256": "f3369337f73e10460c7ee4c117a44f64939e894a4cb820524971dd5c288f8e77",
       "source": {
@@ -1329,7 +1329,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-pabst-beer-can",
-      "file": "images/trashnet-can-069.jpg",
+      "file": "images/trashnet-can-069.webp",
       "source_name": "metal69.jpg",
       "sha256": "af49fd0677db625844199f24ff7ca542e5a2fbbb174839d57ae3ac034fcb28b7",
       "source": {
@@ -1346,7 +1346,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-purple-produce-carton",
-      "file": "images/trashnet-box-189.jpg",
+      "file": "images/trashnet-box-189.webp",
       "source_name": "cardboard189.jpg",
       "sha256": "bcccb2b46dbd0b8027dff07ff120d9a3a27e5ddf8128de027af8f681c7f79211",
       "source": {
@@ -1363,7 +1363,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-blue-label-water",
-      "file": "images/trashnet-bottle-100.jpg",
+      "file": "images/trashnet-bottle-100.webp",
       "source_name": "plastic100.jpg",
       "sha256": "00e0bbcc0a75007fb79cb8e2e96a48c3d32941ee9ae8918590f846261d5aaac1",
       "source": {
@@ -1380,7 +1380,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-pabst-beer-can",
-      "file": "images/trashnet-can-102.jpg",
+      "file": "images/trashnet-can-102.webp",
       "source_name": "metal102.jpg",
       "sha256": "44efcc80b146735d5a7a0ffb6356641cd3ef996019ef43a0e16af87ff6d1354a",
       "source": {
@@ -1397,7 +1397,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-purple-produce-carton",
-      "file": "images/trashnet-box-190.jpg",
+      "file": "images/trashnet-box-190.webp",
       "source_name": "cardboard190.jpg",
       "sha256": "088abe8da4601c733f63ab5ac545693835a927ae20a66c49e6906ac7ff157bd2",
       "source": {
@@ -1414,7 +1414,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-blue-label-water",
-      "file": "images/trashnet-bottle-105.jpg",
+      "file": "images/trashnet-bottle-105.webp",
       "source_name": "plastic105.jpg",
       "sha256": "4b3baf362454ca82fa25407200355a6646ee8d2fd89bad5f146a35fe1ce61ebd",
       "source": {
@@ -1431,7 +1431,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-pabst-beer-can",
-      "file": "images/trashnet-can-103.jpg",
+      "file": "images/trashnet-can-103.webp",
       "source_name": "metal103.jpg",
       "sha256": "85b595fd5f02d95b201370a1ae5e105ff7626c5462cb781e1c876cd04b0ae671",
       "source": {
@@ -1448,7 +1448,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-purple-produce-carton",
-      "file": "images/trashnet-box-191.jpg",
+      "file": "images/trashnet-box-191.webp",
       "source_name": "cardboard191.jpg",
       "sha256": "2b82e19cb55b982d291c8838f84c7e4d3639013727fc814fe4aa7589f20fadad",
       "source": {
@@ -1465,7 +1465,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-blue-label-water",
-      "file": "images/trashnet-bottle-106.jpg",
+      "file": "images/trashnet-bottle-106.webp",
       "source_name": "plastic106.jpg",
       "sha256": "34b4d88c722b12483f73e1ff39947bd464e2ce8a0eaeb1e7c0971dea6bb3893c",
       "source": {
@@ -1482,7 +1482,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-pabst-beer-can",
-      "file": "images/trashnet-can-134.jpg",
+      "file": "images/trashnet-can-134.webp",
       "source_name": "metal134.jpg",
       "sha256": "17a57deae02dfa268f964fde93494e8504565bcf2de190663d621e9b4d9df439",
       "source": {
@@ -1499,7 +1499,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-purple-produce-carton",
-      "file": "images/trashnet-box-193.jpg",
+      "file": "images/trashnet-box-193.webp",
       "source_name": "cardboard193.jpg",
       "sha256": "121f732624ef127b41164313832909f2fb582583f035112c8232bc421e29a5b0",
       "source": {
@@ -1516,7 +1516,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-blue-label-water",
-      "file": "images/trashnet-bottle-157.jpg",
+      "file": "images/trashnet-bottle-157.webp",
       "source_name": "plastic157.jpg",
       "sha256": "8da02dffba1358a9ef9130ee86d4f02f8db163976d022abac541b82b60524ea3",
       "source": {
@@ -1533,7 +1533,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-pabst-beer-can",
-      "file": "images/trashnet-can-259.jpg",
+      "file": "images/trashnet-can-259.webp",
       "source_name": "metal259.jpg",
       "sha256": "1dc73acaeeb07c595c7154f110d6ef94b446323dd5855ddbf0e9b8c4c4934965",
       "source": {
@@ -1550,7 +1550,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-purple-produce-carton",
-      "file": "images/trashnet-box-194.jpg",
+      "file": "images/trashnet-box-194.webp",
       "source_name": "cardboard194.jpg",
       "sha256": "7273c1134c973d5bf88c0a1b1e5b38098ad224883c866e48d9d45a1f8fd32f58",
       "source": {
@@ -1567,7 +1567,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-blue-label-water",
-      "file": "images/trashnet-bottle-191.jpg",
+      "file": "images/trashnet-bottle-191.webp",
       "source_name": "plastic191.jpg",
       "sha256": "ec065cf4559fb3b6aca7e07624d2bed44edd2495850087dde7decbf2af6a8070",
       "source": {
@@ -1584,7 +1584,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-pabst-beer-can",
-      "file": "images/trashnet-can-267.jpg",
+      "file": "images/trashnet-can-267.webp",
       "source_name": "metal267.jpg",
       "sha256": "7ba65e32f1182cc7dd453846174af33890867c9885e4d63fa10d00effd983209",
       "source": {
@@ -1601,7 +1601,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-purple-produce-carton",
-      "file": "images/trashnet-box-195.jpg",
+      "file": "images/trashnet-box-195.webp",
       "source_name": "cardboard195.jpg",
       "sha256": "02d2fd8bf5530e970dbef1107cee1a731c781a838d61174953a3d171963f5d94",
       "source": {
@@ -1618,7 +1618,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-blue-label-water",
-      "file": "images/trashnet-bottle-200.jpg",
+      "file": "images/trashnet-bottle-200.webp",
       "source_name": "plastic200.jpg",
       "sha256": "a093b5e32fcc49641c4990cea1505286e2f9a2fc54526bf100ab2eb6a6728dfa",
       "source": {
@@ -1635,7 +1635,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-pabst-beer-can",
-      "file": "images/trashnet-can-285.jpg",
+      "file": "images/trashnet-can-285.webp",
       "source_name": "metal285.jpg",
       "sha256": "f6ff265cbcc6ca87645a982332bbe1c1301a82425a9b360cc69614d282b6ad77",
       "source": {
@@ -1652,7 +1652,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-purple-produce-carton",
-      "file": "images/trashnet-box-196.jpg",
+      "file": "images/trashnet-box-196.webp",
       "source_name": "cardboard196.jpg",
       "sha256": "2e2814038c3594bb3d50fa40a8a4763ad9087a2b53e21c061f51d7cf0a90b78b",
       "source": {
@@ -1669,7 +1669,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-blue-label-water",
-      "file": "images/trashnet-bottle-202.jpg",
+      "file": "images/trashnet-bottle-202.webp",
       "source_name": "plastic202.jpg",
       "sha256": "cfd035c8c4400a35408be51e5e4219f01104e858e689779ef1972755e2612955",
       "source": {
@@ -1686,7 +1686,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-pabst-beer-can",
-      "file": "images/trashnet-can-365.jpg",
+      "file": "images/trashnet-can-365.webp",
       "source_name": "metal365.jpg",
       "sha256": "e5e02e25ce27f29db9d0eb8a55a6b5ce5a2e10fb0567997b3cd5cc25e5baf522",
       "source": {
@@ -1703,7 +1703,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-purple-produce-carton",
-      "file": "images/trashnet-box-197.jpg",
+      "file": "images/trashnet-box-197.webp",
       "source_name": "cardboard197.jpg",
       "sha256": "0fabbacd1a327ee0220db83ada47c24b77645a6bee64aa5969b8e2ad9dee98f5",
       "source": {
@@ -1720,7 +1720,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-blue-label-water",
-      "file": "images/trashnet-bottle-209.jpg",
+      "file": "images/trashnet-bottle-209.webp",
       "source_name": "plastic209.jpg",
       "sha256": "9d2cdabd68f4df9e76b989ff882f2fd0895a1b1d3633f01e479c52dc94db1161",
       "source": {
@@ -1737,7 +1737,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-pabst-beer-can",
-      "file": "images/trashnet-can-404.jpg",
+      "file": "images/trashnet-can-404.webp",
       "source_name": "metal404.jpg",
       "sha256": "7ccd1514dcac218ee885080e5e7aa11eedecc4eb3f36cb0173b0765b92902977",
       "source": {
@@ -1754,7 +1754,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-purple-produce-carton",
-      "file": "images/trashnet-box-198.jpg",
+      "file": "images/trashnet-box-198.webp",
       "source_name": "cardboard198.jpg",
       "sha256": "d348d8b5c733bbc3fe31c40bcf57999eedfbfd6aee6184b73d33f1e0d62a3b9c",
       "source": {
@@ -1771,7 +1771,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-blue-label-water",
-      "file": "images/trashnet-bottle-262.jpg",
+      "file": "images/trashnet-bottle-262.webp",
       "source_name": "plastic262.jpg",
       "sha256": "b6dda9ed628e3c7845e1b2c90ab54b06c43ac48a6d5fd19e3987e55f603c5eb6",
       "source": {
@@ -1788,7 +1788,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-green-soda-can",
-      "file": "images/trashnet-can-041.jpg",
+      "file": "images/trashnet-can-041.webp",
       "source_name": "metal41.jpg",
       "sha256": "a30654d04e0c1b003cf22d8c2301cc8e69247387ce1951f91d5ae823921424d0",
       "source": {
@@ -1805,7 +1805,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-purple-produce-carton",
-      "file": "images/trashnet-box-199.jpg",
+      "file": "images/trashnet-box-199.webp",
       "source_name": "cardboard199.jpg",
       "sha256": "4803d51b94b42b9e3357e9c1b72f656f622d389743422215b63feb0eaad16d6d",
       "source": {
@@ -1822,7 +1822,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-blue-label-water",
-      "file": "images/trashnet-bottle-274.jpg",
+      "file": "images/trashnet-bottle-274.webp",
       "source_name": "plastic274.jpg",
       "sha256": "861ba3d17ff24a8bd51210f991d34b019b73cbaeb0fa059655c4ef1da2c7c6d8",
       "source": {
@@ -1839,7 +1839,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-green-soda-can",
-      "file": "images/trashnet-can-070.jpg",
+      "file": "images/trashnet-can-070.webp",
       "source_name": "metal70.jpg",
       "sha256": "4fb4ddcac98f16d8bab2241a2e726b4dc1fc777e065b66913db2d4283b5554a2",
       "source": {
@@ -1856,7 +1856,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-purple-produce-carton",
-      "file": "images/trashnet-box-200.jpg",
+      "file": "images/trashnet-box-200.webp",
       "source_name": "cardboard200.jpg",
       "sha256": "235a53570abbad7adcb2901ead6d7385e36c679f1a3aa7bce179a641d4d1a873",
       "source": {
@@ -1873,7 +1873,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-blue-label-water",
-      "file": "images/trashnet-bottle-277.jpg",
+      "file": "images/trashnet-bottle-277.webp",
       "source_name": "plastic277.jpg",
       "sha256": "b70669928144a5f5b6f2c5c6740c134a87b8e11079fd90289f22833280439271",
       "source": {
@@ -1890,7 +1890,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-green-soda-can",
-      "file": "images/trashnet-can-071.jpg",
+      "file": "images/trashnet-can-071.webp",
       "source_name": "metal71.jpg",
       "sha256": "7f174868aec04cf615763c51c00d3cb4004c67da204d40238656b79d4cd8ad4e",
       "source": {
@@ -1907,7 +1907,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-purple-produce-carton",
-      "file": "images/trashnet-box-201.jpg",
+      "file": "images/trashnet-box-201.webp",
       "source_name": "cardboard201.jpg",
       "sha256": "b5ead8ef7426dff4f6c3851044cac9cdc96297c4a11d8abc5e48f701213efc88",
       "source": {
@@ -1924,7 +1924,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-blue-label-water",
-      "file": "images/trashnet-bottle-288.jpg",
+      "file": "images/trashnet-bottle-288.webp",
       "source_name": "plastic288.jpg",
       "sha256": "f720a1bbf957bf13d09e6fe343196d5dd9caea9c935e4352fd1efafc89a9eef0",
       "source": {
@@ -1941,7 +1941,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-green-soda-can",
-      "file": "images/trashnet-can-093.jpg",
+      "file": "images/trashnet-can-093.webp",
       "source_name": "metal93.jpg",
       "sha256": "4879bc2f326d9d8413607d87a11de5341be4280349c24062a76a54b90e5b4973",
       "source": {
@@ -1958,7 +1958,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-purple-produce-carton",
-      "file": "images/trashnet-box-202.jpg",
+      "file": "images/trashnet-box-202.webp",
       "source_name": "cardboard202.jpg",
       "sha256": "a6d3fd0f1fe12e064594e598ea1ebf4bf2357d3aeb657aff74302b129f003664",
       "source": {
@@ -1975,7 +1975,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-blue-label-water",
-      "file": "images/trashnet-bottle-292.jpg",
+      "file": "images/trashnet-bottle-292.webp",
       "source_name": "plastic292.jpg",
       "sha256": "1fe34344d11d325abae025ab4ac0cf6d7322b4cd54ce846b3d725eeea6f4c965",
       "source": {
@@ -1992,7 +1992,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-green-soda-can",
-      "file": "images/trashnet-can-109.jpg",
+      "file": "images/trashnet-can-109.webp",
       "source_name": "metal109.jpg",
       "sha256": "56b95b40642191f8cfa9e0150c4f10600e5363a5da4b113858127584d441e808",
       "source": {
@@ -2009,7 +2009,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-purple-produce-carton",
-      "file": "images/trashnet-box-203.jpg",
+      "file": "images/trashnet-box-203.webp",
       "source_name": "cardboard203.jpg",
       "sha256": "21fca9f2141321b5856dd917ef588b9c60dd431e6435169d6120e4dac61c820d",
       "source": {
@@ -2026,7 +2026,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-blue-label-water",
-      "file": "images/trashnet-bottle-293.jpg",
+      "file": "images/trashnet-bottle-293.webp",
       "source_name": "plastic293.jpg",
       "sha256": "d38eed6abb53bab0066797a23de7260e23ba0f6c2f2912d968633edfe5a49510",
       "source": {
@@ -2043,7 +2043,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-green-soda-can",
-      "file": "images/trashnet-can-139.jpg",
+      "file": "images/trashnet-can-139.webp",
       "source_name": "metal139.jpg",
       "sha256": "e69ce4a19ea7ad865800d6ba1dc67e51c19ad3f3116fb5d7f7734ef427dffb4c",
       "source": {
@@ -2060,7 +2060,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-purple-produce-carton",
-      "file": "images/trashnet-box-204.jpg",
+      "file": "images/trashnet-box-204.webp",
       "source_name": "cardboard204.jpg",
       "sha256": "bde9127611fc86b82d3a0d620dd75227b627d6813fa8d56f026e18f00669015e",
       "source": {
@@ -2077,7 +2077,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-blue-label-water",
-      "file": "images/trashnet-bottle-295.jpg",
+      "file": "images/trashnet-bottle-295.webp",
       "source_name": "plastic295.jpg",
       "sha256": "68e30089fa4660a406b72126b3749cc851a26c666e611f823c857466006963fe",
       "source": {
@@ -2094,7 +2094,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-green-soda-can",
-      "file": "images/trashnet-can-186.jpg",
+      "file": "images/trashnet-can-186.webp",
       "source_name": "metal186.jpg",
       "sha256": "f6fbe70ee36fb0907264735e8abf67ebea2283dcaa3fcf08a273baf528ab35e5",
       "source": {
@@ -2111,7 +2111,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-purple-produce-carton",
-      "file": "images/trashnet-box-205.jpg",
+      "file": "images/trashnet-box-205.webp",
       "source_name": "cardboard205.jpg",
       "sha256": "cb18509203c2d290dfd7f7c89b371499e85eaaf6c1681dcb31c0548588c28429",
       "source": {
@@ -2128,7 +2128,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-blue-label-water",
-      "file": "images/trashnet-bottle-296.jpg",
+      "file": "images/trashnet-bottle-296.webp",
       "source_name": "plastic296.jpg",
       "sha256": "b351129a596213f3b020cb63230fa6e0698e9fe20f9b8bb9d023f4ecf3aa436c",
       "source": {
@@ -2145,7 +2145,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-green-soda-can",
-      "file": "images/trashnet-can-223.jpg",
+      "file": "images/trashnet-can-223.webp",
       "source_name": "metal223.jpg",
       "sha256": "ed04883b7548a704c37a6c05196e9b199a6db7144d2d30a4dcc2069a0aa268a8",
       "source": {
@@ -2162,7 +2162,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-sysco-carton",
-      "file": "images/trashnet-box-206.jpg",
+      "file": "images/trashnet-box-206.webp",
       "source_name": "cardboard206.jpg",
       "sha256": "b0b9350d49745175d4eb74ee742e7e82258dda7ec25eed333de1911736e6bf67",
       "source": {
@@ -2179,7 +2179,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-blue-label-water",
-      "file": "images/trashnet-bottle-298.jpg",
+      "file": "images/trashnet-bottle-298.webp",
       "source_name": "plastic298.jpg",
       "sha256": "f205e53419a78f56b78ae54b0053f3a437cdba809cc480f79d50e2703f11c2f5",
       "source": {
@@ -2196,7 +2196,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-green-soda-can",
-      "file": "images/trashnet-can-230.jpg",
+      "file": "images/trashnet-can-230.webp",
       "source_name": "metal230.jpg",
       "sha256": "58200416ab0635a386c6c5917c8f9e170dec6e9266d04c984a0e7e1f2dd69dea",
       "source": {
@@ -2213,7 +2213,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-sysco-carton",
-      "file": "images/trashnet-box-207.jpg",
+      "file": "images/trashnet-box-207.webp",
       "source_name": "cardboard207.jpg",
       "sha256": "0d19e7e6ef97e06bae787b9283eaa8f08df88b9b653e5be0e9ff75720d0239fb",
       "source": {
@@ -2230,7 +2230,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-blue-label-water",
-      "file": "images/trashnet-bottle-304.jpg",
+      "file": "images/trashnet-bottle-304.webp",
       "source_name": "plastic304.jpg",
       "sha256": "7f728b9e10baef5d4ff0661f2c51939ec71f8b03a792ecc092720dbc30e4d4c8",
       "source": {
@@ -2247,7 +2247,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-green-soda-can",
-      "file": "images/trashnet-can-233.jpg",
+      "file": "images/trashnet-can-233.webp",
       "source_name": "metal233.jpg",
       "sha256": "030338f9dd3986a571552865e0fda1d91e13293fb370b1c0b110fc4043d03484",
       "source": {
@@ -2264,7 +2264,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-sysco-carton",
-      "file": "images/trashnet-box-208.jpg",
+      "file": "images/trashnet-box-208.webp",
       "source_name": "cardboard208.jpg",
       "sha256": "74ae98f30f3dd02757ac78fd7a4f111f777e612d3ea85a2788c0158dca01c0e8",
       "source": {
@@ -2281,7 +2281,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-burgundy-cap-bottle",
-      "file": "images/trashnet-bottle-007.jpg",
+      "file": "images/trashnet-bottle-007.webp",
       "source_name": "plastic7.jpg",
       "sha256": "da60dcee4982606118f20c988e3740daa3e23feb4335a37a5fc3aa9e16d10f66",
       "source": {
@@ -2298,7 +2298,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-green-soda-can",
-      "file": "images/trashnet-can-274.jpg",
+      "file": "images/trashnet-can-274.webp",
       "source_name": "metal274.jpg",
       "sha256": "436a9a4a5d914bc949558e40833bb456353635f1c2a766f5e58adff761e9972c",
       "source": {
@@ -2315,7 +2315,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-sysco-carton",
-      "file": "images/trashnet-box-209.jpg",
+      "file": "images/trashnet-box-209.webp",
       "source_name": "cardboard209.jpg",
       "sha256": "52b6c183732b04bd232645f5e8685c19280dbc2f0ce9725b156b472924183cb5",
       "source": {
@@ -2332,7 +2332,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-burgundy-cap-bottle",
-      "file": "images/trashnet-bottle-008.jpg",
+      "file": "images/trashnet-bottle-008.webp",
       "source_name": "plastic8.jpg",
       "sha256": "9f5b2e26171e2568ea3c809705cfa00732550ae24e0d06c58680e401bef3474e",
       "source": {
@@ -2349,7 +2349,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-green-soda-can",
-      "file": "images/trashnet-can-277.jpg",
+      "file": "images/trashnet-can-277.webp",
       "source_name": "metal277.jpg",
       "sha256": "51c7cff9d8ea7e43822160aa242c591326b78e022a510d95dfda670d60452e53",
       "source": {
@@ -2366,7 +2366,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-sysco-carton",
-      "file": "images/trashnet-box-210.jpg",
+      "file": "images/trashnet-box-210.webp",
       "source_name": "cardboard210.jpg",
       "sha256": "4aadc37b0c115185220dd1d207fa5bc3633c93cb09c5fd193b19b3f10e0be0a9",
       "source": {
@@ -2383,7 +2383,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-burgundy-cap-bottle",
-      "file": "images/trashnet-bottle-129.jpg",
+      "file": "images/trashnet-bottle-129.webp",
       "source_name": "plastic129.jpg",
       "sha256": "cc4229329892f78ad0551448cbb1d659834e211bfce1aa839d4877b88f410c20",
       "source": {
@@ -2400,7 +2400,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-green-soda-can",
-      "file": "images/trashnet-can-288.jpg",
+      "file": "images/trashnet-can-288.webp",
       "source_name": "metal288.jpg",
       "sha256": "191035be31b64e1edad395dce380f5be67ff59fb68a33b57d3051e8bd218a7e8",
       "source": {
@@ -2417,7 +2417,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-sysco-carton",
-      "file": "images/trashnet-box-211.jpg",
+      "file": "images/trashnet-box-211.webp",
       "source_name": "cardboard211.jpg",
       "sha256": "9aa6cf0e9a86de7a3ce785cda8dcedf23539392a690e37d504afd0504596bf95",
       "source": {
@@ -2434,7 +2434,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-burgundy-cap-bottle",
-      "file": "images/trashnet-bottle-130.jpg",
+      "file": "images/trashnet-bottle-130.webp",
       "source_name": "plastic130.jpg",
       "sha256": "05da256767172a2eb0619d0014d6763bb4cbb92b75e3fd328c5db86f6f80f6bc",
       "source": {
@@ -2451,7 +2451,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-green-soda-can",
-      "file": "images/trashnet-can-292.jpg",
+      "file": "images/trashnet-can-292.webp",
       "source_name": "metal292.jpg",
       "sha256": "9e7ef3d5d3a675800e44eddd06a21ef8ea4e3396ede10baa7537e8cefdd2a38b",
       "source": {
@@ -2468,7 +2468,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-sysco-carton",
-      "file": "images/trashnet-box-212.jpg",
+      "file": "images/trashnet-box-212.webp",
       "source_name": "cardboard212.jpg",
       "sha256": "d5faa87e6021912bc14add04f04c9cf6548dc920a750e47680696d8db6de25ed",
       "source": {
@@ -2485,7 +2485,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-burgundy-cap-bottle",
-      "file": "images/trashnet-bottle-167.jpg",
+      "file": "images/trashnet-bottle-167.webp",
       "source_name": "plastic167.jpg",
       "sha256": "d4143c9315967ea98cad769421cfe61b87036ce99a1faf670277eee1801d9c73",
       "source": {
@@ -2502,7 +2502,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-green-soda-can",
-      "file": "images/trashnet-can-306.jpg",
+      "file": "images/trashnet-can-306.webp",
       "source_name": "metal306.jpg",
       "sha256": "265b600061409e515719e77a2773a08c1147de53d7ade912324872aa219de9a6",
       "source": {
@@ -2519,7 +2519,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-sysco-carton",
-      "file": "images/trashnet-box-213.jpg",
+      "file": "images/trashnet-box-213.webp",
       "source_name": "cardboard213.jpg",
       "sha256": "b3c979a3f4b7246548b51ee34782dfab7e146a569511f62bca9b11701460c951",
       "source": {
@@ -2536,7 +2536,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-orange-cap-sports-drink",
-      "file": "images/trashnet-bottle-021.jpg",
+      "file": "images/trashnet-bottle-021.webp",
       "source_name": "plastic21.jpg",
       "sha256": "2a9d33453f886a84673eca85a60d2ef62d0bc5783c6200b52adc1dab01841664",
       "source": {
@@ -2553,7 +2553,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-green-soda-can",
-      "file": "images/trashnet-can-310.jpg",
+      "file": "images/trashnet-can-310.webp",
       "source_name": "metal310.jpg",
       "sha256": "10bff8c5d8e0dc1bdd5785f57de5e4a0b69913813781b10cf5ecf09b42bbe6b9",
       "source": {
@@ -2570,7 +2570,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-sysco-carton",
-      "file": "images/trashnet-box-214.jpg",
+      "file": "images/trashnet-box-214.webp",
       "source_name": "cardboard214.jpg",
       "sha256": "7c74d1ef9a2e93b9cda080c26d33235e3a94864e3fb5bc00e098ab5afe87ca4a",
       "source": {
@@ -2587,7 +2587,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-orange-cap-sports-drink",
-      "file": "images/trashnet-bottle-104.jpg",
+      "file": "images/trashnet-bottle-104.webp",
       "source_name": "plastic104.jpg",
       "sha256": "ee2efd0c3de2816f3009e3220d6ceb0bf1ba3f9b02563814f85fc4fa9fd09972",
       "source": {
@@ -2604,7 +2604,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-green-soda-can",
-      "file": "images/trashnet-can-326.jpg",
+      "file": "images/trashnet-can-326.webp",
       "source_name": "metal326.jpg",
       "sha256": "f58e4a31e9d5b76d462d32ae5a530f50684bc525a95957e0d7958a84703649b0",
       "source": {
@@ -2621,7 +2621,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-sysco-carton",
-      "file": "images/trashnet-box-215.jpg",
+      "file": "images/trashnet-box-215.webp",
       "source_name": "cardboard215.jpg",
       "sha256": "995196b4035e706dea1737e2c445c9e0964014a94fcc2871b91b4a66aa3b7c71",
       "source": {
@@ -2638,7 +2638,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-orange-cap-sports-drink",
-      "file": "images/trashnet-bottle-208.jpg",
+      "file": "images/trashnet-bottle-208.webp",
       "source_name": "plastic208.jpg",
       "sha256": "7066e4ba418dc5633759f9648810860845dc918332edcd49d0a505e434a6855d",
       "source": {
@@ -2655,7 +2655,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-green-soda-can",
-      "file": "images/trashnet-can-379.jpg",
+      "file": "images/trashnet-can-379.webp",
       "source_name": "metal379.jpg",
       "sha256": "bfb1f39a72cebe2ba64ce22ad6f3cc0068daea6559745de2468466c22a3bf639",
       "source": {
@@ -2672,7 +2672,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-sysco-carton",
-      "file": "images/trashnet-box-216.jpg",
+      "file": "images/trashnet-box-216.webp",
       "source_name": "cardboard216.jpg",
       "sha256": "ce928b2777c2f4ead19f07cb8e673cff4b9b8f3b7472d2d3a184c6e6d8aaae41",
       "source": {
@@ -2689,7 +2689,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-orange-cap-sports-drink",
-      "file": "images/trashnet-bottle-324.jpg",
+      "file": "images/trashnet-bottle-324.webp",
       "source_name": "plastic324.jpg",
       "sha256": "3b9ffe4f163e4626818b0ac88b0beee5cd018c2456b7c00eb46cbf05052be268",
       "source": {
@@ -2706,7 +2706,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-green-soda-can",
-      "file": "images/trashnet-can-400.jpg",
+      "file": "images/trashnet-can-400.webp",
       "source_name": "metal400.jpg",
       "sha256": "1133b997083dcc2d802b01f5b2a8926c3d1e591e25f316be3530039fb5190348",
       "source": {
@@ -2723,7 +2723,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-sysco-carton",
-      "file": "images/trashnet-box-217.jpg",
+      "file": "images/trashnet-box-217.webp",
       "source_name": "cardboard217.jpg",
       "sha256": "3f5fba27f5c8a3e46bdbcbccb8e42ff38514e6bd5b6ac3aac96a8d44a05e52ea",
       "source": {
@@ -2740,7 +2740,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-smartwater-bottle",
-      "file": "images/trashnet-bottle-049.jpg",
+      "file": "images/trashnet-bottle-049.webp",
       "source_name": "plastic49.jpg",
       "sha256": "42961ff5bb972e412575a53d3d24459a04e4ab47cbf18961d3cdbc70d49ca404",
       "source": {
@@ -2757,7 +2757,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-red-rootbeer-can",
-      "file": "images/trashnet-can-062.jpg",
+      "file": "images/trashnet-can-062.webp",
       "source_name": "metal62.jpg",
       "sha256": "ba1e9103370776db0f48019aaa67ecf449d359e76b7f7cce8cc4fae189f8528b",
       "source": {
@@ -2774,7 +2774,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-sysco-carton",
-      "file": "images/trashnet-box-218.jpg",
+      "file": "images/trashnet-box-218.webp",
       "source_name": "cardboard218.jpg",
       "sha256": "189f3c6c3c086d1c64a557be1206c99c7867c49cb890ac9e3890f8c4b5a64546",
       "source": {
@@ -2791,7 +2791,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-smartwater-bottle",
-      "file": "images/trashnet-bottle-060.jpg",
+      "file": "images/trashnet-bottle-060.webp",
       "source_name": "plastic60.jpg",
       "sha256": "8fc6634d40c03c2bbf645c53885117de9ba8d99982f90819512a7281f203515f",
       "source": {
@@ -2808,7 +2808,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-red-rootbeer-can",
-      "file": "images/trashnet-can-243.jpg",
+      "file": "images/trashnet-can-243.webp",
       "source_name": "metal243.jpg",
       "sha256": "b9f648ddde3596f81747fd274d0902ea29fdd1d0f7846031972bc7ed45e4d5af",
       "source": {
@@ -2825,7 +2825,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-sysco-carton",
-      "file": "images/trashnet-box-219.jpg",
+      "file": "images/trashnet-box-219.webp",
       "source_name": "cardboard219.jpg",
       "sha256": "2a0b62fda0ff643a92fea69f05c0c1d6bb75d8f11e93b684b6eb052337e89334",
       "source": {
@@ -2842,7 +2842,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-smartwater-bottle",
-      "file": "images/trashnet-bottle-419.jpg",
+      "file": "images/trashnet-bottle-419.webp",
       "source_name": "plastic419.jpg",
       "sha256": "46589779c40299c82795d1ed0eb6d9f045e969eac0470a0e448e950a32db54da",
       "source": {
@@ -2859,7 +2859,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-red-rootbeer-can",
-      "file": "images/trashnet-can-246.jpg",
+      "file": "images/trashnet-can-246.webp",
       "source_name": "metal246.jpg",
       "sha256": "ec5b921975637bd4db2d74e57e497ebdd96264e338dc777d1829a6520bbea24c",
       "source": {
@@ -2876,7 +2876,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-sysco-carton",
-      "file": "images/trashnet-box-220.jpg",
+      "file": "images/trashnet-box-220.webp",
       "source_name": "cardboard220.jpg",
       "sha256": "f7f3094a1df464b9ebad857980abc2556b755436a2da36380688e88b6e693689",
       "source": {
@@ -2893,7 +2893,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-smartwater-bottle",
-      "file": "images/trashnet-bottle-440.jpg",
+      "file": "images/trashnet-bottle-440.webp",
       "source_name": "plastic440.jpg",
       "sha256": "286de05a374690c68be861de898597c49905225c0962731c24cac142caaa9141",
       "source": {
@@ -2910,7 +2910,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-blue-monster-can",
-      "file": "images/trashnet-can-089.jpg",
+      "file": "images/trashnet-can-089.webp",
       "source_name": "metal89.jpg",
       "sha256": "dc96c5c0a8450776cc050f6a2833c9a63347aa9d0d87e9fb725f0b01cbeb530a",
       "source": {
@@ -2927,7 +2927,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-printed-food-carton",
-      "file": "images/trashnet-box-004.jpg",
+      "file": "images/trashnet-box-004.webp",
       "source_name": "cardboard4.jpg",
       "sha256": "c383c12c7625ba8f8c90b16b346f8d250315b76554b7c6932e9db48cf162485a",
       "source": {
@@ -2944,7 +2944,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-rectangular-clear-bottle",
-      "file": "images/trashnet-bottle-094.jpg",
+      "file": "images/trashnet-bottle-094.webp",
       "source_name": "plastic94.jpg",
       "sha256": "79d94d7d79b70d35391826f17d4f46f49e47bd576edf06e05d14cd847f32c58a",
       "source": {
@@ -2961,7 +2961,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-blue-monster-can",
-      "file": "images/trashnet-can-349.jpg",
+      "file": "images/trashnet-can-349.webp",
       "source_name": "metal349.jpg",
       "sha256": "26a14c609e2c6987fa33338986e0396b3fcc018938742916d732ef52848862d8",
       "source": {
@@ -2978,7 +2978,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-printed-food-carton",
-      "file": "images/trashnet-box-117.jpg",
+      "file": "images/trashnet-box-117.webp",
       "source_name": "cardboard117.jpg",
       "sha256": "17b467e667f6ec479e92721a9f9022c2d7f127bae2afd95cf25c0ac5c8d49935",
       "source": {
@@ -2995,7 +2995,7 @@
       "class_name": "塑料瓶",
       "split": "train",
       "group": "trashnet-bottle-rectangular-clear-bottle",
-      "file": "images/trashnet-bottle-145.jpg",
+      "file": "images/trashnet-bottle-145.webp",
       "source_name": "plastic145.jpg",
       "sha256": "1782030f5438851c5b95628ba661fc0815070591ef12835903cccb2c2550106a",
       "source": {
@@ -3012,7 +3012,7 @@
       "class_name": "易拉罐",
       "split": "train",
       "group": "trashnet-can-plain-silver-can",
-      "file": "images/trashnet-can-125.jpg",
+      "file": "images/trashnet-can-125.webp",
       "source_name": "metal125.jpg",
       "sha256": "6c128e56de735b5e60ec045adac71ec25bb1b5e8b4b04f310e777cac41206120",
       "source": {
@@ -3029,7 +3029,7 @@
       "class_name": "纸盒",
       "split": "train",
       "group": "trashnet-box-printed-food-carton",
-      "file": "images/trashnet-box-125.jpg",
+      "file": "images/trashnet-box-125.webp",
       "source_name": "cardboard125.jpg",
       "sha256": "5ec499f5f409e2ef67239f34b4cb719cbd4b693d7a4d41c95a17fdd4198087cb",
       "source": {
@@ -3046,7 +3046,7 @@
       "class_name": "塑料瓶",
       "split": "validation",
       "group": "bottle-02",
-      "file": "images/bottle-02.jpg",
+      "file": "images/bottle-02.webp",
       "source_name": "瓶02_正常.jpg",
       "sha256": "569ebca337d1c115802d477fbe30ae0f4ef7f495b755f2217e9f89a70944878b",
       "source": {
@@ -3060,7 +3060,7 @@
       "class_name": "易拉罐",
       "split": "validation",
       "group": "can-03",
-      "file": "images/can-03.jpg",
+      "file": "images/can-03.webp",
       "source_name": "罐03_正常.jpg",
       "sha256": "b5b40a41ca877e2fd90eb161ec72f5a323d7f632597eccfd47d2024acff121bd",
       "source": {
@@ -3074,7 +3074,7 @@
       "class_name": "纸盒",
       "split": "validation",
       "group": "box-03",
-      "file": "images/box-03.jpg",
+      "file": "images/box-03.webp",
       "source_name": "盒03_正常.jpg",
       "sha256": "a7e4c101b22864c778ac12e5fda761511e097211fe89dc61570ce75fd91e889f",
       "source": {
@@ -3088,7 +3088,7 @@
       "class_name": "塑料瓶",
       "split": "validation",
       "group": "bottle-08",
-      "file": "images/bottle-08.jpg",
+      "file": "images/bottle-08.webp",
       "source_name": "瓶08_压扁.jpg",
       "sha256": "82a7c31e357fe02781c2ee74ad190a617fd778483b055a9b4cd36225f1e568c7",
       "source": {
@@ -3102,7 +3102,7 @@
       "class_name": "易拉罐",
       "split": "validation",
       "group": "can-06",
-      "file": "images/can-06.jpg",
+      "file": "images/can-06.webp",
       "source_name": "罐06_压扁.jpg",
       "sha256": "649a95f0ec40a3993499b4f8b8a0e71d6a3c27f1bd77d06ce4afd4f3692b8a5f",
       "source": {
@@ -3116,7 +3116,7 @@
       "class_name": "纸盒",
       "split": "validation",
       "group": "box-08",
-      "file": "images/box-08.jpg",
+      "file": "images/box-08.webp",
       "source_name": "盒08_压扁.jpg",
       "sha256": "a4793f1a73cb3875fde955a8ac65f0409a503823289608b55d8376f90e0af651",
       "source": {
@@ -3130,7 +3130,7 @@
       "class_name": "塑料瓶",
       "split": "validation",
       "group": "trashnet-bottle-red-label-water",
-      "file": "images/trashnet-bottle-024.jpg",
+      "file": "images/trashnet-bottle-024.webp",
       "source_name": "plastic24.jpg",
       "sha256": "0bf1327c0f1a2d08994b88c56e332f4f36c3b8dac07c59c8965e85c7e9741a30",
       "source": {
@@ -3147,7 +3147,7 @@
       "class_name": "易拉罐",
       "split": "validation",
       "group": "trashnet-can-rockstar-can",
-      "file": "images/trashnet-can-007.jpg",
+      "file": "images/trashnet-can-007.webp",
       "source_name": "metal7.jpg",
       "sha256": "9b90ca957763cc688295ce4d2ac488b588f1c16384ebe4bf62c12373b0203968",
       "source": {
@@ -3164,7 +3164,7 @@
       "class_name": "纸盒",
       "split": "validation",
       "group": "trashnet-box-dark-shoebox",
-      "file": "images/trashnet-box-041.jpg",
+      "file": "images/trashnet-box-041.webp",
       "source_name": "cardboard41.jpg",
       "sha256": "0aaf69cb9229ac6d01d5e9d12c2e64018beb1fa0906c98b07004b4ebbaf748c3",
       "source": {
@@ -3181,7 +3181,7 @@
       "class_name": "塑料瓶",
       "split": "validation",
       "group": "trashnet-bottle-red-label-water",
-      "file": "images/trashnet-bottle-044.jpg",
+      "file": "images/trashnet-bottle-044.webp",
       "source_name": "plastic44.jpg",
       "sha256": "1a04ee128c41326e7c3a9dc1e10503a50bcfc852f7e40cf91a7079c0aac1c8d3",
       "source": {
@@ -3198,7 +3198,7 @@
       "class_name": "易拉罐",
       "split": "validation",
       "group": "trashnet-can-rockstar-can",
-      "file": "images/trashnet-can-021.jpg",
+      "file": "images/trashnet-can-021.webp",
       "source_name": "metal21.jpg",
       "sha256": "f2dd2e04bea9964dd5a699723858eb9705b52889b5614bdc09260effec563ed9",
       "source": {
@@ -3215,7 +3215,7 @@
       "class_name": "纸盒",
       "split": "validation",
       "group": "trashnet-box-dark-shoebox",
-      "file": "images/trashnet-box-072.jpg",
+      "file": "images/trashnet-box-072.webp",
       "source_name": "cardboard72.jpg",
       "sha256": "bf07ebb21c8182ae7954a72a317b9fcff4cdc852bac1716f0f99c0367a60a337",
       "source": {
@@ -3232,7 +3232,7 @@
       "class_name": "塑料瓶",
       "split": "validation",
       "group": "trashnet-bottle-red-label-water",
-      "file": "images/trashnet-bottle-080.jpg",
+      "file": "images/trashnet-bottle-080.webp",
       "source_name": "plastic80.jpg",
       "sha256": "350124b58b826b16e7e73331b4c16846229343a1099c61b3868bfd8bd9ca8075",
       "source": {
@@ -3249,7 +3249,7 @@
       "class_name": "易拉罐",
       "split": "validation",
       "group": "trashnet-can-rockstar-can",
-      "file": "images/trashnet-can-128.jpg",
+      "file": "images/trashnet-can-128.webp",
       "source_name": "metal128.jpg",
       "sha256": "a268392fcb1c09478a6197f68de2a48de7156463ec032f172eefcaf33a48f66d",
       "source": {
@@ -3266,7 +3266,7 @@
       "class_name": "纸盒",
       "split": "validation",
       "group": "trashnet-box-dark-shoebox",
-      "file": "images/trashnet-box-081.jpg",
+      "file": "images/trashnet-box-081.webp",
       "source_name": "cardboard81.jpg",
       "sha256": "4c77715d60b246e29ec1d99d42c8fc18cdd377cf2826136125eb4aa82eab32cb",
       "source": {
@@ -3283,7 +3283,7 @@
       "class_name": "塑料瓶",
       "split": "validation",
       "group": "trashnet-bottle-red-label-water",
-      "file": "images/trashnet-bottle-135.jpg",
+      "file": "images/trashnet-bottle-135.webp",
       "source_name": "plastic135.jpg",
       "sha256": "39fa46dfa5ddaace2af4e36919d320f5abad7718b7d00d227dd0decca92c92a3",
       "source": {
@@ -3300,7 +3300,7 @@
       "class_name": "易拉罐",
       "split": "validation",
       "group": "trashnet-can-rockstar-can",
-      "file": "images/trashnet-can-264.jpg",
+      "file": "images/trashnet-can-264.webp",
       "source_name": "metal264.jpg",
       "sha256": "a7f6e7ee0b6dfda49116da17608ae5d3f05a936111eef0266b6e51c702ec8132",
       "source": {
@@ -3317,7 +3317,7 @@
       "class_name": "纸盒",
       "split": "validation",
       "group": "trashnet-box-dark-shoebox",
-      "file": "images/trashnet-box-112.jpg",
+      "file": "images/trashnet-box-112.webp",
       "source_name": "cardboard112.jpg",
       "sha256": "6e6f1d82b3b218ef2c6376bf266efa908814c54fd0b2a44c5c600ffff5596079",
       "source": {
@@ -3334,7 +3334,7 @@
       "class_name": "塑料瓶",
       "split": "validation",
       "group": "trashnet-bottle-red-label-water",
-      "file": "images/trashnet-bottle-136.jpg",
+      "file": "images/trashnet-bottle-136.webp",
       "source_name": "plastic136.jpg",
       "sha256": "2b8b7b53c225e04948f7c1c875ebc4be4382268dd5ec4b0184bcaddae505273e",
       "source": {
@@ -3351,7 +3351,7 @@
       "class_name": "易拉罐",
       "split": "validation",
       "group": "trashnet-can-rockstar-can",
-      "file": "images/trashnet-can-273.jpg",
+      "file": "images/trashnet-can-273.webp",
       "source_name": "metal273.jpg",
       "sha256": "7642c2315d9009be45a58f9fbbd78a2e786f9b00d74f09213bbee05bdc2e5fd4",
       "source": {
@@ -3368,7 +3368,7 @@
       "class_name": "纸盒",
       "split": "validation",
       "group": "trashnet-box-dark-shoebox",
-      "file": "images/trashnet-box-333.jpg",
+      "file": "images/trashnet-box-333.webp",
       "source_name": "cardboard333.jpg",
       "sha256": "80d7fbff6aef0cc81e65044a3dbcec2adeadca5c29f7500092b0b40f986483bc",
       "source": {
@@ -3385,7 +3385,7 @@
       "class_name": "塑料瓶",
       "split": "validation",
       "group": "trashnet-bottle-red-label-water",
-      "file": "images/trashnet-bottle-217.jpg",
+      "file": "images/trashnet-bottle-217.webp",
       "source_name": "plastic217.jpg",
       "sha256": "498e64723afe4e5e440dddb990f636a44f2b166b699fd882e502cece63e20c85",
       "source": {
@@ -3402,7 +3402,7 @@
       "class_name": "易拉罐",
       "split": "validation",
       "group": "trashnet-can-rockstar-can",
-      "file": "images/trashnet-can-278.jpg",
+      "file": "images/trashnet-can-278.webp",
       "source_name": "metal278.jpg",
       "sha256": "f9b3f19a68e5b0debddd4bd8e834b1bcbd03496b163a3f8f417472296ac90c6c",
       "source": {
@@ -3419,7 +3419,7 @@
       "class_name": "纸盒",
       "split": "validation",
       "group": "trashnet-box-dark-shoebox",
-      "file": "images/trashnet-box-350.jpg",
+      "file": "images/trashnet-box-350.webp",
       "source_name": "cardboard350.jpg",
       "sha256": "c4154176338a6af396600a1fe62ce65b31452ee01ba4f35f907f744f25d61e0b",
       "source": {
@@ -3436,7 +3436,7 @@
       "class_name": "塑料瓶",
       "split": "validation",
       "group": "trashnet-bottle-red-label-water",
-      "file": "images/trashnet-bottle-227.jpg",
+      "file": "images/trashnet-bottle-227.webp",
       "source_name": "plastic227.jpg",
       "sha256": "aab36d5a8153cdf5533467fffdb0fa843ed0db87f46bbd19f0f634eb2fde11fc",
       "source": {
@@ -3453,7 +3453,7 @@
       "class_name": "易拉罐",
       "split": "validation",
       "group": "trashnet-can-rockstar-can",
-      "file": "images/trashnet-can-283.jpg",
+      "file": "images/trashnet-can-283.webp",
       "source_name": "metal283.jpg",
       "sha256": "297060838f7d1c26eaff5197a66b55084a4de90475477198fe36dfccba5e4d5f",
       "source": {
@@ -3470,7 +3470,7 @@
       "class_name": "纸盒",
       "split": "validation",
       "group": "trashnet-box-dark-shoebox",
-      "file": "images/trashnet-box-361.jpg",
+      "file": "images/trashnet-box-361.webp",
       "source_name": "cardboard361.jpg",
       "sha256": "6a62bee00c5bbe0670670e965aa1295eb6919c8808a08ca19202e331895b2df2",
       "source": {
@@ -3487,7 +3487,7 @@
       "class_name": "塑料瓶",
       "split": "validation",
       "group": "trashnet-bottle-red-label-water",
-      "file": "images/trashnet-bottle-319.jpg",
+      "file": "images/trashnet-bottle-319.webp",
       "source_name": "plastic319.jpg",
       "sha256": "bf75d7442a831a48b49342223e304c1507ee3108262b23ad8acff182ca040d28",
       "source": {
@@ -3504,7 +3504,7 @@
       "class_name": "易拉罐",
       "split": "validation",
       "group": "trashnet-can-rockstar-can",
-      "file": "images/trashnet-can-396.jpg",
+      "file": "images/trashnet-can-396.webp",
       "source_name": "metal396.jpg",
       "sha256": "c2fb5a8f94b270549083ef270e1b9f3b6570937db840b6ac4c31a633a8eb2d96",
       "source": {
@@ -3521,7 +3521,7 @@
       "class_name": "纸盒",
       "split": "validation",
       "group": "trashnet-box-dark-shoebox",
-      "file": "images/trashnet-box-386.jpg",
+      "file": "images/trashnet-box-386.webp",
       "source_name": "cardboard386.jpg",
       "sha256": "0a96edefa1adab48bcad66f206d7785629a5c08c1d16e957e4cb33971ac3b236",
       "source": {
@@ -3538,7 +3538,7 @@
       "class_name": "塑料瓶",
       "split": "validation",
       "group": "trashnet-bottle-red-label-water",
-      "file": "images/trashnet-bottle-325.jpg",
+      "file": "images/trashnet-bottle-325.webp",
       "source_name": "plastic325.jpg",
       "sha256": "74a0b1c162d1f631f57a2470976f21de0b5ca218a709a40baa9f6f49c18308a5",
       "source": {
@@ -3555,7 +3555,7 @@
       "class_name": "易拉罐",
       "split": "validation",
       "group": "trashnet-can-white-monster-can",
-      "file": "images/trashnet-can-034.jpg",
+      "file": "images/trashnet-can-034.webp",
       "source_name": "metal34.jpg",
       "sha256": "05293a24ebfa31caa438ba522996f715de17ba84a8618e0a3db7d17cbcc14eaa",
       "source": {
@@ -3572,7 +3572,7 @@
       "class_name": "纸盒",
       "split": "validation",
       "group": "trashnet-box-long-white-carton",
-      "file": "images/trashnet-box-099.jpg",
+      "file": "images/trashnet-box-099.webp",
       "source_name": "cardboard99.jpg",
       "sha256": "244fd7b2518017bf260f2e3a251e8adba9b1150dd0e1c0b479b16f889227da87",
       "source": {
@@ -3589,7 +3589,7 @@
       "class_name": "塑料瓶",
       "split": "validation",
       "group": "trashnet-bottle-red-label-water",
-      "file": "images/trashnet-bottle-351.jpg",
+      "file": "images/trashnet-bottle-351.webp",
       "source_name": "plastic351.jpg",
       "sha256": "fef4ba5b6207bb0c31a53b9906e7fea2f4906a59c9bce90953f0d8ea1555a77b",
       "source": {
@@ -3606,7 +3606,7 @@
       "class_name": "易拉罐",
       "split": "validation",
       "group": "trashnet-can-white-monster-can",
-      "file": "images/trashnet-can-043.jpg",
+      "file": "images/trashnet-can-043.webp",
       "source_name": "metal43.jpg",
       "sha256": "b814327dc68678291d5a7575972476cd34c22ee1dd692b8928d007433ca41a26",
       "source": {
@@ -3623,7 +3623,7 @@
       "class_name": "纸盒",
       "split": "validation",
       "group": "trashnet-box-long-white-carton",
-      "file": "images/trashnet-box-353.jpg",
+      "file": "images/trashnet-box-353.webp",
       "source_name": "cardboard353.jpg",
       "sha256": "9bb88f6c16fd5944403a0e9da568e1908301422d5908b2b4af99cf50db12c504",
       "source": {
@@ -3640,7 +3640,7 @@
       "class_name": "塑料瓶",
       "split": "validation",
       "group": "trashnet-bottle-red-label-water",
-      "file": "images/trashnet-bottle-409.jpg",
+      "file": "images/trashnet-bottle-409.webp",
       "source_name": "plastic409.jpg",
       "sha256": "9905ac528c1d56a26daad93005656a8cf6a3da6194e690b92cf4c926930b584b",
       "source": {
@@ -3657,7 +3657,7 @@
       "class_name": "易拉罐",
       "split": "validation",
       "group": "trashnet-can-white-monster-can",
-      "file": "images/trashnet-can-067.jpg",
+      "file": "images/trashnet-can-067.webp",
       "source_name": "metal67.jpg",
       "sha256": "37dcdb6d7935644f3ddab0087fd7844392d4cab26670f36cbfc029204550c5a2",
       "source": {
@@ -3674,7 +3674,7 @@
       "class_name": "纸盒",
       "split": "validation",
       "group": "trashnet-box-long-white-carton",
-      "file": "images/trashnet-box-387.jpg",
+      "file": "images/trashnet-box-387.webp",
       "source_name": "cardboard387.jpg",
       "sha256": "7fc8374271509d01e96b9bf0408b5c96f767be1b74fa64861dd0b993fdac60d0",
       "source": {
@@ -3691,7 +3691,7 @@
       "class_name": "塑料瓶",
       "split": "validation",
       "group": "trashnet-bottle-red-label-water",
-      "file": "images/trashnet-bottle-414.jpg",
+      "file": "images/trashnet-bottle-414.webp",
       "source_name": "plastic414.jpg",
       "sha256": "4647225f2142d3d40c46ab71c47b062b2db1037d8a2c6041a4a4bc1f9ed29e97",
       "source": {
@@ -3708,7 +3708,7 @@
       "class_name": "易拉罐",
       "split": "validation",
       "group": "trashnet-can-white-monster-can",
-      "file": "images/trashnet-can-075.jpg",
+      "file": "images/trashnet-can-075.webp",
       "source_name": "metal75.jpg",
       "sha256": "54f513bb65bddd2af0ac28a29960d41b26c72064190f9462704ebc0b4397616f",
       "source": {
@@ -3725,7 +3725,7 @@
       "class_name": "纸盒",
       "split": "validation",
       "group": "trashnet-box-long-white-carton",
-      "file": "images/trashnet-box-392.jpg",
+      "file": "images/trashnet-box-392.webp",
       "source_name": "cardboard392.jpg",
       "sha256": "5544ba127a8f5938080130cc3dec06b9bab5e881f8465fc1c2eee8b7ed14c749",
       "source": {
@@ -3742,7 +3742,7 @@
       "class_name": "塑料瓶",
       "split": "validation",
       "group": "trashnet-bottle-aquafina-crushed-water",
-      "file": "images/trashnet-bottle-047.jpg",
+      "file": "images/trashnet-bottle-047.webp",
       "source_name": "plastic47.jpg",
       "sha256": "8cfc88156e367be7e00baebc32cc97607794f2fb94892aff8beb28878c4d93c1",
       "source": {
@@ -3759,7 +3759,7 @@
       "class_name": "易拉罐",
       "split": "validation",
       "group": "trashnet-can-white-monster-can",
-      "file": "images/trashnet-can-078.jpg",
+      "file": "images/trashnet-can-078.webp",
       "source_name": "metal78.jpg",
       "sha256": "2e867917ddf0222c4a22a26729372113496b6eeea690d819fd08ea5d0e34c8f8",
       "source": {
@@ -3776,7 +3776,7 @@
       "class_name": "纸盒",
       "split": "validation",
       "group": "trashnet-box-brown-produce-tray",
-      "file": "images/trashnet-box-061.jpg",
+      "file": "images/trashnet-box-061.webp",
       "source_name": "cardboard61.jpg",
       "sha256": "f5ddc7f1e11d9192efb6618268afe867fab4546550e4a7ff2139b1698dbb2cfc",
       "source": {
@@ -3793,7 +3793,7 @@
       "class_name": "塑料瓶",
       "split": "validation",
       "group": "trashnet-bottle-aquafina-crushed-water",
-      "file": "images/trashnet-bottle-374.jpg",
+      "file": "images/trashnet-bottle-374.webp",
       "source_name": "plastic374.jpg",
       "sha256": "f0a5bc491963e626629fc5b428636a27c96610c0cfd4fc748c6f5932436aa22f",
       "source": {
@@ -3810,7 +3810,7 @@
       "class_name": "易拉罐",
       "split": "validation",
       "group": "trashnet-can-white-monster-can",
-      "file": "images/trashnet-can-101.jpg",
+      "file": "images/trashnet-can-101.webp",
       "source_name": "metal101.jpg",
       "sha256": "d987ae5147a0e9274c7599521f0797990c94820e28f27e6f8cba1cde590fd147",
       "source": {
@@ -3827,7 +3827,7 @@
       "class_name": "纸盒",
       "split": "validation",
       "group": "trashnet-box-brown-produce-tray",
-      "file": "images/trashnet-box-089.jpg",
+      "file": "images/trashnet-box-089.webp",
       "source_name": "cardboard89.jpg",
       "sha256": "25ed31f2cb519f4af3f49d1888c8ba42b97e68fa28d10d038b3e6131d0cb5d7f",
       "source": {
@@ -3844,7 +3844,7 @@
       "class_name": "塑料瓶",
       "split": "validation",
       "group": "trashnet-bottle-aquafina-crushed-water",
-      "file": "images/trashnet-bottle-380.jpg",
+      "file": "images/trashnet-bottle-380.webp",
       "source_name": "plastic380.jpg",
       "sha256": "f96ebe860f17249cdb53bcc1c236f681a7536b484c7a11c6bfdce9788e0076a7",
       "source": {
@@ -3861,7 +3861,7 @@
       "class_name": "易拉罐",
       "split": "validation",
       "group": "trashnet-can-white-monster-can",
-      "file": "images/trashnet-can-123.jpg",
+      "file": "images/trashnet-can-123.webp",
       "source_name": "metal123.jpg",
       "sha256": "c0027d2191b29a1fedfe86c5547a16fd38a172e55dbe54a89dc3440416fc3f40",
       "source": {
@@ -3878,7 +3878,7 @@
       "class_name": "纸盒",
       "split": "validation",
       "group": "trashnet-box-brown-produce-tray",
-      "file": "images/trashnet-box-226.jpg",
+      "file": "images/trashnet-box-226.webp",
       "source_name": "cardboard226.jpg",
       "sha256": "ce76dce4cb943e15ab516ae2b71f241ad19426b8dd6f26c30dd67ccf5d233f73",
       "source": {
@@ -3895,7 +3895,7 @@
       "class_name": "塑料瓶",
       "split": "validation",
       "group": "trashnet-bottle-aquafina-crushed-water",
-      "file": "images/trashnet-bottle-397.jpg",
+      "file": "images/trashnet-bottle-397.webp",
       "source_name": "plastic397.jpg",
       "sha256": "9e666abeff19f37ba945ce8c6cd5496a2043747257d8d0d2cc245205f57aae0d",
       "source": {
@@ -3912,7 +3912,7 @@
       "class_name": "易拉罐",
       "split": "validation",
       "group": "trashnet-can-white-monster-can",
-      "file": "images/trashnet-can-132.jpg",
+      "file": "images/trashnet-can-132.webp",
       "source_name": "metal132.jpg",
       "sha256": "3811593a63b4190976121c5d43287d3b70342ed35acc52b4a47aa45999f44740",
       "source": {
@@ -3929,7 +3929,7 @@
       "class_name": "纸盒",
       "split": "validation",
       "group": "trashnet-box-brown-produce-tray",
-      "file": "images/trashnet-box-283.jpg",
+      "file": "images/trashnet-box-283.webp",
       "source_name": "cardboard283.jpg",
       "sha256": "e9efede53192ffd5126cb11ce465ffcc102a3fb65120c3e0663b2f2ce18cb74e",
       "source": {
@@ -3946,7 +3946,7 @@
       "class_name": "塑料瓶",
       "split": "validation",
       "group": "trashnet-bottle-aquafina-crushed-water",
-      "file": "images/trashnet-bottle-401.jpg",
+      "file": "images/trashnet-bottle-401.webp",
       "source_name": "plastic401.jpg",
       "sha256": "41691dd04158ed6b0a2cffe6470a4e4c28bc1a172d6b0abc57233f7564872443",
       "source": {
@@ -3963,7 +3963,7 @@
       "class_name": "易拉罐",
       "split": "validation",
       "group": "trashnet-can-white-monster-can",
-      "file": "images/trashnet-can-261.jpg",
+      "file": "images/trashnet-can-261.webp",
       "source_name": "metal261.jpg",
       "sha256": "770b06b68120e8ec7c5906381f0f70d6fed1b1d7ac457f60e94466b12aaa5823",
       "source": {
@@ -3980,7 +3980,7 @@
       "class_name": "纸盒",
       "split": "validation",
       "group": "trashnet-box-brown-produce-tray",
-      "file": "images/trashnet-box-334.jpg",
+      "file": "images/trashnet-box-334.webp",
       "source_name": "cardboard334.jpg",
       "sha256": "e20217c46a83b281bcda09e3d2679e22292d3e3c25bc934969f8d9582f94a21a",
       "source": {
@@ -3997,7 +3997,7 @@
       "class_name": "塑料瓶",
       "split": "validation",
       "group": "trashnet-bottle-aquafina-crushed-water",
-      "file": "images/trashnet-bottle-433.jpg",
+      "file": "images/trashnet-bottle-433.webp",
       "source_name": "plastic433.jpg",
       "sha256": "c4585c2d3a7b2bb30f028d7c6f3dee30565b9d3b2c44e1ab9c0fce4d0db5f928",
       "source": {
@@ -4014,7 +4014,7 @@
       "class_name": "易拉罐",
       "split": "validation",
       "group": "trashnet-can-white-monster-can",
-      "file": "images/trashnet-can-333.jpg",
+      "file": "images/trashnet-can-333.webp",
       "source_name": "metal333.jpg",
       "sha256": "beefdccb03a7a0132bd21d50004b775a402a3cad27972d169dfb4c7322b5f38e",
       "source": {
@@ -4031,7 +4031,7 @@
       "class_name": "纸盒",
       "split": "validation",
       "group": "trashnet-box-brown-produce-tray",
-      "file": "images/trashnet-box-298.jpg",
+      "file": "images/trashnet-box-298.webp",
       "source_name": "cardboard298.jpg",
       "sha256": "c858b0ac1ea6378015f8c05c62394d5ec16c0890dd2ddd4403259b1d764560c8",
       "source": {
@@ -4048,7 +4048,7 @@
       "class_name": "塑料瓶",
       "split": "test",
       "group": "bottle-04",
-      "file": "images/bottle-04.jpg",
+      "file": "images/bottle-04.webp",
       "source_name": "瓶04_正常.jpg",
       "sha256": "99cf581e83c7e3368632a662a7edf224112acb2262aa47c288c48ee80aff3611",
       "source": {
@@ -4062,7 +4062,7 @@
       "class_name": "易拉罐",
       "split": "test",
       "group": "can-04",
-      "file": "images/can-04.jpg",
+      "file": "images/can-04.webp",
       "source_name": "罐04_正常.jpg",
       "sha256": "7070787fd3efd46288676e0e6cd23e7a13990ada574eeed02906c6d35a551979",
       "source": {
@@ -4076,7 +4076,7 @@
       "class_name": "纸盒",
       "split": "test",
       "group": "box-05",
-      "file": "images/box-05.jpg",
+      "file": "images/box-05.webp",
       "source_name": "盒05_正常.jpg",
       "sha256": "f1c7f421299dfd8f75814f1679cc90a3a6e3b8124a0b61767a2841d9b4e627af",
       "source": {
@@ -4090,7 +4090,7 @@
       "class_name": "塑料瓶",
       "split": "test",
       "group": "trashnet-bottle-nalgene-reusable-bottle",
-      "file": "images/trashnet-bottle-001.jpg",
+      "file": "images/trashnet-bottle-001.webp",
       "source_name": "plastic1.jpg",
       "sha256": "5a81a13c442580a6839e0d350f98d6a6712f6dff47afbc5b436945327ca9ad37",
       "source": {
@@ -4107,7 +4107,7 @@
       "class_name": "易拉罐",
       "split": "test",
       "group": "trashnet-can-coca-cola-can",
-      "file": "images/trashnet-can-185.jpg",
+      "file": "images/trashnet-can-185.webp",
       "source_name": "metal185.jpg",
       "sha256": "bdc699a908783ac33bc196c3583282057e192549a0727951f81636c6e79b534e",
       "source": {
@@ -4124,7 +4124,7 @@
       "class_name": "纸盒",
       "split": "test",
       "group": "trashnet-box-orange-label-carton",
-      "file": "images/trashnet-box-130.jpg",
+      "file": "images/trashnet-box-130.webp",
       "source_name": "cardboard130.jpg",
       "sha256": "c03d6ce3de22e4139e2429950d3c993f6924acbe505801e38ba88e34a6b769dd",
       "source": {
@@ -4141,7 +4141,7 @@
       "class_name": "塑料瓶",
       "split": "test",
       "group": "trashnet-bottle-nalgene-reusable-bottle",
-      "file": "images/trashnet-bottle-006.jpg",
+      "file": "images/trashnet-bottle-006.webp",
       "source_name": "plastic6.jpg",
       "sha256": "7e619fbd55c4a04a748d52ab82f2464967e0cc2b424f4e36d5f54c6e9bcd5be7",
       "source": {
@@ -4158,7 +4158,7 @@
       "class_name": "易拉罐",
       "split": "test",
       "group": "trashnet-can-coca-cola-can",
-      "file": "images/trashnet-can-203.jpg",
+      "file": "images/trashnet-can-203.webp",
       "source_name": "metal203.jpg",
       "sha256": "3e24987057034d4bdb1e5f4efd6530f833f37bce839f38bed2c0f2dbdc22ae00",
       "source": {
@@ -4175,7 +4175,7 @@
       "class_name": "纸盒",
       "split": "test",
       "group": "trashnet-box-orange-label-carton",
-      "file": "images/trashnet-box-131.jpg",
+      "file": "images/trashnet-box-131.webp",
       "source_name": "cardboard131.jpg",
       "sha256": "24c750b1dc48feec1847b04bd82abab80b66082365cebc9f61960f189f349605",
       "source": {
@@ -4192,7 +4192,7 @@
       "class_name": "塑料瓶",
       "split": "test",
       "group": "trashnet-bottle-naked-juice-bottle",
-      "file": "images/trashnet-bottle-036.jpg",
+      "file": "images/trashnet-bottle-036.webp",
       "source_name": "plastic36.jpg",
       "sha256": "45b4e36df6c6750a9d602c296afec5c54d044d0b045352030e2c72a2198890ca",
       "source": {
@@ -4209,7 +4209,7 @@
       "class_name": "易拉罐",
       "split": "test",
       "group": "trashnet-can-coca-cola-can",
-      "file": "images/trashnet-can-205.jpg",
+      "file": "images/trashnet-can-205.webp",
       "source_name": "metal205.jpg",
       "sha256": "fd8f76d8e26f61856dcdb9a5cdc0725951f5d360ccd80541a3c55bfffd3a9998",
       "source": {
@@ -4226,7 +4226,7 @@
       "class_name": "纸盒",
       "split": "test",
       "group": "trashnet-box-orange-label-carton",
-      "file": "images/trashnet-box-132.jpg",
+      "file": "images/trashnet-box-132.webp",
       "source_name": "cardboard132.jpg",
       "sha256": "06fdb00605265afacb58e4a5d28ee093f209acb79b9703354cbcbc4a17059e91",
       "source": {
@@ -4243,7 +4243,7 @@
       "class_name": "塑料瓶",
       "split": "test",
       "group": "trashnet-bottle-naked-juice-bottle",
-      "file": "images/trashnet-bottle-064.jpg",
+      "file": "images/trashnet-bottle-064.webp",
       "source_name": "plastic64.jpg",
       "sha256": "daaba9da8e9b2d76aae5c21030392f8069bd053c9993b2b227f6df5ded49e03a",
       "source": {
@@ -4260,7 +4260,7 @@
       "class_name": "易拉罐",
       "split": "test",
       "group": "trashnet-can-coca-cola-can",
-      "file": "images/trashnet-can-207.jpg",
+      "file": "images/trashnet-can-207.webp",
       "source_name": "metal207.jpg",
       "sha256": "52f1e32a3a0a72775a78a18bbd15c2f973df594d4845471678405563b18657e5",
       "source": {
@@ -4277,7 +4277,7 @@
       "class_name": "纸盒",
       "split": "test",
       "group": "trashnet-box-orange-label-carton",
-      "file": "images/trashnet-box-133.jpg",
+      "file": "images/trashnet-box-133.webp",
       "source_name": "cardboard133.jpg",
       "sha256": "2eb0bb8ef2c6da8e6d82698f32a6c3efcd6fc4a1509e31d37f5d60445ecc45d7",
       "source": {
@@ -4294,7 +4294,7 @@
       "class_name": "塑料瓶",
       "split": "test",
       "group": "trashnet-bottle-naked-juice-bottle",
-      "file": "images/trashnet-bottle-074.jpg",
+      "file": "images/trashnet-bottle-074.webp",
       "source_name": "plastic74.jpg",
       "sha256": "39f4528b48c35e138c9dc35a57987bb7c63084c759498487440c0ae1a7868549",
       "source": {
@@ -4311,7 +4311,7 @@
       "class_name": "易拉罐",
       "split": "test",
       "group": "trashnet-can-coca-cola-can",
-      "file": "images/trashnet-can-210.jpg",
+      "file": "images/trashnet-can-210.webp",
       "source_name": "metal210.jpg",
       "sha256": "7fc46680580b2c3d7750b9ea1b0504b70db5ad4e6acb0e874eade1032356f513",
       "source": {
@@ -4328,7 +4328,7 @@
       "class_name": "纸盒",
       "split": "test",
       "group": "trashnet-box-orange-label-carton",
-      "file": "images/trashnet-box-134.jpg",
+      "file": "images/trashnet-box-134.webp",
       "source_name": "cardboard134.jpg",
       "sha256": "9720c0ba08fcdf017ceb7b92191f3f6ba6cd05c8cc27b79accc183dfcd8f686d",
       "source": {
@@ -4345,7 +4345,7 @@
       "class_name": "塑料瓶",
       "split": "test",
       "group": "trashnet-bottle-naked-juice-bottle",
-      "file": "images/trashnet-bottle-088.jpg",
+      "file": "images/trashnet-bottle-088.webp",
       "source_name": "plastic88.jpg",
       "sha256": "d330491aa03dbaa550fb4729c87c3a82082785918068e2de501c0ff2b30f1e25",
       "source": {
@@ -4362,7 +4362,7 @@
       "class_name": "易拉罐",
       "split": "test",
       "group": "trashnet-can-coca-cola-can",
-      "file": "images/trashnet-can-211.jpg",
+      "file": "images/trashnet-can-211.webp",
       "source_name": "metal211.jpg",
       "sha256": "249e102551f9b38e40bc026485a7be3a7623f3abbfcd0108ee8cea531d0532f4",
       "source": {
@@ -4379,7 +4379,7 @@
       "class_name": "纸盒",
       "split": "test",
       "group": "trashnet-box-orange-label-carton",
-      "file": "images/trashnet-box-135.jpg",
+      "file": "images/trashnet-box-135.webp",
       "source_name": "cardboard135.jpg",
       "sha256": "3e3a0532e27cab09824cc8de8dbc113e9597367ef0768c765bdad44f4e7869f1",
       "source": {
@@ -4396,7 +4396,7 @@
       "class_name": "塑料瓶",
       "split": "test",
       "group": "trashnet-bottle-naked-juice-bottle",
-      "file": "images/trashnet-bottle-345.jpg",
+      "file": "images/trashnet-bottle-345.webp",
       "source_name": "plastic345.jpg",
       "sha256": "0b529f3d5ce73e58b4168a271e5e29bb66ade9eb0ddd9616b55ed7e3068a9104",
       "source": {
@@ -4413,7 +4413,7 @@
       "class_name": "易拉罐",
       "split": "test",
       "group": "trashnet-can-fruit-and-rootbeer-can",
-      "file": "images/trashnet-can-014.jpg",
+      "file": "images/trashnet-can-014.webp",
       "source_name": "metal14.jpg",
       "sha256": "9fac16ae09af013cdd4273f8b81b811ccaffe3b1f064482e6001c366a757fe08",
       "source": {
@@ -4430,7 +4430,7 @@
       "class_name": "纸盒",
       "split": "test",
       "group": "trashnet-box-orange-label-carton",
-      "file": "images/trashnet-box-136.jpg",
+      "file": "images/trashnet-box-136.webp",
       "source_name": "cardboard136.jpg",
       "sha256": "8bc75c6725f0e9588ba990ed5e5f1bca9da5259eb8e31be0d11ba35afb18412e",
       "source": {
@@ -4447,7 +4447,7 @@
       "class_name": "塑料瓶",
       "split": "test",
       "group": "trashnet-bottle-naked-juice-bottle",
-      "file": "images/trashnet-bottle-371.jpg",
+      "file": "images/trashnet-bottle-371.webp",
       "source_name": "plastic371.jpg",
       "sha256": "655525f72b7162d1497b9b94662372c457757b55b64519d965402d8fc5008d40",
       "source": {
@@ -4464,7 +4464,7 @@
       "class_name": "易拉罐",
       "split": "test",
       "group": "trashnet-can-fruit-and-rootbeer-can",
-      "file": "images/trashnet-can-269.jpg",
+      "file": "images/trashnet-can-269.webp",
       "source_name": "metal269.jpg",
       "sha256": "e56df9be46fbbb5fadd739b24a058acc4f419ff7a567f2c164a89390be832f04",
       "source": {
@@ -4481,7 +4481,7 @@
       "class_name": "纸盒",
       "split": "test",
       "group": "trashnet-box-orange-label-carton",
-      "file": "images/trashnet-box-137.jpg",
+      "file": "images/trashnet-box-137.webp",
       "source_name": "cardboard137.jpg",
       "sha256": "4d89fcb735ea15edca28d80bd5a288c97a2f169eed7ee8d3dfde62d7b22890bc",
       "source": {
@@ -4498,7 +4498,7 @@
       "class_name": "塑料瓶",
       "split": "test",
       "group": "trashnet-bottle-naked-juice-bottle",
-      "file": "images/trashnet-bottle-432.jpg",
+      "file": "images/trashnet-bottle-432.webp",
       "source_name": "plastic432.jpg",
       "sha256": "ba6a9b30bd8d3701ac084706995bb3f68a3e56dffacfc0b4d667ef2690512624",
       "source": {
@@ -4515,7 +4515,7 @@
       "class_name": "易拉罐",
       "split": "test",
       "group": "trashnet-can-black-monster-can",
-      "file": "images/trashnet-can-030.jpg",
+      "file": "images/trashnet-can-030.webp",
       "source_name": "metal30.jpg",
       "sha256": "dcdb8db89ccf1c0b5b1c3fe5d206b7c83204d75e28bbe8eb554f51fa2092e2c8",
       "source": {
@@ -4532,7 +4532,7 @@
       "class_name": "纸盒",
       "split": "test",
       "group": "trashnet-box-white-printed-carton",
-      "file": "images/trashnet-box-180.jpg",
+      "file": "images/trashnet-box-180.webp",
       "source_name": "cardboard180.jpg",
       "sha256": "d0d33e05ddf5a1464af7d3ceed2d30dc161bdd7ac140402020091087c4e6f6d9",
       "source": {
@@ -4549,7 +4549,7 @@
       "class_name": "塑料瓶",
       "split": "test",
       "group": "trashnet-bottle-naked-juice-bottle",
-      "file": "images/trashnet-bottle-444.jpg",
+      "file": "images/trashnet-bottle-444.webp",
       "source_name": "plastic444.jpg",
       "sha256": "eb26ee5deabe9abda304cb63b1f25fbe02e80216df1101eba6745cd1a68b5898",
       "source": {
@@ -4566,7 +4566,7 @@
       "class_name": "易拉罐",
       "split": "test",
       "group": "trashnet-can-black-monster-can",
-      "file": "images/trashnet-can-129.jpg",
+      "file": "images/trashnet-can-129.webp",
       "source_name": "metal129.jpg",
       "sha256": "c1bed427b41f9243ddc979a5411f065649586e75a089b478f156f50ce7eb105b",
       "source": {
@@ -4583,7 +4583,7 @@
       "class_name": "纸盒",
       "split": "test",
       "group": "trashnet-box-white-printed-carton",
-      "file": "images/trashnet-box-181.jpg",
+      "file": "images/trashnet-box-181.webp",
       "source_name": "cardboard181.jpg",
       "sha256": "4dead5453ee522cd3bf8dcdb0d1808cddb659dfdd00ec9014b5055f0fec088f0",
       "source": {
@@ -4600,7 +4600,7 @@
       "class_name": "塑料瓶",
       "split": "test",
       "group": "trashnet-bottle-green-soda-bottle",
-      "file": "images/trashnet-bottle-236.jpg",
+      "file": "images/trashnet-bottle-236.webp",
       "source_name": "plastic236.jpg",
       "sha256": "4396b640336b9df28c71d007065045e2d56dd83bb6cd6bbaccb1f43f22df3cfc",
       "source": {
@@ -4617,7 +4617,7 @@
       "class_name": "易拉罐",
       "split": "test",
       "group": "trashnet-can-black-monster-can",
-      "file": "images/trashnet-can-137.jpg",
+      "file": "images/trashnet-can-137.webp",
       "source_name": "metal137.jpg",
       "sha256": "8068751cd8ae7208f9f7af575fa1406cf8aeb5af232882baf091dd99544c2b5b",
       "source": {
@@ -4634,7 +4634,7 @@
       "class_name": "纸盒",
       "split": "test",
       "group": "trashnet-box-white-printed-carton",
-      "file": "images/trashnet-box-182.jpg",
+      "file": "images/trashnet-box-182.webp",
       "source_name": "cardboard182.jpg",
       "sha256": "7e3f9b753d038ef4fb3cbc0fa67d2cf4bf16058e83fc3251e1c5a51ca6b08a86",
       "source": {
@@ -4651,7 +4651,7 @@
       "class_name": "塑料瓶",
       "split": "test",
       "group": "trashnet-bottle-green-soda-bottle",
-      "file": "images/trashnet-bottle-269.jpg",
+      "file": "images/trashnet-bottle-269.webp",
       "source_name": "plastic269.jpg",
       "sha256": "cdb990f12cecb4b31a21ff16f7fb7db098bf62825606de5769571b1b1d988ff9",
       "source": {
@@ -4668,7 +4668,7 @@
       "class_name": "易拉罐",
       "split": "test",
       "group": "trashnet-can-black-monster-can",
-      "file": "images/trashnet-can-146.jpg",
+      "file": "images/trashnet-can-146.webp",
       "source_name": "metal146.jpg",
       "sha256": "2f48e712ac253a576e000248b523c970264a95e572c23e9ccb57404c15a16857",
       "source": {
@@ -4685,7 +4685,7 @@
       "class_name": "纸盒",
       "split": "test",
       "group": "trashnet-box-white-printed-carton",
-      "file": "images/trashnet-box-183.jpg",
+      "file": "images/trashnet-box-183.webp",
       "source_name": "cardboard183.jpg",
       "sha256": "8746597e062e9897fd53526a66c5ac35c2aefca4ca2c5e6cf3f928b87362e55d",
       "source": {
@@ -4702,7 +4702,7 @@
       "class_name": "塑料瓶",
       "split": "test",
       "group": "trashnet-bottle-green-soda-bottle",
-      "file": "images/trashnet-bottle-287.jpg",
+      "file": "images/trashnet-bottle-287.webp",
       "source_name": "plastic287.jpg",
       "sha256": "894adaed8f5888ccec198d9084553d1b1218e0f05bed3a5e8aa6918f0faece36",
       "source": {
@@ -4719,7 +4719,7 @@
       "class_name": "易拉罐",
       "split": "test",
       "group": "trashnet-can-black-monster-can",
-      "file": "images/trashnet-can-236.jpg",
+      "file": "images/trashnet-can-236.webp",
       "source_name": "metal236.jpg",
       "sha256": "010951f3951c2ec38c5ee138f620c5ee83bf032e36944959ad028ae8f80e5b2a",
       "source": {
@@ -4736,7 +4736,7 @@
       "class_name": "纸盒",
       "split": "test",
       "group": "trashnet-box-white-printed-carton",
-      "file": "images/trashnet-box-184.jpg",
+      "file": "images/trashnet-box-184.webp",
       "source_name": "cardboard184.jpg",
       "sha256": "d46cb1df29467b1ab46333d2a838225aa1f40af0164c54ba97630df53c926ed9",
       "source": {
@@ -4753,7 +4753,7 @@
       "class_name": "塑料瓶",
       "split": "test",
       "group": "trashnet-bottle-green-soda-bottle",
-      "file": "images/trashnet-bottle-313.jpg",
+      "file": "images/trashnet-bottle-313.webp",
       "source_name": "plastic313.jpg",
       "sha256": "4a3ee8bb2e7a98d662172e9039daf4e4c7b231746aa619e7c150ad40dd24fe97",
       "source": {
@@ -4770,7 +4770,7 @@
       "class_name": "易拉罐",
       "split": "test",
       "group": "trashnet-can-black-monster-can",
-      "file": "images/trashnet-can-293.jpg",
+      "file": "images/trashnet-can-293.webp",
       "source_name": "metal293.jpg",
       "sha256": "9f8888050b7043d757bc860110edb1d1e20e0805ec25a0c3541caa02fd9a04c9",
       "source": {
@@ -4787,7 +4787,7 @@
       "class_name": "纸盒",
       "split": "test",
       "group": "trashnet-box-white-printed-carton",
-      "file": "images/trashnet-box-185.jpg",
+      "file": "images/trashnet-box-185.webp",
       "source_name": "cardboard185.jpg",
       "sha256": "65fefbd73dd0f968703ba0c7319e33d8b52cfad221bca536733ceed485675d14",
       "source": {
@@ -4804,7 +4804,7 @@
       "class_name": "塑料瓶",
       "split": "test",
       "group": "trashnet-bottle-green-soda-bottle",
-      "file": "images/trashnet-bottle-334.jpg",
+      "file": "images/trashnet-bottle-334.webp",
       "source_name": "plastic334.jpg",
       "sha256": "892ed231f4d541b31c3f49bc5765a8c93647ddf5a317034742f83d46cb940ad7",
       "source": {
@@ -4821,7 +4821,7 @@
       "class_name": "易拉罐",
       "split": "test",
       "group": "trashnet-can-black-monster-can",
-      "file": "images/trashnet-can-299.jpg",
+      "file": "images/trashnet-can-299.webp",
       "source_name": "metal299.jpg",
       "sha256": "9093a60e9ba7039fe941769c6f73e5a64a4d3904ec3ffb56c51d77ae45eef14f",
       "source": {
@@ -4838,7 +4838,7 @@
       "class_name": "纸盒",
       "split": "test",
       "group": "trashnet-box-white-printed-carton",
-      "file": "images/trashnet-box-186.jpg",
+      "file": "images/trashnet-box-186.webp",
       "source_name": "cardboard186.jpg",
       "sha256": "bab81c8185b5066823d5784139e56e3a91828ecafb0dc1b3c6c0bbd68804c8c1",
       "source": {
@@ -4855,7 +4855,7 @@
       "class_name": "塑料瓶",
       "split": "test",
       "group": "trashnet-bottle-green-soda-bottle",
-      "file": "images/trashnet-bottle-346.jpg",
+      "file": "images/trashnet-bottle-346.webp",
       "source_name": "plastic346.jpg",
       "sha256": "008d570e2620f929bad28e8b1a5dfe5eb4abb861c02598f9f98349aae2289692",
       "source": {
@@ -4872,7 +4872,7 @@
       "class_name": "易拉罐",
       "split": "test",
       "group": "trashnet-can-black-monster-can",
-      "file": "images/trashnet-can-325.jpg",
+      "file": "images/trashnet-can-325.webp",
       "source_name": "metal325.jpg",
       "sha256": "294c88e5d6d03d5b9a9c4cea826286adde0491f22b82ca87a50cadd798d6364b",
       "source": {
@@ -4889,7 +4889,7 @@
       "class_name": "纸盒",
       "split": "test",
       "group": "trashnet-box-white-printed-carton",
-      "file": "images/trashnet-box-187.jpg",
+      "file": "images/trashnet-box-187.webp",
       "source_name": "cardboard187.jpg",
       "sha256": "2d92e10fe0efb5cb4b68e2ddb150cd7ff5e21ef770972c71d6b8432823447e05",
       "source": {
@@ -4906,7 +4906,7 @@
       "class_name": "塑料瓶",
       "split": "test",
       "group": "trashnet-bottle-green-soda-bottle",
-      "file": "images/trashnet-bottle-360.jpg",
+      "file": "images/trashnet-bottle-360.webp",
       "source_name": "plastic360.jpg",
       "sha256": "94e4eba94173cce4e19c4356549d317d6d4f9d79c144436c7f26ade6b490270d",
       "source": {
@@ -4923,7 +4923,7 @@
       "class_name": "易拉罐",
       "split": "test",
       "group": "trashnet-can-black-monster-can",
-      "file": "images/trashnet-can-331.jpg",
+      "file": "images/trashnet-can-331.webp",
       "source_name": "metal331.jpg",
       "sha256": "346c7ac6c6bf721810b67332d4311769adb5620da52e3b063522c649ba11ccbc",
       "source": {
@@ -4940,7 +4940,7 @@
       "class_name": "纸盒",
       "split": "test",
       "group": "trashnet-box-white-printed-carton",
-      "file": "images/trashnet-box-188.jpg",
+      "file": "images/trashnet-box-188.webp",
       "source_name": "cardboard188.jpg",
       "sha256": "294aa55989decf8a64e054f4b880897e11b310007655fee733a6d25c3187bc95",
       "source": {
@@ -4957,7 +4957,7 @@
       "class_name": "塑料瓶",
       "split": "test",
       "group": "trashnet-bottle-green-soda-bottle",
-      "file": "images/trashnet-bottle-421.jpg",
+      "file": "images/trashnet-bottle-421.webp",
       "source_name": "plastic421.jpg",
       "sha256": "9c02154ed8b1a372dc29f2defba0da9949afecce1d8d5c4914872506596ca73f",
       "source": {
@@ -4974,7 +4974,7 @@
       "class_name": "易拉罐",
       "split": "test",
       "group": "trashnet-can-black-monster-can",
-      "file": "images/trashnet-can-383.jpg",
+      "file": "images/trashnet-can-383.webp",
       "source_name": "metal383.jpg",
       "sha256": "e8faf1522a235b7022da1fefabeb339e2c761c5ddb9c5d77b50fb82b2a68cfac",
       "source": {
@@ -4991,7 +4991,7 @@
       "class_name": "纸盒",
       "split": "test",
       "group": "trashnet-box-white-recycling-carton",
-      "file": "images/trashnet-box-118.jpg",
+      "file": "images/trashnet-box-118.webp",
       "source_name": "cardboard118.jpg",
       "sha256": "a6b2370bb703f31cbf1e79ab9ef3e7f716a4579493b058a61fca85e37ae7157e",
       "source": {
@@ -5008,7 +5008,7 @@
       "class_name": "塑料瓶",
       "split": "test",
       "group": "trashnet-bottle-core-water-bottle",
-      "file": "images/trashnet-bottle-266.jpg",
+      "file": "images/trashnet-bottle-266.webp",
       "source_name": "plastic266.jpg",
       "sha256": "c8def67db4e56d42dd7216fa2fa842fc2d5f23f424305d6c09bb69d6c777591c",
       "source": {
@@ -5025,7 +5025,7 @@
       "class_name": "易拉罐",
       "split": "test",
       "group": "trashnet-can-coffee-can",
-      "file": "images/trashnet-can-163.jpg",
+      "file": "images/trashnet-can-163.webp",
       "source_name": "metal163.jpg",
       "sha256": "344a7f02c7d2f4cfeb25b734c802eda5e8c1a683a0ffc57e14a3d1f045bbc696",
       "source": {
@@ -5042,7 +5042,7 @@
       "class_name": "纸盒",
       "split": "test",
       "group": "trashnet-box-white-recycling-carton",
-      "file": "images/trashnet-box-346.jpg",
+      "file": "images/trashnet-box-346.webp",
       "source_name": "cardboard346.jpg",
       "sha256": "3324e4a5a61aa8fc1a7764e1131ab92968f10a5ff02aeb29e5ef4513fbd55ebc",
       "source": {

@@ -28,7 +28,7 @@ export function EducationEcosystemPreviewPage() {
       </div>)}
     </div>
     <img shuku-edit-id="e-e04cd5d4-5907-4779-8066-4ddf5fb76517" className="aipe-ecosystem-panorama"
-      src={moduleAssetUrl('images/closing-preview/education-ecosystem-panorama-v3.jpg')}
+      src={moduleAssetUrl("images/closing-preview/education-ecosystem-panorama-v3.webp")}
       alt="同一大学教学研究空间中的连续长图：师生共同改进学习资料，指导学生实践，并与研究伙伴讨论成果。"
       draggable={false}/>
     <div shuku-edit-id="e-273edbf6-eda1-48cd-823d-10d750b2bd6a" className="aipe-ecosystem-outcomes">

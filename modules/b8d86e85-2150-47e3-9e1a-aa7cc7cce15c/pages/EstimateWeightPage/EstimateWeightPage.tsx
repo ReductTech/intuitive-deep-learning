@@ -51,7 +51,7 @@ export function EstimateWeightPage({ showLoss = false }: { showLoss?: boolean } 
   }), [slope, endpointX, endpointY, inRange, mass, calibration, showLoss, TARGET_DEPTH_CM]);
   if(!calibration.length)return <ContentBlock shuku-edit-id="e-e020a57b-9d84-4bfb-bbcf-0f15b5e4687d" title="请先完成称象记录" subtitle="本页使用第一页投石时实际记录的数据。" />;
   return <ContentBlock shuku-edit-id="e-6653b4fd-2c12-4528-b289-26dc6f1383eb" headingLevel={1} title={showLoss ? "调整直线，估计象重" : "石头不足，如何估计象重？"} subtitle={showLoss ? "让直线贴近观测，观察损失与象重估计的变化。" : "根据已有观测，选择一条直线进行估计。"} className={`aipe-showcase-rl-estimate-page${showLoss ? ' aipe-showcase-rl-estimate-challenge-page' : ''}`}
-    style={{ '--aipe-showcase-rl-est-background': `url("${moduleAssetUrl('cao-chong/estimate-background.jpg')}")` } as CSSProperties}>
+    style={{ '--aipe-showcase-rl-est-background': `url("${moduleAssetUrl("cao-chong/estimate-background.webp")}")` } as CSSProperties}>
     <div shuku-edit-id="e-7b1a7237-a803-4ded-9c36-09a358cf67aa" className={`aipe-showcase-rl-estimate-content${showLoss ? ' aipe-showcase-rl-estimate-content--loss' : ''}`}>
     <div shuku-edit-id="e-e1e2afde-a8da-4157-b4c5-f681a882a486" className="aipe-showcase-rl-estimate-layout">
       <section shuku-edit-id="e-2d3d8344-64fd-4a93-9106-f39411e2dede" className="aipe-showcase-rl-estimate-plot" aria-label="调整直线并根据大象水位估计重量">

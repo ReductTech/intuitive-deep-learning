@@ -9,7 +9,7 @@
   "note": "Read-only PDF page rendering and figure/table excerpts. These bounds and Figure 1 selection are prepared offline for the animation; no live detection is run.",
   "elements": [
     {
-      "file": "figure-01.jpg",
+      "file": "figure-01.webp",
       "page": 2,
       "box": [
         70,
@@ -21,7 +21,7 @@
       "label": "Figure 1"
     },
     {
-      "file": "figure-02.jpg",
+      "file": "figure-02.webp",
       "page": 3,
       "box": [
         72,
@@ -33,7 +33,7 @@
       "label": "Figure 2"
     },
     {
-      "file": "figure-03.jpg",
+      "file": "figure-03.webp",
       "page": 4,
       "box": [
         72,
@@ -45,7 +45,7 @@
       "label": "Figure 3"
     },
     {
-      "file": "table-02.jpg",
+      "file": "table-02.webp",
       "page": 9,
       "box": [
         187,
@@ -57,7 +57,7 @@
       "label": "Table 2"
     },
     {
-      "file": "figure-05.jpg",
+      "file": "figure-05.webp",
       "page": 10,
       "box": [
         72,
@@ -69,7 +69,7 @@
       "label": "Figure 5"
     },
     {
-      "file": "figure-08.jpg",
+      "file": "figure-08.webp",
       "page": 13,
       "box": [
         72,
@@ -81,7 +81,7 @@
       "label": "Figure 8"
     },
     {
-      "file": "figure-12.jpg",
+      "file": "figure-12.webp",
       "page": 16,
       "box": [
         72,
@@ -94,7 +94,7 @@
     }
   ],
   "representative": {
-    "file": "figure-12.jpg",
+    "file": "figure-12.webp",
     "page": 16,
     "caption": "Multi-student distillation procedure",
     "selection": "Method diagram chosen for this demonstration; not a claim that Figure 12 is the only summary of DINOv3."

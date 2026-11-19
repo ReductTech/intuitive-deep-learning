@@ -1,7 +1,7 @@
 {
   "id": "f80cb964-6f15-44cd-b32e-35e9c19169ee",
   "title": "科研智能时代的机遇、挑战与探索",
-  "description": "面向非技术背景听众，从科研实现门槛与文献增长出发，介绍 NAIPv1 的新论文影响力预测、NAIPv2 的论文质量估计，以及阅读辅助应用和评价器、强化学习奖励信号的后续探索。",
+  "description": "面向非技术背景听众，介绍科研想法的实现门槛、传统与 AI 辅助科研流程，以及文献增长带来的阅读挑战。本次发布已实现的前 6 页；后续研究内容保留为创作草稿。",
   "path": "/modules/f80cb964-6f15-44cd-b32e-35e9c19169ee",
   "pages": [
     {
@@ -33,7 +33,23 @@
       "title": "论文数量快速增长，个人阅读时间有限",
       "snippet": "前面说到，更多研究想法有机会进入实践，随之而来的还有阅读与判断的压力。我们把一个人工智能学术会议每年的投稿论文放到同一张书桌上。2013 年只有 67 篇，这时还能认真地逐篇阅读、动笔记录。拖动年份，论文在原来的位置一层层垒高，人物开始挠头犯难。到 2027 年，公开投稿池的统计快照已经记录了 43,013 篇，论文堆满桌面，还延伸到了地上，人只能无奈地瘫在椅子上。这是一种夸张的情境表达：日历在翻，个人阅读和理解的时间却不能随论文数量一起增长。读一篇论文，我们还要理解方法、分析实验和判断创新点。因此，我们需要的不只是更多信息，而是更有效的信息筛选方式。各年显示的是当年的投稿量，论文堆是示意；2027 年采用 2026 年 10 月 8 日公开投稿池的统计快照。",
       "id": "de5f1df7-6945-48e4-b174-2a4b43e63f5f"
-    },
+    }
+  ],
+  "moduleIdentity": {
+    "version": 1,
+    "id": "f80cb964-6f15-44cd-b32e-35e9c19169ee"
+  },
+  "entry": "ResearchIntelligenceEraGuide.tsx",
+  "ppt": {
+    "entry": "ResearchIntelligenceEraPpt.tsx",
+    "path": "/scenedeck/",
+    "player": false
+  },
+  "badge": "科研智能 · 学术报告",
+  "alias": "research-intelligence-era",
+  "pageIdentityVersion": 1,
+  "style_id": "3e96a933-8b28-4fc0-99c5-3f8c561bc5cf",
+  "draftPages": [
     {
       "title": "面对一批新论文，先读哪一篇？",
       "snippet": "假设今天有一批与自己课题相关的新论文，我们没有时间逐篇读完，应该先打开哪一篇？通常会先看题目和摘要，再参考作者、发表渠道、引用次数或者同行推荐。它们能提供线索，但回答的问题不同：摘要帮助判断相关性，引用反映已经发生的传播，作者和渠道提供一种初步预期。我们希望补充一种针对单篇论文的信号，帮助安排阅读顺序，让有限时间更有机会用在值得深入理解的工作上。",
@@ -165,18 +181,39 @@
       "id": "bb596f9d-ce1a-4e20-9fe8-ee41149ceef6"
     }
   ],
-  "moduleIdentity": {
-    "version": 1,
-    "id": "f80cb964-6f15-44cd-b32e-35e9c19169ee"
-  },
-  "entry": "ResearchIntelligenceEraGuide.tsx",
-  "ppt": {
-    "entry": "ResearchIntelligenceEraPpt.tsx",
-    "path": "/scenedeck/",
-    "player": false
-  },
-  "badge": "科研智能 · 学术报告",
-  "alias": "research-intelligence-era",
-  "pageIdentityVersion": 1,
-  "style_id": "76018445-20ab-4dd9-9543-385d177eb159"
+  "authoringPageOrder": [
+    "4deacf4d-782d-4f55-814e-322aa1f38422",
+    "e0595adb-7c6e-466b-ab08-4129d9a2b04c",
+    "366440f3-29d5-4c7a-aed1-c1f3baf9d0f4",
+    "d98982d4-186a-4307-93c4-d5a1e2be2625",
+    "4ad63653-03eb-4d05-b32d-2841a8b23d04",
+    "de5f1df7-6945-48e4-b174-2a4b43e63f5f",
+    "a83d1d58-5c25-4596-81b1-a9e74ef7571e",
+    "73ac1e20-79ae-4814-8d3a-d37c27af5f03",
+    "d95dd5aa-8f91-4cb0-a509-4fe46ef01845",
+    "9fcb3ddc-8ded-4db3-91f0-f412b67037ec",
+    "bab5839a-0a6b-491e-b8a9-5dbbc477eb51",
+    "273b77e5-e195-4868-963c-e26c97935b5a",
+    "381540cc-6b7c-417e-ac4e-7a40de4dddd7",
+    "b5b0ec28-e3ef-4f4f-8a71-539495b3bb39",
+    "cd98c946-cb29-4cd4-bb55-cd4219c0498a",
+    "6555fd1c-12d4-439a-8199-d1217bf74f5c",
+    "07b0cbdc-6bf7-4342-94f2-48ca2fd2858d",
+    "edf9eb44-edc5-400d-8934-996966063584",
+    "080aa4bb-a0dd-4efd-8893-3d226ee56cb4",
+    "986e4686-f855-4188-a797-b35473db8f4b",
+    "dec8cd7e-cc47-4961-b50c-91046cebccaa",
+    "faaf9648-be29-4a76-92f6-3b8593e5b469",
+    "53581a1d-bea5-4895-8250-ca3be7b7f781",
+    "441d63c0-d3f4-477b-bcb5-d06bf08ffd95",
+    "aec5b079-a7a7-4f02-882c-b660ebbae24f",
+    "aed9b223-a6d0-4b08-a7c6-07528e0a31bb",
+    "1818750d-23bb-49ab-bdb9-864af2abc634",
+    "3943bb9e-ab00-435b-bd16-343124326bab",
+    "6caa4886-ddf7-4990-8412-e3279c9f8784",
+    "9d335dc3-67d6-4294-b8b6-6d2ae4a8040f",
+    "714f3110-613e-439b-bb49-8a7bafaa50f1",
+    "bb596f9d-ce1a-4e20-9fe8-ee41149ceef6"
+  ],
+  "draftDescription": "面向非技术背景听众，从科研实现门槛与文献增长出发，介绍 NAIPv1 的新论文影响力预测、NAIPv2 的论文质量估计，以及阅读辅助应用和评价器、强化学习奖励信号的后续探索。"
 }

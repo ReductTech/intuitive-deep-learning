@@ -7,11 +7,11 @@ export const RESULT_HOLD_MS = 2500;
 export const SCAN_DURATION_MS = TILE_COUNT * TILE_DURATION_MS;
 export const CYCLE_DURATION_MS = SCAN_DURATION_MS + RESULT_HOLD_MS;
 export const IMAGE_EXAMPLES = [
-  { name: '现代建筑', file: 'building.jpg' },
-  { name: '斜拉桥', file: 'bridge.jpg' },
-  { name: '山间木屋', file: 'chalet.jpg' },
-  { name: '斑马', file: 'zebra.jpg' },
-  { name: '菠萝', file: 'pineapple.jpg' },
+  { name: '现代建筑', file: "building.webp" },
+  { name: '斜拉桥', file: "bridge.webp" },
+  { name: '山间木屋', file: "chalet.webp" },
+  { name: '斑马', file: 'zebra.webp' },
+  { name: '菠萝', file: 'pineapple.webp' },
 ] as const;
 export type KernelDirection = 'vertical' | 'horizontal';
 

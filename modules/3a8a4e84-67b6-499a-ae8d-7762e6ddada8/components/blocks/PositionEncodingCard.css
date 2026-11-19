@@ -71,3 +71,6 @@
 .tr-ppt-content .tr-pe-next .ui-typography { font-size: 28px; }
 @media (prefers-reduced-motion:reduce){.tr-pe-table td button{transition:none}}
 .tr-pe-example-note{font-size:22px;color:#718a9b;white-space:nowrap}.tr-pe-guide__footer .tr-pe-table-actions{display:flex;align-items:center;justify-content:flex-end;gap:12px;margin-left:auto}.tr-ppt-content .tr-pe-table-actions .tr-pe-table-action{border:0;border-radius:27px;background:#e5eff4;color:#466c81;padding:12px 20px;min-height:52px;font-size:22px}.tr-ppt-content .tr-pe-table-actions .tr-pe-table-action .ui-typography{font-size:22px;color:inherit}.tr-ppt-content .tr-pe-table-actions .tr-pe-next,.tr-ppt-content .tr-pe-table-actions .tr-pe-next .ui-typography{font-size:22px}.tr-pe-table-actions button:disabled{opacity:.45;cursor:default}
+
+/* Keep intrinsic media inside the fixed playback layout. */
+.tr-ppt-content .tr-pe-guide__main { grid-template-rows:minmax(0,1fr) 250px; }

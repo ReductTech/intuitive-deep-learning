@@ -95,3 +95,7 @@
 .course-page-surface .ngtw-biological-model__step { min-height: 0; height: 100%; }
 .course-page-surface .ngtw-biological-model__footer { min-height: 70px; padding-block: 10px; }
 
+
+/* Keep intrinsic media inside the fixed playback layout. */
+.course-shell .ngtw-biological-model__image { position:relative; }
+.course-shell .ngtw-biological-model__image img { position:absolute; inset:0; padding:4px 8px; box-sizing:border-box; }

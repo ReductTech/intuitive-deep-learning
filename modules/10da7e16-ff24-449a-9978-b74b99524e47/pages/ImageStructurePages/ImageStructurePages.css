@@ -1,0 +1,18 @@
+.course-shell .di-structure{display:grid;grid-template-rows:auto minmax(0,1fr);width:100%;height:100%;min-width:0;min-height:0;padding:18px 30px 20px}
+.course-shell .di-structure>.edu-content-body{min-height:0}
+.di-structure__body{display:flex;flex-direction:column;gap:18px;height:100%;min-height:0}
+.di-structure__controls{display:flex;align-items:center;justify-content:center;gap:20px;flex:0 0 62px}
+.di-structure__controls label{display:flex;align-items:center;gap:12px}
+.di-structure__controls input{width:150px;accent-color:#347bb6}
+.di-structure__columns{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;flex:1;min-height:0}
+.di-structure__card{display:flex;flex-direction:column;align-items:center;justify-content:space-around;gap:14px;min-width:0;min-height:0;border:1px solid #cadbe9;border-radius:14px;background:#f8fbfe;padding:22px}
+.di-structure__card>svg{display:block;width:100%;max-width:280px;max-height:45%;min-height:0;flex:1}
+.di-structure__card>svg+svg{max-height:110px}
+.di-structure__card>.ui-typography{margin:0;text-align:center}
+.di-neighborhood{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;width:300px;height:300px;max-width:100%}
+.di-neighborhood>div{display:grid;place-items:center;min-width:0;border-radius:6px}
+.di-neighborhood .is-center{outline:4px solid #2a87d1;outline-offset:0}
+.di-structure__wide-card{display:grid;grid-template-columns:1fr;gap:12px;border:1px solid #cadbe9;border-radius:12px;padding:16px 22px;background:#f8fbfe;min-height:0}
+.di-resampling__strip{display:block;width:100%;height:100px}
+.di-resampling__moire{display:grid;grid-template-columns:480px minmax(0,1fr);align-items:center;gap:28px;min-height:0}
+.di-resampling__moire svg{display:block;width:100%;height:110px}

@@ -9,10 +9,10 @@ import { DANGER } from './failureSimulation';
 import examples from './rewardExamples.json';
 import './FailureModesPage.css';
 
-const robotArt = valueBasedRlAssetUrl('cover-v2/robot.png');
-const receivingEmpty = valueBasedRlAssetUrl('cover-v2/receiving-station-empty.png');
-const receivingLoaded = valueBasedRlAssetUrl('cover-v2/receiving-station-loaded.png');
-const pitArt = valueBasedRlAssetUrl('cover-v2/maintenance-pit.png');
+const robotArt = valueBasedRlAssetUrl("cover-v2/robot.webp");
+const receivingEmpty = valueBasedRlAssetUrl("cover-v2/receiving-station-empty.webp");
+const receivingLoaded = valueBasedRlAssetUrl("cover-v2/receiving-station-loaded.webp");
+const pitArt = valueBasedRlAssetUrl("cover-v2/maintenance-pit.webp");
 
 type CaseId = 'movement' | 'danger';
 type Variant = 'problem' | 'improved';

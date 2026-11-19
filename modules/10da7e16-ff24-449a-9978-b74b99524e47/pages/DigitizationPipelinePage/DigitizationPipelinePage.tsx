@@ -5,7 +5,7 @@ import { ContentBlock, Typography } from "@shuku/course-style/react";
 import './DigitizationPipelinePage.css';
 
 const SIDE = 20;
-const photo = moduleAssetUrl('images/digital-image-cat-scene.jpg');
+const photo = moduleAssetUrl("images/digital-image-cat-scene.webp");
 type RGB = [number, number, number];
 const tuple = (rgb: RGB) => `[${rgb.join(',')}]`;
 

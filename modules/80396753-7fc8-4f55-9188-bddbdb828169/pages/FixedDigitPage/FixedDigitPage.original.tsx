@@ -21,9 +21,9 @@ const KERNELS: Kernel[] = [
 ];
 
 const SAMPLES = [
-  { label: '6', src: moduleAssetUrl('digits/6.jpg') },
-  { label: '2', src: moduleAssetUrl('digits/2.jpg') },
-  { label: '8', src: moduleAssetUrl('digits/8.jpg') },
+  { label: '6', src: moduleAssetUrl("digits/6.webp") },
+  { label: '2', src: moduleAssetUrl("digits/2.webp") },
+  { label: '8', src: moduleAssetUrl("digits/8.webp") },
 ];
 
 const emptyPixels = (): Pixels => Array.from({ length: SIZE }, () => Array(SIZE).fill(0) as number[]);

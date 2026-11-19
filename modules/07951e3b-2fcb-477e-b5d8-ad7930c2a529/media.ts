@@ -5,10 +5,10 @@ export const moduleAssetId = outline.moduleIdentity.id;
 
 const image = (filename: string) => moduleAssetUrl(`images/${filename}`);
 
-export const rainImage = image('rain-scene.jpeg');
-export const catContextImage = image('cat-context.jpg');
-export const umbrellasImage = image('umbrellas.jpeg');
-export const spatialComparisonImage = image('spatial-comparison.jpg');
-export const pairedSourceImage = image('paired-source.jpg');
-export const tasksSourceImage = image('tasks-source.jpg');
-export const vitPaperImage = image('vit-paper.jpg');
+export const rainImage = image("rain-scene.webp");
+export const catContextImage = image("cat-context.webp");
+export const umbrellasImage = image("umbrellas.webp");
+export const spatialComparisonImage = image("spatial-comparison.webp");
+export const pairedSourceImage = image("paired-source.webp");
+export const tasksSourceImage = image("tasks-source.webp");
+export const vitPaperImage = image("vit-paper.webp");

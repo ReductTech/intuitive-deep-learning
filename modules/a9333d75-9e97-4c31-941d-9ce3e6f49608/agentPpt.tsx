@@ -5,7 +5,6 @@ import outline from './outlines.json';
 const scenes: SceneDefinition[] = outline.pages.map(page => ({
   id: page.id,
   title: page.title,
-  section: page.section,
   render: () => <LessonSlide pageId={page.id} />,
 }));
 

@@ -42,7 +42,7 @@ export function StudentCapabilitiesPage() {
       onPointerLeave={() => setActive(2)}
       onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget)) setActive(2); }}>
       <div shuku-edit-id="e-a247c352-b005-4e1d-b04f-296e257eda34" className="aipe-capability-scenery">
-        <img shuku-edit-id="e-29cd583c-cf1d-4878-96e1-95a1f47cbaac" className="aipe-capability-background" src={asset('hall-background.jpg')} alt="五座相连的拱门构成能力殿堂，分别呈现文献、知识联系、表达、实践和创新" draggable={false}/>
+        <img shuku-edit-id="e-29cd583c-cf1d-4878-96e1-95a1f47cbaac" className="aipe-capability-background" src={asset("hall-background.webp")} alt="五座相连的拱门构成能力殿堂，分别呈现文献、知识联系、表达、实践和创新" draggable={false}/>
         {capabilities.map((capability, index) => <button shuku-edit-id="e-3f05c8f0-51fb-48f0-8b8b-7715603e4004" key={capability.id} type="button"
           className="aipe-capability-arch" data-capability={capability.id} data-active={active === index}
           aria-labelledby={`aipe-capability-${capability.id}`} aria-pressed={active === index}
@@ -70,7 +70,7 @@ export function StudentCapabilitiesPage() {
       <div shuku-edit-id="e-b3877f0c-390c-40d3-a64e-856125deabcb" className="aipe-capability-student" role="img" aria-label={`知识探索者面向${capabilities[active].title}`}>
         <span shuku-edit-id="e-1212676c-f674-4ff7-95dd-52ee84e2d160" className="aipe-capability-student-shadow"/>
         {capabilities.map((capability, index) => <img shuku-edit-id="e-30361605-65b3-4e8d-a5bd-1b992feae1cf" key={capability.id}
-          className="aipe-capability-sprite" src={asset(`student-${capability.sprite}-stylized-v2.png`)} alt="" aria-hidden="true"
+          className="aipe-capability-sprite" src={asset(`student-${capability.sprite}-stylized-v2.webp`)} alt="" aria-hidden="true"
           data-active={active === index} draggable={false} decoding="async"/>) }
       </div>
       <Typography shuku-edit-id="e-f8dbdc44-372d-419a-bb3d-b3347387606c" as="p" variant="h3" tone="accent" className="aipe-capability-explorer">知识探索者</Typography>

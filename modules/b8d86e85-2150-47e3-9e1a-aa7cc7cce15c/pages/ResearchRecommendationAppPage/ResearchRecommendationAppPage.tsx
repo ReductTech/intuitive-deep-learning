@@ -8,7 +8,7 @@ import { ResearchAppPhone } from './ResearchAppPhone';
 
 export function ResearchRecommendationAppPage(){
  return <section shuku-edit-id="e-b40f32fc-4d27-4473-b09c-6485fd4880b6" className="research-app-page" aria-label="个性化论文推荐 APP">
-  <a shuku-edit-id="e-5d80dea7-b2fc-40fa-ac77-31d32c227f6d" className="ra-official-brand" href="https://www.reduct.cn/" target="_blank" rel="noreferrer" aria-label="减论科技官网"><img shuku-edit-id="e-a2a62abd-1d76-4231-8f4f-c89439b323e2" src={moduleAssetUrl('images/recommendation-app/reduct-official-logo.png')} alt="减论科技"/></a>
+  <a shuku-edit-id="e-5d80dea7-b2fc-40fa-ac77-31d32c227f6d" className="ra-official-brand" href="https://www.reduct.cn/" target="_blank" rel="noreferrer" aria-label="减论科技官网"><img shuku-edit-id="e-a2a62abd-1d76-4231-8f4f-c89439b323e2" src={moduleAssetUrl("images/recommendation-app/reduct-official-logo.webp")} alt="减论科技"/></a>
   <div shuku-edit-id="e-20f7eeeb-fcc8-4391-8fef-630afbad69f1" className="ra-platform-intro">
    <Typography shuku-edit-id="e-71eef676-9427-4515-8d68-71306835262b" as="h1" variant="display" tone="inherit">科研信息供给的<Typography shuku-edit-id="e-0df79c24-7793-4e9a-bf65-279b3b977de3" as="span" variant="display" tone="inherit">全平台解决方案</Typography></Typography>
    <Typography shuku-edit-id="e-a49092e1-f95e-4c7a-bee8-097bd00b82fb" className="ra-platform-promise" variant="body" tone="muted">结合研究兴趣，发现值得深入阅读的论文</Typography>

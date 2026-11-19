@@ -10,7 +10,7 @@ import './ResearchPhone.css';
 // Reuse only paper figures from the supplied screenshot; feed text and controls remain interactive DOM.
 function Figure({paper}:{paper:Paper}) {
  const [x,y,w,h]=paper.crop;
- return <div shuku-edit-id="e-14561312-5fae-4d0f-be35-e24db7facabf" className="rf-app-figure" data-ppt-viewport="论文配图裁切窗口" style={{aspectRatio:`${w}/${h}`}}><img shuku-edit-id="e-114a4203-5e83-4825-9f8a-c8ba04942053" alt={`${paper.title} 论文配图`} draggable={false} src={moduleAssetUrl('images/recommendation-app/feed-reference.jpg')} style={{width:`${1129/w*100}%`,left:`${-x/w*100}%`,top:`${-y/h*100}%`}}/></div>;
+ return <div shuku-edit-id="e-14561312-5fae-4d0f-be35-e24db7facabf" className="rf-app-figure" data-ppt-viewport="论文配图裁切窗口" style={{aspectRatio:`${w}/${h}`}}><img shuku-edit-id="e-114a4203-5e83-4825-9f8a-c8ba04942053" alt={`${paper.title} 论文配图`} draggable={false} src={moduleAssetUrl("images/recommendation-app/feed-reference.webp")} style={{width:`${1129/w*100}%`,left:`${-x/w*100}%`,top:`${-y/h*100}%`}}/></div>;
 }
 function browserTime() {
  const now=new Date();

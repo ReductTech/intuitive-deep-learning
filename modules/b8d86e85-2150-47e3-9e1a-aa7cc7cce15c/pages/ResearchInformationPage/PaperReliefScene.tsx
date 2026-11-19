@@ -5,9 +5,9 @@ import outline from '../../outlines.json';
 import { allocatePaperStacks, readerPose } from './paperStacks';
 import { projectPaperPage } from './paperPerspective';
 
-const topSheets = ['images/paper-relief/paper-top-single-a.jpg', 'images/paper-relief/paper-top-double-a.jpg',
-  'images/paper-relief/paper-top-single-figure.jpg', 'images/paper-relief/paper-top-double-table.jpg'] as const;
-const assets = ['images/paper-relief/room-calm.jpg','images/paper-relief/desk.png',...topSheets,'images/paper-relief/calendar-stand.png','images/paper-relief/reader-relaxed.png','images/paper-relief/reader-focused.png','images/paper-relief/reader-defeated.png'] as const;
+const topSheets = ["images/paper-relief/paper-top-single-a.webp", "images/paper-relief/paper-top-double-a.webp",
+  "images/paper-relief/paper-top-single-figure.webp", "images/paper-relief/paper-top-double-table.webp"] as const;
+const assets = ["images/paper-relief/room-calm.webp","images/paper-relief/desk.webp",...topSheets,"images/paper-relief/calendar-stand.webp","images/paper-relief/reader-relaxed.webp","images/paper-relief/reader-focused.webp","images/paper-relief/reader-defeated.webp"] as const;
 type Asset = typeof assets[number];
 const image = (file: Asset) => moduleAssetUrl(file);
 const poseLabels = { relaxed:'挠着后脑勺靠在椅子上', focused:'认真地俯身写字', defeated:'无奈地瘫在椅子上，放弃抵抗' };
@@ -34,7 +34,7 @@ export function PaperReliefScene({year,previousYear,count,onReadyChange}:{year:n
 
   return <div shuku-edit-id="e-b58aa838-5932-4791-81f6-41aa6b14ae81" ref={roomRef} className="aipe-paper-room" data-pose={pose} data-paper-count={count} aria-busy={!ready && !failed.size}>
     {assets.map(name => <img shuku-edit-id="e-42a8ad44-b899-4c81-aa0e-22f912f021eb" key={`${name}-${retry}`} src={image(name)}
-      className={`aipe-paper-asset aipe-paper-${name === 'images/paper-relief/room-calm.jpg' ? 'background' : name.includes('/paper-top-') ? 'texture' : name.split('/').pop()!.replace(/\.[^.]+$/, '')}${name === `images/paper-relief/reader-${pose}.png` ? ' is-active' : ''}`}
+      className={`aipe-paper-asset aipe-paper-${name === 'images/paper-relief/room-calm.webp' ? 'background' : name.includes('/paper-top-') ? 'texture' : name.split('/').pop()!.replace(/\.[^.]+$/, '')}${name === `images/paper-relief/reader-${pose}.webp` ? ' is-active' : ''}`}
       alt="" aria-hidden="true" draggable={false}
       onLoad={event => {
         const node = event.currentTarget;
@@ -65,7 +65,7 @@ export function PaperReliefScene({year,previousYear,count,onReadyChange}:{year:n
         transform:plane.transform,backgroundImage:`url("${image(topSheet)}")`}} />
     </div>;})}
     {size && <div shuku-edit-id="e-2df306e4-203a-4ee0-b35b-fb3435c24244" className="aipe-paper-reading-page" aria-hidden="true">
-      {(['images/paper-relief/paper-top-double-a.jpg','images/paper-relief/paper-top-single-figure.jpg'] as const).map((sheet,i) => {
+      {(["images/paper-relief/paper-top-double-a.webp","images/paper-relief/paper-top-single-figure.webp"] as const).map((sheet,i) => {
         const plane = projectPaperPage(size.width * .075, size.width * (.465 + i * .075),
           size.height * .43, size.width / 2, -size.height * .79);
         return <div shuku-edit-id="e-8cb08795-6bff-4395-a1ce-d13422250fdb" key={sheet} className="aipe-paper-reading-sheet" style={{left:`${i*50}%`,

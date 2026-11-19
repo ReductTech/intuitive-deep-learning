@@ -8,12 +8,14 @@ import { ModuleDirectoryPage } from './pages/ModuleDirectoryPage/ModuleDirectory
 import { ProjectFrameworkPage } from './pages/ProjectFrameworkPage/ProjectFrameworkPage';
 import { SkillWorkflowPage } from './pages/SkillWorkflowPage/SkillWorkflowPage';
 import outline from './outlines.json';
+import { PresentationPracticePage } from './pages/PresentationPracticePage/PresentationPracticePage';
 
 export const deck: DeckDefinition = {
   id: outline.id,
   title: outline.title,
   subtitle: outline.description,
   scenes: [
+    { id: 'f069ebfb-40bd-4100-be9e-da6a8875597f', title: outline.pages.find(page => page.id === 'f069ebfb-40bd-4100-be9e-da6a8875597f')!.title, section: '做课件对自己有什么帮助', render: () => <PresentationPracticePage /> },
     { id: outline.pages.find(page => page.id === '18ad36ae-81cb-40b1-a240-301a3de410ac')!.id, title: outline.pages.find(page => page.id === '18ad36ae-81cb-40b1-a240-301a3de410ac')!.title, section: '环境准备', render: () => <ToolOverviewPage /> },
     { id: outline.pages.find(page => page.id === 'e828c4ec-c28f-4aa8-a4ee-4404531e2519')!.id, title: outline.pages.find(page => page.id === 'e828c4ec-c28f-4aa8-a4ee-4404531e2519')!.title, section: '做课件对自己有什么帮助', render: () => <LearnByExplainingPage /> },
     { id: outline.pages.find(page => page.id === 'e547db3b-9b4b-41a1-bcd7-69b6a3328edf')!.id, title: outline.pages.find(page => page.id === 'e547db3b-9b4b-41a1-bcd7-69b6a3328edf')!.title, section: '做课件对自己有什么帮助', render: () => <EngineeringCollaborationPage /> },

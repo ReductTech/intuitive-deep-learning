@@ -15,7 +15,7 @@ export function ArchitectureMap() {
           const id=`${latent?'latent':'pixel'}-${transformer?'transformer':'unet'}`;
           const i=systems.findIndex(s=>s.id===id), system=systems[i];
           return <Button className="vgr-system-choice" key={id} data-testid={`system-${id}`} aria-pressed={selected===i} active={selected===i} onClick={()=>setSelected(i)}>
-            <span className="vgr-system-flow"><ReferenceVisual file={latent?'visuals/latent-encoded.png':'visuals/noisy-cat.jpg'} alt={latent?'latent 表示':'像素状态'}/><Arrow/><ReferenceVisual file={transformer?'visuals/transformer-block.png':'visuals/unet-mini.png'} alt={transformer?'Transformer 主干':'U-Net 主干'}/></span>
+            <span className="vgr-system-flow"><ReferenceVisual file={latent?"visuals/latent-encoded.webp":"visuals/noisy-cat.webp"} alt={latent?'latent 表示':'像素状态'}/><Arrow/><ReferenceVisual file={transformer?"visuals/transformer-block.webp":"visuals/unet-mini.webp"} alt={transformer?'Transformer 主干':'U-Net 主干'}/></span>
             <Typography as="span" variant="bodySmall" tone="inherit">{system.title}</Typography>
           </Button>;
         })}

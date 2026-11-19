@@ -25,7 +25,7 @@ function Pinwheel(){return <span shuku-edit-id="e-81ce09fb-0f78-4191-a39b-683650
 function FigureCrop({table=false}:{table?:boolean}){
  const crop=table?[60,4455,1009,380]:[60,1280,1009,340];
  const [x,y,w,h]=crop;
- return <div shuku-edit-id="e-425bf9ae-b2e6-43cd-bfb6-e77b35ad7e5e" className="rf-af-figure-crop" data-ppt-viewport="原有论文示例配图裁切" style={{aspectRatio:`${w}/${h}`}}><img shuku-edit-id="e-a75ded18-78c6-43a7-bbe1-9ea0478e84b4" src={moduleAssetUrl('images/recommendation-app/feed-reference.jpg')} alt={table?'论文图表内容示例':'论文方法图视觉元素示例'} draggable={false} style={{width:`${1129/w*100}%`,left:`${-x/w*100}%`,top:`${-y/h*100}%`}}/></div>;
+ return <div shuku-edit-id="e-425bf9ae-b2e6-43cd-bfb6-e77b35ad7e5e" className="rf-af-figure-crop" data-ppt-viewport="原有论文示例配图裁切" style={{aspectRatio:`${w}/${h}`}}><img shuku-edit-id="e-a75ded18-78c6-43a7-bbe1-9ea0478e84b4" src={moduleAssetUrl("images/recommendation-app/feed-reference.webp")} alt={table?'论文图表内容示例':'论文方法图视觉元素示例'} draggable={false} style={{width:`${1129/w*100}%`,left:`${-x/w*100}%`,top:`${-y/h*100}%`}}/></div>;
 }
 function PdfPaper({phase,elapsed}:{phase:number;elapsed:number}){
  return <div shuku-edit-id="e-af9c64a4-f3eb-4b86-bdc4-57e4e426da22" className={`rf-af-paper is-phase-${phase}`} aria-label="PDF 解析示例">

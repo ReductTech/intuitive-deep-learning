@@ -82,7 +82,7 @@ export function AttentionObservationCoverPage({ onComplete, isComplete }: { onCo
           <div shuku-edit-id="e-ddb11905-5f97-486a-9c67-76bafb1fd808" className="attn-reflection-evidence">
             <figure shuku-edit-id="e-a643fee2-0758-4d38-a496-9920c6180a4a" className="attn-reflection-still">
               <div shuku-edit-id="e-fb8175d9-f928-4482-9ac3-ac0c27c84cc3" className="attn-reflection-still-image">
-                <CourseMaterialImage path="observation/original-gorilla-storyboard.jpg" frame={{columns:3,rows:3,column:1,row:0}} alt="原始实验视频第28秒的完整静帧：穿大猩猩服的人经过中央，蓝圈标出其位置。原有版权署名保留。" />
+                <CourseMaterialImage path="observation/original-gorilla-storyboard.webp" frame={{columns:3,rows:3,column:1,row:0}} alt="原始实验视频第28秒的完整静帧：穿大猩猩服的人经过中央，蓝圈标出其位置。原有版权署名保留。" />
                 <svg shuku-edit-id="e-67ee717c-2cf3-4470-9526-9c43a82f9605" viewBox="0 0 640 480" aria-hidden="true"><ellipse shuku-edit-id="e-89cb42eb-9dd1-4a1d-9d3e-67cfa7eb2e79" cx="355" cy="229" rx="80" ry="160" fill="none" stroke="var(--ui-accent)" strokeWidth="7" strokeDasharray="15 9"/></svg>
               </div>
               <Typography shuku-edit-id="e-77af7291-e0c0-4c3d-b4e0-0e9e6fc965aa" as="figcaption" variant="bodySmall" tone="muted"><a shuku-edit-id="e-2445e0f5-2ffd-4d36-bf75-09be8f70dd73" href="https://www.youtube.com/watch?v=vJG698U2Mvo&t=28s" target="_blank" rel="noreferrer">原视频静帧 ↗</a></Typography>

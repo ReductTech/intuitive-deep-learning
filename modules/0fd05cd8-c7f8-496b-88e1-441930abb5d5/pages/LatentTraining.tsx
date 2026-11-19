@@ -14,7 +14,7 @@ export function LatentTraining() {
   return <Frame index={7} subtitle="让画师练习：加进去的噪声是已知的，预测偏差可以直接计算" takeaway="训练用已知噪声监督预测；减小预测误差，才能学会处理带噪状态。">
     <LessonSplit equal>
       <TeachingPanel title="① 已知噪声 → 主干预测" className="vga-training-input">
-        <Flow><div shuku-edit-id="e-b1980687-b00b-4ac0-a12b-f2b6638c4241" className="vga-center"><Latent small variant="noisy" /><Text>构造带噪样本</Text></div><Arrow /><div shuku-edit-id="e-a094c460-63a0-4afd-9d7e-ca762a19da45" className="vga-center"><ReferenceVisual file="visuals/unet-mini.png" alt="预测主干" style={{width: 190,height: 100}} /><Text>去噪主干预测</Text></div></Flow>
+        <Flow><div shuku-edit-id="e-b1980687-b00b-4ac0-a12b-f2b6638c4241" className="vga-center"><Latent small variant="noisy" /><Text>构造带噪样本</Text></div><Arrow /><div shuku-edit-id="e-a094c460-63a0-4afd-9d7e-ca762a19da45" className="vga-center"><ReferenceVisual file="visuals/unet-mini.webp" alt="预测主干" style={{width: 190,height: 100}} /><Text>去噪主干预测</Text></div></Flow>
         <div shuku-edit-id="e-47558949-9584-4411-9d90-1a4906a97d17" className="vga-metric-row"><Readout label="已知目标" value="−0.40" /><Readout label="当前预测" value={prediction.toFixed(3)} /><Readout label="平方误差" value={<span shuku-edit-id="e-881fecbd-931f-4fef-bfd7-e1a69162c892" data-testid="training-loss">{loss.toFixed(4)}</span>} warm /></div>
         <Formula latex={`\\mathcal{L}=(${prediction.toFixed(5)}-(-0.4))^2\\approx ${loss.toFixed(4)}`} />
         <div shuku-edit-id="e-dbd7eccf-2ac0-4617-b90a-60d615f9d189" className="vga-stage-tabs"><Button variant="primary" data-testid="train-update" disabled={history.length>=10} onClick={update}>更新一次参数</Button><Button onClick={reset}>重新练习</Button></div>

@@ -3,12 +3,12 @@ import { moduleAssetUrl } from "@shuku/course-runtime/react/assets";
 import { useRef, useState, type CSSProperties, type MouseEvent } from 'react';
 import { ContentBlock, Typography } from "@shuku/course-style/react";
 import { useCompleteOnce } from '../../hooks/useCompleteOnce';
-const bottleTall = moduleAssetUrl("recycling/intro-samples/bottle-tall.jpg");
-const bottleCrumpled = moduleAssetUrl("recycling/intro-samples/bottle-crumpled.jpg");
-const canRed = moduleAssetUrl("recycling/intro-samples/can-red.jpg");
-const canFlattened = moduleAssetUrl("recycling/intro-samples/can-flattened.jpg");
-const cartonSealed = moduleAssetUrl("recycling/intro-samples/carton-sealed.jpg");
-const cartonDented = moduleAssetUrl("recycling/intro-samples/carton-dented.jpg");
+const bottleTall = moduleAssetUrl("recycling/intro-samples/bottle-tall.webp");
+const bottleCrumpled = moduleAssetUrl("recycling/intro-samples/bottle-crumpled.webp");
+const canRed = moduleAssetUrl("recycling/intro-samples/can-red.webp");
+const canFlattened = moduleAssetUrl("recycling/intro-samples/can-flattened.webp");
+const cartonSealed = moduleAssetUrl("recycling/intro-samples/carton-sealed.webp");
+const cartonDented = moduleAssetUrl("recycling/intro-samples/carton-dented.webp");
 import './GeneralizationIntroPage.css';
 
 // Appearance examples, not a recording of one physical object being crushed.

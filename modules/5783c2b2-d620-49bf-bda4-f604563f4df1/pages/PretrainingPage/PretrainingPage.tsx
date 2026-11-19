@@ -4,7 +4,7 @@ import { moduleAssetUrl } from "@shuku/course-runtime/react/assets";
 import { useState } from 'react';
 import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import { useCompleteOnce } from '../../hooks/useCompleteOnce';
-const bottle = moduleAssetUrl("pretraining/bottle-white-cap-hd.jpg");
+const bottle = moduleAssetUrl("pretraining/bottle-white-cap-hd.webp");
 import './PretrainingPage.css';
 
 export const PRETRAINING_CUES = [

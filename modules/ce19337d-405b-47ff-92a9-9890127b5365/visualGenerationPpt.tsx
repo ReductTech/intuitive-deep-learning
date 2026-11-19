@@ -7,7 +7,7 @@ const scenes: SceneDefinition[] = visualGenerationCourse
   .map(({ id, title, section, component }) => ({ id, title, section, render: component }));
 
 export const deck: DeckDefinition = {
-  id: 'visual-generation-guide',
+  id: outline.id,
   title: '视觉生成：从噪声到图像',
   subtitle: `GAN 与 Diffusion · ${scenes.length} 页`,
   scenes,
@@ -16,5 +16,5 @@ export const deck: DeckDefinition = {
 const catalog: [DeckDefinition, ...DeckDefinition[]] = [deck];
 
 export function VisualGenerationPpt() {
-  return <SceneDeck catalog={catalog} moduleId="visual-generation-guide" assetId={outline.moduleIdentity.id} progressKey="lesson-flow:visual-generation-guide-v4" />;
+  return <SceneDeck catalog={catalog} moduleId={outline.id} assetId={outline.moduleIdentity.id} progressKey="lesson-flow:visual-generation-guide-v4" />;
 }

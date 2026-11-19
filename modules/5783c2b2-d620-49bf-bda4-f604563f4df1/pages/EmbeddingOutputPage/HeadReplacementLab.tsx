@@ -3,12 +3,12 @@ import { moduleAssetUrl } from "@shuku/course-runtime/react/assets";
 import { useState, type AnimationEvent } from 'react';
 import { Button, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, NoticeStrip, Typography } from "@shuku/course-style/react";
 import { useCompleteOnce } from '../../hooks/useCompleteOnce';
-const bottle = moduleAssetUrl("head-replacement/bottle-normal.jpg");
-const bottleCrushed = moduleAssetUrl("head-replacement/bottle-deformed.jpg");
-const can = moduleAssetUrl("head-replacement/can-normal.jpg");
-const canCrushed = moduleAssetUrl("head-replacement/can-deformed.jpg");
-const carton = moduleAssetUrl("head-replacement/carton-normal.jpg");
-const cartonCrushed = moduleAssetUrl("head-replacement/carton-deformed.jpg");
+const bottle = moduleAssetUrl("head-replacement/bottle-normal.webp");
+const bottleCrushed = moduleAssetUrl("head-replacement/bottle-deformed.webp");
+const can = moduleAssetUrl("head-replacement/can-normal.webp");
+const canCrushed = moduleAssetUrl("head-replacement/can-deformed.webp");
+const carton = moduleAssetUrl("head-replacement/carton-normal.webp");
+const cartonCrushed = moduleAssetUrl("head-replacement/carton-deformed.webp");
 import './HeadReplacementLab.css';
 
 type Task = 'category' | 'appearance';

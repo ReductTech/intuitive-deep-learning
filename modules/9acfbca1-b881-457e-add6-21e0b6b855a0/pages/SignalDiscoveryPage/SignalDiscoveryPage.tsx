@@ -152,7 +152,7 @@ export function DecisionMarquee({ selected, onSelect }: { selected: string; onSe
   return (
     <div shuku-edit-id="e-82f1aaf3-9a60-47cc-9a85-dfd58c5d2914" className="ngtw-decision-stream relative grid content-center gap-[10px] min-h-[220px] p-[18px_0] overflow-hidden rounded-[8px]" aria-label="常见决定示例">
       {choiceRows.map((choices, rowIndex) => (
-        <div shuku-edit-id="e-709cd7e7-30d5-4b6e-a124-578452195658" className={`ngtw-marquee-row flex w-full overflow-hidden ${rowIndex % 2 === 0 ? 'ngtw-marquee-row--right' : 'ngtw-marquee-row--left'}`} key={rowIndex}>
+        <div shuku-edit-id="e-709cd7e7-30d5-4b6e-a124-578452195658" data-ppt-viewport="循环滚动的输入示例，窗口外的条目等待进入" className={`ngtw-marquee-row flex w-full overflow-hidden ${rowIndex % 2 === 0 ? 'ngtw-marquee-row--right' : 'ngtw-marquee-row--left'}`} key={rowIndex}>
           <div shuku-edit-id="e-168ac267-ab7a-4be1-a059-d26710e59315" className="ngtw-marquee-track flex" style={{ animationDuration: `${92 + rowIndex * 7}s` }}>
             {renderGroup(choices, rowIndex, false)}
             {renderGroup(choices, rowIndex, true)}

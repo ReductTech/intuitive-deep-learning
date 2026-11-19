@@ -7,13 +7,13 @@ import { GOAL, START, keyOf, type Position } from '../../model';
 import { TRAP, warehouseStep } from '../QLearningLoopPage/qLearningSimulation';
 import './DeliveryTaskPage.css';
 
-const robotIcon = valueBasedRlAssetUrl('cover-v2/robot.png');
-const warehouseScene = valueBasedRlAssetUrl('cover-v2/warehouse.jpg');
-const heroRobot = valueBasedRlAssetUrl('cover-v2/robot.png');
-const directionKeycap = valueBasedRlAssetUrl('cover-v2/direction-keycap.png');
-const receivingStationEmpty = valueBasedRlAssetUrl('cover-v2/receiving-station-empty.png');
-const receivingStationLoaded = valueBasedRlAssetUrl('cover-v2/receiving-station-loaded.png');
-const maintenancePit = valueBasedRlAssetUrl('cover-v2/maintenance-pit.png');
+const robotIcon = valueBasedRlAssetUrl("cover-v2/robot.webp");
+const warehouseScene = valueBasedRlAssetUrl("cover-v2/warehouse.webp");
+const heroRobot = valueBasedRlAssetUrl("cover-v2/robot.webp");
+const directionKeycap = valueBasedRlAssetUrl("cover-v2/direction-keycap.webp");
+const receivingStationEmpty = valueBasedRlAssetUrl("cover-v2/receiving-station-empty.webp");
+const receivingStationLoaded = valueBasedRlAssetUrl("cover-v2/receiving-station-loaded.webp");
+const maintenancePit = valueBasedRlAssetUrl("cover-v2/maintenance-pit.webp");
 
 const COLLISION_PENALTY = 10;
 type Direction = 'up' | 'down' | 'left' | 'right';

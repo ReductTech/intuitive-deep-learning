@@ -57,7 +57,7 @@ export function TextCrossAttention() {
         onPointerMove={event => { if (pointer.current === event.pointerId) locate(event); }}
         onPointerUp={event => { if (pointer.current === event.pointerId) locate(event); release(event); }}
         onPointerCancel={release} onLostPointerCapture={() => {pointer.current = null; setDragging(false);}} onKeyDown={moveWithKeys}>
-        <ReferenceVisual file="visuals/attention-feature.jpg" alt="原参考图中的猫脸与书页特征" />
+        <ReferenceVisual file="visuals/attention-feature.webp" alt="原参考图中的猫脸与书页特征" />
         <div className="vgr-query-marker" data-testid="query-marker" style={{left: `${query.col / side * 100}%`, top: `${query.row / side * 100}%`}} aria-hidden="true" />
         <div className="vgr-query-tag" style={{left: `${Math.min(query.col, 12) / side * 100}%`, top: `${(query.row >= 3 ? query.row - 3 : query.row + 1) / side * 100}%`}} aria-hidden="true"><Typography as="span" variant="bodySmall" tone="inherit">Q</Typography></div>
       </div>

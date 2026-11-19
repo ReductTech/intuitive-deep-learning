@@ -1,7 +1,7 @@
-import bgAsset0 from '../../assets/images/translation-example/bg.jpg';
-import ufoAsset1 from '../../assets/images/translation-example/ufo.png';
-import pillarAsset2 from '../../assets/images/translation-example/pillar.png';
-import dark_foliageAsset3 from '../../assets/images/translation-example/dark_foliage.png';
+import bgAsset0 from "../../assets/images/translation-example/bg.webp";
+import ufoAsset1 from "../../assets/images/translation-example/ufo.webp";
+import pillarAsset2 from "../../assets/images/translation-example/pillar.webp";
+import dark_foliageAsset3 from "../../assets/images/translation-example/dark_foliage.webp";
 // Scene assets, compositing, pointer control and idle trajectory copied from the original module.
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from 'react';
 import { Typography } from "@shuku/course-style/react";

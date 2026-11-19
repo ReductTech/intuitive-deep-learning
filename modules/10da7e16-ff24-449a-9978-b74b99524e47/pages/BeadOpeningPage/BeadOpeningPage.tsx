@@ -8,7 +8,7 @@ const asset = (name: string) => moduleAssetUrl(`images/${name}`);
 type Position = { x: number; y: number; columns: number; rows: number } | null;
 const densities = [[48, 64], [24, 32], [16, 22]];
 const labels = ['原图', '细密拼豆', '简化拼豆', '极简拼豆'];
-const photos = [['alpine-lake-source.jpg', '山湖'], ['coast-source.jpg', '海岸'], ['fox-source.jpg', '狐狸'], ['car-source.jpg', '汽车'], ['cat-portrait.jpg', '猫咪']];
+const photos = [["alpine-lake-source.webp", '山湖'], ["coast-source.webp", '海岸'], ["fox-source.webp", '狐狸'], ["car-source.webp", '汽车'], ["cat-portrait.webp", '猫咪']];
 
 function BeadBoard({ source, grid, position, onPoint }: { source: HTMLCanvasElement; grid?: BeadGrid; position: Position; onPoint: (p: Position) => void }) {
   const ref = useRef<HTMLCanvasElement>(null);
@@ -37,7 +37,7 @@ function BeadBoard({ source, grid, position, onPoint }: { source: HTMLCanvasElem
 }
 
 export function BeadOpeningPage() {
-  const [url, setUrl] = useState(asset('car-source.jpg'));
+  const [url, setUrl] = useState(asset("car-source.webp"));
   const [source, setSource] = useState<HTMLCanvasElement | null>(null);
   const [position, setPosition] = useState<Position>(null);
   const [colorCount, setColorCount] = useState(24);
@@ -65,7 +65,7 @@ export function BeadOpeningPage() {
   const selectedGrid = position ? grids.find(g => g.columns === position.columns && g.rows === position.rows) ?? grids[2] : null;
   const current = position && selectedGrid ? selectedGrid.colors[Math.min(selectedGrid.rows - 1, Math.floor(position.y * selectedGrid.rows)) * selectedGrid.columns + Math.min(selectedGrid.columns - 1, Math.floor(position.x * selectedGrid.columns))] : null;
 
-  return <ContentBlock shuku-edit-id="e-613f00fe-c4ab-4c12-86d8-5acd169b7e2a" className="di-beads" headingLevel={1} title="照片，也可以拼出来吗？" subtitle="一张照片会失去什么，又保留什么？" style={{ '--di-studio': `url("${asset('craft-studio-background.jpg')}")` } as CSSProperties}>
+  return <ContentBlock shuku-edit-id="e-613f00fe-c4ab-4c12-86d8-5acd169b7e2a" className="di-beads" headingLevel={1} title="照片，也可以拼出来吗？" subtitle="一张照片会失去什么，又保留什么？" style={{ '--di-studio': `url("${asset("craft-studio-background.webp")}")` } as CSSProperties}>
     <div shuku-edit-id="e-10ae796f-97fa-411a-8df3-177fb4ab719c" className="di-beads__body">
       <div shuku-edit-id="e-122031ba-d144-40af-a363-ecfde5d45723" className="di-beads__tools">
         <Button onClick={() => uploadRef.current?.click()}><Typography shuku-edit-id="e-ce65708f-82c4-4f0a-963a-68699a692679" as="span" variant="bodySmall" tone="inherit">↑ 上传照片</Typography></Button>

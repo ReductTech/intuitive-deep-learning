@@ -1,8 +1,8 @@
 {
   "generator": "Built-in image_gen",
   "assets": [
-    "expanded-warehouse.png",
-    "q-table-growth.png"
+    "expanded-warehouse.webp",
+    "q-table-growth.webp"
   ],
   "prompts": [
     "Use case: scientific-educational.\nAsset type: transparent cutout illustration for a Chinese reinforcement learning lesson, shown about 260 by 165 pixels.\nPrimary request: create a polished miniature expanded logistics warehouse, one cohesive isometric cutaway diorama. A blue-and-white wheeled delivery robot with a dark navy face screen, cyan eyes and small yellow antenna moves between three short shelving rows with warm cardboard parcels. Show a small blue automatic doorway and a compact green charging dock as meaningful state factors. White and pale blue floor, sky blue shelf frames, restrained green accents, soft warm parcel colors. Modern friendly 3D educational render, smooth white ceramic/plastic materials and gentle realistic shading. High camera angle, compact horizontal composition, entire warehouse island visible, simple readable silhouettes at small size, objects large enough to recognize.\nConstraints: no words, letters, numbers, labels, diagram arrows, UI, charts, logos or watermark. Not a measured 100x100 blueprint; a conceptual warehouse illustration. No large background, no surrounding room, no hard rectangular image border. Isolated on genuine transparent background with a subtle contact shadow. All edges intact, generous 5% safe margin.",

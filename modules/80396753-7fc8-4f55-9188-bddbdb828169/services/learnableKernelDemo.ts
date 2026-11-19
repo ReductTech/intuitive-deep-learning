@@ -1,8 +1,8 @@
 export const DIGITS = [
-  { value: 3, file: '3/60051.jpg' },
-  { value: 5, file: '5/60015.jpg' },
-  { value: 8, file: '8/60110.jpg' },
-  { value: 9, file: '9/60009.jpg' },
+  { value: 3, file: "3/60051.webp" },
+  { value: 5, file: "5/60015.webp" },
+  { value: 8, file: "8/60110.webp" },
+  { value: 9, file: "9/60009.webp" },
 ] as const;
 
 export const IMAGE_SIZE = 28;

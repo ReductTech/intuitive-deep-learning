@@ -5,9 +5,9 @@ import { ContentBlock, MathFormulaStatic, Typography } from "@shuku/course-style
 import { useLecturePlayback } from '../../components/LecturePlayback';
 import './GanTrainingPage.css';
 
-const noise = moduleAssetUrl('images/gan-training/noise.jpg');
-const realPortrait = moduleAssetUrl('images/gan-training/real-portrait.jpg');
-const generatedPortrait = moduleAssetUrl('images/gan-training/generated-portrait.jpg');
+const noise = moduleAssetUrl("images/gan-training/noise.webp");
+const realPortrait = moduleAssetUrl("images/gan-training/real-portrait.webp");
+const generatedPortrait = moduleAssetUrl("images/gan-training/generated-portrait.webp");
 
 type Mode = 'd' | 'g' | 'cycle';
 const lessons = {

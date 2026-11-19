@@ -19,12 +19,12 @@ export function ResearchWebMonitor(){
  const visible=papers.filter(p=>(tab!=='论文收藏'||saved.includes(p.id))&&`${p.title} ${p.abstract} ${p.category}`.toLowerCase().includes(query.toLowerCase()));
  function open(p:WebPaper){setDetail(p);viewport.current?.scrollTo({top:0})}
  return <div shuku-edit-id="e-db830491-5b13-4c49-8950-d62338e5cf00" className="rw-monitor" aria-label="网页版科研信息服务演示" onWheel={e=>e.stopPropagation()} onPointerDown={e=>e.stopPropagation()} onKeyDown={e=>e.stopPropagation()}>
-  <img shuku-edit-id="e-83116d42-a47f-4df9-84d2-8bfd8f88f5a6" className="rw-device-photo" src={moduleAssetUrl('images/recommendation-app/monitor-photoreal.png')} alt="" draggable={false} aria-hidden="true"/>
+  <img shuku-edit-id="e-83116d42-a47f-4df9-84d2-8bfd8f88f5a6" className="rw-device-photo" src={moduleAssetUrl("images/recommendation-app/monitor-photoreal.webp")} alt="" draggable={false} aria-hidden="true"/>
   <div shuku-edit-id="e-5fac7dff-e1a2-47d8-9170-a90236b85854" className="rw-case"><i shuku-edit-id="e-f4bf6aa6-d7d6-46e4-9d46-86d16c6c5f45" className="rw-camera"/>
    <div shuku-edit-id="e-f682adc2-0b7e-4a75-a441-2df64e10e78d" className="rw-display" data-feed-screen="desktop" data-ppt-viewport="电脑内的本地网站视口">
     <div shuku-edit-id="e-8e893834-bf93-4b5f-823b-0c7a82c2a442" className="rw-website">
      <header shuku-edit-id="e-c86e681d-a2e6-433e-8127-8236a0d04e62" className="rw-nav">
-      <button shuku-edit-id="e-e9388b93-9725-4511-a411-e417e892b2a3" className="rw-logo" aria-label="网站首页" onClick={()=>changeTab('首页')}><img shuku-edit-id="e-edeaa29a-71bf-45a5-a9cc-16069b589024" src={moduleAssetUrl('images/recommendation-app/reduct-official-logo.png')} alt="减论科技"/></button>
+      <button shuku-edit-id="e-e9388b93-9725-4511-a411-e417e892b2a3" className="rw-logo" aria-label="网站首页" onClick={()=>changeTab('首页')}><img shuku-edit-id="e-edeaa29a-71bf-45a5-a9cc-16069b589024" src={moduleAssetUrl("images/recommendation-app/reduct-official-logo.webp")} alt="减论科技"/></button>
       <nav shuku-edit-id="e-1b65ffa7-d626-4352-8db0-3bee4fdc4b8b" aria-label="网页版导航">{['首页','热点','论文收藏'].map(t=><button shuku-edit-id="e-c31c4f98-3470-44d7-8d83-f08390e255ac" key={t} className={tab===t?'active':''} onClick={()=>changeTab(t)}><Typography shuku-edit-id="e-c687326b-4a50-43b5-ac09-8632230d5909" as="span" variant="bodySmall" tone="inherit">{t}</Typography></button>)}<button shuku-edit-id="e-c4c3d341-b4fa-4609-858d-2fc64fd7e3d0" onClick={()=>setNotice('新芽计划：连接科研学习、实践培养与导师指导。')}>新芽计划⌄</button><button shuku-edit-id="e-c3125cd5-50f9-41e2-90ef-ecf88c13e722" onClick={()=>setNotice('优博之路：关注科研成长与学术交流。')}>优博之路⌄</button></nav>
       <button shuku-edit-id="e-f4bbd2c5-2d2f-4fbd-846a-625d57676cd6" className="rw-login" onClick={()=>setNotice('当前展示论文发现与阅读体验，可直接浏览和收藏。')}>登录</button>
      </header>

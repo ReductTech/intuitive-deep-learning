@@ -7,7 +7,7 @@ const ASSET_ID = '10da7e16-ff24-449a-9978-b74b99524e47';
 const FPS = 24, T = 121, INITIAL_FRAME = 0;
 const PREVIEWS = Array.from({ length: 9 }, (_, i) => Math.round(i * T / 9));
 const videoUrl = moduleAssetUrl('videos/video_1791531788070.mp4');
-const frameUrl = (t: number) => moduleAssetUrl(`videos/video-frames/${String(t).padStart(3, '0')}.jpg`);
+const frameUrl = (t: number) => moduleAssetUrl(`videos/video-frames/${String(t).padStart(3, '0')}.webp`);
 
 export function VideoFramesPage() {
   const videoRef = useRef<HTMLVideoElement>(null);

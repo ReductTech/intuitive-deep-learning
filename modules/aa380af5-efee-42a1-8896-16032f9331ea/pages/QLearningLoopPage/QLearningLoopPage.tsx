@@ -11,9 +11,9 @@ import {
 } from './qLearningSimulation';
 import './QLearningLoopPage.css';
 
-const emptyStationArt = valueBasedRlAssetUrl('cover-v2/receiving-station-empty.png');
-const loadedStationArt = valueBasedRlAssetUrl('cover-v2/receiving-station-loaded.png');
-const pitArt = valueBasedRlAssetUrl('cover-v2/maintenance-pit.png');
+const emptyStationArt = valueBasedRlAssetUrl("cover-v2/receiving-station-empty.webp");
+const loadedStationArt = valueBasedRlAssetUrl("cover-v2/receiving-station-loaded.webp");
+const pitArt = valueBasedRlAssetUrl("cover-v2/maintenance-pit.webp");
 
 const cellLabel = (position: { row: number; col: number }) => `格 ${position.row + 1},${position.col + 1}`;
 const number = (value: number) => value.toFixed(2);

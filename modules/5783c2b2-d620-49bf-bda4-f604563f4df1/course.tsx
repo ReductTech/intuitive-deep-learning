@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import outline from './outlines.json';
 import { LessonFlowRevealMode, LessonStepContext } from "@shuku/course-style/react";
 import { GeneralizationIntroPage } from './pages/GeneralizationIntroPage/GeneralizationIntroPage';
 import { ImageNumbersPage } from './pages/ImageNumbersPage/ImageNumbersPage';
@@ -27,6 +28,7 @@ import { FreezeFineTunePage } from './pages/FreezeFineTunePage/FreezeFineTunePag
 import { StrategyMapPage } from './pages/StrategyMapPage/StrategyMapPage';
 import { TransferWorkflowPage } from './pages/TransferWorkflowPage/TransferWorkflowPage';
 import { BuildTrainingPlanPage } from './pages/BuildTrainingPlanPage/BuildTrainingPlanPage';
+import { StrategyComparisonPage, LearningChainPage } from './pages/StrategyComparisonPage/StrategyComparisonPage';
 
 export interface ResNetTransferCourseItem {
   id: string;
@@ -37,6 +39,20 @@ export interface ResNetTransferCourseItem {
 }
 
 const courseItems: ResNetTransferCourseItem[] = [
+  {
+    id: 'c0fe2d7b-8d17-46f2-a372-17fbc44c960e',
+    title: '这堂课其实只回答了一条问题链',
+    section: '课程回顾',
+    revealMode: 'cue',
+    component: context => <LearningChainPage onComplete={context.complete} />,
+  },
+  {
+    id: '02f1e583-ad66-4141-843c-3481ad47a3c7',
+    title: '三种方案，应该比较什么？',
+    section: '迁移学习',
+    revealMode: 'cue',
+    component: context => <StrategyComparisonPage onComplete={context.complete} />,
+  },
   {
     id: '2444d635-22b7-44db-9f9b-0b44f4cc0b91',
     title: '只有 300 张照片，怎样识别可回收物？',
@@ -228,4 +244,8 @@ const courseItems: ResNetTransferCourseItem[] = [
   },
 ];
 
-export const resNetTransferCourse: ResNetTransferCourseItem[] = courseItems;
+export const resNetTransferCourse: ResNetTransferCourseItem[] = outline.pages.map(page => {
+  const item = courseItems.find(item => item.id === page.id);
+  if (!item) throw new Error('Missing ResNet page renderer: ' + page.id);
+  return { ...item, title: page.title };
+});

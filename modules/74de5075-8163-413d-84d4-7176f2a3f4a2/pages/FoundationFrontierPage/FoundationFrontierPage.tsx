@@ -21,7 +21,7 @@ export function FoundationFrontierPage() {
       </svg>
       <div shuku-edit-id="e-3ff830ad-e8c4-4a39-bb92-f81a4e810f99" className="aipe-ff-hub"><Typography shuku-edit-id="e-8bb691ef-8c26-497f-83cd-4111369af877" as="h2" variant="h1" tone="inherit">知识<br shuku-edit-id="e-bb54200c-431d-48f6-bf16-b5afad7a1fbe"/>探索者</Typography></div>
       <Typography shuku-edit-id="e-e13c4756-2d14-4c30-953f-f816845a1638" as="p" variant="subtitle" tone="muted" className="aipe-ff-hub-caption">理解与应用</Typography>
-      <img shuku-edit-id="e-c5094ee9-e8d3-442d-a217-116a34068fb6" className="aipe-ff-materials" src={moduleAssetUrl('images/foundation-frontier-materials-v2.png')}
+      <img shuku-edit-id="e-c5094ee9-e8d3-442d-a217-116a34068fb6" className="aipe-ff-materials" src={moduleAssetUrl("images/foundation-frontier-materials-v2.webp")}
         alt="研究论文与系统教材，分别承载前沿跟踪与知识体系学习" draggable={false}/>
       <section shuku-edit-id="e-0110e497-398b-4c55-af2d-bf920a1785b9" className="aipe-ff-branch aipe-ff-frontier">
         <Typography shuku-edit-id="e-6a83431f-2dd3-44b9-b9ac-65892fe8d488" as="h2" variant="h1" tone="inherit">持续追踪前沿</Typography>

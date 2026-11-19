@@ -21,7 +21,7 @@ export function LatentSampling() {
   const story=useStory(samplingSteps,650);
   const finished=story.step===9;
   return <ReferenceCanvas index={8} source="18">
-    <RefBox rect={[991,493,193,199]} className="vgr-white vgr-current-latent" data-sampling-step={story.step}><ReferenceVisual file={story.step<2?'visuals/latent-noisy.png':story.step<8?'visuals/latent-encoded.png':'visuals/latent-denoised.png'}/></RefBox>
+    <RefBox rect={[991,493,193,199]} className="vgr-white vgr-current-latent" data-sampling-step={story.step}><ReferenceVisual file={story.step<2?"visuals/latent-noisy.webp":story.step<8?"visuals/latent-encoded.webp":"visuals/latent-denoised.webp"}/></RefBox>
     <Cover rect={[1439,492,201,190]} visible={finished}/>
     {story.playing && <ReferencePaths><path className="vgr-running-path" d={story.step%2 ? 'M361 601H603' : 'M829 651V704H339V631'} fill="none" stroke="#ff8a23" strokeWidth="6" strokeDasharray="14 12"/></ReferencePaths>}
     <ReferenceControls rect={[43,769,1590,51]}><Text>采样更新 {Math.floor(story.step/2)} / 4</Text><Typography variant="bodySmall" tone="accent">{finished?'采样完成 → 最后解码一次':story.step%2?'网络预测：读取当前 latent、时间与文本':'采样器更新：得到下一个 latent'}</Typography><Text muted>同一组网络参数被反复调用</Text></ReferenceControls>

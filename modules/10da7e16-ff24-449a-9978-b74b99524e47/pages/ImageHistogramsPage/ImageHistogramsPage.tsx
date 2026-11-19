@@ -3,7 +3,7 @@ import { moduleAssetUrl } from "@shuku/course-runtime/react/assets";
 import { useEffect, useRef, useState } from 'react';
 import { ContentBlock, Typography } from "@shuku/course-style/react";
 import './ImageHistogramsPage.css';
-const photo = moduleAssetUrl('images/digital-image-cat-scene.jpg');
+const photo = moduleAssetUrl("images/digital-image-cat-scene.webp");
 const COLS = 80, ROWS = 64, TOTAL = COLS * ROWS;
 const STAGE_W = 1500, STAGE_H = 590;
 const IMAGE = { x: 20, y: 40, width: 600, height: 480 };

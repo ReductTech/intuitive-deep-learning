@@ -6,12 +6,12 @@ import { ContentBlock, MathFormulaStatic, Typography } from "@shuku/course-style
 import './CommonKernelsPage.css';
 
 const moduleAssetId = '444f8951-dd2e-42dc-94e5-c5a878618631';
-const buildingImage = creatorGuideAssetUrl(moduleAssetId, 'workflow/convolution-course/xiandaijianzhu.jpg');
-const bridgeImage = creatorGuideAssetUrl(moduleAssetId, 'workflow/convolution-course/xielaqiao.jpg');
-const mountainImage = creatorGuideAssetUrl(moduleAssetId, 'workflow/convolution-course/caiermate.jpg');
-const zebraImage = creatorGuideAssetUrl(moduleAssetId, 'workflow/convolution-course/zebra.jpg');
-const pineappleImage = creatorGuideAssetUrl(moduleAssetId, 'workflow/convolution-course/pineapple.jpg');
-const cityImage = creatorGuideAssetUrl(moduleAssetId, 'workflow/convolution-course/be_city.jpg');
+const buildingImage = creatorGuideAssetUrl(moduleAssetId, "workflow/convolution-course/xiandaijianzhu.webp");
+const bridgeImage = creatorGuideAssetUrl(moduleAssetId, "workflow/convolution-course/xielaqiao.webp");
+const mountainImage = creatorGuideAssetUrl(moduleAssetId, "workflow/convolution-course/caiermate.webp");
+const zebraImage = creatorGuideAssetUrl(moduleAssetId, "workflow/convolution-course/zebra.webp");
+const pineappleImage = creatorGuideAssetUrl(moduleAssetId, "workflow/convolution-course/pineapple.webp");
+const cityImage = creatorGuideAssetUrl(moduleAssetId, "workflow/convolution-course/be_city.webp");
 
 type Matrix3 = readonly [readonly [number, number, number], readonly [number, number, number], readonly [number, number, number]];
 type ViewMode = 'gray' | 'edge' | 'signed';

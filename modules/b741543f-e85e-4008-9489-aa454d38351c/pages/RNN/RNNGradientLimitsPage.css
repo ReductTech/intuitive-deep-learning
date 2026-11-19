@@ -297,3 +297,6 @@
   .course-shell .nrnn-gradient-limits__map-row { grid-template-columns: 24px minmax(0, .9fr) 18px minmax(0, 1fr) 18px minmax(0, .9fr); gap: 4px; }
   .course-shell .nrnn-gradient-limits__map-box { min-height: 58px; }
 }
+
+/* Preserve the full content inside the 1600 × 900 playback canvas. */
+.course-shell .nrnn-gradient-limits__rnn-map { padding-block:12px; }

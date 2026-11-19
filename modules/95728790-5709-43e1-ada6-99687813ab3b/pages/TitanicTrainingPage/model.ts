@@ -1,7 +1,7 @@
 import type recordData from '../../assets/precomputed/titanic.json';
 import {loadPrecomputed} from '../../precomputed';
 const record=await loadPrecomputed<typeof recordData>('titanic');
-import records from '../RegressionClassificationPage/titanic-passengers.json';
+import records from '../../assets/RegressionClassificationPage/titanic-passengers.json';
 export const samples = records.filter((p): p is typeof p & { Age: number } => p.Age !== null);
 export type Inputs = { age: number; male: number; cabin: number; fare: number };
 export const encode = (p: Inputs) => [1, p.age / 80, p.male, p.cabin, p.fare / 100];

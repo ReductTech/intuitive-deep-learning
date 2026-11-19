@@ -3,8 +3,8 @@ import { moduleAssetUrl } from "@shuku/course-runtime/react/assets";
 import { useEffect, useRef, useState, type KeyboardEvent, type MouseEvent } from 'react';
 import { Button, ContentBlock, Typography } from "@shuku/course-style/react";
 import { useCompleteOnce } from '../../hooks/useCompleteOnce';
-const bottleFront = moduleAssetUrl("recycling/camera-views/bottle-front.jpg");
-const bottleAngle = moduleAssetUrl("recycling/camera-views/bottle-angle-45.jpg");
+const bottleFront = moduleAssetUrl("recycling/camera-views/bottle-front.webp");
+const bottleAngle = moduleAssetUrl("recycling/camera-views/bottle-angle-45.webp");
 import './PixelRepresentationPage.css';
 
 type Condition = 'angle' | 'light' | 'distance' | 'background';

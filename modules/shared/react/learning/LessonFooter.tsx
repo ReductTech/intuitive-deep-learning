@@ -13,6 +13,8 @@ export interface LessonFooterLink {
 }
 
 export interface LessonFooterProps {
+  /** Stable page UUID used for rating persistence and events. */
+  pageKey: string;
   title: ReactNode;
   description?: ReactNode;
   eyebrow?: ReactNode;
@@ -30,6 +32,7 @@ export interface LessonFooterProps {
  * lesson does not end as a second catalogue page.
  */
 export function LessonFooter({
+  pageKey,
   title,
   description,
   eyebrow = '本节完成',
@@ -60,7 +63,7 @@ export function LessonFooter({
       )}
       <div className="edu-lesson-footer-meta">
         <LessonDevelopers githubIds={developerIds} />
-        <PageRating />
+        <PageRating pageKey={pageKey} />
       </div>
     </footer>
   );

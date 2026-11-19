@@ -50,3 +50,7 @@
 
 .vfl-loss-classifier { border-left-color:#e2ebf7; border-right-color:#e2ebf7; }
 .vfl-loss-output>p { min-height:58px; }
+
+.vfl-loss-flow { height:510px; margin-top:16px; padding-block:16px; }
+.vfl-loss-stage h2 { margin-bottom:10px; }
+.vfl-loss-conclusion { height:100px; margin-top:10px; }

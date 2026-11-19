@@ -48,10 +48,41 @@ function ruin(parent:THREE.Object3D,x:number,z:number,angle:number) {
  for(let i=0;i<6;i++){const r=block(g,-1.5+i*.5,3.15+.11*(i%2),-1.2,.035,.55,.035,'#4b6260');r.rotation.z=.18*(i%3-1);}
  for(let i=0;i<7;i++){const r=block(g,Math.sin(i*9)*1.8,.2,Math.cos(i*7)*1.7,.25+.1*(i%3),.35,.45,'#9b9b88');r.rotation.set(.2*i,i,.2);}
 }
+const landscapeModelPaths: Record<string, string> = {
+  'building-a.glb': 'evacuation/models/building-a.glb',
+  'building-c.glb': 'evacuation/models/building-c.glb',
+  'building-f.glb': 'evacuation/models/building-f.glb',
+  'building-g.glb': 'evacuation/models/building-g.glb',
+  'building-j.glb': 'evacuation/models/building-j.glb',
+  'building-m.glb': 'evacuation/models/building-m.glb',
+  'building-n.glb': 'evacuation/models/building-n.glb',
+  'building-p.glb': 'evacuation/models/building-p.glb',
+  'building-t.glb': 'evacuation/models/building-t.glb',
+  'Bush_Common.gltf': 'evacuation/models/Bush_Common.gltf',
+  'chimney-large.glb': 'evacuation/models/chimney-large.glb',
+  'chimney-medium.glb': 'evacuation/models/chimney-medium.glb',
+  'CommonTree_1.gltf': 'evacuation/models/CommonTree_1.gltf',
+  'CommonTree_3.gltf': 'evacuation/models/CommonTree_3.gltf',
+  'DeadTree_1.gltf': 'evacuation/models/DeadTree_1.gltf',
+  'DeadTree_3.gltf': 'evacuation/models/DeadTree_3.gltf',
+  'detail-tank-large.glb': 'evacuation/models/detail-tank-large.glb',
+  'Fern_1.gltf': 'evacuation/models/Fern_1.gltf',
+  'Flower_3_Group.gltf': 'evacuation/models/Flower_3_Group.gltf',
+  'Grass_Common_Short.gltf': 'evacuation/models/Grass_Common_Short.gltf',
+  'Pine_1.gltf': 'evacuation/models/Pine_1.gltf',
+  'Pine_2.gltf': 'evacuation/models/Pine_2.gltf',
+  'Pine_3.gltf': 'evacuation/models/Pine_3.gltf',
+  'Rock_Medium_1.gltf': 'evacuation/models/Rock_Medium_1.gltf',
+  'Rock_Medium_2.gltf': 'evacuation/models/Rock_Medium_2.gltf',
+  'Rock_Medium_3.gltf': 'evacuation/models/Rock_Medium_3.gltf',
+  'shipping-container-a.glb': 'evacuation/models/shipping-container-a.glb',
+  'shipping-container-b.glb': 'evacuation/models/shipping-container-b.glb',
+  'water-tower.glb': 'evacuation/models/water-tower.glb',
+};
 type Placement={id?:string;x:number;z:number;height:number;angle:number;tint?:THREE.Color};
 async function instances(parent:THREE.Object3D,name:string,ext:string,items:Placement[],nature=false, refs?:Map<string,{batch:THREE.InstancedMesh;index:number;matrix:THREE.Matrix4}[]>) {
  if(!items.length)return;
- const gltf=await new GLTFLoader().loadAsync(moduleAssetUrl(`evacuation/models/${name}.${ext}`));const source=gltf.scene;source.updateMatrixWorld(true);
+ const gltf=await new GLTFLoader().loadAsync(moduleAssetUrl(landscapeModelPaths[`${name}.${ext}`]));const source=gltf.scene;source.updateMatrixWorld(true);
  const bounds=new THREE.Box3().setFromObject(source),size=bounds.getSize(new THREE.Vector3()),center=bounds.getCenter(new THREE.Vector3());
  const normalize=new THREE.Matrix4().makeTranslation(-center.x,-bounds.min.y,-center.z);const dummy=new THREE.Object3D();
  source.traverse(object=>{if(!(object instanceof THREE.Mesh))return;const geometry=object.geometry.clone();geometry.applyMatrix4(object.matrixWorld);geometry.applyMatrix4(normalize);

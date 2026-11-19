@@ -5,10 +5,10 @@ import { useEffect, useRef } from 'react';
 import { ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import './ReverseInferencePage.css';
 
-const x0 = moduleAssetUrl('images/forward-derivation/x0.jpg');
-const x1 = moduleAssetUrl('images/forward-derivation/x1.jpg');
-const xt = moduleAssetUrl('images/forward-derivation/xt.jpg');
-const noise = moduleAssetUrl('images/two-processes/xt.jpg');
+const x0 = moduleAssetUrl("images/forward-derivation/x0.webp");
+const x1 = moduleAssetUrl("images/forward-derivation/x1.webp");
+const xt = moduleAssetUrl("images/forward-derivation/xt.webp");
+const noise = moduleAssetUrl("images/two-processes/xt.webp");
 
 const steps = [
   '生成从第 T 步的纯噪声开始。',
@@ -49,10 +49,10 @@ function StackedFormula({ lines, label }: { lines: readonly string[]; label: str
   </div>;
 }
 
-export interface ReverseInferencePageProps { onComplete?: () => void; }
+export interface ReverseInferencePageProps { onComplete?: () => void; initialStage?: number; autoplay?: boolean; title?: string; }
 
-export function ReverseInferencePage({ onComplete }: ReverseInferencePageProps) {
-  const { stage: step, controls } = useLecturePlayback(steps.length, 1000);
+export function ReverseInferencePage({ onComplete, initialStage = 0, autoplay = true, title }: ReverseInferencePageProps) {
+  const { stage: step, controls } = useLecturePlayback(steps.length, 1000, undefined, initialStage, autoplay);
   const completedRef = useRef(false);
 
   useEffect(() => {
@@ -64,7 +64,7 @@ export function ReverseInferencePage({ onComplete }: ReverseInferencePageProps) 
   const focused = step >= 4;
 
   return <ContentBlock shuku-edit-id="e-287ee1e9-e1a9-4a5a-91e3-476f28046a96" headingLevel={1} className="vg-shared-page vg-inference" bodyClassName="vg-inference__body"
-    title="图像生成：反向去噪怎样一步步发生？" subtitle={steps[step]}>
+    title={title ?? '图像生成：反向去噪怎样一步步发生？'} subtitle={steps[step]}>
     <div shuku-edit-id="e-0602df61-562d-4132-bfeb-77bf5c3e28ab" className={`vg-inference__content${focused ? ' is-focused' : ''}`}>
       <section shuku-edit-id="e-4bbf3c60-7ac6-4b8e-a5ad-a777222e5310" className="vg-inference__chain" aria-label="从纯噪声到图像的反向生成链">
         <div shuku-edit-id="e-84b8df10-b0b1-4fab-98a9-f365404999b0" className="vg-inference__chain-heading">

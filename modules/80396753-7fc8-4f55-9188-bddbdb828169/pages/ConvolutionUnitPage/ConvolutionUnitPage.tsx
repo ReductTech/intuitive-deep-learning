@@ -50,7 +50,7 @@ export function ConvolutionUnitPage() {
       if (active) setPixels(Array.from({ length: 784 }, (_, i) => rgba[i * 4] / 255));
     };
     image.onerror = () => { if (active) setError(true); };
-    image.src = moduleAssetUrl('mnist/5/60015.jpg');
+    image.src = moduleAssetUrl("mnist/5/60015.webp");
     return () => { active = false; };
   }, []);
   const maps = useMemo(() => pixels ? KERNELS.map(kernel => {

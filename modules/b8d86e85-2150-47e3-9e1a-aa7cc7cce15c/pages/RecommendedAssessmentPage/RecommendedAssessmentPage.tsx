@@ -4,9 +4,9 @@ import outline from '../../outlines.json';
 import './RecommendedAssessmentPage.css';
 
 const advantages = [
-  { title: '呈现理解', detail: '方法关系讲清楚', image: 'assessment-understanding-icon-v5.jpg' },
-  { title: '看见AI协作', detail: '核验内容再改进', image: 'assessment-collaboration-icon-v5.jpg' },
-  { title: '积累学习资源', detail: '供同学学习复用', image: 'assessment-resource-icon-v5.jpg' },
+  { title: '呈现理解', detail: '方法关系讲清楚', image: "assessment-understanding-icon-v5.webp" },
+  { title: '看见AI协作', detail: '核验内容再改进', image: "assessment-collaboration-icon-v5.webp" },
+  { title: '积累学习资源', detail: '供同学学习复用', image: "assessment-resource-icon-v5.webp" },
 ] as const;
 
 const asset = (file: string) => moduleAssetUrl(`images/assessment/${file}`);
@@ -16,7 +16,7 @@ export function RecommendedAssessmentPage() {
     subtitle="一个方向 · 三篇论文 · 三份交互作品 · 一次动手实践（复现 Jittor 代码）"
     headingLevel={1} className="aipe-assessment-page" bodyClassName="aipe-assessment-body">
     <figure shuku-edit-id="e-6cab7e92-5b12-49c3-8428-faafcaa1d6ef" className="aipe-assessment-hero">
-      <img shuku-edit-id="e-6a294313-6f9e-4531-b3a6-f58ac419b10e" src={asset('assessment-flow-approved-v5.jpg')}
+      <img shuku-edit-id="e-6a294313-6f9e-4531-b3a6-f58ac419b10e" src={asset("assessment-flow-approved-v5.webp")}
         alt="选定一个研究方向，深读三篇论文，形成交互式学习作品。"
         draggable={false}/>
       <figcaption shuku-edit-id="e-d24ff4ab-21e4-43c4-8391-c739564d34ed" className="aipe-assessment-stage-labels">

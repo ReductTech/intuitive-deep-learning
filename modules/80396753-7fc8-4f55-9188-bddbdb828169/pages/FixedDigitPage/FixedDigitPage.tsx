@@ -17,9 +17,9 @@ const KERNELS: Kernel[] = [
   { id: 'corner', name: '角点检测', matrix: [[1, -2, 1], [-2, 4, -2], [1, -2, 1]] },
 ];
 const SAMPLES = [
-  { label: '7', src: moduleAssetUrl('mnist/7/60000.jpg') },
-  { label: '2', src: moduleAssetUrl('mnist/2/60035.jpg') },
-  { label: '6', src: moduleAssetUrl('mnist/6/60011.jpg') },
+  { label: '7', src: moduleAssetUrl("mnist/7/60000.webp") },
+  { label: '2', src: moduleAssetUrl("mnist/2/60035.webp") },
+  { label: '6', src: moduleAssetUrl("mnist/6/60011.webp") },
 ];
 const emptyPixels = (): Pixels => Array.from({ length: SIZE }, () => Array(SIZE).fill(0) as number[]);
 const percent = (value: number) => `${(value * 100).toFixed(1)}%`;

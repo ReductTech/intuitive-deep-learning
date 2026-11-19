@@ -3,7 +3,7 @@ import { moduleAssetUrl } from "@shuku/course-runtime/react/assets";
 import { useEffect, useRef, useState } from 'react';
 import { Button, ContentBlock, NoticeStrip, Question, Typography, type QuestionCheckResult } from "@shuku/course-style/react";
 import { useCompleteOnce } from '../../hooks/useCompleteOnce';
-const trainingCurve = moduleAssetUrl("research/resnet-figure1-training-user.jpg");
+const trainingCurve = moduleAssetUrl("research/resnet-figure1-training-user.webp");
 import './DegradationProblemPage.css';
 
 const predictions = [

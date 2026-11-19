@@ -1,0 +1,427 @@
+{
+  "source": "C:\\Users\\Ocean\\Documents\\GitHub\\intuitive-deep-learning",
+  "output": "C:\\Users\\Ocean\\Documents\\GitHub\\Shuku\\var\\course-builds",
+  "stagingDirectoriesCreated": false,
+  "officialBuilderSha256": "92ed89d57084ca2cfd0414c9eab3799d4c10d169b1500227057ed6ace8f31e49",
+  "courses": [
+    {
+      "id": "1a8e20a6-6e70-4d1d-8830-3b6b9a34ffed",
+      "title": "基础示例：Creator Skill 是什么",
+      "status": "passed",
+      "revision": "9dab67a5fa03342cce1c61892062c77f235dcf2acc0ecc67635ffdf91b51a294",
+      "directory": "C:\\Users\\Ocean\\Documents\\GitHub\\Shuku\\var\\course-builds\\1a8e20a6-6e70-4d1d-8830-3b6b9a34ffed\\9dab67a5fa03342cce1c61892062c77f235dcf2acc0ecc67635ffdf91b51a294",
+      "files": 37,
+      "pages": 1,
+      "modes": [
+        "guide",
+        "ppt"
+      ],
+      "seconds": 3.609
+    },
+    {
+      "id": "07951e3b-2fcb-477e-b5d8-ad7930c2a529",
+      "title": "视觉 Transformer 与视觉语言模型",
+      "status": "passed",
+      "revision": "7026e9a20a4df8837d247af8530cb4883df5466fc4661c2c3591b26eebf3188d",
+      "directory": "C:\\Users\\Ocean\\Documents\\GitHub\\Shuku\\var\\course-builds\\07951e3b-2fcb-477e-b5d8-ad7930c2a529\\7026e9a20a4df8837d247af8530cb4883df5466fc4661c2c3591b26eebf3188d",
+      "files": 74,
+      "pages": 27,
+      "modes": [
+        "guide",
+        "ppt"
+      ],
+      "seconds": 2.824
+    },
+    {
+      "id": "0fd05cd8-c7f8-496b-88e1-441930abb5d5",
+      "title": "视觉生成网络结构",
+      "status": "passed",
+      "revision": "b81980ee445592818723095d517bf9f5362ddf9e10998f1b3134379942c7c2ab",
+      "directory": "C:\\Users\\Ocean\\Documents\\GitHub\\Shuku\\var\\course-builds\\0fd05cd8-c7f8-496b-88e1-441930abb5d5\\b81980ee445592818723095d517bf9f5362ddf9e10998f1b3134379942c7c2ab",
+      "files": 137,
+      "pages": 15,
+      "modes": [
+        "guide",
+        "ppt"
+      ],
+      "seconds": 2.446
+    },
+    {
+      "id": "10da7e16-ff24-449a-9978-b74b99524e47",
+      "title": "数字图像入门",
+      "status": "passed",
+      "revision": "0d4d948801f25ec14f3006d3f8829642f127f4fc29e7b897497c8a6c32dfeb6d",
+      "directory": "C:\\Users\\Ocean\\Documents\\GitHub\\Shuku\\var\\course-builds\\10da7e16-ff24-449a-9978-b74b99524e47\\0d4d948801f25ec14f3006d3f8829642f127f4fc29e7b897497c8a6c32dfeb6d",
+      "files": 195,
+      "pages": 24,
+      "modes": [
+        "guide",
+        "ppt"
+      ],
+      "seconds": 2.845
+    },
+    {
+      "id": "1fbfaced-89c8-4ee4-a31e-49fefd5dcb4b",
+      "title": "GeoAgent：看图定位的训练方法",
+      "status": "passed",
+      "revision": "0ccee496a5f4a70c611d15da6634be5b7ed0eca9ccfef98c4c6d6f5faee62055",
+      "directory": "C:\\Users\\Ocean\\Documents\\GitHub\\Shuku\\var\\course-builds\\1fbfaced-89c8-4ee4-a31e-49fefd5dcb4b\\0ccee496a5f4a70c611d15da6634be5b7ed0eca9ccfef98c4c6d6f5faee62055",
+      "files": 39,
+      "pages": 1,
+      "modes": [
+        "guide",
+        "ppt"
+      ],
+      "seconds": 3.544
+    },
+    {
+      "id": "34103f87-7796-4685-97d9-2cb3bf23f6f5",
+      "title": "注意力机制",
+      "status": "passed",
+      "revision": "eb2a98994607e422cc010ede7bfd6495c5a85c57b91ed2178f6231c72536d5e7",
+      "directory": "C:\\Users\\Ocean\\Documents\\GitHub\\Shuku\\var\\course-builds\\34103f87-7796-4685-97d9-2cb3bf23f6f5\\eb2a98994607e422cc010ede7bfd6495c5a85c57b91ed2178f6231c72536d5e7",
+      "files": 96,
+      "pages": 25,
+      "modes": [
+        "guide",
+        "ppt"
+      ],
+      "seconds": 4.955
+    },
+    {
+      "id": "3500e36d-8f2e-43f6-ba93-e830091cd541",
+      "title": "从文字到价值：新生文章影响力预测",
+      "status": "passed",
+      "revision": "906b6688226e0e3d541fac4c0de58ff9586a6e18636f22acc2272dd8c6a0af1e",
+      "directory": "C:\\Users\\Ocean\\Documents\\GitHub\\Shuku\\var\\course-builds\\3500e36d-8f2e-43f6-ba93-e830091cd541\\906b6688226e0e3d541fac4c0de58ff9586a6e18636f22acc2272dd8c6a0af1e",
+      "files": 104,
+      "pages": 38,
+      "modes": [
+        "guide",
+        "ppt"
+      ],
+      "seconds": 10.805
+    },
+    {
+      "id": "38cd1c79-d8b7-462a-b208-a567c5cd89c4",
+      "title": "卷积基础：从五子棋棋形到图像卷积",
+      "status": "passed",
+      "revision": "c126304e6952ac4db5e1b195397524e808b91b79ad0632b5790081b218306d7d",
+      "directory": "C:\\Users\\Ocean\\Documents\\GitHub\\Shuku\\var\\course-builds\\38cd1c79-d8b7-462a-b208-a567c5cd89c4\\c126304e6952ac4db5e1b195397524e808b91b79ad0632b5790081b218306d7d",
+      "files": 86,
+      "pages": 24,
+      "modes": [
+        "guide",
+        "ppt"
+      ],
+      "seconds": 8.468
+    },
+    {
+      "id": "3a8a4e84-67b6-499a-ae8d-7762e6ddada8",
+      "title": "Transformer 入门",
+      "status": "passed",
+      "revision": "e476c4b6608f9ca1511853d9761c7efb01e7b50ecae8be1168766d6f61dd66a9",
+      "directory": "C:\\Users\\Ocean\\Documents\\GitHub\\Shuku\\var\\course-builds\\3a8a4e84-67b6-499a-ae8d-7762e6ddada8\\e476c4b6608f9ca1511853d9761c7efb01e7b50ecae8be1168766d6f61dd66a9",
+      "files": 86,
+      "pages": 34,
+      "modes": [
+        "guide",
+        "ppt"
+      ],
+      "seconds": 3.498
+    },
+    {
+      "id": "444f8951-dd2e-42dc-94e5-c5a878618631",
+      "title": "直觉式学习课件：理念、工具与创作方法",
+      "status": "passed",
+      "revision": "5694255a4556a4fde09f9cc4b2fd95c2ec035f1e4b0540269e8c35de910040b8",
+      "directory": "C:\\Users\\Ocean\\Documents\\GitHub\\Shuku\\var\\course-builds\\444f8951-dd2e-42dc-94e5-c5a878618631\\5694255a4556a4fde09f9cc4b2fd95c2ec035f1e4b0540269e8c35de910040b8",
+      "files": 217,
+      "pages": 22,
+      "modes": [
+        "guide",
+        "ppt"
+      ],
+      "seconds": 10.144
+    },
+    {
+      "id": "56a1d5b2-a439-4ee3-8f63-fd63ac09c741",
+      "title": "梯度下降、优化器与反向传播",
+      "status": "passed",
+      "revision": "e04e442a630109c249ba5c14544ffefc3ddbc7480cf7b895cdc151ae773e561e",
+      "directory": "C:\\Users\\Ocean\\Documents\\GitHub\\Shuku\\var\\course-builds\\56a1d5b2-a439-4ee3-8f63-fd63ac09c741\\e04e442a630109c249ba5c14544ffefc3ddbc7480cf7b895cdc151ae773e561e",
+      "files": 94,
+      "pages": 1,
+      "modes": [
+        "guide",
+        "ppt"
+      ],
+      "seconds": 4.806
+    },
+    {
+      "id": "5783c2b2-d620-49bf-bda4-f604563f4df1",
+      "title": "深层网络与表示学习",
+      "status": "passed",
+      "revision": "2e3aed5acb49f1615b59843ce9d58ca0e633b2d466add7b852ffdeb9cd534fe3",
+      "directory": "C:\\Users\\Ocean\\Documents\\GitHub\\Shuku\\var\\course-builds\\5783c2b2-d620-49bf-bda4-f604563f4df1\\2e3aed5acb49f1615b59843ce9d58ca0e633b2d466add7b852ffdeb9cd534fe3",
+      "files": 433,
+      "pages": 29,
+      "modes": [
+        "guide",
+        "ppt"
+      ],
+      "seconds": 5.644
+    },
+    {
+      "id": "74de5075-8163-413d-84d4-7176f2a3f4a2",
+      "title": "大模型驱动的实践能力培养体系与平台 SPP",
+      "status": "passed",
+      "revision": "7450a1ac28d113d2f6608e994af1c6b2e5e99200efb30acbd7bef31a6b4cbf03",
+      "directory": "C:\\Users\\Ocean\\Documents\\GitHub\\Shuku\\var\\course-builds\\74de5075-8163-413d-84d4-7176f2a3f4a2\\7450a1ac28d113d2f6608e994af1c6b2e5e99200efb30acbd7bef31a6b4cbf03",
+      "files": 1012,
+      "pages": 46,
+      "modes": [
+        "guide",
+        "ppt"
+      ],
+      "seconds": 10.427
+    },
+    {
+      "id": "80396753-7fc8-4f55-9188-bddbdb828169",
+      "title": "视觉特征学习",
+      "status": "passed",
+      "revision": "f02de4cb0e71ab121758cee6d3ac9c2b2fe72785cfe065af3a2c382728319faa",
+      "directory": "C:\\Users\\Ocean\\Documents\\GitHub\\Shuku\\var\\course-builds\\80396753-7fc8-4f55-9188-bddbdb828169\\f02de4cb0e71ab121758cee6d3ac9c2b2fe72785cfe065af3a2c382728319faa",
+      "files": 427,
+      "pages": 25,
+      "modes": [
+        "guide",
+        "ppt"
+      ],
+      "seconds": 3.542
+    },
+    {
+      "id": "95728790-5709-43e1-ada6-99687813ab3b",
+      "title": "多层感知机",
+      "status": "passed",
+      "revision": "97f8351b605c4a7ec7219bd58150ce92efb968b11f016b50eab0755c5b44744b",
+      "directory": "C:\\Users\\Ocean\\Documents\\GitHub\\Shuku\\var\\course-builds\\95728790-5709-43e1-ada6-99687813ab3b\\97f8351b605c4a7ec7219bd58150ce92efb968b11f016b50eab0755c5b44744b",
+      "files": 49,
+      "pages": 5,
+      "modes": [
+        "guide",
+        "ppt"
+      ],
+      "seconds": 10.158
+    },
+    {
+      "id": "9831b46b-af10-4cb3-b9dc-94e0cee25143",
+      "title": "策略梯度入门",
+      "status": "passed",
+      "revision": "b78b2ca9f4c21b32817c2691940039c851a8f2a34753388734c383b944e63bb1",
+      "directory": "C:\\Users\\Ocean\\Documents\\GitHub\\Shuku\\var\\course-builds\\9831b46b-af10-4cb3-b9dc-94e0cee25143\\b78b2ca9f4c21b32817c2691940039c851a8f2a34753388734c383b944e63bb1",
+      "files": 58,
+      "pages": 15,
+      "modes": [
+        "guide",
+        "ppt"
+      ],
+      "seconds": 4.58
+    },
+    {
+      "id": "9acfbca1-b881-457e-add6-21e0b6b855a0",
+      "title": "认识人工神经元",
+      "status": "passed",
+      "revision": "02ba52f2d7736a56cc46b6170167ca2ffb6427ef001791fb0ebfd56fab515143",
+      "directory": "C:\\Users\\Ocean\\Documents\\GitHub\\Shuku\\var\\course-builds\\9acfbca1-b881-457e-add6-21e0b6b855a0\\02ba52f2d7736a56cc46b6170167ca2ffb6427ef001791fb0ebfd56fab515143",
+      "files": 79,
+      "pages": 18,
+      "modes": [
+        "guide",
+        "ppt"
+      ],
+      "seconds": 3.179
+    },
+    {
+      "id": "a9333d75-9e97-4c31-941d-9ce3e6f49608",
+      "title": "智能体如何完成复杂任务",
+      "status": "passed",
+      "revision": "8e6ec713e97f61e2517d1241a5af6d61917730580365ead6506213d936e6b4c8",
+      "directory": "C:\\Users\\Ocean\\Documents\\GitHub\\Shuku\\var\\course-builds\\a9333d75-9e97-4c31-941d-9ce3e6f49608\\8e6ec713e97f61e2517d1241a5af6d61917730580365ead6506213d936e6b4c8",
+      "files": 80,
+      "pages": 40,
+      "modes": [
+        "guide",
+        "ppt"
+      ],
+      "seconds": 3.734
+    },
+    {
+      "id": "aa380af5-efee-42a1-8896-16032f9331ea",
+      "title": "Value-based 强化学习：机器人送货",
+      "status": "passed",
+      "revision": "00eb5ca3c3e2c3dca49729ec464608a49a01502a9a440875d63656d788f13d22",
+      "directory": "C:\\Users\\Ocean\\Documents\\GitHub\\Shuku\\var\\course-builds\\aa380af5-efee-42a1-8896-16032f9331ea\\00eb5ca3c3e2c3dca49729ec464608a49a01502a9a440875d63656d788f13d22",
+      "files": 78,
+      "pages": 22,
+      "modes": [
+        "guide",
+        "ppt"
+      ],
+      "seconds": 11.181
+    },
+    {
+      "id": "adde4a27-235d-4c03-a3cf-734ccf08b38d",
+      "title": "回归与损失：模型怎样变准",
+      "status": "passed",
+      "revision": "312b7c39227c39dc93e0ca129291459af25a26c103fdb847a0ff77a5d49ec51f",
+      "directory": "C:\\Users\\Ocean\\Documents\\GitHub\\Shuku\\var\\course-builds\\adde4a27-235d-4c03-a3cf-734ccf08b38d\\312b7c39227c39dc93e0ca129291459af25a26c103fdb847a0ff77a5d49ec51f",
+      "files": 75,
+      "pages": 18,
+      "modes": [
+        "guide",
+        "ppt"
+      ],
+      "seconds": 10.386
+    },
+    {
+      "id": "b741543f-e85e-4008-9489-aa454d38351c",
+      "title": "朴素 RNN",
+      "status": "passed",
+      "revision": "d814d6ca11c31a7693127a020b50c7e6006bcffb1055d2fb55f02e62cd1181d2",
+      "directory": "C:\\Users\\Ocean\\Documents\\GitHub\\Shuku\\var\\course-builds\\b741543f-e85e-4008-9489-aa454d38351c\\d814d6ca11c31a7693127a020b50c7e6006bcffb1055d2fb55f02e62cd1181d2",
+      "files": 56,
+      "pages": 13,
+      "modes": [
+        "guide",
+        "ppt"
+      ],
+      "seconds": 3.84
+    },
+    {
+      "id": "b8d86e85-2150-47e3-9e1a-aa7cc7cce15c",
+      "title": "大模型驱动的实践能力培养体系与平台",
+      "status": "passed",
+      "revision": "3ad7d0183bed34a85fc589c66e1c685f4b97ffb0bb1a3bdc394da9fe2492588f",
+      "directory": "C:\\Users\\Ocean\\Documents\\GitHub\\Shuku\\var\\course-builds\\b8d86e85-2150-47e3-9e1a-aa7cc7cce15c\\3ad7d0183bed34a85fc589c66e1c685f4b97ffb0bb1a3bdc394da9fe2492588f",
+      "files": 391,
+      "pages": 34,
+      "modes": [
+        "guide",
+        "ppt"
+      ],
+      "seconds": 10.305
+    },
+    {
+      "id": "bc6ed89d-ce23-4837-9b2f-bd44acb810b7",
+      "title": "大模型推理中的注意力优化",
+      "status": "passed",
+      "revision": "fcf55447d06d997e6c74a69890fbe2e256829d52b19a1342748f5bb5819359ba",
+      "directory": "C:\\Users\\Ocean\\Documents\\GitHub\\Shuku\\var\\course-builds\\bc6ed89d-ce23-4837-9b2f-bd44acb810b7\\fcf55447d06d997e6c74a69890fbe2e256829d52b19a1342748f5bb5819359ba",
+      "files": 63,
+      "pages": 25,
+      "modes": [
+        "guide",
+        "ppt"
+      ],
+      "seconds": 4.778
+    },
+    {
+      "id": "bcb6d951-f361-4b01-b20d-557e6dfc2e87",
+      "title": "AI 协同创作：从工具到作品",
+      "status": "passed",
+      "revision": "574decc852927376a0cdab420e41a61783bd5430cf29a27663c9e2a09f15a781",
+      "directory": "C:\\Users\\Ocean\\Documents\\GitHub\\Shuku\\var\\course-builds\\bcb6d951-f361-4b01-b20d-557e6dfc2e87\\574decc852927376a0cdab420e41a61783bd5430cf29a27663c9e2a09f15a781",
+      "files": 51,
+      "pages": 9,
+      "modes": [
+        "guide",
+        "ppt"
+      ],
+      "seconds": 3.955
+    },
+    {
+      "id": "ce19337d-405b-47ff-92a9-9890127b5365",
+      "title": "视觉生成：从噪声到图像",
+      "status": "passed",
+      "revision": "59890599750d5496dbd8db72374f4ef5210362a33ffc3f91a2fc03b320404a3e",
+      "directory": "C:\\Users\\Ocean\\Documents\\GitHub\\Shuku\\var\\course-builds\\ce19337d-405b-47ff-92a9-9890127b5365\\59890599750d5496dbd8db72374f4ef5210362a33ffc3f91a2fc03b320404a3e",
+      "files": 111,
+      "pages": 31,
+      "modes": [
+        "guide",
+        "ppt"
+      ],
+      "seconds": 4.666
+    },
+    {
+      "id": "d0c5d4f2-d72b-48be-9e5e-6a864cc88a45",
+      "title": "研究基础：算法、交互原型与平台实践",
+      "status": "passed",
+      "revision": "f8bdc808e8ee5a6032f2bd45e7d2da6faa9ee3c57c11e495ab34bab9eaa5204e",
+      "directory": "C:\\Users\\Ocean\\Documents\\GitHub\\Shuku\\var\\course-builds\\d0c5d4f2-d72b-48be-9e5e-6a864cc88a45\\f8bdc808e8ee5a6032f2bd45e7d2da6faa9ee3c57c11e495ab34bab9eaa5204e",
+      "files": 599,
+      "pages": 19,
+      "modes": [
+        "guide",
+        "ppt"
+      ],
+      "seconds": 11.669
+    },
+    {
+      "id": "d85337ec-da9a-4eb7-8cd3-c6ed29992ba8",
+      "title": "二叉树：从生活中的选择开始",
+      "status": "passed",
+      "revision": "b327c24512e9f98de7b23a1b99b6b86a452df73f0bde9854688ae1b3a8b44f32",
+      "directory": "C:\\Users\\Ocean\\Documents\\GitHub\\Shuku\\var\\course-builds\\d85337ec-da9a-4eb7-8cd3-c6ed29992ba8\\b327c24512e9f98de7b23a1b99b6b86a452df73f0bde9854688ae1b3a8b44f32",
+      "files": 38,
+      "pages": 1,
+      "modes": [
+        "guide",
+        "ppt"
+      ],
+      "seconds": 3.579
+    },
+    {
+      "id": "dce4f1dd-b3a7-4b44-90e5-6a59545c9c08",
+      "title": "数据标注与数据增广",
+      "status": "passed",
+      "revision": "a0ebea952943dd16f8d0c73565584baff9a653b74e70cf84a339634505ca0f89",
+      "directory": "C:\\Users\\Ocean\\Documents\\GitHub\\Shuku\\var\\course-builds\\dce4f1dd-b3a7-4b44-90e5-6a59545c9c08\\a0ebea952943dd16f8d0c73565584baff9a653b74e70cf84a339634505ca0f89",
+      "files": 75,
+      "pages": 24,
+      "modes": [
+        "guide",
+        "ppt"
+      ],
+      "seconds": 4.042
+    },
+    {
+      "id": "f1751a2d-ea22-4f92-9fa4-32b506c011de",
+      "title": "课程交互联调模块",
+      "status": "passed",
+      "revision": "892b74c5037f5b5665cfc5b255561f58e9259b58d0c553550759ea38c404d563",
+      "directory": "C:\\Users\\Ocean\\Documents\\GitHub\\Shuku\\var\\course-builds\\f1751a2d-ea22-4f92-9fa4-32b506c011de\\892b74c5037f5b5665cfc5b255561f58e9259b58d0c553550759ea38c404d563",
+      "files": 33,
+      "pages": 4,
+      "modes": [
+        "guide"
+      ],
+      "seconds": 3.492
+    },
+    {
+      "id": "f80cb964-6f15-44cd-b32e-35e9c19169ee",
+      "title": "科研智能时代的机遇、挑战与探索",
+      "status": "passed",
+      "revision": "8ca0f5ebddd5ace471bbca2bc572891b7f0b8a2cd71e352ab6b19b942ab1b8b7",
+      "directory": "C:\\Users\\Ocean\\Documents\\GitHub\\Shuku\\var\\course-builds\\f80cb964-6f15-44cd-b32e-35e9c19169ee\\8ca0f5ebddd5ace471bbca2bc572891b7f0b8a2cd71e352ab6b19b942ab1b8b7",
+      "files": 85,
+      "pages": 6,
+      "modes": [
+        "guide",
+        "ppt"
+      ],
+      "seconds": 2.735
+    }
+  ]
+}

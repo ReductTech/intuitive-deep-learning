@@ -10,9 +10,9 @@ import snapshot from '../QTablePage/qTableSnapshot.json';
 import { createPolicySimulation, policyProbabilities, roundedPercentages, samplePolicyAction, trainPolicy } from './policySimulation';
 import './ValuePolicyPage.css';
 
-const robotArt = valueBasedRlAssetUrl('cover-v2/robot.png');
-const receivingEmpty = valueBasedRlAssetUrl('cover-v2/receiving-station-empty.png');
-const pitArt = valueBasedRlAssetUrl('cover-v2/maintenance-pit.png');
+const robotArt = valueBasedRlAssetUrl("cover-v2/robot.webp");
+const receivingEmpty = valueBasedRlAssetUrl("cover-v2/receiving-station-empty.webp");
+const pitArt = valueBasedRlAssetUrl("cover-v2/maintenance-pit.webp");
 
 const q = snapshot.q['5:1'], best = q.indexOf(Math.max(...q));
 type Choice = { method: 'value' | 'policy'; action: number; next: typeof START };

@@ -10,8 +10,8 @@ export function OpeningPage() {
     <section shuku-edit-id="e-25c97c80-e284-4639-a6da-77d25a48ea35" className="llmpe-opening llmpe-spp-opening" aria-label="大模型驱动的实践能力培养体系与平台，CCF SPP第193期">
       <img shuku-edit-id="e-889e90a7-a216-4bab-aa67-d0bc9ce0eb4a" className="llmpe-spp-network" src={moduleAssetUrl('images/spp/cover-network-background.svg')} alt="" aria-hidden="true" draggable={false}/>
       <div shuku-edit-id="e-af586da7-bb90-4d2a-8e09-38a778657e06" className="llmpe-spp-brand" aria-label="CCF SPP，第193期">
-        <img shuku-edit-id="e-4432753f-31b7-46db-ba23-3e32c004500e" className="llmpe-spp-logo" src={moduleAssetUrl('images/spp/ccf-official-logo.png')} alt="中国计算机学会 CCF" draggable={false}/>
-        <span shuku-edit-id="e-e9483654-5cf2-4140-b80f-f017ded535f1" className="llmpe-spp-pilot-logo" role="img" aria-label="CCF 学生领航计划 SPP" style={{ backgroundImage: `url("${moduleAssetUrl('images/spp/spp-official-banner.jpg')}")` }}/>
+        <img shuku-edit-id="e-4432753f-31b7-46db-ba23-3e32c004500e" className="llmpe-spp-logo" src={moduleAssetUrl("images/spp/ccf-official-logo.webp")} alt="中国计算机学会 CCF" draggable={false}/>
+        <span shuku-edit-id="e-e9483654-5cf2-4140-b80f-f017ded535f1" className="llmpe-spp-pilot-logo" role="img" aria-label="CCF 学生领航计划 SPP" style={{ backgroundImage: `url("${moduleAssetUrl("images/spp/spp-official-banner.webp")}")` }}/>
         <span shuku-edit-id="e-f864ed9e-4701-4e8b-95b4-07ce93e5ec99" className="llmpe-spp-brand-divider" aria-hidden="true"/>
         <div shuku-edit-id="e-46304306-a19a-4fa1-85cf-945afa150ff6" className="llmpe-spp-wordmark">
           <Typography shuku-edit-id="e-ae3d5b8b-8a2c-416b-964a-673b6d1e1810" as="span" variant="h2" tone="accent">CCF SPP</Typography>

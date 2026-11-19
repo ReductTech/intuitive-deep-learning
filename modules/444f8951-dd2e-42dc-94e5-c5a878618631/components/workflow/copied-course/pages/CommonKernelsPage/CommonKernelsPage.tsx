@@ -1,9 +1,9 @@
-import xiandaijianzhuAsset0 from '../../../../../assets/workflow/convolution-course/xiandaijianzhu.jpg';
-import xielaqiaoAsset1 from '../../../../../assets/workflow/convolution-course/xielaqiao.jpg';
-import caiermateAsset2 from '../../../../../assets/workflow/convolution-course/caiermate.jpg';
-import zebraAsset3 from '../../../../../assets/workflow/convolution-course/zebra.jpg';
-import pineappleAsset4 from '../../../../../assets/workflow/convolution-course/pineapple.jpg';
-import be_cityAsset5 from '../../../../../assets/workflow/convolution-course/be_city.jpg';
+import xiandaijianzhuAsset0 from "../../../../../assets/workflow/convolution-course/xiandaijianzhu.webp";
+import xielaqiaoAsset1 from "../../../../../assets/workflow/convolution-course/xielaqiao.webp";
+import caiermateAsset2 from "../../../../../assets/workflow/convolution-course/caiermate.webp";
+import zebraAsset3 from "../../../../../assets/workflow/convolution-course/zebra.webp";
+import pineappleAsset4 from "../../../../../assets/workflow/convolution-course/pineapple.webp";
+import be_cityAsset5 from "../../../../../assets/workflow/convolution-course/be_city.webp";
 import { useEffect, useRef, useState, type ChangeEvent } from 'react';
 import { Down, Up, UploadPicture } from '@icon-park/react';
 import { ContentBlock, MathFormulaStatic, Typography } from "@shuku/course-style/react";

@@ -4,10 +4,10 @@ import { ContentBlock, Typography } from "@shuku/course-style/react";
 import './TranslationEquivariancePage.css';
 
 const moduleAssetId = '74de5075-8163-413d-84d4-7176f2a3f4a2';
-const backgroundUrl = moduleAssetUrl('workflow/convolution-course/layerd_scene/bg.jpg');
-const ufoUrl = moduleAssetUrl('workflow/convolution-course/layerd_scene/ufo.png');
-const pillarUrl = moduleAssetUrl('workflow/convolution-course/layerd_scene/pillar.png');
-const foliageUrl = moduleAssetUrl('workflow/convolution-course/layerd_scene/dark_foliage.png');
+const backgroundUrl = moduleAssetUrl("workflow/convolution-course/layerd_scene/bg.webp");
+const ufoUrl = moduleAssetUrl("workflow/convolution-course/layerd_scene/ufo.webp");
+const pillarUrl = moduleAssetUrl("workflow/convolution-course/layerd_scene/pillar.webp");
+const foliageUrl = moduleAssetUrl("workflow/convolution-course/layerd_scene/dark_foliage.webp");
 
 const MAP_WIDTH = 80;
 const MAP_HEIGHT = 58;

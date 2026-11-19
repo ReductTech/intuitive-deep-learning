@@ -10,7 +10,7 @@ export function ConventionalResearchPage() {
   const marker = useId().replaceAll(':', '');
   return (
     <ContentBlock shuku-edit-id="e-c5310e33-d793-4847-8d82-6271c9c9d501" title={outline.pages.find(page => page.id === 'spp-research-conventional-research')!.title} subtitle="从提出问题，到形成研究成果" headingLevel={1} className="rie-traditional" data-scene-id="spp-research-conventional-research">
-      <img shuku-edit-id="e-b6ed230c-7217-40b1-806d-efee2f9deb38" className="rie-traditional-art" src={moduleAssetUrl('images/research-background/conventional-research-art-v1.jpg')} alt="依次对应研究六个环节的笔记本、书籍、研究计划、资料夹、分析材料与文稿" />
+      <img shuku-edit-id="e-b6ed230c-7217-40b1-806d-efee2f9deb38" className="rie-traditional-art" src={moduleAssetUrl("images/research-background/conventional-research-art-v1.webp")} alt="依次对应研究六个环节的笔记本、书籍、研究计划、资料夹、分析材料与文稿" />
       <svg shuku-edit-id="e-3556e6c6-cf55-4077-bf08-5de7ebbc94a3" className="rie-traditional-connections" viewBox="0 0 1600 900" aria-hidden="true">
         <defs shuku-edit-id="e-e03ea627-8908-4931-969f-e79e49f858c1">
           <marker shuku-edit-id="e-7c204482-83f1-4cde-ac71-592850701d0f" id={`${marker}-forward`} viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path shuku-edit-id="e-5ae293f1-eb16-41ef-bde0-7e5fac157697" d="M0 0L10 5L0 10Z" fill="#27446e" /></marker>

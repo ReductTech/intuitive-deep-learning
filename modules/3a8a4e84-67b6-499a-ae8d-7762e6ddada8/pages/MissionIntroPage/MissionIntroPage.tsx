@@ -29,7 +29,7 @@ export function MissionIntroPage({ onComplete }: MissionIntroPageProps) {
         <section shuku-edit-id="e-cdb022d5-7a4e-46fb-b29f-5907b1c02bff" className="tr-intro-story" aria-label="翻译任务的信息流">
           <figure shuku-edit-id="e-5d837eeb-4a8f-4262-a1c6-3b2dd930a878" className="tr-intro-character tr-intro-character--human">
             <figcaption shuku-edit-id="e-1a206d86-fbf9-4c8d-8a51-015d478c329a" className="tr-intro-chat"><span shuku-edit-id="e-1d3bc164-002c-4bd2-9e95-7cec510fb7fe">英文原文</span><strong shuku-edit-id="e-94080932-0ff3-40d8-ad4c-8d92761a712a">I love deep learning.</strong></figcaption>
-            <img shuku-edit-id="e-84eac9aa-cb5d-4b5a-9848-7ba303ae2e82" src={transformerAsset("01_翻译引入/原文输入.png")} alt="学生递出英文原文"/>
+            <img shuku-edit-id="e-84eac9aa-cb5d-4b5a-9848-7ba303ae2e82" src={transformerAsset("01_翻译引入/原文输入.webp")} alt="学生递出英文原文"/>
           </figure>
 
           <div shuku-edit-id="e-af063396-8caa-4c91-a415-b81acc994f33" className="tr-intro-pipeline" aria-label="编码器、上下文表示、解码器依次连接">
@@ -59,7 +59,7 @@ export function MissionIntroPage({ onComplete }: MissionIntroPageProps) {
               <span shuku-edit-id="e-b702eb22-e244-4645-a664-852af999d486">中文译文</span>
               <strong shuku-edit-id="e-45ea0e19-3c05-4446-86e4-2b6ee6efd9e0">{translation}</strong>
             </figcaption>
-            <img shuku-edit-id="e-6a6ed626-70d1-4570-95e2-deed16e469d6" src={transformerAsset("01_翻译引入/译文生成.png")} alt="准备生成译文的 Transformer 机器人"/>
+            <img shuku-edit-id="e-6a6ed626-70d1-4570-95e2-deed16e469d6" src={transformerAsset("01_翻译引入/译文生成.webp")} alt="准备生成译文的 Transformer 机器人"/>
           </figure>
         </section>
 

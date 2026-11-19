@@ -764,3 +764,6 @@
   .aipe-showcase-course-shell .aipe-showcase-ck-window-scan__operand:last-child { order: 3; }
   .aipe-showcase-course-shell .aipe-showcase-ck-window-scan__score-row { grid-template-columns: minmax(0, 1fr); }
 }
+
+.aipe-showcase-course-shell .aipe-showcase-ck-window-scan__cell .ui-typography,
+.aipe-showcase-course-shell .aipe-showcase-ck-window-scan__grid-cell .ui-typography { line-height:1; }

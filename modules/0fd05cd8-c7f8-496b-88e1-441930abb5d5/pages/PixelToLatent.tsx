@@ -21,9 +21,9 @@ function SamplingLatent({ progress }: { progress: number }) {
   return <div shuku-edit-id="e-be08bbe4-6178-4407-ab0f-b3bef0c785ca" className="vga-sampling-latent" data-testid="sampling-latent" data-progress={progress}>
     <svg shuku-edit-id="e-c840f358-65dd-4fc1-9fff-5433a86273ca" viewBox="0 0 530 293" role="img" aria-label={`latent 去噪示意，已完成 ${Math.round(progress * 100)}%`}>
       <defs shuku-edit-id="e-c72f195a-878f-4e34-9c81-cf362d50b463">{planes.map((points, i) => <clipPath shuku-edit-id="e-bb5a1698-3300-4fc9-98c4-decc352e0de2" key={i} id={`${id}-${i}`}><polygon shuku-edit-id="e-2404dee0-299c-477a-9a2f-b5bf5f427d14" points={points} /></clipPath>)}</defs>
-      <image shuku-edit-id="e-8d540c8b-e9e5-4bf0-87e6-1c232413dc51" href={asset('visuals/latent-color.png')} width="530" height="293" />
+      <image shuku-edit-id="e-8d540c8b-e9e5-4bf0-87e6-1c232413dc51" href={asset("visuals/latent-color.webp")} width="530" height="293" />
       {planes.map((_, i) => <g shuku-edit-id="e-487fc65a-e3e4-4034-b7d9-3f2938be8c7e" key={i} clipPath={`url(#${id}-${i})`} opacity={1 - progress}>
-        <image shuku-edit-id="e-4127d3c7-4bd7-4ac6-9765-5a9ae001311d" href={asset('visuals/noise-prediction.jpg')} x={i * 17 - 20} y={-i * 11} width="570" height="330" preserveAspectRatio="none" />
+        <image shuku-edit-id="e-4127d3c7-4bd7-4ac6-9765-5a9ae001311d" href={asset("visuals/noise-prediction.webp")} x={i * 17 - 20} y={-i * 11} width="570" height="330" preserveAspectRatio="none" />
       </g>)}
     </svg>
     <Text muted>去噪状态示意 · 固定初始噪声</Text>

@@ -17,7 +17,7 @@ export function OpeningPage() {
       </header>
       <img shuku-edit-id="e-1dbe6d83-614b-464e-9b1f-307cf949176d"
         className="llmpe-opening-illustration"
-        src={moduleAssetUrl('images/opening-illustration-v1.png')}
+        src={moduleAssetUrl("images/opening-illustration-v1.webp")}
         alt="论文资料、知识图示与编程实验面板"
         draggable={false}
       />

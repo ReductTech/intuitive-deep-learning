@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { ContentBlock, Typography } from "@shuku/course-style/react";
 import './PixelTypesPage.css';
 
-const cutout = moduleAssetUrl('images/digital-image-cat-cutout.png');
+const cutout = moduleAssetUrl("images/digital-image-cat-cutout.webp");
 const SIDE = 320;
 const types = ['二值图', '灰度图', 'RGB 彩色图', 'RGBA 图像'];
 const descriptions = ['只有两个取值', '一个数表示明暗', '三个数表示颜色', '颜色加上不透明度'];

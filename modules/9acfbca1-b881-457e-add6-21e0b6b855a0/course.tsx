@@ -1,3 +1,4 @@
+import './tailwind.css';
 import type { ReactNode } from 'react';
 import { LessonFlowRevealMode, LessonStepContext } from "@shuku/course-style/react";
 import { BiologicalNeuronPage } from './pages/BiologicalNeuronPage/BiologicalNeuronPage';

@@ -6,12 +6,12 @@ import { photoUrl } from '../../data';
 
 type Label = '苹果' | '梨';
 const samples: { id: string; label: Label; file: string; variety: string; description: string }[] = [
-  { id: '01', label: '苹果', file: '01-fuji-apple.jpg', variety: '富士苹果', description: '红黄条纹、顶部凹陷的圆形水果，AI 生成' },
-  { id: '02', label: '梨', file: '02-bartlett-pear.jpg', variety: '巴特利特梨', description: '黄色带斑点、上窄下宽的水果，AI 生成' },
-  { id: '03', label: '苹果', file: '03-granny-smith-apple.jpg', variety: '青苹果', description: '青绿色、顶部凹陷的圆形水果，AI 生成' },
-  { id: '04', label: '梨', file: '04-bosc-pear.jpg', variety: '博斯克梨', description: '棕褐色粗糙果皮、细长颈部的水果，AI 生成' },
-  { id: '05', label: '苹果', file: '05-golden-delicious-apple.jpg', variety: '金冠苹果', description: '金黄色、顶部凹陷的圆形水果，AI 生成' },
-  { id: '06', label: '梨', file: '06-asian-pear.jpg', variety: '亚洲梨', description: '黄褐色、带细小斑点的扁圆形水果，AI 生成' },
+  { id: '01', label: '苹果', file: "01-fuji-apple.webp", variety: '富士苹果', description: '红黄条纹、顶部凹陷的圆形水果，AI 生成' },
+  { id: '02', label: '梨', file: "02-bartlett-pear.webp", variety: '巴特利特梨', description: '黄色带斑点、上窄下宽的水果，AI 生成' },
+  { id: '03', label: '苹果', file: "03-granny-smith-apple.webp", variety: '青苹果', description: '青绿色、顶部凹陷的圆形水果，AI 生成' },
+  { id: '04', label: '梨', file: "04-bosc-pear.webp", variety: '博斯克梨', description: '棕褐色粗糙果皮、细长颈部的水果，AI 生成' },
+  { id: '05', label: '苹果', file: "05-golden-delicious-apple.webp", variety: '金冠苹果', description: '金黄色、顶部凹陷的圆形水果，AI 生成' },
+  { id: '06', label: '梨', file: "06-asian-pear.webp", variety: '亚洲梨', description: '黄褐色、带细小斑点的扁圆形水果，AI 生成' },
 ];
 
 function FruitPhoto({ sample }: { sample: typeof samples[number] }) {
@@ -37,7 +37,7 @@ export function AnnotationOpeningPage() {
   };
 
   return <article shuku-edit-id="e-b746c873-dbe9-4000-b331-07279d5aad03" className={`daa-opening${intro ? ' daa-opening-intro daa-opening-sack-scene' : ''}`} aria-label={outline.pages.find(page => page.id === '00c19198-cc92-4327-b95f-02a6a778fa35')!.title}>
-    <img shuku-edit-id="e-7eddcc38-c919-4f78-932c-5edce16cee81" className="daa-station-background" src={photoUrl(intro ? '14-two-sorters-sacks.jpg' : '13-opening-fruit-station.jpg')} alt="" aria-hidden="true" />
+    <img shuku-edit-id="e-7eddcc38-c919-4f78-932c-5edce16cee81" className="daa-station-background" src={photoUrl(intro ? "14-two-sorters-sacks.webp" : "13-opening-fruit-station.webp")} alt="" aria-hidden="true" />
     <header shuku-edit-id="e-9888842a-b8c8-4e55-9f07-c45a07df7214" className="daa-station-header">
       <div shuku-edit-id="e-9dfc304a-3098-4d69-883b-e805ee121921"><Typography shuku-edit-id="e-4fa8a62f-065f-4603-afd5-291f0ef5ec3e" variant="bodySmall" tone="accent">水果分拣站 · {intro ? '今日验收' : '标注工作台'}</Typography>
         <Typography shuku-edit-id="e-d69eae90-d246-466a-96bc-0a86e78f95e0" as="h1" variant="h1" tone="accent">{intro ? '同一批水果，为什么分法不一样？' : '给这批水果写上答案'}</Typography></div>

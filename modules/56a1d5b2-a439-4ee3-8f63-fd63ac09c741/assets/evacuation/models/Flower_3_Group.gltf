@@ -85,12 +85,12 @@
 		{
 			"mimeType":"image/png",
 			"name":"Leaves",
-			"uri":"Leaves.png"
+			"uri":"Leaves.webp"
 		},
 		{
 			"mimeType":"image/png",
 			"name":"Flowers",
-			"uri":"Flowers.png"
+			"uri":"Flowers.webp"
 		}
 	],
 	"accessors":[

@@ -1,0 +1,308 @@
+[
+  {
+    "module": "0f7a1d06-ea17-4db8-83f4-a1e9aac506bc",
+    "title": "专业创作者指南",
+    "status": "not-applicable",
+    "reason": "Outline-only draft"
+  },
+  {
+    "module": "0fd05cd8-c7f8-496b-88e1-441930abb5d5",
+    "title": "视觉生成网络结构",
+    "exitCode": 0,
+    "status": "passed",
+    "issues": [],
+    "newIssues": [],
+    "existingIssues": [],
+    "coverage": "Actual course entry dependency graph; not a rendered-page check."
+  },
+  {
+    "module": "07951e3b-2fcb-477e-b5d8-ad7930c2a529",
+    "title": "视觉 Transformer 与视觉语言模型",
+    "exitCode": 0,
+    "status": "passed",
+    "issues": [],
+    "newIssues": [],
+    "existingIssues": [],
+    "coverage": "Actual course entry dependency graph; not a rendered-page check."
+  },
+  {
+    "module": "1a8e20a6-6e70-4d1d-8830-3b6b9a34ffed",
+    "title": "基础示例：Creator Skill 是什么",
+    "exitCode": 0,
+    "status": "passed",
+    "issues": [],
+    "newIssues": [],
+    "existingIssues": [],
+    "coverage": "Actual course entry dependency graph; not a rendered-page check."
+  },
+  {
+    "module": "10da7e16-ff24-449a-9978-b74b99524e47",
+    "title": "数字图像入门",
+    "exitCode": 0,
+    "status": "passed",
+    "issues": [],
+    "newIssues": [],
+    "existingIssues": [],
+    "coverage": "Actual course entry dependency graph; not a rendered-page check."
+  },
+  {
+    "module": "1fbfaced-89c8-4ee4-a31e-49fefd5dcb4b",
+    "title": "GeoAgent：看图定位的训练方法",
+    "exitCode": 0,
+    "status": "passed",
+    "issues": [],
+    "newIssues": [],
+    "existingIssues": [],
+    "coverage": "Actual course entry dependency graph; not a rendered-page check."
+  },
+  {
+    "module": "3500e36d-8f2e-43f6-ba93-e830091cd541",
+    "title": "从文字到价值：新生文章影响力预测",
+    "exitCode": 0,
+    "status": "passed",
+    "issues": [],
+    "newIssues": [],
+    "existingIssues": [],
+    "coverage": "Actual course entry dependency graph; not a rendered-page check."
+  },
+  {
+    "module": "34103f87-7796-4685-97d9-2cb3bf23f6f5",
+    "title": "注意力机制",
+    "exitCode": 0,
+    "status": "passed",
+    "issues": [],
+    "newIssues": [],
+    "existingIssues": [],
+    "coverage": "Actual course entry dependency graph; not a rendered-page check."
+  },
+  {
+    "module": "38cd1c79-d8b7-462a-b208-a567c5cd89c4",
+    "title": "卷积基础：从五子棋棋形到图像卷积",
+    "exitCode": 0,
+    "status": "passed",
+    "issues": [],
+    "newIssues": [],
+    "existingIssues": [],
+    "coverage": "Actual course entry dependency graph; not a rendered-page check."
+  },
+  {
+    "module": "3a8a4e84-67b6-499a-ae8d-7762e6ddada8",
+    "title": "Transformer 入门",
+    "exitCode": 0,
+    "status": "passed",
+    "issues": [],
+    "newIssues": [],
+    "existingIssues": [],
+    "coverage": "Actual course entry dependency graph; not a rendered-page check."
+  },
+  {
+    "module": "56a1d5b2-a439-4ee3-8f63-fd63ac09c741",
+    "title": "梯度下降、优化器与反向传播",
+    "exitCode": 0,
+    "status": "passed",
+    "issues": [],
+    "newIssues": [],
+    "existingIssues": [],
+    "coverage": "Actual course entry dependency graph; not a rendered-page check."
+  },
+  {
+    "module": "444f8951-dd2e-42dc-94e5-c5a878618631",
+    "title": "直觉式学习课件：理念、工具与创作方法",
+    "exitCode": 0,
+    "status": "passed",
+    "issues": [],
+    "newIssues": [],
+    "existingIssues": [],
+    "coverage": "Actual course entry dependency graph; not a rendered-page check."
+  },
+  {
+    "module": "5783c2b2-d620-49bf-bda4-f604563f4df1",
+    "title": "深层网络与表示学习",
+    "exitCode": 0,
+    "status": "passed",
+    "issues": [],
+    "newIssues": [],
+    "existingIssues": [],
+    "coverage": "Actual course entry dependency graph; not a rendered-page check."
+  },
+  {
+    "module": "80396753-7fc8-4f55-9188-bddbdb828169",
+    "title": "视觉特征学习",
+    "exitCode": 0,
+    "status": "passed",
+    "issues": [],
+    "newIssues": [],
+    "existingIssues": [],
+    "coverage": "Actual course entry dependency graph; not a rendered-page check."
+  },
+  {
+    "module": "95728790-5709-43e1-ada6-99687813ab3b",
+    "title": "多层感知机",
+    "exitCode": 0,
+    "status": "passed",
+    "issues": [],
+    "newIssues": [],
+    "existingIssues": [],
+    "coverage": "Actual course entry dependency graph; not a rendered-page check."
+  },
+  {
+    "module": "74de5075-8163-413d-84d4-7176f2a3f4a2",
+    "title": "大模型驱动的实践能力培养体系与平台 SPP",
+    "exitCode": 0,
+    "status": "passed",
+    "issues": [],
+    "newIssues": [],
+    "existingIssues": [],
+    "coverage": "Actual course entry dependency graph; not a rendered-page check."
+  },
+  {
+    "module": "9831b46b-af10-4cb3-b9dc-94e0cee25143",
+    "title": "策略梯度入门",
+    "exitCode": 0,
+    "status": "passed",
+    "issues": [],
+    "newIssues": [],
+    "existingIssues": [],
+    "coverage": "Actual course entry dependency graph; not a rendered-page check."
+  },
+  {
+    "module": "9acfbca1-b881-457e-add6-21e0b6b855a0",
+    "title": "认识人工神经元",
+    "exitCode": 0,
+    "status": "passed",
+    "issues": [],
+    "newIssues": [],
+    "existingIssues": [],
+    "coverage": "Actual course entry dependency graph; not a rendered-page check."
+  },
+  {
+    "module": "a9333d75-9e97-4c31-941d-9ce3e6f49608",
+    "title": "智能体如何完成复杂任务",
+    "exitCode": 0,
+    "status": "passed",
+    "issues": [],
+    "newIssues": [],
+    "existingIssues": [],
+    "coverage": "Actual course entry dependency graph; not a rendered-page check."
+  },
+  {
+    "module": "aa380af5-efee-42a1-8896-16032f9331ea",
+    "title": "Value-based 强化学习：机器人送货",
+    "exitCode": 0,
+    "status": "passed",
+    "issues": [],
+    "newIssues": [],
+    "existingIssues": [],
+    "coverage": "Actual course entry dependency graph; not a rendered-page check."
+  },
+  {
+    "module": "adde4a27-235d-4c03-a3cf-734ccf08b38d",
+    "title": "回归与损失：模型怎样变准",
+    "exitCode": 0,
+    "status": "passed",
+    "issues": [],
+    "newIssues": [],
+    "existingIssues": [],
+    "coverage": "Actual course entry dependency graph; not a rendered-page check."
+  },
+  {
+    "module": "b741543f-e85e-4008-9489-aa454d38351c",
+    "title": "朴素 RNN",
+    "exitCode": 0,
+    "status": "passed",
+    "issues": [],
+    "newIssues": [],
+    "existingIssues": [],
+    "coverage": "Actual course entry dependency graph; not a rendered-page check."
+  },
+  {
+    "module": "bc6ed89d-ce23-4837-9b2f-bd44acb810b7",
+    "title": "大模型推理中的注意力优化",
+    "exitCode": 0,
+    "status": "passed",
+    "issues": [],
+    "newIssues": [],
+    "existingIssues": [],
+    "coverage": "Actual course entry dependency graph; not a rendered-page check."
+  },
+  {
+    "module": "bcb6d951-f361-4b01-b20d-557e6dfc2e87",
+    "title": "AI 协同创作：从工具到作品",
+    "exitCode": 0,
+    "status": "passed",
+    "issues": [],
+    "newIssues": [],
+    "existingIssues": [],
+    "coverage": "Actual course entry dependency graph; not a rendered-page check."
+  },
+  {
+    "module": "b8d86e85-2150-47e3-9e1a-aa7cc7cce15c",
+    "title": "大模型驱动的实践能力培养体系与平台",
+    "exitCode": 0,
+    "status": "passed",
+    "issues": [],
+    "newIssues": [],
+    "existingIssues": [],
+    "coverage": "Actual course entry dependency graph; not a rendered-page check."
+  },
+  {
+    "module": "ce19337d-405b-47ff-92a9-9890127b5365",
+    "title": "视觉生成：从噪声到图像",
+    "exitCode": 0,
+    "status": "passed",
+    "issues": [],
+    "newIssues": [],
+    "existingIssues": [],
+    "coverage": "Actual course entry dependency graph; not a rendered-page check."
+  },
+  {
+    "module": "d85337ec-da9a-4eb7-8cd3-c6ed29992ba8",
+    "title": "二叉树：从生活中的选择开始",
+    "exitCode": 0,
+    "status": "passed",
+    "issues": [],
+    "newIssues": [],
+    "existingIssues": [],
+    "coverage": "Actual course entry dependency graph; not a rendered-page check."
+  },
+  {
+    "module": "d0c5d4f2-d72b-48be-9e5e-6a864cc88a45",
+    "title": "研究基础：算法、交互原型与平台实践",
+    "exitCode": 0,
+    "status": "passed",
+    "issues": [],
+    "newIssues": [],
+    "existingIssues": [],
+    "coverage": "Actual course entry dependency graph; not a rendered-page check."
+  },
+  {
+    "module": "f1751a2d-ea22-4f92-9fa4-32b506c011de",
+    "title": "课程交互联调模块",
+    "exitCode": 0,
+    "status": "passed",
+    "issues": [],
+    "newIssues": [],
+    "existingIssues": [],
+    "coverage": "Actual course entry dependency graph; not a rendered-page check."
+  },
+  {
+    "module": "dce4f1dd-b3a7-4b44-90e5-6a59545c9c08",
+    "title": "数据标注与数据增广",
+    "exitCode": 0,
+    "status": "passed",
+    "issues": [],
+    "newIssues": [],
+    "existingIssues": [],
+    "coverage": "Actual course entry dependency graph; not a rendered-page check."
+  },
+  {
+    "module": "f80cb964-6f15-44cd-b32e-35e9c19169ee",
+    "title": "科研智能时代的机遇、挑战与探索",
+    "exitCode": 0,
+    "status": "passed",
+    "issues": [],
+    "newIssues": [],
+    "existingIssues": [],
+    "coverage": "Actual course entry dependency graph; not a rendered-page check."
+  }
+]

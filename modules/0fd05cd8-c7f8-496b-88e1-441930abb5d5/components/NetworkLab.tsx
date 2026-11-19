@@ -24,8 +24,8 @@ export function NetworkLab({ stage = 6, skip = true, playing = false, onSelect, 
         {onSelect ? <Button aria-label={`观察 ${node.label}`} onClick={() => onSelect(index + 1)}>{graphic}</Button> : <div shuku-edit-id="e-ac76747d-6ada-426f-94b5-f203486d919f" className="vga-point-static">{graphic}</div>}
       </div>;
     })}
-    <div shuku-edit-id="e-48d1861f-e38b-4967-bf61-060cd1f1e561" className="vga-network-terminal"><ReferenceVisual file="visuals/noisy-cat.jpg" alt="带噪状态" /><Text>带噪状态</Text></div>
-    <div shuku-edit-id="e-b9edad5f-aa81-43d4-9a7e-e2ad00160d62" className="vga-network-terminal is-output"><ReferenceVisual file="visuals/noise-prediction.jpg" alt="预测噪声" /><Text>预测结果</Text></div>
+    <div shuku-edit-id="e-48d1861f-e38b-4967-bf61-060cd1f1e561" className="vga-network-terminal"><ReferenceVisual file="visuals/noisy-cat.webp" alt="带噪状态" /><Text>带噪状态</Text></div>
+    <div shuku-edit-id="e-b9edad5f-aa81-43d4-9a7e-e2ad00160d62" className="vga-network-terminal is-output"><ReferenceVisual file="visuals/noise-prediction.webp" alt="预测噪声" /><Text>预测结果</Text></div>
     <div shuku-edit-id="e-2e31188e-03c1-42ab-b155-043b94d97fb8" className="vga-network-skip-label"><Text>{skip ? 'Skip · 对应尺度直接传回' : 'Skip · 已断开'}</Text></div>
   </div>;
 }

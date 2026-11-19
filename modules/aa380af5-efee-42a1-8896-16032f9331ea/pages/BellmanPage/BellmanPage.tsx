@@ -4,7 +4,7 @@ import { LessonPage, Formula } from '../../components/LessonPrimitives';
 import { TeachingPanel } from '../../components/TeachingPanel';
 import './BellmanPage.css';
 
-const robotArt = valueBasedRlAssetUrl('cover-v2/robot.png');
+const robotArt = valueBasedRlAssetUrl("cover-v2/robot.webp");
 
 function FlowArrow({ down = false }: { down?: boolean }) {
   return <svg shuku-edit-id="e-36339cfb-8f4c-453b-b4af-c20624a577f6" className={'vbrl-bellman-theory__arrow' + (down ? ' is-down' : '')} viewBox="0 0 24 24" aria-hidden="true">

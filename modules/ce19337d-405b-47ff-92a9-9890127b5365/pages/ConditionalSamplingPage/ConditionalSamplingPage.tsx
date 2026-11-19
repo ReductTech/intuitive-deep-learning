@@ -4,12 +4,12 @@ import { useMemo, useRef, useState } from 'react';
 import { Button, ContentBlock, Typography } from "@shuku/course-style/react";
 import './ConditionalSamplingPage.css';
 
-const sampleOne = moduleAssetUrl('images/conditional-sampling/sample-1.jpg');
-const sampleTwo = moduleAssetUrl('images/conditional-sampling/sample-2.jpg');
-const sampleThree = moduleAssetUrl('images/conditional-sampling/sample-3.jpg');
-const sampleFour = moduleAssetUrl('images/conditional-sampling/sample-4.jpg');
-const sampleFive = moduleAssetUrl('images/conditional-sampling/sample-5.jpg');
-const sampleSix = moduleAssetUrl('images/conditional-sampling/sample-6.jpg');
+const sampleOne = moduleAssetUrl("images/conditional-sampling/sample-1.webp");
+const sampleTwo = moduleAssetUrl("images/conditional-sampling/sample-2.webp");
+const sampleThree = moduleAssetUrl("images/conditional-sampling/sample-3.webp");
+const sampleFour = moduleAssetUrl("images/conditional-sampling/sample-4.webp");
+const sampleFive = moduleAssetUrl("images/conditional-sampling/sample-5.webp");
+const sampleSix = moduleAssetUrl("images/conditional-sampling/sample-6.webp");
 
 type ConditionId = 'grass' | 'small' | 'fluffy';
 

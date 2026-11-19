@@ -5,12 +5,12 @@ import { ContentBlock, MathFormulaStatic, Typography } from "@shuku/course-style
 import './CommonKernelsPage.css';
 
 const moduleAssetId = '38cd1c79-d8b7-462a-b208-a567c5cd89c4';
-const buildingImage = moduleAssetUrl('xiandaijianzhu.jpg');
-const bridgeImage = moduleAssetUrl('xielaqiao.jpg');
-const mountainImage = moduleAssetUrl('caiermate.jpg');
-const zebraImage = moduleAssetUrl('zebra.jpg');
-const pineappleImage = moduleAssetUrl('pineapple.jpg');
-const cityImage = moduleAssetUrl('be_city.jpg');
+const buildingImage = moduleAssetUrl("xiandaijianzhu.webp");
+const bridgeImage = moduleAssetUrl("xielaqiao.webp");
+const mountainImage = moduleAssetUrl("caiermate.webp");
+const zebraImage = moduleAssetUrl("zebra.webp");
+const pineappleImage = moduleAssetUrl("pineapple.webp");
+const cityImage = moduleAssetUrl("be_city.webp");
 
 type Matrix3 = readonly [readonly [number, number, number], readonly [number, number, number], readonly [number, number, number]];
 type ViewMode = 'gray' | 'edge' | 'signed';

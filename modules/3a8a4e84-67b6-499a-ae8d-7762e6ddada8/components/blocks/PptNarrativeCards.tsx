@@ -37,13 +37,13 @@ export function FfnCard({ onComplete, phase = 'intuition' }: CompleteProps & {
         <div shuku-edit-id="e-f5ff2e43-99bb-4496-a407-e4ce97a7765a" className="tr-ffn-intuition">
           <article shuku-edit-id="e-f16d4109-a8bc-4226-99b9-770a072680f7" className="tr-ffn-intuition-panel is-attention">
             <h3 shuku-edit-id="e-e7d8f995-ad5c-4bab-8e96-78a85fc31663">注意力子层</h3>
-            <div shuku-edit-id="e-ed8e6d5a-c609-4973-98e6-117ee44f5942" className="tr-ffn-person-scene is-discussion"><img shuku-edit-id="e-64a4fe99-8a81-4076-8398-b77f7535b98e" src={transformerAsset("05_前馈网络/注意力到逐位加工.jpg")} alt="同学们互相讨论，交换笔记"/></div>
+            <div shuku-edit-id="e-ed8e6d5a-c609-4973-98e6-117ee44f5942" className="tr-ffn-person-scene is-discussion"><img shuku-edit-id="e-64a4fe99-8a81-4076-8398-b77f7535b98e" src={transformerAsset("05_前馈网络/注意力到逐位加工.webp")} alt="同学们互相讨论，交换笔记"/></div>
             <div shuku-edit-id="e-b47d4df5-f96d-4554-bece-6f69369fcfe6" className="tr-ffn-intuition-caption"><h4 shuku-edit-id="e-294084aa-be33-45f5-8d3e-39c308b456a9"><span shuku-edit-id="e-30bf9161-52f2-43f2-b955-adbab40b904d">1</span>先交流</h4><p shuku-edit-id="e-2c491f21-657c-4ead-9257-65f951abff47">从其他 Token 中<strong shuku-edit-id="e-71006130-4e18-4cfa-8504-2d5f282de4c4">汇聚相关信息</strong>。</p></div>
           </article>
           <div shuku-edit-id="e-fca4464e-7353-4615-9b52-87ae4b84ae7e" className="tr-ffn-intuition-arrow" aria-label="从交流到加工"><svg shuku-edit-id="e-8b6925cd-0e63-4bfa-a7af-0ea74204f4e5" viewBox="0 0 240 40" preserveAspectRatio="none" aria-hidden="true"><path shuku-edit-id="e-b27baad7-cce3-4a2d-a873-da91cf8fe7a1" d="M 0 20 H 224 M 208 6 L 224 20 L 208 34"/></svg></div>
           <article shuku-edit-id="e-d358a68d-e5a3-4756-98d6-dfe900aa3c1f" className="tr-ffn-intuition-panel is-processing">
             <h3 shuku-edit-id="e-f8d44603-ffa7-4eb6-810d-a2d1f9f21c93">前馈网络（FFN）子层</h3>
-            <div shuku-edit-id="e-48f07f39-efd6-418f-ade3-ffc427198d83" className="tr-ffn-person-scene is-study"><img shuku-edit-id="e-c666fa11-6782-4f2d-ad6c-a2cc8dace3b9" src={transformerAsset("05_前馈网络/注意力到逐位加工.jpg")} alt="学生独立整理刚获得的笔记"/></div>
+            <div shuku-edit-id="e-48f07f39-efd6-418f-ade3-ffc427198d83" className="tr-ffn-person-scene is-study"><img shuku-edit-id="e-c666fa11-6782-4f2d-ad6c-a2cc8dace3b9" src={transformerAsset("05_前馈网络/注意力到逐位加工.webp")} alt="学生独立整理刚获得的笔记"/></div>
             <div shuku-edit-id="e-3025a18e-c6cb-4633-92af-58d6001af0bc" className="tr-ffn-intuition-caption"><h4 shuku-edit-id="e-2a445a0e-1455-40d9-a00b-0dfdd8daff7f"><span shuku-edit-id="e-877df6d3-5ece-4659-8dbd-ae330aa10471">2</span>再加工</h4><p shuku-edit-id="e-ccecdf95-93bd-4d85-bc5c-d0399f746815">每个 Token <strong shuku-edit-id="e-f8712c1e-3c78-425d-9dd0-4763b039f8e9">独立加工</strong>已有信息。</p><p shuku-edit-id="e-82e5b39d-a790-40b3-a940-6f8779e7e982" className="tr-ffn-shared-rule">各个位置<strong shuku-edit-id="e-2ca6600c-c02e-4f5a-a780-ed137975eb96">共享同一套参数</strong>。</p></div>
           </article>
         </div>

@@ -2,7 +2,7 @@ import { useRef, type CSSProperties, type PointerEvent, type ReactNode } from 'r
 import { photoUrl, type Box } from '../data';
 import './PhotoStage.css';
 
-export function PhotoStage({ file = '01-fuji-apple.jpg', children, imageStyle, className = '' }: { file?: string; children?: ReactNode; imageStyle?: CSSProperties; className?: string }) {
+export function PhotoStage({ file = "01-fuji-apple.webp", children, imageStyle, className = '' }: { file?: string; children?: ReactNode; imageStyle?: CSSProperties; className?: string }) {
   return <div shuku-edit-id="e-673dadfa-5c96-4159-9ff2-b47c4eb9aa0b" className={`daa-photo-stage ${className}`}>
     <img shuku-edit-id="e-29e8ca5c-4497-4a0c-97a0-c1eace724baa" src={photoUrl(file)} alt="AI 生成水果教学图片" width={1536} height={1024} style={imageStyle} />
     {children}
@@ -13,7 +13,7 @@ export function BoxOverlay({ boxes, color = 'var(--ui-accent-alt)' }: { boxes: B
   return <svg shuku-edit-id="e-f645c772-cf3b-4243-af7d-5498bfbcaf81" className="daa-photo-overlay" viewBox="0 0 100 100" preserveAspectRatio="none" aria-label="目标框示意">{boxes.map((b,i)=><rect shuku-edit-id="e-0216571b-0089-4ee1-b926-03022217ca19" key={i} x={b.x1*100} y={b.y1*100} width={(b.x2-b.x1)*100} height={(b.y2-b.y1)*100} fill="none" stroke={color} strokeWidth=".55" />)}</svg>;
 }
 
-export function BoxEditor({ box, onChange, file = '01-fuji-apple.jpg' }: { box: Box; onChange: (box: Box) => void; file?: string }) {
+export function BoxEditor({ box, onChange, file = "01-fuji-apple.webp" }: { box: Box; onChange: (box: Box) => void; file?: string }) {
   const drag = useRef<keyof Box | null>(null);
   const move = (e: PointerEvent<SVGSVGElement>) => {
     if (!drag.current) return;

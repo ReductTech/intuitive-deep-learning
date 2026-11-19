@@ -4,7 +4,7 @@
   var game = window.Act3DisguiseGame || {};
   var constants = game.constants || {};
   var ASSET_ROOT = constants.ASSET_ROOT || './game_assets/';
-  var OVERLAY_ASSET = constants.OVERLAY_ASSET || 'overlay_layer.png';
+  var OVERLAY_ASSET = constants.OVERLAY_ASSET || "overlay_layer.webp";
   var stopStartLight = null;
 
   function $(id) {
@@ -24,7 +24,7 @@
     map.className = 'face-act3-fallback-map';
     overlay.className = 'face-act3-fallback-overlay';
 
-    map.src = ASSET_ROOT + 'map.jpg';
+    map.src = `${ASSET_ROOT}map.webp`;
     map.alt = '';
     overlay.src = ASSET_ROOT + OVERLAY_ASSET;
     overlay.alt = '';

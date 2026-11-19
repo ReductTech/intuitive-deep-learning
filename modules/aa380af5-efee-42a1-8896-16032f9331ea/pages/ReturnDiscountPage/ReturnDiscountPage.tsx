@@ -9,10 +9,10 @@ import { TRAP } from '../QLearningLoopPage/qLearningSimulation';
 import { RETURN_EXPERIENCES, experienceReturn, rewardContribution } from './returnLesson';
 import './ReturnDiscountPage.css';
 
-const robotArt = valueBasedRlAssetUrl('cover-v2/robot.png');
-const emptyStationArt = valueBasedRlAssetUrl('cover-v2/receiving-station-empty.png');
-const loadedStationArt = valueBasedRlAssetUrl('cover-v2/receiving-station-loaded.png');
-const pitArt = valueBasedRlAssetUrl('cover-v2/maintenance-pit.png');
+const robotArt = valueBasedRlAssetUrl("cover-v2/robot.webp");
+const emptyStationArt = valueBasedRlAssetUrl("cover-v2/receiving-station-empty.webp");
+const loadedStationArt = valueBasedRlAssetUrl("cover-v2/receiving-station-loaded.webp");
+const pitArt = valueBasedRlAssetUrl("cover-v2/maintenance-pit.webp");
 
 const coordinate = (position: Position) => '(' + (position.row + 1) + ', ' + (position.col + 1) + ')';
 const signed = (value: number, digits = 0) => (value > 0 ? '+' : '') + value.toFixed(digits).replace('-', '−');

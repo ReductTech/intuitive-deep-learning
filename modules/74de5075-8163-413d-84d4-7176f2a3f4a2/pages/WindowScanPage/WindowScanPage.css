@@ -672,3 +672,6 @@
 /* Matching winning stones use a deeper orange on both board and patch. */
 .aipe-showcase-course-shell .spp-showcase-window-scan__cell--one.spp-showcase-window-scan__cell--hit > .ui-typography,
 .aipe-showcase-course-shell .spp-showcase-window-scan__grid-cell--one.spp-showcase-window-scan__grid-cell--hit > .ui-typography{background:linear-gradient(155deg,#d96520,#b9440c);}
+
+.aipe-showcase-course-shell .aipe-showcase-ck-window-scan__cell .ui-typography,
+.aipe-showcase-course-shell .aipe-showcase-ck-window-scan__grid-cell .ui-typography { line-height:1; }

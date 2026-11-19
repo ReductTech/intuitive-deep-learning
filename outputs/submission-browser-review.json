@@ -1,0 +1,27 @@
+{
+  "source": "C:\\Users\\Ocean\\Documents\\GitHub\\intuitive-deep-learning",
+  "sourceEditsInOriginalRepository": true,
+  "newTemporarySourceDirectories": 0,
+  "scope": {
+    "initialPptStatesVisited": 618,
+    "guideEntriesVisited": 30,
+    "retestedStatesInFinalRounds": 103,
+    "publishedResearchPagesChecked": 6
+  },
+  "runtime": "Missing-renderer registrations fixed; research authoring-only pages moved to draftPages with explicit user approval. Guides needing platform records were checked with the documented local capture fixtures.",
+  "geometry": "Fixed media sizing, omitted PPT Tailwind dependency, hidden-tooltip overflow and readable closing labels. Automated bounds still flag intentional clipped graphics, screen-reader-only labels, truncated table names, font overhang and asynchronous formula/loading states; this is not a claim that every geometry assertion passes.",
+  "interactionChecks": [
+    "histogram method selection changes mapping curve",
+    "neighborhood reveal exposes flat/edge/texture examples",
+    "resampling smoothing/reset toggles correctly",
+    "training strategy comparison changes explanation",
+    "presentation practice advance/reset changes selected prompt"
+  ],
+  "limitations": [
+    "Initial automation used several browser viewport sizes; suspect bounds were rechecked at 1600x900.",
+    "Character counts approximate innerText code points; no density/word-limit certification.",
+    "Not exhaustive testing of every interaction, server AI/GPU service or media listening quality.",
+    "Server admission, security, production build, official thumbnails and content review remain independent."
+  ],
+  "finalPreview": "http://127.0.0.1:50124/f80cb964-6f15-44cd-b32e-35e9c19169ee/8ca0f5ebddd5ace471bbca2bc572891b7f0b8a2cd71e352ab6b19b942ab1b8b7/index.html?mode=ppt"
+}

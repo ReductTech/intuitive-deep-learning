@@ -1,7 +1,7 @@
-import gomoku_playAsset0 from '../assets/images/multi-format/convolution/gomoku-play.jpg';
-import board_as_numbersAsset1 from '../assets/images/multi-format/convolution/board-as-numbers.jpg';
-import window_scanAsset2 from '../assets/images/multi-format/convolution/window-scan.jpg';
-import kernel_designAsset3 from '../assets/images/multi-format/convolution/kernel-design.jpg';
+import gomoku_playAsset0 from "../assets/images/multi-format/convolution/gomoku-play.webp";
+import board_as_numbersAsset1 from "../assets/images/multi-format/convolution/board-as-numbers.webp";
+import window_scanAsset2 from "../assets/images/multi-format/convolution/window-scan.webp";
+import kernel_designAsset3 from "../assets/images/multi-format/convolution/kernel-design.webp";
 import { useEffect, useRef, useState, type ReactNode, type MouseEvent } from 'react';
 import { Button, ContentBlock, Typography } from "@shuku/course-style/react";
 import { NativeStudyPreview } from '../components/NativeStudyPreview';

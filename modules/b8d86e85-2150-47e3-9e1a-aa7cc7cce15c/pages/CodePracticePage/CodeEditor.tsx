@@ -71,6 +71,7 @@ export function CodeEditor({ value, onChange, onCursor, selectedLine, selectedRa
         if (update.selectionSet && update.state.selection.main.empty && !replacing.current) callbacks.current.onCursor(update.state.doc.lineAt(update.state.selection.main.head).number, update.state.selection.main.head - update.state.doc.lineAt(update.state.selection.main.head).from);
       }),
     ] }) });
+    editor.scrollDOM.setAttribute('data-ppt-viewport', '滚动查看和编辑完整代码');
     view.current = editor;
     return () => { editor.destroy(); view.current = null; };
     // CodeMirror owns the document after mount; prop changes are dispatched below.

@@ -7,9 +7,9 @@ import { nineGridCounts, readNineGridPixels } from '../../services/nineGridDigit
 import { MANUAL_FEATURE_EPOCHS, predictManualDigit, trainManualClassifier, type ManualTrainingResult } from '../../services/manualFeatureClassifier';
 
 const samples = [
-  { label: 2, file: 'mnist/2/60035.jpg' },
-  { label: 6, file: 'mnist/6/60011.jpg' },
-  { label: 3, file: 'mnist/3/60018.jpg' },
+  { label: 2, file: "mnist/2/60035.webp" },
+  { label: 6, file: "mnist/6/60011.webp" },
+  { label: 3, file: "mnist/3/60018.webp" },
 ] as const;
 const assetId = '80396753-7fc8-4f55-9188-bddbdb828169';
 export function ManualFeatureClassifierPage() {

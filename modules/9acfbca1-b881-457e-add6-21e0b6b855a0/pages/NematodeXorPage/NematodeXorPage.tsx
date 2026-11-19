@@ -4,8 +4,8 @@ import { ContentBlock, Typography } from "@shuku/course-style/react";
 import './NematodeXorPage.css';
 
 const moduleAssetId = '9acfbca1-b881-457e-add6-21e0b6b855a0';
-const wormStill = moduleAssetUrl('worm_1.png');
-const wormTurn = moduleAssetUrl('worm_2.png');
+const wormStill = moduleAssetUrl("worm_1.webp");
+const wormTurn = moduleAssetUrl("worm_2.webp");
 
 interface NematodeXorPageProps { onComplete?: () => void; }
 

@@ -42,7 +42,7 @@ export function StudentCapabilitiesPage() {
       onPointerLeave={() => setActive(2)}
       onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget)) setActive(2); }}>
       <div shuku-edit-id="e-fa515b5d-49fb-4a96-aeb0-2200bab1bb32" className="aipe-capability-scenery">
-        <img shuku-edit-id="e-c0b36bcb-406b-4fd0-a099-7fec929bbe9d" className="aipe-capability-background" src={asset('hall-background.jpg')} alt="五座相连的拱门构成能力殿堂，分别对应信息判断、知识理解与表达、产品思维与审美、动手解决问题和批判创新" draggable={false}/>
+        <img shuku-edit-id="e-c0b36bcb-406b-4fd0-a099-7fec929bbe9d" className="aipe-capability-background" src={asset("hall-background.webp")} alt="五座相连的拱门构成能力殿堂，分别对应信息判断、知识理解与表达、产品思维与审美、动手解决问题和批判创新" draggable={false}/>
         {capabilities.map((capability, index) => <button shuku-edit-id="e-c923c335-6085-4a96-baa1-b248cc0ba434" key={capability.id} type="button"
           className="aipe-capability-arch" data-capability={capability.id} data-active={active === index}
           aria-labelledby={`aipe-capability-${capability.id}`} aria-pressed={active === index}
@@ -70,7 +70,7 @@ export function StudentCapabilitiesPage() {
       <div shuku-edit-id="e-ed447c59-34b3-4d6b-8228-9ce01a9c2a10" className="aipe-capability-student" role="img" aria-label={`知识探索者面向${capabilities[active].title}`}>
         <span shuku-edit-id="e-f628981b-0e11-4070-b0ad-e44cdf2928de" className="aipe-capability-student-shadow"/>
         {capabilities.map((capability, index) => <img shuku-edit-id="e-29e58377-5f96-408e-9f35-b64ec93e8a93" key={capability.id}
-          className="aipe-capability-sprite" src={asset(`student-${capability.sprite}-stylized-v2.png`)} alt="" aria-hidden="true"
+          className="aipe-capability-sprite" src={asset(`student-${capability.sprite}-stylized-v2.webp`)} alt="" aria-hidden="true"
           data-active={active === index} draggable={false} decoding="async"/>) }
       </div>
       <Typography shuku-edit-id="e-f843e244-a53e-4287-8c14-8f4c62d546c0" as="p" variant="h3" tone="accent" className="aipe-capability-explorer">知识探索者</Typography>

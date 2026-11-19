@@ -1,5 +1,5 @@
 {
-  "images/cat-portrait.jpg": {
+  "images/cat-portrait.webp": {
     "title": "Cat portrait",
     "author": "Roy Tanck",
     "source": "https://commons.wikimedia.org/wiki/File:Cat_portrait_(17236370444).jpg",
@@ -14,7 +14,7 @@
     "prompt": "Use case: photorealistic-natural. Input image is a REFERENCE for the left-hand photographic scene ONLY, not an edit target for UI. Generate one new clean photographic asset matching the left photo's subject and mood: a fluffy brown tabby kitten with white chest and paws sitting on a sunlit wooden desk, facing slightly right, eyes looking up; warm window daylight from the right; blurred green potted plant, cream desk lamp in the upper left, subtle white mug at the far left, cozy room. Portrait 4:5 composition, kitten full head and front paws visible, eyes near the upper middle. The fur and eye should have warm amber, brown, black and green color details suitable for pixel magnification. Natural photographic realism. Deliver ONLY the photograph filling the image, no page, no text, no grid, no arrows, no diagrams, no UI, no white borders. Preserve rich original photo detail; all educational overlays will be added in code.",
     "usage": "第二页场景图与像素采样的共同输入；像素网格、RGB 数值和数字表由浏览器实时生成。"
   },
-  "assets/digital-image-cat-cutout.png": {
+  "assets/digital-image-cat-cutout.webp": {
     "title": "猫咪透明前景",
     "source": "Built-in ImageGen",
     "reference": "assets/digital-image-cat-scene.png",
@@ -40,7 +40,7 @@
     "prompt": "Ceramic fruit bowl with oranges left, banana back, green grapes right, clear center gap, no apple, warm daylight.",
     "usage": "作为未处理背景，独立透明苹果由Canvas合成；处理结果逐像素计算。"
   },
-  "assets/roi-apple-cutout.png": {
+  "assets/roi-apple-cutout.webp": {
     "title": "掩膜演示透明苹果",
     "source": "Built-in ImageGen",
     "prompt": "One red speckled apple with stem, frontal slightly top-down view, soft upper-left light, transparent background.",
@@ -64,32 +64,32 @@
     "prompt": "Square grayscale fictional FIELD NOTES handout, printed paragraphs, two-column table, pencil check marks, pale textured paper with mild uneven illumination, no UI or personal data.",
     "usage": "文档阈值演示输入；切换保留旧阈值，点击重新计算才应用新Otsu阈值。"
   },
-  "assets/images/binarization-metal-tokens.jpg": {
+  "assets/images/binarization-metal-tokens.webp": {
     "title": "二值化金属圆片与垫圈素材",
     "source": "Built-in ImageGen",
     "prompt": "Top-down square grayscale photograph of exactly five separated dark metal objects: three engraved tokens and two washers, visibly different diameters, loose asymmetric arrangement, generous spacing and margins on pale gray paper, diffuse light, subtle contact shadows, no UI, text or currency branding.",
     "usage": "复用上一页素材作为连通域教学输入；灰度、Otsu阈值与标签实际计算。通过Shared moduleAssetUrl引用根目录签名UUID资源。"
   },
-  "assets/images/otsu-mechanical-parts.jpg": {
+  "assets/images/otsu-mechanical-parts.webp": {
     "title": "Otsu灰底零件素材",
     "source": "Built-in ImageGen",
     "prompt": "Square grayscale top-down photo of five separated dark matte mechanical parts on medium gray paper, diffuse light, subtle shadows, no labels or UI.",
     "usage": "复用上一页素材作为连通域教学输入；灰度、Otsu阈值与标签实际计算。通过Shared moduleAssetUrl引用根目录签名UUID资源。"
   },
-  "assets/images/otsu-document.jpg": {
+  "assets/images/otsu-document.webp": {
     "title": "Otsu文档素材",
     "source": "Built-in ImageGen",
     "prompt": "Square grayscale fictional FIELD NOTES handout, printed paragraphs, two-column table, pencil check marks, pale textured paper with mild uneven illumination, no UI or personal data.",
     "usage": "复用上一页素材作为连通域教学输入；灰度、Otsu阈值与标签实际计算。通过Shared moduleAssetUrl引用根目录签名UUID资源。"
   },
-  "assets/images/digital-image-cat-scene.jpg": {
+  "assets/images/digital-image-cat-scene.webp": {
     "title": "暖光桌面猫咪场景",
     "source": "Built-in ImageGen",
     "reference": "User-provided page design reference, 2026-10-06",
     "prompt": "Use case: photorealistic-natural. Input image is a REFERENCE for the left-hand photographic scene ONLY, not an edit target for UI. Generate one new clean photographic asset matching the left photo's subject and mood: a fluffy brown tabby kitten with white chest and paws sitting on a sunlit wooden desk, facing slightly right, eyes looking up; warm window daylight from the right; blurred green potted plant, cream desk lamp in the upper left, subtle white mug at the far left, cozy room. Portrait 4:5 composition, kitten full head and front paws visible, eyes near the upper middle. The fur and eye should have warm amber, brown, black and green color details suitable for pixel magnification. Natural photographic realism. Deliver ONLY the photograph filling the image, no page, no text, no grid, no arrows, no diagrams, no UI, no white borders. Preserve rich original photo detail; all educational overlays will be added in code.",
     "usage": "复用上一页素材作为连通域教学输入；灰度、Otsu阈值与标签实际计算。通过Shared moduleAssetUrl引用根目录签名UUID资源。。"
   },
-  "assets/images/color-space-macaw.jpg": {
+  "assets/images/color-space-macaw.webp": {
     "title": "蓝黄金刚鹦鹉",
     "source": "Built-in ImageGen",
     "prompt": "Natural close-up blue-and-yellow macaw on a branch against blurred green tropical foliage; rich blue, yellow and green, landscape 4:3, no text or UI.",

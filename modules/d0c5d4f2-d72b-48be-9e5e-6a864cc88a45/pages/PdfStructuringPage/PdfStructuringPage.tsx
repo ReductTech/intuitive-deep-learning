@@ -4,7 +4,7 @@ import { ContentBlock, Typography } from "@shuku/course-style/react";
 import outline from '../../outlines.json';
 import './PdfStructuringPage.css';
 
-function Figure(){return <div shuku-edit-id="e-a22a57d1-728d-4d8b-98fb-cee1c7ca37d9" className="rf-pdf-flow-figure" data-ppt-viewport="复用论文配图作为代表图表识别示例"><img shuku-edit-id="e-55824a97-4b45-4e9c-96f6-175c4dd2674a" src={moduleAssetUrl('images/recommendation-app/feed-reference.jpg')} alt="论文图表视觉元素示例" style={{width:`${1129/1009*100}%`,left:`${-60/1009*100}%`,top:`${-1280/340*100}%`}}/></div>}
+function Figure(){return <div shuku-edit-id="e-a22a57d1-728d-4d8b-98fb-cee1c7ca37d9" className="rf-pdf-flow-figure" data-ppt-viewport="复用论文配图作为代表图表识别示例"><img shuku-edit-id="e-55824a97-4b45-4e9c-96f6-175c4dd2674a" src={moduleAssetUrl("images/recommendation-app/feed-reference.webp")} alt="论文图表视觉元素示例" style={{width:`${1129/1009*100}%`,left:`${-60/1009*100}%`,top:`${-1280/340*100}%`}}/></div>}
 function TextLines(){return <div shuku-edit-id="e-4097d9c9-4daa-47c9-ac91-ea9b49eec4b3" className="rf-pdf-flow-lines" aria-hidden="true"><i shuku-edit-id="e-866b2b51-3875-4cfc-b19f-b9c3bf1d00d5"/><i shuku-edit-id="e-82809127-c1f5-413b-a36a-7cce2d8289cf"/><i shuku-edit-id="e-34dab609-de87-4dc2-ad30-3adfabf073c0"/><i shuku-edit-id="e-26372342-ea94-4c3c-9ba6-bfcb24a95d84"/></div>}
 export function PdfStructuringPage(){
  return <ContentBlock shuku-edit-id="e-afc5f736-4d47-443a-9fe3-e17ce74fe56d" className="rf-page rf-pdf-flow" title="把海量论文 PDF，转成结构化研究材料">

@@ -271,3 +271,7 @@
   .course-shell .nrnn-prediction__completion { opacity: 1; animation: none; transform: none; }
   .course-shell .nrnn-prediction__bar-track span { transition: none; }
 }
+
+/* Preserve the full content inside the 1600 × 900 playback canvas. */
+.course-shell .nrnn-prediction__prompt::before { top:-60px; left:calc(50% - 440px); transform:none; }
+.course-shell .nrnn-prediction__prompt::after { top:-65px; left:calc(50% + 255px); transform:none; }

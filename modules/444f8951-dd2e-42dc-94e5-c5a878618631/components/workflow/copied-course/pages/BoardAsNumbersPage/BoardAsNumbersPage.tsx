@@ -1,4 +1,4 @@
-import bg1Asset0 from '../../../../../assets/workflow/convolution-course/bg1.jpg';
+import bg1Asset0 from "../../../../../assets/workflow/convolution-course/bg1.webp";
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import { ContentBlock, Typography } from "@shuku/course-style/react";
 import { useGomokuOutcome } from '../../LessonContext';

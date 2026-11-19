@@ -3,8 +3,8 @@
     {
       "id": "pretrained-jackie",
       "name": "成龙",
-      "input": "input.jpg",
-      "reference": "reference.jpg",
+      "input": "input.webp",
+      "reference": "reference.webp",
       "landmarks": [
         70.46978759765625,
         37.201873779296875,
@@ -24,7 +24,7 @@
       ],
       "classification": {
         "score": 6.1941142082214355,
-        "heat": "classification-heat.png",
+        "heat": "classification-heat.webp",
         "hasPositiveSupport": true,
         "channels": [
           {
@@ -56,7 +56,7 @@
       },
       "recognition": {
         "score": 0.543219804763794,
-        "heat": "recognition-heat.png",
+        "heat": "recognition-heat.webp",
         "hasPositiveSupport": true,
         "channels": [
           {
@@ -101,8 +101,8 @@
     {
       "id": "pretrained-avril",
       "name": "艾薇儿",
-      "input": "input.jpg",
-      "reference": "reference.jpg",
+      "input": "input.webp",
+      "reference": "reference.webp",
       "landmarks": [
         75.63088989257812,
         64.90386962890625,
@@ -122,7 +122,7 @@
       ],
       "classification": {
         "score": 7.354729652404785,
-        "heat": "classification-heat.png",
+        "heat": "classification-heat.webp",
         "hasPositiveSupport": true,
         "channels": [
           {
@@ -154,7 +154,7 @@
       },
       "recognition": {
         "score": 0.7453965544700623,
-        "heat": "recognition-heat.png",
+        "heat": "recognition-heat.webp",
         "hasPositiveSupport": true,
         "channels": [
           {
@@ -199,25 +199,25 @@
   ],
   "sources": [
     {
-      "file": "jackie-1.jpg",
+      "file": "jackie-1.webp",
       "author": "Toms Norde / State Chancellery of Latvia",
       "license": "CC BY-SA 2.0",
       "url": "https://commons.wikimedia.org/wiki/File:Jackie_Chan_in_2012.jpg"
     },
     {
-      "file": "jackie-2.jpg",
+      "file": "jackie-2.webp",
       "author": "Firdaus Latif",
       "license": "CC BY-SA 2.0",
       "url": "https://commons.wikimedia.org/wiki/File:Jackie_Chan_in_Kuala_Lumpur_2012.jpg"
     },
     {
-      "file": "avril-1.jpg",
+      "file": "avril-1.webp",
       "author": "Glenn Francis / Pacific Pro Digital",
       "license": "CC BY-SA 4.0",
       "url": "https://commons.wikimedia.org/wiki/File:Avril_Lavigne_2013_(cropped).jpg"
     },
     {
-      "file": "avril-2.jpg",
+      "file": "avril-2.webp",
       "author": "Freaktheclown; derivative Keraunoscopia",
       "license": "CC BY-SA 3.0",
       "url": "https://commons.wikimedia.org/wiki/File:Avril_Lavigne,_Today_Show,_2013.jpg"

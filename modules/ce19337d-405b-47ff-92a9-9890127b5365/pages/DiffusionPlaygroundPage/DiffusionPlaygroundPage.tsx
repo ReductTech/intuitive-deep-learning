@@ -5,7 +5,7 @@ import { Button, ContentBlock, MathFormulaStatic, Typography } from "@shuku/cour
 import { alphaBars, betas, denoisingPrediction, ForwardChain, gaussianNoise, histogram, pixelStatistics, TOTAL_STEPS } from './diffusionExperiment';
 import './DiffusionPlaygroundPage.css';
 
-const flower = moduleAssetUrl('images/diffusion-playground/flower.jpg');
+const flower = moduleAssetUrl("images/diffusion-playground/flower.webp");
 
 function Label({ children, className = '' }: { children: ReactNode; className?: string }) {
   return <Typography shuku-edit-id="e-742f4c89-ec8c-4362-84a1-719024a8fabd" variant="bodySmall" className={`vg-replica__label ${className}`}>{children}</Typography>;
@@ -68,7 +68,7 @@ function Pixels({ pixels, size, label, sub, noise = false, probe, onPick }: { pi
   } : undefined} />{probe && <span shuku-edit-id="e-3d47889c-c7b9-4875-8dd2-6c57a9d5f752" className="vg-replica__probe" aria-hidden="true" style={{ left: `${(probe.x + .5) / size * 100}%`, top: `${(probe.y + .5) / size * 100}%` }} />}</div></figure>;
 }
 function useImage(size: number) {
-  const [source, setSource] = useState({ url: flower, name: 'flower.jpg' });
+  const [source, setSource] = useState({ url: flower, name: "flower.webp" });
   const [pixels, setPixels] = useState<Float32Array | null>(null);
   const [error, setError] = useState('');
   const upload = useRef<HTMLInputElement>(null);
@@ -140,7 +140,7 @@ function ForwardModule({ onSeen }: { onSeen: () => void }) {
         <Metric label="时间步 t" value={`${t} / 1000`} /><Metric label={<span shuku-edit-id="e-d17f4665-9456-4fd4-9f96-f7eb2f92395d" className="math-formula vg-replica__alpha-symbol" aria-label="αₜ"><MathFormulaStatic latex={String.raw`\alpha_t`} /></span>} value={alphaSchedule[t].toFixed(5)} />
       </div>
       <div shuku-edit-id="e-3823e09e-5e2e-48cb-ac42-6383bfddb5a4" className="vg-replica__forward-images">
-        {pixels ? <Pixels pixels={pixels} size={128} label={`第 ${t} 步图像`} sub={image.name === 'flower.jpg' ? '示例花卉' : image.name} probe={probe} onPick={setProbe} /> : <Label>{image.error || '加载中…'}</Label>}
+        {pixels ? <Pixels pixels={pixels} size={128} label={`第 ${t} 步图像`} sub={image.name === "flower.webp" ? '示例花卉' : image.name} probe={probe} onPick={setProbe} /> : <Label>{image.error || '加载中…'}</Label>}
         <div shuku-edit-id="e-2916bf5b-f027-4861-a414-77fef02a3200" className="vg-replica__histogram">
           <div shuku-edit-id="e-3e506a00-d849-4707-b4ae-1499a1aaba68" className="vg-replica__hist-head"><Label>像素值分布</Label><Label className="vg-replica__sub">均值 {stats.mean.toFixed(2)}</Label></div>
           <svg shuku-edit-id="e-2e81cb88-e9e0-4af9-b764-2262f34720e3" viewBox="0 0 192 100" preserveAspectRatio="none" role="img" aria-label="像素直方图与标准正态分布">

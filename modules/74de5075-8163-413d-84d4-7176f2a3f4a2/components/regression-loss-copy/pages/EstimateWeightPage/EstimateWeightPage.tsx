@@ -51,7 +51,7 @@ export function EstimateWeightPage({ showLoss = false }: { showLoss?: boolean } 
   }), [slope, endpointX, endpointY, inRange, mass, calibration, showLoss, TARGET_DEPTH_CM]);
   if(!calibration.length)return <ContentBlock shuku-edit-id="e-8d703368-8017-4fa0-b328-b9f6b2c768c6" title="请先完成称象记录" subtitle="本页使用第一页投石时实际记录的数据。" />;
   return <ContentBlock shuku-edit-id="e-dd9783a5-1373-4ec2-9540-9d01e9e2e3cf" headingLevel={1} title={showLoss ? "调整直线，估计象重" : "石头不足，如何估计象重？"} subtitle={showLoss ? "让直线贴近观测，观察损失与象重估计的变化。" : "根据已有观测，选择一条直线进行估计。"} className={`spp-regression-estimate-page${showLoss ? ' spp-regression-estimate-challenge-page' : ''}`}
-    style={{ '--spp-regression-est-background': `url("${moduleAssetUrl('regression-loss-copy/cao-chong/estimate-background.jpg')}")` } as CSSProperties}>
+    style={{ '--spp-regression-est-background': `url("${moduleAssetUrl("regression-loss-copy/cao-chong/estimate-background.webp")}")` } as CSSProperties}>
     <div shuku-edit-id="e-8b7b3932-f2de-40dd-9412-7e71288bb8e1" className={`spp-regression-estimate-content${showLoss ? ' spp-regression-estimate-content--loss' : ''}`}>
     <div shuku-edit-id="e-09172ca0-a68e-450b-90eb-006461f56e94" className="spp-regression-estimate-layout">
       <section shuku-edit-id="e-02277c95-2dba-4f79-a837-eed322a11376" className="spp-regression-estimate-plot" aria-label="调整直线并根据大象水位估计重量">

@@ -12,6 +12,6 @@ const slides = {
 
 export function SppBackgroundPage({ slide }: { slide: keyof typeof slides }) {
   return <section shuku-edit-id="e-59aee438-a025-465f-b117-c3cff39684ab" className="spp-background-page" aria-label={slides[slide]}>
-    <img shuku-edit-id="e-1bee47e1-9f7f-4604-8147-b1cd1c606518" src={moduleAssetUrl(`images/spp/background/${slide}.jpg`)} alt={slides[slide]} draggable={false}/>
+    <img shuku-edit-id="e-1bee47e1-9f7f-4604-8147-b1cd1c606518" src={moduleAssetUrl(`images/spp/background/${slide}.webp`)} alt={slides[slide]} draggable={false}/>
   </section>;
 }

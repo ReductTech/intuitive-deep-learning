@@ -9,7 +9,7 @@ import {
   type PointerEvent as ReactPointerEvent,
 } from 'react';
 import { Button, Callout, ContentBlock, NoticeStrip, Typography } from "@shuku/course-style/react";
-const bottleFront = moduleAssetUrl("recycling/camera-views/bottle-front.jpg");
+const bottleFront = moduleAssetUrl("recycling/camera-views/bottle-front.webp");
 import './FeatureMapsPage.css';
 
 type FeatureId = 'edge' | 'texture' | 'shape';

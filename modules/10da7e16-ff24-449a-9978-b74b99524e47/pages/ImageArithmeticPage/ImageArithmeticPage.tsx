@@ -4,8 +4,8 @@ import { useEffect, useMemo, useRef, useState, type RefObject, type PointerEvent
 import { ContentBlock, Typography } from "@shuku/course-style/react";
 import { calculate, clip, HEIGHT, makeRegionMask, regions, WIDTH, type Operation } from './arithmeticModel';
 import './ImageArithmeticPage.css';
-const background = moduleAssetUrl('images/arithmetic-table-background.jpg');
-const catPhoto = moduleAssetUrl('images/digital-image-cat-cutout.png');
+const background = moduleAssetUrl("images/arithmetic-table-background.webp");
+const catPhoto = moduleAssetUrl("images/digital-image-cat-cutout.webp");
 const operations: [Operation, string][] = [['add', '加'], ['subtract', '减'], ['multiply', '乘'], ['divide', '除']];
 function load(url: string): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => { const image = new Image(); image.crossOrigin = 'anonymous'; image.onload = () => resolve(image); image.onerror = reject; image.src = url; });

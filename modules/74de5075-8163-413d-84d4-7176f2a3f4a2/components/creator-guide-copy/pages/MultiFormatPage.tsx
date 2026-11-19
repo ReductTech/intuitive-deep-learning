@@ -6,7 +6,7 @@ import { Button, ContentBlock, Typography } from "@shuku/course-style/react";
 import { NativeStudyPreview } from '../components/NativeStudyPreview';
 import './MultiFormatPage.css';
 
-const lessonImage = (id: string) => creatorGuideAssetUrl(moduleAssetOutline.moduleIdentity.id, `images/multi-format/convolution/${id}.jpg`);
+const lessonImage = (id: string) => creatorGuideAssetUrl(moduleAssetOutline.moduleIdentity.id, `images/multi-format/convolution/${id}.webp`);
 const lessons = [
   { title: '从五子棋开始认识卷积核', image: lessonImage('gomoku-play'), steps: [
     { title: '先下一局', text: '先与 AI 下一局五子棋，从熟悉的棋盘和局部棋形开始。', box: [1, 3, 25, 90] },
@@ -47,7 +47,7 @@ function MiniWindow({ children }: { children: ReactNode }) {
 }
 function ReadingPreview({ onClose }: { onClose: () => void }) {
   return <MiniWindow>
-    <div shuku-edit-id="e-566d76f6-929b-4161-9872-6d1617513bef" className="aipe-replay-cg-format-native-reader"><div shuku-edit-id="e-11b02962-5afc-43ec-b176-88adce7e4662" className="aipe-replay-cg-format-native-content" data-embedded-lesson="true" role="region" aria-label="卷积入门自学流程，可上下滚动并逐步解锁" tabIndex={0} onClick={event => event.stopPropagation()} onKeyDown={event => { if (event.key === 'Escape') { event.stopPropagation(); onClose(); } }}><NativeStudyPreview /></div></div>
+    <div shuku-edit-id="e-566d76f6-929b-4161-9872-6d1617513bef" data-ppt-viewport="等比例缩小的内嵌课件播放器窗口" className="aipe-replay-cg-format-native-reader"><div shuku-edit-id="e-11b02962-5afc-43ec-b176-88adce7e4662" className="aipe-replay-cg-format-native-content" data-embedded-lesson="true" role="region" aria-label="卷积入门自学流程，可上下滚动并逐步解锁" tabIndex={0} onClick={event => event.stopPropagation()} onKeyDown={event => { if (event.key === 'Escape') { event.stopPropagation(); onClose(); } }}><NativeStudyPreview /></div></div>
   </MiniWindow>;
 }
 export function MultiFormatPage() {

@@ -104,3 +104,7 @@
   line-height: 26px;
   text-align: center;
 }
+
+/* Preserve the full content inside the 1600 × 900 playback canvas. */
+.vfl-simple-limit__hero { height:200px; }
+.vfl-simple-limit__panel { height:350px; }

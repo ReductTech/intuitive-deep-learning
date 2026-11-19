@@ -1,5 +1,5 @@
 import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
 import { Button, ContentBlock, Typography } from "@shuku/course-style/react";
 import outline from '../../outlines.json';
 import submissions from './neuripsSubmissions.json';
@@ -7,7 +7,7 @@ import './ResearchInformationPage.css';
 
 const format = (count: number) => count.toLocaleString('en-US');
 const ceiling = 33000;
-const readingScene = moduleAssetUrl('research-information/reading-still-life.jpg');
+const readingScene = moduleAssetUrl("research-information/reading-still-life.webp");
 
 export function ResearchInformationPage() {
   const root = useRef<HTMLElement>(null);
@@ -54,7 +54,7 @@ export function ResearchInformationPage() {
                   aria-label={`${item.year}年，${item.count === null ? '暂无投稿量数据' : `${format(item.count)}篇投稿`}`}
                   onPointerEnter={() => setHovered(index)}
                   onFocus={() => {setHovered(null); setFocused(index);}} onBlur={() => setFocused(null)}
-                  onKeyDown={event => {
+                  onKeyDown={(event: KeyboardEvent<HTMLButtonElement>) => {
                     if (event.key === 'Escape') {event.currentTarget.blur(); setHovered(null); return;}
                     if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
                     event.preventDefault(); event.stopPropagation();

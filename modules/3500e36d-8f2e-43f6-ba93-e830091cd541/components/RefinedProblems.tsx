@@ -5,9 +5,9 @@ import { imageUrl } from './Stage';
 import './RefinedProblems.css';
 type Problem='external'|'published'|'target';
 const items:Record<Problem,{label:string;image:string;detail:string;subtitle:string}>={
- external:{label:'过度依赖外部数据',image:'s4-shape3.png',detail:'作者、机构、发表渠道和引用网络，都可能成为预测的前提。',subtitle:'问题一：过度依赖外部数据'},
- published:{label:'新论文缺少历史记录',image:'s4-shape10.png',detail:'刚出现的论文，尚未积累足够的收录、引用与传播记录。',subtitle:'问题二：新论文缺少历史记录'},
- target:{label:'预测目标存在争议',image:'s4-shape20.png',detail:'直接比较引用次数，会受到研究领域与发表时间的影响。',subtitle:'问题三：预测目标存在争议'}
+ external:{label:'过度依赖外部数据',image:"s4-shape3.webp",detail:'作者、机构、发表渠道和引用网络，都可能成为预测的前提。',subtitle:'问题一：过度依赖外部数据'},
+ published:{label:'新论文缺少历史记录',image:"s4-shape10.webp",detail:'刚出现的论文，尚未积累足够的收录、引用与传播记录。',subtitle:'问题二：新论文缺少历史记录'},
+ target:{label:'预测目标存在争议',image:"s4-shape20.webp",detail:'直接比较引用次数，会受到研究领域与发表时间的影响。',subtitle:'问题三：预测目标存在争议'}
 };
 function sector(start:number,end:number){const p=(r:number,a:number)=>[500+r*Math.cos(a*Math.PI/180),470-r*Math.sin(a*Math.PI/180)].join(' ');return `M${p(340,start)} A340 340 0 0 1 ${p(340,end)} L${p(220,end)} A220 220 0 0 0 ${p(220,start)} Z`;}
 export function RefinedProblems({focus,summary=false}:{focus?:Problem;summary?:boolean}){

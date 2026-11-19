@@ -13,66 +13,66 @@
       }
     },
     {
-      "path": "cao-chong/river-video-poster.jpg",
+      "path": "cao-chong/river-video-poster.webp",
       "source": "First frame extracted from the user-supplied video",
       "role": "Video loading poster and foreground fallback"
     },
     {
-      "path": "cao-chong/rock-slate.png",
+      "path": "cao-chong/rock-slate.webp",
       "source": "OpenAI built-in ImageGen",
       "role": "Second stone variant; transparent slate sprite",
       "prompt": "Single flat broad gray slate boulder, asymmetric layered angular silhouette, pale veins, upper-left sunlight, realistic 2.5D sprite, transparent alpha, no surroundings or text."
     },
     {
-      "path": "cao-chong/rock-basalt.png",
+      "path": "cao-chong/rock-basalt.webp",
       "source": "OpenAI built-in ImageGen",
       "role": "Third stone variant; transparent dark angular sprite",
       "prompt": "Single tall angular dark charcoal basalt boulder, chipped polygonal silhouette, warm brown highlights, upper-left sunlight, realistic 2.5D sprite, transparent alpha, no surroundings or text."
     },
     {
-      "path": "cao-chong/rock-sandstone.png",
+      "path": "cao-chong/rock-sandstone.webp",
       "source": "OpenAI built-in ImageGen",
       "role": "Fourth stone variant; transparent pale oblong sprite",
       "prompt": "Single pale honey beige oblong sandstone boulder, erosion grooves and rough sandy grain, upper-left sunlight, realistic 2.5D sprite, transparent alpha, no surroundings or text."
     },
     {
-      "path": "cao-chong/river.jpg",
+      "path": "cao-chong/river.webp",
       "source": "OpenAI built-in ImageGen",
       "role": "Previous static scenery, retained as the original illustration source; opening now uses the supplied video",
       "prompt": "Realistic painterly 2.5D ancient Chinese river background, warm daylight, mountains and pavilions, single elephant standing on the right stone embankment, clean open foreground water, no boats, people, hands, text or UI."
     },
     {
-      "path": "cao-chong/boat.png",
+      "path": "cao-chong/boat.webp",
       "source": "OpenAI built-in ImageGen",
       "role": "Previous curved hull sprite retained as source; no longer used by pages 01–02",
       "prompt": "Single isolated empty ancient Chinese wooden cargo boat, wide side view with shallow interior, realistic aged oak, transparent alpha, full dry hull, no people, stones, masts, ropes, water, text or shadows outside silhouette."
     },
     {
-      "path": "cao-chong/rock.png",
+      "path": "cao-chong/rock.webp",
       "source": "OpenAI built-in ImageGen",
       "role": "Transparent clickable, falling and loaded stone sprite",
       "prompt": "Single irregular compact gray-brown river boulder, realistic 2.5D game sprite, textured weathered surfaces, sunlight upper left, clean transparent alpha silhouette, no ground, surroundings, people or text."
     },
     {
-      "path": "cao-chong/elephant.png",
+      "path": "cao-chong/elephant.webp",
       "source": "OpenAI built-in ImageGen",
       "role": "Transparent elephant sprite for page 01 weighing sequence and page 02 reference scene",
       "prompt": "Complete adult Asian elephant facing left, three-quarter side view, textured grey skin, warm upper-left sunlight, all feet aligned on invisible deck, transparent background, no scenery, boat, people or text."
     },
     {
-      "path": "cao-chong/boat-rectangular.png",
+      "path": "cao-chong/boat-rectangular.webp",
       "source": "OpenAI built-in ImageGen",
       "role": "Page 01–02 rectangular prism pontoon; transparent rear layer and straight front-wall mask",
       "prompt": "Single empty ancient wooden rectangular flat-bottom cargo pontoon; horizontal flat bottom, vertical planar sidewalls, constant horizontal footprint at every immersion depth, blunt rectangular ends; nearly side-on view slightly above deck, aged oak, warm upper-left light; full dry hull visible, transparent alpha, no tapered or curved ends, no water, cargo, people, elephant, ropes, text."
     },
     {
-      "path": "cao-chong/estimate-background.jpg",
+      "path": "cao-chong/estimate-background.webp",
       "source": "OpenAI built-in ImageGen",
       "role": "Subtle full-slide historical riverside background for pages 02 and 03",
       "prompt": "Photorealistic low-contrast ancient Chinese riverside, misty mountains and distant buildings; small elephant on far right shore; straight-wall flat-bottom barge with stones at bottom-right; broad pale open sky and water for chart and text overlays; no people, labels, UI or watermark."
     },
     {
-      "path": "optimization/optimization-terrain.png",
+      "path": "optimization/optimization-terrain.webp",
       "source": "OpenAI built-in ImageGen",
       "role": "Illustrative nonconvex loss terrain with shallow local valley, deeper global valley, and feasible parameter plane for page 18. No computed or measured loss values.",
       "prompt": "Transparent 3:2 textbook terrain, pale yellow ridges and blue smooth meshed valleys, shallow local valley on left and deeper global valley on right, pale-blue feasible plane with dashed boundary and contour rings, no text, axes, markers or UI.",

@@ -20,7 +20,7 @@ export function FaceFeatureComplexityPage() {
         </div>
         <div shuku-edit-id="e-a717b7ff-80d2-4cb1-a83e-c5b8f16b7f9c" className="vfl-face-complexity-photo-row">
           {PHOTOS.map((index, position) => <div shuku-edit-id="e-4a4087a2-09b2-415e-aeb7-813e23fef06f" className="vfl-face-complexity-photo" key={index}>
-            <img shuku-edit-id="e-a1110c04-34cb-4402-9388-f8cf062e948b" src={moduleAssetUrl(`faces/lfw-serena-${index}.jpg`)} alt={`同一身份的人脸样本 ${position + 1}`} />
+            <img shuku-edit-id="e-a1110c04-34cb-4402-9388-f8cf062e948b" src={moduleAssetUrl(`faces/lfw-serena-${index}.webp`)} alt={`同一身份的人脸样本 ${position + 1}`} />
           </div>)}
         </div>
         <div shuku-edit-id="e-42624392-cf06-4141-ab3a-259197917148" className="vfl-face-complexity-same"><Typography shuku-edit-id="e-9d399827-3d01-4199-89c5-9e22cec2056a" as="p" variant="body" tone="accent">四张照片属于同一人</Typography></div>

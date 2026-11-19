@@ -6,7 +6,7 @@ export function TranslationOpeningPage({ onComplete }: {
     onComplete: () => void;
 }) {
     return <LessonPageFrame><section shuku-edit-id="e-0985bec6-b0c3-4d7a-92af-1ba05136de5f" className="tr-translation-opening" aria-labelledby="tr-translation-title">
-    <img shuku-edit-id="e-e67f2c8e-af22-45de-9893-455667e3e785" className="tr-translation-backdrop" src={transformerAsset("01_翻译引入/翻译任务.jpg")} alt="学生递出原文，机器人歪头托着下巴思考如何翻译"/>
+    <img shuku-edit-id="e-e67f2c8e-af22-45de-9893-455667e3e785" className="tr-translation-backdrop" src={transformerAsset("01_翻译引入/翻译任务.webp")} alt="学生递出原文，机器人歪头托着下巴思考如何翻译"/>
     <header shuku-edit-id="e-5b9a2634-454e-40c8-ba98-a75ce1613f5f" className="tr-lesson-header">
       <Typography shuku-edit-id="e-498b5f70-4a04-4018-96ae-fe03e5806afc" as="h1" variant="display" tone="accent" id="tr-translation-title">一句英文，机器怎样翻成中文？</Typography>
       <Typography shuku-edit-id="e-fc171144-19c8-402e-95d4-24afa2a1ab7c" variant="subtitle" tone="muted">先试着翻译这句英文，再进入课程看看机器怎样完成。</Typography>

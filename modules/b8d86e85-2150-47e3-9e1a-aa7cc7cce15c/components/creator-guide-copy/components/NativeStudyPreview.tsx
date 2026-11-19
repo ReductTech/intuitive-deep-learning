@@ -8,7 +8,7 @@ import { KernelDesignPage } from './workflow/copied-course/pages/KernelDesignPag
 import './workflow/copied-course/tailwind.css';
 import './NativeStudyPreview.css';
 
-const image = (completed: boolean) => creatorGuideAssetUrl('', `images/multi-format/convolution/gomoku-play${completed ? '-completed' : ''}.jpg`);
+const image = (completed: boolean) => creatorGuideAssetUrl('', `images/multi-format/convolution/gomoku-play${completed ? '-completed' : ''}.webp`);
 
 /** Only the first step is simulated; subsequent steps retain the real lesson flow. */
 function ExampleGomokuStep({ complete, isComplete, autoDemo }: LessonStepContext & { autoDemo: boolean }) {

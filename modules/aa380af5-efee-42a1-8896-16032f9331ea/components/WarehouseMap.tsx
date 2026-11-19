@@ -4,7 +4,7 @@ import { Button, Typography } from "@shuku/course-style/react";
 import { BLOCKED, GOAL, GRID, START, keyOf, type Position } from '../model';
 import './WarehouseMap.css';
 
-const robotArt = valueBasedRlAssetUrl('cover-v2/robot.png');
+const robotArt = valueBasedRlAssetUrl("cover-v2/robot.webp");
 const targetArt = valueBasedRlAssetUrl('delivery-target.svg');
 
 export interface MapTrail { points: readonly Position[]; color?: string; dashed?: boolean; }

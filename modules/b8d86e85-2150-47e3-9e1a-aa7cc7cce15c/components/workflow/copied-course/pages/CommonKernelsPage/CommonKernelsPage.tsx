@@ -5,12 +5,12 @@ import { ContentBlock, MathFormulaStatic, Typography } from "@shuku/course-style
 import './CommonKernelsPage.css';
 
 const moduleAssetId = 'b8d86e85-2150-47e3-9e1a-aa7cc7cce15c';
-const buildingImage = moduleAssetUrl('workflow/convolution-course/xiandaijianzhu.jpg');
-const bridgeImage = moduleAssetUrl('workflow/convolution-course/xielaqiao.jpg');
-const mountainImage = moduleAssetUrl('workflow/convolution-course/caiermate.jpg');
-const zebraImage = moduleAssetUrl('workflow/convolution-course/zebra.jpg');
-const pineappleImage = moduleAssetUrl('workflow/convolution-course/pineapple.jpg');
-const cityImage = moduleAssetUrl('workflow/convolution-course/be_city.jpg');
+const buildingImage = moduleAssetUrl("workflow/convolution-course/xiandaijianzhu.webp");
+const bridgeImage = moduleAssetUrl("workflow/convolution-course/xielaqiao.webp");
+const mountainImage = moduleAssetUrl("workflow/convolution-course/caiermate.webp");
+const zebraImage = moduleAssetUrl("workflow/convolution-course/zebra.webp");
+const pineappleImage = moduleAssetUrl("workflow/convolution-course/pineapple.webp");
+const cityImage = moduleAssetUrl("workflow/convolution-course/be_city.webp");
 
 type Matrix3 = readonly [readonly [number, number, number], readonly [number, number, number], readonly [number, number, number]];
 type ViewMode = 'gray' | 'edge' | 'signed';

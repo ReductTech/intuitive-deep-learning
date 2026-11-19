@@ -3,7 +3,7 @@ import { useEffect, useState, type ReactNode } from 'react';
 import { ContentBlock, MathFormulaBlock, MathFormulaStatic, MathFormulaTerm, Typography } from "@shuku/course-style/react";
 import './SecondDifferencePage.css';
 
-const zermattImage = moduleAssetUrl('caiermate.jpg');
+const zermattImage = moduleAssetUrl("caiermate.webp");
 
 interface DifferenceImages {
   input: string;

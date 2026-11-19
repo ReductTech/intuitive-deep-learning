@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 import { Typography } from "@shuku/course-style/react";
 import outline from '../outlines.json';
 import './WeightSharingAblation.css';
-const generatedImages = ['without-structure-v2.jpg','without-interaction-v2.jpg','without-visual-v2.jpg','without-format-v2.jpg'].map(name=>moduleAssetUrl(`images/skill-ablation/${name}`));
+const generatedImages = ['without-structure-v2.webp','without-interaction-v2.webp','without-visual-v2.webp','without-format-v2.webp'].map(name=>moduleAssetUrl(`images/skill-ablation/${name}`));
 const constraintNames = ['内容结构','交互行为','视觉风格','页面规范'];
 export function WeightSharingAblation({category}:{category:number}) {
   const video = useRef<HTMLVideoElement>(null);

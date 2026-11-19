@@ -5,9 +5,9 @@ import outline from '../../outlines.json';
 import { allocatePaperStacks, readerPose } from './paperStacks';
 import { projectPaperPage } from './paperPerspective';
 
-const topSheets = ['images/research-background/paper-relief/paper-top-single-a.jpg', 'images/research-background/paper-relief/paper-top-double-a.jpg',
-  'images/research-background/paper-relief/paper-top-single-figure.jpg', 'images/research-background/paper-relief/paper-top-double-table.jpg'] as const;
-const assets = ['images/research-background/paper-relief/room-calm.jpg','images/research-background/paper-relief/desk.png',...topSheets,'images/research-background/paper-relief/calendar-stand.png','images/research-background/paper-relief/reader-relaxed.png','images/research-background/paper-relief/reader-focused.png','images/research-background/paper-relief/reader-defeated.png'] as const;
+const topSheets = ["images/research-background/paper-relief/paper-top-single-a.webp", "images/research-background/paper-relief/paper-top-double-a.webp",
+  "images/research-background/paper-relief/paper-top-single-figure.webp", "images/research-background/paper-relief/paper-top-double-table.webp"] as const;
+const assets = ["images/research-background/paper-relief/room-calm.webp","images/research-background/paper-relief/desk.webp",...topSheets,"images/research-background/paper-relief/calendar-stand.webp","images/research-background/paper-relief/reader-relaxed.webp","images/research-background/paper-relief/reader-focused.webp","images/research-background/paper-relief/reader-defeated.webp"] as const;
 type Asset = typeof assets[number];
 const image = (file: Asset) => moduleAssetUrl(file);
 const poseLabels = { relaxed:'挠着后脑勺靠在椅子上', focused:'认真地俯身写字', defeated:'无奈地瘫在椅子上，放弃抵抗' };
@@ -34,7 +34,7 @@ export function PaperReliefScene({year,previousYear,count,onReadyChange}:{year:n
 
   return <div shuku-edit-id="e-2afd9095-3153-45d6-b51b-d24675c3ad30" ref={roomRef} className="rie-paper-room" data-pose={pose} data-paper-count={count} aria-busy={!ready && !failed.size}>
     {assets.map(name => <img shuku-edit-id="e-7739ed50-586f-47dd-a38d-652a59f335df" key={`${name}-${retry}`} src={image(name)}
-      className={`rie-paper-asset rie-paper-${name === 'images/research-background/paper-relief/room-calm.jpg' ? 'background' : name.includes('/paper-top-') ? 'texture' : name.split('/').pop()!.replace(/\.[^.]+$/, '')}${name === `images/research-background/paper-relief/reader-${pose}.png` ? ' is-active' : ''}`}
+      className={`rie-paper-asset rie-paper-${name === 'images/research-background/paper-relief/room-calm.webp' ? 'background' : name.includes('/paper-top-') ? 'texture' : name.split('/').pop()!.replace(/\.[^.]+$/, '')}${name === `images/research-background/paper-relief/reader-${pose}.webp` ? ' is-active' : ''}`}
       alt="" aria-hidden="true" draggable={false}
       onLoad={event => {
         const node = event.currentTarget;
@@ -65,7 +65,7 @@ export function PaperReliefScene({year,previousYear,count,onReadyChange}:{year:n
         transform:plane.transform,backgroundImage:`url("${image(topSheet)}")`}} />
     </div>;})}
     {size && <div shuku-edit-id="e-e1047f3c-50d1-44d0-9aa0-f308da3b925f" className="rie-paper-reading-page" aria-hidden="true">
-      {(['images/research-background/paper-relief/paper-top-double-a.jpg','images/research-background/paper-relief/paper-top-single-figure.jpg'] as const).map((sheet,i) => {
+      {(["images/research-background/paper-relief/paper-top-double-a.webp","images/research-background/paper-relief/paper-top-single-figure.webp"] as const).map((sheet,i) => {
         const plane = projectPaperPage(size.width * .075, size.width * (.465 + i * .075),
           size.height * .43, size.width / 2, -size.height * .79);
         return <div shuku-edit-id="e-b6b6b3a3-a1d4-4827-be29-080da30b3858" key={sheet} className="rie-paper-reading-sheet" style={{left:`${i*50}%`,

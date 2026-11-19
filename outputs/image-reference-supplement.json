@@ -1,0 +1,45 @@
+{
+  "files": 4,
+  "records": [
+    {
+      "file": "modules/74de5075-8163-413d-84d4-7176f2a3f4a2/pages/PublicationGrowthPage/PaperReliefScene.tsx",
+      "before": "images/research-background/paper-relief/room-calm.jpg",
+      "after": "images/research-background/paper-relief/room-calm.webp"
+    },
+    {
+      "file": "modules/74de5075-8163-413d-84d4-7176f2a3f4a2/pages/PublicationGrowthPage/PaperReliefScene.tsx",
+      "before": "`images/research-background/paper-relief/reader-${pose}.png`",
+      "after": "`images/research-background/paper-relief/reader-${pose}.webp`"
+    },
+    {
+      "file": "modules/74de5075-8163-413d-84d4-7176f2a3f4a2/pages/ResearchInformationPage/PaperReliefScene.tsx",
+      "before": "images/paper-relief/room-calm.jpg",
+      "after": "images/paper-relief/room-calm.webp"
+    },
+    {
+      "file": "modules/74de5075-8163-413d-84d4-7176f2a3f4a2/pages/ResearchInformationPage/PaperReliefScene.tsx",
+      "before": "`images/paper-relief/reader-${pose}.png`",
+      "after": "`images/paper-relief/reader-${pose}.webp`"
+    },
+    {
+      "file": "modules/b8d86e85-2150-47e3-9e1a-aa7cc7cce15c/pages/ResearchInformationPage/PaperReliefScene.tsx",
+      "before": "images/paper-relief/room-calm.jpg",
+      "after": "images/paper-relief/room-calm.webp"
+    },
+    {
+      "file": "modules/b8d86e85-2150-47e3-9e1a-aa7cc7cce15c/pages/ResearchInformationPage/PaperReliefScene.tsx",
+      "before": "`images/paper-relief/reader-${pose}.png`",
+      "after": "`images/paper-relief/reader-${pose}.webp`"
+    },
+    {
+      "file": "modules/f80cb964-6f15-44cd-b32e-35e9c19169ee/pages/PublicationGrowthPage/PaperReliefScene.tsx",
+      "before": "images/paper-relief/room-calm.jpg",
+      "after": "images/paper-relief/room-calm.webp"
+    },
+    {
+      "file": "modules/f80cb964-6f15-44cd-b32e-35e9c19169ee/pages/PublicationGrowthPage/PaperReliefScene.tsx",
+      "before": "`images/paper-relief/reader-${pose}.png`",
+      "after": "`images/paper-relief/reader-${pose}.webp`"
+    }
+  ]
+}

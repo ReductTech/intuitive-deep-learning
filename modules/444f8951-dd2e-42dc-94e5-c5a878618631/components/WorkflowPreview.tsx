@@ -1,7 +1,7 @@
-import river_video_posterAsset0 from '../assets/workflow/river-video-poster.jpg';
-import boat_rectangularAsset1 from '../assets/workflow/boat-rectangular.png';
-import elephantAsset2 from '../assets/workflow/elephant.png';
-import rockAsset3 from '../assets/workflow/rock.png';
+import river_video_posterAsset0 from "../assets/workflow/river-video-poster.webp";
+import boat_rectangularAsset1 from "../assets/workflow/boat-rectangular.webp";
+import elephantAsset2 from "../assets/workflow/elephant.webp";
+import rockAsset3 from "../assets/workflow/rock.webp";
 import { useState, type CSSProperties } from 'react';
 import { Button, Typography } from "@shuku/course-style/react";
 import outline from '../outlines.json';

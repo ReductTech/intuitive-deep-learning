@@ -5,7 +5,7 @@ import { Light, Picture } from '@icon-park/react';
 import { ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import './GradientPage.css';
 
-const buildingImage = creatorGuideAssetUrl('444f8951-dd2e-42dc-94e5-c5a878618631', 'workflow/convolution-course/xiandaijianzhu.jpg');
+const buildingImage = creatorGuideAssetUrl('444f8951-dd2e-42dc-94e5-c5a878618631', "workflow/convolution-course/xiandaijianzhu.webp");
 
 interface GradientImages { horizontal: string; vertical: string; magnitude: string; }
 

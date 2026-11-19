@@ -64,12 +64,12 @@
 		{
 			"mimeType":"image/png",
 			"name":"Bark_DeadTree_Normal",
-			"uri":"Bark_DeadTree_Normal.jpg"
+			"uri":"Bark_DeadTree_Normal.webp"
 		},
 		{
 			"mimeType":"image/png",
 			"name":"Bark_DeadTree",
-			"uri":"Bark_DeadTree.jpg"
+			"uri":"Bark_DeadTree.webp"
 		}
 	],
 	"accessors":[

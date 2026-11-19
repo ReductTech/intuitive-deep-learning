@@ -71,3 +71,12 @@
   .ngtw-model-fallback { min-height: 360px; }
 }
 
+
+/* Preserve the full content inside the 1600 × 900 playback canvas. */
+.course-page-surface .ngtw-model-viewer-copy { grid-template-rows:minmax(0,1fr) minmax(0,1fr); }
+
+.course-page-surface .ngtw-completion-stage .ui-typography--bodySmall { font-size:22px; line-height:1.4; }
+.course-page-surface .ngtw-completion-stage .ui-typography--h2 { font-size:34px; line-height:1.25; }
+
+.course-page-surface .ngtw-model-viewer-copy__numbers .ui-typography--bodySmall { font-size:20px !important; line-height:1.2 !important; }
+.course-page-surface .ngtw-model-viewer-copy__numbers .ui-typography--h2 { font-size:30px !important; line-height:1.15 !important; }

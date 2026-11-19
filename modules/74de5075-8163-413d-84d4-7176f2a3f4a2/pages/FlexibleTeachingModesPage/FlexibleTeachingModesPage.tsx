@@ -4,7 +4,7 @@ import outline from '../../outlines.json';
 import './FlexibleTeachingModesPage.css';
 
 const illustration = (name: string) => moduleAssetUrl(
-  `images/teaching-mode/${name}-cartoon-v1.jpg`,
+  `images/teaching-mode/${name}-cartoon-v1.webp`,
 );
 
 export function FlexibleTeachingModesPage() {

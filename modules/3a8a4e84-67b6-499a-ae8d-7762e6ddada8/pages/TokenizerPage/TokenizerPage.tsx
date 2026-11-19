@@ -75,7 +75,7 @@ export function TokenizerPage({ onComplete }: TokenizerPageProps) {
           <p shuku-edit-id="e-ed6b9299-a44a-4c75-9f4f-a50b2ed7ffdc" className="tr-tokenizer-caption">输入模型要处理的<strong shuku-edit-id="e-fb875074-3e53-4ce9-8428-3054f9fbb16d">原文句子</strong>。</p>
         </section>
         <section shuku-edit-id="e-0de9af1e-9062-4696-9302-401e4715d239" className="tr-tokenizer-panel" aria-label="分词结果">
-          <h2 shuku-edit-id="e-ebe006c2-0f9d-42aa-9f5b-2cdcfaee7325"><img shuku-edit-id="e-938206bf-17b9-44b9-a1fe-45c1b6991aea" src={transformerAsset("02_分词与嵌入/分词.png")} alt=""/>分词</h2>
+          <h2 shuku-edit-id="e-ebe006c2-0f9d-42aa-9f5b-2cdcfaee7325"><img shuku-edit-id="e-938206bf-17b9-44b9-a1fe-45c1b6991aea" src={transformerAsset("02_分词与嵌入/分词.webp")} alt=""/>分词</h2>
           <div shuku-edit-id="e-7d2c33cb-ce1f-4ca9-9124-ca423c421508" className="tr-tokenizer-demo">
             {tokens.length > 0 && <>
               <div shuku-edit-id="e-9233b79e-96c5-486f-9c7b-8f85a40884e2" className="tr-tokenizer-rows" tabIndex={0} aria-label="词元列表，可上下滚动">
@@ -87,7 +87,7 @@ export function TokenizerPage({ onComplete }: TokenizerPageProps) {
           <p shuku-edit-id="e-4d759eaa-d20f-4858-a46d-039403de126b" className="tr-tokenizer-caption">把句子切成<strong shuku-edit-id="e-4c9c69b6-c3a1-4efa-8332-9d324c51cabc">词元（Token）</strong>。</p>
         </section>
         <section shuku-edit-id="e-f9eefb4a-e384-49ce-86d0-081460816ab0" className="tr-tokenizer-panel" aria-label="词向量矩阵">
-          <h2 shuku-edit-id="e-47740adf-b37e-490f-a0cb-572049d8263c"><img shuku-edit-id="e-6fe57a23-5e8d-4b33-898a-d26c9a530036" src={transformerAsset("02_分词与嵌入/词嵌入.png")} alt=""/>词嵌入</h2>
+          <h2 shuku-edit-id="e-47740adf-b37e-490f-a0cb-572049d8263c"><img shuku-edit-id="e-6fe57a23-5e8d-4b33-898a-d26c9a530036" src={transformerAsset("02_分词与嵌入/词嵌入.webp")} alt=""/>词嵌入</h2>
           <div shuku-edit-id="e-9452ca12-ee51-4a26-9bb2-b24b397813d7" className="tr-tokenizer-demo">
             {modelLoading && <div shuku-edit-id="e-89034696-c80e-443b-b434-50f1e9ada6bb" className="tr-tokenizer-loading" role="status" aria-live="polite">
               <strong shuku-edit-id="e-f6230607-75f6-433c-b842-70983c240ab9">正在计算</strong>

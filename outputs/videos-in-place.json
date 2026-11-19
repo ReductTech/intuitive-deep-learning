@@ -1,0 +1,128 @@
+[
+  {
+    "path": "modules/444f8951-dd2e-42dc-94e5-c5a878618631/assets/videos/weight-sharing.mp4",
+    "beforeBytes": 360978,
+    "afterBytes": 311835,
+    "status": "passed"
+  },
+  {
+    "path": "modules/444f8951-dd2e-42dc-94e5-c5a878618631/assets/workflow/convolution-course/bg_video.mp4",
+    "beforeBytes": 406152,
+    "afterBytes": 327570,
+    "status": "passed"
+  },
+  {
+    "path": "modules/74de5075-8163-413d-84d4-7176f2a3f4a2/assets/showcase-gomoku-bg.mp4",
+    "beforeBytes": 406152,
+    "afterBytes": 327570,
+    "status": "passed"
+  },
+  {
+    "path": "modules/74de5075-8163-413d-84d4-7176f2a3f4a2/assets/assembly/gomoku-bg.mp4",
+    "beforeBytes": 406152,
+    "afterBytes": 327570,
+    "status": "passed"
+  },
+  {
+    "path": "modules/74de5075-8163-413d-84d4-7176f2a3f4a2/assets/videos/weight-sharing.mp4",
+    "beforeBytes": 360978,
+    "afterBytes": 311835,
+    "status": "passed"
+  },
+  {
+    "path": "modules/74de5075-8163-413d-84d4-7176f2a3f4a2/assets/workflow/convolution-course/bg_video.mp4",
+    "beforeBytes": 406152,
+    "afterBytes": 327570,
+    "status": "passed"
+  },
+  {
+    "path": "modules/74de5075-8163-413d-84d4-7176f2a3f4a2/assets/creator-guide-copy/assembly/gomoku-bg.mp4",
+    "beforeBytes": 406152,
+    "afterBytes": 327570,
+    "status": "passed"
+  },
+  {
+    "path": "modules/74de5075-8163-413d-84d4-7176f2a3f4a2/assets/creator-guide-copy/videos/weight-sharing.mp4",
+    "beforeBytes": 360978,
+    "afterBytes": 311835,
+    "status": "passed"
+  },
+  {
+    "path": "modules/74de5075-8163-413d-84d4-7176f2a3f4a2/assets/creator-guide-copy/workflow/convolution-course/bg_video.mp4",
+    "beforeBytes": 406152,
+    "afterBytes": 327570,
+    "status": "passed"
+  },
+  {
+    "path": "modules/80396753-7fc8-4f55-9188-bddbdb828169/assets/yuhuanong/yuhuanong_shouye.mp4",
+    "beforeBytes": 563460,
+    "afterBytes": 322603,
+    "status": "passed"
+  },
+  {
+    "path": "modules/9acfbca1-b881-457e-add6-21e0b6b855a0/assets/teacher_female_10s_wb.mp4",
+    "beforeBytes": 1540287,
+    "afterBytes": 701192,
+    "status": "passed"
+  },
+  {
+    "path": "modules/9acfbca1-b881-457e-add6-21e0b6b855a0/assets/teacher_male_10s_wb.mp4",
+    "beforeBytes": 1368438,
+    "afterBytes": 573502,
+    "status": "passed"
+  },
+  {
+    "path": "modules/9acfbca1-b881-457e-add6-21e0b6b855a0/assets/legacy/cb456124-d558-4bbe-953d-3620cb74197b/teacher_female_10s_wb.mp4",
+    "beforeBytes": 1540287,
+    "afterBytes": 701192,
+    "status": "passed"
+  },
+  {
+    "path": "modules/9acfbca1-b881-457e-add6-21e0b6b855a0/assets/legacy/cb456124-d558-4bbe-953d-3620cb74197b/teacher_male_10s_wb.mp4",
+    "beforeBytes": 1368438,
+    "afterBytes": 573502,
+    "status": "passed"
+  },
+  {
+    "path": "modules/b8d86e85-2150-47e3-9e1a-aa7cc7cce15c/assets/showcase-gomoku-bg.mp4",
+    "beforeBytes": 406152,
+    "afterBytes": 327570,
+    "status": "passed"
+  },
+  {
+    "path": "modules/b8d86e85-2150-47e3-9e1a-aa7cc7cce15c/assets/assembly/gomoku-bg.mp4",
+    "beforeBytes": 406152,
+    "afterBytes": 327570,
+    "status": "passed"
+  },
+  {
+    "path": "modules/b8d86e85-2150-47e3-9e1a-aa7cc7cce15c/assets/videos/weight-sharing.mp4",
+    "beforeBytes": 360978,
+    "afterBytes": 311835,
+    "status": "passed"
+  },
+  {
+    "path": "modules/b8d86e85-2150-47e3-9e1a-aa7cc7cce15c/assets/workflow/convolution-course/bg_video.mp4",
+    "beforeBytes": 406152,
+    "afterBytes": 327570,
+    "status": "passed"
+  },
+  {
+    "path": "modules/b8d86e85-2150-47e3-9e1a-aa7cc7cce15c/assets/creator-guide-copy/assembly/gomoku-bg.mp4",
+    "beforeBytes": 406152,
+    "afterBytes": 327570,
+    "status": "passed"
+  },
+  {
+    "path": "modules/b8d86e85-2150-47e3-9e1a-aa7cc7cce15c/assets/creator-guide-copy/videos/weight-sharing.mp4",
+    "beforeBytes": 360978,
+    "afterBytes": 311835,
+    "status": "passed"
+  },
+  {
+    "path": "modules/b8d86e85-2150-47e3-9e1a-aa7cc7cce15c/assets/creator-guide-copy/workflow/convolution-course/bg_video.mp4",
+    "beforeBytes": 406152,
+    "afterBytes": 327570,
+    "status": "passed"
+  }
+]

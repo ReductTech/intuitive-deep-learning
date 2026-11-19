@@ -1,3 +1,5 @@
+import { deck } from './AiCreatorWorkshopPpt';
+import outline from './outlines.json';
 import { useRef, type ReactNode } from 'react';
 import { useSceneScale } from "@shuku/course-style/react/presentation/canvas";
 import "@shuku/course-style/react/styles.css";
@@ -18,6 +20,10 @@ function GuideFrame({ id, children }: { id: string; children: ReactNode }) {
 }
 
 export function AiCreatorWorkshopGuide() {
-  return <main shuku-edit-id="e-3634bb7a-0ea9-4ea7-b447-3c56e6a55547" className="acw-learning-guide"><GuideFrame id="model-harness-workspace"><ToolOverviewPage /></GuideFrame><GuideFrame id="learn-by-explaining"><LearnByExplainingPage /></GuideFrame><GuideFrame id="learn-through-engineering-challenges"><EngineeringCollaborationPage /></GuideFrame><GuideFrame id="develop-creator-judgment"><CreatorJudgmentPage /></GuideFrame><GuideFrame id="publish-and-credit-contributors"><ContributionRecordPage /></GuideFrame><GuideFrame id="define-the-experiment"><ProjectFrameworkPage /></GuideFrame><GuideFrame id="run-the-first-interface"><ModuleDirectoryPage /></GuideFrame><GuideFrame id="iterate-with-a-screenshot"><SkillWorkflowPage /></GuideFrame></main>;
+  return <main shuku-edit-id="e-3634bb7a-0ea9-4ea7-b447-3c56e6a55547" className="acw-learning-guide">{outline.pages.map(page => {
+    const scene = deck.scenes.find(scene => scene.id === page.id);
+    if (!scene) throw new Error('Missing creator workshop page: ' + page.id);
+    return <GuideFrame key={page.id} id={page.id}>{scene.render({ complete: () => {}, reset: () => {}, isComplete: false })}</GuideFrame>;
+  })}</main>;
 }
 

@@ -10,7 +10,7 @@ import {useAmbientFeedScroll} from './useAmbientFeedScroll';
 // Reuse only paper figures from the supplied screenshot; feed text and controls remain interactive DOM.
 function Figure({paper}:{paper:Paper}) {
  const [x,y,w,h]=paper.crop;
- return <div shuku-edit-id="e-335aa182-1478-46f8-9e4b-ac42ee8064ad" className="ra-figure" data-ppt-viewport="论文配图裁切窗口" style={{aspectRatio:`${w}/${h}`}}><img shuku-edit-id="e-3fddbb88-f8c0-4db0-93d2-d106a3f12fb0" alt={`${paper.title} 论文配图`} draggable={false} src={moduleAssetUrl('images/recommendation-app/feed-reference.jpg')} style={{width:`${1129/w*100}%`,left:`${-x/w*100}%`,top:`${-y/h*100}%`}}/></div>;
+ return <div shuku-edit-id="e-335aa182-1478-46f8-9e4b-ac42ee8064ad" className="ra-figure" data-ppt-viewport="论文配图裁切窗口" style={{aspectRatio:`${w}/${h}`}}><img shuku-edit-id="e-3fddbb88-f8c0-4db0-93d2-d106a3f12fb0" alt={`${paper.title} 论文配图`} draggable={false} src={moduleAssetUrl("images/recommendation-app/feed-reference.webp")} style={{width:`${1129/w*100}%`,left:`${-x/w*100}%`,top:`${-y/h*100}%`}}/></div>;
 }
 function browserTime() {
  const now=new Date();
@@ -76,7 +76,7 @@ export function ResearchAppPhone({ initialEntry='research', autoPlaySprout=true 
  </article>}
  return (
   <div shuku-edit-id="e-1e7abfa0-46ec-4a5c-89af-b1243f36bc65" className="ra-phone ra-phone--photo" data-app-entry={entry} data-app-area={area} onWheel={e=>e.stopPropagation()} onPointerDown={e=>e.stopPropagation()} onKeyDown={e=>e.stopPropagation()}>
-   <img shuku-edit-id="e-130c4917-a1ff-499c-895f-26cdb5c39b3e" className="ra-device-photo" src={moduleAssetUrl('images/recommendation-app/phone-photoreal.png')} alt="" draggable={false} aria-hidden="true"/>
+   <img shuku-edit-id="e-130c4917-a1ff-499c-895f-26cdb5c39b3e" className="ra-device-photo" src={moduleAssetUrl("images/recommendation-app/phone-photoreal.webp")} alt="" draggable={false} aria-hidden="true"/>
    <div shuku-edit-id="e-0efd6ac3-c7c9-4a0c-b442-b7a6efa3799f" className="ra-screen" data-feed-screen="phone">
     <div shuku-edit-id="e-3e4b3243-fa16-4452-bb8e-eda0011853d2" className="ra-status"><PhoneTime/><div shuku-edit-id="e-6e6d60af-45d1-400e-b8d9-634cac974104" className="ra-island"/><div shuku-edit-id="e-1625e56c-7419-493e-9ad9-017ac9c7d353" className="ra-status-icons"><Signal/><Wifi/><BatteryMedium/></div></div>
     <header shuku-edit-id="e-b670680f-34c4-4112-8813-0b609da04d33" className="ra-header"><button shuku-edit-id="e-2df60252-c43c-4376-9345-cbf452ba2f18" aria-label="打开菜单" onClick={()=>setSheet('menu')}><Menu/></button><div shuku-edit-id="e-4f5d3342-ec84-4a0c-895c-f1483a82c09d" className="ra-tabs">{(area==='community'?['发现','关注','新芽','会议']:['热点','发现','关注']).map(t=><button shuku-edit-id="e-dfc6c879-690c-4905-8b7e-4f85976eb98b" key={t} className={(area==='community'?communityTab===t:tab===t)?'active':''} onClick={()=>{setSheet('');setSearching(false);if(area==='community'){setCommunityTab(t);setEntry(t==='新芽'?'sprout':'research');setNav(t==='会议'?'会议':'社区')}else{setEntry('research');setTab(t);setNav('科技');resetFeed()}}}><Typography shuku-edit-id="e-f2644f65-ccae-4873-b773-f8c438f3af4e" as="span" variant="body" tone="inherit">{t}</Typography></button>)}</div><button shuku-edit-id="e-35cb89a2-d6b7-4dff-9ba2-09b6d0b3a1e6" aria-label="搜索论文" onClick={()=>{setArea('research');setEntry('research');setSearching(!searching)}}><Search/></button></header>

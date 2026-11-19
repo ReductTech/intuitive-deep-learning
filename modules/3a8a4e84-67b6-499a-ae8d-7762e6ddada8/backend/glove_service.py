@@ -15,7 +15,7 @@ from fastapi import FastAPI, HTTPException
 
 from pydantic import BaseModel, Field
 
-GLOVE_PATH=Path(__file__).resolve().parent.parent/'models/glove-wiki-gigaword-50/glove-wiki-gigaword-50.gz'
+GLOVE_PATH=Path(__file__).resolve().parent.parent/'assets/models/glove-wiki-gigaword-50/glove-wiki-gigaword-50.gz'
 
 app=FastAPI(title='Local GloVe classroom model')
 

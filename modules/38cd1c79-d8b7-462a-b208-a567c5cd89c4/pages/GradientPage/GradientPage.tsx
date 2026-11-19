@@ -4,7 +4,7 @@ import { Light, Picture } from '@icon-park/react';
 import { ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import './GradientPage.css';
 
-const buildingImage = moduleAssetUrl('xiandaijianzhu.jpg');
+const buildingImage = moduleAssetUrl("xiandaijianzhu.webp");
 
 interface GradientImages { horizontal: string; vertical: string; magnitude: string; }
 

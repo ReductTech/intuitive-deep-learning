@@ -119,3 +119,6 @@
   .ngtw-network-node__caption { max-width: 120px; }
 }
 
+
+/* Preserve the full content inside the 1600 × 900 playback canvas. */
+.course-shell .ngtw-network-summary { top:0; left:0; }

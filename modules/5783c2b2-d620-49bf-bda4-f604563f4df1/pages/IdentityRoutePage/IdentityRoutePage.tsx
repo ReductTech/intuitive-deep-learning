@@ -4,7 +4,7 @@ import { moduleAssetUrl } from "@shuku/course-runtime/react/assets";
 import { useEffect, useRef, useState } from 'react';
 import { Button, ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import { useCompleteOnce } from '../../hooks/useCompleteOnce';
-const bottle = moduleAssetUrl("recycling/camera-views/bottle-front.jpg");
+const bottle = moduleAssetUrl("recycling/camera-views/bottle-front.webp");
 import { canVerify, constructedOutput, initialConstruction, originalRoute, transitionConstruction,
   type ConstructionAction, type LayerIndex } from './identityConstruction';
 import './IdentityRoutePage.css';

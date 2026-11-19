@@ -16,12 +16,12 @@ export function CaoChongPreview({ firstDesign = false, interactive = false, fixe
     if (next !== stones) setRecords(previous => [...previous, next]);
   };
   const reset = () => { setPhase('start'); setStones(0); if (fixed) setRecords([]); };
-  return <div shuku-edit-id="e-844e7054-289e-436b-8ef5-d46ffae84a38" className={`cg-workflow-cao${interactive ? ' is-interactive' : ''}`} style={{ '--cg-workflow-river': `url("${asset('river-video-poster.jpg')}")` } as CSSProperties}>
+  return <div shuku-edit-id="e-844e7054-289e-436b-8ef5-d46ffae84a38" className={`cg-workflow-cao${interactive ? ' is-interactive' : ''}`} style={{ '--cg-workflow-river': `url("${asset('river-video-poster.webp')}")` } as CSSProperties}>
     <div shuku-edit-id="e-f46c2e78-9831-4801-8f7a-c3028969dd89" className="cg-workflow-cao-title"><Typography shuku-edit-id="e-f43ef23d-b891-4386-9d0b-ddf284f940f1" variant="h2" tone="inherit">曹冲称象</Typography><Typography shuku-edit-id="e-503fd125-4d6b-444b-932a-a0bd41874530" variant="bodySmall" tone="inherit">一艘船，能称出大象多重吗？</Typography></div>
     <div shuku-edit-id="e-3038fdef-9f2d-4ea6-8ff8-964d31ada0f6" className="cg-workflow-boat" style={{ transform: `translateY(${phase === 'start' ? 0 : stones * 5}px)` }}>
-      <img shuku-edit-id="e-dcc86632-3530-42f1-869c-789794ae3b7d" className="cg-workflow-boat-back" src={asset('boat-rectangular.png')} alt="河面上的木船" />
-      {phase === 'start' ? <img shuku-edit-id="e-54fd9c0e-3222-42fa-8b96-47934b04cca6" className="cg-workflow-elephant" src={asset('elephant.png')} alt="站在木船上的大象" /> : Array.from({ length: stones }, (_, i) => <img shuku-edit-id="e-01ac475b-3727-4574-8980-bed5d5e2ba9c" key={i} className="cg-workflow-stone" style={{ left: `${28 + i * 9}%` }} src={asset('rock.png')} alt="" />)}
-      <img shuku-edit-id="e-8e14c9b4-97f6-4283-9b47-45027b7c5f81" className="cg-workflow-boat-front" src={asset('boat-rectangular.png')} alt="" />
+      <img shuku-edit-id="e-dcc86632-3530-42f1-869c-789794ae3b7d" className="cg-workflow-boat-back" src={asset('boat-rectangular.webp')} alt="河面上的木船" />
+      {phase === 'start' ? <img shuku-edit-id="e-54fd9c0e-3222-42fa-8b96-47934b04cca6" className="cg-workflow-elephant" src={asset('elephant.webp')} alt="站在木船上的大象" /> : Array.from({ length: stones }, (_, i) => <img shuku-edit-id="e-01ac475b-3727-4574-8980-bed5d5e2ba9c" key={i} className="cg-workflow-stone" style={{ left: `${28 + i * 9}%` }} src={asset('rock.webp')} alt="" />)}
+      <img shuku-edit-id="e-8e14c9b4-97f6-4283-9b47-45027b7c5f81" className="cg-workflow-boat-front" src={asset('boat-rectangular.webp')} alt="" />
       {phase === 'stones' && <div shuku-edit-id="e-8aabd194-40ed-45af-add6-051c71c959e8" className="cg-workflow-watermark"><Typography shuku-edit-id="e-d4f96ec8-112c-489a-9890-a93104224e5d" variant="bodySmall" tone="inherit">大象的水位刻痕</Typography></div>}
     </div>
     {firstDesign && <div shuku-edit-id="e-fcad1377-b402-432e-9a7c-025ad1a6b807" className="cg-workflow-early-answer"><Typography shuku-edit-id="e-e8a0b163-b021-4744-b8a1-3e287ded78ad" variant="bodySmall" tone="inherit">用石头替代大象，直到船沉到同一刻痕</Typography></div>}

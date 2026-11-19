@@ -57,7 +57,7 @@ export function ReferenceCanvas({ index, source, children, title, subtitle, summ
     <div shuku-edit-id="e-f48f8272-9958-4ed1-98b1-ec358a26a34f" ref={viewport} className="vgr-viewport">
     <CropContext.Provider value={top}>
     <div shuku-edit-id="e-d05d17ae-ee30-4ad8-948b-f01f7a077fc3" className="vga-content vgr-contents" data-reference-body-top={top} style={{width:1600,height:canvasHeight,left:layout.left,top:layout.top,transform:`scale(${layout.scale})`}}>
-      {source && <img shuku-edit-id="e-41fe426a-5452-441a-8169-b69dc276910b" className="vgr-plate" src={referenceAsset(`visuals/reference-body-${source}.jpg`)} alt={`${page.title}：参考图内容区的原始图形与流程`} draggable={false} data-reference-plate={source} />}
+      {source && <img shuku-edit-id="e-41fe426a-5452-441a-8169-b69dc276910b" className="vgr-plate" src={referenceAsset(`visuals/reference-body-${source}.webp`)} alt={`${page.title}：参考图内容区的原始图形与流程`} draggable={false} data-reference-plate={source} />}
       {children}
       {!source && <div shuku-edit-id="e-be9e2855-f210-490c-bd95-d7f8d6561b49" className="vgr-native-summary"><Typography variant="h3" tone="accent">{summary}</Typography></div>}
     </div>
@@ -87,6 +87,6 @@ export function Cover({ rect, visible }: { rect: Rect; visible: boolean }) {
 export function LatentNoise({ progress }: { progress: number }) {
   const planes = ['395,9 522,44 522,238 433,212 433,50 395,39','273,17 423,58 423,257 318,228 318,67 273,55','142,26 306,72 306,266 203,237 203,76 142,59','9,37 190,86 190,278 9,239'];
   return <svg shuku-edit-id="e-70430934-b347-4c1d-a7ca-7076e8a05b42" viewBox="0 0 530 293" className="vgr-latent-noise" data-testid="sampling-latent" data-progress={progress} role="img" aria-label={`去噪进度示意 ${Math.round(progress * 100)}%`}>
-    {planes.map(points => <image shuku-edit-id="e-d6e2d008-e9ba-4321-8b5f-7ac8d74f3b07" key={points} href={referenceAsset('visuals/noise-prediction.jpg')} x="0" y="0" width="530" height="293" preserveAspectRatio="none" style={{clipPath: `polygon(${points.split(' ').map(p => {const [x,y] = p.split(',').map(Number);return `${x/5.3}% ${y/2.93}%`;}).join(',')})`}} opacity={1-progress} />)}
+    {planes.map(points => <image shuku-edit-id="e-d6e2d008-e9ba-4321-8b5f-7ac8d74f3b07" key={points} href={referenceAsset("visuals/noise-prediction.webp")} x="0" y="0" width="530" height="293" preserveAspectRatio="none" style={{clipPath: `polygon(${points.split(' ').map(p => {const [x,y] = p.split(',').map(Number);return `${x/5.3}% ${y/2.93}%`;}).join(',')})`}} opacity={1-progress} />)}
   </svg>;
 }

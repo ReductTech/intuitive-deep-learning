@@ -10,10 +10,10 @@ import {
 } from './qUpdateSimulation';
 import './QUpdatePage.css';
 
-const robotArt = valueBasedRlAssetUrl('cover-v2/robot.png');
-const emptyStationArt = valueBasedRlAssetUrl('cover-v2/receiving-station-empty.png');
-const loadedStationArt = valueBasedRlAssetUrl('cover-v2/receiving-station-loaded.png');
-const pitArt = valueBasedRlAssetUrl('cover-v2/maintenance-pit.png');
+const robotArt = valueBasedRlAssetUrl("cover-v2/robot.webp");
+const emptyStationArt = valueBasedRlAssetUrl("cover-v2/receiving-station-empty.webp");
+const loadedStationArt = valueBasedRlAssetUrl("cover-v2/receiving-station-loaded.webp");
+const pitArt = valueBasedRlAssetUrl("cover-v2/maintenance-pit.webp");
 
 type Phase = 'ready' | 'moving' | 'experience' | 'to-target' | 'target' | 'to-table' | 'done';
 type Flight = { id: number; kind: 'experience' | 'target'; style: CSSProperties };

@@ -9,9 +9,9 @@ import { TRAP } from '../QLearningLoopPage/qLearningSimulation';
 import { actionProbabilities, createExplorationQ, evaluateExploration, SNAPSHOT_UPDATES, TRIALS } from './explorationSimulation';
 import './ExplorationPage.css';
 
-const emptyStationArt = valueBasedRlAssetUrl('cover-v2/receiving-station-empty.png');
-const loadedStationArt = valueBasedRlAssetUrl('cover-v2/receiving-station-loaded.png');
-const pitArt = valueBasedRlAssetUrl('cover-v2/maintenance-pit.png');
+const emptyStationArt = valueBasedRlAssetUrl("cover-v2/receiving-station-empty.webp");
+const loadedStationArt = valueBasedRlAssetUrl("cover-v2/receiving-station-loaded.webp");
+const pitArt = valueBasedRlAssetUrl("cover-v2/maintenance-pit.webp");
 
 type Mode = 'greedy' | 'random' | 'mixed';
 const MODES = [{ id: 'greedy', label: '只利用' }, { id: 'random', label: '只探索' }, { id: 'mixed', label: 'ε-greedy' }] as const;

@@ -6,10 +6,10 @@ import { DesignComparisonArrow } from '../../components/DesignComparisonHeader';
 import outline from '../../outlines.json';
 import { MAP_WIDTH, MAP_HEIGHT, loadImage, renderResponse, type Position, type SceneImages } from './laplacianResponse';
 const moduleAssetId = outline.moduleIdentity.id;
-const backgroundUrl = moduleAssetUrl('images/translation-example/bg.jpg');
-const ufoUrl = moduleAssetUrl('images/translation-example/ufo.png');
-const pillarUrl = moduleAssetUrl('images/translation-example/pillar.png');
-const foliageUrl = moduleAssetUrl('images/translation-example/dark_foliage.png');
+const backgroundUrl = moduleAssetUrl("images/translation-example/bg.webp");
+const ufoUrl = moduleAssetUrl("images/translation-example/ufo.webp");
+const pillarUrl = moduleAssetUrl("images/translation-example/pillar.webp");
+const foliageUrl = moduleAssetUrl("images/translation-example/dark_foliage.webp");
 
 export function UfoTranslationScene() {
   const sceneRef = useRef<HTMLDivElement>(null);

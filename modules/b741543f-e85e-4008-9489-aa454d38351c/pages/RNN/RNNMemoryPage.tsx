@@ -2,9 +2,9 @@ import { moduleIdentity } from '../../outlines.json';
 import { moduleAssetUrl } from "@shuku/course-runtime/react/assets";
 import { useRef, useState } from 'react';
 import { Button, ContentBlock, TextInput, Typography } from "@shuku/course-style/react";
-const appleFruit = moduleAssetUrl("apple-fruit.jpg");
+const appleFruit = moduleAssetUrl("apple-fruit.webp");
 const iphone18Pro = moduleAssetUrl("iphone-18-pro.svg");
-const senderAvatar = moduleAssetUrl("sender-avatar.jpg");
+const senderAvatar = moduleAssetUrl("sender-avatar.webp");
 import './RNNMemoryPage.css';
 
 export interface RNNMemoryPageProps {

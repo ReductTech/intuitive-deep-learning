@@ -14,10 +14,13 @@ interface SharedButtonProps {
   className?: string;
 }
 
-export type ButtonProps = SharedButtonProps & (
-  | ({ href: string } & AnchorHTMLAttributes<HTMLAnchorElement>)
-  | ({ href?: undefined } & ButtonHTMLAttributes<HTMLButtonElement>)
-);
+type LinkButtonProps = SharedButtonProps & { href: string } & AnchorHTMLAttributes<HTMLAnchorElement>;
+type NativeButtonProps = SharedButtonProps & { href?: undefined } & ButtonHTMLAttributes<HTMLButtonElement>;
+export type ButtonProps = LinkButtonProps | NativeButtonProps;
+
+function isLinkButton(props: ButtonProps): props is LinkButtonProps {
+  return props.href !== undefined;
+}
 
 export function Button(props: ButtonProps) {
   const {
@@ -47,7 +50,7 @@ export function Button(props: ButtonProps) {
     className,
   );
 
-  if ('href' in props && props.href !== undefined) {
+  if (isLinkButton(props)) {
     const { href, variant: _variant, active: _active, loading: _loading, hint: _hint, explain: _explain, onPointerEnter, onFocus, onClick, ...anchorProps } = props;
     const handlePointerEnter = (event: PointerEvent<HTMLAnchorElement>) => { dismissHint(); onPointerEnter?.(event); };
     const handleFocus = (event: FocusEvent<HTMLAnchorElement>) => { dismissHint(); onFocus?.(event); };

@@ -5,9 +5,9 @@ import { useEffect, useRef, useState } from 'react';
 import { ContentBlock, MathFormulaBlock, MathFormulaStatic, Typography } from "@shuku/course-style/react";
 import './ReverseTrainingPathPage.css';
 
-const x0 = moduleAssetUrl('images/forward-derivation/x0.jpg');
-const x1 = moduleAssetUrl('images/forward-derivation/x1.jpg');
-const x2 = moduleAssetUrl('images/forward-derivation/x2.jpg');
+const x0 = moduleAssetUrl("images/forward-derivation/x0.webp");
+const x1 = moduleAssetUrl("images/forward-derivation/x1.webp");
+const x2 = moduleAssetUrl("images/forward-derivation/x2.webp");
 
 const stages = [
   '先用前向加噪，得到一对相邻的带噪图像。',
@@ -38,10 +38,10 @@ function Formula({ latex, label }: { latex: string; label: string }) {
   return <MathFormulaBlock ariaLabel={label} className="vg-reverse-training__formula"><MathFormulaStatic latex={latex} /></MathFormulaBlock>;
 }
 
-export interface ReverseTrainingPathPageProps { onComplete?: () => void; }
+export interface ReverseTrainingPathPageProps { onComplete?: () => void; initialStage?: number; autoplay?: boolean; title?: string; }
 
-export function ReverseTrainingPathPage({ onComplete }: ReverseTrainingPathPageProps) {
-  const { stage, controls, resumeAfterAction } = useLecturePlayback(stages.length, 1000, 5);
+export function ReverseTrainingPathPage({ onComplete, initialStage = 0, autoplay = true, title }: ReverseTrainingPathPageProps) {
+  const { stage, controls, resumeAfterAction } = useLecturePlayback(stages.length, 1000, 5, initialStage, autoplay);
   const [modelMean, setModelMean] = useState(-1.1);
   const completedRef = useRef(false);
   const gap = Math.abs(modelMean - TEACHER_MEAN);
@@ -53,7 +53,7 @@ export function ReverseTrainingPathPage({ onComplete }: ReverseTrainingPathPageP
   }, [stage, onComplete]);
 
   return <ContentBlock shuku-edit-id="e-fb4335a8-1193-4b1d-9b49-bad61453db89" headingLevel={1} className="vg-shared-page vg-reverse-training" bodyClassName="vg-reverse-training__body"
-    title="前向加噪，如何为反向去噪提供训练路径？" subtitle={stages[stage]}>
+    title={title ?? '前向加噪，如何为反向去噪提供训练路径？'} subtitle={stages[stage]}>
     <div shuku-edit-id="e-453801f9-4044-43e7-ab12-da3f4cb58bc2" className="vg-reverse-training__main">
       <section shuku-edit-id="e-4ad31d45-3756-4f75-97b4-221433ab7f25" className="vg-reverse-training__path" aria-label="前向加噪和反向训练路径">
         <div shuku-edit-id="e-747637d3-360a-4f7c-afca-3fc5cffc55b7" className="vg-reverse-training__diagram">

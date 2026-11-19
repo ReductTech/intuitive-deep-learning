@@ -2,10 +2,10 @@ import { moduleAssetUrl } from '@shuku/course-runtime/react/assets';
 import type { CSSProperties } from 'react';
 import { ArrowRight } from '@icon-park/react';
 import { ContentBlock, MathFormulaBlock, MathFormulaTerm, Typography } from "@shuku/course-style/react";
-import passengers from './titanic-passengers.json';
+import passengers from '../../assets/RegressionClassificationPage/titanic-passengers.json';
 import './RegressionClassificationPage.css';
 
-const ship = moduleAssetUrl('titanic/atlantic-liner.jpg');
+const ship = moduleAssetUrl("titanic/atlantic-liner.webp");
 const classes = ['一等舱', '二等舱', '三等舱'];
 const exampleProbability = .92;
 const outputValue = exampleProbability.toFixed(2);
@@ -17,7 +17,7 @@ export function RegressionClassificationPage() {
     <div shuku-edit-id="e-3bcfe433-fe5e-4b9c-925d-3ef865ac2486" className="rl-task-layout">
       <section shuku-edit-id="e-4fd88d06-023f-4a69-a858-46a57f2f1a54" className="rl-task-manifest">
         <div shuku-edit-id="e-6ca852f0-589f-4fa3-af5a-83260eb83420" className="rl-task-manifest-heading"><Typography shuku-edit-id="e-efb7de02-6d3d-46d2-9ee6-76fad1c15600" variant="h3" tone="accent">乘客名单</Typography><Typography shuku-edit-id="e-38e2e21a-6be1-405f-b4e0-cb177e6bbc1b" variant="bodySmall" tone="muted">{passengers.length}条训练记录</Typography></div>
-        <div shuku-edit-id="e-4c116ae7-2004-4903-9322-be40b9bc46f2" className="rl-task-scroll" tabIndex={0} role="region" aria-label="可滚动的完整泰坦尼克号训练乘客名单">
+        <div shuku-edit-id="e-4c116ae7-2004-4903-9322-be40b9bc46f2" data-ppt-viewport="滚动查看完整训练乘客名单" className="rl-task-scroll" tabIndex={0} role="region" aria-label="可滚动的完整泰坦尼克号训练乘客名单">
           <table shuku-edit-id="e-0acdb63f-9dc6-45e8-8dc7-27e1d81f8ce1" className="rl-task-table" aria-rowcount={passengers.length+1}><colgroup shuku-edit-id="e-cdbab141-a27b-4465-af5c-a22c44bf4baf"><col shuku-edit-id="e-b5c93ed9-c8ac-4e4f-8c03-bdaee43aa7d1"/><col shuku-edit-id="e-5041b228-d716-4449-9fa5-8b744818c992"/><col shuku-edit-id="e-f01a7359-1525-40f7-b7db-feb81c342f4a"/><col shuku-edit-id="e-015065dc-e1a1-45b2-aac9-d46af59d1d81"/><col shuku-edit-id="e-b97de31b-8dee-4dbd-bcc4-c5b0822ae707"/><col shuku-edit-id="e-0d8998ed-6006-43cd-a6d0-e05ee23378b6"/></colgroup><thead shuku-edit-id="e-38e73d58-de66-4c0b-98c8-4c9b26c63269"><tr shuku-edit-id="e-59f565bb-3c1b-4d93-84f8-16a3622089f0">{['编号','乘客姓名','性别','年龄','舱位','实际结果'].map(label=><th shuku-edit-id="e-b631c585-94ba-46bf-93e0-fdad11004745" scope="col" key={label}><Typography shuku-edit-id="e-5a9846ce-2f23-4a7c-a667-d7c063a1cc82" as="span" variant="bodySmall" tone="inherit">{label}</Typography></th>)}</tr></thead><tbody shuku-edit-id="e-9c27e513-2dd4-4d53-97e5-a052ef32a862">
             {passengers.map(person=><tr shuku-edit-id="e-16b85cac-d05c-4c46-ba44-24c2d226fa49" key={person.PassengerId}>
               <td shuku-edit-id="e-eb77c72d-a04f-41c2-a911-f52be15e6d7b"><Typography shuku-edit-id="e-d1e2fb3c-0a6b-41ae-8a78-c2df6133ccc7" as="span" variant="bodySmall" tone="muted">{person.PassengerId}</Typography></td>

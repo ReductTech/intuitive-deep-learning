@@ -36,7 +36,7 @@ export function ColorImageBlurPage() {
       setSource(channels.map((_, c) => Uint8Array.from({ length: N * N }, (_, i) => rgba[i * 4 + c])));
     };
     image.onerror = () => { if (!cancelled) setError(true); };
-    image.src = moduleAssetUrl('images/color-space-macaw.jpg');
+    image.src = moduleAssetUrl("images/color-space-macaw.webp");
     return () => { cancelled = true; };
   }, []);
   const filtered = useMemo(() => source.map(channel => blurChannel(channel, N, N, sigma)), [source, sigma]);

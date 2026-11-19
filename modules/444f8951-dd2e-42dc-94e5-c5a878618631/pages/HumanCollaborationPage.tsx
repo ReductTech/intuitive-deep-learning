@@ -1,4 +1,4 @@
-import human_collaboration_blank_padsAsset0 from '../assets/images/human-collaboration-blank-pads.jpg';
+import human_collaboration_blank_padsAsset0 from "../assets/images/human-collaboration-blank-pads.webp";
 import { Typography } from "@shuku/course-style/react";
 import './HumanCollaborationPage.css';
 

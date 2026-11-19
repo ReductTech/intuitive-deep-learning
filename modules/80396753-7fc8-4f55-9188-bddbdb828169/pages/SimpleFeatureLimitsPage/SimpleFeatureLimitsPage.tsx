@@ -6,8 +6,8 @@ import './SimpleFeatureLimitsPage.css';
 
 const ASSET_ID = '80396753-7fc8-4f55-9188-bddbdb828169';
 const examples = [
-  { digit: '3', file: 'mnist/3/60018.jpg' },
-  { digit: '5', file: 'mnist/5/60162.jpg' },
+  { digit: '3', file: "mnist/3/60018.webp" },
+  { digit: '5', file: "mnist/5/60162.webp" },
 ] as const;
 
 type Digit = typeof examples[number]['digit'];

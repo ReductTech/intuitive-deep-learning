@@ -10,7 +10,7 @@ export function LatentTokenization() {
   const projected=Array.from({length:4},(_,k)=>raw.reduce((sum,v,j)=>sum+v*Math.cos((j+1)*(k+1)*.2),0)/Math.sqrt(raw.length));
   return <ReferenceCanvas index={9} source="22">
     <RefBox rect={[63,485,189,162]} className="vgr-patch-plane">
-      <div className="vga-patch-choice vgr-patch-choice" style={{gridTemplateColumns:`repeat(${shown},minmax(0,1fr))`,backgroundImage:`url("${referenceAsset('visuals/latent-channel.jpg')}")`}}>
+      <div className="vga-patch-choice vgr-patch-choice" style={{gridTemplateColumns:`repeat(${shown},minmax(0,1fr))`,backgroundImage:`url("${referenceAsset("visuals/latent-channel.webp")}")`}}>
         {Array.from({length:shown**2},(_,i)=><button key={i} type="button" draggable className={selected===i?'is-selected':''} aria-label={`选择第 ${i+1} 个 patch`} aria-pressed={selected===i} onClick={()=>{setSelected(i);setSent(false);}} onDragStart={e=>{setSelected(i);setSent(false);e.dataTransfer.setData('text/plain',String(i));}}/>)}</div>
     </RefBox>
     <RefBox rect={[409,317,370,94]} className="vgr-white vgr-center"><Text>Patchify：按 {patch} × {patch} 切块</Text><Text muted>每块保留 C 个通道</Text></RefBox>

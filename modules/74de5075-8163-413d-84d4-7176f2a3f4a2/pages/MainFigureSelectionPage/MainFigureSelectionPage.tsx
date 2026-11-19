@@ -9,7 +9,7 @@ import './MainFigureSelectionPage.css';
 
 type Stage='pages'|'assemble'|'detect'|'confirm'|'focus'|'result'|'complete';
 const asset=(file:string)=>moduleAssetUrl(`research-foundation/research-papers/dinov3/${file}`);
-const pageAsset=(index:number)=>asset(`pages/page-${String(SELECTED_PAGES[index]).padStart(2,'0')}.jpg`);
+const pageAsset=(index:number)=>asset(`pages/page-${String(SELECTED_PAGES[index]).padStart(2,'0')}.webp`);
 const copy={
  pages:['图表检测与提取','逐页定位论文中的图与表'],
  assemble:['汇聚论文中的图与表','从完整论文到候选视觉元素'],

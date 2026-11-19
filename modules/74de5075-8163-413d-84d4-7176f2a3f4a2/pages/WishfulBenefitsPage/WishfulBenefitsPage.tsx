@@ -13,7 +13,7 @@ const benefits = [
 export function WishfulBenefitsPage() {
   return (
     <ContentBlock shuku-edit-id="e-51f26ac8-decf-44be-b978-52e6fe98b3f1" title={outline.pages.find(page => page.id === 'spp-research-wishful-benefits')!.title} headingLevel={1} className="rie-benefits" data-scene-id="spp-research-wishful-benefits">
-      <img shuku-edit-id="e-665522ab-322f-4637-911e-3ef4aaa201b6" className="rie-benefits-art" src={moduleAssetUrl('images/research-background/wishful-benefits-art-v1.jpg')} alt="降低的台阶、进入实践的想法、尝试反馈的循环，以及留给思考的笔记本" />
+      <img shuku-edit-id="e-665522ab-322f-4637-911e-3ef4aaa201b6" className="rie-benefits-art" src={moduleAssetUrl("images/research-background/wishful-benefits-art-v1.webp")} alt="降低的台阶、进入实践的想法、尝试反馈的循环，以及留给思考的笔记本" />
       <div shuku-edit-id="e-1ecb03f3-f35c-4ed6-bc9a-d57b9a223404" className="rie-benefits-grid">
         {benefits.map(([title, description]) => (
           <div shuku-edit-id="e-cfa3981d-3860-48d5-b68a-77e270dd6f41" key={title} className="rie-benefits-copy">

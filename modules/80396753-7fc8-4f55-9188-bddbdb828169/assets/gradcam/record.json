@@ -18,8 +18,8 @@
       "name": "Colin Powell",
       "inputIndex": 90,
       "referenceIndex": 91,
-      "input": "input.jpg",
-      "reference": "reference.jpg",
+      "input": "input.webp",
+      "reference": "reference.webp",
       "classification": {
         "score": 10.773309707641602,
         "channels": [
@@ -39,8 +39,8 @@
             "image": "classification-channel-46.png"
           }
         ],
-        "heat": "classification-heat.jpg",
-        "overlay": "classification-overlay.jpg"
+        "heat": "classification-heat.webp",
+        "overlay": "classification-overlay.webp"
       },
       "triplet": {
         "score": 0.762151837348938,
@@ -61,8 +61,8 @@
             "image": "triplet-channel-1.png"
           }
         ],
-        "heat": "triplet-heat.jpg",
-        "overlay": "triplet-overlay.jpg"
+        "heat": "triplet-heat.webp",
+        "overlay": "triplet-overlay.webp"
       }
     },
     {
@@ -70,8 +70,8 @@
       "name": "George W Bush",
       "inputIndex": 190,
       "referenceIndex": 191,
-      "input": "input.jpg",
-      "reference": "reference.jpg",
+      "input": "input.webp",
+      "reference": "reference.webp",
       "classification": {
         "score": 10.137115478515625,
         "channels": [
@@ -91,8 +91,8 @@
             "image": "classification-channel-18.png"
           }
         ],
-        "heat": "classification-heat.jpg",
-        "overlay": "classification-overlay.jpg"
+        "heat": "classification-heat.webp",
+        "overlay": "classification-overlay.webp"
       },
       "triplet": {
         "score": 0.5347323417663574,
@@ -113,8 +113,8 @@
             "image": "triplet-channel-5.png"
           }
         ],
-        "heat": "triplet-heat.jpg",
-        "overlay": "triplet-overlay.jpg"
+        "heat": "triplet-heat.webp",
+        "overlay": "triplet-overlay.webp"
       }
     }
   ],

@@ -3,7 +3,7 @@ import { moduleAssetUrl } from "@shuku/course-runtime/react/assets";
 import { useEffect, useRef, useState } from 'react';
 import { Button, ContentBlock, NoticeStrip, Typography } from "@shuku/course-style/react";
 import { useCompleteOnce } from '../../hooks/useCompleteOnce';
-const bottleFront = moduleAssetUrl("recycling/camera-views/bottle-front.jpg");
+const bottleFront = moduleAssetUrl("recycling/camera-views/bottle-front.webp");
 import './LearningFeaturesPage.css';
 
 type Phase = 0 | 1 | 2 | 3 | 4 | 5 | 6;

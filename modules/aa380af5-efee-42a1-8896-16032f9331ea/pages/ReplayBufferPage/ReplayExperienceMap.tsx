@@ -6,10 +6,10 @@ import { TRAP } from '../QLearningLoopPage/qLearningSimulation';
 import { type ReplayExperience } from './replaySimulation';
 import './ReplayExperienceMap.css';
 
-const robotArt = valueBasedRlAssetUrl('cover-v2/robot.png');
-const emptyStation = valueBasedRlAssetUrl('cover-v2/receiving-station-empty.png');
-const loadedStation = valueBasedRlAssetUrl('cover-v2/receiving-station-loaded.png');
-const pitArt = valueBasedRlAssetUrl('cover-v2/maintenance-pit.png');
+const robotArt = valueBasedRlAssetUrl("cover-v2/robot.webp");
+const emptyStation = valueBasedRlAssetUrl("cover-v2/receiving-station-empty.webp");
+const loadedStation = valueBasedRlAssetUrl("cover-v2/receiving-station-loaded.webp");
+const pitArt = valueBasedRlAssetUrl("cover-v2/maintenance-pit.webp");
 
 export function ReplayExperienceMap({ position, experience, atEnd, robotKey }: {
   position: Position; experience: ReplayExperience | null; atEnd: boolean; robotKey: string;

@@ -1,0 +1,11 @@
+.course-shell .rt-strategy-compare{display:grid;grid-template-rows:auto minmax(0,1fr);width:100%;height:100%;padding:18px 32px 22px;min-width:0;min-height:0}
+.rt-strategy-compare__body{display:flex;flex-direction:column;gap:22px;height:100%;min-height:0}
+.rt-strategy-compare__criteria{display:flex;justify-content:center;gap:24px}
+.rt-strategy-compare table{width:100%;border-collapse:collapse;table-layout:fixed;flex:1}
+.rt-strategy-compare th,.rt-strategy-compare td{padding:18px 22px;border:1px solid #c7daeb;text-align:left}
+.rt-strategy-compare th{background:#edf5fc}
+.rt-strategy-compare__body>section{padding:18px 24px;border-radius:12px;background:#edf5fc}
+.rt-chain__visual{display:grid;grid-template-columns:220px minmax(0,1fr);align-items:center;gap:28px;flex:1;min-height:0}
+.rt-chain__visual>img{display:block;width:100%;height:280px;object-fit:contain}
+.rt-chain__steps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;align-items:stretch}
+.rt-chain__steps>.edu-btn{min-height:110px;white-space:normal}
